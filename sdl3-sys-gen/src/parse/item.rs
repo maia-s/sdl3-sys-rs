@@ -1,0 +1,99 @@
+use std::borrow::Cow;
+
+use super::{
+    DocComment, DocCommentFile, Enum, FnDecl, GetSpan, Ident, IncludeKind, Parse, ParseErr,
+    ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind, Punctuated, Span, StructOrUnion,
+    TypeDef, WsAndComments,
+};
+
+pub enum Item {
+    PreProcBlock(PreProcBlock),
+    Skipped(Span),
+    Define(Option<DocComment>, Ident, Span),
+    DefineFn(Option<DocComment>, Ident, Punctuated<Ident, Op![,]>, Span),
+    Include(IncludeKind, Span),
+    FileDoc(DocComment),
+    StructOrUnion(StructOrUnion),
+    Enum(Enum),
+    FnDecl(FnDecl),
+    TypeDef(TypeDef),
+}
+
+impl Parse for Item {
+    fn desc() -> Cow<'static, str> {
+        "item".into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        let input = &input.trim_wsc_start()?;
+        if let (rest, Some(pp)) = PreProcLine::try_parse_raw(input)? {
+            Ok((
+                rest,
+                Some(match pp.kind {
+                    PreProcLineKind::Define(doc, ident, contents) => {
+                        Item::Define(doc, ident, contents)
+                    }
+                    PreProcLineKind::DefineFn(doc, ident, args, contents) => {
+                        Item::DefineFn(doc, ident, args, contents)
+                    }
+                    PreProcLineKind::Include(kind, path) => Item::Include(kind, path),
+                    _ => {
+                        return if let (rest, Some(block)) = PreProcBlock::try_parse_raw(input)? {
+                            Ok((rest, Some(Item::PreProcBlock(block))))
+                        } else {
+                            Ok((input.clone(), None))
+                        }
+                    }
+                }),
+            ))
+        } else if let (rest, Some(f)) = FnDecl::try_parse_raw(input)? {
+            Ok((rest, Some(Item::FnDecl(f))))
+        } else if let (rest, Some(t)) = TypeDef::try_parse_raw(input)? {
+            Ok((rest, Some(Item::TypeDef(t))))
+        } else if let (mut rest, Some(e)) = Enum::try_parse_raw(input)? {
+            WsAndComments::try_parse(&mut rest)?;
+            <Op![;]>::parse(&mut rest)?;
+            Ok((rest, Some(Item::Enum(e))))
+        } else if let (rest, Some(s)) = StructOrUnionItem::try_parse_raw(input)? {
+            Ok((rest, Some(Item::StructOrUnion(s.0))))
+        } else if let (rest, Some(dc)) = DocCommentFile::try_parse_raw(input)? {
+            Ok((rest, Some(Item::FileDoc(dc.into()))))
+        } else {
+            Ok((input.clone(), None))
+        }
+    }
+}
+
+pub type Items = Vec<Item>;
+
+pub struct StructOrUnionItem(StructOrUnion);
+
+impl Parse for StructOrUnionItem {
+    fn desc() -> Cow<'static, str> {
+        "struct or union item".into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(s)) = StructOrUnion::try_parse_raw(input)? {
+            WsAndComments::try_parse(&mut rest)?;
+            <Op![;]>::parse(&mut rest)?;
+            if s.ident.is_none() {
+                return Err(ParseErr::new(
+                    s.span(),
+                    format!(
+                        "top level anonymous {}",
+                        if s.kw_struct.is_some() {
+                            "struct"
+                        } else {
+                            "union"
+                        }
+                    ),
+                ));
+            }
+            let span = input.start().join(&rest.start());
+            Ok((rest, Some(Self(s))))
+        } else {
+            Ok((input.clone(), None))
+        }
+    }
+}

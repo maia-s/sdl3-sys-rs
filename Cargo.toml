@@ -1,0 +1,8 @@
+[workspace]
+members = [
+    "sdl3-sys",
+    "sdl3-sys-gen",
+]
+default-members = [
+    "sdl3-sys"
+]
