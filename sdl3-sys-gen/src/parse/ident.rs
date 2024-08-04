@@ -8,6 +8,12 @@ pub struct IdentOrKwT<const ALLOW_KEYWORDS: bool> {
     pub span: Span,
 }
 
+impl<const ALLOW_KEYWORDS: bool> IdentOrKwT<ALLOW_KEYWORDS> {
+    pub fn as_str(&self) -> &str {
+        self.span.as_str()
+    }
+}
+
 impl<const ALLOW_KEYWORDS: bool> GetSpan for IdentOrKwT<ALLOW_KEYWORDS> {
     fn span(&self) -> Span {
         self.span.clone()

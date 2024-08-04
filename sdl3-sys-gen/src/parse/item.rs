@@ -1,17 +1,16 @@
 use std::borrow::Cow;
 
 use super::{
-    DocComment, DocCommentFile, Enum, FnDecl, GetSpan, Ident, IncludeKind, Parse, ParseErr,
-    ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind, Punctuated, Span, StructOrUnion,
-    TypeDef, WsAndComments,
+    Define, DocComment, DocCommentFile, Enum, FnDecl, GetSpan, Include, Parse, ParseErr,
+    ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind, Span, StructOrUnion, TypeDef,
+    WsAndComments,
 };
 
 pub enum Item {
     PreProcBlock(PreProcBlock),
     Skipped(Span),
-    Define(Option<DocComment>, Ident, Span),
-    DefineFn(Option<DocComment>, Ident, Punctuated<Ident, Op![,]>, Span),
-    Include(IncludeKind, Span),
+    Define(Define),
+    Include(Include),
     FileDoc(DocComment),
     StructOrUnion(StructOrUnion),
     Enum(Enum),
@@ -30,13 +29,8 @@ impl Parse for Item {
             Ok((
                 rest,
                 Some(match pp.kind {
-                    PreProcLineKind::Define(doc, ident, contents) => {
-                        Item::Define(doc, ident, contents)
-                    }
-                    PreProcLineKind::DefineFn(doc, ident, args, contents) => {
-                        Item::DefineFn(doc, ident, args, contents)
-                    }
-                    PreProcLineKind::Include(kind, path) => Item::Include(kind, path),
+                    PreProcLineKind::Define(d) => Item::Define(d),
+                    PreProcLineKind::Include(i) => Item::Include(i),
                     _ => {
                         return if let (rest, Some(block)) = PreProcBlock::try_parse_raw(input)? {
                             Ok((rest, Some(Item::PreProcBlock(block))))

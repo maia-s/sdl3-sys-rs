@@ -30,6 +30,11 @@ impl ParseErr {
             backtrace,
         }
     }
+
+    pub fn map_msg(mut self, message: impl Into<Cow<'static, str>>) -> Self {
+        self.message = message.into();
+        self
+    }
 }
 
 impl error::Error for ParseErr {}

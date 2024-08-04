@@ -1,8 +1,34 @@
 use super::{
-    DocComment, DocCommentPost, GetSpan, Ident, Item, Items, Parse, ParseErr, ParseRawRes,
-    Punctuated, Span, WsAndComments,
+    DocComment, DocCommentPost, GetSpan, Ident, IdentOrKw, Item, Items, Parse, ParseErr,
+    ParseRawRes, Punctuated, Span, WsAndComments,
 };
 use std::borrow::Cow;
+
+pub struct Define {
+    span: Span,
+    doc: Option<DocComment>,
+    ident: Ident,
+    args: Option<Punctuated<Ident, Op![,]>>,
+    expr: Span,
+}
+
+impl GetSpan for Define {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
+}
+
+pub struct Include {
+    span: Span,
+    kind: IncludeKind,
+    path: Span,
+}
+
+impl GetSpan for Include {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
+}
 
 pub enum IncludeKind {
     Local,
@@ -76,10 +102,9 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                 PreProcLineKind::ElIfNDef(ident) => (PreProcBlockKind::IfNDef(ident), true),
                 PreProcLineKind::Else => (PreProcBlockKind::None, true),
 
-                PreProcLineKind::Define(_, _, _)
-                | PreProcLineKind::DefineFn(_, _, _, _)
-                | PreProcLineKind::EndIf
-                | PreProcLineKind::Include(_, _) => return Ok((input.clone(), None)),
+                PreProcLineKind::EndIf
+                | PreProcLineKind::Define(_)
+                | PreProcLineKind::Include(_) => return Ok((input.clone(), None)),
             };
 
             if !ALLOW_INITIAL_ELSE && is_else {
@@ -173,9 +198,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                 ));
                             }
 
-                            PreProcLineKind::Define(_, _, _)
-                            | PreProcLineKind::DefineFn(_, _, _, _)
-                            | PreProcLineKind::Include(_, _) => {
+                            PreProcLineKind::Define(_) | PreProcLineKind::Include(_) => {
                                 rest = rest_;
                                 continue;
                             }
@@ -209,9 +232,8 @@ pub enum PreProcLineKind {
     ElIfNDef(Ident),
     Else,
     EndIf,
-    Define(Option<DocComment>, Ident, Span),
-    DefineFn(Option<DocComment>, Ident, Punctuated<Ident, Op![,]>, Span),
-    Include(IncludeKind, Span),
+    Define(Define),
+    Include(Include),
 }
 
 impl Parse for PreProcLine {
@@ -237,78 +259,87 @@ impl Parse for PreProcLine {
                     ));
                 }
             }
-            let i = i.trim_wsc_start()?;
-            let kind = if let Some(mut i) = i.strip_prefix("if") {
-                if let Some(mut i) = i.strip_prefix("def") {
-                    WsAndComments::parse(&mut i)?;
-                    PreProcLineKind::IfDef(Ident::parse_all(i)?)
-                } else if let Some(mut i) = i.strip_prefix("ndef") {
-                    WsAndComments::parse(&mut i)?;
-                    PreProcLineKind::IfNDef(Ident::parse_all(i)?)
-                } else {
-                    WsAndComments::parse(&mut i)?;
-                    PreProcLineKind::If(i)
-                }
-            } else if let Some(mut i) = i.strip_prefix("elif") {
-                if let Some(mut i) = i.strip_prefix("def") {
-                    WsAndComments::parse(&mut i)?;
-                    PreProcLineKind::ElIfDef(Ident::parse_all(i)?)
-                } else if let Some(mut i) = i.strip_prefix("ndef") {
-                    WsAndComments::parse(&mut i)?;
-                    PreProcLineKind::ElIfNDef(Ident::parse_all(i)?)
-                } else {
-                    WsAndComments::parse(&mut i)?;
-                    PreProcLineKind::ElIf(i)
-                }
-            } else if let Some(mut i) = i.strip_prefix("define") {
-                WsAndComments::parse(&mut i)?;
-                let ident = Ident::parse(&mut i)?;
-                if i.starts_with_ch('(') {
-                    if let Some(close_paren) = i.as_bytes().iter().position(|&b| b == b')') {
-                        let args = Punctuated::<Ident, Op![,]>::try_parse_all(
-                            i.slice(1..close_paren).trim_wsc()?,
-                        )?
-                        .unwrap_or_default();
-                        PreProcLineKind::DefineFn(doc, ident, args, i.slice(close_paren + 1..))
+            let mut i = i.trim_wsc_start()?;
+            let ident = IdentOrKw::parse(&mut i)
+                .map_err(|e| e.map_msg("expected preprocessor directive"))?;
+            WsAndComments::try_parse(&mut i)?;
+
+            let kind = match ident.as_str() {
+                "if" => PreProcLineKind::If(i),
+                "ifdef" => PreProcLineKind::IfDef(Ident::parse_all(i)?),
+                "ifndef" => PreProcLineKind::IfNDef(Ident::parse_all(i)?),
+
+                "elif" => PreProcLineKind::ElIf(i),
+                "elifdef" => PreProcLineKind::ElIfDef(Ident::parse_all(i)?),
+                "enifndef" => PreProcLineKind::ElIfNDef(Ident::parse_all(i)?),
+
+                "else" => PreProcLineKind::Else,
+                "endif" => PreProcLineKind::EndIf,
+
+                "define" => {
+                    let ident = Ident::parse(&mut i)?;
+                    if i.starts_with_ch('(') {
+                        if let Some(close_paren) = i.as_bytes().iter().position(|&b| b == b')') {
+                            let args = Punctuated::<Ident, Op![,]>::try_parse_all(
+                                i.slice(1..close_paren).trim_wsc()?,
+                            )?
+                            .unwrap_or_default();
+                            PreProcLineKind::Define(Define {
+                                span: span.clone(),
+                                doc,
+                                ident,
+                                args: Some(args),
+                                expr: i.slice(close_paren + 1..),
+                            })
+                        } else {
+                            return Err(ParseErr::new(i.slice(0..=0), "unmatched `(`"));
+                        }
                     } else {
-                        return Err(ParseErr::new(i.slice(0..=0), "unmatched `(`"));
+                        WsAndComments::try_parse(&mut i)?;
+                        PreProcLineKind::Define(Define {
+                            span: span.clone(),
+                            doc,
+                            ident,
+                            args: None,
+                            expr: i,
+                        })
                     }
-                } else {
-                    WsAndComments::try_parse(&mut i)?;
-                    PreProcLineKind::Define(doc, ident, i)
                 }
-            } else if let Some(i) = i.strip_prefix("include") {
-                let i = i.trim_wsc_start()?;
-                let e = i.as_bytes()[i.len() - 1];
-                let kind = match i.as_bytes()[0] {
-                    b'<' => {
-                        if e != b'>' {
-                            return Err(ParseErr::new(i.slice(i.len() - 1..), "expected `>`"));
+
+                "include" => {
+                    let i = i.trim_wsc_start()?;
+                    let e = i.as_bytes()[i.len() - 1];
+                    let kind = match i.as_bytes()[0] {
+                        b'<' => {
+                            if e != b'>' {
+                                return Err(ParseErr::new(i.slice(i.len() - 1..), "expected `>`"));
+                            }
+                            IncludeKind::System
                         }
-                        IncludeKind::System
-                    }
-                    b'"' => {
-                        if e != b'"' {
-                            return Err(ParseErr::new(i.slice(i.len() - 1..), "expected `\"`"));
+                        b'"' => {
+                            if e != b'"' {
+                                return Err(ParseErr::new(i.slice(i.len() - 1..), "expected `\"`"));
+                            }
+                            IncludeKind::Local
                         }
-                        IncludeKind::Local
-                    }
-                    _ => return Err(ParseErr::new(i, "malformed include path")),
-                };
-                PreProcLineKind::Include(kind, i.slice(1..i.len() - 1))
-            } else {
-                match i.as_str() {
-                    "else" => PreProcLineKind::Else,
-                    "endif" => PreProcLineKind::EndIf,
-                    _ => {
-                        let span = line.start().join(&i);
-                        return Err(ParseErr::new(
-                            span.clone(),
-                            format!("unrecognized preprocessor directive: `{span}`"),
-                        ));
-                    }
+                        _ => return Err(ParseErr::new(i, "malformed include path")),
+                    };
+                    PreProcLineKind::Include(Include {
+                        span: span.clone(),
+                        kind,
+                        path: i.slice(1..i.len() - 1),
+                    })
+                }
+
+                _ => {
+                    let span = line.start().join(&i);
+                    return Err(ParseErr::new(
+                        span.clone(),
+                        format!("unrecognized preprocessor directive: `{span}`"),
+                    ));
                 }
             };
+
             Ok((rest, Some(Self { span, kind })))
         } else {
             Ok((input.clone(), None))
