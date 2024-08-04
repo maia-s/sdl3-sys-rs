@@ -97,7 +97,7 @@ impl Gen {
         println!("parsing {filename}");
         let contents: Span = Source::new(filename, contents).into();
         let rest = contents.clone();
-        let items = Items::parse_all(&rest)?;
+        let items = Items::parse_all(rest)?;
         self.modules.insert(module.to_owned(), items);
         Ok(())
     }

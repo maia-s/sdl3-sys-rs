@@ -144,8 +144,8 @@ pub trait Parse: Sized {
         }
     }
 
-    fn try_parse_all(input: &Span) -> ParseRes<Option<Self>> {
-        match Self::try_parse_raw(input) {
+    fn try_parse_all(input: Span) -> ParseRes<Option<Self>> {
+        match Self::try_parse_raw(&input) {
             Ok((rest, parsed)) => {
                 if rest.is_empty() {
                     Ok(parsed)
@@ -160,8 +160,8 @@ pub trait Parse: Sized {
         }
     }
 
-    fn parse_all(input: &Span) -> ParseRes<Self> {
-        match Self::parse_raw(input) {
+    fn parse_all(input: Span) -> ParseRes<Self> {
+        match Self::parse_raw(&input) {
             Ok((rest, parsed)) => {
                 let rest = rest.trim_wsc_start()?;
                 if rest.is_empty() {
@@ -218,7 +218,7 @@ trait ParseRev: Parse {
     }
 
     fn try_parse_rev_all(input: &Span) -> ParseRes<Option<Self>> {
-        match Self::try_parse_rev_raw(input) {
+        match Self::try_parse_rev_raw(&input) {
             Ok((rest, parsed)) => {
                 if rest.is_empty() {
                     Ok(parsed)
@@ -233,8 +233,8 @@ trait ParseRev: Parse {
         }
     }
 
-    fn parse_rev_all(input: &Span) -> ParseRes<Self> {
-        match Self::parse_rev_raw(input) {
+    fn parse_rev_all(input: Span) -> ParseRes<Self> {
+        match Self::parse_rev_raw(&input) {
             Ok((rest, parsed)) => {
                 if rest.is_empty() {
                     Ok(parsed)

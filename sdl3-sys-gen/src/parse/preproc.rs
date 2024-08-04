@@ -135,7 +135,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                         vec![Item::Skipped(block)]
                                     }
 
-                                    _ => Items::parse_all(&block.trim_wsc()?)?,
+                                    _ => Items::parse_all(block.trim_wsc()?)?,
                                 };
                                 let (rest, else_block) = PreProcBlock::<true>::parse_raw(&rest)?;
                                 let span1 = else_block.span();
@@ -159,7 +159,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                         vec![Item::Skipped(block)]
                                     }
 
-                                    _ => Items::parse_all(&block.trim_wsc()?)?,
+                                    _ => Items::parse_all(block.trim_wsc()?)?,
                                 };
                                 let rest = rest_;
                                 return Ok((
@@ -241,10 +241,10 @@ impl Parse for PreProcLine {
             let kind = if let Some(mut i) = i.strip_prefix("if") {
                 if let Some(mut i) = i.strip_prefix("def") {
                     WsAndComments::parse(&mut i)?;
-                    PreProcLineKind::IfDef(Ident::parse_all(&i)?)
+                    PreProcLineKind::IfDef(Ident::parse_all(i)?)
                 } else if let Some(mut i) = i.strip_prefix("ndef") {
                     WsAndComments::parse(&mut i)?;
-                    PreProcLineKind::IfNDef(Ident::parse_all(&i)?)
+                    PreProcLineKind::IfNDef(Ident::parse_all(i)?)
                 } else {
                     WsAndComments::parse(&mut i)?;
                     PreProcLineKind::If(i)
@@ -252,10 +252,10 @@ impl Parse for PreProcLine {
             } else if let Some(mut i) = i.strip_prefix("elif") {
                 if let Some(mut i) = i.strip_prefix("def") {
                     WsAndComments::parse(&mut i)?;
-                    PreProcLineKind::ElIfDef(Ident::parse_all(&i)?)
+                    PreProcLineKind::ElIfDef(Ident::parse_all(i)?)
                 } else if let Some(mut i) = i.strip_prefix("ndef") {
                     WsAndComments::parse(&mut i)?;
-                    PreProcLineKind::ElIfNDef(Ident::parse_all(&i)?)
+                    PreProcLineKind::ElIfNDef(Ident::parse_all(i)?)
                 } else {
                     WsAndComments::parse(&mut i)?;
                     PreProcLineKind::ElIf(i)
@@ -266,7 +266,7 @@ impl Parse for PreProcLine {
                 if i.starts_with_ch('(') {
                     if let Some(close_paren) = i.as_bytes().iter().position(|&b| b == b')') {
                         let args = Punctuated::<Ident, Op![,]>::try_parse_all(
-                            &i.slice(1..close_paren).trim_wsc()?,
+                            i.slice(1..close_paren).trim_wsc()?,
                         )?
                         .unwrap_or_default();
                         PreProcLineKind::DefineFn(doc, ident, args, i.slice(close_paren + 1..))
