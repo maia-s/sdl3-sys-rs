@@ -1,6 +1,6 @@
 use super::{
     DocComment, Enum, Expr, Ident, Kw_const, Kw_typedef, Op, Parse, ParseRawRes, PrimitiveType,
-    PrimitiveTypeParse, Punctuated, Span, StructOrUnion, UintLiteral, VarDecl, WsAndComments,
+    PrimitiveTypeParse, Punctuated, Span, StructOrUnion, VarDecl, WsAndComments,
 };
 use std::borrow::Cow;
 

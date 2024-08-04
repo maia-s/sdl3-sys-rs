@@ -1,6 +1,6 @@
 use super::{
-    DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op, Parse, ParseRawRes, Span, Type,
-    TypeWithReqIdent, WsAndComments,
+    Delimited, DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op, Parse, ParseRawRes, Span,
+    Spanned, Type, TypeWithReqIdent, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -107,18 +107,16 @@ impl Parse for StructFields {
     }
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        let mut rest = input.clone();
-        WsAndComments::try_parse(&mut rest)?;
-        if let Some(open_brace) = Op::<'{'>::try_parse(&mut rest)? {
-            let fields = Vec::try_parse(&mut rest)?.unwrap_or_default();
-            let close_brace = Op::<'}'>::parse(&mut rest)?;
+        if let (rest, Some(f)) =
+            Spanned::<Delimited<Op<'{'>, Vec<StructField>, Op<'}'>>>::try_parse_raw(input)?
+        {
             Ok((
                 rest,
                 Some(Self {
-                    span: open_brace.span.join(&close_brace.span),
-                    open_brace,
-                    fields,
-                    close_brace,
+                    span: f.span,
+                    open_brace: f.value.open,
+                    fields: f.value.value,
+                    close_brace: f.value.close,
                 }),
             ))
         } else {

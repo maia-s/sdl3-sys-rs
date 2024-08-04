@@ -355,9 +355,40 @@ impl<const OP1: char, const OP2: char> Parse for Op<OP1, OP2> {
     }
 }
 
-struct Punctuated<T, P, const ALLOW_TRAILING: bool = false>(Vec<(T, Option<P>)>);
+struct Delimited<Open, T, Close> {
+    open: Open,
+    value: T,
+    close: Close,
+}
 
-impl<'a, T, P, const ALLOW_TRAILING: bool> Parse for Punctuated<T, P, ALLOW_TRAILING>
+impl<Open: Parse, T: Parse, Close: Parse> Parse for Delimited<Open, T, Close> {
+    fn desc() -> Cow<'static, str> {
+        format!("{} {} {}", Open::desc(), T::desc(), Close::desc()).into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        let mut rest = input.clone();
+        if let Some(open) = Open::try_parse(&mut rest)? {
+            WsAndComments::try_parse(&mut rest)?;
+            let value = T::parse(&mut rest)?;
+            WsAndComments::try_parse(&mut rest)?;
+            let close = Close::parse(&mut rest)?;
+            Ok((rest, Some(Self { open, value, close })))
+        } else {
+            Ok((input.clone(), None))
+        }
+    }
+}
+
+struct Punctuated<T, P>(pub Vec<(T, Option<P>)>);
+
+impl<T, P> Default for Punctuated<T, P> {
+    fn default() -> Self {
+        Self(Vec::new())
+    }
+}
+
+impl<T, P> Parse for Punctuated<T, P>
 where
     T: Parse,
     P: Parse,
@@ -373,18 +404,9 @@ where
             while let (rest_, Some(punct)) = P::try_parse_raw(&rest.trim_wsc_start()?)? {
                 rest = rest_;
                 vec.push((value, Some(punct)));
-                if ALLOW_TRAILING {
-                    if let (rest_, Some(value_)) = T::try_parse_raw(&rest.trim_wsc_start()?)? {
-                        rest = rest_;
-                        value = value_;
-                    } else {
-                        return Ok((rest, Some(Self(vec))));
-                    }
-                } else {
-                    let (rest_, value_) = T::parse_raw(&rest.trim_wsc_start()?)?;
-                    rest = rest_;
-                    value = value_;
-                }
+                let (rest_, value_) = T::parse_raw(&rest.trim_wsc_start()?)?;
+                rest = rest_;
+                value = value_;
             }
             vec.push((value, None));
             Ok((rest, Some(Self(vec))))
@@ -394,9 +416,25 @@ where
     }
 }
 
-impl<T, P, const ALLOW_TRAILING: bool> Default for Punctuated<T, P, ALLOW_TRAILING> {
-    fn default() -> Self {
-        Self(Vec::new())
+struct Terminated<T, Term> {
+    value: T,
+    term: Term,
+}
+
+impl<T: Parse, Term: Parse> Parse for Terminated<T, Term> {
+    fn desc() -> Cow<'static, str> {
+        T::desc()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        let mut rest = input.clone();
+        if let Some(value) = T::try_parse(&mut rest)? {
+            WsAndComments::try_parse(&mut rest)?;
+            let term = Term::parse(&mut rest)?;
+            Ok((rest, Some(Self { value, term })))
+        } else {
+            Ok((input.clone(), None))
+        }
     }
 }
 

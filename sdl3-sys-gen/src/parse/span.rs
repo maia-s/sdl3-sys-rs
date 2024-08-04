@@ -15,6 +15,7 @@ pub trait GetSpan {
     fn span(&self) -> Span;
 }
 
+#[derive(Default)]
 pub struct Spanned<T> {
     pub span: Span,
     pub value: T,

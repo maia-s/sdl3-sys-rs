@@ -1,10 +1,9 @@
-use std::borrow::Cow;
-
 use super::{
-    Define, DocComment, DocCommentFile, Enum, FnDecl, GetSpan, Include, Parse, ParseErr,
-    ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind, Span, StructOrUnion, TypeDef,
-    WsAndComments,
+    Define, DocComment, DocCommentFile, Enum, FnCall, FnDecl, GetSpan, Include, Parse, ParseErr,
+    ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind, Span, StructOrUnion, Terminated,
+    TypeDef, WsAndComments,
 };
+use std::borrow::Cow;
 
 pub enum Item {
     PreProcBlock(PreProcBlock),
@@ -15,6 +14,7 @@ pub enum Item {
     StructOrUnion(StructOrUnion),
     Enum(Enum),
     FnDecl(FnDecl),
+    FnCall(FnCall),
     TypeDef(TypeDef),
 }
 
@@ -40,6 +40,15 @@ impl Parse for Item {
                     }
                 }),
             ))
+        } else if let (
+            rest,
+            Some(Terminated {
+                value: call,
+                term: _,
+            }),
+        ) = Terminated::<FnCall, Op![;]>::try_parse_raw(input)?
+        {
+            Ok((rest, Some(Item::FnCall(call))))
         } else if let (rest, Some(f)) = FnDecl::try_parse_raw(input)? {
             Ok((rest, Some(Item::FnDecl(f))))
         } else if let (rest, Some(t)) = TypeDef::try_parse_raw(input)? {
@@ -68,9 +77,9 @@ impl Parse for StructOrUnionItem {
     }
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(s)) = StructOrUnion::try_parse_raw(input)? {
-            WsAndComments::try_parse(&mut rest)?;
-            <Op![;]>::parse(&mut rest)?;
+        if let (rest, Some(Terminated { value: s, term: _ })) =
+            Terminated::<StructOrUnion, Op![;]>::try_parse_raw(input)?
+        {
             if s.ident.is_none() {
                 return Err(ParseErr::new(
                     s.span(),
@@ -84,7 +93,6 @@ impl Parse for StructOrUnionItem {
                     ),
                 ));
             }
-            let span = input.start().join(&rest.start());
             Ok((rest, Some(Self(s))))
         } else {
             Ok((input.clone(), None))
