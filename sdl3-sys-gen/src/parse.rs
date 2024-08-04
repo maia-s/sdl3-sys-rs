@@ -4,7 +4,8 @@ macro_rules! Op {
     ($($tt:tt)*) => {
         $crate::parse::Op::<
             { $crate::parse::op_first_ch(stringify!($($tt)*)) },
-            { $crate::parse::op_second_ch(stringify!($($tt)*)) }
+            { $crate::parse::op_second_ch(stringify!($($tt)*)) },
+            { $crate::parse::op_third_ch(stringify!($($tt)*)) },
         >
     };
 }
@@ -39,11 +40,21 @@ pub const fn op_first_ch(str: &str) -> char {
 }
 
 pub const fn op_second_ch(str: &str) -> char {
-    assert!(str.len() <= 2);
     if str.len() < 2 {
         '\0'
     } else {
         let ch = str.as_bytes()[1];
+        assert!(ch <= 0x7f);
+        ch as char
+    }
+}
+
+pub const fn op_third_ch(str: &str) -> char {
+    assert!(str.len() <= 3);
+    if str.len() < 3 {
+        '\0'
+    } else {
+        let ch = str.as_bytes()[2];
         assert!(ch <= 0x7f);
         ch as char
     }
@@ -326,29 +337,77 @@ impl<const KW_INDEX: usize> Parse for Keyword<KW_INDEX> {
     }
 }
 
-struct Op<const OP1: char, const OP2: char = '\0'> {
+pub type ExprOp = Op<'\0'>;
+
+struct Op<const OP1: char, const OP2: char = '\0', const OP3: char = '\0'> {
     span: Span,
 }
 
-impl<const OP1: char, const OP2: char> GetSpan for Op<OP1, OP2> {
+impl<const OP1: char, const OP2: char, const OP3: char> GetSpan for Op<OP1, OP2, OP3> {
     fn span(&self) -> Span {
         self.span.clone()
     }
 }
 
-impl<const OP1: char, const OP2: char> Parse for Op<OP1, OP2> {
+impl<const OP1: char, const OP2: char, const OP3: char> Parse for Op<OP1, OP2, OP3> {
     fn desc() -> Cow<'static, str> {
-        format!("`{}{}`", OP1, OP2).into()
+        if OP1 == '\0' {
+            "operator".into()
+        } else if OP2 == '\0' {
+            format!("`{OP1}`").into()
+        } else if OP3 == '\0' {
+            format!("`{OP1}{OP2}`").into()
+        } else {
+            format!("`{OP1}{OP2}{OP3}`").into()
+        }
     }
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let Some(rest) = input.strip_prefix_ch(OP1) {
+        if OP1 == '\0' {
+            const { assert!(OP2 == '\0') }
+            if input.len() >= 3 {
+                match &input.as_bytes()[..3] {
+                    b"..." | b"<<=" | b">>=" => {
+                        let (span, rest) = input.split_at(3);
+                        return Ok((rest, Some(Self { span })));
+                    }
+                    _ => (),
+                }
+            }
+            if input.len() >= 2 {
+                match &input.as_bytes()[..2] {
+                    b"!=" | b"%=" | b"&&" | b"&=" | b"*=" | b"++" | b"+=" | b"--" | b"-="
+                    | b"->" | b"/=" | b"<<" | b"<=" | b"==" | b">=" | b">>" | b"^=" | b"|="
+                    | b"||" => {
+                        let (span, rest) = input.split_at(2);
+                        return Ok((rest, Some(Self { span })));
+                    }
+                    _ => (),
+                }
+            }
+            if !input.is_empty() {
+                match input.as_bytes()[0] {
+                    b'!' | b'%' | b'&' | b'*' | b'+' | b'-' | b'.' | b'/' | b':' | b'<' | b'='
+                    | b'>' | b'?' | b'^' | b'|' | b'~' => {
+                        let (span, rest) = input.split_at(1);
+                        return Ok((rest, Some(Self { span })));
+                    }
+                    _ => (),
+                }
+            }
+        } else if let Some(rest) = input.strip_prefix_ch(OP1) {
             if OP2 == '\0' {
-                let span = input.slice(..=0);
+                const { assert!(OP3 == '\0') }
+                let span = input.join(&rest.start());
                 return Ok((rest, Some(Self { span })));
             } else if let Some(rest) = rest.strip_prefix_ch(OP2) {
-                let span = input.slice(..=1);
-                return Ok((rest, Some(Self { span })));
+                if OP3 == '\0' {
+                    let span = input.join(&rest.start());
+                    return Ok((rest, Some(Self { span })));
+                } else if let Some(rest) = rest.strip_prefix_ch(OP3) {
+                    let span = input.join(&rest.start());
+                    return Ok((rest, Some(Self { span })));
+                }
             }
         }
         Ok((input.clone(), None))
