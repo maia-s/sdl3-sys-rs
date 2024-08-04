@@ -1,5 +1,5 @@
 use super::{
-    DocComment, Enum, Ident, Kw_const, Kw_typedef, Op, Parse, ParseRawRes, PrimitiveType,
+    DocComment, Enum, Expr, Ident, Kw_const, Kw_typedef, Op, Parse, ParseRawRes, PrimitiveType,
     PrimitiveTypeParse, Punctuated, Span, StructOrUnion, UintLiteral, VarDecl, WsAndComments,
 };
 use std::borrow::Cow;
@@ -30,7 +30,7 @@ pub enum TypeEnum {
     Enum(Box<Enum>),
     Struct(Box<StructOrUnion>),
     Pointer(Box<Type>),
-    Array(Box<Type>, usize),
+    Array(Box<Type>, Expr),
     FnPointer(Box<FnPointerType>),
 }
 
@@ -167,12 +167,12 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
             while Op::<'['>::try_parse(&mut rest2)?.is_some() {
                 rest = rest2;
                 WsAndComments::try_parse(&mut rest)?;
-                if let Some(size) = UintLiteral::try_parse(&mut rest)? {
+                if let Some(expr) = Expr::try_parse(&mut rest)? {
                     WsAndComments::try_parse(&mut rest)?;
                     let span = input.start().join(&rest.start());
                     ty = Type {
                         is_const: true,
-                        ty: TypeEnum::Array(Box::new(ty), size.u64()? as usize),
+                        ty: TypeEnum::Array(Box::new(ty), expr),
                         span,
                     }
                 } else {
