@@ -18,6 +18,7 @@ pub enum PrimitiveType {
     UnsignedLongLong,
     Float,
     Double,
+    Void,
     Bool,
     SizeT,
     Int8T,
@@ -170,6 +171,7 @@ impl Parse for PrimitiveTypeParse {
                     ty: match ident.span.as_str() {
                         "float" => PrimitiveType::Float,
                         "double" => PrimitiveType::Double,
+                        "void" => PrimitiveType::Void,
                         "_Bool" => PrimitiveType::Bool,
                         "size_t" => PrimitiveType::SizeT,
                         "int8_t" => PrimitiveType::Int8T,
