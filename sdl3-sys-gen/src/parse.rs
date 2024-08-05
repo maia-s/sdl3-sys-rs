@@ -1,6 +1,8 @@
 use std::{
     borrow::Cow,
     fmt::{self, Debug, Display},
+    num::NonZeroU8,
+    str, u8,
 };
 
 macro_rules! Op {
@@ -348,10 +350,46 @@ impl<const KW_INDEX: usize> Parse for Keyword<KW_INDEX> {
     }
 }
 
-enum Precedence {
-    LeftToRight(u8),
-    RightToLeft(u8),
-    None,
+#[derive(Clone, Copy)]
+struct Precedence(NonZeroU8);
+
+impl Precedence {
+    pub const fn left_to_right(prec: u8) -> Self {
+        assert!(prec != 0);
+        match prec.checked_shl(1) {
+            Some(prec) => Self(unsafe { NonZeroU8::new_unchecked(prec) }),
+            None => panic!("precedence out of range"),
+        }
+    }
+
+    pub const fn right_to_left(prec: u8) -> Self {
+        assert!(prec != 0);
+        match prec.checked_shl(1) {
+            Some(prec) => Self(unsafe { NonZeroU8::new_unchecked(prec + 1) }),
+            None => panic!("precedence out of range"),
+        }
+    }
+
+    pub const fn max() -> Self {
+        Self(NonZeroU8::MAX)
+    }
+
+    pub const fn parse_rhs_first(self, rhs: Self) -> bool {
+        let l = self.0.get();
+        let r = rhs.0.get() & !1;
+        r < l
+    }
+}
+
+impl Debug for Precedence {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "Precedence({}({}))",
+            if self.0.get() & 1 != 0 { "RTL" } else { "LTR" },
+            self.0.get() >> 1
+        )
+    }
 }
 
 pub type ExprOp = Op<'\0'>;
@@ -376,34 +414,38 @@ impl<const OP1: char, const OP2: char, const OP3: char> Op<OP1, OP2, OP3> {
         };
         unsafe { str::from_utf8_unchecked(bstr) }
     };
-    const BINARY_PRECEDENCE: Precedence = Self::_binary_precedence(Self::STR.as_bytes());
+    const BINARY_PRECEDENCE: Option<Precedence> = Self::_binary_precedence(Self::STR.as_bytes());
 
-    const fn _binary_precedence(s: &[u8]) -> Precedence {
+    const fn _binary_precedence(s: &[u8]) -> Option<Precedence> {
         match s {
-            b"." | b"->" => Precedence::LeftToRight(1),
-            b"*" | b"/" | b"%" => Precedence::LeftToRight(3),
-            b"+" | b"-" => Precedence::LeftToRight(4),
-            b"<<" | b">>" => Precedence::LeftToRight(5),
-            b"<" | b"<=" | b">" | b">=" => Precedence::LeftToRight(6),
-            b"==" | b"!=" => Precedence::LeftToRight(7),
-            b"&" => Precedence::LeftToRight(8),
-            b"^" => Precedence::LeftToRight(9),
-            b"|" => Precedence::LeftToRight(10),
-            b"&&" => Precedence::LeftToRight(11),
-            b"||" => Precedence::LeftToRight(12),
-            b"?" => Precedence::RightToLeft(13),
+            b"." | b"->" => Some(Precedence::left_to_right(1)),
+            b"*" | b"/" | b"%" => Some(Precedence::left_to_right(3)),
+            b"+" | b"-" => Some(Precedence::left_to_right(4)),
+            b"<<" | b">>" => Some(Precedence::left_to_right(5)),
+            b"<" | b"<=" | b">" | b">=" => Some(Precedence::left_to_right(6)),
+            b"==" | b"!=" => Some(Precedence::left_to_right(7)),
+            b"&" => Some(Precedence::left_to_right(8)),
+            b"^" => Some(Precedence::left_to_right(9)),
+            b"|" => Some(Precedence::left_to_right(10)),
+            b"&&" => Some(Precedence::left_to_right(11)),
+            b"||" => Some(Precedence::left_to_right(12)),
+            b"?" => Some(Precedence::right_to_left(13)),
             b"=" | b"+=" | b"-=" | b"*=" | b"/=" | b"%=" | b"<<=" | b">>=" | b"&=" | b"^="
-            | b"|=" => Precedence::RightToLeft(14),
-            _ => Precedence::None,
+            | b"|=" => Some(Precedence::right_to_left(14)),
+            _ => None,
         }
     }
 
-    pub fn binary_precedence(&self) -> Precedence {
+    pub fn binary_precedence(&self) -> Option<Precedence> {
         if Self::STR.is_empty() {
             Self::_binary_precedence(self.span.as_bytes())
         } else {
             Self::BINARY_PRECEDENCE
         }
+    }
+
+    pub fn as_str(&self) -> &str {
+        self.span.as_str()
     }
 }
 
