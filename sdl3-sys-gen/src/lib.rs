@@ -11,7 +11,7 @@ use std::{
 };
 
 fn skip(module: &str) -> bool {
-    module == "egl"
+    ["egl", "endian"].contains(&module)
         || module.starts_with("main")
         || module.starts_with("opengl")
         || module.starts_with("test")
