@@ -558,6 +558,12 @@ impl<T, P> Default for Punctuated<T, P> {
     }
 }
 
+impl<T, P> From<Punctuated<T, P>> for Vec<T> {
+    fn from(value: Punctuated<T, P>) -> Self {
+        value.0.into_iter().map(|(t, _)| t).collect()
+    }
+}
+
 impl<T, P> Parse for Punctuated<T, P>
 where
     T: Parse,

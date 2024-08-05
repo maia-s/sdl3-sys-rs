@@ -1,6 +1,6 @@
 use super::{
-    DocComment, Enum, Expr, Ident, Kw_const, Kw_typedef, Op, Parse, ParseRawRes, PrimitiveType,
-    PrimitiveTypeParse, Punctuated, Span, StructOrUnion, VarDecl, WsAndComments,
+    DocComment, Enum, Expr, FnDeclArgs, Ident, Kw_const, Kw_typedef, Op, Parse, ParseRawRes,
+    PrimitiveType, PrimitiveTypeParse, Punctuated, Span, StructOrUnion, VarDecl, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -33,13 +33,33 @@ pub enum TypeEnum {
     Struct(Box<StructOrUnion>),
     Pointer(Box<Type>),
     Array(Box<Type>, Expr),
-    FnPointer(Box<FnPointerType>),
+    FnPointer(Box<FnPointer>),
 }
 
 #[derive(Debug)]
-pub struct FnPointerType {
+pub struct FnAbi {
+    abi: Ident,
+}
+
+impl Parse for FnAbi {
+    fn desc() -> Cow<'static, str> {
+        "function abi".into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (rest, Some(abi)) = Ident::try_parse_raw_eq(input, "SDLCALL")? {
+            Ok((rest, Some(Self { abi })))
+        } else {
+            Ok((input.clone(), None))
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct FnPointer {
+    abi: Option<FnAbi>,
     return_type: Type,
-    args: Punctuated<VarDecl, Op![,]>,
+    args: FnDeclArgs,
 }
 
 const NO_IDENT: u8 = 0;
@@ -126,8 +146,10 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
         // prepare function pointer
         rest2 = rest.clone();
         WsAndComments::try_parse(&mut rest2)?;
-        let (ident, args) = if Op::<'('>::try_parse(&mut rest2)?.is_some() {
+        let (abi, ident, args) = if Op::<'('>::try_parse(&mut rest2)?.is_some() {
             rest = rest2;
+            WsAndComments::try_parse(&mut rest)?;
+            let abi = FnAbi::try_parse(&mut rest)?;
             WsAndComments::try_parse(&mut rest)?;
             <Op![*]>::parse(&mut rest)?;
             WsAndComments::try_parse(&mut rest)?;
@@ -141,12 +163,8 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
             WsAndComments::try_parse(&mut rest)?;
             Op::<')'>::parse(&mut rest)?;
             WsAndComments::try_parse(&mut rest)?;
-            Op::<'('>::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            let args = Punctuated::<VarDecl, Op![,]>::try_parse(&mut rest)?.unwrap_or_default();
-            WsAndComments::try_parse(&mut rest)?;
-            Op::<')'>::parse(&mut rest)?;
-            (ident, Some(args))
+            let args = FnDeclArgs::parse(&mut rest)?;
+            (abi, ident, Some(args))
         } else {
             let ident = if IDENT_SPEC == NO_IDENT {
                 None
@@ -160,7 +178,7 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
                 }
                 ident
             };
-            (ident, None)
+            (None, ident, None)
         };
 
         // array
@@ -198,7 +216,8 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
             ty = Type {
                 span,
                 is_const: true,
-                ty: TypeEnum::FnPointer(Box::new(FnPointerType {
+                ty: TypeEnum::FnPointer(Box::new(FnPointer {
+                    abi,
                     return_type: ty,
                     args,
                 })),

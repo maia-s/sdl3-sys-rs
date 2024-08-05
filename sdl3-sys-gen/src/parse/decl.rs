@@ -1,15 +1,17 @@
 use super::{
-    DocComment, Ident, Kw_extern, Op, Parse, ParseRawRes, Punctuated, Span, Type, TypeWithIdent,
-    TypeWithReqIdent, WsAndComments,
+    DocComment, FnAbi, Ident, Kw_extern, Kw_void, Op, Parse, ParseRawRes, Punctuated, Span, Type,
+    TypeWithIdent, TypeWithOptIdent, TypeWithReqIdent, WsAndComments,
 };
 use std::borrow::Cow;
 
+#[derive(Debug)]
 pub struct FnDecl {
     span: Span,
     doc: Option<DocComment>,
+    abi: Option<FnAbi>,
     ident: Ident,
     return_type: Type,
-    args: Punctuated<VarDecl, Op![,]>,
+    args: FnDeclArgs,
 }
 
 impl Parse for FnDecl {
@@ -26,15 +28,11 @@ impl Parse for FnDecl {
                 WsAndComments::parse(&mut rest)?;
                 let ty = Type::parse(&mut rest)?;
                 WsAndComments::parse(&mut rest)?;
-                Ident::parse_eq(&mut rest, "SDLCALL")?;
+                let abi = FnAbi::parse(&mut rest)?;
                 WsAndComments::parse(&mut rest)?;
                 let ident = Ident::parse(&mut rest)?;
                 WsAndComments::try_parse(&mut rest)?;
-                Op::<'('>::parse(&mut rest)?;
-                WsAndComments::try_parse(&mut rest)?;
-                let args = Punctuated::try_parse(&mut rest)?.unwrap_or_default();
-                WsAndComments::try_parse(&mut rest)?;
-                Op::<')'>::parse(&mut rest)?;
+                let args = FnDeclArgs::parse(&mut rest)?;
                 WsAndComments::try_parse(&mut rest)?;
                 let semi = <Op![;]>::parse(&mut rest)?;
 
@@ -49,6 +47,7 @@ impl Parse for FnDecl {
                     Some(Self {
                         span,
                         doc,
+                        abi: Some(abi),
                         ident,
                         return_type: ty,
                         args,
@@ -57,6 +56,59 @@ impl Parse for FnDecl {
             }
         }
         Ok((input.clone(), None))
+    }
+}
+
+#[derive(Debug)]
+pub struct FnDeclArgs {
+    span: Span,
+    args: Vec<ArgDecl>,
+}
+
+impl Parse for FnDeclArgs {
+    fn desc() -> Cow<'static, str> {
+        "function arguments declaration".into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        let mut rest = input.clone();
+        if let Some(open_paren) = Op::<'('>::try_parse(&mut rest)? {
+            WsAndComments::try_parse(&mut rest)?;
+            let args = Punctuated::<ArgDecl, Op![,]>::try_parse(&mut rest)?
+                .unwrap_or_default()
+                .into();
+            WsAndComments::try_parse(&mut rest)?;
+            let close_paren = Op::<')'>::parse(&mut rest)?;
+            Ok((
+                rest,
+                Some(Self {
+                    span: open_paren.span.join(&close_paren.span),
+                    args,
+                }),
+            ))
+        } else {
+            Ok((input.clone(), None))
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct ArgDecl {
+    ident: Option<Ident>,
+    ty: Type,
+}
+
+impl Parse for ArgDecl {
+    fn desc() -> Cow<'static, str> {
+        "variable declaration".into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (rest, Some(TypeWithIdent { ty, ident })) = TypeWithOptIdent::try_parse_raw(input)? {
+            Ok((rest, Some(ArgDecl { ty, ident })))
+        } else {
+            Ok((input.clone(), None))
+        }
     }
 }
 
