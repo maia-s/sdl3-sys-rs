@@ -5,6 +5,7 @@ use super::{
     Punctuated, Span, Type, WsAndComments,
 };
 
+#[derive(Debug)]
 pub enum Expr {
     Ident(Ident),
     Literal(Literal),
@@ -87,6 +88,7 @@ impl Parse for CallArgs {
     }
 }
 
+#[derive(Debug)]
 pub struct Cast {
     span: Span,
     ty: Type,
@@ -131,6 +133,7 @@ impl Parse for Cast {
     }
 }
 
+#[derive(Debug)]
 pub struct FnCall {
     span: Span,
     ident: IdentOrKw,
@@ -164,6 +167,7 @@ impl Parse for FnCall {
     }
 }
 
+#[derive(Debug)]
 pub enum SizeOf {
     Type(Span, Type),
     Expr(Span, Expr),

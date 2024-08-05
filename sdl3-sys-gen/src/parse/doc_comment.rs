@@ -1,6 +1,7 @@
 use super::{GetSpan, Parse, ParseErr, ParseRawRes, Span, WsAndComments};
 use std::borrow::Cow;
 
+#[derive(Debug)]
 pub struct DocComment {
     pub span: Span,
 }

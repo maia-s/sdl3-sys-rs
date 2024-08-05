@@ -60,6 +60,7 @@ impl Parse for FnDecl {
     }
 }
 
+#[derive(Debug)]
 pub struct VarDecl {
     ident: Ident,
     ty: Type,

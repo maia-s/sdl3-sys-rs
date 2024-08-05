@@ -4,6 +4,7 @@ use super::{
     GetSpan, IdentOrKw, Kw_const, Parse, ParseErr, ParseRawRes, Span, Spanned, WsAndComments,
 };
 
+#[derive(Debug)]
 pub enum PrimitiveType {
     Char,
     SignedChar,

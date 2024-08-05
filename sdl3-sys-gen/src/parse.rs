@@ -1,4 +1,7 @@
-use std::{borrow::Cow, fmt::Display, str};
+use std::{
+    borrow::Cow,
+    fmt::{self, Debug, Display},
+};
 
 macro_rules! Op {
     ($($tt:tt)*) => {
@@ -317,6 +320,14 @@ pub struct Keyword<const KW_INDEX: usize> {
     span: Span,
 }
 
+impl<const KW_INDEX: usize> Debug for Keyword<KW_INDEX> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct(&format!("Keyword<`{}`>", KEYWORDS[KW_INDEX]))
+            .field("span", &self.span)
+            .finish()
+    }
+}
+
 impl<const KW_INDEX: usize> GetSpan for Keyword<KW_INDEX> {
     fn span(&self) -> Span {
         self.span.clone()
@@ -393,6 +404,14 @@ impl<const OP1: char, const OP2: char, const OP3: char> Op<OP1, OP2, OP3> {
         } else {
             Self::BINARY_PRECEDENCE
         }
+    }
+}
+
+impl<const OP1: char, const OP2: char, const OP3: char> Debug for Op<OP1, OP2, OP3> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct(&format!("Op<`{}`>", Self::STR))
+            .field("span", &self.span)
+            .finish()
     }
 }
 
@@ -488,6 +507,7 @@ impl<Open: Parse, T: Parse, Close: Parse> Parse for Delimited<Open, T, Close> {
     }
 }
 
+#[derive(Debug)]
 struct Punctuated<T, P>(pub Vec<(T, Option<P>)>);
 
 impl<T, P> Default for Punctuated<T, P> {

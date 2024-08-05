@@ -1,6 +1,7 @@
 use super::{GetSpan, Op, Parse, ParseErr, ParseRawRes, Span, WsAndComments};
 use std::{borrow::Cow, ffi::CString};
 
+#[derive(Debug)]
 pub enum Literal {
     Integer(IntegerLiteral),
     String(StringLiteral),
@@ -41,6 +42,7 @@ pub const ALLOW_ANY_INT_LITERAL: u8 =
 pub type IntegerLiteral = IntegerLiteralT<ALLOW_ANY_INT_LITERAL>;
 pub type UintLiteral = IntegerLiteralT<{ ALLOW_U32_LITERAL | ALLOW_U64_LITERAL }>;
 
+#[derive(Debug)]
 pub enum IntegerLiteralT<const ALLOW: u8> {
     Int32(Span, i32),
     Uint31(Span, u32),
@@ -388,6 +390,7 @@ impl<const ALLOW: u8> Parse for IntegerLiteralT<ALLOW> {
     }
 }
 
+#[derive(Debug)]
 pub struct StringLiteral {
     span: Span,
     str: CString,

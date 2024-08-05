@@ -3,6 +3,7 @@ use super::{
 };
 use std::borrow::Cow;
 
+#[derive(Debug)]
 pub struct Enum {
     span: Span,
     doc: Option<DocComment>,
@@ -10,6 +11,7 @@ pub struct Enum {
     variants: Vec<EnumVariant>,
 }
 
+#[derive(Debug)]
 pub struct EnumVariant {
     doc: Option<DocComment>,
     ident: Ident,

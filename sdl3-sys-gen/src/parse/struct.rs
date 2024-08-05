@@ -4,6 +4,7 @@ use super::{
 };
 use std::borrow::Cow;
 
+#[derive(Debug)]
 pub struct StructOrUnion {
     pub span: Span,
     pub doc: Option<DocComment>,
@@ -55,6 +56,7 @@ impl Parse for StructOrUnion {
     }
 }
 
+#[derive(Debug)]
 pub struct StructField {
     span: Span,
     doc: Option<DocComment>,
@@ -94,6 +96,7 @@ impl Parse for StructField {
     }
 }
 
+#[derive(Debug)]
 pub struct StructFields {
     span: Span,
     open_brace: Op<'{'>,

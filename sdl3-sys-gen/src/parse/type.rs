@@ -4,6 +4,7 @@ use super::{
 };
 use std::borrow::Cow;
 
+#[derive(Debug)]
 pub struct Type {
     span: Span,
     is_const: bool,
@@ -24,6 +25,7 @@ impl Parse for Type {
     }
 }
 
+#[derive(Debug)]
 pub enum TypeEnum {
     Primitive(PrimitiveType),
     Ident(Ident),
@@ -34,6 +36,7 @@ pub enum TypeEnum {
     FnPointer(Box<FnPointerType>),
 }
 
+#[derive(Debug)]
 pub struct FnPointerType {
     return_type: Type,
     args: Punctuated<VarDecl, Op![,]>,
