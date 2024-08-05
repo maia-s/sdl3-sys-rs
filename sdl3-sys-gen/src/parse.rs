@@ -1,4 +1,4 @@
-use std::{borrow::Cow, fmt::Display};
+use std::{borrow::Cow, fmt::Display, str};
 
 macro_rules! Op {
     ($($tt:tt)*) => {
@@ -337,10 +337,75 @@ impl<const KW_INDEX: usize> Parse for Keyword<KW_INDEX> {
     }
 }
 
+enum Precedence {
+    LeftToRight(u8),
+    RightToLeft(u8),
+    None,
+}
+
 pub type ExprOp = Op<'\0'>;
 
 struct Op<const OP1: char, const OP2: char = '\0', const OP3: char = '\0'> {
     span: Span,
+}
+
+impl<const OP1: char, const OP2: char, const OP3: char> Op<OP1, OP2, OP3> {
+    const STR: &'static str = {
+        assert!(OP1 as u32 <= 0x7f && OP2 as u32 <= 0x7f && OP3 as u32 <= 0x7f);
+        let bstr: &[u8] = if OP1 == '\0' && OP2 == '\0' && OP3 == '\0' {
+            &[]
+        } else if OP1 != '\0' && OP2 == '\0' && OP3 == '\0' {
+            &[OP1 as u8]
+        } else if OP1 != '\0' && OP2 != '\0' && OP3 == '\0' {
+            &[OP1 as u8, OP2 as u8]
+        } else if OP1 != '\0' && OP2 != '\0' && OP3 != '\0' {
+            &[OP1 as u8, OP2 as u8, OP3 as u8]
+        } else {
+            panic!("invalid op")
+        };
+        unsafe { str::from_utf8_unchecked(bstr) }
+    };
+    const BINARY_PRECEDENCE: Precedence = Self::_binary_precedence(Self::STR.as_bytes());
+
+    const fn _binary_precedence(s: &[u8]) -> Precedence {
+        match s {
+            b"." | b"->" => Precedence::LeftToRight(1),
+            b"*" | b"/" | b"%" => Precedence::LeftToRight(3),
+            b"+" | b"-" => Precedence::LeftToRight(4),
+            b"<<" | b">>" => Precedence::LeftToRight(5),
+            b"<" | b"<=" | b">" | b">=" => Precedence::LeftToRight(6),
+            b"==" | b"!=" => Precedence::LeftToRight(7),
+            b"&" => Precedence::LeftToRight(8),
+            b"^" => Precedence::LeftToRight(9),
+            b"|" => Precedence::LeftToRight(10),
+            b"&&" => Precedence::LeftToRight(11),
+            b"||" => Precedence::LeftToRight(12),
+            b"?" => Precedence::RightToLeft(13),
+            b"=" | b"+=" | b"-=" | b"*=" | b"/=" | b"%=" | b"<<=" | b">>=" | b"&=" | b"^="
+            | b"|=" => Precedence::RightToLeft(14),
+            _ => Precedence::None,
+        }
+    }
+
+    pub fn binary_precedence(&self) -> Precedence {
+        if Self::STR.is_empty() {
+            Self::_binary_precedence(self.span.as_bytes())
+        } else {
+            Self::BINARY_PRECEDENCE
+        }
+    }
+}
+
+impl<const OP1: char, const OP2: char, const OP3: char> TryFrom<Span> for Op<OP1, OP2, OP3> {
+    type Error = ParseErr;
+
+    fn try_from(span: Span) -> Result<Self, Self::Error> {
+        if Self::STR.is_empty() || Self::STR == span.as_str() {
+            Ok(Self { span })
+        } else {
+            Err(ParseErr::new(span, format!("expected `{}`", Self::STR)))
+        }
+    }
 }
 
 impl<const OP1: char, const OP2: char, const OP3: char> GetSpan for Op<OP1, OP2, OP3> {
@@ -351,20 +416,15 @@ impl<const OP1: char, const OP2: char, const OP3: char> GetSpan for Op<OP1, OP2,
 
 impl<const OP1: char, const OP2: char, const OP3: char> Parse for Op<OP1, OP2, OP3> {
     fn desc() -> Cow<'static, str> {
-        if OP1 == '\0' {
+        if Self::STR.is_empty() {
             "operator".into()
-        } else if OP2 == '\0' {
-            format!("`{OP1}`").into()
-        } else if OP3 == '\0' {
-            format!("`{OP1}{OP2}`").into()
         } else {
-            format!("`{OP1}{OP2}{OP3}`").into()
+            format!("`{}`", Self::STR).into()
         }
     }
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if OP1 == '\0' {
-            const { assert!(OP2 == '\0') }
+        if Self::STR.is_empty() {
             if input.len() >= 3 {
                 match &input.as_bytes()[..3] {
                     b"..." | b"<<=" | b">>=" => {
@@ -395,20 +455,9 @@ impl<const OP1: char, const OP2: char, const OP3: char> Parse for Op<OP1, OP2, O
                     _ => (),
                 }
             }
-        } else if let Some(rest) = input.strip_prefix_ch(OP1) {
-            if OP2 == '\0' {
-                const { assert!(OP3 == '\0') }
-                let span = input.join(&rest.start());
-                return Ok((rest, Some(Self { span })));
-            } else if let Some(rest) = rest.strip_prefix_ch(OP2) {
-                if OP3 == '\0' {
-                    let span = input.join(&rest.start());
-                    return Ok((rest, Some(Self { span })));
-                } else if let Some(rest) = rest.strip_prefix_ch(OP3) {
-                    let span = input.join(&rest.start());
-                    return Ok((rest, Some(Self { span })));
-                }
-            }
+        } else if let Some(rest) = input.strip_prefix(Self::STR) {
+            let span = input.start().join(&rest.start());
+            return Ok((rest, Some(Self { span })));
         }
         Ok((input.clone(), None))
     }
