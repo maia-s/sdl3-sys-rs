@@ -45,6 +45,7 @@ impl Parse for PrimitiveTypeParse {
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
         let (rest, is_const) = Kw_const::try_parse_raw(input)?;
+        let (rest, _) = WsAndComments::try_parse_raw(&rest)?;
         let mut is_const = is_const.is_some();
         if let (
             rest,

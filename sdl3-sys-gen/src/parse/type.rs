@@ -243,6 +243,7 @@ impl Parse for TypeDef {
         let mut rest = input.clone();
         let doc = DocComment::try_parse(&mut rest)?;
         if let Some(typedef_kw) = Kw_typedef::try_parse(&mut rest)? {
+            WsAndComments::try_parse(&mut rest)?;
             let TypeWithIdent { ty, ident } = TypeWithReqIdent::parse(&mut rest)?;
             WsAndComments::try_parse(&mut rest)?;
             let semi = <Op![;]>::parse(&mut rest)?;
