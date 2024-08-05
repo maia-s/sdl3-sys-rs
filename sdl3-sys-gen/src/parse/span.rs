@@ -74,6 +74,8 @@ pub struct Span {
     src: Option<Rc<Source>>,
     start: usize,
     end: usize,
+    #[cfg(feature = "extra-debugging")]
+    str: String,
 }
 
 impl Span {
@@ -81,8 +83,24 @@ impl Span {
         let src = src.into();
         let end = src.text.len();
         Self {
+            #[cfg(feature = "extra-debugging")]
+            str: src.text.clone(),
             src: Some(src),
             start: 0,
+            end,
+        }
+    }
+
+    pub fn clone_range(&self, start: usize, end: usize) -> Self {
+        let src = self.src.clone();
+        Self {
+            #[cfg(feature = "extra-debugging")]
+            str: src
+                .as_ref()
+                .map(|s| s.text[start..end].to_owned())
+                .unwrap_or_default(),
+            src,
+            start,
             end,
         }
     }
@@ -115,11 +133,7 @@ impl Span {
     }
 
     pub fn start(&self) -> Self {
-        Self {
-            src: self.src.clone(),
-            start: self.start,
-            end: self.start,
-        }
+        self.clone_range(self.start, self.start)
     }
 
     pub fn start_pos(&self) -> usize {
@@ -127,11 +141,7 @@ impl Span {
     }
 
     pub fn end(&self) -> Self {
-        Self {
-            src: self.src.clone(),
-            start: self.end,
-            end: self.end,
-        }
+        self.clone_range(self.end, self.end)
     }
 
     pub fn end_pos(&self) -> usize {
@@ -141,11 +151,7 @@ impl Span {
     pub fn join(&self, other: &Self) -> Self {
         assert!(self.source().text.as_ptr() == other.source().text.as_ptr());
         assert!(self.source().text.len() == other.source().text.len());
-        Self {
-            src: self.src.clone(),
-            start: self.start.min(other.start),
-            end: self.end.max(other.end),
-        }
+        self.clone_range(self.start.min(other.start), self.end.max(other.end))
     }
 
     #[must_use]
@@ -169,27 +175,15 @@ impl Span {
             Bound::Unbounded => self.end,
         };
         assert!(start <= end && end <= self.source().text.len());
-        Self {
-            src: self.src.clone(),
-            start,
-            end,
-        }
+        self.clone_range(start, end)
     }
 
     #[must_use]
     pub fn split_at(&self, index: usize) -> (Self, Self) {
         assert!(self.start + index <= self.end);
         (
-            Self {
-                src: self.src.clone(),
-                start: self.start,
-                end: self.start + index,
-            },
-            Self {
-                src: self.src.clone(),
-                start: self.start + index,
-                end: self.end,
-            },
+            self.clone_range(self.start, self.start + index),
+            self.clone_range(self.start + index, self.end),
         )
     }
 

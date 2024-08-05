@@ -2,3 +2,8 @@
 name = "sdl3-sys-gen"
 version = "0.1.0"
 edition = "2021"
+
+[features]
+default = []
+
+extra-debugging = []
