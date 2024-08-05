@@ -6,6 +6,15 @@ pub enum Literal {
     String(StringLiteral),
 }
 
+impl GetSpan for Literal {
+    fn span(&self) -> Span {
+        match self {
+            Self::Integer(l) => l.span(),
+            Self::String(l) => l.span(),
+        }
+    }
+}
+
 impl Parse for Literal {
     fn desc() -> Cow<'static, str> {
         "literal".into()
@@ -39,6 +48,19 @@ pub enum IntegerLiteralT<const ALLOW: u8> {
     Int64(Span, i64),
     Uint63(Span, u64),
     Uint64(Span, u64),
+}
+
+impl<const ALLOW: u8> GetSpan for IntegerLiteralT<ALLOW> {
+    fn span(&self) -> Span {
+        match self {
+            Self::Int32(span, _)
+            | Self::Uint31(span, _)
+            | Self::Uint32(span, _)
+            | Self::Int64(span, _)
+            | Self::Uint63(span, _)
+            | Self::Uint64(span, _) => span.clone(),
+        }
+    }
 }
 
 impl<const ALLOW: u8> IntegerLiteralT<ALLOW> {
@@ -369,6 +391,12 @@ impl<const ALLOW: u8> Parse for IntegerLiteralT<ALLOW> {
 pub struct StringLiteral {
     span: Span,
     str: CString,
+}
+
+impl GetSpan for StringLiteral {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
 }
 
 impl Parse for StringLiteral {
