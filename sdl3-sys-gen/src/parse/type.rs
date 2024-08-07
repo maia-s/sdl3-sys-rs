@@ -1,6 +1,6 @@
 use super::{
-    DocComment, Enum, Expr, FnAbi, FnDeclArgs, Ident, Kw_const, Kw_typedef, Op, Parse, ParseRawRes,
-    PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion, WsAndComments,
+    DocComment, Enum, Expr, FnAbi, FnDeclArgs, GetSpan, Ident, Kw_const, Kw_typedef, Op, Parse,
+    ParseRawRes, PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -18,6 +18,10 @@ impl Type {
             is_const: false,
             ty: TypeEnum::DotDotDot,
         }
+    }
+
+    pub fn strictly_left_aligned(&self) -> bool {
+        self.ty.strictly_left_aligned()
     }
 }
 
@@ -47,6 +51,15 @@ pub enum TypeEnum {
     DotDotDot,
 }
 
+impl TypeEnum {
+    pub fn strictly_left_aligned(&self) -> bool {
+        matches!(
+            self,
+            Self::Primitive(_) | Self::Ident(_) | Self::Enum(_) | Self::Struct(_)
+        )
+    }
+}
+
 #[derive(Clone, Debug)]
 pub struct FnPointer {
     abi: Option<FnAbi>,
@@ -65,6 +78,12 @@ pub type TypeWithReqIdent = TypeWithIdent<REQ_IDENT>;
 pub struct TypeWithIdent<const IDENT_SPEC: u8> {
     pub ty: Type,
     pub ident: Option<Ident>,
+}
+
+impl<const IDENT_SPEC: u8> GetSpan for TypeWithIdent<IDENT_SPEC> {
+    fn span(&self) -> Span {
+        self.ty.span.join(&self.ty.span)
+    }
 }
 
 impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {

@@ -1,6 +1,6 @@
 use super::{
-    Delimited, DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op, Parse, ParseRawRes, Span,
-    Spanned, Type, TypeWithReqIdent, WsAndComments,
+    Delimited, DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op, Parse, ParseErr, ParseRawRes,
+    Span, Spanned, Type, TypeWithReqIdent, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -62,10 +62,17 @@ pub struct StructField {
     doc: Option<DocComment>,
     ident: Ident,
     ty: Type,
-    semi: Op![;],
 }
 
-impl Parse for StructField {
+#[derive(Debug)]
+pub struct StructFieldGroup {
+    span: Span,
+    doc: Option<DocComment>,
+    idents: Vec<Ident>,
+    ty: Type,
+}
+
+impl Parse for StructFieldGroup {
     fn desc() -> Cow<'static, str> {
         "struct field".into()
     }
@@ -74,10 +81,21 @@ impl Parse for StructField {
         let mut rest = input.clone();
         let doc = DocComment::try_parse(&mut rest)?;
         if let Some(twi) = TypeWithReqIdent::try_parse(&mut rest)? {
-            let ident = twi.ident.unwrap();
+            let mut idents = vec![twi.ident.unwrap()];
             WsAndComments::try_parse(&mut rest)?;
+            while let Some(comma) = <Op![,]>::try_parse(&mut rest)? {
+                if !twi.ty.strictly_left_aligned() {
+                    return Err(ParseErr::new(
+                        comma.span,
+                        "multiple declaration for pointer and array types isn't supported",
+                    ));
+                }
+                WsAndComments::try_parse(&mut rest)?;
+                idents.push(Ident::parse(&mut rest)?);
+                WsAndComments::try_parse(&mut rest)?;
+            }
             let semi = <Op![;]>::parse(&mut rest)?;
-            let span = input.start().join(&rest.start());
+            let span = input.start().join(&semi.span);
             let doc = DocComment::try_parse_combine_postfix(doc, &mut rest)?;
             WsAndComments::try_parse(&mut rest)?;
             Ok((
@@ -85,9 +103,8 @@ impl Parse for StructField {
                 Some(Self {
                     span,
                     doc,
-                    ident,
+                    idents,
                     ty: twi.ty,
-                    semi,
                 }),
             ))
         } else {
@@ -111,14 +128,27 @@ impl Parse for StructFields {
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
         if let (rest, Some(f)) =
-            Spanned::<Delimited<Op<'{'>, Vec<StructField>, Op<'}'>>>::try_parse_raw(input)?
+            Spanned::<Delimited<Op<'{'>, Vec<StructFieldGroup>, Op<'}'>>>::try_parse_raw(input)?
         {
+            let fields = f
+                .value
+                .value
+                .into_iter()
+                .flat_map(|f| {
+                    f.idents.into_iter().map(move |ident| StructField {
+                        span: f.span.clone(),
+                        doc: f.doc.clone(),
+                        ident,
+                        ty: f.ty.clone(),
+                    })
+                })
+                .collect();
             Ok((
                 rest,
                 Some(Self {
                     span: f.span,
                     open_brace: f.value.open,
-                    fields: f.value.value,
+                    fields,
                     close_brace: f.value.close,
                 }),
             ))
