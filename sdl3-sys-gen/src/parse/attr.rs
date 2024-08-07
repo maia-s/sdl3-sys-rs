@@ -45,13 +45,11 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                 },
 
                 ATTR_ARG => match ident.as_str() {
-                    "SDL_PRINTF_FORMAT_STRING" => return Ok((rest, Some(Self { ident, args }))),
+                    "SDL_PRINTF_FORMAT_STRING" | "SDL_SCANF_FORMAT_STRING" => {
+                        return Ok((rest, Some(Self { ident, args })))
+                    }
 
-                    _ => (),
-                },
-
-                ATTR_FN => match ident.as_str() {
-                    "SDL_ALLOC_SIZE" => {
+                    "SDL_IN_BYTECAP" | "SDL_OUT_BYTECAP" | "SDL_INOUT_Z_CAP" | "SDL_OUT_Z_CAP" => {
                         let (rest, args) = CallArgs::parse_raw(&rest)?;
                         return Ok((
                             rest,
@@ -62,13 +60,21 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                         ));
                     }
 
-                    "SDL_DECLSPEC" => return Ok((rest, Some(Self { ident, args }))),
+                    _ => (),
+                },
 
-                    "SDL_FORCE_INLINE" => return Ok((rest, Some(Self { ident, args }))),
+                ATTR_FN => match ident.as_str() {
+                    "SDL_DECLSPEC" | "SDL_FORCE_INLINE" | "SDL_MALLOC" => {
+                        return Ok((rest, Some(Self { ident, args })))
+                    }
 
-                    "SDL_MALLOC" => return Ok((rest, Some(Self { ident, args }))),
-
-                    "SDL_PRINTF_VARARG_FUNC" => {
+                    "SDL_ALLOC_SIZE"
+                    | "SDL_ALLOC_SIZE2"
+                    | "SDL_PRINTF_VARARG_FUNC"
+                    | "SDL_PRINTF_VARARG_FUNCV"
+                    | "SDL_SCANF_VARARG_FUNC"
+                    | "SDL_SCANF_VARARG_FUNCV"
+                    | "SDL_WPRINTF_VARARG_FUNC" => {
                         let (rest, args) = CallArgs::parse_raw(&rest)?;
                         return Ok((
                             rest,

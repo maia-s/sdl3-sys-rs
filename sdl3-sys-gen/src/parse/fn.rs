@@ -124,6 +124,7 @@ impl Parse for ArgDecl {
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
         let (rest, attr) = ArgAttribute::try_parse_raw(input)?;
+        let (rest, _) = WsAndComments::try_parse_raw(&rest)?;
         if let (rest, Some(op)) = <Op![...]>::try_parse_raw(&rest)? {
             Ok((
                 rest,
