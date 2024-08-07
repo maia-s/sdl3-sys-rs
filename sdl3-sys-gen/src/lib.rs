@@ -13,6 +13,7 @@ use std::{
 fn skip(module: &str) -> bool {
     [
         "begin_code",
+        "bits",
         "close_code",
         "egl",
         "endian",
