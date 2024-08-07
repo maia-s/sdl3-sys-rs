@@ -45,8 +45,8 @@ impl Parse for Item {
             Some(Terminated {
                 value: call,
                 term: _,
-            }),
-        ) = Terminated::<FnCall, Op![;]>::try_parse_raw(input)?
+            }), // hack: optional `;` bc global macro calls are inconsistent about that
+        ) = Terminated::<FnCall, Option<Op![;]>>::try_parse_raw(input)?
         {
             Ok((rest, Some(Item::FnCall(call))))
         } else if let (rest, Some(f)) = FnDecl::try_parse_raw(input)? {
