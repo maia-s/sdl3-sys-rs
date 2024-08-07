@@ -1,13 +1,13 @@
 use crate::parse::{ExprOp, ParseErr};
 
 use super::{
-    Delimited, GetSpan, Ident, IdentOrKw, Kw_sizeof, Literal, Op, Parse, ParseRawRes, Precedence,
+    Delimited, GetSpan, IdentOrKw, Kw_sizeof, Literal, Op, Parse, ParseRawRes, Precedence,
     Punctuated, Span, Type, WsAndComments,
 };
 
 #[derive(Debug)]
 pub enum Expr {
-    Ident(Ident),
+    Ident(IdentOrKw),
     Literal(Literal),
     FnCall(FnCall),
     Cast(Box<Cast>),
@@ -39,7 +39,7 @@ impl Expr {
             expr
         } else if let Some(call) = FnCall::try_parse(&mut rest)? {
             Self::FnCall(call)
-        } else if let Some(ident) = Ident::try_parse(&mut rest)? {
+        } else if let Some(ident) = IdentOrKw::try_parse(&mut rest)? {
             Self::Ident(ident)
         } else if let Some(lit) = Literal::try_parse(&mut rest)? {
             Self::Literal(lit)
