@@ -12,6 +12,7 @@ pub enum Item {
     Undef(Ident),
     Include(Include),
     Pragma(Span),
+    Error(Span),
     FileDoc(DocComment),
     StructOrUnion(StructOrUnion),
     Enum(Enum),
@@ -35,6 +36,7 @@ impl Parse for Item {
                     PreProcLineKind::Undef(u) => Item::Undef(u),
                     PreProcLineKind::Include(i) => Item::Include(i),
                     PreProcLineKind::Pragma(p) => Item::Pragma(p),
+                    PreProcLineKind::Error(e) => Item::Error(e),
                     _ => {
                         return if let (rest, Some(block)) = PreProcBlock::try_parse_raw(input)? {
                             Ok((rest, Some(Item::PreProcBlock(block))))
