@@ -22,6 +22,7 @@ macro_rules! submodules {
     )* };
 }
 submodules!(
+    attr,
     decl,
     doc_comment,
     r#enum,

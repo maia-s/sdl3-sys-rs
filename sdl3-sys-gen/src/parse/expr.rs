@@ -116,7 +116,22 @@ impl GetSpan for BinaryOp {
 }
 
 #[derive(Default)]
-pub struct CallArgs(Vec<Expr>);
+pub struct CallArgs {
+    span: Span,
+    args: Vec<Expr>,
+}
+
+impl From<CallArgs> for Vec<Expr> {
+    fn from(value: CallArgs) -> Self {
+        value.args
+    }
+}
+
+impl GetSpan for CallArgs {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
+}
 
 impl Parse for CallArgs {
     fn desc() -> std::borrow::Cow<'static, str> {
@@ -124,13 +139,12 @@ impl Parse for CallArgs {
     }
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(args)) = Punctuated::<Expr, Op![,]>::try_parse_raw(input)? {
-            Ok((
-                rest,
-                Some(Self(
-                    args.0.into_iter().map(|(v, _)| v).collect::<Vec<Expr>>(),
-                )),
-            ))
+        if let (rest, Some(args)) =
+            Delimited::<Op<'('>, Option<Punctuated<Expr, Op![,]>>, Op<')'>>::try_parse_raw(input)?
+        {
+            let span = args.open.span.join(&args.close.span);
+            let args = args.value.map(|v| v.into()).unwrap_or_default();
+            Ok((rest, Some(Self { span, args })))
         } else {
             Ok((input.clone(), None))
         }
@@ -204,12 +218,16 @@ impl Parse for FnCall {
         let mut rest = input.trim_wsc_start()?;
         if let Some(ident) = IdentOrKw::try_parse(&mut rest)? {
             WsAndComments::try_parse(&mut rest)?;
-            if let Some((args, close)) =
-                Delimited::<Op<'('>, Option<CallArgs>, Op<')'>>::try_parse(&mut rest)?
-                    .map(|args| (args.value.unwrap_or_default().0, args.close))
-            {
-                let span = ident.span.join(&close.span);
-                return Ok((rest, Some(Self { span, ident, args })));
+            if let Some(args) = CallArgs::try_parse(&mut rest)? {
+                let span = args.span();
+                return Ok((
+                    rest,
+                    Some(Self {
+                        span,
+                        ident,
+                        args: args.into(),
+                    }),
+                ));
             }
         }
         Ok((input.clone(), None))

@@ -1,6 +1,6 @@
 use super::{
-    DocComment, FnAbi, Ident, Kw_extern, Kw_void, Op, Parse, ParseRawRes, Punctuated, Span, Type,
-    TypeWithIdent, TypeWithOptIdent, TypeWithReqIdent, WsAndComments,
+    ArgAttribute, DocComment, FnAbi, FnAttribute, Ident, Kw_extern, Op, Parse, ParseRawRes,
+    Punctuated, Span, Type, TypeWithIdent, TypeWithOptIdent, TypeWithReqIdent, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -8,6 +8,7 @@ use std::borrow::Cow;
 pub struct FnDecl {
     span: Span,
     doc: Option<DocComment>,
+    attr: Option<FnAttribute>,
     abi: Option<FnAbi>,
     ident: Ident,
     return_type: Type,
@@ -34,6 +35,8 @@ impl Parse for FnDecl {
                 WsAndComments::try_parse(&mut rest)?;
                 let args = FnDeclArgs::parse(&mut rest)?;
                 WsAndComments::try_parse(&mut rest)?;
+                let attr = FnAttribute::try_parse(&mut rest)?;
+                WsAndComments::try_parse(&mut rest)?;
                 let semi = <Op![;]>::parse(&mut rest)?;
 
                 let span = if let Some(doc) = &doc {
@@ -47,6 +50,7 @@ impl Parse for FnDecl {
                     Some(Self {
                         span,
                         doc,
+                        attr,
                         abi: Some(abi),
                         ident,
                         return_type: ty,
@@ -94,18 +98,31 @@ impl Parse for FnDeclArgs {
 
 #[derive(Debug)]
 pub struct ArgDecl {
+    attr: Option<ArgAttribute>,
     ident: Option<Ident>,
     ty: Type,
 }
 
 impl Parse for ArgDecl {
     fn desc() -> Cow<'static, str> {
-        "variable declaration".into()
+        "argument declaration".into()
     }
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(TypeWithIdent { ty, ident })) = TypeWithOptIdent::try_parse_raw(input)? {
-            Ok((rest, Some(ArgDecl { ty, ident })))
+        let (rest, attr) = ArgAttribute::try_parse_raw(input)?;
+        if let (rest, Some(op)) = <Op![...]>::try_parse_raw(&rest)? {
+            Ok((
+                rest,
+                Some(Self {
+                    attr,
+                    ident: None,
+                    ty: Type::dotdotdot(op.span),
+                }),
+            ))
+        } else if let (rest, Some(TypeWithIdent { ty, ident })) =
+            TypeWithOptIdent::try_parse_raw(&rest)?
+        {
+            Ok((rest, Some(Self { attr, ty, ident })))
         } else {
             Ok((input.clone(), None))
         }

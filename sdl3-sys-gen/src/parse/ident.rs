@@ -46,8 +46,7 @@ impl<const ALLOW_KEYWORDS: bool> Parse for IdentOrKwT<ALLOW_KEYWORDS> {
                 _ => {
                     let span = input.slice(..i);
                     if !ALLOW_KEYWORDS && is_keyword(&span) {
-                        let msg = format!("unexpected keyword `{span}`");
-                        return Err(ParseErr::new(span, msg));
+                        return Ok((input.clone(), None));
                     } else {
                         return Ok((input.slice(i..), Some(Self { span })));
                     }
@@ -56,8 +55,7 @@ impl<const ALLOW_KEYWORDS: bool> Parse for IdentOrKwT<ALLOW_KEYWORDS> {
         }
         let span = input.clone();
         if !ALLOW_KEYWORDS && is_keyword(&span) {
-            let msg = format!("unexpected keyword `{span}`");
-            Err(ParseErr::new(span, msg))
+            Ok((input.clone(), None))
         } else {
             Ok((span.end(), Some(Self { span })))
         }

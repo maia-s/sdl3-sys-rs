@@ -11,6 +11,16 @@ pub struct Type {
     ty: TypeEnum,
 }
 
+impl Type {
+    pub fn dotdotdot(span: Span) -> Self {
+        Self {
+            span,
+            is_const: false,
+            ty: TypeEnum::DotDotDot,
+        }
+    }
+}
+
 impl Parse for Type {
     fn desc() -> Cow<'static, str> {
         "type".into()
@@ -34,6 +44,7 @@ pub enum TypeEnum {
     Pointer(Box<Type>),
     Array(Box<Type>, Expr),
     FnPointer(Box<FnPointer>),
+    DotDotDot,
 }
 
 #[derive(Debug)]
