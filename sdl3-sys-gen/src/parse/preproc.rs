@@ -104,7 +104,8 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
 
                 PreProcLineKind::EndIf
                 | PreProcLineKind::Define(_)
-                | PreProcLineKind::Include(_) => return Ok((input.clone(), None)),
+                | PreProcLineKind::Include(_)
+                | PreProcLineKind::Pragma(_) => return Ok((input.clone(), None)),
             };
 
             if !ALLOW_INITIAL_ELSE && is_else {
@@ -198,7 +199,9 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                 ));
                             }
 
-                            PreProcLineKind::Define(_) | PreProcLineKind::Include(_) => {
+                            PreProcLineKind::Define(_)
+                            | PreProcLineKind::Include(_)
+                            | PreProcLineKind::Pragma(_) => {
                                 rest = rest_;
                                 continue;
                             }
@@ -234,6 +237,7 @@ pub enum PreProcLineKind {
     EndIf,
     Define(Define),
     Include(Include),
+    Pragma(Span),
 }
 
 impl Parse for PreProcLine {
@@ -330,6 +334,8 @@ impl Parse for PreProcLine {
                         path: i.slice(1..i.len() - 1),
                     })
                 }
+
+                "pragma" => PreProcLineKind::Pragma(i),
 
                 _ => {
                     let span = line.start().join(&i);
