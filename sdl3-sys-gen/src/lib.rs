@@ -11,7 +11,14 @@ use std::{
 };
 
 fn skip(module: &str) -> bool {
-    ["begin_code", "close_code", "egl", "endian"].contains(&module)
+    [
+        "begin_code",
+        "close_code",
+        "egl",
+        "endian",
+        "platform_defines",
+    ]
+    .contains(&module)
         || module.starts_with("main")
         || module.starts_with("opengl")
         || module.starts_with("test")
