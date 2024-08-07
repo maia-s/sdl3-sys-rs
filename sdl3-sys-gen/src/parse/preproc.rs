@@ -258,14 +258,6 @@ impl Parse for PreProcLine {
         let span = line.span;
         let line = span.trim_wsc()?;
         if let Some(i) = line.strip_prefix_ch('#') {
-            if let Some(doc) = &doc {
-                if !i.starts_with("define") {
-                    return Err(ParseErr::new(
-                        doc.span(),
-                        "doc comment for preprocessor directive other than define",
-                    ));
-                }
-            }
             let mut i = i.trim_wsc_start()?;
             let ident = IdentOrKw::parse(&mut i)
                 .map_err(|e| e.map_msg("expected preprocessor directive"))?;
