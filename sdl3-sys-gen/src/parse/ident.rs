@@ -4,7 +4,7 @@ use std::borrow::Cow;
 pub type Ident = IdentOrKwT<false>;
 pub type IdentOrKw = IdentOrKwT<true>;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct IdentOrKwT<const ALLOW_KEYWORDS: bool> {
     pub span: Span,
 }

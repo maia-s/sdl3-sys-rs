@@ -77,7 +77,7 @@ impl Parse for Function {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct FnDeclArgs {
     span: Span,
     args: Vec<ArgDecl>,
@@ -110,7 +110,7 @@ impl Parse for FnDeclArgs {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct ArgDecl {
     attr: Option<ArgAttribute>,
     ident: Option<Ident>,

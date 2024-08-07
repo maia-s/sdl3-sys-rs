@@ -320,6 +320,7 @@ impl<T: ParseRev> ParseRev for Vec<T> {
     }
 }
 
+#[derive(Clone)]
 pub struct Keyword<const KW_INDEX: usize> {
     span: Span,
 }
@@ -396,6 +397,7 @@ impl Debug for Precedence {
 
 pub type ExprOp = Op<'\0'>;
 
+#[derive(Clone)]
 struct Op<const OP1: char, const OP2: char = '\0', const OP3: char = '\0'> {
     span: Span,
 }

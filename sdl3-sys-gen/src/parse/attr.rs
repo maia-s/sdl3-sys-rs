@@ -10,7 +10,7 @@ pub type FnAttribute = Attribute<ATTR_FN>;
 
 pub type FnAttributes = Attributes<ATTR_FN>;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Attribute<const KIND: usize> {
     ident: Ident,
     args: Vec<Expr>,

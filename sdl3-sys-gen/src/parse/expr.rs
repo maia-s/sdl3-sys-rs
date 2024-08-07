@@ -5,7 +5,7 @@ use super::{
     Punctuated, Span, Type, WsAndComments,
 };
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum Expr {
     Ident(IdentOrKw),
     Literal(Literal),
@@ -106,7 +106,7 @@ impl Parse for Expr {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct BinaryOp {
     op: ExprOp,
     lhs: Expr,
@@ -155,7 +155,7 @@ impl Parse for CallArgs {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Cast {
     span: Span,
     ty: Type,
@@ -200,7 +200,7 @@ impl Parse for Cast {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct FnCall {
     span: Span,
     ident: IdentOrKw,
@@ -238,7 +238,7 @@ impl Parse for FnCall {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum SizeOf {
     Type(Span, Type),
     Expr(Span, Expr),
