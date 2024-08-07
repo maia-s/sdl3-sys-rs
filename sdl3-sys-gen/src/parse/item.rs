@@ -1,7 +1,7 @@
 use super::{
-    Define, DocComment, DocCommentFile, Enum, FnCall, FnDecl, GetSpan, Include, Parse, ParseErr,
-    ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind, Span, StructOrUnion, Terminated,
-    TypeDef, WsAndComments,
+    Define, DocComment, DocCommentFile, Enum, FnCall, FnDecl, GetSpan, Ident, Include, Parse,
+    ParseErr, ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind, Span, StructOrUnion,
+    Terminated, TypeDef, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -9,6 +9,7 @@ pub enum Item {
     PreProcBlock(PreProcBlock),
     Skipped(Span),
     Define(Define),
+    Undef(Ident),
     Include(Include),
     Pragma(Span),
     FileDoc(DocComment),
@@ -31,6 +32,7 @@ impl Parse for Item {
                 rest,
                 Some(match pp.kind {
                     PreProcLineKind::Define(d) => Item::Define(d),
+                    PreProcLineKind::Undef(u) => Item::Undef(u),
                     PreProcLineKind::Include(i) => Item::Include(i),
                     PreProcLineKind::Pragma(p) => Item::Pragma(p),
                     _ => {
