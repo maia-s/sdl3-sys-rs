@@ -231,11 +231,18 @@ impl<const ALLOW: u8> Parse for IntegerLiteralT<ALLOW> {
             }
 
             let mut endi = input.len();
+            let mut suffix = None;
             let digitkind = match base {
                 8 => {
                     for (i, ch) in chars.by_ref() {
                         match ch {
                             '0'..='7' => {
+                                if suffix.is_some() {
+                                    return Err(ParseErr::new(
+                                        rest.slice(i..=i),
+                                        "digit after suffix",
+                                    ));
+                                }
                                 need_digit = false;
                                 value = value
                                     .checked_shl(3)
@@ -244,7 +251,7 @@ impl<const ALLOW: u8> Parse for IntegerLiteralT<ALLOW> {
                                         ParseErr::new(rest.slice(..=i), "octal literal overflow")
                                     })?;
                             }
-                            '\'' if !need_digit => need_digit = true,
+                            '\'' if !need_digit && suffix.is_none() => need_digit = true,
                             _ => {
                                 endi = i;
                                 break;
@@ -257,6 +264,12 @@ impl<const ALLOW: u8> Parse for IntegerLiteralT<ALLOW> {
                     for (i, ch) in chars.by_ref() {
                         match ch {
                             '0'..='9' => {
+                                if suffix.is_some() {
+                                    return Err(ParseErr::new(
+                                        rest.slice(i..=i),
+                                        "digit after suffix",
+                                    ));
+                                }
                                 need_digit = false;
                                 value = value
                                     .checked_mul(10)
@@ -265,7 +278,7 @@ impl<const ALLOW: u8> Parse for IntegerLiteralT<ALLOW> {
                                         ParseErr::new(rest.slice(..=i), "decimal literal overflow")
                                     })?;
                             }
-                            '\'' if !need_digit => need_digit = true,
+                            '\'' if !need_digit && suffix.is_none() => need_digit = true,
                             _ => {
                                 endi = i;
                                 break;
@@ -278,25 +291,54 @@ impl<const ALLOW: u8> Parse for IntegerLiteralT<ALLOW> {
                     for (i, ch) in chars.by_ref() {
                         value = match ch {
                             '0'..='9' => {
+                                if suffix.is_some() {
+                                    return Err(ParseErr::new(
+                                        rest.slice(i..=i),
+                                        "digit after suffix",
+                                    ));
+                                }
                                 need_digit = false;
                                 value
                                     .checked_shl(4)
                                     .and_then(|v| v.checked_add((ch as u8 - b'0') as i128))
                             }
                             'a'..='f' => {
+                                if suffix.is_some() {
+                                    return Err(ParseErr::new(
+                                        rest.slice(i..=i),
+                                        "digit after suffix",
+                                    ));
+                                }
                                 need_digit = false;
                                 value
                                     .checked_shl(4)
                                     .and_then(|v| v.checked_add((ch as u8 - b'a' + 10) as i128))
                             }
                             'A'..='F' => {
+                                if suffix.is_some() {
+                                    return Err(ParseErr::new(
+                                        rest.slice(i..=i),
+                                        "digit after suffix",
+                                    ));
+                                }
                                 need_digit = false;
                                 value
                                     .checked_shl(4)
                                     .and_then(|v| v.checked_add((ch as u8 - b'A' + 10) as i128))
                             }
-                            '\'' if !need_digit => {
+                            '\'' if !need_digit && suffix.is_none() => {
                                 need_digit = true;
+                                continue;
+                            }
+                            'u' => {
+                                if suffix.is_none() {
+                                    suffix = Some("u");
+                                } else {
+                                    return Err(ParseErr::new(
+                                        rest.slice(i..=i),
+                                        "double `u` suffix",
+                                    ));
+                                }
                                 continue;
                             }
                             _ => {
