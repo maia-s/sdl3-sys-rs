@@ -222,6 +222,7 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
 
 pub struct TypeDef {
     span: Span,
+    doc: Option<DocComment>,
     ident: Ident,
     ty: Type,
 }
@@ -240,13 +241,16 @@ impl Parse for TypeDef {
             WsAndComments::try_parse(&mut rest)?;
             let semi = <Op![;]>::parse(&mut rest)?;
             let span = doc
+                .clone()
                 .map(|dc| dc.span)
                 .unwrap_or(typedef_kw.span)
                 .join(&semi.span);
+            let doc = DocComment::try_parse_combine_postfix(doc, &mut rest)?;
             Ok((
                 rest,
                 Some(TypeDef {
                     span,
+                    doc,
                     ident: ident.unwrap(),
                     ty,
                 }),
