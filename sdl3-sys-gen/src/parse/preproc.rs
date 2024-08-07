@@ -4,6 +4,10 @@ use super::{
 };
 use std::borrow::Cow;
 
+fn skip_ifdef(str: &str) -> bool {
+    matches!(str, "__cplusplus" | "SDL_THREAD_SAFETY_ANALYSIS")
+}
+
 pub struct Define {
     span: Span,
     doc: Option<DocComment>,
@@ -157,9 +161,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                         ))
                                     }
 
-                                    PreProcBlockKind::IfDef(i)
-                                        if i.span.as_str() == "__cplusplus" =>
-                                    {
+                                    PreProcBlockKind::IfDef(i) if skip_ifdef(i.as_str()) => {
                                         vec![Item::Skipped(block)]
                                     }
 
@@ -181,9 +183,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                             PreProcLineKind::EndIf => {
                                 let block = block_start.join(&rest.start());
                                 let block = match &kind {
-                                    PreProcBlockKind::IfDef(i)
-                                        if i.span.as_str() == "__cplusplus" =>
-                                    {
+                                    PreProcBlockKind::IfDef(i) if skip_ifdef(i.as_str()) => {
                                         vec![Item::Skipped(block)]
                                     }
 
