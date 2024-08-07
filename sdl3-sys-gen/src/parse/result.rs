@@ -14,7 +14,7 @@ pub type ParseRawOk<T> = (Span, T);
 
 pub struct ParseErr {
     span: Span,
-    message: Cow<'static, str>,
+    pub message: Cow<'static, str>,
     location: &'static Location<'static>,
     backtrace: Backtrace,
 }

@@ -1,12 +1,12 @@
 use super::{
-    ArgAttribute, DocComment, FnAbi, FnAttribute, FnAttributes, GetSpan, Ident, Kw_extern, Op,
-    Parse, ParseRawRes, Punctuated, Span, Type, TypeWithIdent, TypeWithOptIdent, TypeWithReqIdent,
+    ArgAttribute, Balanced, DocComment, FnAbi, FnAttribute, FnAttributes, GetSpan, Ident,
+    Kw_extern, Op, Parse, ParseRawRes, Punctuated, Span, Type, TypeWithIdent, TypeWithOptIdent,
     WsAndComments,
 };
 use std::borrow::Cow;
 
 #[derive(Debug)]
-pub struct FnDecl {
+pub struct Function {
     span: Span,
     doc: Option<DocComment>,
     attr: Vec<FnAttribute>,
@@ -14,9 +14,10 @@ pub struct FnDecl {
     ident: Ident,
     return_type: Type,
     args: FnDeclArgs,
+    body: Option<Span>,
 }
 
-impl Parse for FnDecl {
+impl Parse for Function {
     fn desc() -> Cow<'static, str> {
         "function declaration".into()
     }
@@ -40,8 +41,21 @@ impl Parse for FnDecl {
                     let attr2: Vec<FnAttribute> = FnAttributes::parse(&mut rest)?.into();
                     attr.extend(attr2);
                     WsAndComments::try_parse(&mut rest)?;
-                    let semi = <Op![;]>::parse(&mut rest)?;
-                    let span = span0.join(&semi.span());
+                    let semi = <Op![;]>::try_parse(&mut rest)?;
+                    let body = if semi.is_none() {
+                        Some(
+                            Balanced::<Op<'{'>, Op<'}'>>::parse(&mut rest)
+                                .map_err(|e| {
+                                    let msg = format!("{} or `;`", e.message);
+                                    e.map_msg(msg)
+                                })?
+                                .inner,
+                        )
+                    } else {
+                        None
+                    };
+
+                    let span = span0.join(&rest.start());
 
                     return Ok((
                         rest,
@@ -53,6 +67,7 @@ impl Parse for FnDecl {
                             ident,
                             return_type: ty,
                             args,
+                            body,
                         }),
                     ));
                 }
@@ -122,27 +137,6 @@ impl Parse for ArgDecl {
             TypeWithOptIdent::try_parse_raw(&rest)?
         {
             Ok((rest, Some(Self { attr, ty, ident })))
-        } else {
-            Ok((input.clone(), None))
-        }
-    }
-}
-
-#[derive(Debug)]
-pub struct VarDecl {
-    ident: Ident,
-    ty: Type,
-}
-
-impl Parse for VarDecl {
-    fn desc() -> Cow<'static, str> {
-        "variable declaration".into()
-    }
-
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(TypeWithIdent { ty, ident })) = TypeWithReqIdent::try_parse_raw(input)? {
-            let ident = ident.unwrap();
-            Ok((rest, Some(VarDecl { ty, ident })))
         } else {
             Ok((input.clone(), None))
         }

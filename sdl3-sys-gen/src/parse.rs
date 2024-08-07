@@ -1,6 +1,7 @@
 use std::{
     borrow::Cow,
     fmt::{self, Debug, Display},
+    marker::PhantomData,
     num::NonZeroU8,
     str, u8,
 };
@@ -23,9 +24,9 @@ macro_rules! submodules {
 }
 submodules!(
     attr,
-    decl,
     doc_comment,
     r#enum,
+    r#fn,
     expr,
     ident,
     item,
@@ -520,6 +521,64 @@ impl<const OP1: char, const OP2: char, const OP3: char> Parse for Op<OP1, OP2, O
         } else if let Some(rest) = input.strip_prefix(Self::STR) {
             let span = input.start().join(&rest.start());
             return Ok((rest, Some(Self { span })));
+        }
+        Ok((input.clone(), None))
+    }
+}
+
+struct Balanced<Open, Close> {
+    span: Span,
+    inner: Span,
+    _ph: PhantomData<fn() -> (Open, Close)>,
+}
+
+impl<Open, Close> GetSpan for Balanced<Open, Close> {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
+}
+
+impl<Open: GetSpan + Parse, Close: GetSpan + Parse> Parse for Balanced<Open, Close> {
+    fn desc() -> Cow<'static, str> {
+        format!("balanced {}...{}", Open::desc(), Close::desc()).into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(open)) = Open::try_parse_raw(input)? {
+            let inner_s = rest.start();
+            let mut nesting = 1;
+            loop {
+                if let (rest_, Some(_)) = Open::try_parse_raw(&rest)? {
+                    rest = rest_;
+                    nesting += 1;
+                } else if let (rest_, Some(close)) = Close::try_parse_raw(&rest)? {
+                    let inner_e = rest.start();
+                    rest = rest_;
+                    nesting -= 1;
+                    if nesting == 0 {
+                        return Ok((
+                            rest,
+                            Some(Self {
+                                span: open.span().join(&close.span()),
+                                inner: inner_s.join(&inner_e),
+                                _ph: PhantomData,
+                            }),
+                        ));
+                    }
+                } else if let Some(ch) = rest.chars().next() {
+                    let (_, rest_) = rest.split_at(ch.len_utf8());
+                    rest = rest_;
+                } else {
+                    return Err(ParseErr::new(
+                        open.span(),
+                        format!(
+                            "no matching balanced {} for {}",
+                            Close::desc(),
+                            Open::desc(),
+                        ),
+                    ));
+                }
+            }
         }
         Ok((input.clone(), None))
     }

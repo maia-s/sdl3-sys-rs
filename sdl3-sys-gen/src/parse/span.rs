@@ -3,7 +3,7 @@ use std::{
     fmt::{self, Debug, Display},
     ops::{Bound, RangeBounds},
     rc::Rc,
-    str::CharIndices,
+    str::{CharIndices, Chars},
 };
 
 const NO_SOURCE: &Source = &Source {
@@ -126,6 +126,10 @@ impl Span {
 
     pub fn as_bytes(&self) -> &[u8] {
         self.as_str().as_bytes()
+    }
+
+    pub fn chars(&self) -> Chars {
+        self.as_str().chars()
     }
 
     pub fn char_indices(&self) -> CharIndices {

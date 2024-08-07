@@ -64,6 +64,8 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
 
                     "SDL_DECLSPEC" => return Ok((rest, Some(Self { ident, args }))),
 
+                    "SDL_FORCE_INLINE" => return Ok((rest, Some(Self { ident, args }))),
+
                     "SDL_MALLOC" => return Ok((rest, Some(Self { ident, args }))),
 
                     "SDL_PRINTF_VARARG_FUNC" => {

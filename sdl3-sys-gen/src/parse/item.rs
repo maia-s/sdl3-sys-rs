@@ -1,5 +1,5 @@
 use super::{
-    Define, DocComment, DocCommentFile, Enum, FnCall, FnDecl, GetSpan, Ident, Include, Parse,
+    Define, DocComment, DocCommentFile, Enum, FnCall, Function, GetSpan, Ident, Include, Parse,
     ParseErr, ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind, Span, StructOrUnion,
     Terminated, TypeDef, WsAndComments,
 };
@@ -15,7 +15,7 @@ pub enum Item {
     FileDoc(DocComment),
     StructOrUnion(StructOrUnion),
     Enum(Enum),
-    FnDecl(FnDecl),
+    Function(Function),
     FnCall(FnCall),
     TypeDef(TypeDef),
 }
@@ -53,8 +53,8 @@ impl Parse for Item {
         ) = Terminated::<FnCall, Option<Op![;]>>::try_parse_raw(input)?
         {
             Ok((rest, Some(Item::FnCall(call))))
-        } else if let (rest, Some(f)) = FnDecl::try_parse_raw(input)? {
-            Ok((rest, Some(Item::FnDecl(f))))
+        } else if let (rest, Some(f)) = Function::try_parse_raw(input)? {
+            Ok((rest, Some(Item::Function(f))))
         } else if let (rest, Some(t)) = TypeDef::try_parse_raw(input)? {
             Ok((rest, Some(Item::TypeDef(t))))
         } else if let (mut rest, Some(e)) = Enum::try_parse_raw(input)? {
