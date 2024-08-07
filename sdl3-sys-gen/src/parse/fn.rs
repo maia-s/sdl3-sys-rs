@@ -9,6 +9,7 @@ use std::borrow::Cow;
 pub struct Function {
     span: Span,
     doc: Option<DocComment>,
+    extern_kw: Option<Kw_extern>,
     attr: Vec<FnAttribute>,
     abi: Option<FnAbi>,
     ident: Ident,
@@ -26,7 +27,7 @@ impl Parse for Function {
         let mut rest = input.clone();
         let doc = DocComment::try_parse(&mut rest)?;
         let span0 = rest.start();
-        let _extern_kw = Kw_extern::try_parse(&mut rest)?;
+        let extern_kw = Kw_extern::try_parse(&mut rest)?;
         WsAndComments::try_parse(&mut rest)?;
         let mut attr: Vec<FnAttribute> = FnAttributes::parse(&mut rest)?.into();
         WsAndComments::try_parse(&mut rest)?;
@@ -62,6 +63,7 @@ impl Parse for Function {
                         Some(Self {
                             span,
                             doc,
+                            extern_kw,
                             attr,
                             abi,
                             ident,

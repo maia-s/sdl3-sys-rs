@@ -64,7 +64,7 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                 },
 
                 ATTR_FN => match ident.as_str() {
-                    "SDL_DECLSPEC" | "SDL_FORCE_INLINE" | "SDL_MALLOC" => {
+                    "SDL_DECLSPEC" | "SDL_FORCE_INLINE" | "SDL_MALLOC" | "__inline" => {
                         return Ok((rest, Some(Self { ident, args })))
                     }
 
