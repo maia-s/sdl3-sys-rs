@@ -1,4 +1,4 @@
-use super::{GetSpan, Parse, ParseErr, ParseRawRes, Span, WsAndComments};
+use super::{GetSpan, Parse, ParseErr, ParseRawRes, ParseRev, Span, WsAndComments};
 use std::borrow::Cow;
 
 #[derive(Clone, Debug)]
@@ -18,6 +18,24 @@ impl DocComment {
         input: &mut Span,
     ) -> Result<Option<DocComment>, ParseErr> {
         if let Some(post) = DocCommentPost::try_parse(input)? {
+            if pre.is_some() {
+                Err(ParseErr::new(
+                    post.span,
+                    "item has both prefix and postfix documentation comment",
+                ))
+            } else {
+                Ok(Some(post.into()))
+            }
+        } else {
+            Ok(pre)
+        }
+    }
+
+    pub fn try_parse_rev_combine_postfix(
+        pre: Option<DocComment>,
+        input: &mut Span,
+    ) -> Result<Option<DocComment>, ParseErr> {
+        if let Some(post) = DocCommentPost::try_parse_rev(input)? {
             if pre.is_some() {
                 Err(ParseErr::new(
                     post.span,
@@ -104,8 +122,34 @@ impl Parse for DocCommentPost {
         let rest = input.trim_wsc_start()?;
         if rest.starts_with("/**<") {
             if let Some(end) = rest.as_bytes().windows(2).position(|b| b == b"*/") {
-                let span = rest.slice(4..end).trim();
-                Ok((rest.slice(end + 2..), Some(Self { span })))
+                let (span, rest) = rest.split_at(end + 2);
+                Ok((
+                    rest,
+                    Some(Self {
+                        span: span.slice(4..span.len() - 2).trim(),
+                    }),
+                ))
+            } else {
+                todo!()
+            }
+        } else {
+            Ok((input.clone(), None))
+        }
+    }
+}
+
+impl ParseRev for DocCommentPost {
+    fn try_parse_rev_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        let rest = input.trim_wsc_end()?;
+        if rest.ends_with("*/") {
+            if let Some(start) = rest.as_bytes().windows(4).rev().position(|b| b == b"/**<") {
+                let (rest, span) = rest.split_at(rest.len() - start - 4);
+                Ok((
+                    rest,
+                    Some(Self {
+                        span: span.slice(4..span.len() - 2).trim(),
+                    }),
+                ))
             } else {
                 todo!()
             }

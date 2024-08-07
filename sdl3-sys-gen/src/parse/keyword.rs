@@ -1,5 +1,10 @@
-use super::Keyword;
-use std::{collections::HashSet, sync::OnceLock};
+use super::{GetSpan, IdentOrKw, Parse, ParseRawRes, Span};
+use std::{
+    borrow::Cow,
+    collections::HashSet,
+    fmt::{self, Debug},
+    sync::OnceLock,
+};
 
 macro_rules! def_kws {
     ($($kw:ident),* $(,)*) => {
@@ -92,4 +97,37 @@ def_kws! {
     Kw_void,
     Kw_volatile,
     Kw_while,
+}
+
+#[derive(Clone)]
+pub struct Keyword<const KW_INDEX: usize> {
+    pub span: Span,
+}
+
+impl<const KW_INDEX: usize> Debug for Keyword<KW_INDEX> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct(&format!("Keyword<`{}`>", KEYWORDS[KW_INDEX]))
+            .field("span", &self.span)
+            .finish()
+    }
+}
+
+impl<const KW_INDEX: usize> GetSpan for Keyword<KW_INDEX> {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
+}
+
+impl<const KW_INDEX: usize> Parse for Keyword<KW_INDEX> {
+    fn desc() -> Cow<'static, str> {
+        format!("`{}`", KEYWORDS[KW_INDEX]).into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (rest, Some(ident)) = IdentOrKw::try_parse_raw_eq(input, KEYWORDS[KW_INDEX])? {
+            Ok((rest, Some(Keyword { span: ident.span })))
+        } else {
+            Ok((input.clone(), None))
+        }
+    }
 }

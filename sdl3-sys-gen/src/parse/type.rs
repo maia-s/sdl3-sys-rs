@@ -162,7 +162,10 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
             WsAndComments::try_parse(&mut rest)?;
             let abi = FnAbi::try_parse(&mut rest)?;
             WsAndComments::try_parse(&mut rest)?;
-            <Op![*]>::parse(&mut rest)?;
+            if <Op![*]>::try_parse(&mut rest)?.is_none() {
+                // it's not a function pointer, and not a type
+                return Ok((input.clone(), None));
+            }
             WsAndComments::try_parse(&mut rest)?;
             let ident = if IDENT_SPEC == NO_IDENT {
                 None
@@ -181,7 +184,11 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
                 None
             } else if IDENT_SPEC == REQ_IDENT {
                 rest = rest2;
-                Some(Ident::parse(&mut rest)?)
+                if let Some(ident) = Ident::try_parse(&mut rest)? {
+                    Some(ident)
+                } else {
+                    return Ok((input.clone(), None));
+                }
             } else {
                 let ident = Ident::try_parse(&mut rest2)?;
                 if ident.is_some() {

@@ -1,6 +1,6 @@
 use super::{
-    DocComment, DocCommentPost, GetSpan, Ident, IdentOrKw, Item, Items, Parse, ParseErr,
-    ParseRawRes, Punctuated, Span, WsAndComments,
+    DocComment, DocCommentPost, Expr, FloatLiteral, GetSpan, Ident, IdentOrKw, Item, Items,
+    Literal, Parse, ParseErr, ParseRawRes, Punctuated, Span, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -13,12 +13,37 @@ pub struct Define {
     doc: Option<DocComment>,
     ident: Ident,
     args: Option<Vec<IdentOrKw>>,
-    expr: Span,
+    value: DefineValue,
 }
 
 impl GetSpan for Define {
     fn span(&self) -> Span {
         self.span.clone()
+    }
+}
+
+pub enum DefineValue {
+    Expr(Expr),
+    Items(Items),
+    Other(Span),
+}
+
+impl Parse for DefineValue {
+    fn desc() -> Cow<'static, str> {
+        "define value".into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        if input.contains("#") || input.contains("_asm") || input.contains("_cast<") {
+            Ok((input.end(), Some(Self::Other(input.clone()))))
+        } else if let Some(items) = Items::try_parse_try_all(input)? {
+            Ok((input.end(), Some(Self::Items(items))))
+        } else if let Some(expr) = Expr::try_parse_try_all(input)? {
+            Ok((input.end(), Some(Self::Expr(expr))))
+        } else {
+            dbg!(input);
+            panic!()
+        }
     }
 }
 
@@ -286,24 +311,31 @@ impl Parse for PreProcLine {
                                 i.slice(1..close_paren).trim_wsc()?,
                             )?
                             .unwrap_or_default();
+                            let mut value_span = i.slice(close_paren + 1..).trim_wsc_start()?;
+                            let doc =
+                                DocComment::try_parse_rev_combine_postfix(doc, &mut value_span)?;
+                            let value = DefineValue::parse_all(value_span.trim_wsc_end()?)?;
                             PreProcLineKind::Define(Define {
                                 span: span.clone(),
                                 doc,
                                 ident,
                                 args: Some(args.into()),
-                                expr: i.slice(close_paren + 1..),
+                                value,
                             })
                         } else {
                             return Err(ParseErr::new(i.slice(0..=0), "unmatched `(`"));
                         }
                     } else {
                         WsAndComments::try_parse(&mut i)?;
+                        let mut value_span = i.trim_wsc_start()?;
+                        let doc = DocComment::try_parse_rev_combine_postfix(doc, &mut value_span)?;
+                        let value = DefineValue::parse_all(value_span.trim_wsc_end()?)?;
                         PreProcLineKind::Define(Define {
                             span: span.clone(),
                             doc,
                             ident,
                             args: None,
-                            expr: i,
+                            value,
                         })
                     }
                 }

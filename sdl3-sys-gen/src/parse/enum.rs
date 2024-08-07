@@ -1,5 +1,6 @@
 use super::{
-    DocComment, Expr, Ident, Kw_enum, Op, Parse, ParseErr, ParseRawRes, Span, WsAndComments,
+    DocComment, Expr, ExprNoComma, Ident, Kw_enum, Op, Parse, ParseErr, ParseRawRes, Precedence,
+    Span, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -39,9 +40,9 @@ impl Parse for Enum {
                     WsAndComments::try_parse(&mut rest)?;
                     let expr = if <Op![=]>::try_parse(&mut rest)?.is_some() {
                         WsAndComments::try_parse(&mut rest)?;
-                        let expr = Expr::parse(&mut rest)?;
+                        let expr = ExprNoComma::parse(&mut rest)?;
                         WsAndComments::try_parse(&mut rest)?;
-                        Some(expr)
+                        Some(expr.0)
                     } else {
                         None
                     };

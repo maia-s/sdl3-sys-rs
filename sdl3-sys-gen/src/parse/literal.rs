@@ -1,9 +1,10 @@
-use super::{GetSpan, Op, Parse, ParseErr, ParseRawRes, Span, WsAndComments};
+use super::{GetSpan, Op, Parse, ParseErr, ParseRawRes, Span, Spanned};
 use std::{borrow::Cow, ffi::CString};
 
 #[derive(Clone, Debug)]
 pub enum Literal {
     Integer(IntegerLiteral),
+    Float(FloatLiteral),
     String(StringLiteral),
 }
 
@@ -11,6 +12,7 @@ impl GetSpan for Literal {
     fn span(&self) -> Span {
         match self {
             Self::Integer(l) => l.span(),
+            Self::Float(l) => l.span(),
             Self::String(l) => l.span(),
         }
     }
@@ -22,7 +24,9 @@ impl Parse for Literal {
     }
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(lit)) = IntegerLiteralT::try_parse_raw(input)? {
+        if let (rest, Some(lit)) = FloatLiteral::try_parse_raw(input)? {
+            Ok((rest, Some(Self::Float(lit))))
+        } else if let (rest, Some(lit)) = IntegerLiteral::try_parse_raw(input)? {
             Ok((rest, Some(Self::Integer(lit))))
         } else if let (rest, Some(lit)) = StringLiteral::try_parse_raw(input)? {
             Ok((rest, Some(Self::String(lit))))
@@ -32,174 +36,231 @@ impl Parse for Literal {
     }
 }
 
-pub const ALLOW_I32_LITERAL: u8 = 1 << 0;
-pub const ALLOW_U32_LITERAL: u8 = 1 << 1;
-pub const ALLOW_I64_LITERAL: u8 = 1 << 2;
-pub const ALLOW_U64_LITERAL: u8 = 1 << 3;
-pub const ALLOW_ANY_INT_LITERAL: u8 =
-    ALLOW_I32_LITERAL | ALLOW_U32_LITERAL | ALLOW_I64_LITERAL | ALLOW_U64_LITERAL;
-
-pub type IntegerLiteral = IntegerLiteralT<ALLOW_ANY_INT_LITERAL>;
-pub type UintLiteral = IntegerLiteralT<{ ALLOW_U32_LITERAL | ALLOW_U64_LITERAL }>;
-
 #[derive(Clone, Debug)]
-pub enum IntegerLiteralT<const ALLOW: u8> {
-    Int32(Span, i32),
-    Uint31(Span, u32),
-    Uint32(Span, u32),
-    Int64(Span, i64),
-    Uint63(Span, u64),
-    Uint64(Span, u64),
+pub enum FloatLiteral {
+    Float(Spanned<f32>),
+    Double(Spanned<f64>),
 }
 
-impl<const ALLOW: u8> GetSpan for IntegerLiteralT<ALLOW> {
+impl GetSpan for FloatLiteral {
     fn span(&self) -> Span {
         match self {
-            Self::Int32(span, _)
-            | Self::Uint31(span, _)
-            | Self::Uint32(span, _)
-            | Self::Int64(span, _)
-            | Self::Uint63(span, _)
-            | Self::Uint64(span, _) => span.clone(),
+            Self::Float(lit) => lit.span(),
+            Self::Double(lit) => lit.span(),
         }
     }
 }
 
-impl<const ALLOW: u8> IntegerLiteralT<ALLOW> {
-    pub fn zero(span: Span) -> Self {
-        Self::Uint31(span, 0)
+impl Parse for FloatLiteral {
+    fn desc() -> Cow<'static, str> {
+        "float literal".into()
     }
 
-    pub fn into_all(self) -> IntegerLiteral {
-        match self {
-            Self::Int32(span, value) => IntegerLiteral::Int32(span, value),
-            Self::Uint31(span, value) => IntegerLiteral::Uint31(span, value),
-            Self::Uint32(span, value) => IntegerLiteral::Uint32(span, value),
-            Self::Int64(span, value) => IntegerLiteral::Int64(span, value),
-            Self::Uint63(span, value) => IntegerLiteral::Uint63(span, value),
-            Self::Uint64(span, value) => IntegerLiteral::Uint64(span, value),
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        let mut chars = input.char_indices().peekable();
+        let mut have_digits = false;
+
+        let next = 'int_part: {
+            for (i, ch) in chars.by_ref() {
+                match ch {
+                    '0'..='9' => have_digits = true,
+                    '.' => break 'int_part ch,
+                    'e' | 'E' if have_digits => break 'int_part ch,
+                    'f' | 'F' if have_digits => {
+                        let span = input.slice(..i);
+                        let rest = input.slice(i + 1..);
+                        let value = span.as_str().parse().unwrap();
+                        return Ok((rest, Some(FloatLiteral::Float(Spanned { span, value }))));
+                    }
+                    _ => return Ok((input.clone(), None)),
+                }
+            }
+            // integer
+            return Ok((input.clone(), None));
+        };
+
+        if next == '.' {
+            'dec_part: {
+                for (i, ch) in chars.by_ref() {
+                    match ch {
+                        '0'..='9' => have_digits = true,
+                        'e' | 'E' if have_digits => break 'dec_part,
+                        'f' | 'F' if have_digits => {
+                            let span = input.slice(..i);
+                            let rest = input.slice(i + 1..);
+                            let value = span.as_str().parse().unwrap();
+                            return Ok((rest, Some(FloatLiteral::Float(Spanned { span, value }))));
+                        }
+                        _ => {
+                            if have_digits {
+                                let (span, rest) = input.split_at(i);
+                                let value = span.as_str().parse().unwrap();
+                                return Ok((
+                                    rest,
+                                    Some(FloatLiteral::Double(Spanned { span, value })),
+                                ));
+                            } else {
+                                return Ok((input.clone(), None));
+                            }
+                        }
+                    }
+                }
+                if have_digits {
+                    let value = input.as_str().parse().unwrap();
+                    return Ok((
+                        input.end(),
+                        Some(FloatLiteral::Double(Spanned {
+                            span: input.clone(),
+                            value,
+                        })),
+                    ));
+                } else {
+                    return Ok((input.clone(), None));
+                }
+            }
         }
-    }
 
-    pub fn i32(&self) -> Result<i32, ParseErr> {
-        match self {
-            Self::Int32(_, value) => Ok(*value),
-            Self::Uint31(_, value) => Ok(*value as i32),
-            Self::Uint32(span, _)
-            | Self::Int64(span, _)
-            | Self::Uint63(span, _)
-            | Self::Uint64(span, _) => {
-                Err(ParseErr::new(span.clone(), "expected 32-bit signed int"))
+        if let Some((_, '+' | '-')) = chars.peek() {
+            chars.next();
+        }
+
+        have_digits = false;
+
+        for (i, ch) in chars {
+            match ch {
+                '0'..='9' => have_digits = true,
+                'f' | 'F' if have_digits => {
+                    let span = input.slice(..i);
+                    let rest = input.slice(i + 1..);
+                    let value = span.as_str().parse().unwrap();
+                    return Ok((rest, Some(FloatLiteral::Float(Spanned { span, value }))));
+                }
+                _ => {
+                    if have_digits {
+                        let (span, rest) = input.split_at(i);
+                        let value = span.as_str().parse().unwrap();
+                        return Ok((rest, Some(FloatLiteral::Double(Spanned { span, value }))));
+                    } else {
+                        return Ok((input.clone(), None));
+                    }
+                }
             }
         }
-    }
 
-    pub fn u32(&self) -> Result<u32, ParseErr> {
-        match self {
-            Self::Uint31(_, value) | Self::Uint32(_, value) => Ok(*value),
-            Self::Int32(span, _)
-            | Self::Int64(span, _)
-            | Self::Uint63(span, _)
-            | Self::Uint64(span, _) => {
-                Err(ParseErr::new(span.clone(), "expected 32-bit unsigned int"))
-            }
-        }
-    }
-
-    pub fn i64(&self) -> Result<i64, ParseErr> {
-        match self {
-            Self::Int32(_, value) => Ok(*value as i64),
-            Self::Uint31(_, value) | Self::Uint32(_, value) => Ok(*value as i64),
-            Self::Int64(_, value) => Ok(*value),
-            Self::Uint63(_, value) => Ok(*value as i64),
-            Self::Uint64(span, _) => Err(ParseErr::new(span.clone(), "expected 64-bit signed int")),
-        }
-    }
-
-    pub fn u64(&self) -> Result<u64, ParseErr> {
-        match self {
-            Self::Uint31(_, value) | Self::Uint32(_, value) => Ok(*value as u64),
-            Self::Uint63(_, value) | Self::Uint64(_, value) => Ok(*value),
-            Self::Int32(span, _) | Self::Int64(span, _) => {
-                Err(ParseErr::new(span.clone(), "expected 64-bit unsigned int"))
-            }
-        }
-    }
-
-    #[must_use]
-    pub fn checked_add_1(&self) -> Option<Self> {
-        match *self {
-            Self::Int32(_, value) => {
-                if value == -1 {
-                    Some(Self::Uint31(Span::default(), 0))
-                } else {
-                    Some(Self::Int32(Span::default(), value + 1))
-                }
-            }
-            Self::Uint31(_, value) => {
-                if value == i32::MAX as u32 {
-                    Some(Self::Uint32(Span::default(), value + 1))
-                } else {
-                    Some(Self::Uint31(Span::default(), value + 1))
-                }
-            }
-            Self::Uint32(_, value) => {
-                if value == u32::MAX {
-                    Some(Self::Uint63(Span::default(), value as u64 + 1))
-                } else {
-                    Some(Self::Uint32(Span::default(), value + 1))
-                }
-            }
-            Self::Int64(_, value) => {
-                if value == -1 {
-                    Some(Self::Uint31(Span::default(), 0))
-                } else {
-                    Some(Self::Int64(Span::default(), value + 1))
-                }
-            }
-            Self::Uint63(_, value) => {
-                if value == i64::MAX as u64 {
-                    Some(Self::Uint64(Span::default(), value + 1))
-                } else {
-                    Some(Self::Uint63(Span::default(), value + 1))
-                }
-            }
-            Self::Uint64(_, value) => {
-                if value == u64::MAX {
-                    None
-                } else {
-                    Some(Self::Uint64(Span::default(), value + 1))
-                }
-            }
+        if have_digits {
+            let value = input.as_str().parse().unwrap();
+            Ok((
+                input.end(),
+                Some(FloatLiteral::Double(Spanned {
+                    span: input.clone(),
+                    value,
+                })),
+            ))
+        } else {
+            Ok((input.clone(), None))
         }
     }
 }
 
-impl<const ALLOW: u8> Parse for IntegerLiteralT<ALLOW> {
+#[derive(Clone, Debug)]
+pub enum IntegerLiteral {
+    Unsuffixed(Spanned<u64>),
+    Unsigned(Spanned<u64>),
+    Long(Spanned<u64>),
+    UnsignedLong(Spanned<u64>),
+    LongLong(Spanned<u64>),
+    UnsignedLongLong(Spanned<u64>),
+}
+
+impl GetSpan for IntegerLiteral {
+    fn span(&self) -> Span {
+        match self {
+            Self::Unsuffixed(lit)
+            | Self::Unsigned(lit)
+            | Self::Long(lit)
+            | Self::UnsignedLong(lit)
+            | Self::LongLong(lit)
+            | Self::UnsignedLongLong(lit) => lit.span(),
+        }
+    }
+}
+
+impl Parse for IntegerLiteral {
     fn desc() -> Cow<'static, str> {
         "integer literal".into()
     }
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        let (negative_op_span, rest) =
-            if let (mut rest, Some(negative_op)) = <Op![-]>::try_parse_raw(input)? {
-                WsAndComments::try_parse(&mut rest)?;
-                (Some(negative_op.span()), rest)
+        fn parse_suffix_and_create(
+            rest: Span,
+            span: Span,
+            value: u64,
+        ) -> ParseRawRes<Option<IntegerLiteral>> {
+            if rest.starts_with("ull") || rest.starts_with("ULL") {
+                let (sspan, rest) = rest.split_at(3);
+                Ok((
+                    rest,
+                    Some(IntegerLiteral::UnsignedLongLong(Spanned {
+                        span: span.join(&sspan),
+                        value,
+                    })),
+                ))
+            } else if rest.starts_with("ul") || rest.starts_with("UL") {
+                let (sspan, rest) = rest.split_at(2);
+                Ok((
+                    rest,
+                    Some(IntegerLiteral::UnsignedLong(Spanned {
+                        span: span.join(&sspan),
+                        value,
+                    })),
+                ))
+            } else if rest.starts_with("u") || rest.starts_with("U") {
+                let (sspan, rest) = rest.split_at(1);
+                Ok((
+                    rest,
+                    Some(IntegerLiteral::Unsigned(Spanned {
+                        span: span.join(&sspan),
+                        value,
+                    })),
+                ))
+            } else if rest.starts_with("ll") || rest.starts_with("LL") {
+                let (sspan, rest) = rest.split_at(2);
+                Ok((
+                    rest,
+                    Some(IntegerLiteral::LongLong(Spanned {
+                        span: span.join(&sspan),
+                        value,
+                    })),
+                ))
+            } else if rest.starts_with("l") || rest.starts_with("L") {
+                let (sspan, rest) = rest.split_at(1);
+                Ok((
+                    rest,
+                    Some(IntegerLiteral::Long(Spanned {
+                        span: span.join(&sspan),
+                        value,
+                    })),
+                ))
             } else {
-                (None, input.clone())
-            };
+                Ok((
+                    rest,
+                    Some(IntegerLiteral::Unsuffixed(Spanned { span, value })),
+                ))
+            }
+        }
 
+        let rest = input.clone();
         let mut chars = rest.char_indices();
         if let Some((_, ch)) = chars.next() {
             let mut base = 10;
-            let mut value = 0_i128;
+            let mut value = 0_u64;
             let mut need_digit;
 
             if ch == '0' {
                 if let Some((_, ch)) = chars.next() {
                     base = match ch {
                         '0'..='9' => {
-                            value = (ch as u8 - b'0') as i128;
+                            value = (ch as u8 - b'0') as _;
                             need_digit = false;
                             8
                         }
@@ -208,50 +269,35 @@ impl<const ALLOW: u8> Parse for IntegerLiteralT<ALLOW> {
                             16
                         }
                         _ => {
-                            let (mut span, rest) = rest.split_at(1);
-                            if let Some(negative_op_span) = negative_op_span {
-                                span = negative_op_span.join(&span);
-                            }
-                            return Ok((rest, Some(Self::Uint31(span, 0))));
+                            let (span, rest) = rest.split_at(1);
+                            return parse_suffix_and_create(rest, span, 0);
                         }
                     };
                 } else {
-                    return Ok((rest.end(), Some(Self::Uint31(input.clone(), 0))));
+                    return parse_suffix_and_create(rest.end(), rest, 0);
                 }
             } else if matches!(ch, '1'..='9') {
                 need_digit = false;
-                value = (ch as u8 - b'0') as i128;
-            } else if let Some(negative_op_span) = negative_op_span {
-                return Err(ParseErr::new(
-                    negative_op_span,
-                    "expected integer after `-`",
-                ));
+                value = (ch as u8 - b'0') as _;
             } else {
                 return Ok((input.clone(), None));
             }
 
             let mut endi = input.len();
-            let mut suffix = None;
             let digitkind = match base {
                 8 => {
                     for (i, ch) in chars.by_ref() {
                         match ch {
                             '0'..='7' => {
-                                if suffix.is_some() {
-                                    return Err(ParseErr::new(
-                                        rest.slice(i..=i),
-                                        "digit after suffix",
-                                    ));
-                                }
                                 need_digit = false;
                                 value = value
                                     .checked_shl(3)
-                                    .and_then(|v| v.checked_add((ch as u8 - b'0') as i128))
+                                    .and_then(|v| v.checked_add((ch as u8 - b'0') as _))
                                     .ok_or_else(|| {
                                         ParseErr::new(rest.slice(..=i), "octal literal overflow")
                                     })?;
                             }
-                            '\'' if !need_digit && suffix.is_none() => need_digit = true,
+                            '\'' if !need_digit => need_digit = true,
                             _ => {
                                 endi = i;
                                 break;
@@ -264,21 +310,15 @@ impl<const ALLOW: u8> Parse for IntegerLiteralT<ALLOW> {
                     for (i, ch) in chars.by_ref() {
                         match ch {
                             '0'..='9' => {
-                                if suffix.is_some() {
-                                    return Err(ParseErr::new(
-                                        rest.slice(i..=i),
-                                        "digit after suffix",
-                                    ));
-                                }
                                 need_digit = false;
                                 value = value
                                     .checked_mul(10)
-                                    .and_then(|v| v.checked_add((ch as u8 - b'0') as i128))
+                                    .and_then(|v| v.checked_add((ch as u8 - b'0') as _))
                                     .ok_or_else(|| {
                                         ParseErr::new(rest.slice(..=i), "decimal literal overflow")
                                     })?;
                             }
-                            '\'' if !need_digit && suffix.is_none() => need_digit = true,
+                            '\'' if !need_digit => need_digit = true,
                             _ => {
                                 endi = i;
                                 break;
@@ -291,54 +331,25 @@ impl<const ALLOW: u8> Parse for IntegerLiteralT<ALLOW> {
                     for (i, ch) in chars.by_ref() {
                         value = match ch {
                             '0'..='9' => {
-                                if suffix.is_some() {
-                                    return Err(ParseErr::new(
-                                        rest.slice(i..=i),
-                                        "digit after suffix",
-                                    ));
-                                }
                                 need_digit = false;
                                 value
                                     .checked_shl(4)
-                                    .and_then(|v| v.checked_add((ch as u8 - b'0') as i128))
+                                    .and_then(|v| v.checked_add((ch as u8 - b'0') as _))
                             }
                             'a'..='f' => {
-                                if suffix.is_some() {
-                                    return Err(ParseErr::new(
-                                        rest.slice(i..=i),
-                                        "digit after suffix",
-                                    ));
-                                }
                                 need_digit = false;
                                 value
                                     .checked_shl(4)
-                                    .and_then(|v| v.checked_add((ch as u8 - b'a' + 10) as i128))
+                                    .and_then(|v| v.checked_add((ch as u8 - b'a' + 10) as _))
                             }
                             'A'..='F' => {
-                                if suffix.is_some() {
-                                    return Err(ParseErr::new(
-                                        rest.slice(i..=i),
-                                        "digit after suffix",
-                                    ));
-                                }
                                 need_digit = false;
                                 value
                                     .checked_shl(4)
-                                    .and_then(|v| v.checked_add((ch as u8 - b'A' + 10) as i128))
+                                    .and_then(|v| v.checked_add((ch as u8 - b'A' + 10) as _))
                             }
-                            '\'' if !need_digit && suffix.is_none() => {
+                            '\'' if !need_digit => {
                                 need_digit = true;
-                                continue;
-                            }
-                            'u' => {
-                                if suffix.is_none() {
-                                    suffix = Some("u");
-                                } else {
-                                    return Err(ParseErr::new(
-                                        rest.slice(i..=i),
-                                        "double `u` suffix",
-                                    ));
-                                }
                                 continue;
                             }
                             _ => {
@@ -365,67 +376,8 @@ impl<const ALLOW: u8> Parse for IntegerLiteralT<ALLOW> {
                 return Err(ParseErr::new(span, format!("expected {digitkind} digit")));
             }
 
-            let (mut span, rest) = rest.split_at(endi);
-
-            if let Some(negative_op_span) = negative_op_span {
-                span = negative_op_span.join(&span);
-                value = -value;
-            }
-
-            let value = if let Ok(value) = i32::try_from(value) {
-                if value >= 0 {
-                    Self::Uint31(span.clone(), value as u32)
-                } else {
-                    Self::Int32(span.clone(), value)
-                }
-            } else if let Ok(value) = u32::try_from(value) {
-                Self::Uint32(span.clone(), value)
-            } else if let Ok(value) = i64::try_from(value) {
-                if value >= 0 {
-                    Self::Uint63(span.clone(), value as u64)
-                } else {
-                    Self::Int64(span.clone(), value)
-                }
-            } else if let Ok(value) = u64::try_from(value) {
-                Self::Uint64(span.clone(), value)
-            } else {
-                return Err(ParseErr::new(span, "integer literal out of range"));
-            };
-
-            if ALLOW & ALLOW_I32_LITERAL == 0 && matches!(value, Self::Int32(_, _))
-                || (ALLOW & ALLOW_U32_LITERAL == 0 && matches!(value, Self::Uint32(_, _)))
-                || (ALLOW & ALLOW_I64_LITERAL == 0 && matches!(value, Self::Int64(_, _)))
-                || (ALLOW & ALLOW_U64_LITERAL == 0 && matches!(value, Self::Uint64(_, _)))
-                || (ALLOW & (ALLOW_I64_LITERAL | ALLOW_U64_LITERAL) == 0
-                    && matches!(value, Self::Uint63(_, _)))
-            {
-                let mut expecteds = Vec::new();
-                if ALLOW & ALLOW_I32_LITERAL != 0 {
-                    expecteds.push("32-bit signed int");
-                }
-                if ALLOW & ALLOW_U32_LITERAL != 0 {
-                    expecteds.push("32-bit unsigned int");
-                }
-                if ALLOW & ALLOW_I64_LITERAL != 0 {
-                    expecteds.push("64-bit signed int");
-                }
-                if ALLOW & ALLOW_U64_LITERAL != 0 {
-                    expecteds.push("64-bit unsigned int");
-                }
-                let mut expected = expecteds.remove(0).to_owned();
-                for i in expecteds.drain(..) {
-                    expected.push_str(" or ");
-                    expected.push_str(i);
-                }
-                return Err(ParseErr::new(span, expected));
-            }
-
-            Ok((rest, Some(value)))
-        } else if let Some(negative_op_span) = negative_op_span {
-            Err(ParseErr::new(
-                negative_op_span,
-                "expected integer after `-`",
-            ))
+            let (span, rest) = rest.split_at(endi);
+            parse_suffix_and_create(rest, span, value)
         } else {
             Ok((input.clone(), None))
         }
@@ -456,7 +408,7 @@ impl Parse for StringLiteral {
                 if ch == '\\' {
                     Err(ParseErr::new(rest.slice(i..=i), "escapes aren't supported"))
                 } else {
-                    let (span, rest) = rest.split_at(i);
+                    let (span, rest) = rest.split_at(i + 1);
                     let str = CString::new(span.as_str()).unwrap();
                     Ok((rest, Some(Self { span, str })))
                 }

@@ -15,7 +15,7 @@ pub trait GetSpan {
     fn span(&self) -> Span;
 }
 
-#[derive(Default)]
+#[derive(Clone, Debug, Default)]
 pub struct Spanned<T> {
     pub span: Span,
     pub value: T,
@@ -191,12 +191,20 @@ impl Span {
         )
     }
 
+    pub fn contains(&self, pat: &str) -> bool {
+        self.as_str().contains(pat)
+    }
+
     pub fn starts_with(&self, pat: &str) -> bool {
         self.as_str().starts_with(pat)
     }
 
     pub fn starts_with_ch(&self, pat: char) -> bool {
         self.as_str().starts_with(pat)
+    }
+
+    pub fn ends_with(&self, pat: &str) -> bool {
+        self.as_str().ends_with(pat)
     }
 
     pub fn strip_prefix(&self, prefix: impl AsRef<str>) -> Option<Self> {
@@ -250,7 +258,11 @@ impl Span {
             if ch.is_whitespace() {
                 continue;
             }
-            if ch == '/'
+            if ch == '\\' {
+                if let Some((_, '\n')) = chars.next() {
+                    continue;
+                }
+            } else if ch == '/'
                 && self.as_bytes().get(i + 1) == Some(&b'*')
                 && (self.as_bytes().get(i + 2) != Some(&b'*')
                     || self.as_bytes().get(i + 3) == Some(&b'/'))
@@ -274,6 +286,10 @@ impl Span {
     pub fn trim_wsc_end(&self) -> ParseRes<Span> {
         let mut chars = self.char_indices().rev();
         'trim: while let Some((i, ch)) = chars.next() {
+            if ch == '\n' && self.as_bytes()[i.saturating_sub(1)] == b'\\' {
+                chars.next();
+                continue;
+            }
             if ch.is_whitespace() {
                 continue;
             }

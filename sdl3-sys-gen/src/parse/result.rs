@@ -16,13 +16,13 @@ pub struct ParseErr {
     span: Span,
     pub message: Cow<'static, str>,
     location: &'static Location<'static>,
-    backtrace: Backtrace,
+    backtrace: Box<Backtrace>,
 }
 
 impl ParseErr {
     #[track_caller]
     pub fn new(span: Span, message: impl Into<Cow<'static, str>>) -> Self {
-        let backtrace = Backtrace::capture();
+        let backtrace = Box::new(Backtrace::capture());
         Self {
             span,
             message: message.into(),
