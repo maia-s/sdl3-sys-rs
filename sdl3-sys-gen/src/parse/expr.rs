@@ -50,6 +50,10 @@ impl Expr {
         loop {
             let mut rest2 = rest.clone();
             WsAndComments::try_parse(&mut rest2)?;
+            if rest2.starts_with("/**<") {
+                // trailing doc comment after expression
+                break;
+            }
             if let Some(op) = ExprOp::try_parse(&mut rest2)? {
                 if let Some(new_prec) = op.binary_precedence() {
                     if prec.parse_rhs_first(new_prec) {
