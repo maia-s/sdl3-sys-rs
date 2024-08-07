@@ -39,7 +39,7 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
         if let (rest, Some(ident)) = Ident::try_parse_raw(input)? {
             match KIND {
                 ATTR_ABI => match ident.as_str() {
-                    "SDLCALL" => return Ok((rest, Some(Self { ident, args }))),
+                    "SDLCALL" | "__cdecl" => return Ok((rest, Some(Self { ident, args }))),
 
                     _ => (),
                 },
