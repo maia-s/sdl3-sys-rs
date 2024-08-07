@@ -55,11 +55,8 @@ impl Parse for Enum {
                     if !got_comma {
                         break;
                     }
-                } else if let Some(v_doc) = v_doc {
-                    return Err(ParseErr::new(
-                        v_doc.span,
-                        "trailing prefix doc comment in enum",
-                    ));
+                } else if let Some(_v_doc) = v_doc {
+                    // FIXME: group doc comment (skip for now)
                 } else {
                     break;
                 }
