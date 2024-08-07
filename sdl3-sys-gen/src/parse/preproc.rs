@@ -8,7 +8,7 @@ pub struct Define {
     span: Span,
     doc: Option<DocComment>,
     ident: Ident,
-    args: Option<Punctuated<Ident, Op![,]>>,
+    args: Option<Vec<IdentOrKw>>,
     expr: Span,
 }
 
@@ -279,7 +279,7 @@ impl Parse for PreProcLine {
                     let ident = Ident::parse(&mut i)?;
                     if i.starts_with_ch('(') {
                         if let Some(close_paren) = i.as_bytes().iter().position(|&b| b == b')') {
-                            let args = Punctuated::<Ident, Op![,]>::try_parse_all(
+                            let args = Punctuated::<IdentOrKw, Op![,]>::try_parse_all(
                                 i.slice(1..close_paren).trim_wsc()?,
                             )?
                             .unwrap_or_default();
@@ -287,7 +287,7 @@ impl Parse for PreProcLine {
                                 span: span.clone(),
                                 doc,
                                 ident,
-                                args: Some(args),
+                                args: Some(args.into()),
                                 expr: i.slice(close_paren + 1..),
                             })
                         } else {
