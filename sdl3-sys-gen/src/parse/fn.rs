@@ -1,7 +1,7 @@
 use super::{
     ArgAttribute, Balanced, DocComment, FnAbi, FnAttribute, FnAttributes, GetSpan, Ident,
-    Kw_extern, Op, Parse, ParseRawRes, Punctuated, Span, Type, TypeWithIdent, TypeWithOptIdent,
-    WsAndComments,
+    Kw_extern, Kw_static, Op, Parse, ParseErr, ParseRawRes, Punctuated, Span, Type, TypeWithIdent,
+    TypeWithOptIdent, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -9,6 +9,7 @@ use std::borrow::Cow;
 pub struct Function {
     span: Span,
     doc: Option<DocComment>,
+    static_kw: Option<Kw_static>,
     extern_kw: Option<Kw_extern>,
     attr: Vec<FnAttribute>,
     abi: Option<FnAbi>,
@@ -27,7 +28,12 @@ impl Parse for Function {
         let mut rest = input.clone();
         let doc = DocComment::try_parse(&mut rest)?;
         let span0 = rest.start();
+        let static_kw = Kw_static::try_parse(&mut rest)?;
+        WsAndComments::try_parse(&mut rest)?;
         let extern_kw = Kw_extern::try_parse(&mut rest)?;
+        if let (Some(_), Some(extern_kw)) = (&static_kw, &extern_kw) {
+            return Err(ParseErr::new(extern_kw.span(), "static extern"));
+        }
         WsAndComments::try_parse(&mut rest)?;
         let mut attr: Vec<FnAttribute> = FnAttributes::parse(&mut rest)?.into();
         WsAndComments::try_parse(&mut rest)?;
@@ -42,7 +48,11 @@ impl Parse for Function {
                     let attr2: Vec<FnAttribute> = FnAttributes::parse(&mut rest)?.into();
                     attr.extend(attr2);
                     WsAndComments::try_parse(&mut rest)?;
-                    let semi = <Op![;]>::try_parse(&mut rest)?;
+                    let semi = if extern_kw.is_some() {
+                        Some(<Op![;]>::parse(&mut rest)?)
+                    } else {
+                        <Op![;]>::try_parse(&mut rest)?
+                    };
                     let body = if semi.is_none() {
                         Some(
                             Balanced::<Op<'{'>, Op<'}'>>::parse(&mut rest)
@@ -63,6 +73,7 @@ impl Parse for Function {
                         Some(Self {
                             span,
                             doc,
+                            static_kw,
                             extern_kw,
                             attr,
                             abi,

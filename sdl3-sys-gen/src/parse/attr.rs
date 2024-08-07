@@ -1,4 +1,4 @@
-use super::{CallArgs, Expr, GetSpan, Ident, Parse, Span, WsAndComments};
+use super::{CallArgs, Delimited, Expr, GetSpan, Ident, Op, Parse, Span, WsAndComments};
 
 pub const ATTR_ABI: usize = 0;
 pub const ATTR_ARG: usize = 1;
@@ -41,6 +41,18 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                 ATTR_ABI => match ident.as_str() {
                     "SDLCALL" | "__cdecl" => return Ok((rest, Some(Self { ident, args }))),
 
+                    "__attribute__" => {
+                        let (rest, args) =
+                            Delimited::<Op<'('>, CallArgs, Op<')'>>::parse_raw(&rest)?;
+                        return Ok((
+                            rest,
+                            Some(Self {
+                                ident,
+                                args: args.value.into(),
+                            }),
+                        ));
+                    }
+
                     _ => (),
                 },
 
@@ -64,16 +76,25 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                 },
 
                 ATTR_FN => match ident.as_str() {
-                    "SDL_DECLSPEC" | "SDL_FORCE_INLINE" | "SDL_MALLOC" | "__inline" => {
-                        return Ok((rest, Some(Self { ident, args })))
-                    }
+                    "SDL_ANALYZER_NORETURN"
+                    | "SDL_DECLSPEC"
+                    | "SDL_FORCE_INLINE"
+                    | "SDL_MALLOC"
+                    | "__inline"
+                    | "__inline__" => return Ok((rest, Some(Self { ident, args }))),
 
-                    "SDL_ALLOC_SIZE"
+                    "SDL_ACQUIRE"
+                    | "SDL_ACQUIRE_SHARED"
+                    | "SDL_ALLOC_SIZE"
                     | "SDL_ALLOC_SIZE2"
                     | "SDL_PRINTF_VARARG_FUNC"
                     | "SDL_PRINTF_VARARG_FUNCV"
+                    | "SDL_RELEASE"
+                    | "SDL_RELEASE_GENERIC"
                     | "SDL_SCANF_VARARG_FUNC"
                     | "SDL_SCANF_VARARG_FUNCV"
+                    | "SDL_TRY_ACQUIRE"
+                    | "SDL_TRY_ACQUIRE_SHARED"
                     | "SDL_WPRINTF_VARARG_FUNC" => {
                         let (rest, args) = CallArgs::parse_raw(&rest)?;
                         return Ok((

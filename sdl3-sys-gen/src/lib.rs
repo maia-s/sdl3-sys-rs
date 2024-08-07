@@ -15,6 +15,7 @@ fn skip(module: &str) -> bool {
         "begin_code",
         "bits",
         "close_code",
+        "copying",
         "egl",
         "endian",
         "platform_defines",
