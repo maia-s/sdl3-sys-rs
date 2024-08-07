@@ -1,6 +1,6 @@
 use super::{
-    DocComment, Enum, Expr, FnDeclArgs, Ident, Kw_const, Kw_typedef, Op, Parse, ParseRawRes,
-    PrimitiveType, PrimitiveTypeParse, Punctuated, Span, StructOrUnion, VarDecl, WsAndComments,
+    DocComment, Enum, Expr, FnAbi, FnDeclArgs, Ident, Kw_const, Kw_typedef, Op, Parse, ParseRawRes,
+    PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -45,25 +45,6 @@ pub enum TypeEnum {
     Array(Box<Type>, Expr),
     FnPointer(Box<FnPointer>),
     DotDotDot,
-}
-
-#[derive(Debug)]
-pub struct FnAbi {
-    abi: Ident,
-}
-
-impl Parse for FnAbi {
-    fn desc() -> Cow<'static, str> {
-        "function abi".into()
-    }
-
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(abi)) = Ident::try_parse_raw_eq(input, "SDLCALL")? {
-            Ok((rest, Some(Self { abi })))
-        } else {
-            Ok((input.clone(), None))
-        }
-    }
 }
 
 #[derive(Debug)]

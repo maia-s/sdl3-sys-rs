@@ -1,6 +1,7 @@
 use super::{
-    ArgAttribute, DocComment, FnAbi, FnAttribute, Ident, Kw_extern, Op, Parse, ParseRawRes,
-    Punctuated, Span, Type, TypeWithIdent, TypeWithOptIdent, TypeWithReqIdent, WsAndComments,
+    ArgAttribute, DocComment, FnAbi, FnAttribute, FnAttributes, GetSpan, Ident, Kw_extern, Op,
+    Parse, ParseRawRes, Punctuated, Span, Type, TypeWithIdent, TypeWithOptIdent, TypeWithReqIdent,
+    WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -8,7 +9,7 @@ use std::borrow::Cow;
 pub struct FnDecl {
     span: Span,
     doc: Option<DocComment>,
-    attr: Option<FnAttribute>,
+    attr: Vec<FnAttribute>,
     abi: Option<FnAbi>,
     ident: Ident,
     return_type: Type,
@@ -23,40 +24,38 @@ impl Parse for FnDecl {
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
         let mut rest = input.clone();
         let doc = DocComment::try_parse(&mut rest)?;
-        if let Some(extern_kw) = Kw_extern::try_parse(&mut rest)? {
-            WsAndComments::parse(&mut rest)?;
-            if Ident::try_parse_eq(&mut rest, "SDL_DECLSPEC")?.is_some() {
-                WsAndComments::parse(&mut rest)?;
-                let ty = Type::parse(&mut rest)?;
-                WsAndComments::parse(&mut rest)?;
-                let abi = FnAbi::parse(&mut rest)?;
-                WsAndComments::parse(&mut rest)?;
-                let ident = Ident::parse(&mut rest)?;
+        let span0 = rest.start();
+        let _extern_kw = Kw_extern::try_parse(&mut rest)?;
+        WsAndComments::try_parse(&mut rest)?;
+        let mut attr: Vec<FnAttribute> = FnAttributes::parse(&mut rest)?.into();
+        WsAndComments::try_parse(&mut rest)?;
+        if let Some(ty) = Type::try_parse(&mut rest)? {
+            WsAndComments::try_parse(&mut rest)?;
+            let abi = FnAbi::try_parse(&mut rest)?;
+            WsAndComments::try_parse(&mut rest)?;
+            if let Some(ident) = Ident::try_parse(&mut rest)? {
                 WsAndComments::try_parse(&mut rest)?;
-                let args = FnDeclArgs::parse(&mut rest)?;
-                WsAndComments::try_parse(&mut rest)?;
-                let attr = FnAttribute::try_parse(&mut rest)?;
-                WsAndComments::try_parse(&mut rest)?;
-                let semi = <Op![;]>::parse(&mut rest)?;
+                if let Some(args) = FnDeclArgs::try_parse(&mut rest)? {
+                    WsAndComments::try_parse(&mut rest)?;
+                    let attr2: Vec<FnAttribute> = FnAttributes::parse(&mut rest)?.into();
+                    attr.extend(attr2);
+                    WsAndComments::try_parse(&mut rest)?;
+                    let semi = <Op![;]>::parse(&mut rest)?;
+                    let span = span0.join(&semi.span());
 
-                let span = if let Some(doc) = &doc {
-                    doc.span.clone()
-                } else {
-                    extern_kw.span
+                    return Ok((
+                        rest,
+                        Some(Self {
+                            span,
+                            doc,
+                            attr,
+                            abi,
+                            ident,
+                            return_type: ty,
+                            args,
+                        }),
+                    ));
                 }
-                .join(&semi.span);
-                return Ok((
-                    rest,
-                    Some(Self {
-                        span,
-                        doc,
-                        attr,
-                        abi: Some(abi),
-                        ident,
-                        return_type: ty,
-                        args,
-                    }),
-                ));
             }
         }
         Ok((input.clone(), None))
