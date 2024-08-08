@@ -54,7 +54,7 @@ impl<const ALLOW_KEYWORDS: bool> Parse for IdentOrKwT<ALLOW_KEYWORDS> {
             }
         }
         let span = input.clone();
-        if !ALLOW_KEYWORDS && is_keyword(&span) {
+        if span.is_empty() || (!ALLOW_KEYWORDS && is_keyword(&span)) {
             Ok((input.clone(), None))
         } else {
             Ok((span.end(), Some(Self { span })))

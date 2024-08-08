@@ -136,10 +136,12 @@ impl Expr {
                         }
 
                         _ => {
-                            let (rest_, rhs) =
-                                Expr::parse_raw_with_prec(&rest2, new_prec, true)?;
-                            rest = rest_;
-                            lhs = Expr::BinaryOp(Box::new(BinaryOp { op, lhs, rhs }));
+                            if let (rest_, Some(rhs)) = Expr::try_parse_raw_with_prec(&rest2, new_prec, true)? {
+                                rest = rest_;
+                                lhs = Expr::BinaryOp(Box::new(BinaryOp { op, lhs, rhs }));
+                            } else {
+                                return Ok((input.clone(),None))
+                            }
                         }
                     }
                 } else {

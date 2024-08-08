@@ -1,6 +1,6 @@
 use super::{
     DocComment, DocCommentPost, Expr, GetSpan, Ident, IdentOrKw, Item, Items, Parse, ParseErr,
-    ParseRawRes, Punctuated, Span, WsAndComments,
+    ParseRawRes, Punctuated, Span, Type, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -26,8 +26,10 @@ impl GetSpan for Define {
 #[derive(Debug)]
 pub enum DefineValue {
     Expr(Expr),
+    Type(Type),
     Items(Items),
     Other(Span),
+    None,
 }
 
 impl Parse for DefineValue {
@@ -36,12 +38,16 @@ impl Parse for DefineValue {
     }
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if input.contains("#") || input.contains("_cast<") {
+        if input.is_empty() {
+            Ok((input.end(), Some(Self::None)))
+        } else if input.contains("#") || input.contains("_cast<") {
             Ok((input.end(), Some(Self::Other(input.clone()))))
         } else if let Some(items) = Items::try_parse_try_all(input)? {
             Ok((input.end(), Some(Self::Items(items))))
         } else if let Some(expr) = Expr::try_parse_try_all(input)? {
             Ok((input.end(), Some(Self::Expr(expr))))
+        } else if let Some(ty) = Type::try_parse_try_all(input)? {
+            Ok((input.end(), Some(Self::Type(ty))))
         } else {
             dbg!(input);
             panic!()
