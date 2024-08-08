@@ -1,5 +1,5 @@
 use super::{
-    ArgAttribute, Balanced, DocComment, FnAbi, FnAttribute, FnAttributes, GetSpan, Ident,
+    ArgAttribute, Balanced, Block, DocComment, FnAbi, FnAttribute, FnAttributes, GetSpan, Ident,
     Kw_extern, Kw_static, Op, Parse, ParseErr, ParseRawRes, Punctuated, Span, Type, TypeWithIdent,
     TypeWithOptIdent, WsAndComments,
 };
@@ -16,7 +16,7 @@ pub struct Function {
     ident: Ident,
     return_type: Type,
     args: FnDeclArgs,
-    body: Option<Span>,
+    body: Option<Block>,
 }
 
 impl Parse for Function {
@@ -54,14 +54,10 @@ impl Parse for Function {
                         <Op![;]>::try_parse(&mut rest)?
                     };
                     let body = if semi.is_none() {
-                        Some(
-                            Balanced::<Op<'{'>, Op<'}'>>::parse(&mut rest)
-                                .map_err(|e| {
-                                    let msg = format!("{} or `;`", e.message);
-                                    e.map_msg(msg)
-                                })?
-                                .inner,
-                        )
+                        Some(Block::parse(&mut rest).map_err(|e| {
+                            let msg = format!("{} or `;`", e.message);
+                            e.map_msg(msg)
+                        })?)
                     } else {
                         None
                     };

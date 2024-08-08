@@ -2,9 +2,9 @@ use crate::parse::{Kw_else, Kw_while};
 
 use super::{
     Define, Delimited, DocComment, DocCommentFile, Enum, Expr, ExprNoComma, FnCall, Function,
-    GetSpan, Ident, Include, Kw_do, Kw_if, Op, Parse, ParseErr, ParseRawRes, PreProcBlock,
-    PreProcLine, PreProcLineKind, Span, StructOrUnion, Terminated, Type, TypeDef, TypeWithReqIdent,
-    WsAndComments,
+    GetSpan, Ident, Include, Kw_do, Kw_if, Kw_return, Op, Parse, ParseErr, ParseRawRes,
+    PreProcBlock, PreProcLine, PreProcLineKind, Span, StructOrUnion, Terminated, Type, TypeDef,
+    TypeWithReqIdent, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -28,6 +28,7 @@ pub enum Item {
     VarDecl(VarDecl),
     DoWhile(DoWhile),
     IfElse(IfElse),
+    Return(Return),
 }
 
 impl Parse for Item {
@@ -61,6 +62,8 @@ impl Parse for Item {
             Ok((rest, Some(Item::DoWhile(s))))
         } else if let (rest, Some(s)) = IfElse::try_parse_raw(input)? {
             Ok((rest, Some(Item::IfElse(s))))
+        } else if let (rest, Some(s)) = Return::try_parse_raw(input)? {
+            Ok((rest, Some(Item::Return(s))))
         } else if let (rest, Some(f)) = Function::try_parse_raw(input)? {
             Ok((rest, Some(Item::Function(f))))
         } else if let (rest, Some(t)) = TypeDef::try_parse_raw(input)? {
@@ -208,6 +211,36 @@ impl Parse for IfElse {
                     cond,
                     on_true,
                     on_false,
+                }),
+            ))
+        } else {
+            Ok((input.clone(), None))
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct Return {
+    span: Span,
+    expr: Expr,
+}
+
+impl Parse for Return {
+    fn desc() -> Cow<'static, str> {
+        "return".into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(return_kw)) = Kw_return::try_parse_raw(input)? {
+            WsAndComments::try_parse(&mut rest)?;
+            let expr = Expr::parse(&mut rest)?;
+            WsAndComments::try_parse(&mut rest)?;
+            let semi = <Op![;]>::parse(&mut rest)?;
+            Ok((
+                rest,
+                Some(Self {
+                    span: return_kw.span.join(&semi.span),
+                    expr,
                 }),
             ))
         } else {
