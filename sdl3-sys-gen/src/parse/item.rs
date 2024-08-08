@@ -8,6 +8,7 @@ use super::{
 };
 use std::borrow::Cow;
 
+#[derive(Debug)]
 pub enum Item {
     PreProcBlock(PreProcBlock),
     Block(Block),
@@ -87,6 +88,7 @@ impl Parse for Item {
 
 pub type Items = Vec<Item>;
 
+#[derive(Debug)]
 pub struct Block {
     span: Span,
     items: Items,
@@ -114,6 +116,7 @@ impl Parse for Block {
     }
 }
 
+#[derive(Debug)]
 pub struct DoWhile {
     span: Span,
     block: Block,
@@ -154,6 +157,7 @@ impl Parse for DoWhile {
     }
 }
 
+#[derive(Debug)]
 pub struct IfElse {
     span: Span,
     cond: Expr,
@@ -243,6 +247,7 @@ impl Parse for StructOrUnionItem {
     }
 }
 
+#[derive(Debug)]
 pub struct VarDecl {
     span: Span,
     ident: Ident,

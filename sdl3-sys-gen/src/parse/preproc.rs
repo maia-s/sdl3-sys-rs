@@ -8,6 +8,7 @@ fn skip_ifdef(str: &str) -> bool {
     matches!(str, "__cplusplus" | "SDL_THREAD_SAFETY_ANALYSIS")
 }
 
+#[derive(Debug)]
 pub struct Define {
     span: Span,
     doc: Option<DocComment>,
@@ -22,6 +23,7 @@ impl GetSpan for Define {
     }
 }
 
+#[derive(Debug)]
 pub enum DefineValue {
     Expr(Expr),
     Items(Items),
@@ -47,6 +49,7 @@ impl Parse for DefineValue {
     }
 }
 
+#[derive(Debug)]
 pub struct Include {
     span: Span,
     kind: IncludeKind,
@@ -59,6 +62,7 @@ impl GetSpan for Include {
     }
 }
 
+#[derive(Debug)]
 pub enum IncludeKind {
     Local,
     System,
@@ -92,6 +96,7 @@ impl Parse for Line {
     }
 }
 
+#[derive(Debug)]
 pub struct PreProcBlock<const ALLOW_INITIAL_ELSE: bool = false> {
     span: Span,
     kind: PreProcBlockKind,
@@ -105,6 +110,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> GetSpan for PreProcBlock<ALLOW_INITIAL_ELSE
     }
 }
 
+#[derive(Debug)]
 pub enum PreProcBlockKind {
     If(Expr),
     IfDef(Ident),
