@@ -101,9 +101,12 @@ impl Parse for FnDeclArgs {
         let mut rest = input.clone();
         if let Some(open_paren) = Op::<'('>::try_parse(&mut rest)? {
             WsAndComments::try_parse(&mut rest)?;
-            let args = Punctuated::<ArgDecl, Op![,]>::try_parse(&mut rest)?
+            let mut args: Vec<ArgDecl> = Punctuated::<ArgDecl, Op![,]>::try_parse(&mut rest)?
                 .unwrap_or_default()
                 .into();
+            if args.len() == 1 && args[0].ty.is_void() {
+                args.clear()
+            }
             WsAndComments::try_parse(&mut rest)?;
             if let Some(close_paren) = Op::<')'>::try_parse(&mut rest)? {
                 return Ok((

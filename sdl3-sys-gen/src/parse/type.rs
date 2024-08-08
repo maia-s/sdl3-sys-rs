@@ -27,6 +27,10 @@ impl Type {
     pub fn is_array_or_pointer(&self) -> bool {
         matches!(self.ty, TypeEnum::Array(_, _) | TypeEnum::Pointer(_))
     }
+
+    pub fn is_void(&self) -> bool {
+        matches!(self.ty, TypeEnum::Primitive(PrimitiveType::Void))
+    }
 }
 
 impl Parse for Type {
