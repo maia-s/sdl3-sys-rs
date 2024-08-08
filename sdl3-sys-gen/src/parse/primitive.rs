@@ -84,7 +84,9 @@ impl Parse for PrimitiveTypeParse {
                 return Err(ParseErr::new(span, "too many keywords in primitive type"));
             }
 
-            is_const = n_const > 0;
+            if n_const > 0 {
+                is_const = true;
+            }
 
             if (n_signed > 0 && n_unsigned > 0)
                 || (n_short > 0 && n_long > 0)
