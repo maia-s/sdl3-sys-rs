@@ -408,7 +408,8 @@ impl Parse for StringLiteral {
                 if ch == '\\' {
                     Err(ParseErr::new(rest.slice(i..=i), "escapes aren't supported"))
                 } else {
-                    let (span, rest) = rest.split_at(i + 1);
+                    let span = rest.slice(..i);
+                    let rest = rest.slice(i + 1..);
                     let str = CString::new(span.as_str()).unwrap();
                     Ok((rest, Some(Self { span, str })))
                 }

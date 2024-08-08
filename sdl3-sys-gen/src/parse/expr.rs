@@ -1,3 +1,4 @@
+use std::cmp::Ordering;
 use super::{
     Balanced, Delimited, ExprOp, GetSpan, Ident, IdentOrKw, Kw_sizeof, Literal, Op, Parse,
     ParseErr, ParseRawRes, Precedence, Punctuated, Span, Type, WsAndComments
@@ -5,6 +6,7 @@ use super::{
 
 #[derive(Clone, Debug)]
 pub enum Expr {
+    Parenthesized(Box<Expr>),
     Ident(IdentOrKw),
     Literal(Literal),
     FnCall(FnCall),
@@ -42,7 +44,7 @@ impl Expr {
             let (rest_, expr) = Expr::parse_raw_with_prec(&rest, uprec, true)?;
             rest = rest_;
             Self::UnaryOp(Box::new(UnaryOp { op, expr }))
-        } else if let (true, Some(cast)) = (allow_cast, Cast::try_parse(&mut rest)?) {
+        } else if let Some(cast) = Cast::try_parse_if(&mut rest, |_| allow_cast)? {
             if prec.parse_rhs_first(Precedence::right_to_left(2)) {
                 is_cast = true;
                 Self::Cast(Box::new(cast))
@@ -69,7 +71,7 @@ impl Expr {
             close: _,
         }) = Delimited::<Op<'('>, Expr, Op<')'>>::try_parse(&mut rest)?
         {
-            expr
+            Expr::Parenthesized(Box::new(expr))
         } else if let Some(ident) = IdentOrKw::try_parse(&mut rest)? {
             Self::Ident(ident)
         } else if let Some(lit) = Literal::try_parse(&mut rest)? {
@@ -156,16 +158,23 @@ impl Expr {
             if let (not_cast_rest, Some(not_cast)) =
                 Expr::try_parse_raw_with_prec(input, prec, false)?
             {
-                if rest.start_pos() != not_cast_rest.start_pos() {
-                    return Err(ParseErr::new(
-                        lhs.span(), 
-                        "expression is valid both as a cast and as a non-cast expression, but parse lengths differ"
-                    ));
+                match rest.start_pos().cmp(&not_cast_rest.start_pos()) {
+                    Ordering::Greater => {
+                        // keep the cast
+                    }
+                    Ordering::Less => {
+                        return Err(ParseErr::new(
+                            lhs.span(), 
+                            "expression is valid both as a cast and as a non-cast expression, but expression is longer"
+                        ));
+                    }
+                    Ordering::Equal => {
+                        lhs = Expr::Ambiguous(Ambiguous {
+                            span: lhs.span().join(&not_cast.span()),
+                            alternatives: vec![lhs, not_cast],
+                        });
+                    }
                 }
-                lhs = Expr::Ambiguous(Ambiguous {
-                    span: lhs.span().join(&not_cast.span()),
-                    alternatives: vec![lhs, not_cast],
-                });
             }
         }
 
@@ -187,6 +196,7 @@ impl Expr {
 impl GetSpan for Expr {
     fn span(&self) -> Span {
         match self {
+            Self::Parenthesized(e) => e.span(),
             Self::Ident(e) => e.span(),
             Self::Literal(e) => e.span(),
             Self::FnCall(e) => e.span(),

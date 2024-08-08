@@ -39,9 +39,17 @@ impl Parse for StructOrUnion {
         }
         WsAndComments::try_parse(&mut rest)?;
         let ident = Ident::try_parse(&mut rest)?;
-        WsAndComments::try_parse(&mut rest)?;
-        let fields = StructFields::try_parse(&mut rest)?;
-        let span = input.start().join(&rest.start());
+        let (mut rest2, _) = WsAndComments::try_parse_raw(&rest)?;
+        let fields = StructFields::try_parse(&mut rest2)?;
+        if fields.is_some() {
+            rest = rest2;
+        }
+        let span = kw_struct
+            .as_ref()
+            .map(|s| s.span())
+            .unwrap_or_else(|| kw_union.as_ref().unwrap().span())
+            .start()
+            .join(&rest.start());
         Ok((
             rest,
             Some(Self {

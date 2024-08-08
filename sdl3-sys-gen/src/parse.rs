@@ -105,6 +105,19 @@ pub trait Parse: Sized {
         }
     }
 
+    fn try_parse_if(
+        input: &mut Span,
+        accept: impl FnOnce(&Self) -> bool,
+    ) -> ParseRes<Option<Self>> {
+        match Self::try_parse_raw_if(input, accept) {
+            Ok((rest, parsed)) => {
+                *input = rest;
+                Ok(parsed)
+            }
+            Err(e) => Err(e),
+        }
+    }
+
     fn parse(input: &mut Span) -> ParseRes<Self> {
         match Self::parse_raw(input) {
             Ok((rest, parsed)) => {
@@ -322,13 +335,13 @@ impl<Open: Parse, T: Parse, Close: Parse> Parse for Delimited<Open, T, Close> {
         let mut rest = input.clone();
         if let Some(open) = Open::try_parse(&mut rest)? {
             WsAndComments::try_parse(&mut rest)?;
-            let value = T::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            let close = Close::parse(&mut rest)?;
-            Ok((rest, Some(Self { open, value, close })))
-        } else {
-            Ok((input.clone(), None))
+            if let Some(value) = T::try_parse(&mut rest)? {
+                WsAndComments::try_parse(&mut rest)?;
+                let close = Close::parse(&mut rest)?;
+                return Ok((rest, Some(Self { open, value, close })));
+            }
         }
+        Ok((input.clone(), None))
     }
 }
 

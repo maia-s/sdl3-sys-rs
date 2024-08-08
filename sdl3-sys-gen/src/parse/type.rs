@@ -277,11 +277,7 @@ impl Parse for TypeDef {
             let TypeWithIdent { ty, ident } = TypeWithReqIdent::parse(&mut rest)?;
             WsAndComments::try_parse(&mut rest)?;
             let semi = <Op![;]>::parse(&mut rest)?;
-            let span = doc
-                .clone()
-                .map(|dc| dc.span)
-                .unwrap_or(typedef_kw.span)
-                .join(&semi.span);
+            let span = typedef_kw.span.join(&semi.span);
             let doc = DocComment::try_parse_combine_postfix(doc, &mut rest)?;
             Ok((
                 rest,
