@@ -106,7 +106,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> GetSpan for PreProcBlock<ALLOW_INITIAL_ELSE
 }
 
 pub enum PreProcBlockKind {
-    If(Span),
+    If(Expr),
     IfDef(Ident),
     IfNDef(Ident),
     None,
@@ -256,10 +256,10 @@ pub struct PreProcLine {
 }
 
 pub enum PreProcLineKind {
-    If(Span),
+    If(Expr),
     IfDef(Ident),
     IfNDef(Ident),
-    ElIf(Span),
+    ElIf(Expr),
     ElIfDef(Ident),
     ElIfNDef(Ident),
     Else,
@@ -292,11 +292,11 @@ impl Parse for PreProcLine {
             WsAndComments::try_parse(&mut i)?;
 
             let kind = match ident.as_str() {
-                "if" => PreProcLineKind::If(i),
+                "if" => PreProcLineKind::If(Expr::parse_all(i)?),
                 "ifdef" => PreProcLineKind::IfDef(Ident::parse_all(i)?),
                 "ifndef" => PreProcLineKind::IfNDef(Ident::parse_all(i)?),
 
-                "elif" => PreProcLineKind::ElIf(i),
+                "elif" => PreProcLineKind::ElIf(Expr::parse_all(i)?),
                 "elifdef" => PreProcLineKind::ElIfDef(Ident::parse_all(i)?),
                 "enifndef" => PreProcLineKind::ElIfNDef(Ident::parse_all(i)?),
 
