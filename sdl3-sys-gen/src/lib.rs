@@ -13,16 +13,13 @@ use std::{
 fn skip(module: &str) -> bool {
     [
         "begin_code",
-        "bits",
         "close_code",
         "copying",
-        "egl",
         "endian",
         "platform_defines",
     ]
     .contains(&module)
         || module.starts_with("main")
-        || module.starts_with("opengl")
         || module.starts_with("test")
 }
 
@@ -105,8 +102,8 @@ impl Gen {
     fn parse(&mut self, module: &str, filename: String, contents: String) -> Result<(), ParseErr> {
         println!("parsing {filename}");
         let contents: Span = Source::new(filename, contents).into();
-        let rest = contents.clone();
-        let items = Items::parse_all(rest)?;
+        let rest = contents.trim_wsc()?;
+        let items = Items::try_parse_all(rest)?.unwrap_or_default();
         self.modules.insert(module.to_owned(), items);
         Ok(())
     }

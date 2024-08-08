@@ -23,6 +23,10 @@ impl Type {
     pub fn strictly_left_aligned(&self) -> bool {
         self.ty.strictly_left_aligned()
     }
+
+    pub fn is_array_or_pointer(&self) -> bool {
+        matches!(self.ty, TypeEnum::Array(_, _) | TypeEnum::Pointer(_))
+    }
 }
 
 impl Parse for Type {
@@ -163,8 +167,15 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
             let abi = FnAbi::try_parse(&mut rest)?;
             WsAndComments::try_parse(&mut rest)?;
             if <Op![*]>::try_parse(&mut rest)?.is_none() {
-                // it's not a function pointer, and not a type
-                return Ok((input.clone(), None));
+                let ok = if let Some(abi) = &abi {
+                    abi.ident.as_str().ends_with("APIENTRYP")
+                } else {
+                    false
+                };
+                if !ok {
+                    // it's not a function pointer, and not a type
+                    return Ok((input.clone(), None));
+                }
             }
             WsAndComments::try_parse(&mut rest)?;
             let ident = if IDENT_SPEC == NO_IDENT {
@@ -206,23 +217,18 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
             while Op::<'['>::try_parse(&mut rest2)?.is_some() {
                 rest = rest2;
                 WsAndComments::try_parse(&mut rest)?;
-                if let Some(expr) = Expr::try_parse(&mut rest)? {
-                    WsAndComments::try_parse(&mut rest)?;
-                    let span = input.start().join(&rest.start());
-                    ty = Type {
-                        is_const: true,
-                        ty: TypeEnum::Array(Box::new(ty), expr),
-                        span,
-                    }
-                } else {
-                    let span = input.start().join(&rest.start());
-                    ty = Type {
-                        is_const: true,
-                        ty: TypeEnum::Pointer(Box::new(ty)),
-                        span,
-                    }
-                }
+                let expr = Expr::try_parse(&mut rest)?;
+                WsAndComments::try_parse(&mut rest)?;
                 Op::<']'>::parse(&mut rest)?;
+                ty = Type {
+                    span: input.start().join(&rest.start()),
+                    is_const: true,
+                    ty: if let Some(expr) = expr {
+                        TypeEnum::Array(Box::new(ty), expr)
+                    } else {
+                        TypeEnum::Pointer(Box::new(ty))
+                    },
+                };
                 rest2 = rest.clone();
                 WsAndComments::try_parse(&mut rest2)?;
             }

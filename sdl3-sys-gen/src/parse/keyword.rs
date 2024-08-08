@@ -124,7 +124,9 @@ impl<const KW_INDEX: usize> Parse for Keyword<KW_INDEX> {
     }
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(ident)) = IdentOrKw::try_parse_raw_eq(input, KEYWORDS[KW_INDEX])? {
+        if let (rest, Some(ident)) =
+            IdentOrKw::try_parse_raw_if(input, |i| i.as_str() == KEYWORDS[KW_INDEX])?
+        {
             Ok((rest, Some(Keyword { span: ident.span })))
         } else {
             Ok((input.clone(), None))

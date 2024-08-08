@@ -12,8 +12,8 @@ pub type FnAttributes = Attributes<ATTR_FN>;
 
 #[derive(Clone, Debug)]
 pub struct Attribute<const KIND: usize> {
-    ident: Ident,
-    args: Vec<Expr>,
+    pub ident: Ident,
+    pub args: Vec<Expr>,
 }
 
 impl<const KIND: usize> GetSpan for Attribute<KIND> {
@@ -39,7 +39,10 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
         if let (rest, Some(ident)) = Ident::try_parse_raw(input)? {
             match KIND {
                 ATTR_ABI => match ident.as_str() {
-                    "SDLCALL" | "__cdecl" => return Ok((rest, Some(Self { ident, args }))),
+                    "APIENTRY" | "APIENTRYP" | "EGLAPIENTRY" | "EGLAPIENTRYP" | "GLAPIENTRY"
+                    | "GL_APIENTRY" | "GL_APIENTRYP" | "SDLCALL" | "__cdecl" => {
+                        return Ok((rest, Some(Self { ident, args })))
+                    }
 
                     "__attribute__" => {
                         let (rest, args) =
@@ -76,7 +79,10 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                 },
 
                 ATTR_FN => match ident.as_str() {
-                    "SDL_ANALYZER_NORETURN"
+                    "EGLAPI"
+                    | "GLAPI"
+                    | "GL_APICALL"
+                    | "SDL_ANALYZER_NORETURN"
                     | "SDL_DECLSPEC"
                     | "SDL_DEPRECATED"
                     | "SDL_FORCE_INLINE"

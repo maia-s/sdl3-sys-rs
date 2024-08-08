@@ -80,14 +80,16 @@ impl<const OP1: char, const OP2: char, const OP3: char> Op<OP1, OP2, OP3> {
 
     const fn _unary_precedence(s: &[u8]) -> Option<Precedence> {
         match s {
-            b"+" | b"-" | b"!" | b"~" | b"*" | b"&" => Some(Precedence::right_to_left(2)),
+            b"+" | b"++" | b"-" | b"--" | b"!" | b"~" | b"*" | b"&" => {
+                Some(Precedence::right_to_left(2))
+            }
             _ => None,
         }
     }
 
     const fn _binary_precedence(s: &[u8]) -> Option<Precedence> {
         match s {
-            b"(" | b"[" | b"." | b"->" => Some(Precedence::left_to_right(1)),
+            b"++" | b"--" | b"(" | b"[" | b"." | b"->" => Some(Precedence::left_to_right(1)),
             b"*" | b"/" | b"%" => Some(Precedence::left_to_right(3)),
             b"+" | b"-" => Some(Precedence::left_to_right(4)),
             b"<<" | b">>" => Some(Precedence::left_to_right(5)),

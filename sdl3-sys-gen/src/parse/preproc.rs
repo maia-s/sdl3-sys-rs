@@ -36,7 +36,7 @@ impl Parse for DefineValue {
     }
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if input.contains("#") || input.contains("_asm") || input.contains("_cast<") {
+        if input.contains("#") || input.contains("_cast<") {
             Ok((input.end(), Some(Self::Other(input.clone()))))
         } else if let Some(items) = Items::try_parse_try_all(input)? {
             Ok((input.end(), Some(Self::Items(items))))
@@ -196,7 +196,9 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                         vec![Item::Skipped(block)]
                                     }
 
-                                    _ => Items::parse_all(block.trim_wsc()?)?,
+                                    _ => {
+                                        Items::try_parse_all(block.trim_wsc()?)?.unwrap_or_default()
+                                    }
                                 };
                                 let (rest, else_block) = PreProcBlock::<true>::parse_raw(&rest)?;
                                 let span1 = else_block.span();
@@ -218,7 +220,9 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                         vec![Item::Skipped(block)]
                                     }
 
-                                    _ => Items::parse_all(block.trim_wsc()?)?,
+                                    _ => {
+                                        Items::try_parse_all(block.trim_wsc()?)?.unwrap_or_default()
+                                    }
                                 };
                                 let rest = rest_;
                                 return Ok((

@@ -72,12 +72,12 @@ pub trait Parse: Sized {
         }
     }
 
-    fn try_parse_raw_eq<T>(input: &Span, cmp: T) -> ParseRawRes<Option<Self>>
-    where
-        Self: PartialEq<T>,
-    {
+    fn try_parse_raw_if(
+        input: &Span,
+        accept: impl FnOnce(&Self) -> bool,
+    ) -> ParseRawRes<Option<Self>> {
         if let (rest, Some(parsed)) = Self::try_parse_raw(input)? {
-            if parsed == cmp {
+            if accept(&parsed) {
                 return Ok((rest, Some(parsed)));
             }
         }
@@ -305,6 +305,12 @@ struct Delimited<Open, T, Close> {
     open: Open,
     value: T,
     close: Close,
+}
+
+impl<Open: GetSpan, T, Close: GetSpan> GetSpan for Delimited<Open, T, Close> {
+    fn span(&self) -> Span {
+        self.open.span().join(&self.close.span())
+    }
 }
 
 impl<Open: Parse, T: Parse, Close: Parse> Parse for Delimited<Open, T, Close> {

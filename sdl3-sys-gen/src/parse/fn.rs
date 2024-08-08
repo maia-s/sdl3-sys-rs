@@ -105,17 +105,17 @@ impl Parse for FnDeclArgs {
                 .unwrap_or_default()
                 .into();
             WsAndComments::try_parse(&mut rest)?;
-            let close_paren = Op::<')'>::parse(&mut rest)?;
-            Ok((
-                rest,
-                Some(Self {
-                    span: open_paren.span.join(&close_paren.span),
-                    args,
-                }),
-            ))
-        } else {
-            Ok((input.clone(), None))
+            if let Some(close_paren) = Op::<')'>::try_parse(&mut rest)? {
+                return Ok((
+                    rest,
+                    Some(Self {
+                        span: open_paren.span.join(&close_paren.span),
+                        args,
+                    }),
+                ));
+            }
         }
+        Ok((input.clone(), None))
     }
 }
 

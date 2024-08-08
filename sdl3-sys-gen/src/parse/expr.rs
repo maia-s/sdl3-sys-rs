@@ -1,6 +1,6 @@
 use super::{
-    Delimited, ExprOp, GetSpan, IdentOrKw, Kw_sizeof, Literal, Op, Parse, ParseErr, ParseRawRes,
-    Precedence, Punctuated, Span, Type, WsAndComments
+    Balanced, Delimited, ExprOp, GetSpan, Ident, IdentOrKw, Kw_sizeof, Literal, Op, Parse,
+    ParseErr, ParseRawRes, Precedence, Punctuated, Span, Type, WsAndComments
 };
 
 #[derive(Clone, Debug)]
@@ -10,14 +10,22 @@ pub enum Expr {
     FnCall(FnCall),
     Ambiguous(Ambiguous),
     Cast(Box<Cast>),
+    Asm(Asm),
     SizeOf(Box<SizeOf>),
     UnaryOp(Box<UnaryOp>),
     BinaryOp(Box<BinaryOp>),
+    PostOp(Box<UnaryOp>),
     Ternary(Box<Ternary>),
     ArrayIndex {
         span: Span,
         base: Box<Expr>,
         index: Box<Expr>,
+    },
+
+    // only created by VarDecl
+    ArrayValues {
+        span: Span,
+        values: Vec<Expr>
     },
 }
 
@@ -47,6 +55,8 @@ impl Expr {
             } else {
                 return Ok((input.clone(), None));
             }
+        } else if let Some(asm) = Asm::try_parse(&mut rest)? {
+            Self::Asm(asm)
         } else if let Some(sizeof) = SizeOf::try_parse(&mut rest)? {
             if prec.parse_rhs_first(Precedence::right_to_left(2)) {
                 Self::SizeOf(Box::new(sizeof))
@@ -75,11 +85,20 @@ impl Expr {
                 // trailing doc comment after expression
                 break;
             }
+
             if let Some((new_prec, op)) = ExprOp::try_parse_binop(&mut rest2)? {
                 if prec.parse_rhs_first(new_prec) {
                     WsAndComments::try_parse(&mut rest2)?;
                     match op.as_str().as_bytes() {
-                        b"("=>{
+                        b"++" | b"--" => {
+                            rest = rest2;
+                            lhs = Expr::PostOp(Box::new(UnaryOp {
+                                op,
+                                expr: lhs,
+                            }))
+                        }
+
+                        b"(" => {
                             let (rest_, args) = CallArgs::parse_raw(&op.span.join(&rest2))?;
                             rest = rest_;
                             lhs = Expr::FnCall(FnCall {
@@ -171,11 +190,13 @@ impl GetSpan for Expr {
             Self::FnCall(e) => e.span(),
             Self::Cast(e) => e.span(),
             Self::Ambiguous(e) => e.span(),
+            Self::Asm(e) => e.span(),
             Self::SizeOf(e) => e.span(),
-            Self::UnaryOp(e) => e.span(),
+            Self::UnaryOp(e) | Self::PostOp(e) => e.span(),
             Self::BinaryOp(e) => e.span(),
             Self::Ternary(e) => e.span(),
             Self::ArrayIndex { span, .. } => span.clone(),
+            Self::ArrayValues { span, .. } => span.clone(),
         }
     }
 }
@@ -200,6 +221,49 @@ impl Parse for ExprNoComma {
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
         let (rest, expr) = Expr::try_parse_raw_with_prec(input, Precedence::comma(), true)?;
         Ok((rest, expr.map(Self)))
+    }
+}
+
+#[derive(Clone, Debug)]
+pub struct Asm {
+    pub span: Span,
+    pub kind: Span,
+}
+
+impl GetSpan for Asm {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
+}
+
+impl Parse for Asm {
+    fn desc() -> std::borrow::Cow<'static, str> {
+        "asm".into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(ident)) = Ident::try_parse_raw(input)? {
+            match ident.as_str().as_bytes() {
+                b"__asm__" => {
+                    WsAndComments::try_parse(&mut rest)?;
+                    if let (rest_, Some(_)) = Ident::try_parse_raw_if(&rest, |i| i.as_str() == "__volatile__")? {
+                        rest = rest_;
+                        WsAndComments::try_parse(&mut rest)?;
+                    }
+                    let body = Balanced::<Op<'('>, Op<')'>>::parse(&mut rest)?;
+                    return Ok((rest, Some(Self { span: ident.span.join(&body.span), kind: ident.span() })))
+                }
+
+                b"_asm" => {
+                    WsAndComments::try_parse(&mut rest)?;
+                    let body = Balanced::<Op<'{'>, Op<'}'>>::parse(&mut rest)?;
+                    return Ok((rest, Some(Self { span: ident.span.join(&body.span), kind: ident.span() })))
+                }
+
+                _ => ()
+            }
+        }
+        Ok((input.clone(), None))
     }
 }
 

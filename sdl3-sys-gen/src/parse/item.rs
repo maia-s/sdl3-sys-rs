@@ -1,10 +1,10 @@
 use crate::parse::{Kw_else, Kw_while};
 
 use super::{
-    Define, Delimited, DocComment, DocCommentFile, Enum, Expr, ExprNoComma, FnCall, Function,
-    GetSpan, Ident, Include, Kw_do, Kw_if, Kw_return, Op, Parse, ParseErr, ParseRawRes,
-    PreProcBlock, PreProcLine, PreProcLineKind, Span, StructOrUnion, Terminated, Type, TypeDef,
-    TypeWithReqIdent, WsAndComments,
+    Asm, Define, Delimited, DocComment, DocCommentFile, Enum, Expr, ExprNoComma, FnCall, Function,
+    GetSpan, Ident, Include, Kw_do, Kw_for, Kw_if, Kw_return, Op, Parse, ParseErr, ParseRawRes,
+    PreProcBlock, PreProcLine, PreProcLineKind, Punctuated, Span, StructOrUnion, Terminated, Type,
+    TypeDef, TypeWithReqIdent, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -27,6 +27,7 @@ pub enum Item {
     TypeDef(TypeDef),
     VarDecl(VarDecl),
     DoWhile(DoWhile),
+    For(For),
     IfElse(IfElse),
     Return(Return),
 }
@@ -60,6 +61,8 @@ impl Parse for Item {
             ))
         } else if let (rest, Some(s)) = DoWhile::try_parse_raw(input)? {
             Ok((rest, Some(Item::DoWhile(s))))
+        } else if let (rest, Some(s)) = For::try_parse_raw(input)? {
+            Ok((rest, Some(Item::For(s))))
         } else if let (rest, Some(s)) = IfElse::try_parse_raw(input)? {
             Ok((rest, Some(Item::IfElse(s))))
         } else if let (rest, Some(s)) = Return::try_parse_raw(input)? {
@@ -76,6 +79,10 @@ impl Parse for Item {
             Ok((rest, Some(Item::StructOrUnion(s.0))))
         } else if let (rest, Some(decl)) = VarDecl::try_parse_raw(input)? {
             Ok((rest, Some(Item::VarDecl(decl))))
+        } else if let (rest, Some(asm)) =
+            Asm::try_parse_raw_if(input, |a| a.kind.as_str() == "_asm")?
+        {
+            Ok((rest, Some(Item::Expr(Expr::Asm(asm)))))
         } else if let (rest, Some(expr)) = Terminated::<Expr, Op![;]>::try_parse_raw(input)? {
             Ok((rest, Some(Item::Expr(expr.value))))
         } else if let (rest, Some(call)) = FnCall::try_parse_raw(input)? {
@@ -152,6 +159,55 @@ impl Parse for DoWhile {
                     span,
                     block,
                     cond: cond.value,
+                }),
+            ))
+        } else {
+            Ok((input.clone(), None))
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct For {
+    span: Span,
+    init: Expr,
+    cond: Expr,
+    iter: Expr,
+    block: Block,
+}
+
+impl Parse for For {
+    fn desc() -> Cow<'static, str> {
+        "for".into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(for_kw)) = Kw_for::try_parse_raw(input)? {
+            WsAndComments::try_parse(&mut rest)?;
+            Op::<'('>::parse(&mut rest)?;
+            WsAndComments::try_parse(&mut rest)?;
+            let init = Expr::parse(&mut rest)?;
+            WsAndComments::try_parse(&mut rest)?;
+            <Op![;]>::parse(&mut rest)?;
+            WsAndComments::try_parse(&mut rest)?;
+            let cond = Expr::parse(&mut rest)?;
+            WsAndComments::try_parse(&mut rest)?;
+            <Op![;]>::parse(&mut rest)?;
+            WsAndComments::try_parse(&mut rest)?;
+            let iter = Expr::parse(&mut rest)?;
+            WsAndComments::try_parse(&mut rest)?;
+            Op::<')'>::parse(&mut rest)?;
+            WsAndComments::try_parse(&mut rest)?;
+            let block = Block::parse(&mut rest)?;
+            let span = for_kw.span.join(&block.span);
+            Ok((
+                rest,
+                Some(Self {
+                    span,
+                    init,
+                    cond,
+                    iter,
+                    block,
                 }),
             ))
         } else {
@@ -304,7 +360,20 @@ impl Parse for VarDecl {
             WsAndComments::try_parse(&mut rest)?;
             let init = if <Op![=]>::try_parse(&mut rest)?.is_some() {
                 WsAndComments::try_parse(&mut rest)?;
-                let init = Some(ExprNoComma::parse(&mut rest)?.0);
+                let init = if ty.ty.is_array_or_pointer() {
+                    let parsed = Delimited::<
+                        Op<'{'>,
+                        Option<Punctuated<ExprNoComma, Op![,]>>,
+                        Op<'}'>,
+                    >::parse(&mut rest)?;
+                    let span = parsed.span();
+                    let values: Vec<ExprNoComma> =
+                        parsed.value.map(|v| v.into()).unwrap_or_default();
+                    let values = values.into_iter().map(|i| i.0).collect();
+                    Some(Expr::ArrayValues { span, values })
+                } else {
+                    Some(ExprNoComma::parse(&mut rest)?.0)
+                };
                 WsAndComments::try_parse(&mut rest)?;
                 init
             } else {
