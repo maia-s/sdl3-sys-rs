@@ -57,7 +57,7 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                 },
 
                 ATTR_ARG => match ident.as_str() {
-                    "SDL_PRINTF_FORMAT_STRING" | "SDL_SCANF_FORMAT_STRING" => {
+                    "SDL_PRINTF_FORMAT_STRING" | "SDL_SCANF_FORMAT_STRING" | "SDL_UNUSED" => {
                         return Ok((rest, Some(Self { ident, args })))
                     }
 
@@ -78,6 +78,7 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                 ATTR_FN => match ident.as_str() {
                     "SDL_ANALYZER_NORETURN"
                     | "SDL_DECLSPEC"
+                    | "SDL_DEPRECATED"
                     | "SDL_FORCE_INLINE"
                     | "SDL_MALLOC"
                     | "__inline"
