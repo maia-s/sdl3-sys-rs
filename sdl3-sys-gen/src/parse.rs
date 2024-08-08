@@ -1,10 +1,4 @@
-use std::{
-    borrow::Cow,
-    fmt::{self, Debug, Display},
-    marker::PhantomData,
-    num::NonZeroU8,
-    str,
-};
+use std::{borrow::Cow, fmt::Debug, marker::PhantomData, str};
 
 macro_rules! Op {
     ($($tt:tt)*) => {
@@ -101,36 +95,8 @@ pub trait Parse: Sized {
         }
     }
 
-    fn parse_raw_eq<T>(input: &Span, cmp: T) -> ParseRawRes<Self>
-    where
-        Self: PartialEq<T>,
-        T: Display,
-    {
-        match Self::try_parse_raw(input) {
-            Ok((rest, Some(parsed))) if parsed == cmp => Ok((rest, parsed)),
-            Ok((rest, _)) => Err(ParseErr::new(
-                input.start().join(&rest.start()),
-                format!("expected `{cmp}`"),
-            )),
-            Err(e) => Err(e),
-        }
-    }
-
     fn try_parse(input: &mut Span) -> ParseRes<Option<Self>> {
         match Self::try_parse_raw(input) {
-            Ok((rest, parsed)) => {
-                *input = rest;
-                Ok(parsed)
-            }
-            Err(e) => Err(e),
-        }
-    }
-
-    fn try_parse_eq<T>(input: &mut Span, cmp: T) -> ParseRes<Option<Self>>
-    where
-        Self: PartialEq<T>,
-    {
-        match Self::try_parse_raw_eq(input, cmp) {
             Ok((rest, parsed)) => {
                 *input = rest;
                 Ok(parsed)
@@ -148,21 +114,6 @@ pub trait Parse: Sized {
             Err(e) => Err(e),
         }
     }
-
-    fn parse_eq<T>(input: &mut Span, cmp: T) -> ParseRes<Self>
-    where
-        Self: PartialEq<T>,
-        T: Display,
-    {
-        match Self::parse_raw_eq(input, cmp) {
-            Ok((rest, parsed)) => {
-                *input = rest;
-                Ok(parsed)
-            }
-            Err(e) => Err(e),
-        }
-    }
-
     fn try_parse_try_all(input: &Span) -> ParseRes<Option<Self>> {
         match Self::try_parse_raw(input) {
             Ok((rest, parsed)) => {
@@ -234,48 +185,6 @@ trait ParseRev: Parse {
             Ok((rest, parsed)) => {
                 *input = rest;
                 Ok(parsed)
-            }
-            Err(e) => Err(e),
-        }
-    }
-
-    fn parse_rev(input: &mut Span) -> ParseRes<Self> {
-        match Self::parse_rev_raw(input) {
-            Ok((rest, parsed)) => {
-                *input = rest;
-                Ok(parsed)
-            }
-            Err(e) => Err(e),
-        }
-    }
-
-    fn try_parse_rev_all(input: Span) -> ParseRes<Option<Self>> {
-        match Self::try_parse_rev_raw(&input) {
-            Ok((rest, parsed)) => {
-                if rest.is_empty() {
-                    Ok(parsed)
-                } else {
-                    Err(ParseErr::new(
-                        rest,
-                        format!("unexpected data before {}", Self::desc()),
-                    ))
-                }
-            }
-            Err(e) => Err(e),
-        }
-    }
-
-    fn parse_rev_all(input: Span) -> ParseRes<Self> {
-        match Self::parse_rev_raw(&input) {
-            Ok((rest, parsed)) => {
-                if rest.is_empty() {
-                    Ok(parsed)
-                } else {
-                    Err(ParseErr::new(
-                        rest,
-                        format!("unexpected data before {}", Self::desc()),
-                    ))
-                }
             }
             Err(e) => Err(e),
         }

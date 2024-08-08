@@ -75,6 +75,7 @@ pub struct Span {
     start: usize,
     end: usize,
     #[cfg(feature = "extra-debugging")]
+    #[allow(unused)]
     str: String,
 }
 

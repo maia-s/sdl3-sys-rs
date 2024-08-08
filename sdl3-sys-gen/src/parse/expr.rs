@@ -1,7 +1,6 @@
-use crate::parse::{ExprOp, ParseErr};
-
 use super::{
-    Delimited, GetSpan, IdentOrKw, Kw_sizeof, Literal, Op, Parse, ParseRawRes, ParseRes, Precedence, Punctuated, Span, Type, WsAndComments
+    Delimited, ExprOp, GetSpan, IdentOrKw, Kw_sizeof, Literal, Op, Parse, ParseErr, ParseRawRes,
+    Precedence, Punctuated, Span, Type, WsAndComments
 };
 
 #[derive(Clone, Debug)]

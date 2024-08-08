@@ -1,6 +1,6 @@
 use super::{
-    ArgAttribute, Balanced, Block, DocComment, FnAbi, FnAttribute, FnAttributes, GetSpan, Ident,
-    Kw_extern, Kw_static, Op, Parse, ParseErr, ParseRawRes, Punctuated, Span, Type, TypeWithIdent,
+    ArgAttribute, Block, DocComment, FnAbi, FnAttribute, FnAttributes, GetSpan, Ident, Kw_extern,
+    Kw_static, Op, Parse, ParseErr, ParseRawRes, Punctuated, Span, Type, TypeWithIdent,
     TypeWithOptIdent, WsAndComments,
 };
 use std::borrow::Cow;
