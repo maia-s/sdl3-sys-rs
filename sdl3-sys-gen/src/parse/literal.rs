@@ -163,25 +163,27 @@ impl Parse for FloatLiteral {
 }
 
 #[derive(Clone, Debug)]
-pub enum IntegerLiteral {
-    Unsuffixed(Spanned<u64>),
-    Unsigned(Spanned<u64>),
-    Long(Spanned<u64>),
-    UnsignedLong(Spanned<u64>),
-    LongLong(Spanned<u64>),
-    UnsignedLongLong(Spanned<u64>),
+pub struct IntegerLiteral {
+    span: Span,
+    kind: IntegerLiteralType,
+    value: u64,
+    base: u32,
+    ndigits: u32,
+}
+
+#[derive(Clone, Debug)]
+pub enum IntegerLiteralType {
+    Unsuffixed,
+    Unsigned,
+    Long,
+    UnsignedLong,
+    LongLong,
+    UnsignedLongLong,
 }
 
 impl GetSpan for IntegerLiteral {
     fn span(&self) -> Span {
-        match self {
-            Self::Unsuffixed(lit)
-            | Self::Unsigned(lit)
-            | Self::Long(lit)
-            | Self::UnsignedLong(lit)
-            | Self::LongLong(lit)
-            | Self::UnsignedLongLong(lit) => lit.span(),
-        }
+        self.span.clone()
     }
 }
 
@@ -195,56 +197,79 @@ impl Parse for IntegerLiteral {
             rest: Span,
             span: Span,
             value: u64,
+            base: u32,
+            ndigits: u32,
         ) -> ParseRawRes<Option<IntegerLiteral>> {
             if rest.starts_with("ull") || rest.starts_with("ULL") {
                 let (sspan, rest) = rest.split_at(3);
                 Ok((
                     rest,
-                    Some(IntegerLiteral::UnsignedLongLong(Spanned {
+                    Some(IntegerLiteral {
                         span: span.join(&sspan),
+                        kind: IntegerLiteralType::UnsignedLongLong,
                         value,
-                    })),
+                        base,
+                        ndigits,
+                    }),
                 ))
             } else if rest.starts_with("ul") || rest.starts_with("UL") {
                 let (sspan, rest) = rest.split_at(2);
                 Ok((
                     rest,
-                    Some(IntegerLiteral::UnsignedLong(Spanned {
+                    Some(IntegerLiteral {
                         span: span.join(&sspan),
+                        kind: IntegerLiteralType::UnsignedLong,
                         value,
-                    })),
+                        base,
+                        ndigits,
+                    }),
                 ))
             } else if rest.starts_with("u") || rest.starts_with("U") {
                 let (sspan, rest) = rest.split_at(1);
                 Ok((
                     rest,
-                    Some(IntegerLiteral::Unsigned(Spanned {
+                    Some(IntegerLiteral {
                         span: span.join(&sspan),
+                        kind: IntegerLiteralType::Unsigned,
                         value,
-                    })),
+                        base,
+                        ndigits,
+                    }),
                 ))
             } else if rest.starts_with("ll") || rest.starts_with("LL") {
                 let (sspan, rest) = rest.split_at(2);
                 Ok((
                     rest,
-                    Some(IntegerLiteral::LongLong(Spanned {
+                    Some(IntegerLiteral {
                         span: span.join(&sspan),
+                        kind: IntegerLiteralType::LongLong,
                         value,
-                    })),
+                        base,
+                        ndigits,
+                    }),
                 ))
             } else if rest.starts_with("l") || rest.starts_with("L") {
                 let (sspan, rest) = rest.split_at(1);
                 Ok((
                     rest,
-                    Some(IntegerLiteral::Long(Spanned {
+                    Some(IntegerLiteral {
                         span: span.join(&sspan),
+                        kind: IntegerLiteralType::Long,
                         value,
-                    })),
+                        base,
+                        ndigits,
+                    }),
                 ))
             } else {
                 Ok((
                     rest,
-                    Some(IntegerLiteral::Unsuffixed(Spanned { span, value })),
+                    Some(IntegerLiteral {
+                        span,
+                        kind: IntegerLiteralType::Unsuffixed,
+                        value,
+                        base,
+                        ndigits,
+                    }),
                 ))
             }
         }
@@ -270,11 +295,11 @@ impl Parse for IntegerLiteral {
                         }
                         _ => {
                             let (span, rest) = rest.split_at(1);
-                            return parse_suffix_and_create(rest, span, 0);
+                            return parse_suffix_and_create(rest, span, 0, 10, 1);
                         }
                     };
                 } else {
-                    return parse_suffix_and_create(rest.end(), rest, 0);
+                    return parse_suffix_and_create(rest.end(), rest, 0, 10, 1);
                 }
             } else if matches!(ch, '1'..='9') {
                 need_digit = false;
@@ -283,6 +308,7 @@ impl Parse for IntegerLiteral {
                 return Ok((input.clone(), None));
             }
 
+            let mut ndigits = !need_digit as _;
             let mut endi = input.len();
             let digitkind = match base {
                 8 => {
@@ -290,6 +316,7 @@ impl Parse for IntegerLiteral {
                         match ch {
                             '0'..='7' => {
                                 need_digit = false;
+                                ndigits += 1;
                                 value = value
                                     .checked_shl(3)
                                     .and_then(|v| v.checked_add((ch as u8 - b'0') as _))
@@ -311,6 +338,7 @@ impl Parse for IntegerLiteral {
                         match ch {
                             '0'..='9' => {
                                 need_digit = false;
+                                ndigits += 1;
                                 value = value
                                     .checked_mul(10)
                                     .and_then(|v| v.checked_add((ch as u8 - b'0') as _))
@@ -332,18 +360,21 @@ impl Parse for IntegerLiteral {
                         value = match ch {
                             '0'..='9' => {
                                 need_digit = false;
+                                ndigits += 1;
                                 value
                                     .checked_shl(4)
                                     .and_then(|v| v.checked_add((ch as u8 - b'0') as _))
                             }
                             'a'..='f' => {
                                 need_digit = false;
+                                ndigits += 1;
                                 value
                                     .checked_shl(4)
                                     .and_then(|v| v.checked_add((ch as u8 - b'a' + 10) as _))
                             }
                             'A'..='F' => {
                                 need_digit = false;
+                                ndigits += 1;
                                 value
                                     .checked_shl(4)
                                     .and_then(|v| v.checked_add((ch as u8 - b'A' + 10) as _))
@@ -377,7 +408,7 @@ impl Parse for IntegerLiteral {
             }
 
             let (span, rest) = rest.split_at(endi);
-            parse_suffix_and_create(rest, span, value)
+            parse_suffix_and_create(rest, span, value, base, ndigits)
         } else {
             Ok((input.clone(), None))
         }
