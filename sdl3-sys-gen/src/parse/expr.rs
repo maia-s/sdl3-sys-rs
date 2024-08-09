@@ -6,7 +6,7 @@ use super::{
 
 #[derive(Clone, Debug)]
 pub enum Expr {
-    Parenthesized(Box<Expr>),
+    Parenthesized(Box<Parenthesized>),
     Ident(IdentOrKw),
     Literal(Literal),
     FnCall(FnCall),
@@ -65,13 +65,9 @@ impl Expr {
             } else {
                 return Ok((input.clone(), None));
             }
-        } else if let Some(Delimited {
-            open: _,
-            value: expr,
-            close: _,
-        }) = Delimited::<Op<'('>, Expr, Op<')'>>::try_parse(&mut rest)?
+        } else if let Some(p) = Parenthesized::try_parse(&mut rest)?
         {
-            Expr::Parenthesized(Box::new(expr))
+            Expr::Parenthesized(Box::new(p))
         } else if let Some(ident) = IdentOrKw::try_parse(&mut rest)? {
             Self::Ident(ident)
         } else if let Some(lit) = Literal::try_parse(&mut rest)? {
@@ -233,6 +229,39 @@ impl Parse for ExprNoComma {
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
         let (rest, expr) = Expr::try_parse_raw_with_prec(input, Precedence::comma(), true)?;
         Ok((rest, expr.map(Self)))
+    }
+}
+
+#[derive(Clone,Debug)]
+pub struct Parenthesized {
+    pub span: Span,
+    pub expr: Expr,
+}
+
+impl GetSpan for Parenthesized {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
+}
+
+impl Parse for Parenthesized {
+    fn desc() -> std::borrow::Cow<'static, str> {
+        "parenthesized expression".into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (rest, Some(Delimited {
+            open,
+            value: expr,
+            close,
+        })) = Delimited::<Op<'('>, Expr, Op<')'>>::try_parse_raw(input)? {
+            Ok((rest, Some(Self {
+                span: open.span.join(&close.span),
+                expr,
+            })))
+        } else {
+            Ok((input.clone(), None))
+        }
     }
 }
 
