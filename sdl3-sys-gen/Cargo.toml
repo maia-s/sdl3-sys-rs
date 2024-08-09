@@ -7,3 +7,6 @@ edition = "2021"
 default = []
 
 extra-debugging = []
+
+[dependencies]
+const-it = "0.2"

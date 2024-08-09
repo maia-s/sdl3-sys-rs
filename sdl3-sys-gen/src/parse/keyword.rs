@@ -1,4 +1,5 @@
 use super::{GetSpan, IdentOrKw, Parse, ParseRawRes, Span};
+use const_it::{expect_some, slice_strip_prefix};
 use std::{
     borrow::Cow,
     collections::HashSet,
@@ -31,10 +32,10 @@ macro_rules! def_kws {
 }
 
 const fn kwstr(str: &str) -> &str {
-    let bytes = str.as_bytes();
-    assert!(bytes[0] == b'K' && bytes[1] == b'w' && bytes[2] == b'_');
-    let bytes = unsafe { core::slice::from_raw_parts(bytes.as_ptr().add(3), bytes.len() - 3) };
-    unsafe { core::str::from_utf8_unchecked(bytes) }
+    expect_some!(
+        slice_strip_prefix!(str, "Kw_"),
+        "ident didn't start with `Kw_`"
+    )
 }
 
 def_kws! {
