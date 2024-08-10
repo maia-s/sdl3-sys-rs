@@ -1,5 +1,7 @@
 use super::{Parse, ParseErr, ParseRawRes, ParseRes};
+use core::hash::Hash;
 use std::{
+    borrow::Cow,
     fmt::{self, Debug, Display},
     ops::{Bound, RangeBounds},
     rc::Rc,
@@ -90,6 +92,10 @@ impl Span {
             start: 0,
             end,
         }
+    }
+
+    pub fn new_inline(src: impl Into<Cow<'static, str>>) -> Self {
+        Self::new(Source::new("<inline>".into(), src.into().to_string()))
     }
 
     pub fn clone_range(&self, start: usize, end: usize) -> Self {
@@ -335,5 +341,19 @@ impl Debug for Span {
 impl Display for Span {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(self.as_str())
+    }
+}
+
+impl PartialEq for Span {
+    fn eq(&self, other: &Self) -> bool {
+        self.as_str().eq(other.as_str())
+    }
+}
+
+impl Eq for Span {}
+
+impl Hash for Span {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.as_str().hash(state)
     }
 }

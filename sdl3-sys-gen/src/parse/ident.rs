@@ -4,9 +4,21 @@ use std::borrow::Cow;
 pub type Ident = IdentOrKwT<false>;
 pub type IdentOrKw = IdentOrKwT<true>;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct IdentOrKwT<const ALLOW_KEYWORDS: bool> {
     pub span: Span,
+}
+
+impl<const ALLOW_KEYWORDS: bool> IdentOrKwT<ALLOW_KEYWORDS> {
+    pub fn new_inline(ident: impl Into<Cow<'static, str>>) -> Self {
+        let ident = ident.into();
+        if !ALLOW_KEYWORDS && is_keyword(&ident) {
+            panic!("can't create keyword with non-keyword ident");
+        }
+        Self {
+            span: Span::new_inline(ident),
+        }
+    }
 }
 
 impl<const ALLOW_KEYWORDS: bool> IdentOrKwT<ALLOW_KEYWORDS> {

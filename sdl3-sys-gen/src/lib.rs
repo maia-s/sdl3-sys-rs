@@ -1,5 +1,10 @@
+#![allow(clippy::type_complexity)]
+
+mod emit;
 mod parse;
 
+use core::fmt::Write;
+use emit::{Emit, EmitContext, EmitErr, EmitResult};
 use parse::{Items, Parse, ParseErr, Source, Span};
 use std::{
     collections::HashMap,
@@ -31,6 +36,7 @@ pub fn generate(headers_path: &Path) -> Result<(), Error> {
         let name = entry.file_name();
         let name = name.to_string_lossy();
         let name_lc = name.to_ascii_lowercase();
+
         if let Some(module) = name_lc
             .strip_prefix("sdl_")
             .and_then(|s| s.strip_suffix(".h"))
@@ -56,13 +62,60 @@ pub fn generate(headers_path: &Path) -> Result<(), Error> {
         }
     }
 
+    gen.emit("log")?;
+
     Ok(())
+}
+
+#[derive(Default)]
+pub struct Gen {
+    modules: HashMap<String, Items>,
+}
+
+impl Gen {
+    pub fn new() -> Self {
+        Self {
+            modules: HashMap::new(),
+        }
+    }
+
+    pub fn parse(
+        &mut self,
+        module: &str,
+        filename: String,
+        contents: String,
+    ) -> Result<(), ParseErr> {
+        println!("parsing {filename}");
+        let contents: Span = Source::new(filename, contents).into();
+        let rest = contents.trim_wsc()?;
+        let items = Items::try_parse_all(rest)?.unwrap_or_default();
+        self.modules.insert(module.to_owned(), items);
+        Ok(())
+    }
+
+    pub fn emit(&self, module: &str) -> EmitResult {
+        let mut output = StringLog(String::new());
+        let mut ctx = EmitContext::new(module, &mut output);
+        self.modules[module].emit(&mut ctx)?;
+        Ok(())
+    }
+}
+
+#[derive(Debug)]
+pub struct StringLog(String);
+
+impl Write for StringLog {
+    fn write_str(&mut self, s: &str) -> fmt::Result {
+        print!("{s}");
+        self.0.write_str(s)
+    }
 }
 
 #[derive(Debug)]
 pub enum Error {
     IoError(io::Error),
     ParseError(ParseErr),
+    EmitError(EmitErr),
 }
 
 impl error::Error for Error {}
@@ -72,6 +125,7 @@ impl Display for Error {
         match self {
             Error::IoError(e) => Display::fmt(e, f),
             Error::ParseError(e) => Display::fmt(e, f),
+            Error::EmitError(e) => Display::fmt(e, f),
         }
     }
 }
@@ -88,23 +142,8 @@ impl From<ParseErr> for Error {
     }
 }
 
-struct Gen {
-    modules: HashMap<String, Items>,
-}
-
-impl Gen {
-    fn new() -> Self {
-        Self {
-            modules: HashMap::new(),
-        }
-    }
-
-    fn parse(&mut self, module: &str, filename: String, contents: String) -> Result<(), ParseErr> {
-        println!("parsing {filename}");
-        let contents: Span = Source::new(filename, contents).into();
-        let rest = contents.trim_wsc()?;
-        let items = Items::try_parse_all(rest)?.unwrap_or_default();
-        self.modules.insert(module.to_owned(), items);
-        Ok(())
+impl From<EmitErr> for Error {
+    fn from(value: EmitErr) -> Self {
+        Self::EmitError(value)
     }
 }

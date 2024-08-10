@@ -18,7 +18,7 @@ pub enum Item {
     Include(Include),
     Pragma(Span),
     Error(Span),
-    FileDoc(DocComment),
+    FileDoc(DocCommentFile),
     StructOrUnion(StructOrUnion),
     Enum(Enum),
     Function(Function),

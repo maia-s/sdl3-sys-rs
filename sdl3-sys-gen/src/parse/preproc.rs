@@ -10,11 +10,11 @@ fn skip_ifdef(str: &str) -> bool {
 
 #[derive(Clone, Debug)]
 pub struct Define {
-    span: Span,
-    doc: Option<DocComment>,
-    ident: Ident,
-    args: Option<Vec<IdentOrKw>>,
-    value: DefineValue,
+    pub span: Span,
+    pub doc: Option<DocComment>,
+    pub ident: Ident,
+    pub args: Option<Vec<IdentOrKw>>,
+    pub value: DefineValue,
 }
 
 impl GetSpan for Define {
@@ -57,9 +57,9 @@ impl Parse for DefineValue {
 
 #[derive(Clone, Debug)]
 pub struct Include {
-    span: Span,
-    kind: IncludeKind,
-    path: Span,
+    pub span: Span,
+    pub kind: IncludeKind,
+    pub path: Span,
 }
 
 impl GetSpan for Include {
@@ -104,10 +104,10 @@ impl Parse for Line {
 
 #[derive(Clone, Debug)]
 pub struct PreProcBlock<const ALLOW_INITIAL_ELSE: bool = false> {
-    span: Span,
-    kind: PreProcBlockKind,
-    block: Items,
-    else_block: Option<Box<PreProcBlock<true>>>,
+    pub span: Span,
+    pub kind: PreProcBlockKind,
+    pub block: Items,
+    pub else_block: Option<Box<PreProcBlock<true>>>,
 }
 
 impl<const ALLOW_INITIAL_ELSE: bool> GetSpan for PreProcBlock<ALLOW_INITIAL_ELSE> {
