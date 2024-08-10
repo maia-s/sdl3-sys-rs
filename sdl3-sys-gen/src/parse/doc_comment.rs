@@ -1,4 +1,5 @@
 use super::{GetSpan, Parse, ParseErr, ParseRawRes, ParseRev, Span, WsAndComments};
+use crate::common_prefix;
 use std::{
     borrow::Cow,
     fmt::{self, Display},
@@ -12,15 +13,6 @@ pub struct DocComment {
 
 impl Display for DocComment {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        fn common_prefix<'a>(a: &'a str, b: &str) -> &'a str {
-            for (i, (ca, cb)) in a.chars().zip(b.chars()).enumerate() {
-                if ca != cb {
-                    return &a[..i];
-                }
-            }
-            &a[..a.len().min(b.len())]
-        }
-
         macro_rules! pass {
             ($lines:expr) => {{
                 let mut lines = $lines;

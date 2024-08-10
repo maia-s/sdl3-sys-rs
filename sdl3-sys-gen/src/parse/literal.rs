@@ -164,11 +164,11 @@ impl Parse for FloatLiteral {
 
 #[derive(Clone, Debug)]
 pub struct IntegerLiteral {
-    span: Span,
-    kind: IntegerLiteralType,
-    value: u64,
-    base: u32,
-    ndigits: u32,
+    pub span: Span,
+    pub kind: IntegerLiteralType,
+    pub value: u64,
+    pub base: u32,
+    pub ndigits: u32,
 }
 
 #[derive(Clone, Debug)]
@@ -179,6 +179,28 @@ pub enum IntegerLiteralType {
     UnsignedLong,
     LongLong,
     UnsignedLongLong,
+}
+
+impl IntegerLiteral {
+    pub fn zero() -> Self {
+        Self {
+            span: Span::new_inline("0"),
+            kind: IntegerLiteralType::Unsuffixed,
+            value: 0,
+            base: 10,
+            ndigits: 1,
+        }
+    }
+
+    pub fn one() -> Self {
+        Self {
+            span: Span::new_inline("1"),
+            kind: IntegerLiteralType::Unsuffixed,
+            value: 1,
+            base: 10,
+            ndigits: 1,
+        }
+    }
 }
 
 impl GetSpan for IntegerLiteral {
@@ -417,8 +439,8 @@ impl Parse for IntegerLiteral {
 
 #[derive(Clone, Debug)]
 pub struct StringLiteral {
-    span: Span,
-    str: CString,
+    pub span: Span,
+    pub str: CString,
 }
 
 impl GetSpan for StringLiteral {

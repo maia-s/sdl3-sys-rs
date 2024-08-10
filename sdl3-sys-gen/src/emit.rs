@@ -1,9 +1,16 @@
-use crate::parse::{
-    Define, DefineValue, DocComment, DocCommentFile, GetSpan, Ident, IdentOrKw, Include, Item,
-    ParseErr, PreProcBlock,
+use crate::{
+    common_prefix,
+    parse::{
+        Define, DocComment, DocCommentFile, Expr, GetSpan, Include, IntegerLiteral, Item, Literal,
+        ParseErr, PreProcBlock, TypeDef,
+    },
 };
 use core::fmt::{self, Display, Write};
-use std::collections::{HashMap, HashSet};
+
+mod expr;
+pub use expr::Value;
+mod state;
+pub use state::EmitContext;
 
 pub type EmitResult = Result<(), EmitErr>;
 
@@ -34,83 +41,18 @@ impl Display for EmitErr {
     }
 }
 
-pub struct EmitContext<'a> {
-    module: &'a str,
-    output: &'a mut dyn Write,
-    preprocstate: PreProcState,
-}
-
-impl<'a> EmitContext<'a> {
-    pub fn new(module: &'a str, output: &'a mut dyn Write) -> Self {
-        let mut preprocstate = PreProcState::default();
-        preprocstate.undefine(Ident::new_inline("__cplusplus"));
-        preprocstate.undefine(Ident::new_inline(format!("SDL_{module}_h_")));
-        Self {
-            module,
-            output,
-            preprocstate,
-        }
-    }
-}
-
-impl Write for EmitContext<'_> {
-    fn write_str(&mut self, s: &str) -> fmt::Result {
-        self.output.write_str(s)
-    }
-}
-
-#[derive(Default)]
-pub struct PreProcState {
-    defined: HashMap<Ident, (Option<Vec<IdentOrKw>>, DefineValue)>,
-    undefined: HashSet<Ident>,
-}
-
-impl PreProcState {
-    pub fn define(
-        &mut self,
-        key: Ident,
-        args: Option<Vec<IdentOrKw>>,
-        value: DefineValue,
-    ) -> EmitResult {
-        if self.defined.contains_key(&key) {
-            return Err(ParseErr::new(key.span, "already defined").into());
-        }
-        self.undefined.remove(&key);
-        self.defined.insert(key, (args, value));
-        Ok(())
-    }
-
-    pub fn undefine(&mut self, key: Ident) {
-        self.defined.remove(&key);
-        self.undefined.insert(key);
-    }
-
-    pub fn lookup(
-        &self,
-        key: &Ident,
-    ) -> Result<Option<(&Ident, &(Option<Vec<IdentOrKw>>, DefineValue))>, EmitErr> {
-        if let Some((ident, value)) = self.defined.get_key_value(key) {
-            Ok(Some((ident, value)))
-        } else if self.undefined.contains(key) {
-            Ok(None)
-        } else {
-            Err(ParseErr::new(key.span(), "unknown define").into())
-        }
-    }
-
-    pub fn is_defined(&self, key: &Ident) -> Result<bool, EmitErr> {
-        if self.defined.contains_key(key) {
-            Ok(true)
-        } else if self.undefined.contains(key) {
-            Ok(false)
-        } else {
-            Err(ParseErr::new(key.span(), "unknown define").into())
-        }
-    }
-}
-
 pub trait Emit {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult;
+}
+
+impl<T: Emit> Emit for Option<T> {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        if let Some(t) = self {
+            t.emit(ctx)
+        } else {
+            Ok(())
+        }
+    }
 }
 
 impl<T: Emit> Emit for Vec<T> {
@@ -139,7 +81,7 @@ impl Emit for Item {
             Item::Function(_) => todo!(),
             Item::Expr(_) => todo!(),
             Item::FnCall(_) => todo!(),
-            Item::TypeDef(_) => todo!(),
+            Item::TypeDef(td) => td.emit(ctx),
             Item::VarDecl(_) => todo!(),
             Item::DoWhile(_) => todo!(),
             Item::For(_) => todo!(),
@@ -174,7 +116,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
             crate::parse::PreProcBlockKind::If(_) => todo!(),
 
             crate::parse::PreProcBlockKind::IfDef(ident) => {
-                if ctx.preprocstate.is_defined(ident)? {
+                if ctx.preprocstate().is_defined(ident)? {
                     self.block.emit(ctx)
                 } else if let Some(else_block) = &self.else_block {
                     else_block.emit(ctx)
@@ -184,7 +126,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
             }
 
             crate::parse::PreProcBlockKind::IfNDef(ident) => {
-                if !ctx.preprocstate.is_defined(ident)? {
+                if !ctx.preprocstate().is_defined(ident)? {
                     self.block.emit(ctx)
                 } else if let Some(else_block) = &self.else_block {
                     else_block.emit(ctx)
@@ -200,7 +142,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
 
 impl Emit for Define {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        ctx.preprocstate
+        ctx.preprocstate_mut()
             .define(self.ident.clone(), self.args.clone(), self.value.clone())
     }
 }
@@ -212,5 +154,100 @@ impl Emit for Include {
             writeln!(ctx, "use super::{module}::*;")?;
         }
         Ok(())
+    }
+}
+
+impl Emit for TypeDef {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        self.doc.emit(ctx)?;
+
+        match &self.ty.ty {
+            crate::parse::TypeEnum::Primitive(_) => todo!(),
+            crate::parse::TypeEnum::Ident(_) => todo!(),
+
+            crate::parse::TypeEnum::Enum(e) => {
+                assert!(e.doc.is_none());
+
+                let mut enum_rust_type = None;
+                let mut known_values = Vec::new();
+
+                let mut prefix = e
+                    .variants
+                    .first()
+                    .map(|v| v.ident.as_str())
+                    .unwrap_or_default();
+
+                for variant in &e.variants {
+                    known_values.push(", ".into());
+                    known_values.push(format!("[`{}`]", variant.ident.as_str()));
+                    prefix = common_prefix(prefix, variant.ident.as_str());
+                }
+
+                if !known_values.is_empty() {
+                    if self.doc.is_some() {
+                        writeln!(ctx, "///")?;
+                    }
+                    write!(ctx, "/// This is a `C` enum. Known values: ")?;
+                    let mut known_values = known_values.into_iter();
+                    known_values.next();
+                    for s in known_values {
+                        ctx.write_str(&s)?;
+                    }
+                    writeln!(ctx)?;
+                }
+
+                let enum_rust_type = enum_rust_type.unwrap_or("::core::ffi::c_int");
+
+                ctx.scope_mut().register_sym(self.ident.clone())?;
+                let enum_ident = self.ident.as_str();
+                writeln!(ctx, "#[repr(transparent)]")?;
+                writeln!(ctx, "pub struct {enum_ident}(pub {enum_rust_type});")?;
+
+                let mut impl_consts = String::new();
+                let mut ctx_impl = ctx.with_output(&mut impl_consts);
+                let mut global_consts = String::new();
+                let mut ctx_global = ctx.with_output(&mut global_consts);
+                let mut next_expr = Some(Expr::Literal(Literal::Integer(IntegerLiteral::zero())));
+
+                for variant in &e.variants {
+                    ctx.scope_mut().register_sym(variant.ident.clone())?;
+                    let variant_ident = variant.ident.as_str();
+                    let short_variant_ident = variant_ident.strip_prefix(prefix).unwrap();
+                    variant.doc.emit(&mut ctx_impl)?;
+                    write!(ctx_impl, "pub const {short_variant_ident}: Self = Self(")?;
+                    next_expr = if let Some(expr) = &variant.expr {
+                        expr.emit(&mut ctx_impl)?;
+                        expr.try_eval_plus_one(ctx).map(Expr::Value)
+                    } else if let Some(next_expr) = next_expr {
+                        next_expr.emit(&mut ctx_impl)?;
+                        next_expr.try_eval_plus_one(ctx).map(Expr::Value)
+                    } else {
+                        return Err(ParseErr::new(
+                            variant.ident.span(),
+                            "couldn't evaluate value for enum",
+                        )
+                        .into());
+                    };
+                    writeln!(ctx_impl, ");")?;
+                    variant.doc.emit(&mut ctx_global)?;
+                    writeln!(
+                        ctx_global,
+                        "pub const {variant_ident}: {enum_ident} = {enum_ident}::{short_variant_ident};"
+                    )?;
+                }
+
+                writeln!(ctx, "impl {enum_ident} {{")?;
+                ctx.write_str(&impl_consts)?;
+                writeln!(ctx, "}}")?;
+                ctx.write_str(&global_consts)?;
+                Ok(())
+            }
+
+            crate::parse::TypeEnum::Struct(_) => todo!(),
+            crate::parse::TypeEnum::Pointer(_) => todo!(),
+            crate::parse::TypeEnum::Array(_, _) => todo!(),
+            crate::parse::TypeEnum::FnPointer(_) => todo!(),
+            crate::parse::TypeEnum::DotDotDot => todo!(),
+        }
     }
 }

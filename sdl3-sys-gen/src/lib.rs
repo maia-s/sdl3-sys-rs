@@ -147,3 +147,12 @@ impl From<EmitErr> for Error {
         Self::EmitError(value)
     }
 }
+
+fn common_prefix<'a>(a: &'a str, b: &str) -> &'a str {
+    for (i, (ca, cb)) in a.chars().zip(b.chars()).enumerate() {
+        if ca != cb {
+            return &a[..i];
+        }
+    }
+    &a[..a.len().min(b.len())]
+}

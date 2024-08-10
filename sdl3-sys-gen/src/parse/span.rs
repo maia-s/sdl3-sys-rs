@@ -98,6 +98,14 @@ impl Span {
         Self::new(Source::new("<inline>".into(), src.into().to_string()))
     }
 
+    pub fn none() -> Self {
+        Self {
+            src: None,
+            start: 0,
+            end: 0,
+        }
+    }
+
     pub fn clone_range(&self, start: usize, end: usize) -> Self {
         let src = self.src.clone();
         Self {

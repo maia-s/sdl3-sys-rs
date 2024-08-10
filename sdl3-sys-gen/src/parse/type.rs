@@ -6,9 +6,9 @@ use std::borrow::Cow;
 
 #[derive(Clone, Debug)]
 pub struct Type {
-    span: Span,
-    is_const: bool,
-    ty: TypeEnum,
+    pub span: Span,
+    pub is_const: bool,
+    pub ty: TypeEnum,
 }
 
 impl Type {
@@ -258,10 +258,10 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
 
 #[derive(Clone, Debug)]
 pub struct TypeDef {
-    span: Span,
-    doc: Option<DocComment>,
-    ident: Ident,
-    ty: Type,
+    pub span: Span,
+    pub doc: Option<DocComment>,
+    pub ident: Ident,
+    pub ty: Type,
 }
 
 impl Parse for TypeDef {

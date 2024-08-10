@@ -5,17 +5,17 @@ use std::borrow::Cow;
 
 #[derive(Clone, Debug)]
 pub struct Enum {
-    span: Span,
-    doc: Option<DocComment>,
-    ident: Option<Ident>,
-    variants: Vec<EnumVariant>,
+    pub span: Span,
+    pub doc: Option<DocComment>,
+    pub ident: Option<Ident>,
+    pub variants: Vec<EnumVariant>,
 }
 
 #[derive(Clone, Debug)]
 pub struct EnumVariant {
-    doc: Option<DocComment>,
-    ident: Ident,
-    expr: Option<Expr>,
+    pub doc: Option<DocComment>,
+    pub ident: Ident,
+    pub expr: Option<Expr>,
 }
 
 impl Parse for Enum {

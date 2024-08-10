@@ -1,4 +1,6 @@
 use std::cmp::Ordering;
+use crate::emit::Value;
+
 use super::{
     Balanced, Delimited, ExprOp, GetSpan, Ident, IdentOrKw, Kw_sizeof, Literal, Op, Parse,
     ParseErr, ParseRawRes, Precedence, Punctuated, Span, Type, WsAndComments
@@ -29,6 +31,9 @@ pub enum Expr {
         span: Span,
         values: Vec<Expr>
     },
+
+    // only created by the emitter
+    Value(Value)
 }
 
 impl Expr {
@@ -205,6 +210,7 @@ impl GetSpan for Expr {
             Self::Ternary(e) => e.span(),
             Self::ArrayIndex { span, .. } => span.clone(),
             Self::ArrayValues { span, .. } => span.clone(),
+            Self::Value(_) => Span::none(),
         }
     }
 }
@@ -322,9 +328,9 @@ impl GetSpan for UnaryOp {
 
 #[derive(Clone, Debug)]
 pub struct BinaryOp {
-    op: ExprOp,
-    lhs: Expr,
-    rhs: Expr,
+    pub op: ExprOp,
+    pub lhs: Expr,
+    pub rhs: Expr,
 }
 
 impl GetSpan for BinaryOp {
