@@ -85,7 +85,8 @@ impl Parse for DocComment {
     }
 }
 
-pub struct DocCommentFile(DocComment);
+#[derive(Clone, Debug)]
+pub struct DocCommentFile(pub DocComment);
 
 impl Parse for DocCommentFile {
     fn desc() -> Cow<'static, str> {

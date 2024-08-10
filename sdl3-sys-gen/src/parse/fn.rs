@@ -5,7 +5,7 @@ use super::{
 };
 use std::borrow::Cow;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Function {
     span: Span,
     doc: Option<DocComment>,
