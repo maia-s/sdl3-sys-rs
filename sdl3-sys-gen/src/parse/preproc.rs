@@ -1,6 +1,6 @@
 use super::{
-    DocComment, DocCommentPost, Expr, GetSpan, Ident, IdentOrKw, Item, Items, Parse, ParseErr,
-    ParseRawRes, Punctuated, Span, Type, WsAndComments,
+    Ambiguous, DocComment, DocCommentPost, Expr, GetSpan, Ident, IdentOrKw, Item, Items, Parse,
+    ParseErr, ParseRawRes, Punctuated, Span, Type, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -29,6 +29,7 @@ pub enum DefineValue {
     Type(Type),
     Items(Items),
     Other(Span),
+    Ambiguous(Ambiguous),
     None,
 }
 
@@ -42,15 +43,32 @@ impl Parse for DefineValue {
             Ok((input.end(), Some(Self::None)))
         } else if input.contains("#") || input.contains("_cast<") {
             Ok((input.end(), Some(Self::Other(input.clone()))))
-        } else if let Some(items) = Items::try_parse_try_all(input)? {
-            Ok((input.end(), Some(Self::Items(items))))
-        } else if let Some(expr) = Expr::try_parse_try_all(input)? {
-            Ok((input.end(), Some(Self::Expr(expr))))
-        } else if let Some(ty) = Type::try_parse_try_all(input)? {
-            Ok((input.end(), Some(Self::Type(ty))))
         } else {
-            dbg!(input);
-            panic!()
+            let items = Items::try_parse_try_all(input)?;
+            let expr = Expr::try_parse_try_all(input)?;
+            let ty = Type::try_parse_try_all(input)?;
+            if items.is_some() as usize + expr.is_some() as usize + ty.is_some() as usize > 1 {
+                let mut ambiguous = Ambiguous::new(input.clone());
+                if let Some(items) = items {
+                    ambiguous.push_items(items);
+                }
+                if let Some(expr) = expr {
+                    ambiguous.push_expr(expr);
+                }
+                if let Some(ty) = ty {
+                    ambiguous.push_ty(ty);
+                }
+                Ok((input.end(), Some(Self::Ambiguous(ambiguous))))
+            } else if let Some(items) = items {
+                Ok((input.end(), Some(Self::Items(items))))
+            } else if let Some(expr) = expr {
+                Ok((input.end(), Some(Self::Expr(expr))))
+            } else if let Some(ty) = ty {
+                Ok((input.end(), Some(Self::Type(ty))))
+            } else {
+                dbg!(input);
+                panic!()
+            }
         }
     }
 }

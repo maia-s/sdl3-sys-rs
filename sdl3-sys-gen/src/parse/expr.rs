@@ -1,10 +1,9 @@
-use std::cmp::Ordering;
-use crate::emit::Value;
-
 use super::{
-    Balanced, Delimited, ExprOp, GetSpan, Ident, IdentOrKw, Kw_sizeof, Literal, Op, Parse,
+    Balanced, Delimited, ExprOp, GetSpan, Ident, IdentOrKw, Items, Kw_sizeof, Literal, Op, Parse,
     ParseErr, ParseRawRes, Precedence, Punctuated, Span, Type, WsAndComments
 };
+use crate::emit::Value;
+use std::cmp::Ordering;
 
 #[derive(Clone, Debug)]
 pub enum Expr {
@@ -170,10 +169,10 @@ impl Expr {
                         ));
                     }
                     Ordering::Equal => {
-                        lhs = Expr::Ambiguous(Ambiguous {
-                            span: lhs.span().join(&not_cast.span()),
-                            alternatives: vec![lhs, not_cast],
-                        });
+                        let mut ambiguous = Ambiguous::new(lhs.span().join(&not_cast.span()));
+                        ambiguous.push_expr(lhs);
+                        ambiguous.push_expr(not_cast);
+                        lhs = Expr::Ambiguous(ambiguous);
                     }
                 }
             }
@@ -355,7 +354,32 @@ impl GetSpan for Ternary {
 #[derive(Clone, Debug)]
 pub struct Ambiguous {
     pub span: Span,
-    pub alternatives: Vec<Expr>
+    pub alternatives: Vec<Alternative>,
+}
+
+#[derive(Clone, Debug)]
+pub enum Alternative {
+    Expr(Expr),
+    Type(Type),
+    Items(Items),
+}
+
+impl Ambiguous {
+    pub fn new(span: Span) -> Self {
+        Self { span, alternatives:Vec::new() }
+    }
+
+    pub fn push_expr(&mut self, expr: Expr) {
+        self.alternatives.push(Alternative::Expr(expr));
+    }
+
+    pub fn push_ty(&mut self, ty: Type) {
+        self.alternatives.push(Alternative::Type(ty));
+    }
+
+    pub fn push_items(&mut self, items: Items) {
+        self.alternatives.push(Alternative::Items(items));
+    }
 }
 
 impl GetSpan for Ambiguous {

@@ -1,7 +1,7 @@
 use super::{Emit, EmitContext, EmitResult};
 use crate::parse::{
-    BinaryOp, Expr, FloatLiteral, GetSpan, IntegerLiteral, Literal, Op, ParseErr, Span,
-    StringLiteral,
+    Alternative, BinaryOp, Expr, FloatLiteral, GetSpan, IntegerLiteral, Literal, Op, ParseErr,
+    Span, StringLiteral,
 };
 use core::fmt::Write;
 
@@ -51,11 +51,13 @@ impl Expr {
             Expr::Ambiguous(amb) => {
                 let mut result = None;
                 for alt in amb.alternatives.iter() {
-                    if let Some(value) = alt.try_eval(ctx) {
-                        if result.is_none() {
-                            result = Some(value.clone());
-                        } else {
-                            return None;
+                    if let Alternative::Expr(expr) = alt {
+                        if let Some(value) = expr.try_eval(ctx) {
+                            if result.is_none() {
+                                result = Some(value.clone());
+                            } else {
+                                return None;
+                            }
                         }
                     }
                 }

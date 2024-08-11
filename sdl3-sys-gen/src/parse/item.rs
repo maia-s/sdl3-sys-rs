@@ -1,11 +1,10 @@
-use crate::parse::{Kw_else, Kw_while};
-
 use super::{
     Asm, Define, Delimited, DocComment, DocCommentFile, Enum, Expr, ExprNoComma, FnCall, Function,
     GetSpan, Ident, Include, Kw_do, Kw_for, Kw_if, Kw_return, Op, Parse, ParseErr, ParseRawRes,
     PreProcBlock, PreProcLine, PreProcLineKind, Punctuated, Span, StructOrUnion, Terminated, Type,
     TypeDef, TypeWithReqIdent, WsAndComments,
 };
+use crate::parse::{Kw_else, Kw_while};
 use std::borrow::Cow;
 
 #[derive(Clone, Debug)]
