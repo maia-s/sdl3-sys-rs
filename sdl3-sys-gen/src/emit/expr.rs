@@ -17,8 +17,22 @@ impl Emit for Value {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match self {
             Value::U31(u) => write!(ctx, "{u}")?,
-            Value::F32(f) => write!(ctx, "{f:.}_f32")?,
-            Value::F64(f) => write!(ctx, "{f:.}_f64")?,
+            &Value::F32(f) => {
+                let s = format!("{}", f);
+                if s.parse() == Ok(f) {
+                    write!(ctx, "{s}_f32")?
+                } else {
+                    todo!()
+                }
+            }
+            &Value::F64(f) => {
+                let s = format!("{}", f);
+                if s.parse() == Ok(f) {
+                    write!(ctx, "{s}_f64")?
+                } else {
+                    todo!()
+                }
+            }
             Value::String(s) => return s.emit(ctx),
         }
         Ok(())
@@ -160,10 +174,9 @@ impl Emit for IntegerLiteral {
 impl Emit for FloatLiteral {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match self {
-            FloatLiteral::Float(f) => write!(ctx, "{:.}_f32", f.value)?,
-            FloatLiteral::Double(f) => write!(ctx, "{:.}_f64", f.value)?,
+            FloatLiteral::Float(f) => Value::F32(f.value).emit(ctx),
+            FloatLiteral::Double(f) => Value::F64(f.value).emit(ctx),
         }
-        Ok(())
     }
 }
 
