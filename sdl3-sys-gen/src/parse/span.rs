@@ -360,6 +360,18 @@ impl PartialEq for Span {
 
 impl Eq for Span {}
 
+impl PartialOrd for Span {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl Ord for Span {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        self.as_str().cmp(other.as_str())
+    }
+}
+
 impl Hash for Span {
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
         self.as_str().hash(state)

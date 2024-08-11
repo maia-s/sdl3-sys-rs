@@ -1,9 +1,8 @@
 use super::{
     Ambiguous, DocComment, DocCommentPost, Expr, GetSpan, Ident, IdentOrKw, IntegerLiteral, Item,
-    Items, Literal, Parse, ParseErr, ParseRawRes, Punctuated, Span, StringLiteral, Type,
-    WsAndComments,
+    Items, Literal, Parse, ParseErr, ParseRawRes, Punctuated, Span, Type, WsAndComments,
 };
-use std::{borrow::Cow, ffi::CString};
+use std::borrow::Cow;
 
 fn skip_ifdef(str: &str) -> bool {
     matches!(str, "__cplusplus" | "SDL_THREAD_SAFETY_ANALYSIS")
@@ -229,7 +228,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                     }
 
                                     PreProcBlockKind::IfDef(i) if skip_ifdef(i.as_str()) => {
-                                        vec![Item::Skipped(block)]
+                                        Items(vec![Item::Skipped(block)])
                                     }
 
                                     _ => {
@@ -253,7 +252,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                 let block = block_start.join(&rest.start());
                                 let block = match &kind {
                                     PreProcBlockKind::IfDef(i) if skip_ifdef(i.as_str()) => {
-                                        vec![Item::Skipped(block)]
+                                        Items(vec![Item::Skipped(block)])
                                     }
 
                                     _ => {

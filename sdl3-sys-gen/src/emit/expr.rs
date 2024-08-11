@@ -1,4 +1,4 @@
-use super::{Emit, EmitContext, EmitErr, EmitResult, Eval};
+use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval};
 use crate::parse::{
     Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, GetSpan, IntegerLiteral,
     Literal, Op, ParseErr, Span, StringLiteral,
@@ -12,9 +12,18 @@ pub enum Value {
     F32(f32),
     F64(f64),
     String(StringLiteral),
+    TargetDependent(DefineState),
 }
 
 impl Value {
+    pub fn bool(value: bool) -> Self {
+        Value::U31(value as u32)
+    }
+
+    pub fn is_target_dependent(&self) -> bool {
+        matches!(self, Self::TargetDependent(_))
+    }
+
     pub fn is_truthy(&self) -> bool {
         match self {
             &Value::I32(i) => i != 0,
@@ -22,7 +31,12 @@ impl Value {
             &Value::F32(f) => !f.is_nan() && f != 0.0,
             &Value::F64(f) => !f.is_nan() && f != 0.0,
             Value::String(_) => true,
+            Value::TargetDependent(_) => unreachable!(),
         }
+    }
+
+    pub fn is_falsy(&self) -> bool {
+        !self.is_truthy()
     }
 }
 
@@ -48,6 +62,9 @@ impl Emit for Value {
                 }
             }
             Value::String(s) => return s.emit(ctx),
+            Value::TargetDependent(_) => {
+                return Err(ParseErr::new(Span::none(), "can't emit indeterminate value").into())
+            }
         }
         Ok(())
     }
@@ -148,10 +165,13 @@ impl Eval for Expr {
                             let Expr::Ident(define) = &args[0] else {
                                 return err();
                             };
-                            return if ctx.preprocstate().is_defined(&define.clone().try_into()?)? {
-                                Ok(Some(Value::U31(1)))
+                            let define = define.clone().try_into()?;
+                            return if ctx.preprocstate().is_target_define(&define) {
+                                Ok(Some(Value::TargetDependent(DefineState::defined(define))))
+                            } else if ctx.preprocstate().is_defined(&define)? {
+                                Ok(Some(Value::bool(true)))
                             } else {
-                                Ok(Some(Value::U31(0)))
+                                Ok(Some(Value::bool(false)))
                             };
                         }
                     }
@@ -183,6 +203,12 @@ impl Eval for Expr {
                 let Some(expr) = expr else { return Ok(None) };
 
                 return match uop.op.as_str().as_bytes() {
+                    b"!" => match expr {
+                        Value::String(_) => Ok(None),
+                        Value::TargetDependent(ds) => Ok(Some(Value::TargetDependent(ds.not()))),
+                        _ => Ok(Some(Value::bool(expr.is_falsy()))),
+                    },
+
                     b"+" => match expr {
                         Value::String(_) => Ok(None),
                         _ => Ok(Some(expr)),
@@ -197,6 +223,7 @@ impl Eval for Expr {
                         Value::U31(value) => Ok(Some(Value::I32(-(value as i32)))),
                         Value::F32(value) => Ok(Some(Value::F32(-value))),
                         Value::F64(value) => Ok(Some(Value::F64(-value))),
+                        Value::TargetDependent(_) => Ok(Some(expr)),
                         _ => Ok(None),
                     },
 
@@ -205,22 +232,53 @@ impl Eval for Expr {
             }
 
             Expr::BinaryOp(bop) => {
-                let lhs = bop.lhs.try_eval(ctx)?;
-                let Some(lhs) = lhs else { return Ok(None) };
-                let rhs = bop.rhs.try_eval(ctx)?;
-                let Some(rhs) = rhs else { return Ok(None) };
+                macro_rules! eval {
+                    ($expr:expr) => {{
+                        let Some(value) = $expr.try_eval(ctx)? else {
+                            return Ok(None);
+                        };
+                        value
+                    }};
+                }
 
-                macro_rules! checked_add {
-                    ($a:expr, $b:expr) => {
-                        $a.checked_add($b).ok_or_else(|| {
+                macro_rules! calc {
+                    ($op:tt) => {
+                        match (eval!(bop.lhs), eval!(bop.rhs)) {
+                            (Value::I32(lhs), Value::I32(rhs)) => {
+                                Ok(Some(Value::I32(calc!(@ checked $op (lhs, rhs)))))
+                            }
+                            (Value::I32(lhs), Value::U31(rhs)) => {
+                                Ok(Some(Value::I32(calc!(@ checked $op (lhs, rhs as i32)))))
+                            }
+                            (Value::U31(lhs), Value::I32(rhs)) => {
+                                Ok(Some(Value::I32(calc!(@ checked $op (lhs as i32, rhs)))))
+                            }
+                            (Value::U31(lhs), Value::U31(rhs)) => {
+                                let value = calc!(@ checked $op (lhs, rhs));
+                                if value <= i32::MAX as u32 {
+                                    Ok(Some(Value::U31(value)))
+                                } else {
+                                    todo!()
+                                }
+                            }
+                            (Value::F32(lhs), Value::F32(rhs)) => Ok(Some(Value::F32(lhs $op rhs))),
+                            (Value::F64(lhs), Value::F64(rhs)) => Ok(Some(Value::F64(lhs $op rhs))),
+                            _ => {
+                                Err(ParseErr::new(bop.span(), "missing implementation for eval").into())
+                            }
+                        }
+                    };
+
+                    (@ checked + ($lhs:expr, $rhs:expr)) => {
+                        $lhs.checked_add($rhs).ok_or_else(|| {
                             ParseErr::new(bop.span(), "evaluated value out of range")
                         })?
                     };
                 }
 
                 macro_rules! compare {
-                    ($lhs:ident $op:tt $rhs:ident) => {
-                        match ($lhs, $rhs) {
+                    ($op:tt) => {
+                        match (eval!(bop.lhs), eval!(bop.rhs)) {
                             (Value::I32(lhs), Value::I32(rhs)) => {
                                 Ok(Some(Value::U31((lhs $op rhs) as u32)))
                             }
@@ -245,49 +303,62 @@ impl Eval for Expr {
                 }
 
                 return match bop.op.as_str().as_bytes() {
-                    b"+" => match (lhs, rhs) {
-                        (Value::I32(lhs), Value::I32(rhs)) => {
-                            Ok(Some(Value::I32(checked_add!(lhs, rhs))))
-                        }
-                        (Value::I32(lhs), Value::U31(rhs)) => {
-                            Ok(Some(Value::I32(checked_add!(lhs, rhs as i32))))
-                        }
-                        (Value::U31(lhs), Value::I32(rhs)) => {
-                            Ok(Some(Value::I32(checked_add!(lhs as i32, rhs))))
-                        }
-                        (Value::U31(lhs), Value::U31(rhs)) => {
-                            let value = checked_add!(lhs, rhs);
-                            if value <= i32::MAX as u32 {
-                                Ok(Some(Value::U31(checked_add!(lhs, rhs))))
-                            } else {
-                                todo!()
-                            }
-                        }
-                        (Value::F32(lhs), Value::F32(rhs)) => Ok(Some(Value::F32(lhs + rhs))),
-                        (Value::F64(lhs), Value::F64(rhs)) => Ok(Some(Value::F64(lhs + rhs))),
-                        _ => {
-                            Err(ParseErr::new(bop.span(), "missing implementation for eval").into())
-                        }
-                    },
+                    b"+" => calc!(+),
 
                     b"&&" => {
-                        let lhs = lhs.is_truthy();
-                        let rhs = rhs.is_truthy();
-                        Ok(Some(Value::U31((lhs && rhs) as u32)))
+                        let lhs = eval!(bop.lhs);
+                        if let Value::TargetDependent(lhs) = lhs {
+                            let rhs = eval!(bop.rhs);
+                            if let Value::TargetDependent(rhs) = rhs {
+                                Ok(Some(Value::TargetDependent(lhs.all(rhs))))
+                            } else if rhs.is_truthy() {
+                                Ok(Some(Value::TargetDependent(lhs)))
+                            } else {
+                                Ok(Some(Value::bool(false)))
+                            }
+                        } else if lhs.is_truthy() {
+                            let rhs = eval!(bop.rhs);
+                            if let Value::TargetDependent(rhs) = rhs {
+                                Ok(Some(Value::TargetDependent(rhs)))
+                            } else {
+                                Ok(Some(Value::bool(rhs.is_truthy())))
+                            }
+                        } else {
+                            // short circuit
+                            Ok(Some(Value::bool(false)))
+                        }
                     }
 
                     b"||" => {
-                        let lhs = lhs.is_truthy();
-                        let rhs = rhs.is_truthy();
-                        Ok(Some(Value::U31((lhs || rhs) as u32)))
+                        let lhs = eval!(bop.lhs);
+                        if let Value::TargetDependent(lhs) = lhs {
+                            let rhs = eval!(bop.rhs);
+                            if let Value::TargetDependent(rhs) = rhs {
+                                Ok(Some(Value::TargetDependent(lhs.any(rhs))))
+                            } else if rhs.is_falsy() {
+                                Ok(Some(Value::TargetDependent(lhs)))
+                            } else {
+                                Ok(Some(Value::bool(true)))
+                            }
+                        } else if lhs.is_falsy() {
+                            let rhs = eval!(bop.rhs);
+                            if let Value::TargetDependent(rhs) = rhs {
+                                Ok(Some(Value::TargetDependent(rhs)))
+                            } else {
+                                Ok(Some(Value::bool(rhs.is_truthy())))
+                            }
+                        } else {
+                            // short circuit
+                            Ok(Some(Value::bool(true)))
+                        }
                     }
 
-                    b"==" => compare!(lhs == rhs),
-                    b"!=" => compare!(lhs != rhs),
-                    b"<" => compare!(lhs < rhs),
-                    b"<=" => compare!(lhs <= rhs),
-                    b">" => compare!(lhs > rhs),
-                    b">=" => compare!(lhs >= rhs),
+                    b"==" => compare!(==),
+                    b"!=" => compare!(!=),
+                    b"<" => compare!(<),
+                    b"<=" => compare!(<=),
+                    b">" => compare!(>),
+                    b">=" => compare!(>=),
 
                     _ => {
                         return Err(

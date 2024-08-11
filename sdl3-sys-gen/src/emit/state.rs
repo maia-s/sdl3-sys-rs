@@ -1,11 +1,140 @@
 use super::{EmitErr, EmitResult};
-use crate::parse::{DefineValue, GetSpan, Ident, IdentOrKw, ParseErr};
+use crate::parse::{DefineValue, GetSpan, Ident, IdentOrKw, IdentOrKwT, ParseErr};
 use std::{
     cell::{Ref, RefCell, RefMut},
-    collections::{HashMap, HashSet},
+    collections::{BTreeSet, HashMap, HashSet},
     fmt::{self, Write},
+    iter::Extend,
     rc::Rc,
 };
+
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub struct DefineState {
+    state: Option<Coll<Ident>>,
+}
+
+impl DefineState {
+    pub fn none() -> Self {
+        Self { state: None }
+    }
+
+    pub fn is_none(&self) -> bool {
+        self.state.is_none()
+    }
+
+    pub fn defined(ident: Ident) -> Self {
+        Self {
+            state: Some(Coll::One(ident)),
+        }
+    }
+
+    #[must_use]
+    pub fn all(self, rhs: Self) -> Self {
+        let state = if let Some(self_state) = self.state {
+            Some(if let Some(rhs_state) = rhs.state {
+                self_state.all(rhs_state)
+            } else {
+                self_state
+            })
+        } else {
+            rhs.state
+        };
+        Self { state }
+    }
+
+    #[must_use]
+    pub fn any(self, rhs: Self) -> Self {
+        let state = if let Some(self_state) = self.state {
+            Some(if let Some(rhs_state) = rhs.state {
+                self_state.any(rhs_state)
+            } else {
+                self_state
+            })
+        } else {
+            rhs.state
+        };
+        Self { state }
+    }
+
+    #[must_use]
+    pub fn not(self) -> Self {
+        Self {
+            state: self.state.map(|coll| coll.not()),
+        }
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub enum Coll<T> {
+    All(BTreeSet<Coll<T>>),
+    Any(BTreeSet<Coll<T>>),
+    Not(Box<Coll<T>>),
+    One(T),
+}
+
+impl<T: Clone + Ord> Coll<T> {
+    #[must_use]
+    pub fn all(self, rhs: Self) -> Self {
+        if let Coll::All(mut all) = self {
+            match rhs {
+                Coll::All(rhs) => all.extend(rhs),
+                Coll::Any(_) | Coll::Not(_) | Coll::One(_) => {
+                    all.insert(rhs);
+                }
+            }
+            Coll::All(all)
+        } else if let Coll::All(mut all) = rhs {
+            match self {
+                Coll::All(_) => unreachable!(),
+                Coll::Any(_) | Coll::Not(_) | Coll::One(_) => {
+                    all.insert(self);
+                }
+            }
+            Coll::All(all)
+        } else {
+            let mut all = BTreeSet::new();
+            all.insert(self.clone());
+            all.insert(rhs);
+            Coll::All(all)
+        }
+    }
+
+    #[must_use]
+    pub fn any(self, rhs: Self) -> Self {
+        if let Coll::Any(mut any) = self {
+            match rhs {
+                Coll::Any(rhs) => any.extend(rhs),
+                Coll::All(_) | Coll::Not(_) | Coll::One(_) => {
+                    any.insert(rhs);
+                }
+            }
+            Coll::Any(any)
+        } else if let Coll::Any(mut any) = rhs {
+            match self {
+                Coll::Any(_) => unreachable!(),
+                Coll::All(_) | Coll::Not(_) | Coll::One(_) => {
+                    any.insert(self);
+                }
+            }
+            Coll::Any(any)
+        } else {
+            let mut any = BTreeSet::new();
+            any.insert(self.clone());
+            any.insert(rhs);
+            Coll::Any(any)
+        }
+    }
+
+    #[must_use]
+    pub fn not(self) -> Self {
+        if let Coll::Not(not) = self {
+            // not not
+            *not
+        } else {
+            Coll::Not(Box::new(self))
+        }
+    }
+}
 
 pub struct EmitContext<'a> {
     inner: Rc<RefCell<InnerEmitContext>>,
@@ -135,6 +264,7 @@ impl Write for EmitContext<'_> {
 pub struct PreProcState {
     defined: HashMap<Ident, (Option<Vec<IdentOrKw>>, DefineValue)>,
     undefined: HashSet<Ident>,
+    target_defines: HashSet<Ident>,
 }
 
 impl PreProcState {
@@ -158,6 +288,10 @@ impl PreProcState {
         self.undefined.insert(key);
     }
 
+    pub fn register_target_define(&mut self, key: Ident) {
+        self.target_defines.insert(key);
+    }
+
     pub fn lookup(
         &self,
         key: &Ident,
@@ -179,6 +313,10 @@ impl PreProcState {
         } else {
             Err(ParseErr::new(key.span(), "unknown define").into())
         }
+    }
+
+    pub fn is_target_define(&self, key: &Ident) -> bool {
+        self.target_defines.contains(key)
     }
 }
 

@@ -1,6 +1,6 @@
 use super::{
-    Asm, Define, Delimited, DocComment, DocCommentFile, Enum, Expr, ExprNoComma, FnCall, Function,
-    GetSpan, Ident, Include, Kw_do, Kw_for, Kw_if, Kw_return, Op, Parse, ParseErr, ParseRawRes,
+    Asm, Define, Delimited, DocCommentFile, Enum, Expr, ExprNoComma, FnCall, Function, GetSpan,
+    Ident, Include, Kw_do, Kw_for, Kw_if, Kw_return, Op, Parse, ParseErr, ParseRawRes,
     PreProcBlock, PreProcLine, PreProcLineKind, Punctuated, Span, StructOrUnion, Terminated, Type,
     TypeDef, TypeWithReqIdent, WsAndComments,
 };
@@ -95,7 +95,19 @@ impl Parse for Item {
     }
 }
 
-pub type Items = Vec<Item>;
+#[derive(Clone, Debug, Default)]
+pub struct Items(pub Vec<Item>);
+
+impl Parse for Items {
+    fn desc() -> Cow<'static, str> {
+        "items".into()
+    }
+
+    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+        let (rest, parsed) = Vec::try_parse_raw(input)?;
+        Ok((rest, parsed.map(Items)))
+    }
+}
 
 #[derive(Clone, Debug)]
 pub struct Block {
@@ -249,7 +261,7 @@ impl Parse for IfElse {
                     let elseif = IfElse::parse(&mut rest)?;
                     Block {
                         span: elseif.span(),
-                        items: vec![Item::IfElse(elseif)],
+                        items: Items(vec![Item::IfElse(elseif)]),
                     }
                 } else {
                     Block::parse(&mut rest)?

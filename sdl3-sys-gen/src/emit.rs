@@ -2,7 +2,8 @@ use crate::{
     common_prefix,
     parse::{
         ArgDecl, Define, DocComment, DocCommentFile, Expr, FnAbi, FnDeclArgs, Function, GetSpan,
-        Ident, Include, IntegerLiteral, Item, Literal, ParseErr, PreProcBlock, Type, TypeDef,
+        Ident, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock, Type,
+        TypeDef,
     },
 };
 use core::fmt::{self, Display, Write};
@@ -11,7 +12,7 @@ use std::ops::Deref;
 mod expr;
 pub use expr::Value;
 mod state;
-pub use state::EmitContext;
+pub use state::{DefineState, EmitContext};
 
 fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
     if let Some(abi) = &abi {
@@ -80,6 +81,18 @@ impl Display for EmitErr {
 
 pub trait Emit {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult;
+
+    fn emit_with_define_state(
+        &self,
+        ctx: &mut EmitContext,
+        define_state: &DefineState,
+    ) -> EmitResult {
+        todo!(); // ctx.emit_define_state_cfg(define_state)?;
+        writeln!(ctx, "emit! {{")?;
+        self.emit(ctx)?;
+        writeln!(ctx, "}}")?;
+        Ok(())
+    }
 }
 
 impl<T: Emit> Emit for Box<T> {
@@ -138,6 +151,12 @@ impl Emit for Item {
     }
 }
 
+impl Emit for Items {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        self.0.emit(ctx)
+    }
+}
+
 impl Emit for DocComment {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         for line in self.to_string().lines() {
@@ -166,7 +185,13 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
                     expr.try_eval(ctx)?
                 };
                 if let Some(value) = value {
-                    if value.is_truthy() {
+                    if let Value::TargetDependent(define_state) = value {
+                        self.block.emit_with_define_state(ctx, &define_state)?;
+                        if let Some(else_block) = &self.else_block {
+                            else_block.emit_with_define_state(ctx, &define_state.not())?;
+                        }
+                        Ok(())
+                    } else if value.is_truthy() {
                         self.block.emit(ctx)
                     } else {
                         self.else_block.emit(ctx)
@@ -177,7 +202,14 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
             }
 
             crate::parse::PreProcBlockKind::IfDef(ident) => {
-                if ctx.preprocstate().is_defined(ident)? {
+                if ctx.preprocstate().is_target_define(ident) {
+                    let define_state = DefineState::defined(ident.clone());
+                    self.block.emit_with_define_state(ctx, &define_state)?;
+                    if let Some(else_block) = &self.else_block {
+                        else_block.emit_with_define_state(ctx, &define_state.not())?;
+                    }
+                    Ok(())
+                } else if ctx.preprocstate().is_defined(ident)? {
                     self.block.emit(ctx)
                 } else {
                     self.else_block.emit(ctx)
@@ -185,7 +217,15 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
             }
 
             crate::parse::PreProcBlockKind::IfNDef(ident) => {
-                if !ctx.preprocstate().is_defined(ident)? {
+                if ctx.preprocstate().is_target_define(ident) {
+                    let define_state = DefineState::defined(ident.clone());
+                    self.block
+                        .emit_with_define_state(ctx, &define_state.clone().not())?;
+                    if let Some(else_block) = &self.else_block {
+                        else_block.emit_with_define_state(ctx, &define_state)?;
+                    }
+                    Ok(())
+                } else if !ctx.preprocstate().is_defined(ident)? {
                     self.block.emit(ctx)
                 } else {
                     self.else_block.emit(ctx)
