@@ -6,6 +6,7 @@ use crate::{
     },
 };
 use core::fmt::{self, Display, Write};
+use std::ops::Deref;
 
 mod expr;
 pub use expr::Value;
@@ -81,6 +82,12 @@ pub trait Emit {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult;
 }
 
+impl<T: Emit> Emit for Box<T> {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        self.deref().emit(ctx)
+    }
+}
+
 impl<T: Emit> Emit for Option<T> {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if let Some(t) = self {
@@ -98,6 +105,10 @@ impl<T: Emit> Emit for Vec<T> {
         }
         Ok(())
     }
+}
+
+pub trait Eval {
+    fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr>;
 }
 
 impl Emit for Item {
@@ -149,25 +160,35 @@ impl Emit for DocCommentFile {
 impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match &self.kind {
-            crate::parse::PreProcBlockKind::If(_) => todo!(),
+            crate::parse::PreProcBlockKind::If(expr) => {
+                let value = {
+                    let _eval_mode = ctx.preproc_eval_mode_guard();
+                    expr.try_eval(ctx)?
+                };
+                if let Some(value) = value {
+                    if value.is_truthy() {
+                        self.block.emit(ctx)
+                    } else {
+                        self.else_block.emit(ctx)
+                    }
+                } else {
+                    Err(ParseErr::new(expr.span(), "couldn't evaluate if expression").into())
+                }
+            }
 
             crate::parse::PreProcBlockKind::IfDef(ident) => {
                 if ctx.preprocstate().is_defined(ident)? {
                     self.block.emit(ctx)
-                } else if let Some(else_block) = &self.else_block {
-                    else_block.emit(ctx)
                 } else {
-                    Ok(())
+                    self.else_block.emit(ctx)
                 }
             }
 
             crate::parse::PreProcBlockKind::IfNDef(ident) => {
                 if !ctx.preprocstate().is_defined(ident)? {
                     self.block.emit(ctx)
-                } else if let Some(else_block) = &self.else_block {
-                    else_block.emit(ctx)
                 } else {
-                    Ok(())
+                    self.else_block.emit(ctx)
                 }
             }
 
@@ -367,10 +388,10 @@ impl Emit for TypeDef {
                     write!(ctx_impl, "pub const {short_variant_ident}: Self = Self(")?;
                     next_expr = if let Some(expr) = &variant.expr {
                         expr.emit(&mut ctx_impl)?;
-                        expr.try_eval_plus_one(ctx).map(Expr::Value)
+                        expr.try_eval_plus_one(ctx)?.map(Expr::Value)
                     } else if let Some(next_expr) = next_expr {
                         next_expr.emit(&mut ctx_impl)?;
-                        next_expr.try_eval_plus_one(ctx).map(Expr::Value)
+                        next_expr.try_eval_plus_one(ctx)?.map(Expr::Value)
                     } else {
                         return Err(ParseErr::new(
                             variant.ident.span(),

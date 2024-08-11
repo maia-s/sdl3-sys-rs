@@ -17,51 +17,82 @@ pub struct InnerEmitContext {
     preprocstate: PreProcState,
     scope: Scope,
     enum_scope: Scope,
+    preproc_eval_mode: usize,
 }
 
 impl<'a> EmitContext<'a> {
-    pub fn new(module: impl Into<String>, output: &'a mut dyn Write) -> Self {
+    pub fn new(module: impl Into<String>, output: &'a mut dyn Write) -> Result<Self, EmitErr> {
         let module = module.into();
         let mut preprocstate = PreProcState::default();
         preprocstate.undefine(Ident::new_inline("__cplusplus"));
         preprocstate.undefine(Ident::new_inline(format!("SDL_{module}_h_")));
-        Self {
+        preprocstate.define(
+            Ident::new_inline("__STDC_VERSION__"),
+            None,
+            DefineValue::parse_expr("202311L")?,
+        )?;
+        preprocstate.define(
+            Ident::new_inline("SDL_WIKI_DOCUMENTATION_SECTION"),
+            None,
+            DefineValue::one(),
+        )?;
+        Ok(Self {
             inner: Rc::new(RefCell::new(InnerEmitContext {
                 module,
                 preprocstate,
                 scope: Scope::new(),
                 enum_scope: Scope::new(),
+                preproc_eval_mode: 0,
             })),
             output,
-        }
+        })
+    }
+
+    fn inner(&self) -> Ref<InnerEmitContext> {
+        self.inner.borrow()
+    }
+
+    fn inner_mut(&mut self) -> RefMut<InnerEmitContext> {
+        self.inner.borrow_mut()
+    }
+
+    fn inner_map<T: ?Sized>(&self, map: impl FnOnce(&InnerEmitContext) -> &T) -> Ref<T> {
+        Ref::map(self.inner(), map)
+    }
+
+    fn inner_mut_map<T: ?Sized>(
+        &mut self,
+        map: impl FnOnce(&mut InnerEmitContext) -> &mut T,
+    ) -> RefMut<T> {
+        RefMut::map(self.inner_mut(), map)
     }
 
     pub fn module(&self) -> Ref<str> {
-        Ref::map(self.inner.borrow(), |ctx| ctx.module.as_str())
+        self.inner_map(|ctx| ctx.module.as_str())
     }
 
-    pub fn preprocstate(&mut self) -> Ref<PreProcState> {
-        Ref::map(self.inner.borrow(), |ctx| &ctx.preprocstate)
+    pub fn preprocstate(&self) -> Ref<PreProcState> {
+        self.inner_map(|ctx| &ctx.preprocstate)
     }
 
     pub fn preprocstate_mut(&mut self) -> RefMut<PreProcState> {
-        RefMut::map(self.inner.borrow_mut(), |ctx| &mut ctx.preprocstate)
+        self.inner_mut_map(|ctx| &mut ctx.preprocstate)
     }
 
-    pub fn scope(&mut self) -> Ref<Scope> {
-        Ref::map(self.inner.borrow(), |ctx| &ctx.scope)
+    pub fn scope(&self) -> Ref<Scope> {
+        self.inner_map(|ctx| &ctx.scope)
     }
 
     pub fn scope_mut(&mut self) -> RefMut<Scope> {
-        RefMut::map(self.inner.borrow_mut(), |ctx| &mut ctx.scope)
+        self.inner_mut_map(|ctx| &mut ctx.scope)
     }
 
-    pub fn enum_scope(&mut self) -> Ref<Scope> {
-        Ref::map(self.inner.borrow(), |ctx| &ctx.enum_scope)
+    pub fn enum_scope(&self) -> Ref<Scope> {
+        self.inner_map(|ctx| &ctx.enum_scope)
     }
 
     pub fn enum_scope_mut(&mut self) -> RefMut<Scope> {
-        RefMut::map(self.inner.borrow_mut(), |ctx| &mut ctx.enum_scope)
+        self.inner_mut_map(|ctx| &mut ctx.enum_scope)
     }
 
     pub fn with_output<'b>(&self, output: &'b mut dyn Write) -> EmitContext<'b> {
@@ -73,6 +104,24 @@ impl<'a> EmitContext<'a> {
 
     pub fn use_ident(&self, ident: &Ident) -> EmitResult {
         Ok(())
+    }
+
+    pub fn is_preproc_eval_mode(&self) -> bool {
+        self.inner().preproc_eval_mode != 0
+    }
+
+    pub fn preproc_eval_mode_guard(&mut self) -> impl Drop {
+        pub struct Guard(Rc<RefCell<InnerEmitContext>>);
+
+        impl Drop for Guard {
+            fn drop(&mut self) {
+                self.0.borrow_mut().preproc_eval_mode -= 1;
+            }
+        }
+
+        self.inner_mut().preproc_eval_mode += 1;
+
+        Guard(Rc::clone(&self.inner))
     }
 }
 
@@ -95,6 +144,7 @@ impl PreProcState {
         args: Option<Vec<IdentOrKw>>,
         value: DefineValue,
     ) -> EmitResult {
+        dbg!("define", &key, &args, &value);
         if self.defined.contains_key(&key) {
             return Err(ParseErr::new(key.span, "already defined").into());
         }
@@ -111,9 +161,9 @@ impl PreProcState {
     pub fn lookup(
         &self,
         key: &Ident,
-    ) -> Result<Option<(&Ident, &(Option<Vec<IdentOrKw>>, DefineValue))>, EmitErr> {
-        if let Some((ident, value)) = self.defined.get_key_value(key) {
-            Ok(Some((ident, value)))
+    ) -> Result<Option<&(Option<Vec<IdentOrKw>>, DefineValue)>, EmitErr> {
+        if let Some(value) = self.defined.get(key) {
+            Ok(Some(value))
         } else if self.undefined.contains(key) {
             Ok(None)
         } else {

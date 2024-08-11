@@ -62,14 +62,14 @@ pub fn generate(headers_path: &Path) -> Result<(), Error> {
         }
     }
 
-    /*
+    let mut keys = Vec::new();
     for module in gen.modules.keys() {
-        if !["opengle2s"].contains(&module.as_str()) {
-            gen.emit(module)?;
-        }
+        keys.push(module.as_str());
     }
-    */
-    gen.emit("power")?;
+    keys.sort_unstable();
+    for module in keys {
+        gen.emit(module)?;
+    }
 
     Ok(())
 }
@@ -103,7 +103,7 @@ impl Gen {
     pub fn emit(&self, module: &str) -> EmitResult {
         println!("emitting {module}");
         let mut output = StringLog(String::new());
-        let mut ctx = EmitContext::new(module, &mut output);
+        let mut ctx = EmitContext::new(module, &mut output)?;
         self.modules[module].emit(&mut ctx)?;
         Ok(())
     }

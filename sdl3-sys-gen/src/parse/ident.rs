@@ -9,6 +9,17 @@ pub struct IdentOrKwT<const ALLOW_KEYWORDS: bool> {
     pub span: Span,
 }
 
+impl TryFrom<IdentOrKw> for Ident {
+    type Error = ParseErr;
+    fn try_from(value: IdentOrKw) -> Result<Self, Self::Error> {
+        if !is_keyword(&value.span) {
+            Ok(Self { span: value.span })
+        } else {
+            Err(ParseErr::new(value.span(), "ident is keyword"))
+        }
+    }
+}
+
 impl<const ALLOW_KEYWORDS: bool> IdentOrKwT<ALLOW_KEYWORDS> {
     pub fn new_inline(ident: impl Into<Cow<'static, str>>) -> Self {
         let ident = ident.into();

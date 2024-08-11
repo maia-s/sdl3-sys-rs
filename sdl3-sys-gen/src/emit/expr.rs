@@ -1,7 +1,7 @@
-use super::{Emit, EmitContext, EmitResult};
+use super::{Emit, EmitContext, EmitErr, EmitResult, Eval};
 use crate::parse::{
-    Alternative, BinaryOp, Expr, FloatLiteral, GetSpan, IntegerLiteral, Literal, Op, ParseErr,
-    Span, StringLiteral,
+    Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, GetSpan, IntegerLiteral,
+    Literal, Op, ParseErr, Span, StringLiteral,
 };
 use core::fmt::Write;
 
@@ -12,6 +12,18 @@ pub enum Value {
     F32(f32),
     F64(f64),
     String(StringLiteral),
+}
+
+impl Value {
+    pub fn is_truthy(&self) -> bool {
+        match self {
+            &Value::I32(i) => i != 0,
+            &Value::U31(u) => u != 0,
+            &Value::F32(f) => !f.is_nan() && f != 0.0,
+            &Value::F64(f) => !f.is_nan() && f != 0.0,
+            Value::String(_) => true,
+        }
+    }
 }
 
 impl Emit for Value {
@@ -41,112 +53,31 @@ impl Emit for Value {
     }
 }
 
-impl Expr {
-    pub fn try_eval(&self, ctx: &EmitContext) -> Option<Value> {
+impl Eval for DefineValue {
+    fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
         match self {
-            Expr::Parenthesized(_) => todo!(),
-            Expr::Ident(_) => todo!(),
-
-            Expr::Literal(lit) => match lit {
-                Literal::Integer(i) => {
-                    if i.value <= i32::MAX as u64 {
-                        Some(Value::U31(i.value as u32))
-                    } else {
-                        None
-                    }
-                }
-                Literal::Float(f) => match f {
-                    FloatLiteral::Float(f) => Some(Value::F32(f.value)),
-                    FloatLiteral::Double(f) => Some(Value::F64(f.value)),
-                },
-                Literal::String(s) => Some(Value::String(s.clone())),
-            },
-
-            Expr::FnCall(_) => todo!(),
-
-            Expr::Ambiguous(amb) => {
-                let mut result = None;
-                for alt in amb.alternatives.iter() {
-                    if let Alternative::Expr(expr) = alt {
-                        if let Some(value) = expr.try_eval(ctx) {
-                            if result.is_none() {
-                                result = Some(value.clone());
-                            } else {
-                                return None;
-                            }
-                        }
-                    }
-                }
-                result
-            }
-
-            Expr::Cast(_) => todo!(),
-            Expr::Asm(_) => None,
-            Expr::SizeOf(_) => todo!(),
-
-            Expr::UnaryOp(uop) => {
-                let expr = uop.expr.try_eval(ctx)?;
-
-                match uop.op.as_str().as_bytes() {
-                    b"+" => match expr {
-                        Value::String(_) => None,
-                        _ => Some(expr),
-                    },
-
-                    b"-" => match expr {
-                        Value::I32(value) => Some(Value::I32(value.checked_neg()?)),
-                        Value::U31(value) => Some(Value::I32(-(value as i32))),
-                        Value::F32(value) => Some(Value::F32(-value)),
-                        Value::F64(value) => Some(Value::F64(-value)),
-                        _ => None,
-                    },
-
-                    _ => None,
-                }
-            }
-
-            Expr::BinaryOp(bop) => {
-                let lhs = bop.lhs.try_eval(ctx)?;
-                let rhs = bop.rhs.try_eval(ctx)?;
-
-                match bop.op.as_str().as_bytes() {
-                    b"+" => match (lhs, rhs) {
-                        (Value::I32(lhs), Value::I32(rhs)) => {
-                            Some(Value::I32(lhs.checked_add(rhs)?))
-                        }
-                        (Value::I32(lhs), Value::U31(rhs)) => {
-                            Some(Value::I32(lhs.checked_add(rhs as i32)?))
-                        }
-                        (Value::U31(lhs), Value::I32(rhs)) => {
-                            Some(Value::I32((lhs as i32).checked_add(rhs)?))
-                        }
-                        (Value::U31(lhs), Value::U31(rhs)) => {
-                            let value = lhs.checked_add(rhs)?;
-                            if value <= i32::MAX as u32 {
-                                Some(Value::U31(lhs.checked_add(rhs)?))
-                            } else {
-                                todo!()
-                            }
-                        }
-                        (Value::F32(lhs), Value::F32(rhs)) => Some(Value::F32(lhs + rhs)),
-                        (Value::F64(lhs), Value::F64(rhs)) => Some(Value::F64(lhs + rhs)),
-                        _ => None,
-                    },
-
-                    _ => None,
-                }
-            }
-
-            Expr::PostOp(_) => todo!(),
-            Expr::Ternary(_) => todo!(),
-            Expr::ArrayIndex { span, base, index } => todo!(),
-            Expr::ArrayValues { span, values } => todo!(),
-
-            Expr::Value(value) => Some(value.clone()),
+            Self::Expr(expr) => expr.try_eval(ctx),
+            Self::Ambiguous(amb) => amb.try_eval(ctx),
+            _ => todo!(),
         }
     }
+}
 
-    pub fn try_eval_plus_one(&self, ctx: &EmitContext) -> Option<Value> {
+impl Eval for Ambiguous {
+    fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        for alt in self.alternatives.iter() {
+            if let Alternative::Expr(expr) = alt {
+                if let Ok(Some(value)) = expr.try_eval(ctx) {
+                    return Ok(Some(value));
+                }
+            }
+        }
+        Ok(None)
+    }
+}
+
+impl Expr {
+    pub fn try_eval_plus_one(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
         Expr::BinaryOp(Box::new(BinaryOp {
             op: Op {
                 span: Span::new_inline("+"),
@@ -155,6 +86,226 @@ impl Expr {
             rhs: Expr::Literal(Literal::Integer(IntegerLiteral::one())),
         }))
         .try_eval(ctx)
+    }
+}
+
+impl Eval for Expr {
+    fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        match self {
+            Expr::Parenthesized(p) => return p.expr.try_eval(ctx),
+
+            Expr::Ident(ident) => {
+                if ctx.is_preproc_eval_mode() {
+                    return if let Some((args, value)) =
+                        ctx.preprocstate().lookup(&ident.clone().try_into()?)?
+                    {
+                        if args.is_some() {
+                            return Err(ParseErr::new(
+                                self.span(),
+                                "define with arguments used without arguments",
+                            )
+                            .into());
+                        }
+                        value.try_eval(ctx)
+                    } else {
+                        Err(ParseErr::new(ident.span(), "undefined macro").into())
+                    };
+                }
+            }
+
+            Expr::Literal(lit) => {
+                return match lit {
+                    Literal::Integer(i) => {
+                        if i.value <= i32::MAX as u64 {
+                            Ok(Some(Value::U31(i.value as u32)))
+                        } else {
+                            Err(ParseErr::new(i.span(), "value out of range for U31").into())
+                        }
+                    }
+                    Literal::Float(f) => match f {
+                        FloatLiteral::Float(f) => Ok(Some(Value::F32(f.value))),
+                        FloatLiteral::Double(f) => Ok(Some(Value::F64(f.value))),
+                    },
+                    Literal::String(s) => Ok(Some(Value::String(s.clone()))),
+                }
+            }
+
+            Expr::FnCall(call) => {
+                if ctx.is_preproc_eval_mode() {
+                    if let Expr::Ident(ident) = &*call.func {
+                        if ident.as_str() == "defined" {
+                            let args = &*call.args;
+                            let err = || {
+                                Err(ParseErr::new(
+                                    call.span(),
+                                    "defined() in #if takes one argument of type ident",
+                                )
+                                .into())
+                            };
+                            if args.len() != 1 {
+                                return err();
+                            }
+                            let Expr::Ident(define) = &args[0] else {
+                                return err();
+                            };
+                            return if ctx.preprocstate().is_defined(&define.clone().try_into()?)? {
+                                Ok(Some(Value::U31(1)))
+                            } else {
+                                Ok(Some(Value::U31(0)))
+                            };
+                        }
+                    }
+                }
+            }
+
+            Expr::Ambiguous(amb) => {
+                let mut result = None;
+                for alt in amb.alternatives.iter() {
+                    if let Alternative::Expr(expr) = alt {
+                        if let Some(value) = expr.try_eval(ctx)? {
+                            if result.is_none() {
+                                result = Some(value.clone());
+                            } else {
+                                return Ok(None);
+                            }
+                        }
+                    }
+                }
+                return Ok(result);
+            }
+
+            Expr::Cast(_) => (),
+            Expr::Asm(_) => return Ok(None),
+            Expr::SizeOf(_) => (),
+
+            Expr::UnaryOp(uop) => {
+                let expr = uop.expr.try_eval(ctx)?;
+                let Some(expr) = expr else { return Ok(None) };
+
+                return match uop.op.as_str().as_bytes() {
+                    b"+" => match expr {
+                        Value::String(_) => Ok(None),
+                        _ => Ok(Some(expr)),
+                    },
+
+                    b"-" => match expr {
+                        Value::I32(value) => {
+                            Ok(Some(Value::I32(value.checked_neg().ok_or_else(|| {
+                                ParseErr::new(uop.span(), "can't negate INT_MIN")
+                            })?)))
+                        }
+                        Value::U31(value) => Ok(Some(Value::I32(-(value as i32)))),
+                        Value::F32(value) => Ok(Some(Value::F32(-value))),
+                        Value::F64(value) => Ok(Some(Value::F64(-value))),
+                        _ => Ok(None),
+                    },
+
+                    _ => Err(ParseErr::new(uop.span(), "missing implementation for eval").into()),
+                };
+            }
+
+            Expr::BinaryOp(bop) => {
+                let lhs = bop.lhs.try_eval(ctx)?;
+                let Some(lhs) = lhs else { return Ok(None) };
+                let rhs = bop.rhs.try_eval(ctx)?;
+                let Some(rhs) = rhs else { return Ok(None) };
+
+                macro_rules! checked_add {
+                    ($a:expr, $b:expr) => {
+                        $a.checked_add($b).ok_or_else(|| {
+                            ParseErr::new(bop.span(), "evaluated value out of range")
+                        })?
+                    };
+                }
+
+                macro_rules! compare {
+                    ($lhs:ident $op:tt $rhs:ident) => {
+                        match ($lhs, $rhs) {
+                            (Value::I32(lhs), Value::I32(rhs)) => {
+                                Ok(Some(Value::U31((lhs $op rhs) as u32)))
+                            }
+                            (Value::I32(lhs), Value::U31(rhs)) => {
+                                Ok(Some(Value::U31((lhs $op rhs as i32) as u32)))
+                            }
+                            (Value::U31(lhs), Value::I32(rhs)) => {
+                                Ok(Some(Value::U31(((lhs as i32) $op rhs) as u32)))
+                            }
+                            (Value::U31(lhs), Value::U31(rhs)) => {
+                                Ok(Some(Value::U31((lhs $op rhs) as u32)))
+                            }
+                            (Value::F32(lhs), Value::F32(rhs)) => {
+                                Ok(Some(Value::U31((lhs $op rhs) as u32)))
+                            }
+                            (Value::F64(lhs), Value::F64(rhs)) => {
+                                Ok(Some(Value::U31((lhs $op rhs) as u32)))
+                            }
+                            _ => Err(ParseErr::new(bop.span(), concat!("invalid operands to `", stringify!($op), "`")).into()),
+                        }
+                    };
+                }
+
+                return match bop.op.as_str().as_bytes() {
+                    b"+" => match (lhs, rhs) {
+                        (Value::I32(lhs), Value::I32(rhs)) => {
+                            Ok(Some(Value::I32(checked_add!(lhs, rhs))))
+                        }
+                        (Value::I32(lhs), Value::U31(rhs)) => {
+                            Ok(Some(Value::I32(checked_add!(lhs, rhs as i32))))
+                        }
+                        (Value::U31(lhs), Value::I32(rhs)) => {
+                            Ok(Some(Value::I32(checked_add!(lhs as i32, rhs))))
+                        }
+                        (Value::U31(lhs), Value::U31(rhs)) => {
+                            let value = checked_add!(lhs, rhs);
+                            if value <= i32::MAX as u32 {
+                                Ok(Some(Value::U31(checked_add!(lhs, rhs))))
+                            } else {
+                                todo!()
+                            }
+                        }
+                        (Value::F32(lhs), Value::F32(rhs)) => Ok(Some(Value::F32(lhs + rhs))),
+                        (Value::F64(lhs), Value::F64(rhs)) => Ok(Some(Value::F64(lhs + rhs))),
+                        _ => {
+                            Err(ParseErr::new(bop.span(), "missing implementation for eval").into())
+                        }
+                    },
+
+                    b"&&" => {
+                        let lhs = lhs.is_truthy();
+                        let rhs = rhs.is_truthy();
+                        Ok(Some(Value::U31((lhs && rhs) as u32)))
+                    }
+
+                    b"||" => {
+                        let lhs = lhs.is_truthy();
+                        let rhs = rhs.is_truthy();
+                        Ok(Some(Value::U31((lhs || rhs) as u32)))
+                    }
+
+                    b"==" => compare!(lhs == rhs),
+                    b"!=" => compare!(lhs != rhs),
+                    b"<" => compare!(lhs < rhs),
+                    b"<=" => compare!(lhs <= rhs),
+                    b">" => compare!(lhs > rhs),
+                    b">=" => compare!(lhs >= rhs),
+
+                    _ => {
+                        return Err(
+                            ParseErr::new(bop.span(), "missing implementation for eval").into()
+                        )
+                    }
+                };
+            }
+
+            Expr::PostOp(_) => (),
+            Expr::Ternary(_) => (),
+            Expr::ArrayIndex { span, base, index } => (),
+            Expr::ArrayValues { span, values } => (),
+
+            Expr::Value(value) => return Ok(Some(value.clone())),
+        }
+
+        Err(ParseErr::new(self.span(), "missing implementation for eval").into())
     }
 }
 
@@ -171,7 +322,7 @@ impl Emit for Expr {
             Expr::SizeOf(_) => todo!(),
 
             Expr::UnaryOp(uop) => {
-                if let Some(value) = self.try_eval(ctx) {
+                if let Some(value) = self.try_eval(ctx)? {
                     value.emit(ctx)
                 } else {
                     match uop.op.as_str().as_bytes() {

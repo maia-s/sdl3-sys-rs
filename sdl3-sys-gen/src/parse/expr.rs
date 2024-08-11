@@ -472,9 +472,9 @@ impl Parse for Cast {
 
 #[derive(Clone, Debug)]
 pub struct FnCall {
-    span: Span,
-    func: Box<Expr>,
-    args: Vec<Expr>,
+    pub span: Span,
+    pub func: Box<Expr>,
+    pub args: Vec<Expr>,
 }
 
 impl GetSpan for FnCall {

@@ -1,8 +1,9 @@
 use super::{
-    Ambiguous, DocComment, DocCommentPost, Expr, GetSpan, Ident, IdentOrKw, Item, Items, Parse,
-    ParseErr, ParseRawRes, Punctuated, Span, Type, WsAndComments,
+    Ambiguous, DocComment, DocCommentPost, Expr, GetSpan, Ident, IdentOrKw, IntegerLiteral, Item,
+    Items, Literal, Parse, ParseErr, ParseRawRes, Punctuated, Span, StringLiteral, Type,
+    WsAndComments,
 };
-use std::borrow::Cow;
+use std::{borrow::Cow, ffi::CString};
 
 fn skip_ifdef(str: &str) -> bool {
     matches!(str, "__cplusplus" | "SDL_THREAD_SAFETY_ANALYSIS")
@@ -31,6 +32,17 @@ pub enum DefineValue {
     Other(Span),
     Ambiguous(Ambiguous),
     None,
+}
+
+impl DefineValue {
+    pub fn one() -> Self {
+        Self::Expr(Expr::Literal(Literal::Integer(IntegerLiteral::one())))
+    }
+
+    pub fn parse_expr(s: &str) -> Result<Self, ParseErr> {
+        let s = Span::new_inline(s.to_string());
+        Ok(Self::Expr(Expr::parse_all(s.trim_wsc()?)?))
+    }
 }
 
 impl Parse for DefineValue {
