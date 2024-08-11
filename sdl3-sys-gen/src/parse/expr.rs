@@ -315,8 +315,8 @@ impl Parse for Asm {
 
 #[derive(Clone, Debug)]
 pub struct UnaryOp {
-    op: ExprOp,
-    expr: Expr,
+    pub op: ExprOp,
+    pub expr: Expr,
 }
 
 impl GetSpan for UnaryOp {

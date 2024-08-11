@@ -7,6 +7,7 @@ use core::fmt::Write;
 
 #[derive(Clone, Debug)]
 pub enum Value {
+    I32(i32),
     U31(u32),
     F32(f32),
     F64(f64),
@@ -16,6 +17,7 @@ pub enum Value {
 impl Emit for Value {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match self {
+            Value::I32(i) => write!(ctx, "{i}")?,
             Value::U31(u) => write!(ctx, "{u}")?,
             &Value::F32(f) => {
                 let s = format!("{}", f);
@@ -81,7 +83,27 @@ impl Expr {
             Expr::Cast(_) => todo!(),
             Expr::Asm(_) => None,
             Expr::SizeOf(_) => todo!(),
-            Expr::UnaryOp(_) => todo!(),
+
+            Expr::UnaryOp(uop) => {
+                let expr = uop.expr.try_eval(ctx)?;
+
+                match uop.op.as_str().as_bytes() {
+                    b"+" => match expr {
+                        Value::String(_) => None,
+                        _ => Some(expr),
+                    },
+
+                    b"-" => match expr {
+                        Value::I32(value) => Some(Value::I32(value.checked_neg()?)),
+                        Value::U31(value) => Some(Value::I32(-(value as i32))),
+                        Value::F32(value) => Some(Value::F32(-value)),
+                        Value::F64(value) => Some(Value::F64(-value)),
+                        _ => None,
+                    },
+
+                    _ => None,
+                }
+            }
 
             Expr::BinaryOp(bop) => {
                 let lhs = bop.lhs.try_eval(ctx)?;
@@ -89,8 +111,22 @@ impl Expr {
 
                 match bop.op.as_str().as_bytes() {
                     b"+" => match (lhs, rhs) {
+                        (Value::I32(lhs), Value::I32(rhs)) => {
+                            Some(Value::I32(lhs.checked_add(rhs)?))
+                        }
+                        (Value::I32(lhs), Value::U31(rhs)) => {
+                            Some(Value::I32(lhs.checked_add(rhs as i32)?))
+                        }
+                        (Value::U31(lhs), Value::I32(rhs)) => {
+                            Some(Value::I32((lhs as i32).checked_add(rhs)?))
+                        }
                         (Value::U31(lhs), Value::U31(rhs)) => {
-                            Some(Value::U31(lhs.checked_add(rhs)?))
+                            let value = lhs.checked_add(rhs)?;
+                            if value <= i32::MAX as u32 {
+                                Some(Value::U31(lhs.checked_add(rhs)?))
+                            } else {
+                                todo!()
+                            }
                         }
                         (Value::F32(lhs), Value::F32(rhs)) => Some(Value::F32(lhs + rhs)),
                         (Value::F64(lhs), Value::F64(rhs)) => Some(Value::F64(lhs + rhs)),
@@ -133,7 +169,24 @@ impl Emit for Expr {
             Expr::Cast(_) => todo!(),
             Expr::Asm(_) => todo!(),
             Expr::SizeOf(_) => todo!(),
-            Expr::UnaryOp(_) => todo!(),
+
+            Expr::UnaryOp(uop) => {
+                if let Some(value) = self.try_eval(ctx) {
+                    value.emit(ctx)
+                } else {
+                    match uop.op.as_str().as_bytes() {
+                        b"+" => uop.expr.emit(ctx),
+                        b"-" => {
+                            write!(ctx, "-(")?;
+                            uop.expr.emit(ctx)?;
+                            write!(ctx, ")")?;
+                            Ok(())
+                        }
+                        _ => todo!(),
+                    }
+                }
+            }
+
             Expr::BinaryOp(_) => todo!(),
             Expr::PostOp(_) => todo!(),
             Expr::Ternary(_) => todo!(),

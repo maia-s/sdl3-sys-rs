@@ -62,7 +62,14 @@ pub fn generate(headers_path: &Path) -> Result<(), Error> {
         }
     }
 
-    gen.emit("log")?;
+    /*
+    for module in gen.modules.keys() {
+        if !["opengle2s"].contains(&module.as_str()) {
+            gen.emit(module)?;
+        }
+    }
+    */
+    gen.emit("power")?;
 
     Ok(())
 }
@@ -94,6 +101,7 @@ impl Gen {
     }
 
     pub fn emit(&self, module: &str) -> EmitResult {
+        println!("emitting {module}");
         let mut output = StringLog(String::new());
         let mut ctx = EmitContext::new(module, &mut output);
         self.modules[module].emit(&mut ctx)?;
