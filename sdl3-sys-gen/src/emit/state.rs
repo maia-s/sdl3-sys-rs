@@ -70,6 +70,10 @@ impl<'a> EmitContext<'a> {
             output,
         }
     }
+
+    pub fn use_ident(&self, ident: &Ident) -> EmitResult {
+        Ok(())
+    }
 }
 
 impl Write for EmitContext<'_> {

@@ -11,6 +11,12 @@ pub struct Type {
     pub ty: TypeEnum,
 }
 
+impl GetSpan for Type {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
+}
+
 impl Type {
     pub fn dotdotdot(span: Span) -> Self {
         Self {
@@ -70,9 +76,9 @@ impl TypeEnum {
 
 #[derive(Clone, Debug)]
 pub struct FnPointer {
-    abi: Option<FnAbi>,
-    return_type: Type,
-    args: FnDeclArgs,
+    pub abi: Option<FnAbi>,
+    pub return_type: Type,
+    pub args: FnDeclArgs,
 }
 
 const NO_IDENT: u8 = 0;

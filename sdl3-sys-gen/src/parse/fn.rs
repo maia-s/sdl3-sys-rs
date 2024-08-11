@@ -7,16 +7,16 @@ use std::borrow::Cow;
 
 #[derive(Clone, Debug)]
 pub struct Function {
-    span: Span,
-    doc: Option<DocComment>,
-    static_kw: Option<Kw_static>,
-    extern_kw: Option<Kw_extern>,
-    attr: Vec<FnAttribute>,
-    abi: Option<FnAbi>,
-    ident: Ident,
-    return_type: Type,
-    args: FnDeclArgs,
-    body: Option<Block>,
+    pub span: Span,
+    pub doc: Option<DocComment>,
+    pub static_kw: Option<Kw_static>,
+    pub extern_kw: Option<Kw_extern>,
+    pub attr: Vec<FnAttribute>,
+    pub abi: Option<FnAbi>,
+    pub ident: Ident,
+    pub return_type: Type,
+    pub args: FnDeclArgs,
+    pub body: Option<Block>,
 }
 
 impl Parse for Function {
@@ -88,8 +88,8 @@ impl Parse for Function {
 
 #[derive(Clone, Debug)]
 pub struct FnDeclArgs {
-    span: Span,
-    args: Vec<ArgDecl>,
+    pub span: Span,
+    pub args: Vec<ArgDecl>,
 }
 
 impl Parse for FnDeclArgs {
@@ -124,9 +124,9 @@ impl Parse for FnDeclArgs {
 
 #[derive(Clone, Debug)]
 pub struct ArgDecl {
-    attr: Option<ArgAttribute>,
-    ident: Option<Ident>,
-    ty: Type,
+    pub attr: Option<ArgAttribute>,
+    pub ident: Option<Ident>,
+    pub ty: Type,
 }
 
 impl Parse for ArgDecl {

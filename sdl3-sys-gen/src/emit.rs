@@ -1,8 +1,8 @@
 use crate::{
     common_prefix,
     parse::{
-        Define, DocComment, DocCommentFile, Expr, GetSpan, Include, IntegerLiteral, Item, Literal,
-        ParseErr, PreProcBlock, TypeDef,
+        ArgDecl, Define, DocComment, DocCommentFile, Expr, FnAbi, FnDeclArgs, Function, GetSpan,
+        Ident, Include, IntegerLiteral, Item, Literal, ParseErr, PreProcBlock, Type, TypeDef,
     },
 };
 use core::fmt::{self, Display, Write};
@@ -11,6 +11,42 @@ mod expr;
 pub use expr::Value;
 mod state;
 pub use state::EmitContext;
+
+fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
+    if let Some(abi) = &abi {
+        match abi.ident.as_str() {
+            "SDLCALL" => {
+                if for_fn_ptr {
+                    write!(ctx, "extern_sdl_ptr!(")?
+                } else {
+                    writeln!(ctx, "extern_sdl! {{")?
+                }
+                return Ok(());
+            }
+            "__cdecl" => write!(ctx, "extern \"cdecl\" ")?,
+            _ => return Err(ParseErr::new(abi.span(), "can't emit this abi").into()),
+        }
+    } else {
+        write!(ctx, "extern \"C\" ")?;
+    }
+    if !for_fn_ptr {
+        writeln!(ctx, "{{")?;
+    }
+    Ok(())
+}
+
+fn emit_extern_end(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
+    if for_fn_ptr {
+        if let Some(abi) = &abi {
+            if abi.ident.as_str() == "SDLCALL" {
+                write!(ctx, ")")?;
+            }
+        }
+    } else {
+        writeln!(ctx, "}}")?;
+    }
+    Ok(())
+}
 
 pub type EmitResult = Result<(), EmitErr>;
 
@@ -78,7 +114,7 @@ impl Emit for Item {
             Item::FileDoc(dc) => dc.emit(ctx),
             Item::StructOrUnion(_) => todo!(),
             Item::Enum(_) => todo!(),
-            Item::Function(_) => todo!(),
+            Item::Function(f) => f.emit(ctx),
             Item::Expr(_) => todo!(),
             Item::FnCall(_) => todo!(),
             Item::TypeDef(td) => td.emit(ctx),
@@ -152,6 +188,120 @@ impl Emit for Include {
         if let Some(module) = self.path.as_str().strip_prefix("SDL3/SDL_") {
             let module = module.strip_suffix(".h").unwrap();
             writeln!(ctx, "use super::{module}::*;")?;
+        }
+        Ok(())
+    }
+}
+
+impl Emit for Ident {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        write!(ctx, "{}", self.as_str())?;
+        Ok(())
+    }
+}
+
+impl Emit for Function {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        if self.static_kw.is_none() {
+            emit_extern_start(ctx, &self.abi, false)?;
+            self.doc.emit(ctx)?;
+            write!(ctx, "fn ")?;
+            self.ident.emit(ctx)?;
+            self.args.emit(ctx)?;
+            if !self.return_type.is_void() {
+                write!(ctx, " -> ")?;
+                self.return_type.emit(ctx)?;
+            }
+            writeln!(ctx, ";")?;
+            emit_extern_end(ctx, &self.abi, false)?;
+            Ok(())
+        } else {
+            todo!()
+        }
+    }
+}
+
+impl Emit for FnDeclArgs {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        ctx.write_char('(')?;
+        if !self.args.is_empty() {
+            let mut args = self.args.iter();
+            args.next().unwrap().emit(ctx)?;
+            for arg in args {
+                write!(ctx, ", ")?;
+                arg.emit(ctx)?;
+            }
+        }
+        ctx.write_char(')')?;
+        Ok(())
+    }
+}
+
+impl Emit for ArgDecl {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        if let Some(ident) = &self.ident {
+            write!(ctx, "{}: ", ident.as_str())?;
+        }
+        self.ty.emit(ctx)
+    }
+}
+
+impl Emit for Type {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        match &self.ty {
+            crate::parse::TypeEnum::Primitive(t) => match t {
+                crate::parse::PrimitiveType::Char => write!(ctx, "::core::ffi::c_char")?,
+                crate::parse::PrimitiveType::SignedChar => write!(ctx, "::core::ffi::c_schar")?,
+                crate::parse::PrimitiveType::UnsignedChar => write!(ctx, "::core::ffi::c_uchar")?,
+                crate::parse::PrimitiveType::Short => write!(ctx, "::core::ffi::c_short")?,
+                crate::parse::PrimitiveType::UnsignedShort => write!(ctx, "::core::ffi::c_ushort")?,
+                crate::parse::PrimitiveType::Int => write!(ctx, "::core::ffi::c_int")?,
+                crate::parse::PrimitiveType::UnsignedInt => write!(ctx, "::core::ffi::c_uint")?,
+                crate::parse::PrimitiveType::Long => write!(ctx, "::core::ffi::c_long")?,
+                crate::parse::PrimitiveType::UnsignedLong => write!(ctx, "::core::ffi::c_ulong")?,
+                crate::parse::PrimitiveType::LongLong => write!(ctx, "::core::ffi::c_longlong")?,
+                crate::parse::PrimitiveType::UnsignedLongLong => {
+                    write!(ctx, "::core::ffi::c_ulonglong")?
+                }
+                crate::parse::PrimitiveType::Float => write!(ctx, "::core::ffi::c_float")?,
+                crate::parse::PrimitiveType::Double => write!(ctx, "::core::ffi::c_double")?,
+                crate::parse::PrimitiveType::Void => write!(ctx, "()")?,
+                crate::parse::PrimitiveType::Bool => {
+                    return Err(ParseErr::new(self.span(), "can't emit this type").into())
+                }
+                crate::parse::PrimitiveType::SizeT => write!(ctx, "::core::primitive::usize")?,
+                crate::parse::PrimitiveType::Int8T => write!(ctx, "::core::primitive::i8")?,
+                crate::parse::PrimitiveType::Uint8T => write!(ctx, "::core::primitive::u8")?,
+                crate::parse::PrimitiveType::Int16T => write!(ctx, "::core::primitive::i16")?,
+                crate::parse::PrimitiveType::Uint16T => write!(ctx, "::core::primitive::u16")?,
+                crate::parse::PrimitiveType::Int32T => write!(ctx, "::core::primitive::i32")?,
+                crate::parse::PrimitiveType::Uint32T => write!(ctx, "::core::primitive::u32")?,
+                crate::parse::PrimitiveType::Int64T => write!(ctx, "::core::primitive::i64")?,
+                crate::parse::PrimitiveType::Uint64T => write!(ctx, "::core::primitive::u64")?,
+                crate::parse::PrimitiveType::IntPtrT => write!(ctx, "::core::primitive::isize")?,
+                crate::parse::PrimitiveType::UintPtrT => write!(ctx, "::core::primitive::usize")?,
+            },
+            crate::parse::TypeEnum::Ident(i) => {
+                ctx.use_ident(i)?;
+                i.emit(ctx)?;
+            }
+            crate::parse::TypeEnum::Enum(_) => todo!(),
+            crate::parse::TypeEnum::Struct(_) => todo!(),
+            crate::parse::TypeEnum::Pointer(p) => {
+                if p.is_const {
+                    write!(ctx, "*const ")?;
+                } else {
+                    write!(ctx, "*mut ")?;
+                }
+                if p.is_void() {
+                    write!(ctx, "::core::ffi::c_void")?;
+                } else {
+                    p.emit(ctx)?;
+                }
+            }
+            crate::parse::TypeEnum::Array(_, _) => todo!(),
+            crate::parse::TypeEnum::FnPointer(_) => todo!(),
+            crate::parse::TypeEnum::DotDotDot => write!(ctx, "...")?,
         }
         Ok(())
     }
@@ -246,7 +396,21 @@ impl Emit for TypeDef {
             crate::parse::TypeEnum::Struct(_) => todo!(),
             crate::parse::TypeEnum::Pointer(_) => todo!(),
             crate::parse::TypeEnum::Array(_, _) => todo!(),
-            crate::parse::TypeEnum::FnPointer(_) => todo!(),
+
+            crate::parse::TypeEnum::FnPointer(f) => {
+                write!(ctx, "pub type {} = Option<", self.ident.as_str())?;
+                emit_extern_start(ctx, &f.abi, true)?;
+                write!(ctx, "fn")?;
+                f.args.emit(ctx)?;
+                if !f.return_type.is_void() {
+                    write!(ctx, " -> ")?;
+                    f.return_type.emit(ctx)?;
+                }
+                emit_extern_end(ctx, &f.abi, true)?;
+                writeln!(ctx, ">;")?;
+                Ok(())
+            }
+
             crate::parse::TypeEnum::DotDotDot => todo!(),
         }
     }
