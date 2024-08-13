@@ -7,12 +7,12 @@ use crate::{
     },
 };
 use core::fmt::{self, Display, Write};
-use std::ops::Deref;
+use std::{io, ops::Deref};
 
 mod expr;
 pub use expr::Value;
 mod state;
-pub use state::{DefineState, EmitContext};
+pub use state::{DefineState, EmitContext, InnerEmitContext};
 
 fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
     if let Some(abi) = &abi {
@@ -56,6 +56,7 @@ pub type EmitResult = Result<(), EmitErr>;
 pub enum EmitErr {
     ParseError(ParseErr),
     FmtError(fmt::Error),
+    IoError(io::Error),
 }
 
 impl From<ParseErr> for EmitErr {
@@ -75,6 +76,7 @@ impl Display for EmitErr {
         match self {
             Self::ParseError(e) => Display::fmt(e, f),
             Self::FmtError(e) => Display::fmt(e, f),
+            Self::IoError(e) => Display::fmt(e, f),
         }
     }
 }
@@ -248,6 +250,11 @@ impl Emit for Include {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if let Some(module) = self.path.as_str().strip_prefix("SDL3/SDL_") {
             let module = module.strip_suffix(".h").unwrap();
+            if !ctx.r#gen.emitted.borrow().contains_key(module) {
+                ctx.r#gen.emit(module)?;
+            }
+            let included = &ctx.r#gen.emitted.borrow_mut()[module].preprocstate;
+            ctx.preprocstate_mut().include(included)?;
             writeln!(ctx, "use super::{module}::*;")?;
         }
         Ok(())

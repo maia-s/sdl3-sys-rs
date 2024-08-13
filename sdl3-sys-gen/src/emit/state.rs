@@ -1,5 +1,8 @@
 use super::{EmitErr, EmitResult};
-use crate::parse::{DefineValue, GetSpan, Ident, IdentOrKw, IdentOrKwT, ParseErr};
+use crate::{
+    parse::{DefineValue, GetSpan, Ident, IdentOrKw, IdentOrKwT, ParseErr},
+    Gen,
+};
 use std::{
     cell::{Ref, RefCell, RefMut},
     collections::{BTreeSet, HashMap, HashSet},
@@ -136,21 +139,26 @@ impl<T: Clone + Ord> Coll<T> {
     }
 }
 
-pub struct EmitContext<'a> {
+pub struct EmitContext<'a, 'b> {
     inner: Rc<RefCell<InnerEmitContext>>,
     output: &'a mut dyn Write,
+    pub gen: &'b Gen,
 }
 
 pub struct InnerEmitContext {
     module: String,
-    preprocstate: PreProcState,
+    pub preprocstate: PreProcState,
     scope: Scope,
     enum_scope: Scope,
     preproc_eval_mode: usize,
 }
 
-impl<'a> EmitContext<'a> {
-    pub fn new(module: impl Into<String>, output: &'a mut dyn Write) -> Result<Self, EmitErr> {
+impl<'a, 'b> EmitContext<'a, 'b> {
+    pub fn new(
+        module: impl Into<String>,
+        output: &'a mut dyn Write,
+        gen: &'b Gen,
+    ) -> Result<Self, EmitErr> {
         let module = module.into();
         let mut preprocstate = PreProcState::default();
         preprocstate.undefine(Ident::new_inline("__cplusplus"));
@@ -174,7 +182,12 @@ impl<'a> EmitContext<'a> {
                 preproc_eval_mode: 0,
             })),
             output,
+            gen,
         })
+    }
+
+    pub fn into_inner(self) -> InnerEmitContext {
+        Rc::into_inner(self.inner).unwrap().into_inner()
     }
 
     fn inner(&self) -> Ref<InnerEmitContext> {
@@ -224,10 +237,11 @@ impl<'a> EmitContext<'a> {
         self.inner_mut_map(|ctx| &mut ctx.enum_scope)
     }
 
-    pub fn with_output<'b>(&self, output: &'b mut dyn Write) -> EmitContext<'b> {
+    pub fn with_output<'o>(&self, output: &'o mut dyn Write) -> EmitContext<'o, 'b> {
         EmitContext {
             inner: Rc::clone(&self.inner),
             output,
+            gen: self.gen,
         }
     }
 
@@ -254,7 +268,7 @@ impl<'a> EmitContext<'a> {
     }
 }
 
-impl Write for EmitContext<'_> {
+impl Write for EmitContext<'_, '_> {
     fn write_str(&mut self, s: &str) -> fmt::Result {
         self.output.write_str(s)
     }
@@ -268,13 +282,22 @@ pub struct PreProcState {
 }
 
 impl PreProcState {
+    pub fn include(&mut self, include: &Self) -> EmitResult {
+        for key in include.undefined.iter() {
+            self.undefine(key.clone());
+        }
+        for (key, (args, value)) in include.defined.iter() {
+            self.define(key.clone(), args.clone(), value.clone())?;
+        }
+        Ok(())
+    }
+
     pub fn define(
         &mut self,
         key: Ident,
         args: Option<Vec<IdentOrKw>>,
         value: DefineValue,
     ) -> EmitResult {
-        dbg!("define", &key, &args, &value);
         if self.defined.contains_key(&key) {
             return Err(ParseErr::new(key.span, "already defined").into());
         }

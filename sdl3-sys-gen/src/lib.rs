@@ -4,14 +4,15 @@ mod emit;
 mod parse;
 
 use core::fmt::Write;
-use emit::{Emit, EmitContext, EmitErr, EmitResult};
+use emit::{Emit, EmitContext, EmitErr, InnerEmitContext};
 use parse::{Items, Parse, ParseErr, Source, Span};
 use std::{
+    cell::RefCell,
     collections::HashMap,
     error,
     fmt::{self, Debug, Display},
-    fs::{read_dir, File},
-    io::{self, Read},
+    fs::{read_dir, DirBuilder, File},
+    io::{self, BufWriter, Read},
     path::{Path, PathBuf},
 };
 
@@ -28,8 +29,8 @@ fn skip(module: &str) -> bool {
         || module.starts_with("test")
 }
 
-pub fn generate(headers_path: &Path) -> Result<(), Error> {
-    let mut gen = Gen::new();
+pub fn generate(headers_path: &Path, output_path: &Path) -> Result<(), Error> {
+    let mut gen = Gen::new(output_path.to_owned())?;
 
     for entry in read_dir(headers_path)? {
         let entry = entry?;
@@ -63,7 +64,7 @@ pub fn generate(headers_path: &Path) -> Result<(), Error> {
     }
 
     let mut keys = Vec::new();
-    for module in gen.modules.keys() {
+    for module in gen.parsed.keys() {
         keys.push(module.as_str());
     }
     keys.sort_unstable();
@@ -76,14 +77,19 @@ pub fn generate(headers_path: &Path) -> Result<(), Error> {
 
 #[derive(Default)]
 pub struct Gen {
-    modules: HashMap<String, Items>,
+    parsed: HashMap<String, Items>,
+    emitted: RefCell<HashMap<String, InnerEmitContext>>,
+    output_path: PathBuf,
 }
 
 impl Gen {
-    pub fn new() -> Self {
-        Self {
-            modules: HashMap::new(),
-        }
+    pub fn new(output_path: PathBuf) -> Result<Self, Error> {
+        DirBuilder::new().recursive(true).create(&output_path)?;
+        Ok(Self {
+            parsed: HashMap::new(),
+            emitted: RefCell::new(HashMap::new()),
+            output_path,
+        })
     }
 
     pub fn parse(
@@ -96,16 +102,56 @@ impl Gen {
         let contents: Span = Source::new(filename, contents).into();
         let rest = contents.trim_wsc()?;
         let items = Items::try_parse_all(rest)?.unwrap_or_default();
-        self.modules.insert(module.to_owned(), items);
+        self.parsed.insert(module.to_owned(), items);
         Ok(())
     }
 
-    pub fn emit(&self, module: &str) -> EmitResult {
-        println!("emitting {module}");
-        let mut output = StringLog(String::new());
-        let mut ctx = EmitContext::new(module, &mut output)?;
-        self.modules[module].emit(&mut ctx)?;
+    pub fn emit(&self, module: &str) -> Result<(), Error> {
+        if !self.emitted.borrow().contains_key(module) {
+            let mut path = self.output_path.clone();
+            path.push(module);
+            path.set_extension("rs");
+
+            struct CompleteGuard<'a>(bool, &'a Path);
+            impl Drop for CompleteGuard<'_> {
+                fn drop(&mut self) {
+                    if !self.0 {
+                        use io::Write;
+                        File::options()
+                            .append(true)
+                            .open(&self.1)
+                            .unwrap()
+                            .write_all(
+                                "\n\ncompile_error!(\"incomplete generated file\");\n".as_bytes(),
+                            )
+                            .unwrap();
+                    }
+                }
+            }
+            let mut complete_guard = CompleteGuard(false, &path);
+
+            let mut file = Writable(BufWriter::new(File::create(&path)?));
+            let mut ctx = EmitContext::new(module, &mut file, self)?;
+            self.parsed[module].emit(&mut ctx)?;
+            let emitted = ctx.into_inner();
+            file.0.into_inner().unwrap().sync_all()?;
+            self.emitted
+                .borrow_mut()
+                .insert(module.to_string(), emitted);
+
+            complete_guard.0 = true;
+
+            println!("emitted {module}");
+        }
         Ok(())
+    }
+}
+
+pub struct Writable<T>(T);
+
+impl<T: io::Write> Write for Writable<T> {
+    fn write_str(&mut self, s: &str) -> fmt::Result {
+        self.0.write_all(s.as_bytes()).map_err(|_| fmt::Error)
     }
 }
 
@@ -153,6 +199,16 @@ impl From<ParseErr> for Error {
 impl From<EmitErr> for Error {
     fn from(value: EmitErr) -> Self {
         Self::EmitError(value)
+    }
+}
+
+impl From<Error> for EmitErr {
+    fn from(value: Error) -> Self {
+        match value {
+            Error::IoError(e) => Self::IoError(e),
+            Error::EmitError(e) => e,
+            Error::ParseError(e) => unreachable!(),
+        }
     }
 }
 
