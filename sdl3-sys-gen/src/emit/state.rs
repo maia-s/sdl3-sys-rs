@@ -1,6 +1,6 @@
 use super::{EmitErr, EmitResult};
 use crate::{
-    parse::{DefineValue, GetSpan, Ident, IdentOrKw, IdentOrKwT, ParseErr},
+    parse::{DefineValue, GetSpan, Ident, IdentOrKw, ParseErr, Span},
     Gen,
 };
 use std::{
@@ -142,15 +142,16 @@ impl<T: Clone + Ord> Coll<T> {
 pub struct EmitContext<'a, 'b> {
     inner: Rc<RefCell<InnerEmitContext>>,
     output: &'a mut dyn Write,
+    ool_output: String,
     pub gen: &'b Gen,
 }
 
 pub struct InnerEmitContext {
     module: String,
-    pub preprocstate: PreProcState,
+    pub preproc_state: Rc<RefCell<PreProcState>>,
     scope: Scope,
-    enum_scope: Scope,
     preproc_eval_mode: usize,
+    emitted_file_doc: bool,
 }
 
 impl<'a, 'b> EmitContext<'a, 'b> {
@@ -160,28 +161,84 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         gen: &'b Gen,
     ) -> Result<Self, EmitErr> {
         let module = module.into();
-        let mut preprocstate = PreProcState::default();
-        preprocstate.undefine(Ident::new_inline("__cplusplus"));
-        preprocstate.undefine(Ident::new_inline(format!("SDL_{module}_h_")));
-        preprocstate.define(
+        let mut preproc_state = PreProcState::default();
+        preproc_state.register_target_define(Ident::new_inline("__LP64__"));
+        preproc_state.undefine(Ident::new_inline("__clang_analyzer__"));
+        preproc_state.undefine(Ident::new_inline("__cplusplus"));
+        preproc_state.undefine(Ident::new_inline("PRId32"));
+        preproc_state.undefine(Ident::new_inline("PRIs64"));
+        preproc_state.undefine(Ident::new_inline("PRIu32"));
+        preproc_state.undefine(Ident::new_inline("PRIu64"));
+        preproc_state.undefine(Ident::new_inline("PRIx32"));
+        preproc_state.undefine(Ident::new_inline("PRIX32"));
+        preproc_state.undefine(Ident::new_inline("PRIx64"));
+        preproc_state.undefine(Ident::new_inline("PRIX64"));
+        preproc_state.undefine(Ident::new_inline("DOXYGEN_SHOULD_IGNORE_THIS"));
+        preproc_state.undefine(Ident::new_inline(format!("SDL_{module}_h_")));
+        preproc_state.undefine(Ident::new_inline("SDL_COMPILE_TIME_ASSERT"));
+        preproc_state.undefine(Ident::new_inline("SDL_FUNCTION_POINTER_IS_VOID_POINTER"));
+        preproc_state.undefine(Ident::new_inline("SDL_memcpy"));
+        preproc_state.undefine(Ident::new_inline("SDL_memmove"));
+        preproc_state.undefine(Ident::new_inline("SDL_memset"));
+        preproc_state.undefine(Ident::new_inline("SDL_PI_D"));
+        preproc_state.undefine(Ident::new_inline("SDL_PI_F"));
+        preproc_state.undefine(Ident::new_inline("SDL_PRIs32"));
+        preproc_state.undefine(Ident::new_inline("SDL_PRIs64"));
+        preproc_state.undefine(Ident::new_inline("SDL_PRIu32"));
+        preproc_state.undefine(Ident::new_inline("SDL_PRIu64"));
+        preproc_state.undefine(Ident::new_inline("SDL_PRIx32"));
+        preproc_state.undefine(Ident::new_inline("SDL_PRIX32"));
+        preproc_state.undefine(Ident::new_inline("SDL_PRIx64"));
+        preproc_state.undefine(Ident::new_inline("SDL_PRIX64"));
+        preproc_state.undefine(Ident::new_inline("SDL_SLOW_MEMCPY"));
+        preproc_state.undefine(Ident::new_inline("SDL_SLOW_MEMMOVE"));
+        preproc_state.undefine(Ident::new_inline("SDL_SLOW_MEMSET"));
+        preproc_state.define(
             Ident::new_inline("__STDC_VERSION__"),
             None,
             DefineValue::parse_expr("202311L")?,
         )?;
-        preprocstate.define(
+        preproc_state.define(
+            Ident::new_inline("FLT_EPSILON"),
+            None,
+            DefineValue::RustCode("::core::primitive::f32::EPSILON".into()),
+        )?;
+        preproc_state.define(
+            Ident::new_inline("SIZE_MAX"),
+            None,
+            DefineValue::RustCode("::core::primitive::usize::MAX".into()),
+        )?;
+        preproc_state.define(
+            Ident::new_inline("__has_builtin"),
+            Some(vec![IdentOrKw::new_inline("builtin")]),
+            DefineValue::Other(Span::new_inline("__has_builtin")),
+        )?;
+        preproc_state.define(
             Ident::new_inline("SDL_WIKI_DOCUMENTATION_SECTION"),
+            None,
+            DefineValue::one(),
+        )?;
+
+        preproc_state.define(
+            Ident::new_inline("SDL_DISABLE_ALLOCA"),
+            None,
+            DefineValue::one(),
+        )?;
+        preproc_state.define(
+            Ident::new_inline("SDL_DISABLE_ANALYZE_MACROS"),
             None,
             DefineValue::one(),
         )?;
         Ok(Self {
             inner: Rc::new(RefCell::new(InnerEmitContext {
                 module,
-                preprocstate,
+                preproc_state: Rc::new(RefCell::new(preproc_state)),
                 scope: Scope::new(),
-                enum_scope: Scope::new(),
                 preproc_eval_mode: 0,
+                emitted_file_doc: false,
             })),
             output,
+            ool_output: String::new(),
             gen,
         })
     }
@@ -213,12 +270,54 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner_map(|ctx| ctx.module.as_str())
     }
 
-    pub fn preprocstate(&self) -> Ref<PreProcState> {
-        self.inner_map(|ctx| &ctx.preprocstate)
+    pub fn preproc_state(&self) -> Rc<RefCell<PreProcState>> {
+        Rc::clone(&self.inner().preproc_state)
     }
 
-    pub fn preprocstate_mut(&mut self) -> RefMut<PreProcState> {
-        self.inner_mut_map(|ctx| &mut ctx.preprocstate)
+    pub fn target_dependent_preproc_state_guard(&mut self) -> impl Drop {
+        pub struct Guard(Rc<RefCell<InnerEmitContext>>);
+
+        impl Drop for Guard {
+            fn drop(&mut self) {
+                let parent = Rc::clone(
+                    self.0
+                        .borrow()
+                        .preproc_state
+                        .borrow()
+                        .parent
+                        .as_ref()
+                        .unwrap(),
+                );
+                {
+                    let pps = self.0.borrow();
+                    let pps = pps.preproc_state.borrow();
+                    let mut parent_mut = parent.borrow_mut();
+                    for key in pps.undefined.iter() {
+                        if let Ok(Some((_, DefineValue::TargetDependent))) = parent_mut.lookup(key)
+                        {
+                            continue;
+                        }
+                        parent_mut
+                            .define(key.clone(), None, DefineValue::TargetDependent)
+                            .unwrap();
+                    }
+                    for (key, (args, _)) in pps.defined.iter() {
+                        if let Ok(Some((_, DefineValue::TargetDependent))) = parent_mut.lookup(key)
+                        {
+                            continue;
+                        }
+                        parent_mut
+                            .define(key.clone(), args.clone(), DefineValue::TargetDependent)
+                            .unwrap();
+                    }
+                }
+                self.0.borrow_mut().preproc_state = parent;
+            }
+        }
+
+        let parent = Rc::clone(&self.inner().preproc_state);
+        self.inner_mut().preproc_state = Rc::new(RefCell::new(PreProcState::with_parent(parent)));
+        Guard(Rc::clone(&self.inner))
     }
 
     pub fn scope(&self) -> Ref<Scope> {
@@ -229,23 +328,31 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner_mut_map(|ctx| &mut ctx.scope)
     }
 
-    pub fn enum_scope(&self) -> Ref<Scope> {
-        self.inner_map(|ctx| &ctx.enum_scope)
-    }
-
-    pub fn enum_scope_mut(&mut self) -> RefMut<Scope> {
-        self.inner_mut_map(|ctx| &mut ctx.enum_scope)
-    }
-
     pub fn with_output<'o>(&self, output: &'o mut dyn Write) -> EmitContext<'o, 'b> {
         EmitContext {
             inner: Rc::clone(&self.inner),
             output,
+            ool_output: String::new(),
             gen: self.gen,
         }
     }
 
-    pub fn use_ident(&self, ident: &Ident) -> EmitResult {
+    pub fn with_ool_output<'o>(&'o mut self) -> EmitContext<'o, 'b> {
+        EmitContext {
+            inner: Rc::clone(&self.inner),
+            output: &mut self.ool_output,
+            ool_output: String::new(),
+            gen: self.gen,
+        }
+    }
+
+    pub fn flush_ool_output(&mut self) -> EmitResult {
+        self.output.write_str(&self.ool_output)?;
+        self.ool_output.clear();
+        Ok(())
+    }
+
+    pub fn use_ident(&self, _ident: &Ident) -> EmitResult {
         Ok(())
     }
 
@@ -266,6 +373,107 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
         Guard(Rc::clone(&self.inner))
     }
+
+    pub fn emitted_file_doc(&self) -> bool {
+        self.inner().emitted_file_doc
+    }
+
+    pub fn set_emitted_file_doc(&mut self, value: bool) {
+        self.inner_mut().emitted_file_doc = value;
+    }
+
+    pub fn lookup_sym(&self, key: &Ident) -> Option<Ident> {
+        if let Ok(Some(_)) = self.preproc_state().borrow().lookup(key) {
+            todo!()
+        } else {
+            self.scope().lookup(key)
+        }
+    }
+
+    pub fn lookup_enum_sym(&self, key: &Ident) -> Option<Ident> {
+        if let Ok(Some(_)) = self.preproc_state().borrow().lookup(key) {
+            todo!()
+        } else {
+            self.scope().lookup_enum(key)
+        }
+    }
+
+    pub fn lookup_struct_sym(&self, key: &Ident) -> Option<Ident> {
+        if let Ok(Some(_)) = self.preproc_state().borrow().lookup(key) {
+            todo!()
+        } else {
+            self.scope().lookup_struct(key)
+        }
+    }
+
+    pub fn emit_define_state_cfg(&mut self, define_state: &DefineState) -> EmitResult {
+        fn emit_cfg_r(ctx: &mut EmitContext, coll: &Coll<Ident>) -> EmitResult {
+            match coll {
+                Coll::All(c) => {
+                    write!(ctx, "all(")?;
+                    let mut first = true;
+                    for cfg in c.iter() {
+                        if !first {
+                            write!(ctx, ", ")?;
+                        }
+                        first = false;
+                        emit_cfg_r(ctx, cfg)?;
+                    }
+                    write!(ctx, ")")?;
+                    Ok(())
+                }
+
+                Coll::Any(c) => {
+                    write!(ctx, "any(")?;
+                    let mut first = true;
+                    for cfg in c.iter() {
+                        if !first {
+                            write!(ctx, ", ")?;
+                        }
+                        first = false;
+                        emit_cfg_r(ctx, cfg)?;
+                    }
+                    write!(ctx, ")")?;
+                    Ok(())
+                }
+
+                Coll::Not(c) => {
+                    write!(ctx, "not(")?;
+                    emit_cfg_r(ctx, c)?;
+                    write!(ctx, ")")?;
+                    Ok(())
+                }
+
+                Coll::One(c) => ctx.emit_cfg_from_target_define(c),
+            }
+        }
+
+        if let Some(coll) = &define_state.state {
+            write!(self, "#[cfg(")?;
+            emit_cfg_r(self, coll)?;
+            writeln!(self, ")]")?;
+        }
+        Ok(())
+    }
+
+    fn emit_cfg_from_target_define(&mut self, target_define: &Ident) -> EmitResult {
+        const ALWAYS_FALSE: &str = "any()";
+
+        let s = match target_define.as_str() {
+            "__LP64__" => r#"all(not(windows), target_pointer_width = "64")"#,
+
+            "SDL_PLATFORM_3DS" => ALWAYS_FALSE,
+            "SDL_PLATFORM_APPLE" => r#"target_vendor = "apple""#,
+            "SDL_PLATFORM_GDK" => ALWAYS_FALSE, // change WIN32 if this is changed
+            "SDL_PLATFORM_VITA" => ALWAYS_FALSE,
+            "SDL_PLATFORM_WIN32" => "windows",
+
+            _ => panic!("unhandled target define: {}", target_define.as_str()),
+        };
+
+        write!(self, "{s}")?;
+        Ok(())
+    }
 }
 
 impl Write for EmitContext<'_, '_> {
@@ -276,12 +484,22 @@ impl Write for EmitContext<'_, '_> {
 
 #[derive(Default)]
 pub struct PreProcState {
+    parent: Option<Rc<RefCell<PreProcState>>>,
     defined: HashMap<Ident, (Option<Vec<IdentOrKw>>, DefineValue)>,
     undefined: HashSet<Ident>,
     target_defines: HashSet<Ident>,
 }
 
 impl PreProcState {
+    pub fn with_parent(parent: Rc<RefCell<PreProcState>>) -> Self {
+        Self {
+            parent: Some(parent),
+            defined: HashMap::new(),
+            undefined: HashSet::new(),
+            target_defines: HashSet::new(),
+        }
+    }
+
     pub fn include(&mut self, include: &Self) -> EmitResult {
         for key in include.undefined.iter() {
             self.undefine(key.clone());
@@ -298,7 +516,13 @@ impl PreProcState {
         args: Option<Vec<IdentOrKw>>,
         value: DefineValue,
     ) -> EmitResult {
-        if self.defined.contains_key(&key) {
+        if self.defined.contains_key(&key)
+            || self
+                .parent
+                .as_ref()
+                .map(|p| p.borrow().defined.contains_key(&key))
+                .unwrap_or(false)
+        {
             return Err(ParseErr::new(key.span, "already defined").into());
         }
         self.undefined.remove(&key);
@@ -318,11 +542,13 @@ impl PreProcState {
     pub fn lookup(
         &self,
         key: &Ident,
-    ) -> Result<Option<&(Option<Vec<IdentOrKw>>, DefineValue)>, EmitErr> {
+    ) -> Result<Option<(Option<Vec<IdentOrKw>>, DefineValue)>, EmitErr> {
         if let Some(value) = self.defined.get(key) {
-            Ok(Some(value))
+            Ok(Some(value.clone()))
         } else if self.undefined.contains(key) {
             Ok(None)
+        } else if let Some(parent) = &self.parent {
+            parent.borrow().lookup(key)
         } else {
             Err(ParseErr::new(key.span(), "unknown define").into())
         }
@@ -333,13 +559,22 @@ impl PreProcState {
             Ok(true)
         } else if self.undefined.contains(key) {
             Ok(false)
+        } else if let Some(parent) = &self.parent {
+            parent.borrow().is_defined(key)
         } else {
+            dbg!(key, &self.defined.keys(), &self.undefined);
             Err(ParseErr::new(key.span(), "unknown define").into())
         }
     }
 
     pub fn is_target_define(&self, key: &Ident) -> bool {
-        self.target_defines.contains(key)
+        key.as_str().starts_with("SDL_PLATFORM")
+            || self.target_defines.contains(key)
+            || self
+                .parent
+                .as_ref()
+                .map(|p| p.borrow().target_defines.contains(key))
+                .unwrap_or(false)
     }
 }
 
@@ -349,6 +584,8 @@ pub struct Scope(Rc<RefCell<InnerScope>>);
 struct InnerScope {
     parent: Option<Rc<RefCell<InnerScope>>>,
     syms: HashSet<Ident>,
+    enum_syms: HashSet<Ident>,
+    struct_syms: HashSet<Ident>,
 }
 
 impl Scope {
@@ -356,6 +593,8 @@ impl Scope {
         Self(Rc::new(RefCell::new(InnerScope {
             parent: None,
             syms: HashSet::new(),
+            enum_syms: HashSet::new(),
+            struct_syms: HashSet::new(),
         })))
     }
 
@@ -363,6 +602,8 @@ impl Scope {
         self.0 = Rc::new(RefCell::new(InnerScope {
             parent: Some(Rc::clone(&self.0)),
             syms: HashSet::new(),
+            enum_syms: HashSet::new(),
+            struct_syms: HashSet::new(),
         }));
     }
 
@@ -381,5 +622,39 @@ impl Scope {
             return Err(ParseErr::new(span, "symbol already defined in this scope").into());
         }
         Ok(())
+    }
+
+    pub fn register_enum_sym(&mut self, ident: Ident) -> EmitResult {
+        let span = ident.span();
+        if !self.0.borrow_mut().enum_syms.insert(ident) {
+            return Err(ParseErr::new(span, "enum symbol already defined in this scope").into());
+        }
+        Ok(())
+    }
+
+    pub fn register_struct_sym(&mut self, ident: Ident) -> EmitResult {
+        let span = ident.span();
+        if !self.0.borrow_mut().struct_syms.insert(ident) {
+            return Err(ParseErr::new(span, "struct symbol already defined in this scope").into());
+        }
+        Ok(())
+    }
+
+    pub fn lookup(&self, ident: &Ident) -> Option<Ident> {
+        self.0.borrow().syms.get(ident).cloned()
+    }
+
+    pub fn lookup_enum(&self, ident: &Ident) -> Option<Ident> {
+        self.0.borrow().enum_syms.get(ident).cloned()
+    }
+
+    pub fn lookup_struct(&self, ident: &Ident) -> Option<Ident> {
+        self.0.borrow().struct_syms.get(ident).cloned()
+    }
+}
+
+impl Default for Scope {
+    fn default() -> Self {
+        Self::new()
     }
 }

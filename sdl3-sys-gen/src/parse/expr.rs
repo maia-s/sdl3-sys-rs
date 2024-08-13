@@ -24,6 +24,7 @@ pub enum Expr {
         base: Box<Expr>,
         index: Box<Expr>,
     },
+    HasInclude(HasInclude),
 
     // only created by VarDecl
     ArrayValues {
@@ -101,7 +102,18 @@ impl Expr {
                         }
 
                         b"(" => {
-                            let (rest_, args) = CallArgs::parse_raw(&op.span.join(&rest2))?;
+                            let rest_ = op.span.join(&rest2);
+
+                            if let Expr::Ident(ident) = &lhs {
+                                if ident.as_str() == "__has_include" {
+                                    let (rest_, arg) = Balanced::<Op::<'('>,Op::<')'>>::parse_raw(&rest_)?;
+                                    rest = rest_;
+                                    lhs = Expr::HasInclude(HasInclude { span: lhs.span().join(&arg.span), include: arg.inner });
+                                    continue;
+                                }
+                            }
+
+                            let (rest_, args) = CallArgs::parse_raw(&op.span.join(&rest_))?;
                             rest = rest_;
                             lhs = Expr::FnCall(FnCall {
                                 span: lhs.span().join(&args.span()),
@@ -207,6 +219,7 @@ impl GetSpan for Expr {
             Self::UnaryOp(e) | Self::PostOp(e) => e.span(),
             Self::BinaryOp(e) => e.span(),
             Self::Ternary(e) => e.span(),
+            Self::HasInclude(e) => e.span(),
             Self::ArrayIndex { span, .. } => span.clone(),
             Self::ArrayValues { span, .. } => span.clone(),
             Self::Value(_) => Span::none(),
@@ -234,6 +247,18 @@ impl Parse for ExprNoComma {
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
         let (rest, expr) = Expr::try_parse_raw_with_prec(input, Precedence::comma(), true)?;
         Ok((rest, expr.map(Self)))
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct HasInclude {
+    span: Span,
+    include: Span,
+}
+
+impl GetSpan for HasInclude {
+    fn span(&self) -> Span {
+        self.span.clone()
     }
 }
 

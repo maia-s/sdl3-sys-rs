@@ -1,10 +1,11 @@
 use super::{is_keyword, GetSpan, Parse, ParseErr, ParseRawRes, ParseRev, Span};
+use core::{borrow::Borrow, hash::Hash};
 use std::borrow::Cow;
 
 pub type Ident = IdentOrKwT<false>;
 pub type IdentOrKw = IdentOrKwT<true>;
 
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Debug, PartialOrd, Ord)]
 pub struct IdentOrKwT<const ALLOW_KEYWORDS: bool> {
     pub span: Span,
 }
@@ -38,15 +39,35 @@ impl<const ALLOW_KEYWORDS: bool> IdentOrKwT<ALLOW_KEYWORDS> {
     }
 }
 
+impl<const ALLOW_KEYWORDS: bool> Borrow<str> for IdentOrKwT<ALLOW_KEYWORDS> {
+    fn borrow(&self) -> &str {
+        self.as_str()
+    }
+}
+
 impl<const ALLOW_KEYWORDS: bool> GetSpan for IdentOrKwT<ALLOW_KEYWORDS> {
     fn span(&self) -> Span {
         self.span.clone()
     }
 }
 
-impl<const ALLOW_KEYWORDS: bool> PartialEq<&str> for IdentOrKwT<ALLOW_KEYWORDS> {
-    fn eq(&self, other: &&str) -> bool {
-        self.span.as_str() == *other
+impl<const ALLOW_KEYWORDS: bool> PartialEq<str> for IdentOrKwT<ALLOW_KEYWORDS> {
+    fn eq(&self, other: &str) -> bool {
+        self.as_str() == other
+    }
+}
+
+impl<const ALLOW_KEYWORDS: bool> PartialEq for IdentOrKwT<ALLOW_KEYWORDS> {
+    fn eq(&self, other: &Self) -> bool {
+        self.as_str() == other.as_str()
+    }
+}
+
+impl<const ALLOW_KEYWORDS: bool> Eq for IdentOrKwT<ALLOW_KEYWORDS> {}
+
+impl<const ALLOW_KEYWORDS: bool> Hash for IdentOrKwT<ALLOW_KEYWORDS> {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.as_str().hash(state)
     }
 }
 

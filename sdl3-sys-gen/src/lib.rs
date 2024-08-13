@@ -108,6 +108,11 @@ impl Gen {
 
     pub fn emit(&self, module: &str) -> Result<(), Error> {
         if !self.emitted.borrow().contains_key(module) {
+            if !self.parsed.contains_key(module) {
+                eprintln!("skipping {module}");
+                return Ok(());
+            }
+
             let mut path = self.output_path.clone();
             path.push(module);
             path.set_extension("rs");
@@ -133,6 +138,7 @@ impl Gen {
             let mut file = Writable(BufWriter::new(File::create(&path)?));
             let mut ctx = EmitContext::new(module, &mut file, self)?;
             self.parsed[module].emit(&mut ctx)?;
+            ctx.flush_ool_output()?;
             let emitted = ctx.into_inner();
             file.0.into_inner().unwrap().sync_all()?;
             self.emitted

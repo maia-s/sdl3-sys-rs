@@ -1,9 +1,9 @@
 use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval};
 use crate::parse::{
-    Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, GetSpan, IntegerLiteral,
-    Literal, Op, ParseErr, Span, StringLiteral,
+    Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan,
+    IntegerLiteral, Literal, Op, ParseErr, SizeOf, Span, StringLiteral, TypeEnum,
 };
-use core::fmt::Write;
+use core::{fmt::Write, ops::Deref};
 
 #[derive(Clone, Debug)]
 pub enum Value {
@@ -13,6 +13,7 @@ pub enum Value {
     F64(f64),
     String(StringLiteral),
     TargetDependent(DefineState),
+    RustCode(String),
 }
 
 impl Value {
@@ -31,7 +32,7 @@ impl Value {
             &Value::F32(f) => !f.is_nan() && f != 0.0,
             &Value::F64(f) => !f.is_nan() && f != 0.0,
             Value::String(_) => true,
-            Value::TargetDependent(_) => unreachable!(),
+            Value::TargetDependent(_) | Value::RustCode(_) => unreachable!(),
         }
     }
 
@@ -65,6 +66,7 @@ impl Emit for Value {
             Value::TargetDependent(_) => {
                 return Err(ParseErr::new(Span::none(), "can't emit indeterminate value").into())
             }
+            Value::RustCode(s) => ctx.write_str(s)?,
         }
         Ok(())
     }
@@ -113,8 +115,10 @@ impl Eval for Expr {
 
             Expr::Ident(ident) => {
                 if ctx.is_preproc_eval_mode() {
-                    return if let Some((args, value)) =
-                        ctx.preprocstate().lookup(&ident.clone().try_into()?)?
+                    return if let Some((args, value)) = ctx
+                        .preproc_state()
+                        .borrow()
+                        .lookup(&ident.clone().try_into()?)?
                     {
                         if args.is_some() {
                             return Err(ParseErr::new(
@@ -166,9 +170,9 @@ impl Eval for Expr {
                                 return err();
                             };
                             let define = define.clone().try_into()?;
-                            return if ctx.preprocstate().is_target_define(&define) {
+                            return if ctx.preproc_state().borrow().is_target_define(&define) {
                                 Ok(Some(Value::TargetDependent(DefineState::defined(define))))
-                            } else if ctx.preprocstate().is_defined(&define)? {
+                            } else if ctx.preproc_state().borrow().is_defined(&define)? {
                                 Ok(Some(Value::bool(true)))
                             } else {
                                 Ok(Some(Value::bool(false)))
@@ -196,7 +200,38 @@ impl Eval for Expr {
 
             Expr::Cast(_) => (),
             Expr::Asm(_) => return Ok(None),
-            Expr::SizeOf(_) => (),
+
+            Expr::SizeOf(s) => match s.deref() {
+                SizeOf::Type(_, ty) => match &ty.ty {
+                    TypeEnum::Primitive(_) => {
+                        let mut out = String::new();
+                        let mut ctx2 = ctx.with_output(&mut out);
+                        write!(ctx2, "::core::mem::size_of::<")?;
+                        ty.emit(&mut ctx2)?;
+                        write!(ctx2, ">()")?;
+                        return Ok(Some(Value::RustCode(out)));
+                    }
+
+                    TypeEnum::Ident(ident) => {
+                        if ctx.lookup_sym(ident).is_some() {
+                            return Ok(Some(Value::RustCode(format!(
+                                "::core::mem::size_of::<{}>()",
+                                ident.as_str()
+                            ))));
+                        } else {
+                            todo!()
+                        }
+                    }
+                    TypeEnum::Enum(_) => todo!(),
+                    TypeEnum::Struct(_) => todo!(),
+                    TypeEnum::Pointer(_) => todo!(),
+                    TypeEnum::Array(_, _) => todo!(),
+                    TypeEnum::FnPointer(_) => todo!(),
+                    TypeEnum::DotDotDot => todo!(),
+                },
+
+                SizeOf::Expr(_, _) => todo!(),
+            },
 
             Expr::UnaryOp(uop) => {
                 let expr = uop.expr.try_eval(ctx)?;
@@ -277,7 +312,8 @@ impl Eval for Expr {
                 }
 
                 macro_rules! compare {
-                    ($op:tt) => {
+                    ($op:tt) => {{
+                        let op = stringify!($op);
                         match (eval!(bop.lhs), eval!(bop.rhs)) {
                             (Value::I32(lhs), Value::I32(rhs)) => {
                                 Ok(Some(Value::U31((lhs $op rhs) as u32)))
@@ -297,9 +333,16 @@ impl Eval for Expr {
                             (Value::F64(lhs), Value::F64(rhs)) => {
                                 Ok(Some(Value::U31((lhs $op rhs) as u32)))
                             }
-                            _ => Err(ParseErr::new(bop.span(), concat!("invalid operands to `", stringify!($op), "`")).into()),
+                            (Value::RustCode(lhs), rhs) => {
+                                let mut code = String::new();
+                                let mut rhs_ctx = ctx.with_output(&mut code);
+                                write!(rhs_ctx, "{lhs} {op} ")?;
+                                rhs.emit(&mut rhs_ctx)?;
+                                Ok(Some(Value::RustCode(code)))
+                            }
+                            _ => Err(ParseErr::new(bop.span(), format!("invalid operands to `{op}`")).into()),
                         }
-                    };
+                    }};
                 }
 
                 return match bop.op.as_str().as_bytes() {
@@ -373,6 +416,8 @@ impl Eval for Expr {
             Expr::ArrayIndex { span, base, index } => (),
             Expr::ArrayValues { span, values } => (),
 
+            Expr::HasInclude(_) => return Ok(Some(Value::bool(false))),
+
             Expr::Value(value) => return Ok(Some(value.clone())),
         }
 
@@ -386,7 +431,7 @@ impl Emit for Expr {
             Expr::Parenthesized(_) => todo!(),
             Expr::Ident(_) => todo!(),
             Expr::Literal(lit) => lit.emit(ctx),
-            Expr::FnCall(_) => todo!(),
+            Expr::FnCall(call) => call.emit(ctx),
             Expr::Ambiguous(_) => todo!(),
             Expr::Cast(_) => todo!(),
             Expr::Asm(_) => todo!(),
@@ -415,6 +460,32 @@ impl Emit for Expr {
             Expr::ArrayIndex { span, base, index } => todo!(),
             Expr::ArrayValues { span, values } => todo!(),
             Expr::Value(value) => value.emit(ctx),
+            Expr::HasInclude(_) => todo!(),
+        }
+    }
+}
+
+impl Emit for FnCall {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        if let Expr::Ident(ident) = &*self.func {
+            match ident.as_str() {
+                "SDL_COMPILE_TIME_ASSERT" => {
+                    assert_eq!(self.args.len(), 2);
+                    let value = self.args[1].try_eval(ctx)?;
+                    match value {
+                        Some(Value::RustCode(s)) => {
+                            writeln!(ctx, "const _: () = ::core::assert!({s});")?;
+                            Ok(())
+                        }
+
+                        _ => todo!(),
+                    }
+                }
+
+                _ => todo!(),
+            }
+        } else {
+            todo!()
         }
     }
 }

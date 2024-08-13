@@ -30,6 +30,8 @@ pub enum DefineValue {
     Items(Items),
     Other(Span),
     Ambiguous(Ambiguous),
+    RustCode(String),
+    TargetDependent,
     None,
 }
 

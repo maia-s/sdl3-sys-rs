@@ -2,16 +2,20 @@ use crate::{
     common_prefix,
     parse::{
         ArgDecl, Define, DocComment, DocCommentFile, Expr, FnAbi, FnDeclArgs, Function, GetSpan,
-        Ident, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock, Type,
-        TypeDef,
+        Ident, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock,
+        PreProcBlockKind, PrimitiveType, Type, TypeDef, TypeEnum,
     },
 };
-use core::fmt::{self, Display, Write};
-use std::{io, ops::Deref};
+use core::{
+    cell::RefCell,
+    fmt::{self, Display, Write},
+};
+use std::{io, ops::Deref, rc::Rc};
 
 mod expr;
 pub use expr::Value;
 mod state;
+use state::PreProcState;
 pub use state::{DefineState, EmitContext, InnerEmitContext};
 
 fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
@@ -81,7 +85,7 @@ impl Display for EmitErr {
     }
 }
 
-pub trait Emit {
+pub trait Emit: core::fmt::Debug {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult;
 
     fn emit_with_define_state(
@@ -89,10 +93,12 @@ pub trait Emit {
         ctx: &mut EmitContext,
         define_state: &DefineState,
     ) -> EmitResult {
-        todo!(); // ctx.emit_define_state_cfg(define_state)?;
+        let _pps_guard = ctx.target_dependent_preproc_state_guard();
+        ctx.emit_define_state_cfg(define_state)?;
         writeln!(ctx, "emit! {{")?;
         self.emit(ctx)?;
         writeln!(ctx, "}}")?;
+        writeln!(ctx)?;
         Ok(())
     }
 }
@@ -141,7 +147,7 @@ impl Emit for Item {
             Item::StructOrUnion(_) => todo!(),
             Item::Enum(_) => todo!(),
             Item::Function(f) => f.emit(ctx),
-            Item::Expr(_) => todo!(),
+            Item::Expr(e) => e.emit(ctx),
             Item::FnCall(_) => todo!(),
             Item::TypeDef(td) => td.emit(ctx),
             Item::VarDecl(_) => todo!(),
@@ -170,10 +176,13 @@ impl Emit for DocComment {
 
 impl Emit for DocCommentFile {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        for line in self.0.to_string().lines() {
-            writeln!(ctx, "//! {}", line)?;
+        if !ctx.emitted_file_doc() {
+            ctx.set_emitted_file_doc(true);
+            for line in self.0.to_string().lines() {
+                writeln!(ctx, "//! {}", line)?;
+            }
+            writeln!(ctx)?;
         }
-        writeln!(ctx)?;
         Ok(())
     }
 }
@@ -181,7 +190,7 @@ impl Emit for DocCommentFile {
 impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match &self.kind {
-            crate::parse::PreProcBlockKind::If(expr) => {
+            PreProcBlockKind::If(expr) => {
                 let value = {
                     let _eval_mode = ctx.preproc_eval_mode_guard();
                     expr.try_eval(ctx)?
@@ -203,23 +212,23 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
                 }
             }
 
-            crate::parse::PreProcBlockKind::IfDef(ident) => {
-                if ctx.preprocstate().is_target_define(ident) {
+            PreProcBlockKind::IfDef(ident) => {
+                if ctx.preproc_state().borrow().is_target_define(ident) {
                     let define_state = DefineState::defined(ident.clone());
                     self.block.emit_with_define_state(ctx, &define_state)?;
                     if let Some(else_block) = &self.else_block {
                         else_block.emit_with_define_state(ctx, &define_state.not())?;
                     }
                     Ok(())
-                } else if ctx.preprocstate().is_defined(ident)? {
+                } else if ctx.preproc_state().borrow().is_defined(ident)? {
                     self.block.emit(ctx)
                 } else {
                     self.else_block.emit(ctx)
                 }
             }
 
-            crate::parse::PreProcBlockKind::IfNDef(ident) => {
-                if ctx.preprocstate().is_target_define(ident) {
+            PreProcBlockKind::IfNDef(ident) => {
+                if ctx.preproc_state().borrow().is_target_define(ident) {
                     let define_state = DefineState::defined(ident.clone());
                     self.block
                         .emit_with_define_state(ctx, &define_state.clone().not())?;
@@ -227,22 +236,28 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
                         else_block.emit_with_define_state(ctx, &define_state)?;
                     }
                     Ok(())
-                } else if !ctx.preprocstate().is_defined(ident)? {
+                } else if !ctx.preproc_state().borrow().is_defined(ident)? {
                     self.block.emit(ctx)
                 } else {
                     self.else_block.emit(ctx)
                 }
             }
 
-            crate::parse::PreProcBlockKind::None => todo!(),
+            PreProcBlockKind::None => {
+                assert!(self.else_block.is_none());
+                self.block.emit(ctx)
+            }
         }
     }
 }
 
 impl Emit for Define {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        ctx.preprocstate_mut()
-            .define(self.ident.clone(), self.args.clone(), self.value.clone())
+        ctx.preproc_state().borrow_mut().define(
+            self.ident.clone(),
+            self.args.clone(),
+            self.value.clone(),
+        )
     }
 }
 
@@ -253,9 +268,18 @@ impl Emit for Include {
             if !ctx.r#gen.emitted.borrow().contains_key(module) {
                 ctx.r#gen.emit(module)?;
             }
-            let included = &ctx.r#gen.emitted.borrow_mut()[module].preprocstate;
-            ctx.preprocstate_mut().include(included)?;
-            writeln!(ctx, "use super::{module}::*;")?;
+            if let Some(included) = &ctx
+                .r#gen
+                .emitted
+                .borrow_mut()
+                .get(module)
+                .map(|m| Rc::clone(&m.preproc_state))
+            {
+                ctx.preproc_state()
+                    .borrow_mut()
+                    .include(&included.borrow())?;
+                writeln!(ctx, "use super::{module}::*;")?;
+            }
         }
         Ok(())
     }
@@ -317,45 +341,65 @@ impl Emit for ArgDecl {
 impl Emit for Type {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match &self.ty {
-            crate::parse::TypeEnum::Primitive(t) => match t {
-                crate::parse::PrimitiveType::Char => write!(ctx, "::core::ffi::c_char")?,
-                crate::parse::PrimitiveType::SignedChar => write!(ctx, "::core::ffi::c_schar")?,
-                crate::parse::PrimitiveType::UnsignedChar => write!(ctx, "::core::ffi::c_uchar")?,
-                crate::parse::PrimitiveType::Short => write!(ctx, "::core::ffi::c_short")?,
-                crate::parse::PrimitiveType::UnsignedShort => write!(ctx, "::core::ffi::c_ushort")?,
-                crate::parse::PrimitiveType::Int => write!(ctx, "::core::ffi::c_int")?,
-                crate::parse::PrimitiveType::UnsignedInt => write!(ctx, "::core::ffi::c_uint")?,
-                crate::parse::PrimitiveType::Long => write!(ctx, "::core::ffi::c_long")?,
-                crate::parse::PrimitiveType::UnsignedLong => write!(ctx, "::core::ffi::c_ulong")?,
-                crate::parse::PrimitiveType::LongLong => write!(ctx, "::core::ffi::c_longlong")?,
-                crate::parse::PrimitiveType::UnsignedLongLong => {
-                    write!(ctx, "::core::ffi::c_ulonglong")?
-                }
-                crate::parse::PrimitiveType::Float => write!(ctx, "::core::ffi::c_float")?,
-                crate::parse::PrimitiveType::Double => write!(ctx, "::core::ffi::c_double")?,
-                crate::parse::PrimitiveType::Void => write!(ctx, "()")?,
-                crate::parse::PrimitiveType::Bool => {
+            TypeEnum::Primitive(t) => match t {
+                PrimitiveType::Char => write!(ctx, "::core::ffi::c_char")?,
+                PrimitiveType::SignedChar => write!(ctx, "::core::ffi::c_schar")?,
+                PrimitiveType::UnsignedChar => write!(ctx, "::core::ffi::c_uchar")?,
+                PrimitiveType::Short => write!(ctx, "::core::ffi::c_short")?,
+                PrimitiveType::UnsignedShort => write!(ctx, "::core::ffi::c_ushort")?,
+                PrimitiveType::Int => write!(ctx, "::core::ffi::c_int")?,
+                PrimitiveType::UnsignedInt => write!(ctx, "::core::ffi::c_uint")?,
+                PrimitiveType::Long => write!(ctx, "::core::ffi::c_long")?,
+                PrimitiveType::UnsignedLong => write!(ctx, "::core::ffi::c_ulong")?,
+                PrimitiveType::LongLong => write!(ctx, "::core::ffi::c_longlong")?,
+                PrimitiveType::UnsignedLongLong => write!(ctx, "::core::ffi::c_ulonglong")?,
+                PrimitiveType::Float => write!(ctx, "::core::ffi::c_float")?,
+                PrimitiveType::Double => write!(ctx, "::core::ffi::c_double")?,
+                PrimitiveType::Void => write!(ctx, "()")?,
+                PrimitiveType::Bool => {
                     return Err(ParseErr::new(self.span(), "can't emit this type").into())
                 }
-                crate::parse::PrimitiveType::SizeT => write!(ctx, "::core::primitive::usize")?,
-                crate::parse::PrimitiveType::Int8T => write!(ctx, "::core::primitive::i8")?,
-                crate::parse::PrimitiveType::Uint8T => write!(ctx, "::core::primitive::u8")?,
-                crate::parse::PrimitiveType::Int16T => write!(ctx, "::core::primitive::i16")?,
-                crate::parse::PrimitiveType::Uint16T => write!(ctx, "::core::primitive::u16")?,
-                crate::parse::PrimitiveType::Int32T => write!(ctx, "::core::primitive::i32")?,
-                crate::parse::PrimitiveType::Uint32T => write!(ctx, "::core::primitive::u32")?,
-                crate::parse::PrimitiveType::Int64T => write!(ctx, "::core::primitive::i64")?,
-                crate::parse::PrimitiveType::Uint64T => write!(ctx, "::core::primitive::u64")?,
-                crate::parse::PrimitiveType::IntPtrT => write!(ctx, "::core::primitive::isize")?,
-                crate::parse::PrimitiveType::UintPtrT => write!(ctx, "::core::primitive::usize")?,
+                PrimitiveType::SizeT => write!(ctx, "::core::primitive::usize")?,
+                PrimitiveType::Int8T => write!(ctx, "::core::primitive::i8")?,
+                PrimitiveType::Uint8T => write!(ctx, "::core::primitive::u8")?,
+                PrimitiveType::Int16T => write!(ctx, "::core::primitive::i16")?,
+                PrimitiveType::Uint16T => write!(ctx, "::core::primitive::u16")?,
+                PrimitiveType::Int32T => write!(ctx, "::core::primitive::i32")?,
+                PrimitiveType::Uint32T => write!(ctx, "::core::primitive::u32")?,
+                PrimitiveType::Int64T => write!(ctx, "::core::primitive::i64")?,
+                PrimitiveType::Uint64T => write!(ctx, "::core::primitive::u64")?,
+                PrimitiveType::IntPtrT => write!(ctx, "::core::primitive::isize")?,
+                PrimitiveType::UintPtrT => write!(ctx, "::core::primitive::usize")?,
             },
-            crate::parse::TypeEnum::Ident(i) => {
+
+            TypeEnum::Ident(i) => {
                 ctx.use_ident(i)?;
                 i.emit(ctx)?;
             }
-            crate::parse::TypeEnum::Enum(_) => todo!(),
-            crate::parse::TypeEnum::Struct(_) => todo!(),
-            crate::parse::TypeEnum::Pointer(p) => {
+
+            TypeEnum::Enum(_) => todo!(),
+
+            TypeEnum::Struct(s) => {
+                if let Some(ident) = s.ident.as_ref() {
+                    if ctx.lookup_struct_sym(ident).is_none() {
+                        if s.fields.is_none() {
+                            ctx.scope_mut().register_struct_sym(ident.clone())?;
+                            let mut ool = ctx.with_ool_output();
+                            writeln!(ool, "#[repr(C)]")?;
+                            writeln!(ool, "pub struct {} {{ _opaque: [u8; 0] }}", ident.as_str())?;
+                            write!(ctx, "{}", ident.as_str())?;
+                        } else {
+                            todo!()
+                        }
+                    } else {
+                        todo!()
+                    }
+                } else {
+                    todo!()
+                }
+            }
+
+            TypeEnum::Pointer(p) => {
                 if p.is_const {
                     write!(ctx, "*const ")?;
                 } else {
@@ -367,9 +411,12 @@ impl Emit for Type {
                     p.emit(ctx)?;
                 }
             }
-            crate::parse::TypeEnum::Array(_, _) => todo!(),
-            crate::parse::TypeEnum::FnPointer(_) => todo!(),
-            crate::parse::TypeEnum::DotDotDot => write!(ctx, "...")?,
+
+            TypeEnum::Array(_, _) => todo!(),
+
+            TypeEnum::FnPointer(_) => todo!(),
+
+            TypeEnum::DotDotDot => write!(ctx, "...")?,
         }
         Ok(())
     }
@@ -377,29 +424,77 @@ impl Emit for Type {
 
 impl Emit for TypeDef {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        self.doc.emit(ctx)?;
-
         match &self.ty.ty {
-            crate::parse::TypeEnum::Primitive(_) => todo!(),
-            crate::parse::TypeEnum::Ident(_) => todo!(),
+            TypeEnum::Primitive(p) => {
+                self.doc.emit(ctx)?;
+                let p = match p {
+                    PrimitiveType::Char => "::core::ffi::c_char",
+                    PrimitiveType::SignedChar => "::core::ffi::c_schar",
+                    PrimitiveType::UnsignedChar => "::core::ffi::c_uchar",
+                    PrimitiveType::Short => "::core::ffi::c_short",
+                    PrimitiveType::UnsignedShort => "::core::ffi::c_ushort",
+                    PrimitiveType::Int => "::core::ffi::c_int",
+                    PrimitiveType::UnsignedInt => "::core::ffi::c_uint",
+                    PrimitiveType::Long => "::core::ffi::c_long",
+                    PrimitiveType::UnsignedLong => "::core::ffi::c_ulong",
+                    PrimitiveType::LongLong => "::core::ffi::c_longlong",
+                    PrimitiveType::UnsignedLongLong => "::core::ffi::c_ulonglong",
+                    PrimitiveType::Float => "::core::primitive::f32",
+                    PrimitiveType::Double => "::core::primitive::f64",
+                    PrimitiveType::Void => "()",
+                    PrimitiveType::Bool => todo!(),
+                    PrimitiveType::SizeT => "::core::primitive::usize",
+                    PrimitiveType::Int8T => "::core::primitive::i8",
+                    PrimitiveType::Uint8T => "::core::primitive::u8",
+                    PrimitiveType::Int16T => "::core::primitive::i16",
+                    PrimitiveType::Uint16T => "::core::primitive::u16",
+                    PrimitiveType::Int32T => "::core::primitive::i32",
+                    PrimitiveType::Uint32T => "::core::primitive::u32",
+                    PrimitiveType::Int64T => "::core::primitive::i64",
+                    PrimitiveType::Uint64T => "::core::primitive::u64",
+                    PrimitiveType::IntPtrT => "::core::primitive::isize",
+                    PrimitiveType::UintPtrT => "::core::primitive::usize",
+                };
+                ctx.scope_mut().register_sym(self.ident.clone())?;
+                writeln!(ctx, "pub type {} = {p};", self.ident.as_str())?;
+                writeln!(ctx)?;
+                Ok(())
+            }
 
-            crate::parse::TypeEnum::Enum(e) => {
+            TypeEnum::Ident(sym) => {
+                let sym = ctx.lookup_sym(sym).ok_or_else(|| {
+                    ParseErr::new(sym.span(), format!("`{}` not defined", sym.as_str()))
+                })?;
+                ctx.scope_mut().register_sym(self.ident.clone())?;
+                self.doc.emit(ctx)?;
+                writeln!(ctx, "pub type {} = {};", self.ident.as_str(), sym.as_str())?;
+                writeln!(ctx)?;
+                Ok(())
+            }
+
+            TypeEnum::Enum(e) => {
+                self.doc.emit(ctx)?;
                 assert!(e.doc.is_none());
 
                 let mut enum_rust_type = None;
                 let mut known_values = Vec::new();
 
-                let mut prefix = e
-                    .variants
-                    .first()
-                    .map(|v| v.ident.as_str())
-                    .unwrap_or_default();
+                let prefix = if e.variants.len() > 1 {
+                    let mut prefix = e
+                        .variants
+                        .first()
+                        .map(|v| v.ident.as_str())
+                        .unwrap_or_default();
 
-                for variant in &e.variants {
-                    known_values.push(", ".into());
-                    known_values.push(format!("[`{}`]", variant.ident.as_str()));
-                    prefix = common_prefix(prefix, variant.ident.as_str());
-                }
+                    for variant in &e.variants {
+                        known_values.push(", ".into());
+                        known_values.push(format!("[`{}`]", variant.ident.as_str()));
+                        prefix = common_prefix(prefix, variant.ident.as_str());
+                    }
+                    prefix
+                } else {
+                    ""
+                };
 
                 if !known_values.is_empty() {
                     if self.doc.is_some() {
@@ -454,6 +549,9 @@ impl Emit for TypeDef {
                     )?;
                 }
 
+                ctx_impl.flush_ool_output()?;
+                ctx_global.flush_ool_output()?;
+
                 writeln!(ctx, "impl {enum_ident} {{")?;
                 ctx.write_str(&impl_consts)?;
                 writeln!(ctx, "}}")?;
@@ -461,11 +559,37 @@ impl Emit for TypeDef {
                 Ok(())
             }
 
-            crate::parse::TypeEnum::Struct(_) => todo!(),
-            crate::parse::TypeEnum::Pointer(_) => todo!(),
-            crate::parse::TypeEnum::Array(_, _) => todo!(),
+            TypeEnum::Struct(s) => {
+                if let Some(ident) = &s.ident {
+                    if ctx.lookup_struct_sym(ident).is_none() {
+                        self.ty.emit(&mut ctx.with_ool_output())?;
+                    }
+                    self.doc.emit(ctx)?;
+                    writeln!(ctx, "/// ...")?;
+                    ctx.flush_ool_output()?;
+                    todo!()
+                } else {
+                    todo!()
+                }
+            }
 
-            crate::parse::TypeEnum::FnPointer(f) => {
+            TypeEnum::Pointer(_) => {
+                ctx.scope_mut().register_sym(self.ident.clone())?;
+                self.doc.emit(ctx)?;
+                write!(ctx, "pub type {} = ", self.ident.as_str())?;
+                self.ty.emit(ctx)?;
+                writeln!(ctx, ";")?;
+                Ok(())
+            }
+
+            TypeEnum::Array(_, _) => {
+                self.doc.emit(ctx)?;
+                todo!()
+            }
+
+            TypeEnum::FnPointer(f) => {
+                ctx.scope_mut().register_sym(self.ident.clone())?;
+                self.doc.emit(ctx)?;
                 write!(ctx, "pub type {} = Option<", self.ident.as_str())?;
                 emit_extern_start(ctx, &f.abi, true)?;
                 write!(ctx, "fn")?;
@@ -479,7 +603,10 @@ impl Emit for TypeDef {
                 Ok(())
             }
 
-            crate::parse::TypeEnum::DotDotDot => todo!(),
+            TypeEnum::DotDotDot => {
+                self.doc.emit(ctx)?;
+                todo!()
+            }
         }
     }
 }

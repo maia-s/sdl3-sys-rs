@@ -127,6 +127,7 @@ pub trait Parse: Sized {
             Err(e) => Err(e),
         }
     }
+
     fn try_parse_try_all(input: &Span) -> ParseRes<Option<Self>> {
         match Self::try_parse_raw(input) {
             Ok((rest, parsed)) => {
