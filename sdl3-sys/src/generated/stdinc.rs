@@ -153,27 +153,31 @@ pub const DUMMY_ENUM_VALUE: SDL_DUMMY_ENUM = SDL_DUMMY_ENUM::DUMMY_ENUM_VALUE;
 const _: () = ::core::assert!(::core::mem::size_of::<SDL_DUMMY_ENUM>() == ::core::mem::size_of::<::core::ffi::c_int>());
 }
 
-extern_sdl! {
-fn SDL_malloc(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
-}
-extern_sdl! {
-fn SDL_calloc(nmemb: ::core::primitive::usize, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
-}
-extern_sdl! {
-fn SDL_realloc(mem: *mut ::core::ffi::c_void, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
-}
-extern_sdl! {
-fn SDL_free(mem: *mut ::core::ffi::c_void);
-}
-pub type SDL_malloc_func = Option<extern_sdl_ptr!(fn(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void)>;
+extern_sdlcall! {{
+pub fn SDL_malloc(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+}}
 
-pub type SDL_calloc_func = Option<extern_sdl_ptr!(fn(nmemb: ::core::primitive::usize, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void)>;
+extern_sdlcall! {{
+pub fn SDL_calloc(nmemb: ::core::primitive::usize, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+}}
 
-pub type SDL_realloc_func = Option<extern_sdl_ptr!(fn(mem: *mut ::core::ffi::c_void, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void)>;
+extern_sdlcall! {{
+pub fn SDL_realloc(mem: *mut ::core::ffi::c_void, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+}}
 
-pub type SDL_free_func = Option<extern_sdl_ptr!(fn(mem: *mut ::core::ffi::c_void))>;
+extern_sdlcall! {{
+pub fn SDL_free(mem: *mut ::core::ffi::c_void);
+}}
 
-extern_sdl! {
+pub type SDL_malloc_func = Option<extern_sdlcall!(fn(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void)>;
+
+pub type SDL_calloc_func = Option<extern_sdlcall!(fn(nmemb: ::core::primitive::usize, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void)>;
+
+pub type SDL_realloc_func = Option<extern_sdlcall!(fn(mem: *mut ::core::ffi::c_void, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void)>;
+
+pub type SDL_free_func = Option<extern_sdlcall!(fn(mem: *mut ::core::ffi::c_void))>;
+
+extern_sdlcall! {{
 /// Get the original set of SDL memory functions.
 /// 
 /// This is what SDL_malloc and friends will use by default, if there has been
@@ -189,9 +193,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_GetOriginalMemoryFunctions(malloc_func: *mut SDL_malloc_func, calloc_func: *mut SDL_calloc_func, realloc_func: *mut SDL_realloc_func, free_func: *mut SDL_free_func);
-}
-extern_sdl! {
+pub fn SDL_GetOriginalMemoryFunctions(malloc_func: *mut SDL_malloc_func, calloc_func: *mut SDL_calloc_func, realloc_func: *mut SDL_realloc_func, free_func: *mut SDL_free_func);
+}}
+
+extern_sdlcall! {{
 /// Get the current set of SDL memory functions.
 /// 
 /// \param malloc_func filled with malloc function.
@@ -207,9 +212,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_SetMemoryFunctions
 /// \sa SDL_GetOriginalMemoryFunctions
-fn SDL_GetMemoryFunctions(malloc_func: *mut SDL_malloc_func, calloc_func: *mut SDL_calloc_func, realloc_func: *mut SDL_realloc_func, free_func: *mut SDL_free_func);
-}
-extern_sdl! {
+pub fn SDL_GetMemoryFunctions(malloc_func: *mut SDL_malloc_func, calloc_func: *mut SDL_calloc_func, realloc_func: *mut SDL_realloc_func, free_func: *mut SDL_free_func);
+}}
+
+extern_sdlcall! {{
 /// Replace SDL's memory allocation functions with a custom set.
 /// 
 /// It is not safe to call this function once any allocations have been made,
@@ -234,9 +240,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_GetMemoryFunctions
 /// \sa SDL_GetOriginalMemoryFunctions
-fn SDL_SetMemoryFunctions(malloc_func: SDL_malloc_func, calloc_func: SDL_calloc_func, realloc_func: SDL_realloc_func, free_func: SDL_free_func) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_SetMemoryFunctions(malloc_func: SDL_malloc_func, calloc_func: SDL_calloc_func, realloc_func: SDL_realloc_func, free_func: SDL_free_func) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Allocate memory aligned to a specific value.
 /// 
 /// If `alignment` is less than the size of `void *`, then it will be increased
@@ -257,9 +264,10 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_aligned_free
-fn SDL_aligned_alloc(alignment: ::core::primitive::usize, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
-}
-extern_sdl! {
+pub fn SDL_aligned_alloc(alignment: ::core::primitive::usize, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+}}
+
+extern_sdlcall! {{
 /// Free memory allocated by SDL_aligned_alloc().
 /// 
 /// The pointer is no longer valid after this call and cannot be dereferenced
@@ -272,9 +280,10 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_aligned_alloc
-fn SDL_aligned_free(mem: *mut ::core::ffi::c_void);
-}
-extern_sdl! {
+pub fn SDL_aligned_free(mem: *mut ::core::ffi::c_void);
+}}
+
+extern_sdlcall! {{
 /// Get the number of outstanding (unfreed) allocations.
 /// 
 /// \returns the number of allocations.
@@ -282,37 +291,46 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_GetNumAllocations() -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_getenv(name: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_setenv(name: *const ::core::ffi::c_char, value: *const ::core::ffi::c_char, overwrite: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_unsetenv(name: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
-}
-pub type SDL_CompareCallback = Option<extern_sdl_ptr!(fn(a: *const ::core::ffi::c_void, b: *const ::core::ffi::c_void) -> ::core::ffi::c_int)>;
+pub fn SDL_GetNumAllocations() -> ::core::ffi::c_int;
+}}
 
-extern_sdl! {
-fn SDL_qsort(base: *mut ::core::ffi::c_void, nmemb: ::core::primitive::usize, size: ::core::primitive::usize, compare: SDL_CompareCallback);
-}
-extern_sdl! {
-fn SDL_bsearch(key: *const ::core::ffi::c_void, base: *const ::core::ffi::c_void, nmemb: ::core::primitive::usize, size: ::core::primitive::usize, compare: SDL_CompareCallback) -> *mut ::core::ffi::c_void;
-}
-pub type SDL_CompareCallback_r = Option<extern_sdl_ptr!(fn(userdata: *mut ::core::ffi::c_void, a: *const ::core::ffi::c_void, b: *const ::core::ffi::c_void) -> ::core::ffi::c_int)>;
+extern_sdlcall! {{
+pub fn SDL_getenv(name: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
+}}
 
-extern_sdl! {
-fn SDL_qsort_r(base: *mut ::core::ffi::c_void, nmemb: ::core::primitive::usize, size: ::core::primitive::usize, compare: SDL_CompareCallback_r, userdata: *mut ::core::ffi::c_void);
-}
-extern_sdl! {
-fn SDL_bsearch_r(key: *const ::core::ffi::c_void, base: *const ::core::ffi::c_void, nmemb: ::core::primitive::usize, size: ::core::primitive::usize, compare: SDL_CompareCallback_r, userdata: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
-}
-extern_sdl! {
-fn SDL_abs(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+extern_sdlcall! {{
+pub fn SDL_setenv(name: *const ::core::ffi::c_char, value: *const ::core::ffi::c_char, overwrite: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_unsetenv(name: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
+}}
+
+pub type SDL_CompareCallback = Option<extern_sdlcall!(fn(a: *const ::core::ffi::c_void, b: *const ::core::ffi::c_void) -> ::core::ffi::c_int)>;
+
+extern_sdlcall! {{
+pub fn SDL_qsort(base: *mut ::core::ffi::c_void, nmemb: ::core::primitive::usize, size: ::core::primitive::usize, compare: SDL_CompareCallback);
+}}
+
+extern_sdlcall! {{
+pub fn SDL_bsearch(key: *const ::core::ffi::c_void, base: *const ::core::ffi::c_void, nmemb: ::core::primitive::usize, size: ::core::primitive::usize, compare: SDL_CompareCallback) -> *mut ::core::ffi::c_void;
+}}
+
+pub type SDL_CompareCallback_r = Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, a: *const ::core::ffi::c_void, b: *const ::core::ffi::c_void) -> ::core::ffi::c_int)>;
+
+extern_sdlcall! {{
+pub fn SDL_qsort_r(base: *mut ::core::ffi::c_void, nmemb: ::core::primitive::usize, size: ::core::primitive::usize, compare: SDL_CompareCallback_r, userdata: *mut ::core::ffi::c_void);
+}}
+
+extern_sdlcall! {{
+pub fn SDL_bsearch_r(key: *const ::core::ffi::c_void, base: *const ::core::ffi::c_void, nmemb: ::core::primitive::usize, size: ::core::primitive::usize, compare: SDL_CompareCallback_r, userdata: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_abs(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Query if a character is alphabetic (a letter).
 /// 
 /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -324,9 +342,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_isalpha(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isalpha(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Query if a character is alphabetic (a letter) or a number.
 /// 
 /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -338,9 +357,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_isalnum(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isalnum(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Report if a character is blank (a space or tab).
 /// 
 /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -352,9 +372,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_isblank(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isblank(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Report if a character is a control character.
 /// 
 /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -366,9 +387,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_iscntrl(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_iscntrl(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Report if a character is a numeric digit.
 /// 
 /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -380,9 +402,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_isdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Report if a character is a hexadecimal digit.
 /// 
 /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -394,9 +417,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_isxdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isxdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Report if a character is a punctuation mark.
 /// 
 /// **WARNING**: Regardless of system locale, this is equivalent to
@@ -411,9 +435,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_isgraph
 /// \sa SDL_isalnum
-fn SDL_ispunct(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_ispunct(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Report if a character is whitespace.
 /// 
 /// **WARNING**: Regardless of system locale, this will only treat the
@@ -432,9 +457,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_isspace(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isspace(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Report if a character is upper case.
 /// 
 /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -446,9 +472,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_isupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Report if a character is lower case.
 /// 
 /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -460,9 +487,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_islower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_islower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Report if a character is "printable".
 /// 
 /// Be advised that "printable" has a definition that goes back to text
@@ -478,9 +506,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_isprint(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isprint(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Report if a character is any "printable" except space.
 /// 
 /// Be advised that "printable" has a definition that goes back to text
@@ -498,9 +527,10 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_isprint
-fn SDL_isgraph(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isgraph(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Convert low-ASCII English letters to uppercase.
 /// 
 /// **WARNING**: Regardless of system locale, this will only convert ASCII
@@ -515,9 +545,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_toupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_toupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Convert low-ASCII English letters to lowercase.
 /// 
 /// **WARNING**: Regardless of system locale, this will only convert ASCII
@@ -532,51 +563,66 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_tolower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_crc16(crc: Uint16, data: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> Uint16;
-}
-extern_sdl! {
-fn SDL_crc32(crc: Uint32, data: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> Uint32;
-}
-extern_sdl! {
-fn SDL_memcpy(dst: *mut ::core::ffi::c_void, src: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
-}
-extern_sdl! {
-fn SDL_memmove(dst: *mut ::core::ffi::c_void, src: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
-}
-extern_sdl! {
-fn SDL_memset(dst: *mut ::core::ffi::c_void, c: ::core::ffi::c_int, len: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
-}
-extern_sdl! {
-fn SDL_memset4(dst: *mut ::core::ffi::c_void, val: Uint32, dwords: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
-}
-extern_sdl! {
-fn SDL_memcmp(s1: *const ::core::ffi::c_void, s2: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_wcslen(wstr: *const wchar_t) -> ::core::primitive::usize;
-}
-extern_sdl! {
-fn SDL_wcsnlen(wstr: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
-}
-extern_sdl! {
-fn SDL_wcslcpy(dst: *mut wchar_t, src: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
-}
-extern_sdl! {
-fn SDL_wcslcat(dst: *mut wchar_t, src: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
-}
-extern_sdl! {
-fn SDL_wcsdup(wstr: *const wchar_t) -> *mut wchar_t;
-}
-extern_sdl! {
-fn SDL_wcsstr(haystack: *const wchar_t, needle: *const wchar_t) -> *mut wchar_t;
-}
-extern_sdl! {
-fn SDL_wcsnstr(haystack: *const wchar_t, needle: *const wchar_t, maxlen: ::core::primitive::usize) -> *mut wchar_t;
-}
-extern_sdl! {
+pub fn SDL_tolower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_crc16(crc: Uint16, data: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> Uint16;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_crc32(crc: Uint32, data: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> Uint32;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_memcpy(dst: *mut ::core::ffi::c_void, src: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_memmove(dst: *mut ::core::ffi::c_void, src: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_memset(dst: *mut ::core::ffi::c_void, c: ::core::ffi::c_int, len: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_memset4(dst: *mut ::core::ffi::c_void, val: Uint32, dwords: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_memcmp(s1: *const ::core::ffi::c_void, s2: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_wcslen(wstr: *const wchar_t) -> ::core::primitive::usize;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_wcsnlen(wstr: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_wcslcpy(dst: *mut wchar_t, src: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_wcslcat(dst: *mut wchar_t, src: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_wcsdup(wstr: *const wchar_t) -> *mut wchar_t;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_wcsstr(haystack: *const wchar_t, needle: *const wchar_t) -> *mut wchar_t;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_wcsnstr(haystack: *const wchar_t, needle: *const wchar_t, maxlen: ::core::primitive::usize) -> *mut wchar_t;
+}}
+
+extern_sdlcall! {{
 /// Compare two null-terminated wide strings.
 /// 
 /// This only compares wchar_t values until it hits a null-terminating
@@ -592,9 +638,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_wcscmp(str1: *const wchar_t, str2: *const wchar_t) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_wcscmp(str1: *const wchar_t, str2: *const wchar_t) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Compare two wide strings up to a number of wchar_t values.
 /// 
 /// This only compares wchar_t values; it does not care if the string is
@@ -622,9 +669,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_wcsncmp(str1: *const wchar_t, str2: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_wcsncmp(str1: *const wchar_t, str2: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Compare two null-terminated wide strings, case-insensitively.
 /// 
 /// This will work with Unicode strings, using a technique called
@@ -651,9 +699,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_wcscasecmp(str1: *const wchar_t, str2: *const wchar_t) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_wcscasecmp(str1: *const wchar_t, str2: *const wchar_t) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Compare two wide strings, case-insensitively, up to a number of wchar_t.
 /// 
 /// This will work with Unicode strings, using a technique called
@@ -692,36 +741,46 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_wcsncasecmp(str1: *const wchar_t, str2: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_wcstol(str: *const wchar_t, endp: *mut *mut wchar_t, base: ::core::ffi::c_int) -> ::core::ffi::c_long;
-}
-extern_sdl! {
-fn SDL_strlen(str: *const ::core::ffi::c_char) -> ::core::primitive::usize;
-}
-extern_sdl! {
-fn SDL_strnlen(str: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
-}
-extern_sdl! {
-fn SDL_strlcpy(dst: *mut ::core::ffi::c_char, src: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
-}
-extern_sdl! {
-fn SDL_utf8strlcpy(dst: *mut ::core::ffi::c_char, src: *const ::core::ffi::c_char, dst_bytes: ::core::primitive::usize) -> ::core::primitive::usize;
-}
-extern_sdl! {
-fn SDL_strlcat(dst: *mut ::core::ffi::c_char, src: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
-}
-extern_sdl! {
-fn SDL_strdup(str: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_strndup(str: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_strrev(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
+pub fn SDL_wcsncasecmp(str1: *const wchar_t, str2: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_wcstol(str: *const wchar_t, endp: *mut *mut wchar_t, base: ::core::ffi::c_int) -> ::core::ffi::c_long;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strlen(str: *const ::core::ffi::c_char) -> ::core::primitive::usize;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strnlen(str: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strlcpy(dst: *mut ::core::ffi::c_char, src: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_utf8strlcpy(dst: *mut ::core::ffi::c_char, src: *const ::core::ffi::c_char, dst_bytes: ::core::primitive::usize) -> ::core::primitive::usize;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strlcat(dst: *mut ::core::ffi::c_char, src: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strdup(str: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strndup(str: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strrev(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
 /// Convert a string to uppercase.
 /// 
 /// **WARNING**: Regardless of system locale, this will only convert ASCII
@@ -739,9 +798,10 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_strlwr
-fn SDL_strupr(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
+pub fn SDL_strupr(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
 /// Convert a string to lowercase.
 /// 
 /// **WARNING**: Regardless of system locale, this will only convert ASCII
@@ -759,72 +819,94 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_strupr
-fn SDL_strlwr(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_strchr(str: *const ::core::ffi::c_char, c: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_strrchr(str: *const ::core::ffi::c_char, c: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_strstr(haystack: *const ::core::ffi::c_char, needle: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_strnstr(haystack: *const ::core::ffi::c_char, needle: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_strcasestr(haystack: *const ::core::ffi::c_char, needle: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_strtok_r(s1: *mut ::core::ffi::c_char, s2: *const ::core::ffi::c_char, saveptr: *mut *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_utf8strlen(str: *const ::core::ffi::c_char) -> ::core::primitive::usize;
-}
-extern_sdl! {
-fn SDL_utf8strnlen(str: *const ::core::ffi::c_char, bytes: ::core::primitive::usize) -> ::core::primitive::usize;
-}
-extern_sdl! {
-fn SDL_itoa(value: ::core::ffi::c_int, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_uitoa(value: ::core::ffi::c_uint, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_ltoa(value: ::core::ffi::c_long, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_ultoa(value: ::core::ffi::c_ulong, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_lltoa(value: Sint64, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_ulltoa(value: Uint64, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_atoi(str: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_atof(str: *const ::core::ffi::c_char) -> ::core::ffi::c_double;
-}
-extern_sdl! {
-fn SDL_strtol(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char, base: ::core::ffi::c_int) -> ::core::ffi::c_long;
-}
-extern_sdl! {
-fn SDL_strtoul(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char, base: ::core::ffi::c_int) -> ::core::ffi::c_ulong;
-}
-extern_sdl! {
-fn SDL_strtoll(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char, base: ::core::ffi::c_int) -> Sint64;
-}
-extern_sdl! {
-fn SDL_strtoull(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char, base: ::core::ffi::c_int) -> Uint64;
-}
-extern_sdl! {
-fn SDL_strtod(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_strlwr(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strchr(str: *const ::core::ffi::c_char, c: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strrchr(str: *const ::core::ffi::c_char, c: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strstr(haystack: *const ::core::ffi::c_char, needle: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strnstr(haystack: *const ::core::ffi::c_char, needle: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strcasestr(haystack: *const ::core::ffi::c_char, needle: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strtok_r(s1: *mut ::core::ffi::c_char, s2: *const ::core::ffi::c_char, saveptr: *mut *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_utf8strlen(str: *const ::core::ffi::c_char) -> ::core::primitive::usize;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_utf8strnlen(str: *const ::core::ffi::c_char, bytes: ::core::primitive::usize) -> ::core::primitive::usize;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_itoa(value: ::core::ffi::c_int, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_uitoa(value: ::core::ffi::c_uint, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_ltoa(value: ::core::ffi::c_long, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_ultoa(value: ::core::ffi::c_ulong, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_lltoa(value: Sint64, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_ulltoa(value: Uint64, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_atoi(str: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_atof(str: *const ::core::ffi::c_char) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strtol(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char, base: ::core::ffi::c_int) -> ::core::ffi::c_long;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strtoul(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char, base: ::core::ffi::c_int) -> ::core::ffi::c_ulong;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strtoll(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char, base: ::core::ffi::c_int) -> Sint64;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strtoull(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char, base: ::core::ffi::c_int) -> Uint64;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_strtod(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compare two null-terminated UTF-8 strings.
 /// 
 /// Due to the nature of UTF-8 encoding, this will work with Unicode strings,
@@ -841,9 +923,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_strcmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_strcmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Compare two UTF-8 strings up to a number of bytes.
 /// 
 /// Due to the nature of UTF-8 encoding, this will work with Unicode strings,
@@ -870,9 +953,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_strncmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_strncmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Compare two null-terminated UTF-8 strings, case-insensitively.
 /// 
 /// This will work with Unicode strings, using a technique called
@@ -897,9 +981,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_strcasecmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_strcasecmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Compare two UTF-8 strings, case-insensitively, up to a number of bytes.
 /// 
 /// This will work with Unicode strings, using a technique called
@@ -935,9 +1020,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_strncasecmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_strncasecmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Decode a UTF-8 string, one Unicode codepoint at a time.
 /// 
 /// This will return the first Unicode codepoint in the UTF-8 encoded string in
@@ -979,9 +1065,10 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_StepUTF8(pstr: *mut *const ::core::ffi::c_char, pslen: *mut ::core::primitive::usize) -> Uint32;
-}
-extern_sdl! {
+pub fn SDL_StepUTF8(pstr: *mut *const ::core::ffi::c_char, pslen: *mut ::core::primitive::usize) -> Uint32;
+}}
+
+extern_sdlcall! {{
 /// Convert a single Unicode codepoint to UTF-8.
 /// 
 /// The buffer pointed to by `dst` must be at least 4 bytes long, as this
@@ -1007,33 +1094,42 @@ extern_sdl! {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_UCS4ToUTF8(codepoint: Uint32, dst: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
-}
-extern_sdl! {
-fn SDL_sscanf(text: *const ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ...) -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_vsscanf(text: *const ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ap: va_list) -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_snprintf(text: *mut ::core::ffi::c_char, maxlen: ::core::primitive::usize, fmt: *const ::core::ffi::c_char, ...) -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_swprintf(text: *mut wchar_t, maxlen: ::core::primitive::usize, fmt: *const wchar_t, ...) -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_vsnprintf(text: *mut ::core::ffi::c_char, maxlen: ::core::primitive::usize, fmt: *const ::core::ffi::c_char, ap: va_list) -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_vswprintf(text: *mut wchar_t, maxlen: ::core::primitive::usize, fmt: *const wchar_t, ap: va_list) -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_asprintf(strp: *mut *mut ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ...) -> ::core::ffi::c_int;
-}
-extern_sdl! {
-fn SDL_vasprintf(strp: *mut *mut ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ap: va_list) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_UCS4ToUTF8(codepoint: Uint32, dst: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_sscanf(text: *const ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ...) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_vsscanf(text: *const ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ap: va_list) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_snprintf(text: *mut ::core::ffi::c_char, maxlen: ::core::primitive::usize, fmt: *const ::core::ffi::c_char, ...) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_swprintf(text: *mut wchar_t, maxlen: ::core::primitive::usize, fmt: *const wchar_t, ...) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_vsnprintf(text: *mut ::core::ffi::c_char, maxlen: ::core::primitive::usize, fmt: *const ::core::ffi::c_char, ap: va_list) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_vswprintf(text: *mut wchar_t, maxlen: ::core::primitive::usize, fmt: *const wchar_t, ap: va_list) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_asprintf(strp: *mut *mut ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ...) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+pub fn SDL_vasprintf(strp: *mut *mut ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ap: va_list) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Seeds the pseudo-random number generator.
 /// 
 /// Reusing the seed number will cause SDL_rand_*() to repeat the same stream
@@ -1050,9 +1146,10 @@ extern_sdl! {
 /// \sa SDL_rand
 /// \sa SDL_rand_bits
 /// \sa SDL_randf
-fn SDL_srand(seed: Uint64);
-}
-extern_sdl! {
+pub fn SDL_srand(seed: Uint64);
+}}
+
+extern_sdlcall! {{
 /// Generate a pseudo-random number less than n for positive n
 /// 
 /// The method used is faster and of better quality than `rand() % n`. Odds are
@@ -1083,9 +1180,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_srand
 /// \sa SDL_randf
-fn SDL_rand(n: Sint32) -> Sint32;
-}
-extern_sdl! {
+pub fn SDL_rand(n: Sint32) -> Sint32;
+}}
+
+extern_sdlcall! {{
 /// Generate a uniform pseudo-random floating point number less than 1.0
 /// 
 /// If you want reproducible output, be sure to initialize with SDL_srand()
@@ -1105,9 +1203,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_srand
 /// \sa SDL_rand
-fn SDL_randf() -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_randf() -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Generate 32 pseudo-random bits.
 /// 
 /// You likely want to use SDL_rand() to get a psuedo-random number instead.
@@ -1127,9 +1226,10 @@ extern_sdl! {
 /// \sa SDL_rand
 /// \sa SDL_randf
 /// \sa SDL_srand
-fn SDL_rand_bits() -> Uint32;
-}
-extern_sdl! {
+pub fn SDL_rand_bits() -> Uint32;
+}}
+
+extern_sdlcall! {{
 /// Generate a pseudo-random number less than n for positive n
 /// 
 /// The method used is faster and of better quality than `rand() % n`. Odds are
@@ -1161,9 +1261,10 @@ extern_sdl! {
 /// \sa SDL_rand
 /// \sa SDL_rand_bits_r
 /// \sa SDL_randf_r
-fn SDL_rand_r(state: *mut Uint64, n: Sint32) -> Sint32;
-}
-extern_sdl! {
+pub fn SDL_rand_r(state: *mut Uint64, n: Sint32) -> Sint32;
+}}
+
+extern_sdlcall! {{
 /// Generate a uniform pseudo-random floating point number less than 1.0
 /// 
 /// If you want reproducible output, be sure to initialize with SDL_srand()
@@ -1187,9 +1288,10 @@ extern_sdl! {
 /// \sa SDL_rand_bits_r
 /// \sa SDL_rand_r
 /// \sa SDL_randf
-fn SDL_randf_r(state: *mut Uint64) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_randf_r(state: *mut Uint64) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Generate 32 pseudo-random bits.
 /// 
 /// You likely want to use SDL_rand_r() to get a psuedo-random number instead.
@@ -1211,9 +1313,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_rand_r
 /// \sa SDL_randf_r
-fn SDL_rand_bits_r(state: *mut Uint64) -> Uint32;
-}
-extern_sdl! {
+pub fn SDL_rand_bits_r(state: *mut Uint64) -> Uint32;
+}}
+
+extern_sdlcall! {{
 /// Compute the arc cosine of `x`.
 /// 
 /// The definition of `y = acos(x)` is `x = cos(y)`.
@@ -1240,9 +1343,10 @@ extern_sdl! {
 /// \sa SDL_acosf
 /// \sa SDL_asin
 /// \sa SDL_cos
-fn SDL_acos(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_acos(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the arc cosine of `x`.
 /// 
 /// The definition of `y = acos(x)` is `x = cos(y)`.
@@ -1269,9 +1373,10 @@ extern_sdl! {
 /// \sa SDL_acos
 /// \sa SDL_asinf
 /// \sa SDL_cosf
-fn SDL_acosf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_acosf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Compute the arc sine of `x`.
 /// 
 /// The definition of `y = asin(x)` is `x = sin(y)`.
@@ -1298,9 +1403,10 @@ extern_sdl! {
 /// \sa SDL_asinf
 /// \sa SDL_acos
 /// \sa SDL_sin
-fn SDL_asin(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_asin(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the arc sine of `x`.
 /// 
 /// The definition of `y = asin(x)` is `x = sin(y)`.
@@ -1327,9 +1433,10 @@ extern_sdl! {
 /// \sa SDL_asin
 /// \sa SDL_acosf
 /// \sa SDL_sinf
-fn SDL_asinf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_asinf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Compute the arc tangent of `x`.
 /// 
 /// The definition of `y = atan(x)` is `x = tan(y)`.
@@ -1358,9 +1465,10 @@ extern_sdl! {
 /// \sa SDL_atanf
 /// \sa SDL_atan2
 /// \sa SDL_tan
-fn SDL_atan(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_atan(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the arc tangent of `x`.
 /// 
 /// The definition of `y = atan(x)` is `x = tan(y)`.
@@ -1389,9 +1497,10 @@ extern_sdl! {
 /// \sa SDL_atan
 /// \sa SDL_atan2f
 /// \sa SDL_tanf
-fn SDL_atanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_atanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Compute the arc tangent of `y / x`, using the signs of x and y to adjust
 /// the result's quadrant.
 /// 
@@ -1424,9 +1533,10 @@ extern_sdl! {
 /// \sa SDL_atan2f
 /// \sa SDL_atan
 /// \sa SDL_tan
-fn SDL_atan2(y: ::core::ffi::c_double, x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_atan2(y: ::core::ffi::c_double, x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the arc tangent of `y / x`, using the signs of x and y to adjust
 /// the result's quadrant.
 /// 
@@ -1459,9 +1569,10 @@ extern_sdl! {
 /// \sa SDL_atan2f
 /// \sa SDL_atan
 /// \sa SDL_tan
-fn SDL_atan2f(y: ::core::ffi::c_float, x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_atan2f(y: ::core::ffi::c_float, x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Compute the ceiling of `x`.
 /// 
 /// The ceiling of `x` is the smallest integer `y` such that `y > x`, i.e `x`
@@ -1486,9 +1597,10 @@ extern_sdl! {
 /// \sa SDL_trunc
 /// \sa SDL_round
 /// \sa SDL_lround
-fn SDL_ceil(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_ceil(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the ceiling of `x`.
 /// 
 /// The ceiling of `x` is the smallest integer `y` such that `y > x`, i.e `x`
@@ -1513,9 +1625,10 @@ extern_sdl! {
 /// \sa SDL_truncf
 /// \sa SDL_roundf
 /// \sa SDL_lroundf
-fn SDL_ceilf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_ceilf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Copy the sign of one floating-point value to another.
 /// 
 /// The definition of copysign is that ``copysign(x, y) = abs(x) * sign(y)``.
@@ -1538,9 +1651,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_copysignf
 /// \sa SDL_fabs
-fn SDL_copysign(x: ::core::ffi::c_double, y: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_copysign(x: ::core::ffi::c_double, y: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Copy the sign of one floating-point value to another.
 /// 
 /// The definition of copysign is that ``copysign(x, y) = abs(x) * sign(y)``.
@@ -1563,9 +1677,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_copysignf
 /// \sa SDL_fabsf
-fn SDL_copysignf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_copysignf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Compute the cosine of `x`.
 /// 
 /// Domain: `-INF <= x <= INF`
@@ -1590,9 +1705,10 @@ extern_sdl! {
 /// \sa SDL_cosf
 /// \sa SDL_acos
 /// \sa SDL_sin
-fn SDL_cos(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_cos(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the cosine of `x`.
 /// 
 /// Domain: `-INF <= x <= INF`
@@ -1617,9 +1733,10 @@ extern_sdl! {
 /// \sa SDL_cos
 /// \sa SDL_acosf
 /// \sa SDL_sinf
-fn SDL_cosf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_cosf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Compute the exponential of `x`.
 /// 
 /// The definition of `y = exp(x)` is `y = e^x`, where `e` is the base of the
@@ -1648,9 +1765,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_expf
 /// \sa SDL_log
-fn SDL_exp(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_exp(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the exponential of `x`.
 /// 
 /// The definition of `y = exp(x)` is `y = e^x`, where `e` is the base of the
@@ -1679,9 +1797,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_exp
 /// \sa SDL_logf
-fn SDL_expf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_expf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Compute the absolute value of `x`
 /// 
 /// Domain: `-INF <= x <= INF`
@@ -1699,9 +1818,10 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_fabsf
-fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the absolute value of `x`
 /// 
 /// Domain: `-INF <= x <= INF`
@@ -1719,9 +1839,10 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_fabs
-fn SDL_fabsf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_fabsf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Compute the floor of `x`.
 /// 
 /// The floor of `x` is the largest integer `y` such that `y > x`, i.e `x`
@@ -1746,9 +1867,10 @@ extern_sdl! {
 /// \sa SDL_trunc
 /// \sa SDL_round
 /// \sa SDL_lround
-fn SDL_floor(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_floor(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the floor of `x`.
 /// 
 /// The floor of `x` is the largest integer `y` such that `y > x`, i.e `x`
@@ -1773,9 +1895,10 @@ extern_sdl! {
 /// \sa SDL_truncf
 /// \sa SDL_roundf
 /// \sa SDL_lroundf
-fn SDL_floorf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_floorf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Truncate `x` to an integer.
 /// 
 /// Rounds `x` to the next closest integer to 0. This is equivalent to removing
@@ -1801,9 +1924,10 @@ extern_sdl! {
 /// \sa SDL_floor
 /// \sa SDL_round
 /// \sa SDL_lround
-fn SDL_trunc(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_trunc(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Truncate `x` to an integer.
 /// 
 /// Rounds `x` to the next closest integer to 0. This is equivalent to removing
@@ -1829,9 +1953,10 @@ extern_sdl! {
 /// \sa SDL_floorf
 /// \sa SDL_roundf
 /// \sa SDL_lroundf
-fn SDL_truncf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_truncf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Return the floating-point remainder of `x / y`
 /// 
 /// Divides `x` by `y`, and returns the remainder.
@@ -1858,9 +1983,10 @@ extern_sdl! {
 /// \sa SDL_floor
 /// \sa SDL_round
 /// \sa SDL_lround
-fn SDL_fmod(x: ::core::ffi::c_double, y: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_fmod(x: ::core::ffi::c_double, y: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Return the floating-point remainder of `x / y`
 /// 
 /// Divides `x` by `y`, and returns the remainder.
@@ -1887,9 +2013,10 @@ extern_sdl! {
 /// \sa SDL_floorf
 /// \sa SDL_roundf
 /// \sa SDL_lroundf
-fn SDL_fmodf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_fmodf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Return whether the value is infinity.
 /// 
 /// \param x double-precision floating point value.
@@ -1900,9 +2027,10 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_isinff
-fn SDL_isinf(x: ::core::ffi::c_double) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isinf(x: ::core::ffi::c_double) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Return whether the value is infinity.
 /// 
 /// \param x floating point value.
@@ -1913,9 +2041,10 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_isinf
-fn SDL_isinff(x: ::core::ffi::c_float) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isinff(x: ::core::ffi::c_float) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Return whether the value is NaN.
 /// 
 /// \param x double-precision floating point value.
@@ -1926,9 +2055,10 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_isnanf
-fn SDL_isnan(x: ::core::ffi::c_double) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isnan(x: ::core::ffi::c_double) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Return whether the value is NaN.
 /// 
 /// \param x floating point value.
@@ -1939,9 +2069,10 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_isnan
-fn SDL_isnanf(x: ::core::ffi::c_float) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_isnanf(x: ::core::ffi::c_float) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// Compute the natural logarithm of `x`.
 /// 
 /// Domain: `0 < x <= INF`
@@ -1968,9 +2099,10 @@ extern_sdl! {
 /// \sa SDL_logf
 /// \sa SDL_log10
 /// \sa SDL_exp
-fn SDL_log(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_log(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the natural logarithm of `x`.
 /// 
 /// Domain: `0 < x <= INF`
@@ -1996,9 +2128,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_log
 /// \sa SDL_expf
-fn SDL_logf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_logf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Compute the base-10 logarithm of `x`.
 /// 
 /// Domain: `0 < x <= INF`
@@ -2025,9 +2158,10 @@ extern_sdl! {
 /// \sa SDL_log10f
 /// \sa SDL_log
 /// \sa SDL_pow
-fn SDL_log10(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_log10(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the base-10 logarithm of `x`.
 /// 
 /// Domain: `0 < x <= INF`
@@ -2054,9 +2188,10 @@ extern_sdl! {
 /// \sa SDL_log10
 /// \sa SDL_logf
 /// \sa SDL_powf
-fn SDL_log10f(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_log10f(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Split `x` into integer and fractional parts
 /// 
 /// This function operates on double-precision floating point values, use
@@ -2073,9 +2208,10 @@ extern_sdl! {
 /// \sa SDL_modff
 /// \sa SDL_trunc
 /// \sa SDL_fmod
-fn SDL_modf(x: ::core::ffi::c_double, y: *mut ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_modf(x: ::core::ffi::c_double, y: *mut ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Split `x` into integer and fractional parts
 /// 
 /// This function operates on single-precision floating point values, use
@@ -2092,9 +2228,10 @@ extern_sdl! {
 /// \sa SDL_modf
 /// \sa SDL_truncf
 /// \sa SDL_fmodf
-fn SDL_modff(x: ::core::ffi::c_float, y: *mut ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_modff(x: ::core::ffi::c_float, y: *mut ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Raise `x` to the power `y`
 /// 
 /// Domain: `-INF <= x <= INF`, `-INF <= y <= INF`
@@ -2123,9 +2260,10 @@ extern_sdl! {
 /// \sa SDL_powf
 /// \sa SDL_exp
 /// \sa SDL_log
-fn SDL_pow(x: ::core::ffi::c_double, y: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_pow(x: ::core::ffi::c_double, y: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Raise `x` to the power `y`
 /// 
 /// Domain: `-INF <= x <= INF`, `-INF <= y <= INF`
@@ -2154,9 +2292,10 @@ extern_sdl! {
 /// \sa SDL_pow
 /// \sa SDL_expf
 /// \sa SDL_logf
-fn SDL_powf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_powf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Round `x` to the nearest integer.
 /// 
 /// Rounds `x` to the nearest integer. Values halfway between integers will be
@@ -2182,9 +2321,10 @@ extern_sdl! {
 /// \sa SDL_floor
 /// \sa SDL_ceil
 /// \sa SDL_trunc
-fn SDL_round(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_round(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Round `x` to the nearest integer.
 /// 
 /// Rounds `x` to the nearest integer. Values halfway between integers will be
@@ -2210,9 +2350,10 @@ extern_sdl! {
 /// \sa SDL_floorf
 /// \sa SDL_ceilf
 /// \sa SDL_truncf
-fn SDL_roundf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_roundf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Round `x` to the nearest integer representable as a long
 /// 
 /// Rounds `x` to the nearest integer. Values halfway between integers will be
@@ -2238,9 +2379,10 @@ extern_sdl! {
 /// \sa SDL_floor
 /// \sa SDL_ceil
 /// \sa SDL_trunc
-fn SDL_lround(x: ::core::ffi::c_double) -> ::core::ffi::c_long;
-}
-extern_sdl! {
+pub fn SDL_lround(x: ::core::ffi::c_double) -> ::core::ffi::c_long;
+}}
+
+extern_sdlcall! {{
 /// Round `x` to the nearest integer representable as a long
 /// 
 /// Rounds `x` to the nearest integer. Values halfway between integers will be
@@ -2266,9 +2408,10 @@ extern_sdl! {
 /// \sa SDL_floorf
 /// \sa SDL_ceilf
 /// \sa SDL_truncf
-fn SDL_lroundf(x: ::core::ffi::c_float) -> ::core::ffi::c_long;
-}
-extern_sdl! {
+pub fn SDL_lroundf(x: ::core::ffi::c_float) -> ::core::ffi::c_long;
+}}
+
+extern_sdlcall! {{
 /// Scale `x` by an integer power of two.
 /// 
 /// Multiplies `x` by the `n`th power of the floating point radix (always 2).
@@ -2290,9 +2433,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_scalbnf
 /// \sa SDL_pow
-fn SDL_scalbn(x: ::core::ffi::c_double, n: ::core::ffi::c_int) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_scalbn(x: ::core::ffi::c_double, n: ::core::ffi::c_int) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Scale `x` by an integer power of two.
 /// 
 /// Multiplies `x` by the `n`th power of the floating point radix (always 2).
@@ -2314,9 +2458,10 @@ extern_sdl! {
 /// 
 /// \sa SDL_scalbn
 /// \sa SDL_powf
-fn SDL_scalbnf(x: ::core::ffi::c_float, n: ::core::ffi::c_int) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_scalbnf(x: ::core::ffi::c_float, n: ::core::ffi::c_int) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Compute the sine of `x`.
 /// 
 /// Domain: `-INF <= x <= INF`
@@ -2341,9 +2486,10 @@ extern_sdl! {
 /// \sa SDL_sinf
 /// \sa SDL_asin
 /// \sa SDL_cos
-fn SDL_sin(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_sin(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the sine of `x`.
 /// 
 /// Domain: `-INF <= x <= INF`
@@ -2368,9 +2514,10 @@ extern_sdl! {
 /// \sa SDL_sin
 /// \sa SDL_asinf
 /// \sa SDL_cosf
-fn SDL_sinf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_sinf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Compute the square root of `x`.
 /// 
 /// Domain: `0 <= x <= INF`
@@ -2393,9 +2540,10 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_sqrtf
-fn SDL_sqrt(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_sqrt(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the square root of `x`.
 /// 
 /// Domain: `0 <= x <= INF`
@@ -2418,9 +2566,10 @@ extern_sdl! {
 /// \since This function is available since SDL 3.0.0.
 /// 
 /// \sa SDL_sqrt
-fn SDL_sqrtf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
-extern_sdl! {
+pub fn SDL_sqrtf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
+extern_sdlcall! {{
 /// Compute the tangent of `x`.
 /// 
 /// Domain: `-INF <= x <= INF`
@@ -2447,9 +2596,10 @@ extern_sdl! {
 /// \sa SDL_cos
 /// \sa SDL_atan
 /// \sa SDL_atan2
-fn SDL_tan(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-}
-extern_sdl! {
+pub fn SDL_tan(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+}}
+
+extern_sdlcall! {{
 /// Compute the tangent of `x`.
 /// 
 /// Domain: `-INF <= x <= INF`
@@ -2476,11 +2626,12 @@ extern_sdl! {
 /// \sa SDL_cosf
 /// \sa SDL_atanf
 /// \sa SDL_atan2f
-fn SDL_tanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}
+pub fn SDL_tanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+}}
+
 pub type SDL_iconv_t = *mut SDL_iconv_data_t;
 
-extern_sdl! {
+extern_sdlcall! {{
 /// This function allocates a context for the specified character set
 /// conversion.
 /// 
@@ -2494,9 +2645,10 @@ extern_sdl! {
 /// \sa SDL_iconv
 /// \sa SDL_iconv_close
 /// \sa SDL_iconv_string
-fn SDL_iconv_open(tocode: *const ::core::ffi::c_char, fromcode: *const ::core::ffi::c_char) -> SDL_iconv_t;
-}
-extern_sdl! {
+pub fn SDL_iconv_open(tocode: *const ::core::ffi::c_char, fromcode: *const ::core::ffi::c_char) -> SDL_iconv_t;
+}}
+
+extern_sdlcall! {{
 /// This function frees a context used for character set conversion.
 /// 
 /// \param cd The character set conversion handle.
@@ -2507,9 +2659,10 @@ extern_sdl! {
 /// \sa SDL_iconv
 /// \sa SDL_iconv_open
 /// \sa SDL_iconv_string
-fn SDL_iconv_close(cd: SDL_iconv_t) -> ::core::ffi::c_int;
-}
-extern_sdl! {
+pub fn SDL_iconv_close(cd: SDL_iconv_t) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
 /// This function converts text between encodings, reading from and writing to
 /// a buffer.
 /// 
@@ -2543,9 +2696,10 @@ extern_sdl! {
 /// \sa SDL_iconv_open
 /// \sa SDL_iconv_close
 /// \sa SDL_iconv_string
-fn SDL_iconv(cd: SDL_iconv_t, inbuf: *mut *const ::core::ffi::c_char, inbytesleft: *mut ::core::primitive::usize, outbuf: *mut *mut ::core::ffi::c_char, outbytesleft: *mut ::core::primitive::usize) -> ::core::primitive::usize;
-}
-extern_sdl! {
+pub fn SDL_iconv(cd: SDL_iconv_t, inbuf: *mut *const ::core::ffi::c_char, inbytesleft: *mut ::core::primitive::usize, outbuf: *mut *mut ::core::ffi::c_char, outbytesleft: *mut ::core::primitive::usize) -> ::core::primitive::usize;
+}}
+
+extern_sdlcall! {{
 /// Helper function to convert a string's encoding in one call.
 /// 
 /// This function converts a buffer or string between encodings in one pass.
@@ -2569,9 +2723,10 @@ extern_sdl! {
 /// \sa SDL_iconv_open
 /// \sa SDL_iconv_close
 /// \sa SDL_iconv
-fn SDL_iconv_string(tocode: *const ::core::ffi::c_char, fromcode: *const ::core::ffi::c_char, inbuf: *const ::core::ffi::c_char, inbytesleft: ::core::primitive::usize) -> *mut ::core::ffi::c_char;
-}
-extern "C" {
+pub fn SDL_iconv_string(tocode: *const ::core::ffi::c_char, fromcode: *const ::core::ffi::c_char, inbuf: *const ::core::ffi::c_char, inbytesleft: ::core::primitive::usize) -> *mut ::core::ffi::c_char;
+}}
+
+extern "C" {{
 /// Multiply two integers, checking for overflow.
 /// 
 /// If `a * b` would overflow, return -1.
@@ -2587,9 +2742,10 @@ extern "C" {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_size_mul_overflow(a: ::core::primitive::usize, b: ::core::primitive::usize, ret: *mut ::core::primitive::usize) -> ::core::ffi::c_int;
-}
-extern "C" {
+pub fn SDL_size_mul_overflow(a: ::core::primitive::usize, b: ::core::primitive::usize, ret: *mut ::core::primitive::usize) -> ::core::ffi::c_int;
+}}
+
+extern "C" {{
 /// Add two integers, checking for overflow.
 /// 
 /// If `a + b` would overflow, return -1.
@@ -2605,8 +2761,9 @@ extern "C" {
 /// \threadsafety It is safe to call this function from any thread.
 /// 
 /// \since This function is available since SDL 3.0.0.
-fn SDL_size_add_overflow(a: ::core::primitive::usize, b: ::core::primitive::usize, ret: *mut ::core::primitive::usize) -> ::core::ffi::c_int;
-}
+pub fn SDL_size_add_overflow(a: ::core::primitive::usize, b: ::core::primitive::usize, ret: *mut ::core::primitive::usize) -> ::core::ffi::c_int;
+}}
+
 pub type SDL_FunctionPointer = Option<extern "C" fn()>;
 
 #[repr(C)]

@@ -8,10 +8,6 @@ macro_rules! emit {
 
 // The calling convention for SDL on non-GNU Windows uses "cdecl" instead of "C"
 #[cfg(all(target_family = "windows", not(target_env = "gnu")))]
-macro_rules! extern_sdlcall {
-    ($($tt:tt)*) => { extern "cdecl" $($tt)* };
-}
+macro_rules! extern_sdlcall { ($($tt:tt)*) => { extern "cdecl" $($tt)* }; }
 #[cfg(not(all(target_family = "windows", not(target_env = "gnu"))))]
-macro_rules! extern_sdlcall {
-    ($($tt:tt)*) => { extern "C" $($tt)* };
-}
+macro_rules! extern_sdlcall { ($($tt:tt)*) => { extern "C" $($tt)* }; }

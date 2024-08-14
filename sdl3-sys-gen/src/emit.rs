@@ -23,9 +23,9 @@ fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: boo
         match abi.ident.as_str() {
             "SDLCALL" => {
                 if for_fn_ptr {
-                    write!(ctx, "extern_sdl_ptr!(")?
+                    write!(ctx, "extern_sdlcall!(")?
                 } else {
-                    writeln!(ctx, "extern_sdl! {{")?
+                    writeln!(ctx, "extern_sdlcall! {{{{")?
                 }
                 return Ok(());
             }
@@ -36,7 +36,7 @@ fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: boo
         write!(ctx, "extern \"C\" ")?;
     }
     if !for_fn_ptr {
-        writeln!(ctx, "{{")?;
+        writeln!(ctx, "{{{{")?;
     }
     Ok(())
 }
@@ -49,7 +49,8 @@ fn emit_extern_end(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool)
             }
         }
     } else {
-        writeln!(ctx, "}}")?;
+        writeln!(ctx, "}}}}")?;
+        writeln!(ctx)?;
     }
     Ok(())
 }
@@ -308,7 +309,7 @@ impl Emit for Function {
         if self.static_kw.is_none() {
             emit_extern_start(ctx, &self.abi, false)?;
             self.doc.emit(ctx)?;
-            write!(ctx, "fn ")?;
+            write!(ctx, "pub fn ")?;
             self.ident.emit(ctx)?;
             self.args.emit(ctx)?;
             if !self.return_type.is_void() {
@@ -512,7 +513,7 @@ impl Emit for TypeDef {
                     if self.doc.is_some() {
                         writeln!(ctx, "///")?;
                     }
-                    write!(ctx, "/// This is a `C` enum. Known values: ")?;
+                    write!(ctx, "/// sdl3-sys note: This is a `C` enum. Known values: ")?;
                     let mut known_values = known_values.into_iter();
                     known_values.next();
                     for s in known_values {
@@ -568,12 +569,13 @@ impl Emit for TypeDef {
                 ctx.write_str(&impl_consts)?;
                 writeln!(ctx, "}}")?;
                 ctx.write_str(&global_consts)?;
+                writeln!(ctx)?;
                 Ok(())
             }
 
             TypeEnum::Struct(s) => {
                 if let Some(ident) = &s.ident {
-                    if ctx.lookup_struct_sym(ident).is_none() {
+                    if s.fields.is_none() && ctx.lookup_struct_sym(ident).is_none() {
                         self.ty.emit(&mut ctx.with_ool_output())?;
                     }
                     self.doc.emit(ctx)?;
@@ -591,6 +593,7 @@ impl Emit for TypeDef {
                 write!(ctx, "pub type {} = ", self.ident.as_str())?;
                 self.ty.emit(ctx)?;
                 writeln!(ctx, ";")?;
+                writeln!(ctx)?;
                 Ok(())
             }
 
@@ -612,6 +615,7 @@ impl Emit for TypeDef {
                 }
                 emit_extern_end(ctx, &f.abi, true)?;
                 writeln!(ctx, ">;")?;
+                writeln!(ctx)?;
                 Ok(())
             }
 
