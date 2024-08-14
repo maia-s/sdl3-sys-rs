@@ -11,6 +11,9 @@ use std::{
     rc::Rc,
 };
 
+#[derive(Clone, Copy, Debug)]
+pub struct CfgExpr(&'static str);
+
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct DefineState {
     state: Option<Coll<Ident>>,
@@ -162,7 +165,22 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     ) -> Result<Self, EmitErr> {
         let module = module.into();
         let mut preproc_state = PreProcState::default();
-        preproc_state.register_target_define(Ident::new_inline("__LP64__"));
+
+        const ALWAYS_FALSE: &str = "any()";
+
+        preproc_state.register_target_define(
+            "__LP64__",
+            CfgExpr(r#"all(not(windows), target_pointer_width = "64")"#),
+        );
+        preproc_state
+            .register_target_define("_MSC_VER", CfgExpr(r#"all(windows, target_env = "msvc")"#));
+        preproc_state.register_target_define("SDL_PLATFORM_3DS", CfgExpr(ALWAYS_FALSE));
+        preproc_state
+            .register_target_define("SDL_PLATFORM_APPLE", CfgExpr(r#"target_vendor = "apple""#));
+        preproc_state.register_target_define("SDL_PLATFORM_GDK", CfgExpr(ALWAYS_FALSE)); // change WIN32 if this is changed
+        preproc_state.register_target_define("SDL_PLATFORM_VITA", CfgExpr(ALWAYS_FALSE));
+        preproc_state.register_target_define("SDL_PLATFORM_WIN32", CfgExpr("windows"));
+
         preproc_state.undefine(Ident::new_inline("__clang_analyzer__"));
         preproc_state.undefine(Ident::new_inline("__cplusplus"));
         preproc_state.undefine(Ident::new_inline("PRId32"));
@@ -193,6 +211,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         preproc_state.undefine(Ident::new_inline("SDL_SLOW_MEMCPY"));
         preproc_state.undefine(Ident::new_inline("SDL_SLOW_MEMMOVE"));
         preproc_state.undefine(Ident::new_inline("SDL_SLOW_MEMSET"));
+
         preproc_state.define(
             Ident::new_inline("__STDC_VERSION__"),
             None,
@@ -274,50 +293,49 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         Rc::clone(&self.inner().preproc_state)
     }
 
-    pub fn target_dependent_preproc_state_guard(&mut self) -> impl Drop {
-        pub struct Guard(Rc<RefCell<InnerEmitContext>>);
+    pub fn with_target_dependent_preproc_state_guard(
+        &mut self,
+    ) -> (Rc<RefCell<PreProcState>>, impl Drop) {
+        pub struct Guard(Rc<RefCell<InnerEmitContext>>, Rc<RefCell<PreProcState>>);
 
         impl Drop for Guard {
             fn drop(&mut self) {
-                let parent = Rc::clone(
-                    self.0
-                        .borrow()
-                        .preproc_state
-                        .borrow()
-                        .parent
-                        .as_ref()
-                        .unwrap(),
-                );
-                {
-                    let pps = self.0.borrow();
-                    let pps = pps.preproc_state.borrow();
-                    let mut parent_mut = parent.borrow_mut();
-                    for key in pps.undefined.iter() {
-                        if let Ok(Some((_, DefineValue::TargetDependent))) = parent_mut.lookup(key)
-                        {
-                            continue;
-                        }
-                        parent_mut
-                            .define(key.clone(), None, DefineValue::TargetDependent)
-                            .unwrap();
-                    }
-                    for (key, (args, _)) in pps.defined.iter() {
-                        if let Ok(Some((_, DefineValue::TargetDependent))) = parent_mut.lookup(key)
-                        {
-                            continue;
-                        }
-                        parent_mut
-                            .define(key.clone(), args.clone(), DefineValue::TargetDependent)
-                            .unwrap();
-                    }
-                }
-                self.0.borrow_mut().preproc_state = parent;
+                self.0.borrow_mut().preproc_state = Rc::clone(&self.1);
             }
         }
 
         let parent = Rc::clone(&self.inner().preproc_state);
-        self.inner_mut().preproc_state = Rc::new(RefCell::new(PreProcState::with_parent(parent)));
-        Guard(Rc::clone(&self.inner))
+        let pps = Rc::new(RefCell::new(PreProcState::with_parent(Rc::clone(&parent))));
+        self.inner_mut().preproc_state = Rc::clone(&pps);
+
+        (pps, Guard(Rc::clone(&self.inner), parent))
+    }
+
+    pub fn merge_target_dependent_preproc_state(&mut self, pps: PreProcState) {
+        let parent = self.preproc_state();
+        assert_eq!(
+            Rc::as_ptr(&parent),
+            Rc::as_ptr(pps.parent.as_ref().unwrap())
+        );
+        let mut parent = parent.borrow_mut();
+
+        for key in pps.undefined.iter() {
+            if let Ok(Some((_, DefineValue::TargetDependent))) = parent.lookup(key) {
+                continue;
+            }
+            parent
+                .define(key.clone(), None, DefineValue::TargetDependent)
+                .unwrap();
+        }
+
+        for (key, (args, _)) in pps.defined.iter() {
+            if let Ok(Some((_, DefineValue::TargetDependent))) = parent.lookup(key) {
+                continue;
+            }
+            parent
+                .define(key.clone(), args.clone(), DefineValue::TargetDependent)
+                .unwrap();
+        }
     }
 
     pub fn scope(&self) -> Ref<Scope> {
@@ -457,21 +475,15 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     fn emit_cfg_from_target_define(&mut self, target_define: &Ident) -> EmitResult {
-        const ALWAYS_FALSE: &str = "any()";
-
-        let s = match target_define.as_str() {
-            "__LP64__" => r#"all(not(windows), target_pointer_width = "64")"#,
-
-            "SDL_PLATFORM_3DS" => ALWAYS_FALSE,
-            "SDL_PLATFORM_APPLE" => r#"target_vendor = "apple""#,
-            "SDL_PLATFORM_GDK" => ALWAYS_FALSE, // change WIN32 if this is changed
-            "SDL_PLATFORM_VITA" => ALWAYS_FALSE,
-            "SDL_PLATFORM_WIN32" => "windows",
-
-            _ => panic!("unhandled target define: {}", target_define.as_str()),
-        };
-
-        write!(self, "{s}")?;
+        write!(
+            self,
+            "{}",
+            self.preproc_state()
+                .borrow()
+                .get_target_define(target_define)
+                .ok_or_else(|| ParseErr::new(target_define.span(), "undefined target define"))?
+                .0
+        )?;
         Ok(())
     }
 }
@@ -482,12 +494,12 @@ impl Write for EmitContext<'_, '_> {
     }
 }
 
-#[derive(Default)]
+#[derive(Debug, Default)]
 pub struct PreProcState {
     parent: Option<Rc<RefCell<PreProcState>>>,
     defined: HashMap<Ident, (Option<Vec<IdentOrKw>>, DefineValue)>,
     undefined: HashSet<Ident>,
-    target_defines: HashSet<Ident>,
+    target_defines: HashMap<&'static str, CfgExpr>,
 }
 
 impl PreProcState {
@@ -496,7 +508,7 @@ impl PreProcState {
             parent: Some(parent),
             defined: HashMap::new(),
             undefined: HashSet::new(),
-            target_defines: HashSet::new(),
+            target_defines: HashMap::new(),
         }
     }
 
@@ -505,6 +517,7 @@ impl PreProcState {
             self.undefine(key.clone());
         }
         for (key, (args, value)) in include.defined.iter() {
+            self.undefine(key.clone());
             self.define(key.clone(), args.clone(), value.clone())?;
         }
         Ok(())
@@ -516,13 +529,7 @@ impl PreProcState {
         args: Option<Vec<IdentOrKw>>,
         value: DefineValue,
     ) -> EmitResult {
-        if self.defined.contains_key(&key)
-            || self
-                .parent
-                .as_ref()
-                .map(|p| p.borrow().defined.contains_key(&key))
-                .unwrap_or(false)
-        {
+        if let Ok(true) = self.is_defined(&key) {
             return Err(ParseErr::new(key.span, "already defined").into());
         }
         self.undefined.remove(&key);
@@ -535,8 +542,8 @@ impl PreProcState {
         self.undefined.insert(key);
     }
 
-    pub fn register_target_define(&mut self, key: Ident) {
-        self.target_defines.insert(key);
+    pub fn register_target_define(&mut self, key: &'static str, value: CfgExpr) {
+        self.target_defines.insert(key, value);
     }
 
     pub fn lookup(
@@ -562,19 +569,28 @@ impl PreProcState {
         } else if let Some(parent) = &self.parent {
             parent.borrow().is_defined(key)
         } else {
-            dbg!(key, &self.defined.keys(), &self.undefined);
             Err(ParseErr::new(key.span(), "unknown define").into())
         }
     }
 
     pub fn is_target_define(&self, key: &Ident) -> bool {
         key.as_str().starts_with("SDL_PLATFORM")
-            || self.target_defines.contains(key)
+            || self.target_defines.contains_key(key.as_str())
             || self
                 .parent
                 .as_ref()
-                .map(|p| p.borrow().target_defines.contains(key))
+                .map(|p| p.borrow().target_defines.contains_key(key.as_str()))
                 .unwrap_or(false)
+    }
+
+    pub fn get_target_define(&self, key: &Ident) -> Option<CfgExpr> {
+        if let Some(cfg) = self.target_defines.get(key.as_str()) {
+            Some(*cfg)
+        } else if let Some(parent) = &self.parent {
+            parent.borrow().get_target_define(key)
+        } else {
+            None
+        }
     }
 }
 

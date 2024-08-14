@@ -92,14 +92,17 @@ pub trait Emit: core::fmt::Debug {
         &self,
         ctx: &mut EmitContext,
         define_state: &DefineState,
-    ) -> EmitResult {
-        let _pps_guard = ctx.target_dependent_preproc_state_guard();
-        ctx.emit_define_state_cfg(define_state)?;
-        writeln!(ctx, "emit! {{")?;
-        self.emit(ctx)?;
-        writeln!(ctx, "}}")?;
-        writeln!(ctx)?;
-        Ok(())
+    ) -> Result<PreProcState, EmitErr> {
+        let pps = {
+            let (pps, _pps_guard) = ctx.with_target_dependent_preproc_state_guard();
+            ctx.emit_define_state_cfg(define_state)?;
+            writeln!(ctx, "emit! {{")?;
+            self.emit(ctx)?;
+            writeln!(ctx, "}}")?;
+            writeln!(ctx)?;
+            pps
+        };
+        Ok(Rc::into_inner(pps).unwrap().into_inner())
     }
 }
 
@@ -197,10 +200,13 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
                 };
                 if let Some(value) = value {
                     if let Value::TargetDependent(define_state) = value {
-                        self.block.emit_with_define_state(ctx, &define_state)?;
+                        let pps1 = self.block.emit_with_define_state(ctx, &define_state)?;
                         if let Some(else_block) = &self.else_block {
-                            else_block.emit_with_define_state(ctx, &define_state.not())?;
+                            let pps2 =
+                                else_block.emit_with_define_state(ctx, &define_state.not())?;
+                            ctx.merge_target_dependent_preproc_state(pps2);
                         }
+                        ctx.merge_target_dependent_preproc_state(pps1);
                         Ok(())
                     } else if value.is_truthy() {
                         self.block.emit(ctx)
@@ -215,10 +221,12 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
             PreProcBlockKind::IfDef(ident) => {
                 if ctx.preproc_state().borrow().is_target_define(ident) {
                     let define_state = DefineState::defined(ident.clone());
-                    self.block.emit_with_define_state(ctx, &define_state)?;
+                    let pps1 = self.block.emit_with_define_state(ctx, &define_state)?;
                     if let Some(else_block) = &self.else_block {
-                        else_block.emit_with_define_state(ctx, &define_state.not())?;
+                        let pps2 = else_block.emit_with_define_state(ctx, &define_state.not())?;
+                        ctx.merge_target_dependent_preproc_state(pps2);
                     }
+                    ctx.merge_target_dependent_preproc_state(pps1);
                     Ok(())
                 } else if ctx.preproc_state().borrow().is_defined(ident)? {
                     self.block.emit(ctx)
@@ -230,11 +238,14 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
             PreProcBlockKind::IfNDef(ident) => {
                 if ctx.preproc_state().borrow().is_target_define(ident) {
                     let define_state = DefineState::defined(ident.clone());
-                    self.block
+                    let pps1 = self
+                        .block
                         .emit_with_define_state(ctx, &define_state.clone().not())?;
                     if let Some(else_block) = &self.else_block {
-                        else_block.emit_with_define_state(ctx, &define_state)?;
+                        let pps2 = else_block.emit_with_define_state(ctx, &define_state)?;
+                        ctx.merge_target_dependent_preproc_state(pps2);
                     }
+                    ctx.merge_target_dependent_preproc_state(pps1);
                     Ok(())
                 } else if !ctx.preproc_state().borrow().is_defined(ident)? {
                     self.block.emit(ctx)
@@ -389,6 +400,7 @@ impl Emit for Type {
                             writeln!(ool, "pub struct {} {{ _opaque: [u8; 0] }}", ident.as_str())?;
                             write!(ctx, "{}", ident.as_str())?;
                         } else {
+                            dbg!(self);
                             todo!()
                         }
                     } else {
