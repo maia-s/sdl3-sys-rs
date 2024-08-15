@@ -25,7 +25,8 @@ fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: boo
                 if for_fn_ptr {
                     write!(ctx, "extern_sdlcall!(")?
                 } else {
-                    writeln!(ctx, "extern_sdlcall! {{{{")?
+                    writeln!(ctx, "extern_sdlcall! {{{{")?;
+                    ctx.increase_indent();
                 }
                 return Ok(());
             }
@@ -36,7 +37,8 @@ fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: boo
         write!(ctx, "extern \"C\" ")?;
     }
     if !for_fn_ptr {
-        writeln!(ctx, "{{{{")?;
+        writeln!(ctx, "{{")?;
+        ctx.increase_indent();
     }
     Ok(())
 }
@@ -49,7 +51,15 @@ fn emit_extern_end(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool)
             }
         }
     } else {
-        writeln!(ctx, "}}}}")?;
+        ctx.decrease_indent();
+        if let Some(abi) = &abi {
+            if abi.ident.as_str() == "SDLCALL" {
+                writeln!(ctx, "}}}}")?;
+                writeln!(ctx)?;
+                return Ok(());
+            }
+        }
+        writeln!(ctx, "}}")?;
         writeln!(ctx)?;
     }
     Ok(())
@@ -98,7 +108,9 @@ pub trait Emit: core::fmt::Debug {
             let (pps, _pps_guard) = ctx.with_target_dependent_preproc_state_guard();
             ctx.emit_define_state_cfg(define_state)?;
             writeln!(ctx, "emit! {{")?;
+            ctx.increase_indent();
             self.emit(ctx)?;
+            ctx.decrease_indent();
             writeln!(ctx, "}}")?;
             writeln!(ctx)?;
             pps
@@ -566,7 +578,9 @@ impl Emit for TypeDef {
                 ctx_global.flush_ool_output()?;
 
                 writeln!(ctx, "impl {enum_ident} {{")?;
+                ctx.increase_indent();
                 ctx.write_str(&impl_consts)?;
+                ctx.decrease_indent();
                 writeln!(ctx, "}}")?;
                 ctx.write_str(&global_consts)?;
                 writeln!(ctx)?;
@@ -605,7 +619,11 @@ impl Emit for TypeDef {
             TypeEnum::FnPointer(f) => {
                 ctx.scope_mut().register_sym(self.ident.clone())?;
                 self.doc.emit(ctx)?;
-                write!(ctx, "pub type {} = Option<", self.ident.as_str())?;
+                write!(
+                    ctx,
+                    "pub type {} = ::core::option::Option<",
+                    self.ident.as_str()
+                )?;
                 emit_extern_start(ctx, &f.abi, true)?;
                 write!(ctx, "fn")?;
                 f.args.emit(ctx)?;

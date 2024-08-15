@@ -3,6 +3,7 @@ use crate::{
     parse::{DefineValue, GetSpan, Ident, IdentOrKw, ParseErr, Span},
     Gen,
 };
+use core::mem;
 use std::{
     cell::{Ref, RefCell, RefMut},
     collections::{BTreeSet, HashMap, HashSet},
@@ -145,6 +146,9 @@ impl<T: Clone + Ord> Coll<T> {
 pub struct EmitContext<'a, 'b> {
     inner: Rc<RefCell<InnerEmitContext>>,
     output: &'a mut dyn Write,
+    indent: usize,
+    newline_count: usize,
+    do_indent: bool,
     ool_output: String,
     pub gen: &'b Gen,
 }
@@ -257,6 +261,9 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                 emitted_file_doc: false,
             })),
             output,
+            indent: 0,
+            newline_count: 0,
+            do_indent: false,
             ool_output: String::new(),
             gen,
         })
@@ -291,6 +298,14 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
     pub fn preproc_state(&self) -> Rc<RefCell<PreProcState>> {
         Rc::clone(&self.inner().preproc_state)
+    }
+
+    pub fn increase_indent(&mut self) {
+        self.indent += 4;
+    }
+
+    pub fn decrease_indent(&mut self) {
+        self.indent -= 4;
     }
 
     pub fn with_target_dependent_preproc_state_guard(
@@ -350,6 +365,9 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         EmitContext {
             inner: Rc::clone(&self.inner),
             output,
+            indent: 0,
+            newline_count: 0,
+            do_indent: false,
             ool_output: String::new(),
             gen: self.gen,
         }
@@ -359,6 +377,9 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         EmitContext {
             inner: Rc::clone(&self.inner),
             output: &mut self.ool_output,
+            indent: self.indent,
+            newline_count: 0,
+            do_indent: self.do_indent,
             ool_output: String::new(),
             gen: self.gen,
         }
@@ -488,9 +509,39 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 }
 
+/*
+"" => [""]
+"\n" => ["", ""]
+"aaa" => ["aaa"]
+"aaa\n" => ["aaa", ""]
+"aaa\nbbb" => ["aaa", "bbb"]
+"aaa\nbbb\n" => ["aaa, "bbb", ""]
+*/
+
 impl Write for EmitContext<'_, '_> {
     fn write_str(&mut self, s: &str) -> fmt::Result {
-        self.output.write_str(s)
+        let indent = " ".repeat(self.indent);
+        for line in s.split('\n') {
+            if line.is_empty() {
+                self.newline_count += 1;
+            } else {
+                for _ in 0..self.newline_count {
+                    self.output.write_char('\n')?;
+                }
+                if self.do_indent || self.newline_count != 0 {
+                    self.output.write_str(&indent)?;
+                }
+                self.output.write_str(line)?;
+                self.newline_count = 1;
+            }
+        }
+        self.newline_count -= 1;
+        self.do_indent = self.newline_count != 0;
+        if self.newline_count != 0 {
+            self.newline_count -= 1;
+            self.output.write_char('\n')?;
+        }
+        Ok(())
     }
 }
 
