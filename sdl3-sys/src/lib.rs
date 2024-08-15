@@ -14,14 +14,16 @@ macro_rules! extern_sdlcall { ($($tt:tt)*) => { extern "cdecl" $($tt)* }; }
 #[cfg(not(all(target_family = "windows", not(target_env = "gnu"))))]
 macro_rules! extern_sdlcall { ($($tt:tt)*) => { extern "C" $($tt)* }; }
 
-mod generated;
+pub mod generated;
 
-#[cfg(windows)]
-pub type c_wchar_t = u16;
-#[cfg(not(windows))]
-pub type c_wchar_t = u32;
+pub mod ffi {
+    #[cfg(windows)]
+    pub type c_wchar_t = u16;
+    #[cfg(not(windows))]
+    pub type c_wchar_t = u32;
 
-#[cfg(feature = "nightly")]
-pub use core::ffi::VaList;
-#[cfg(not(feature = "nightly"))]
-pub enum VaList {}
+    #[cfg(feature = "nightly")]
+    pub use core::ffi::VaList;
+    #[cfg(not(feature = "nightly"))]
+    pub enum VaList {}
+}

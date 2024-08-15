@@ -185,7 +185,7 @@ impl Emit for Items {
 impl Emit for DocComment {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         for line in self.to_string().lines() {
-            writeln!(ctx, "/// {}", line)?;
+            writeln!(ctx, "///{}{}", if line.is_empty() { "" } else { " " }, line)?;
         }
         Ok(())
     }
@@ -196,7 +196,7 @@ impl Emit for DocCommentFile {
         if !ctx.emitted_file_doc() {
             ctx.set_emitted_file_doc(true);
             for line in self.0.to_string().lines() {
-                writeln!(ctx, "//! {}", line)?;
+                writeln!(ctx, "//!{}{}", if line.is_empty() { "" } else { " " }, line)?;
             }
             writeln!(ctx)?;
         }
@@ -395,8 +395,8 @@ impl Emit for Type {
                 PrimitiveType::Uint64T => write!(ctx, "::core::primitive::u64")?,
                 PrimitiveType::IntPtrT => write!(ctx, "::core::primitive::isize")?,
                 PrimitiveType::UintPtrT => write!(ctx, "::core::primitive::usize")?,
-                PrimitiveType::WcharT => write!(ctx, "crate::c_wchar_t")?,
-                PrimitiveType::VaList => write!(ctx, "crate::VaList")?,
+                PrimitiveType::WcharT => write!(ctx, "crate::ffi::c_wchar_t")?,
+                PrimitiveType::VaList => write!(ctx, "crate::ffi::VaList")?,
             },
 
             TypeEnum::Ident(i) => {
@@ -482,8 +482,8 @@ impl Emit for TypeDef {
                     PrimitiveType::Uint64T => "::core::primitive::u64",
                     PrimitiveType::IntPtrT => "::core::primitive::isize",
                     PrimitiveType::UintPtrT => "::core::primitive::usize",
-                    PrimitiveType::WcharT => "crate::c_wchar_t",
-                    PrimitiveType::VaList => "crate::VaList",
+                    PrimitiveType::WcharT => "crate::ffi::c_wchar_t",
+                    PrimitiveType::VaList => "crate::ffi::VaList",
                 };
                 ctx.scope_mut().register_sym(self.ident.clone())?;
                 writeln!(ctx, "pub type {} = {p};", self.ident.as_str())?;
