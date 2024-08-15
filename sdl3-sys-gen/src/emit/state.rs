@@ -3,7 +3,6 @@ use crate::{
     parse::{DefineValue, GetSpan, Ident, IdentOrKw, ParseErr, Span},
     Gen,
 };
-use core::mem;
 use std::{
     cell::{Ref, RefCell, RefMut},
     collections::{BTreeSet, HashMap, HashSet},

@@ -32,6 +32,8 @@ pub enum PrimitiveType {
     Uint64T,
     IntPtrT,
     UintPtrT,
+    WcharT,
+    VaList,
 }
 
 pub struct PrimitiveTypeParse {
@@ -209,6 +211,8 @@ impl Parse for PrimitiveTypeParse {
                         "uint64_t" => PrimitiveType::Uint64T,
                         "intptr_t" => PrimitiveType::IntPtrT,
                         "uintptr_t" => PrimitiveType::UintPtrT,
+                        "wchar_t" => PrimitiveType::WcharT,
+                        "va_list" => PrimitiveType::VaList,
                         _ => return Ok((input.clone(), None)),
                     },
                 }),

@@ -6,11 +6,12 @@ use crate::{
         PreProcBlockKind, PrimitiveType, Type, TypeDef, TypeEnum,
     },
 };
-use core::{
-    cell::RefCell,
+use std::{
     fmt::{self, Display, Write},
+    io,
+    ops::Deref,
+    rc::Rc,
 };
-use std::{io, ops::Deref, rc::Rc};
 
 mod expr;
 pub use expr::Value;
@@ -394,6 +395,8 @@ impl Emit for Type {
                 PrimitiveType::Uint64T => write!(ctx, "::core::primitive::u64")?,
                 PrimitiveType::IntPtrT => write!(ctx, "::core::primitive::isize")?,
                 PrimitiveType::UintPtrT => write!(ctx, "::core::primitive::usize")?,
+                PrimitiveType::WcharT => write!(ctx, "crate::c_wchar_t")?,
+                PrimitiveType::VaList => write!(ctx, "crate::VaList")?,
             },
 
             TypeEnum::Ident(i) => {
@@ -479,6 +482,8 @@ impl Emit for TypeDef {
                     PrimitiveType::Uint64T => "::core::primitive::u64",
                     PrimitiveType::IntPtrT => "::core::primitive::isize",
                     PrimitiveType::UintPtrT => "::core::primitive::usize",
+                    PrimitiveType::WcharT => "crate::c_wchar_t",
+                    PrimitiveType::VaList => "crate::VaList",
                 };
                 ctx.scope_mut().register_sym(self.ident.clone())?;
                 writeln!(ctx, "pub type {} = {p};", self.ident.as_str())?;

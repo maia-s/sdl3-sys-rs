@@ -124,7 +124,7 @@ impl Gen {
                         use io::Write;
                         File::options()
                             .append(true)
-                            .open(&self.1)
+                            .open(self.1)
                             .unwrap()
                             .write_all(
                                 "\n\ncompile_error!(\"incomplete generated file\");\n".as_bytes(),
@@ -137,6 +137,8 @@ impl Gen {
 
             let mut file = Writable(BufWriter::new(File::create(&path)?));
             let mut ctx = EmitContext::new(module, &mut file, self)?;
+            writeln!(ctx, "#![allow(non_camel_case_types)]")?; // this doesn't work if it's in another file
+            writeln!(ctx)?;
             self.parsed[module].emit(&mut ctx)?;
             ctx.flush_ool_output()?;
             let emitted = ctx.into_inner();
@@ -196,6 +198,12 @@ impl From<io::Error> for Error {
     }
 }
 
+impl From<fmt::Error> for Error {
+    fn from(value: fmt::Error) -> Self {
+        Self::EmitError(EmitErr::FmtError(value))
+    }
+}
+
 impl From<ParseErr> for Error {
     fn from(value: ParseErr) -> Self {
         Self::ParseError(value)
@@ -213,7 +221,7 @@ impl From<Error> for EmitErr {
         match value {
             Error::IoError(e) => Self::IoError(e),
             Error::EmitError(e) => e,
-            Error::ParseError(e) => unreachable!(),
+            Error::ParseError(_) => unreachable!(),
         }
     }
 }

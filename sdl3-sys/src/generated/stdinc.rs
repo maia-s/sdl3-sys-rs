@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 //! # CategoryStdinc
 //! 
 //! This is a general header that includes C language support. It implements a
@@ -595,31 +597,31 @@ extern_sdlcall! {{
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_wcslen(wstr: *const wchar_t) -> ::core::primitive::usize;
+    pub fn SDL_wcslen(wstr: *const crate::c_wchar_t) -> ::core::primitive::usize;
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_wcsnlen(wstr: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_wcsnlen(wstr: *const crate::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_wcslcpy(dst: *mut wchar_t, src: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_wcslcpy(dst: *mut crate::c_wchar_t, src: *const crate::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_wcslcat(dst: *mut wchar_t, src: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_wcslcat(dst: *mut crate::c_wchar_t, src: *const crate::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_wcsdup(wstr: *const wchar_t) -> *mut wchar_t;
+    pub fn SDL_wcsdup(wstr: *const crate::c_wchar_t) -> *mut crate::c_wchar_t;
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_wcsstr(haystack: *const wchar_t, needle: *const wchar_t) -> *mut wchar_t;
+    pub fn SDL_wcsstr(haystack: *const crate::c_wchar_t, needle: *const crate::c_wchar_t) -> *mut crate::c_wchar_t;
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_wcsnstr(haystack: *const wchar_t, needle: *const wchar_t, maxlen: ::core::primitive::usize) -> *mut wchar_t;
+    pub fn SDL_wcsnstr(haystack: *const crate::c_wchar_t, needle: *const crate::c_wchar_t, maxlen: ::core::primitive::usize) -> *mut crate::c_wchar_t;
 }}
 
 extern_sdlcall! {{
@@ -638,7 +640,7 @@ extern_sdlcall! {{
     /// \threadsafety It is safe to call this function from any thread.
     /// 
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_wcscmp(str1: *const wchar_t, str2: *const wchar_t) -> ::core::ffi::c_int;
+    pub fn SDL_wcscmp(str1: *const crate::c_wchar_t, str2: *const crate::c_wchar_t) -> ::core::ffi::c_int;
 }}
 
 extern_sdlcall! {{
@@ -669,7 +671,7 @@ extern_sdlcall! {{
     /// \threadsafety It is safe to call this function from any thread.
     /// 
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_wcsncmp(str1: *const wchar_t, str2: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_wcsncmp(str1: *const crate::c_wchar_t, str2: *const crate::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
 }}
 
 extern_sdlcall! {{
@@ -699,7 +701,7 @@ extern_sdlcall! {{
     /// \threadsafety It is safe to call this function from any thread.
     /// 
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_wcscasecmp(str1: *const wchar_t, str2: *const wchar_t) -> ::core::ffi::c_int;
+    pub fn SDL_wcscasecmp(str1: *const crate::c_wchar_t, str2: *const crate::c_wchar_t) -> ::core::ffi::c_int;
 }}
 
 extern_sdlcall! {{
@@ -741,11 +743,11 @@ extern_sdlcall! {{
     /// \threadsafety It is safe to call this function from any thread.
     /// 
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_wcsncasecmp(str1: *const wchar_t, str2: *const wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_wcsncasecmp(str1: *const crate::c_wchar_t, str2: *const crate::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_wcstol(str: *const wchar_t, endp: *mut *mut wchar_t, base: ::core::ffi::c_int) -> ::core::ffi::c_long;
+    pub fn SDL_wcstol(str: *const crate::c_wchar_t, endp: *mut *mut crate::c_wchar_t, base: ::core::ffi::c_int) -> ::core::ffi::c_long;
 }}
 
 extern_sdlcall! {{
@@ -1102,7 +1104,7 @@ extern_sdlcall! {{
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_vsscanf(text: *const ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ap: va_list) -> ::core::ffi::c_int;
+    pub fn SDL_vsscanf(text: *const ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ap: crate::VaList) -> ::core::ffi::c_int;
 }}
 
 extern_sdlcall! {{
@@ -1110,15 +1112,15 @@ extern_sdlcall! {{
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_swprintf(text: *mut wchar_t, maxlen: ::core::primitive::usize, fmt: *const wchar_t, ...) -> ::core::ffi::c_int;
+    pub fn SDL_swprintf(text: *mut crate::c_wchar_t, maxlen: ::core::primitive::usize, fmt: *const crate::c_wchar_t, ...) -> ::core::ffi::c_int;
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_vsnprintf(text: *mut ::core::ffi::c_char, maxlen: ::core::primitive::usize, fmt: *const ::core::ffi::c_char, ap: va_list) -> ::core::ffi::c_int;
+    pub fn SDL_vsnprintf(text: *mut ::core::ffi::c_char, maxlen: ::core::primitive::usize, fmt: *const ::core::ffi::c_char, ap: crate::VaList) -> ::core::ffi::c_int;
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_vswprintf(text: *mut wchar_t, maxlen: ::core::primitive::usize, fmt: *const wchar_t, ap: va_list) -> ::core::ffi::c_int;
+    pub fn SDL_vswprintf(text: *mut crate::c_wchar_t, maxlen: ::core::primitive::usize, fmt: *const crate::c_wchar_t, ap: crate::VaList) -> ::core::ffi::c_int;
 }}
 
 extern_sdlcall! {{
@@ -1126,7 +1128,7 @@ extern_sdlcall! {{
 }}
 
 extern_sdlcall! {{
-    pub fn SDL_vasprintf(strp: *mut *mut ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ap: va_list) -> ::core::ffi::c_int;
+    pub fn SDL_vasprintf(strp: *mut *mut ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ap: crate::VaList) -> ::core::ffi::c_int;
 }}
 
 extern_sdlcall! {{
