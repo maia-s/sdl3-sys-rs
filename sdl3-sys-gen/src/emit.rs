@@ -470,7 +470,7 @@ impl Emit for TypeDef {
                     PrimitiveType::Float => "::core::primitive::f32",
                     PrimitiveType::Double => "::core::primitive::f64",
                     PrimitiveType::Void => "()",
-                    PrimitiveType::Bool => todo!(),
+                    PrimitiveType::Bool => "::core::primitive::bool",
                     PrimitiveType::SizeT => "::core::primitive::usize",
                     PrimitiveType::Int8T => "::core::primitive::i8",
                     PrimitiveType::Uint8T => "::core::primitive::u8",

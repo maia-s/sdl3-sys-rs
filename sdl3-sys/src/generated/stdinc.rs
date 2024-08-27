@@ -12,7 +12,7 @@
 ///
 /// \sa SDL_TRUE
 /// \sa SDL_FALSE
-pub type SDL_bool = ::core::ffi::c_int;
+pub type SDL_bool = ::core::primitive::bool;
 
 /// A signed 8-bit integer type.
 ///
@@ -135,6 +135,7 @@ emit! {
 
 }
 
+const _: () = ::core::assert!(::core::mem::size_of::<SDL_bool>() == 1);
 const _: () = ::core::assert!(::core::mem::size_of::<Uint8>() == 1);
 const _: () = ::core::assert!(::core::mem::size_of::<Sint8>() == 1);
 const _: () = ::core::assert!(::core::mem::size_of::<Uint16>() == 2);
@@ -231,8 +232,8 @@ extern_sdlcall! {{
     /// \param calloc_func custom calloc function.
     /// \param realloc_func custom realloc function.
     /// \param free_func custom free function.
-    /// \returns 0 on success or a negative error code on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \threadsafety It is safe to call this function from any thread, but one
     ///               should not replace the memory functions once any allocations
@@ -242,7 +243,7 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetMemoryFunctions
     /// \sa SDL_GetOriginalMemoryFunctions
-    pub fn SDL_SetMemoryFunctions(malloc_func: SDL_malloc_func, calloc_func: SDL_calloc_func, realloc_func: SDL_realloc_func, free_func: SDL_free_func) -> ::core::ffi::c_int;
+    pub fn SDL_SetMemoryFunctions(malloc_func: SDL_malloc_func, calloc_func: SDL_calloc_func, realloc_func: SDL_realloc_func, free_func: SDL_free_func) -> SDL_bool;
 }}
 
 extern_sdlcall! {{

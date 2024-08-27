@@ -199,7 +199,7 @@ impl Parse for PrimitiveTypeParse {
                         "float" => PrimitiveType::Float,
                         "double" => PrimitiveType::Double,
                         "void" => PrimitiveType::Void,
-                        "_Bool" => PrimitiveType::Bool,
+                        "bool" | "_Bool" => PrimitiveType::Bool,
                         "size_t" => PrimitiveType::SizeT,
                         "int8_t" => PrimitiveType::Int8T,
                         "uint8_t" => PrimitiveType::Uint8T,
