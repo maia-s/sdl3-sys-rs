@@ -1,7 +1,5 @@
 # sdl3-sys
 
-(I'm currently on vacation until the end of August)
-
 This is a work in progress of the "new" sdl3-sys for Rust! The bindings themselves will be in the
 sdl3-sys crate in the sdl3-sys dir, but currently that's mostly empty as I'm working on finishing the
 generator, in sdl3-sys-gen.
