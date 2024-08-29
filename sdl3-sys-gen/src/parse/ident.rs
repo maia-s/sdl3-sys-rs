@@ -1,5 +1,5 @@
 use super::{is_keyword, GetSpan, Parse, ParseErr, ParseRawRes, ParseRev, Span};
-use core::{borrow::Borrow, hash::Hash};
+use core::{borrow::Borrow, fmt::Display, hash::Hash};
 use std::borrow::Cow;
 
 pub type Ident = IdentOrKwT<false>;
@@ -8,6 +8,12 @@ pub type IdentOrKw = IdentOrKwT<true>;
 #[derive(Clone, Debug, PartialOrd, Ord)]
 pub struct IdentOrKwT<const ALLOW_KEYWORDS: bool> {
     pub span: Span,
+}
+
+impl<const ALLOW_KEYWORDS: bool> Display for IdentOrKwT<ALLOW_KEYWORDS> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        Display::fmt(&self.span, f)
+    }
 }
 
 impl TryFrom<IdentOrKw> for Ident {

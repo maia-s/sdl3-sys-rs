@@ -410,17 +410,14 @@ impl Emit for Type {
                 if let Some(ident) = s.ident.as_ref() {
                     if ctx.lookup_struct_sym(ident).is_none() {
                         if s.fields.is_none() {
-                            ctx.scope_mut().register_struct_sym(ident.clone())?;
-                            let mut ool = ctx.with_ool_output();
-                            writeln!(ool, "#[repr(C)]")?;
-                            writeln!(ool, "pub struct {} {{ _opaque: [u8; 0] }}", ident.as_str())?;
+                            ctx.scope_mut().register_struct_sym(ident.clone(), false)?;
                             write!(ctx, "{}", ident.as_str())?;
                         } else {
                             dbg!(self);
                             todo!()
                         }
                     } else {
-                        todo!()
+                        write!(ctx, "{}", ident.as_str())?;
                     }
                 } else {
                     todo!()
@@ -579,8 +576,8 @@ impl Emit for TypeDef {
                     )?;
                 }
 
-                ctx_impl.flush_ool_output()?;
-                ctx_global.flush_ool_output()?;
+                drop(ctx_impl);
+                drop(ctx_global);
 
                 writeln!(ctx, "impl {enum_ident} {{")?;
                 ctx.increase_indent();
@@ -594,16 +591,41 @@ impl Emit for TypeDef {
 
             TypeEnum::Struct(s) => {
                 if let Some(ident) = &s.ident {
-                    if s.fields.is_none() && ctx.lookup_struct_sym(ident).is_none() {
-                        self.ty.emit(&mut ctx.with_ool_output())?;
+                    if s.fields.is_none() {
+                        if ctx.lookup_struct_sym(ident).is_none() {
+                            self.ty.emit(&mut ctx.with_ool_output())?;
+                        }
+                    } else {
+                        ctx.scope_mut().register_struct_sym(ident.clone(), true)?;
                     }
-                    self.doc.emit(ctx)?;
-                    writeln!(ctx, "/// ...")?;
-                    ctx.flush_ool_output()?;
-                    todo!()
-                } else {
-                    todo!()
                 }
+
+                if let Some(fields) = &s.fields {
+                    self.doc.emit(ctx)?;
+                    writeln!(ctx, "#[repr(C)]")?;
+                    writeln!(ctx, "#[derive(Clone, Copy, Debug)]")?;
+                    writeln!(
+                        ctx,
+                        "pub {} {} {{",
+                        if s.is_struct() { "struct" } else { "union" },
+                        self.ident
+                    )?;
+                    ctx.increase_indent();
+
+                    for field in fields.fields.iter() {
+                        field.doc.emit(ctx)?;
+                        field.ident.emit(ctx)?;
+                        write!(ctx, ": ")?;
+                        field.ty.emit(ctx)?;
+                        writeln!(ctx, ",")?;
+                    }
+
+                    ctx.decrease_indent();
+                    writeln!(ctx, "}}")?;
+                }
+
+                ctx.flush_ool_output()?;
+                Ok(())
             }
 
             TypeEnum::Pointer(_) => {

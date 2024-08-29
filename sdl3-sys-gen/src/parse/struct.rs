@@ -14,6 +14,12 @@ pub struct StructOrUnion {
     pub fields: Option<StructFields>,
 }
 
+impl StructOrUnion {
+    pub const fn is_struct(&self) -> bool {
+        self.kw_struct.is_some()
+    }
+}
+
 impl GetSpan for StructOrUnion {
     fn span(&self) -> Span {
         self.span.clone()
@@ -66,10 +72,10 @@ impl Parse for StructOrUnion {
 
 #[derive(Clone, Debug)]
 pub struct StructField {
-    span: Span,
-    doc: Option<DocComment>,
-    ident: Ident,
-    ty: Type,
+    pub span: Span,
+    pub doc: Option<DocComment>,
+    pub ident: Ident,
+    pub ty: Type,
 }
 
 #[derive(Debug)]
@@ -123,10 +129,10 @@ impl Parse for StructFieldGroup {
 
 #[derive(Clone, Debug)]
 pub struct StructFields {
-    span: Span,
-    open_brace: Op<'{'>,
-    fields: Vec<StructField>,
-    close_brace: Op<'}'>,
+    pub span: Span,
+    pub open_brace: Op<'{'>,
+    pub fields: Vec<StructField>,
+    pub close_brace: Op<'}'>,
 }
 
 impl Parse for StructFields {

@@ -143,7 +143,6 @@ impl Gen {
             writeln!(ctx, "#![allow(non_camel_case_types)]")?; // this doesn't work if it's in another file
             writeln!(ctx)?;
             self.parsed[module].emit(&mut ctx)?;
-            ctx.flush_ool_output()?;
             let emitted = ctx.into_inner();
             file.0.into_inner().unwrap().sync_all()?;
             self.emitted

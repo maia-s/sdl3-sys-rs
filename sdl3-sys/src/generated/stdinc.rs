@@ -2770,4 +2770,6 @@ extern "C" {
 pub type SDL_FunctionPointer = ::core::option::Option<extern "C" fn()>;
 
 #[repr(C)]
-pub struct SDL_iconv_data_t { _opaque: [u8; 0] }
+#[non_exhaustive]
+pub struct SDL_iconv_data_t { _opaque: [::core::primitive::u8; 0] }
+

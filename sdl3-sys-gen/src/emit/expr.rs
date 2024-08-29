@@ -209,6 +209,7 @@ impl Eval for Expr {
                         write!(ctx2, "::core::mem::size_of::<")?;
                         ty.emit(&mut ctx2)?;
                         write!(ctx2, ">()")?;
+                        drop(ctx2);
                         return Ok(Some(Value::RustCode(out)));
                     }
 
@@ -338,6 +339,7 @@ impl Eval for Expr {
                                 let mut rhs_ctx = ctx.with_output(&mut code);
                                 write!(rhs_ctx, "{lhs} {op} ")?;
                                 rhs.emit(&mut rhs_ctx)?;
+                                drop(rhs_ctx);
                                 Ok(Some(Value::RustCode(code)))
                             }
                             _ => Err(ParseErr::new(bop.span(), format!("invalid operands to `{op}`")).into()),

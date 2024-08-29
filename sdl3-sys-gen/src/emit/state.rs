@@ -5,7 +5,7 @@ use crate::{
 };
 use std::{
     cell::{Ref, RefCell, RefMut},
-    collections::{BTreeSet, HashMap, HashSet},
+    collections::{BTreeMap, BTreeSet, HashMap, HashSet},
     fmt::{self, Write},
     iter::Extend,
     rc::Rc,
@@ -152,6 +152,7 @@ pub struct EmitContext<'a, 'b> {
     pub gen: &'b Gen,
 }
 
+#[derive(Default)]
 pub struct InnerEmitContext {
     module: String,
     pub preproc_state: Rc<RefCell<PreProcState>>,
@@ -269,7 +270,9 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     pub fn into_inner(self) -> InnerEmitContext {
-        Rc::into_inner(self.inner).unwrap().into_inner()
+        let inner = Rc::clone(&self.inner);
+        drop(self);
+        Rc::into_inner(inner).unwrap().into_inner()
     }
 
     fn inner(&self) -> Ref<InnerEmitContext> {
@@ -436,7 +439,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         }
     }
 
-    pub fn lookup_struct_sym(&self, key: &Ident) -> Option<Ident> {
+    pub fn lookup_struct_sym(&self, key: &Ident) -> Option<(Ident, bool)> {
         if let Ok(Some(_)) = self.preproc_state().borrow().lookup(key) {
             todo!()
         } else {
@@ -508,14 +511,12 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 }
 
-/*
-"" => [""]
-"\n" => ["", ""]
-"aaa" => ["aaa"]
-"aaa\n" => ["aaa", ""]
-"aaa\nbbb" => ["aaa", "bbb"]
-"aaa\nbbb\n" => ["aaa, "bbb", ""]
-*/
+impl Drop for EmitContext<'_, '_> {
+    fn drop(&mut self) {
+        self.flush_ool_output().unwrap();
+        self.inner.borrow_mut().scope.pop(self.output).unwrap();
+    }
+}
 
 impl Write for EmitContext<'_, '_> {
     fn write_str(&mut self, s: &str) -> fmt::Result {
@@ -647,39 +648,50 @@ impl PreProcState {
 #[derive(Clone)]
 pub struct Scope(Rc<RefCell<InnerScope>>);
 
+#[derive(Default)]
 struct InnerScope {
     parent: Option<Rc<RefCell<InnerScope>>>,
     syms: HashSet<Ident>,
     enum_syms: HashSet<Ident>,
-    struct_syms: HashSet<Ident>,
+    struct_syms: BTreeMap<Ident, bool>,
 }
 
 impl Scope {
     pub fn new() -> Self {
-        Self(Rc::new(RefCell::new(InnerScope {
-            parent: None,
-            syms: HashSet::new(),
-            enum_syms: HashSet::new(),
-            struct_syms: HashSet::new(),
-        })))
+        Self(Rc::new(RefCell::new(InnerScope::default())))
     }
 
     pub fn push(&mut self) {
         self.0 = Rc::new(RefCell::new(InnerScope {
             parent: Some(Rc::clone(&self.0)),
-            syms: HashSet::new(),
-            enum_syms: HashSet::new(),
-            struct_syms: HashSet::new(),
+            ..Default::default()
         }));
     }
 
-    pub fn pop(&mut self) {
-        let parent = if let Some(parent) = &self.0.borrow().parent {
-            Rc::clone(parent)
-        } else {
-            panic!("popped top level scope");
-        };
-        self.0 = parent;
+    pub fn pop(&mut self, f: &mut dyn Write) -> EmitResult {
+        for s in self
+            .0
+            .borrow()
+            .struct_syms
+            .iter()
+            .filter_map(|(s, d)| (!d).then_some(s))
+        {
+            writeln!(f, "#[repr(C)]")?;
+            writeln!(f, "#[non_exhaustive]")?;
+            writeln!(
+                f,
+                "pub struct {} {{ _opaque: [::core::primitive::u8; 0] }}",
+                s.as_str()
+            )?;
+            writeln!(f)?;
+        }
+
+        let parent = self.0.borrow().parent.as_ref().map(Rc::clone);
+        if let Some(parent) = parent {
+            self.0 = parent;
+        }
+
+        Ok(())
     }
 
     pub fn register_sym(&mut self, ident: Ident) -> EmitResult {
@@ -698,10 +710,14 @@ impl Scope {
         Ok(())
     }
 
-    pub fn register_struct_sym(&mut self, ident: Ident) -> EmitResult {
+    pub fn register_struct_sym(&mut self, ident: Ident, defined: bool) -> EmitResult {
         let span = ident.span();
-        if !self.0.borrow_mut().struct_syms.insert(ident) {
-            return Err(ParseErr::new(span, "struct symbol already defined in this scope").into());
+        if let Some(true) = self.0.borrow_mut().struct_syms.insert(ident, defined) {
+            if defined {
+                return Err(
+                    ParseErr::new(span, "struct symbol already defined in this scope").into(),
+                );
+            }
         }
         Ok(())
     }
@@ -714,8 +730,12 @@ impl Scope {
         self.0.borrow().enum_syms.get(ident).cloned()
     }
 
-    pub fn lookup_struct(&self, ident: &Ident) -> Option<Ident> {
-        self.0.borrow().struct_syms.get(ident).cloned()
+    pub fn lookup_struct(&self, ident: &Ident) -> Option<(Ident, bool)> {
+        self.0
+            .borrow()
+            .struct_syms
+            .get_key_value(ident)
+            .map(|(i, d)| (i.clone(), *d))
     }
 }
 
