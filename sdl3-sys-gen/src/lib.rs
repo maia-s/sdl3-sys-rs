@@ -8,7 +8,7 @@ use emit::{Emit, EmitContext, EmitErr, InnerEmitContext};
 use parse::{Items, Parse, ParseErr, Source, Span};
 use std::{
     cell::RefCell,
-    collections::HashMap,
+    collections::{HashMap, HashSet},
     error,
     fmt::{self, Debug, Display},
     fs::{read_dir, DirBuilder, File},
@@ -79,6 +79,7 @@ pub fn generate(headers_path: &Path, output_path: &Path) -> Result<(), Error> {
 pub struct Gen {
     parsed: HashMap<String, Items>,
     emitted: RefCell<HashMap<String, InnerEmitContext>>,
+    skipped: RefCell<HashSet<String>>,
     output_path: PathBuf,
 }
 
@@ -88,6 +89,7 @@ impl Gen {
         Ok(Self {
             parsed: HashMap::new(),
             emitted: RefCell::new(HashMap::new()),
+            skipped: RefCell::new(HashSet::new()),
             output_path,
         })
     }
@@ -107,9 +109,10 @@ impl Gen {
     }
 
     pub fn emit(&self, module: &str) -> Result<(), Error> {
-        if !self.emitted.borrow().contains_key(module) {
+        if !self.emitted.borrow().contains_key(module) && !self.skipped.borrow().contains(module) {
             if !self.parsed.contains_key(module) {
                 eprintln!("skipping {module}");
+                self.skipped.borrow_mut().insert(module.to_string());
                 return Ok(());
             }
 
