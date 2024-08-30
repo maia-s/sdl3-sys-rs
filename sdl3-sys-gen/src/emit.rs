@@ -541,6 +541,10 @@ impl Emit for TypeDef {
                 ctx.scope_mut().register_sym(self.ident.clone())?;
                 let enum_ident = self.ident.as_str();
                 writeln!(ctx, "#[repr(transparent)]")?;
+                writeln!(
+                    ctx,
+                    "#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]"
+                )?;
                 writeln!(ctx, "pub struct {enum_ident}(pub {enum_rust_type});")?;
 
                 let mut impl_consts = String::new();

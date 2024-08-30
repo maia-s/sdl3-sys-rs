@@ -155,6 +155,7 @@ const _: () = ::core::assert!(::core::mem::size_of::<Sint64>() == 8);
 #[cfg(all(not(any(/* always disabled: SDL_PLATFORM_3DS */)), not(any(/* always disabled: SDL_PLATFORM_VITA */))))]
 emit! {
     #[repr(transparent)]
+    #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SDL_DUMMY_ENUM(pub ::core::ffi::c_int);
     impl SDL_DUMMY_ENUM {
         pub const DUMMY_ENUM_VALUE: Self = Self(0);
