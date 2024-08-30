@@ -100,6 +100,8 @@ impl Span {
 
     pub fn none() -> Self {
         Self {
+            #[cfg(feature = "extra-debugging")]
+            str: String::new(),
             src: None,
             start: 0,
             end: 0,
