@@ -172,86 +172,85 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
         const ALWAYS_FALSE: &str = "any()";
 
-        preproc_state.register_target_define(
-            "__LP64__",
-            CfgExpr(r#"all(not(windows), target_pointer_width = "64")"#),
-        );
-        preproc_state
-            .register_target_define("_MSC_VER", CfgExpr(r#"all(windows, target_env = "msvc")"#));
-        preproc_state.register_target_define("SDL_PLATFORM_3DS", CfgExpr(ALWAYS_FALSE));
-        preproc_state
-            .register_target_define("SDL_PLATFORM_APPLE", CfgExpr(r#"target_vendor = "apple""#));
-        preproc_state.register_target_define("SDL_PLATFORM_GDK", CfgExpr(ALWAYS_FALSE)); // change WIN32 if this is changed
-        preproc_state.register_target_define("SDL_PLATFORM_VITA", CfgExpr(ALWAYS_FALSE));
-        preproc_state.register_target_define("SDL_PLATFORM_WIN32", CfgExpr("windows"));
+        macro_rules! target_defines {
+            ($($define:literal = $cfg:expr;)*) => {
+                $( preproc_state.register_target_define($define, $cfg); )*
+            };
+        }
+        target_defines! {
+            "__LP64__" = CfgExpr(r#"all(not(windows), target_pointer_width = "64")"#);
+            "_MSC_VER" = CfgExpr(r#"all(windows, target_env = "msvc")"#);
+            "ANDROID" = CfgExpr(r#"target_os = "android""#);
+            "SDL_PLATFORM_3DS" = CfgExpr(ALWAYS_FALSE);
+            "SDL_PLATFORM_ANDROID" = CfgExpr(r#"target_os = "android""#);
+            "SDL_PLATFORM_APPLE" = CfgExpr(r#"target_vendor = "apple""#);
+            "SDL_PLATFORM_GDK" = CfgExpr(ALWAYS_FALSE); // change WIN32 if this is changed
+            "SDL_PLATFORM_VITA" = CfgExpr(ALWAYS_FALSE);
+            "SDL_PLATFORM_WIN32" = CfgExpr("windows");
+        }
 
-        preproc_state.undefine(Ident::new_inline("__clang_analyzer__"));
-        preproc_state.undefine(Ident::new_inline("__cplusplus"));
-        preproc_state.undefine(Ident::new_inline("PRId32"));
-        preproc_state.undefine(Ident::new_inline("PRIs64"));
-        preproc_state.undefine(Ident::new_inline("PRIu32"));
-        preproc_state.undefine(Ident::new_inline("PRIu64"));
-        preproc_state.undefine(Ident::new_inline("PRIx32"));
-        preproc_state.undefine(Ident::new_inline("PRIX32"));
-        preproc_state.undefine(Ident::new_inline("PRIx64"));
-        preproc_state.undefine(Ident::new_inline("PRIX64"));
-        preproc_state.undefine(Ident::new_inline("DOXYGEN_SHOULD_IGNORE_THIS"));
-        preproc_state.undefine(Ident::new_inline(format!("SDL_{module}_h_")));
-        preproc_state.undefine(Ident::new_inline("SDL_COMPILE_TIME_ASSERT"));
-        preproc_state.undefine(Ident::new_inline("SDL_FUNCTION_POINTER_IS_VOID_POINTER"));
-        preproc_state.undefine(Ident::new_inline("SDL_memcpy"));
-        preproc_state.undefine(Ident::new_inline("SDL_memmove"));
-        preproc_state.undefine(Ident::new_inline("SDL_memset"));
-        preproc_state.undefine(Ident::new_inline("SDL_PI_D"));
-        preproc_state.undefine(Ident::new_inline("SDL_PI_F"));
-        preproc_state.undefine(Ident::new_inline("SDL_PRIs32"));
-        preproc_state.undefine(Ident::new_inline("SDL_PRIs64"));
-        preproc_state.undefine(Ident::new_inline("SDL_PRIu32"));
-        preproc_state.undefine(Ident::new_inline("SDL_PRIu64"));
-        preproc_state.undefine(Ident::new_inline("SDL_PRIx32"));
-        preproc_state.undefine(Ident::new_inline("SDL_PRIX32"));
-        preproc_state.undefine(Ident::new_inline("SDL_PRIx64"));
-        preproc_state.undefine(Ident::new_inline("SDL_PRIX64"));
-        preproc_state.undefine(Ident::new_inline("SDL_SLOW_MEMCPY"));
-        preproc_state.undefine(Ident::new_inline("SDL_SLOW_MEMMOVE"));
-        preproc_state.undefine(Ident::new_inline("SDL_SLOW_MEMSET"));
+        macro_rules! undefines {
+            ($($ident:expr),* $(,)?) => {
+                $( preproc_state.undefine(Ident::new_inline($ident)); )*
+            };
+        }
+        undefines! {
+            "__clang_analyzer__",
+            "__cplusplus",
+            "assert",
+            "PRId32",
+            "PRIs64",
+            "PRIu32",
+            "PRIu64",
+            "PRIx32",
+            "PRIX32",
+            "PRIx64",
+            "PRIX64",
+            "DOXYGEN_SHOULD_IGNORE_THIS",
+            format!("SDL_{module}_h_"),
+            "SDL_ASSERT_LEVEL",
+            "SDL_AssertBreakpoint",
+            "SDL_COMPILE_TIME_ASSERT",
+            "SDL_FUNCTION_POINTER_IS_VOID_POINTER",
+            "SDL_memcpy",
+            "SDL_memmove",
+            "SDL_memset",
+            "SDL_PI_D",
+            "SDL_PI_F",
+            "SDL_PRIs32",
+            "SDL_PRIs64",
+            "SDL_PRIu32",
+            "SDL_PRIu64",
+            "SDL_PRIx32",
+            "SDL_PRIX32",
+            "SDL_PRIx64",
+            "SDL_PRIX64",
+            "SDL_SLOW_MEMCPY",
+            "SDL_SLOW_MEMMOVE",
+            "SDL_SLOW_MEMSET",
+        }
 
-        preproc_state.define(
-            Ident::new_inline("__STDC_VERSION__"),
-            None,
-            DefineValue::parse_expr("202311L")?,
-        )?;
-        preproc_state.define(
-            Ident::new_inline("FLT_EPSILON"),
-            None,
-            DefineValue::RustCode("::core::primitive::f32::EPSILON".into()),
-        )?;
-        preproc_state.define(
-            Ident::new_inline("SIZE_MAX"),
-            None,
-            DefineValue::RustCode("::core::primitive::usize::MAX".into()),
-        )?;
-        preproc_state.define(
-            Ident::new_inline("__has_builtin"),
-            Some(vec![IdentOrKw::new_inline("builtin")]),
-            DefineValue::Other(Span::new_inline("__has_builtin")),
-        )?;
-        preproc_state.define(
-            Ident::new_inline("SDL_WIKI_DOCUMENTATION_SECTION"),
-            None,
-            DefineValue::one(),
-        )?;
+        macro_rules! defines {
+            ($($define:literal $(($($args:literal),*))? = $value:expr;)*) => {
+                $( defines!(@ Ident::new_inline($define), $(($($args),*),)? $value); )*
+            };
+            (@ $define:expr, $value:expr) => {
+                preproc_state.define($define, None, $value)?;
+            };
+            (@ $define:expr, ($($args:literal),*), $value:expr) => {
+                preproc_state.define($define, Some(vec![$(IdentOrKw::new_inline($args))*]), $value)?;
+            };
+        }
+        defines! {
+            "__STDC_VERSION__" = DefineValue::parse_expr("202311L")?;
+            "FLT_EPSILON" = DefineValue::RustCode("::core::primitive::f32::EPSILON".into());
+            "SIZE_MAX" = DefineValue::RustCode("::core::primitive::usize::MAX".into());
+            "__has_builtin"("builtin") = DefineValue::Other(Span::new_inline("__has_builtin"));
+            "SDL_DISABLE_ALLOCA" = DefineValue::one();
+            "SDL_DISABLE_ANALYZE_MACROS" = DefineValue::one();
+            "SDL_WIKI_DOCUMENTATION_SECTION" = DefineValue::one();
+        }
 
-        preproc_state.define(
-            Ident::new_inline("SDL_DISABLE_ALLOCA"),
-            None,
-            DefineValue::one(),
-        )?;
-        preproc_state.define(
-            Ident::new_inline("SDL_DISABLE_ANALYZE_MACROS"),
-            None,
-            DefineValue::one(),
-        )?;
         Ok(Self {
             inner: Rc::new(RefCell::new(InnerEmitContext {
                 module,
