@@ -6,6 +6,14 @@
 //! subset of the C runtime: these should all behave the same way as their C
 //! runtime equivalents, but with an SDL_ prefix.
 
+#[cfg(doc)]
+emit! {
+}
+
+#[cfg(not(doc))]
+emit! {
+}
+
 /// A boolean type: true or false.
 ///
 /// \since This datatype is available since SDL 3.0.0.
@@ -71,27 +79,11 @@ pub type Uint64 = ::core::primitive::u64;
 /// \sa SDL_MIN_SINT64
 pub type SDL_Time = Sint64;
 
-#[cfg(any(any(), windows))]
+#[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
 emit! {
 }
 
-#[cfg(not(any(any(), windows)))]
-emit! {
-    #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
-    emit! {
-    }
-
-    #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
-    emit! {
-    }
-
-}
-
-#[cfg(any(any(), windows))]
-emit! {
-}
-
-#[cfg(not(any(any(), windows)))]
+#[cfg(not(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows)))]
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
@@ -103,11 +95,11 @@ emit! {
 
 }
 
-#[cfg(any(any(), windows))]
+#[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
 emit! {
 }
 
-#[cfg(not(any(any(), windows)))]
+#[cfg(not(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows)))]
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
@@ -119,11 +111,27 @@ emit! {
 
 }
 
-#[cfg(any(any(), windows))]
+#[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
 emit! {
 }
 
-#[cfg(not(any(any(), windows)))]
+#[cfg(not(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows)))]
+emit! {
+    #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
+    emit! {
+    }
+
+    #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
+    emit! {
+    }
+
+}
+
+#[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
+emit! {
+}
+
+#[cfg(not(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows)))]
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
@@ -144,7 +152,7 @@ const _: () = ::core::assert!(::core::mem::size_of::<Uint32>() == 4);
 const _: () = ::core::assert!(::core::mem::size_of::<Sint32>() == 4);
 const _: () = ::core::assert!(::core::mem::size_of::<Uint64>() == 8);
 const _: () = ::core::assert!(::core::mem::size_of::<Sint64>() == 8);
-#[cfg(all(not(any()), not(any())))]
+#[cfg(all(not(any(/* always disabled: SDL_PLATFORM_3DS */)), not(any(/* always disabled: SDL_PLATFORM_VITA */))))]
 emit! {
     #[repr(transparent)]
     pub struct SDL_DUMMY_ENUM(pub ::core::ffi::c_int);
@@ -2748,6 +2756,14 @@ extern "C" {
     pub fn SDL_size_mul_overflow(a: ::core::primitive::usize, b: ::core::primitive::usize, ret: *mut ::core::primitive::usize) -> ::core::ffi::c_int;
 }
 
+#[cfg(not(doc))]
+emit! {
+    extern "C" {
+        pub fn SDL_size_mul_overflow_builtin(a: ::core::primitive::usize, b: ::core::primitive::usize, ret: *mut ::core::primitive::usize) -> ::core::ffi::c_int;
+    }
+
+}
+
 extern "C" {
     /// Add two integers, checking for overflow.
     ///
@@ -2765,6 +2781,14 @@ extern "C" {
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_size_add_overflow(a: ::core::primitive::usize, b: ::core::primitive::usize, ret: *mut ::core::primitive::usize) -> ::core::ffi::c_int;
+}
+
+#[cfg(not(doc))]
+emit! {
+    extern "C" {
+        pub fn SDL_size_add_overflow_builtin(a: ::core::primitive::usize, b: ::core::primitive::usize, ret: *mut ::core::primitive::usize) -> ::core::ffi::c_int;
+    }
+
 }
 
 pub type SDL_FunctionPointer = ::core::option::Option<extern "C" fn()>;

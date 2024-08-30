@@ -170,7 +170,11 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         let module = module.into();
         let mut preproc_state = PreProcState::default();
 
-        const ALWAYS_FALSE: &str = "any()";
+        macro_rules! always_false {
+            ($define:literal) => {
+                concat!("any(/* always disabled: ", $define, " */)")
+            };
+        }
 
         macro_rules! target_defines {
             ($($define:literal = $cfg:expr;)*) => {
@@ -178,15 +182,20 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             };
         }
         target_defines! {
+            "__GNUC__" = CfgExpr(always_false!("__GNUC__"));
             "__LP64__" = CfgExpr(r#"all(not(windows), target_pointer_width = "64")"#);
+            "__OPTIMIZE__" = CfgExpr("not(debug_assertions)");
+            "_DEBUG" = CfgExpr("debug_assertions");
             "_MSC_VER" = CfgExpr(r#"all(windows, target_env = "msvc")"#);
             "ANDROID" = CfgExpr(r#"target_os = "android""#);
-            "SDL_PLATFORM_3DS" = CfgExpr(ALWAYS_FALSE);
+            "DEBUG" = CfgExpr("debug_assertions");
+            "SDL_PLATFORM_3DS" = CfgExpr(always_false!("SDL_PLATFORM_3DS"));
             "SDL_PLATFORM_ANDROID" = CfgExpr(r#"target_os = "android""#);
             "SDL_PLATFORM_APPLE" = CfgExpr(r#"target_vendor = "apple""#);
-            "SDL_PLATFORM_GDK" = CfgExpr(ALWAYS_FALSE); // change WIN32 if this is changed
-            "SDL_PLATFORM_VITA" = CfgExpr(ALWAYS_FALSE);
+            "SDL_PLATFORM_GDK" = CfgExpr(always_false!("SDL_PLATFORM_GDK")); // change WIN32 if this is changed
+            "SDL_PLATFORM_VITA" = CfgExpr(always_false!("SDL_PLATFORM_VITA"));
             "SDL_PLATFORM_WIN32" = CfgExpr("windows");
+            "SDL_WIKI_DOCUMENTATION_SECTION" = CfgExpr("doc");
         }
 
         macro_rules! undefines {
@@ -211,6 +220,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_ASSERT_LEVEL",
             "SDL_AssertBreakpoint",
             "SDL_COMPILE_TIME_ASSERT",
+            "SDL_DEFAULT_ASSERT_LEVEL", // !!! FIXME
             "SDL_FUNCTION_POINTER_IS_VOID_POINTER",
             "SDL_memcpy",
             "SDL_memmove",
@@ -244,11 +254,12 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         defines! {
             "__STDC_VERSION__" = DefineValue::parse_expr("202311L")?;
             "FLT_EPSILON" = DefineValue::RustCode("::core::primitive::f32::EPSILON".into());
+            "INT64_C"("x") = DefineValue::RustCode("{x}_i64".into());
+            "UINT64_C"("x") = DefineValue::RustCode("{x}_u64".into());
             "SIZE_MAX" = DefineValue::RustCode("::core::primitive::usize::MAX".into());
             "__has_builtin"("builtin") = DefineValue::Other(Span::new_inline("__has_builtin"));
             "SDL_DISABLE_ALLOCA" = DefineValue::one();
             "SDL_DISABLE_ANALYZE_MACROS" = DefineValue::one();
-            "SDL_WIKI_DOCUMENTATION_SECTION" = DefineValue::one();
         }
 
         Ok(Self {
@@ -612,7 +623,7 @@ impl PreProcState {
     }
 
     pub fn is_defined(&self, key: &Ident) -> Result<bool, EmitErr> {
-        if self.defined.contains_key(key) {
+        if self.is_target_define(key) || self.defined.contains_key(key) {
             Ok(true)
         } else if self.undefined.contains(key) {
             Ok(false)

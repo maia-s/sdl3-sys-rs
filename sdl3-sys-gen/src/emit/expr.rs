@@ -154,29 +154,60 @@ impl Eval for Expr {
             Expr::FnCall(call) => {
                 if ctx.is_preproc_eval_mode() {
                     if let Expr::Ident(ident) = &*call.func {
-                        if ident.as_str() == "defined" {
-                            let args = &*call.args;
-                            let err = || {
-                                Err(ParseErr::new(
-                                    call.span(),
-                                    "defined() in #if takes one argument of type ident",
-                                )
-                                .into())
-                            };
-                            if args.len() != 1 {
-                                return err();
+                        match ident.as_str() {
+                            "defined" => {
+                                let args = &*call.args;
+                                let err = || {
+                                    Err(ParseErr::new(
+                                        call.span(),
+                                        "defined() in #if takes one argument of type ident",
+                                    )
+                                    .into())
+                                };
+                                if args.len() != 1 {
+                                    return err();
+                                }
+                                let Expr::Ident(define) = &args[0] else {
+                                    return err();
+                                };
+                                let define = define.clone().try_into()?;
+                                return if ctx.preproc_state().borrow().is_target_define(&define) {
+                                    Ok(Some(Value::TargetDependent(DefineState::defined(define))))
+                                } else if ctx.preproc_state().borrow().is_defined(&define)? {
+                                    Ok(Some(Value::bool(true)))
+                                } else {
+                                    Ok(Some(Value::bool(false)))
+                                };
                             }
-                            let Expr::Ident(define) = &args[0] else {
-                                return err();
-                            };
-                            let define = define.clone().try_into()?;
-                            return if ctx.preproc_state().borrow().is_target_define(&define) {
-                                Ok(Some(Value::TargetDependent(DefineState::defined(define))))
-                            } else if ctx.preproc_state().borrow().is_defined(&define)? {
-                                Ok(Some(Value::bool(true)))
-                            } else {
-                                Ok(Some(Value::bool(false)))
-                            };
+
+                            "SDL_HAS_BUILTIN" => {
+                                let args = &*call.args;
+                                let err = || {
+                                    Err(ParseErr::new(
+                                        call.span(),
+                                        "SDL_HAS_BUILTIN takes one argument of type ident",
+                                    )
+                                    .into())
+                                };
+                                if args.len() != 1 {
+                                    return err();
+                                }
+                                let Expr::Ident(builtin) = &args[0] else {
+                                    return err();
+                                };
+                                return Ok(Some(Value::bool(match builtin.as_str() {
+                                    "__builtin_add_overflow" | "__builtin_mul_overflow" => true,
+                                    _ => {
+                                        return Err(ParseErr::new(
+                                            builtin.span(),
+                                            "unknown builtin",
+                                        )
+                                        .into())
+                                    }
+                                })));
+                            }
+
+                            _ => (),
                         }
                     }
                 }
