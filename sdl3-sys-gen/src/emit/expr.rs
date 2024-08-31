@@ -13,6 +13,9 @@ use core::{
 pub enum Value {
     I32(i32),
     U31(u32),
+    I64(i64),
+    U63(u64),
+    U64(u64),
     F32(f32),
     F64(f64),
     Bool(bool),
@@ -34,6 +37,9 @@ impl Value {
         match self {
             &Value::I32(i) => i != 0,
             &Value::U31(u) => u != 0,
+            &Value::I64(i) => i != 0,
+            &Value::U63(u) => u != 0,
+            &Value::U64(u) => u != 0,
             &Value::F32(f) => !f.is_nan() && f != 0.0,
             &Value::F64(f) => !f.is_nan() && f != 0.0,
             &Value::Bool(b) => b,
@@ -50,8 +56,11 @@ impl Value {
 impl Emit for Value {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match self {
-            Value::I32(i) => write!(ctx, "{i}")?,
+            Value::I32(i) => write!(ctx, "{i}_i32")?,
             Value::U31(u) => write!(ctx, "{u}")?,
+            Value::I64(i) => write!(ctx, "{i}_i64")?,
+            Value::U63(i) => write!(ctx, "{i}_i64")?,
+            Value::U64(u) => write!(ctx, "{u}_u64")?,
             &Value::F32(f) => {
                 let s = format!("{}", f);
                 if s.parse() == Ok(f) {
@@ -167,8 +176,10 @@ impl Eval for Expr {
                     Literal::Integer(i) => {
                         if i.value <= i32::MAX as u64 {
                             Ok(Some(Value::U31(i.value as u32)))
+                        } else if i.value <= i64::MAX as u64 {
+                            Ok(Some(Value::U63(i.value)))
                         } else {
-                            Err(ParseErr::new(i.span(), "value out of range for U31").into())
+                            Ok(Some(Value::U64(i.value)))
                         }
                     }
                     Literal::Float(f) => match f {
@@ -240,6 +251,45 @@ impl Eval for Expr {
                     }
                 } else {
                     // not preproc
+
+                    if let Expr::Ident(ident) = &*call.func {
+                        match ident.as_str() {
+                            "SDL_SINT64_C" | "SDL_UINT64_C" => {
+                                let args = &*call.args;
+                                let err = || {
+                                    Err(ParseErr::new(call.span(), "expected one argument").into())
+                                };
+                                if args.len() != 1 {
+                                    return err();
+                                }
+                                let Some(arg) = args[0].try_eval(ctx)? else {
+                                    return Ok(None);
+                                };
+                                return Ok(Some(match ident.as_str() {
+                                    "SDL_SINT64_C" => match arg {
+                                        Value::I32(i) => Value::I64(i as i64),
+                                        Value::U31(u) => Value::I64(u as i64),
+                                        Value::I64(i) => Value::I64(i),
+                                        Value::U63(u) => Value::I64(u as i64),
+                                        Value::U64(u) => Value::I64(u as i64),
+                                        _ => todo!(),
+                                    },
+                                    "SDL_UINT64_C" => match arg {
+                                        Value::I32(i) => Value::U64(i as u64),
+                                        Value::U31(u) => Value::U64(u as u64),
+                                        Value::I64(i) => Value::U64(i as u64),
+                                        Value::U63(u) => Value::U64(u),
+                                        Value::U64(u) => Value::U64(u),
+                                        _ => todo!(),
+                                    },
+                                    _ => unreachable!(),
+                                }));
+                            }
+
+                            _ => (),
+                        }
+                    }
+
                     return Ok(None); // !!! FIXME
                 }
             }
@@ -343,7 +393,10 @@ impl Eval for Expr {
 
                     b"~" => match expr {
                         Value::I32(value) => Ok(Some(Value::I32(!value))),
-                        Value::U31(value) => Ok(Some(Value::U31(!value))),
+                        Value::U31(value) => Ok(Some(Value::I32(!(value as i32)))),
+                        Value::I64(value) => Ok(Some(Value::I64(!value))),
+                        Value::U63(value) => Ok(Some(Value::I64(!(value as i64)))),
+                        Value::U64(value) => Ok(Some(Value::U64(!value))),
                         _ => todo!(),
                     },
 

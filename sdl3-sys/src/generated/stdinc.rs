@@ -1,4 +1,4 @@
-#![allow(non_camel_case_types)]
+#![allow(non_camel_case_types, clippy::approx_constant)]
 
 //! # CategoryStdinc
 //!
@@ -35,7 +35,7 @@ pub type Sint8 = ::core::primitive::i8;
 
 pub const SDL_MAX_SINT8: Sint8 = (0x7f) as Sint8;
 
-pub const SDL_MIN_SINT8: Sint8 = ((4294967168)) as Sint8;
+pub const SDL_MIN_SINT8: Sint8 = ((-128_i32)) as Sint8;
 
 /// An unsigned 8-bit integer type.
 ///
@@ -53,7 +53,7 @@ pub type Sint16 = ::core::primitive::i16;
 
 pub const SDL_MAX_SINT16: Sint16 = (0x7fff) as Sint16;
 
-pub const SDL_MIN_SINT16: Sint16 = ((4294934528)) as Sint16;
+pub const SDL_MIN_SINT16: Sint16 = ((-32768_i32)) as Sint16;
 
 /// An unsigned 16-bit integer type.
 ///
@@ -71,7 +71,7 @@ pub type Sint32 = ::core::primitive::i32;
 
 pub const SDL_MAX_SINT32: Sint32 = (0x7fffffff) as Sint32;
 
-pub const SDL_MIN_SINT32: Sint32 = ((2147483648)) as Sint32;
+pub const SDL_MIN_SINT32: Sint32 = ((-2147483648_i32)) as Sint32;
 
 /// An unsigned 32-bit integer type.
 ///
@@ -89,12 +89,20 @@ pub const SDL_MIN_UINT32: Uint32 = (0x00000000) as Uint32;
 /// \sa SDL_SINT64_C
 pub type Sint64 = ::core::primitive::i64;
 
+pub const SDL_MAX_SINT64: ::core::primitive::i64 = 9223372036854775807;
+
+pub const SDL_MIN_SINT64: ::core::primitive::i64 = -9223372036854775808;
+
 /// An unsigned 64-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 ///
 /// \sa SDL_UINT64_C
 pub type Uint64 = ::core::primitive::u64;
+
+pub const SDL_MAX_UINT64: ::core::primitive::u64 = 18446744073709551615;
+
+pub const SDL_MIN_UINT64: ::core::primitive::u64 = 0;
 
 /// SDL times are signed, 64-bit integers representing nanoseconds since the
 /// Unix epoch (Jan 1, 1970).
@@ -2723,13 +2731,13 @@ extern_sdlcall! {{
     pub fn SDL_tanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }}
 
-pub const SDL_ICONV_ERROR: ::core::primitive::usize = (-1) as ::core::primitive::usize;
+pub const SDL_ICONV_ERROR: ::core::primitive::usize = (-1_i32) as ::core::primitive::usize;
 
-pub const SDL_ICONV_E2BIG: ::core::primitive::usize = (-2) as ::core::primitive::usize;
+pub const SDL_ICONV_E2BIG: ::core::primitive::usize = (-2_i32) as ::core::primitive::usize;
 
-pub const SDL_ICONV_EILSEQ: ::core::primitive::usize = (-3) as ::core::primitive::usize;
+pub const SDL_ICONV_EILSEQ: ::core::primitive::usize = (-3_i32) as ::core::primitive::usize;
 
-pub const SDL_ICONV_EINVAL: ::core::primitive::usize = (-4) as ::core::primitive::usize;
+pub const SDL_ICONV_EINVAL: ::core::primitive::usize = (-4_i32) as ::core::primitive::usize;
 
 pub type SDL_iconv_t = *mut SDL_iconv_data_t;
 

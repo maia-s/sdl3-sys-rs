@@ -140,7 +140,10 @@ impl Gen {
 
             let mut file = Writable(BufWriter::new(File::create(&path)?));
             let mut ctx = EmitContext::new(module, &mut file, self)?;
-            writeln!(ctx, "#![allow(non_camel_case_types)]")?; // this doesn't work if it's in another file
+            writeln!(
+                ctx,
+                "#![allow(non_camel_case_types, clippy::approx_constant)]"
+            )?;
             writeln!(ctx)?;
             self.parsed[module].emit(&mut ctx)?;
             let emitted = ctx.into_inner();
