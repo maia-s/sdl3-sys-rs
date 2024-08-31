@@ -1,4 +1,4 @@
-#![allow(non_camel_case_types, clippy::approx_constant)]
+#![allow(non_camel_case_types, non_upper_case_globals, clippy::approx_constant)]
 
 //! # CategoryStdinc
 //!

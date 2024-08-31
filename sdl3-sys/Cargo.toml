@@ -8,5 +8,13 @@ license = "Zlib"
 [features]
 default = []
 
-# used to enable core::ffi::VaList
+# These are mutually exlusive; if more than one is enabled, the former in the list is used
+# (so e.g. disabled overrides release). If none are selected, either release or debug will
+# be enabled based on the build profile
+assert-level-disabled = []
+assert-level-release = []
+assert-level-debug = []
+assert-level-paranoid = []
+
+# Used to enable core::ffi::VaList
 nightly = []

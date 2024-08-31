@@ -158,8 +158,14 @@ impl Emit for Item {
             Item::Define(d) => d.emit(ctx),
             Item::Undef(_) => todo!(),
             Item::Include(i) => i.emit(ctx),
-            Item::Pragma(_) => todo!(),
-            Item::Error(_) => todo!(),
+            Item::Pragma(p) => {
+                writeln!(ctx, "// pragma `{}`", p.as_str())?;
+                Ok(())
+            }
+            Item::Error(e) => {
+                writeln!(ctx, "::core::compile_error!({:?});", e.as_str())?;
+                Ok(())
+            }
             Item::FileDoc(dc) => dc.emit(ctx),
             Item::StructOrUnion(_) => todo!(),
             Item::Enum(_) => todo!(),
@@ -208,10 +214,21 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match &self.kind {
             PreProcBlockKind::If(expr) => {
-                let value = {
+                let mut value = {
                     let _eval_mode = ctx.preproc_eval_mode_guard();
                     expr.try_eval(ctx)?
                 };
+                if value.is_none() {
+                    if let Expr::BinaryOp(bop) = &expr {
+                        if bop.op.as_str() == "==" {
+                            if let Expr::Ident(lhs) = &bop.lhs {
+                                if let Some(rhs) = bop.rhs.try_eval(ctx)? {
+                                    value = ctx.try_target_dependent_if_compare(lhs.as_str(), rhs);
+                                }
+                            }
+                        }
+                    }
+                }
                 if let Some(value) = value {
                     if let Value::TargetDependent(define_state) = value {
                         let pps1 = self.block.emit_with_define_state(ctx, &define_state)?;
@@ -673,6 +690,7 @@ impl Emit for TypeDef {
 
                     ctx.decrease_indent();
                     writeln!(ctx, "}}")?;
+                    writeln!(ctx)?;
                 }
 
                 ctx.flush_ool_output()?;

@@ -8,10 +8,10 @@ use emit::{Emit, EmitContext, EmitErr, InnerEmitContext};
 use parse::{Items, Parse, ParseErr, Source, Span};
 use std::{
     cell::RefCell,
-    collections::{HashMap, HashSet},
+    collections::{BTreeMap, HashSet},
     error,
     fmt::{self, Debug, Display},
-    fs::{read_dir, DirBuilder, File},
+    fs::{read_dir, DirBuilder, File, OpenOptions},
     io::{self, BufWriter, Read},
     path::{Path, PathBuf},
 };
@@ -63,22 +63,19 @@ pub fn generate(headers_path: &Path, output_path: &Path) -> Result<(), Error> {
         }
     }
 
-    let mut keys = Vec::new();
+    gen.emit_top_level()?; // create empty mod.rs to be appended by emit
     for module in gen.parsed.keys() {
-        keys.push(module.as_str());
-    }
-    keys.sort_unstable();
-    for module in keys {
         gen.emit(module)?;
     }
+    gen.emit_top_level()?; // rewrite final mod.rs in sorted order
 
     Ok(())
 }
 
 #[derive(Default)]
 pub struct Gen {
-    parsed: HashMap<String, Items>,
-    emitted: RefCell<HashMap<String, InnerEmitContext>>,
+    parsed: BTreeMap<String, Items>,
+    emitted: RefCell<BTreeMap<String, InnerEmitContext>>,
     skipped: RefCell<HashSet<String>>,
     output_path: PathBuf,
 }
@@ -87,8 +84,8 @@ impl Gen {
     pub fn new(output_path: PathBuf) -> Result<Self, Error> {
         DirBuilder::new().recursive(true).create(&output_path)?;
         Ok(Self {
-            parsed: HashMap::new(),
-            emitted: RefCell::new(HashMap::new()),
+            parsed: BTreeMap::new(),
+            emitted: RefCell::new(BTreeMap::new()),
             skipped: RefCell::new(HashSet::new()),
             output_path,
         })
@@ -142,7 +139,7 @@ impl Gen {
             let mut ctx = EmitContext::new(module, &mut file, self)?;
             writeln!(
                 ctx,
-                "#![allow(non_camel_case_types, clippy::approx_constant)]"
+                "#![allow(non_camel_case_types, non_upper_case_globals, clippy::approx_constant)]"
             )?;
             writeln!(ctx)?;
             self.parsed[module].emit(&mut ctx)?;
@@ -155,7 +152,26 @@ impl Gen {
             complete_guard.0 = true;
 
             println!("emitted {module}");
+
+            let mut path = self.output_path.clone();
+            path.push("mod");
+            path.set_extension("rs");
+            let mut file = Writable(BufWriter::new(OpenOptions::new().append(true).open(&path)?));
+            writeln!(file, "pub mod {module};")?;
         }
+        Ok(())
+    }
+
+    pub fn emit_top_level(&self) -> Result<(), Error> {
+        let mut path = self.output_path.clone();
+        path.push("mod");
+        path.set_extension("rs");
+        let mut file = Writable(BufWriter::new(File::create(&path)?));
+
+        for module in self.emitted.borrow().keys() {
+            writeln!(file, "pub mod {module};")?;
+        }
+
         Ok(())
     }
 }

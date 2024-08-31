@@ -55,6 +55,33 @@ impl Value {
     }
 }
 
+impl TryFrom<Value> for u64 {
+    type Error = ();
+    fn try_from(value: Value) -> Result<Self, Self::Error> {
+        match value {
+            Value::I32(i) => {
+                if i >= 0 {
+                    Ok(i as u64)
+                } else {
+                    Err(())
+                }
+            }
+            Value::U31(u) => Ok(u as u64),
+            Value::U32(u) => Ok(u as u64),
+            Value::I64(i) => {
+                if i >= 0 {
+                    Ok(i as u64)
+                } else {
+                    Err(())
+                }
+            }
+            Value::U63(u) => Ok(u),
+            Value::U64(u) => Ok(u),
+            _ => Err(()),
+        }
+    }
+}
+
 impl Emit for Value {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match self {

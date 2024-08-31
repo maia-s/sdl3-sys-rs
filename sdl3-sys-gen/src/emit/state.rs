@@ -1,4 +1,4 @@
-use super::{EmitErr, EmitResult};
+use super::{EmitErr, EmitResult, Value};
 use crate::{
     parse::{DefineValue, GetSpan, Ident, IdentOrKw, ParseErr, Span},
     Gen,
@@ -182,6 +182,11 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             };
         }
         target_defines! {
+            ".sdl3-sys.assert-level-disabled" = CfgExpr(r#"feature = "assert-level-disabled""#);
+            ".sdl3-sys.assert-level-release" = CfgExpr(r#"feature = "assert-level-release""#);
+            ".sdl3-sys.assert-level-debug" = CfgExpr(r#"feature = "assert-level-debug""#);
+            ".sdl3-sys.assert-level-paranoid" = CfgExpr(r#"feature = "assert-level-paranoid""#);
+            "__clang__" = CfgExpr(always_false!("__clang__"));
             "__GNUC__" = CfgExpr(always_false!("__GNUC__"));
             "__LP64__" = CfgExpr(r#"all(not(windows), target_pointer_width = "64")"#);
             "__OPTIMIZE__" = CfgExpr("not(debug_assertions)");
@@ -277,6 +282,28 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             ool_output: String::new(),
             gen,
         })
+    }
+
+    pub fn try_target_dependent_if_compare(&self, ident: &str, value: Value) -> Option<Value> {
+        if ident == "SDL_ASSERT_LEVEL" {
+            match u64::try_from(value).expect("invalid assert level") {
+                0 => Some(Value::TargetDependent(DefineState::defined(
+                    Ident::new_inline(".sdl3-sys.assert-level-disabled"),
+                ))),
+                1 => Some(Value::TargetDependent(DefineState::defined(
+                    Ident::new_inline(".sdl3-sys.assert-level-release"),
+                ))),
+                2 => Some(Value::TargetDependent(DefineState::defined(
+                    Ident::new_inline(".sdl3-sys.assert-level-debug"),
+                ))),
+                3 => Some(Value::TargetDependent(DefineState::defined(
+                    Ident::new_inline(".sdl3-sys.assert-level-paranoid"),
+                ))),
+                _ => panic!("invalid assert level"),
+            }
+        } else {
+            todo!()
+        }
     }
 
     pub fn into_inner(self) -> InnerEmitContext {
@@ -598,7 +625,7 @@ impl PreProcState {
         args: Option<Vec<IdentOrKw>>,
         value: DefineValue,
     ) -> EmitResult {
-        if let Ok(true) = self.is_defined(&key) {
+        if let Ok(true) = self.is_defined_ignore_target(&key) {
             return Err(ParseErr::new(key.span, "already defined").into());
         }
         self.undefined.remove(&key);
@@ -631,7 +658,15 @@ impl PreProcState {
     }
 
     pub fn is_defined(&self, key: &Ident) -> Result<bool, EmitErr> {
-        if self.is_target_define(key) || self.defined.contains_key(key) {
+        if self.is_target_define(key) {
+            Ok(true)
+        } else {
+            self.is_defined_ignore_target(key)
+        }
+    }
+
+    pub fn is_defined_ignore_target(&self, key: &Ident) -> Result<bool, EmitErr> {
+        if self.defined.contains_key(key) {
             Ok(true)
         } else if self.undefined.contains(key) {
             Ok(false)
