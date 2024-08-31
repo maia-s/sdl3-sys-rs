@@ -26,6 +26,14 @@ impl Type {
         }
     }
 
+    pub fn primitive(primitive: PrimitiveType) -> Self {
+        Self {
+            span: Span::none(),
+            is_const: false,
+            ty: TypeEnum::Primitive(primitive),
+        }
+    }
+
     pub fn strictly_left_aligned(&self) -> bool {
         self.ty.strictly_left_aligned()
     }

@@ -452,9 +452,9 @@ impl Parse for CallArgs {
 
 #[derive(Clone, Debug)]
 pub struct Cast {
-    span: Span,
-    ty: Type,
-    expr: Expr,
+    pub span: Span,
+    pub ty: Type,
+    pub expr: Expr,
 }
 
 impl GetSpan for Cast {

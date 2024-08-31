@@ -433,8 +433,16 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner_mut().emitted_file_doc = value;
     }
 
+    pub fn lookup_preproc(&self, key: &Ident) -> Option<(Option<Vec<IdentOrKw>>, DefineValue)> {
+        if let Ok(Some(def)) = self.preproc_state().borrow().lookup(key) {
+            Some(def)
+        } else {
+            None
+        }
+    }
+
     pub fn lookup_sym(&self, key: &Ident) -> Option<Ident> {
-        if let Ok(Some(_)) = self.preproc_state().borrow().lookup(key) {
+        if let Some(_) = self.lookup_preproc(key) {
             todo!()
         } else {
             self.scope().lookup(key)
@@ -442,7 +450,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     pub fn lookup_enum_sym(&self, key: &Ident) -> Option<Ident> {
-        if let Ok(Some(_)) = self.preproc_state().borrow().lookup(key) {
+        if let Some(_) = self.lookup_preproc(key) {
             todo!()
         } else {
             self.scope().lookup_enum(key)
@@ -450,7 +458,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     pub fn lookup_struct_sym(&self, key: &Ident) -> Option<(Ident, bool)> {
-        if let Ok(Some(_)) = self.preproc_state().borrow().lookup(key) {
+        if let Some(_) = self.lookup_preproc(key) {
             todo!()
         } else {
             self.scope().lookup_struct(key)

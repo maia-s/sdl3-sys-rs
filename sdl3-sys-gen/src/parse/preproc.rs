@@ -32,7 +32,6 @@ pub enum DefineValue {
     Ambiguous(Ambiguous),
     RustCode(String),
     TargetDependent,
-    None,
 }
 
 impl DefineValue {
@@ -44,6 +43,10 @@ impl DefineValue {
         let s = Span::new_inline(s.to_string());
         Ok(Self::Expr(Expr::parse_all(s.trim_wsc()?)?))
     }
+
+    pub const fn is_target_dependent(&self) -> bool {
+        matches!(self, Self::TargetDependent)
+    }
 }
 
 impl Parse for DefineValue {
@@ -53,7 +56,7 @@ impl Parse for DefineValue {
 
     fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
         if input.is_empty() {
-            Ok((input.end(), Some(Self::None)))
+            Ok((input.end(), Some(Self::one())))
         } else if input.contains("#") || input.contains("_cast<") {
             Ok((input.end(), Some(Self::Other(input.clone()))))
         } else {

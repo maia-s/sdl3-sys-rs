@@ -1,9 +1,13 @@
 use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval};
 use crate::parse::{
     Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan,
-    IntegerLiteral, Literal, Op, ParseErr, SizeOf, Span, StringLiteral, TypeEnum,
+    IntegerLiteral, Literal, Op, Parenthesized, ParseErr, PrimitiveType, SizeOf, Span,
+    StringLiteral, Type, TypeEnum,
 };
-use core::{fmt::Write, ops::Deref};
+use core::{
+    fmt::{Display, Write},
+    ops::Deref,
+};
 
 #[derive(Clone, Debug)]
 pub enum Value {
@@ -11,9 +15,10 @@ pub enum Value {
     U31(u32),
     F32(f32),
     F64(f64),
+    Bool(bool),
     String(StringLiteral),
     TargetDependent(DefineState),
-    RustCode(String),
+    RustCode(Box<RustCode>),
 }
 
 impl Value {
@@ -31,6 +36,7 @@ impl Value {
             &Value::U31(u) => u != 0,
             &Value::F32(f) => !f.is_nan() && f != 0.0,
             &Value::F64(f) => !f.is_nan() && f != 0.0,
+            &Value::Bool(b) => b,
             Value::String(_) => true,
             Value::TargetDependent(_) | Value::RustCode(_) => unreachable!(),
         }
@@ -62,13 +68,26 @@ impl Emit for Value {
                     todo!()
                 }
             }
+            &Value::Bool(b) => write!(ctx, "{b}")?,
             Value::String(s) => return s.emit(ctx),
             Value::TargetDependent(_) => {
                 return Err(ParseErr::new(Span::none(), "can't emit indeterminate value").into())
             }
-            Value::RustCode(s) => ctx.write_str(s)?,
+            Value::RustCode(s) => ctx.write_str(&s.value)?,
         }
         Ok(())
+    }
+}
+
+#[derive(Clone, Debug)]
+pub struct RustCode {
+    pub value: String,
+    pub ty: Type,
+}
+
+impl Display for RustCode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(&self.value)
     }
 }
 
@@ -77,7 +96,10 @@ impl Eval for DefineValue {
         match self {
             Self::Expr(expr) => expr.try_eval(ctx),
             Self::Ambiguous(amb) => amb.try_eval(ctx),
-            _ => todo!(),
+            Self::TargetDependent => Ok(None),
+            _ => {
+                todo!()
+            }
         }
     }
 }
@@ -131,6 +153,12 @@ impl Eval for Expr {
                     } else {
                         Err(ParseErr::new(ident.span(), "undefined macro").into())
                     };
+                }
+                match ident.as_str() {
+                    "true" => return Ok(Some(Value::Bool(true))),
+                    "false" => return Ok(Some(Value::Bool(false))),
+                    "size_t" => return Ok(None),
+                    _ => (),
                 }
             }
 
@@ -210,6 +238,9 @@ impl Eval for Expr {
                             _ => (),
                         }
                     }
+                } else {
+                    // not preproc
+                    return Ok(None); // !!! FIXME
                 }
             }
 
@@ -229,7 +260,20 @@ impl Eval for Expr {
                 return Ok(result);
             }
 
-            Expr::Cast(_) => (),
+            Expr::Cast(cast) => {
+                let mut out = String::new();
+                let mut ctx2 = ctx.with_output(&mut out);
+                write!(ctx2, "(")?;
+                cast.expr.emit(&mut ctx2)?;
+                write!(ctx2, ") as ")?;
+                cast.ty.emit(&mut ctx2)?;
+                drop(ctx2);
+                return Ok(Some(Value::RustCode(Box::new(RustCode {
+                    value: out,
+                    ty: cast.ty.clone(),
+                }))));
+            }
+
             Expr::Asm(_) => return Ok(None),
 
             Expr::SizeOf(s) => match s.deref() {
@@ -241,15 +285,18 @@ impl Eval for Expr {
                         ty.emit(&mut ctx2)?;
                         write!(ctx2, ">()")?;
                         drop(ctx2);
-                        return Ok(Some(Value::RustCode(out)));
+                        return Ok(Some(Value::RustCode(Box::new(RustCode {
+                            value: out,
+                            ty: Type::primitive(PrimitiveType::SizeT),
+                        }))));
                     }
 
                     TypeEnum::Ident(ident) => {
                         if ctx.lookup_sym(ident).is_some() {
-                            return Ok(Some(Value::RustCode(format!(
-                                "::core::mem::size_of::<{}>()",
-                                ident.as_str()
-                            ))));
+                            return Ok(Some(Value::RustCode(Box::new(RustCode {
+                                value: format!("::core::mem::size_of::<{}>()", ident.as_str()),
+                                ty: Type::primitive(PrimitiveType::SizeT),
+                            }))));
                         } else {
                             todo!()
                         }
@@ -292,6 +339,12 @@ impl Eval for Expr {
                         Value::F64(value) => Ok(Some(Value::F64(-value))),
                         Value::TargetDependent(_) => Ok(Some(expr)),
                         _ => Ok(None),
+                    },
+
+                    b"~" => match expr {
+                        Value::I32(value) => Ok(Some(Value::I32(!value))),
+                        Value::U31(value) => Ok(Some(Value::U31(!value))),
+                        _ => todo!(),
                     },
 
                     _ => Err(ParseErr::new(uop.span(), "missing implementation for eval").into()),
@@ -341,6 +394,12 @@ impl Eval for Expr {
                             ParseErr::new(bop.span(), "evaluated value out of range")
                         })?
                     };
+
+                    (@ checked - ($lhs:expr, $rhs:expr)) => {
+                        $lhs.checked_add($rhs).ok_or_else(|| {
+                            ParseErr::new(bop.span(), "evaluated value out of range")
+                        })?
+                    };
                 }
 
                 macro_rules! compare {
@@ -371,7 +430,7 @@ impl Eval for Expr {
                                 write!(rhs_ctx, "{lhs} {op} ")?;
                                 rhs.emit(&mut rhs_ctx)?;
                                 drop(rhs_ctx);
-                                Ok(Some(Value::RustCode(code)))
+                                Ok(Some(Value::RustCode(Box::new(RustCode{ value:code, ty:Type::primitive(PrimitiveType::Bool) }))))
                             }
                             _ => Err(ParseErr::new(bop.span(), format!("invalid operands to `{op}`")).into()),
                         }
@@ -380,6 +439,13 @@ impl Eval for Expr {
 
                 return match bop.op.as_str().as_bytes() {
                     b"+" => calc!(+),
+                    b"-" => calc!(-),
+
+                    b"," => {
+                        let _lhs = eval!(bop.lhs);
+                        let rhs = eval!(bop.rhs);
+                        Ok(Some(rhs))
+                    }
 
                     b"&&" => {
                         let lhs = eval!(bop.lhs);
@@ -461,7 +527,7 @@ impl Eval for Expr {
 impl Emit for Expr {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match self {
-            Expr::Parenthesized(_) => todo!(),
+            Expr::Parenthesized(e) => e.emit(ctx),
             Expr::Ident(_) => todo!(),
             Expr::Literal(lit) => lit.emit(ctx),
             Expr::FnCall(call) => call.emit(ctx),
@@ -498,6 +564,15 @@ impl Emit for Expr {
     }
 }
 
+impl Emit for Parenthesized {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        ctx.write_char('(')?;
+        self.expr.emit(ctx)?;
+        ctx.write_char(')')?;
+        Ok(())
+    }
+}
+
 impl Emit for FnCall {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if let Expr::Ident(ident) = &*self.func {
@@ -508,6 +583,7 @@ impl Emit for FnCall {
                     match value {
                         Some(Value::RustCode(s)) => {
                             writeln!(ctx, "const _: () = ::core::assert!({s});")?;
+                            writeln!(ctx)?;
                             Ok(())
                         }
 
@@ -563,7 +639,7 @@ impl Emit for StringLiteral {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         write!(
             ctx,
-            "unsafe {{ ::core::ffi::Cstr::from_bytes_with_nul_unchecked(b\""
+            "unsafe {{ ::core::ffi::CStr::from_bytes_with_nul_unchecked(b\""
         )?;
         for &b in self.str.as_bytes() {
             match b {
@@ -575,7 +651,7 @@ impl Emit for StringLiteral {
                 _ => write!(ctx, "\\x{:02x}", b)?,
             }
         }
-        write!(ctx, "\0\" }})")?;
+        write!(ctx, "\\0\") }}")?;
         Ok(())
     }
 }

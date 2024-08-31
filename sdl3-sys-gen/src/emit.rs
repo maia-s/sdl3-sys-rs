@@ -282,7 +282,42 @@ impl Emit for Define {
             self.ident.clone(),
             self.args.clone(),
             self.value.clone(),
-        )
+        )?;
+        if self.args.is_none() {
+            let ident = self.ident.as_str();
+            if let Some(value) = self.value.try_eval(ctx)? {
+                match value {
+                    Value::I32(val) => {
+                        writeln!(ctx, "pub const {ident}: ::core::primitive::i32 = {val};")?
+                    }
+                    Value::U31(val) => {
+                        writeln!(ctx, "pub const {ident}: ::core::primitive::i32 = {val};")?
+                    }
+                    Value::F32(val) => {
+                        writeln!(ctx, "pub const {ident}: ::core::primitive::f32 = {val};")?
+                    }
+                    Value::F64(val) => {
+                        writeln!(ctx, "pub const {ident}: ::core::primitive::f64 = {val};")?
+                    }
+                    Value::Bool(val) => {
+                        writeln!(ctx, "pub const {ident}: ::core::primitive::bool = {val};")?
+                    }
+                    Value::String(val) => {
+                        write!(ctx, "pub const {ident}: &::core::ffi::CStr = ")?;
+                        val.emit(ctx)?;
+                        writeln!(ctx, ";")?;
+                    }
+                    Value::TargetDependent(_) => todo!(),
+                    Value::RustCode(val) => {
+                        write!(ctx, "pub const {ident}: ")?;
+                        val.ty.emit(ctx)?;
+                        writeln!(ctx, " = {val};")?;
+                    }
+                }
+                writeln!(ctx)?;
+            }
+        }
+        Ok(())
     }
 }
 

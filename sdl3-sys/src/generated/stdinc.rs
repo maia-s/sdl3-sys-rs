@@ -6,6 +6,8 @@
 //! subset of the C runtime: these should all behave the same way as their C
 //! runtime equivalents, but with an SDL_ prefix.
 
+pub const SDL_stdinc_h_: ::core::primitive::i32 = 1;
+
 #[cfg(doc)]
 emit! {
 }
@@ -13,6 +15,10 @@ emit! {
 #[cfg(not(doc))]
 emit! {
 }
+
+pub const SDL_FALSE: ::core::primitive::bool = false;
+
+pub const SDL_TRUE: ::core::primitive::bool = true;
 
 /// A boolean type: true or false.
 ///
@@ -27,30 +33,54 @@ pub type SDL_bool = ::core::primitive::bool;
 /// \since This macro is available since SDL 3.0.0.
 pub type Sint8 = ::core::primitive::i8;
 
+pub const SDL_MAX_SINT8: Sint8 = (0x7f) as Sint8;
+
+pub const SDL_MIN_SINT8: Sint8 = ((4294967168)) as Sint8;
+
 /// An unsigned 8-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Uint8 = ::core::primitive::u8;
+
+pub const SDL_MAX_UINT8: Uint8 = (0xff) as Uint8;
+
+pub const SDL_MIN_UINT8: Uint8 = (0x00) as Uint8;
 
 /// A signed 16-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Sint16 = ::core::primitive::i16;
 
+pub const SDL_MAX_SINT16: Sint16 = (0x7fff) as Sint16;
+
+pub const SDL_MIN_SINT16: Sint16 = ((4294934528)) as Sint16;
+
 /// An unsigned 16-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Uint16 = ::core::primitive::u16;
+
+pub const SDL_MAX_UINT16: Uint16 = (0xffff) as Uint16;
+
+pub const SDL_MIN_UINT16: Uint16 = (0x0000) as Uint16;
 
 /// A signed 32-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Sint32 = ::core::primitive::i32;
 
+pub const SDL_MAX_SINT32: Sint32 = (0x7fffffff) as Sint32;
+
+pub const SDL_MIN_SINT32: Sint32 = ((2147483648)) as Sint32;
+
 /// An unsigned 32-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Uint32 = ::core::primitive::u32;
+
+pub const SDL_MAX_UINT32: Uint32 = (0xffffffff) as Uint32;
+
+pub const SDL_MIN_UINT32: Uint32 = (0x00000000) as Uint32;
 
 /// A signed 64-bit integer type.
 ///
@@ -81,77 +111,122 @@ pub type SDL_Time = Sint64;
 
 #[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
 emit! {
+    pub const SDL_PRIs64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64d\0") };
+
 }
 
 #[cfg(not(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows)))]
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
+        pub const SDL_PRIs64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"ld\0") };
+
     }
 
     #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
+        pub const SDL_PRIs64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"lld\0") };
+
     }
 
 }
 
 #[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
 emit! {
+    pub const SDL_PRIu64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64u\0") };
+
 }
 
 #[cfg(not(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows)))]
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
+        pub const SDL_PRIu64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"lu\0") };
+
     }
 
     #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
+        pub const SDL_PRIu64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"llu\0") };
+
     }
 
 }
 
 #[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
 emit! {
+    pub const SDL_PRIx64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64x\0") };
+
 }
 
 #[cfg(not(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows)))]
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
+        pub const SDL_PRIx64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"lx\0") };
+
     }
 
     #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
+        pub const SDL_PRIx64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"llx\0") };
+
     }
 
 }
 
 #[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
 emit! {
+    pub const SDL_PRIX64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64X\0") };
+
 }
 
 #[cfg(not(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows)))]
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
+        pub const SDL_PRIX64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"lX\0") };
+
     }
 
     #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
+        pub const SDL_PRIX64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"llX\0") };
+
     }
 
 }
+
+pub const SDL_PRIs32: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"d\0") };
+
+pub const SDL_PRIu32: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"u\0") };
+
+pub const SDL_PRIx32: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"x\0") };
+
+pub const SDL_PRIX32: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"X\0") };
+
+pub const SDL_PRINTF_FORMAT_STRING: ::core::primitive::i32 = 1;
+
+pub const SDL_SCANF_FORMAT_STRING: ::core::primitive::i32 = 1;
 
 const _: () = ::core::assert!(::core::mem::size_of::<SDL_bool>() == 1);
+
 const _: () = ::core::assert!(::core::mem::size_of::<Uint8>() == 1);
+
 const _: () = ::core::assert!(::core::mem::size_of::<Sint8>() == 1);
+
 const _: () = ::core::assert!(::core::mem::size_of::<Uint16>() == 2);
+
 const _: () = ::core::assert!(::core::mem::size_of::<Sint16>() == 2);
+
 const _: () = ::core::assert!(::core::mem::size_of::<Uint32>() == 4);
+
 const _: () = ::core::assert!(::core::mem::size_of::<Sint32>() == 4);
+
 const _: () = ::core::assert!(::core::mem::size_of::<Uint64>() == 8);
+
 const _: () = ::core::assert!(::core::mem::size_of::<Sint64>() == 8);
+
 #[cfg(all(not(any(/* always disabled: SDL_PLATFORM_3DS */)), not(any(/* always disabled: SDL_PLATFORM_VITA */))))]
 emit! {
     #[repr(transparent)]
@@ -163,6 +238,7 @@ emit! {
     pub const DUMMY_ENUM_VALUE: SDL_DUMMY_ENUM = SDL_DUMMY_ENUM::DUMMY_ENUM_VALUE;
 
     const _: () = ::core::assert!(::core::mem::size_of::<SDL_DUMMY_ENUM>() == ::core::mem::size_of::<::core::ffi::c_int>());
+
 }
 
 extern_sdlcall! {{
@@ -1035,6 +1111,8 @@ extern_sdlcall! {{
     pub fn SDL_strncasecmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
 }}
 
+pub const SDL_INVALID_UNICODE_CODEPOINT: ::core::primitive::i32 = 65533;
+
 extern_sdlcall! {{
     /// Decode a UTF-8 string, one Unicode codepoint at a time.
     ///
@@ -1327,6 +1405,10 @@ extern_sdlcall! {{
     /// \sa SDL_randf_r
     pub fn SDL_rand_bits_r(state: *mut Uint64) -> Uint32;
 }}
+
+pub const SDL_PI_D: ::core::primitive::f64 = 3.141592653589793;
+
+pub const SDL_PI_F: ::core::primitive::f32 = 3.1415927;
 
 extern_sdlcall! {{
     /// Compute the arc cosine of `x`.
@@ -2640,6 +2722,14 @@ extern_sdlcall! {{
     /// \sa SDL_atan2f
     pub fn SDL_tanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }}
+
+pub const SDL_ICONV_ERROR: ::core::primitive::usize = (-1) as ::core::primitive::usize;
+
+pub const SDL_ICONV_E2BIG: ::core::primitive::usize = (-2) as ::core::primitive::usize;
+
+pub const SDL_ICONV_EILSEQ: ::core::primitive::usize = (-3) as ::core::primitive::usize;
+
+pub const SDL_ICONV_EINVAL: ::core::primitive::usize = (-4) as ::core::primitive::usize;
 
 pub type SDL_iconv_t = *mut SDL_iconv_data_t;
 
