@@ -1,12 +1,10 @@
-#![allow(non_camel_case_types, non_upper_case_globals, clippy::approx_constant)]
+#![allow(non_camel_case_types, non_upper_case_globals, clippy::approx_constant, clippy::double_parens)]
 
 //! # CategoryStdinc
 //!
 //! This is a general header that includes C language support. It implements a
 //! subset of the C runtime: these should all behave the same way as their C
 //! runtime equivalents, but with an SDL_ prefix.
-
-pub const SDL_stdinc_h_: ::core::primitive::i32 = 1;
 
 #[cfg(doc)]
 emit! {

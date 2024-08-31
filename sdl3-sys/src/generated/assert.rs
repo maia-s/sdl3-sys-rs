@@ -1,4 +1,4 @@
-#![allow(non_camel_case_types, non_upper_case_globals, clippy::approx_constant)]
+#![allow(non_camel_case_types, non_upper_case_globals, clippy::approx_constant, clippy::double_parens)]
 
 //! # CategoryAssert
 //!
@@ -35,9 +35,8 @@
 //! To use it: do a debug build and just sprinkle around tests to check your
 //! code!
 
-pub const SDL_assert_h_: ::core::primitive::i32 = 1;
-
 use super::stdinc::*;
+
 #[cfg(doc)]
 emit! {
 }

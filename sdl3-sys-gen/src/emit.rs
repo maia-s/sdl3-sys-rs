@@ -302,6 +302,10 @@ impl Emit for Define {
         )?;
         if self.args.is_none() {
             let ident = self.ident.as_str();
+            if ident.starts_with("SDL_") && ident.ends_with("_h_") {
+                // skip include guard define
+                return Ok(());
+            }
             if let Some(value) = self.value.try_eval(ctx)? {
                 match value {
                     Value::I32(val) => {
@@ -368,6 +372,7 @@ impl Emit for Include {
                     .borrow_mut()
                     .include(&included.borrow())?;
                 writeln!(ctx, "use super::{module}::*;")?;
+                writeln!(ctx)?;
             }
         }
         Ok(())
