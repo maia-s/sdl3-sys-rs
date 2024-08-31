@@ -186,10 +186,23 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             ".sdl3-sys.assert-level-release" = CfgExpr(r#"feature = "assert-level-release""#);
             ".sdl3-sys.assert-level-debug" = CfgExpr(r#"feature = "assert-level-debug""#);
             ".sdl3-sys.assert-level-paranoid" = CfgExpr(r#"feature = "assert-level-paranoid""#);
+            "__aarch64__" = CfgExpr(r#"target_arch = "aarch64""#);
+            "__arm__" = CfgExpr(r#"target_arch = "arm""#);
+            "__ARM_ARCH_7__" = CfgExpr(r#"all(target_arch = "arm", target_feature = "v7")"#);
+            "__ARM_ARCH_7A__" = CfgExpr(always_false!("__ARM_ARCH_7A__")); // ?
+            "__ARM_ARCH_7EM__" = CfgExpr(always_false!("__ARM_ARCH_7EM__")); // ?
+            "__ARM_ARCH_7R__" = CfgExpr(always_false!("__ARM_ARCH_7R__")); // ?
+            "__ARM_ARCH_7M__" = CfgExpr(always_false!("__ARM_ARCH_7M__")); // ?
+            "__ARM_ARCH_7S__" = CfgExpr(always_false!("__ARM_ARCH_7S__")); // ?
+            "__ARM_ARCH_8A__" = CfgExpr(always_false!("__ARM_ARCH_8A__")); // ?
             "__clang__" = CfgExpr(always_false!("__clang__"));
             "__GNUC__" = CfgExpr(always_false!("__GNUC__"));
+            "__i386__" = CfgExpr(r#"target_arch = "x86""#);
             "__LP64__" = CfgExpr(r#"all(not(windows), target_pointer_width = "64")"#);
             "__OPTIMIZE__" = CfgExpr("not(debug_assertions)");
+            "__powerpc__" = CfgExpr(r#"any(target_arch = "powerpc", target_arch = "powerpc64")"#);
+            "__ppc__" = CfgExpr(r#"any(target_arch = "powerpc", target_arch = "powerpc64")"#);
+            "__x86_64__" = CfgExpr(r#"target_arch = "x86_64""#);
             "_DEBUG" = CfgExpr("debug_assertions");
             "_MSC_VER" = CfgExpr(r#"all(windows, target_env = "msvc")"#);
             "ANDROID" = CfgExpr(r#"target_os = "android""#);
@@ -197,6 +210,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_PLATFORM_3DS" = CfgExpr(always_false!("SDL_PLATFORM_3DS"));
             "SDL_PLATFORM_ANDROID" = CfgExpr(r#"target_os = "android""#);
             "SDL_PLATFORM_APPLE" = CfgExpr(r#"target_vendor = "apple""#);
+            "SDL_PLATFORM_EMSCRIPTEN" = CfgExpr(r#"target_os = "emscripten""#);
             "SDL_PLATFORM_GDK" = CfgExpr(always_false!("SDL_PLATFORM_GDK")); // change WIN32 if this is changed
             "SDL_PLATFORM_VITA" = CfgExpr(always_false!("SDL_PLATFORM_VITA"));
             "SDL_PLATFORM_WIN32" = CfgExpr("windows");
@@ -209,8 +223,11 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             };
         }
         undefines! {
+            "__ARM_ARCH",
             "__clang_analyzer__",
             "__cplusplus",
+            "__SUNPRO_C",
+            "__WATCOMC__",
             "assert",
             "PRId32",
             "PRIs64",
@@ -224,6 +241,8 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             format!("SDL_{module}_h_"),
             "SDL_ASSERT_LEVEL",
             "SDL_AssertBreakpoint",
+            "SDL_AtomicDecRef",
+            "SDL_AtomicIncRef",
             "SDL_COMPILE_TIME_ASSERT",
             "SDL_DEFAULT_ASSERT_LEVEL", // !!! FIXME
             "SDL_FUNCTION_POINTER_IS_VOID_POINTER",
@@ -243,6 +262,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_SLOW_MEMCPY",
             "SDL_SLOW_MEMMOVE",
             "SDL_SLOW_MEMSET",
+            "SDL_THREAD_SAFETY_ANALYSIS",
         }
 
         macro_rules! defines {
@@ -258,6 +278,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         }
         defines! {
             "__STDC_VERSION__" = DefineValue::parse_expr("202311L")?;
+            "_MSC_VER" = DefineValue::parse_expr("1700")?;
             "FLT_EPSILON" = DefineValue::RustCode("::core::primitive::f32::EPSILON".into());
             "INT64_C"("x") = DefineValue::RustCode("{x}_i64".into());
             "UINT64_C"("x") = DefineValue::RustCode("{x}_u64".into());
