@@ -293,6 +293,9 @@ impl Emit for Define {
                     Value::U31(val) => {
                         writeln!(ctx, "pub const {ident}: ::core::primitive::i32 = {val};")?
                     }
+                    Value::U32(val) => {
+                        writeln!(ctx, "pub const {ident}: ::core::primitive::u32 = {val};")?
+                    }
                     Value::I64(val) => {
                         writeln!(ctx, "pub const {ident}: ::core::primitive::i64 = {val};")?
                     }

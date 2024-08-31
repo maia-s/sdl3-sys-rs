@@ -13,6 +13,7 @@ use core::{
 pub enum Value {
     I32(i32),
     U31(u32),
+    U32(u32),
     I64(i64),
     U63(u64),
     U64(u64),
@@ -37,6 +38,7 @@ impl Value {
         match self {
             &Value::I32(i) => i != 0,
             &Value::U31(u) => u != 0,
+            &Value::U32(u) => u != 0,
             &Value::I64(i) => i != 0,
             &Value::U63(u) => u != 0,
             &Value::U64(u) => u != 0,
@@ -58,6 +60,7 @@ impl Emit for Value {
         match self {
             Value::I32(i) => write!(ctx, "{i}_i32")?,
             Value::U31(u) => write!(ctx, "{u}")?,
+            Value::U32(u) => write!(ctx, "{u}_u32")?,
             Value::I64(i) => write!(ctx, "{i}_i64")?,
             Value::U63(i) => write!(ctx, "{i}_i64")?,
             Value::U64(u) => write!(ctx, "{u}_u64")?,
@@ -176,6 +179,8 @@ impl Eval for Expr {
                     Literal::Integer(i) => {
                         if i.value <= i32::MAX as u64 {
                             Ok(Some(Value::U31(i.value as u32)))
+                        } else if i.value <= u32::MAX as u64 {
+                            Ok(Some(Value::U32(i.value as u32)))
                         } else if i.value <= i64::MAX as u64 {
                             Ok(Some(Value::U63(i.value)))
                         } else {
@@ -381,10 +386,20 @@ impl Eval for Expr {
                     b"-" => match expr {
                         Value::I32(value) => {
                             Ok(Some(Value::I32(value.checked_neg().ok_or_else(|| {
-                                ParseErr::new(uop.span(), "can't negate INT_MIN")
+                                ParseErr::new(uop.span(), "can't negate i32::MIN")
                             })?)))
                         }
-                        Value::U31(value) => Ok(Some(Value::I32(-(value as i32)))),
+                        Value::U31(value) | Value::U32(value) => {
+                            Ok(Some(Value::I32(-(value as i32))))
+                        }
+                        Value::I64(value) => {
+                            Ok(Some(Value::I64(value.checked_neg().ok_or_else(|| {
+                                ParseErr::new(uop.span(), "can't negate i64::MIN")
+                            })?)))
+                        }
+                        Value::U63(value) | Value::U64(value) => {
+                            Ok(Some(Value::I64(-(value as i64))))
+                        }
                         Value::F32(value) => Ok(Some(Value::F32(-value))),
                         Value::F64(value) => Ok(Some(Value::F64(-value))),
                         Value::TargetDependent(_) => Ok(Some(expr)),
@@ -394,6 +409,7 @@ impl Eval for Expr {
                     b"~" => match expr {
                         Value::I32(value) => Ok(Some(Value::I32(!value))),
                         Value::U31(value) => Ok(Some(Value::I32(!(value as i32)))),
+                        Value::U32(value) => Ok(Some(Value::U32(!value))),
                         Value::I64(value) => Ok(Some(Value::I64(!value))),
                         Value::U63(value) => Ok(Some(Value::I64(!(value as i64)))),
                         Value::U64(value) => Ok(Some(Value::U64(!value))),
