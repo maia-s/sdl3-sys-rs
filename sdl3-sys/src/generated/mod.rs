@@ -4,3 +4,4 @@ pub mod atomic;
 pub mod error;
 pub mod mutex;
 pub mod properties;
+pub mod iostream;

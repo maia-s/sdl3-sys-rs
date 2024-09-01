@@ -1,8 +1,8 @@
 use crate::{
     common_prefix,
     parse::{
-        ArgDecl, Define, DocComment, DocCommentFile, Expr, FnAbi, FnDeclArgs, Function, GetSpan,
-        Ident, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock,
+        ArgDecl, Define, DocComment, DocCommentFile, Expr, FnAbi, FnDeclArgs, FnPointer, Function,
+        GetSpan, Ident, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock,
         PreProcBlockKind, PrimitiveType, Type, TypeDef, TypeEnum,
     },
 };
@@ -403,6 +403,22 @@ impl Emit for Function {
     }
 }
 
+impl Emit for FnPointer {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        write!(ctx, "::core::option::Option<")?;
+        emit_extern_start(ctx, &self.abi, true)?;
+        write!(ctx, "fn")?;
+        self.args.emit(ctx)?;
+        if !self.return_type.is_void() {
+            write!(ctx, " -> ")?;
+            self.return_type.emit(ctx)?;
+        }
+        emit_extern_end(ctx, &self.abi, true)?;
+        write!(ctx, ">")?;
+        Ok(())
+    }
+}
+
 impl Emit for FnDeclArgs {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         ctx.write_char('(')?;
@@ -508,7 +524,7 @@ impl Emit for Type {
 
             TypeEnum::Array(_, _) => todo!(),
 
-            TypeEnum::FnPointer(_) => todo!(),
+            TypeEnum::FnPointer(fnp) => fnp.emit(ctx)?,
 
             TypeEnum::DotDotDot => write!(ctx, "...")?,
         }
