@@ -361,16 +361,11 @@ impl Emit for Include {
             if !ctx.r#gen.emitted.borrow().contains_key(module) {
                 ctx.r#gen.emit(module)?;
             }
-            if let Some(included) = &ctx
-                .r#gen
-                .emitted
-                .borrow_mut()
-                .get(module)
-                .map(|m| Rc::clone(&m.preproc_state))
-            {
+            if let Some(included) = &ctx.r#gen.emitted.borrow_mut().get(module) {
                 ctx.preproc_state()
                     .borrow_mut()
-                    .include(&included.borrow())?;
+                    .include(&included.preproc_state.borrow())?;
+                ctx.scope_mut().include(&included.scope)?;
                 writeln!(ctx, "use super::{module}::*;")?;
                 writeln!(ctx)?;
             }
@@ -556,7 +551,7 @@ impl Emit for TypeDef {
                     PrimitiveType::WcharT => "crate::ffi::c_wchar_t",
                     PrimitiveType::VaList => "crate::ffi::VaList",
                 };
-                ctx.scope_mut().register_sym(self.ident.clone())?;
+                ctx.register_sym(self.ident.clone())?;
                 writeln!(ctx, "pub type {} = {p};", self.ident.as_str())?;
                 writeln!(ctx)?;
                 Ok(())
@@ -566,7 +561,7 @@ impl Emit for TypeDef {
                 let sym = ctx.lookup_sym(sym).ok_or_else(|| {
                     ParseErr::new(sym.span(), format!("`{}` not defined", sym.as_str()))
                 })?;
-                ctx.scope_mut().register_sym(self.ident.clone())?;
+                ctx.register_sym(self.ident.clone())?;
                 self.doc.emit(ctx)?;
                 writeln!(ctx, "pub type {} = {};", self.ident.as_str(), sym.as_str())?;
                 writeln!(ctx)?;
@@ -612,7 +607,7 @@ impl Emit for TypeDef {
 
                 let enum_rust_type = enum_rust_type.unwrap_or("::core::ffi::c_int");
 
-                ctx.scope_mut().register_sym(self.ident.clone())?;
+                ctx.register_sym(self.ident.clone())?;
                 let enum_ident = self.ident.as_str();
                 writeln!(ctx, "#[repr(transparent)]")?;
                 writeln!(
@@ -628,7 +623,7 @@ impl Emit for TypeDef {
                 let mut next_expr = Some(Expr::Literal(Literal::Integer(IntegerLiteral::zero())));
 
                 for variant in &e.variants {
-                    ctx.scope_mut().register_sym(variant.ident.clone())?;
+                    ctx.register_sym(variant.ident.clone())?;
                     let variant_ident = variant.ident.as_str();
                     let short_variant_ident = variant_ident.strip_prefix(prefix).unwrap();
                     variant.doc.emit(&mut ctx_impl)?;
@@ -705,7 +700,7 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Pointer(_) => {
-                ctx.scope_mut().register_sym(self.ident.clone())?;
+                ctx.register_sym(self.ident.clone())?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type {} = ", self.ident.as_str())?;
                 self.ty.emit(ctx)?;
@@ -720,7 +715,7 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::FnPointer(f) => {
-                ctx.scope_mut().register_sym(self.ident.clone())?;
+                ctx.register_sym(self.ident.clone())?;
                 self.doc.emit(ctx)?;
                 write!(
                     ctx,

@@ -156,7 +156,7 @@ pub struct EmitContext<'a, 'b> {
 pub struct InnerEmitContext {
     module: String,
     pub preproc_state: Rc<RefCell<PreProcState>>,
-    scope: Scope,
+    pub scope: Scope,
     preproc_eval_mode: usize,
     emitted_file_doc: bool,
 }
@@ -481,6 +481,11 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner_mut().emitted_file_doc = value;
     }
 
+    pub fn register_sym(&mut self, ident: Ident) -> EmitResult {
+        let module = self.inner().module.clone();
+        self.scope_mut().register_sym(ident, module)
+    }
+
     pub fn lookup_preproc(&self, key: &Ident) -> Option<(Option<Vec<IdentOrKw>>, DefineValue)> {
         if let Ok(Some(def)) = self.preproc_state().borrow().lookup(key) {
             Some(def)
@@ -580,7 +585,11 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 impl Drop for EmitContext<'_, '_> {
     fn drop(&mut self) {
         self.flush_ool_output().unwrap();
-        self.inner.borrow_mut().scope.pop(self.output).unwrap();
+        self.inner
+            .borrow()
+            .scope
+            .emit_opaque_structs(self.output)
+            .unwrap();
     }
 }
 
@@ -725,7 +734,7 @@ pub struct Scope(Rc<RefCell<InnerScope>>);
 #[derive(Default)]
 struct InnerScope {
     parent: Option<Rc<RefCell<InnerScope>>>,
-    syms: HashSet<Ident>,
+    syms: HashMap<Ident, String>,
     enum_syms: HashSet<Ident>,
     struct_syms: BTreeMap<Ident, bool>,
     struct_docs: BTreeMap<Ident, DocComment>,
@@ -744,6 +753,16 @@ impl Scope {
     }
 
     pub fn pop(&mut self, f: &mut dyn Write) -> EmitResult {
+        let parent = self.0.borrow().parent.as_ref().map(Rc::clone);
+        if let Some(parent) = parent {
+            self.0 = parent;
+        } else {
+            panic!("popped top level scope")
+        }
+        Ok(())
+    }
+
+    pub fn emit_opaque_structs(&self, f: &mut dyn Write) -> EmitResult {
         let scope = self.0.borrow();
 
         for s in scope
@@ -766,19 +785,22 @@ impl Scope {
             writeln!(f)?;
         }
 
-        let parent = scope.parent.as_ref().map(Rc::clone);
-        drop(scope);
-        if let Some(parent) = parent {
-            self.0 = parent;
-        }
-
         Ok(())
     }
 
-    pub fn register_sym(&mut self, ident: Ident) -> EmitResult {
+    pub fn include(&mut self, scope: &Scope) -> EmitResult {
+        for (sym, m) in scope.0.borrow().syms.iter() {
+            self.register_sym(sym.clone(), m.clone())?;
+        }
+        Ok(())
+    }
+
+    pub fn register_sym(&mut self, ident: Ident, module: String) -> EmitResult {
         let span = ident.span();
-        if !self.0.borrow_mut().syms.insert(ident) {
-            return Err(ParseErr::new(span, "symbol already defined in this scope").into());
+        if let Some(m) = self.0.borrow_mut().syms.insert(ident, module.clone()) {
+            if m != module {
+                return Err(ParseErr::new(span, "symbol already defined in this scope").into());
+            }
         }
         Ok(())
     }
@@ -816,7 +838,12 @@ impl Scope {
     }
 
     pub fn lookup(&self, ident: &Ident) -> Option<Ident> {
-        self.0.borrow().syms.get(ident).cloned()
+        self.0
+            .borrow()
+            .syms
+            .get_key_value(ident)
+            .map(|(sym, _)| sym)
+            .cloned()
     }
 
     pub fn lookup_enum(&self, ident: &Ident) -> Option<Ident> {
