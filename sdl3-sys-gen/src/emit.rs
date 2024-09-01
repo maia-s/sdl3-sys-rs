@@ -534,6 +534,8 @@ impl Emit for Type {
 
 impl Emit for TypeDef {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        ctx.register_sym(self.ident.clone())?;
+
         match &self.ty.ty {
             TypeEnum::Primitive(p) => {
                 self.doc.emit(ctx)?;
@@ -567,7 +569,6 @@ impl Emit for TypeDef {
                     PrimitiveType::WcharT => "crate::ffi::c_wchar_t",
                     PrimitiveType::VaList => "crate::ffi::VaList",
                 };
-                ctx.register_sym(self.ident.clone())?;
                 writeln!(ctx, "pub type {} = {p};", self.ident.as_str())?;
                 writeln!(ctx)?;
                 Ok(())
@@ -577,7 +578,6 @@ impl Emit for TypeDef {
                 let sym = ctx.lookup_sym(sym).ok_or_else(|| {
                     ParseErr::new(sym.span(), format!("`{}` not defined", sym.as_str()))
                 })?;
-                ctx.register_sym(self.ident.clone())?;
                 self.doc.emit(ctx)?;
                 writeln!(ctx, "pub type {} = {};", self.ident.as_str(), sym.as_str())?;
                 writeln!(ctx)?;
@@ -623,7 +623,6 @@ impl Emit for TypeDef {
 
                 let enum_rust_type = enum_rust_type.unwrap_or("::core::ffi::c_int");
 
-                ctx.register_sym(self.ident.clone())?;
                 let enum_ident = self.ident.as_str();
                 writeln!(ctx, "#[repr(transparent)]")?;
                 writeln!(
@@ -716,7 +715,6 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Pointer(_) => {
-                ctx.register_sym(self.ident.clone())?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type {} = ", self.ident.as_str())?;
                 self.ty.emit(ctx)?;
@@ -731,7 +729,6 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::FnPointer(f) => {
-                ctx.register_sym(self.ident.clone())?;
                 self.doc.emit(ctx)?;
                 write!(
                     ctx,
