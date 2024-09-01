@@ -575,7 +575,7 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Ident(sym) => {
-                let sym = ctx.lookup_sym(sym).ok_or_else(|| {
+                let (sym, _) = ctx.lookup_sym(sym).ok_or_else(|| {
                     ParseErr::new(sym.span(), format!("`{}` not defined", sym.as_str()))
                 })?;
                 self.doc.emit(ctx)?;

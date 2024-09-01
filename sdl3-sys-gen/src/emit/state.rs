@@ -150,6 +150,7 @@ pub struct EmitContext<'a, 'b> {
     do_indent: bool,
     ool_output: String,
     pub gen: &'b Gen,
+    top: bool,
 }
 
 #[derive(Default)]
@@ -214,6 +215,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_PLATFORM_GDK" = CfgExpr(always_false!("SDL_PLATFORM_GDK")); // change WIN32 if this is changed
             "SDL_PLATFORM_VITA" = CfgExpr(always_false!("SDL_PLATFORM_VITA"));
             "SDL_PLATFORM_WIN32" = CfgExpr("windows");
+            "SDL_PLATFORM_WINRT" = CfgExpr(always_false!("SDL_PLATFORM_WINRT"));
             "SDL_WIKI_DOCUMENTATION_SECTION" = CfgExpr("doc");
         }
 
@@ -243,8 +245,10 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_AssertBreakpoint",
             "SDL_AtomicDecRef",
             "SDL_AtomicIncRef",
+            "SDL_BeginThreadFunction",
             "SDL_COMPILE_TIME_ASSERT",
             "SDL_DEFAULT_ASSERT_LEVEL", // !!! FIXME
+            "SDL_EndThreadFunction",
             "SDL_FUNCTION_POINTER_IS_VOID_POINTER",
             "SDL_memcpy",
             "SDL_memmove",
@@ -302,6 +306,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             do_indent: false,
             ool_output: String::new(),
             gen,
+            top: true,
         })
     }
 
@@ -430,6 +435,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             do_indent: false,
             ool_output: String::new(),
             gen: self.gen,
+            top: false,
         }
     }
 
@@ -442,6 +448,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             do_indent: self.do_indent,
             ool_output: String::new(),
             gen: self.gen,
+            top: false,
         }
     }
 
@@ -494,7 +501,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         }
     }
 
-    pub fn lookup_sym(&self, key: &Ident) -> Option<Ident> {
+    pub fn lookup_sym(&self, key: &Ident) -> Option<(Ident, String)> {
         if let Some(_) = self.lookup_preproc(key) {
             todo!()
         } else {
@@ -584,12 +591,14 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
 impl Drop for EmitContext<'_, '_> {
     fn drop(&mut self) {
-        self.flush_ool_output().unwrap();
-        self.inner
-            .borrow()
-            .scope
-            .emit_opaque_structs(self.output)
-            .unwrap();
+        if self.top {
+            self.flush_ool_output().unwrap();
+            self.inner
+                .borrow()
+                .scope
+                .emit_opaque_structs(self.output)
+                .unwrap();
+        }
     }
 }
 
@@ -696,8 +705,13 @@ impl PreProcState {
     }
 
     pub fn is_defined_ignore_target(&self, key: &Ident) -> Result<bool, EmitErr> {
-        if self.defined.contains_key(key) {
-            Ok(true)
+        if let Some((_, value)) = self.defined.get(key) {
+            if matches!(value, DefineValue::TargetDependent) {
+                // workaround for mutually exclusive defines not part of the same #if chain
+                Ok(false)
+            } else {
+                Ok(true)
+            }
         } else if self.undefined.contains(key) {
             Ok(false)
         } else if let Some(parent) = &self.parent {
@@ -797,19 +811,21 @@ impl Scope {
 
     pub fn register_sym(&mut self, ident: Ident, module: String) -> EmitResult {
         let span = ident.span();
-        if let Some(m) = self.0.borrow_mut().syms.insert(ident, module.clone()) {
+        if let Some(m) = self.lookup(&ident).map(|(_, m)| m) {
             if m != module {
                 return Err(ParseErr::new(span, "symbol already defined in this scope").into());
             }
         }
+        self.0.borrow_mut().syms.insert(ident, module.clone());
         Ok(())
     }
 
     pub fn register_enum_sym(&mut self, ident: Ident) -> EmitResult {
         let span = ident.span();
-        if !self.0.borrow_mut().enum_syms.insert(ident) {
+        if self.lookup_enum(&ident).is_some() {
             return Err(ParseErr::new(span, "enum symbol already defined in this scope").into());
         }
+        self.0.borrow_mut().enum_syms.insert(ident);
         Ok(())
     }
 
@@ -827,35 +843,63 @@ impl Scope {
                 return Err(ParseErr::new(span, "docs already defined for this struct").into());
             }
         }
-        if let Some(true) = self.0.borrow_mut().struct_syms.insert(ident, defined) {
-            if defined {
-                return Err(
-                    ParseErr::new(span, "struct symbol already defined in this scope").into(),
-                );
-            }
+        if self.lookup_struct(&ident).is_some() {
+            return Err(ParseErr::new(span, "struct symbol already defined in this scope").into());
         }
+        self.0.borrow_mut().struct_syms.insert(ident, defined);
         Ok(())
     }
 
-    pub fn lookup(&self, ident: &Ident) -> Option<Ident> {
-        self.0
-            .borrow()
-            .syms
-            .get_key_value(ident)
-            .map(|(sym, _)| sym)
-            .cloned()
+    pub fn lookup(&self, ident: &Ident) -> Option<(Ident, String)> {
+        self.0.borrow().lookup(ident)
     }
 
     pub fn lookup_enum(&self, ident: &Ident) -> Option<Ident> {
-        self.0.borrow().enum_syms.get(ident).cloned()
+        self.0.borrow().lookup_enum(ident)
     }
 
     pub fn lookup_struct(&self, ident: &Ident) -> Option<(Ident, bool)> {
-        self.0
-            .borrow()
+        self.0.borrow().lookup_struct(ident)
+    }
+}
+
+impl InnerScope {
+    pub fn lookup(&self, ident: &Ident) -> Option<(Ident, String)> {
+        if let Some(sym) = self
+            .syms
+            .get_key_value(ident)
+            .map(|(sym, m)| (sym.clone(), m.clone()))
+        {
+            Some(sym)
+        } else if let Some(parent) = &self.parent {
+            parent.borrow().lookup(ident)
+        } else {
+            None
+        }
+    }
+
+    pub fn lookup_enum(&self, ident: &Ident) -> Option<Ident> {
+        if let Some(sym) = self.enum_syms.get(ident) {
+            Some(sym.clone())
+        } else if let Some(parent) = &self.parent {
+            parent.borrow().lookup_enum(ident)
+        } else {
+            None
+        }
+    }
+
+    pub fn lookup_struct(&self, ident: &Ident) -> Option<(Ident, bool)> {
+        if let Some(sym) = self
             .struct_syms
             .get_key_value(ident)
             .map(|(i, d)| (i.clone(), *d))
+        {
+            Some(sym)
+        } else if let Some(parent) = &self.parent {
+            parent.borrow().lookup_struct(ident)
+        } else {
+            None
+        }
     }
 }
 
