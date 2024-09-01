@@ -2834,57 +2834,19 @@ extern_sdlcall! {{
     pub fn SDL_iconv_string(tocode: *const ::core::ffi::c_char, fromcode: *const ::core::ffi::c_char, inbuf: *const ::core::ffi::c_char, inbytesleft: ::core::primitive::usize) -> *mut ::core::ffi::c_char;
 }}
 
-extern "C" {
-    /// Multiply two integers, checking for overflow.
-    ///
-    /// If `a * b` would overflow, return -1.
-    ///
-    /// Otherwise store `a * b` via ret and return 0.
-    ///
-    /// \param a the multiplicand.
-    /// \param b the multiplier.
-    /// \param ret on non-overflow output, stores the multiplication result. May
-    ///            not be NULL.
-    /// \returns -1 on overflow, 0 if result doesn't overflow.
-    ///
-    /// \threadsafety It is safe to call this function from any thread.
-    ///
-    /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_size_mul_overflow(a: ::core::primitive::usize, b: ::core::primitive::usize, ret: *mut ::core::primitive::usize) -> ::core::ffi::c_int;
-}
+// skipped inline function `SDL_size_mul_overflow`
 
 #[cfg(not(doc))]
 emit! {
-    extern "C" {
-        pub fn SDL_size_mul_overflow_builtin(a: ::core::primitive::usize, b: ::core::primitive::usize, ret: *mut ::core::primitive::usize) -> ::core::ffi::c_int;
-    }
+    // skipped inline function `SDL_size_mul_overflow_builtin`
 
 }
 
-extern "C" {
-    /// Add two integers, checking for overflow.
-    ///
-    /// If `a + b` would overflow, return -1.
-    ///
-    /// Otherwise store `a + b` via ret and return 0.
-    ///
-    /// \param a the first addend.
-    /// \param b the second addend.
-    /// \param ret on non-overflow output, stores the addition result. May not be
-    ///            NULL.
-    /// \returns -1 on overflow, 0 if result doesn't overflow.
-    ///
-    /// \threadsafety It is safe to call this function from any thread.
-    ///
-    /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_size_add_overflow(a: ::core::primitive::usize, b: ::core::primitive::usize, ret: *mut ::core::primitive::usize) -> ::core::ffi::c_int;
-}
+// skipped inline function `SDL_size_add_overflow`
 
 #[cfg(not(doc))]
 emit! {
-    extern "C" {
-        pub fn SDL_size_add_overflow_builtin(a: ::core::primitive::usize, b: ::core::primitive::usize, ret: *mut ::core::primitive::usize) -> ::core::ffi::c_int;
-    }
+    // skipped inline function `SDL_size_add_overflow_builtin`
 
 }
 

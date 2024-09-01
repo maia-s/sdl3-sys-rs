@@ -388,7 +388,7 @@ impl Emit for Ident {
 
 impl Emit for Function {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        if self.static_kw.is_none() {
+        if self.static_kw.is_none() && !self.attr.contains("SDL_FORCE_INLINE") {
             emit_extern_start(ctx, &self.abi, false)?;
             self.doc.emit(ctx)?;
             write!(ctx, "pub fn ")?;
@@ -400,10 +400,11 @@ impl Emit for Function {
             }
             writeln!(ctx, ";")?;
             emit_extern_end(ctx, &self.abi, false)?;
-            Ok(())
         } else {
-            todo!()
+            writeln!(ctx, "// skipped inline function `{}`", self.ident.as_str())?;
+            writeln!(ctx);
         }
+        Ok(())
     }
 }
 

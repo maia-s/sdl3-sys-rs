@@ -124,7 +124,22 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
     }
 }
 
-pub struct Attributes<const KIND: usize>(Vec<Attribute<KIND>>);
+#[derive(Clone, Debug)]
+pub struct Attributes<const KIND: usize>(pub Vec<Attribute<KIND>>);
+
+impl<const KIND: usize> Attributes<KIND> {
+    pub fn contains<T: ?Sized>(&self, attr: &T) -> bool
+    where
+        Ident: PartialEq<T>,
+    {
+        for i in self.0.iter() {
+            if i.ident.eq(attr) {
+                return true;
+            }
+        }
+        false
+    }
+}
 
 impl<const KIND: usize> Parse for Attributes<KIND> {
     fn desc() -> std::borrow::Cow<'static, str> {
@@ -139,11 +154,5 @@ impl<const KIND: usize> Parse for Attributes<KIND> {
             WsAndComments::try_parse(&mut rest)?;
         }
         Ok((rest, Self(vec)))
-    }
-}
-
-impl<const KIND: usize> From<Attributes<KIND>> for Vec<Attribute<KIND>> {
-    fn from(value: Attributes<KIND>) -> Self {
-        value.0
     }
 }

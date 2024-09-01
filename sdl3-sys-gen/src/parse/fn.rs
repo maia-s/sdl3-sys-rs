@@ -1,7 +1,7 @@
 use super::{
-    ArgAttribute, Block, DocComment, FnAbi, FnAttribute, FnAttributes, GetSpan, Ident, Kw_extern,
-    Kw_static, Op, Parse, ParseErr, ParseRawRes, Punctuated, Span, Type, TypeWithIdent,
-    TypeWithOptIdent, WsAndComments,
+    ArgAttribute, Block, DocComment, FnAbi, FnAttributes, GetSpan, Ident, Kw_extern, Kw_static, Op,
+    Parse, ParseErr, ParseRawRes, Punctuated, Span, Type, TypeWithIdent, TypeWithOptIdent,
+    WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -11,7 +11,7 @@ pub struct Function {
     pub doc: Option<DocComment>,
     pub static_kw: Option<Kw_static>,
     pub extern_kw: Option<Kw_extern>,
-    pub attr: Vec<FnAttribute>,
+    pub attr: FnAttributes,
     pub abi: Option<FnAbi>,
     pub ident: Ident,
     pub return_type: Type,
@@ -35,7 +35,7 @@ impl Parse for Function {
             return Err(ParseErr::new(extern_kw.span(), "static extern"));
         }
         WsAndComments::try_parse(&mut rest)?;
-        let mut attr: Vec<FnAttribute> = FnAttributes::parse(&mut rest)?.into();
+        let mut attr: FnAttributes = FnAttributes::parse(&mut rest)?;
         WsAndComments::try_parse(&mut rest)?;
         if let Some(ty) = Type::try_parse(&mut rest)? {
             WsAndComments::try_parse(&mut rest)?;
@@ -45,8 +45,8 @@ impl Parse for Function {
                 WsAndComments::try_parse(&mut rest)?;
                 if let Some(args) = FnDeclArgs::try_parse(&mut rest)? {
                     WsAndComments::try_parse(&mut rest)?;
-                    let attr2: Vec<FnAttribute> = FnAttributes::parse(&mut rest)?.into();
-                    attr.extend(attr2);
+                    let attr2: FnAttributes = FnAttributes::parse(&mut rest)?;
+                    attr.0.extend(attr2.0);
                     WsAndComments::try_parse(&mut rest)?;
                     let semi = if extern_kw.is_some() {
                         Some(<Op![;]>::parse(&mut rest)?)
