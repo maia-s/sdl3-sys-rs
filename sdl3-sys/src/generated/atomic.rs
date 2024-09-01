@@ -324,8 +324,8 @@ extern_sdlcall! {{
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_AtomicCompareAndSwap
-    /// \sa SDL_AtomicGetPtr
-    /// \sa SDL_AtomicSetPtr
+    /// \sa SDL_AtomicGetPointer
+    /// \sa SDL_AtomicSetPointer
     pub fn SDL_AtomicCompareAndSwapPointer(a: *mut *mut ::core::ffi::c_void, oldval: *mut ::core::ffi::c_void, newval: *mut ::core::ffi::c_void) -> SDL_bool;
 }}
 
@@ -344,8 +344,8 @@ extern_sdlcall! {{
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_AtomicCompareAndSwapPointer
-    /// \sa SDL_AtomicGetPtr
-    pub fn SDL_AtomicSetPtr(a: *mut *mut ::core::ffi::c_void, v: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
+    /// \sa SDL_AtomicGetPointer
+    pub fn SDL_AtomicSetPointer(a: *mut *mut ::core::ffi::c_void, v: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
 }}
 
 extern_sdlcall! {{
@@ -362,7 +362,7 @@ extern_sdlcall! {{
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_AtomicCompareAndSwapPointer
-    /// \sa SDL_AtomicSetPtr
-    pub fn SDL_AtomicGetPtr(a: *mut *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
+    /// \sa SDL_AtomicSetPointer
+    pub fn SDL_AtomicGetPointer(a: *mut *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
 }}
 
