@@ -402,7 +402,7 @@ impl Emit for Function {
             emit_extern_end(ctx, &self.abi, false)?;
         } else {
             writeln!(ctx, "// skipped inline function `{}`", self.ident.as_str())?;
-            writeln!(ctx);
+            writeln!(ctx)?;
         }
         Ok(())
     }
@@ -480,7 +480,11 @@ impl Emit for Type {
                 if let Some(ident) = s.ident.as_ref() {
                     if ctx.lookup_struct_sym(ident).is_none() {
                         if s.fields.is_none() {
-                            ctx.scope_mut().register_struct_sym(ident.clone(), false)?;
+                            ctx.scope_mut().register_struct_sym(
+                                ident.clone(),
+                                false,
+                                s.doc.clone(),
+                            )?;
                             write!(ctx, "{}", ident.as_str())?;
                         } else {
                             dbg!(self);
@@ -665,13 +669,11 @@ impl Emit for TypeDef {
 
             TypeEnum::Struct(s) => {
                 if let Some(ident) = &s.ident {
-                    if s.fields.is_none() {
-                        if ctx.lookup_struct_sym(ident).is_none() {
-                            self.ty.emit(&mut ctx.with_ool_output())?;
-                        }
-                    } else {
-                        ctx.scope_mut().register_struct_sym(ident.clone(), true)?;
-                    }
+                    ctx.scope_mut().register_struct_sym(
+                        ident.clone(),
+                        s.fields.is_some(),
+                        self.doc.clone(),
+                    )?;
                 }
 
                 if let Some(fields) = &s.fields {
@@ -699,7 +701,6 @@ impl Emit for TypeDef {
                     writeln!(ctx)?;
                 }
 
-                ctx.flush_ool_output()?;
                 Ok(())
             }
 

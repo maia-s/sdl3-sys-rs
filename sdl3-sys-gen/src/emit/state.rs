@@ -1,6 +1,6 @@
 use super::{EmitErr, EmitResult, Value};
 use crate::{
-    parse::{DefineValue, GetSpan, Ident, IdentOrKw, ParseErr, Span},
+    parse::{DefineValue, DocComment, GetSpan, Ident, IdentOrKw, ParseErr, Span},
     Gen,
 };
 use std::{
@@ -728,6 +728,7 @@ struct InnerScope {
     syms: HashSet<Ident>,
     enum_syms: HashSet<Ident>,
     struct_syms: BTreeMap<Ident, bool>,
+    struct_docs: BTreeMap<Ident, DocComment>,
 }
 
 impl Scope {
@@ -743,13 +744,18 @@ impl Scope {
     }
 
     pub fn pop(&mut self, f: &mut dyn Write) -> EmitResult {
-        for s in self
-            .0
-            .borrow()
+        let scope = self.0.borrow();
+
+        for s in scope
             .struct_syms
             .iter()
             .filter_map(|(s, d)| (!d).then_some(s))
         {
+            if let Some(doc) = scope.struct_docs.get(s) {
+                for line in doc.to_string().lines() {
+                    writeln!(f, "///{}{}", if line.is_empty() { "" } else { " " }, line)?;
+                }
+            }
             writeln!(f, "#[repr(C)]")?;
             writeln!(f, "#[non_exhaustive]")?;
             writeln!(
@@ -760,7 +766,8 @@ impl Scope {
             writeln!(f)?;
         }
 
-        let parent = self.0.borrow().parent.as_ref().map(Rc::clone);
+        let parent = scope.parent.as_ref().map(Rc::clone);
+        drop(scope);
         if let Some(parent) = parent {
             self.0 = parent;
         }
@@ -784,8 +791,20 @@ impl Scope {
         Ok(())
     }
 
-    pub fn register_struct_sym(&mut self, ident: Ident, defined: bool) -> EmitResult {
+    pub fn register_struct_sym(
+        &mut self,
+        ident: Ident,
+        defined: bool,
+        doc: Option<DocComment>,
+    ) -> EmitResult {
         let span = ident.span();
+        if let Some(doc) = doc {
+            let mut docs = self.0.borrow_mut();
+            let docs = &mut docs.struct_docs;
+            if docs.insert(ident.clone(), doc).is_some() {
+                return Err(ParseErr::new(span, "docs already defined for this struct").into());
+            }
+        }
         if let Some(true) = self.0.borrow_mut().struct_syms.insert(ident, defined) {
             if defined {
                 return Err(
