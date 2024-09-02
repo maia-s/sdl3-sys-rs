@@ -106,7 +106,7 @@ emit! {
         ///
         /// \sa SDL_CreateThreadWithProperties
         /// \sa SDL_WaitThread
-        pub fn SDL_CreateThread(fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void) -> *mut SDL_Thread;
+        pub fn SDL_CreateThread(r#fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void) -> *mut SDL_Thread;
     }}
 
     extern_sdlcall! {{
@@ -216,7 +216,7 @@ emit! {
         ///          information.
         ///
         /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_CreateThreadRuntime(fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
+        pub fn SDL_CreateThreadRuntime(r#fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
     }}
 
     extern_sdlcall! {{

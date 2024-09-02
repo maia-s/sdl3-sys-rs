@@ -591,8 +591,8 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
 impl Drop for EmitContext<'_, '_> {
     fn drop(&mut self) {
+        self.flush_ool_output().unwrap();
         if self.top {
-            self.flush_ool_output().unwrap();
             self.inner
                 .borrow()
                 .scope
