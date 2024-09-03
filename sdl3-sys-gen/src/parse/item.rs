@@ -8,6 +8,18 @@ use crate::parse::{Kw_else, Kw_while};
 use std::borrow::Cow;
 
 #[derive(Clone, Debug)]
+pub struct RustCode {
+    pub value: String,
+    pub ty: Type,
+}
+
+impl RustCode {
+    pub fn boxed(value: String, ty: Type) -> Box<Self> {
+        Box::new(Self { value, ty })
+    }
+}
+
+#[derive(Clone, Debug)]
 pub enum Item {
     PreProcBlock(PreProcBlock),
     Block(Block),

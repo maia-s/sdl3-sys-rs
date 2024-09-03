@@ -6,3 +6,6 @@ pub mod mutex;
 pub mod properties;
 pub mod iostream;
 pub mod thread;
+pub mod audio;
+pub mod bits;
+pub mod blendmode;

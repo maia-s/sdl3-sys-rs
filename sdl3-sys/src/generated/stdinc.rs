@@ -6,6 +6,8 @@
 //! subset of the C runtime: these should all behave the same way as their C
 //! runtime equivalents, but with an SDL_ prefix.
 
+pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
+
 #[cfg(doc)]
 emit! {
 }
@@ -114,6 +116,12 @@ pub const SDL_MIN_UINT64: ::core::primitive::u64 = 0;
 /// \sa SDL_MAX_SINT64
 /// \sa SDL_MIN_SINT64
 pub type SDL_Time = Sint64;
+
+pub const SDL_MAX_TIME: ::core::primitive::i64 = 9223372036854775807;
+
+pub const SDL_MIN_TIME: ::core::primitive::i64 = -9223372036854775808;
+
+pub const SDL_FLT_EPSILON: ::core::ffi::c_float = ::core::primitive::f32::EPSILON;
 
 #[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
 emit! {

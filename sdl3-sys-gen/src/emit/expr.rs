@@ -2,10 +2,10 @@ use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval};
 use crate::parse::{
     Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan,
     IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
-    SizeOf, Span, StringLiteral, Type, TypeEnum,
+    RustCode, SizeOf, Span, StringLiteral, Type, TypeEnum,
 };
 use core::{
-    fmt::{Display, Write},
+    fmt::{self, Display, Write},
     ops::Deref,
 };
 
@@ -118,14 +118,8 @@ impl Emit for Value {
     }
 }
 
-#[derive(Clone, Debug)]
-pub struct RustCode {
-    pub value: String,
-    pub ty: Type,
-}
-
 impl Display for RustCode {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(&self.value)
     }
 }
@@ -136,9 +130,8 @@ impl Eval for DefineValue {
             Self::Expr(expr) => expr.try_eval(ctx),
             Self::Ambiguous(amb) => amb.try_eval(ctx),
             Self::TargetDependent => Ok(None),
-            _ => {
-                todo!()
-            }
+            Self::RustCode(r) => Ok(Some(Value::RustCode(r.clone()))),
+            _ => todo!(),
         }
     }
 }
@@ -213,12 +206,8 @@ impl Eval for Expr {
             Expr::Parenthesized(p) => return p.expr.try_eval(ctx),
 
             Expr::Ident(ident) => {
-                if ctx.is_preproc_eval_mode() {
-                    return if let Some((args, value)) = ctx
-                        .preproc_state()
-                        .borrow()
-                        .lookup(&ident.clone().try_into()?)?
-                    {
+                if let Ok(i) = ident.clone().try_into() {
+                    if let Ok(Some((args, value))) = ctx.preproc_state().borrow().lookup(&i) {
                         if args.is_some() {
                             return Err(ParseErr::new(
                                 self.span(),
@@ -226,11 +215,12 @@ impl Eval for Expr {
                             )
                             .into());
                         }
-                        value.try_eval(ctx)
-                    } else {
-                        Err(ParseErr::new(ident.span(), "undefined macro").into())
-                    };
+                        return value.try_eval(ctx);
+                    } else if ctx.is_preproc_eval_mode() {
+                        return Err(ParseErr::new(ident.span(), "undefined macro").into());
+                    }
                 }
+
                 match ident.as_str() {
                     "true" => return Ok(Some(Value::Bool(true))),
                     "false" => return Ok(Some(Value::Bool(false))),

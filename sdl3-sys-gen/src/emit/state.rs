@@ -1,6 +1,9 @@
 use super::{EmitErr, EmitResult, Value};
 use crate::{
-    parse::{DefineValue, DocComment, GetSpan, Ident, IdentOrKw, ParseErr, Span},
+    parse::{
+        DefineValue, DocComment, GetSpan, Ident, IdentOrKw, ParseErr, PrimitiveType, RustCode,
+        Span, Type,
+    },
     Gen,
 };
 use std::{
@@ -187,6 +190,8 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             ".sdl3-sys.assert-level-release" = CfgExpr(r#"feature = "assert-level-release""#);
             ".sdl3-sys.assert-level-debug" = CfgExpr(r#"feature = "assert-level-debug""#);
             ".sdl3-sys.assert-level-paranoid" = CfgExpr(r#"feature = "assert-level-paranoid""#);
+            ".sdl3-sys.big-endian" = CfgExpr(r#"target_endian = "big""#);
+            ".sdl3-sys.little-endian" = CfgExpr(r#"target_endian = "little""#);
             "__aarch64__" = CfgExpr(r#"target_arch = "aarch64""#);
             "__arm__" = CfgExpr(r#"target_arch = "arm""#);
             "__ARM_ARCH_7__" = CfgExpr(r#"all(target_arch = "arm", target_feature = "v7")"#);
@@ -208,6 +213,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "_MSC_VER" = CfgExpr(r#"all(windows, target_env = "msvc")"#);
             "ANDROID" = CfgExpr(r#"target_os = "android""#);
             "DEBUG" = CfgExpr("debug_assertions");
+            "SDL_BYTEORDER" = CfgExpr(always_false!("byte order")); // this has a non-boolean value
             "SDL_PLATFORM_3DS" = CfgExpr(always_false!("SDL_PLATFORM_3DS"));
             "SDL_PLATFORM_ANDROID" = CfgExpr(r#"target_os = "android""#);
             "SDL_PLATFORM_APPLE" = CfgExpr(r#"target_vendor = "apple""#);
@@ -283,13 +289,15 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         defines! {
             "__STDC_VERSION__" = DefineValue::parse_expr("202311L")?;
             "_MSC_VER" = DefineValue::parse_expr("1700")?;
-            "FLT_EPSILON" = DefineValue::RustCode("::core::primitive::f32::EPSILON".into());
-            "INT64_C"("x") = DefineValue::RustCode("{x}_i64".into());
-            "UINT64_C"("x") = DefineValue::RustCode("{x}_u64".into());
-            "SIZE_MAX" = DefineValue::RustCode("::core::primitive::usize::MAX".into());
+            "FLT_EPSILON" = DefineValue::RustCode(RustCode::boxed("::core::primitive::f32::EPSILON".into(), Type::primitive(PrimitiveType::Float)));
+            "INT64_C"("x") = DefineValue::RustCode(RustCode::boxed("{x}_i64".into(), Type::primitive(PrimitiveType::Int64T)));
+            "UINT64_C"("x") = DefineValue::RustCode(RustCode::boxed("{x}_u64".into(), Type::primitive(PrimitiveType::Uint64T)));
+            "SIZE_MAX" = DefineValue::RustCode(RustCode::boxed("::core::primitive::usize::MAX".into(), Type::primitive(PrimitiveType::SizeT)));
             "__has_builtin"("builtin") = DefineValue::Other(Span::new_inline("__has_builtin"));
+            "SDL_BIG_ENDIAN"= DefineValue::parse_expr("4321")?;
             "SDL_DISABLE_ALLOCA" = DefineValue::one();
             "SDL_DISABLE_ANALYZE_MACROS" = DefineValue::one();
+            "SDL_LIL_ENDIAN"= DefineValue::parse_expr("1234")?;
         }
 
         Ok(Self {
@@ -311,24 +319,27 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     pub fn try_target_dependent_if_compare(&self, ident: &str, value: Value) -> Option<Value> {
-        if ident == "SDL_ASSERT_LEVEL" {
-            match u64::try_from(value).expect("invalid assert level") {
-                0 => Some(Value::TargetDependent(DefineState::defined(
-                    Ident::new_inline(".sdl3-sys.assert-level-disabled"),
-                ))),
-                1 => Some(Value::TargetDependent(DefineState::defined(
-                    Ident::new_inline(".sdl3-sys.assert-level-release"),
-                ))),
-                2 => Some(Value::TargetDependent(DefineState::defined(
-                    Ident::new_inline(".sdl3-sys.assert-level-debug"),
-                ))),
-                3 => Some(Value::TargetDependent(DefineState::defined(
-                    Ident::new_inline(".sdl3-sys.assert-level-paranoid"),
-                ))),
+        let target_dependent_value = |define| {
+            Some(Value::TargetDependent(DefineState::defined(
+                Ident::new_inline(define),
+            )))
+        };
+        match ident {
+            "SDL_ASSERT_LEVEL" => match u64::try_from(value) {
+                Ok(0) => target_dependent_value(".sdl3-sys.assert-level-disabled"),
+                Ok(1) => target_dependent_value(".sdl3-sys.assert-level-release"),
+                Ok(2) => target_dependent_value(".sdl3-sys.assert-level-debug"),
+                Ok(3) => target_dependent_value(".sdl3-sys.assert-level-paranoid"),
                 _ => panic!("invalid assert level"),
-            }
-        } else {
-            todo!()
+            },
+
+            "SDL_BYTEORDER" => match u64::try_from(value) {
+                Ok(1234) => target_dependent_value(".sdl3-sys.little-endian"),
+                Ok(4321) => target_dependent_value(".sdl3-sys.big-endian"),
+                _ => panic!("invalid byte order"),
+            },
+
+            _ => todo!(),
         }
     }
 
@@ -689,6 +700,8 @@ impl PreProcState {
             Ok(Some(value.clone()))
         } else if self.undefined.contains(key) {
             Ok(None)
+        } else if self.target_defines.contains_key(key.as_str()) {
+            Ok(Some((None, DefineValue::TargetDependent)))
         } else if let Some(parent) = &self.parent {
             parent.borrow().lookup(key)
         } else {

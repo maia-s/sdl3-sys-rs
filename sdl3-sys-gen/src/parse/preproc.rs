@@ -1,6 +1,6 @@
 use super::{
     Ambiguous, DocComment, DocCommentPost, Expr, GetSpan, Ident, IdentOrKw, IntegerLiteral, Item,
-    Items, Literal, Parse, ParseErr, ParseRawRes, Punctuated, Span, Type, WsAndComments,
+    Items, Literal, Parse, ParseErr, ParseRawRes, Punctuated, RustCode, Span, Type, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -30,7 +30,7 @@ pub enum DefineValue {
     Items(Items),
     Other(Span),
     Ambiguous(Ambiguous),
-    RustCode(String),
+    RustCode(Box<RustCode>),
     TargetDependent,
 }
 
