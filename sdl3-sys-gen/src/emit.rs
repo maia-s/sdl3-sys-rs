@@ -586,7 +586,16 @@ impl Emit for Type {
                 }
             }
 
-            TypeEnum::Array(_, _) => todo!(),
+            TypeEnum::Array(ty, len) => {
+                let Some(len) = len.try_eval(ctx)? else {
+                    return Err(ParseErr::new(len.span(), "invalid array length").into());
+                };
+                write!(ctx, "[")?;
+                ty.emit(ctx)?;
+                write!(ctx, "; ")?;
+                len.emit(ctx)?;
+                write!(ctx, "]")?;
+            }
 
             TypeEnum::FnPointer(fnp) => fnp.emit(ctx)?,
 

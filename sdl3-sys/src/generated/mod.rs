@@ -9,3 +9,6 @@ pub mod thread;
 pub mod audio;
 pub mod bits;
 pub mod blendmode;
+pub mod pixels;
+pub mod rect;
+pub mod surface;
