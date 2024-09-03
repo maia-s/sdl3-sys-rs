@@ -666,10 +666,10 @@ pub const SDL_COLORSPACE_BT2020_FULL: SDL_Colorspace = SDL_Colorspace::BT2020_FU
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_Color {
-    r: Uint8,
-    g: Uint8,
-    b: Uint8,
-    a: Uint8,
+    pub r: Uint8,
+    pub g: Uint8,
+    pub b: Uint8,
+    pub a: Uint8,
 }
 
 /// The bits of this structure can be directly reinterpreted as a float-packed
@@ -679,10 +679,10 @@ pub struct SDL_Color {
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_FColor {
-    r: ::core::ffi::c_float,
-    g: ::core::ffi::c_float,
-    b: ::core::ffi::c_float,
-    a: ::core::ffi::c_float,
+    pub r: ::core::ffi::c_float,
+    pub g: ::core::ffi::c_float,
+    pub b: ::core::ffi::c_float,
+    pub a: ::core::ffi::c_float,
 }
 
 /// A set of indexed colors representing a palette.
@@ -694,13 +694,13 @@ pub struct SDL_FColor {
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_Palette {
     /// number of elements in `colors`.
-    ncolors: ::core::ffi::c_int,
+    pub ncolors: ::core::ffi::c_int,
     /// an array of colors, `ncolors` long.
-    colors: *mut SDL_Color,
+    pub colors: *mut SDL_Color,
     /// internal use only, do not touch.
-    version: Uint32,
+    pub version: Uint32,
     /// internal use only, do not touch.
-    refcount: ::core::ffi::c_int,
+    pub refcount: ::core::ffi::c_int,
 }
 
 /// Details about the format of a pixel.
@@ -709,22 +709,22 @@ pub struct SDL_Palette {
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_PixelFormatDetails {
-    format: SDL_PixelFormat,
-    bits_per_pixel: Uint8,
-    bytes_per_pixel: Uint8,
-    padding: [Uint8; 2],
-    Rmask: Uint32,
-    Gmask: Uint32,
-    Bmask: Uint32,
-    Amask: Uint32,
-    Rbits: Uint8,
-    Gbits: Uint8,
-    Bbits: Uint8,
-    Abits: Uint8,
-    Rshift: Uint8,
-    Gshift: Uint8,
-    Bshift: Uint8,
-    Ashift: Uint8,
+    pub format: SDL_PixelFormat,
+    pub bits_per_pixel: Uint8,
+    pub bytes_per_pixel: Uint8,
+    pub padding: [Uint8; 2],
+    pub Rmask: Uint32,
+    pub Gmask: Uint32,
+    pub Bmask: Uint32,
+    pub Amask: Uint32,
+    pub Rbits: Uint8,
+    pub Gbits: Uint8,
+    pub Bbits: Uint8,
+    pub Abits: Uint8,
+    pub Rshift: Uint8,
+    pub Gshift: Uint8,
+    pub Bshift: Uint8,
+    pub Ashift: Uint8,
 }
 
 extern_sdlcall! {{

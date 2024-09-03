@@ -785,6 +785,7 @@ impl Emit for TypeDef {
 
                     for field in fields.fields.iter() {
                         field.doc.emit(ctx)?;
+                        write!(ctx, "pub ")?;
                         field.ident.emit(ctx)?;
                         write!(ctx, ": ")?;
                         field.ty.emit(ctx)?;

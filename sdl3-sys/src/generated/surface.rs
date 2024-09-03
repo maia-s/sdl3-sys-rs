@@ -94,21 +94,21 @@ pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_Surface {
     /// Read-only
-    flags: SDL_SurfaceFlags,
+    pub flags: SDL_SurfaceFlags,
     /// Read-only
-    format: SDL_PixelFormat,
+    pub format: SDL_PixelFormat,
     /// Read-only
-    w: ::core::ffi::c_int,
+    pub w: ::core::ffi::c_int,
     /// Read-only
-    h: ::core::ffi::c_int,
+    pub h: ::core::ffi::c_int,
     /// Read-only
-    pitch: ::core::ffi::c_int,
+    pub pitch: ::core::ffi::c_int,
     /// Read-only pointer, writable pixels if non-NULL
-    pixels: *mut ::core::ffi::c_void,
+    pub pixels: *mut ::core::ffi::c_void,
     /// Application reference count, used when freeing surface
-    refcount: ::core::ffi::c_int,
+    pub refcount: ::core::ffi::c_int,
     /// Private
-    internal: *mut SDL_SurfaceData,
+    pub internal: *mut SDL_SurfaceData,
 }
 
 extern_sdlcall! {{

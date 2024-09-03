@@ -168,11 +168,11 @@ pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID = (0xfffffffe) a
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_AudioSpec {
     /// Audio data format
-    format: SDL_AudioFormat,
+    pub format: SDL_AudioFormat,
     /// Number of channels: 1 mono, 2 stereo, etc
-    channels: ::core::ffi::c_int,
+    pub channels: ::core::ffi::c_int,
     /// sample rate: sample frames per second
-    freq: ::core::ffi::c_int,
+    pub freq: ::core::ffi::c_int,
 }
 
 extern_sdlcall! {{

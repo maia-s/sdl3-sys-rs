@@ -18,8 +18,8 @@ use super::error::*;
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_Point {
-    x: ::core::ffi::c_int,
-    y: ::core::ffi::c_int,
+    pub x: ::core::ffi::c_int,
+    pub y: ::core::ffi::c_int,
 }
 
 /// The structure that defines a point (using floating point values).
@@ -31,8 +31,8 @@ pub struct SDL_Point {
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_FPoint {
-    x: ::core::ffi::c_float,
-    y: ::core::ffi::c_float,
+    pub x: ::core::ffi::c_float,
+    pub y: ::core::ffi::c_float,
 }
 
 /// A rectangle, with the origin at the upper left (using integers).
@@ -49,10 +49,10 @@ pub struct SDL_FPoint {
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_Rect {
-    x: ::core::ffi::c_int,
-    y: ::core::ffi::c_int,
-    w: ::core::ffi::c_int,
-    h: ::core::ffi::c_int,
+    pub x: ::core::ffi::c_int,
+    pub y: ::core::ffi::c_int,
+    pub w: ::core::ffi::c_int,
+    pub h: ::core::ffi::c_int,
 }
 
 /// A rectangle, with the origin at the upper left (using floating point
@@ -72,10 +72,10 @@ pub struct SDL_Rect {
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_FRect {
-    x: ::core::ffi::c_float,
-    y: ::core::ffi::c_float,
-    w: ::core::ffi::c_float,
-    h: ::core::ffi::c_float,
+    pub x: ::core::ffi::c_float,
+    pub y: ::core::ffi::c_float,
+    pub w: ::core::ffi::c_float,
+    pub h: ::core::ffi::c_float,
 }
 
 // skipped inline function `SDL_RectToFRect`

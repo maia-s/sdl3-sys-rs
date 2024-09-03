@@ -139,19 +139,19 @@ pub const SDL_ASSERTION_ALWAYS_IGNORE: SDL_AssertState = SDL_AssertState::ALWAYS
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_AssertData {
     /// SDL_TRUE if app should always continue when assertion is triggered.
-    always_ignore: SDL_bool,
+    pub always_ignore: SDL_bool,
     /// Number of times this assertion has been triggered.
-    trigger_count: ::core::ffi::c_uint,
+    pub trigger_count: ::core::ffi::c_uint,
     /// A string of this assert's test code.
-    condition: *const ::core::ffi::c_char,
+    pub condition: *const ::core::ffi::c_char,
     /// The source file where this assert lives.
-    filename: *const ::core::ffi::c_char,
+    pub filename: *const ::core::ffi::c_char,
     /// The line in `filename` where this assert lives.
-    linenum: ::core::ffi::c_int,
+    pub linenum: ::core::ffi::c_int,
     /// The name of the function where this assert lives.
-    function: *const ::core::ffi::c_char,
+    pub function: *const ::core::ffi::c_char,
     /// next item in the linked list.
-    next: *const SDL_AssertData,
+    pub next: *const SDL_AssertData,
 }
 
 extern_sdlcall! {{

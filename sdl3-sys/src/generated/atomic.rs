@@ -228,7 +228,7 @@ emit! {
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_AtomicInt {
-    value: ::core::ffi::c_int,
+    pub value: ::core::ffi::c_int,
 }
 
 extern_sdlcall! {{

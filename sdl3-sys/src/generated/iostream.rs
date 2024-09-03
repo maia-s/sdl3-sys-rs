@@ -90,12 +90,12 @@ pub struct SDL_IOStreamInterface {
     /// Return the number of bytes in this SDL_IOStream
     ///
     /// \return the total size of the data stream, or -1 on error.
-    size: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void) -> Sint64)>,
+    pub size: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void) -> Sint64)>,
     /// Seek to `offset` relative to `whence`, one of stdio's whence values:
     /// SDL_IO_SEEK_SET, SDL_IO_SEEK_CUR, SDL_IO_SEEK_END
     ///
     /// \return the final offset in the data stream, or -1 on error.
-    seek: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, offset: Sint64, whence: SDL_IOWhence) -> Sint64)>,
+    pub seek: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, offset: Sint64, whence: SDL_IOWhence) -> Sint64)>,
     /// Read up to `size` bytes from the data stream to the area pointed
     /// at by `ptr`.
     ///
@@ -104,7 +104,7 @@ pub struct SDL_IOStreamInterface {
     /// a complete, successful read.
     ///
     /// \return the number of bytes read
-    read: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, ptr: *mut ::core::ffi::c_void, size: ::core::primitive::usize, status: *mut SDL_IOStatus) -> ::core::primitive::usize)>,
+    pub read: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, ptr: *mut ::core::ffi::c_void, size: ::core::primitive::usize, status: *mut SDL_IOStatus) -> ::core::primitive::usize)>,
     /// Write exactly `size` bytes from the area pointed at by `ptr`
     /// to data stream.
     ///
@@ -113,14 +113,14 @@ pub struct SDL_IOStreamInterface {
     /// a complete, successful write.
     ///
     /// \return the number of bytes written
-    write: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, ptr: *const ::core::ffi::c_void, size: ::core::primitive::usize, status: *mut SDL_IOStatus) -> ::core::primitive::usize)>,
+    pub write: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, ptr: *const ::core::ffi::c_void, size: ::core::primitive::usize, status: *mut SDL_IOStatus) -> ::core::primitive::usize)>,
     /// Close and free any allocated resources.
     ///
     /// The SDL_IOStream is still destroyed even if this fails, so clean up anything
     /// even if flushing to disk returns an error.
     ///
     /// \return SDL_TRUE if successful or SDL_FALSE on write error when flushing data.
-    close: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool)>,
+    pub close: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool)>,
 }
 
 extern_sdlcall! {{
