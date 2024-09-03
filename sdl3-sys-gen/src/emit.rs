@@ -75,6 +75,10 @@ pub const fn is_rust_keyword(s: &str) -> bool {
     )
 }
 
+pub const fn is_valid_ident(s: &str) -> bool {
+    matches!(s.as_bytes()[0], b'a'..=b'z' | b'A'..=b'Z' | b'_')
+}
+
 fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
     if let Some(abi) = &abi {
         match abi.ident.as_str() {
@@ -701,13 +705,14 @@ impl Emit for TypeDef {
                     ctx.register_sym(variant.ident.clone())?;
                     let variant_ident = variant.ident.as_str();
                     let short_variant_ident = variant_ident.strip_prefix(prefix).unwrap();
-                    variant.doc.emit(&mut ctx_impl)?;
-                    write!(ctx_impl, "pub const {short_variant_ident}: Self = Self(")?;
+                    let is_short_valid = is_valid_ident(short_variant_ident);
+                    let mut value = String::new();
+                    let mut ctx_value = ctx.with_output(&mut value);
                     next_expr = if let Some(expr) = &variant.expr {
-                        expr.emit(&mut ctx_impl)?;
+                        expr.emit(&mut ctx_value)?;
                         expr.try_eval_plus_one(ctx)?.map(Expr::Value)
                     } else if let Some(next_expr) = next_expr {
-                        next_expr.emit(&mut ctx_impl)?;
+                        next_expr.emit(&mut ctx_value)?;
                         next_expr.try_eval_plus_one(ctx)?.map(Expr::Value)
                     } else {
                         return Err(ParseErr::new(
@@ -716,12 +721,23 @@ impl Emit for TypeDef {
                         )
                         .into());
                     };
-                    writeln!(ctx_impl, ");")?;
+                    drop(ctx_value);
+                    if is_short_valid {
+                        variant.doc.emit(&mut ctx_impl)?;
+                        writeln!(
+                            ctx_impl,
+                            "pub const {short_variant_ident}: Self = Self({value});"
+                        )?;
+                    }
                     variant.doc.emit(&mut ctx_global)?;
-                    writeln!(
-                        ctx_global,
-                        "pub const {variant_ident}: {enum_ident} = {enum_ident}::{short_variant_ident};"
-                    )?;
+                    if is_short_valid {
+                        writeln!(ctx_global, "pub const {variant_ident}: {enum_ident} = {enum_ident}::{short_variant_ident};")?;
+                    } else {
+                        writeln!(
+                            ctx_global,
+                            "pub const {variant_ident}: {enum_ident} = {enum_ident}({value});"
+                        )?;
+                    }
                 }
 
                 drop(ctx_impl);
