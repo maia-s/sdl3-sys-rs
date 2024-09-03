@@ -1,8 +1,8 @@
 use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval};
 use crate::parse::{
     Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan,
-    IntegerLiteral, Literal, Op, Parenthesized, ParseErr, PrimitiveType, SizeOf, Span,
-    StringLiteral, Type, TypeEnum,
+    IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
+    SizeOf, Span, StringLiteral, Type, TypeEnum,
 };
 use core::{
     fmt::{Display, Write},
@@ -156,6 +156,44 @@ impl Eval for Ambiguous {
     }
 }
 
+impl Eval for IntegerLiteral {
+    fn try_eval(&self, _ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        match self.kind {
+            IntegerLiteralType::Unsuffixed => {
+                if self.value <= i32::MAX as u64 {
+                    Ok(Some(Value::U31(self.value as u32)))
+                } else if self.value <= u32::MAX as u64 {
+                    Ok(Some(Value::U32(self.value as u32)))
+                } else if self.value <= i64::MAX as u64 {
+                    Ok(Some(Value::U63(self.value)))
+                } else {
+                    Ok(Some(Value::U64(self.value)))
+                }
+            }
+            IntegerLiteralType::Unsigned => {
+                if self.value <= u32::MAX as u64 {
+                    Ok(Some(Value::U32(self.value as u32)))
+                } else {
+                    todo!()
+                }
+            }
+            IntegerLiteralType::Long => {
+                // !!! FIXME: long can be 32-bit or 64-bit depending on platform
+                if self.value <= i32::MAX as u64 {
+                    Ok(Some(Value::I32(self.value as i32)))
+                } else if self.value <= i64::MAX as u64 {
+                    Ok(Some(Value::I64(self.value as i64)))
+                } else {
+                    todo!()
+                }
+            }
+            IntegerLiteralType::UnsignedLong => todo!(),
+            IntegerLiteralType::LongLong => todo!(),
+            IntegerLiteralType::UnsignedLongLong => todo!(),
+        }
+    }
+}
+
 impl Expr {
     pub fn try_eval_plus_one(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
         Expr::BinaryOp(Box::new(BinaryOp {
@@ -203,17 +241,7 @@ impl Eval for Expr {
 
             Expr::Literal(lit) => {
                 return match lit {
-                    Literal::Integer(i) => {
-                        if i.value <= i32::MAX as u64 {
-                            Ok(Some(Value::U31(i.value as u32)))
-                        } else if i.value <= u32::MAX as u64 {
-                            Ok(Some(Value::U32(i.value as u32)))
-                        } else if i.value <= i64::MAX as u64 {
-                            Ok(Some(Value::U63(i.value)))
-                        } else {
-                            Ok(Some(Value::U64(i.value)))
-                        }
-                    }
+                    Literal::Integer(i) => i.try_eval(ctx),
                     Literal::Float(f) => match f {
                         FloatLiteral::Float(f) => Ok(Some(Value::F32(f.value))),
                         FloatLiteral::Double(f) => Ok(Some(Value::F64(f.value))),
@@ -477,6 +505,15 @@ impl Eval for Expr {
                                     todo!()
                                 }
                             }
+                            (Value::U31(lhs), Value::U32(rhs)) => {
+                                Ok(Some(Value::U32(calc!(@ checked $op (lhs, rhs)))))
+                            }
+                            (Value::U32(lhs), Value::U31(rhs)) => {
+                                Ok(Some(Value::U32(calc!(@ checked $op (lhs, rhs)))))
+                            }
+                            (Value::U32(lhs), Value::U32(rhs)) => {
+                                Ok(Some(Value::U32(calc!(@ checked $op (lhs, rhs)))))
+                            }
                             (Value::F32(lhs), Value::F32(rhs)) => Ok(Some(Value::F32(lhs $op rhs))),
                             (Value::F64(lhs), Value::F64(rhs)) => Ok(Some(Value::F64(lhs $op rhs))),
                             _ => {
@@ -529,6 +566,29 @@ impl Eval for Expr {
                                 Ok(Some(Value::RustCode(Box::new(RustCode{ value:code, ty:Type::primitive(PrimitiveType::Bool) }))))
                             }
                             _ => Err(ParseErr::new(bop.span(), format!("invalid operands to `{op}`")).into()),
+                        }
+                    }};
+                }
+
+                macro_rules! shift {
+                    ($op:tt) => {{
+                        let op = stringify!($op);
+                        let Ok(shift) = u64::try_from(eval!(bop.rhs)) else {
+                            return Err(ParseErr::new(
+                                bop.rhs.span(),
+                                format!("invalid shift value"),
+                            )
+                            .into());
+                        };
+
+                        match eval!(bop.lhs) {
+                            Value::U32(lhs) => Ok(Some(Value::U32(lhs $op shift))),
+
+                            _ => {dbg!(&bop.lhs, eval!(bop.lhs));Err(ParseErr::new(
+                                bop.lhs.span(),
+                                format!("invalid operand to `{op}`"),
+                            )
+                            .into())},
                         }
                     }};
                 }
@@ -597,6 +657,9 @@ impl Eval for Expr {
                     b"<=" => compare!(<=),
                     b">" => compare!(>),
                     b">=" => compare!(>=),
+
+                    b"<<" => shift!(<<),
+                    b">>" => shift!(>>),
 
                     _ => {
                         return Err(
