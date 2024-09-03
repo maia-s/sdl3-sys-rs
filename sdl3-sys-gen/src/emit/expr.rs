@@ -318,18 +318,16 @@ impl Eval for Expr {
                                 return Ok(Some(match ident.as_str() {
                                     "SDL_SINT64_C" => match arg {
                                         Value::I32(i) => Value::I64(i as i64),
-                                        Value::U31(u) => Value::I64(u as i64),
+                                        Value::U31(u) | Value::U32(u) => Value::I64(u as i64),
                                         Value::I64(i) => Value::I64(i),
-                                        Value::U63(u) => Value::I64(u as i64),
-                                        Value::U64(u) => Value::I64(u as i64),
+                                        Value::U63(u) | Value::U64(u) => Value::I64(u as i64),
                                         _ => todo!(),
                                     },
                                     "SDL_UINT64_C" => match arg {
                                         Value::I32(i) => Value::U64(i as u64),
-                                        Value::U31(u) => Value::U64(u as u64),
+                                        Value::U31(u) | Value::U32(u) => Value::U64(u as u64),
                                         Value::I64(i) => Value::U64(i as u64),
-                                        Value::U63(u) => Value::U64(u),
-                                        Value::U64(u) => Value::U64(u),
+                                        Value::U63(u) | Value::U64(u) => Value::U64(u),
                                         _ => todo!(),
                                     },
                                     _ => unreachable!(),

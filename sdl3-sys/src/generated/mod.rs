@@ -12,3 +12,8 @@ pub mod blendmode;
 pub mod pixels;
 pub mod rect;
 pub mod surface;
+pub mod video;
+pub mod camera;
+pub mod clipboard;
+pub mod cpuinfo;
+pub mod dialog;
