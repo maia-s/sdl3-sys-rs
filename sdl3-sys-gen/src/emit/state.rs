@@ -359,7 +359,6 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                 }
             }
 
-
             _ => todo!(),
         }
     }
@@ -898,7 +897,7 @@ impl Scope {
                 return Err(ParseErr::new(span, "docs already defined for this struct").into());
             }
         }
-        if self.lookup_struct(&ident).is_some() {
+        if let Some((_, true)) = self.lookup_struct(&ident) {
             return Err(ParseErr::new(span, "struct symbol already defined in this scope").into());
         }
         self.0.borrow_mut().struct_syms.insert(ident, defined);

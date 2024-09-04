@@ -19,3 +19,4 @@ pub mod cpuinfo;
 pub mod dialog;
 pub mod guid;
 pub mod power;
+pub mod sensor;
