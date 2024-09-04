@@ -477,6 +477,19 @@ impl Eval for Expr {
                     }};
                 }
 
+                macro_rules! bitop {
+                    ($op:tt) => {
+                        match (eval!(bop.lhs), eval!(bop.rhs)) {
+                            (Value::I32(lhs), Value::I32(rhs)) => Ok(Some(Value::I32(lhs $op rhs))),
+                            (Value::I32(lhs), Value::U31(rhs)) => Ok(Some(Value::I32(lhs $op rhs as i32))),
+                            (Value::U31(lhs), Value::I32(rhs)) => Ok(Some(Value::I32(lhs as i32 $op rhs))),
+                            (Value::U31(lhs), Value::U31(rhs)) => Ok(Some(Value::U31(lhs $op rhs))),
+                            (Value::U31(lhs) | Value::U32(lhs), Value::U31(rhs) | Value::U32(rhs)) => Ok(Some(Value::U32(lhs $op rhs))),
+                            _ => todo!(),
+                        }
+                    };
+                }
+
                 macro_rules! calc {
                     ($op:tt) => {
                         match (eval!(bop.lhs), eval!(bop.rhs)) {
@@ -588,6 +601,9 @@ impl Eval for Expr {
                 return match bop.op.as_str().as_bytes() {
                     b"+" => calc!(+),
                     b"-" => calc!(-),
+
+                    b"&" => bitop!(&),
+                    b"|" => bitop!(|),
 
                     b"," => {
                         let _lhs = eval!(bop.lhs);

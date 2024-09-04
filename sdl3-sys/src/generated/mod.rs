@@ -20,3 +20,4 @@ pub mod dialog;
 pub mod guid;
 pub mod power;
 pub mod sensor;
+pub mod joystick;
