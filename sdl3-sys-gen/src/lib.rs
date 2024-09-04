@@ -29,6 +29,10 @@ fn skip(module: &str) -> bool {
         || module.starts_with("test")
 }
 
+fn skip_emit(module: &str) -> bool {
+    ["egl"].contains(&module)
+}
+
 pub fn generate(headers_path: &Path, output_path: &Path) -> Result<(), Error> {
     let mut gen = Gen::new(output_path.to_owned())?;
 
@@ -107,7 +111,7 @@ impl Gen {
 
     pub fn emit(&self, module: &str) -> Result<(), Error> {
         if !self.emitted.borrow().contains_key(module) && !self.skipped.borrow().contains(module) {
-            if !self.parsed.contains_key(module) {
+            if !self.parsed.contains_key(module) || skip_emit(module) {
                 eprintln!("skipping {module}");
                 self.skipped.borrow_mut().insert(module.to_string());
                 return Ok(());
