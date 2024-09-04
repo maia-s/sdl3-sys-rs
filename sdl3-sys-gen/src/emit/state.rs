@@ -1,8 +1,8 @@
-use super::{EmitErr, EmitResult, Value};
+use super::{EmitErr, EmitResult, Eval, Value};
 use crate::{
     parse::{
-        DefineValue, DocComment, GetSpan, Ident, IdentOrKw, ParseErr, PrimitiveType, RustCode,
-        Span, Type,
+        DefineValue, DocComment, Expr, GetSpan, Ident, IdentOrKw, ParseErr, PrimitiveType,
+        RustCode, Span, Type,
     },
     Gen,
 };
@@ -174,6 +174,12 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         let module = module.into();
         let mut preproc_state = PreProcState::default();
 
+        macro_rules! always_true {
+            ($define:literal) => {
+                concat!("all(/* always enabled: ", $define, " */)")
+            };
+        }
+
         macro_rules! always_false {
             ($define:literal) => {
                 concat!("any(/* always disabled: ", $define, " */)")
@@ -213,7 +219,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "_MSC_VER" = CfgExpr(r#"all(windows, target_env = "msvc")"#);
             "ANDROID" = CfgExpr(r#"target_os = "android""#);
             "DEBUG" = CfgExpr("debug_assertions");
-            "SDL_BYTEORDER" = CfgExpr(always_false!("byte order")); // this has a non-boolean value
+            "SDL_BYTEORDER" = CfgExpr(always_true!("byte order")); // this has a non-boolean value
             "SDL_PLATFORM_3DS" = CfgExpr(always_false!("SDL_PLATFORM_3DS"));
             "SDL_PLATFORM_ANDROID" = CfgExpr(r#"target_os = "android""#);
             "SDL_PLATFORM_APPLE" = CfgExpr(r#"target_vendor = "apple""#);
@@ -294,10 +300,10 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "UINT64_C"("x") = DefineValue::RustCode(RustCode::boxed("{x}_u64".into(), Type::primitive(PrimitiveType::Uint64T)));
             "SIZE_MAX" = DefineValue::RustCode(RustCode::boxed("::core::primitive::usize::MAX".into(), Type::primitive(PrimitiveType::SizeT)));
             "__has_builtin"("builtin") = DefineValue::Other(Span::new_inline("__has_builtin"));
-            "SDL_BIG_ENDIAN"= DefineValue::parse_expr("4321")?;
+            "SDL_BIG_ENDIAN" = DefineValue::parse_expr("4321")?;
             "SDL_DISABLE_ALLOCA" = DefineValue::one();
             "SDL_DISABLE_ANALYZE_MACROS" = DefineValue::one();
-            "SDL_LIL_ENDIAN"= DefineValue::parse_expr("1234")?;
+            "SDL_LIL_ENDIAN" = DefineValue::parse_expr("1234")?;
         }
 
         Ok(Self {
@@ -318,26 +324,41 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         })
     }
 
-    pub fn try_target_dependent_if_compare(&self, ident: &str, value: Value) -> Option<Value> {
+    pub fn try_target_dependent_if_compare(
+        &self,
+        op: &str,
+        ident: &str,
+        rhs: &Expr,
+    ) -> Option<Value> {
         let target_dependent_value = |define| {
             Some(Value::TargetDependent(DefineState::defined(
                 Ident::new_inline(define),
             )))
         };
-        match ident {
-            "SDL_ASSERT_LEVEL" => match u64::try_from(value) {
-                Ok(0) => target_dependent_value(".sdl3-sys.assert-level-disabled"),
-                Ok(1) => target_dependent_value(".sdl3-sys.assert-level-release"),
-                Ok(2) => target_dependent_value(".sdl3-sys.assert-level-debug"),
-                Ok(3) => target_dependent_value(".sdl3-sys.assert-level-paranoid"),
-                _ => panic!("invalid assert level"),
-            },
+        match op {
+            "==" => {
+                let Ok(Some(value)) = rhs.try_eval(self) else {
+                    return None;
+                };
+                match ident {
+                    "SDL_ASSERT_LEVEL" => match u64::try_from(value) {
+                        Ok(0) => target_dependent_value(".sdl3-sys.assert-level-disabled"),
+                        Ok(1) => target_dependent_value(".sdl3-sys.assert-level-release"),
+                        Ok(2) => target_dependent_value(".sdl3-sys.assert-level-debug"),
+                        Ok(3) => target_dependent_value(".sdl3-sys.assert-level-paranoid"),
+                        _ => panic!("invalid assert level"),
+                    },
 
-            "SDL_BYTEORDER" => match u64::try_from(value) {
-                Ok(1234) => target_dependent_value(".sdl3-sys.little-endian"),
-                Ok(4321) => target_dependent_value(".sdl3-sys.big-endian"),
-                _ => panic!("invalid byte order"),
-            },
+                    "SDL_BYTEORDER" => match u64::try_from(value) {
+                        Ok(1234) => target_dependent_value(".sdl3-sys.little-endian"),
+                        Ok(4321) => target_dependent_value(".sdl3-sys.big-endian"),
+                        _ => panic!("invalid byte order"),
+                    },
+
+                    _ => todo!(),
+                }
+            }
+
 
             _ => todo!(),
         }
@@ -499,9 +520,9 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner_mut().emitted_file_doc = value;
     }
 
-    pub fn register_sym(&mut self, ident: Ident) -> EmitResult {
+    pub fn register_sym(&mut self, ident: Ident, ty: Option<Type>) -> EmitResult {
         let module = self.inner().module.clone();
-        self.scope_mut().register_sym(ident, module)
+        self.scope_mut().register_sym(Sym { module, ident, ty })
     }
 
     pub fn lookup_preproc(&self, key: &Ident) -> Option<(Option<Vec<IdentOrKw>>, DefineValue)> {
@@ -512,12 +533,8 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         }
     }
 
-    pub fn lookup_sym(&self, key: &Ident) -> Option<(Ident, String)> {
-        if let Some(_) = self.lookup_preproc(key) {
-            todo!()
-        } else {
-            self.scope().lookup(key)
-        }
+    pub fn lookup_sym(&self, key: &Ident) -> Option<Sym> {
+        self.scope().lookup(key)
     }
 
     pub fn lookup_enum_sym(&self, key: &Ident) -> Option<Ident> {
@@ -645,6 +662,7 @@ pub struct PreProcState {
     parent: Option<Rc<RefCell<PreProcState>>>,
     defined: HashMap<Ident, (Option<Vec<IdentOrKw>>, DefineValue)>,
     undefined: HashSet<Ident>,
+    undefined_prefixes: HashSet<String>,
     target_defines: HashMap<&'static str, CfgExpr>,
 }
 
@@ -654,6 +672,7 @@ impl PreProcState {
             parent: Some(parent),
             defined: HashMap::new(),
             undefined: HashSet::new(),
+            undefined_prefixes: HashSet::new(),
             target_defines: HashMap::new(),
         }
     }
@@ -688,6 +707,10 @@ impl PreProcState {
         self.undefined.insert(key);
     }
 
+    pub fn undefine_prefix(&mut self, pfx: &str) {
+        self.undefined_prefixes.insert(pfx.to_string());
+    }
+
     pub fn register_target_define(&mut self, key: &'static str, value: CfgExpr) {
         self.target_defines.insert(key, value);
     }
@@ -698,7 +721,7 @@ impl PreProcState {
     ) -> Result<Option<(Option<Vec<IdentOrKw>>, DefineValue)>, EmitErr> {
         if let Some(value) = self.defined.get(key) {
             Ok(Some(value.clone()))
-        } else if self.undefined.contains(key) {
+        } else if self.undefined.contains(key) || self.undefined_prefixes_matches(key.as_str()) {
             Ok(None)
         } else if self.target_defines.contains_key(key.as_str()) {
             Ok(Some((None, DefineValue::TargetDependent)))
@@ -725,13 +748,22 @@ impl PreProcState {
             } else {
                 Ok(true)
             }
-        } else if self.undefined.contains(key) {
+        } else if self.undefined.contains(key) || self.undefined_prefixes_matches(key.as_str()) {
             Ok(false)
         } else if let Some(parent) = &self.parent {
             parent.borrow().is_defined(key)
         } else {
             Err(ParseErr::new(key.span(), "unknown define").into())
         }
+    }
+
+    pub fn undefined_prefixes_matches(&self, s: &str) -> bool {
+        for pfx in self.undefined_prefixes.iter() {
+            if s.starts_with(pfx) {
+                return true;
+            }
+        }
+        false
     }
 
     pub fn is_target_define(&self, key: &Ident) -> bool {
@@ -755,13 +787,20 @@ impl PreProcState {
     }
 }
 
+#[derive(Clone, Debug)]
+pub struct Sym {
+    pub module: String,
+    pub ident: Ident,
+    pub ty: Option<Type>,
+}
+
 #[derive(Clone)]
 pub struct Scope(Rc<RefCell<InnerScope>>);
 
 #[derive(Default)]
 struct InnerScope {
     parent: Option<Rc<RefCell<InnerScope>>>,
-    syms: HashMap<Ident, String>,
+    syms: HashMap<Ident, Sym>,
     enum_syms: HashSet<Ident>,
     struct_syms: BTreeMap<Ident, bool>,
     struct_docs: BTreeMap<Ident, DocComment>,
@@ -816,20 +855,23 @@ impl Scope {
     }
 
     pub fn include(&mut self, scope: &Scope) -> EmitResult {
-        for (sym, m) in scope.0.borrow().syms.iter() {
-            self.register_sym(sym.clone(), m.clone())?;
+        for sym in scope.0.borrow().syms.values() {
+            self.register_sym(sym.clone())?;
         }
         Ok(())
     }
 
-    pub fn register_sym(&mut self, ident: Ident, module: String) -> EmitResult {
-        let span = ident.span();
-        if let Some(m) = self.lookup(&ident).map(|(_, m)| m) {
-            if m != module {
+    pub fn register_sym(&mut self, sym: Sym) -> EmitResult {
+        let span = sym.ident.span();
+        if let Some(s) = self.lookup(&sym.ident) {
+            if sym.module != s.module {
                 return Err(ParseErr::new(span, "symbol already defined in this scope").into());
             }
         }
-        self.0.borrow_mut().syms.insert(ident, module.clone());
+        self.0
+            .borrow_mut()
+            .syms
+            .insert(sym.ident.clone(), sym.clone());
         Ok(())
     }
 
@@ -863,7 +905,7 @@ impl Scope {
         Ok(())
     }
 
-    pub fn lookup(&self, ident: &Ident) -> Option<(Ident, String)> {
+    pub fn lookup(&self, ident: &Ident) -> Option<Sym> {
         self.0.borrow().lookup(ident)
     }
 
@@ -877,13 +919,9 @@ impl Scope {
 }
 
 impl InnerScope {
-    pub fn lookup(&self, ident: &Ident) -> Option<(Ident, String)> {
-        if let Some(sym) = self
-            .syms
-            .get_key_value(ident)
-            .map(|(sym, m)| (sym.clone(), m.clone()))
-        {
-            Some(sym)
+    pub fn lookup(&self, ident: &Ident) -> Option<Sym> {
+        if let Some(sym) = self.syms.get(ident) {
+            Some(sym.clone())
         } else if let Some(parent) = &self.parent {
             parent.borrow().lookup(ident)
         } else {

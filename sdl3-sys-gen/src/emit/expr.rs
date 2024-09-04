@@ -129,9 +129,12 @@ impl Eval for DefineValue {
         match self {
             Self::Expr(expr) => expr.try_eval(ctx),
             Self::Ambiguous(amb) => amb.try_eval(ctx),
-            Self::TargetDependent => Ok(None),
             Self::RustCode(r) => Ok(Some(Value::RustCode(r.clone()))),
-            _ => todo!(),
+            Self::TargetDependent | Self::Type(_) => Ok(None),
+            _ => {
+                dbg!(self);
+                todo!()
+            }
         }
     }
 }
@@ -182,7 +185,7 @@ impl Eval for IntegerLiteral {
             }
             IntegerLiteralType::UnsignedLong => todo!(),
             IntegerLiteralType::LongLong => todo!(),
-            IntegerLiteralType::UnsignedLongLong => todo!(),
+            IntegerLiteralType::UnsignedLongLong => Ok(Some(Value::U64(self.value))),
         }
     }
 }
@@ -405,6 +408,7 @@ impl Eval for Expr {
                     TypeEnum::Array(_, _) => todo!(),
                     TypeEnum::FnPointer(_) => todo!(),
                     TypeEnum::DotDotDot => todo!(),
+                    TypeEnum::Rust(_) => todo!(),
                 },
 
                 SizeOf::Expr(_, _) => todo!(),
@@ -490,7 +494,7 @@ impl Eval for Expr {
                                 if value <= i32::MAX as u32 {
                                     Ok(Some(Value::U31(value)))
                                 } else {
-                                    todo!()
+                                    Ok(Some(Value::U32(value)))
                                 }
                             }
                             (Value::U31(lhs), Value::U32(rhs)) => {
@@ -675,7 +679,13 @@ impl Emit for Expr {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match self {
             Expr::Parenthesized(e) => e.emit(ctx),
-            Expr::Ident(_) => todo!(),
+            Expr::Ident(i) => {
+                if let Some(sym) = ctx.lookup_sym(&i.clone().try_into().unwrap()) {
+                    sym.ident.emit(ctx)
+                } else {
+                    Err(ParseErr::new(i.span(), "undefined symbol").into())
+                }
+            }
             Expr::Literal(lit) => lit.emit(ctx),
             Expr::FnCall(call) => call.emit(ctx),
             Expr::Ambiguous(_) => todo!(),

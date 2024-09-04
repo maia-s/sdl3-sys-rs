@@ -3,7 +3,7 @@ use crate::{
     parse::{
         ArgDecl, Define, DocComment, DocCommentFile, Expr, FnAbi, FnDeclArgs, FnPointer, Function,
         GetSpan, Ident, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock,
-        PreProcBlockKind, PrimitiveType, Type, TypeDef, TypeEnum,
+        PreProcBlockKind, PrimitiveType, RustCode, Type, TypeDef, TypeEnum,
     },
 };
 use std::{
@@ -82,6 +82,7 @@ pub const fn is_valid_ident(s: &str) -> bool {
 fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
     if let Some(abi) = &abi {
         match abi.ident.as_str() {
+            "__cdecl" => write!(ctx, "extern \"cdecl\" ")?,
             "SDLCALL" => {
                 if for_fn_ptr {
                     write!(ctx, "extern_sdlcall!(")?
@@ -91,7 +92,6 @@ fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: boo
                 }
                 return Ok(());
             }
-            "__cdecl" => write!(ctx, "extern \"cdecl\" ")?,
             _ => return Err(ParseErr::new(abi.span(), "can't emit this abi").into()),
         }
     } else {
@@ -227,7 +227,16 @@ impl Emit for Item {
                 Ok(())
             }
             Item::FileDoc(dc) => dc.emit(ctx),
-            Item::StructOrUnion(_) => todo!(),
+            Item::StructOrUnion(s) => {
+                if let (Some(ident), false) = (&s.ident, s.fields.is_some()) {
+                    ctx.scope_mut()
+                        .register_struct_sym(ident.clone(), false, s.doc.clone())?;
+                    Ok(())
+                } else {
+                    dbg!(s);
+                    todo!()
+                }
+            }
             Item::Enum(_) => todo!(),
             Item::Function(f) => f.emit(ctx),
             Item::Expr(e) => e.emit(ctx),
@@ -280,12 +289,12 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
                 };
                 if value.is_none() {
                     if let Expr::BinaryOp(bop) = &expr {
-                        if bop.op.as_str() == "==" {
-                            if let Expr::Ident(lhs) = &bop.lhs {
-                                if let Some(rhs) = bop.rhs.try_eval(ctx)? {
-                                    value = ctx.try_target_dependent_if_compare(lhs.as_str(), rhs);
-                                }
-                            }
+                        if let Expr::Ident(lhs) = &bop.lhs {
+                            value = ctx.try_target_dependent_if_compare(
+                                bop.op.as_str(),
+                                lhs.as_str(),
+                                &bop.rhs,
+                            );
                         }
                     }
                 }
@@ -362,46 +371,87 @@ impl Emit for Define {
         )?;
         if self.args.is_none() {
             let ident = self.ident.as_str();
-            if ident.starts_with("SDL_") && ident.ends_with("_h_") {
+            if ident.ends_with("_h_") {
                 // skip include guard define
                 return Ok(());
             }
             if let Some(value) = self.value.try_eval(ctx)? {
                 match value {
                     Value::I32(val) => {
+                        ctx.register_sym(
+                            self.ident.clone(),
+                            Some(Type::primitive(PrimitiveType::Int32T)),
+                        )?;
                         writeln!(ctx, "pub const {ident}: ::core::primitive::i32 = {val};")?
                     }
                     Value::U31(val) => {
+                        ctx.register_sym(
+                            self.ident.clone(),
+                            Some(Type::primitive(PrimitiveType::Int32T)),
+                        )?;
                         writeln!(ctx, "pub const {ident}: ::core::primitive::i32 = {val};")?
                     }
                     Value::U32(val) => {
+                        ctx.register_sym(
+                            self.ident.clone(),
+                            Some(Type::primitive(PrimitiveType::Uint32T)),
+                        )?;
                         writeln!(ctx, "pub const {ident}: ::core::primitive::u32 = {val};")?
                     }
                     Value::I64(val) => {
+                        ctx.register_sym(
+                            self.ident.clone(),
+                            Some(Type::primitive(PrimitiveType::Int64T)),
+                        )?;
                         writeln!(ctx, "pub const {ident}: ::core::primitive::i64 = {val};")?
                     }
                     Value::U63(val) => {
+                        ctx.register_sym(
+                            self.ident.clone(),
+                            Some(Type::primitive(PrimitiveType::Int64T)),
+                        )?;
                         writeln!(ctx, "pub const {ident}: ::core::primitive::i64 = {val};")?
                     }
                     Value::U64(val) => {
+                        ctx.register_sym(
+                            self.ident.clone(),
+                            Some(Type::primitive(PrimitiveType::Uint64T)),
+                        )?;
                         writeln!(ctx, "pub const {ident}: ::core::primitive::u64 = {val};")?
                     }
                     Value::F32(val) => {
+                        ctx.register_sym(
+                            self.ident.clone(),
+                            Some(Type::primitive(PrimitiveType::Float)),
+                        )?;
                         writeln!(ctx, "pub const {ident}: ::core::primitive::f32 = {val};")?
                     }
                     Value::F64(val) => {
+                        ctx.register_sym(
+                            self.ident.clone(),
+                            Some(Type::primitive(PrimitiveType::Double)),
+                        )?;
                         writeln!(ctx, "pub const {ident}: ::core::primitive::f64 = {val};")?
                     }
                     Value::Bool(val) => {
+                        ctx.register_sym(
+                            self.ident.clone(),
+                            Some(Type::primitive(PrimitiveType::Bool)),
+                        )?;
                         writeln!(ctx, "pub const {ident}: ::core::primitive::bool = {val};")?
                     }
                     Value::String(val) => {
+                        ctx.register_sym(
+                            self.ident.clone(),
+                            Some(Type::rust("&::core::ffi::CStr")),
+                        )?;
                         write!(ctx, "pub const {ident}: &::core::ffi::CStr = ")?;
                         val.emit(ctx)?;
                         writeln!(ctx, ";")?;
                     }
                     Value::TargetDependent(_) => todo!(),
                     Value::RustCode(val) => {
+                        ctx.register_sym(self.ident.clone(), Some(val.ty.clone()))?;
                         write!(ctx, "pub const {ident}: ")?;
                         val.ty.emit(ctx)?;
                         writeln!(ctx, " = {val};")?;
@@ -526,9 +576,7 @@ impl Emit for Type {
                 PrimitiveType::Float => write!(ctx, "::core::ffi::c_float")?,
                 PrimitiveType::Double => write!(ctx, "::core::ffi::c_double")?,
                 PrimitiveType::Void => write!(ctx, "()")?,
-                PrimitiveType::Bool => {
-                    return Err(ParseErr::new(self.span(), "can't emit this type").into())
-                }
+                PrimitiveType::Bool => write!(ctx, "::core::primitive::bool")?,
                 PrimitiveType::SizeT => write!(ctx, "::core::primitive::usize")?,
                 PrimitiveType::Int8T => write!(ctx, "::core::primitive::i8")?,
                 PrimitiveType::Uint8T => write!(ctx, "::core::primitive::u8")?,
@@ -600,6 +648,8 @@ impl Emit for Type {
             TypeEnum::FnPointer(fnp) => fnp.emit(ctx)?,
 
             TypeEnum::DotDotDot => write!(ctx, "...")?,
+
+            TypeEnum::Rust(r) => write!(ctx, "{r}")?,
         }
         Ok(())
     }
@@ -607,52 +657,30 @@ impl Emit for Type {
 
 impl Emit for TypeDef {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        ctx.register_sym(self.ident.clone())?;
+        ctx.register_sym(self.ident.clone(), None)?;
 
         match &self.ty.ty {
             TypeEnum::Primitive(p) => {
                 self.doc.emit(ctx)?;
-                let p = match p {
-                    PrimitiveType::Char => "::core::ffi::c_char",
-                    PrimitiveType::SignedChar => "::core::ffi::c_schar",
-                    PrimitiveType::UnsignedChar => "::core::ffi::c_uchar",
-                    PrimitiveType::Short => "::core::ffi::c_short",
-                    PrimitiveType::UnsignedShort => "::core::ffi::c_ushort",
-                    PrimitiveType::Int => "::core::ffi::c_int",
-                    PrimitiveType::UnsignedInt => "::core::ffi::c_uint",
-                    PrimitiveType::Long => "::core::ffi::c_long",
-                    PrimitiveType::UnsignedLong => "::core::ffi::c_ulong",
-                    PrimitiveType::LongLong => "::core::ffi::c_longlong",
-                    PrimitiveType::UnsignedLongLong => "::core::ffi::c_ulonglong",
-                    PrimitiveType::Float => "::core::primitive::f32",
-                    PrimitiveType::Double => "::core::primitive::f64",
-                    PrimitiveType::Void => "()",
-                    PrimitiveType::Bool => "::core::primitive::bool",
-                    PrimitiveType::SizeT => "::core::primitive::usize",
-                    PrimitiveType::Int8T => "::core::primitive::i8",
-                    PrimitiveType::Uint8T => "::core::primitive::u8",
-                    PrimitiveType::Int16T => "::core::primitive::i16",
-                    PrimitiveType::Uint16T => "::core::primitive::u16",
-                    PrimitiveType::Int32T => "::core::primitive::i32",
-                    PrimitiveType::Uint32T => "::core::primitive::u32",
-                    PrimitiveType::Int64T => "::core::primitive::i64",
-                    PrimitiveType::Uint64T => "::core::primitive::u64",
-                    PrimitiveType::IntPtrT => "::core::primitive::isize",
-                    PrimitiveType::UintPtrT => "::core::primitive::usize",
-                    PrimitiveType::WcharT => "crate::ffi::c_wchar_t",
-                    PrimitiveType::VaList => "crate::ffi::VaList",
-                };
-                writeln!(ctx, "pub type {} = {p};", self.ident.as_str())?;
+                write!(ctx, "pub type ")?;
+                self.ident.emit(ctx)?;
+                write!(ctx, " = ")?;
+                self.ty.emit(ctx)?;
+                writeln!(ctx, ";")?;
                 writeln!(ctx)?;
                 Ok(())
             }
 
             TypeEnum::Ident(sym) => {
-                let (sym, _) = ctx.lookup_sym(sym).ok_or_else(|| {
+                let sym = ctx.lookup_sym(sym).ok_or_else(|| {
                     ParseErr::new(sym.span(), format!("`{}` not defined", sym.as_str()))
                 })?;
                 self.doc.emit(ctx)?;
-                writeln!(ctx, "pub type {} = {};", self.ident.as_str(), sym.as_str())?;
+                write!(ctx, "pub type ")?;
+                self.ident.emit(ctx)?;
+                write!(ctx, " = ")?;
+                sym.ident.emit(ctx)?;
+                writeln!(ctx, ";")?;
                 writeln!(ctx)?;
                 Ok(())
             }
@@ -711,7 +739,7 @@ impl Emit for TypeDef {
                 let mut next_expr = Some(Expr::Literal(Literal::Integer(IntegerLiteral::zero())));
 
                 for variant in &e.variants {
-                    ctx.register_sym(variant.ident.clone())?;
+                    ctx.register_sym(variant.ident.clone(), Some(Type::ident(self.ident.clone())))?;
                     let variant_ident = variant.ident.as_str();
                     let short_variant_ident = variant_ident.strip_prefix(prefix).unwrap();
                     let is_short_valid = is_valid_ident(short_variant_ident);
@@ -837,6 +865,11 @@ impl Emit for TypeDef {
             TypeEnum::DotDotDot => {
                 self.doc.emit(ctx)?;
                 todo!()
+            }
+
+            TypeEnum::Rust(r) => {
+                writeln!(ctx, "pub type {} = {r};", self.ident.as_str())?;
+                Ok(())
             }
         }
     }

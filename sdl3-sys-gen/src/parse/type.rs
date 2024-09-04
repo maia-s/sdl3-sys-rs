@@ -1,6 +1,6 @@
 use super::{
     DocComment, Enum, Expr, FnAbi, FnDeclArgs, GetSpan, Ident, Kw_const, Kw_typedef, Op, Parse,
-    ParseRawRes, PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion, WsAndComments,
+    ParseRawRes, PrimitiveType, PrimitiveTypeParse, RustCode, Span, StructOrUnion, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -31,6 +31,22 @@ impl Type {
             span: Span::none(),
             is_const: false,
             ty: TypeEnum::Primitive(primitive),
+        }
+    }
+
+    pub fn ident(ident: Ident) -> Self {
+        Self {
+            span: Span::none(),
+            is_const: false,
+            ty: TypeEnum::Ident(ident),
+        }
+    }
+
+    pub fn rust(rust: impl Into<String>) -> Self {
+        Self {
+            span: Span::none(),
+            is_const: false,
+            ty: TypeEnum::Rust(rust.into()),
         }
     }
 
@@ -71,6 +87,7 @@ pub enum TypeEnum {
     Array(Box<Type>, Expr),
     FnPointer(Box<FnPointer>),
     DotDotDot,
+    Rust(String),
 }
 
 impl TypeEnum {
