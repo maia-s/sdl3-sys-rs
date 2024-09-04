@@ -17,3 +17,5 @@ pub mod camera;
 pub mod clipboard;
 pub mod cpuinfo;
 pub mod dialog;
+pub mod guid;
+pub mod power;
