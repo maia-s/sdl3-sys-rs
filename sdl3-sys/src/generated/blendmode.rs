@@ -19,21 +19,21 @@ use super::stdinc::*;
 /// \sa SDL_ComposeCustomBlendMode
 pub type SDL_BlendMode = Uint32;
 
-pub const SDL_BLENDMODE_NONE: ::core::primitive::u32 = 0;
+pub const SDL_BLENDMODE_NONE: ::core::primitive::u32 = 0_u32;
 
-pub const SDL_BLENDMODE_BLEND: ::core::primitive::u32 = 1;
+pub const SDL_BLENDMODE_BLEND: ::core::primitive::u32 = 1_u32;
 
-pub const SDL_BLENDMODE_BLEND_PREMULTIPLIED: ::core::primitive::u32 = 16;
+pub const SDL_BLENDMODE_BLEND_PREMULTIPLIED: ::core::primitive::u32 = 16_u32;
 
-pub const SDL_BLENDMODE_ADD: ::core::primitive::u32 = 2;
+pub const SDL_BLENDMODE_ADD: ::core::primitive::u32 = 2_u32;
 
-pub const SDL_BLENDMODE_ADD_PREMULTIPLIED: ::core::primitive::u32 = 32;
+pub const SDL_BLENDMODE_ADD_PREMULTIPLIED: ::core::primitive::u32 = 32_u32;
 
-pub const SDL_BLENDMODE_MOD: ::core::primitive::u32 = 4;
+pub const SDL_BLENDMODE_MOD: ::core::primitive::u32 = 4_u32;
 
-pub const SDL_BLENDMODE_MUL: ::core::primitive::u32 = 8;
+pub const SDL_BLENDMODE_MUL: ::core::primitive::u32 = 8_u32;
 
-pub const SDL_BLENDMODE_INVALID: ::core::primitive::u32 = 2147483647;
+pub const SDL_BLENDMODE_INVALID: ::core::primitive::u32 = 2147483647_u32;
 
 /// The blend operation used when combining source and destination pixel
 /// components.

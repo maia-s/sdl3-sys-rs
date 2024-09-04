@@ -53,6 +53,23 @@ impl Value {
     pub fn is_falsy(&self) -> bool {
         !self.is_truthy()
     }
+
+    pub fn ty(&self) -> Type {
+        match self {
+            Value::I32(_) => Type::primitive(PrimitiveType::Int32T),
+            Value::U31(_) => Type::primitive(PrimitiveType::Int32T),
+            Value::U32(_) => Type::primitive(PrimitiveType::Uint32T),
+            Value::I64(_) => Type::primitive(PrimitiveType::Int64T),
+            Value::U63(_) => Type::primitive(PrimitiveType::Int64T),
+            Value::U64(_) => Type::primitive(PrimitiveType::Uint64T),
+            Value::F32(_) => Type::primitive(PrimitiveType::Float),
+            Value::F64(_) => Type::primitive(PrimitiveType::Double),
+            Value::Bool(_) => Type::primitive(PrimitiveType::Bool),
+            Value::String(_) => Type::rust("&::core::ffi::CStr"),
+            Value::RustCode(r) => r.ty.clone(),
+            Value::TargetDependent(_) => todo!(),
+        }
+    }
 }
 
 impl TryFrom<Value> for u64 {

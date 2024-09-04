@@ -18,7 +18,7 @@ use super::properties::*;
 /// \since This datatype is available since SDL 3.0.0.
 pub type SDL_SensorID = Uint32;
 
-pub const SDL_STANDARD_GRAVITY: ::core::primitive::f32 = 9.80665;
+pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 
 /// The different sensors defined by SDL.
 ///

@@ -25,13 +25,13 @@ use super::iostream::*;
 /// \since This datatype is available since SDL 3.0.0.
 pub type SDL_SurfaceFlags = Uint32;
 
-pub const SDL_SURFACE_PREALLOCATED: ::core::primitive::u32 = 1;
+pub const SDL_SURFACE_PREALLOCATED: ::core::primitive::u32 = 1_u32;
 
-pub const SDL_SURFACE_LOCK_NEEDED: ::core::primitive::u32 = 2;
+pub const SDL_SURFACE_LOCK_NEEDED: ::core::primitive::u32 = 2_u32;
 
-pub const SDL_SURFACE_LOCKED: ::core::primitive::u32 = 4;
+pub const SDL_SURFACE_LOCKED: ::core::primitive::u32 = 4_u32;
 
-pub const SDL_SURFACE_SIMD_ALIGNED: ::core::primitive::u32 = 8;
+pub const SDL_SURFACE_SIMD_ALIGNED: ::core::primitive::u32 = 8_u32;
 
 /// The scaling mode.
 ///

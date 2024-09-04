@@ -376,87 +376,15 @@ impl Emit for Define {
                 return Ok(());
             }
             if let Some(value) = self.value.try_eval(ctx)? {
-                match value {
-                    Value::I32(val) => {
-                        ctx.register_sym(
-                            self.ident.clone(),
-                            Some(Type::primitive(PrimitiveType::Int32T)),
-                        )?;
-                        writeln!(ctx, "pub const {ident}: ::core::primitive::i32 = {val};")?
-                    }
-                    Value::U31(val) => {
-                        ctx.register_sym(
-                            self.ident.clone(),
-                            Some(Type::primitive(PrimitiveType::Int32T)),
-                        )?;
-                        writeln!(ctx, "pub const {ident}: ::core::primitive::i32 = {val};")?
-                    }
-                    Value::U32(val) => {
-                        ctx.register_sym(
-                            self.ident.clone(),
-                            Some(Type::primitive(PrimitiveType::Uint32T)),
-                        )?;
-                        writeln!(ctx, "pub const {ident}: ::core::primitive::u32 = {val};")?
-                    }
-                    Value::I64(val) => {
-                        ctx.register_sym(
-                            self.ident.clone(),
-                            Some(Type::primitive(PrimitiveType::Int64T)),
-                        )?;
-                        writeln!(ctx, "pub const {ident}: ::core::primitive::i64 = {val};")?
-                    }
-                    Value::U63(val) => {
-                        ctx.register_sym(
-                            self.ident.clone(),
-                            Some(Type::primitive(PrimitiveType::Int64T)),
-                        )?;
-                        writeln!(ctx, "pub const {ident}: ::core::primitive::i64 = {val};")?
-                    }
-                    Value::U64(val) => {
-                        ctx.register_sym(
-                            self.ident.clone(),
-                            Some(Type::primitive(PrimitiveType::Uint64T)),
-                        )?;
-                        writeln!(ctx, "pub const {ident}: ::core::primitive::u64 = {val};")?
-                    }
-                    Value::F32(val) => {
-                        ctx.register_sym(
-                            self.ident.clone(),
-                            Some(Type::primitive(PrimitiveType::Float)),
-                        )?;
-                        writeln!(ctx, "pub const {ident}: ::core::primitive::f32 = {val};")?
-                    }
-                    Value::F64(val) => {
-                        ctx.register_sym(
-                            self.ident.clone(),
-                            Some(Type::primitive(PrimitiveType::Double)),
-                        )?;
-                        writeln!(ctx, "pub const {ident}: ::core::primitive::f64 = {val};")?
-                    }
-                    Value::Bool(val) => {
-                        ctx.register_sym(
-                            self.ident.clone(),
-                            Some(Type::primitive(PrimitiveType::Bool)),
-                        )?;
-                        writeln!(ctx, "pub const {ident}: ::core::primitive::bool = {val};")?
-                    }
-                    Value::String(val) => {
-                        ctx.register_sym(
-                            self.ident.clone(),
-                            Some(Type::rust("&::core::ffi::CStr")),
-                        )?;
-                        write!(ctx, "pub const {ident}: &::core::ffi::CStr = ")?;
-                        val.emit(ctx)?;
-                        writeln!(ctx, ";")?;
-                    }
-                    Value::TargetDependent(_) => todo!(),
-                    Value::RustCode(val) => {
-                        ctx.register_sym(self.ident.clone(), Some(val.ty.clone()))?;
-                        write!(ctx, "pub const {ident}: ")?;
-                        val.ty.emit(ctx)?;
-                        writeln!(ctx, " = {val};")?;
-                    }
-                }
+                let ty = value.ty();
+                ctx.register_sym(self.ident.clone(), Some(ty.clone()))?;
+                write!(ctx, "pub const ")?;
+                self.ident.emit(ctx)?;
+                write!(ctx, ": ")?;
+                ty.emit(ctx)?;
+                write!(ctx, " = ")?;
+                value.emit(ctx)?;
+                writeln!(ctx, ";")?;
                 writeln!(ctx)?;
             }
         }

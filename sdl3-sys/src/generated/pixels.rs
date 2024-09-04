@@ -10,11 +10,11 @@ use super::error::*;
 
 pub const SDL_ALPHA_OPAQUE: ::core::primitive::i32 = 255;
 
-pub const SDL_ALPHA_OPAQUE_FLOAT: ::core::primitive::f32 = 1;
+pub const SDL_ALPHA_OPAQUE_FLOAT: ::core::ffi::c_float = 1_f32;
 
 pub const SDL_ALPHA_TRANSPARENT: ::core::primitive::i32 = 0;
 
-pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::primitive::f32 = 0;
+pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0_f32;
 
 /// Pixel type.
 ///

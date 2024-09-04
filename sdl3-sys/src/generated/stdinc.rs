@@ -89,9 +89,9 @@ pub const SDL_MIN_UINT32: Uint32 = (0x00000000) as Uint32;
 /// \sa SDL_SINT64_C
 pub type Sint64 = ::core::primitive::i64;
 
-pub const SDL_MAX_SINT64: ::core::primitive::i64 = 9223372036854775807;
+pub const SDL_MAX_SINT64: ::core::primitive::i64 = 9223372036854775807_i64;
 
-pub const SDL_MIN_SINT64: ::core::primitive::i64 = -9223372036854775808;
+pub const SDL_MIN_SINT64: ::core::primitive::i64 = -9223372036854775808_i64;
 
 /// An unsigned 64-bit integer type.
 ///
@@ -100,9 +100,9 @@ pub const SDL_MIN_SINT64: ::core::primitive::i64 = -9223372036854775808;
 /// \sa SDL_UINT64_C
 pub type Uint64 = ::core::primitive::u64;
 
-pub const SDL_MAX_UINT64: ::core::primitive::u64 = 18446744073709551615;
+pub const SDL_MAX_UINT64: ::core::primitive::u64 = 18446744073709551615_u64;
 
-pub const SDL_MIN_UINT64: ::core::primitive::u64 = 0;
+pub const SDL_MIN_UINT64: ::core::primitive::u64 = 0_u64;
 
 /// SDL times are signed, 64-bit integers representing nanoseconds since the
 /// Unix epoch (Jan 1, 1970).
@@ -117,9 +117,9 @@ pub const SDL_MIN_UINT64: ::core::primitive::u64 = 0;
 /// \sa SDL_MIN_SINT64
 pub type SDL_Time = Sint64;
 
-pub const SDL_MAX_TIME: ::core::primitive::i64 = 9223372036854775807;
+pub const SDL_MAX_TIME: ::core::primitive::i64 = 9223372036854775807_i64;
 
-pub const SDL_MIN_TIME: ::core::primitive::i64 = -9223372036854775808;
+pub const SDL_MIN_TIME: ::core::primitive::i64 = -9223372036854775808_i64;
 
 pub const SDL_FLT_EPSILON: ::core::ffi::c_float = ::core::primitive::f32::EPSILON;
 
@@ -1420,9 +1420,9 @@ extern_sdlcall! {{
     pub fn SDL_rand_bits_r(state: *mut Uint64) -> Uint32;
 }}
 
-pub const SDL_PI_D: ::core::primitive::f64 = 3.141592653589793;
+pub const SDL_PI_D: ::core::ffi::c_double = 3.141592653589793_f64;
 
-pub const SDL_PI_F: ::core::primitive::f32 = 3.1415927;
+pub const SDL_PI_F: ::core::ffi::c_float = 3.1415927_f32;
 
 extern_sdlcall! {{
     /// Compute the arc cosine of `x`.

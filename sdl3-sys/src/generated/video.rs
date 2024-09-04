@@ -133,59 +133,59 @@ pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation = SDL_Display
 /// \sa SDL_GetWindowFlags
 pub type SDL_WindowFlags = Uint64;
 
-pub const SDL_WINDOW_FULLSCREEN: ::core::primitive::u64 = 1;
+pub const SDL_WINDOW_FULLSCREEN: ::core::primitive::u64 = 1_u64;
 
-pub const SDL_WINDOW_OPENGL: ::core::primitive::u64 = 2;
+pub const SDL_WINDOW_OPENGL: ::core::primitive::u64 = 2_u64;
 
-pub const SDL_WINDOW_OCCLUDED: ::core::primitive::u64 = 4;
+pub const SDL_WINDOW_OCCLUDED: ::core::primitive::u64 = 4_u64;
 
-pub const SDL_WINDOW_HIDDEN: ::core::primitive::u64 = 8;
+pub const SDL_WINDOW_HIDDEN: ::core::primitive::u64 = 8_u64;
 
-pub const SDL_WINDOW_BORDERLESS: ::core::primitive::u64 = 16;
+pub const SDL_WINDOW_BORDERLESS: ::core::primitive::u64 = 16_u64;
 
-pub const SDL_WINDOW_RESIZABLE: ::core::primitive::u64 = 32;
+pub const SDL_WINDOW_RESIZABLE: ::core::primitive::u64 = 32_u64;
 
-pub const SDL_WINDOW_MINIMIZED: ::core::primitive::u64 = 64;
+pub const SDL_WINDOW_MINIMIZED: ::core::primitive::u64 = 64_u64;
 
-pub const SDL_WINDOW_MAXIMIZED: ::core::primitive::u64 = 128;
+pub const SDL_WINDOW_MAXIMIZED: ::core::primitive::u64 = 128_u64;
 
-pub const SDL_WINDOW_MOUSE_GRABBED: ::core::primitive::u64 = 256;
+pub const SDL_WINDOW_MOUSE_GRABBED: ::core::primitive::u64 = 256_u64;
 
-pub const SDL_WINDOW_INPUT_FOCUS: ::core::primitive::u64 = 512;
+pub const SDL_WINDOW_INPUT_FOCUS: ::core::primitive::u64 = 512_u64;
 
-pub const SDL_WINDOW_MOUSE_FOCUS: ::core::primitive::u64 = 1024;
+pub const SDL_WINDOW_MOUSE_FOCUS: ::core::primitive::u64 = 1024_u64;
 
-pub const SDL_WINDOW_EXTERNAL: ::core::primitive::u64 = 2048;
+pub const SDL_WINDOW_EXTERNAL: ::core::primitive::u64 = 2048_u64;
 
-pub const SDL_WINDOW_MODAL: ::core::primitive::u64 = 4096;
+pub const SDL_WINDOW_MODAL: ::core::primitive::u64 = 4096_u64;
 
-pub const SDL_WINDOW_HIGH_PIXEL_DENSITY: ::core::primitive::u64 = 8192;
+pub const SDL_WINDOW_HIGH_PIXEL_DENSITY: ::core::primitive::u64 = 8192_u64;
 
-pub const SDL_WINDOW_MOUSE_CAPTURE: ::core::primitive::u64 = 16384;
+pub const SDL_WINDOW_MOUSE_CAPTURE: ::core::primitive::u64 = 16384_u64;
 
-pub const SDL_WINDOW_MOUSE_RELATIVE_MODE: ::core::primitive::u64 = 32768;
+pub const SDL_WINDOW_MOUSE_RELATIVE_MODE: ::core::primitive::u64 = 32768_u64;
 
-pub const SDL_WINDOW_ALWAYS_ON_TOP: ::core::primitive::u64 = 65536;
+pub const SDL_WINDOW_ALWAYS_ON_TOP: ::core::primitive::u64 = 65536_u64;
 
-pub const SDL_WINDOW_UTILITY: ::core::primitive::u64 = 131072;
+pub const SDL_WINDOW_UTILITY: ::core::primitive::u64 = 131072_u64;
 
-pub const SDL_WINDOW_TOOLTIP: ::core::primitive::u64 = 262144;
+pub const SDL_WINDOW_TOOLTIP: ::core::primitive::u64 = 262144_u64;
 
-pub const SDL_WINDOW_POPUP_MENU: ::core::primitive::u64 = 524288;
+pub const SDL_WINDOW_POPUP_MENU: ::core::primitive::u64 = 524288_u64;
 
-pub const SDL_WINDOW_KEYBOARD_GRABBED: ::core::primitive::u64 = 1048576;
+pub const SDL_WINDOW_KEYBOARD_GRABBED: ::core::primitive::u64 = 1048576_u64;
 
-pub const SDL_WINDOW_VULKAN: ::core::primitive::u64 = 268435456;
+pub const SDL_WINDOW_VULKAN: ::core::primitive::u64 = 268435456_u64;
 
-pub const SDL_WINDOW_METAL: ::core::primitive::u64 = 536870912;
+pub const SDL_WINDOW_METAL: ::core::primitive::u64 = 536870912_u64;
 
-pub const SDL_WINDOW_TRANSPARENT: ::core::primitive::u64 = 1073741824;
+pub const SDL_WINDOW_TRANSPARENT: ::core::primitive::u64 = 1073741824_u64;
 
-pub const SDL_WINDOW_NOT_FOCUSABLE: ::core::primitive::u64 = 2147483648;
+pub const SDL_WINDOW_NOT_FOCUSABLE: ::core::primitive::u64 = 2147483648_u64;
 
-pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376;
+pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376_u32;
 
-pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832;
+pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 
 /// Window flash operation.
 ///
@@ -2153,7 +2153,7 @@ extern_sdlcall! {{
 
 pub const SDL_WINDOW_SURFACE_VSYNC_DISABLED: ::core::primitive::i32 = 0;
 
-pub const SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE: ::core::primitive::i32 = -1;
+pub const SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE: ::core::primitive::i32 = -1_i32;
 
 extern_sdlcall! {{
     /// Get VSync for the window surface.

@@ -115,9 +115,9 @@ pub const SDL_JOYSTICK_CONNECTION_WIRELESS: SDL_JoystickConnectionState = SDL_Jo
 
 pub const SDL_JOYSTICK_AXIS_MAX: ::core::primitive::i32 = 32767;
 
-pub const SDL_JOYSTICK_AXIS_MIN: ::core::primitive::i32 = -32768;
+pub const SDL_JOYSTICK_AXIS_MIN: ::core::primitive::i32 = -32768_i32;
 
-pub const SDL_IPHONE_MAX_GFORCE: ::core::primitive::f64 = 5;
+pub const SDL_IPHONE_MAX_GFORCE: ::core::ffi::c_double = 5_f64;
 
 extern_sdlcall! {{
     /// Locking for atomic access to the joystick API.
@@ -1015,23 +1015,23 @@ extern_sdlcall! {{
     pub fn SDL_GetJoystickHat(joystick: *mut SDL_Joystick, hat: ::core::ffi::c_int) -> Uint8;
 }}
 
-pub const SDL_HAT_CENTERED: ::core::primitive::u32 = 0;
+pub const SDL_HAT_CENTERED: ::core::primitive::u32 = 0_u32;
 
-pub const SDL_HAT_UP: ::core::primitive::u32 = 1;
+pub const SDL_HAT_UP: ::core::primitive::u32 = 1_u32;
 
-pub const SDL_HAT_RIGHT: ::core::primitive::u32 = 2;
+pub const SDL_HAT_RIGHT: ::core::primitive::u32 = 2_u32;
 
-pub const SDL_HAT_DOWN: ::core::primitive::u32 = 4;
+pub const SDL_HAT_DOWN: ::core::primitive::u32 = 4_u32;
 
-pub const SDL_HAT_LEFT: ::core::primitive::u32 = 8;
+pub const SDL_HAT_LEFT: ::core::primitive::u32 = 8_u32;
 
-pub const SDL_HAT_RIGHTUP: ::core::primitive::u32 = 3;
+pub const SDL_HAT_RIGHTUP: ::core::primitive::u32 = 3_u32;
 
-pub const SDL_HAT_RIGHTDOWN: ::core::primitive::u32 = 6;
+pub const SDL_HAT_RIGHTDOWN: ::core::primitive::u32 = 6_u32;
 
-pub const SDL_HAT_LEFTUP: ::core::primitive::u32 = 9;
+pub const SDL_HAT_LEFTUP: ::core::primitive::u32 = 9_u32;
 
-pub const SDL_HAT_LEFTDOWN: ::core::primitive::u32 = 12;
+pub const SDL_HAT_LEFTDOWN: ::core::primitive::u32 = 12_u32;
 
 extern_sdlcall! {{
     /// Get the current state of a button on a joystick.

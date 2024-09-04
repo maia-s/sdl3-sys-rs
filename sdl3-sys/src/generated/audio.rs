@@ -76,13 +76,13 @@ use super::iostream::*;
 
 use super::thread::*;
 
-pub const SDL_AUDIO_MASK_BITSIZE: ::core::primitive::u32 = 255;
+pub const SDL_AUDIO_MASK_BITSIZE: ::core::primitive::u32 = 255_u32;
 
-pub const SDL_AUDIO_MASK_FLOAT: ::core::primitive::u32 = 256;
+pub const SDL_AUDIO_MASK_FLOAT: ::core::primitive::u32 = 256_u32;
 
-pub const SDL_AUDIO_MASK_BIG_ENDIAN: ::core::primitive::u32 = 4096;
+pub const SDL_AUDIO_MASK_BIG_ENDIAN: ::core::primitive::u32 = 4096_u32;
 
-pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768;
+pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 
 /// Audio format.
 ///
