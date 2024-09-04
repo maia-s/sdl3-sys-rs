@@ -358,7 +358,7 @@ pub struct SDL_VirtualJoystickTouchpadDesc {
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_VirtualJoystickSensorDesc {
     /// the type of this sensor
-    pub type: SDL_SensorType,
+    pub r#type: SDL_SensorType,
     /// the update frequency of this sensor, may be 0.0f
     pub rate: ::core::ffi::c_float,
 }
@@ -376,7 +376,7 @@ pub struct SDL_VirtualJoystickSensorDesc {
 #[derive(Clone, Copy, Debug)]
 pub struct SDL_VirtualJoystickDesc {
     /// `SDL_JoystickType`
-    pub type: Uint16,
+    pub r#type: Uint16,
     /// unused
     pub padding: Uint16,
     /// the USB vendor ID of this joystick
@@ -593,7 +593,7 @@ extern_sdlcall! {{
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SendJoystickVirtualSensorData(joystick: *mut SDL_Joystick, type: SDL_SensorType, sensor_timestamp: Uint64, data: *const ::core::ffi::c_float, num_values: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SendJoystickVirtualSensorData(joystick: *mut SDL_Joystick, r#type: SDL_SensorType, sensor_timestamp: Uint64, data: *const ::core::ffi::c_float, num_values: ::core::ffi::c_int) -> SDL_bool;
 }}
 
 extern_sdlcall! {{

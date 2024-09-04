@@ -64,6 +64,7 @@ pub const fn is_rust_keyword(s: &str) -> bool {
             | b"trait"
             | b"true"
             | b"try"
+            | b"type"
             | b"typeof"
             | b"unsafe"
             | b"unsized"
