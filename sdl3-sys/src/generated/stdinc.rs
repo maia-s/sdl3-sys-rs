@@ -2842,19 +2842,19 @@ extern_sdlcall! {{
     pub fn SDL_iconv_string(tocode: *const ::core::ffi::c_char, fromcode: *const ::core::ffi::c_char, inbuf: *const ::core::ffi::c_char, inbytesleft: ::core::primitive::usize) -> *mut ::core::ffi::c_char;
 }}
 
-// skipped inline function `SDL_size_mul_overflow`
+// skipped inline function `SDL_size_mul_check_overflow`
 
 #[cfg(not(doc))]
 emit! {
-    // skipped inline function `SDL_size_mul_overflow_builtin`
+    // skipped inline function `SDL_size_mul_check_overflow_builtin`
 
 }
 
-// skipped inline function `SDL_size_add_overflow`
+// skipped inline function `SDL_size_add_check_overflow`
 
 #[cfg(not(doc))]
 emit! {
-    // skipped inline function `SDL_size_add_overflow_builtin`
+    // skipped inline function `SDL_size_add_check_overflow_builtin`
 
 }
 
