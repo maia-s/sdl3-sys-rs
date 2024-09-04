@@ -117,7 +117,7 @@ pub const SDL_JOYSTICK_AXIS_MAX: ::core::primitive::i32 = 32767;
 
 pub const SDL_JOYSTICK_AXIS_MIN: ::core::primitive::i32 = -32768_i32;
 
-pub const SDL_IPHONE_MAX_GFORCE: ::core::ffi::c_double = 5_f64;
+pub const SDL_IPHONE_MAX_GFORCE: ::core::ffi::c_double = 5.0_f64;
 
 extern_sdlcall! {{
     /// Locking for atomic access to the joystick API.

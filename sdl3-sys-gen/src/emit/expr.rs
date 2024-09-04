@@ -111,7 +111,8 @@ impl Emit for Value {
             &Value::F32(f) => {
                 let s = format!("{}", f);
                 if s.parse() == Ok(f) {
-                    write!(ctx, "{s}_f32")?
+                    let dec = if s.contains('.') { "" } else { ".0" };
+                    write!(ctx, "{s}{dec}_f32")?
                 } else {
                     todo!()
                 }
@@ -119,7 +120,8 @@ impl Emit for Value {
             &Value::F64(f) => {
                 let s = format!("{}", f);
                 if s.parse() == Ok(f) {
-                    write!(ctx, "{s}_f64")?
+                    let dec = if s.contains('.') { "" } else { ".0" };
+                    write!(ctx, "{s}{dec}_f64")?
                 } else {
                     todo!()
                 }
