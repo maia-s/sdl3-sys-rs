@@ -66,7 +66,8 @@ pub type SDL_JoystickID = Uint32;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_JOYSTICK_TYPE_UNKNOWN`], [`SDL_JOYSTICK_TYPE_GAMEPAD`], [`SDL_JOYSTICK_TYPE_WHEEL`], [`SDL_JOYSTICK_TYPE_ARCADE_STICK`], [`SDL_JOYSTICK_TYPE_FLIGHT_STICK`], [`SDL_JOYSTICK_TYPE_DANCE_PAD`], [`SDL_JOYSTICK_TYPE_GUITAR`], [`SDL_JOYSTICK_TYPE_DRUM_KIT`], [`SDL_JOYSTICK_TYPE_ARCADE_PAD`], [`SDL_JOYSTICK_TYPE_THROTTLE`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoystickType(pub ::core::ffi::c_int);
 impl SDL_JoystickType {
     pub const UNKNOWN: Self = Self(0);
@@ -100,7 +101,8 @@ pub const SDL_JOYSTICK_TYPE_THROTTLE: SDL_JoystickType = SDL_JoystickType::THROT
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_JOYSTICK_CONNECTION_INVALID`], [`SDL_JOYSTICK_CONNECTION_UNKNOWN`], [`SDL_JOYSTICK_CONNECTION_WIRED`], [`SDL_JOYSTICK_CONNECTION_WIRELESS`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoystickConnectionState(pub ::core::ffi::c_int);
 impl SDL_JoystickConnectionState {
     pub const INVALID: Self = Self(-1_i32);
@@ -354,7 +356,8 @@ extern_sdlcall! {{
 ///
 /// \sa SDL_VirtualJoystickDesc
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_VirtualJoystickTouchpadDesc {
     /// the number of simultaneous fingers on this touchpad
     pub nfingers: Uint16,
@@ -367,7 +370,8 @@ pub struct SDL_VirtualJoystickTouchpadDesc {
 ///
 /// \sa SDL_VirtualJoystickDesc
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_VirtualJoystickSensorDesc {
     /// the type of this sensor
     pub r#type: SDL_SensorType,
@@ -385,7 +389,8 @@ pub struct SDL_VirtualJoystickSensorDesc {
 /// \sa SDL_VirtualJoystickSensorDesc
 /// \sa SDL_VirtualJoystickTouchpadDesc
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_VirtualJoystickDesc {
     /// `SDL_JoystickType`
     pub r#type: Uint16,

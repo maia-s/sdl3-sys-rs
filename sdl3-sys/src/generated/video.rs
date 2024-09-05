@@ -52,7 +52,8 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: &::core::ffi::CStr =
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_SYSTEM_THEME_UNKNOWN`], [`SDL_SYSTEM_THEME_LIGHT`], [`SDL_SYSTEM_THEME_DARK`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_SystemTheme(pub ::core::ffi::c_int);
 impl SDL_SystemTheme {
     /// Unknown system theme
@@ -79,7 +80,8 @@ pub const SDL_SYSTEM_THEME_DARK: SDL_SystemTheme = SDL_SystemTheme::DARK;
 /// \sa SDL_SetWindowFullscreenMode
 /// \sa SDL_GetWindowFullscreenMode
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DisplayMode {
     /// the display this mode is associated with
     pub displayID: SDL_DisplayID,
@@ -107,7 +109,8 @@ pub struct SDL_DisplayMode {
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_ORIENTATION_UNKNOWN`], [`SDL_ORIENTATION_LANDSCAPE`], [`SDL_ORIENTATION_LANDSCAPE_FLIPPED`], [`SDL_ORIENTATION_PORTRAIT`], [`SDL_ORIENTATION_PORTRAIT_FLIPPED`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DisplayOrientation(pub ::core::ffi::c_int);
 impl SDL_DisplayOrientation {
     /// The display orientation can't be determined
@@ -235,7 +238,8 @@ pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_FLASH_CANCEL`], [`SDL_FLASH_BRIEFLY`], [`SDL_FLASH_UNTIL_FOCUSED`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_FlashOperation(pub ::core::ffi::c_int);
 impl SDL_FlashOperation {
     /// Cancel any window flash state
@@ -297,7 +301,8 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<extern_sdlcall!(fn() -
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GL_RED_SIZE`], [`SDL_GL_GREEN_SIZE`], [`SDL_GL_BLUE_SIZE`], [`SDL_GL_ALPHA_SIZE`], [`SDL_GL_BUFFER_SIZE`], [`SDL_GL_DOUBLEBUFFER`], [`SDL_GL_DEPTH_SIZE`], [`SDL_GL_STENCIL_SIZE`], [`SDL_GL_ACCUM_RED_SIZE`], [`SDL_GL_ACCUM_GREEN_SIZE`], [`SDL_GL_ACCUM_BLUE_SIZE`], [`SDL_GL_ACCUM_ALPHA_SIZE`], [`SDL_GL_STEREO`], [`SDL_GL_MULTISAMPLEBUFFERS`], [`SDL_GL_MULTISAMPLESAMPLES`], [`SDL_GL_ACCELERATED_VISUAL`], [`SDL_GL_RETAINED_BACKING`], [`SDL_GL_CONTEXT_MAJOR_VERSION`], [`SDL_GL_CONTEXT_MINOR_VERSION`], [`SDL_GL_CONTEXT_FLAGS`], [`SDL_GL_CONTEXT_PROFILE_MASK`], [`SDL_GL_SHARE_WITH_CURRENT_CONTEXT`], [`SDL_GL_FRAMEBUFFER_SRGB_CAPABLE`], [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`], [`SDL_GL_CONTEXT_RESET_NOTIFICATION`], [`SDL_GL_CONTEXT_NO_ERROR`], [`SDL_GL_FLOATBUFFERS`], [`SDL_GL_EGL_PLATFORM`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLattr(pub ::core::ffi::c_int);
 impl SDL_GLattr {
     /// the minimum number of bits for the red channel of the color buffer; defaults to 3.
@@ -414,7 +419,8 @@ pub const SDL_GL_EGL_PLATFORM: SDL_GLattr = SDL_GLattr::EGL_PLATFORM;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GL_CONTEXT_PROFILE_CORE`], [`SDL_GL_CONTEXT_PROFILE_COMPATIBILITY`], [`SDL_GL_CONTEXT_PROFILE_ES`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLprofile(pub ::core::ffi::c_int);
 impl SDL_GLprofile {
     pub const CORE: Self = Self(0x1000);
@@ -433,7 +439,8 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLprofile = SDL_GLprofile::ES;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GL_CONTEXT_DEBUG_FLAG`], [`SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG`], [`SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG`], [`SDL_GL_CONTEXT_RESET_ISOLATION_FLAG`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLcontextFlag(pub ::core::ffi::c_int);
 impl SDL_GLcontextFlag {
     pub const DEBUG_FLAG: Self = Self(0x1000);
@@ -453,7 +460,8 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLcontextFlag = SDL_GLcontext
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE`], [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLcontextReleaseFlag(pub ::core::ffi::c_int);
 impl SDL_GLcontextReleaseFlag {
     pub const NONE: Self = Self(0x0000);
@@ -468,7 +476,8 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLcontextReleaseFlag = SDL_
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GL_CONTEXT_RESET_NO_NOTIFICATION`], [`SDL_GL_CONTEXT_RESET_LOSE_CONTEXT`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLContextResetNotification(pub ::core::ffi::c_int);
 impl SDL_GLContextResetNotification {
     pub const NO_NOTIFICATION: Self = Self(0x0000);
@@ -2486,7 +2495,8 @@ extern_sdlcall! {{
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_HITTEST_NORMAL`], [`SDL_HITTEST_DRAGGABLE`], [`SDL_HITTEST_RESIZE_TOPLEFT`], [`SDL_HITTEST_RESIZE_TOP`], [`SDL_HITTEST_RESIZE_TOPRIGHT`], [`SDL_HITTEST_RESIZE_RIGHT`], [`SDL_HITTEST_RESIZE_BOTTOMRIGHT`], [`SDL_HITTEST_RESIZE_BOTTOM`], [`SDL_HITTEST_RESIZE_BOTTOMLEFT`], [`SDL_HITTEST_RESIZE_LEFT`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HitTestResult(pub ::core::ffi::c_int);
 impl SDL_HitTestResult {
     /// Region is normal. No special properties.

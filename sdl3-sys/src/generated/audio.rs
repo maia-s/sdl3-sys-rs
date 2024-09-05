@@ -99,7 +99,8 @@ pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_AUDIO_UNKNOWN`], [`SDL_AUDIO_U8`], [`SDL_AUDIO_S8`], [`SDL_AUDIO_S16LE`], [`SDL_AUDIO_S16BE`], [`SDL_AUDIO_S32LE`], [`SDL_AUDIO_S32BE`], [`SDL_AUDIO_F32LE`], [`SDL_AUDIO_F32BE`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AudioFormat(pub ::core::ffi::c_int);
 impl SDL_AudioFormat {
     /// Unspecified audio format
@@ -179,7 +180,8 @@ pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID = (0xfffffffe) a
 ///
 /// \sa SDL_AudioFormat
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AudioSpec {
     /// Audio data format
     pub format: SDL_AudioFormat,

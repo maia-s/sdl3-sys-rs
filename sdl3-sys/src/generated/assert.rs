@@ -103,7 +103,8 @@ emit! {
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_ASSERTION_RETRY`], [`SDL_ASSERTION_BREAK`], [`SDL_ASSERTION_ABORT`], [`SDL_ASSERTION_IGNORE`], [`SDL_ASSERTION_ALWAYS_IGNORE`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AssertState(pub ::core::ffi::c_int);
 impl SDL_AssertState {
     /// Retry the assert immediately.
@@ -136,7 +137,8 @@ pub const SDL_ASSERTION_ALWAYS_IGNORE: SDL_AssertState = SDL_AssertState::ALWAYS
 ///
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AssertData {
     /// SDL_TRUE if app should always continue when assertion is triggered.
     pub always_ignore: SDL_bool,

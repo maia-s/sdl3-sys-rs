@@ -16,7 +16,8 @@ use super::error::*;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_POWERSTATE_ERROR`], [`SDL_POWERSTATE_UNKNOWN`], [`SDL_POWERSTATE_ON_BATTERY`], [`SDL_POWERSTATE_NO_BATTERY`], [`SDL_POWERSTATE_CHARGING`], [`SDL_POWERSTATE_CHARGED`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PowerState(pub ::core::ffi::c_int);
 impl SDL_PowerState {
     /// error determining power status

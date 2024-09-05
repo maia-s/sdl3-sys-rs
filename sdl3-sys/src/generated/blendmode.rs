@@ -49,7 +49,8 @@ pub const SDL_BLENDMODE_INVALID: ::core::primitive::u32 = 2147483647_u32;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_BLENDOPERATION_ADD`], [`SDL_BLENDOPERATION_SUBTRACT`], [`SDL_BLENDOPERATION_REV_SUBTRACT`], [`SDL_BLENDOPERATION_MINIMUM`], [`SDL_BLENDOPERATION_MAXIMUM`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_BlendOperation(pub ::core::ffi::c_int);
 impl SDL_BlendOperation {
     /// dst + src: supported by all renderers
@@ -85,7 +86,8 @@ pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_BLENDFACTOR_ZERO`], [`SDL_BLENDFACTOR_ONE`], [`SDL_BLENDFACTOR_SRC_COLOR`], [`SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR`], [`SDL_BLENDFACTOR_SRC_ALPHA`], [`SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA`], [`SDL_BLENDFACTOR_DST_COLOR`], [`SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR`], [`SDL_BLENDFACTOR_DST_ALPHA`], [`SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_BlendFactor(pub ::core::ffi::c_int);
 impl SDL_BlendFactor {
     /// 0, 0, 0, 0

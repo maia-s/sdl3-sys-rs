@@ -21,7 +21,8 @@ use super::properties::*;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_IO_STATUS_READY`], [`SDL_IO_STATUS_ERROR`], [`SDL_IO_STATUS_EOF`], [`SDL_IO_STATUS_NOT_READY`], [`SDL_IO_STATUS_READONLY`], [`SDL_IO_STATUS_WRITEONLY`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_IOStatus(pub ::core::ffi::c_int);
 impl SDL_IOStatus {
     /// Everything is ready (no errors and not EOF).
@@ -59,7 +60,8 @@ pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_IO_SEEK_SET`], [`SDL_IO_SEEK_CUR`], [`SDL_IO_SEEK_END`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_IOWhence(pub ::core::ffi::c_int);
 impl SDL_IOWhence {
     /// Seek from the beginning of data
@@ -85,7 +87,8 @@ pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
 ///
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_IOStreamInterface {
     /// Return the number of bytes in this SDL_IOStream
     ///

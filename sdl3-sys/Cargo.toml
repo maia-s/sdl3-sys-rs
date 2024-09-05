@@ -8,6 +8,9 @@ license = "Zlib"
 [features]
 default = []
 
+# Implement the Debug trait for applicable types
+debug-impls = []
+
 # These are mutually exlusive; if more than one is enabled, the former in the list is used
 # (so e.g. disabled overrides release). If none are selected, either release or debug will
 # be enabled based on the build profile

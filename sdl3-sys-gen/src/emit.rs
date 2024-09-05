@@ -659,7 +659,11 @@ impl Emit for TypeDef {
                 writeln!(ctx, "#[repr(transparent)]")?;
                 writeln!(
                     ctx,
-                    "#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]"
+                    "#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]"
+                )?;
+                writeln!(
+                    ctx,
+                    r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
                 )?;
                 writeln!(ctx, "pub struct {enum_ident}(pub {enum_rust_type});")?;
 
@@ -733,7 +737,11 @@ impl Emit for TypeDef {
                 if let Some(fields) = &s.fields {
                     self.doc.emit(ctx)?;
                     writeln!(ctx, "#[repr(C)]")?;
-                    writeln!(ctx, "#[derive(Clone, Copy, Debug)]")?;
+                    writeln!(ctx, "#[derive(Clone, Copy)]")?;
+                    writeln!(
+                        ctx,
+                        r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
+                    )?;
                     writeln!(
                         ctx,
                         "pub {} {} {{",

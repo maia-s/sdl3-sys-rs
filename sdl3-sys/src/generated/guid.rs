@@ -25,7 +25,8 @@ use super::error::*;
 ///
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GUID {
     pub data: [Uint8; 16],
 }

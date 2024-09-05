@@ -226,7 +226,8 @@ emit! {
 /// \sa SDL_AtomicSet
 /// \sa SDL_AtomicAdd
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AtomicInt {
     pub value: ::core::ffi::c_int,
 }

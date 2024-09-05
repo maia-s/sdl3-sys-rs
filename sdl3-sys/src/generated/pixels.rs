@@ -40,7 +40,8 @@ pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PIXELTYPE_UNKNOWN`], [`SDL_PIXELTYPE_INDEX1`], [`SDL_PIXELTYPE_INDEX4`], [`SDL_PIXELTYPE_INDEX8`], [`SDL_PIXELTYPE_PACKED8`], [`SDL_PIXELTYPE_PACKED16`], [`SDL_PIXELTYPE_PACKED32`], [`SDL_PIXELTYPE_ARRAYU8`], [`SDL_PIXELTYPE_ARRAYU16`], [`SDL_PIXELTYPE_ARRAYU32`], [`SDL_PIXELTYPE_ARRAYF16`], [`SDL_PIXELTYPE_ARRAYF32`], [`SDL_PIXELTYPE_INDEX2`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PixelType(pub ::core::ffi::c_int);
 impl SDL_PixelType {
     pub const UNKNOWN: Self = Self(0);
@@ -75,7 +76,8 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_BITMAPORDER_NONE`], [`SDL_BITMAPORDER_4321`], [`SDL_BITMAPORDER_1234`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_BitmapOrder(pub ::core::ffi::c_int);
 impl SDL_BitmapOrder {
     pub const NONE: Self = Self(0);
@@ -88,7 +90,8 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder(2);
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PACKEDORDER_NONE`], [`SDL_PACKEDORDER_XRGB`], [`SDL_PACKEDORDER_RGBX`], [`SDL_PACKEDORDER_ARGB`], [`SDL_PACKEDORDER_RGBA`], [`SDL_PACKEDORDER_XBGR`], [`SDL_PACKEDORDER_BGRX`], [`SDL_PACKEDORDER_ABGR`], [`SDL_PACKEDORDER_BGRA`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PackedOrder(pub ::core::ffi::c_int);
 impl SDL_PackedOrder {
     pub const NONE: Self = Self(0);
@@ -115,7 +118,8 @@ pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_ARRAYORDER_NONE`], [`SDL_ARRAYORDER_RGB`], [`SDL_ARRAYORDER_RGBA`], [`SDL_ARRAYORDER_ARGB`], [`SDL_ARRAYORDER_BGR`], [`SDL_ARRAYORDER_BGRA`], [`SDL_ARRAYORDER_ABGR`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ArrayOrder(pub ::core::ffi::c_int);
 impl SDL_ArrayOrder {
     pub const NONE: Self = Self(0);
@@ -138,7 +142,8 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PACKEDLAYOUT_NONE`], [`SDL_PACKEDLAYOUT_332`], [`SDL_PACKEDLAYOUT_4444`], [`SDL_PACKEDLAYOUT_1555`], [`SDL_PACKEDLAYOUT_5551`], [`SDL_PACKEDLAYOUT_565`], [`SDL_PACKEDLAYOUT_8888`], [`SDL_PACKEDLAYOUT_2101010`], [`SDL_PACKEDLAYOUT_1010102`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PackedLayout(pub ::core::ffi::c_int);
 impl SDL_PackedLayout {
     pub const NONE: Self = Self(0);
@@ -191,7 +196,8 @@ pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout(8);
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PIXELFORMAT_UNKNOWN`], [`SDL_PIXELFORMAT_INDEX1LSB`], [`SDL_PIXELFORMAT_INDEX1MSB`], [`SDL_PIXELFORMAT_INDEX2LSB`], [`SDL_PIXELFORMAT_INDEX2MSB`], [`SDL_PIXELFORMAT_INDEX4LSB`], [`SDL_PIXELFORMAT_INDEX4MSB`], [`SDL_PIXELFORMAT_INDEX8`], [`SDL_PIXELFORMAT_RGB332`], [`SDL_PIXELFORMAT_XRGB4444`], [`SDL_PIXELFORMAT_XBGR4444`], [`SDL_PIXELFORMAT_XRGB1555`], [`SDL_PIXELFORMAT_XBGR1555`], [`SDL_PIXELFORMAT_ARGB4444`], [`SDL_PIXELFORMAT_RGBA4444`], [`SDL_PIXELFORMAT_ABGR4444`], [`SDL_PIXELFORMAT_BGRA4444`], [`SDL_PIXELFORMAT_ARGB1555`], [`SDL_PIXELFORMAT_RGBA5551`], [`SDL_PIXELFORMAT_ABGR1555`], [`SDL_PIXELFORMAT_BGRA5551`], [`SDL_PIXELFORMAT_RGB565`], [`SDL_PIXELFORMAT_BGR565`], [`SDL_PIXELFORMAT_RGB24`], [`SDL_PIXELFORMAT_BGR24`], [`SDL_PIXELFORMAT_XRGB8888`], [`SDL_PIXELFORMAT_RGBX8888`], [`SDL_PIXELFORMAT_XBGR8888`], [`SDL_PIXELFORMAT_BGRX8888`], [`SDL_PIXELFORMAT_ARGB8888`], [`SDL_PIXELFORMAT_RGBA8888`], [`SDL_PIXELFORMAT_ABGR8888`], [`SDL_PIXELFORMAT_BGRA8888`], [`SDL_PIXELFORMAT_XRGB2101010`], [`SDL_PIXELFORMAT_XBGR2101010`], [`SDL_PIXELFORMAT_ARGB2101010`], [`SDL_PIXELFORMAT_ABGR2101010`], [`SDL_PIXELFORMAT_RGB48`], [`SDL_PIXELFORMAT_BGR48`], [`SDL_PIXELFORMAT_RGBA64`], [`SDL_PIXELFORMAT_ARGB64`], [`SDL_PIXELFORMAT_BGRA64`], [`SDL_PIXELFORMAT_ABGR64`], [`SDL_PIXELFORMAT_RGB48_FLOAT`], [`SDL_PIXELFORMAT_BGR48_FLOAT`], [`SDL_PIXELFORMAT_RGBA64_FLOAT`], [`SDL_PIXELFORMAT_ARGB64_FLOAT`], [`SDL_PIXELFORMAT_BGRA64_FLOAT`], [`SDL_PIXELFORMAT_ABGR64_FLOAT`], [`SDL_PIXELFORMAT_RGB96_FLOAT`], [`SDL_PIXELFORMAT_BGR96_FLOAT`], [`SDL_PIXELFORMAT_RGBA128_FLOAT`], [`SDL_PIXELFORMAT_ARGB128_FLOAT`], [`SDL_PIXELFORMAT_BGRA128_FLOAT`], [`SDL_PIXELFORMAT_ABGR128_FLOAT`], [`SDL_PIXELFORMAT_YV12`], [`SDL_PIXELFORMAT_IYUV`], [`SDL_PIXELFORMAT_YUY2`], [`SDL_PIXELFORMAT_UYVY`], [`SDL_PIXELFORMAT_YVYU`], [`SDL_PIXELFORMAT_NV12`], [`SDL_PIXELFORMAT_NV21`], [`SDL_PIXELFORMAT_P010`], [`SDL_PIXELFORMAT_EXTERNAL_OES`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PixelFormat(pub ::core::ffi::c_int);
 impl SDL_PixelFormat {
     pub const UNKNOWN: Self = Self(0);
@@ -356,7 +362,8 @@ emit! {
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_COLOR_TYPE_UNKNOWN`], [`SDL_COLOR_TYPE_RGB`], [`SDL_COLOR_TYPE_YCBCR`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ColorType(pub ::core::ffi::c_int);
 impl SDL_ColorType {
     pub const UNKNOWN: Self = Self(0);
@@ -374,7 +381,8 @@ pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_COLOR_RANGE_UNKNOWN`], [`SDL_COLOR_RANGE_LIMITED`], [`SDL_COLOR_RANGE_FULL`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ColorRange(pub ::core::ffi::c_int);
 impl SDL_ColorRange {
     pub const UNKNOWN: Self = Self(0);
@@ -396,7 +404,8 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_COLOR_PRIMARIES_UNKNOWN`], [`SDL_COLOR_PRIMARIES_BT709`], [`SDL_COLOR_PRIMARIES_UNSPECIFIED`], [`SDL_COLOR_PRIMARIES_BT470M`], [`SDL_COLOR_PRIMARIES_BT470BG`], [`SDL_COLOR_PRIMARIES_BT601`], [`SDL_COLOR_PRIMARIES_SMPTE240`], [`SDL_COLOR_PRIMARIES_GENERIC_FILM`], [`SDL_COLOR_PRIMARIES_BT2020`], [`SDL_COLOR_PRIMARIES_XYZ`], [`SDL_COLOR_PRIMARIES_SMPTE431`], [`SDL_COLOR_PRIMARIES_SMPTE432`], [`SDL_COLOR_PRIMARIES_EBU3213`], [`SDL_COLOR_PRIMARIES_CUSTOM`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ColorPrimaries(pub ::core::ffi::c_int);
 impl SDL_ColorPrimaries {
     pub const UNKNOWN: Self = Self(0);
@@ -459,7 +468,8 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_TRANSFER_CHARACTERISTICS_UNKNOWN`], [`SDL_TRANSFER_CHARACTERISTICS_BT709`], [`SDL_TRANSFER_CHARACTERISTICS_UNSPECIFIED`], [`SDL_TRANSFER_CHARACTERISTICS_GAMMA22`], [`SDL_TRANSFER_CHARACTERISTICS_GAMMA28`], [`SDL_TRANSFER_CHARACTERISTICS_BT601`], [`SDL_TRANSFER_CHARACTERISTICS_SMPTE240`], [`SDL_TRANSFER_CHARACTERISTICS_LINEAR`], [`SDL_TRANSFER_CHARACTERISTICS_LOG100`], [`SDL_TRANSFER_CHARACTERISTICS_LOG100_SQRT10`], [`SDL_TRANSFER_CHARACTERISTICS_IEC61966`], [`SDL_TRANSFER_CHARACTERISTICS_BT1361`], [`SDL_TRANSFER_CHARACTERISTICS_SRGB`], [`SDL_TRANSFER_CHARACTERISTICS_BT2020_10BIT`], [`SDL_TRANSFER_CHARACTERISTICS_BT2020_12BIT`], [`SDL_TRANSFER_CHARACTERISTICS_PQ`], [`SDL_TRANSFER_CHARACTERISTICS_SMPTE428`], [`SDL_TRANSFER_CHARACTERISTICS_HLG`], [`SDL_TRANSFER_CHARACTERISTICS_CUSTOM`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TransferCharacteristics(pub ::core::ffi::c_int);
 impl SDL_TransferCharacteristics {
     pub const UNKNOWN: Self = Self(0);
@@ -536,7 +546,8 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics = SDL
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_MATRIX_COEFFICIENTS_IDENTITY`], [`SDL_MATRIX_COEFFICIENTS_BT709`], [`SDL_MATRIX_COEFFICIENTS_UNSPECIFIED`], [`SDL_MATRIX_COEFFICIENTS_FCC`], [`SDL_MATRIX_COEFFICIENTS_BT470BG`], [`SDL_MATRIX_COEFFICIENTS_BT601`], [`SDL_MATRIX_COEFFICIENTS_SMPTE240`], [`SDL_MATRIX_COEFFICIENTS_YCGCO`], [`SDL_MATRIX_COEFFICIENTS_BT2020_NCL`], [`SDL_MATRIX_COEFFICIENTS_BT2020_CL`], [`SDL_MATRIX_COEFFICIENTS_SMPTE2085`], [`SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL`], [`SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL`], [`SDL_MATRIX_COEFFICIENTS_ICTCP`], [`SDL_MATRIX_COEFFICIENTS_CUSTOM`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MatrixCoefficients(pub ::core::ffi::c_int);
 impl SDL_MatrixCoefficients {
     pub const IDENTITY: Self = Self(0);
@@ -595,7 +606,8 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_CHROMA_LOCATION_NONE`], [`SDL_CHROMA_LOCATION_LEFT`], [`SDL_CHROMA_LOCATION_CENTER`], [`SDL_CHROMA_LOCATION_TOPLEFT`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ChromaLocation(pub ::core::ffi::c_int);
 impl SDL_ChromaLocation {
     /// RGB, no chroma sampling
@@ -632,7 +644,8 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_COLORSPACE_UNKNOWN`], [`SDL_COLORSPACE_SRGB`], [`SDL_COLORSPACE_SRGB_LINEAR`], [`SDL_COLORSPACE_HDR10`], [`SDL_COLORSPACE_JPEG`], [`SDL_COLORSPACE_BT601_LIMITED`], [`SDL_COLORSPACE_BT601_FULL`], [`SDL_COLORSPACE_BT709_LIMITED`], [`SDL_COLORSPACE_BT709_FULL`], [`SDL_COLORSPACE_BT2020_LIMITED`], [`SDL_COLORSPACE_BT2020_FULL`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Colorspace(pub ::core::ffi::c_int);
 impl SDL_Colorspace {
     pub const UNKNOWN: Self = Self(0);
@@ -688,7 +701,8 @@ pub const SDL_COLORSPACE_BT2020_FULL: SDL_Colorspace = SDL_Colorspace::BT2020_FU
 ///
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Color {
     pub r: Uint8,
     pub g: Uint8,
@@ -701,7 +715,8 @@ pub struct SDL_Color {
 ///
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_FColor {
     pub r: ::core::ffi::c_float,
     pub g: ::core::ffi::c_float,
@@ -715,7 +730,8 @@ pub struct SDL_FColor {
 ///
 /// \sa SDL_SetPaletteColors
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Palette {
     /// number of elements in `colors`.
     pub ncolors: ::core::ffi::c_int,
@@ -731,7 +747,8 @@ pub struct SDL_Palette {
 ///
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PixelFormatDetails {
     pub format: SDL_PixelFormat,
     pub bits_per_pixel: Uint8,

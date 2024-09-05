@@ -43,7 +43,8 @@ pub const SDL_SURFACE_SIMD_ALIGNED: ::core::primitive::u32 = 8_u32;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_SCALEMODE_NEAREST`], [`SDL_SCALEMODE_LINEAR`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ScaleMode(pub ::core::ffi::c_int);
 impl SDL_ScaleMode {
     /// nearest pixel sampling
@@ -62,7 +63,8 @@ pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_FLIP_NONE`], [`SDL_FLIP_HORIZONTAL`], [`SDL_FLIP_VERTICAL`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_FlipMode(pub ::core::ffi::c_int);
 impl SDL_FlipMode {
     /// Do not flip
@@ -95,7 +97,8 @@ pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
 ///
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Surface {
     /// Read-only
     pub flags: SDL_SurfaceFlags,

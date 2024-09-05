@@ -35,7 +35,8 @@ pub type SDL_CameraID = Uint32;
 /// \sa SDL_GetCameraSupportedFormats
 /// \sa SDL_GetCameraFormat
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_CameraSpec {
     /// Frame format
     pub format: SDL_PixelFormat,
@@ -59,7 +60,8 @@ pub struct SDL_CameraSpec {
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_CAMERA_POSITION_UNKNOWN`], [`SDL_CAMERA_POSITION_FRONT_FACING`], [`SDL_CAMERA_POSITION_BACK_FACING`]
 #[repr(transparent)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_CameraPosition(pub ::core::ffi::c_int);
 impl SDL_CameraPosition {
     pub const UNKNOWN: Self = Self(0);

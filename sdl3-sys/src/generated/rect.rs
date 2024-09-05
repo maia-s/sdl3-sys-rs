@@ -16,7 +16,8 @@ use super::error::*;
 /// \sa SDL_GetRectEnclosingPoints
 /// \sa SDL_PointInRect
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Point {
     pub x: ::core::ffi::c_int,
     pub y: ::core::ffi::c_int,
@@ -29,7 +30,8 @@ pub struct SDL_Point {
 /// \sa SDL_GetRectEnclosingPointsFloat
 /// \sa SDL_PointInRectFloat
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_FPoint {
     pub x: ::core::ffi::c_float,
     pub y: ::core::ffi::c_float,
@@ -47,7 +49,8 @@ pub struct SDL_FPoint {
 /// \sa SDL_GetRectUnion
 /// \sa SDL_GetRectEnclosingPoints
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Rect {
     pub x: ::core::ffi::c_int,
     pub y: ::core::ffi::c_int,
@@ -70,7 +73,8 @@ pub struct SDL_Rect {
 /// \sa SDL_GetRectEnclosingPointsFloat
 /// \sa SDL_PointInRectFloat
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_FRect {
     pub x: ::core::ffi::c_float,
     pub y: ::core::ffi::c_float,

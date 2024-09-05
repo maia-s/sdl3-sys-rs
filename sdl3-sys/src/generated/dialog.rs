@@ -25,7 +25,8 @@ use super::video::*;
 /// \sa SDL_ShowSaveFileDialog
 /// \sa SDL_ShowOpenFolderDialog
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DialogFileFilter {
     pub name: *const ::core::ffi::c_char,
     pub pattern: *const ::core::ffi::c_char,
