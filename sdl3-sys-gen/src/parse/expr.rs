@@ -1,6 +1,5 @@
 use super::{
-    Balanced, Delimited, ExprOp, GetSpan, Ident, IdentOrKw, Items, Kw_sizeof, Literal, Op, Parse,
-    ParseErr, ParseRawRes, Precedence, Punctuated, Span, Type, WsAndComments
+    Balanced, Delimited, ExprOp, GetSpan, Ident, IdentOrKw, Items, Kw_sizeof, Literal, Op, Parse, ParseContext, ParseErr, ParseRawRes, Precedence, Punctuated, Span, Type, WsAndComments
 };
 use crate::emit::Value;
 use std::cmp::Ordering;
@@ -37,24 +36,24 @@ pub enum Expr {
 }
 
 impl Expr {
-    pub fn try_parse_raw_with_prec(
+    pub fn try_parse_raw_with_prec(ctx: &ParseContext, 
         input: &Span,
         prec: Precedence,
         allow_cast: bool,
     ) -> ParseRawRes<Option<Self>> {
         let mut rest = input.clone();
         let mut is_cast = false;
-        let mut lhs = if let Some((uprec, op)) = ExprOp::try_parse_unop(&mut rest)? {
-            WsAndComments::try_parse(&mut rest)?;
-            let (rest_, expr) = Expr::parse_raw_with_prec(&rest, uprec, true)?;
+        let mut lhs = if let Some((uprec, op)) = ExprOp::try_parse_unop(ctx, &mut rest)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let (rest_, expr) = Expr::parse_raw_with_prec(ctx, &rest, uprec, true)?;
             rest = rest_;
             Self::UnaryOp(Box::new(UnaryOp { op, expr }))
-        } else if let Some(cast) = Cast::try_parse_if(&mut rest, |_| allow_cast)? {
+        } else if let Some(cast) = Cast::try_parse_if(ctx, &mut rest, |_| allow_cast)? {
             if prec.parse_rhs_first(Precedence::right_to_left(2)) {
                 is_cast = true;
                 Self::Cast(Box::new(cast))
             } else if let (rest, Some(not_cast)) =
-                Expr::try_parse_raw_with_prec(input, prec, false)?
+                Expr::try_parse_raw_with_prec(ctx, input, prec, false)?
             {
                 // not valid as a cast here, but valid as a non-cast expression
                 // (this isn't exactly right in general, but works for now)
@@ -62,20 +61,20 @@ impl Expr {
             } else {
                 return Ok((input.clone(), None));
             }
-        } else if let Some(asm) = Asm::try_parse(&mut rest)? {
+        } else if let Some(asm) = Asm::try_parse(ctx, &mut rest)? {
             Self::Asm(asm)
-        } else if let Some(sizeof) = SizeOf::try_parse(&mut rest)? {
+        } else if let Some(sizeof) = SizeOf::try_parse(ctx, &mut rest)? {
             if prec.parse_rhs_first(Precedence::right_to_left(2)) {
                 Self::SizeOf(Box::new(sizeof))
             } else {
                 return Ok((input.clone(), None));
             }
-        } else if let Some(p) = Parenthesized::try_parse(&mut rest)?
+        } else if let Some(p) = Parenthesized::try_parse(ctx, &mut rest)?
         {
             Expr::Parenthesized(Box::new(p))
-        } else if let Some(ident) = IdentOrKw::try_parse(&mut rest)? {
+        } else if let Some(ident) = IdentOrKw::try_parse(ctx, &mut rest)? {
             Self::Ident(ident)
-        } else if let Some(lit) = Literal::try_parse(&mut rest)? {
+        } else if let Some(lit) = Literal::try_parse(ctx, &mut rest)? {
             Self::Literal(lit)
         } else {
             return Ok((input.clone(), None));
@@ -83,15 +82,15 @@ impl Expr {
 
         loop {
             let mut rest2 = rest.clone();
-            WsAndComments::try_parse(&mut rest2)?;
+            WsAndComments::try_parse(ctx, &mut rest2)?;
             if rest2.starts_with("/**<") {
                 // trailing doc comment after expression
                 break;
             }
 
-            if let Some((new_prec, op)) = ExprOp::try_parse_binop(&mut rest2)? {
+            if let Some((new_prec, op)) = ExprOp::try_parse_binop(ctx, &mut rest2)? {
                 if prec.parse_rhs_first(new_prec) {
-                    WsAndComments::try_parse(&mut rest2)?;
+                    WsAndComments::try_parse(ctx, &mut rest2)?;
                     match op.as_str().as_bytes() {
                         b"++" | b"--" => {
                             rest = rest2;
@@ -106,14 +105,14 @@ impl Expr {
 
                             if let Expr::Ident(ident) = &lhs {
                                 if ident.as_str() == "__has_include" {
-                                    let (rest_, arg) = Balanced::<Op::<'('>,Op::<')'>>::parse_raw(&rest_)?;
+                                    let (rest_, arg) = Balanced::<Op::<'('>,Op::<')'>>::parse_raw(ctx, &rest_)?;
                                     rest = rest_;
                                     lhs = Expr::HasInclude(HasInclude { span: lhs.span().join(&arg.span), include: arg.inner });
                                     continue;
                                 }
                             }
 
-                            let (rest_, args) = CallArgs::parse_raw(&op.span.join(&rest_))?;
+                            let (rest_, args) = CallArgs::parse_raw(ctx, &op.span.join(&rest_))?;
                             rest = rest_;
                             lhs = Expr::FnCall(FnCall {
                                 span: lhs.span().join(&args.span()),
@@ -123,9 +122,9 @@ impl Expr {
                         }
 
                         b"[" => {
-                            let index = Expr::parse(&mut rest2)?;
-                            WsAndComments::try_parse(&mut rest2)?;
-                            let close = Op::<']'>::parse(&mut rest2)?;
+                            let index = Expr::parse(ctx, &mut rest2)?;
+                            WsAndComments::try_parse(ctx, &mut rest2)?;
+                            let close = Op::<']'>::parse(ctx, &mut rest2)?;
                             rest = rest2;
                             lhs = Expr::ArrayIndex {
                                 span: lhs.span().join(&close.span),
@@ -135,12 +134,12 @@ impl Expr {
                         }
 
                         b"?" => {
-                            let on_true = Expr::parse(&mut rest2)?;
-                            WsAndComments::try_parse(&mut rest2)?;
-                            Op::<':'>::parse(&mut rest2)?;
-                            WsAndComments::try_parse(&mut rest2)?;
+                            let on_true = Expr::parse(ctx, &mut rest2)?;
+                            WsAndComments::try_parse(ctx, &mut rest2)?;
+                            Op::<':'>::parse(ctx, &mut rest2)?;
+                            WsAndComments::try_parse(ctx, &mut rest2)?;
                             let (rest_, on_false) =
-                                Expr::parse_raw_with_prec(&rest2, new_prec, true)?;
+                                Expr::parse_raw_with_prec(ctx, &rest2, new_prec, true)?;
                             rest = rest_;
                             lhs = Expr::Ternary(Box::new(Ternary {
                                 cond: lhs,
@@ -150,7 +149,7 @@ impl Expr {
                         }
 
                         _ => {
-                            if let (rest_, Some(rhs)) = Expr::try_parse_raw_with_prec(&rest2, new_prec, true)? {
+                            if let (rest_, Some(rhs)) = Expr::try_parse_raw_with_prec(ctx, &rest2, new_prec, true)? {
                                 rest = rest_;
                                 lhs = Expr::BinaryOp(Box::new(BinaryOp { op, lhs, rhs }));
                             } else {
@@ -168,7 +167,7 @@ impl Expr {
 
         if is_cast {
             if let (not_cast_rest, Some(not_cast)) =
-                Expr::try_parse_raw_with_prec(input, prec, false)?
+                Expr::try_parse_raw_with_prec(ctx, input, prec, false)?
             {
                 match rest.start_pos().cmp(&not_cast_rest.start_pos()) {
                     Ordering::Greater => {
@@ -193,12 +192,12 @@ impl Expr {
         Ok((rest, Some(lhs)))
     }
 
-    pub fn parse_raw_with_prec(
+    pub fn parse_raw_with_prec(ctx: &ParseContext, 
         input: &Span,
         prec: Precedence,
         allow_cast: bool,
     ) -> ParseRawRes<Self> {
-        match Self::try_parse_raw_with_prec(input, prec, allow_cast)? {
+        match Self::try_parse_raw_with_prec(ctx, input, prec, allow_cast)? {
             (rest, Some(parsed)) => Ok((rest, parsed)),
             _ => Err(ParseErr::new(input.start(), "expected expression")),
         }
@@ -232,8 +231,8 @@ impl Parse for Expr {
         "expression".into()
     }
 
-    fn try_parse_raw(input: &super::Span) -> ParseRawRes<Option<Self>> {
-        Expr::try_parse_raw_with_prec(input, Precedence::max(), true)
+    fn try_parse_raw(ctx: &ParseContext, input: &super::Span) -> ParseRawRes<Option<Self>> {
+        Expr::try_parse_raw_with_prec(ctx, input, Precedence::max(), true)
     }
 }
 
@@ -244,8 +243,8 @@ impl Parse for ExprNoComma {
         Expr::desc()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        let (rest, expr) = Expr::try_parse_raw_with_prec(input, Precedence::comma(), true)?;
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        let (rest, expr) = Expr::try_parse_raw_with_prec(ctx, input, Precedence::comma(), true)?;
         Ok((rest, expr.map(Self)))
     }
 }
@@ -279,12 +278,12 @@ impl Parse for Parenthesized {
         "parenthesized expression".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         if let (rest, Some(Delimited {
             open,
             value: expr,
             close,
-        })) = Delimited::<Op<'('>, Expr, Op<')'>>::try_parse_raw(input)? {
+        })) = Delimited::<Op<'('>, Expr, Op<')'>>::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Self {
                 span: open.span.join(&close.span),
                 expr,
@@ -312,22 +311,22 @@ impl Parse for Asm {
         "asm".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(ident)) = Ident::try_parse_raw(input)? {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(ident)) = Ident::try_parse_raw(ctx, input)? {
             match ident.as_str().as_bytes() {
                 b"__asm__" => {
-                    WsAndComments::try_parse(&mut rest)?;
-                    if let (rest_, Some(_)) = Ident::try_parse_raw_if(&rest, |i| i.as_str() == "__volatile__")? {
+                    WsAndComments::try_parse(ctx, &mut rest)?;
+                    if let (rest_, Some(_)) = Ident::try_parse_raw_if(ctx, &rest, |i| i.as_str() == "__volatile__")? {
                         rest = rest_;
-                        WsAndComments::try_parse(&mut rest)?;
+                        WsAndComments::try_parse(ctx, &mut rest)?;
                     }
-                    let body = Balanced::<Op<'('>, Op<')'>>::parse(&mut rest)?;
+                    let body = Balanced::<Op<'('>, Op<')'>>::parse(ctx, &mut rest)?;
                     return Ok((rest, Some(Self { span: ident.span.join(&body.span), kind: ident.span() })))
                 }
 
                 b"_asm" => {
-                    WsAndComments::try_parse(&mut rest)?;
-                    let body = Balanced::<Op<'{'>, Op<'}'>>::parse(&mut rest)?;
+                    WsAndComments::try_parse(ctx, &mut rest)?;
+                    let body = Balanced::<Op<'{'>, Op<'}'>>::parse(ctx, &mut rest)?;
                     return Ok((rest, Some(Self { span: ident.span.join(&body.span), kind: ident.span() })))
                 }
 
@@ -436,9 +435,9 @@ impl Parse for CallArgs {
         "arguments".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         if let (rest, Some(args)) =
-            Delimited::<Op<'('>, Option<Punctuated<ExprNoComma, Op![,]>>, Op<')'>>::try_parse_raw(input)?
+            Delimited::<Op<'('>, Option<Punctuated<ExprNoComma, Op![,]>>, Op<')'>>::try_parse_raw(ctx, input)?
         {
             let span = args.open.span.join(&args.close.span);
             let args: Vec<ExprNoComma> = args.value.map(|v| v.into()).unwrap_or_default();
@@ -468,16 +467,16 @@ impl Parse for Cast {
         "cast expression".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(open_paren)) = Op::<'('>::try_parse_raw(input)? {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (rest, Some(open_paren)) = Op::<'('>::try_parse_raw(ctx, input)? {
             // this may just be a parenthesized expression, so don't error if something fails to parse
-            let (rest, _) = WsAndComments::try_parse_raw(&rest)?;
-            if let (rest, Some(ty)) = Type::try_parse_raw(&rest)? {
-                let (rest, _) = WsAndComments::try_parse_raw(&rest)?;
-                if let (rest, Some(_close_paren)) = Op::<')'>::try_parse_raw(&rest)? {
-                    let (rest, _) = WsAndComments::try_parse_raw(&rest)?;
+            let (rest, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
+            if let (rest, Some(ty)) = Type::try_parse_raw(ctx, &rest)? {
+                let (rest, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
+                if let (rest, Some(_close_paren)) = Op::<')'>::try_parse_raw(ctx, &rest)? {
+                    let (rest, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
                     if let (rest, Some(expr)) =
-                        Expr::try_parse_raw_with_prec(&rest, Precedence::right_to_left(2), true)?
+                        Expr::try_parse_raw_with_prec(ctx, &rest, Precedence::right_to_left(2), true)?
                     {
                         return Ok((
                             rest,
@@ -513,12 +512,12 @@ impl Parse for FnCall {
         "function call".into()
     }
 
-    fn try_parse_raw(input: &Span) -> super::ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> super::ParseRawRes<Option<Self>> {
         // this only parses ident(), not general expr()
         let mut rest = input.trim_wsc_start()?;
-        if let Some(func) = IdentOrKw::try_parse(&mut rest)? {
-            WsAndComments::try_parse(&mut rest)?;
-            if let Some(args) = CallArgs::try_parse(&mut rest)? {
+        if let Some(func) = IdentOrKw::try_parse(ctx, &mut rest)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            if let Some(args) = CallArgs::try_parse(ctx, &mut rest)? {
                 let span = func.span().join(&args.span());
                 return Ok((
                     rest,
@@ -553,21 +552,21 @@ impl Parse for SizeOf {
         "sizeof".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(kw)) = Kw_sizeof::try_parse_raw(input)? {
-            let (rest, _) = WsAndComments::try_parse_raw(&rest)?;
-            if let (rest, Some(_)) = Op::<'('>::try_parse_raw(&rest)? {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (rest, Some(kw)) = Kw_sizeof::try_parse_raw(ctx, input)? {
+            let (rest, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
+            if let (rest, Some(_)) = Op::<'('>::try_parse_raw(ctx, &rest)? {
                 // could be a parenthesized expression
-                let (rest, _) = WsAndComments::try_parse_raw(&rest)?;
-                if let (rest, Some(ty)) = Type::try_parse_raw(&rest)? {
-                    let (rest, _) = WsAndComments::try_parse_raw(&rest)?;
-                    if let (rest, Some(close_paren)) = Op::<')'>::try_parse_raw(&rest)? {
+                let (rest, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
+                if let (rest, Some(ty)) = Type::try_parse_raw(ctx, &rest)? {
+                    let (rest, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
+                    if let (rest, Some(close_paren)) = Op::<')'>::try_parse_raw(ctx, &rest)? {
                         return Ok((rest, Some(Self::Type(kw.span.join(&close_paren.span), ty))));
                     }
                 }
             }
             if let (rest, Some(expr)) =
-                Expr::try_parse_raw_with_prec(&rest, Precedence::right_to_left(2), true)?
+                Expr::try_parse_raw_with_prec(ctx, &rest, Precedence::right_to_left(2), true)?
             {
                 return Ok((rest, Some(Self::Expr(kw.span.join(&expr.span()), expr))));
             }

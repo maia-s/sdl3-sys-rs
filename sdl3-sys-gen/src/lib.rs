@@ -5,7 +5,7 @@ mod parse;
 
 use core::fmt::Write;
 use emit::{Emit, EmitContext, EmitErr, InnerEmitContext};
-use parse::{Items, Parse, ParseErr, Source, Span};
+use parse::{Items, Parse, ParseContext, ParseErr, Source, Span};
 use std::{
     cell::RefCell,
     collections::{BTreeMap, HashSet},
@@ -104,7 +104,8 @@ impl Gen {
         println!("parsing {filename}");
         let contents: Span = Source::new(filename, contents).into();
         let rest = contents.trim_wsc()?;
-        let items = Items::try_parse_all(rest)?.unwrap_or_default();
+        let ctx = ParseContext::new();
+        let items = Items::try_parse_all(&ctx, rest)?.unwrap_or_default();
         self.parsed.insert(module.to_owned(), items);
         Ok(())
     }

@@ -1,7 +1,7 @@
 use super::{
     ArgAttribute, Block, DocComment, FnAbi, FnAttributes, GetSpan, Ident, Kw_extern, Kw_static, Op,
-    Parse, ParseErr, ParseRawRes, Punctuated, Span, Type, TypeWithIdent, TypeWithOptIdent,
-    WsAndComments,
+    Parse, ParseContext, ParseErr, ParseRawRes, Punctuated, Span, Type, TypeWithIdent,
+    TypeWithOptIdent, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -24,37 +24,37 @@ impl Parse for Function {
         "function declaration".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut rest = input.clone();
-        let doc = DocComment::try_parse(&mut rest)?;
+        let doc = DocComment::try_parse(ctx, &mut rest)?;
         let span0 = rest.start();
-        let static_kw = Kw_static::try_parse(&mut rest)?;
-        WsAndComments::try_parse(&mut rest)?;
-        let extern_kw = Kw_extern::try_parse(&mut rest)?;
+        let static_kw = Kw_static::try_parse(ctx, &mut rest)?;
+        WsAndComments::try_parse(ctx, &mut rest)?;
+        let extern_kw = Kw_extern::try_parse(ctx, &mut rest)?;
         if let (Some(_), Some(extern_kw)) = (&static_kw, &extern_kw) {
             return Err(ParseErr::new(extern_kw.span(), "static extern"));
         }
-        WsAndComments::try_parse(&mut rest)?;
-        let mut attr: FnAttributes = FnAttributes::parse(&mut rest)?;
-        WsAndComments::try_parse(&mut rest)?;
-        if let Some(ty) = Type::try_parse(&mut rest)? {
-            WsAndComments::try_parse(&mut rest)?;
-            let abi = FnAbi::try_parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            if let Some(ident) = Ident::try_parse(&mut rest)? {
-                WsAndComments::try_parse(&mut rest)?;
-                if let Some(args) = FnDeclArgs::try_parse(&mut rest)? {
-                    WsAndComments::try_parse(&mut rest)?;
-                    let attr2: FnAttributes = FnAttributes::parse(&mut rest)?;
+        WsAndComments::try_parse(ctx, &mut rest)?;
+        let mut attr: FnAttributes = FnAttributes::parse(ctx, &mut rest)?;
+        WsAndComments::try_parse(ctx, &mut rest)?;
+        if let Some(ty) = Type::try_parse(ctx, &mut rest)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let abi = FnAbi::try_parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            if let Some(ident) = Ident::try_parse(ctx, &mut rest)? {
+                WsAndComments::try_parse(ctx, &mut rest)?;
+                if let Some(args) = FnDeclArgs::try_parse(ctx, &mut rest)? {
+                    WsAndComments::try_parse(ctx, &mut rest)?;
+                    let attr2: FnAttributes = FnAttributes::parse(ctx, &mut rest)?;
                     attr.0.extend(attr2.0);
-                    WsAndComments::try_parse(&mut rest)?;
+                    WsAndComments::try_parse(ctx, &mut rest)?;
                     let semi = if extern_kw.is_some() {
-                        Some(<Op![;]>::parse(&mut rest)?)
+                        Some(<Op![;]>::parse(ctx, &mut rest)?)
                     } else {
-                        <Op![;]>::try_parse(&mut rest)?
+                        <Op![;]>::try_parse(ctx, &mut rest)?
                     };
                     let body = if semi.is_none() {
-                        Some(Block::parse(&mut rest).map_err(|e| {
+                        Some(Block::parse(ctx, &mut rest).map_err(|e| {
                             let msg = format!("{} or `;`", e.message);
                             e.map_msg(msg)
                         })?)
@@ -97,18 +97,18 @@ impl Parse for FnDeclArgs {
         "function arguments declaration".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut rest = input.clone();
-        if let Some(open_paren) = Op::<'('>::try_parse(&mut rest)? {
-            WsAndComments::try_parse(&mut rest)?;
-            let mut args: Vec<ArgDecl> = Punctuated::<ArgDecl, Op![,]>::try_parse(&mut rest)?
+        if let Some(open_paren) = Op::<'('>::try_parse(ctx, &mut rest)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let mut args: Vec<ArgDecl> = Punctuated::<ArgDecl, Op![,]>::try_parse(ctx, &mut rest)?
                 .unwrap_or_default()
                 .into();
             if args.len() == 1 && args[0].ty.is_void() {
                 args.clear()
             }
-            WsAndComments::try_parse(&mut rest)?;
-            if let Some(close_paren) = Op::<')'>::try_parse(&mut rest)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            if let Some(close_paren) = Op::<')'>::try_parse(ctx, &mut rest)? {
                 return Ok((
                     rest,
                     Some(Self {
@@ -134,10 +134,10 @@ impl Parse for ArgDecl {
         "argument declaration".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        let (rest, attr) = ArgAttribute::try_parse_raw(input)?;
-        let (rest, _) = WsAndComments::try_parse_raw(&rest)?;
-        if let (rest, Some(op)) = <Op![...]>::try_parse_raw(&rest)? {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        let (rest, attr) = ArgAttribute::try_parse_raw(ctx, input)?;
+        let (rest, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
+        if let (rest, Some(op)) = <Op![...]>::try_parse_raw(ctx, &rest)? {
             Ok((
                 rest,
                 Some(Self {
@@ -147,7 +147,7 @@ impl Parse for ArgDecl {
                 }),
             ))
         } else if let (rest, Some(TypeWithIdent { ty, ident })) =
-            TypeWithOptIdent::try_parse_raw(&rest)?
+            TypeWithOptIdent::try_parse_raw(ctx, &rest)?
         {
             Ok((rest, Some(Self { attr, ty, ident })))
         } else {

@@ -62,21 +62,30 @@ pub const fn op_third_ch(str: &str) -> char {
     }
 }
 
+pub struct ParseContext {}
+
+impl ParseContext {
+    pub const fn new() -> Self {
+        Self {}
+    }
+}
+
 pub trait Parse: Sized {
     fn desc() -> Cow<'static, str>;
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        match Self::parse_raw(input) {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        match Self::parse_raw(ctx, input) {
             Ok((rest, parsed)) => Ok((rest, Some(parsed))),
             Err(e) => Err(e),
         }
     }
 
     fn try_parse_raw_if(
+        ctx: &ParseContext,
         input: &Span,
         accept: impl FnOnce(&Self) -> bool,
     ) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(parsed)) = Self::try_parse_raw(input)? {
+        if let (rest, Some(parsed)) = Self::try_parse_raw(ctx, input)? {
             if accept(&parsed) {
                 return Ok((rest, Some(parsed)));
             }
@@ -84,8 +93,8 @@ pub trait Parse: Sized {
         Ok((input.clone(), None))
     }
 
-    fn parse_raw(input: &Span) -> ParseRawRes<Self> {
-        match Self::try_parse_raw(input) {
+    fn parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Self> {
+        match Self::try_parse_raw(ctx, input) {
             Ok((rest, Some(parsed))) => Ok((rest, parsed)),
             Ok((rest, None)) => Err(ParseErr::new(
                 input.start().join(&rest.start()),
@@ -95,8 +104,8 @@ pub trait Parse: Sized {
         }
     }
 
-    fn try_parse(input: &mut Span) -> ParseRes<Option<Self>> {
-        match Self::try_parse_raw(input) {
+    fn try_parse(ctx: &ParseContext, input: &mut Span) -> ParseRes<Option<Self>> {
+        match Self::try_parse_raw(ctx, input) {
             Ok((rest, parsed)) => {
                 *input = rest;
                 Ok(parsed)
@@ -106,10 +115,11 @@ pub trait Parse: Sized {
     }
 
     fn try_parse_if(
+        ctx: &ParseContext,
         input: &mut Span,
         accept: impl FnOnce(&Self) -> bool,
     ) -> ParseRes<Option<Self>> {
-        match Self::try_parse_raw_if(input, accept) {
+        match Self::try_parse_raw_if(ctx, input, accept) {
             Ok((rest, parsed)) => {
                 *input = rest;
                 Ok(parsed)
@@ -118,8 +128,8 @@ pub trait Parse: Sized {
         }
     }
 
-    fn parse(input: &mut Span) -> ParseRes<Self> {
-        match Self::parse_raw(input) {
+    fn parse(ctx: &ParseContext, input: &mut Span) -> ParseRes<Self> {
+        match Self::parse_raw(ctx, input) {
             Ok((rest, parsed)) => {
                 *input = rest;
                 Ok(parsed)
@@ -128,8 +138,8 @@ pub trait Parse: Sized {
         }
     }
 
-    fn try_parse_try_all(input: &Span) -> ParseRes<Option<Self>> {
-        match Self::try_parse_raw(input) {
+    fn try_parse_try_all(ctx: &ParseContext, input: &Span) -> ParseRes<Option<Self>> {
+        match Self::try_parse_raw(ctx, input) {
             Ok((rest, parsed)) => {
                 if rest.is_empty() {
                     Ok(parsed)
@@ -141,8 +151,8 @@ pub trait Parse: Sized {
         }
     }
 
-    fn try_parse_all(input: Span) -> ParseRes<Option<Self>> {
-        match Self::try_parse_raw(&input) {
+    fn try_parse_all(ctx: &ParseContext, input: Span) -> ParseRes<Option<Self>> {
+        match Self::try_parse_raw(ctx, &input) {
             Ok((rest, parsed)) => {
                 if rest.is_empty() {
                     Ok(parsed)
@@ -157,8 +167,8 @@ pub trait Parse: Sized {
         }
     }
 
-    fn parse_all(input: Span) -> ParseRes<Self> {
-        match Self::parse_raw(&input) {
+    fn parse_all(ctx: &ParseContext, input: Span) -> ParseRes<Self> {
+        match Self::parse_raw(ctx, &input) {
             Ok((rest, parsed)) => {
                 let rest = rest.trim_wsc_start()?;
                 if rest.is_empty() {
@@ -176,15 +186,15 @@ pub trait Parse: Sized {
 }
 
 trait ParseRev: Parse {
-    fn try_parse_rev_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        match Self::parse_rev_raw(input) {
+    fn try_parse_rev_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        match Self::parse_rev_raw(ctx, input) {
             Ok((rest, parsed)) => Ok((rest, Some(parsed))),
             Err(e) => Err(e),
         }
     }
 
-    fn parse_rev_raw(input: &Span) -> ParseRawRes<Self> {
-        match Self::try_parse_rev_raw(input) {
+    fn parse_rev_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Self> {
+        match Self::try_parse_rev_raw(ctx, input) {
             Ok((rest, Some(parsed))) => Ok((rest, parsed)),
             Ok((rest, None)) => Err(ParseErr::new(
                 input.start().join(&rest.start()),
@@ -194,8 +204,8 @@ trait ParseRev: Parse {
         }
     }
 
-    fn try_parse_rev(input: &mut Span) -> ParseRes<Option<Self>> {
-        match Self::try_parse_rev_raw(input) {
+    fn try_parse_rev(ctx: &ParseContext, input: &mut Span) -> ParseRes<Option<Self>> {
+        match Self::try_parse_rev_raw(ctx, input) {
             Ok((rest, parsed)) => {
                 *input = rest;
                 Ok(parsed)
@@ -211,15 +221,15 @@ impl<T: Parse> Parse for Option<T> {
     }
 
     #[inline(always)]
-    fn parse_raw(input: &Span) -> ParseRawRes<Self> {
-        T::try_parse_raw(input)
+    fn parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Self> {
+        T::try_parse_raw(ctx, input)
     }
 }
 
 impl<T: ParseRev> ParseRev for Option<T> {
     #[inline(always)]
-    fn parse_rev_raw(input: &Span) -> ParseRawRes<Self> {
-        T::try_parse_rev_raw(input)
+    fn parse_rev_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Self> {
+        T::try_parse_rev_raw(ctx, input)
     }
 }
 
@@ -228,13 +238,13 @@ impl<T: Parse> Parse for Vec<T> {
         T::desc()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut vec = Vec::new();
-        let (mut rest, Some(parsed)) = T::try_parse_raw(input)? else {
+        let (mut rest, Some(parsed)) = T::try_parse_raw(ctx, input)? else {
             return Ok((input.clone(), None));
         };
         vec.push(parsed);
-        while let (rest_, Some(parsed)) = T::try_parse_raw(&rest)? {
+        while let (rest_, Some(parsed)) = T::try_parse_raw(ctx, &rest)? {
             rest = rest_;
             vec.push(parsed);
         }
@@ -243,13 +253,13 @@ impl<T: Parse> Parse for Vec<T> {
 }
 
 impl<T: ParseRev> ParseRev for Vec<T> {
-    fn try_parse_rev_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_rev_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut vec = Vec::new();
-        let (mut rest, Some(parsed)) = T::try_parse_rev_raw(input)? else {
+        let (mut rest, Some(parsed)) = T::try_parse_rev_raw(ctx, input)? else {
             return Ok((input.clone(), None));
         };
         vec.push(parsed);
-        while let (rest_, Some(parsed)) = T::try_parse_rev_raw(&rest)? {
+        while let (rest_, Some(parsed)) = T::try_parse_rev_raw(ctx, &rest)? {
             rest = rest_;
             vec.push(parsed);
         }
@@ -274,15 +284,15 @@ impl<Open: GetSpan + Parse, Close: GetSpan + Parse> Parse for Balanced<Open, Clo
         format!("balanced {}...{}", Open::desc(), Close::desc()).into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(open)) = Open::try_parse_raw(input)? {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(open)) = Open::try_parse_raw(ctx, input)? {
             let inner_s = rest.start();
             let mut nesting = 1;
             loop {
-                if let (rest_, Some(_)) = Open::try_parse_raw(&rest)? {
+                if let (rest_, Some(_)) = Open::try_parse_raw(ctx, &rest)? {
                     rest = rest_;
                     nesting += 1;
-                } else if let (rest_, Some(close)) = Close::try_parse_raw(&rest)? {
+                } else if let (rest_, Some(close)) = Close::try_parse_raw(ctx, &rest)? {
                     let inner_e = rest.start();
                     rest = rest_;
                     nesting -= 1;
@@ -332,13 +342,13 @@ impl<Open: Parse, T: Parse, Close: Parse> Parse for Delimited<Open, T, Close> {
         format!("{} {} {}", Open::desc(), T::desc(), Close::desc()).into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut rest = input.clone();
-        if let Some(open) = Open::try_parse(&mut rest)? {
-            WsAndComments::try_parse(&mut rest)?;
-            if let Some(value) = T::try_parse(&mut rest)? {
-                WsAndComments::try_parse(&mut rest)?;
-                let close = Close::parse(&mut rest)?;
+        if let Some(open) = Open::try_parse(ctx, &mut rest)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            if let Some(value) = T::try_parse(ctx, &mut rest)? {
+                WsAndComments::try_parse(ctx, &mut rest)?;
+                let close = Close::parse(ctx, &mut rest)?;
                 return Ok((rest, Some(Self { open, value, close })));
             }
         }
@@ -370,14 +380,14 @@ where
         format!("{} punctuated by {}", T::desc(), P::desc()).into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut vec = Vec::new();
-        let (mut rest, value) = T::try_parse_raw(input)?;
+        let (mut rest, value) = T::try_parse_raw(ctx, input)?;
         if let Some(mut value) = value {
-            while let (rest_, Some(punct)) = P::try_parse_raw(&rest.trim_wsc_start()?)? {
+            while let (rest_, Some(punct)) = P::try_parse_raw(ctx, &rest.trim_wsc_start()?)? {
                 rest = rest_;
                 vec.push((value, Some(punct)));
-                let (rest_, value_) = T::parse_raw(&rest.trim_wsc_start()?)?;
+                let (rest_, value_) = T::parse_raw(ctx, &rest.trim_wsc_start()?)?;
                 rest = rest_;
                 value = value_;
             }
@@ -399,10 +409,10 @@ impl<T: Parse, Term: Parse> Parse for Terminated<T, Term> {
         T::desc()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(value)) = T::try_parse_raw(input)? {
-            WsAndComments::try_parse(&mut rest)?;
-            if let Some(term) = Term::try_parse(&mut rest)? {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(value)) = T::try_parse_raw(ctx, input)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            if let Some(term) = Term::try_parse(ctx, &mut rest)? {
                 return Ok((rest, Some(Self { value, term })));
             }
         }
@@ -417,7 +427,7 @@ impl Parse for WsAndComments {
         "whitespace or comments".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let rest = input.trim_wsc_start()?;
         let rest_len = rest.len();
         if rest_len < input.len() {
@@ -429,7 +439,7 @@ impl Parse for WsAndComments {
 }
 
 impl ParseRev for WsAndComments {
-    fn try_parse_rev_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_rev_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let rest = input.trim_wsc_end()?;
         let rest_len = rest.len();
         if rest_len < input.len() {

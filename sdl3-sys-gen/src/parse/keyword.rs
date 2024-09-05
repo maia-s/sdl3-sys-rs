@@ -1,4 +1,4 @@
-use super::{GetSpan, IdentOrKw, Parse, ParseRawRes, Span};
+use super::{GetSpan, IdentOrKw, Parse, ParseContext, ParseRawRes, Span};
 use const_it::{expect_some, slice_strip_prefix};
 use std::{
     borrow::Cow,
@@ -124,9 +124,9 @@ impl<const KW_INDEX: usize> Parse for Keyword<KW_INDEX> {
         format!("`{}`", KEYWORDS[KW_INDEX]).into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         if let (rest, Some(ident)) =
-            IdentOrKw::try_parse_raw_if(input, |i| i.as_str() == KEYWORDS[KW_INDEX])?
+            IdentOrKw::try_parse_raw_if(ctx, input, |i| i.as_str() == KEYWORDS[KW_INDEX])?
         {
             Ok((rest, Some(Keyword { span: ident.span })))
         } else {

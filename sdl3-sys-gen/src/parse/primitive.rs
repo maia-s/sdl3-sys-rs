@@ -1,7 +1,8 @@
 use std::borrow::Cow;
 
 use super::{
-    GetSpan, IdentOrKw, Kw_const, Parse, ParseErr, ParseRawRes, Span, Spanned, WsAndComments,
+    GetSpan, IdentOrKw, Kw_const, Parse, ParseContext, ParseErr, ParseRawRes, Span, Spanned,
+    WsAndComments,
 };
 
 #[derive(Clone, Debug)]
@@ -47,9 +48,9 @@ impl Parse for PrimitiveTypeParse {
         "primitive type".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        let (rest, is_const) = Kw_const::try_parse_raw(input)?;
-        let (rest, _) = WsAndComments::try_parse_raw(&rest)?;
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        let (rest, is_const) = Kw_const::try_parse_raw(ctx, input)?;
+        let (rest, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
         let mut is_const = is_const.is_some();
         if let (
             rest,
@@ -57,7 +58,7 @@ impl Parse for PrimitiveTypeParse {
                 span,
                 value: combine,
             }),
-        ) = Spanned::<Vec<PrimitiveCombineKw>>::try_parse_raw(&rest)?
+        ) = Spanned::<Vec<PrimitiveCombineKw>>::try_parse_raw(ctx, &rest)?
         {
             macro_rules! query {
                 ($kw:pat) => {
@@ -181,10 +182,10 @@ impl Parse for PrimitiveTypeParse {
                     },
                 }),
             ));
-        } else if let (mut rest, Some(ident)) = IdentOrKw::try_parse_raw(&rest)? {
+        } else if let (mut rest, Some(ident)) = IdentOrKw::try_parse_raw(ctx, &rest)? {
             let mut span = ident.span();
             if !is_const {
-                if let (rest_, Some(const_kw)) = Kw_const::try_parse_raw(&rest)? {
+                if let (rest_, Some(const_kw)) = Kw_const::try_parse_raw(ctx, &rest)? {
                     rest = rest_;
                     span = span.join(&const_kw.span());
                     is_const = true;
@@ -256,10 +257,10 @@ impl Parse for PrimitiveCombineKw {
         "`signed`, `unsigned`, `char`, `short`, `int` or `long`".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut rest = input.clone();
-        WsAndComments::try_parse(&mut rest)?;
-        if let Some(i) = IdentOrKw::try_parse(&mut rest)? {
+        WsAndComments::try_parse(ctx, &mut rest)?;
+        if let Some(i) = IdentOrKw::try_parse(ctx, &mut rest)? {
             match i.span.as_str() {
                 "const" => return Ok((rest, Some(PrimitiveCombineKw::Const(i.span)))),
                 "signed" => return Ok((rest, Some(PrimitiveCombineKw::Signed(i.span)))),

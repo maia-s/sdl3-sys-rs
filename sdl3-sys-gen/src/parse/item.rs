@@ -1,8 +1,8 @@
 use super::{
     Asm, Define, Delimited, DocCommentFile, Enum, Expr, ExprNoComma, FnCall, Function, GetSpan,
-    Ident, Include, Kw_do, Kw_for, Kw_if, Kw_return, Op, Parse, ParseErr, ParseRawRes,
-    PreProcBlock, PreProcLine, PreProcLineKind, Punctuated, Span, StructOrUnion, Terminated, Type,
-    TypeDef, TypeWithReqIdent, WsAndComments,
+    Ident, Include, Kw_do, Kw_for, Kw_if, Kw_return, Op, Parse, ParseContext, ParseErr,
+    ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind, Punctuated, Span, StructOrUnion,
+    Terminated, Type, TypeDef, TypeWithReqIdent, WsAndComments,
 };
 use crate::parse::{Kw_else, Kw_while};
 use std::borrow::Cow;
@@ -48,11 +48,11 @@ impl Parse for Item {
         "item".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let input = &input.trim_wsc_start()?;
-        if let (rest, Some(block)) = Block::try_parse_raw(input)? {
+        if let (rest, Some(block)) = Block::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Self::Block(block))))
-        } else if let (rest, Some(pp)) = PreProcLine::try_parse_raw(input)? {
+        } else if let (rest, Some(pp)) = PreProcLine::try_parse_raw(ctx, input)? {
             Ok((
                 rest,
                 Some(match pp.kind {
@@ -62,7 +62,8 @@ impl Parse for Item {
                     PreProcLineKind::Pragma(p) => Item::Pragma(p),
                     PreProcLineKind::Error(e) => Item::Error(e),
                     _ => {
-                        return if let (rest, Some(block)) = PreProcBlock::try_parse_raw(input)? {
+                        return if let (rest, Some(block)) = PreProcBlock::try_parse_raw(ctx, input)?
+                        {
                             Ok((rest, Some(Item::PreProcBlock(block))))
                         } else {
                             Ok((input.clone(), None))
@@ -70,36 +71,36 @@ impl Parse for Item {
                     }
                 }),
             ))
-        } else if let (rest, Some(s)) = DoWhile::try_parse_raw(input)? {
+        } else if let (rest, Some(s)) = DoWhile::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::DoWhile(s))))
-        } else if let (rest, Some(s)) = For::try_parse_raw(input)? {
+        } else if let (rest, Some(s)) = For::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::For(s))))
-        } else if let (rest, Some(s)) = IfElse::try_parse_raw(input)? {
+        } else if let (rest, Some(s)) = IfElse::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::IfElse(s))))
-        } else if let (rest, Some(s)) = Return::try_parse_raw(input)? {
+        } else if let (rest, Some(s)) = Return::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::Return(s))))
-        } else if let (rest, Some(f)) = Function::try_parse_raw(input)? {
+        } else if let (rest, Some(f)) = Function::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::Function(f))))
-        } else if let (rest, Some(t)) = TypeDef::try_parse_raw(input)? {
+        } else if let (rest, Some(t)) = TypeDef::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::TypeDef(t))))
-        } else if let (mut rest, Some(e)) = Enum::try_parse_raw(input)? {
-            WsAndComments::try_parse(&mut rest)?;
-            <Op![;]>::parse(&mut rest)?;
+        } else if let (mut rest, Some(e)) = Enum::try_parse_raw(ctx, input)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            <Op![;]>::parse(ctx, &mut rest)?;
             Ok((rest, Some(Item::Enum(e))))
-        } else if let (rest, Some(s)) = StructOrUnionItem::try_parse_raw(input)? {
+        } else if let (rest, Some(s)) = StructOrUnionItem::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::StructOrUnion(s.0))))
-        } else if let (rest, Some(decl)) = VarDecl::try_parse_raw(input)? {
+        } else if let (rest, Some(decl)) = VarDecl::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::VarDecl(decl))))
         } else if let (rest, Some(asm)) =
-            Asm::try_parse_raw_if(input, |a| a.kind.as_str() == "_asm")?
+            Asm::try_parse_raw_if(ctx, input, |a| a.kind.as_str() == "_asm")?
         {
             Ok((rest, Some(Item::Expr(Expr::Asm(asm)))))
-        } else if let (rest, Some(expr)) = Terminated::<Expr, Op![;]>::try_parse_raw(input)? {
+        } else if let (rest, Some(expr)) = Terminated::<Expr, Op![;]>::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::Expr(expr.value))))
-        } else if let (rest, Some(call)) = FnCall::try_parse_raw(input)? {
+        } else if let (rest, Some(call)) = FnCall::try_parse_raw(ctx, input)? {
             // fn call with ident and no trailing `;` (macro call)
             Ok((rest, Some(Item::FnCall(call))))
-        } else if let (rest, Some(dc)) = DocCommentFile::try_parse_raw(input)? {
+        } else if let (rest, Some(dc)) = DocCommentFile::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::FileDoc(dc.into()))))
         } else {
             Ok((input.clone(), None))
@@ -115,8 +116,8 @@ impl Parse for Items {
         "items".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        let (rest, parsed) = Vec::try_parse_raw(input)?;
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        let (rest, parsed) = Vec::try_parse_raw(ctx, input)?;
         Ok((rest, parsed.map(Items)))
     }
 }
@@ -132,9 +133,9 @@ impl Parse for Block {
         "block".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         if let (rest, Some(block)) =
-            Delimited::<Op<'{'>, Option<Items>, Op<'}'>>::try_parse_raw(input)?
+            Delimited::<Op<'{'>, Option<Items>, Op<'}'>>::try_parse_raw(ctx, input)?
         {
             Ok((
                 rest,
@@ -161,17 +162,17 @@ impl Parse for DoWhile {
         "do while".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(do_kw)) = Kw_do::try_parse_raw(input)? {
-            WsAndComments::try_parse(&mut rest)?;
-            let block = Block::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            Kw_while::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            let cond = Delimited::<Op<'('>, Expr, Op<')'>>::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(do_kw)) = Kw_do::try_parse_raw(ctx, input)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let block = Block::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            Kw_while::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let cond = Delimited::<Op<'('>, Expr, Op<')'>>::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
             // macros leave out the `;`
-            let span = if let Some(semi) = <Op![;]>::try_parse(&mut rest)? {
+            let span = if let Some(semi) = <Op![;]>::try_parse(ctx, &mut rest)? {
                 do_kw.span.join(&semi.span)
             } else {
                 do_kw.span.join(&cond.close.span)
@@ -204,24 +205,24 @@ impl Parse for For {
         "for".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(for_kw)) = Kw_for::try_parse_raw(input)? {
-            WsAndComments::try_parse(&mut rest)?;
-            Op::<'('>::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            let init = Expr::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            <Op![;]>::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            let cond = Expr::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            <Op![;]>::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            let iter = Expr::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            Op::<')'>::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            let block = Block::parse(&mut rest)?;
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(for_kw)) = Kw_for::try_parse_raw(ctx, input)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            Op::<'('>::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let init = Expr::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            <Op![;]>::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let cond = Expr::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            <Op![;]>::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let iter = Expr::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            Op::<')'>::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let block = Block::parse(ctx, &mut rest)?;
             let span = for_kw.span.join(&block.span);
             Ok((
                 rest,
@@ -258,25 +259,25 @@ impl Parse for IfElse {
         "if".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(if_kw)) = Kw_if::try_parse_raw(input)? {
-            WsAndComments::try_parse(&mut rest)?;
-            let cond = Delimited::<Op<'('>, Expr, Op<')'>>::parse(&mut rest)?.value;
-            WsAndComments::try_parse(&mut rest)?;
-            let on_true = Block::parse(&mut rest)?;
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(if_kw)) = Kw_if::try_parse_raw(ctx, input)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let cond = Delimited::<Op<'('>, Expr, Op<')'>>::parse(ctx, &mut rest)?.value;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let on_true = Block::parse(ctx, &mut rest)?;
             let mut span = if_kw.span.join(&on_true.span);
-            let (mut rest2, _) = WsAndComments::try_parse_raw(&rest)?;
-            let on_false = if Kw_else::try_parse(&mut rest2)?.is_some() {
+            let (mut rest2, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
+            let on_false = if Kw_else::try_parse(ctx, &mut rest2)?.is_some() {
                 rest = rest2;
-                WsAndComments::try_parse(&mut rest)?;
-                let on_false = if let (_, Some(_)) = Kw_if::try_parse_raw(&rest)? {
-                    let elseif = IfElse::parse(&mut rest)?;
+                WsAndComments::try_parse(ctx, &mut rest)?;
+                let on_false = if let (_, Some(_)) = Kw_if::try_parse_raw(ctx, &rest)? {
+                    let elseif = IfElse::parse(ctx, &mut rest)?;
                     Block {
                         span: elseif.span(),
                         items: Items(vec![Item::IfElse(elseif)]),
                     }
                 } else {
-                    Block::parse(&mut rest)?
+                    Block::parse(ctx, &mut rest)?
                 };
                 span = span.join(&on_false.span);
                 Some(on_false)
@@ -309,12 +310,12 @@ impl Parse for Return {
         "return".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(return_kw)) = Kw_return::try_parse_raw(input)? {
-            WsAndComments::try_parse(&mut rest)?;
-            let expr = Expr::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            let semi = <Op![;]>::parse(&mut rest)?;
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(return_kw)) = Kw_return::try_parse_raw(ctx, input)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let expr = Expr::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let semi = <Op![;]>::parse(ctx, &mut rest)?;
             Ok((
                 rest,
                 Some(Self {
@@ -335,9 +336,9 @@ impl Parse for StructOrUnionItem {
         "struct or union item".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         if let (rest, Some(Terminated { value: s, term: _ })) =
-            Terminated::<StructOrUnion, Op![;]>::try_parse_raw(input)?
+            Terminated::<StructOrUnion, Op![;]>::try_parse_raw(ctx, input)?
         {
             if s.ident.is_none() {
                 return Err(ParseErr::new(
@@ -378,34 +379,34 @@ impl Parse for VarDecl {
         "variable declaration".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(ty)) = TypeWithReqIdent::try_parse_raw(input)? {
-            WsAndComments::try_parse(&mut rest)?;
-            let init = if <Op![=]>::try_parse(&mut rest)?.is_some() {
-                WsAndComments::try_parse(&mut rest)?;
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(ty)) = TypeWithReqIdent::try_parse_raw(ctx, input)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let init = if <Op![=]>::try_parse(ctx, &mut rest)?.is_some() {
+                WsAndComments::try_parse(ctx, &mut rest)?;
                 let init = if ty.ty.is_array_or_pointer() {
                     let parsed = Delimited::<
                         Op<'{'>,
                         Option<Punctuated<ExprNoComma, Op![,]>>,
                         Op<'}'>,
-                    >::parse(&mut rest)?;
+                    >::parse(ctx, &mut rest)?;
                     let span = parsed.span();
                     let values: Vec<ExprNoComma> =
                         parsed.value.map(|v| v.into()).unwrap_or_default();
                     let values = values.into_iter().map(|i| i.0).collect();
                     Some(Expr::ArrayValues { span, values })
                 } else {
-                    Some(ExprNoComma::parse(&mut rest)?.0)
+                    Some(ExprNoComma::parse(ctx, &mut rest)?.0)
                 };
-                WsAndComments::try_parse(&mut rest)?;
+                WsAndComments::try_parse(ctx, &mut rest)?;
                 init
             } else {
                 None
             };
             let semi = if init.is_some() {
-                Some(<Op![;]>::parse(&mut rest)?)
+                Some(<Op![;]>::parse(ctx, &mut rest)?)
             } else {
-                <Op![;]>::try_parse(&mut rest)?
+                <Op![;]>::try_parse(ctx, &mut rest)?
             };
             if let Some(semi) = semi {
                 let span = ty.span().join(&semi.span);

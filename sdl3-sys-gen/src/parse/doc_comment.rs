@@ -1,4 +1,4 @@
-use super::{GetSpan, Parse, ParseErr, ParseRawRes, ParseRev, Span, WsAndComments};
+use super::{GetSpan, Parse, ParseContext, ParseErr, ParseRawRes, ParseRev, Span, WsAndComments};
 use crate::common_prefix;
 use std::{
     borrow::Cow,
@@ -81,10 +81,11 @@ impl GetSpan for DocComment {
 
 impl DocComment {
     pub fn try_parse_combine_postfix(
-        pre: Option<DocComment>,
+        ctx: &ParseContext,
         input: &mut Span,
+        pre: Option<DocComment>,
     ) -> Result<Option<DocComment>, ParseErr> {
-        if let Some(post) = DocCommentPost::try_parse(input)? {
+        if let Some(post) = DocCommentPost::try_parse(ctx, input)? {
             if pre.is_some() {
                 Err(ParseErr::new(
                     post.span,
@@ -99,10 +100,11 @@ impl DocComment {
     }
 
     pub fn try_parse_rev_combine_postfix(
-        pre: Option<DocComment>,
+        ctx: &ParseContext,
         input: &mut Span,
+        pre: Option<DocComment>,
     ) -> Result<Option<DocComment>, ParseErr> {
-        if let Some(post) = DocCommentPost::try_parse_rev(input)? {
+        if let Some(post) = DocCommentPost::try_parse_rev(ctx, input)? {
             if pre.is_some() {
                 Err(ParseErr::new(
                     post.span,
@@ -122,7 +124,7 @@ impl Parse for DocComment {
         "documentation comment".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let rest = input.trim_wsc_start()?;
         if rest.starts_with("/**") && !rest.starts_with("/**<") {
             let start = rest.start();
@@ -164,9 +166,9 @@ impl Parse for DocCommentFile {
         "doc comment for file".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(dc)) = DocComment::try_parse_raw(input)? {
-            if WsAndComments::try_parse(&mut rest)?.is_some() {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(dc)) = DocComment::try_parse_raw(ctx, input)? {
+            if WsAndComments::try_parse(ctx, &mut rest)?.is_some() {
                 // empty line after doc comment, so it's not attached to anything
                 return Ok((rest, Some(Self(dc))));
             }
@@ -185,7 +187,7 @@ impl Parse for DocCommentPost {
         "documentation comment (postfix)".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let rest = input.trim_wsc_start()?;
         if rest.starts_with("/**<") {
             if let Some(end) = rest.as_bytes().windows(2).position(|b| b == b"*/") {
@@ -202,7 +204,7 @@ impl Parse for DocCommentPost {
 }
 
 impl ParseRev for DocCommentPost {
-    fn try_parse_rev_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_rev_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let rest = input.trim_wsc_end()?;
         if rest.ends_with("*/") {
             if let Some(start) = rest.as_bytes().windows(4).rev().position(|b| b == b"/**<") {

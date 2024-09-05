@@ -1,4 +1,4 @@
-use super::{is_keyword, GetSpan, Parse, ParseErr, ParseRawRes, ParseRev, Span};
+use super::{is_keyword, GetSpan, Parse, ParseContext, ParseErr, ParseRawRes, ParseRev, Span};
 use core::{borrow::Borrow, fmt::Display, hash::Hash};
 use std::borrow::Cow;
 
@@ -82,7 +82,7 @@ impl<const ALLOW_KEYWORDS: bool> Parse for IdentOrKwT<ALLOW_KEYWORDS> {
         "ident".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut chars = input.char_indices();
         if let Some(first) = chars.next() {
             match first.1 {
@@ -113,7 +113,7 @@ impl<const ALLOW_KEYWORDS: bool> Parse for IdentOrKwT<ALLOW_KEYWORDS> {
 }
 
 impl<const ALLOW_KEYWORDS: bool> ParseRev for IdentOrKwT<ALLOW_KEYWORDS> {
-    fn try_parse_rev_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_rev_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut id_start = None;
         for (i, ch) in input.char_indices().rev() {
             match ch {

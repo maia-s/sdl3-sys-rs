@@ -1,6 +1,6 @@
 use super::{
-    Delimited, DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op, Parse, ParseErr, ParseRawRes,
-    Span, Spanned, Type, TypeWithReqIdent, WsAndComments,
+    Delimited, DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op, Parse, ParseContext, ParseErr,
+    ParseRawRes, Span, Spanned, Type, TypeWithReqIdent, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -31,22 +31,22 @@ impl Parse for StructOrUnion {
         "struct or union".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut rest = input.clone();
-        let doc = DocComment::try_parse(&mut rest)?;
-        let kw_struct = Kw_struct::try_parse(&mut rest)?;
+        let doc = DocComment::try_parse(ctx, &mut rest)?;
+        let kw_struct = Kw_struct::try_parse(ctx, &mut rest)?;
         let kw_union = if kw_struct.is_none() {
-            Kw_union::try_parse(&mut rest)?
+            Kw_union::try_parse(ctx, &mut rest)?
         } else {
             None
         };
         if kw_struct.is_none() && kw_union.is_none() {
             return Ok((input.clone(), None));
         }
-        WsAndComments::try_parse(&mut rest)?;
-        let ident = Ident::try_parse(&mut rest)?;
-        let (mut rest2, _) = WsAndComments::try_parse_raw(&rest)?;
-        let fields = StructFields::try_parse(&mut rest2)?;
+        WsAndComments::try_parse(ctx, &mut rest)?;
+        let ident = Ident::try_parse(ctx, &mut rest)?;
+        let (mut rest2, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
+        let fields = StructFields::try_parse(ctx, &mut rest2)?;
         if fields.is_some() {
             rest = rest2;
         }
@@ -91,27 +91,27 @@ impl Parse for StructFieldGroup {
         "struct field".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut rest = input.clone();
-        let doc = DocComment::try_parse(&mut rest)?;
-        if let Some(twi) = TypeWithReqIdent::try_parse(&mut rest)? {
+        let doc = DocComment::try_parse(ctx, &mut rest)?;
+        if let Some(twi) = TypeWithReqIdent::try_parse(ctx, &mut rest)? {
             let mut idents = vec![twi.ident.unwrap()];
-            WsAndComments::try_parse(&mut rest)?;
-            while let Some(comma) = <Op![,]>::try_parse(&mut rest)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            while let Some(comma) = <Op![,]>::try_parse(ctx, &mut rest)? {
                 if !twi.ty.strictly_left_aligned() {
                     return Err(ParseErr::new(
                         comma.span,
                         "multiple declaration for pointer and array types isn't supported",
                     ));
                 }
-                WsAndComments::try_parse(&mut rest)?;
-                idents.push(Ident::parse(&mut rest)?);
-                WsAndComments::try_parse(&mut rest)?;
+                WsAndComments::try_parse(ctx, &mut rest)?;
+                idents.push(Ident::parse(ctx, &mut rest)?);
+                WsAndComments::try_parse(ctx, &mut rest)?;
             }
-            let semi = <Op![;]>::parse(&mut rest)?;
+            let semi = <Op![;]>::parse(ctx, &mut rest)?;
             let span = input.start().join(&semi.span);
-            let doc = DocComment::try_parse_combine_postfix(doc, &mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
+            let doc = DocComment::try_parse_combine_postfix(ctx, &mut rest, doc)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
             Ok((
                 rest,
                 Some(Self {
@@ -140,9 +140,11 @@ impl Parse for StructFields {
         "struct fields".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         if let (rest, Some(f)) =
-            Spanned::<Delimited<Op<'{'>, Vec<StructFieldGroup>, Op<'}'>>>::try_parse_raw(input)?
+            Spanned::<Delimited<Op<'{'>, Vec<StructFieldGroup>, Op<'}'>>>::try_parse_raw(
+                ctx, input,
+            )?
         {
             let fields = f
                 .value

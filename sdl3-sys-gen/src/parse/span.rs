@@ -1,4 +1,4 @@
-use super::{Parse, ParseErr, ParseRawRes, ParseRes};
+use super::{Parse, ParseContext, ParseErr, ParseRawRes, ParseRes};
 use core::hash::Hash;
 use std::{
     borrow::Cow,
@@ -34,8 +34,8 @@ impl<T: Parse> Parse for Spanned<T> {
         T::desc()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        let (rest, value) = T::try_parse_raw(input)?;
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        let (rest, value) = T::try_parse_raw(ctx, input)?;
         if let Some(value) = value {
             let span = input.start().join(&rest.start());
             Ok((rest, Some(Self { span, value })))

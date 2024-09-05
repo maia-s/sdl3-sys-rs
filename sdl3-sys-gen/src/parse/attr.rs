@@ -1,4 +1,6 @@
-use super::{CallArgs, Delimited, Expr, GetSpan, Ident, Op, Parse, Span, WsAndComments};
+use super::{
+    CallArgs, Delimited, Expr, GetSpan, Ident, Op, Parse, ParseContext, Span, WsAndComments,
+};
 
 pub const ATTR_ABI: usize = 0;
 pub const ATTR_ARG: usize = 1;
@@ -34,9 +36,9 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
     }
 
     #[allow(clippy::single_match)]
-    fn try_parse_raw(input: &Span) -> super::ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> super::ParseRawRes<Option<Self>> {
         let args = Vec::new();
-        if let (rest, Some(ident)) = Ident::try_parse_raw(input)? {
+        if let (rest, Some(ident)) = Ident::try_parse_raw(ctx, input)? {
             match KIND {
                 ATTR_ABI => match ident.as_str() {
                     "APIENTRY" | "APIENTRYP" | "EGLAPIENTRY" | "EGLAPIENTRYP" | "GLAPIENTRY"
@@ -46,7 +48,7 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
 
                     "__attribute__" => {
                         let (rest, args) =
-                            Delimited::<Op<'('>, CallArgs, Op<')'>>::parse_raw(&rest)?;
+                            Delimited::<Op<'('>, CallArgs, Op<')'>>::parse_raw(ctx, &rest)?;
                         return Ok((
                             rest,
                             Some(Self {
@@ -65,7 +67,7 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                     }
 
                     "SDL_IN_BYTECAP" | "SDL_OUT_BYTECAP" | "SDL_INOUT_Z_CAP" | "SDL_OUT_Z_CAP" => {
-                        let (rest, args) = CallArgs::parse_raw(&rest)?;
+                        let (rest, args) = CallArgs::parse_raw(ctx, &rest)?;
                         return Ok((
                             rest,
                             Some(Self {
@@ -103,7 +105,7 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                     | "SDL_TRY_ACQUIRE"
                     | "SDL_TRY_ACQUIRE_SHARED"
                     | "SDL_WPRINTF_VARARG_FUNC" => {
-                        let (rest, args) = CallArgs::parse_raw(&rest)?;
+                        let (rest, args) = CallArgs::parse_raw(ctx, &rest)?;
                         return Ok((
                             rest,
                             Some(Self {
@@ -146,12 +148,12 @@ impl<const KIND: usize> Parse for Attributes<KIND> {
         Attribute::<KIND>::desc()
     }
 
-    fn parse_raw(input: &Span) -> super::ParseRawRes<Self> {
+    fn parse_raw(ctx: &ParseContext, input: &Span) -> super::ParseRawRes<Self> {
         let mut rest = input.clone();
         let mut vec = Vec::new();
-        while let Some(attr) = Attribute::<KIND>::try_parse(&mut rest)? {
+        while let Some(attr) = Attribute::<KIND>::try_parse(ctx, &mut rest)? {
             vec.push(attr);
-            WsAndComments::try_parse(&mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
         }
         Ok((rest, Self(vec)))
     }

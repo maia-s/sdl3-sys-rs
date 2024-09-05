@@ -1,6 +1,7 @@
 use super::{
     DocComment, Enum, Expr, FnAbi, FnDeclArgs, GetSpan, Ident, Kw_const, Kw_typedef, Op, Parse,
-    ParseRawRes, PrimitiveType, PrimitiveTypeParse, RustCode, Span, StructOrUnion, WsAndComments,
+    ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion,
+    WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -68,8 +69,8 @@ impl Parse for Type {
         "type".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(ty)) = TypeWithNoIdent::try_parse_raw(input)? {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (rest, Some(ty)) = TypeWithNoIdent::try_parse_raw(ctx, input)? {
             Ok((rest, Some(ty.ty)))
         } else {
             Ok((input.clone(), None))
@@ -130,10 +131,10 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
         "type".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut rest = input.clone();
         let mut ty = if let Some(PrimitiveTypeParse { span, ty, is_const }) =
-            PrimitiveTypeParse::try_parse(&mut rest)?
+            PrimitiveTypeParse::try_parse(ctx, &mut rest)?
         {
             Type {
                 span,
@@ -142,9 +143,9 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
             }
         } else {
             let mut rest2 = rest.clone();
-            let is_const = Kw_const::try_parse(&mut rest2)?.is_some();
-            WsAndComments::try_parse(&mut rest2)?;
-            if let Some(e) = Enum::try_parse(&mut rest2)? {
+            let is_const = Kw_const::try_parse(ctx, &mut rest2)?.is_some();
+            WsAndComments::try_parse(ctx, &mut rest2)?;
+            if let Some(e) = Enum::try_parse(ctx, &mut rest2)? {
                 rest = rest2;
                 let span = input.start().join(&rest.start());
                 Type {
@@ -152,7 +153,7 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
                     is_const,
                     ty: TypeEnum::Enum(Box::new(e)),
                 }
-            } else if let Some(s) = StructOrUnion::try_parse(&mut rest2)? {
+            } else if let Some(s) = StructOrUnion::try_parse(ctx, &mut rest2)? {
                 rest = rest2;
                 let span = input.start().join(&rest.start());
                 Type {
@@ -160,9 +161,9 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
                     is_const,
                     ty: TypeEnum::Struct(Box::new(s)),
                 }
-            } else if let Some(ident) = Ident::try_parse(&mut rest2)? {
+            } else if let Some(ident) = Ident::try_parse(ctx, &mut rest2)? {
                 rest = rest2;
-                let is_const = is_const || Kw_const::try_parse(&mut rest)?.is_some();
+                let is_const = is_const || Kw_const::try_parse(ctx, &mut rest)?.is_some();
                 let span = input.start().join(&rest.start());
                 Type {
                     span,
@@ -176,14 +177,14 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
 
         // pointer
         let mut rest2 = rest.clone();
-        WsAndComments::try_parse(&mut rest2)?;
-        while <Op![*]>::try_parse(&mut rest2)?.is_some() {
+        WsAndComments::try_parse(ctx, &mut rest2)?;
+        while <Op![*]>::try_parse(ctx, &mut rest2)?.is_some() {
             rest = rest2.clone();
-            WsAndComments::try_parse(&mut rest2)?;
-            let is_const = Kw_const::try_parse(&mut rest2)?.is_some();
+            WsAndComments::try_parse(ctx, &mut rest2)?;
+            let is_const = Kw_const::try_parse(ctx, &mut rest2)?.is_some();
             if is_const {
                 rest = rest2.clone();
-                WsAndComments::try_parse(&mut rest2)?;
+                WsAndComments::try_parse(ctx, &mut rest2)?;
             }
             let span = input.start().join(&rest.start());
             ty = Type {
@@ -195,13 +196,13 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
 
         // prepare function pointer
         rest2 = rest.clone();
-        WsAndComments::try_parse(&mut rest2)?;
-        let (abi, ident, args) = if Op::<'('>::try_parse(&mut rest2)?.is_some() {
+        WsAndComments::try_parse(ctx, &mut rest2)?;
+        let (abi, ident, args) = if Op::<'('>::try_parse(ctx, &mut rest2)?.is_some() {
             rest = rest2;
-            WsAndComments::try_parse(&mut rest)?;
-            let abi = FnAbi::try_parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            if <Op![*]>::try_parse(&mut rest)?.is_none() {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let abi = FnAbi::try_parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            if <Op![*]>::try_parse(ctx, &mut rest)?.is_none() {
                 let ok = if let Some(abi) = &abi {
                     abi.ident.as_str().ends_with("APIENTRYP")
                 } else {
@@ -212,31 +213,31 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
                     return Ok((input.clone(), None));
                 }
             }
-            WsAndComments::try_parse(&mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
             let ident = if IDENT_SPEC == NO_IDENT {
                 None
             } else if IDENT_SPEC == REQ_IDENT {
-                Some(Ident::parse(&mut rest)?)
+                Some(Ident::parse(ctx, &mut rest)?)
             } else {
-                Ident::try_parse(&mut rest)?
+                Ident::try_parse(ctx, &mut rest)?
             };
-            WsAndComments::try_parse(&mut rest)?;
-            Op::<')'>::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            let args = FnDeclArgs::parse(&mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            Op::<')'>::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let args = FnDeclArgs::parse(ctx, &mut rest)?;
             (abi, ident, Some(args))
         } else {
             let ident = if IDENT_SPEC == NO_IDENT {
                 None
             } else if IDENT_SPEC == REQ_IDENT {
                 rest = rest2;
-                if let Some(ident) = Ident::try_parse(&mut rest)? {
+                if let Some(ident) = Ident::try_parse(ctx, &mut rest)? {
                     Some(ident)
                 } else {
                     return Ok((input.clone(), None));
                 }
             } else {
-                let ident = Ident::try_parse(&mut rest2)?;
+                let ident = Ident::try_parse(ctx, &mut rest2)?;
                 if ident.is_some() {
                     rest = rest2;
                 }
@@ -248,13 +249,13 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
         // array
         if ident.is_some() {
             rest2 = rest.clone();
-            WsAndComments::try_parse(&mut rest2)?;
-            while Op::<'['>::try_parse(&mut rest2)?.is_some() {
+            WsAndComments::try_parse(ctx, &mut rest2)?;
+            while Op::<'['>::try_parse(ctx, &mut rest2)?.is_some() {
                 rest = rest2;
-                WsAndComments::try_parse(&mut rest)?;
-                let expr = Expr::try_parse(&mut rest)?;
-                WsAndComments::try_parse(&mut rest)?;
-                Op::<']'>::parse(&mut rest)?;
+                WsAndComments::try_parse(ctx, &mut rest)?;
+                let expr = Expr::try_parse(ctx, &mut rest)?;
+                WsAndComments::try_parse(ctx, &mut rest)?;
+                Op::<']'>::parse(ctx, &mut rest)?;
                 ty = Type {
                     span: input.start().join(&rest.start()),
                     is_const: true,
@@ -265,7 +266,7 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
                     },
                 };
                 rest2 = rest.clone();
-                WsAndComments::try_parse(&mut rest2)?;
+                WsAndComments::try_parse(ctx, &mut rest2)?;
             }
         }
 
@@ -300,16 +301,16 @@ impl Parse for TypeDef {
         "typedef".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut rest = input.clone();
-        let doc = DocComment::try_parse(&mut rest)?;
-        if let Some(typedef_kw) = Kw_typedef::try_parse(&mut rest)? {
-            WsAndComments::try_parse(&mut rest)?;
-            let TypeWithIdent { ty, ident } = TypeWithReqIdent::parse(&mut rest)?;
-            WsAndComments::try_parse(&mut rest)?;
-            let semi = <Op![;]>::parse(&mut rest)?;
+        let doc = DocComment::try_parse(ctx, &mut rest)?;
+        if let Some(typedef_kw) = Kw_typedef::try_parse(ctx, &mut rest)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let TypeWithIdent { ty, ident } = TypeWithReqIdent::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let semi = <Op![;]>::parse(ctx, &mut rest)?;
             let span = typedef_kw.span.join(&semi.span);
-            let doc = DocComment::try_parse_combine_postfix(doc, &mut rest)?;
+            let doc = DocComment::try_parse_combine_postfix(ctx, &mut rest, doc)?;
             Ok((
                 rest,
                 Some(TypeDef {

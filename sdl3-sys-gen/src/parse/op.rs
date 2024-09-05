@@ -1,4 +1,4 @@
-use super::{GetSpan, Parse, ParseErr, ParseRawRes, ParseRes, Span};
+use super::{GetSpan, Parse, ParseContext, ParseErr, ParseRawRes, ParseRes, Span};
 use std::{
     borrow::Cow,
     fmt::{self, Debug},
@@ -130,8 +130,11 @@ impl<const OP1: char, const OP2: char, const OP3: char> Op<OP1, OP2, OP3> {
 }
 
 impl ExprOp {
-    pub fn try_parse_unop(input: &mut Span) -> ParseRes<Option<(Precedence, Self)>> {
-        if let (rest, Some(op)) = ExprOp::try_parse_raw(input)? {
+    pub fn try_parse_unop(
+        ctx: &ParseContext,
+        input: &mut Span,
+    ) -> ParseRes<Option<(Precedence, Self)>> {
+        if let (rest, Some(op)) = ExprOp::try_parse_raw(ctx, input)? {
             if let Some(prec) = op.unary_precedence() {
                 *input = rest;
                 return Ok(Some((prec, op)));
@@ -140,8 +143,11 @@ impl ExprOp {
         Ok(None)
     }
 
-    pub fn try_parse_binop(input: &mut Span) -> ParseRes<Option<(Precedence, Self)>> {
-        if let (rest, Some(op)) = ExprOp::try_parse_raw(input)? {
+    pub fn try_parse_binop(
+        ctx: &ParseContext,
+        input: &mut Span,
+    ) -> ParseRes<Option<(Precedence, Self)>> {
+        if let (rest, Some(op)) = ExprOp::try_parse_raw(ctx, input)? {
             if let Some(prec) = op.binary_precedence() {
                 *input = rest;
                 return Ok(Some((prec, op)));
@@ -186,7 +192,7 @@ impl<const OP1: char, const OP2: char, const OP3: char> Parse for Op<OP1, OP2, O
         }
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         if Self::STR.is_empty() {
             if input.len() >= 3 {
                 match &input.as_bytes()[..3] {

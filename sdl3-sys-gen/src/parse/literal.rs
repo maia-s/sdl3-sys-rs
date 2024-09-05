@@ -1,4 +1,4 @@
-use super::{GetSpan, Op, Parse, ParseErr, ParseRawRes, Span, Spanned};
+use super::{GetSpan, Op, Parse, ParseContext, ParseErr, ParseRawRes, Span, Spanned};
 use std::{borrow::Cow, ffi::CString};
 
 #[derive(Clone, Debug)]
@@ -23,12 +23,12 @@ impl Parse for Literal {
         "literal".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(lit)) = FloatLiteral::try_parse_raw(input)? {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (rest, Some(lit)) = FloatLiteral::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Self::Float(lit))))
-        } else if let (rest, Some(lit)) = IntegerLiteral::try_parse_raw(input)? {
+        } else if let (rest, Some(lit)) = IntegerLiteral::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Self::Integer(lit))))
-        } else if let (rest, Some(lit)) = StringLiteral::try_parse_raw(input)? {
+        } else if let (rest, Some(lit)) = StringLiteral::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Self::String(lit))))
         } else {
             Ok((input.clone(), None))
@@ -56,7 +56,7 @@ impl Parse for FloatLiteral {
         "float literal".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut chars = input.char_indices().peekable();
         let mut have_digits = false;
 
@@ -214,7 +214,7 @@ impl Parse for IntegerLiteral {
         "integer literal".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         fn parse_suffix_and_create(
             rest: Span,
             span: Span,
@@ -454,9 +454,9 @@ impl Parse for StringLiteral {
         "string literal".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut rest = input.clone();
-        if let Some(open_quote) = Op::<'\"'>::try_parse(&mut rest)? {
+        if let Some(open_quote) = Op::<'\"'>::try_parse(ctx, &mut rest)? {
             if let Some((i, ch)) = rest.char_indices().find(|(_, c)| matches!(c, '\\' | '\"')) {
                 if ch == '\\' {
                     Err(ParseErr::new(rest.slice(i..=i), "escapes aren't supported"))

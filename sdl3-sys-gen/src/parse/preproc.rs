@@ -1,6 +1,7 @@
 use super::{
     Ambiguous, DocComment, DocCommentPost, Expr, GetSpan, Ident, IdentOrKw, IntegerLiteral, Item,
-    Items, Literal, Parse, ParseErr, ParseRawRes, Punctuated, RustCode, Span, Type, WsAndComments,
+    Items, Literal, Parse, ParseContext, ParseErr, ParseRawRes, Punctuated, RustCode, Span, Type,
+    WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -41,7 +42,10 @@ impl DefineValue {
 
     pub fn parse_expr(s: &str) -> Result<Self, ParseErr> {
         let s = Span::new_inline(s.to_string());
-        Ok(Self::Expr(Expr::parse_all(s.trim_wsc()?)?))
+        Ok(Self::Expr(Expr::parse_all(
+            &ParseContext::new(),
+            s.trim_wsc()?,
+        )?))
     }
 
     pub const fn is_target_dependent(&self) -> bool {
@@ -54,15 +58,15 @@ impl Parse for DefineValue {
         "define value".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         if input.is_empty() {
             Ok((input.end(), Some(Self::one())))
         } else if input.contains("#") || input.contains("_cast<") {
             Ok((input.end(), Some(Self::Other(input.clone()))))
         } else {
-            let items = Items::try_parse_try_all(input)?;
-            let expr = Expr::try_parse_try_all(input)?;
-            let ty = Type::try_parse_try_all(input)?;
+            let items = Items::try_parse_try_all(ctx, input)?;
+            let expr = Expr::try_parse_try_all(ctx, input)?;
+            let ty = Type::try_parse_try_all(ctx, input)?;
             if items.is_some() as usize + expr.is_some() as usize + ty.is_some() as usize > 1 {
                 let mut ambiguous = Ambiguous::new(input.clone());
                 if let Some(items) = items {
@@ -117,7 +121,7 @@ impl Parse for Line {
         "line".into()
     }
 
-    fn parse_raw(input: &Span) -> ParseRawRes<Self> {
+    fn parse_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Self> {
         let input = &input.trim_wsc_start()?;
         let mut escaped = false;
         let (rest, span) = 'parse: {
@@ -163,8 +167,8 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
         "preprocessor block".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(line)) = PreProcLine::try_parse_raw(input)? {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(line)) = PreProcLine::try_parse_raw(ctx, input)? {
             let span0 = line.span;
 
             let (kind, is_else) = match line.kind {
@@ -193,8 +197,8 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
 
             while !rest.is_empty() {
                 // skip doc comments so the end of one doesn't break Line
-                if DocComment::try_parse(&mut rest)?.is_some() {
-                } else if let (rest_, Some(line)) = Line::try_parse_raw(&rest)? {
+                if DocComment::try_parse(ctx, &mut rest)?.is_some() {
+                } else if let (rest_, Some(line)) = Line::try_parse_raw(ctx, &rest)? {
                     let span = line.span.clone();
                     let mut line = line.span;
                     if !line.as_str().contains('#') && line.as_str().contains("/**<") {
@@ -206,16 +210,16 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                             .position(|b| b == b"/**<")
                             .unwrap();
                         rest = rest.slice(pos..);
-                        DocCommentPost::parse(&mut rest)?;
+                        DocCommentPost::parse(ctx, &mut rest)?;
                         continue;
                     }
-                    if let Some(pp) = PreProcLine::try_parse(&mut line)? {
+                    if let Some(pp) = PreProcLine::try_parse(ctx, &mut line)? {
                         match pp.kind {
                             PreProcLineKind::If(_)
                             | PreProcLineKind::IfDef(_)
                             | PreProcLineKind::IfNDef(_) => {
                                 // skip nested if block
-                                PreProcBlock::<false>::parse(&mut rest)?;
+                                PreProcBlock::<false>::parse(ctx, &mut rest)?;
                                 continue;
                             }
 
@@ -236,11 +240,11 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                         Items(vec![Item::Skipped(block)])
                                     }
 
-                                    _ => {
-                                        Items::try_parse_all(block.trim_wsc()?)?.unwrap_or_default()
-                                    }
+                                    _ => Items::try_parse_all(ctx, block.trim_wsc()?)?
+                                        .unwrap_or_default(),
                                 };
-                                let (rest, else_block) = PreProcBlock::<true>::parse_raw(&rest)?;
+                                let (rest, else_block) =
+                                    PreProcBlock::<true>::parse_raw(ctx, &rest)?;
                                 let span1 = else_block.span();
                                 return Ok((
                                     rest,
@@ -260,9 +264,8 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                         Items(vec![Item::Skipped(block)])
                                     }
 
-                                    _ => {
-                                        Items::try_parse_all(block.trim_wsc()?)?.unwrap_or_default()
-                                    }
+                                    _ => Items::try_parse_all(ctx, block.trim_wsc()?)?
+                                        .unwrap_or_default(),
                                 };
                                 let rest = rest_;
                                 return Ok((
@@ -326,45 +329,49 @@ impl Parse for PreProcLine {
         "preprocessor directive".into()
     }
 
-    fn try_parse_raw(input: &Span) -> ParseRawRes<Option<Self>> {
-        let (rest, doc) = DocComment::try_parse_raw(input)?;
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        let (rest, doc) = DocComment::try_parse_raw(ctx, input)?;
         if doc.is_some() && !rest.starts_with_ch('#') {
             // detached doc comment
             return Ok((input.clone(), None));
         }
-        let (rest, line) = Line::parse_raw(&rest)?;
+        let (rest, line) = Line::parse_raw(ctx, &rest)?;
         let span = line.span;
         let line = span.trim_wsc()?;
         if let Some(i) = line.strip_prefix_ch('#') {
             let mut i = i.trim_wsc_start()?;
-            let ident = IdentOrKw::parse(&mut i)
+            let ident = IdentOrKw::parse(ctx, &mut i)
                 .map_err(|e| e.map_msg("expected preprocessor directive"))?;
-            WsAndComments::try_parse(&mut i)?;
+            WsAndComments::try_parse(ctx, &mut i)?;
 
             let kind = match ident.as_str() {
-                "if" => PreProcLineKind::If(Expr::parse_all(i)?),
-                "ifdef" => PreProcLineKind::IfDef(Ident::parse_all(i)?),
-                "ifndef" => PreProcLineKind::IfNDef(Ident::parse_all(i)?),
+                "if" => PreProcLineKind::If(Expr::parse_all(ctx, i)?),
+                "ifdef" => PreProcLineKind::IfDef(Ident::parse_all(ctx, i)?),
+                "ifndef" => PreProcLineKind::IfNDef(Ident::parse_all(ctx, i)?),
 
-                "elif" => PreProcLineKind::ElIf(Expr::parse_all(i)?),
-                "elifdef" => PreProcLineKind::ElIfDef(Ident::parse_all(i)?),
-                "enifndef" => PreProcLineKind::ElIfNDef(Ident::parse_all(i)?),
+                "elif" => PreProcLineKind::ElIf(Expr::parse_all(ctx, i)?),
+                "elifdef" => PreProcLineKind::ElIfDef(Ident::parse_all(ctx, i)?),
+                "enifndef" => PreProcLineKind::ElIfNDef(Ident::parse_all(ctx, i)?),
 
                 "else" => PreProcLineKind::Else,
                 "endif" => PreProcLineKind::EndIf,
 
                 "define" => {
-                    let ident = Ident::parse(&mut i)?;
+                    let ident = Ident::parse(ctx, &mut i)?;
                     if i.starts_with_ch('(') {
                         if let Some(close_paren) = i.as_bytes().iter().position(|&b| b == b')') {
                             let args = Punctuated::<IdentOrKw, Op![,]>::try_parse_all(
+                                ctx,
                                 i.slice(1..close_paren).trim_wsc()?,
                             )?
                             .unwrap_or_default();
                             let mut value_span = i.slice(close_paren + 1..).trim_wsc_start()?;
-                            let doc =
-                                DocComment::try_parse_rev_combine_postfix(doc, &mut value_span)?;
-                            let value = DefineValue::parse_all(value_span.trim_wsc_end()?)?;
+                            let doc = DocComment::try_parse_rev_combine_postfix(
+                                ctx,
+                                &mut value_span,
+                                doc,
+                            )?;
+                            let value = DefineValue::parse_all(ctx, value_span.trim_wsc_end()?)?;
                             PreProcLineKind::Define(Define {
                                 span: span.clone(),
                                 doc,
@@ -376,10 +383,11 @@ impl Parse for PreProcLine {
                             return Err(ParseErr::new(i.slice(0..=0), "unmatched `(`"));
                         }
                     } else {
-                        WsAndComments::try_parse(&mut i)?;
+                        WsAndComments::try_parse(ctx, &mut i)?;
                         let mut value_span = i.trim_wsc_start()?;
-                        let doc = DocComment::try_parse_rev_combine_postfix(doc, &mut value_span)?;
-                        let value = DefineValue::parse_all(value_span.trim_wsc_end()?)?;
+                        let doc =
+                            DocComment::try_parse_rev_combine_postfix(ctx, &mut value_span, doc)?;
+                        let value = DefineValue::parse_all(ctx, value_span.trim_wsc_end()?)?;
                         PreProcLineKind::Define(Define {
                             span: span.clone(),
                             doc,
@@ -390,7 +398,7 @@ impl Parse for PreProcLine {
                     }
                 }
 
-                "undef" => PreProcLineKind::Undef(Ident::parse_all(i)?),
+                "undef" => PreProcLineKind::Undef(Ident::parse_all(ctx, i)?),
 
                 "include" => {
                     let i = i.trim_wsc_start()?;
