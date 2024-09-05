@@ -16,8 +16,18 @@ emit! {
 emit! {
 }
 
+/// A boolean false.
+///
+/// \since This macro is available since SDL 3.0.0.
+///
+/// \sa SDL_bool
 pub const SDL_FALSE: ::core::primitive::bool = false;
 
+/// A boolean true.
+///
+/// \since This macro is available since SDL 3.0.0.
+///
+/// \sa SDL_bool
 pub const SDL_TRUE: ::core::primitive::bool = true;
 
 /// A boolean type: true or false.
@@ -1125,6 +1135,16 @@ extern_sdlcall! {{
     pub fn SDL_strncasecmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
 }}
 
+/// The Unicode REPLACEMENT CHARACTER codepoint.
+///
+/// SDL_StepUTF8() reports this codepoint when it encounters a UTF-8 string
+/// with encoding errors.
+///
+/// This tends to render as something like a question mark in most places.
+///
+/// \since This macro is available since SDL 3.0.0.
+///
+/// \sa SDL_StepUTF8
 pub const SDL_INVALID_UNICODE_CODEPOINT: ::core::primitive::i32 = 65533;
 
 extern_sdlcall! {{
@@ -1420,8 +1440,10 @@ extern_sdlcall! {{
     pub fn SDL_rand_bits_r(state: *mut Uint64) -> Uint32;
 }}
 
+/// pi (double)
 pub const SDL_PI_D: ::core::ffi::c_double = 3.141592653589793_f64;
 
+/// pi (float)
 pub const SDL_PI_F: ::core::ffi::c_float = 3.1415927_f32;
 
 extern_sdlcall! {{

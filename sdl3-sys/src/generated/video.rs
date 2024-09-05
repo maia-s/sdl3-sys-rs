@@ -33,6 +33,17 @@ pub type SDL_DisplayID = Uint32;
 /// \since This datatype is available since SDL 3.0.0.
 pub type SDL_WindowID = Uint32;
 
+/// The pointer to the global `wl_display` object used by the Wayland video
+/// backend.
+///
+/// Can be set before the video subsystem is initialized to import an external
+/// `wl_display` object from an application or toolkit for use in SDL, or read
+/// after initialization to export the `wl_display` used by the Wayland video
+/// backend. Setting this property after the video subsystem has been
+/// initialized has no effect, and reading it when the video subsystem is
+/// uninitialized will either return the user provided value, if one was set
+/// prior to initialization, or NULL. See docs/README-wayland.md for more
+/// information.
 pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.video.wayland.wl_display\0") };
 
 /// System theme.
@@ -133,58 +144,89 @@ pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation = SDL_Display
 /// \sa SDL_GetWindowFlags
 pub type SDL_WindowFlags = Uint64;
 
+/// window is in fullscreen mode
 pub const SDL_WINDOW_FULLSCREEN: ::core::primitive::u64 = 1_u64;
 
+/// window usable with OpenGL context
 pub const SDL_WINDOW_OPENGL: ::core::primitive::u64 = 2_u64;
 
+/// window is occluded
 pub const SDL_WINDOW_OCCLUDED: ::core::primitive::u64 = 4_u64;
 
+/// window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; SDL_ShowWindow() is required for it to become visible
 pub const SDL_WINDOW_HIDDEN: ::core::primitive::u64 = 8_u64;
 
+/// no window decoration
 pub const SDL_WINDOW_BORDERLESS: ::core::primitive::u64 = 16_u64;
 
+/// window can be resized
 pub const SDL_WINDOW_RESIZABLE: ::core::primitive::u64 = 32_u64;
 
+/// window is minimized
 pub const SDL_WINDOW_MINIMIZED: ::core::primitive::u64 = 64_u64;
 
+/// window is maximized
 pub const SDL_WINDOW_MAXIMIZED: ::core::primitive::u64 = 128_u64;
 
+/// window has grabbed mouse input
 pub const SDL_WINDOW_MOUSE_GRABBED: ::core::primitive::u64 = 256_u64;
 
+/// window has input focus
 pub const SDL_WINDOW_INPUT_FOCUS: ::core::primitive::u64 = 512_u64;
 
+/// window has mouse focus
 pub const SDL_WINDOW_MOUSE_FOCUS: ::core::primitive::u64 = 1024_u64;
 
+/// window not created by SDL
 pub const SDL_WINDOW_EXTERNAL: ::core::primitive::u64 = 2048_u64;
 
+/// window is modal
 pub const SDL_WINDOW_MODAL: ::core::primitive::u64 = 4096_u64;
 
+/// window uses high pixel density back buffer if possible
 pub const SDL_WINDOW_HIGH_PIXEL_DENSITY: ::core::primitive::u64 = 8192_u64;
 
+/// window has mouse captured (unrelated to MOUSE_GRABBED)
 pub const SDL_WINDOW_MOUSE_CAPTURE: ::core::primitive::u64 = 16384_u64;
 
+/// window has relative mode enabled
 pub const SDL_WINDOW_MOUSE_RELATIVE_MODE: ::core::primitive::u64 = 32768_u64;
 
+/// window should always be above others
 pub const SDL_WINDOW_ALWAYS_ON_TOP: ::core::primitive::u64 = 65536_u64;
 
+/// window should be treated as a utility window, not showing in the task bar and window list
 pub const SDL_WINDOW_UTILITY: ::core::primitive::u64 = 131072_u64;
 
+/// window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window
 pub const SDL_WINDOW_TOOLTIP: ::core::primitive::u64 = 262144_u64;
 
+/// window should be treated as a popup menu, requires a parent window
 pub const SDL_WINDOW_POPUP_MENU: ::core::primitive::u64 = 524288_u64;
 
+/// window has grabbed keyboard input
 pub const SDL_WINDOW_KEYBOARD_GRABBED: ::core::primitive::u64 = 1048576_u64;
 
+/// window usable for Vulkan surface
 pub const SDL_WINDOW_VULKAN: ::core::primitive::u64 = 268435456_u64;
 
+/// window usable for Metal view
 pub const SDL_WINDOW_METAL: ::core::primitive::u64 = 536870912_u64;
 
+/// window with transparent buffer
 pub const SDL_WINDOW_TRANSPARENT: ::core::primitive::u64 = 1073741824_u64;
 
+/// window should not be focusable
 pub const SDL_WINDOW_NOT_FOCUSABLE: ::core::primitive::u64 = 2147483648_u64;
 
+/// Used to indicate that you don't care what the window position is.
+///
+/// \since This macro is available since SDL 3.0.0.
 pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376_u32;
 
+/// Used to indicate that the window position should be centered.
+///
+/// \since This macro is available since SDL 3.0.0.
 pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 
 /// Window flash operation.

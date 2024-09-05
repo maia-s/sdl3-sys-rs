@@ -19,18 +19,25 @@ use super::stdinc::*;
 /// \sa SDL_ComposeCustomBlendMode
 pub type SDL_BlendMode = Uint32;
 
+/// no blending: dstRGBA = srcRGBA
 pub const SDL_BLENDMODE_NONE: ::core::primitive::u32 = 0_u32;
 
+/// alpha blending: dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)), dstA = srcA + (dstA * (1-srcA))
 pub const SDL_BLENDMODE_BLEND: ::core::primitive::u32 = 1_u32;
 
+/// pre-multiplied alpha blending: dstRGBA = srcRGBA + (dstRGBA * (1-srcA))
 pub const SDL_BLENDMODE_BLEND_PREMULTIPLIED: ::core::primitive::u32 = 16_u32;
 
+/// additive blending: dstRGB = (srcRGB * srcA) + dstRGB, dstA = dstA
 pub const SDL_BLENDMODE_ADD: ::core::primitive::u32 = 2_u32;
 
+/// pre-multiplied additive blending: dstRGB = srcRGB + dstRGB, dstA = dstA
 pub const SDL_BLENDMODE_ADD_PREMULTIPLIED: ::core::primitive::u32 = 32_u32;
 
+/// color modulate: dstRGB = srcRGB * dstRGB, dstA = dstA
 pub const SDL_BLENDMODE_MOD: ::core::primitive::u32 = 4_u32;
 
+/// color multiply: dstRGB = (srcRGB * dstRGB) + (dstRGB * (1-srcA)), dstA = dstA
 pub const SDL_BLENDMODE_MUL: ::core::primitive::u32 = 8_u32;
 
 pub const SDL_BLENDMODE_INVALID: ::core::primitive::u32 = 2147483647_u32;

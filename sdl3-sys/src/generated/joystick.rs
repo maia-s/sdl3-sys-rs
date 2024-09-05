@@ -113,8 +113,20 @@ pub const SDL_JOYSTICK_CONNECTION_UNKNOWN: SDL_JoystickConnectionState = SDL_Joy
 pub const SDL_JOYSTICK_CONNECTION_WIRED: SDL_JoystickConnectionState = SDL_JoystickConnectionState::WIRED;
 pub const SDL_JOYSTICK_CONNECTION_WIRELESS: SDL_JoystickConnectionState = SDL_JoystickConnectionState::WIRELESS;
 
+/// The largest value an SDL_Joystick's axis can report.
+///
+/// \since This macro is available since SDL 3.0.0.
+///
+/// \sa SDL_JOYSTICK_AXIS_MIN
 pub const SDL_JOYSTICK_AXIS_MAX: ::core::primitive::i32 = 32767;
 
+/// The smallest value an SDL_Joystick's axis can report.
+///
+/// This is a negative number!
+///
+/// \since This macro is available since SDL 3.0.0.
+///
+/// \sa SDL_JOYSTICK_AXIS_MAX
 pub const SDL_JOYSTICK_AXIS_MIN: ::core::primitive::i32 = -32768_i32;
 
 pub const SDL_IPHONE_MAX_GFORCE: ::core::ffi::c_double = 5.0_f64;

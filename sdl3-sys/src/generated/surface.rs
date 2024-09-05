@@ -25,12 +25,16 @@ use super::iostream::*;
 /// \since This datatype is available since SDL 3.0.0.
 pub type SDL_SurfaceFlags = Uint32;
 
+/// Surface uses preallocated pixel memory
 pub const SDL_SURFACE_PREALLOCATED: ::core::primitive::u32 = 1_u32;
 
+/// Surface needs to be locked to access pixels
 pub const SDL_SURFACE_LOCK_NEEDED: ::core::primitive::u32 = 2_u32;
 
+/// Surface is currently locked
 pub const SDL_SURFACE_LOCKED: ::core::primitive::u32 = 4_u32;
 
+/// Surface uses pixel memory allocated with SDL_aligned_alloc()
 pub const SDL_SURFACE_SIMD_ALIGNED: ::core::primitive::u32 = 8_u32;
 
 /// The scaling mode.

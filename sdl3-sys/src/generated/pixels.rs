@@ -8,12 +8,32 @@ use super::stdinc::*;
 
 use super::error::*;
 
+/// A fully opaque 8-bit alpha value.
+///
+/// \since This macro is available since SDL 3.0.0.
+///
+/// \sa SDL_ALPHA_TRANSPARENT
 pub const SDL_ALPHA_OPAQUE: ::core::primitive::i32 = 255;
 
+/// A fully opaque floating point alpha value.
+///
+/// \since This macro is available since SDL 3.0.0.
+///
+/// \sa SDL_ALPHA_TRANSPARENT_FLOAT
 pub const SDL_ALPHA_OPAQUE_FLOAT: ::core::ffi::c_float = 1.0_f32;
 
+/// A fully transparent 8-bit alpha value.
+///
+/// \since This macro is available since SDL 3.0.0.
+///
+/// \sa SDL_ALPHA_OPAQUE
 pub const SDL_ALPHA_TRANSPARENT: ::core::primitive::i32 = 0;
 
+/// A fully transparent floating point alpha value.
+///
+/// \since This macro is available since SDL 3.0.0.
+///
+/// \sa SDL_ALPHA_OPAQUE_FLOAT
 pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 
 /// Pixel type.

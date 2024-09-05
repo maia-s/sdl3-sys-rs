@@ -18,6 +18,14 @@ use super::properties::*;
 /// \since This datatype is available since SDL 3.0.0.
 pub type SDL_SensorID = Uint32;
 
+/// A constant to represent standard gravity for accelerometer sensors.
+///
+/// The accelerometer returns the current acceleration in SI meters per second
+/// squared. This measurement includes the force of gravity, so a device at
+/// rest will have an value of SDL_STANDARD_GRAVITY away from the center of the
+/// earth, which is a positive Y value.
+///
+/// \since This macro is available since SDL 3.0.0.
 pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 
 /// The different sensors defined by SDL.

@@ -379,6 +379,7 @@ impl Emit for Define {
             if let Some(value) = self.value.try_eval(ctx)? {
                 let ty = value.ty();
                 ctx.register_sym(self.ident.clone(), Some(ty.clone()))?;
+                self.doc.emit(ctx)?;
                 write!(ctx, "pub const ")?;
                 self.ident.emit(ctx)?;
                 write!(ctx, ": ")?;
