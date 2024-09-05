@@ -11,6 +11,7 @@ pub struct StructOrUnion {
     pub kw_struct: Option<Kw_struct>,
     pub kw_union: Option<Kw_union>,
     pub ident: Option<Ident>,
+    pub generated_ident: Ident,
     pub fields: Option<StructFields>,
 }
 
@@ -46,6 +47,27 @@ impl Parse for StructOrUnion {
         WsAndComments::try_parse(ctx, &mut rest)?;
         let ident = Ident::try_parse(ctx, &mut rest)?;
         let (mut rest2, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
+        let generated_ident = if let Some(ident) = &ident {
+            ident.clone()
+        } else {
+            let sibling = *ctx.sibling_struct_index.borrow();
+            *ctx.sibling_struct_index.borrow_mut() += 1;
+            Ident::new_inline(format!(
+                "{}__Anon{}{}",
+                ctx.parent_struct_ident
+                    .borrow()
+                    .as_ref()
+                    .map(|p| p.as_str())
+                    .unwrap_or(""),
+                if kw_struct.is_some() {
+                    "Struct"
+                } else {
+                    "Union"
+                },
+                sibling
+            ))
+        };
+        let _guard = ctx.with_parent_struct_guard(Some(generated_ident.clone()));
         let fields = StructFields::try_parse(ctx, &mut rest2)?;
         if fields.is_some() {
             rest = rest2;
@@ -64,6 +86,7 @@ impl Parse for StructOrUnion {
                 kw_struct,
                 kw_union,
                 ident,
+                generated_ident,
                 fields,
             }),
         ))

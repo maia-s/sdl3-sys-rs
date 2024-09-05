@@ -1,3 +1,4 @@
+use core::{borrow::Borrow, cell::RefCell};
 use std::{borrow::Cow, fmt::Debug, marker::PhantomData, str};
 
 macro_rules! Op {
@@ -62,11 +63,42 @@ pub const fn op_third_ch(str: &str) -> char {
     }
 }
 
-pub struct ParseContext {}
+pub struct ParseContext {
+    pub parent_struct_ident: RefCell<Option<Ident>>,
+    pub sibling_struct_index: RefCell<usize>,
+}
 
 impl ParseContext {
+    pub const FIRST_SIBLING: usize = 1;
+
     pub const fn new() -> Self {
-        Self {}
+        Self {
+            parent_struct_ident: RefCell::new(None),
+            sibling_struct_index: RefCell::new(Self::FIRST_SIBLING),
+        }
+    }
+
+    pub fn with_parent_struct_guard(&self, ident: Option<Ident>) -> impl Drop + '_ {
+        struct Guard<'a>(&'a ParseContext, Option<Ident>, usize);
+
+        impl Drop for Guard<'_> {
+            fn drop(&mut self) {
+                *self.0.parent_struct_ident.borrow_mut() = self.1.take();
+                *self.0.sibling_struct_index.borrow_mut() = *self.2.borrow();
+            }
+        }
+
+        Guard(
+            self,
+            self.parent_struct_ident.replace(ident),
+            self.sibling_struct_index.replace(Self::FIRST_SIBLING),
+        )
+    }
+}
+
+impl Default for ParseContext {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
