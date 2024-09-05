@@ -41,6 +41,7 @@ pub const fn is_rust_keyword(s: &str) -> bool {
             | b"final"
             | b"fn"
             | b"for"
+            | b"gen"
             | b"if"
             | b"impl"
             | b"in"
