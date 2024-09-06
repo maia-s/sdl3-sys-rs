@@ -225,6 +225,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_PLATFORM_APPLE" = CfgExpr(r#"target_vendor = "apple""#);
             "SDL_PLATFORM_EMSCRIPTEN" = CfgExpr(r#"target_os = "emscripten""#);
             "SDL_PLATFORM_GDK" = CfgExpr(always_false!("SDL_PLATFORM_GDK")); // change WIN32 if this is changed
+            "SDL_PLATFORM_IOS" = CfgExpr(r#"any(target_os = "ios", target_os = "tvos", target_os = "watchos")"#);
             "SDL_PLATFORM_VITA" = CfgExpr(always_false!("SDL_PLATFORM_VITA"));
             "SDL_PLATFORM_WIN32" = CfgExpr("windows");
             "SDL_PLATFORM_WINRT" = CfgExpr(always_false!("SDL_PLATFORM_WINRT"));

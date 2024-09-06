@@ -30,7 +30,7 @@ fn skip(module: &str) -> bool {
 }
 
 fn skip_emit(module: &str) -> bool {
-    ["egl", "intrin", "oldnames"].contains(&module)
+    ["egl", "intrin", "oldnames"].contains(&module) || module.starts_with("opengl")
 }
 
 pub fn generate(headers_path: &Path, output_path: &Path) -> Result<(), Error> {
