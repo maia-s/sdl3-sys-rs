@@ -280,6 +280,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_SLOW_MEMMOVE",
             "SDL_SLOW_MEMSET",
             "SDL_THREAD_SAFETY_ANALYSIS",
+            "SDL_VENDOR_INFO",
         }
 
         macro_rules! defines {
