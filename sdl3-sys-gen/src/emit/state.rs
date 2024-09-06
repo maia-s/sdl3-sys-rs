@@ -474,9 +474,9 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         EmitContext {
             inner: Rc::clone(&self.inner),
             output: &mut self.ool_output,
-            indent: self.indent,
+            indent: 0,
             newline_count: 0,
-            do_indent: self.do_indent,
+            do_indent: false,
             ool_output: String::new(),
             gen: self.gen,
             top: false,
@@ -898,9 +898,14 @@ impl Scope {
             }
         }
         if let Some((_, true)) = self.lookup_struct(&ident) {
-            return Err(ParseErr::new(span, "struct symbol already defined in this scope").into());
+            if defined {
+                return Err(
+                    ParseErr::new(span, "struct symbol already defined in this scope").into(),
+                );
+            }
+        } else {
+            self.0.borrow_mut().struct_syms.insert(ident, defined);
         }
-        self.0.borrow_mut().struct_syms.insert(ident, defined);
         Ok(())
     }
 
