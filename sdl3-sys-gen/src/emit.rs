@@ -15,6 +15,8 @@ use std::{
 
 mod expr;
 pub use expr::Value;
+mod patch;
+pub use patch::patch_sdl_compile_time_assert;
 mod state;
 use state::PreProcState;
 pub use state::{DefineState, EmitContext, InnerEmitContext};

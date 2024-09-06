@@ -1,8 +1,11 @@
 use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval};
-use crate::parse::{
-    Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan, Ident,
-    IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
-    RustCode, SizeOf, Span, StringLiteral, Type, TypeEnum,
+use crate::{
+    emit::patch_sdl_compile_time_assert,
+    parse::{
+        Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan, Ident,
+        IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
+        RustCode, SizeOf, Span, StringLiteral, Type, TypeEnum,
+    },
 };
 use core::{
     fmt::{self, Display, Write},
@@ -443,7 +446,11 @@ impl Eval for Expr {
                     TypeEnum::Rust(_) => todo!(),
                 },
 
-                SizeOf::Expr(_, _) => todo!(),
+                SizeOf::Expr(_, _) => {
+                    // !!! FIXME: size_of_val isn't const, so this'd require finding the type of the expression.
+                    // skip it for now
+                    return Ok(None);
+                }
             },
 
             Expr::UnaryOp(uop) => {
@@ -553,6 +560,9 @@ impl Eval for Expr {
                             }
                             (Value::F32(lhs), Value::F32(rhs)) => Ok(Some(Value::F32(lhs $op rhs))),
                             (Value::F64(lhs), Value::F64(rhs)) => Ok(Some(Value::F64(lhs $op rhs))),
+
+                            (Value::RustCode(_), _) => Ok(None),
+
                             _ => {
                                 Err(ParseErr::new(bop.span(), "missing implementation for eval").into())
                             }
@@ -621,11 +631,11 @@ impl Eval for Expr {
                         match eval!(bop.lhs) {
                             Value::U32(lhs) => Ok(Some(Value::U32(lhs $op shift))),
 
-                            _ => {dbg!(&bop.lhs, eval!(bop.lhs));Err(ParseErr::new(
+                            _ => Err(ParseErr::new(
                                 bop.lhs.span(),
                                 format!("invalid operand to `{op}`"),
                             )
-                            .into())},
+                            .into()),
                         }
                     }};
                 }
@@ -784,6 +794,13 @@ impl Emit for FnCall {
             match ident.as_str() {
                 "SDL_COMPILE_TIME_ASSERT" => {
                     assert_eq!(self.args.len(), 2);
+                    let Expr::Ident(id) = &self.args[0] else {
+                        todo!()
+                    };
+                    if patch_sdl_compile_time_assert(ctx, id.as_str())? {
+                        return Ok(());
+                    }
+
                     let value = self.args[1].try_eval(ctx)?;
                     match value {
                         Some(Value::RustCode(s)) => {
@@ -792,7 +809,10 @@ impl Emit for FnCall {
                             Ok(())
                         }
 
-                        _ => todo!(),
+                        _ => {
+                            dbg!(value);
+                            todo!()
+                        }
                     }
                 }
 
