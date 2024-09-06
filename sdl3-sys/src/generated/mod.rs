@@ -36,3 +36,8 @@ pub mod hidapi;
 pub mod hints;
 pub mod init;
 pub mod loadso;
+pub mod locale;
+pub mod log;
+pub mod messagebox;
+pub mod metal;
+pub mod misc;
