@@ -210,13 +210,18 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__clang__" = CfgExpr(always_false!("__clang__"));
             "__GNUC__" = CfgExpr(always_false!("__GNUC__"));
             "__i386__" = CfgExpr(r#"target_arch = "x86""#);
+            "__ia64" = CfgExpr(always_false!("__ia64"));
             "__LP64__" = CfgExpr(r#"all(not(windows), target_pointer_width = "64")"#);
             "__OPTIMIZE__" = CfgExpr("not(debug_assertions)");
             "__powerpc__" = CfgExpr(r#"any(target_arch = "powerpc", target_arch = "powerpc64")"#);
+            "__powerpc64__" = CfgExpr(r#"target_arch = "powerpc64""#);
             "__ppc__" = CfgExpr(r#"any(target_arch = "powerpc", target_arch = "powerpc64")"#);
             "__x86_64__" = CfgExpr(r#"target_arch = "x86_64""#);
             "_DEBUG" = CfgExpr("debug_assertions");
+            "_M_IA64" = CfgExpr(always_false!("_M_IA64"));
+            "_M_X64" = CfgExpr(r#"target_arch = "x86_64""#);
             "_MSC_VER" = CfgExpr(r#"all(windows, target_env = "msvc")"#);
+            "_WIN64" = CfgExpr(r#"all(windows, target_pointer_width = "64")"#);
             "ANDROID" = CfgExpr(r#"target_os = "android""#);
             "DEBUG" = CfgExpr("debug_assertions");
             "SDL_BYTEORDER" = CfgExpr(always_true!("byte order")); // this has a non-boolean value
@@ -255,6 +260,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "PRIx64",
             "PRIX64",
             "DOXYGEN_SHOULD_IGNORE_THIS",
+            "NO_SDL_VULKAN_TYPEDEFS",
             format!("SDL_{module}_h_"), "SDL_locale_h",
             "SDL_ASSERT_LEVEL",
             "SDL_AssertBreakpoint",
@@ -283,6 +289,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_SLOW_MEMSET",
             "SDL_THREAD_SAFETY_ANALYSIS",
             "SDL_VENDOR_INFO",
+            "VULKAN_H_",
         }
 
         macro_rules! defines {

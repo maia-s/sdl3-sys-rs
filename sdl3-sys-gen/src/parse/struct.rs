@@ -4,12 +4,17 @@ use super::{
 };
 use std::borrow::Cow;
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum StructKind {
+    Struct,
+    Union,
+}
+
 #[derive(Clone, Debug)]
 pub struct StructOrUnion {
     pub span: Span,
     pub doc: Option<DocComment>,
-    pub kw_struct: Option<Kw_struct>,
-    pub kw_union: Option<Kw_union>,
+    pub kind: StructKind,
     pub ident: Option<Ident>,
     pub generated_ident: Ident,
     pub fields: Option<StructFields>,
@@ -17,7 +22,7 @@ pub struct StructOrUnion {
 
 impl StructOrUnion {
     pub const fn is_struct(&self) -> bool {
-        self.kw_struct.is_some()
+        matches!(self.kind, StructKind::Struct)
     }
 }
 
@@ -78,13 +83,17 @@ impl Parse for StructOrUnion {
             .unwrap_or_else(|| kw_union.as_ref().unwrap().span())
             .start()
             .join(&rest.start());
+        let kind = if kw_struct.is_some() {
+            StructKind::Struct
+        } else {
+            StructKind::Union
+        };
         Ok((
             rest,
             Some(Self {
                 span,
                 doc,
-                kw_struct,
-                kw_union,
+                kind,
                 ident,
                 generated_ident,
                 fields,

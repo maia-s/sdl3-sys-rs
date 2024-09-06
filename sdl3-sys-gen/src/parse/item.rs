@@ -345,11 +345,7 @@ impl Parse for StructOrUnionItem {
                     s.span(),
                     format!(
                         "top level anonymous {}",
-                        if s.kw_struct.is_some() {
-                            "struct"
-                        } else {
-                            "union"
-                        }
+                        if s.is_struct() { "struct" } else { "union" }
                     ),
                 ));
             }

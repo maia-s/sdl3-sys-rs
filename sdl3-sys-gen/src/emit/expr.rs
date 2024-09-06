@@ -1,11 +1,10 @@
-use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval};
-use crate::{
-    emit::patch_sdl_compile_time_assert,
-    parse::{
-        Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan, Ident,
-        IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
-        RustCode, SizeOf, Span, StringLiteral, Type, TypeEnum,
-    },
+use super::{
+    patch_sdl_compile_time_assert, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval,
+};
+use crate::parse::{
+    Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan, Ident,
+    IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
+    RustCode, SizeOf, Span, StringLiteral, Type, TypeEnum,
 };
 use core::{
     fmt::{self, Display, Write},
