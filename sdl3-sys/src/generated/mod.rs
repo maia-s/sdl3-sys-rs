@@ -47,3 +47,5 @@ pub mod revision;
 pub mod storage;
 pub mod system;
 pub mod time;
+pub mod timer;
+pub mod version;
