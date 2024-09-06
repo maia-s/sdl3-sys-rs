@@ -375,7 +375,7 @@ impl Emit for Define {
         )?;
         if self.args.is_none() {
             let ident = self.ident.as_str();
-            if ident.ends_with("_h_") {
+            if ident.ends_with("_h_") || ident == "SDL_locale_h" {
                 // skip include guard define
                 return Ok(());
             }

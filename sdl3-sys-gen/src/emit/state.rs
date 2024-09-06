@@ -252,7 +252,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "PRIx64",
             "PRIX64",
             "DOXYGEN_SHOULD_IGNORE_THIS",
-            format!("SDL_{module}_h_"),
+            format!("SDL_{module}_h_"), "SDL_locale_h",
             "SDL_ASSERT_LEVEL",
             "SDL_AssertBreakpoint",
             "SDL_AtomicDecRef",
