@@ -507,10 +507,12 @@ impl StructOrUnion {
             doc.emit(ctx_ool)?;
             writeln!(ctx_ool, "#[repr(C)]")?;
             writeln!(ctx_ool, "#[derive(Clone, Copy)]")?;
-            writeln!(
-                ctx_ool,
-                r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
-            )?;
+            if self.is_struct() {
+                writeln!(
+                    ctx_ool,
+                    r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
+                )?;
+            }
             writeln!(
                 ctx_ool,
                 "pub {} {} {{",
