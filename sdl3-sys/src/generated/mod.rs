@@ -35,3 +35,4 @@ pub mod haptic;
 pub mod hidapi;
 pub mod hints;
 pub mod init;
+pub mod loadso;
