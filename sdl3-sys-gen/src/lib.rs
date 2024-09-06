@@ -30,7 +30,7 @@ fn skip(module: &str) -> bool {
 }
 
 fn skip_emit(module: &str) -> bool {
-    ["egl", "intrin"].contains(&module)
+    ["egl", "intrin", "oldnames"].contains(&module)
 }
 
 pub fn generate(headers_path: &Path, output_path: &Path) -> Result<(), Error> {
