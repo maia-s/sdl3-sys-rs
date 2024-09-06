@@ -27,3 +27,4 @@ pub mod keycode;
 pub mod keyboard;
 pub mod mouse;
 pub mod pen;
+pub mod touch;
