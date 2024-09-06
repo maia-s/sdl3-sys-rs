@@ -206,7 +206,7 @@ impl Eval for IntegerLiteral {
                 }
             }
             IntegerLiteralType::UnsignedLong => todo!(),
-            IntegerLiteralType::LongLong => todo!(),
+            IntegerLiteralType::LongLong => Ok(Some(Value::I64(self.value as i64))),
             IntegerLiteralType::UnsignedLongLong => Ok(Some(Value::U64(self.value))),
         }
     }
