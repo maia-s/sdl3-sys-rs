@@ -42,3 +42,4 @@ pub mod messagebox;
 pub mod metal;
 pub mod misc;
 pub mod platform;
+pub mod render;
