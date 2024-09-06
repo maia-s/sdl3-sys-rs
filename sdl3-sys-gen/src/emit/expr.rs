@@ -1,6 +1,6 @@
 use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval};
 use crate::parse::{
-    Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan,
+    Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan, Ident,
     IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
     RustCode, SizeOf, Span, StringLiteral, Type, TypeEnum,
 };
@@ -247,7 +247,20 @@ impl Eval for Expr {
                     "true" => return Ok(Some(Value::Bool(true))),
                     "false" => return Ok(Some(Value::Bool(false))),
                     "size_t" => return Ok(None),
-                    _ => (),
+                    _ => {
+                        if let Ok(ident) = Ident::try_from(ident.clone()) {
+                            if let Some(sym) = ctx.lookup_sym(&ident) {
+                                return if let Some(ty) = &sym.ty {
+                                    Ok(Some(Value::RustCode(RustCode::boxed(
+                                        ident.to_string(),
+                                        ty.clone(),
+                                    ))))
+                                } else {
+                                    Ok(None)
+                                };
+                            }
+                        }
+                    }
                 }
             }
 

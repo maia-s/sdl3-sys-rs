@@ -350,10 +350,42 @@ pub const SDL_PIXELFORMAT_EXTERNAL_OES: SDL_PixelFormat = SDL_PixelFormat::EXTER
 
 #[cfg(target_endian = "big")]
 emit! {
+    pub const SDL_PIXELFORMAT_RGBA32: SDL_PixelFormat = SDL_PIXELFORMAT_RGBA8888;
+
+    pub const SDL_PIXELFORMAT_ARGB32: SDL_PixelFormat = SDL_PIXELFORMAT_ARGB8888;
+
+    pub const SDL_PIXELFORMAT_BGRA32: SDL_PixelFormat = SDL_PIXELFORMAT_BGRA8888;
+
+    pub const SDL_PIXELFORMAT_ABGR32: SDL_PixelFormat = SDL_PIXELFORMAT_ABGR8888;
+
+    pub const SDL_PIXELFORMAT_RGBX32: SDL_PixelFormat = SDL_PIXELFORMAT_RGBX8888;
+
+    pub const SDL_PIXELFORMAT_XRGB32: SDL_PixelFormat = SDL_PIXELFORMAT_XRGB8888;
+
+    pub const SDL_PIXELFORMAT_BGRX32: SDL_PixelFormat = SDL_PIXELFORMAT_BGRX8888;
+
+    pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PIXELFORMAT_XBGR8888;
+
 }
 
 #[cfg(not(target_endian = "big"))]
 emit! {
+    pub const SDL_PIXELFORMAT_RGBA32: SDL_PixelFormat = SDL_PIXELFORMAT_ABGR8888;
+
+    pub const SDL_PIXELFORMAT_ARGB32: SDL_PixelFormat = SDL_PIXELFORMAT_BGRA8888;
+
+    pub const SDL_PIXELFORMAT_BGRA32: SDL_PixelFormat = SDL_PIXELFORMAT_ARGB8888;
+
+    pub const SDL_PIXELFORMAT_ABGR32: SDL_PixelFormat = SDL_PIXELFORMAT_RGBA8888;
+
+    pub const SDL_PIXELFORMAT_RGBX32: SDL_PixelFormat = SDL_PIXELFORMAT_XBGR8888;
+
+    pub const SDL_PIXELFORMAT_XRGB32: SDL_PixelFormat = SDL_PIXELFORMAT_BGRX8888;
+
+    pub const SDL_PIXELFORMAT_BGRX32: SDL_PixelFormat = SDL_PIXELFORMAT_XRGB8888;
+
+    pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PIXELFORMAT_RGBX8888;
+
 }
 
 /// Colorspace color type.
@@ -691,6 +723,10 @@ pub const SDL_COLORSPACE_BT709_FULL: SDL_Colorspace = SDL_Colorspace::BT709_FULL
 pub const SDL_COLORSPACE_BT2020_LIMITED: SDL_Colorspace = SDL_Colorspace::BT2020_LIMITED;
 /// Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P2020
 pub const SDL_COLORSPACE_BT2020_FULL: SDL_Colorspace = SDL_Colorspace::BT2020_FULL;
+
+pub const SDL_COLORSPACE_RGB_DEFAULT: SDL_Colorspace = SDL_COLORSPACE_SRGB;
+
+pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_COLORSPACE_JPEG;
 
 /// A structure that represents a color as RGBA components.
 ///

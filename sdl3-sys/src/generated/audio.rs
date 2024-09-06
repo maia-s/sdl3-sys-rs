@@ -143,10 +143,22 @@ pub const SDL_AUDIO_F32BE: SDL_AudioFormat = SDL_AudioFormat::F32BE;
 
 #[cfg(target_endian = "little")]
 emit! {
+    pub const SDL_AUDIO_S16: SDL_AudioFormat = SDL_AUDIO_S16LE;
+
+    pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AUDIO_S32LE;
+
+    pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AUDIO_F32LE;
+
 }
 
 #[cfg(not(target_endian = "little"))]
 emit! {
+    pub const SDL_AUDIO_S16: SDL_AudioFormat = SDL_AUDIO_S16BE;
+
+    pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AUDIO_S32BE;
+
+    pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AUDIO_F32BE;
+
 }
 
 /// SDL Audio Device instance IDs.
