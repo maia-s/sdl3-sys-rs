@@ -3,7 +3,7 @@ use crate::{
     parse::{
         ArgDecl, Define, DocComment, DocCommentFile, Expr, FnAbi, FnDeclArgs, FnPointer, Function,
         GetSpan, Ident, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock,
-        PreProcBlockKind, PrimitiveType, RustCode, Type, TypeDef, TypeEnum,
+        PreProcBlockKind, PrimitiveType, RustCode, StructOrUnion, Type, TypeDef, TypeEnum,
     },
 };
 use std::{
@@ -489,6 +489,56 @@ impl Emit for ArgDecl {
     }
 }
 
+impl StructOrUnion {
+    pub fn emit_with_doc_and_ident(
+        &self,
+        ctx: &mut EmitContext,
+        doc: Option<DocComment>,
+        with_ident: bool,
+    ) -> EmitResult {
+        let ident = &self.generated_ident;
+        let doc = self.doc.clone().or(doc);
+
+        ctx.scope_mut()
+            .register_struct_sym(ident.clone(), self.fields.is_some(), doc.clone())?;
+
+        if let Some(fields) = &self.fields {
+            let ctx_ool = &mut { ctx.with_ool_output() };
+            doc.emit(ctx_ool)?;
+            writeln!(ctx_ool, "#[repr(C)]")?;
+            writeln!(ctx_ool, "#[derive(Clone, Copy)]")?;
+            writeln!(
+                ctx_ool,
+                r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
+            )?;
+            writeln!(
+                ctx_ool,
+                "pub {} {} {{",
+                if self.is_struct() { "struct" } else { "union" },
+                ident
+            )?;
+            ctx_ool.increase_indent();
+
+            for field in fields.fields.iter() {
+                field.doc.emit(ctx_ool)?;
+                write!(ctx_ool, "pub ")?;
+                field.ident.emit(ctx_ool)?;
+                write!(ctx_ool, ": ")?;
+                field.ty.emit(ctx_ool)?;
+                writeln!(ctx_ool, ",")?;
+            }
+
+            ctx_ool.decrease_indent();
+            writeln!(ctx_ool, "}}")?;
+            writeln!(ctx_ool)?;
+        }
+        if with_ident {
+            ident.emit(ctx)?;
+        }
+        Ok(())
+    }
+}
+
 impl Emit for Type {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match &self.ty {
@@ -530,27 +580,7 @@ impl Emit for Type {
 
             TypeEnum::Enum(_) => todo!(),
 
-            TypeEnum::Struct(s) => {
-                if let Some(ident) = s.ident.as_ref() {
-                    if ctx.lookup_struct_sym(ident).is_none() {
-                        if s.fields.is_none() {
-                            ctx.scope_mut().register_struct_sym(
-                                ident.clone(),
-                                false,
-                                s.doc.clone(),
-                            )?;
-                            write!(ctx, "{}", ident.as_str())?;
-                        } else {
-                            dbg!(self);
-                            todo!()
-                        }
-                    } else {
-                        write!(ctx, "{}", ident.as_str())?;
-                    }
-                } else {
-                    todo!()
-                }
-            }
+            TypeEnum::Struct(s) => return s.emit_with_doc_and_ident(ctx, None, true),
 
             TypeEnum::Pointer(p) => {
                 if p.is_const {
@@ -726,45 +756,8 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Struct(s) => {
-                if let Some(ident) = &s.ident {
-                    ctx.scope_mut().register_struct_sym(
-                        ident.clone(),
-                        s.fields.is_some(),
-                        self.doc.clone(),
-                    )?;
-                }
-
-                if let Some(fields) = &s.fields {
-                    self.doc.emit(ctx)?;
-                    writeln!(ctx, "#[repr(C)]")?;
-                    writeln!(ctx, "#[derive(Clone, Copy)]")?;
-                    writeln!(
-                        ctx,
-                        r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
-                    )?;
-                    writeln!(
-                        ctx,
-                        "pub {} {} {{",
-                        if s.is_struct() { "struct" } else { "union" },
-                        self.ident
-                    )?;
-                    ctx.increase_indent();
-
-                    for field in fields.fields.iter() {
-                        field.doc.emit(ctx)?;
-                        write!(ctx, "pub ")?;
-                        field.ident.emit(ctx)?;
-                        write!(ctx, ": ")?;
-                        field.ty.emit(ctx)?;
-                        writeln!(ctx, ",")?;
-                    }
-
-                    ctx.decrease_indent();
-                    writeln!(ctx, "}}")?;
-                    writeln!(ctx)?;
-                }
-
-                Ok(())
+                s.emit_with_doc_and_ident(ctx, self.doc.clone(), false)?;
+                ctx.flush_ool_output()
             }
 
             TypeEnum::Pointer(_) => {
