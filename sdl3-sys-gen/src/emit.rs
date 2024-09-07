@@ -807,7 +807,20 @@ impl Emit for TypeDef {
 
             TypeEnum::Struct(s) => {
                 s.emit_with_doc_and_ident(ctx, self.doc.clone(), false)?;
-                ctx.flush_ool_output()
+                ctx.flush_ool_output()?;
+
+                if let Some(ident) = &s.ident {
+                    if self.ident.as_str() != ident.as_str() {
+                        write!(ctx, "pub type ")?;
+                        self.ident.emit(ctx)?;
+                        write!(ctx, " = ")?;
+                        ident.emit(ctx)?;
+                        writeln!(ctx, ";")?;
+                        writeln!(ctx)?;
+                    }
+                }
+
+                Ok(())
             }
 
             TypeEnum::Pointer(_) => {

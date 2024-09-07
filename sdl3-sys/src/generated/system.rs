@@ -16,6 +16,8 @@ use super::video::*;
 
 #[cfg(windows)]
 emit! {
+    pub type MSG = tagMSG;
+
     /// A callback to be used with SDL_SetWindowsMessageHook.
     ///
     /// This callback may modify the message, and should return SDL_TRUE if the
@@ -92,6 +94,8 @@ emit! {
     }}
 
 }
+
+pub type XEvent = _XEvent;
 
 pub type SDL_X11EventHook = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, xevent: *mut XEvent) -> SDL_bool)>;
 
