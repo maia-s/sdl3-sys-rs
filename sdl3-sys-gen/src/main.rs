@@ -5,8 +5,7 @@ use std::{
 };
 
 fn main() {
-    let headers_path =
-        PathBuf::from_iter([env!("CARGO_MANIFEST_DIR"), "..", "SDL", "include", "SDL3"]);
+    let sdl_path = PathBuf::from_iter([env!("CARGO_MANIFEST_DIR"), "..", "SDL"]);
     let output_path = PathBuf::from_iter([
         env!("CARGO_MANIFEST_DIR"),
         "..",
@@ -14,7 +13,7 @@ fn main() {
         "src",
         "generated",
     ]);
-    match sdl3_sys_gen::generate(&headers_path, &output_path) {
+    match sdl3_sys_gen::generate(&sdl_path, &output_path) {
         Ok(()) => (),
         Err(e) => {
             if stderr().is_terminal() {

@@ -5,7 +5,7 @@ mod parse;
 
 use core::fmt::Write;
 use emit::{Emit, EmitContext, EmitErr, InnerEmitContext};
-use parse::{Items, Parse, ParseContext, ParseErr, Source, Span};
+use parse::{DefineValue, Ident, Items, Parse, ParseContext, ParseErr, Source, Span};
 use std::{
     cell::RefCell,
     collections::{BTreeMap, HashSet},
@@ -14,6 +14,7 @@ use std::{
     fs::{read_dir, DirBuilder, File, OpenOptions},
     io::{self, BufWriter, Read},
     path::{Path, PathBuf},
+    process::Command,
 };
 
 fn skip(module: &str) -> bool {
@@ -33,8 +34,23 @@ fn skip_emit(module: &str) -> bool {
     ["egl", "intrin", "oldnames"].contains(&module) || module.starts_with("opengl")
 }
 
-pub fn generate(headers_path: &Path, output_path: &Path) -> Result<(), Error> {
-    let mut gen = Gen::new(output_path.to_owned())?;
+pub fn generate(sdl_path: &Path, output_path: &Path) -> Result<(), Error> {
+    let mut showrev_path = sdl_path.to_path_buf();
+    showrev_path.push("build-scripts/showrev.sh");
+
+    let revision = if let Ok(output) = Command::new(showrev_path).output() {
+        output
+            .status
+            .success()
+            .then(|| String::from_utf8_lossy(output.stdout.trim_ascii()).into_owned())
+    } else {
+        None
+    };
+
+    let mut headers_path = sdl_path.to_path_buf();
+    headers_path.push("include/SDL3");
+
+    let mut gen = Gen::new(output_path.to_owned(), revision)?;
 
     for entry in read_dir(headers_path)? {
         let entry = entry?;
@@ -78,6 +94,7 @@ pub fn generate(headers_path: &Path, output_path: &Path) -> Result<(), Error> {
 
 #[derive(Default)]
 pub struct Gen {
+    revision: Option<String>,
     parsed: BTreeMap<String, Items>,
     emitted: RefCell<BTreeMap<String, InnerEmitContext>>,
     skipped: RefCell<HashSet<String>>,
@@ -85,9 +102,10 @@ pub struct Gen {
 }
 
 impl Gen {
-    pub fn new(output_path: PathBuf) -> Result<Self, Error> {
+    pub fn new(output_path: PathBuf, revision: Option<String>) -> Result<Self, Error> {
         DirBuilder::new().recursive(true).create(&output_path)?;
         Ok(Self {
+            revision,
             parsed: BTreeMap::new(),
             emitted: RefCell::new(BTreeMap::new()),
             skipped: RefCell::new(HashSet::new()),
@@ -142,6 +160,13 @@ impl Gen {
 
             let mut file = Writable(BufWriter::new(File::create(&path)?));
             let mut ctx = EmitContext::new(module, &mut file, self)?;
+            if let Some(revision) = &self.revision {
+                ctx.preproc_state().borrow_mut().define(
+                    Ident::new_inline("SDL_VENDOR_INFO"),
+                    None,
+                    DefineValue::parse_expr(&format!("{revision:?}"))?,
+                )?;
+            }
             writeln!(
                 ctx,
                 "#![allow(non_camel_case_types, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens)]"
