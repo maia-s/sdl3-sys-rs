@@ -8,6 +8,8 @@ use super::stdinc::*;
 
 use super::error::*;
 
+use super::surface::*;
+
 use super::video::*;
 
 /// This is a unique ID for a mouse for the time it is connected to the system,

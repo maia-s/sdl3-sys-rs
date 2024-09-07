@@ -1088,241 +1088,493 @@ pub const SDL_GPU_DRIVER_D3D11: SDL_GPUDriver = SDL_GPUDriver::D3D11;
 pub const SDL_GPU_DRIVER_D3D12: SDL_GPUDriver = SDL_GPUDriver::D3D12;
 pub const SDL_GPU_DRIVER_METAL: SDL_GPUDriver = SDL_GPUDriver::METAL;
 
+/// A structure specifying a depth-stencil clear value.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_GPUDepthStencilTargetInfo
+/// \sa SDL_BeginGPURenderPass
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUDepthStencilValue {
+    /// The clear value for the depth aspect of the depth-stencil target.
     pub depth: ::core::ffi::c_float,
+    /// The clear value for the stencil aspect of the depth-stencil target.
     pub stencil: Uint8,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
 }
 
+/// A structure specifying a viewport.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_SetGPUViewport
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUViewport {
+    /// The left offset of the viewport.
     pub x: ::core::ffi::c_float,
+    /// The top offset of the viewport.
     pub y: ::core::ffi::c_float,
+    /// The width of the viewport.
     pub w: ::core::ffi::c_float,
+    /// The height of the viewport.
     pub h: ::core::ffi::c_float,
+    /// The minimum depth of the viewport.
     pub min_depth: ::core::ffi::c_float,
+    /// The maximum depth of the viewport.
     pub max_depth: ::core::ffi::c_float,
 }
 
+/// A structure specifying parameters related to transferring data to or from a
+/// texture.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_UploadToGPUTexture
+/// \sa SDL_DownloadFromGPUTexture
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureTransferInfo {
+    /// The transfer buffer used in the transfer operation.
     pub transfer_buffer: *mut SDL_GPUTransferBuffer,
+    /// The starting byte of the image data in the transfer buffer.
     pub offset: Uint32,
+    /// The number of pixels from one row to the next.
     pub pixels_per_row: Uint32,
+    /// The number of rows from one layer/depth-slice to the next.
     pub rows_per_layer: Uint32,
 }
 
+/// A structure specifying a location in a transfer buffer.
+///
+/// Used when transferring buffer data to or from a transfer buffer.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_UploadToGPUBuffer
+/// \sa SDL_DownloadFromGPUBuffer
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTransferBufferLocation {
+    /// The transfer buffer used in the transfer operation.
     pub transfer_buffer: *mut SDL_GPUTransferBuffer,
+    /// The starting byte of the buffer data in the transfer buffer.
     pub offset: Uint32,
 }
 
+/// A structure specifying a location in a texture.
+///
+/// Used when copying data from one texture to another.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_CopyGPUTextureToTexture
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureLocation {
+    /// The texture used in the copy operation.
     pub texture: *mut SDL_GPUTexture,
+    /// The mip level index of the location.
     pub mip_level: Uint32,
+    /// The layer index of the location.
     pub layer: Uint32,
+    /// The left offset of the location.
     pub x: Uint32,
+    /// The top offset of the location.
     pub y: Uint32,
+    /// The front offset of the location.
     pub z: Uint32,
 }
 
+/// A structure specifying a region of a texture.
+///
+/// Used when transferring data to or from a texture.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_UploadToGPUTexture
+/// \sa SDL_DownloadFromGPUTexture
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureRegion {
+    /// The texture used in the copy operation.
     pub texture: *mut SDL_GPUTexture,
+    /// The mip level index to transfer.
     pub mip_level: Uint32,
+    /// The layer index to transfer.
     pub layer: Uint32,
+    /// The left offset of the region.
     pub x: Uint32,
+    /// The top offset of the region.
     pub y: Uint32,
+    /// The front offset of the region.
     pub z: Uint32,
+    /// The width of the region.
     pub w: Uint32,
+    /// The height of the region.
     pub h: Uint32,
+    /// The depth of the region.
     pub d: Uint32,
 }
 
+/// A structure specifying a region of a texture used in the blit operation.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_BlitGPUTexture
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUBlitRegion {
+    /// The texture.
     pub texture: *mut SDL_GPUTexture,
+    /// The mip level index of the region.
     pub mip_level: Uint32,
+    /// The layer index or depth plane of the region. This value is treated as a layer index on 2D array and cube textures, and as a depth plane on 3D textures.
     pub layer_or_depth_plane: Uint32,
+    /// The left offset of the region.
     pub x: Uint32,
+    /// The top offset of the region.
     pub y: Uint32,
+    /// The width of the region.
     pub w: Uint32,
+    /// The height of the region.
     pub h: Uint32,
 }
 
+/// A structure specifying a location in a buffer.
+///
+/// Used when copying data between buffers.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_CopyGPUBufferToBuffer
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUBufferLocation {
+    /// The buffer.
     pub buffer: *mut SDL_GPUBuffer,
+    /// The starting byte within the buffer.
     pub offset: Uint32,
 }
 
+/// A structure specifying a region of a buffer.
+///
+/// Used when transferring data to or from buffers.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_UploadToGPUBuffer
+/// \sa SDL_DownloadFromGPUBuffer
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUBufferRegion {
+    /// The buffer.
     pub buffer: *mut SDL_GPUBuffer,
+    /// The starting byte within the buffer.
     pub offset: Uint32,
+    /// The size in bytes of the region.
     pub size: Uint32,
 }
 
+/// A structure specifying the parameters of an indirect draw command.
+///
+/// Note that the `first_vertex` and `first_instance` parameters are NOT
+/// compatible with built-in vertex/instance ID variables in shaders (for
+/// example, SV_VertexID). If your shader depends on these variables, the
+/// correlating draw call parameter MUST be 0.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_DrawGPUPrimitivesIndirect
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUIndirectDrawCommand {
+    /// The number of vertices to draw.
     pub num_vertices: Uint32,
+    /// The number of instances to draw.
     pub num_instances: Uint32,
+    /// The index of the first vertex to draw.
     pub first_vertex: Uint32,
+    /// The ID of the first instance to draw.
     pub first_instance: Uint32,
 }
 
+/// A structure specifying the parameters of an indexed indirect draw command.
+///
+/// Note that the `first_vertex` and `first_instance` parameters are NOT
+/// compatible with built-in vertex/instance ID variables in shaders (for
+/// example, SV_VertexID). If your shader depends on these variables, the
+/// correlating draw call parameter MUST be 0.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_DrawGPUIndexedPrimitivesIndirect
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUIndexedIndirectDrawCommand {
+    /// The number of indices to draw per instance.
     pub num_indices: Uint32,
+    /// The number of instances to draw.
     pub num_instances: Uint32,
+    /// The base index within the index buffer.
     pub first_index: Uint32,
+    /// The value added to the vertex index before indexing into the vertex buffer.
     pub vertex_offset: Sint32,
+    /// The ID of the first instance to draw.
     pub first_instance: Uint32,
 }
 
+/// A structure specifying the parameters of an indexed dispatch command.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_DispatchGPUComputeIndirect
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUIndirectDispatchCommand {
+    /// The number of local workgroups to dispatch in the X dimension.
     pub groupcount_x: Uint32,
+    /// The number of local workgroups to dispatch in the Y dimension.
     pub groupcount_y: Uint32,
+    /// The number of local workgroups to dispatch in the Z dimension.
     pub groupcount_z: Uint32,
 }
 
+/// A structure specifying the parameters of a sampler.
+///
+/// \since This function is available since SDL 3.0.0
+///
+/// \sa SDL_CreateGPUSampler
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUSamplerCreateInfo {
+    /// The minification filter to apply to lookups.
     pub min_filter: SDL_GPUFilter,
+    /// The magnification filter to apply to lookups.
     pub mag_filter: SDL_GPUFilter,
+    /// The mipmap filter to apply to lookups.
     pub mipmap_mode: SDL_GPUSamplerMipmapMode,
+    /// The addressing mode for U coordinates outside [0, 1).
     pub address_mode_u: SDL_GPUSamplerAddressMode,
+    /// The addressing mode for V coordinates outside [0, 1).
     pub address_mode_v: SDL_GPUSamplerAddressMode,
+    /// The addressing mode for W coordinates outside [0, 1).
     pub address_mode_w: SDL_GPUSamplerAddressMode,
+    /// The bias to be added to mipmap LOD calculation.
     pub mip_lod_bias: ::core::ffi::c_float,
+    /// The anisotropy value clamp used by the sampler. If enable_anisotropy is SDL_FALSE, this is ignored.
     pub max_anisotropy: ::core::ffi::c_float,
+    /// SDL_TRUE to enable anisotropic filtering.
     pub enable_anisotropy: SDL_bool,
+    /// SDL_TRUE to enable comparison against a reference value during lookups.
     pub enable_compare: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
+    /// The comparison operator to apply to fetched data before filtering.
     pub compare_op: SDL_GPUCompareOp,
+    /// Clamps the minimum of the computed LOD value.
     pub min_lod: ::core::ffi::c_float,
+    /// Clamps the maximum of the computed LOD value.
     pub max_lod: ::core::ffi::c_float,
+    /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
 }
 
+/// A structure specifying a vertex binding.
+///
+/// When you call SDL_BindGPUVertexBuffers, you specify the binding indices of
+/// the vertex buffers. For example if you called SDL_BindGPUVertexBuffers with
+/// a first_binding of 2 and num_bindings of 3, the binding indices 2, 3, 4
+/// would be used by the vertex buffers you pass in.
+///
+/// Vertex attributes are linked to bindings via the index. The binding_index
+/// field of SDL_GPUVertexAttribute specifies the vertex buffer binding index
+/// that the attribute will be read from.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_GPUVertexAttribute
+/// \sa SDL_GPUVertexInputState
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUVertexBinding {
-    pub binding: Uint32,
+    /// The binding index.
+    pub index: Uint32,
+    /// The byte pitch between consecutive elements of the vertex buffer.
     pub pitch: Uint32,
+    /// Whether attribute addressing is a function of the vertex index or instance index.
     pub input_rate: SDL_GPUVertexInputRate,
+    /// The number of instances to draw using the same per-instance data before advancing in the instance buffer by one element. Ignored unless input_rate is SDL_GPU_VERTEXINPUTRATE_INSTANCE
     pub instance_step_rate: Uint32,
 }
 
+/// A structure specifying a vertex attribute.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_GPUVertexBinding
+/// \sa SDL_GPUVertexInputState
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUVertexAttribute {
+    /// The shader input location index.
     pub location: Uint32,
-    pub binding: Uint32,
+    /// The binding index.
+    pub binding_index: Uint32,
+    /// The size and type of the attribute data.
     pub format: SDL_GPUVertexElementFormat,
+    /// The byte offset of this attribute relative to the start of the vertex element.
     pub offset: Uint32,
 }
 
+/// A structure specifying the parameters of a graphics pipeline vertex input
+/// state.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_GPUGraphicsPipelineCreateInfo
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUVertexInputState {
+    /// A pointer to an array of vertex binding descriptions.
     pub vertex_bindings: *const SDL_GPUVertexBinding,
+    /// The number of vertex binding descriptions in the above array.
     pub num_vertex_bindings: Uint32,
+    /// A pointer to an array of vertex attribute descriptions.
     pub vertex_attributes: *const SDL_GPUVertexAttribute,
+    /// The number of vertex attribute descriptions in the above array.
     pub num_vertex_attributes: Uint32,
 }
 
+/// A structure specifying the stencil operation state of a graphics pipeline.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_GPUDepthStencilState
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUStencilOpState {
+    /// The action performed on samples that fail the stencil test.
     pub fail_op: SDL_GPUStencilOp,
+    /// The action performed on samples that pass the depth and stencil tests.
     pub pass_op: SDL_GPUStencilOp,
+    /// The action performed on samples that pass the stencil test and fail the depth test.
     pub depth_fail_op: SDL_GPUStencilOp,
+    /// The comparison operator used in the stencil test.
     pub compare_op: SDL_GPUCompareOp,
 }
 
+/// A structure specifying the blend state of a color target.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_GPUColorTargetDescription
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUColorTargetBlendState {
+    /// Whether blending is enabled for the color target.
     pub enable_blend: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
+    /// The value to be multiplied by the source RGB value.
     pub src_color_blendfactor: SDL_GPUBlendFactor,
+    /// The value to be multiplied by the destination RGB value.
     pub dst_color_blendfactor: SDL_GPUBlendFactor,
+    /// The blend operation for the RGB components.
     pub color_blend_op: SDL_GPUBlendOp,
+    /// The value to be multiplied by the source alpha.
     pub src_alpha_blendfactor: SDL_GPUBlendFactor,
+    /// The value to be multiplied by the destination alpha.
     pub dst_alpha_blendfactor: SDL_GPUBlendFactor,
+    /// The blend operation for the alpha component.
     pub alpha_blend_op: SDL_GPUBlendOp,
+    /// A bitmask specifying which of the RGBA components are enabled for writing.
     pub color_write_mask: SDL_GPUColorComponentFlags,
 }
 
+/// A structure specifying code and metadata for creating a shader object.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_CreateGPUShader
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUShaderCreateInfo {
+    /// The size in bytes of the code pointed to.
     pub code_size: ::core::primitive::usize,
+    /// A pointer to shader code.
     pub code: *const Uint8,
+    /// A pointer to a null-terminated UTF-8 string specifying the entry point function name for the shader.
     pub entrypoint: *const ::core::ffi::c_char,
+    /// The format of the shader code.
     pub format: SDL_GPUShaderFormat,
+    /// The stage the shader program corresponds to.
     pub stage: SDL_GPUShaderStage,
+    /// The number of samplers defined in the shader.
     pub num_samplers: Uint32,
+    /// The number of storage textures defined in the shader.
     pub num_storage_textures: Uint32,
+    /// The number of storage buffers defined in the shader.
     pub num_storage_buffers: Uint32,
+    /// The number of uniform buffers defined in the shader.
     pub num_uniform_buffers: Uint32,
+    /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
 }
 
+/// A structure specifying the parameters of a texture.
+///
+/// Usage flags can be bitwise OR'd together for combinations of usages. Note
+/// that certain usage combinations are invalid, for example SAMPLER and
+/// GRAPHICS_STORAGE.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_CreateGPUTexture
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureCreateInfo {
+    /// The base dimensionality of the texture.
     pub r#type: SDL_GPUTextureType,
+    /// The pixel format of the texture.
     pub format: SDL_GPUTextureFormat,
+    /// How the texture is intended to be used by the client.
     pub usage: SDL_GPUTextureUsageFlags,
+    /// The width of the texture.
     pub width: Uint32,
+    /// The height of the texture.
     pub height: Uint32,
+    /// The layer count or depth of the texture. This value is treated as a layer count on 2D array textures, and as a depth value on 3D textures.
     pub layer_count_or_depth: Uint32,
+    /// The number of mip levels in the texture.
     pub num_levels: Uint32,
+    /// The number of samples per texel. Only applies if the texture is used as a render target.
     pub sample_count: SDL_GPUSampleCount,
+    /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
 }
 
@@ -1338,186 +1590,400 @@ pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT: &::core::ffi::CStr
 
 pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.stencil\0") };
 
+/// A structure specifying the parameters of a buffer.
+///
+/// Usage flags can be bitwise OR'd together for combinations of usages. Note
+/// that certain combinations are invalid, for example VERTEX and INDEX.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_CreateGPUBuffer
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUBufferCreateInfo {
+    /// How the buffer is intended to be used by the client.
     pub usage: SDL_GPUBufferUsageFlags,
+    /// The size in bytes of the buffer.
     pub size: Uint32,
+    /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
 }
 
+/// A structure specifying the parameters of a transfer buffer.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_CreateGPUTransferBuffer
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTransferBufferCreateInfo {
+    /// How the transfer buffer is intended to be used by the client.
     pub usage: SDL_GPUTransferBufferUsage,
+    /// The size in bytes of the transfer buffer.
     pub size: Uint32,
+    /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
 }
 
+/// A structure specifying the parameters of the graphics pipeline rasterizer
+/// state.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_GPUGraphicsPipelineCreateInfo
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPURasterizerState {
+    /// Whether polygons will be filled in or drawn as lines.
     pub fill_mode: SDL_GPUFillMode,
+    /// The facing direction in which triangles will be culled.
     pub cull_mode: SDL_GPUCullMode,
+    /// The vertex winding that will cause a triangle to be determined as front-facing.
     pub front_face: SDL_GPUFrontFace,
+    /// SDL_TRUE to bias fragment depth values.
     pub enable_depth_bias: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
+    /// A scalar factor controlling the depth value added to each fragment.
     pub depth_bias_constant_factor: ::core::ffi::c_float,
+    /// The maximum depth bias of a fragment.
     pub depth_bias_clamp: ::core::ffi::c_float,
+    /// A scalar factor applied to a fragment's slope in depth calculations.
     pub depth_bias_slope_factor: ::core::ffi::c_float,
 }
 
+/// A structure specifying the parameters of the graphics pipeline multisample
+/// state.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_GPUGraphicsPipelineCreateInfo
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUMultisampleState {
+    /// The number of samples to be used in rasterization.
     pub sample_count: SDL_GPUSampleCount,
+    /// Determines which samples get updated in the render targets. 0xFFFFFFFF is a reasonable default.
     pub sample_mask: Uint32,
 }
 
+/// A structure specifying the parameters of the graphics pipeline depth
+/// stencil state.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_GPUGraphicsPipelineCreateInfo
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUDepthStencilState {
+    /// SDL_TRUE enables the depth test.
     pub enable_depth_test: SDL_bool,
+    /// SDL_TRUE enables depth writes. Depth writes are always disabled when enable_depth_test is SDL_FALSE.
     pub enable_depth_write: SDL_bool,
+    /// SDL_TRUE enables the stencil test.
     pub enable_stencil_test: SDL_bool,
     pub padding1: Uint8,
+    /// The comparison operator used for depth testing.
     pub compare_op: SDL_GPUCompareOp,
+    /// The stencil op state for back-facing triangles.
     pub back_stencil_state: SDL_GPUStencilOpState,
+    /// The stencil op state for front-facing triangles.
     pub front_stencil_state: SDL_GPUStencilOpState,
+    /// Selects the bits of the stencil values participating in the stencil test.
     pub compare_mask: Uint8,
+    /// Selects the bits of the stencil values updated by the stencil test.
     pub write_mask: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
 }
 
+/// A structure specifying the parameters of color targets used in a graphics
+/// pipeline.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_GPUGraphicsPipelineTargetInfo
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUColorTargetDescription {
+    /// The pixel format of the texture to be used as a color target.
     pub format: SDL_GPUTextureFormat,
+    /// The blend state to be used for the color target.
     pub blend_state: SDL_GPUColorTargetBlendState,
 }
 
+/// A structure specifying the descriptions of render targets used in a
+/// graphics pipeline.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_GPUGraphicsPipelineCreateInfo
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GpuGraphicsPipelineTargetInfo {
+    /// A pointer to an array of color target descriptions.
     pub color_target_descriptions: *const SDL_GPUColorTargetDescription,
+    /// The number of color target descriptions in the above array.
     pub num_color_targets: Uint32,
+    /// SDL_TRUE specifies that the pipeline uses a depth-stencil target.
     pub has_depth_stencil_target: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
+    /// The pixel format of the depth-stencil target. Ignored if has_depth_stencil_target is SDL_FALSE.
     pub depth_stencil_format: SDL_GPUTextureFormat,
 }
 
+/// A structure specifying the parameters of a graphics pipeline state.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_CreateGPUGraphicsPipeline
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUGraphicsPipelineCreateInfo {
+    /// The vertex shader used by the graphics pipeline.
     pub vertex_shader: *mut SDL_GPUShader,
+    /// The fragment shader used by the graphics pipeline.
     pub fragment_shader: *mut SDL_GPUShader,
+    /// The vertex layout of the graphics pipeline.
     pub vertex_input_state: SDL_GPUVertexInputState,
+    /// The primitive topology of the graphics pipeline.
     pub primitive_type: SDL_GPUPrimitiveType,
+    /// The rasterizer state of the graphics pipeline.
     pub rasterizer_state: SDL_GPURasterizerState,
+    /// The multisample state of the graphics pipeline.
     pub multisample_state: SDL_GPUMultisampleState,
+    /// The depth-stencil state of the graphics pipeline.
     pub depth_stencil_state: SDL_GPUDepthStencilState,
+    /// Formats and blend modes for the render targets of the graphics pipeline.
     pub target_info: SDL_GpuGraphicsPipelineTargetInfo,
+    /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
 }
 
+/// A structure specifying the parameters of a compute pipeline state.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_CreateGPUComputePipeline
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUComputePipelineCreateInfo {
+    /// The size in bytes of the compute shader code pointed to.
     pub code_size: ::core::primitive::usize,
+    /// A pointer to compute shader code.
     pub code: *const Uint8,
+    /// A pointer to a null-terminated UTF-8 string specifying the entry point function name for the shader.
     pub entrypoint: *const ::core::ffi::c_char,
+    /// The format of the compute shader code.
     pub format: SDL_GPUShaderFormat,
+    /// The number of readonly storage textures defined in the shader.
     pub num_readonly_storage_textures: Uint32,
+    /// The number of readonly storage buffers defined in the shader.
     pub num_readonly_storage_buffers: Uint32,
+    /// The number of writeonly storage textures defined in the shader.
     pub num_writeonly_storage_textures: Uint32,
+    /// The number of writeonly storage buffers defined in the shader.
     pub num_writeonly_storage_buffers: Uint32,
+    /// The number of uniform buffers defined in the shader.
     pub num_uniform_buffers: Uint32,
+    /// The number of threads in the X dimension. This should match the value in the shader.
     pub threadcount_x: Uint32,
+    /// The number of threads in the Y dimension. This should match the value in the shader.
     pub threadcount_y: Uint32,
+    /// The number of threads in the Z dimension. This should match the value in the shader.
     pub threadcount_z: Uint32,
+    /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
 }
 
+/// A structure specifying the parameters of a color target used by a render
+/// pass.
+///
+/// The load_op field determines what is done with the texture at the beginning
+/// of the render pass.
+///
+/// - LOAD: Loads the data currently in the texture.
+/// - CLEAR: Clears the texture to a single color.
+/// - DONT_CARE: The driver will do whatever it wants with the texture memory.
+///   This is a good option if you know that every single pixel will be touched
+///   in the render pass.
+///
+/// The store_op field determines what is done with the color results of the
+/// render pass.
+///
+/// - STORE: Stores the results of the render pass in the texture.
+/// - DONT_CARE: The driver will do whatever it wants with the texture memory.
+///   This is often a good option for depth/stencil textures.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_BeginGPURenderPass
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUColorTargetInfo {
+    /// The texture that will be used as a color target by a render pass.
     pub texture: *mut SDL_GPUTexture,
+    /// The mip level to use as a color target.
     pub mip_level: Uint32,
+    /// The layer index or depth plane to use as a color target. This value is treated as a layer index on 2D array and cube textures, and as a depth plane on 3D textures.
     pub layer_or_depth_plane: Uint32,
+    /// The color to clear the color target to at the start of the render pass. Ignored if SDL_GPU_LOADOP_CLEAR is not used.
     pub clear_color: SDL_FColor,
+    /// What is done with the contents of the color target at the beginning of the render pass.
     pub load_op: SDL_GPULoadOp,
+    /// What is done with the results of the render pass.
     pub store_op: SDL_GPUStoreOp,
+    /// SDL_TRUE cycles the texture if the texture is bound and load_op is not LOAD
     pub cycle: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
 }
 
+/// A structure specifying the parameters of a depth-stencil target used by a
+/// render pass.
+///
+/// The load_op field determines what is done with the depth contents of the
+/// texture at the beginning of the render pass.
+///
+/// - LOAD: Loads the depth values currently in the texture.
+/// - CLEAR: Clears the texture to a single depth.
+/// - DONT_CARE: The driver will do whatever it wants with the memory. This is
+///   a good option if you know that every single pixel will be touched in the
+///   render pass.
+///
+/// The store_op field determines what is done with the depth results of the
+/// render pass.
+///
+/// - STORE: Stores the depth results in the texture.
+/// - DONT_CARE: The driver will do whatever it wants with the depth results.
+///   This is often a good option for depth/stencil textures that don't need to
+///   be reused again.
+///
+/// The stencil_load_op field determines what is done with the stencil contents
+/// of the texture at the beginning of the render pass.
+///
+/// - LOAD: Loads the stencil values currently in the texture.
+/// - CLEAR: Clears the stencil values to a single value.
+/// - DONT_CARE: The driver will do whatever it wants with the memory. This is
+///   a good option if you know that every single pixel will be touched in the
+///   render pass.
+///
+/// The stencil_store_op field determines what is done with the stencil results
+/// of the render pass.
+///
+/// - STORE: Stores the stencil results in the texture.
+/// - DONT_CARE: The driver will do whatever it wants with the stencil results.
+///   This is often a good option for depth/stencil textures that don't need to
+///   be reused again.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_BeginGPURenderPass
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUDepthStencilTargetInfo {
+    /// The texture that will be used as the depth stencil target by the render pass.
     pub texture: *mut SDL_GPUTexture,
+    /// The depth-stencil clear values. Can be ignored by the render pass if SDL_GPU_LOADOP_CLEAR is not used.
     pub clear_value: SDL_GPUDepthStencilValue,
+    /// What is done with the depth contents at the beginning of the render pass.
     pub load_op: SDL_GPULoadOp,
+    /// What is done with the depth results of the render pass.
     pub store_op: SDL_GPUStoreOp,
+    /// What is done with the stencil contents at the beginning of the render pass.
     pub stencil_load_op: SDL_GPULoadOp,
+    /// What is done with the stencil results of the render pass.
     pub stencil_store_op: SDL_GPUStoreOp,
+    /// SDL_TRUE cycles the texture if the texture is bound and any load ops are not LOAD
     pub cycle: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
 }
 
+/// A structure specifying parameters in a buffer binding call.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_BindGPUVertexBuffers
+/// \sa SDL_BindGPUIndexBuffers
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUBufferBinding {
+    /// The buffer to bind. Must have been created with SDL_GPU_BUFFERUSAGE_VERTEX for SDL_BindGPUVertexBuffers, or SDL_GPU_BUFFERUSAGE_INDEX for SDL_BindGPUIndexBuffers.
     pub buffer: *mut SDL_GPUBuffer,
+    /// The starting byte of the data to bind in the buffer.
     pub offset: Uint32,
 }
 
+/// A structure specifying parameters in a sampler binding call.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_BindGPUVertexSamplers
+/// \sa SDL_BindGPUFragmentSamplers
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureSamplerBinding {
+    /// The texture to bind. Must have been created with SDL_GPU_TEXTUREUSAGE_SAMPLER.
     pub texture: *mut SDL_GPUTexture,
+    /// The sampler to bind.
     pub sampler: *mut SDL_GPUSampler,
 }
 
+/// A structure specifying parameters related to binding buffers in a compute
+/// pass.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_BeginGPUComputePass
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUStorageBufferWriteOnlyBinding {
+    /// The buffer to bind. Must have been created with SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE.
     pub buffer: *mut SDL_GPUBuffer,
+    /// SDL_TRUE cycles the buffer if it is already bound.
     pub cycle: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
 }
 
+/// A structure specifying parameters related to binding textures in a compute
+/// pass.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_BeginGPUComputePass
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUStorageTextureWriteOnlyBinding {
+    /// The texture to bind. Must have been created with SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE.
     pub texture: *mut SDL_GPUTexture,
+    /// The mip level index to bind.
     pub mip_level: Uint32,
+    /// The layer index to bind.
     pub layer: Uint32,
+    /// SDL_TRUE cycles the texture if it is already bound.
     pub cycle: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
@@ -2280,7 +2746,7 @@ extern_sdlcall! {{
     /// correlating draw call parameter MUST be 0.
     ///
     /// \param render_pass a render pass handle.
-    /// \param num_indices the number of vertices to draw per instance.
+    /// \param num_indices the number of indices to draw per instance.
     /// \param num_instances the number of instances to draw.
     /// \param first_index the starting index within the index buffer.
     /// \param vertex_offset value added to vertex index before indexing into the
@@ -2494,7 +2960,8 @@ extern_sdlcall! {{
     ///
     /// \param device a GPU context.
     /// \param transfer_buffer a transfer buffer.
-    /// \param cycle if SDL_TRUE, cycles the transfer buffer if it is bound.
+    /// \param cycle if SDL_TRUE, cycles the transfer buffer if it is already
+    ///              bound.
     /// \returns the address of the mapped transfer buffer memory.
     ///
     /// \since This function is available since SDL 3.0.0.
@@ -2553,8 +3020,8 @@ extern_sdlcall! {{
     /// \param copy_pass a copy pass handle.
     /// \param source the source transfer buffer with offset.
     /// \param destination the destination buffer with offset and size.
-    /// \param cycle if SDL_TRUE, cycles the buffer if it is bound, otherwise
-    ///              overwrites the data.
+    /// \param cycle if SDL_TRUE, cycles the buffer if it is already bound,
+    ///              otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_UploadToGPUBuffer(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTransferBufferLocation, destination: *const SDL_GPUBufferRegion, cycle: SDL_bool);
@@ -2589,8 +3056,8 @@ extern_sdlcall! {{
     /// \param source the buffer and offset to copy from.
     /// \param destination the buffer and offset to copy to.
     /// \param size the length of the buffer to copy.
-    /// \param cycle if SDL_TRUE, cycles the destination buffer if it is bound,
-    ///              otherwise overwrites the data.
+    /// \param cycle if SDL_TRUE, cycles the destination buffer if it is already
+    ///              bound, otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_CopyGPUBufferToBuffer(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUBufferLocation, destination: *const SDL_GPUBufferLocation, size: Uint32, cycle: SDL_bool);

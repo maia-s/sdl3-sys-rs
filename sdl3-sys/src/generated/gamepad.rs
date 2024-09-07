@@ -36,11 +36,15 @@ use super::stdinc::*;
 
 use super::error::*;
 
-use super::joystick::*;
-
-use super::properties::*;
+use super::guid::*;
 
 use super::iostream::*;
+
+use super::joystick::*;
+
+use super::power::*;
+
+use super::properties::*;
 
 use super::sensor::*;
 

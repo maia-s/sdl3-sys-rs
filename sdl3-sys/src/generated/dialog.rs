@@ -4,6 +4,8 @@
 //!
 //! File dialog support.
 
+use super::stdinc::*;
+
 use super::error::*;
 
 use super::video::*;

@@ -4,7 +4,11 @@
 //!
 //! Event queue management.
 
+use super::stdinc::*;
+
 use super::audio::*;
+
+use super::camera::*;
 
 use super::error::*;
 
@@ -14,17 +18,21 @@ use super::joystick::*;
 
 use super::keyboard::*;
 
+use super::keycode::*;
+
 use super::mouse::*;
 
 use super::pen::*;
 
-use super::stdinc::*;
+use super::power::*;
+
+use super::sensor::*;
+
+use super::scancode::*;
 
 use super::touch::*;
 
 use super::video::*;
-
-use super::camera::*;
 
 /// A value that signifies a button is no longer pressed.
 ///

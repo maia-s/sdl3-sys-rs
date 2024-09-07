@@ -4,6 +4,8 @@
 //!
 //! Functions for creating Vulkan surfaces on SDL windows.
 
+use super::stdinc::*;
+
 use super::error::*;
 
 use super::video::*;

@@ -15,6 +15,8 @@
 //! Pens may provide more than simple touch input; they might have other axes,
 //! such as pressure, tilt, rotation, etc.
 
+use super::stdinc::*;
+
 use super::error::*;
 
 /// SDL pen instance IDs.

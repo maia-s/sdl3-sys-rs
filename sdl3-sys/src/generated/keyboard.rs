@@ -10,6 +10,12 @@ use super::error::*;
 
 use super::keycode::*;
 
+use super::properties::*;
+
+use super::rect::*;
+
+use super::scancode::*;
+
 use super::video::*;
 
 /// This is a unique ID for a keyboard for the time it is connected to the

@@ -9,7 +9,15 @@
 //! provide SDL_Surface objects as new frames of video come in. These surfaces
 //! can be uploaded to an SDL_Texture or processed as pixels in memory.
 
+use super::stdinc::*;
+
 use super::error::*;
+
+use super::pixels::*;
+
+use super::properties::*;
+
+use super::surface::*;
 
 use super::video::*;
 

@@ -28,13 +28,19 @@
 
 use super::stdinc::*;
 
+use super::blendmode::*;
+
 use super::error::*;
 
 use super::events::*;
 
+use super::pixels::*;
+
 use super::properties::*;
 
 use super::rect::*;
+
+use super::surface::*;
 
 use super::video::*;
 
