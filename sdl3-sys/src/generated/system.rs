@@ -14,7 +14,7 @@ use super::render::*;
 
 use super::video::*;
 
-#[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
+#[cfg(windows)]
 emit! {
     /// A callback to be used with SDL_SetWindowsMessageHook.
     ///
@@ -74,10 +74,6 @@ emit! {
         pub fn SDL_GetDirect3D9AdapterIndex(displayID: SDL_DisplayID) -> ::core::ffi::c_int;
     }}
 
-}
-
-#[cfg(any(windows, any(/* always disabled: SDL_PLATFORM_WINGDK */)))]
-emit! {
     extern_sdlcall! {{
         /// Get the DXGI Adapter and Output indices for the specified display.
         ///
@@ -504,104 +500,6 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_SendAndroidMessage(command: Uint32, param: ::core::ffi::c_int) -> SDL_bool;
-    }}
-
-}
-
-#[cfg(any(/* always disabled: SDL_PLATFORM_WINRT */))]
-emit! {
-    /// WinRT / Windows Phone path types
-    ///
-    /// \since This enum is available since SDL 3.0.0.
-    ///
-    /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_WINRT_PATH_INSTALLED_LOCATION`], [`SDL_WINRT_PATH_LOCAL_FOLDER`], [`SDL_WINRT_PATH_ROAMING_FOLDER`], [`SDL_WINRT_PATH_TEMP_FOLDER`]
-    #[repr(transparent)]
-    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    #[cfg_attr(feature = "debug-impls", derive(Debug))]
-    pub struct SDL_WinRT_Path(pub ::core::ffi::c_int);
-    impl SDL_WinRT_Path {
-        /// The installed app's root directory.
-        ///        Files here are likely to be read-only.
-        pub const INSTALLED_LOCATION: Self = Self(0);
-        /// The app's local data store.  Files may be written here
-        pub const LOCAL_FOLDER: Self = Self(1);
-        /// The app's roaming data store.  Unsupported on Windows Phone.
-        ///        Files written here may be copied to other machines via a network
-        ///        connection.
-        pub const ROAMING_FOLDER: Self = Self(2);
-        /// The app's temporary data store.  Unsupported on Windows Phone.
-        ///        Files written here may be deleted at any time.
-        pub const TEMP_FOLDER: Self = Self(3);
-    }
-    /// The installed app's root directory.
-    ///        Files here are likely to be read-only.
-    pub const SDL_WINRT_PATH_INSTALLED_LOCATION: SDL_WinRT_Path = SDL_WinRT_Path::INSTALLED_LOCATION;
-    /// The app's local data store.  Files may be written here
-    pub const SDL_WINRT_PATH_LOCAL_FOLDER: SDL_WinRT_Path = SDL_WinRT_Path::LOCAL_FOLDER;
-    /// The app's roaming data store.  Unsupported on Windows Phone.
-    ///        Files written here may be copied to other machines via a network
-    ///        connection.
-    pub const SDL_WINRT_PATH_ROAMING_FOLDER: SDL_WinRT_Path = SDL_WinRT_Path::ROAMING_FOLDER;
-    /// The app's temporary data store.  Unsupported on Windows Phone.
-    ///        Files written here may be deleted at any time.
-    pub const SDL_WINRT_PATH_TEMP_FOLDER: SDL_WinRT_Path = SDL_WinRT_Path::TEMP_FOLDER;
-
-    /// WinRT Device Family
-    ///
-    /// \since This enum is available since SDL 3.0.0.
-    ///
-    /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_WINRT_DEVICEFAMILY_UNKNOWN`], [`SDL_WINRT_DEVICEFAMILY_DESKTOP`], [`SDL_WINRT_DEVICEFAMILY_MOBILE`], [`SDL_WINRT_DEVICEFAMILY_XBOX`]
-    #[repr(transparent)]
-    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    #[cfg_attr(feature = "debug-impls", derive(Debug))]
-    pub struct SDL_WinRT_DeviceFamily(pub ::core::ffi::c_int);
-    impl SDL_WinRT_DeviceFamily {
-        /// Unknown family
-        pub const UNKNOWN: Self = Self(0);
-        /// Desktop family
-        pub const DESKTOP: Self = Self(1);
-        /// Mobile family (for example smartphone)
-        pub const MOBILE: Self = Self(2);
-        /// XBox family
-        pub const XBOX: Self = Self(3);
-    }
-    /// Unknown family
-    pub const SDL_WINRT_DEVICEFAMILY_UNKNOWN: SDL_WinRT_DeviceFamily = SDL_WinRT_DeviceFamily::UNKNOWN;
-    /// Desktop family
-    pub const SDL_WINRT_DEVICEFAMILY_DESKTOP: SDL_WinRT_DeviceFamily = SDL_WinRT_DeviceFamily::DESKTOP;
-    /// Mobile family (for example smartphone)
-    pub const SDL_WINRT_DEVICEFAMILY_MOBILE: SDL_WinRT_DeviceFamily = SDL_WinRT_DeviceFamily::MOBILE;
-    /// XBox family
-    pub const SDL_WINRT_DEVICEFAMILY_XBOX: SDL_WinRT_DeviceFamily = SDL_WinRT_DeviceFamily::XBOX;
-
-    extern_sdlcall! {{
-        /// Retrieve a WinRT defined path on the local file system.
-        ///
-        /// Not all paths are available on all versions of Windows. This is especially
-        /// true on Windows Phone. Check the documentation for the given SDL_WinRT_Path
-        /// for more information on which path types are supported where.
-        ///
-        /// Documentation on most app-specific path types on WinRT can be found on
-        /// MSDN, at the URL:
-        ///
-        /// https://msdn.microsoft.com/en-us/library/windows/apps/hh464917.aspx
-        ///
-        /// \param pathType the type of path to retrieve, one of SDL_WinRT_Path.
-        /// \returns a UTF-8 string (8-bit, multi-byte) containing the path, or NULL if
-        ///          the path is not available for any reason; call SDL_GetError() for
-        ///          more information.
-        ///
-        /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_GetWinRTFSPath(pathType: SDL_WinRT_Path) -> *const ::core::ffi::c_char;
-    }}
-
-    extern_sdlcall! {{
-        /// Detects the device family of WinRT platform at runtime.
-        ///
-        /// \returns a value from the SDL_WinRT_DeviceFamily enum.
-        ///
-        /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_GetWinRTDeviceFamily() -> SDL_WinRT_DeviceFamily;
     }}
 
 }

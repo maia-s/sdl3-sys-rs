@@ -377,7 +377,7 @@ pub const SDL_GPU_TEXTURETYPE_CUBE: SDL_GPUTextureType = SDL_GPUTextureType::CUB
 /// Specifies the sample count of a texture.
 ///
 /// Used in multisampling. Note that this value only applies when the texture
-/// is used as a render pass attachment.
+/// is used as a render target.
 ///
 /// \since This enum is available since SDL 3.0.0
 ///
@@ -780,8 +780,8 @@ pub const SDL_GPU_STENCILOP_INCREMENT_AND_WRAP: SDL_GPUStencilOp = SDL_GPUStenci
 /// Decrements the current value and wraps to the maximum value.
 pub const SDL_GPU_STENCILOP_DECREMENT_AND_WRAP: SDL_GPUStencilOp = SDL_GPUStencilOp::DECREMENT_AND_WRAP;
 
-/// Specifies the operator to be used when pixels in a render pass texture
-/// attachment are blended with existing pixels in the texture.
+/// Specifies the operator to be used when pixels in a render target are
+/// blended with existing pixels in the texture.
 ///
 /// The source color is the value written by the fragment shader. The
 /// destination color is the value currently existing in the texture.
@@ -818,8 +818,8 @@ pub const SDL_GPU_BLENDOP_MIN: SDL_GPUBlendOp = SDL_GPUBlendOp::MIN;
 /// max(source, destination)
 pub const SDL_GPU_BLENDOP_MAX: SDL_GPUBlendOp = SDL_GPUBlendOp::MAX;
 
-/// Specifies a blending factor to be used when pixels in a render pass texture
-/// attachment are blended with existing pixels in the texture.
+/// Specifies a blending factor to be used when pixels in a render target are
+/// blended with existing pixels in the texture.
 ///
 /// The source color is the value written by the fragment shader. The
 /// destination color is the value currently existing in the texture.
@@ -1107,25 +1107,25 @@ pub struct SDL_GPUViewport {
     pub y: ::core::ffi::c_float,
     pub w: ::core::ffi::c_float,
     pub h: ::core::ffi::c_float,
-    pub minDepth: ::core::ffi::c_float,
-    pub maxDepth: ::core::ffi::c_float,
+    pub min_depth: ::core::ffi::c_float,
+    pub max_depth: ::core::ffi::c_float,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureTransferInfo {
-    pub transferBuffer: *mut SDL_GPUTransferBuffer,
+    pub transfer_buffer: *mut SDL_GPUTransferBuffer,
     pub offset: Uint32,
-    pub imagePitch: Uint32,
-    pub imageHeight: Uint32,
+    pub pixels_per_row: Uint32,
+    pub rows_per_layer: Uint32,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTransferBufferLocation {
-    pub transferBuffer: *mut SDL_GPUTransferBuffer,
+    pub transfer_buffer: *mut SDL_GPUTransferBuffer,
     pub offset: Uint32,
 }
 
@@ -1134,7 +1134,7 @@ pub struct SDL_GPUTransferBufferLocation {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureLocation {
     pub texture: *mut SDL_GPUTexture,
-    pub mipLevel: Uint32,
+    pub mip_level: Uint32,
     pub layer: Uint32,
     pub x: Uint32,
     pub y: Uint32,
@@ -1146,7 +1146,7 @@ pub struct SDL_GPUTextureLocation {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureRegion {
     pub texture: *mut SDL_GPUTexture,
-    pub mipLevel: Uint32,
+    pub mip_level: Uint32,
     pub layer: Uint32,
     pub x: Uint32,
     pub y: Uint32,
@@ -1161,8 +1161,8 @@ pub struct SDL_GPUTextureRegion {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUBlitRegion {
     pub texture: *mut SDL_GPUTexture,
-    pub mipLevel: Uint32,
-    pub layerOrDepthPlane: Uint32,
+    pub mip_level: Uint32,
+    pub layer_or_depth_plane: Uint32,
     pub x: Uint32,
     pub y: Uint32,
     pub w: Uint32,
@@ -1190,51 +1190,51 @@ pub struct SDL_GPUBufferRegion {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUIndirectDrawCommand {
-    pub vertexCount: Uint32,
-    pub instanceCount: Uint32,
-    pub firstVertex: Uint32,
-    pub firstInstance: Uint32,
+    pub num_vertices: Uint32,
+    pub num_instances: Uint32,
+    pub first_vertex: Uint32,
+    pub first_instance: Uint32,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUIndexedIndirectDrawCommand {
-    pub indexCount: Uint32,
-    pub instanceCount: Uint32,
-    pub firstIndex: Uint32,
-    pub vertexOffset: Sint32,
-    pub firstInstance: Uint32,
+    pub num_indices: Uint32,
+    pub num_instances: Uint32,
+    pub first_index: Uint32,
+    pub vertex_offset: Sint32,
+    pub first_instance: Uint32,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUIndirectDispatchCommand {
-    pub groupCountX: Uint32,
-    pub groupCountY: Uint32,
-    pub groupCountZ: Uint32,
+    pub groupcount_x: Uint32,
+    pub groupcount_y: Uint32,
+    pub groupcount_z: Uint32,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUSamplerCreateInfo {
-    pub minFilter: SDL_GPUFilter,
-    pub magFilter: SDL_GPUFilter,
-    pub mipmapMode: SDL_GPUSamplerMipmapMode,
-    pub addressModeU: SDL_GPUSamplerAddressMode,
-    pub addressModeV: SDL_GPUSamplerAddressMode,
-    pub addressModeW: SDL_GPUSamplerAddressMode,
-    pub mipLodBias: ::core::ffi::c_float,
-    pub maxAnisotropy: ::core::ffi::c_float,
-    pub anisotropyEnable: SDL_bool,
-    pub compareEnable: SDL_bool,
+    pub min_filter: SDL_GPUFilter,
+    pub mag_filter: SDL_GPUFilter,
+    pub mipmap_mode: SDL_GPUSamplerMipmapMode,
+    pub address_mode_u: SDL_GPUSamplerAddressMode,
+    pub address_mode_v: SDL_GPUSamplerAddressMode,
+    pub address_mode_w: SDL_GPUSamplerAddressMode,
+    pub mip_lod_bias: ::core::ffi::c_float,
+    pub max_anisotropy: ::core::ffi::c_float,
+    pub enable_anisotropy: SDL_bool,
+    pub enable_compare: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
-    pub compareOp: SDL_GPUCompareOp,
-    pub minLod: ::core::ffi::c_float,
-    pub maxLod: ::core::ffi::c_float,
+    pub compare_op: SDL_GPUCompareOp,
+    pub min_lod: ::core::ffi::c_float,
+    pub max_lod: ::core::ffi::c_float,
     pub props: SDL_PropertiesID,
 }
 
@@ -1243,9 +1243,9 @@ pub struct SDL_GPUSamplerCreateInfo {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUVertexBinding {
     pub binding: Uint32,
-    pub stride: Uint32,
-    pub inputRate: SDL_GPUVertexInputRate,
-    pub instanceStepRate: Uint32,
+    pub pitch: Uint32,
+    pub input_rate: SDL_GPUVertexInputRate,
+    pub instance_step_rate: Uint32,
 }
 
 #[repr(C)]
@@ -1262,52 +1262,52 @@ pub struct SDL_GPUVertexAttribute {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUVertexInputState {
-    pub vertexBindings: *const SDL_GPUVertexBinding,
-    pub vertexBindingCount: Uint32,
-    pub vertexAttributes: *const SDL_GPUVertexAttribute,
-    pub vertexAttributeCount: Uint32,
+    pub vertex_bindings: *const SDL_GPUVertexBinding,
+    pub num_vertex_bindings: Uint32,
+    pub vertex_attributes: *const SDL_GPUVertexAttribute,
+    pub num_vertex_attributes: Uint32,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUStencilOpState {
-    pub failOp: SDL_GPUStencilOp,
-    pub passOp: SDL_GPUStencilOp,
-    pub depthFailOp: SDL_GPUStencilOp,
-    pub compareOp: SDL_GPUCompareOp,
+    pub fail_op: SDL_GPUStencilOp,
+    pub pass_op: SDL_GPUStencilOp,
+    pub depth_fail_op: SDL_GPUStencilOp,
+    pub compare_op: SDL_GPUCompareOp,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GPUColorAttachmentBlendState {
-    pub blendEnable: SDL_bool,
+pub struct SDL_GPUColorTargetBlendState {
+    pub enable_blend: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
-    pub srcColorBlendFactor: SDL_GPUBlendFactor,
-    pub dstColorBlendFactor: SDL_GPUBlendFactor,
-    pub colorBlendOp: SDL_GPUBlendOp,
-    pub srcAlphaBlendFactor: SDL_GPUBlendFactor,
-    pub dstAlphaBlendFactor: SDL_GPUBlendFactor,
-    pub alphaBlendOp: SDL_GPUBlendOp,
-    pub colorWriteMask: SDL_GPUColorComponentFlags,
+    pub src_color_blendfactor: SDL_GPUBlendFactor,
+    pub dst_color_blendfactor: SDL_GPUBlendFactor,
+    pub color_blend_op: SDL_GPUBlendOp,
+    pub src_alpha_blendfactor: SDL_GPUBlendFactor,
+    pub dst_alpha_blendfactor: SDL_GPUBlendFactor,
+    pub alpha_blend_op: SDL_GPUBlendOp,
+    pub color_write_mask: SDL_GPUColorComponentFlags,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUShaderCreateInfo {
-    pub codeSize: ::core::primitive::usize,
+    pub code_size: ::core::primitive::usize,
     pub code: *const Uint8,
-    pub entryPointName: *const ::core::ffi::c_char,
+    pub entrypoint: *const ::core::ffi::c_char,
     pub format: SDL_GPUShaderFormat,
     pub stage: SDL_GPUShaderStage,
-    pub samplerCount: Uint32,
-    pub storageTextureCount: Uint32,
-    pub storageBufferCount: Uint32,
-    pub uniformBufferCount: Uint32,
+    pub num_samplers: Uint32,
+    pub num_storage_textures: Uint32,
+    pub num_storage_buffers: Uint32,
+    pub num_uniform_buffers: Uint32,
     pub props: SDL_PropertiesID,
 }
 
@@ -1317,12 +1317,12 @@ pub struct SDL_GPUShaderCreateInfo {
 pub struct SDL_GPUTextureCreateInfo {
     pub r#type: SDL_GPUTextureType,
     pub format: SDL_GPUTextureFormat,
-    pub usageFlags: SDL_GPUTextureUsageFlags,
+    pub usage: SDL_GPUTextureUsageFlags,
     pub width: Uint32,
     pub height: Uint32,
-    pub layerCountOrDepth: Uint32,
-    pub levelCount: Uint32,
-    pub sampleCount: SDL_GPUSampleCount,
+    pub layer_count_or_depth: Uint32,
+    pub num_levels: Uint32,
+    pub sample_count: SDL_GPUSampleCount,
     pub props: SDL_PropertiesID,
 }
 
@@ -1342,8 +1342,8 @@ pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8: &::core::ffi::CS
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUBufferCreateInfo {
-    pub usageFlags: SDL_GPUBufferUsageFlags,
-    pub sizeInBytes: Uint32,
+    pub usage: SDL_GPUBufferUsageFlags,
+    pub size: Uint32,
     pub props: SDL_PropertiesID,
 }
 
@@ -1352,7 +1352,7 @@ pub struct SDL_GPUBufferCreateInfo {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTransferBufferCreateInfo {
     pub usage: SDL_GPUTransferBufferUsage,
-    pub sizeInBytes: Uint32,
+    pub size: Uint32,
     pub props: SDL_PropertiesID,
 }
 
@@ -1360,77 +1360,76 @@ pub struct SDL_GPUTransferBufferCreateInfo {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPURasterizerState {
-    pub fillMode: SDL_GPUFillMode,
-    pub cullMode: SDL_GPUCullMode,
-    pub frontFace: SDL_GPUFrontFace,
-    pub depthBiasEnable: SDL_bool,
+    pub fill_mode: SDL_GPUFillMode,
+    pub cull_mode: SDL_GPUCullMode,
+    pub front_face: SDL_GPUFrontFace,
+    pub enable_depth_bias: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
-    pub depthBiasConstantFactor: ::core::ffi::c_float,
-    pub depthBiasClamp: ::core::ffi::c_float,
-    pub depthBiasSlopeFactor: ::core::ffi::c_float,
+    pub depth_bias_constant_factor: ::core::ffi::c_float,
+    pub depth_bias_clamp: ::core::ffi::c_float,
+    pub depth_bias_slope_factor: ::core::ffi::c_float,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUMultisampleState {
-    pub sampleCount: SDL_GPUSampleCount,
-    pub sampleMask: Uint32,
+    pub sample_count: SDL_GPUSampleCount,
+    pub sample_mask: Uint32,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUDepthStencilState {
-    pub depthTestEnable: SDL_bool,
-    pub depthWriteEnable: SDL_bool,
-    pub stencilTestEnable: SDL_bool,
+    pub enable_depth_test: SDL_bool,
+    pub enable_depth_write: SDL_bool,
+    pub enable_stencil_test: SDL_bool,
     pub padding1: Uint8,
-    pub compareOp: SDL_GPUCompareOp,
-    pub backStencilState: SDL_GPUStencilOpState,
-    pub frontStencilState: SDL_GPUStencilOpState,
-    pub compareMask: Uint8,
-    pub writeMask: Uint8,
-    pub reference: Uint8,
+    pub compare_op: SDL_GPUCompareOp,
+    pub back_stencil_state: SDL_GPUStencilOpState,
+    pub front_stencil_state: SDL_GPUStencilOpState,
+    pub compare_mask: Uint8,
+    pub write_mask: Uint8,
     pub padding2: Uint8,
+    pub padding3: Uint8,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GPUColorAttachmentDescription {
+pub struct SDL_GPUColorTargetDescription {
     pub format: SDL_GPUTextureFormat,
-    pub blendState: SDL_GPUColorAttachmentBlendState,
+    pub blend_state: SDL_GPUColorTargetBlendState,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GPUGraphicsPipelineAttachmentInfo {
-    pub colorAttachmentDescriptions: *const SDL_GPUColorAttachmentDescription,
-    pub colorAttachmentCount: Uint32,
-    pub hasDepthStencilAttachment: SDL_bool,
+pub struct SDL_GpuGraphicsPipelineTargetInfo {
+    pub color_target_descriptions: *const SDL_GPUColorTargetDescription,
+    pub num_color_targets: Uint32,
+    pub has_depth_stencil_target: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
-    pub depthStencilFormat: SDL_GPUTextureFormat,
+    pub depth_stencil_format: SDL_GPUTextureFormat,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUGraphicsPipelineCreateInfo {
-    pub vertexShader: *mut SDL_GPUShader,
-    pub fragmentShader: *mut SDL_GPUShader,
-    pub vertexInputState: SDL_GPUVertexInputState,
-    pub primitiveType: SDL_GPUPrimitiveType,
-    pub rasterizerState: SDL_GPURasterizerState,
-    pub multisampleState: SDL_GPUMultisampleState,
-    pub depthStencilState: SDL_GPUDepthStencilState,
-    pub attachmentInfo: SDL_GPUGraphicsPipelineAttachmentInfo,
-    pub blendConstants: [::core::ffi::c_float; 4],
+    pub vertex_shader: *mut SDL_GPUShader,
+    pub fragment_shader: *mut SDL_GPUShader,
+    pub vertex_input_state: SDL_GPUVertexInputState,
+    pub primitive_type: SDL_GPUPrimitiveType,
+    pub rasterizer_state: SDL_GPURasterizerState,
+    pub multisample_state: SDL_GPUMultisampleState,
+    pub depth_stencil_state: SDL_GPUDepthStencilState,
+    pub target_info: SDL_GpuGraphicsPipelineTargetInfo,
     pub props: SDL_PropertiesID,
 }
 
@@ -1438,31 +1437,31 @@ pub struct SDL_GPUGraphicsPipelineCreateInfo {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUComputePipelineCreateInfo {
-    pub codeSize: ::core::primitive::usize,
+    pub code_size: ::core::primitive::usize,
     pub code: *const Uint8,
-    pub entryPointName: *const ::core::ffi::c_char,
+    pub entrypoint: *const ::core::ffi::c_char,
     pub format: SDL_GPUShaderFormat,
-    pub readOnlyStorageTextureCount: Uint32,
-    pub readOnlyStorageBufferCount: Uint32,
-    pub writeOnlyStorageTextureCount: Uint32,
-    pub writeOnlyStorageBufferCount: Uint32,
-    pub uniformBufferCount: Uint32,
-    pub threadCountX: Uint32,
-    pub threadCountY: Uint32,
-    pub threadCountZ: Uint32,
+    pub num_readonly_storage_textures: Uint32,
+    pub num_readonly_storage_buffers: Uint32,
+    pub num_writeonly_storage_textures: Uint32,
+    pub num_writeonly_storage_buffers: Uint32,
+    pub num_uniform_buffers: Uint32,
+    pub threadcount_x: Uint32,
+    pub threadcount_y: Uint32,
+    pub threadcount_z: Uint32,
     pub props: SDL_PropertiesID,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GPUColorAttachmentInfo {
+pub struct SDL_GPUColorTargetInfo {
     pub texture: *mut SDL_GPUTexture,
-    pub mipLevel: Uint32,
-    pub layerOrDepthPlane: Uint32,
-    pub clearColor: SDL_FColor,
-    pub loadOp: SDL_GPULoadOp,
-    pub storeOp: SDL_GPUStoreOp,
+    pub mip_level: Uint32,
+    pub layer_or_depth_plane: Uint32,
+    pub clear_color: SDL_FColor,
+    pub load_op: SDL_GPULoadOp,
+    pub store_op: SDL_GPUStoreOp,
     pub cycle: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
@@ -1472,13 +1471,13 @@ pub struct SDL_GPUColorAttachmentInfo {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GPUDepthStencilAttachmentInfo {
+pub struct SDL_GPUDepthStencilTargetInfo {
     pub texture: *mut SDL_GPUTexture,
-    pub depthStencilClearValue: SDL_GPUDepthStencilValue,
-    pub loadOp: SDL_GPULoadOp,
-    pub storeOp: SDL_GPUStoreOp,
-    pub stencilLoadOp: SDL_GPULoadOp,
-    pub stencilStoreOp: SDL_GPUStoreOp,
+    pub clear_value: SDL_GPUDepthStencilValue,
+    pub load_op: SDL_GPULoadOp,
+    pub store_op: SDL_GPUStoreOp,
+    pub stencil_load_op: SDL_GPULoadOp,
+    pub stencil_store_op: SDL_GPUStoreOp,
     pub cycle: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
@@ -1517,7 +1516,7 @@ pub struct SDL_GPUStorageBufferWriteOnlyBinding {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUStorageTextureWriteOnlyBinding {
     pub texture: *mut SDL_GPUTexture,
-    pub mipLevel: Uint32,
+    pub mip_level: Uint32,
     pub layer: Uint32,
     pub cycle: SDL_bool,
     pub padding1: Uint8,
@@ -1528,9 +1527,9 @@ pub struct SDL_GPUStorageTextureWriteOnlyBinding {
 extern_sdlcall! {{
     /// Creates a GPU context.
     ///
-    /// \param formatFlags a bitflag indicating which shader formats the app is
-    ///                    able to provide.
-    /// \param debugMode enable debug mode properties and validations.
+    /// \param format_flags a bitflag indicating which shader formats the app is
+    ///                     able to provide.
+    /// \param debug_mode enable debug mode properties and validations.
     /// \param name the preferred GPU driver, or NULL to let SDL pick the optimal
     ///             driver.
     /// \returns a GPU context on success or NULL on failure.
@@ -1539,7 +1538,7 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetGPUDriver
     /// \sa SDL_DestroyGPUDevice
-    pub fn SDL_CreateGPUDevice(formatFlags: SDL_GPUShaderFormat, debugMode: SDL_bool, name: *const ::core::ffi::c_char) -> *mut SDL_GPUDevice;
+    pub fn SDL_CreateGPUDevice(format_flags: SDL_GPUShaderFormat, debug_mode: SDL_bool, name: *const ::core::ffi::c_char) -> *mut SDL_GPUDevice;
 }}
 
 extern_sdlcall! {{
@@ -1661,23 +1660,23 @@ extern_sdlcall! {{
     ///   textures
     ///
     /// \param device a GPU Context.
-    /// \param computePipelineCreateInfo a struct describing the state of the
-    ///                                  requested compute pipeline.
+    /// \param createinfo a struct describing the state of the compute pipeline to
+    ///                   create.
     /// \returns a compute pipeline object on success, or NULL on failure.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_BindGPUComputePipeline
     /// \sa SDL_ReleaseGPUComputePipeline
-    pub fn SDL_CreateGPUComputePipeline(device: *mut SDL_GPUDevice, computePipelineCreateInfo: *const SDL_GPUComputePipelineCreateInfo) -> *mut SDL_GPUComputePipeline;
+    pub fn SDL_CreateGPUComputePipeline(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUComputePipelineCreateInfo) -> *mut SDL_GPUComputePipeline;
 }}
 
 extern_sdlcall! {{
     /// Creates a pipeline object to be used in a graphics workflow.
     ///
     /// \param device a GPU Context.
-    /// \param pipelineCreateInfo a struct describing the state of the desired
-    ///                           graphics pipeline.
+    /// \param createinfo a struct describing the state of the graphics pipeline to
+    ///                   create.
     /// \returns a graphics pipeline object on success, or NULL on failure.
     ///
     /// \since This function is available since SDL 3.0.0.
@@ -1685,7 +1684,7 @@ extern_sdlcall! {{
     /// \sa SDL_CreateGPUShader
     /// \sa SDL_BindGPUGraphicsPipeline
     /// \sa SDL_ReleaseGPUGraphicsPipeline
-    pub fn SDL_CreateGPUGraphicsPipeline(device: *mut SDL_GPUDevice, pipelineCreateInfo: *const SDL_GPUGraphicsPipelineCreateInfo) -> *mut SDL_GPUGraphicsPipeline;
+    pub fn SDL_CreateGPUGraphicsPipeline(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUGraphicsPipelineCreateInfo) -> *mut SDL_GPUGraphicsPipeline;
 }}
 
 extern_sdlcall! {{
@@ -1693,8 +1692,7 @@ extern_sdlcall! {{
     /// workflow.
     ///
     /// \param device a GPU Context.
-    /// \param samplerCreateInfo a struct describing the state of the desired
-    ///                          sampler.
+    /// \param createinfo a struct describing the state of the sampler to create.
     /// \returns a sampler object on success, or NULL on failure.
     ///
     /// \since This function is available since SDL 3.0.0.
@@ -1702,7 +1700,7 @@ extern_sdlcall! {{
     /// \sa SDL_BindGPUVertexSamplers
     /// \sa SDL_BindGPUFragmentSamplers
     /// \sa SDL_ReleaseSampler
-    pub fn SDL_CreateGPUSampler(device: *mut SDL_GPUDevice, samplerCreateInfo: *const SDL_GPUSamplerCreateInfo) -> *mut SDL_GPUSampler;
+    pub fn SDL_CreateGPUSampler(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUSamplerCreateInfo) -> *mut SDL_GPUSampler;
 }}
 
 extern_sdlcall! {{
@@ -1761,15 +1759,14 @@ extern_sdlcall! {{
     ///   information from the SDL_GPUPipeline.
     ///
     /// \param device a GPU Context.
-    /// \param shaderCreateInfo a struct describing the state of the desired
-    ///                         shader.
+    /// \param createinfo a struct describing the state of the shader to create.
     /// \returns a shader object on success, or NULL on failure.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_CreateGPUGraphicsPipeline
     /// \sa SDL_ReleaseGPUShader
-    pub fn SDL_CreateGPUShader(device: *mut SDL_GPUDevice, shaderCreateInfo: *const SDL_GPUShaderCreateInfo) -> *mut SDL_GPUShader;
+    pub fn SDL_CreateGPUShader(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUShaderCreateInfo) -> *mut SDL_GPUShader;
 }}
 
 extern_sdlcall! {{
@@ -1786,8 +1783,7 @@ extern_sdlcall! {{
     /// count.
     ///
     /// \param device a GPU Context.
-    /// \param textureCreateInfo a struct describing the state of the texture to
-    ///                          create.
+    /// \param createinfo a struct describing the state of the texture to create.
     /// \returns a texture object on success, or NULL on failure.
     ///
     /// \since This function is available since SDL 3.0.0.
@@ -1802,7 +1798,7 @@ extern_sdlcall! {{
     /// \sa SDL_BlitGPUTexture
     /// \sa SDL_ReleaseGPUTexture
     /// \sa SDL_GPUTextureSupportsFormat
-    pub fn SDL_CreateGPUTexture(device: *mut SDL_GPUDevice, textureCreateInfo: *const SDL_GPUTextureCreateInfo) -> *mut SDL_GPUTexture;
+    pub fn SDL_CreateGPUTexture(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUTextureCreateInfo) -> *mut SDL_GPUTexture;
 }}
 
 extern_sdlcall! {{
@@ -1815,8 +1811,7 @@ extern_sdlcall! {{
     /// buffer cannot have both the VERTEX and INDEX flags.
     ///
     /// \param device a GPU Context.
-    /// \param bufferCreateInfo a struct describing the state of the buffer to
-    ///                         create.
+    /// \param createinfo a struct describing the state of the buffer to create.
     /// \returns a buffer object on success, or NULL on failure.
     ///
     /// \since This function is available since SDL 3.0.0.
@@ -1834,7 +1829,7 @@ extern_sdlcall! {{
     /// \sa SDL_BindGPUComputeStorageBuffers
     /// \sa SDL_DispatchGPUComputeIndirect
     /// \sa SDL_ReleaseGPUBuffer
-    pub fn SDL_CreateGPUBuffer(device: *mut SDL_GPUDevice, bufferCreateInfo: *const SDL_GPUBufferCreateInfo) -> *mut SDL_GPUBuffer;
+    pub fn SDL_CreateGPUBuffer(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUBufferCreateInfo) -> *mut SDL_GPUBuffer;
 }}
 
 extern_sdlcall! {{
@@ -1842,8 +1837,8 @@ extern_sdlcall! {{
     /// graphics resources.
     ///
     /// \param device a GPU Context.
-    /// \param transferBufferCreateInfo a struct describing the state of the
-    ///                                 transfer buffer to create.
+    /// \param createinfo a struct describing the state of the transfer buffer to
+    ///                   create.
     /// \returns a transfer buffer on success, or NULL on failure.
     ///
     /// \since This function is available since SDL 3.0.0.
@@ -1853,7 +1848,7 @@ extern_sdlcall! {{
     /// \sa SDL_UploadToGPUTexture
     /// \sa SDL_DownloadFromGPUTexture
     /// \sa SDL_ReleaseGPUTransferBuffer
-    pub fn SDL_CreateGPUTransferBuffer(device: *mut SDL_GPUDevice, transferBufferCreateInfo: *const SDL_GPUTransferBufferCreateInfo) -> *mut SDL_GPUTransferBuffer;
+    pub fn SDL_CreateGPUTransferBuffer(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUTransferBufferCreateInfo) -> *mut SDL_GPUTransferBuffer;
 }}
 
 extern_sdlcall! {{
@@ -1887,11 +1882,11 @@ extern_sdlcall! {{
     ///
     /// Useful for debugging.
     ///
-    /// \param commandBuffer a command buffer.
+    /// \param command_buffer a command buffer.
     /// \param text a UTF-8 string constant to insert as the label.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_InsertGPUDebugLabel(commandBuffer: *mut SDL_GPUCommandBuffer, text: *const ::core::ffi::c_char);
+    pub fn SDL_InsertGPUDebugLabel(command_buffer: *mut SDL_GPUCommandBuffer, text: *const ::core::ffi::c_char);
 }}
 
 extern_sdlcall! {{
@@ -1908,24 +1903,24 @@ extern_sdlcall! {{
     /// pass rather than the command buffer. For best results, if you push a debug
     /// group during a pass, always pop it in the same pass.
     ///
-    /// \param commandBuffer a command buffer.
+    /// \param command_buffer a command buffer.
     /// \param name a UTF-8 string constant that names the group.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_PopGPUDebugGroup
-    pub fn SDL_PushGPUDebugGroup(commandBuffer: *mut SDL_GPUCommandBuffer, name: *const ::core::ffi::c_char);
+    pub fn SDL_PushGPUDebugGroup(command_buffer: *mut SDL_GPUCommandBuffer, name: *const ::core::ffi::c_char);
 }}
 
 extern_sdlcall! {{
     /// Ends the most-recently pushed debug group.
     ///
-    /// \param commandBuffer a command buffer.
+    /// \param command_buffer a command buffer.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_PushGPUDebugGroup
-    pub fn SDL_PopGPUDebugGroup(commandBuffer: *mut SDL_GPUCommandBuffer);
+    pub fn SDL_PopGPUDebugGroup(command_buffer: *mut SDL_GPUCommandBuffer);
 }}
 
 extern_sdlcall! {{
@@ -1970,10 +1965,10 @@ extern_sdlcall! {{
     /// You must not reference the transfer buffer after calling this function.
     ///
     /// \param device a GPU context.
-    /// \param transferBuffer a transfer buffer to be destroyed.
+    /// \param transfer_buffer a transfer buffer to be destroyed.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReleaseGPUTransferBuffer(device: *mut SDL_GPUDevice, transferBuffer: *mut SDL_GPUTransferBuffer);
+    pub fn SDL_ReleaseGPUTransferBuffer(device: *mut SDL_GPUDevice, transfer_buffer: *mut SDL_GPUTransferBuffer);
 }}
 
 extern_sdlcall! {{
@@ -1982,10 +1977,10 @@ extern_sdlcall! {{
     /// You must not reference the compute pipeline after calling this function.
     ///
     /// \param device a GPU context.
-    /// \param computePipeline a compute pipeline to be destroyed.
+    /// \param compute_pipeline a compute pipeline to be destroyed.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReleaseGPUComputePipeline(device: *mut SDL_GPUDevice, computePipeline: *mut SDL_GPUComputePipeline);
+    pub fn SDL_ReleaseGPUComputePipeline(device: *mut SDL_GPUDevice, compute_pipeline: *mut SDL_GPUComputePipeline);
 }}
 
 extern_sdlcall! {{
@@ -2006,10 +2001,10 @@ extern_sdlcall! {{
     /// You must not reference the graphics pipeline after calling this function.
     ///
     /// \param device a GPU context.
-    /// \param graphicsPipeline a graphics pipeline to be destroyed.
+    /// \param graphics_pipeline a graphics pipeline to be destroyed.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReleaseGPUGraphicsPipeline(device: *mut SDL_GPUDevice, graphicsPipeline: *mut SDL_GPUGraphicsPipeline);
+    pub fn SDL_ReleaseGPUGraphicsPipeline(device: *mut SDL_GPUDevice, graphics_pipeline: *mut SDL_GPUGraphicsPipeline);
 }}
 
 extern_sdlcall! {{
@@ -2035,13 +2030,13 @@ extern_sdlcall! {{
     ///
     /// Subsequent draw calls will use this uniform data.
     ///
-    /// \param commandBuffer a command buffer.
-    /// \param slotIndex the vertex uniform slot to push data to.
+    /// \param command_buffer a command buffer.
+    /// \param slot_index the vertex uniform slot to push data to.
     /// \param data client data to write.
-    /// \param dataLengthInBytes the length of the data to write.
+    /// \param length the length of the data to write.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_PushGPUVertexUniformData(commandBuffer: *mut SDL_GPUCommandBuffer, slotIndex: Uint32, data: *const ::core::ffi::c_void, dataLengthInBytes: Uint32);
+    pub fn SDL_PushGPUVertexUniformData(command_buffer: *mut SDL_GPUCommandBuffer, slot_index: Uint32, data: *const ::core::ffi::c_void, length: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2049,13 +2044,13 @@ extern_sdlcall! {{
     ///
     /// Subsequent draw calls will use this uniform data.
     ///
-    /// \param commandBuffer a command buffer.
-    /// \param slotIndex the fragment uniform slot to push data to.
+    /// \param command_buffer a command buffer.
+    /// \param slot_index the fragment uniform slot to push data to.
     /// \param data client data to write.
-    /// \param dataLengthInBytes the length of the data to write.
+    /// \param length the length of the data to write.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_PushGPUFragmentUniformData(commandBuffer: *mut SDL_GPUCommandBuffer, slotIndex: Uint32, data: *const ::core::ffi::c_void, dataLengthInBytes: Uint32);
+    pub fn SDL_PushGPUFragmentUniformData(command_buffer: *mut SDL_GPUCommandBuffer, slot_index: Uint32, data: *const ::core::ffi::c_void, length: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2063,13 +2058,13 @@ extern_sdlcall! {{
     ///
     /// Subsequent draw calls will use this uniform data.
     ///
-    /// \param commandBuffer a command buffer.
-    /// \param slotIndex the uniform slot to push data to.
+    /// \param command_buffer a command buffer.
+    /// \param slot_index the uniform slot to push data to.
     /// \param data client data to write.
-    /// \param dataLengthInBytes the length of the data to write.
+    /// \param length the length of the data to write.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_PushGPUComputeUniformData(commandBuffer: *mut SDL_GPUCommandBuffer, slotIndex: Uint32, data: *const ::core::ffi::c_void, dataLengthInBytes: Uint32);
+    pub fn SDL_PushGPUComputeUniformData(command_buffer: *mut SDL_GPUCommandBuffer, slot_index: Uint32, data: *const ::core::ffi::c_void, length: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2083,20 +2078,20 @@ extern_sdlcall! {{
     /// is called. You cannot begin another render pass, or begin a compute pass or
     /// copy pass until you have ended the render pass.
     ///
-    /// \param commandBuffer a command buffer.
-    /// \param colorAttachmentInfos an array of texture subresources with
-    ///                             corresponding clear values and load/store ops.
-    /// \param colorAttachmentCount the number of color attachments in the
-    ///                             colorAttachmentInfos array.
-    /// \param depthStencilAttachmentInfo a texture subresource with corresponding
-    ///                                   clear value and load/store ops, may be
-    ///                                   NULL.
+    /// \param command_buffer a command buffer.
+    /// \param color_target_infos an array of texture subresources with
+    ///                           corresponding clear values and load/store ops.
+    /// \param num_color_targets the number of color targets in the
+    ///                          color_target_infos array.
+    /// \param depth_stencil_target_info a texture subresource with corresponding
+    ///                                  clear value and load/store ops, may be
+    ///                                  NULL.
     /// \returns a render pass handle.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_EndGPURenderPass
-    pub fn SDL_BeginGPURenderPass(commandBuffer: *mut SDL_GPUCommandBuffer, colorAttachmentInfos: *const SDL_GPUColorAttachmentInfo, colorAttachmentCount: Uint32, depthStencilAttachmentInfo: *const SDL_GPUDepthStencilAttachmentInfo) -> *mut SDL_GPURenderPass;
+    pub fn SDL_BeginGPURenderPass(command_buffer: *mut SDL_GPUCommandBuffer, color_target_infos: *const SDL_GPUColorTargetInfo, num_color_targets: Uint32, depth_stencil_target_info: *const SDL_GPUDepthStencilTargetInfo) -> *mut SDL_GPURenderPass;
 }}
 
 extern_sdlcall! {{
@@ -2104,59 +2099,81 @@ extern_sdlcall! {{
     ///
     /// A graphics pipeline must be bound before making any draw calls.
     ///
-    /// \param renderPass a render pass handle.
-    /// \param graphicsPipeline the graphics pipeline to bind.
+    /// \param render_pass a render pass handle.
+    /// \param graphics_pipeline the graphics pipeline to bind.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUGraphicsPipeline(renderPass: *mut SDL_GPURenderPass, graphicsPipeline: *mut SDL_GPUGraphicsPipeline);
+    pub fn SDL_BindGPUGraphicsPipeline(render_pass: *mut SDL_GPURenderPass, graphics_pipeline: *mut SDL_GPUGraphicsPipeline);
 }}
 
 extern_sdlcall! {{
     /// Sets the current viewport state on a command buffer.
     ///
-    /// \param renderPass a render pass handle.
+    /// \param render_pass a render pass handle.
     /// \param viewport the viewport to set.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetGPUViewport(renderPass: *mut SDL_GPURenderPass, viewport: *const SDL_GPUViewport);
+    pub fn SDL_SetGPUViewport(render_pass: *mut SDL_GPURenderPass, viewport: *const SDL_GPUViewport);
 }}
 
 extern_sdlcall! {{
     /// Sets the current scissor state on a command buffer.
     ///
-    /// \param renderPass a render pass handle.
+    /// \param render_pass a render pass handle.
     /// \param scissor the scissor area to set.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetGPUScissor(renderPass: *mut SDL_GPURenderPass, scissor: *const SDL_Rect);
+    pub fn SDL_SetGPUScissor(render_pass: *mut SDL_GPURenderPass, scissor: *const SDL_Rect);
+}}
+
+extern_sdlcall! {{
+    /// Sets the current blend constants on a command buffer.
+    ///
+    /// \param render_pass a render pass handle.
+    /// \param blend_constants the blend constant color.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_GPU_BLENDFACTOR_CONSTANT_COLOR
+    /// \sa SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR
+    pub fn SDL_SetGPUBlendConstants(render_pass: *mut SDL_GPURenderPass, blend_constants: SDL_FColor);
+}}
+
+extern_sdlcall! {{
+    /// Sets the current stencil reference value on a command buffer.
+    ///
+    /// \param render_pass a render pass handle.
+    /// \param reference the stencil reference value to set.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    pub fn SDL_SetGPUStencilReference(render_pass: *mut SDL_GPURenderPass, reference: Uint8);
 }}
 
 extern_sdlcall! {{
     /// Binds vertex buffers on a command buffer for use with subsequent draw
     /// calls.
     ///
-    /// \param renderPass a render pass handle.
-    /// \param firstBinding the starting bind point for the vertex buffers.
-    /// \param pBindings an array of SDL_GPUBufferBinding structs containing vertex
-    ///                  buffers and offset values.
-    /// \param bindingCount the number of bindings in the pBindings array.
+    /// \param render_pass a render pass handle.
+    /// \param first_binding the starting bind point for the vertex buffers.
+    /// \param bindings an array of SDL_GPUBufferBinding structs containing vertex
+    ///                 buffers and offset values.
+    /// \param num_bindings the number of bindings in the bindings array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUVertexBuffers(renderPass: *mut SDL_GPURenderPass, firstBinding: Uint32, pBindings: *const SDL_GPUBufferBinding, bindingCount: Uint32);
+    pub fn SDL_BindGPUVertexBuffers(render_pass: *mut SDL_GPURenderPass, first_binding: Uint32, bindings: *const SDL_GPUBufferBinding, num_bindings: Uint32);
 }}
 
 extern_sdlcall! {{
     /// Binds an index buffer on a command buffer for use with subsequent draw
     /// calls.
     ///
-    /// \param renderPass a render pass handle.
-    /// \param pBinding a pointer to a struct containing an index buffer and
-    ///                 offset.
-    /// \param indexElementSize whether the index values in the buffer are 16- or
-    ///                         32-bit.
+    /// \param render_pass a render pass handle.
+    /// \param binding a pointer to a struct containing an index buffer and offset.
+    /// \param index_element_size whether the index values in the buffer are 16- or
+    ///                           32-bit.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUIndexBuffer(renderPass: *mut SDL_GPURenderPass, pBinding: *const SDL_GPUBufferBinding, indexElementSize: SDL_GPUIndexElementSize);
+    pub fn SDL_BindGPUIndexBuffer(render_pass: *mut SDL_GPURenderPass, binding: *const SDL_GPUBufferBinding, index_element_size: SDL_GPUIndexElementSize);
 }}
 
 extern_sdlcall! {{
@@ -2164,14 +2181,15 @@ extern_sdlcall! {{
     ///
     /// The textures must have been created with SDL_GPU_TEXTUREUSAGE_SAMPLER.
     ///
-    /// \param renderPass a render pass handle.
-    /// \param firstSlot the vertex sampler slot to begin binding from.
-    /// \param textureSamplerBindings an array of texture-sampler binding structs.
-    /// \param bindingCount the number of texture-sampler pairs to bind from the
+    /// \param render_pass a render pass handle.
+    /// \param first_slot the vertex sampler slot to begin binding from.
+    /// \param texture_sampler_bindings an array of texture-sampler binding
+    ///                                 structs.
+    /// \param num_bindings the number of texture-sampler pairs to bind from the
     ///                     array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUVertexSamplers(renderPass: *mut SDL_GPURenderPass, firstSlot: Uint32, textureSamplerBindings: *const SDL_GPUTextureSamplerBinding, bindingCount: Uint32);
+    pub fn SDL_BindGPUVertexSamplers(render_pass: *mut SDL_GPURenderPass, first_slot: Uint32, texture_sampler_bindings: *const SDL_GPUTextureSamplerBinding, num_bindings: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2180,13 +2198,13 @@ extern_sdlcall! {{
     /// These textures must have been created with
     /// SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ.
     ///
-    /// \param renderPass a render pass handle.
-    /// \param firstSlot the vertex storage texture slot to begin binding from.
-    /// \param storageTextures an array of storage textures.
-    /// \param bindingCount the number of storage texture to bind from the array.
+    /// \param render_pass a render pass handle.
+    /// \param first_slot the vertex storage texture slot to begin binding from.
+    /// \param storage_textures an array of storage textures.
+    /// \param num_bindings the number of storage texture to bind from the array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUVertexStorageTextures(renderPass: *mut SDL_GPURenderPass, firstSlot: Uint32, storageTextures: *const *mut SDL_GPUTexture, bindingCount: Uint32);
+    pub fn SDL_BindGPUVertexStorageTextures(render_pass: *mut SDL_GPURenderPass, first_slot: Uint32, storage_textures: *const *mut SDL_GPUTexture, num_bindings: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2195,13 +2213,13 @@ extern_sdlcall! {{
     /// These buffers must have been created with
     /// SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ.
     ///
-    /// \param renderPass a render pass handle.
-    /// \param firstSlot the vertex storage buffer slot to begin binding from.
-    /// \param storageBuffers an array of buffers.
-    /// \param bindingCount the number of buffers to bind from the array.
+    /// \param render_pass a render pass handle.
+    /// \param first_slot the vertex storage buffer slot to begin binding from.
+    /// \param storage_buffers an array of buffers.
+    /// \param num_bindings the number of buffers to bind from the array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUVertexStorageBuffers(renderPass: *mut SDL_GPURenderPass, firstSlot: Uint32, storageBuffers: *const *mut SDL_GPUBuffer, bindingCount: Uint32);
+    pub fn SDL_BindGPUVertexStorageBuffers(render_pass: *mut SDL_GPURenderPass, first_slot: Uint32, storage_buffers: *const *mut SDL_GPUBuffer, num_bindings: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2209,14 +2227,15 @@ extern_sdlcall! {{
     ///
     /// The textures must have been created with SDL_GPU_TEXTUREUSAGE_SAMPLER.
     ///
-    /// \param renderPass a render pass handle.
-    /// \param firstSlot the fragment sampler slot to begin binding from.
-    /// \param textureSamplerBindings an array of texture-sampler binding structs.
-    /// \param bindingCount the number of texture-sampler pairs to bind from the
+    /// \param render_pass a render pass handle.
+    /// \param first_slot the fragment sampler slot to begin binding from.
+    /// \param texture_sampler_bindings an array of texture-sampler binding
+    ///                                 structs.
+    /// \param num_bindings the number of texture-sampler pairs to bind from the
     ///                     array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUFragmentSamplers(renderPass: *mut SDL_GPURenderPass, firstSlot: Uint32, textureSamplerBindings: *const SDL_GPUTextureSamplerBinding, bindingCount: Uint32);
+    pub fn SDL_BindGPUFragmentSamplers(render_pass: *mut SDL_GPURenderPass, first_slot: Uint32, texture_sampler_bindings: *const SDL_GPUTextureSamplerBinding, num_bindings: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2225,13 +2244,13 @@ extern_sdlcall! {{
     /// These textures must have been created with
     /// SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ.
     ///
-    /// \param renderPass a render pass handle.
-    /// \param firstSlot the fragment storage texture slot to begin binding from.
-    /// \param storageTextures an array of storage textures.
-    /// \param bindingCount the number of storage textures to bind from the array.
+    /// \param render_pass a render pass handle.
+    /// \param first_slot the fragment storage texture slot to begin binding from.
+    /// \param storage_textures an array of storage textures.
+    /// \param num_bindings the number of storage textures to bind from the array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUFragmentStorageTextures(renderPass: *mut SDL_GPURenderPass, firstSlot: Uint32, storageTextures: *const *mut SDL_GPUTexture, bindingCount: Uint32);
+    pub fn SDL_BindGPUFragmentStorageTextures(render_pass: *mut SDL_GPURenderPass, first_slot: Uint32, storage_textures: *const *mut SDL_GPUTexture, num_bindings: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2240,13 +2259,13 @@ extern_sdlcall! {{
     /// These buffers must have been created with
     /// SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ.
     ///
-    /// \param renderPass a render pass handle.
-    /// \param firstSlot the fragment storage buffer slot to begin binding from.
-    /// \param storageBuffers an array of storage buffers.
-    /// \param bindingCount the number of storage buffers to bind from the array.
+    /// \param render_pass a render pass handle.
+    /// \param first_slot the fragment storage buffer slot to begin binding from.
+    /// \param storage_buffers an array of storage buffers.
+    /// \param num_bindings the number of storage buffers to bind from the array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUFragmentStorageBuffers(renderPass: *mut SDL_GPURenderPass, firstSlot: Uint32, storageBuffers: *const *mut SDL_GPUBuffer, bindingCount: Uint32);
+    pub fn SDL_BindGPUFragmentStorageBuffers(render_pass: *mut SDL_GPURenderPass, first_slot: Uint32, storage_buffers: *const *mut SDL_GPUBuffer, num_bindings: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2255,21 +2274,21 @@ extern_sdlcall! {{
     ///
     /// You must not call this function before binding a graphics pipeline.
     ///
-    /// Note that the `firstVertex` and `firstInstance` parameters are NOT
+    /// Note that the `first_vertex` and `first_instance` parameters are NOT
     /// compatible with built-in vertex/instance ID variables in shaders (for
     /// example, SV_VertexID). If your shader depends on these variables, the
     /// correlating draw call parameter MUST be 0.
     ///
-    /// \param renderPass a render pass handle.
-    /// \param indexCount the number of vertices to draw per instance.
-    /// \param instanceCount the number of instances to draw.
-    /// \param firstIndex the starting index within the index buffer.
-    /// \param vertexOffset value added to vertex index before indexing into the
-    ///                     vertex buffer.
-    /// \param firstInstance the ID of the first instance to draw.
+    /// \param render_pass a render pass handle.
+    /// \param num_indices the number of vertices to draw per instance.
+    /// \param num_instances the number of instances to draw.
+    /// \param first_index the starting index within the index buffer.
+    /// \param vertex_offset value added to vertex index before indexing into the
+    ///                      vertex buffer.
+    /// \param first_instance the ID of the first instance to draw.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DrawGPUIndexedPrimitives(renderPass: *mut SDL_GPURenderPass, indexCount: Uint32, instanceCount: Uint32, firstIndex: Uint32, vertexOffset: Sint32, firstInstance: Uint32);
+    pub fn SDL_DrawGPUIndexedPrimitives(render_pass: *mut SDL_GPURenderPass, num_indices: Uint32, num_instances: Uint32, first_index: Uint32, vertex_offset: Sint32, first_instance: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2277,19 +2296,19 @@ extern_sdlcall! {{
     ///
     /// You must not call this function before binding a graphics pipeline.
     ///
-    /// Note that the `firstVertex` and `firstInstance` parameters are NOT
+    /// Note that the `first_vertex` and `first_instance` parameters are NOT
     /// compatible with built-in vertex/instance ID variables in shaders (for
     /// example, SV_VertexID). If your shader depends on these variables, the
     /// correlating draw call parameter MUST be 0.
     ///
-    /// \param renderPass a render pass handle.
-    /// \param vertexCount the number of vertices to draw.
-    /// \param instanceCount the number of instances that will be drawn.
-    /// \param firstVertex the index of the first vertex to draw.
-    /// \param firstInstance the ID of the first instance to draw.
+    /// \param render_pass a render pass handle.
+    /// \param num_vertices the number of vertices to draw.
+    /// \param num_instances the number of instances that will be drawn.
+    /// \param first_vertex the index of the first vertex to draw.
+    /// \param first_instance the ID of the first instance to draw.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DrawGPUPrimitives(renderPass: *mut SDL_GPURenderPass, vertexCount: Uint32, instanceCount: Uint32, firstVertex: Uint32, firstInstance: Uint32);
+    pub fn SDL_DrawGPUPrimitives(render_pass: *mut SDL_GPURenderPass, num_vertices: Uint32, num_instances: Uint32, first_vertex: Uint32, first_instance: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2299,15 +2318,15 @@ extern_sdlcall! {{
     /// The buffer layout should match the layout of SDL_GPUIndirectDrawCommand.
     /// You must not call this function before binding a graphics pipeline.
     ///
-    /// \param renderPass a render pass handle.
+    /// \param render_pass a render pass handle.
     /// \param buffer a buffer containing draw parameters.
-    /// \param offsetInBytes the offset to start reading from the draw buffer.
-    /// \param drawCount the number of draw parameter sets that should be read from
-    ///                  the draw buffer.
-    /// \param stride the byte stride between sets of draw parameters.
+    /// \param offset the offset to start reading from the draw buffer.
+    /// \param draw_count the number of draw parameter sets that should be read
+    ///                   from the draw buffer.
+    /// \param pitch the byte pitch between sets of draw parameters.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DrawGPUPrimitivesIndirect(renderPass: *mut SDL_GPURenderPass, buffer: *mut SDL_GPUBuffer, offsetInBytes: Uint32, drawCount: Uint32, stride: Uint32);
+    pub fn SDL_DrawGPUPrimitivesIndirect(render_pass: *mut SDL_GPURenderPass, buffer: *mut SDL_GPUBuffer, offset: Uint32, draw_count: Uint32, pitch: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2318,15 +2337,15 @@ extern_sdlcall! {{
     /// SDL_GPUIndexedIndirectDrawCommand. You must not call this function before
     /// binding a graphics pipeline.
     ///
-    /// \param renderPass a render pass handle.
+    /// \param render_pass a render pass handle.
     /// \param buffer a buffer containing draw parameters.
-    /// \param offsetInBytes the offset to start reading from the draw buffer.
-    /// \param drawCount the number of draw parameter sets that should be read from
-    ///                  the draw buffer.
-    /// \param stride the byte stride between sets of draw parameters.
+    /// \param offset the offset to start reading from the draw buffer.
+    /// \param draw_count the number of draw parameter sets that should be read
+    ///                   from the draw buffer.
+    /// \param pitch the byte pitch between sets of draw parameters.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DrawGPUIndexedPrimitivesIndirect(renderPass: *mut SDL_GPURenderPass, buffer: *mut SDL_GPUBuffer, offsetInBytes: Uint32, drawCount: Uint32, stride: Uint32);
+    pub fn SDL_DrawGPUIndexedPrimitivesIndirect(render_pass: *mut SDL_GPURenderPass, buffer: *mut SDL_GPUBuffer, offset: Uint32, draw_count: Uint32, pitch: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2335,10 +2354,10 @@ extern_sdlcall! {{
     /// All bound graphics state on the render pass command buffer is unset. The
     /// render pass handle is now invalid.
     ///
-    /// \param renderPass a render pass handle.
+    /// \param render_pass a render pass handle.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_EndGPURenderPass(renderPass: *mut SDL_GPURenderPass);
+    pub fn SDL_EndGPURenderPass(render_pass: *mut SDL_GPURenderPass);
 }}
 
 extern_sdlcall! {{
@@ -2357,31 +2376,31 @@ extern_sdlcall! {{
     /// dispatch, you MUST end the current compute pass and begin a new one before
     /// you can safely access the data.
     ///
-    /// \param commandBuffer a command buffer.
-    /// \param storageTextureBindings an array of writeable storage texture binding
-    ///                               structs.
-    /// \param storageTextureBindingCount the number of storage textures to bind
-    ///                                   from the array.
-    /// \param storageBufferBindings an array of writeable storage buffer binding
-    ///                              structs.
-    /// \param storageBufferBindingCount the number of storage buffers to bind from
-    ///                                  the array.
+    /// \param command_buffer a command buffer.
+    /// \param storage_texture_bindings an array of writeable storage texture
+    ///                                 binding structs.
+    /// \param num_storage_texture_bindings the number of storage textures to bind
+    ///                                     from the array.
+    /// \param storage_buffer_bindings an array of writeable storage buffer binding
+    ///                                structs.
+    /// \param num_storage_buffer_bindings the number of storage buffers to bind
+    ///                                    from the array.
     /// \returns a compute pass handle.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_EndGPUComputePass
-    pub fn SDL_BeginGPUComputePass(commandBuffer: *mut SDL_GPUCommandBuffer, storageTextureBindings: *const SDL_GPUStorageTextureWriteOnlyBinding, storageTextureBindingCount: Uint32, storageBufferBindings: *const SDL_GPUStorageBufferWriteOnlyBinding, storageBufferBindingCount: Uint32) -> *mut SDL_GPUComputePass;
+    pub fn SDL_BeginGPUComputePass(command_buffer: *mut SDL_GPUCommandBuffer, storage_texture_bindings: *const SDL_GPUStorageTextureWriteOnlyBinding, num_storage_texture_bindings: Uint32, storage_buffer_bindings: *const SDL_GPUStorageBufferWriteOnlyBinding, num_storage_buffer_bindings: Uint32) -> *mut SDL_GPUComputePass;
 }}
 
 extern_sdlcall! {{
     /// Binds a compute pipeline on a command buffer for use in compute dispatch.
     ///
-    /// \param computePass a compute pass handle.
-    /// \param computePipeline a compute pipeline to bind.
+    /// \param compute_pass a compute pass handle.
+    /// \param compute_pipeline a compute pipeline to bind.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUComputePipeline(computePass: *mut SDL_GPUComputePass, computePipeline: *mut SDL_GPUComputePipeline);
+    pub fn SDL_BindGPUComputePipeline(compute_pass: *mut SDL_GPUComputePass, compute_pipeline: *mut SDL_GPUComputePipeline);
 }}
 
 extern_sdlcall! {{
@@ -2390,13 +2409,13 @@ extern_sdlcall! {{
     /// These textures must have been created with
     /// SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ.
     ///
-    /// \param computePass a compute pass handle.
-    /// \param firstSlot the compute storage texture slot to begin binding from.
-    /// \param storageTextures an array of storage textures.
-    /// \param bindingCount the number of storage textures to bind from the array.
+    /// \param compute_pass a compute pass handle.
+    /// \param first_slot the compute storage texture slot to begin binding from.
+    /// \param storage_textures an array of storage textures.
+    /// \param num_bindings the number of storage textures to bind from the array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUComputeStorageTextures(computePass: *mut SDL_GPUComputePass, firstSlot: Uint32, storageTextures: *const *mut SDL_GPUTexture, bindingCount: Uint32);
+    pub fn SDL_BindGPUComputeStorageTextures(compute_pass: *mut SDL_GPUComputePass, first_slot: Uint32, storage_textures: *const *mut SDL_GPUTexture, num_bindings: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2405,13 +2424,13 @@ extern_sdlcall! {{
     /// These buffers must have been created with
     /// SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ.
     ///
-    /// \param computePass a compute pass handle.
-    /// \param firstSlot the compute storage buffer slot to begin binding from.
-    /// \param storageBuffers an array of storage buffer binding structs.
-    /// \param bindingCount the number of storage buffers to bind from the array.
+    /// \param compute_pass a compute pass handle.
+    /// \param first_slot the compute storage buffer slot to begin binding from.
+    /// \param storage_buffers an array of storage buffer binding structs.
+    /// \param num_bindings the number of storage buffers to bind from the array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUComputeStorageBuffers(computePass: *mut SDL_GPUComputePass, firstSlot: Uint32, storageBuffers: *const *mut SDL_GPUBuffer, bindingCount: Uint32);
+    pub fn SDL_BindGPUComputeStorageBuffers(compute_pass: *mut SDL_GPUComputePass, first_slot: Uint32, storage_buffers: *const *mut SDL_GPUBuffer, num_bindings: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2424,16 +2443,16 @@ extern_sdlcall! {{
     /// guarantee of which order the writes will occur. If the write order matters,
     /// you MUST end the compute pass and begin another one.
     ///
-    /// \param computePass a compute pass handle.
-    /// \param groupCountX number of local workgroups to dispatch in the X
-    ///                    dimension.
-    /// \param groupCountY number of local workgroups to dispatch in the Y
-    ///                    dimension.
-    /// \param groupCountZ number of local workgroups to dispatch in the Z
-    ///                    dimension.
+    /// \param compute_pass a compute pass handle.
+    /// \param groupcount_x number of local workgroups to dispatch in the X
+    ///                     dimension.
+    /// \param groupcount_y number of local workgroups to dispatch in the Y
+    ///                     dimension.
+    /// \param groupcount_z number of local workgroups to dispatch in the Z
+    ///                     dimension.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DispatchGPUCompute(computePass: *mut SDL_GPUComputePass, groupCountX: Uint32, groupCountY: Uint32, groupCountZ: Uint32);
+    pub fn SDL_DispatchGPUCompute(compute_pass: *mut SDL_GPUComputePass, groupcount_x: Uint32, groupcount_y: Uint32, groupcount_z: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2448,12 +2467,12 @@ extern_sdlcall! {{
     /// guarantee of which order the writes will occur. If the write order matters,
     /// you MUST end the compute pass and begin another one.
     ///
-    /// \param computePass a compute pass handle.
+    /// \param compute_pass a compute pass handle.
     /// \param buffer a buffer containing dispatch parameters.
-    /// \param offsetInBytes the offset to start reading from the dispatch buffer.
+    /// \param offset the offset to start reading from the dispatch buffer.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DispatchGPUComputeIndirect(computePass: *mut SDL_GPUComputePass, buffer: *mut SDL_GPUBuffer, offsetInBytes: Uint32);
+    pub fn SDL_DispatchGPUComputeIndirect(compute_pass: *mut SDL_GPUComputePass, buffer: *mut SDL_GPUBuffer, offset: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2462,10 +2481,10 @@ extern_sdlcall! {{
     /// All bound compute state on the command buffer is unset. The compute pass
     /// handle is now invalid.
     ///
-    /// \param computePass a compute pass handle.
+    /// \param compute_pass a compute pass handle.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_EndGPUComputePass(computePass: *mut SDL_GPUComputePass);
+    pub fn SDL_EndGPUComputePass(compute_pass: *mut SDL_GPUComputePass);
 }}
 
 extern_sdlcall! {{
@@ -2474,22 +2493,22 @@ extern_sdlcall! {{
     /// You must unmap the transfer buffer before encoding upload commands.
     ///
     /// \param device a GPU context.
-    /// \param transferBuffer a transfer buffer.
+    /// \param transfer_buffer a transfer buffer.
     /// \param cycle if SDL_TRUE, cycles the transfer buffer if it is bound.
     /// \returns the address of the mapped transfer buffer memory.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_MapGPUTransferBuffer(device: *mut SDL_GPUDevice, transferBuffer: *mut SDL_GPUTransferBuffer, cycle: SDL_bool) -> *mut ::core::ffi::c_void;
+    pub fn SDL_MapGPUTransferBuffer(device: *mut SDL_GPUDevice, transfer_buffer: *mut SDL_GPUTransferBuffer, cycle: SDL_bool) -> *mut ::core::ffi::c_void;
 }}
 
 extern_sdlcall! {{
     /// Unmaps a previously mapped transfer buffer.
     ///
     /// \param device a GPU context.
-    /// \param transferBuffer a previously mapped transfer buffer.
+    /// \param transfer_buffer a previously mapped transfer buffer.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_UnmapGPUTransferBuffer(device: *mut SDL_GPUDevice, transferBuffer: *mut SDL_GPUTransferBuffer);
+    pub fn SDL_UnmapGPUTransferBuffer(device: *mut SDL_GPUDevice, transfer_buffer: *mut SDL_GPUTransferBuffer);
 }}
 
 extern_sdlcall! {{
@@ -2499,11 +2518,11 @@ extern_sdlcall! {{
     /// inside a copy pass. You must not begin another copy pass, or a render pass
     /// or compute pass before ending the copy pass.
     ///
-    /// \param commandBuffer a command buffer.
+    /// \param command_buffer a command buffer.
     /// \returns a copy pass handle.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BeginGPUCopyPass(commandBuffer: *mut SDL_GPUCommandBuffer) -> *mut SDL_GPUCopyPass;
+    pub fn SDL_BeginGPUCopyPass(command_buffer: *mut SDL_GPUCommandBuffer) -> *mut SDL_GPUCopyPass;
 }}
 
 extern_sdlcall! {{
@@ -2515,14 +2534,14 @@ extern_sdlcall! {{
     /// You must align the data in the transfer buffer to a multiple of the texel
     /// size of the texture format.
     ///
-    /// \param copyPass a copy pass handle.
+    /// \param copy_pass a copy pass handle.
     /// \param source the source transfer buffer with image layout information.
     /// \param destination the destination texture region.
     /// \param cycle if SDL_TRUE, cycles the texture if the texture is bound,
     ///              otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_UploadToGPUTexture(copyPass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTextureTransferInfo, destination: *const SDL_GPUTextureRegion, cycle: SDL_bool);
+    pub fn SDL_UploadToGPUTexture(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTextureTransferInfo, destination: *const SDL_GPUTextureRegion, cycle: SDL_bool);
 }}
 
 extern_sdlcall! {{
@@ -2531,14 +2550,14 @@ extern_sdlcall! {{
     /// The upload occurs on the GPU timeline. You may assume that the upload has
     /// finished in subsequent commands.
     ///
-    /// \param copyPass a copy pass handle.
+    /// \param copy_pass a copy pass handle.
     /// \param source the source transfer buffer with offset.
     /// \param destination the destination buffer with offset and size.
     /// \param cycle if SDL_TRUE, cycles the buffer if it is bound, otherwise
     ///              overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_UploadToGPUBuffer(copyPass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTransferBufferLocation, destination: *const SDL_GPUBufferRegion, cycle: SDL_bool);
+    pub fn SDL_UploadToGPUBuffer(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTransferBufferLocation, destination: *const SDL_GPUBufferRegion, cycle: SDL_bool);
 }}
 
 extern_sdlcall! {{
@@ -2547,7 +2566,7 @@ extern_sdlcall! {{
     /// This copy occurs on the GPU timeline. You may assume the copy has finished
     /// in subsequent commands.
     ///
-    /// \param copyPass a copy pass handle.
+    /// \param copy_pass a copy pass handle.
     /// \param source a source texture region.
     /// \param destination a destination texture region.
     /// \param w the width of the region to copy.
@@ -2557,7 +2576,7 @@ extern_sdlcall! {{
     ///              texture is bound, otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_CopyGPUTextureToTexture(copyPass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTextureLocation, destination: *const SDL_GPUTextureLocation, w: Uint32, h: Uint32, d: Uint32, cycle: SDL_bool);
+    pub fn SDL_CopyGPUTextureToTexture(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTextureLocation, destination: *const SDL_GPUTextureLocation, w: Uint32, h: Uint32, d: Uint32, cycle: SDL_bool);
 }}
 
 extern_sdlcall! {{
@@ -2566,7 +2585,7 @@ extern_sdlcall! {{
     /// This copy occurs on the GPU timeline. You may assume the copy has finished
     /// in subsequent commands.
     ///
-    /// \param copyPass a copy pass handle.
+    /// \param copy_pass a copy pass handle.
     /// \param source the buffer and offset to copy from.
     /// \param destination the buffer and offset to copy to.
     /// \param size the length of the buffer to copy.
@@ -2574,7 +2593,7 @@ extern_sdlcall! {{
     ///              otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_CopyGPUBufferToBuffer(copyPass: *mut SDL_GPUCopyPass, source: *const SDL_GPUBufferLocation, destination: *const SDL_GPUBufferLocation, size: Uint32, cycle: SDL_bool);
+    pub fn SDL_CopyGPUBufferToBuffer(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUBufferLocation, destination: *const SDL_GPUBufferLocation, size: Uint32, cycle: SDL_bool);
 }}
 
 extern_sdlcall! {{
@@ -2583,13 +2602,13 @@ extern_sdlcall! {{
     /// This data is not guaranteed to be copied until the command buffer fence is
     /// signaled.
     ///
-    /// \param copyPass a copy pass handle.
+    /// \param copy_pass a copy pass handle.
     /// \param source the source texture region.
     /// \param destination the destination transfer buffer with image layout
     ///                    information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DownloadFromGPUTexture(copyPass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTextureRegion, destination: *const SDL_GPUTextureTransferInfo);
+    pub fn SDL_DownloadFromGPUTexture(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTextureRegion, destination: *const SDL_GPUTextureTransferInfo);
 }}
 
 extern_sdlcall! {{
@@ -2598,21 +2617,21 @@ extern_sdlcall! {{
     /// This data is not guaranteed to be copied until the command buffer fence is
     /// signaled.
     ///
-    /// \param copyPass a copy pass handle.
+    /// \param copy_pass a copy pass handle.
     /// \param source the source buffer with offset and size.
     /// \param destination the destination transfer buffer with offset.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DownloadFromGPUBuffer(copyPass: *mut SDL_GPUCopyPass, source: *const SDL_GPUBufferRegion, destination: *const SDL_GPUTransferBufferLocation);
+    pub fn SDL_DownloadFromGPUBuffer(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUBufferRegion, destination: *const SDL_GPUTransferBufferLocation);
 }}
 
 extern_sdlcall! {{
     /// Ends the current copy pass.
     ///
-    /// \param copyPass a copy pass handle.
+    /// \param copy_pass a copy pass handle.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_EndGPUCopyPass(copyPass: *mut SDL_GPUCopyPass);
+    pub fn SDL_EndGPUCopyPass(copy_pass: *mut SDL_GPUCopyPass);
 }}
 
 extern_sdlcall! {{
@@ -2620,11 +2639,11 @@ extern_sdlcall! {{
     ///
     /// This function must not be called inside of any pass.
     ///
-    /// \param commandBuffer a commandBuffer.
+    /// \param command_buffer a command_buffer.
     /// \param texture a texture with more than 1 mip level.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GenerateMipmapsForGPUTexture(commandBuffer: *mut SDL_GPUCommandBuffer, texture: *mut SDL_GPUTexture);
+    pub fn SDL_GenerateMipmapsForGPUTexture(command_buffer: *mut SDL_GPUCommandBuffer, texture: *mut SDL_GPUTexture);
 }}
 
 extern_sdlcall! {{
@@ -2632,16 +2651,16 @@ extern_sdlcall! {{
     ///
     /// This function must not be called inside of any pass.
     ///
-    /// \param commandBuffer a command buffer.
+    /// \param command_buffer a command buffer.
     /// \param source the texture region to copy from.
     /// \param destination the texture region to copy to.
-    /// \param flipMode the flip mode for the source texture region.
-    /// \param filterMode the filter mode that will be used when blitting.
+    /// \param flip_mode the flip mode for the source texture region.
+    /// \param filter the filter mode that will be used when blitting.
     /// \param cycle if SDL_TRUE, cycles the destination texture if the destination
     ///              texture is bound, otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BlitGPUTexture(commandBuffer: *mut SDL_GPUCommandBuffer, source: *const SDL_GPUBlitRegion, destination: *const SDL_GPUBlitRegion, flipMode: SDL_FlipMode, filterMode: SDL_GPUFilter, cycle: SDL_bool);
+    pub fn SDL_BlitGPUTexture(command_buffer: *mut SDL_GPUCommandBuffer, source: *const SDL_GPUBlitRegion, destination: *const SDL_GPUBlitRegion, flip_mode: SDL_FlipMode, filter: SDL_GPUFilter, cycle: SDL_bool);
 }}
 
 extern_sdlcall! {{
@@ -2651,13 +2670,13 @@ extern_sdlcall! {{
     ///
     /// \param device a GPU context.
     /// \param window an SDL_Window.
-    /// \param swapchainComposition the swapchain composition to check.
+    /// \param swapchain_composition the swapchain composition to check.
     /// \returns SDL_TRUE if supported, SDL_FALSE if unsupported (or on error).
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ClaimWindowForGPUDevice
-    pub fn SDL_WindowSupportsGPUSwapchainComposition(device: *mut SDL_GPUDevice, window: *mut SDL_Window, swapchainComposition: SDL_GPUSwapchainComposition) -> SDL_bool;
+    pub fn SDL_WindowSupportsGPUSwapchainComposition(device: *mut SDL_GPUDevice, window: *mut SDL_Window, swapchain_composition: SDL_GPUSwapchainComposition) -> SDL_bool;
 }}
 
 extern_sdlcall! {{
@@ -2667,13 +2686,13 @@ extern_sdlcall! {{
     ///
     /// \param device a GPU context.
     /// \param window an SDL_Window.
-    /// \param presentMode the presentation mode to check.
+    /// \param present_mode the presentation mode to check.
     /// \returns SDL_TRUE if supported, SDL_FALSE if unsupported (or on error).
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ClaimWindowForGPUDevice
-    pub fn SDL_WindowSupportsGPUPresentMode(device: *mut SDL_GPUDevice, window: *mut SDL_Window, presentMode: SDL_GPUPresentMode) -> SDL_bool;
+    pub fn SDL_WindowSupportsGPUPresentMode(device: *mut SDL_GPUDevice, window: *mut SDL_Window, present_mode: SDL_GPUPresentMode) -> SDL_bool;
 }}
 
 extern_sdlcall! {{
@@ -2725,15 +2744,15 @@ extern_sdlcall! {{
     ///
     /// \param device a GPU context.
     /// \param window an SDL_Window that has been claimed.
-    /// \param swapchainComposition the desired composition of the swapchain.
-    /// \param presentMode the desired present mode for the swapchain.
+    /// \param swapchain_composition the desired composition of the swapchain.
+    /// \param present_mode the desired present mode for the swapchain.
     /// \returns SDL_TRUE if successful, SDL_FALSE on error.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_WindowSupportsGPUPresentMode
     /// \sa SDL_WindowSupportsGPUSwapchainComposition
-    pub fn SDL_SetGPUSwapchainParameters(device: *mut SDL_GPUDevice, window: *mut SDL_Window, swapchainComposition: SDL_GPUSwapchainComposition, presentMode: SDL_GPUPresentMode) -> SDL_bool;
+    pub fn SDL_SetGPUSwapchainParameters(device: *mut SDL_GPUDevice, window: *mut SDL_Window, swapchain_composition: SDL_GPUSwapchainComposition, present_mode: SDL_GPUPresentMode) -> SDL_bool;
 }}
 
 extern_sdlcall! {{
@@ -2758,10 +2777,10 @@ extern_sdlcall! {{
     /// and must not be freed by the user. You MUST NOT call this function from any
     /// thread other than the one that created the window.
     ///
-    /// \param commandBuffer a command buffer.
+    /// \param command_buffer a command buffer.
     /// \param window a window that has been claimed.
-    /// \param pWidth a pointer filled in with the swapchain width.
-    /// \param pHeight a pointer filled in with the swapchain height.
+    /// \param w a pointer filled in with the swapchain width.
+    /// \param h a pointer filled in with the swapchain height.
     /// \returns a swapchain texture.
     ///
     /// \since This function is available since SDL 3.0.0.
@@ -2769,7 +2788,7 @@ extern_sdlcall! {{
     /// \sa SDL_ClaimWindowForGPUDevice
     /// \sa SDL_SubmitGPUCommandBuffer
     /// \sa SDL_SubmitGPUCommandBufferAndAcquireFence
-    pub fn SDL_AcquireGPUSwapchainTexture(commandBuffer: *mut SDL_GPUCommandBuffer, window: *mut SDL_Window, pWidth: *mut Uint32, pHeight: *mut Uint32) -> *mut SDL_GPUTexture;
+    pub fn SDL_AcquireGPUSwapchainTexture(command_buffer: *mut SDL_GPUCommandBuffer, window: *mut SDL_Window, w: *mut Uint32, h: *mut Uint32) -> *mut SDL_GPUTexture;
 }}
 
 extern_sdlcall! {{
@@ -2782,14 +2801,14 @@ extern_sdlcall! {{
     /// All commands in the submission are guaranteed to begin executing before any
     /// command in a subsequent submission begins executing.
     ///
-    /// \param commandBuffer a command buffer.
+    /// \param command_buffer a command buffer.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_AcquireGPUCommandBuffer
     /// \sa SDL_AcquireGPUSwapchainTexture
     /// \sa SDL_SubmitGPUCommandBufferAndAcquireFence
-    pub fn SDL_SubmitGPUCommandBuffer(commandBuffer: *mut SDL_GPUCommandBuffer);
+    pub fn SDL_SubmitGPUCommandBuffer(command_buffer: *mut SDL_GPUCommandBuffer);
 }}
 
 extern_sdlcall! {{
@@ -2804,7 +2823,7 @@ extern_sdlcall! {{
     /// All commands in the submission are guaranteed to begin executing before any
     /// command in a subsequent submission begins executing.
     ///
-    /// \param commandBuffer a command buffer.
+    /// \param command_buffer a command buffer.
     /// \returns a fence associated with the command buffer.
     ///
     /// \since This function is available since SDL 3.0.0.
@@ -2813,7 +2832,7 @@ extern_sdlcall! {{
     /// \sa SDL_AcquireGPUSwapchainTexture
     /// \sa SDL_SubmitGPUCommandBuffer
     /// \sa SDL_ReleaseGPUFence
-    pub fn SDL_SubmitGPUCommandBufferAndAcquireFence(commandBuffer: *mut SDL_GPUCommandBuffer) -> *mut SDL_GPUFence;
+    pub fn SDL_SubmitGPUCommandBufferAndAcquireFence(command_buffer: *mut SDL_GPUCommandBuffer) -> *mut SDL_GPUFence;
 }}
 
 extern_sdlcall! {{
@@ -2831,16 +2850,16 @@ extern_sdlcall! {{
     /// Blocks the thread until the given fences are signaled.
     ///
     /// \param device a GPU context.
-    /// \param waitAll if 0, wait for any fence to be signaled, if 1, wait for all
-    ///                fences to be signaled.
-    /// \param pFences an array of fences to wait on.
-    /// \param fenceCount the number of fences in the pFences array.
+    /// \param wait_all if 0, wait for any fence to be signaled, if 1, wait for all
+    ///                 fences to be signaled.
+    /// \param fences an array of fences to wait on.
+    /// \param num_fences the number of fences in the fences array.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SubmitGPUCommandBufferAndAcquireFence
     /// \sa SDL_WaitForGPUIdle
-    pub fn SDL_WaitForGPUFences(device: *mut SDL_GPUDevice, waitAll: SDL_bool, pFences: *const *mut SDL_GPUFence, fenceCount: Uint32);
+    pub fn SDL_WaitForGPUFences(device: *mut SDL_GPUDevice, wait_all: SDL_bool, fences: *const *mut SDL_GPUFence, num_fences: Uint32);
 }}
 
 extern_sdlcall! {{
@@ -2871,13 +2890,13 @@ extern_sdlcall! {{
 extern_sdlcall! {{
     /// Obtains the texel block size for a texture format.
     ///
-    /// \param textureFormat the texture format you want to know the texel size of.
+    /// \param format the texture format you want to know the texel size of.
     /// \returns the texel block size of the texture format.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_UploadToGPUTexture
-    pub fn SDL_GPUTextureFormatTexelBlockSize(textureFormat: SDL_GPUTextureFormat) -> Uint32;
+    pub fn SDL_GPUTextureFormatTexelBlockSize(format: SDL_GPUTextureFormat) -> Uint32;
 }}
 
 extern_sdlcall! {{
@@ -2899,11 +2918,11 @@ extern_sdlcall! {{
     ///
     /// \param device a GPU context.
     /// \param format the texture format to check.
-    /// \param sampleCount the sample count to check.
+    /// \param sample_count the sample count to check.
     /// \returns a hardware-specific version of min(preferred, possible).
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GPUTextureSupportsSampleCount(device: *mut SDL_GPUDevice, format: SDL_GPUTextureFormat, sampleCount: SDL_GPUSampleCount) -> SDL_bool;
+    pub fn SDL_GPUTextureSupportsSampleCount(device: *mut SDL_GPUDevice, format: SDL_GPUTextureFormat, sample_count: SDL_GPUSampleCount) -> SDL_bool;
 }}
 
 #[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))]

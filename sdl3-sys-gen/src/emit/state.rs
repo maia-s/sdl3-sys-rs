@@ -234,8 +234,8 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_PLATFORM_LINUX" = CfgExpr(r#"target_os = "linux""#);
             "SDL_PLATFORM_VITA" = CfgExpr(always_false!("SDL_PLATFORM_VITA"));
             "SDL_PLATFORM_WIN32" = CfgExpr("windows");
+            "SDL_PLATFORM_WINDOWS" = CfgExpr("windows");
             "SDL_PLATFORM_WINGDK" = CfgExpr(always_false!("SDL_PLATFORM_WINGDK"));
-            "SDL_PLATFORM_WINRT" = CfgExpr(always_false!("SDL_PLATFORM_WINRT"));
             "SDL_WIKI_DOCUMENTATION_SECTION" = CfgExpr("doc");
         }
 

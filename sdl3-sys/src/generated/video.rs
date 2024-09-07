@@ -1390,11 +1390,6 @@ extern_sdlcall! {{
     /// - `SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER`: the EGLSurface associated with
     ///   the window
     ///
-    /// On UWP:
-    ///
-    /// - `SDL_PROP_WINDOW_WINRT_WINDOW_POINTER`: the IInspectable CoreWindow
-    ///   associated with the window
-    ///
     /// On Windows:
     ///
     /// - `SDL_PROP_WINDOW_WIN32_HWND_POINTER`: the HWND associated with the window
@@ -1479,8 +1474,6 @@ pub const SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER: &::core::ffi::CStr = unsafe {
 pub const SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.vivante.window\0") };
 
 pub const SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.vivante.surface\0") };
-
-pub const SDL_PROP_WINDOW_WINRT_WINDOW_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.winrt.window\0") };
 
 pub const SDL_PROP_WINDOW_WIN32_HWND_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.win32.hwnd\0") };
 

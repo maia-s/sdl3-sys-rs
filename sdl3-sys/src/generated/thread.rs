@@ -14,7 +14,7 @@ use super::atomic::*;
 
 use super::mutex::*;
 
-#[cfg(all(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows), not(any(/* always disabled: SDL_PLATFORM_WINRT */))))]
+#[cfg(windows)]
 emit! {
 }
 
@@ -188,7 +188,7 @@ emit! {
 
 #[cfg(not(doc))]
 emit! {
-    #[cfg(all(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows), not(any(/* always disabled: SDL_PLATFORM_WINRT */))))]
+    #[cfg(windows)]
     emit! {
     }
 

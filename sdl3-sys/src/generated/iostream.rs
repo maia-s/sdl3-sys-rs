@@ -85,11 +85,16 @@ pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
 /// already offers several common types of I/O streams, via functions like
 /// SDL_IOFromFile() and SDL_IOFromMem().
 ///
+/// This structure should be initialized using SDL_INIT_INTERFACE()
+///
 /// \since This struct is available since SDL 3.0.0.
+///
+/// \sa SDL_INIT_INTERFACE
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_IOStreamInterface {
+    pub version: Uint32,
     /// Return the number of bytes in this SDL_IOStream
     ///
     /// \return the total size of the data stream, or -1 on error.
@@ -125,6 +130,8 @@ pub struct SDL_IOStreamInterface {
     /// \return SDL_TRUE if successful or SDL_FALSE on write error when flushing data.
     pub close: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool)>,
 }
+
+const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_IOStreamInterface>() == 24) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_IOStreamInterface>() == 48)));
 
 extern_sdlcall! {{
     /// Use this function to create a new SDL_IOStream structure for reading from
@@ -314,20 +321,19 @@ extern_sdlcall! {{
     /// read/write a common data source, you should use the built-in
     /// implementations in SDL, like SDL_IOFromFile() or SDL_IOFromMem(), etc.
     ///
-    /// You must free the returned pointer with SDL_CloseIO().
-    ///
     /// This function makes a copy of `iface` and the caller does not need to keep
-    /// this data around after this call.
+    /// it around after this call.
     ///
-    /// \param iface the function pointers that implement this SDL_IOStream.
-    /// \param userdata the app-controlled pointer that is passed to iface's
-    ///                 functions when called.
+    /// \param iface the interface that implements this SDL_IOStream, initialized
+    ///              using SDL_INIT_INTERFACE().
+    /// \param userdata the pointer that will be passed to the interface functions.
     /// \returns a pointer to the allocated memory on success or NULL on failure;
     ///          call SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_CloseIO
+    /// \sa SDL_INIT_INTERFACE
     /// \sa SDL_IOFromConstMem
     /// \sa SDL_IOFromFile
     /// \sa SDL_IOFromMem

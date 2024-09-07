@@ -186,6 +186,12 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
                 rest = rest2.clone();
                 WsAndComments::try_parse(ctx, &mut rest2)?;
             }
+            let is_restrict =
+                Ident::try_parse_if(ctx, &mut rest2, |i| i.as_str() == "SDL_RESTRICT")?.is_some();
+            if is_restrict {
+                rest = rest2.clone();
+                WsAndComments::try_parse(ctx, &mut rest2)?;
+            }
             let span = input.start().join(&rest.start());
             ty = Type {
                 is_const,

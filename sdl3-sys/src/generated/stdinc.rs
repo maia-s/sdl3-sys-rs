@@ -133,13 +133,13 @@ pub const SDL_MIN_TIME: ::core::primitive::i64 = -9223372036854775808_i64;
 
 pub const SDL_FLT_EPSILON: ::core::ffi::c_float = ::core::primitive::f32::EPSILON;
 
-#[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
+#[cfg(windows)]
 emit! {
     pub const SDL_PRIs64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64d\0") };
 
 }
 
-#[cfg(not(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows)))]
+#[cfg(not(windows))]
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
@@ -155,13 +155,13 @@ emit! {
 
 }
 
-#[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
+#[cfg(windows)]
 emit! {
     pub const SDL_PRIu64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64u\0") };
 
 }
 
-#[cfg(not(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows)))]
+#[cfg(not(windows))]
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
@@ -177,13 +177,13 @@ emit! {
 
 }
 
-#[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
+#[cfg(windows)]
 emit! {
     pub const SDL_PRIx64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64x\0") };
 
 }
 
-#[cfg(not(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows)))]
+#[cfg(not(windows))]
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
@@ -199,13 +199,13 @@ emit! {
 
 }
 
-#[cfg(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows))]
+#[cfg(windows)]
 emit! {
     pub const SDL_PRIX64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64X\0") };
 
 }
 
-#[cfg(not(any(any(/* always disabled: SDL_PLATFORM_GDK */), windows)))]
+#[cfg(not(windows))]
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
@@ -250,6 +250,16 @@ const _: () = ::core::assert!(::core::mem::size_of::<Sint32>() == 4);
 const _: () = ::core::assert!(::core::mem::size_of::<Uint64>() == 8);
 
 const _: () = ::core::assert!(::core::mem::size_of::<Sint64>() == 8);
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_alignment_test {
+    pub a: Uint8,
+    pub b: *mut ::core::ffi::c_void,
+}
+
+const _: () = ::core::assert!(::core::mem::size_of::<SDL_alignment_test>() == (2 * ::core::mem::size_of::<*mut ::core::ffi::c_void>()));
 
 #[cfg(all(not(any(/* always disabled: SDL_PLATFORM_3DS */)), not(any(/* always disabled: SDL_PLATFORM_VITA */))))]
 emit! {
@@ -1134,6 +1144,22 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_strncasecmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+}}
+
+extern_sdlcall! {{
+    /// Searches a string for the first occurence of any character contained in a
+    /// breakset, and returns a pointer from the string to that character.
+    ///
+    /// \param str The null-terminated string to be searched.
+    /// \param breakset A null-terminated string containing the list of characters
+    ///                 to look for.
+    /// \returns A pointer to the location, in str, of the first occurence of a
+    ///          character present in the breakset, or NULL if none is found.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    pub fn SDL_strpbrk(str: *const ::core::ffi::c_char, breakset: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
 }}
 
 /// The Unicode REPLACEMENT CHARACTER codepoint.

@@ -47,7 +47,7 @@ use super::stdinc::*;
 ///
 /// \since This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_LOG_CATEGORY_APPLICATION`], [`SDL_LOG_CATEGORY_ERROR`], [`SDL_LOG_CATEGORY_ASSERT`], [`SDL_LOG_CATEGORY_SYSTEM`], [`SDL_LOG_CATEGORY_AUDIO`], [`SDL_LOG_CATEGORY_VIDEO`], [`SDL_LOG_CATEGORY_RENDER`], [`SDL_LOG_CATEGORY_GPU`], [`SDL_LOG_CATEGORY_INPUT`], [`SDL_LOG_CATEGORY_TEST`], [`SDL_LOG_CATEGORY_RESERVED1`], [`SDL_LOG_CATEGORY_RESERVED2`], [`SDL_LOG_CATEGORY_RESERVED3`], [`SDL_LOG_CATEGORY_RESERVED4`], [`SDL_LOG_CATEGORY_RESERVED5`], [`SDL_LOG_CATEGORY_RESERVED6`], [`SDL_LOG_CATEGORY_RESERVED7`], [`SDL_LOG_CATEGORY_RESERVED8`], [`SDL_LOG_CATEGORY_RESERVED9`], [`SDL_LOG_CATEGORY_RESERVED10`], [`SDL_LOG_CATEGORY_CUSTOM`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_LOG_CATEGORY_APPLICATION`], [`SDL_LOG_CATEGORY_ERROR`], [`SDL_LOG_CATEGORY_ASSERT`], [`SDL_LOG_CATEGORY_SYSTEM`], [`SDL_LOG_CATEGORY_AUDIO`], [`SDL_LOG_CATEGORY_VIDEO`], [`SDL_LOG_CATEGORY_RENDER`], [`SDL_LOG_CATEGORY_INPUT`], [`SDL_LOG_CATEGORY_TEST`], [`SDL_LOG_CATEGORY_GPU`], [`SDL_LOG_CATEGORY_RESERVED1`], [`SDL_LOG_CATEGORY_RESERVED2`], [`SDL_LOG_CATEGORY_RESERVED3`], [`SDL_LOG_CATEGORY_RESERVED4`], [`SDL_LOG_CATEGORY_RESERVED5`], [`SDL_LOG_CATEGORY_RESERVED6`], [`SDL_LOG_CATEGORY_RESERVED7`], [`SDL_LOG_CATEGORY_RESERVED8`], [`SDL_LOG_CATEGORY_RESERVED9`], [`SDL_LOG_CATEGORY_RESERVED10`], [`SDL_LOG_CATEGORY_CUSTOM`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -60,9 +60,9 @@ impl SDL_LogCategory {
     pub const AUDIO: Self = Self(4);
     pub const VIDEO: Self = Self(5);
     pub const RENDER: Self = Self(6);
-    pub const GPU: Self = Self(7);
-    pub const INPUT: Self = Self(8);
-    pub const TEST: Self = Self(9);
+    pub const INPUT: Self = Self(7);
+    pub const TEST: Self = Self(8);
+    pub const GPU: Self = Self(9);
     pub const RESERVED1: Self = Self(10);
     pub const RESERVED2: Self = Self(11);
     pub const RESERVED3: Self = Self(12);
@@ -82,9 +82,9 @@ pub const SDL_LOG_CATEGORY_SYSTEM: SDL_LogCategory = SDL_LogCategory::SYSTEM;
 pub const SDL_LOG_CATEGORY_AUDIO: SDL_LogCategory = SDL_LogCategory::AUDIO;
 pub const SDL_LOG_CATEGORY_VIDEO: SDL_LogCategory = SDL_LogCategory::VIDEO;
 pub const SDL_LOG_CATEGORY_RENDER: SDL_LogCategory = SDL_LogCategory::RENDER;
-pub const SDL_LOG_CATEGORY_GPU: SDL_LogCategory = SDL_LogCategory::GPU;
 pub const SDL_LOG_CATEGORY_INPUT: SDL_LogCategory = SDL_LogCategory::INPUT;
 pub const SDL_LOG_CATEGORY_TEST: SDL_LogCategory = SDL_LogCategory::TEST;
+pub const SDL_LOG_CATEGORY_GPU: SDL_LogCategory = SDL_LogCategory::GPU;
 pub const SDL_LOG_CATEGORY_RESERVED1: SDL_LogCategory = SDL_LogCategory::RESERVED1;
 pub const SDL_LOG_CATEGORY_RESERVED2: SDL_LogCategory = SDL_LogCategory::RESERVED2;
 pub const SDL_LOG_CATEGORY_RESERVED3: SDL_LogCategory = SDL_LogCategory::RESERVED3;

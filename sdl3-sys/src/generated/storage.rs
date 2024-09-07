@@ -21,11 +21,16 @@ use super::properties::*;
 /// It is not usually necessary to do this; SDL provides standard
 /// implementations for many things you might expect to do with an SDL_Storage.
 ///
+/// This structure should be initialized using SDL_INIT_INTERFACE()
+///
 /// \since This struct is available since SDL 3.0.0.
+///
+/// \sa SDL_INIT_INTERFACE
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_StorageInterface {
+    pub version: Uint32,
     pub close: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool)>,
     pub ready: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool)>,
     pub enumerate: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, path: *const ::core::ffi::c_char, callback: SDL_EnumerateDirectoryCallback, callback_userdata: *mut ::core::ffi::c_void) -> SDL_bool)>,
@@ -38,6 +43,8 @@ pub struct SDL_StorageInterface {
     pub copy: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, oldpath: *const ::core::ffi::c_char, newpath: *const ::core::ffi::c_char) -> SDL_bool)>,
     pub space_remaining: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void) -> Uint64)>,
 }
+
+const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_StorageInterface>() == 48) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_StorageInterface>() == 96)));
 
 extern_sdlcall! {{
     /// Opens up a read-only container for the application's filesystem.
@@ -114,8 +121,12 @@ extern_sdlcall! {{
     /// should use the built-in implementations in SDL, like SDL_OpenTitleStorage()
     /// or SDL_OpenUserStorage().
     ///
-    /// \param iface the function table to be used by this container.
-    /// \param userdata the pointer that will be passed to the store interface.
+    /// This function makes a copy of `iface` and the caller does not need to keep
+    /// it around after this call.
+    ///
+    /// \param iface the interface that implements this storage, initialized using
+    ///              SDL_INIT_INTERFACE().
+    /// \param userdata the pointer that will be passed to the interface functions.
     /// \returns a storage container on success or NULL on failure; call
     ///          SDL_GetError() for more information.
     ///
@@ -124,6 +135,7 @@ extern_sdlcall! {{
     /// \sa SDL_CloseStorage
     /// \sa SDL_GetStorageFileSize
     /// \sa SDL_GetStorageSpaceRemaining
+    /// \sa SDL_INIT_INTERFACE
     /// \sa SDL_ReadStorageFile
     /// \sa SDL_StorageReady
     /// \sa SDL_WriteStorageFile

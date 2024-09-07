@@ -381,17 +381,21 @@ pub struct SDL_VirtualJoystickSensorDesc {
 
 /// The structure that describes a virtual joystick.
 ///
-/// All elements of this structure are optional and can be left 0.
+/// This structure should be initialized using SDL_INIT_INTERFACE(). All
+/// elements of this structure are optional.
 ///
 /// \since This struct is available since SDL 3.0.0.
 ///
 /// \sa SDL_AttachVirtualJoystick
+/// \sa SDL_INIT_INTERFACE
 /// \sa SDL_VirtualJoystickSensorDesc
 /// \sa SDL_VirtualJoystickTouchpadDesc
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_VirtualJoystickDesc {
+    /// the version of this interface
+    pub version: Uint32,
     /// `SDL_JoystickType`
     pub r#type: Uint16,
     /// unused
@@ -446,10 +450,12 @@ pub struct SDL_VirtualJoystickDesc {
     pub Cleanup: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void))>,
 }
 
+const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 84) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 136)));
+
 extern_sdlcall! {{
     /// Attach a new virtual joystick.
     ///
-    /// \param desc joystick description.
+    /// \param desc joystick description, initialized using SDL_INIT_INTERFACE().
     /// \returns the joystick instance ID, or 0 on failure; call SDL_GetError() for
     ///          more information.
     ///

@@ -28,14 +28,6 @@ pub enum Value {
 }
 
 impl Value {
-    pub fn bool(value: bool) -> Self {
-        Value::U31(value as u32)
-    }
-
-    pub fn is_target_dependent(&self) -> bool {
-        matches!(self, Self::TargetDependent(_))
-    }
-
     pub fn is_truthy(&self) -> bool {
         match self {
             &Value::I32(i) => i != 0,
@@ -300,9 +292,9 @@ impl Eval for Expr {
                                 return if ctx.preproc_state().borrow().is_target_define(&define) {
                                     Ok(Some(Value::TargetDependent(DefineState::defined(define))))
                                 } else if ctx.preproc_state().borrow().is_defined(&define)? {
-                                    Ok(Some(Value::bool(true)))
+                                    Ok(Some(Value::Bool(true)))
                                 } else {
-                                    Ok(Some(Value::bool(false)))
+                                    Ok(Some(Value::Bool(false)))
                                 };
                             }
 
@@ -321,7 +313,7 @@ impl Eval for Expr {
                                 let Expr::Ident(builtin) = &args[0] else {
                                     return err();
                                 };
-                                return Ok(Some(Value::bool(match builtin.as_str() {
+                                return Ok(Some(Value::Bool(match builtin.as_str() {
                                     "__builtin_add_overflow" | "__builtin_mul_overflow" => true,
                                     _ => {
                                         return Err(ParseErr::new(
@@ -413,7 +405,7 @@ impl Eval for Expr {
 
             Expr::SizeOf(s) => match s.deref() {
                 SizeOf::Type(_, ty) => match &ty.ty {
-                    TypeEnum::Primitive(_) => {
+                    TypeEnum::Primitive(_) | TypeEnum::Pointer(_) => {
                         let mut out = String::new();
                         let mut ctx2 = ctx.with_output(&mut out);
                         write!(ctx2, "::core::mem::size_of::<")?;
@@ -436,9 +428,9 @@ impl Eval for Expr {
                             todo!()
                         }
                     }
+
                     TypeEnum::Enum(_) => todo!(),
                     TypeEnum::Struct(_) => todo!(),
-                    TypeEnum::Pointer(_) => todo!(),
                     TypeEnum::Array(_, _) => todo!(),
                     TypeEnum::FnPointer(_) => todo!(),
                     TypeEnum::DotDotDot => todo!(),
@@ -460,7 +452,7 @@ impl Eval for Expr {
                     b"!" => match expr {
                         Value::String(_) => Ok(None),
                         Value::TargetDependent(ds) => Ok(Some(Value::TargetDependent(ds.not()))),
-                        _ => Ok(Some(Value::bool(expr.is_falsy()))),
+                        _ => Ok(Some(Value::Bool(expr.is_falsy()))),
                     },
 
                     b"+" => match expr {
@@ -560,12 +552,25 @@ impl Eval for Expr {
                             (Value::F32(lhs), Value::F32(rhs)) => Ok(Some(Value::F32(lhs $op rhs))),
                             (Value::F64(lhs), Value::F64(rhs)) => Ok(Some(Value::F64(lhs $op rhs))),
 
-                            (Value::RustCode(_), _) => Ok(None),
-
-                            _ => {
-                                Err(ParseErr::new(bop.span(), "missing implementation for eval").into())
+                            (Value::RustCode(_), _) => {
+                                // FIXME
+                                Ok(None)
                             }
+
+                            (Value::U31(lhs), Value::RustCode(rhs)) => {
+                                // FIXME
+                                assert!(matches!(rhs.ty.ty, TypeEnum::Primitive(PrimitiveType::SizeT)));
+                                Ok(Some(Value::RustCode(RustCode::boxed(format!("({} {} {})", lhs, stringify!($op), rhs.value), rhs.ty))))
+                            }
+
+                            _ => Err(ParseErr::new(bop.span(), "missing implementation for eval").into()),
                         }
+                    };
+
+                    (@ checked * ($lhs:expr, $rhs:expr)) => {
+                        $lhs.checked_mul($rhs).ok_or_else(|| {
+                            ParseErr::new(bop.span(), "evaluated value out of range")
+                        })?
                     };
 
                     (@ checked + ($lhs:expr, $rhs:expr)) => {
@@ -640,6 +645,7 @@ impl Eval for Expr {
                 }
 
                 return match bop.op.as_str().as_bytes() {
+                    b"*" => calc!(*),
                     b"+" => calc!(+),
                     b"-" => calc!(-),
 
@@ -661,18 +667,32 @@ impl Eval for Expr {
                             } else if rhs.is_truthy() {
                                 Ok(Some(Value::TargetDependent(lhs)))
                             } else {
-                                Ok(Some(Value::bool(false)))
+                                Ok(Some(Value::Bool(false)))
                             }
+                        } else if let Value::RustCode(_) = lhs {
+                            let rhs = eval!(bop.rhs);
+                            let mut out = String::new();
+                            let mut ctx_out = ctx.with_output(&mut out);
+                            write!(&mut ctx_out, "(")?;
+                            lhs.emit(&mut ctx_out)?;
+                            write!(&mut ctx_out, " && ")?;
+                            rhs.emit(&mut ctx_out)?;
+                            write!(&mut ctx_out, ")")?;
+                            drop(ctx_out);
+                            Ok(Some(Value::RustCode(RustCode::boxed(
+                                out,
+                                Type::primitive(PrimitiveType::Bool),
+                            ))))
                         } else if lhs.is_truthy() {
                             let rhs = eval!(bop.rhs);
                             if let Value::TargetDependent(rhs) = rhs {
                                 Ok(Some(Value::TargetDependent(rhs)))
                             } else {
-                                Ok(Some(Value::bool(rhs.is_truthy())))
+                                Ok(Some(Value::Bool(rhs.is_truthy())))
                             }
                         } else {
                             // short circuit
-                            Ok(Some(Value::bool(false)))
+                            Ok(Some(Value::Bool(false)))
                         }
                     }
 
@@ -685,18 +705,32 @@ impl Eval for Expr {
                             } else if rhs.is_falsy() {
                                 Ok(Some(Value::TargetDependent(lhs)))
                             } else {
-                                Ok(Some(Value::bool(true)))
+                                Ok(Some(Value::Bool(true)))
                             }
+                        } else if let Value::RustCode(_) = lhs {
+                            let rhs = eval!(bop.rhs);
+                            let mut out = String::new();
+                            let mut ctx_out = ctx.with_output(&mut out);
+                            write!(&mut ctx_out, "(")?;
+                            lhs.emit(&mut ctx_out)?;
+                            write!(&mut ctx_out, " || ")?;
+                            rhs.emit(&mut ctx_out)?;
+                            write!(&mut ctx_out, ")")?;
+                            drop(ctx_out);
+                            Ok(Some(Value::RustCode(RustCode::boxed(
+                                out,
+                                Type::primitive(PrimitiveType::Bool),
+                            ))))
                         } else if lhs.is_falsy() {
                             let rhs = eval!(bop.rhs);
                             if let Value::TargetDependent(rhs) = rhs {
                                 Ok(Some(Value::TargetDependent(rhs)))
                             } else {
-                                Ok(Some(Value::bool(rhs.is_truthy())))
+                                Ok(Some(Value::Bool(rhs.is_truthy())))
                             }
                         } else {
                             // short circuit
-                            Ok(Some(Value::bool(true)))
+                            Ok(Some(Value::Bool(true)))
                         }
                     }
 
@@ -723,7 +757,7 @@ impl Eval for Expr {
             Expr::ArrayIndex { span, base, index } => (),
             Expr::ArrayValues { span, values } => (),
 
-            Expr::HasInclude(_) => return Ok(Some(Value::bool(false))),
+            Expr::HasInclude(_) => return Ok(Some(Value::Bool(false))),
 
             Expr::Value(value) => return Ok(Some(value.clone())),
         }
@@ -809,7 +843,7 @@ impl Emit for FnCall {
                         }
 
                         _ => {
-                            dbg!(value);
+                            dbg!(self, value);
                             todo!()
                         }
                     }
