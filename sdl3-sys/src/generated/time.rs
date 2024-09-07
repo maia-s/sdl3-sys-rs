@@ -74,11 +74,15 @@ pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TimeFormat(pub ::core::ffi::c_int);
 impl SDL_TimeFormat {
+    /// 24 hour time
+    pub const _24HR: Self = Self(0);
+    /// 12 hour time
+    pub const _12HR: Self = Self(1);
 }
 /// 24 hour time
-pub const SDL_TIME_FORMAT_24HR: SDL_TimeFormat = SDL_TimeFormat(0);
+pub const SDL_TIME_FORMAT_24HR: SDL_TimeFormat = SDL_TimeFormat::_24HR;
 /// 12 hour time
-pub const SDL_TIME_FORMAT_12HR: SDL_TimeFormat = SDL_TimeFormat(1);
+pub const SDL_TIME_FORMAT_12HR: SDL_TimeFormat = SDL_TimeFormat::_12HR;
 
 extern_sdlcall! {{
     /// Gets the current preferred date and time format for the system locale.

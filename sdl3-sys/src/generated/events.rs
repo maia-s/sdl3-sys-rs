@@ -104,8 +104,8 @@ impl SDL_EventType {
     pub const DISPLAY_CURRENT_MODE_CHANGED: Self = Self(342);
     /// Display has changed content scale
     pub const DISPLAY_CONTENT_SCALE_CHANGED: Self = Self(343);
-    pub const DISPLAY_FIRST: Self = Self(SDL_EVENT_DISPLAY_ORIENTATION);
-    pub const DISPLAY_LAST: Self = Self(SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED);
+    pub const DISPLAY_FIRST: Self = SDL_EVENT_DISPLAY_ORIENTATION;
+    pub const DISPLAY_LAST: Self = SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED;
     /// Window has been shown
     pub const WINDOW_SHOWN: Self = Self(0x202);
     /// Window has been hidden
@@ -159,8 +159,8 @@ impl SDL_EventType {
     pub const WINDOW_DESTROYED: Self = Self(537);
     /// Window HDR properties have changed
     pub const WINDOW_HDR_STATE_CHANGED: Self = Self(538);
-    pub const WINDOW_FIRST: Self = Self(SDL_EVENT_WINDOW_SHOWN);
-    pub const WINDOW_LAST: Self = Self(SDL_EVENT_WINDOW_HDR_STATE_CHANGED);
+    pub const WINDOW_FIRST: Self = SDL_EVENT_WINDOW_SHOWN;
+    pub const WINDOW_LAST: Self = SDL_EVENT_WINDOW_HDR_STATE_CHANGED;
     /// Key pressed
     pub const KEY_DOWN: Self = Self(0x300);
     /// Key released

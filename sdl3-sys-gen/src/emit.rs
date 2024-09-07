@@ -685,7 +685,7 @@ impl Emit for TypeDef {
                     for variant in &e.variants {
                         known_values.push(", ".into());
                         known_values.push(format!("[`{}`]", variant.ident.as_str()));
-                        prefix = common_prefix(prefix, variant.ident.as_str());
+                        prefix = common_prefix(prefix, variant.ident.as_str(), Some(b'_'));
                     }
                     prefix
                 } else {
@@ -727,41 +727,51 @@ impl Emit for TypeDef {
 
                 for variant in &e.variants {
                     ctx.register_sym(variant.ident.clone(), Some(Type::ident(self.ident.clone())))?;
+
                     let variant_ident = variant.ident.as_str();
-                    let short_variant_ident = variant_ident.strip_prefix(prefix).unwrap();
-                    let is_short_valid = is_valid_ident(short_variant_ident);
-                    let mut value = String::new();
-                    let mut ctx_value = ctx.with_output(&mut value);
-                    next_expr = if let Some(expr) = &variant.expr {
-                        expr.emit(&mut ctx_value)?;
-                        expr.try_eval_plus_one(ctx)?.map(Expr::Value)
-                    } else if let Some(next_expr) = next_expr {
-                        next_expr.emit(&mut ctx_value)?;
-                        next_expr.try_eval_plus_one(ctx)?.map(Expr::Value)
-                    } else {
+                    let mut short_variant_ident = variant_ident.strip_prefix(prefix).unwrap();
+                    if !is_valid_ident(short_variant_ident) {
+                        short_variant_ident =
+                            &variant_ident[variant_ident.len() - short_variant_ident.len() - 1..];
+                    }
+
+                    let Some(expr) = variant.expr.as_ref().or(next_expr.as_ref()) else {
                         return Err(ParseErr::new(
                             variant.ident.span(),
                             "couldn't evaluate value for enum",
                         )
                         .into());
                     };
+
+                    let mut value = String::new();
+                    let mut ctx_value = ctx.with_output(&mut value);
+                    expr.emit(&mut ctx_value)?;
                     drop(ctx_value);
-                    if is_short_valid {
-                        variant.doc.emit(&mut ctx_impl)?;
-                        writeln!(
-                            ctx_impl,
-                            "pub const {short_variant_ident}: Self = Self({value});"
-                        )?;
-                    }
-                    variant.doc.emit(&mut ctx_global)?;
-                    if is_short_valid {
-                        writeln!(ctx_global, "pub const {variant_ident}: {enum_ident} = {enum_ident}::{short_variant_ident};")?;
+                    let need_wrap = if let Expr::Ident(ident) = &expr {
+                        if let Some(TypeEnum::Ident(tid)) = ctx
+                            .lookup_sym(&ident.clone().try_into().unwrap())
+                            .and_then(|s| s.ty)
+                            .map(|t| t.ty)
+                        {
+                            tid.as_str() != enum_ident
+                        } else {
+                            true
+                        }
                     } else {
-                        writeln!(
-                            ctx_global,
-                            "pub const {variant_ident}: {enum_ident} = {enum_ident}({value});"
-                        )?;
+                        true
+                    };
+                    if need_wrap {
+                        value.insert_str(0, "Self(");
+                        value.push(')');
                     }
+
+                    next_expr = expr.try_eval_plus_one(ctx)?.map(Expr::Value);
+
+                    variant.doc.emit(&mut ctx_impl)?;
+                    writeln!(ctx_impl, "pub const {short_variant_ident}: Self = {value};")?;
+
+                    variant.doc.emit(&mut ctx_global)?;
+                    writeln!(ctx_global, "pub const {variant_ident}: {enum_ident} = {enum_ident}::{short_variant_ident};")?;
                 }
 
                 drop(ctx_impl);

@@ -24,9 +24,9 @@ impl Display for DocComment {
                     // one non-empty line
                     return f.write_str(first.trim());
                 };
-                let mut prefix = common_prefix(first, second);
+                let mut prefix = common_prefix(first, second, None);
                 for line in lines {
-                    prefix = common_prefix(prefix, line);
+                    prefix = common_prefix(prefix, line, None);
                 }
                 prefix
             }};

@@ -112,11 +112,15 @@ pub const SDL_GPU_STOREOP_DONT_CARE: SDL_GPUStoreOp = SDL_GPUStoreOp::DONT_CARE;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUIndexElementSize(pub ::core::ffi::c_int);
 impl SDL_GPUIndexElementSize {
+    /// The index elements are 16-bit.
+    pub const _16BIT: Self = Self(0);
+    /// The index elements are 32-bit.
+    pub const _32BIT: Self = Self(1);
 }
 /// The index elements are 16-bit.
-pub const SDL_GPU_INDEXELEMENTSIZE_16BIT: SDL_GPUIndexElementSize = SDL_GPUIndexElementSize(0);
+pub const SDL_GPU_INDEXELEMENTSIZE_16BIT: SDL_GPUIndexElementSize = SDL_GPUIndexElementSize::_16BIT;
 /// The index elements are 32-bit.
-pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndexElementSize(1);
+pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndexElementSize::_32BIT;
 
 /// Specifies the pixel format of a texture.
 ///
@@ -362,15 +366,21 @@ pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE: ::core::primitive::u32 = 3
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureType(pub ::core::ffi::c_int);
 impl SDL_GPUTextureType {
+    /// The texture is a 2-dimensional image.
+    pub const _2D: Self = Self(0);
+    /// The texture is a 2-dimensional array image.
+    pub const _2D_ARRAY: Self = Self(1);
+    /// The texture is a 3-dimensional image.
+    pub const _3D: Self = Self(2);
     /// The texture is a cube image.
     pub const CUBE: Self = Self(3);
 }
 /// The texture is a 2-dimensional image.
-pub const SDL_GPU_TEXTURETYPE_2D: SDL_GPUTextureType = SDL_GPUTextureType(0);
+pub const SDL_GPU_TEXTURETYPE_2D: SDL_GPUTextureType = SDL_GPUTextureType::_2D;
 /// The texture is a 2-dimensional array image.
-pub const SDL_GPU_TEXTURETYPE_2D_ARRAY: SDL_GPUTextureType = SDL_GPUTextureType(1);
+pub const SDL_GPU_TEXTURETYPE_2D_ARRAY: SDL_GPUTextureType = SDL_GPUTextureType::_2D_ARRAY;
 /// The texture is a 3-dimensional image.
-pub const SDL_GPU_TEXTURETYPE_3D: SDL_GPUTextureType = SDL_GPUTextureType(2);
+pub const SDL_GPU_TEXTURETYPE_3D: SDL_GPUTextureType = SDL_GPUTextureType::_3D;
 /// The texture is a cube image.
 pub const SDL_GPU_TEXTURETYPE_CUBE: SDL_GPUTextureType = SDL_GPUTextureType::CUBE;
 
@@ -390,15 +400,23 @@ pub const SDL_GPU_TEXTURETYPE_CUBE: SDL_GPUTextureType = SDL_GPUTextureType::CUB
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUSampleCount(pub ::core::ffi::c_int);
 impl SDL_GPUSampleCount {
+    /// No multisampling.
+    pub const _1: Self = Self(0);
+    /// MSAA 2x
+    pub const _2: Self = Self(1);
+    /// MSAA 4x
+    pub const _4: Self = Self(2);
+    /// MSAA 8x
+    pub const _8: Self = Self(3);
 }
 /// No multisampling.
-pub const SDL_GPU_SAMPLECOUNT_1: SDL_GPUSampleCount = SDL_GPUSampleCount(0);
+pub const SDL_GPU_SAMPLECOUNT_1: SDL_GPUSampleCount = SDL_GPUSampleCount::_1;
 /// MSAA 2x
-pub const SDL_GPU_SAMPLECOUNT_2: SDL_GPUSampleCount = SDL_GPUSampleCount(1);
+pub const SDL_GPU_SAMPLECOUNT_2: SDL_GPUSampleCount = SDL_GPUSampleCount::_2;
 /// MSAA 4x
-pub const SDL_GPU_SAMPLECOUNT_4: SDL_GPUSampleCount = SDL_GPUSampleCount(2);
+pub const SDL_GPU_SAMPLECOUNT_4: SDL_GPUSampleCount = SDL_GPUSampleCount::_4;
 /// MSAA 8x
-pub const SDL_GPU_SAMPLECOUNT_8: SDL_GPUSampleCount = SDL_GPUSampleCount(3);
+pub const SDL_GPU_SAMPLECOUNT_8: SDL_GPUSampleCount = SDL_GPUSampleCount::_8;
 
 /// Specifies the face of a cube map.
 ///
@@ -678,14 +696,14 @@ pub const SDL_GPU_CULLMODE_BACK: SDL_GPUCullMode = SDL_GPUCullMode::BACK;
 pub struct SDL_GPUFrontFace(pub ::core::ffi::c_int);
 impl SDL_GPUFrontFace {
     /// A triangle with counter-clockwise vertex winding will be considered front-facing.
-    pub const OUNTER_CLOCKWISE: Self = Self(0);
+    pub const COUNTER_CLOCKWISE: Self = Self(0);
     /// A triangle with clockwise vertex winding will be considered front-facing.
-    pub const LOCKWISE: Self = Self(1);
+    pub const CLOCKWISE: Self = Self(1);
 }
 /// A triangle with counter-clockwise vertex winding will be considered front-facing.
-pub const SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::OUNTER_CLOCKWISE;
+pub const SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::COUNTER_CLOCKWISE;
 /// A triangle with clockwise vertex winding will be considered front-facing.
-pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::LOCKWISE;
+pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOCKWISE;
 
 /// Specifies a comparison operator for depth, stencil and sampler operations.
 ///

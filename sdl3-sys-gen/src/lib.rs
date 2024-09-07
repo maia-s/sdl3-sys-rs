@@ -277,11 +277,24 @@ impl From<Error> for EmitErr {
     }
 }
 
-fn common_prefix<'a>(a: &'a str, b: &str) -> &'a str {
-    for (i, (ca, cb)) in a.chars().zip(b.chars()).enumerate() {
-        if ca != cb {
-            return &a[..i];
+fn common_prefix<'a>(a: &'a str, b: &str, end_with: Option<u8>) -> &'a str {
+    let mut i = 'pfx: {
+        for (i, (ca, cb)) in a.chars().zip(b.chars()).enumerate() {
+            if ca != cb {
+                break 'pfx i;
+            }
+        }
+        a.len().min(b.len())
+    };
+    if let Some(end_with) = end_with {
+        let bytes = a.as_bytes();
+        while i > 0 {
+            if bytes[i - 1] != end_with {
+                i -= 1
+            } else {
+                break;
+            }
         }
     }
-    &a[..a.len().min(b.len())]
+    &a[..i]
 }

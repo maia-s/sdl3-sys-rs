@@ -81,10 +81,12 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 pub struct SDL_BitmapOrder(pub ::core::ffi::c_int);
 impl SDL_BitmapOrder {
     pub const NONE: Self = Self(0);
+    pub const _4321: Self = Self(1);
+    pub const _1234: Self = Self(2);
 }
 pub const SDL_BITMAPORDER_NONE: SDL_BitmapOrder = SDL_BitmapOrder::NONE;
-pub const SDL_BITMAPORDER_4321: SDL_BitmapOrder = SDL_BitmapOrder(1);
-pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder(2);
+pub const SDL_BITMAPORDER_4321: SDL_BitmapOrder = SDL_BitmapOrder::_4321;
+pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 
 /// Packed component order, high bit -> low bit.
 ///
@@ -147,16 +149,24 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 pub struct SDL_PackedLayout(pub ::core::ffi::c_int);
 impl SDL_PackedLayout {
     pub const NONE: Self = Self(0);
+    pub const _332: Self = Self(1);
+    pub const _4444: Self = Self(2);
+    pub const _1555: Self = Self(3);
+    pub const _5551: Self = Self(4);
+    pub const _565: Self = Self(5);
+    pub const _8888: Self = Self(6);
+    pub const _2101010: Self = Self(7);
+    pub const _1010102: Self = Self(8);
 }
 pub const SDL_PACKEDLAYOUT_NONE: SDL_PackedLayout = SDL_PackedLayout::NONE;
-pub const SDL_PACKEDLAYOUT_332: SDL_PackedLayout = SDL_PackedLayout(1);
-pub const SDL_PACKEDLAYOUT_4444: SDL_PackedLayout = SDL_PackedLayout(2);
-pub const SDL_PACKEDLAYOUT_1555: SDL_PackedLayout = SDL_PackedLayout(3);
-pub const SDL_PACKEDLAYOUT_5551: SDL_PackedLayout = SDL_PackedLayout(4);
-pub const SDL_PACKEDLAYOUT_565: SDL_PackedLayout = SDL_PackedLayout(5);
-pub const SDL_PACKEDLAYOUT_8888: SDL_PackedLayout = SDL_PackedLayout(6);
-pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout(7);
-pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout(8);
+pub const SDL_PACKEDLAYOUT_332: SDL_PackedLayout = SDL_PackedLayout::_332;
+pub const SDL_PACKEDLAYOUT_4444: SDL_PackedLayout = SDL_PackedLayout::_4444;
+pub const SDL_PACKEDLAYOUT_1555: SDL_PackedLayout = SDL_PackedLayout::_1555;
+pub const SDL_PACKEDLAYOUT_5551: SDL_PackedLayout = SDL_PackedLayout::_5551;
+pub const SDL_PACKEDLAYOUT_565: SDL_PackedLayout = SDL_PackedLayout::_565;
+pub const SDL_PACKEDLAYOUT_8888: SDL_PackedLayout = SDL_PackedLayout::_8888;
+pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout::_2101010;
+pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_1010102;
 
 /// Pixel format.
 ///
