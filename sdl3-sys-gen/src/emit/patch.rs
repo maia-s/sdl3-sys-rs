@@ -52,7 +52,7 @@ const MACRO_CALL_PATCHES: &[MacroCallPatch] = &[
                 "pub struct __{arg} {{ _opaque: [::core::primitive::u8; 0] }}",
             )?;
             writeln!(ctx)?;
-            writeln!(ctx, r#"#[not(cfg(target_pointer_width = "64"))]"#)?;
+            writeln!(ctx, r#"#[cfg(not(target_pointer_width = "64"))]"#)?;
             writeln!(ctx, "pub type {arg} = ::core::primitive::u64;")?;
             writeln!(ctx)?;
             Ok(())

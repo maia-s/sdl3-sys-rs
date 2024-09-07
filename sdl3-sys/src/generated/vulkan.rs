@@ -36,7 +36,7 @@ pub type VkSurfaceKHR = *mut __VkSurfaceKHR;
 #[non_exhaustive]
 pub struct __VkSurfaceKHR { _opaque: [::core::primitive::u8; 0] }
 
-#[not(cfg(target_pointer_width = "64"))]
+#[cfg(not(target_pointer_width = "64"))]
 pub type VkSurfaceKHR = ::core::primitive::u64;
 
 extern_sdlcall! {{
