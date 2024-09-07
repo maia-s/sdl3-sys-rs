@@ -169,7 +169,7 @@ impl Gen {
             }
             writeln!(
                 ctx,
-                "#![allow(non_camel_case_types, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens)]"
+                "#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens)]"
             )?;
             writeln!(ctx)?;
             self.parsed[module].emit(&mut ctx)?;
