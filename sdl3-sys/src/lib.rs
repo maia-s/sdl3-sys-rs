@@ -8,10 +8,16 @@ macro_rules! emit {
     ($($tt:tt)*) => { $($tt)* };
 }
 
-// The calling convention for SDL on non-GNU Windows uses "cdecl" instead of "C"
-#[cfg(all(target_family = "windows", not(target_env = "gnu")))]
+#[cfg(doc)]
+/// The calling convention for SDL may differ per platform. You can use this macro
+/// to define function pointers to be passed to SDL.
+#[macro_export]
+macro_rules! extern_sdlcall { ($($tt:tt)*) => { extern "C" $($tt)* }; }
+#[cfg(all(not(doc), target_family = "windows", not(target_env = "gnu")))]
+#[macro_export]
 macro_rules! extern_sdlcall { ($($tt:tt)*) => { extern "cdecl" $($tt)* }; }
-#[cfg(not(all(target_family = "windows", not(target_env = "gnu"))))]
+#[cfg(all(not(doc), not(all(target_family = "windows", not(target_env = "gnu")))))]
+#[macro_export]
 macro_rules! extern_sdlcall { ($($tt:tt)*) => { extern "C" $($tt)* }; }
 
 mod generated;
