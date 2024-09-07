@@ -101,7 +101,7 @@ pub const SDL_MESSAGEBOX_COLOR_MAX: SDL_MessageBoxColorType = SDL_MessageBoxColo
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MessageBoxColorScheme {
-    pub colors: [SDL_MessageBoxColor; SDL_MESSAGEBOX_COLOR_MAX],
+    pub colors: [SDL_MessageBoxColor; SDL_MESSAGEBOX_COLOR_MAX.0 as ::core::primitive::usize],
 }
 
 /// MessageBox structure containing title, text, window, etc.

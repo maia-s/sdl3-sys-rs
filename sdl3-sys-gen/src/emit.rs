@@ -618,13 +618,27 @@ impl Emit for Type {
             }
 
             TypeEnum::Array(ty, len) => {
-                let Some(len) = len.try_eval(ctx)? else {
-                    return Err(ParseErr::new(len.span(), "invalid array length").into());
-                };
                 write!(ctx, "[")?;
                 ty.emit(ctx)?;
                 write!(ctx, "; ")?;
-                len.emit(ctx)?;
+                if let Some(len) = len.try_eval(ctx)? {
+                    len.emit(ctx)?;
+                } else {
+                    return Err(ParseErr::new(len.span(), "invalid array length").into());
+                };
+                // check if the length is an enum value
+                if let Expr::Ident(ident) = len {
+                    if let Some(ty) = ctx
+                        .lookup_sym(&ident.clone().try_into().unwrap())
+                        .and_then(|s| s.ty)
+                    {
+                        if let TypeEnum::Ident(ident) = &ty.ty {
+                            if ctx.lookup_enum_sym(ident).is_some() {
+                                write!(ctx, ".0 as ::core::primitive::usize")?;
+                            }
+                        }
+                    }
+                }
                 write!(ctx, "]")?;
             }
 
@@ -669,6 +683,10 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Enum(e) => {
+                if let Some(ident) = &e.ident {
+                    ctx.scope_mut().register_enum_sym(ident.clone())?;
+                }
+
                 self.doc.emit(ctx)?;
                 assert!(e.doc.is_none());
 
