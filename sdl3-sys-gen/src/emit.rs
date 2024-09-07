@@ -3,7 +3,7 @@ use crate::{
     parse::{
         ArgDecl, Define, DocComment, DocCommentFile, Expr, FnAbi, FnDeclArgs, FnPointer, Function,
         GetSpan, Ident, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock,
-        PreProcBlockKind, PrimitiveType, StructOrUnion, Type, TypeDef, TypeEnum,
+        PreProcBlockKind, PrimitiveType, StructKind, StructOrUnion, Type, TypeDef, TypeEnum,
     },
 };
 use std::{
@@ -395,7 +395,11 @@ impl Emit for Define {
             }
             if let Some(value) = self.value.try_eval(ctx)? {
                 let ty = value.ty();
-                ctx.register_sym(self.ident.clone(), Some(ty.clone()))?;
+                ctx.register_sym(
+                    self.ident.clone(),
+                    Some(ty.clone()),
+                    ty.can_derive_debug(ctx),
+                )?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub const ")?;
                 self.ident.emit(ctx)?;
@@ -506,6 +510,20 @@ impl Emit for ArgDecl {
 }
 
 impl StructOrUnion {
+    pub fn can_derive_debug(&self, ctx: &EmitContext) -> bool {
+        if matches!(self.kind, StructKind::Union) {
+            return false;
+        }
+        if let Some(fields) = &self.fields {
+            for field in fields.fields.iter() {
+                if !field.ty.can_derive_debug(ctx) {
+                    return false;
+                }
+            }
+        }
+        true
+    }
+
     pub fn emit_with_doc_and_ident(
         &self,
         ctx: &mut EmitContext,
@@ -527,7 +545,7 @@ impl StructOrUnion {
             doc.emit(ctx_ool)?;
             writeln!(ctx_ool, "#[repr(C)]")?;
             writeln!(ctx_ool, "#[derive(Clone, Copy)]")?;
-            if self.is_struct() {
+            if self.can_derive_debug(ctx_ool) {
                 writeln!(
                     ctx_ool,
                     r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
@@ -646,7 +664,7 @@ impl Emit for Type {
 
             TypeEnum::DotDotDot => write!(ctx, "...")?,
 
-            TypeEnum::Rust(r) => write!(ctx, "{r}")?,
+            TypeEnum::Rust(r, _) => write!(ctx, "{r}")?,
         }
         Ok(())
     }
@@ -654,10 +672,9 @@ impl Emit for Type {
 
 impl Emit for TypeDef {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        ctx.register_sym(self.ident.clone(), None)?;
-
         match &self.ty.ty {
             TypeEnum::Primitive(p) => {
+                ctx.register_sym(self.ident.clone(), None, true)?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type ")?;
                 self.ident.emit(ctx)?;
@@ -672,6 +689,7 @@ impl Emit for TypeDef {
                 let sym = ctx.lookup_sym(sym).ok_or_else(|| {
                     ParseErr::new(sym.span(), format!("`{}` not defined", sym.as_str()))
                 })?;
+                ctx.register_sym(self.ident.clone(), None, sym.can_derive_debug)?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type ")?;
                 self.ident.emit(ctx)?;
@@ -683,6 +701,8 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Enum(e) => {
+                ctx.register_sym(self.ident.clone(), None, true)?;
+
                 if let Some(ident) = &e.ident {
                     ctx.scope_mut().register_enum_sym(ident.clone())?;
                 }
@@ -744,7 +764,11 @@ impl Emit for TypeDef {
                 let mut next_expr = Some(Expr::Literal(Literal::Integer(IntegerLiteral::zero())));
 
                 for variant in &e.variants {
-                    ctx.register_sym(variant.ident.clone(), Some(Type::ident(self.ident.clone())))?;
+                    ctx.register_sym(
+                        variant.ident.clone(),
+                        Some(Type::ident(self.ident.clone())),
+                        true,
+                    )?;
 
                     let variant_ident = variant.ident.as_str();
                     let mut short_variant_ident = variant_ident.strip_prefix(prefix).unwrap();
@@ -806,6 +830,8 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Struct(s) => {
+                ctx.register_sym(self.ident.clone(), None, s.can_derive_debug(ctx))?;
+
                 s.emit_with_doc_and_ident(ctx, self.doc.clone(), false)?;
                 ctx.flush_ool_output()?;
 
@@ -824,6 +850,7 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Pointer(_) => {
+                ctx.register_sym(self.ident.clone(), None, true)?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type {} = ", self.ident.as_str())?;
                 self.ty.emit(ctx)?;
@@ -833,11 +860,13 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Array(_, _) => {
+                ctx.register_sym(self.ident.clone(), None, true)?;
                 self.doc.emit(ctx)?;
                 todo!()
             }
 
             TypeEnum::FnPointer(f) => {
+                ctx.register_sym(self.ident.clone(), None, true)?;
                 self.doc.emit(ctx)?;
                 write!(
                     ctx,
@@ -858,11 +887,13 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::DotDotDot => {
+                ctx.register_sym(self.ident.clone(), None, false)?;
                 self.doc.emit(ctx)?;
                 todo!()
             }
 
-            TypeEnum::Rust(r) => {
+            TypeEnum::Rust(r, can_derive_debug) => {
+                ctx.register_sym(self.ident.clone(), None, *can_derive_debug)?;
                 writeln!(ctx, "pub type {} = {r};", self.ident.as_str())?;
                 Ok(())
             }

@@ -287,7 +287,6 @@ pub const SDL_GAMEPAD_BINDTYPE_HAT: SDL_GamepadBindingType = SDL_GamepadBindingT
 /// \sa SDL_GetGamepadBindings
 #[repr(C)]
 #[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GamepadBinding {
     pub input_type: SDL_GamepadBindingType,
     pub input: SDL_GamepadBinding__AnonUnion1,

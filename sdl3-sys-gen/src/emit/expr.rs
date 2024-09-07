@@ -59,7 +59,7 @@ impl Value {
             Value::F32(_) => Type::primitive(PrimitiveType::Float),
             Value::F64(_) => Type::primitive(PrimitiveType::Double),
             Value::Bool(_) => Type::primitive(PrimitiveType::Bool),
-            Value::String(_) => Type::rust("&::core::ffi::CStr"),
+            Value::String(_) => Type::rust("&::core::ffi::CStr", true),
             Value::RustCode(r) => r.ty.clone(),
             Value::TargetDependent(_) => todo!(),
         }
@@ -434,7 +434,7 @@ impl Eval for Expr {
                     TypeEnum::Array(_, _) => todo!(),
                     TypeEnum::FnPointer(_) => todo!(),
                     TypeEnum::DotDotDot => todo!(),
-                    TypeEnum::Rust(_) => todo!(),
+                    TypeEnum::Rust(_, _) => todo!(),
                 },
 
                 SizeOf::Expr(_, _) => {

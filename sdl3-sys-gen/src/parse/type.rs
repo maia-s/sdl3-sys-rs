@@ -1,6 +1,8 @@
+use crate::emit::EmitContext;
+
 use super::{
     DocComment, Enum, Expr, FnAbi, FnDeclArgs, GetSpan, Ident, Kw_const, Kw_typedef, Op, Parse,
-    ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion,
+    ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse, RustCode, Span, StructOrUnion,
     WsAndComments,
 };
 use std::borrow::Cow;
@@ -43,11 +45,11 @@ impl Type {
         }
     }
 
-    pub fn rust(rust: impl Into<String>) -> Self {
+    pub fn rust(rust: impl Into<String>, can_derive_debug: bool) -> Self {
         Self {
             span: Span::none(),
             is_const: false,
-            ty: TypeEnum::Rust(rust.into()),
+            ty: TypeEnum::Rust(rust.into(), can_derive_debug),
         }
     }
 
@@ -61,6 +63,23 @@ impl Type {
 
     pub fn is_void(&self) -> bool {
         matches!(self.ty, TypeEnum::Primitive(PrimitiveType::Void))
+    }
+
+    pub fn can_derive_debug(&self, ctx: &EmitContext) -> bool {
+        match &self.ty {
+            TypeEnum::Primitive(_) => true,
+            TypeEnum::Ident(ident) => ctx
+                .lookup_sym(ident)
+                .map(|s| s.can_derive_debug)
+                .unwrap_or(false),
+            TypeEnum::Enum(_) => true,
+            TypeEnum::Struct(s) => s.can_derive_debug(ctx),
+            TypeEnum::Pointer(_) => true,
+            TypeEnum::Array(ty, _) => ty.can_derive_debug(ctx),
+            TypeEnum::FnPointer(_) => true,
+            TypeEnum::DotDotDot => false,
+            TypeEnum::Rust(_, can_derive_debug) => *can_derive_debug,
+        }
     }
 }
 
@@ -88,7 +107,7 @@ pub enum TypeEnum {
     Array(Box<Type>, Expr),
     FnPointer(Box<FnPointer>),
     DotDotDot,
-    Rust(String),
+    Rust(String, bool),
 }
 
 impl TypeEnum {

@@ -530,9 +530,19 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner_mut().emitted_file_doc = value;
     }
 
-    pub fn register_sym(&mut self, ident: Ident, ty: Option<Type>) -> EmitResult {
+    pub fn register_sym(
+        &mut self,
+        ident: Ident,
+        ty: Option<Type>,
+        can_derive_debug: bool,
+    ) -> EmitResult {
         let module = self.inner().module.clone();
-        self.scope_mut().register_sym(Sym { module, ident, ty })
+        self.scope_mut().register_sym(Sym {
+            module,
+            ident,
+            ty,
+            can_derive_debug,
+        })
     }
 
     pub fn lookup_preproc(&self, key: &Ident) -> Option<(Option<Vec<IdentOrKw>>, DefineValue)> {
@@ -821,6 +831,7 @@ pub struct Sym {
     pub module: String,
     pub ident: Ident,
     pub ty: Option<Type>,
+    pub can_derive_debug: bool,
 }
 
 #[derive(Clone)]
