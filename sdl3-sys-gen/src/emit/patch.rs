@@ -11,7 +11,7 @@ pub struct CompileTimeAssertPatch {
 const SDL_COMPILE_TIME_ASSERT_PATCHES: &[CompileTimeAssertPatch] = &[CompileTimeAssertPatch {
     module: "events",
     id: "SDL_Event",
-    replace_output: "const _: () = ::core::assert!(::core::mem::size_of(SDL_Event) == 128);",
+    replace_output: "const _: () = ::core::assert!(::core::mem::size_of::<SDL_Event>() == 128);",
 }];
 
 pub struct MacroCallPatch {

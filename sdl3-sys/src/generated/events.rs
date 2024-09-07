@@ -1451,7 +1451,7 @@ pub union SDL_Event {
     pub padding: [Uint8; 128],
 }
 
-const _: () = ::core::assert!(::core::mem::size_of(SDL_Event) == 128);
+const _: () = ::core::assert!(::core::mem::size_of::<SDL_Event>() == 128);
 
 extern_sdlcall! {{
     /// Pump the event loop, gathering events from the input devices.
