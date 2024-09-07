@@ -14,7 +14,8 @@ macro_rules! extern_sdlcall { ($($tt:tt)*) => { extern "cdecl" $($tt)* }; }
 #[cfg(not(all(target_family = "windows", not(target_env = "gnu"))))]
 macro_rules! extern_sdlcall { ($($tt:tt)*) => { extern "C" $($tt)* }; }
 
-pub mod generated;
+mod generated;
+pub use generated::*;
 
 pub mod ffi {
     #[cfg(windows)]
