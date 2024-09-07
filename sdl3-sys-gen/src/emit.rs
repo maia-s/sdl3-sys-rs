@@ -3,7 +3,7 @@ use crate::{
     parse::{
         ArgDecl, Define, DocComment, DocCommentFile, Expr, FnAbi, FnDeclArgs, FnPointer, Function,
         GetSpan, Ident, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock,
-        PreProcBlockKind, PrimitiveType, RustCode, StructOrUnion, Type, TypeDef, TypeEnum,
+        PreProcBlockKind, PrimitiveType, StructOrUnion, Type, TypeDef, TypeEnum,
     },
 };
 use std::{
@@ -233,8 +233,12 @@ impl Emit for Item {
             Item::FileDoc(dc) => dc.emit(ctx),
             Item::StructOrUnion(s) => {
                 if let (Some(ident), false) = (&s.ident, s.fields.is_some()) {
-                    ctx.scope_mut()
-                        .register_struct_sym(ident.clone(), false, s.doc.clone())?;
+                    ctx.scope_mut().register_struct_or_union_sym(
+                        s.kind,
+                        ident.clone(),
+                        false,
+                        s.doc.clone(),
+                    )?;
                     Ok(())
                 } else {
                     dbg!(s);
@@ -511,8 +515,12 @@ impl StructOrUnion {
         let ident = &self.generated_ident;
         let doc = self.doc.clone().or(doc);
 
-        ctx.scope_mut()
-            .register_struct_sym(ident.clone(), self.fields.is_some(), doc.clone())?;
+        ctx.scope_mut().register_struct_or_union_sym(
+            self.kind,
+            ident.clone(),
+            self.fields.is_some(),
+            doc.clone(),
+        )?;
 
         if let Some(fields) = &self.fields {
             let ctx_ool = &mut { ctx.with_ool_output() };

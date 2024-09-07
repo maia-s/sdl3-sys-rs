@@ -2,7 +2,7 @@ use super::{EmitErr, EmitResult, Eval, Value};
 use crate::{
     parse::{
         DefineValue, DocComment, Expr, GetSpan, Ident, IdentOrKw, ParseErr, PrimitiveType,
-        RustCode, Span, Type,
+        RustCode, Span, StructKind, Type,
     },
     Gen,
 };
@@ -548,18 +548,37 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     pub fn lookup_enum_sym(&self, key: &Ident) -> Option<Ident> {
-        if let Some(_) = self.lookup_preproc(key) {
+        if self.lookup_preproc(key).is_some() {
             todo!()
         } else {
             self.scope().lookup_enum(key)
         }
     }
 
+    pub fn lookup_struct_or_union_sym(
+        &self,
+        kind: StructKind,
+        key: &Ident,
+    ) -> Option<(Ident, bool)> {
+        match kind {
+            StructKind::Struct => self.lookup_struct_sym(key),
+            StructKind::Union => self.lookup_union_sym(key),
+        }
+    }
+
     pub fn lookup_struct_sym(&self, key: &Ident) -> Option<(Ident, bool)> {
-        if let Some(_) = self.lookup_preproc(key) {
+        if self.lookup_preproc(key).is_some() {
             todo!()
         } else {
             self.scope().lookup_struct(key)
+        }
+    }
+
+    pub fn lookup_union_sym(&self, key: &Ident) -> Option<(Ident, bool)> {
+        if self.lookup_preproc(key).is_some() {
+            todo!()
+        } else {
+            self.scope().lookup_union(key)
         }
     }
 
@@ -634,7 +653,7 @@ impl Drop for EmitContext<'_, '_> {
             self.inner
                 .borrow()
                 .scope
-                .emit_opaque_structs(self.output)
+                .emit_opaque_structs_and_unions(self.output)
                 .unwrap();
         }
     }
@@ -814,6 +833,8 @@ struct InnerScope {
     enum_syms: HashSet<Ident>,
     struct_syms: BTreeMap<Ident, bool>,
     struct_docs: BTreeMap<Ident, DocComment>,
+    union_syms: BTreeMap<Ident, bool>,
+    union_docs: BTreeMap<Ident, DocComment>,
 }
 
 impl Scope {
@@ -828,7 +849,7 @@ impl Scope {
         }));
     }
 
-    pub fn pop(&mut self, f: &mut dyn Write) -> EmitResult {
+    pub fn pop(&mut self) -> EmitResult {
         let parent = self.0.borrow().parent.as_ref().map(Rc::clone);
         if let Some(parent) = parent {
             self.0 = parent;
@@ -838,27 +859,42 @@ impl Scope {
         Ok(())
     }
 
-    pub fn emit_opaque_structs(&self, f: &mut dyn Write) -> EmitResult {
+    pub fn emit_opaque_structs_and_unions(&self, f: &mut dyn Write) -> EmitResult {
         let scope = self.0.borrow();
+
+        macro_rules! emit {
+            ($s:expr, $docs:expr) => {
+                if let Some(doc) = $docs.get($s) {
+                    for line in doc.to_string().lines() {
+                        writeln!(f, "///{}{}", if line.is_empty() { "" } else { " " }, line)?;
+                    }
+                }
+                writeln!(f, "#[repr(C)]")?;
+                writeln!(f, "#[non_exhaustive]")?;
+                writeln!(
+                    f,
+                    "pub struct {} {{ _opaque: [::core::primitive::u8; 0] }}",
+                    $s.as_str()
+                )?;
+                writeln!(f)?;
+            };
+        }
 
         for s in scope
             .struct_syms
             .iter()
             .filter_map(|(s, d)| (!d).then_some(s))
         {
-            if let Some(doc) = scope.struct_docs.get(s) {
-                for line in doc.to_string().lines() {
-                    writeln!(f, "///{}{}", if line.is_empty() { "" } else { " " }, line)?;
-                }
-            }
-            writeln!(f, "#[repr(C)]")?;
-            writeln!(f, "#[non_exhaustive]")?;
-            writeln!(
-                f,
-                "pub struct {} {{ _opaque: [::core::primitive::u8; 0] }}",
-                s.as_str()
-            )?;
-            writeln!(f)?;
+            emit!(s, scope.struct_docs);
+        }
+
+        for s in scope
+            .union_syms
+            .iter()
+            .filter_map(|(s, d)| (!d).then_some(s))
+        {
+            // opaque unions are emitted as opaque structs
+            emit!(s, scope.union_docs);
         }
 
         Ok(())
@@ -894,6 +930,19 @@ impl Scope {
         Ok(())
     }
 
+    pub fn register_struct_or_union_sym(
+        &mut self,
+        kind: StructKind,
+        ident: Ident,
+        defined: bool,
+        doc: Option<DocComment>,
+    ) -> EmitResult {
+        match kind {
+            StructKind::Struct => self.register_struct_sym(ident, defined, doc),
+            StructKind::Union => self.register_union_sym(ident, defined, doc),
+        }
+    }
+
     pub fn register_struct_sym(
         &mut self,
         ident: Ident,
@@ -920,6 +969,32 @@ impl Scope {
         Ok(())
     }
 
+    pub fn register_union_sym(
+        &mut self,
+        ident: Ident,
+        defined: bool,
+        doc: Option<DocComment>,
+    ) -> EmitResult {
+        let span = ident.span();
+        if let Some(doc) = doc {
+            let mut docs = self.0.borrow_mut();
+            let docs = &mut docs.union_docs;
+            if docs.insert(ident.clone(), doc).is_some() {
+                return Err(ParseErr::new(span, "docs already defined for this union").into());
+            }
+        }
+        if let Some((_, true)) = self.lookup_union(&ident) {
+            if defined {
+                return Err(
+                    ParseErr::new(span, "union symbol already defined in this scope").into(),
+                );
+            }
+        } else {
+            self.0.borrow_mut().union_syms.insert(ident, defined);
+        }
+        Ok(())
+    }
+
     pub fn lookup(&self, ident: &Ident) -> Option<Sym> {
         self.0.borrow().lookup(ident)
     }
@@ -929,7 +1004,11 @@ impl Scope {
     }
 
     pub fn lookup_struct(&self, ident: &Ident) -> Option<(Ident, bool)> {
-        self.0.borrow().lookup_struct(ident)
+        self.0.borrow().lookup_struct_(ident)
+    }
+
+    pub fn lookup_union(&self, ident: &Ident) -> Option<(Ident, bool)> {
+        self.0.borrow().lookup_union(ident)
     }
 }
 
@@ -954,7 +1033,7 @@ impl InnerScope {
         }
     }
 
-    pub fn lookup_struct(&self, ident: &Ident) -> Option<(Ident, bool)> {
+    pub fn lookup_struct_(&self, ident: &Ident) -> Option<(Ident, bool)> {
         if let Some(sym) = self
             .struct_syms
             .get_key_value(ident)
@@ -962,7 +1041,21 @@ impl InnerScope {
         {
             Some(sym)
         } else if let Some(parent) = &self.parent {
-            parent.borrow().lookup_struct(ident)
+            parent.borrow().lookup_struct_(ident)
+        } else {
+            None
+        }
+    }
+
+    pub fn lookup_union(&self, ident: &Ident) -> Option<(Ident, bool)> {
+        if let Some(sym) = self
+            .union_syms
+            .get_key_value(ident)
+            .map(|(i, d)| (i.clone(), *d))
+        {
+            Some(sym)
+        } else if let Some(parent) = &self.parent {
+            parent.borrow().lookup_union(ident)
         } else {
             None
         }

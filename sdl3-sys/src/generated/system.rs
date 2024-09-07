@@ -687,9 +687,9 @@ pub struct XUser { _opaque: [::core::primitive::u8; 0] }
 
 #[repr(C)]
 #[non_exhaustive]
-pub struct _XEvent { _opaque: [::core::primitive::u8; 0] }
+pub struct tagMSG { _opaque: [::core::primitive::u8; 0] }
 
 #[repr(C)]
 #[non_exhaustive]
-pub struct tagMSG { _opaque: [::core::primitive::u8; 0] }
+pub struct _XEvent { _opaque: [::core::primitive::u8; 0] }
 
