@@ -22,3 +22,11 @@ pub mod ffi {
     #[cfg(not(feature = "nightly"))]
     pub enum VaList {}
 }
+
+pub(crate) mod sealed_interface {
+    pub trait Sealed {}
+}
+
+pub trait Interface: sealed_interface::Sealed + Sized {
+    fn init() -> Self;
+}

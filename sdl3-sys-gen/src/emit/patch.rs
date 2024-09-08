@@ -1,5 +1,5 @@
-use super::{EmitContext, EmitErr};
-use crate::parse::Expr;
+use super::{Emit, EmitContext, EmitErr};
+use crate::parse::{Define, Expr};
 use core::fmt::Write;
 
 pub struct Patch<T: ?Sized> {
@@ -7,6 +7,30 @@ pub struct Patch<T: ?Sized> {
     ident: &'static str,
     patch: fn(&mut EmitContext, &T) -> Result<bool, EmitErr>,
 }
+
+type DefinePatch = Patch<Define>;
+
+const DEFINE_PATCHES: &[DefinePatch] = &[DefinePatch {
+    module: Some("stdinc"),
+    ident: "SDL_INIT_INTERFACE",
+    patch: |ctx, define| {
+        define.doc.emit(ctx)?;
+        writeln!(ctx, "///")?;
+        writeln!(ctx, "/// # Safety")?;
+        writeln!(ctx, "/// `iface` must point to an SDL interface struct")?;
+        writeln!(ctx, "#[inline(always)]")?;
+        writeln!(
+            ctx,
+            "pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {{"
+        )?;
+        ctx.increase_indent();
+        writeln!(ctx, "unsafe {{ iface.write(T::init()) }};")?;
+        ctx.decrease_indent();
+        writeln!(ctx, "}}")?;
+        writeln!(ctx)?;
+        Ok(true)
+    },
+}];
 
 type MacroCallPatch = Patch<[Expr]>;
 
@@ -68,6 +92,17 @@ const MACRO_CALL_PATCHES: &[MacroCallPatch] = &[
         },
     },
 ];
+
+pub fn patch_define(ctx: &mut EmitContext, define: &Define) -> Result<bool, EmitErr> {
+    for patch in DEFINE_PATCHES.iter() {
+        if (patch.module.is_none() || patch.module == Some(&*ctx.module()))
+            && patch.ident == define.ident.as_str()
+        {
+            return (patch.patch)(ctx, define);
+        }
+    }
+    Ok(false)
+}
 
 pub fn patch_macro_call(
     ctx: &mut EmitContext,

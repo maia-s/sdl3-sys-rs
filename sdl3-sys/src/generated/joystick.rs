@@ -450,6 +450,26 @@ pub struct SDL_VirtualJoystickDesc {
     pub Cleanup: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>,
 }
 
+impl SDL_VirtualJoystickDesc {
+    /// Create a new `SDL_VirtualJoystickDesc` and initialize it with `SDL_INIT_INTERFACE`
+    #[inline]
+    pub const fn init() -> Self {
+        ::core::assert!(::core::mem::size_of::<Self>() <= u32::MAX as usize);
+        let mut this = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
+        this.version = ::core::mem::size_of::<Self>() as u32;
+        this
+    }
+}
+
+impl crate::sealed_interface::Sealed for SDL_VirtualJoystickDesc {}
+
+impl crate::Interface for SDL_VirtualJoystickDesc {
+    #[inline(always)]
+    fn init() -> Self {
+        Self::init()
+    }
+}
+
 const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 84) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 136)));
 
 extern "C" {

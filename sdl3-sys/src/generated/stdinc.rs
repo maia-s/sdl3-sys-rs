@@ -276,6 +276,50 @@ emit! {
 
 }
 
+/// A macro to initialize an SDL interface.
+///
+/// This macro will initialize an SDL interface structure and should be called
+/// before you fill out the fields with your implementation.
+///
+/// You can use it like this:
+///
+/// ```c
+/// SDL_IOStreamInterface iface;
+///
+/// SDL_INIT_INTERFACE(&iface);
+///
+/// // Fill in the interface function pointers with your implementation
+/// iface.seek = ...
+///
+/// stream = SDL_OpenIO(&iface, NULL);
+/// ```
+///
+/// If you are using designated initializers, you can use the size of the
+/// interface as the version, e.g.
+///
+/// ```c
+/// SDL_IOStreamInterface iface = {
+///     .version = sizeof(iface),
+///     .seek = ...
+/// };
+/// stream = SDL_OpenIO(&iface, NULL);
+/// ```
+///
+/// \threadsafety It is safe to call this macro from any thread.
+///
+/// \since This macro is available since SDL 3.0.0.
+///
+/// \sa SDL_IOStreamInterface
+/// \sa SDL_StorageInterface
+/// \sa SDL_VirtualJoystickDesc
+///
+/// # Safety
+/// `iface` must point to an SDL interface struct
+#[inline(always)]
+pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {
+    unsafe { iface.write(T::init()) };
+}
+
 extern "C" {
     pub fn SDL_malloc(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
 }

@@ -16,6 +16,7 @@ use std::{
 mod expr;
 pub use expr::Value;
 mod patch;
+use patch::patch_define;
 pub use patch::patch_macro_call;
 mod state;
 use state::PreProcState;
@@ -361,7 +362,9 @@ impl Emit for Define {
             self.args.clone(),
             self.value.clone(),
         )?;
-        if self.args.is_none() {
+        if patch_define(ctx, self)? {
+            // patched
+        } else if self.args.is_none() {
             let ident = self.ident.as_str();
             if ident.ends_with("_h_") || ident == "SDL_locale_h" {
                 // skip include guard define
@@ -515,6 +518,12 @@ impl StructOrUnion {
         )?;
 
         if let Some(fields) = &self.fields {
+            let may_be_interface = if let Some(doc) = &doc {
+                doc.span.contains("SDL_INIT_INTERFACE")
+            } else {
+                false
+            };
+
             let ctx_ool = &mut { ctx.with_ool_output() };
             doc.emit(ctx_ool)?;
             writeln!(ctx_ool, "#[repr(C)]")?;
@@ -533,7 +542,11 @@ impl StructOrUnion {
             )?;
             ctx_ool.increase_indent();
 
+            let mut has_version_field = false;
             for field in fields.fields.iter() {
+                if field.ident.as_str() == "version" {
+                    has_version_field = true;
+                }
                 field.doc.emit(ctx_ool)?;
                 write!(ctx_ool, "pub ")?;
                 field.ident.emit(ctx_ool)?;
@@ -545,6 +558,49 @@ impl StructOrUnion {
             ctx_ool.decrease_indent();
             writeln!(ctx_ool, "}}")?;
             writeln!(ctx_ool)?;
+
+            if may_be_interface && has_version_field {
+                writeln!(ctx_ool, "impl {ident} {{")?;
+                ctx_ool.increase_indent();
+                writeln!(
+                    ctx_ool,
+                    "/// Create a new `{ident}` and initialize it with `SDL_INIT_INTERFACE`"
+                )?;
+                writeln!(ctx_ool, "#[inline]")?;
+                writeln!(ctx_ool, "pub const fn init() -> Self {{")?;
+                ctx_ool.increase_indent();
+                writeln!(
+                    ctx_ool,
+                    "::core::assert!(::core::mem::size_of::<Self>() <= u32::MAX as usize);"
+                )?;
+                writeln!(ctx_ool, "let mut this = unsafe {{ ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }};")?;
+                writeln!(
+                    ctx_ool,
+                    "this.version = ::core::mem::size_of::<Self>() as u32;"
+                )?;
+                writeln!(ctx_ool, "this")?;
+                ctx_ool.decrease_indent();
+                writeln!(ctx_ool, "}}")?;
+                ctx_ool.decrease_indent();
+                writeln!(ctx_ool, "}}")?;
+                writeln!(ctx_ool)?;
+                writeln!(
+                    ctx_ool,
+                    "impl crate::sealed_interface::Sealed for {ident} {{}}"
+                )?;
+                writeln!(ctx_ool)?;
+                writeln!(ctx_ool, "impl crate::Interface for {ident} {{")?;
+                ctx_ool.increase_indent();
+                writeln!(ctx_ool, "#[inline(always)]")?;
+                writeln!(ctx_ool, "fn init() -> Self {{")?;
+                ctx_ool.increase_indent();
+                writeln!(ctx_ool, "Self::init()")?;
+                ctx_ool.decrease_indent();
+                writeln!(ctx_ool, "}}")?;
+                ctx_ool.decrease_indent();
+                writeln!(ctx_ool, "}}")?;
+                writeln!(ctx_ool)?;
+            }
         }
         if with_ident {
             ident.emit(ctx)?;

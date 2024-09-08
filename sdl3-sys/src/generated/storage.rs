@@ -44,6 +44,26 @@ pub struct SDL_StorageInterface {
     pub space_remaining: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> Uint64>,
 }
 
+impl SDL_StorageInterface {
+    /// Create a new `SDL_StorageInterface` and initialize it with `SDL_INIT_INTERFACE`
+    #[inline]
+    pub const fn init() -> Self {
+        ::core::assert!(::core::mem::size_of::<Self>() <= u32::MAX as usize);
+        let mut this = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
+        this.version = ::core::mem::size_of::<Self>() as u32;
+        this
+    }
+}
+
+impl crate::sealed_interface::Sealed for SDL_StorageInterface {}
+
+impl crate::Interface for SDL_StorageInterface {
+    #[inline(always)]
+    fn init() -> Self {
+        Self::init()
+    }
+}
+
 const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_StorageInterface>() == 48) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_StorageInterface>() == 96)));
 
 extern "C" {

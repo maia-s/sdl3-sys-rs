@@ -131,6 +131,26 @@ pub struct SDL_IOStreamInterface {
     pub close: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool>,
 }
 
+impl SDL_IOStreamInterface {
+    /// Create a new `SDL_IOStreamInterface` and initialize it with `SDL_INIT_INTERFACE`
+    #[inline]
+    pub const fn init() -> Self {
+        ::core::assert!(::core::mem::size_of::<Self>() <= u32::MAX as usize);
+        let mut this = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
+        this.version = ::core::mem::size_of::<Self>() as u32;
+        this
+    }
+}
+
+impl crate::sealed_interface::Sealed for SDL_IOStreamInterface {}
+
+impl crate::Interface for SDL_IOStreamInterface {
+    #[inline(always)]
+    fn init() -> Self {
+        Self::init()
+    }
+}
+
 const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_IOStreamInterface>() == 24) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_IOStreamInterface>() == 48)));
 
 extern "C" {
