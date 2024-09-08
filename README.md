@@ -1,12 +1,7 @@
 # sdl3-sys
 
-This is a work in progress of the "new" sdl3-sys for Rust! The bindings themselves will be in the
-sdl3-sys crate in the sdl3-sys dir, but currently that's incomplete as I'm working on finishing the
-generator, in sdl3-sys-gen.
-
-You can look at the files in sdl3-sys/src/generated for an idea of what the bindings will be like.
-(Note this currently doesn't output anything for #define'd functions. They're parsed and available
-to the generator, but they're not emitted yet.)
+This is a work in progress of the "new" sdl3-sys for Rust! The bindings themselves are in sdl3-sys,
+and the generator that generates them is in sdl3-sys-gen.
 
 ### Why not use bindgen?
 
