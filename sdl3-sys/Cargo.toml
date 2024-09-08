@@ -1,9 +1,14 @@
 [package]
 name = "sdl3-sys"
-version = "0.0.9+sdl3-3.1.2"
+version = "0.0.9+sdl3-prerelease-3.1.2-1636-g7df1caba7"
 edition = "2021"
 authors = ["Maia S. R."]
 license = "Zlib"
+description = "Rust bindings for version 3 of the SDL library (Simple DirectMedia Layer)"
+repository = "https://github.com/maia-s/sdl3-sys-rs"
+documentation = "https://docs.rs/sdl3-sys"
+keywords = ["sdl", "windowing", "graphics"]
+categories = ["external-ffi-bindings", "rendering", "game-development", "multimedia", "no-std"]
 
 [features]
 default = []
@@ -21,3 +26,6 @@ assert-level-paranoid = []
 
 # Used to enable core::ffi::VaList
 nightly = []
+
+[package.metadata.docs.rs]
+all-features = true

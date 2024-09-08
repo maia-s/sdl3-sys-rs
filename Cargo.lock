@@ -10,7 +10,7 @@ checksum = "f2cb6b2bb0b3b03d18eb4feb1b0fe49df04ece2e656bbfdd77ea62ca111a1ba9"
 
 [[package]]
 name = "sdl3-sys"
-version = "0.0.9+sdl3-3.1.2"
+version = "0.0.9+sdl3-prerelease-3.1.2-1636-g7df1caba7"
 
 [[package]]
 name = "sdl3-sys-gen"
