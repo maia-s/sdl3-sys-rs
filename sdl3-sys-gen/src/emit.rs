@@ -16,7 +16,7 @@ use std::{
 mod expr;
 pub use expr::Value;
 mod patch;
-pub use patch::{patch_macro_call, patch_sdl_compile_time_assert};
+pub use patch::patch_macro_call;
 mod state;
 use state::PreProcState;
 pub use state::{DefineState, EmitContext, InnerEmitContext};
@@ -232,17 +232,7 @@ impl Emit for Item {
             Item::Enum(_) => todo!(),
             Item::Function(f) => f.emit(ctx),
             Item::Expr(e) => e.emit(ctx),
-            Item::FnCall(call) => {
-                if let (Expr::Ident(call), Expr::Ident(arg)) = (&*call.func, &call.args[0]) {
-                    if patch_macro_call(ctx, call.as_str(), arg.as_str())? {
-                        Ok(())
-                    } else {
-                        todo!()
-                    }
-                } else {
-                    todo!()
-                }
-            }
+            Item::FnCall(call) => call.emit(ctx),
             Item::TypeDef(td) => td.emit(ctx),
             Item::VarDecl(_) => todo!(),
             Item::DoWhile(_) => todo!(),

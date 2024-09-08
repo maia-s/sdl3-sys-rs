@@ -1,6 +1,4 @@
-use super::{
-    patch_sdl_compile_time_assert, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval,
-};
+use super::{patch_macro_call, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval};
 use crate::parse::{
     Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan, Ident,
     IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
@@ -824,32 +822,29 @@ impl Emit for Parenthesized {
 impl Emit for FnCall {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if let Expr::Ident(ident) = &*self.func {
-            match ident.as_str() {
-                "SDL_COMPILE_TIME_ASSERT" => {
-                    assert_eq!(self.args.len(), 2);
-                    let Expr::Ident(id) = &self.args[0] else {
-                        todo!()
-                    };
-                    if patch_sdl_compile_time_assert(ctx, id.as_str())? {
-                        return Ok(());
-                    }
+            if patch_macro_call(ctx, ident.as_str(), &self.args)? {
+                Ok(())
+            } else {
+                match ident.as_str() {
+                    "SDL_COMPILE_TIME_ASSERT" => {
+                        assert_eq!(self.args.len(), 2);
+                        let value = self.args[1].try_eval(ctx)?;
+                        match value {
+                            Some(Value::RustCode(s)) => {
+                                writeln!(ctx, "const _: () = ::core::assert!({s});")?;
+                                writeln!(ctx)?;
+                                Ok(())
+                            }
 
-                    let value = self.args[1].try_eval(ctx)?;
-                    match value {
-                        Some(Value::RustCode(s)) => {
-                            writeln!(ctx, "const _: () = ::core::assert!({s});")?;
-                            writeln!(ctx)?;
-                            Ok(())
-                        }
-
-                        _ => {
-                            dbg!(self, value);
-                            todo!()
+                            _ => {
+                                dbg!(self, value);
+                                todo!()
+                            }
                         }
                     }
+
+                    _ => todo!(),
                 }
-
-                _ => todo!(),
             }
         } else {
             todo!()
