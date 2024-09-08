@@ -1312,9 +1312,9 @@ extern "C" {
     pub fn SDL_StopHapticRumble(haptic: *mut SDL_Haptic) -> SDL_bool;
 }
 
-/// \typedef SDL_Haptic
-///
 /// The haptic structure used to identify an SDL haptic.
+///
+/// \since This struct is available since SDL 3.0.0.
 ///
 /// \sa SDL_OpenHaptic
 /// \sa SDL_OpenHapticFromJoystick
