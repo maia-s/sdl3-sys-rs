@@ -1,4 +1,4 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens)]
+#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph)]
 
 //! # CategoryHaptic
 //!
@@ -516,8 +516,8 @@ pub struct SDL_HapticConstant {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticPeriodic {
     /// SDL_HAPTIC_SINE, SDL_HAPTIC_SQUARE
-    ///                              SDL_HAPTIC_TRIANGLE, SDL_HAPTIC_SAWTOOTHUP or
-    ///                              SDL_HAPTIC_SAWTOOTHDOWN
+    /// SDL_HAPTIC_TRIANGLE, SDL_HAPTIC_SAWTOOTHUP or
+    /// SDL_HAPTIC_SAWTOOTHDOWN
     pub r#type: Uint16,
     /// Direction of the effect.
     pub direction: SDL_HapticDirection,
@@ -577,7 +577,7 @@ pub struct SDL_HapticPeriodic {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticCondition {
     /// SDL_HAPTIC_SPRING, SDL_HAPTIC_DAMPER,
-    ///                                  SDL_HAPTIC_INERTIA or SDL_HAPTIC_FRICTION
+    /// SDL_HAPTIC_INERTIA or SDL_HAPTIC_FRICTION
     pub r#type: Uint16,
     /// Direction of the effect - Not used ATM.
     pub direction: SDL_HapticDirection,

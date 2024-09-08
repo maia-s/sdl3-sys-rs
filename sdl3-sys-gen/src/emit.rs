@@ -1,5 +1,5 @@
 use crate::{
-    common_prefix,
+    common_ident_prefix,
     parse::{
         ArgDecl, Define, DocComment, DocCommentFile, Expr, FnAbi, FnDeclArgs, FnPointer, Function,
         GetSpan, Ident, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock,
@@ -707,7 +707,7 @@ impl Emit for TypeDef {
                     for variant in &e.variants {
                         known_values.push(", ".into());
                         known_values.push(format!("[`{}`]", variant.ident.as_str()));
-                        prefix = common_prefix(prefix, variant.ident.as_str(), Some(b'_'));
+                        prefix = common_ident_prefix(prefix, variant.ident.as_str());
                     }
                     prefix
                 } else {

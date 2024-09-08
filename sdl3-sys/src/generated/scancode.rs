@@ -1,4 +1,4 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens)]
+#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph)]
 
 //! # CategoryScancode
 //!
@@ -72,49 +72,49 @@ impl SDL_Scancode {
     pub const SCANCODE_LEFTBRACKET: Self = Self(47);
     pub const SCANCODE_RIGHTBRACKET: Self = Self(48);
     /// Located at the lower left of the return
-    ///                                   *   key on ISO keyboards and at the right end
-    ///                                   *   of the QWERTY row on ANSI keyboards.
-    ///                                   *   Produces REVERSE SOLIDUS (backslash) and
-    ///                                   *   VERTICAL LINE in a US layout, REVERSE
-    ///                                   *   SOLIDUS and VERTICAL LINE in a UK Mac
-    ///                                   *   layout, NUMBER SIGN and TILDE in a UK
-    ///                                   *   Windows layout, DOLLAR SIGN and POUND SIGN
-    ///                                   *   in a Swiss German layout, NUMBER SIGN and
-    ///                                   *   APOSTROPHE in a German layout, GRAVE
-    ///                                   *   ACCENT and POUND SIGN in a French Mac
-    ///                                   *   layout, and ASTERISK and MICRO SIGN in a
-    ///                                   *   French Windows layout.
+    /// key on ISO keyboards and at the right end
+    /// of the QWERTY row on ANSI keyboards.
+    /// Produces REVERSE SOLIDUS (backslash) and
+    /// VERTICAL LINE in a US layout, REVERSE
+    /// SOLIDUS and VERTICAL LINE in a UK Mac
+    /// layout, NUMBER SIGN and TILDE in a UK
+    /// Windows layout, DOLLAR SIGN and POUND SIGN
+    /// in a Swiss German layout, NUMBER SIGN and
+    /// APOSTROPHE in a German layout, GRAVE
+    /// ACCENT and POUND SIGN in a French Mac
+    /// layout, and ASTERISK and MICRO SIGN in a
+    /// French Windows layout.
     pub const SCANCODE_BACKSLASH: Self = Self(49);
     /// ISO USB keyboards actually use this code
-    ///                                   *   instead of 49 for the same key, but all
-    ///                                   *   OSes I've seen treat the two codes
-    ///                                   *   identically. So, as an implementor, unless
-    ///                                   *   your keyboard generates both of those
-    ///                                   *   codes and your OS treats them differently,
-    ///                                   *   you should generate SDL_SCANCODE_BACKSLASH
-    ///                                   *   instead of this code. As a user, you
-    ///                                   *   should not rely on this code because SDL
-    ///                                   *   will never generate it with most (all?)
-    ///                                   *   keyboards.
+    /// instead of 49 for the same key, but all
+    /// OSes I've seen treat the two codes
+    /// identically. So, as an implementor, unless
+    /// your keyboard generates both of those
+    /// codes and your OS treats them differently,
+    /// you should generate SDL_SCANCODE_BACKSLASH
+    /// instead of this code. As a user, you
+    /// should not rely on this code because SDL
+    /// will never generate it with most (all?)
+    /// keyboards.
     pub const SCANCODE_NONUSHASH: Self = Self(50);
     pub const SCANCODE_SEMICOLON: Self = Self(51);
     pub const SCANCODE_APOSTROPHE: Self = Self(52);
     /// Located in the top left corner (on both ANSI
-    ///                               *   and ISO keyboards). Produces GRAVE ACCENT and
-    ///                               *   TILDE in a US Windows layout and in US and UK
-    ///                               *   Mac layouts on ANSI keyboards, GRAVE ACCENT
-    ///                               *   and NOT SIGN in a UK Windows layout, SECTION
-    ///                               *   SIGN and PLUS-MINUS SIGN in US and UK Mac
-    ///                               *   layouts on ISO keyboards, SECTION SIGN and
-    ///                               *   DEGREE SIGN in a Swiss German layout (Mac:
-    ///                               *   only on ISO keyboards), CIRCUMFLEX ACCENT and
-    ///                               *   DEGREE SIGN in a German layout (Mac: only on
-    ///                               *   ISO keyboards), SUPERSCRIPT TWO and TILDE in a
-    ///                               *   French Windows layout, COMMERCIAL AT and
-    ///                               *   NUMBER SIGN in a French Mac layout on ISO
-    ///                               *   keyboards, and LESS-THAN SIGN and GREATER-THAN
-    ///                               *   SIGN in a Swiss German, German, or French Mac
-    ///                               *   layout on ANSI keyboards.
+    /// and ISO keyboards). Produces GRAVE ACCENT and
+    /// TILDE in a US Windows layout and in US and UK
+    /// Mac layouts on ANSI keyboards, GRAVE ACCENT
+    /// and NOT SIGN in a UK Windows layout, SECTION
+    /// SIGN and PLUS-MINUS SIGN in US and UK Mac
+    /// layouts on ISO keyboards, SECTION SIGN and
+    /// DEGREE SIGN in a Swiss German layout (Mac:
+    /// only on ISO keyboards), CIRCUMFLEX ACCENT and
+    /// DEGREE SIGN in a German layout (Mac: only on
+    /// ISO keyboards), SUPERSCRIPT TWO and TILDE in a
+    /// French Windows layout, COMMERCIAL AT and
+    /// NUMBER SIGN in a French Mac layout on ISO
+    /// keyboards, and LESS-THAN SIGN and GREATER-THAN
+    /// SIGN in a Swiss German, German, or French Mac
+    /// layout on ANSI keyboards.
     pub const SCANCODE_GRAVE: Self = Self(53);
     pub const SCANCODE_COMMA: Self = Self(54);
     pub const SCANCODE_PERIOD: Self = Self(55);
@@ -136,7 +136,7 @@ impl SDL_Scancode {
     pub const SCANCODE_SCROLLLOCK: Self = Self(71);
     pub const SCANCODE_PAUSE: Self = Self(72);
     /// insert on PC, help on some Mac keyboards (but
-    ///                                    does send code 73, not 117)
+    /// does send code 73, not 117)
     pub const SCANCODE_INSERT: Self = Self(73);
     pub const SCANCODE_HOME: Self = Self(74);
     pub const SCANCODE_PAGEUP: Self = Self(75);
@@ -166,21 +166,21 @@ impl SDL_Scancode {
     pub const SCANCODE_KP_0: Self = Self(98);
     pub const SCANCODE_KP_PERIOD: Self = Self(99);
     /// This is the additional key that ISO
-    ///                                         *   keyboards have over ANSI ones,
-    ///                                         *   located between left shift and Y.
-    ///                                         *   Produces GRAVE ACCENT and TILDE in a
-    ///                                         *   US or UK Mac layout, REVERSE SOLIDUS
-    ///                                         *   (backslash) and VERTICAL LINE in a
-    ///                                         *   US or UK Windows layout, and
-    ///                                         *   LESS-THAN SIGN and GREATER-THAN SIGN
-    ///                                         *   in a Swiss German, German, or French
-    ///                                         *   layout.
+    /// keyboards have over ANSI ones,
+    /// located between left shift and Y.
+    /// Produces GRAVE ACCENT and TILDE in a
+    /// US or UK Mac layout, REVERSE SOLIDUS
+    /// (backslash) and VERTICAL LINE in a
+    /// US or UK Windows layout, and
+    /// LESS-THAN SIGN and GREATER-THAN SIGN
+    /// in a Swiss German, German, or French
+    /// layout.
     pub const SCANCODE_NONUSBACKSLASH: Self = Self(100);
     /// windows contextual menu, compose
     pub const SCANCODE_APPLICATION: Self = Self(101);
     /// The USB document says this is a status flag,
-    ///                                *   not a physical key - but some Mac keyboards
-    ///                                *   do have a power key.
+    /// not a physical key - but some Mac keyboards
+    /// do have a power key.
     pub const SCANCODE_POWER: Self = Self(102);
     pub const SCANCODE_KP_EQUALS: Self = Self(103);
     pub const SCANCODE_F13: Self = Self(104);
@@ -221,7 +221,7 @@ impl SDL_Scancode {
     pub const SCANCODE_KP_COMMA: Self = Self(133);
     pub const SCANCODE_KP_EQUALSAS400: Self = Self(134);
     /// used on Asian keyboards, see
-    ///                                             footnotes in USB doc
+    /// footnotes in USB doc
     pub const SCANCODE_INTERNATIONAL1: Self = Self(135);
     pub const SCANCODE_INTERNATIONAL2: Self = Self(136);
     /// Yen
@@ -323,8 +323,8 @@ impl SDL_Scancode {
     /// windows, command (apple), meta
     pub const SCANCODE_RGUI: Self = Self(231);
     /// I'm not sure if this is really not covered
-    ///                                  *   by any of the above, but since there's a
-    ///                                  *   special SDL_KMOD_MODE for it I'm adding it here
+    /// by any of the above, but since there's a
+    /// special SDL_KMOD_MODE for it I'm adding it here
     pub const SCANCODE_MODE: Self = Self(257);
     /// Sleep
     pub const SCANCODE_SLEEP: Self = Self(258);
@@ -384,14 +384,14 @@ impl SDL_Scancode {
     /// AC Bookmarks
     pub const SCANCODE_AC_BOOKMARKS: Self = Self(286);
     /// Usually situated below the display on phones and
-    ///                                       used as a multi-function feature key for selecting
-    ///                                       a software defined function shown on the bottom left
-    ///                                       of the display.
+    /// used as a multi-function feature key for selecting
+    /// a software defined function shown on the bottom left
+    /// of the display.
     pub const SCANCODE_SOFTLEFT: Self = Self(287);
     /// Usually situated below the display on phones and
-    ///                                        used as a multi-function feature key for selecting
-    ///                                        a software defined function shown on the bottom right
-    ///                                        of the display.
+    /// used as a multi-function feature key for selecting
+    /// a software defined function shown on the bottom right
+    /// of the display.
     pub const SCANCODE_SOFTRIGHT: Self = Self(288);
     /// Used for accepting phone calls.
     pub const SCANCODE_CALL: Self = Self(289);
@@ -400,7 +400,7 @@ impl SDL_Scancode {
     /// 400-500 reserved for dynamic keycodes
     pub const SCANCODE_RESERVED: Self = Self(400);
     /// not a key, just marks the number of scancodes
-    ///                                  for array bounds
+    /// for array bounds
     pub const NUM_SCANCODES: Self = Self(512);
 }
 pub const SDL_SCANCODE_UNKNOWN: SDL_Scancode = SDL_Scancode::SCANCODE_UNKNOWN;
@@ -450,49 +450,49 @@ pub const SDL_SCANCODE_EQUALS: SDL_Scancode = SDL_Scancode::SCANCODE_EQUALS;
 pub const SDL_SCANCODE_LEFTBRACKET: SDL_Scancode = SDL_Scancode::SCANCODE_LEFTBRACKET;
 pub const SDL_SCANCODE_RIGHTBRACKET: SDL_Scancode = SDL_Scancode::SCANCODE_RIGHTBRACKET;
 /// Located at the lower left of the return
-///                                   *   key on ISO keyboards and at the right end
-///                                   *   of the QWERTY row on ANSI keyboards.
-///                                   *   Produces REVERSE SOLIDUS (backslash) and
-///                                   *   VERTICAL LINE in a US layout, REVERSE
-///                                   *   SOLIDUS and VERTICAL LINE in a UK Mac
-///                                   *   layout, NUMBER SIGN and TILDE in a UK
-///                                   *   Windows layout, DOLLAR SIGN and POUND SIGN
-///                                   *   in a Swiss German layout, NUMBER SIGN and
-///                                   *   APOSTROPHE in a German layout, GRAVE
-///                                   *   ACCENT and POUND SIGN in a French Mac
-///                                   *   layout, and ASTERISK and MICRO SIGN in a
-///                                   *   French Windows layout.
+/// key on ISO keyboards and at the right end
+/// of the QWERTY row on ANSI keyboards.
+/// Produces REVERSE SOLIDUS (backslash) and
+/// VERTICAL LINE in a US layout, REVERSE
+/// SOLIDUS and VERTICAL LINE in a UK Mac
+/// layout, NUMBER SIGN and TILDE in a UK
+/// Windows layout, DOLLAR SIGN and POUND SIGN
+/// in a Swiss German layout, NUMBER SIGN and
+/// APOSTROPHE in a German layout, GRAVE
+/// ACCENT and POUND SIGN in a French Mac
+/// layout, and ASTERISK and MICRO SIGN in a
+/// French Windows layout.
 pub const SDL_SCANCODE_BACKSLASH: SDL_Scancode = SDL_Scancode::SCANCODE_BACKSLASH;
 /// ISO USB keyboards actually use this code
-///                                   *   instead of 49 for the same key, but all
-///                                   *   OSes I've seen treat the two codes
-///                                   *   identically. So, as an implementor, unless
-///                                   *   your keyboard generates both of those
-///                                   *   codes and your OS treats them differently,
-///                                   *   you should generate SDL_SCANCODE_BACKSLASH
-///                                   *   instead of this code. As a user, you
-///                                   *   should not rely on this code because SDL
-///                                   *   will never generate it with most (all?)
-///                                   *   keyboards.
+/// instead of 49 for the same key, but all
+/// OSes I've seen treat the two codes
+/// identically. So, as an implementor, unless
+/// your keyboard generates both of those
+/// codes and your OS treats them differently,
+/// you should generate SDL_SCANCODE_BACKSLASH
+/// instead of this code. As a user, you
+/// should not rely on this code because SDL
+/// will never generate it with most (all?)
+/// keyboards.
 pub const SDL_SCANCODE_NONUSHASH: SDL_Scancode = SDL_Scancode::SCANCODE_NONUSHASH;
 pub const SDL_SCANCODE_SEMICOLON: SDL_Scancode = SDL_Scancode::SCANCODE_SEMICOLON;
 pub const SDL_SCANCODE_APOSTROPHE: SDL_Scancode = SDL_Scancode::SCANCODE_APOSTROPHE;
 /// Located in the top left corner (on both ANSI
-///                               *   and ISO keyboards). Produces GRAVE ACCENT and
-///                               *   TILDE in a US Windows layout and in US and UK
-///                               *   Mac layouts on ANSI keyboards, GRAVE ACCENT
-///                               *   and NOT SIGN in a UK Windows layout, SECTION
-///                               *   SIGN and PLUS-MINUS SIGN in US and UK Mac
-///                               *   layouts on ISO keyboards, SECTION SIGN and
-///                               *   DEGREE SIGN in a Swiss German layout (Mac:
-///                               *   only on ISO keyboards), CIRCUMFLEX ACCENT and
-///                               *   DEGREE SIGN in a German layout (Mac: only on
-///                               *   ISO keyboards), SUPERSCRIPT TWO and TILDE in a
-///                               *   French Windows layout, COMMERCIAL AT and
-///                               *   NUMBER SIGN in a French Mac layout on ISO
-///                               *   keyboards, and LESS-THAN SIGN and GREATER-THAN
-///                               *   SIGN in a Swiss German, German, or French Mac
-///                               *   layout on ANSI keyboards.
+/// and ISO keyboards). Produces GRAVE ACCENT and
+/// TILDE in a US Windows layout and in US and UK
+/// Mac layouts on ANSI keyboards, GRAVE ACCENT
+/// and NOT SIGN in a UK Windows layout, SECTION
+/// SIGN and PLUS-MINUS SIGN in US and UK Mac
+/// layouts on ISO keyboards, SECTION SIGN and
+/// DEGREE SIGN in a Swiss German layout (Mac:
+/// only on ISO keyboards), CIRCUMFLEX ACCENT and
+/// DEGREE SIGN in a German layout (Mac: only on
+/// ISO keyboards), SUPERSCRIPT TWO and TILDE in a
+/// French Windows layout, COMMERCIAL AT and
+/// NUMBER SIGN in a French Mac layout on ISO
+/// keyboards, and LESS-THAN SIGN and GREATER-THAN
+/// SIGN in a Swiss German, German, or French Mac
+/// layout on ANSI keyboards.
 pub const SDL_SCANCODE_GRAVE: SDL_Scancode = SDL_Scancode::SCANCODE_GRAVE;
 pub const SDL_SCANCODE_COMMA: SDL_Scancode = SDL_Scancode::SCANCODE_COMMA;
 pub const SDL_SCANCODE_PERIOD: SDL_Scancode = SDL_Scancode::SCANCODE_PERIOD;
@@ -514,7 +514,7 @@ pub const SDL_SCANCODE_PRINTSCREEN: SDL_Scancode = SDL_Scancode::SCANCODE_PRINTS
 pub const SDL_SCANCODE_SCROLLLOCK: SDL_Scancode = SDL_Scancode::SCANCODE_SCROLLLOCK;
 pub const SDL_SCANCODE_PAUSE: SDL_Scancode = SDL_Scancode::SCANCODE_PAUSE;
 /// insert on PC, help on some Mac keyboards (but
-///                                    does send code 73, not 117)
+/// does send code 73, not 117)
 pub const SDL_SCANCODE_INSERT: SDL_Scancode = SDL_Scancode::SCANCODE_INSERT;
 pub const SDL_SCANCODE_HOME: SDL_Scancode = SDL_Scancode::SCANCODE_HOME;
 pub const SDL_SCANCODE_PAGEUP: SDL_Scancode = SDL_Scancode::SCANCODE_PAGEUP;
@@ -544,21 +544,21 @@ pub const SDL_SCANCODE_KP_9: SDL_Scancode = SDL_Scancode::SCANCODE_KP_9;
 pub const SDL_SCANCODE_KP_0: SDL_Scancode = SDL_Scancode::SCANCODE_KP_0;
 pub const SDL_SCANCODE_KP_PERIOD: SDL_Scancode = SDL_Scancode::SCANCODE_KP_PERIOD;
 /// This is the additional key that ISO
-///                                         *   keyboards have over ANSI ones,
-///                                         *   located between left shift and Y.
-///                                         *   Produces GRAVE ACCENT and TILDE in a
-///                                         *   US or UK Mac layout, REVERSE SOLIDUS
-///                                         *   (backslash) and VERTICAL LINE in a
-///                                         *   US or UK Windows layout, and
-///                                         *   LESS-THAN SIGN and GREATER-THAN SIGN
-///                                         *   in a Swiss German, German, or French
-///                                         *   layout.
+/// keyboards have over ANSI ones,
+/// located between left shift and Y.
+/// Produces GRAVE ACCENT and TILDE in a
+/// US or UK Mac layout, REVERSE SOLIDUS
+/// (backslash) and VERTICAL LINE in a
+/// US or UK Windows layout, and
+/// LESS-THAN SIGN and GREATER-THAN SIGN
+/// in a Swiss German, German, or French
+/// layout.
 pub const SDL_SCANCODE_NONUSBACKSLASH: SDL_Scancode = SDL_Scancode::SCANCODE_NONUSBACKSLASH;
 /// windows contextual menu, compose
 pub const SDL_SCANCODE_APPLICATION: SDL_Scancode = SDL_Scancode::SCANCODE_APPLICATION;
 /// The USB document says this is a status flag,
-///                                *   not a physical key - but some Mac keyboards
-///                                *   do have a power key.
+/// not a physical key - but some Mac keyboards
+/// do have a power key.
 pub const SDL_SCANCODE_POWER: SDL_Scancode = SDL_Scancode::SCANCODE_POWER;
 pub const SDL_SCANCODE_KP_EQUALS: SDL_Scancode = SDL_Scancode::SCANCODE_KP_EQUALS;
 pub const SDL_SCANCODE_F13: SDL_Scancode = SDL_Scancode::SCANCODE_F13;
@@ -599,7 +599,7 @@ pub const SDL_SCANCODE_VOLUMEDOWN: SDL_Scancode = SDL_Scancode::SCANCODE_VOLUMED
 pub const SDL_SCANCODE_KP_COMMA: SDL_Scancode = SDL_Scancode::SCANCODE_KP_COMMA;
 pub const SDL_SCANCODE_KP_EQUALSAS400: SDL_Scancode = SDL_Scancode::SCANCODE_KP_EQUALSAS400;
 /// used on Asian keyboards, see
-///                                             footnotes in USB doc
+/// footnotes in USB doc
 pub const SDL_SCANCODE_INTERNATIONAL1: SDL_Scancode = SDL_Scancode::SCANCODE_INTERNATIONAL1;
 pub const SDL_SCANCODE_INTERNATIONAL2: SDL_Scancode = SDL_Scancode::SCANCODE_INTERNATIONAL2;
 /// Yen
@@ -701,8 +701,8 @@ pub const SDL_SCANCODE_RALT: SDL_Scancode = SDL_Scancode::SCANCODE_RALT;
 /// windows, command (apple), meta
 pub const SDL_SCANCODE_RGUI: SDL_Scancode = SDL_Scancode::SCANCODE_RGUI;
 /// I'm not sure if this is really not covered
-///                                  *   by any of the above, but since there's a
-///                                  *   special SDL_KMOD_MODE for it I'm adding it here
+/// by any of the above, but since there's a
+/// special SDL_KMOD_MODE for it I'm adding it here
 pub const SDL_SCANCODE_MODE: SDL_Scancode = SDL_Scancode::SCANCODE_MODE;
 /// Sleep
 pub const SDL_SCANCODE_SLEEP: SDL_Scancode = SDL_Scancode::SCANCODE_SLEEP;
@@ -762,14 +762,14 @@ pub const SDL_SCANCODE_AC_REFRESH: SDL_Scancode = SDL_Scancode::SCANCODE_AC_REFR
 /// AC Bookmarks
 pub const SDL_SCANCODE_AC_BOOKMARKS: SDL_Scancode = SDL_Scancode::SCANCODE_AC_BOOKMARKS;
 /// Usually situated below the display on phones and
-///                                       used as a multi-function feature key for selecting
-///                                       a software defined function shown on the bottom left
-///                                       of the display.
+/// used as a multi-function feature key for selecting
+/// a software defined function shown on the bottom left
+/// of the display.
 pub const SDL_SCANCODE_SOFTLEFT: SDL_Scancode = SDL_Scancode::SCANCODE_SOFTLEFT;
 /// Usually situated below the display on phones and
-///                                        used as a multi-function feature key for selecting
-///                                        a software defined function shown on the bottom right
-///                                        of the display.
+/// used as a multi-function feature key for selecting
+/// a software defined function shown on the bottom right
+/// of the display.
 pub const SDL_SCANCODE_SOFTRIGHT: SDL_Scancode = SDL_Scancode::SCANCODE_SOFTRIGHT;
 /// Used for accepting phone calls.
 pub const SDL_SCANCODE_CALL: SDL_Scancode = SDL_Scancode::SCANCODE_CALL;
@@ -778,6 +778,6 @@ pub const SDL_SCANCODE_ENDCALL: SDL_Scancode = SDL_Scancode::SCANCODE_ENDCALL;
 /// 400-500 reserved for dynamic keycodes
 pub const SDL_SCANCODE_RESERVED: SDL_Scancode = SDL_Scancode::SCANCODE_RESERVED;
 /// not a key, just marks the number of scancodes
-///                                  for array bounds
+/// for array bounds
 pub const SDL_NUM_SCANCODES: SDL_Scancode = SDL_Scancode::NUM_SCANCODES;
 

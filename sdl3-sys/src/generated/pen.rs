@@ -1,4 +1,4 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens)]
+#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph)]
 
 //! # CategoryPen
 //!
@@ -79,10 +79,10 @@ impl SDL_PenAxis {
     /// Pen pressure.  Unidirectional: 0 to 1.0
     pub const AXIS_PRESSURE: Self = Self(0);
     /// Pen horizontal tilt angle.  Bidirectional: -90.0 to 90.0 (left-to-right).
-    ///                                  The physical max/min tilt may be smaller than -90.0 / 90.0, check SDL_PenCapabilityInfo
+    /// The physical max/min tilt may be smaller than -90.0 / 90.0, check SDL_PenCapabilityInfo
     pub const AXIS_XTILT: Self = Self(1);
     /// Pen vertical tilt angle.  Bidirectional: -90.0 to 90.0 (top-to-down).
-    ///                                  The physical max/min tilt may be smaller than -90.0 / 90.0 check SDL_PenCapabilityInfo
+    /// The physical max/min tilt may be smaller than -90.0 / 90.0 check SDL_PenCapabilityInfo
     pub const AXIS_YTILT: Self = Self(2);
     /// Pen distance to drawing surface.  Unidirectional: 0.0 to 1.0
     pub const AXIS_DISTANCE: Self = Self(3);
@@ -98,10 +98,10 @@ impl SDL_PenAxis {
 /// Pen pressure.  Unidirectional: 0 to 1.0
 pub const SDL_PEN_AXIS_PRESSURE: SDL_PenAxis = SDL_PenAxis::AXIS_PRESSURE;
 /// Pen horizontal tilt angle.  Bidirectional: -90.0 to 90.0 (left-to-right).
-///                                  The physical max/min tilt may be smaller than -90.0 / 90.0, check SDL_PenCapabilityInfo
+/// The physical max/min tilt may be smaller than -90.0 / 90.0, check SDL_PenCapabilityInfo
 pub const SDL_PEN_AXIS_XTILT: SDL_PenAxis = SDL_PenAxis::AXIS_XTILT;
 /// Pen vertical tilt angle.  Bidirectional: -90.0 to 90.0 (top-to-down).
-///                                  The physical max/min tilt may be smaller than -90.0 / 90.0 check SDL_PenCapabilityInfo
+/// The physical max/min tilt may be smaller than -90.0 / 90.0 check SDL_PenCapabilityInfo
 pub const SDL_PEN_AXIS_YTILT: SDL_PenAxis = SDL_PenAxis::AXIS_YTILT;
 /// Pen distance to drawing surface.  Unidirectional: 0.0 to 1.0
 pub const SDL_PEN_AXIS_DISTANCE: SDL_PenAxis = SDL_PenAxis::AXIS_DISTANCE;

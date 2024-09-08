@@ -1,5 +1,5 @@
 use super::{GetSpan, Parse, ParseContext, ParseErr, ParseRawRes, ParseRev, Span, WsAndComments};
-use crate::common_prefix;
+use crate::common_doc_prefix;
 use std::{
     borrow::Cow,
     fmt::{self, Display},
@@ -9,6 +9,7 @@ use std::{
 pub struct DocComment {
     pub span: Span,
     pub doc: Span,
+    pub trailing: bool,
 }
 
 impl Display for DocComment {
@@ -24,9 +25,10 @@ impl Display for DocComment {
                     // one non-empty line
                     return f.write_str(first.trim());
                 };
-                let mut prefix = common_prefix(first, second, None);
+                let mut prefix =
+                    common_doc_prefix(if self.trailing { second } else { first }, second);
                 for line in lines {
-                    prefix = common_prefix(prefix, line, None);
+                    prefix = common_doc_prefix(prefix, line);
                 }
                 prefix
             }};
@@ -138,17 +140,38 @@ impl Parse for DocComment {
                         if got_cr {
                             rest = rest.slice(i..);
                             let span = start.join(&rest.start());
-                            return Ok((rest, Some(Self { span, doc })));
+                            return Ok((
+                                rest,
+                                Some(Self {
+                                    span,
+                                    doc,
+                                    trailing: false,
+                                }),
+                            ));
                         }
                         got_cr = true;
                     } else if !ch.is_ascii_whitespace() {
                         rest = rest.slice(i..);
                         let span = start.join(&rest.start());
-                        return Ok((rest, Some(Self { span, doc })));
+                        return Ok((
+                            rest,
+                            Some(Self {
+                                span,
+                                doc,
+                                trailing: false,
+                            }),
+                        ));
                     }
                 }
                 let span = start.join(&rest.start());
-                Ok((rest.end(), Some(Self { span, doc })))
+                Ok((
+                    rest.end(),
+                    Some(Self {
+                        span,
+                        doc,
+                        trailing: false,
+                    }),
+                ))
             } else {
                 Err(ParseErr::new(rest.slice(..4), "doc comment with no end"))
             }
@@ -225,6 +248,7 @@ impl From<DocCommentPost> for DocComment {
         Self {
             span: value.span,
             doc: value.doc,
+            trailing: true,
         }
     }
 }

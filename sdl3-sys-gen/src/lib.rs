@@ -169,7 +169,7 @@ impl Gen {
             }
             writeln!(
                 ctx,
-                "#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens)]"
+                "#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph)]"
             )?;
             writeln!(ctx)?;
             self.parsed[module].emit(&mut ctx)?;
@@ -277,7 +277,19 @@ impl From<Error> for EmitErr {
     }
 }
 
-fn common_prefix<'a>(a: &'a str, b: &str, end_with: Option<u8>) -> &'a str {
+fn common_doc_prefix<'a>(a: &'a str, b: &str) -> &'a str {
+    let i = 'pfx: {
+        for (i, (ca, cb)) in a.chars().zip(b.chars()).enumerate() {
+            if ca != cb || ca.is_alphanumeric() {
+                break 'pfx i;
+            }
+        }
+        a.len().min(b.len())
+    };
+    &a[..i]
+}
+
+fn common_ident_prefix<'a>(a: &'a str, b: &str) -> &'a str {
     let mut i = 'pfx: {
         for (i, (ca, cb)) in a.chars().zip(b.chars()).enumerate() {
             if ca != cb {
@@ -286,14 +298,12 @@ fn common_prefix<'a>(a: &'a str, b: &str, end_with: Option<u8>) -> &'a str {
         }
         a.len().min(b.len())
     };
-    if let Some(end_with) = end_with {
-        let bytes = a.as_bytes();
-        while i > 0 {
-            if bytes[i - 1] != end_with {
-                i -= 1
-            } else {
-                break;
-            }
+    let bytes = a.as_bytes();
+    while i > 0 {
+        if bytes[i - 1] != b'_' {
+            i -= 1
+        } else {
+            break;
         }
     }
     &a[..i]

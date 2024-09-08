@@ -1,4 +1,4 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens)]
+#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph)]
 
 //! # CategoryJoystick
 //!
@@ -419,10 +419,10 @@ pub struct SDL_VirtualJoystickDesc {
     /// unused
     pub padding2: [Uint16; 2],
     /// A mask of which buttons are valid for this controller
-    ///                              e.g. (1 << SDL_GAMEPAD_BUTTON_SOUTH)
+    /// e.g. (1 << SDL_GAMEPAD_BUTTON_SOUTH)
     pub button_mask: Uint32,
     /// A mask of which axes are valid for this controller
-    ///                              e.g. (1 << SDL_GAMEPAD_AXIS_LEFTX)
+    /// e.g. (1 << SDL_GAMEPAD_AXIS_LEFTX)
     pub axis_mask: Uint32,
     /// the name of the joystick
     pub name: *const ::core::ffi::c_char,

@@ -1,4 +1,4 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens)]
+#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph)]
 
 //! # CategoryEvents
 //!
@@ -63,28 +63,28 @@ impl SDL_EventType {
     /// User-requested quit
     pub const QUIT: Self = Self(0x100);
     /// The application is being terminated by the OS. This event must be handled in a callback set with SDL_AddEventWatch().
-    ///                                      Called on iOS in applicationWillTerminate()
-    ///                                      Called on Android in onDestroy()
+    /// Called on iOS in applicationWillTerminate()
+    /// Called on Android in onDestroy()
     pub const TERMINATING: Self = Self(257);
     /// The application is low on memory, free memory if possible. This event must be handled in a callback set with SDL_AddEventWatch().
-    ///                                      Called on iOS in applicationDidReceiveMemoryWarning()
-    ///                                      Called on Android in onTrimMemory()
+    /// Called on iOS in applicationDidReceiveMemoryWarning()
+    /// Called on Android in onTrimMemory()
     pub const LOW_MEMORY: Self = Self(258);
     /// The application is about to enter the background. This event must be handled in a callback set with SDL_AddEventWatch().
-    ///                                      Called on iOS in applicationWillResignActive()
-    ///                                      Called on Android in onPause()
+    /// Called on iOS in applicationWillResignActive()
+    /// Called on Android in onPause()
     pub const WILL_ENTER_BACKGROUND: Self = Self(259);
     /// The application did enter the background and may not get CPU for some time. This event must be handled in a callback set with SDL_AddEventWatch().
-    ///                                      Called on iOS in applicationDidEnterBackground()
-    ///                                      Called on Android in onPause()
+    /// Called on iOS in applicationDidEnterBackground()
+    /// Called on Android in onPause()
     pub const DID_ENTER_BACKGROUND: Self = Self(260);
     /// The application is about to enter the foreground. This event must be handled in a callback set with SDL_AddEventWatch().
-    ///                                      Called on iOS in applicationWillEnterForeground()
-    ///                                      Called on Android in onResume()
+    /// Called on iOS in applicationWillEnterForeground()
+    /// Called on Android in onResume()
     pub const WILL_ENTER_FOREGROUND: Self = Self(261);
     /// The application is now interactive. This event must be handled in a callback set with SDL_AddEventWatch().
-    ///                                      Called on iOS in applicationDidBecomeActive()
-    ///                                      Called on Android in onResume()
+    /// Called on iOS in applicationDidBecomeActive()
+    /// Called on Android in onResume()
     pub const DID_ENTER_FOREGROUND: Self = Self(262);
     /// The user's locale preferences have changed.
     pub const LOCALE_CHANGED: Self = Self(263);
@@ -153,9 +153,9 @@ impl SDL_EventType {
     /// The window has left fullscreen mode
     pub const WINDOW_LEAVE_FULLSCREEN: Self = Self(536);
     /// The window with the associated ID is being or has been destroyed. If this message is being handled
-    ///                                              in an event watcher, the window handle is still valid and can still be used to retrieve any userdata
-    ///                                              associated with the window. Otherwise, the handle has already been destroyed and all resources
-    ///                                              associated with it are invalid
+    /// in an event watcher, the window handle is still valid and can still be used to retrieve any userdata
+    /// associated with the window. Otherwise, the handle has already been destroyed and all resources
+    /// associated with it are invalid
     pub const WINDOW_DESTROYED: Self = Self(537);
     /// Window HDR properties have changed
     pub const WINDOW_HDR_STATE_CHANGED: Self = Self(538);
@@ -170,7 +170,7 @@ impl SDL_EventType {
     /// Keyboard text input
     pub const TEXT_INPUT: Self = Self(771);
     /// Keymap changed due to a system event such as an
-    ///                                             input language or keyboard layout change.
+    /// input language or keyboard layout change.
     pub const KEYMAP_CHANGED: Self = Self(772);
     /// A new keyboard has been inserted into the system
     pub const KEYBOARD_ADDED: Self = Self(773);
@@ -297,28 +297,28 @@ pub const SDL_EVENT_FIRST: SDL_EventType = SDL_EventType::FIRST;
 /// User-requested quit
 pub const SDL_EVENT_QUIT: SDL_EventType = SDL_EventType::QUIT;
 /// The application is being terminated by the OS. This event must be handled in a callback set with SDL_AddEventWatch().
-///                                      Called on iOS in applicationWillTerminate()
-///                                      Called on Android in onDestroy()
+/// Called on iOS in applicationWillTerminate()
+/// Called on Android in onDestroy()
 pub const SDL_EVENT_TERMINATING: SDL_EventType = SDL_EventType::TERMINATING;
 /// The application is low on memory, free memory if possible. This event must be handled in a callback set with SDL_AddEventWatch().
-///                                      Called on iOS in applicationDidReceiveMemoryWarning()
-///                                      Called on Android in onTrimMemory()
+/// Called on iOS in applicationDidReceiveMemoryWarning()
+/// Called on Android in onTrimMemory()
 pub const SDL_EVENT_LOW_MEMORY: SDL_EventType = SDL_EventType::LOW_MEMORY;
 /// The application is about to enter the background. This event must be handled in a callback set with SDL_AddEventWatch().
-///                                      Called on iOS in applicationWillResignActive()
-///                                      Called on Android in onPause()
+/// Called on iOS in applicationWillResignActive()
+/// Called on Android in onPause()
 pub const SDL_EVENT_WILL_ENTER_BACKGROUND: SDL_EventType = SDL_EventType::WILL_ENTER_BACKGROUND;
 /// The application did enter the background and may not get CPU for some time. This event must be handled in a callback set with SDL_AddEventWatch().
-///                                      Called on iOS in applicationDidEnterBackground()
-///                                      Called on Android in onPause()
+/// Called on iOS in applicationDidEnterBackground()
+/// Called on Android in onPause()
 pub const SDL_EVENT_DID_ENTER_BACKGROUND: SDL_EventType = SDL_EventType::DID_ENTER_BACKGROUND;
 /// The application is about to enter the foreground. This event must be handled in a callback set with SDL_AddEventWatch().
-///                                      Called on iOS in applicationWillEnterForeground()
-///                                      Called on Android in onResume()
+/// Called on iOS in applicationWillEnterForeground()
+/// Called on Android in onResume()
 pub const SDL_EVENT_WILL_ENTER_FOREGROUND: SDL_EventType = SDL_EventType::WILL_ENTER_FOREGROUND;
 /// The application is now interactive. This event must be handled in a callback set with SDL_AddEventWatch().
-///                                      Called on iOS in applicationDidBecomeActive()
-///                                      Called on Android in onResume()
+/// Called on iOS in applicationDidBecomeActive()
+/// Called on Android in onResume()
 pub const SDL_EVENT_DID_ENTER_FOREGROUND: SDL_EventType = SDL_EventType::DID_ENTER_FOREGROUND;
 /// The user's locale preferences have changed.
 pub const SDL_EVENT_LOCALE_CHANGED: SDL_EventType = SDL_EventType::LOCALE_CHANGED;
@@ -387,9 +387,9 @@ pub const SDL_EVENT_WINDOW_ENTER_FULLSCREEN: SDL_EventType = SDL_EventType::WIND
 /// The window has left fullscreen mode
 pub const SDL_EVENT_WINDOW_LEAVE_FULLSCREEN: SDL_EventType = SDL_EventType::WINDOW_LEAVE_FULLSCREEN;
 /// The window with the associated ID is being or has been destroyed. If this message is being handled
-///                                              in an event watcher, the window handle is still valid and can still be used to retrieve any userdata
-///                                              associated with the window. Otherwise, the handle has already been destroyed and all resources
-///                                              associated with it are invalid
+/// in an event watcher, the window handle is still valid and can still be used to retrieve any userdata
+/// associated with the window. Otherwise, the handle has already been destroyed and all resources
+/// associated with it are invalid
 pub const SDL_EVENT_WINDOW_DESTROYED: SDL_EventType = SDL_EventType::WINDOW_DESTROYED;
 /// Window HDR properties have changed
 pub const SDL_EVENT_WINDOW_HDR_STATE_CHANGED: SDL_EventType = SDL_EventType::WINDOW_HDR_STATE_CHANGED;
@@ -404,7 +404,7 @@ pub const SDL_EVENT_TEXT_EDITING: SDL_EventType = SDL_EventType::TEXT_EDITING;
 /// Keyboard text input
 pub const SDL_EVENT_TEXT_INPUT: SDL_EventType = SDL_EventType::TEXT_INPUT;
 /// Keymap changed due to a system event such as an
-///                                             input language or keyboard layout change.
+/// input language or keyboard layout change.
 pub const SDL_EVENT_KEYMAP_CHANGED: SDL_EventType = SDL_EventType::KEYMAP_CHANGED;
 /// A new keyboard has been inserted into the system
 pub const SDL_EVENT_KEYBOARD_ADDED: SDL_EventType = SDL_EventType::KEYBOARD_ADDED;
@@ -879,11 +879,11 @@ pub struct SDL_JoyHatEvent {
     /// The joystick hat index
     pub hat: Uint8,
     /// The hat position value.
-    ///                          *   \sa SDL_HAT_LEFTUP SDL_HAT_UP SDL_HAT_RIGHTUP
-    ///                          *   \sa SDL_HAT_LEFT SDL_HAT_CENTERED SDL_HAT_RIGHT
-    ///                          *   \sa SDL_HAT_LEFTDOWN SDL_HAT_DOWN SDL_HAT_RIGHTDOWN
-    ///                          *
-    ///                          *   Note that zero means the POV is centered.
+    /// \sa SDL_HAT_LEFTUP SDL_HAT_UP SDL_HAT_RIGHTUP
+    /// \sa SDL_HAT_LEFT SDL_HAT_CENTERED SDL_HAT_RIGHT
+    /// \sa SDL_HAT_LEFTDOWN SDL_HAT_DOWN SDL_HAT_RIGHTDOWN
+    ///
+    /// Note that zero means the POV is centered.
     pub value: Uint8,
     pub padding1: Uint8,
     pub padding2: Uint8,
