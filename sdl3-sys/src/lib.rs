@@ -1,7 +1,6 @@
 #![no_std]
 #![allow(non_camel_case_types)]
 #![cfg_attr(feature = "nightly", feature(c_variadic))]
-#![cfg_attr(all(doc, not(doctest), feature = "nightly"), feature(doc_auto_cfg))]
 
 // This macro is used to apply attributes (like cfg) to a group of items. Wrap
 // the items in a call to this macro and apply the attributes to the macro call
