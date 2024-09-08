@@ -8,7 +8,7 @@ pub const ATTR_FN: usize = 2;
 
 pub type FnAbi = Attribute<ATTR_ABI>;
 pub type ArgAttribute = Attribute<ATTR_ARG>;
-pub type FnAttribute = Attribute<ATTR_FN>;
+//pub type FnAttribute = Attribute<ATTR_FN>;
 
 pub type FnAttributes = Attributes<ATTR_FN>;
 

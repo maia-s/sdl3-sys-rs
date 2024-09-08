@@ -1,5 +1,4 @@
 use super::{EmitContext, EmitErr};
-use crate::parse::{Ident, StructKind, StructOrUnion};
 use core::fmt::Write;
 
 pub struct CompileTimeAssertPatch {

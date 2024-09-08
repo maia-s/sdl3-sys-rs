@@ -1,3 +1,5 @@
+#![allow(unexpected_cfgs)]
+
 use super::{Parse, ParseContext, ParseErr, ParseRawRes, ParseRes};
 use core::hash::Hash;
 use std::{

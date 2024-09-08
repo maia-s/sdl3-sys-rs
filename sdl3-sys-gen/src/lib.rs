@@ -251,7 +251,7 @@ impl From<io::Error> for Error {
 
 impl From<fmt::Error> for Error {
     fn from(value: fmt::Error) -> Self {
-        Self::EmitError(EmitErr::FmtError(value))
+        Self::EmitError(EmitErr::Fmt(value))
     }
 }
 
@@ -270,7 +270,7 @@ impl From<EmitErr> for Error {
 impl From<Error> for EmitErr {
     fn from(value: Error) -> Self {
         match value {
-            Error::IoError(e) => Self::IoError(e),
+            Error::IoError(e) => Self::Io(e),
             Error::EmitError(e) => e,
             Error::ParseError(_) => unreachable!(),
         }

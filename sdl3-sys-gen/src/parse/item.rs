@@ -101,7 +101,7 @@ impl Parse for Item {
             // fn call with ident and no trailing `;` (macro call)
             Ok((rest, Some(Item::FnCall(call))))
         } else if let (rest, Some(dc)) = DocCommentFile::try_parse_raw(ctx, input)? {
-            Ok((rest, Some(Item::FileDoc(dc.into()))))
+            Ok((rest, Some(Item::FileDoc(dc))))
         } else {
             Ok((input.clone(), None))
         }
@@ -124,8 +124,8 @@ impl Parse for Items {
 
 #[derive(Clone, Debug)]
 pub struct Block {
-    span: Span,
-    items: Items,
+    pub span: Span,
+    pub items: Items,
 }
 
 impl Parse for Block {
@@ -152,9 +152,9 @@ impl Parse for Block {
 
 #[derive(Clone, Debug)]
 pub struct DoWhile {
-    span: Span,
-    block: Block,
-    cond: Expr,
+    pub span: Span,
+    pub block: Block,
+    pub cond: Expr,
 }
 
 impl Parse for DoWhile {
@@ -193,11 +193,11 @@ impl Parse for DoWhile {
 
 #[derive(Clone, Debug)]
 pub struct For {
-    span: Span,
-    init: Expr,
-    cond: Expr,
-    iter: Expr,
-    block: Block,
+    pub span: Span,
+    pub init: Expr,
+    pub cond: Expr,
+    pub iter: Expr,
+    pub block: Block,
 }
 
 impl Parse for For {
@@ -242,10 +242,10 @@ impl Parse for For {
 
 #[derive(Clone, Debug)]
 pub struct IfElse {
-    span: Span,
-    cond: Expr,
-    on_true: Block,
-    on_false: Option<Block>,
+    pub span: Span,
+    pub cond: Expr,
+    pub on_true: Block,
+    pub on_false: Option<Block>,
 }
 
 impl GetSpan for IfElse {
@@ -301,8 +301,8 @@ impl Parse for IfElse {
 
 #[derive(Clone, Debug)]
 pub struct Return {
-    span: Span,
-    expr: Expr,
+    pub span: Span,
+    pub expr: Expr,
 }
 
 impl Parse for Return {
@@ -358,10 +358,10 @@ impl Parse for StructOrUnionItem {
 
 #[derive(Clone, Debug)]
 pub struct VarDecl {
-    span: Span,
-    ident: Ident,
-    ty: Type,
-    init: Option<Expr>,
+    pub span: Span,
+    pub ident: Ident,
+    pub ty: Type,
+    pub init: Option<Expr>,
 }
 
 impl GetSpan for VarDecl {

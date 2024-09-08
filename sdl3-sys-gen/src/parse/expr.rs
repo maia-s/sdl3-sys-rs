@@ -251,8 +251,8 @@ impl Parse for ExprNoComma {
 
 #[derive(Debug, Clone)]
 pub struct HasInclude {
-    span: Span,
-    include: Span,
+    pub span: Span,
+    pub include: Span,
 }
 
 impl GetSpan for HasInclude {
@@ -364,9 +364,9 @@ impl GetSpan for BinaryOp {
 
 #[derive(Clone, Debug)]
 pub struct Ternary {
-    cond: Expr,
-    on_true: Expr,
-    on_false: Expr,
+    pub cond: Expr,
+    pub on_true: Expr,
+    pub on_false: Expr,
 }
 
 impl GetSpan for Ternary {

@@ -433,6 +433,7 @@ where
 
 struct Terminated<T, Term> {
     value: T,
+    #[allow(dead_code)]
     term: Term,
 }
 
@@ -452,7 +453,7 @@ impl<T: Parse, Term: Parse> Parse for Terminated<T, Term> {
     }
 }
 
-struct WsAndComments(Span);
+struct WsAndComments(#[allow(dead_code)] Span);
 
 impl Parse for WsAndComments {
     fn desc() -> Cow<'static, str> {

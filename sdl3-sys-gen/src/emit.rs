@@ -105,7 +105,7 @@ fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: boo
     Ok(())
 }
 
-fn emit_extern_end(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
+fn emit_extern_end(ctx: &mut EmitContext, _abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
     if !for_fn_ptr {
         ctx.decrease_indent();
         writeln!(ctx, "}}")?;
@@ -118,29 +118,29 @@ pub type EmitResult = Result<(), EmitErr>;
 
 #[derive(Debug)]
 pub enum EmitErr {
-    ParseError(ParseErr),
-    FmtError(fmt::Error),
-    IoError(io::Error),
+    Parse(ParseErr),
+    Fmt(fmt::Error),
+    Io(io::Error),
 }
 
 impl From<ParseErr> for EmitErr {
     fn from(value: ParseErr) -> Self {
-        Self::ParseError(value)
+        Self::Parse(value)
     }
 }
 
 impl From<fmt::Error> for EmitErr {
     fn from(value: fmt::Error) -> Self {
-        Self::FmtError(value)
+        Self::Fmt(value)
     }
 }
 
 impl Display for EmitErr {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::ParseError(e) => Display::fmt(e, f),
-            Self::FmtError(e) => Display::fmt(e, f),
-            Self::IoError(e) => Display::fmt(e, f),
+            Self::Parse(e) => Display::fmt(e, f),
+            Self::Fmt(e) => Display::fmt(e, f),
+            Self::Io(e) => Display::fmt(e, f),
         }
     }
 }
@@ -657,7 +657,7 @@ impl Emit for Type {
 impl Emit for TypeDef {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match &self.ty.ty {
-            TypeEnum::Primitive(p) => {
+            TypeEnum::Primitive(_) => {
                 ctx.register_sym(self.ident.clone(), None, true)?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type ")?;
@@ -694,7 +694,7 @@ impl Emit for TypeDef {
                 self.doc.emit(ctx)?;
                 assert!(e.doc.is_none());
 
-                let mut enum_rust_type = None;
+                let enum_rust_type = None;
                 let mut known_values = Vec::new();
 
                 let prefix = if e.variants.len() > 1 {
@@ -727,6 +727,7 @@ impl Emit for TypeDef {
                     writeln!(ctx)?;
                 }
 
+                #[allow(clippy::unnecessary_literal_unwrap)]
                 let enum_rust_type = enum_rust_type.unwrap_or("::core::ffi::c_int");
 
                 let enum_ident = self.ident.as_str();

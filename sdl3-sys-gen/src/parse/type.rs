@@ -2,7 +2,7 @@ use crate::emit::EmitContext;
 
 use super::{
     DocComment, Enum, Expr, FnAbi, FnDeclArgs, GetSpan, Ident, Kw_const, Kw_typedef, Op, Parse,
-    ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse, RustCode, Span, StructOrUnion,
+    ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion,
     WsAndComments,
 };
 use std::borrow::Cow;

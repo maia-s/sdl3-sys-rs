@@ -754,8 +754,8 @@ impl Eval for Expr {
 
             Expr::PostOp(_) => (),
             Expr::Ternary(_) => (),
-            Expr::ArrayIndex { span, base, index } => (),
-            Expr::ArrayValues { span, values } => (),
+            Expr::ArrayIndex { .. } => (),
+            Expr::ArrayValues { .. } => (),
 
             Expr::HasInclude(_) => return Ok(Some(Value::Bool(false))),
 
@@ -804,8 +804,8 @@ impl Emit for Expr {
             Expr::BinaryOp(_) => todo!(),
             Expr::PostOp(_) => todo!(),
             Expr::Ternary(_) => todo!(),
-            Expr::ArrayIndex { span, base, index } => todo!(),
-            Expr::ArrayValues { span, values } => todo!(),
+            Expr::ArrayIndex { .. } => todo!(),
+            Expr::ArrayValues { .. } => todo!(),
             Expr::Value(value) => value.emit(ctx),
             Expr::HasInclude(_) => todo!(),
         }
