@@ -11,7 +11,7 @@ use super::video::*;
 /// \since This datatype is available since SDL 3.0.0.
 pub type SDL_MetalView = *mut ::core::ffi::c_void;
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a CAMetalLayer-backed NSView/UIView and attach it to the specified
     /// window.
     ///
@@ -29,9 +29,9 @@ extern_sdlcall! {{
     /// \sa SDL_Metal_DestroyView
     /// \sa SDL_Metal_GetLayer
     pub fn SDL_Metal_CreateView(window: *mut SDL_Window) -> SDL_MetalView;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Destroy an existing SDL_MetalView object.
     ///
     /// This should be called before SDL_DestroyWindow, if SDL_Metal_CreateView was
@@ -43,9 +43,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_Metal_CreateView
     pub fn SDL_Metal_DestroyView(view: SDL_MetalView);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a pointer to the backing CAMetalLayer for the given view.
     ///
     /// \param view the SDL_MetalView object.
@@ -53,5 +53,5 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_Metal_GetLayer(view: SDL_MetalView) -> *mut ::core::ffi::c_void;
-}}
+}
 

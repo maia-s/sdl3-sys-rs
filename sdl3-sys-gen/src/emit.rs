@@ -88,13 +88,9 @@ fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: boo
         match abi.ident.as_str() {
             "__cdecl" => write!(ctx, "extern \"cdecl\" ")?,
             "SDLCALL" => {
-                if for_fn_ptr {
-                    write!(ctx, "extern_sdlcall!(")?
-                } else {
-                    writeln!(ctx, "extern_sdlcall! {{{{")?;
-                    ctx.increase_indent();
-                }
-                return Ok(());
+                // SDL explicitly uses the cdecl ABI on 32-bit non-GNU Windows, but cdecl is
+                // the default ABI on 32-bit Windows, so we can just use C everywhere
+                write!(ctx, "extern \"C\" ")?;
             }
             _ => return Err(ParseErr::new(abi.span(), "can't emit this abi").into()),
         }
@@ -109,21 +105,8 @@ fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: boo
 }
 
 fn emit_extern_end(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
-    if for_fn_ptr {
-        if let Some(abi) = &abi {
-            if abi.ident.as_str() == "SDLCALL" {
-                write!(ctx, ")")?;
-            }
-        }
-    } else {
+    if !for_fn_ptr {
         ctx.decrease_indent();
-        if let Some(abi) = &abi {
-            if abi.ident.as_str() == "SDLCALL" {
-                writeln!(ctx, "}}}}")?;
-                writeln!(ctx)?;
-                return Ok(());
-            }
-        }
         writeln!(ctx, "}}")?;
         writeln!(ctx)?;
     }

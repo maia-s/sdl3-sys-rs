@@ -814,7 +814,7 @@ pub struct SDL_PixelFormatDetails {
     pub Ashift: Uint8,
 }
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the human readable name of a pixel format.
     ///
     /// \param format the pixel format to query.
@@ -825,9 +825,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetPixelFormatName(format: SDL_PixelFormat) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Convert one of the enumerated pixel formats to a bpp value and RGBA masks.
     ///
     /// \param format one of the SDL_PixelFormat values.
@@ -845,9 +845,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetPixelFormatForMasks
     pub fn SDL_GetMasksForPixelFormat(format: SDL_PixelFormat, bpp: *mut ::core::ffi::c_int, Rmask: *mut Uint32, Gmask: *mut Uint32, Bmask: *mut Uint32, Amask: *mut Uint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Convert a bpp value and RGBA masks to an enumerated pixel format.
     ///
     /// This will return `SDL_PIXELFORMAT_UNKNOWN` if the conversion wasn't
@@ -867,9 +867,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetMasksForPixelFormat
     pub fn SDL_GetPixelFormatForMasks(bpp: ::core::ffi::c_int, Rmask: Uint32, Gmask: Uint32, Bmask: Uint32, Amask: Uint32) -> SDL_PixelFormat;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create an SDL_PixelFormatDetails structure corresponding to a pixel format.
     ///
     /// Returned structure may come from a shared global cache (i.e. not newly
@@ -884,9 +884,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetPixelFormatDetails(format: SDL_PixelFormat) -> *const SDL_PixelFormatDetails;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a palette structure with the specified number of color entries.
     ///
     /// The palette entries are initialized to white.
@@ -904,9 +904,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetPaletteColors
     /// \sa SDL_SetSurfacePalette
     pub fn SDL_CreatePalette(ncolors: ::core::ffi::c_int) -> *mut SDL_Palette;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a range of colors in a palette.
     ///
     /// \param palette the SDL_Palette structure to modify.
@@ -921,9 +921,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetPaletteColors(palette: *mut SDL_Palette, colors: *const SDL_Color, firstcolor: ::core::ffi::c_int, ncolors: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Free a palette created with SDL_CreatePalette().
     ///
     /// \param palette the SDL_Palette structure to be freed.
@@ -935,9 +935,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_CreatePalette
     pub fn SDL_DestroyPalette(palette: *mut SDL_Palette);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Map an RGB triple to an opaque pixel value for a given pixel format.
     ///
     /// This function maps the RGB color value to the specified pixel format and
@@ -973,9 +973,9 @@ extern_sdlcall! {{
     /// \sa SDL_MapRGBA
     /// \sa SDL_MapSurfaceRGB
     pub fn SDL_MapRGB(format: *const SDL_PixelFormatDetails, palette: *const SDL_Palette, r: Uint8, g: Uint8, b: Uint8) -> Uint32;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Map an RGBA quadruple to a pixel value for a given pixel format.
     ///
     /// This function maps the RGBA color value to the specified pixel format and
@@ -1012,9 +1012,9 @@ extern_sdlcall! {{
     /// \sa SDL_MapRGB
     /// \sa SDL_MapSurfaceRGBA
     pub fn SDL_MapRGBA(format: *const SDL_PixelFormatDetails, palette: *const SDL_Palette, r: Uint8, g: Uint8, b: Uint8, a: Uint8) -> Uint32;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get RGB values from a pixel in the specified format.
     ///
     /// This function uses the entire 8-bit [0..255] range when converting color
@@ -1040,9 +1040,9 @@ extern_sdlcall! {{
     /// \sa SDL_MapRGB
     /// \sa SDL_MapRGBA
     pub fn SDL_GetRGB(pixel: Uint32, format: *const SDL_PixelFormatDetails, palette: *const SDL_Palette, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get RGBA values from a pixel in the specified format.
     ///
     /// This function uses the entire 8-bit [0..255] range when converting color
@@ -1072,5 +1072,5 @@ extern_sdlcall! {{
     /// \sa SDL_MapRGB
     /// \sa SDL_MapRGBA
     pub fn SDL_GetRGBA(pixel: Uint32, format: *const SDL_PixelFormatDetails, palette: *const SDL_Palette, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8, a: *mut Uint8);
-}}
+}
 

@@ -28,7 +28,7 @@ use super::video::*;
 /// \since This datatype is available since SDL 3.0.0.
 pub type SDL_KeyboardID = Uint32;
 
-extern_sdlcall! {{
+extern "C" {
     /// Return whether a keyboard is currently connected.
     ///
     /// \returns SDL_TRUE if a keyboard is connected, SDL_FALSE otherwise.
@@ -37,9 +37,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetKeyboards
     pub fn SDL_HasKeyboard() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of currently connected keyboards.
     ///
     /// Note that this will include any device or virtual driver that includes
@@ -58,9 +58,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetKeyboardNameForID
     /// \sa SDL_HasKeyboard
     pub fn SDL_GetKeyboards(count: *mut ::core::ffi::c_int) -> *mut SDL_KeyboardID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the name of a keyboard.
     ///
     /// This function returns "" if the keyboard doesn't have a name.
@@ -73,18 +73,18 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetKeyboards
     pub fn SDL_GetKeyboardNameForID(instance_id: SDL_KeyboardID) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query the window which currently has keyboard focus.
     ///
     /// \returns the window with keyboard focus.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetKeyboardFocus() -> *mut SDL_Window;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a snapshot of the current state of the keyboard.
     ///
     /// The pointer returned is a pointer to an internal SDL array. It will be
@@ -113,9 +113,9 @@ extern_sdlcall! {{
     /// \sa SDL_PumpEvents
     /// \sa SDL_ResetKeyboard
     pub fn SDL_GetKeyboardState(numkeys: *mut ::core::ffi::c_int) -> *const Uint8;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Clear the state of the keyboard.
     ///
     /// This function will generate key up events for all pressed keys.
@@ -124,9 +124,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetKeyboardState
     pub fn SDL_ResetKeyboard();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current key modifier state for the keyboard.
     ///
     /// \returns an OR'd combination of the modifier keys for the keyboard. See
@@ -137,9 +137,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetKeyboardState
     /// \sa SDL_SetModState
     pub fn SDL_GetModState() -> SDL_Keymod;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the current key modifier state for the keyboard.
     ///
     /// The inverse of SDL_GetModState(), SDL_SetModState() allows you to impose
@@ -156,9 +156,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetModState
     pub fn SDL_SetModState(modstate: SDL_Keymod);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the key code corresponding to the given scancode according to the
     /// current keyboard layout.
     ///
@@ -178,9 +178,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetKeyName
     /// \sa SDL_GetScancodeFromKey
     pub fn SDL_GetKeyFromScancode(scancode: SDL_Scancode, modstate: SDL_Keymod, key_event: SDL_bool) -> SDL_Keycode;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the scancode corresponding to the given key code according to the
     /// current keyboard layout.
     ///
@@ -197,9 +197,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetKeyFromScancode
     /// \sa SDL_GetScancodeName
     pub fn SDL_GetScancodeFromKey(key: SDL_Keycode, modstate: *mut SDL_Keymod) -> SDL_Scancode;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a human-readable name for a scancode.
     ///
     /// \param scancode the desired SDL_Scancode.
@@ -213,9 +213,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetScancodeName
     pub fn SDL_SetScancodeName(scancode: SDL_Scancode, name: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a human-readable name for a scancode.
     ///
     /// **Warning**: The returned name is by design not stable across platforms,
@@ -237,9 +237,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetScancodeFromName
     /// \sa SDL_SetScancodeName
     pub fn SDL_GetScancodeName(scancode: SDL_Scancode) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a scancode from a human-readable name.
     ///
     /// \param name the human-readable scancode name.
@@ -252,9 +252,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetScancodeFromKey
     /// \sa SDL_GetScancodeName
     pub fn SDL_GetScancodeFromName(name: *const ::core::ffi::c_char) -> SDL_Scancode;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a human-readable name for a key.
     ///
     /// If the key doesn't have a name, this function returns an empty string ("").
@@ -268,9 +268,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetKeyFromScancode
     /// \sa SDL_GetScancodeFromKey
     pub fn SDL_GetKeyName(key: SDL_Keycode) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a key code from a human-readable name.
     ///
     /// \param name the human-readable key name.
@@ -283,9 +283,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetKeyName
     /// \sa SDL_GetScancodeFromName
     pub fn SDL_GetKeyFromName(name: *const ::core::ffi::c_char) -> SDL_Keycode;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Start accepting Unicode text input events in a window.
     ///
     /// This function will enable text input (SDL_EVENT_TEXT_INPUT and
@@ -307,7 +307,7 @@ extern_sdlcall! {{
     /// \sa SDL_StopTextInput
     /// \sa SDL_TextInputActive
     pub fn SDL_StartTextInput(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
 /// Text input type.
 ///
@@ -398,7 +398,7 @@ pub const SDL_CAPITALIZE_WORDS: SDL_Capitalization = SDL_Capitalization::WORDS;
 /// All letters will be capitalized
 pub const SDL_CAPITALIZE_LETTERS: SDL_Capitalization = SDL_Capitalization::LETTERS;
 
-extern_sdlcall! {{
+extern "C" {
     /// Start accepting Unicode text input events in a window, with properties
     /// describing the input.
     ///
@@ -444,7 +444,7 @@ extern_sdlcall! {{
     /// \sa SDL_StopTextInput
     /// \sa SDL_TextInputActive
     pub fn SDL_StartTextInputWithProperties(window: *mut SDL_Window, props: SDL_PropertiesID) -> SDL_bool;
-}}
+}
 
 pub const SDL_PROP_TEXTINPUT_TYPE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.type\0") };
 
@@ -456,7 +456,7 @@ pub const SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN: &::core::ffi::CStr = unsafe { ::
 
 pub const SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.android.inputtype\0") };
 
-extern_sdlcall! {{
+extern "C" {
     /// Check whether or not Unicode text input events are enabled for a window.
     ///
     /// \param window the window to check.
@@ -466,9 +466,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_StartTextInput
     pub fn SDL_TextInputActive(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Stop receiving any text input events in a window.
     ///
     /// If SDL_StartTextInput() showed the screen keyboard, this function will hide
@@ -482,9 +482,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_StartTextInput
     pub fn SDL_StopTextInput(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Dismiss the composition window/IME without disabling the subsystem.
     ///
     /// \param window the window to affect.
@@ -496,9 +496,9 @@ extern_sdlcall! {{
     /// \sa SDL_StartTextInput
     /// \sa SDL_StopTextInput
     pub fn SDL_ClearComposition(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the area used to type Unicode text input.
     ///
     /// Native input methods may place a window with word suggestions near the
@@ -517,9 +517,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetTextInputArea
     /// \sa SDL_StartTextInput
     pub fn SDL_SetTextInputArea(window: *mut SDL_Window, rect: *const SDL_Rect, cursor: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the area used to type Unicode text input.
     ///
     /// This returns the values previously set by SDL_SetTextInputArea().
@@ -536,9 +536,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetTextInputArea
     pub fn SDL_GetTextInputArea(window: *mut SDL_Window, rect: *mut SDL_Rect, cursor: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Check whether the platform has screen keyboard support.
     ///
     /// \returns SDL_TRUE if the platform has some screen keyboard support or
@@ -549,9 +549,9 @@ extern_sdlcall! {{
     /// \sa SDL_StartTextInput
     /// \sa SDL_ScreenKeyboardShown
     pub fn SDL_HasScreenKeyboardSupport() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Check whether the screen keyboard is shown for given window.
     ///
     /// \param window the window for which screen keyboard should be queried.
@@ -561,5 +561,5 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_HasScreenKeyboardSupport
     pub fn SDL_ScreenKeyboardShown(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 

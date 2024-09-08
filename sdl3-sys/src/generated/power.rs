@@ -46,7 +46,7 @@ pub const SDL_POWERSTATE_CHARGING: SDL_PowerState = SDL_PowerState::CHARGING;
 /// Plugged in, battery charged
 pub const SDL_POWERSTATE_CHARGED: SDL_PowerState = SDL_PowerState::CHARGED;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current power supply details.
     ///
     /// You should never take a battery status as absolute truth. Batteries
@@ -74,5 +74,5 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetPowerInfo(seconds: *mut ::core::ffi::c_int, percent: *mut ::core::ffi::c_int) -> SDL_PowerState;
-}}
+}
 

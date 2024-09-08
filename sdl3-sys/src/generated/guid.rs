@@ -31,7 +31,7 @@ pub struct SDL_GUID {
     pub data: [Uint8; 16],
 }
 
-extern_sdlcall! {{
+extern "C" {
     /// Get an ASCII string representation for a given SDL_GUID.
     ///
     /// \param guid the SDL_GUID you wish to convert to string.
@@ -42,9 +42,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_StringToGUID
     pub fn SDL_GUIDToString(guid: SDL_GUID, pszGUID: *mut ::core::ffi::c_char, cbGUID: ::core::ffi::c_int);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Convert a GUID string into a SDL_GUID structure.
     ///
     /// Performs no error checking. If this function is given a string containing
@@ -58,5 +58,5 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GUIDToString
     pub fn SDL_StringToGUID(pchGUID: *const ::core::ffi::c_char) -> SDL_GUID;
-}}
+}
 

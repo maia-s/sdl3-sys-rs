@@ -8,7 +8,7 @@ use super::stdinc::*;
 
 use super::error::*;
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a new mutex.
     ///
     /// All newly-created mutexes begin in the _unlocked_ state.
@@ -28,9 +28,9 @@ extern_sdlcall! {{
     /// \sa SDL_TryLockMutex
     /// \sa SDL_UnlockMutex
     pub fn SDL_CreateMutex() -> *mut SDL_Mutex;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Lock the mutex.
     ///
     /// This will block until the mutex is available, which is to say it is in the
@@ -52,9 +52,9 @@ extern_sdlcall! {{
     /// \sa SDL_TryLockMutex
     /// \sa SDL_UnlockMutex
     pub fn SDL_LockMutex(mutex: *mut SDL_Mutex);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Try to lock a mutex without blocking.
     ///
     /// This works just like SDL_LockMutex(), but if the mutex is not available,
@@ -73,9 +73,9 @@ extern_sdlcall! {{
     /// \sa SDL_LockMutex
     /// \sa SDL_UnlockMutex
     pub fn SDL_TryLockMutex(mutex: *mut SDL_Mutex) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Unlock the mutex.
     ///
     /// It is legal for the owning thread to lock an already-locked mutex. It must
@@ -92,9 +92,9 @@ extern_sdlcall! {{
     /// \sa SDL_LockMutex
     /// \sa SDL_TryLockMutex
     pub fn SDL_UnlockMutex(mutex: *mut SDL_Mutex);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Destroy a mutex created with SDL_CreateMutex().
     ///
     /// This function must be called on any mutex that is no longer needed. Failure
@@ -109,9 +109,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_CreateMutex
     pub fn SDL_DestroyMutex(mutex: *mut SDL_Mutex);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a new read/write lock.
     ///
     /// A read/write lock is useful for situations where you have multiple threads
@@ -151,9 +151,9 @@ extern_sdlcall! {{
     /// \sa SDL_TryLockRWLockForWriting
     /// \sa SDL_UnlockRWLock
     pub fn SDL_CreateRWLock() -> *mut SDL_RWLock;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Lock the read/write lock for _read only_ operations.
     ///
     /// This will block until the rwlock is available, which is to say it is not
@@ -188,9 +188,9 @@ extern_sdlcall! {{
     /// \sa SDL_TryLockRWLockForReading
     /// \sa SDL_UnlockRWLock
     pub fn SDL_LockRWLockForReading(rwlock: *mut SDL_RWLock);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Lock the read/write lock for _write_ operations.
     ///
     /// This will block until the rwlock is available, which is to say it is not
@@ -219,9 +219,9 @@ extern_sdlcall! {{
     /// \sa SDL_TryLockRWLockForWriting
     /// \sa SDL_UnlockRWLock
     pub fn SDL_LockRWLockForWriting(rwlock: *mut SDL_RWLock);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Try to lock a read/write lock _for reading_ without blocking.
     ///
     /// This works just like SDL_LockRWLockForReading(), but if the rwlock is not
@@ -244,9 +244,9 @@ extern_sdlcall! {{
     /// \sa SDL_TryLockRWLockForWriting
     /// \sa SDL_UnlockRWLock
     pub fn SDL_TryLockRWLockForReading(rwlock: *mut SDL_RWLock) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Try to lock a read/write lock _for writing_ without blocking.
     ///
     /// This works just like SDL_LockRWLockForWriting(), but if the rwlock is not
@@ -274,9 +274,9 @@ extern_sdlcall! {{
     /// \sa SDL_TryLockRWLockForReading
     /// \sa SDL_UnlockRWLock
     pub fn SDL_TryLockRWLockForWriting(rwlock: *mut SDL_RWLock) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Unlock the read/write lock.
     ///
     /// Use this function to unlock the rwlock, whether it was locked for read-only
@@ -299,9 +299,9 @@ extern_sdlcall! {{
     /// \sa SDL_TryLockRWLockForReading
     /// \sa SDL_TryLockRWLockForWriting
     pub fn SDL_UnlockRWLock(rwlock: *mut SDL_RWLock);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Destroy a read/write lock created with SDL_CreateRWLock().
     ///
     /// This function must be called on any read/write lock that is no longer
@@ -316,9 +316,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_CreateRWLock
     pub fn SDL_DestroyRWLock(rwlock: *mut SDL_RWLock);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a semaphore.
     ///
     /// This function creates a new semaphore and initializes it with the value
@@ -340,9 +340,9 @@ extern_sdlcall! {{
     /// \sa SDL_WaitSemaphore
     /// \sa SDL_WaitSemaphoreTimeout
     pub fn SDL_CreateSemaphore(initial_value: Uint32) -> *mut SDL_Semaphore;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Destroy a semaphore.
     ///
     /// It is not safe to destroy a semaphore if there are threads currently
@@ -354,9 +354,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_CreateSemaphore
     pub fn SDL_DestroySemaphore(sem: *mut SDL_Semaphore);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Wait until a semaphore has a positive value and then decrements it.
     ///
     /// This function suspends the calling thread until the semaphore pointed to by
@@ -374,9 +374,9 @@ extern_sdlcall! {{
     /// \sa SDL_TryWaitSemaphore
     /// \sa SDL_WaitSemaphoreTimeout
     pub fn SDL_WaitSemaphore(sem: *mut SDL_Semaphore);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// See if a semaphore has a positive value and decrement it if it does.
     ///
     /// This function checks to see if the semaphore pointed to by `sem` has a
@@ -393,9 +393,9 @@ extern_sdlcall! {{
     /// \sa SDL_WaitSemaphore
     /// \sa SDL_WaitSemaphoreTimeout
     pub fn SDL_TryWaitSemaphore(sem: *mut SDL_Semaphore) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Wait until a semaphore has a positive value and then decrements it.
     ///
     /// This function suspends the calling thread until either the semaphore
@@ -413,9 +413,9 @@ extern_sdlcall! {{
     /// \sa SDL_TryWaitSemaphore
     /// \sa SDL_WaitSemaphore
     pub fn SDL_WaitSemaphoreTimeout(sem: *mut SDL_Semaphore, timeoutMS: Sint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Atomically increment a semaphore's value and wake waiting threads.
     ///
     /// \param sem the semaphore to increment.
@@ -426,9 +426,9 @@ extern_sdlcall! {{
     /// \sa SDL_WaitSemaphore
     /// \sa SDL_WaitSemaphoreTimeout
     pub fn SDL_SignalSemaphore(sem: *mut SDL_Semaphore);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current value of a semaphore.
     ///
     /// \param sem the semaphore to query.
@@ -436,9 +436,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSemaphoreValue(sem: *mut SDL_Semaphore) -> Uint32;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a condition variable.
     ///
     /// \returns a new condition variable or NULL on failure; call SDL_GetError()
@@ -452,9 +452,9 @@ extern_sdlcall! {{
     /// \sa SDL_WaitConditionTimeout
     /// \sa SDL_DestroyCondition
     pub fn SDL_CreateCondition() -> *mut SDL_Condition;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Destroy a condition variable.
     ///
     /// \param cond the condition variable to destroy.
@@ -463,9 +463,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_CreateCondition
     pub fn SDL_DestroyCondition(cond: *mut SDL_Condition);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Restart one of the threads that are waiting on the condition variable.
     ///
     /// \param cond the condition variable to signal.
@@ -478,9 +478,9 @@ extern_sdlcall! {{
     /// \sa SDL_WaitCondition
     /// \sa SDL_WaitConditionTimeout
     pub fn SDL_SignalCondition(cond: *mut SDL_Condition);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Restart all threads that are waiting on the condition variable.
     ///
     /// \param cond the condition variable to signal.
@@ -493,9 +493,9 @@ extern_sdlcall! {{
     /// \sa SDL_WaitCondition
     /// \sa SDL_WaitConditionTimeout
     pub fn SDL_BroadcastCondition(cond: *mut SDL_Condition);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Wait until a condition variable is signaled.
     ///
     /// This function unlocks the specified `mutex` and waits for another thread to
@@ -521,9 +521,9 @@ extern_sdlcall! {{
     /// \sa SDL_SignalCondition
     /// \sa SDL_WaitConditionTimeout
     pub fn SDL_WaitCondition(cond: *mut SDL_Condition, mutex: *mut SDL_Mutex);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Wait until a condition variable is signaled or a certain time has passed.
     ///
     /// This function unlocks the specified `mutex` and waits for another thread to
@@ -551,7 +551,7 @@ extern_sdlcall! {{
     /// \sa SDL_SignalCondition
     /// \sa SDL_WaitCondition
     pub fn SDL_WaitConditionTimeout(cond: *mut SDL_Condition, mutex: *mut SDL_Mutex, timeoutMS: Sint32) -> SDL_bool;
-}}
+}
 
 /// A means to block multiple threads until a condition is satisfied.
 ///

@@ -59,7 +59,7 @@ pub const SDL_TOUCH_MOUSEID: SDL_MouseID = (-1_i32) as SDL_MouseID;
 
 pub const SDL_MOUSE_TOUCHID: SDL_TouchID = (-1_i32) as SDL_TouchID;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of registered touch devices.
     ///
     /// On some platforms SDL first sees the touch device if it was actually used.
@@ -74,9 +74,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetTouchDevices(count: *mut ::core::ffi::c_int) -> *mut SDL_TouchID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the touch device name as reported from the driver.
     ///
     /// \param touchID the touch device instance ID.
@@ -85,9 +85,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetTouchDeviceName(touchID: SDL_TouchID) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the type of the given touch device.
     ///
     /// \param touchID the ID of a touch device.
@@ -95,9 +95,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetTouchDeviceType(touchID: SDL_TouchID) -> SDL_TouchDeviceType;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of active fingers for a given touch device.
     ///
     /// \param touchID the ID of a touch device.
@@ -110,5 +110,5 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetTouchFingers(touchID: SDL_TouchID, count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Finger;
-}}
+}
 

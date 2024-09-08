@@ -39,9 +39,9 @@ emit! {
     ///
     /// \sa SDL_SetWindowsMessageHook
     /// \sa SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP
-    pub type SDL_WindowsMessageHook = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, msg: *mut MSG) -> SDL_bool)>;
+    pub type SDL_WindowsMessageHook = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, msg: *mut MSG) -> SDL_bool>;
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Set a callback for every Windows message, run before TranslateMessage().
         ///
         /// The callback may modify the message, and should return SDL_TRUE if the
@@ -56,13 +56,13 @@ emit! {
         /// \sa SDL_WindowsMessageHook
         /// \sa SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP
         pub fn SDL_SetWindowsMessageHook(callback: SDL_WindowsMessageHook, userdata: *mut ::core::ffi::c_void);
-    }}
+    }
 
 }
 
 #[cfg(any(windows, any(/* always disabled: SDL_PLATFORM_WINGDK */)))]
 emit! {
-    extern_sdlcall! {{
+    extern "C" {
         /// Get the D3D9 adapter index that matches the specified display.
         ///
         /// The returned adapter index can be passed to `IDirect3D9::CreateDevice` and
@@ -74,9 +74,9 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_GetDirect3D9AdapterIndex(displayID: SDL_DisplayID) -> ::core::ffi::c_int;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Get the DXGI Adapter and Output indices for the specified display.
         ///
         /// The DXGI Adapter and Output indices can be passed to `EnumAdapters` and
@@ -91,15 +91,15 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_GetDXGIOutputInfo(displayID: SDL_DisplayID, adapterIndex: *mut ::core::ffi::c_int, outputIndex: *mut ::core::ffi::c_int) -> SDL_bool;
-    }}
+    }
 
 }
 
 pub type XEvent = _XEvent;
 
-pub type SDL_X11EventHook = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, xevent: *mut XEvent) -> SDL_bool)>;
+pub type SDL_X11EventHook = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, xevent: *mut XEvent) -> SDL_bool>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a callback for every X11 event.
     ///
     /// The callback may modify the event, and should return SDL_TRUE if the event
@@ -111,11 +111,11 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetX11EventHook(callback: SDL_X11EventHook, userdata: *mut ::core::ffi::c_void);
-}}
+}
 
 #[cfg(target_os = "linux")]
 emit! {
-    extern_sdlcall! {{
+    extern "C" {
         /// Sets the UNIX nice value for a thread.
         ///
         /// This uses setpriority() if possible, and RealtimeKit if available.
@@ -127,9 +127,9 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_SetLinuxThreadPriority(threadID: Sint64, priority: ::core::ffi::c_int) -> SDL_bool;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Sets the priority (not nice level) and scheduling policy for a thread.
         ///
         /// This uses setpriority() if possible, and RealtimeKit if available.
@@ -143,7 +143,7 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_SetLinuxThreadPriorityAndPolicy(threadID: Sint64, sdlPriority: ::core::ffi::c_int, schedPolicy: ::core::ffi::c_int) -> SDL_bool;
-    }}
+    }
 
 }
 
@@ -163,9 +163,9 @@ emit! {
     /// \since This datatype is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetiOSAnimationCallback
-    pub type SDL_iOSAnimationCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void))>;
+    pub type SDL_iOSAnimationCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Use this function to set the animation callback on Apple iOS.
         ///
         /// The function prototype for `callback` is:
@@ -202,9 +202,9 @@ emit! {
         ///
         /// \sa SDL_SetiOSEventPump
         pub fn SDL_SetiOSAnimationCallback(window: *mut SDL_Window, interval: ::core::ffi::c_int, callback: SDL_iOSAnimationCallback, callbackParam: *mut ::core::ffi::c_void) -> SDL_bool;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Use this function to enable or disable the SDL event pump on Apple iOS.
         ///
         /// This function is only available on Apple iOS.
@@ -215,13 +215,13 @@ emit! {
         ///
         /// \sa SDL_SetiOSAnimationCallback
         pub fn SDL_SetiOSEventPump(enabled: SDL_bool);
-    }}
+    }
 
 }
 
 #[cfg(target_os = "android")]
 emit! {
-    extern_sdlcall! {{
+    extern "C" {
         /// Get the Android Java Native Interface Environment of the current thread.
         ///
         /// This is the JNIEnv one needs to access the Java virtual machine from native
@@ -241,9 +241,9 @@ emit! {
         ///
         /// \sa SDL_GetAndroidActivity
         pub fn SDL_GetAndroidJNIEnv() -> *mut ::core::ffi::c_void;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Retrieve the Java instance of the Android activity class.
         ///
         /// The prototype of the function in SDL's code actually declares a void*
@@ -266,9 +266,9 @@ emit! {
         ///
         /// \sa SDL_GetAndroidJNIEnv
         pub fn SDL_GetAndroidActivity() -> *mut ::core::ffi::c_void;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Query Android API level of the current device.
         ///
         /// - API level 35: Android 15 (VANILLA_ICE_CREAM)
@@ -302,43 +302,43 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_GetAndroidSDKVersion() -> ::core::ffi::c_int;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Query if the application is running on Android TV.
         ///
         /// \returns SDL_TRUE if this is Android TV, SDL_FALSE otherwise.
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_IsAndroidTV() -> SDL_bool;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Query if the application is running on a Chromebook.
         ///
         /// \returns SDL_TRUE if this is a Chromebook, SDL_FALSE otherwise.
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_IsChromebook() -> SDL_bool;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Query if the application is running on a Samsung DeX docking station.
         ///
         /// \returns SDL_TRUE if this is a DeX docking station, SDL_FALSE otherwise.
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_IsDeXMode() -> SDL_bool;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Trigger the Android system back button behavior.
         ///
         /// \threadsafety It is safe to call this function from any thread.
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_SendAndroidBackButton();
-    }}
+    }
 
     /// See the official Android developer guide for more information:
     /// http://developer.android.com/guide/topics/data/data-storage.html
@@ -348,7 +348,7 @@ emit! {
 
     pub const SDL_ANDROID_EXTERNAL_STORAGE_WRITE: ::core::primitive::i32 = 2;
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Get the path used for internal storage for this Android application.
         ///
         /// This path is unique to your application and cannot be written to by other
@@ -368,9 +368,9 @@ emit! {
         ///
         /// \sa SDL_GetAndroidExternalStorageState
         pub fn SDL_GetAndroidInternalStoragePath() -> *const ::core::ffi::c_char;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Get the current state of external storage for this Android application.
         ///
         /// The current state of external storage, a bitmask of these values:
@@ -385,9 +385,9 @@ emit! {
         ///
         /// \sa SDL_GetAndroidExternalStoragePath
         pub fn SDL_GetAndroidExternalStorageState() -> Uint32;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Get the path used for external storage for this Android application.
         ///
         /// This path is unique to your application, but is public and can be written
@@ -407,9 +407,9 @@ emit! {
         ///
         /// \sa SDL_GetAndroidExternalStorageState
         pub fn SDL_GetAndroidExternalStoragePath() -> *const ::core::ffi::c_char;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Get the path used for caching data for this Android application.
         ///
         /// This path is unique to your application, but is public and can be written
@@ -426,11 +426,11 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_GetAndroidCachePath() -> *const ::core::ffi::c_char;
-    }}
+    }
 
-    pub type SDL_RequestAndroidPermissionCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, permission: *const ::core::ffi::c_char, granted: SDL_bool))>;
+    pub type SDL_RequestAndroidPermissionCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, permission: *const ::core::ffi::c_char, granted: SDL_bool)>;
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Request permissions at runtime, asynchronously.
         ///
         /// You do not need to call this for built-in functionality of SDL; recording
@@ -460,9 +460,9 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_RequestAndroidPermission(permission: *const ::core::ffi::c_char, cb: SDL_RequestAndroidPermissionCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Shows an Android toast notification.
         ///
         /// Toasts are a sort of lightweight notification that are unique to Android.
@@ -488,9 +488,9 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_ShowAndroidToast(message: *const ::core::ffi::c_char, duration: ::core::ffi::c_int, gravity: ::core::ffi::c_int, xoffset: ::core::ffi::c_int, yoffset: ::core::ffi::c_int) -> SDL_bool;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Send a user command to SDLActivity.
         ///
         /// Override "boolean onUnhandledMessage(Message msg)" to handle the message.
@@ -504,11 +504,11 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_SendAndroidMessage(command: Uint32, param: ::core::ffi::c_int) -> SDL_bool;
-    }}
+    }
 
 }
 
-extern_sdlcall! {{
+extern "C" {
     /// Query if the current device is a tablet.
     ///
     /// If SDL can't determine this, it will return SDL_FALSE.
@@ -517,9 +517,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_IsTablet() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationWillTerminate.
     ///
@@ -534,9 +534,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_OnApplicationWillTerminate();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationDidReceiveMemoryWarning.
     ///
@@ -551,9 +551,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_OnApplicationDidReceiveMemoryWarning();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationWillResignActive.
     ///
@@ -568,9 +568,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_OnApplicationWillEnterBackground();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationDidEnterBackground.
     ///
@@ -585,9 +585,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_OnApplicationDidEnterBackground();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationWillEnterForeground.
     ///
@@ -602,9 +602,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_OnApplicationWillEnterForeground();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationDidBecomeActive.
     ///
@@ -619,11 +619,11 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_OnApplicationDidEnterForeground();
-}}
+}
 
 #[cfg(any(target_os = "ios", target_os = "tvos", target_os = "watchos"))]
 emit! {
-    extern_sdlcall! {{
+    extern "C" {
         /// Let iOS apps with external event handling report
         /// onApplicationDidChangeStatusBarOrientation.
         ///
@@ -638,7 +638,7 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_OnApplicationDidChangeStatusBarOrientation();
-    }}
+    }
 
 }
 
@@ -648,7 +648,7 @@ emit! {
 
     pub type XUserHandle = *mut XUser;
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Gets a reference to the global async task queue handle for GDK,
         /// initializing if needed.
         ///
@@ -662,9 +662,9 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_GetGDKTaskQueue(outTaskQueue: *mut XTaskQueueHandle) -> SDL_bool;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Gets a reference to the default user handle for GDK.
         ///
         /// This is effectively a synchronous version of XUserAddAsync, which always
@@ -677,7 +677,7 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_GetGDKDefaultUser(outUserHandle: *mut XUserHandle) -> SDL_bool;
-    }}
+    }
 
 }
 

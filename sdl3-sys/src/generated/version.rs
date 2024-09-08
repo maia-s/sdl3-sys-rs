@@ -30,7 +30,7 @@ pub const SDL_MINOR_VERSION: ::core::primitive::i32 = 1;
 /// \since This macro is available since SDL 3.0.0.
 pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 2;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the version of SDL that is linked against your program.
     ///
     /// If you are linking to SDL dynamically, then it is possible that the current
@@ -46,9 +46,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetRevision
     pub fn SDL_GetVersion() -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the code revision of SDL that is linked against your program.
     ///
     /// This value is the revision of the code you are linked with and may be
@@ -72,5 +72,5 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetVersion
     pub fn SDL_GetRevision() -> *const ::core::ffi::c_char;
-}}
+}
 

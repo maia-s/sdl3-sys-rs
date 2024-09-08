@@ -18,7 +18,7 @@ pub const SDL_NS_PER_MS: ::core::primitive::i32 = 1000000;
 
 pub const SDL_NS_PER_US: ::core::primitive::i32 = 1000;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the number of milliseconds since SDL library initialization.
     ///
     /// \returns an unsigned 64-bit value representing the number of milliseconds
@@ -26,9 +26,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetTicks() -> Uint64;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the number of nanoseconds since SDL library initialization.
     ///
     /// \returns an unsigned 64-bit value representing the number of nanoseconds
@@ -36,9 +36,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetTicksNS() -> Uint64;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current value of the high resolution counter.
     ///
     /// This function is typically used for profiling.
@@ -53,9 +53,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetPerformanceFrequency
     pub fn SDL_GetPerformanceCounter() -> Uint64;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the count per second of the high resolution counter.
     ///
     /// \returns a platform-specific count per second.
@@ -64,9 +64,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetPerformanceCounter
     pub fn SDL_GetPerformanceFrequency() -> Uint64;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Wait a specified number of milliseconds before returning.
     ///
     /// This function waits a specified number of milliseconds before returning. It
@@ -77,9 +77,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_Delay(ms: Uint32);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Wait a specified number of nanoseconds before returning.
     ///
     /// This function waits a specified number of nanoseconds before returning. It
@@ -90,7 +90,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_DelayNS(ns: Uint64);
-}}
+}
 
 /// Definition of the timer ID type.
 ///
@@ -119,9 +119,9 @@ pub type SDL_TimerID = Uint32;
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_AddTimer
-pub type SDL_TimerCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, timerID: SDL_TimerID, interval: Uint32) -> Uint32)>;
+pub type SDL_TimerCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, timerID: SDL_TimerID, interval: Uint32) -> Uint32>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Call a callback function at a future time.
     ///
     /// If you use this function, you must pass `SDL_INIT_TIMER` to SDL_Init().
@@ -157,7 +157,7 @@ extern_sdlcall! {{
     /// \sa SDL_AddTimerNS
     /// \sa SDL_RemoveTimer
     pub fn SDL_AddTimer(interval: Uint32, callback: SDL_TimerCallback, userdata: *mut ::core::ffi::c_void) -> SDL_TimerID;
-}}
+}
 
 /// Function prototype for the nanosecond timer callback function.
 ///
@@ -181,9 +181,9 @@ extern_sdlcall! {{
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_AddTimerNS
-pub type SDL_NSTimerCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, timerID: SDL_TimerID, interval: Uint64) -> Uint64)>;
+pub type SDL_NSTimerCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, timerID: SDL_TimerID, interval: Uint64) -> Uint64>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Call a callback function at a future time.
     ///
     /// If you use this function, you must pass `SDL_INIT_TIMER` to SDL_Init().
@@ -219,9 +219,9 @@ extern_sdlcall! {{
     /// \sa SDL_AddTimer
     /// \sa SDL_RemoveTimer
     pub fn SDL_AddTimerNS(interval: Uint64, callback: SDL_NSTimerCallback, userdata: *mut ::core::ffi::c_void) -> SDL_TimerID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Remove a timer created with SDL_AddTimer().
     ///
     /// \param id the ID of the timer to remove.
@@ -232,5 +232,5 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_AddTimer
     pub fn SDL_RemoveTimer(id: SDL_TimerID) -> SDL_bool;
-}}
+}
 

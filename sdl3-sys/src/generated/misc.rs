@@ -8,7 +8,7 @@ use super::stdinc::*;
 
 use super::error::*;
 
-extern_sdlcall! {{
+extern "C" {
     /// Open a URL/URI in the browser or other appropriate external application.
     ///
     /// Open a URL in a separate, system-provided application. How this works will
@@ -37,5 +37,5 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_OpenURL(url: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 

@@ -84,7 +84,7 @@ pub const SDL_TIME_FORMAT_24HR: SDL_TimeFormat = SDL_TimeFormat::_24HR;
 /// 12 hour time
 pub const SDL_TIME_FORMAT_12HR: SDL_TimeFormat = SDL_TimeFormat::_12HR;
 
-extern_sdlcall! {{
+extern "C" {
     /// Gets the current preferred date and time format for the system locale.
     ///
     /// This might be a "slow" call that has to query the operating system. It's
@@ -101,9 +101,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetDateTimeLocalePreferences(dateFormat: *mut SDL_DateFormat, timeFormat: *mut SDL_TimeFormat) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Gets the current value of the system realtime clock in nanoseconds since
     /// Jan 1, 1970 in Universal Coordinated Time (UTC).
     ///
@@ -113,9 +113,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetCurrentTime(ticks: *mut SDL_Time) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Converts an SDL_Time in nanoseconds since the epoch to a calendar time in
     /// the SDL_DateTime format.
     ///
@@ -129,9 +129,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_TimeToDateTime(ticks: SDL_Time, dt: *mut SDL_DateTime, localTime: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Converts a calendar time to an SDL_Time in nanoseconds since the epoch.
     ///
     /// This function ignores the day_of_week member of the SDL_DateTime struct, so
@@ -144,9 +144,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_DateTimeToTime(dt: *const SDL_DateTime, ticks: *mut SDL_Time) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Converts an SDL time into a Windows FILETIME (100-nanosecond intervals
     /// since January 1, 1601).
     ///
@@ -160,9 +160,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_TimeToWindows(ticks: SDL_Time, dwLowDateTime: *mut Uint32, dwHighDateTime: *mut Uint32);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Converts a Windows FILETIME (100-nanosecond intervals since January 1,
     /// 1601) to an SDL time.
     ///
@@ -175,9 +175,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_TimeFromWindows(dwLowDateTime: Uint32, dwHighDateTime: Uint32) -> SDL_Time;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the number of days in a month for a given year.
     ///
     /// \param year the year.
@@ -187,9 +187,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetDaysInMonth(year: ::core::ffi::c_int, month: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the day of year for a calendar date.
     ///
     /// \param year the year component of the date.
@@ -200,9 +200,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetDayOfYear(year: ::core::ffi::c_int, month: ::core::ffi::c_int, day: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the day of week for a calendar date.
     ///
     /// \param year the year component of the date.
@@ -213,5 +213,5 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetDayOfWeek(year: ::core::ffi::c_int, month: ::core::ffi::c_int, day: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}}
+}
 

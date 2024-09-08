@@ -132,7 +132,7 @@ pub const SDL_BLENDFACTOR_DST_ALPHA: SDL_BlendFactor = SDL_BlendFactor::DST_ALPH
 /// 1-dstA, 1-dstA, 1-dstA, 1-dstA
 pub const SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA: SDL_BlendFactor = SDL_BlendFactor::ONE_MINUS_DST_ALPHA;
 
-extern_sdlcall! {{
+extern "C" {
     /// Compose a custom blend mode for renderers.
     ///
     /// The functions SDL_SetRenderDrawBlendMode and SDL_SetTextureBlendMode accept
@@ -217,5 +217,5 @@ extern_sdlcall! {{
     /// \sa SDL_SetTextureBlendMode
     /// \sa SDL_GetTextureBlendMode
     pub fn SDL_ComposeCustomBlendMode(srcColorFactor: SDL_BlendFactor, dstColorFactor: SDL_BlendFactor, colorOperation: SDL_BlendOperation, srcAlphaFactor: SDL_BlendFactor, dstAlphaFactor: SDL_BlendFactor, alphaOperation: SDL_BlendOperation) -> SDL_BlendMode;
-}}
+}
 

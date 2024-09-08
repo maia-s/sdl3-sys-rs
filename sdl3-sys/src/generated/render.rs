@@ -120,7 +120,7 @@ pub const SDL_LOGICAL_PRESENTATION_OVERSCAN: SDL_RendererLogicalPresentation = S
 /// The rendered content is scaled up by integer multiples to fit the output resolution
 pub const SDL_LOGICAL_PRESENTATION_INTEGER_SCALE: SDL_RendererLogicalPresentation = SDL_RendererLogicalPresentation::INTEGER_SCALE;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the number of 2D rendering drivers available for the current display.
     ///
     /// A render driver is a set of code that handles rendering and texture
@@ -136,9 +136,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateRenderer
     /// \sa SDL_GetRenderDriver
     pub fn SDL_GetNumRenderDrivers() -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Use this function to get the name of a built in 2D rendering driver.
     ///
     /// The list of rendering drivers is given in the order that they are normally
@@ -158,9 +158,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetNumRenderDrivers
     pub fn SDL_GetRenderDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a window and default renderer.
     ///
     /// \param title the title of the window, in UTF-8 encoding.
@@ -178,9 +178,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateRenderer
     /// \sa SDL_CreateWindow
     pub fn SDL_CreateWindowAndRenderer(title: *const ::core::ffi::c_char, width: ::core::ffi::c_int, height: ::core::ffi::c_int, window_flags: SDL_WindowFlags, window: *mut *mut SDL_Window, renderer: *mut *mut SDL_Renderer) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a 2D rendering context for a window.
     ///
     /// If you want a specific renderer, you can specify its name here. A list of
@@ -208,9 +208,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetRenderDriver
     /// \sa SDL_GetRendererName
     pub fn SDL_CreateRenderer(window: *mut SDL_Window, name: *const ::core::ffi::c_char) -> *mut SDL_Renderer;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a 2D rendering context for a window, with the specified properties.
     ///
     /// These are the supported properties:
@@ -259,7 +259,7 @@ extern_sdlcall! {{
     /// \sa SDL_DestroyRenderer
     /// \sa SDL_GetRendererName
     pub fn SDL_CreateRendererWithProperties(props: SDL_PropertiesID) -> *mut SDL_Renderer;
-}}
+}
 
 pub const SDL_PROP_RENDERER_CREATE_NAME_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.create.name\0") };
 
@@ -283,7 +283,7 @@ pub const SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER: &:
 
 pub const SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.create.vulkan.present_queue_family_index\0") };
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a 2D software rendering context for a surface.
     ///
     /// Two other API which can be used to create SDL_Renderer:
@@ -300,9 +300,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_DestroyRenderer
     pub fn SDL_CreateSoftwareRenderer(surface: *mut SDL_Surface) -> *mut SDL_Renderer;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the renderer associated with a window.
     ///
     /// \param window the window to query.
@@ -311,9 +311,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRenderer(window: *mut SDL_Window) -> *mut SDL_Renderer;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the window associated with a renderer.
     ///
     /// \param renderer the renderer to query.
@@ -322,9 +322,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRenderWindow(renderer: *mut SDL_Renderer) -> *mut SDL_Window;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the name of a renderer.
     ///
     /// \param renderer the rendering context.
@@ -336,9 +336,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateRenderer
     /// \sa SDL_CreateRendererWithProperties
     pub fn SDL_GetRendererName(renderer: *mut SDL_Renderer) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the properties associated with a renderer.
     ///
     /// The following read-only properties are provided by SDL:
@@ -415,7 +415,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRendererProperties(renderer: *mut SDL_Renderer) -> SDL_PropertiesID;
-}}
+}
 
 pub const SDL_PROP_RENDERER_NAME_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.name\0") };
 
@@ -463,7 +463,7 @@ pub const SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER: &::core::f
 
 pub const SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.vulkan.swapchain_image_count\0") };
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the output size in pixels of a rendering context.
     ///
     /// This returns the true output size in pixels, ignoring any render targets or
@@ -479,9 +479,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetCurrentRenderOutputSize
     pub fn SDL_GetRenderOutputSize(renderer: *mut SDL_Renderer, w: *mut ::core::ffi::c_int, h: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current output size in pixels of a rendering context.
     ///
     /// If a rendering target is active, this will return the size of the rendering
@@ -499,9 +499,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetRenderOutputSize
     pub fn SDL_GetCurrentRenderOutputSize(renderer: *mut SDL_Renderer, w: *mut ::core::ffi::c_int, h: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a texture for a rendering context.
     ///
     /// \param renderer the rendering context.
@@ -521,9 +521,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetTextureSize
     /// \sa SDL_UpdateTexture
     pub fn SDL_CreateTexture(renderer: *mut SDL_Renderer, format: SDL_PixelFormat, access: SDL_TextureAccess, w: ::core::ffi::c_int, h: ::core::ffi::c_int) -> *mut SDL_Texture;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a texture from an existing surface.
     ///
     /// The surface is not modified or freed by this function.
@@ -547,9 +547,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateTextureWithProperties
     /// \sa SDL_DestroyTexture
     pub fn SDL_CreateTextureFromSurface(renderer: *mut SDL_Renderer, surface: *mut SDL_Surface) -> *mut SDL_Texture;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a texture for a rendering context with the specified properties.
     ///
     /// These are the supported properties:
@@ -658,7 +658,7 @@ extern_sdlcall! {{
     /// \sa SDL_GetTextureSize
     /// \sa SDL_UpdateTexture
     pub fn SDL_CreateTextureWithProperties(renderer: *mut SDL_Renderer, props: SDL_PropertiesID) -> *mut SDL_Texture;
-}}
+}
 
 pub const SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.colorspace\0") };
 
@@ -706,7 +706,7 @@ pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER: &::core::ffi::CStr
 
 pub const SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.vulkan.texture\0") };
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the properties associated with a texture.
     ///
     /// The following read-only properties are provided by SDL:
@@ -801,7 +801,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetTextureProperties(texture: *mut SDL_Texture) -> SDL_PropertiesID;
-}}
+}
 
 pub const SDL_PROP_TEXTURE_COLORSPACE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.colorspace\0") };
 
@@ -855,7 +855,7 @@ pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER: &::core::ffi::CStr =
 
 pub const SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.vulkan.texture\0") };
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the renderer that created an SDL_Texture.
     ///
     /// \param texture the texture to query.
@@ -866,9 +866,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRendererFromTexture(texture: *mut SDL_Texture) -> *mut SDL_Renderer;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the size of a texture, as floating point values.
     ///
     /// \param texture the texture to query.
@@ -881,9 +881,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetTextureSize(texture: *mut SDL_Texture, w: *mut ::core::ffi::c_float, h: *mut ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set an additional color value multiplied into render copy operations.
     ///
     /// When this texture is rendered, during the copy operation each source color
@@ -908,9 +908,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetTextureAlphaMod
     /// \sa SDL_SetTextureColorModFloat
     pub fn SDL_SetTextureColorMod(texture: *mut SDL_Texture, r: Uint8, g: Uint8, b: Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set an additional color value multiplied into render copy operations.
     ///
     /// When this texture is rendered, during the copy operation each source color
@@ -935,9 +935,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetTextureAlphaModFloat
     /// \sa SDL_SetTextureColorMod
     pub fn SDL_SetTextureColorModFloat(texture: *mut SDL_Texture, r: ::core::ffi::c_float, g: ::core::ffi::c_float, b: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the additional color value multiplied into render copy operations.
     ///
     /// \param texture the texture to query.
@@ -953,9 +953,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetTextureColorModFloat
     /// \sa SDL_SetTextureColorMod
     pub fn SDL_GetTextureColorMod(texture: *mut SDL_Texture, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the additional color value multiplied into render copy operations.
     ///
     /// \param texture the texture to query.
@@ -971,9 +971,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetTextureColorMod
     /// \sa SDL_SetTextureColorModFloat
     pub fn SDL_GetTextureColorModFloat(texture: *mut SDL_Texture, r: *mut ::core::ffi::c_float, g: *mut ::core::ffi::c_float, b: *mut ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set an additional alpha value multiplied into render copy operations.
     ///
     /// When this texture is rendered, during the copy operation the source alpha
@@ -995,9 +995,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetTextureAlphaModFloat
     /// \sa SDL_SetTextureColorMod
     pub fn SDL_SetTextureAlphaMod(texture: *mut SDL_Texture, alpha: Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set an additional alpha value multiplied into render copy operations.
     ///
     /// When this texture is rendered, during the copy operation the source alpha
@@ -1019,9 +1019,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetTextureAlphaMod
     /// \sa SDL_SetTextureColorModFloat
     pub fn SDL_SetTextureAlphaModFloat(texture: *mut SDL_Texture, alpha: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the additional alpha value multiplied into render copy operations.
     ///
     /// \param texture the texture to query.
@@ -1035,9 +1035,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetTextureColorMod
     /// \sa SDL_SetTextureAlphaMod
     pub fn SDL_GetTextureAlphaMod(texture: *mut SDL_Texture, alpha: *mut Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the additional alpha value multiplied into render copy operations.
     ///
     /// \param texture the texture to query.
@@ -1051,9 +1051,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetTextureColorModFloat
     /// \sa SDL_SetTextureAlphaModFloat
     pub fn SDL_GetTextureAlphaModFloat(texture: *mut SDL_Texture, alpha: *mut ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the blend mode for a texture, used by SDL_RenderTexture().
     ///
     /// If the blend mode is not supported, the closest supported mode is chosen
@@ -1068,9 +1068,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetTextureBlendMode
     pub fn SDL_SetTextureBlendMode(texture: *mut SDL_Texture, blendMode: SDL_BlendMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the blend mode used for texture copy operations.
     ///
     /// \param texture the texture to query.
@@ -1082,9 +1082,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetTextureBlendMode
     pub fn SDL_GetTextureBlendMode(texture: *mut SDL_Texture, blendMode: *mut SDL_BlendMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the scale mode used for texture scale operations.
     ///
     /// The default texture scale mode is SDL_SCALEMODE_LINEAR.
@@ -1100,9 +1100,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetTextureScaleMode
     pub fn SDL_SetTextureScaleMode(texture: *mut SDL_Texture, scaleMode: SDL_ScaleMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the scale mode used for texture scale operations.
     ///
     /// \param texture the texture to query.
@@ -1114,9 +1114,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetTextureScaleMode
     pub fn SDL_GetTextureScaleMode(texture: *mut SDL_Texture, scaleMode: *mut SDL_ScaleMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Update the given texture rectangle with new pixel data.
     ///
     /// The pixel data must be in the pixel format of the texture, which can be
@@ -1146,9 +1146,9 @@ extern_sdlcall! {{
     /// \sa SDL_UpdateNVTexture
     /// \sa SDL_UpdateYUVTexture
     pub fn SDL_UpdateTexture(texture: *mut SDL_Texture, rect: *const SDL_Rect, pixels: *const ::core::ffi::c_void, pitch: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Update a rectangle within a planar YV12 or IYUV texture with new pixel
     /// data.
     ///
@@ -1176,9 +1176,9 @@ extern_sdlcall! {{
     /// \sa SDL_UpdateNVTexture
     /// \sa SDL_UpdateTexture
     pub fn SDL_UpdateYUVTexture(texture: *mut SDL_Texture, rect: *const SDL_Rect, Yplane: *const Uint8, Ypitch: ::core::ffi::c_int, Uplane: *const Uint8, Upitch: ::core::ffi::c_int, Vplane: *const Uint8, Vpitch: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Update a rectangle within a planar NV12 or NV21 texture with new pixels.
     ///
     /// You can use SDL_UpdateTexture() as long as your pixel data is a contiguous
@@ -1202,9 +1202,9 @@ extern_sdlcall! {{
     /// \sa SDL_UpdateTexture
     /// \sa SDL_UpdateYUVTexture
     pub fn SDL_UpdateNVTexture(texture: *mut SDL_Texture, rect: *const SDL_Rect, Yplane: *const Uint8, Ypitch: ::core::ffi::c_int, UVplane: *const Uint8, UVpitch: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Lock a portion of the texture for **write-only** pixel access.
     ///
     /// As an optimization, the pixels made available for editing don't necessarily
@@ -1232,9 +1232,9 @@ extern_sdlcall! {{
     /// \sa SDL_LockTextureToSurface
     /// \sa SDL_UnlockTexture
     pub fn SDL_LockTexture(texture: *mut SDL_Texture, rect: *const SDL_Rect, pixels: *mut *mut ::core::ffi::c_void, pitch: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Lock a portion of the texture for **write-only** pixel access, and expose
     /// it as a SDL surface.
     ///
@@ -1266,9 +1266,9 @@ extern_sdlcall! {{
     /// \sa SDL_LockTexture
     /// \sa SDL_UnlockTexture
     pub fn SDL_LockTextureToSurface(texture: *mut SDL_Texture, rect: *const SDL_Rect, surface: *mut *mut SDL_Surface) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Unlock a texture, uploading the changes to video memory, if needed.
     ///
     /// **Warning**: Please note that SDL_LockTexture() is intended to be
@@ -1285,9 +1285,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_LockTexture
     pub fn SDL_UnlockTexture(texture: *mut SDL_Texture);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a texture as the current rendering target.
     ///
     /// The default render target is the window for which the renderer was created.
@@ -1305,9 +1305,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetRenderTarget
     pub fn SDL_SetRenderTarget(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current render target.
     ///
     /// The default render target is the window for which the renderer was created,
@@ -1320,9 +1320,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetRenderTarget
     pub fn SDL_GetRenderTarget(renderer: *mut SDL_Renderer) -> *mut SDL_Texture;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a device independent resolution and presentation mode for rendering.
     ///
     /// This function sets the width and height of the logical rendering output. A
@@ -1350,9 +1350,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetRenderLogicalPresentation
     /// \sa SDL_GetRenderLogicalPresentationRect
     pub fn SDL_SetRenderLogicalPresentation(renderer: *mut SDL_Renderer, w: ::core::ffi::c_int, h: ::core::ffi::c_int, mode: SDL_RendererLogicalPresentation, scale_mode: SDL_ScaleMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get device independent resolution and presentation mode for rendering.
     ///
     /// This function gets the width and height of the logical rendering output, or
@@ -1370,9 +1370,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetRenderLogicalPresentation
     pub fn SDL_GetRenderLogicalPresentation(renderer: *mut SDL_Renderer, w: *mut ::core::ffi::c_int, h: *mut ::core::ffi::c_int, mode: *mut SDL_RendererLogicalPresentation, scale_mode: *mut SDL_ScaleMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the final presentation rectangle for rendering.
     ///
     /// This function returns the calculated rectangle used for logical
@@ -1390,9 +1390,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetRenderLogicalPresentation
     pub fn SDL_GetRenderLogicalPresentationRect(renderer: *mut SDL_Renderer, rect: *mut SDL_FRect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a point in render coordinates when given a point in window coordinates.
     ///
     /// \param renderer the rendering context.
@@ -1408,9 +1408,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetRenderLogicalPresentation
     /// \sa SDL_SetRenderScale
     pub fn SDL_RenderCoordinatesFromWindow(renderer: *mut SDL_Renderer, window_x: ::core::ffi::c_float, window_y: ::core::ffi::c_float, x: *mut ::core::ffi::c_float, y: *mut ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a point in window coordinates when given a point in render coordinates.
     ///
     /// \param renderer the rendering context.
@@ -1428,9 +1428,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetRenderLogicalPresentation
     /// \sa SDL_SetRenderScale
     pub fn SDL_RenderCoordinatesToWindow(renderer: *mut SDL_Renderer, x: ::core::ffi::c_float, y: ::core::ffi::c_float, window_x: *mut ::core::ffi::c_float, window_y: *mut ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Convert the coordinates in an event to render coordinates.
     ///
     /// Touch coordinates are converted from normalized coordinates in the window
@@ -1447,9 +1447,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderCoordinatesFromWindow
     pub fn SDL_ConvertEventToRenderCoordinates(renderer: *mut SDL_Renderer, event: *mut SDL_Event) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the drawing area for rendering on the current target.
     ///
     /// \param renderer the rendering context.
@@ -1463,9 +1463,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetRenderViewport
     /// \sa SDL_RenderViewportSet
     pub fn SDL_SetRenderViewport(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the drawing area for the current target.
     ///
     /// \param renderer the rendering context.
@@ -1478,9 +1478,9 @@ extern_sdlcall! {{
     /// \sa SDL_RenderViewportSet
     /// \sa SDL_SetRenderViewport
     pub fn SDL_GetRenderViewport(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Return whether an explicit rectangle was set as the viewport.
     ///
     /// This is useful if you're saving and restoring the viewport and want to know
@@ -1496,9 +1496,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetRenderViewport
     /// \sa SDL_SetRenderViewport
     pub fn SDL_RenderViewportSet(renderer: *mut SDL_Renderer) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the safe area for rendering within the current viewport.
     ///
     /// Some devices have portions of the screen which are partially obscured or
@@ -1516,9 +1516,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRenderSafeArea(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the clip rectangle for rendering on the specified target.
     ///
     /// \param renderer the rendering context.
@@ -1532,9 +1532,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetRenderClipRect
     /// \sa SDL_RenderClipEnabled
     pub fn SDL_SetRenderClipRect(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the clip rectangle for the current target.
     ///
     /// \param renderer the rendering context.
@@ -1548,9 +1548,9 @@ extern_sdlcall! {{
     /// \sa SDL_RenderClipEnabled
     /// \sa SDL_SetRenderClipRect
     pub fn SDL_GetRenderClipRect(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get whether clipping is enabled on the given renderer.
     ///
     /// \param renderer the rendering context.
@@ -1562,9 +1562,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetRenderClipRect
     /// \sa SDL_SetRenderClipRect
     pub fn SDL_RenderClipEnabled(renderer: *mut SDL_Renderer) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the drawing scale for rendering on the current target.
     ///
     /// The drawing coordinates are scaled by the x/y scaling factors before they
@@ -1585,9 +1585,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetRenderScale
     pub fn SDL_SetRenderScale(renderer: *mut SDL_Renderer, scaleX: ::core::ffi::c_float, scaleY: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the drawing scale for the current target.
     ///
     /// \param renderer the rendering context.
@@ -1600,9 +1600,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetRenderScale
     pub fn SDL_GetRenderScale(renderer: *mut SDL_Renderer, scaleX: *mut ::core::ffi::c_float, scaleY: *mut ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the color used for drawing operations.
     ///
     /// Set the color for drawing or filling rectangles, lines, and points, and for
@@ -1623,9 +1623,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetRenderDrawColor
     /// \sa SDL_SetRenderDrawColorFloat
     pub fn SDL_SetRenderDrawColor(renderer: *mut SDL_Renderer, r: Uint8, g: Uint8, b: Uint8, a: Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the color used for drawing operations (Rect, Line and Clear).
     ///
     /// Set the color for drawing or filling rectangles, lines, and points, and for
@@ -1646,9 +1646,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetRenderDrawColorFloat
     /// \sa SDL_SetRenderDrawColor
     pub fn SDL_SetRenderDrawColorFloat(renderer: *mut SDL_Renderer, r: ::core::ffi::c_float, g: ::core::ffi::c_float, b: ::core::ffi::c_float, a: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the color used for drawing operations (Rect, Line and Clear).
     ///
     /// \param renderer the rendering context.
@@ -1668,9 +1668,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetRenderDrawColorFloat
     /// \sa SDL_SetRenderDrawColor
     pub fn SDL_GetRenderDrawColor(renderer: *mut SDL_Renderer, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8, a: *mut Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the color used for drawing operations (Rect, Line and Clear).
     ///
     /// \param renderer the rendering context.
@@ -1690,9 +1690,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetRenderDrawColorFloat
     /// \sa SDL_GetRenderDrawColor
     pub fn SDL_GetRenderDrawColorFloat(renderer: *mut SDL_Renderer, r: *mut ::core::ffi::c_float, g: *mut ::core::ffi::c_float, b: *mut ::core::ffi::c_float, a: *mut ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the color scale used for render operations.
     ///
     /// The color scale is an additional scale multiplied into the pixel color
@@ -1712,9 +1712,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetRenderColorScale
     pub fn SDL_SetRenderColorScale(renderer: *mut SDL_Renderer, scale: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the color scale used for render operations.
     ///
     /// \param renderer the rendering context.
@@ -1726,9 +1726,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetRenderColorScale
     pub fn SDL_GetRenderColorScale(renderer: *mut SDL_Renderer, scale: *mut ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the blend mode used for drawing operations (Fill and Line).
     ///
     /// If the blend mode is not supported, the closest supported mode is chosen.
@@ -1742,9 +1742,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetRenderDrawBlendMode
     pub fn SDL_SetRenderDrawBlendMode(renderer: *mut SDL_Renderer, blendMode: SDL_BlendMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the blend mode used for drawing operations.
     ///
     /// \param renderer the rendering context.
@@ -1756,9 +1756,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetRenderDrawBlendMode
     pub fn SDL_GetRenderDrawBlendMode(renderer: *mut SDL_Renderer, blendMode: *mut SDL_BlendMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Clear the current rendering target with the drawing color.
     ///
     /// This function clears the entire rendering target, ignoring the viewport and
@@ -1774,9 +1774,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetRenderDrawColor
     pub fn SDL_RenderClear(renderer: *mut SDL_Renderer) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Draw a point on the current rendering target at subpixel precision.
     ///
     /// \param renderer the renderer which should draw a point.
@@ -1789,9 +1789,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderPoints
     pub fn SDL_RenderPoint(renderer: *mut SDL_Renderer, x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Draw multiple points on the current rendering target at subpixel precision.
     ///
     /// \param renderer the renderer which should draw multiple points.
@@ -1804,9 +1804,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderPoint
     pub fn SDL_RenderPoints(renderer: *mut SDL_Renderer, points: *const SDL_FPoint, count: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Draw a line on the current rendering target at subpixel precision.
     ///
     /// \param renderer the renderer which should draw a line.
@@ -1821,9 +1821,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderLines
     pub fn SDL_RenderLine(renderer: *mut SDL_Renderer, x1: ::core::ffi::c_float, y1: ::core::ffi::c_float, x2: ::core::ffi::c_float, y2: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Draw a series of connected lines on the current rendering target at
     /// subpixel precision.
     ///
@@ -1837,9 +1837,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderLine
     pub fn SDL_RenderLines(renderer: *mut SDL_Renderer, points: *const SDL_FPoint, count: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Draw a rectangle on the current rendering target at subpixel precision.
     ///
     /// \param renderer the renderer which should draw a rectangle.
@@ -1852,9 +1852,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderRects
     pub fn SDL_RenderRect(renderer: *mut SDL_Renderer, rect: *const SDL_FRect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Draw some number of rectangles on the current rendering target at subpixel
     /// precision.
     ///
@@ -1868,9 +1868,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderRect
     pub fn SDL_RenderRects(renderer: *mut SDL_Renderer, rects: *const SDL_FRect, count: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Fill a rectangle on the current rendering target with the drawing color at
     /// subpixel precision.
     ///
@@ -1884,9 +1884,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderFillRects
     pub fn SDL_RenderFillRect(renderer: *mut SDL_Renderer, rect: *const SDL_FRect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Fill some number of rectangles on the current rendering target with the
     /// drawing color at subpixel precision.
     ///
@@ -1900,9 +1900,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderFillRect
     pub fn SDL_RenderFillRects(renderer: *mut SDL_Renderer, rects: *const SDL_FRect, count: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Copy a portion of the texture to the current rendering target at subpixel
     /// precision.
     ///
@@ -1920,9 +1920,9 @@ extern_sdlcall! {{
     /// \sa SDL_RenderTextureRotated
     /// \sa SDL_RenderTextureTiled
     pub fn SDL_RenderTexture(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture, srcrect: *const SDL_FRect, dstrect: *const SDL_FRect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Copy a portion of the source texture to the current rendering target, with
     /// rotation and flipping, at subpixel precision.
     ///
@@ -1946,9 +1946,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderTexture
     pub fn SDL_RenderTextureRotated(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture, srcrect: *const SDL_FRect, dstrect: *const SDL_FRect, angle: ::core::ffi::c_double, center: *const SDL_FPoint, flip: SDL_FlipMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Tile a portion of the texture to the current rendering target at subpixel
     /// precision.
     ///
@@ -1971,9 +1971,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderTexture
     pub fn SDL_RenderTextureTiled(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture, srcrect: *const SDL_FRect, scale: ::core::ffi::c_float, dstrect: *const SDL_FRect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Perform a scaled copy using the 9-grid algorithm to the current rendering
     /// target at subpixel precision.
     ///
@@ -2003,9 +2003,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderTexture
     pub fn SDL_RenderTexture9Grid(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture, srcrect: *const SDL_FRect, left_width: ::core::ffi::c_float, right_width: ::core::ffi::c_float, top_height: ::core::ffi::c_float, bottom_height: ::core::ffi::c_float, scale: ::core::ffi::c_float, dstrect: *const SDL_FRect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Render a list of triangles, optionally using a texture and indices into the
     /// vertex array Color and alpha modulation is done per vertex
     /// (SDL_SetTextureColorMod and SDL_SetTextureAlphaMod are ignored).
@@ -2025,9 +2025,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderGeometryRaw
     pub fn SDL_RenderGeometry(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture, vertices: *const SDL_Vertex, num_vertices: ::core::ffi::c_int, indices: *const ::core::ffi::c_int, num_indices: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Render a list of triangles, optionally using a texture and indices into the
     /// vertex arrays Color and alpha modulation is done per vertex
     /// (SDL_SetTextureColorMod and SDL_SetTextureAlphaMod are ignored).
@@ -2052,9 +2052,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RenderGeometry
     pub fn SDL_RenderGeometryRaw(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture, xy: *const ::core::ffi::c_float, xy_stride: ::core::ffi::c_int, color: *const SDL_FColor, color_stride: ::core::ffi::c_int, uv: *const ::core::ffi::c_float, uv_stride: ::core::ffi::c_int, num_vertices: ::core::ffi::c_int, indices: *const ::core::ffi::c_void, num_indices: ::core::ffi::c_int, size_indices: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Read pixels from the current rendering target.
     ///
     /// The returned surface should be freed with SDL_DestroySurface()
@@ -2071,9 +2071,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_RenderReadPixels(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> *mut SDL_Surface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Update the screen with any rendering performed since the previous call.
     ///
     /// SDL's rendering functions operate on a backbuffer; that is, calling a
@@ -2119,9 +2119,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetRenderDrawBlendMode
     /// \sa SDL_SetRenderDrawColor
     pub fn SDL_RenderPresent(renderer: *mut SDL_Renderer) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Destroy the specified texture.
     ///
     /// Passing NULL or an otherwise invalid texture will set the SDL error message
@@ -2134,9 +2134,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateTexture
     /// \sa SDL_CreateTextureFromSurface
     pub fn SDL_DestroyTexture(texture: *mut SDL_Texture);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Destroy the rendering context for a window and free all associated
     /// textures.
     ///
@@ -2148,9 +2148,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_CreateRenderer
     pub fn SDL_DestroyRenderer(renderer: *mut SDL_Renderer);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Force the rendering context to flush any pending commands and state.
     ///
     /// You do not need to (and in fact, shouldn't) call this function unless you
@@ -2179,9 +2179,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_FlushRenderer(renderer: *mut SDL_Renderer) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the CAMetalLayer associated with the given Metal renderer.
     ///
     /// This function returns `void *`, so SDL doesn't have to include Metal's
@@ -2195,9 +2195,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetRenderMetalCommandEncoder
     pub fn SDL_GetRenderMetalLayer(renderer: *mut SDL_Renderer) -> *mut ::core::ffi::c_void;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the Metal command encoder for the current frame.
     ///
     /// This function returns `void *`, so SDL doesn't have to include Metal's
@@ -2216,9 +2216,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetRenderMetalLayer
     pub fn SDL_GetRenderMetalCommandEncoder(renderer: *mut SDL_Renderer) -> *mut ::core::ffi::c_void;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Add a set of synchronization semaphores for the current frame.
     ///
     /// The Vulkan renderer will wait for `wait_semaphore` before submitting
@@ -2246,9 +2246,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_AddVulkanRenderSemaphores(renderer: *mut SDL_Renderer, wait_stage_mask: Uint32, wait_semaphore: Sint64, signal_semaphore: Sint64) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Toggle VSync of the given renderer.
     ///
     /// When a renderer is created, vsync defaults to SDL_RENDERER_VSYNC_DISABLED.
@@ -2269,13 +2269,13 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetRenderVSync
     pub fn SDL_SetRenderVSync(renderer: *mut SDL_Renderer, vsync: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
 pub const SDL_RENDERER_VSYNC_DISABLED: ::core::primitive::i32 = 0;
 
 pub const SDL_RENDERER_VSYNC_ADAPTIVE: ::core::primitive::i32 = -1_i32;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get VSync of the given renderer.
     ///
     /// \param renderer the renderer to toggle.
@@ -2288,7 +2288,7 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetRenderVSync
     pub fn SDL_GetRenderVSync(renderer: *mut SDL_Renderer, vsync: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
 /// A structure representing rendering state
 ///

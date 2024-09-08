@@ -5,7 +5,7 @@
 //! SDL provides a means to identify the app's platform, both at compile time
 //! and runtime.
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the name of the platform.
     ///
     /// Here are the names returned for some (but not all) supported platforms:
@@ -21,5 +21,5 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetPlatform() -> *const ::core::ffi::c_char;
-}}
+}
 

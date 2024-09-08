@@ -161,7 +161,7 @@ pub const SDL_BUTTON_X1: ::core::primitive::i32 = 4;
 
 pub const SDL_BUTTON_X2: ::core::primitive::i32 = 5;
 
-extern_sdlcall! {{
+extern "C" {
     /// Return whether a mouse is currently connected.
     ///
     /// \returns SDL_TRUE if a mouse is connected, SDL_FALSE otherwise.
@@ -170,9 +170,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetMice
     pub fn SDL_HasMouse() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of currently connected mice.
     ///
     /// Note that this will include any device or virtual driver that includes
@@ -191,9 +191,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetMouseNameForID
     /// \sa SDL_HasMouse
     pub fn SDL_GetMice(count: *mut ::core::ffi::c_int) -> *mut SDL_MouseID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the name of a mouse.
     ///
     /// This function returns "" if the mouse doesn't have a name.
@@ -206,18 +206,18 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetMice
     pub fn SDL_GetMouseNameForID(instance_id: SDL_MouseID) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the window which currently has mouse focus.
     ///
     /// \returns the window with mouse focus.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetMouseFocus() -> *mut SDL_Window;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Retrieve the current state of the mouse.
     ///
     /// The current button state is returned as a button bitmask, which can be
@@ -237,9 +237,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetGlobalMouseState
     /// \sa SDL_GetRelativeMouseState
     pub fn SDL_GetMouseState(x: *mut ::core::ffi::c_float, y: *mut ::core::ffi::c_float) -> SDL_MouseButtonFlags;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current state of the mouse in relation to the desktop.
     ///
     /// This works similarly to SDL_GetMouseState(), but the coordinates will be
@@ -267,9 +267,9 @@ extern_sdlcall! {{
     /// \sa SDL_CaptureMouse
     /// \sa SDL_GetMouseState
     pub fn SDL_GetGlobalMouseState(x: *mut ::core::ffi::c_float, y: *mut ::core::ffi::c_float) -> SDL_MouseButtonFlags;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Retrieve the relative state of the mouse.
     ///
     /// The current button state is returned as a button bitmask, which can be
@@ -286,9 +286,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetMouseState
     pub fn SDL_GetRelativeMouseState(x: *mut ::core::ffi::c_float, y: *mut ::core::ffi::c_float) -> SDL_MouseButtonFlags;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Move the mouse cursor to the given position within the window.
     ///
     /// This function generates a mouse motion event if relative mode is not
@@ -307,9 +307,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_WarpMouseGlobal
     pub fn SDL_WarpMouseInWindow(window: *mut SDL_Window, x: ::core::ffi::c_float, y: ::core::ffi::c_float);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Move the mouse to the given position in global screen space.
     ///
     /// This function generates a mouse motion event.
@@ -329,9 +329,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_WarpMouseInWindow
     pub fn SDL_WarpMouseGlobal(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set relative mouse mode for a window.
     ///
     /// While the window has focus and relative mouse mode is enabled, the cursor
@@ -350,9 +350,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetWindowRelativeMouseMode
     pub fn SDL_SetWindowRelativeMouseMode(window: *mut SDL_Window, enabled: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query whether relative mouse mode is enabled for a window.
     ///
     /// \param window the window to query.
@@ -363,9 +363,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetWindowRelativeMouseMode
     pub fn SDL_GetWindowRelativeMouseMode(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Capture the mouse and to track input outside an SDL window.
     ///
     /// Capturing enables your app to obtain mouse events globally, instead of just
@@ -409,9 +409,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetGlobalMouseState
     pub fn SDL_CaptureMouse(enabled: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a cursor using the specified bitmap data and mask (in MSB format).
     ///
     /// `mask` has to be in MSB (Most Significant Bit) format.
@@ -453,9 +453,9 @@ extern_sdlcall! {{
     /// \sa SDL_DestroyCursor
     /// \sa SDL_SetCursor
     pub fn SDL_CreateCursor(data: *const Uint8, mask: *const Uint8, w: ::core::ffi::c_int, h: ::core::ffi::c_int, hot_x: ::core::ffi::c_int, hot_y: ::core::ffi::c_int) -> *mut SDL_Cursor;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a color cursor.
     ///
     /// If this function is passed a surface with alternate representations, the
@@ -481,9 +481,9 @@ extern_sdlcall! {{
     /// \sa SDL_DestroyCursor
     /// \sa SDL_SetCursor
     pub fn SDL_CreateColorCursor(surface: *mut SDL_Surface, hot_x: ::core::ffi::c_int, hot_y: ::core::ffi::c_int) -> *mut SDL_Cursor;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a system cursor.
     ///
     /// \param id an SDL_SystemCursor enum value.
@@ -494,9 +494,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_DestroyCursor
     pub fn SDL_CreateSystemCursor(id: SDL_SystemCursor) -> *mut SDL_Cursor;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the active cursor.
     ///
     /// This function sets the currently active cursor to the specified one. If the
@@ -512,9 +512,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetCursor
     pub fn SDL_SetCursor(cursor: *mut SDL_Cursor) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the active cursor.
     ///
     /// This function returns a pointer to the current cursor which is owned by the
@@ -526,9 +526,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetCursor
     pub fn SDL_GetCursor() -> *mut SDL_Cursor;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the default cursor.
     ///
     /// You do not have to call SDL_DestroyCursor() on the return value, but it is
@@ -539,9 +539,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetDefaultCursor() -> *mut SDL_Cursor;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Free a previously-created cursor.
     ///
     /// Use this function to free cursor resources created with SDL_CreateCursor(),
@@ -555,9 +555,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateCursor
     /// \sa SDL_CreateSystemCursor
     pub fn SDL_DestroyCursor(cursor: *mut SDL_Cursor);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Show the cursor.
     ///
     /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
@@ -568,9 +568,9 @@ extern_sdlcall! {{
     /// \sa SDL_CursorVisible
     /// \sa SDL_HideCursor
     pub fn SDL_ShowCursor() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Hide the cursor.
     ///
     /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
@@ -581,9 +581,9 @@ extern_sdlcall! {{
     /// \sa SDL_CursorVisible
     /// \sa SDL_ShowCursor
     pub fn SDL_HideCursor() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Return whether the cursor is currently being shown.
     ///
     /// \returns `SDL_TRUE` if the cursor is being shown, or `SDL_FALSE` if the
@@ -594,7 +594,7 @@ extern_sdlcall! {{
     /// \sa SDL_HideCursor
     /// \sa SDL_ShowCursor
     pub fn SDL_CursorVisible() -> SDL_bool;
-}}
+}
 
 /// The structure used to identify an SDL cursor.
 ///

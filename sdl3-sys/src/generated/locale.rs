@@ -28,7 +28,7 @@ pub struct SDL_Locale {
     pub country: *const ::core::ffi::c_char,
 }
 
-extern_sdlcall! {{
+extern "C" {
     /// Report the user's preferred locale.
     ///
     /// Returned language strings are in the format xx, where 'xx' is an ISO-639
@@ -69,5 +69,5 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetPreferredLocales(count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Locale;
-}}
+}
 

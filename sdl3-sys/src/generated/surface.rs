@@ -118,7 +118,7 @@ pub struct SDL_Surface {
     pub internal: *mut SDL_SurfaceData,
 }
 
-extern_sdlcall! {{
+extern "C" {
     /// Allocate a new surface with a specific pixel format.
     ///
     /// The pixels of the new surface are initialized to zero.
@@ -134,9 +134,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateSurfaceFrom
     /// \sa SDL_DestroySurface
     pub fn SDL_CreateSurface(width: ::core::ffi::c_int, height: ::core::ffi::c_int, format: SDL_PixelFormat) -> *mut SDL_Surface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Allocate a new surface with a specific pixel format and existing pixel
     /// data.
     ///
@@ -162,9 +162,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateSurface
     /// \sa SDL_DestroySurface
     pub fn SDL_CreateSurfaceFrom(width: ::core::ffi::c_int, height: ::core::ffi::c_int, format: SDL_PixelFormat, pixels: *mut ::core::ffi::c_void, pitch: ::core::ffi::c_int) -> *mut SDL_Surface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Free a surface.
     ///
     /// It is safe to pass NULL to this function.
@@ -177,9 +177,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateSurface
     /// \sa SDL_CreateSurfaceFrom
     pub fn SDL_DestroySurface(surface: *mut SDL_Surface);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the properties associated with a surface.
     ///
     /// The following properties are understood by SDL:
@@ -205,7 +205,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSurfaceProperties(surface: *mut SDL_Surface) -> SDL_PropertiesID;
-}}
+}
 
 pub const SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.surface.SDR_white_point\0") };
 
@@ -213,7 +213,7 @@ pub const SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT: &::core::ffi::CStr = unsafe { ::c
 
 pub const SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.surface.tonemap\0") };
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the colorspace used by a surface.
     ///
     /// Setting the colorspace doesn't change the pixels, only how they are
@@ -229,9 +229,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetSurfaceColorspace
     pub fn SDL_SetSurfaceColorspace(surface: *mut SDL_Surface, colorspace: SDL_Colorspace) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the colorspace used by a surface.
     ///
     /// The colorspace defaults to SDL_COLORSPACE_SRGB_LINEAR for floating point
@@ -246,9 +246,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetSurfaceColorspace
     pub fn SDL_GetSurfaceColorspace(surface: *mut SDL_Surface) -> SDL_Colorspace;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a palette and associate it with a surface.
     ///
     /// This function creates a palette compatible with the provided surface. The
@@ -274,9 +274,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetPaletteColors
     pub fn SDL_CreateSurfacePalette(surface: *mut SDL_Surface) -> *mut SDL_Palette;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the palette used by a surface.
     ///
     /// A single palette can be shared with many surfaces.
@@ -291,9 +291,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreatePalette
     /// \sa SDL_GetSurfacePalette
     pub fn SDL_SetSurfacePalette(surface: *mut SDL_Surface, palette: *mut SDL_Palette) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the palette used by a surface.
     ///
     /// \param surface the SDL_Surface structure to query.
@@ -304,9 +304,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetSurfacePalette
     pub fn SDL_GetSurfacePalette(surface: *mut SDL_Surface) -> *mut SDL_Palette;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Add an alternate version of a surface.
     ///
     /// This function adds an alternate version of this surface, usually used for
@@ -329,9 +329,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetSurfaceImages
     /// \sa SDL_SurfaceHasAlternateImages
     pub fn SDL_AddSurfaceAlternateImage(surface: *mut SDL_Surface, image: *mut SDL_Surface) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Return whether a surface has alternate versions available.
     ///
     /// \param surface the SDL_Surface structure to query.
@@ -344,9 +344,9 @@ extern_sdlcall! {{
     /// \sa SDL_RemoveSurfaceAlternateImages
     /// \sa SDL_GetSurfaceImages
     pub fn SDL_SurfaceHasAlternateImages(surface: *mut SDL_Surface) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get an array including all versions of a surface.
     ///
     /// This returns all versions of a surface, with the surface being queried as
@@ -369,9 +369,9 @@ extern_sdlcall! {{
     /// \sa SDL_RemoveSurfaceAlternateImages
     /// \sa SDL_SurfaceHasAlternateImages
     pub fn SDL_GetSurfaceImages(surface: *mut SDL_Surface, count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Surface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Remove all alternate versions of a surface.
     ///
     /// This function removes a reference from all the alternative versions,
@@ -385,9 +385,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetSurfaceImages
     /// \sa SDL_SurfaceHasAlternateImages
     pub fn SDL_RemoveSurfaceAlternateImages(surface: *mut SDL_Surface);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set up a surface for directly accessing the pixels.
     ///
     /// Between calls to SDL_LockSurface() / SDL_UnlockSurface(), you can write to
@@ -408,9 +408,9 @@ extern_sdlcall! {{
     /// \sa SDL_MUSTLOCK
     /// \sa SDL_UnlockSurface
     pub fn SDL_LockSurface(surface: *mut SDL_Surface) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Release a surface after directly accessing the pixels.
     ///
     /// \param surface the SDL_Surface structure to be unlocked.
@@ -419,9 +419,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_LockSurface
     pub fn SDL_UnlockSurface(surface: *mut SDL_Surface);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Load a BMP image from a seekable SDL data stream.
     ///
     /// The new surface should be freed with SDL_DestroySurface(). Not doing so
@@ -439,9 +439,9 @@ extern_sdlcall! {{
     /// \sa SDL_LoadBMP
     /// \sa SDL_SaveBMP_IO
     pub fn SDL_LoadBMP_IO(src: *mut SDL_IOStream, closeio: SDL_bool) -> *mut SDL_Surface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Load a BMP image from a file.
     ///
     /// The new surface should be freed with SDL_DestroySurface(). Not doing so
@@ -457,9 +457,9 @@ extern_sdlcall! {{
     /// \sa SDL_LoadBMP_IO
     /// \sa SDL_SaveBMP
     pub fn SDL_LoadBMP(file: *const ::core::ffi::c_char) -> *mut SDL_Surface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Save a surface to a seekable SDL data stream in BMP format.
     ///
     /// Surfaces with a 24-bit, 32-bit and paletted 8-bit format get saved in the
@@ -480,9 +480,9 @@ extern_sdlcall! {{
     /// \sa SDL_LoadBMP_IO
     /// \sa SDL_SaveBMP
     pub fn SDL_SaveBMP_IO(surface: *mut SDL_Surface, dst: *mut SDL_IOStream, closeio: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Save a surface to a file.
     ///
     /// Surfaces with a 24-bit, 32-bit and paletted 8-bit format get saved in the
@@ -501,9 +501,9 @@ extern_sdlcall! {{
     /// \sa SDL_LoadBMP
     /// \sa SDL_SaveBMP_IO
     pub fn SDL_SaveBMP(surface: *mut SDL_Surface, file: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the RLE acceleration hint for a surface.
     ///
     /// If RLE is enabled, color key and alpha blending blits are much faster, but
@@ -521,9 +521,9 @@ extern_sdlcall! {{
     /// \sa SDL_LockSurface
     /// \sa SDL_UnlockSurface
     pub fn SDL_SetSurfaceRLE(surface: *mut SDL_Surface, enabled: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Returns whether the surface is RLE enabled.
     ///
     /// It is safe to pass a NULL `surface` here; it will return SDL_FALSE.
@@ -535,9 +535,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetSurfaceRLE
     pub fn SDL_SurfaceHasRLE(surface: *mut SDL_Surface) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the color key (transparent pixel) in a surface.
     ///
     /// The color key defines a pixel value that will be treated as transparent in
@@ -560,9 +560,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetSurfaceRLE
     /// \sa SDL_SurfaceHasColorKey
     pub fn SDL_SetSurfaceColorKey(surface: *mut SDL_Surface, enabled: SDL_bool, key: Uint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Returns whether the surface has a color key.
     ///
     /// It is safe to pass a NULL `surface` here; it will return SDL_FALSE.
@@ -575,9 +575,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetSurfaceColorKey
     /// \sa SDL_GetSurfaceColorKey
     pub fn SDL_SurfaceHasColorKey(surface: *mut SDL_Surface) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the color key (transparent pixel) for a surface.
     ///
     /// The color key is a pixel of the format used by the surface, as generated by
@@ -595,9 +595,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetSurfaceColorKey
     /// \sa SDL_SurfaceHasColorKey
     pub fn SDL_GetSurfaceColorKey(surface: *mut SDL_Surface, key: *mut Uint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set an additional color value multiplied into blit operations.
     ///
     /// When this surface is blitted, during the blit operation each source color
@@ -618,9 +618,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetSurfaceColorMod
     /// \sa SDL_SetSurfaceAlphaMod
     pub fn SDL_SetSurfaceColorMod(surface: *mut SDL_Surface, r: Uint8, g: Uint8, b: Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the additional color value multiplied into blit operations.
     ///
     /// \param surface the SDL_Surface structure to query.
@@ -635,9 +635,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetSurfaceAlphaMod
     /// \sa SDL_SetSurfaceColorMod
     pub fn SDL_GetSurfaceColorMod(surface: *mut SDL_Surface, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set an additional alpha value used in blit operations.
     ///
     /// When this surface is blitted, during the blit operation the source alpha
@@ -655,9 +655,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetSurfaceAlphaMod
     /// \sa SDL_SetSurfaceColorMod
     pub fn SDL_SetSurfaceAlphaMod(surface: *mut SDL_Surface, alpha: Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the additional alpha value used in blit operations.
     ///
     /// \param surface the SDL_Surface structure to query.
@@ -670,9 +670,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetSurfaceColorMod
     /// \sa SDL_SetSurfaceAlphaMod
     pub fn SDL_GetSurfaceAlphaMod(surface: *mut SDL_Surface, alpha: *mut Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the blend mode used for blit operations.
     ///
     /// To copy a surface to another surface (or texture) without blending with the
@@ -688,9 +688,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetSurfaceBlendMode
     pub fn SDL_SetSurfaceBlendMode(surface: *mut SDL_Surface, blendMode: SDL_BlendMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the blend mode used for blit operations.
     ///
     /// \param surface the SDL_Surface structure to query.
@@ -702,9 +702,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetSurfaceBlendMode
     pub fn SDL_GetSurfaceBlendMode(surface: *mut SDL_Surface, blendMode: *mut SDL_BlendMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the clipping rectangle for a surface.
     ///
     /// When `surface` is the destination of a blit, only the area within the clip
@@ -723,9 +723,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetSurfaceClipRect
     pub fn SDL_SetSurfaceClipRect(surface: *mut SDL_Surface, rect: *const SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the clipping rectangle for a surface.
     ///
     /// When `surface` is the destination of a blit, only the area within the clip
@@ -742,9 +742,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetSurfaceClipRect
     pub fn SDL_GetSurfaceClipRect(surface: *mut SDL_Surface, rect: *mut SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Flip a surface vertically or horizontally.
     ///
     /// \param surface the surface to flip.
@@ -754,9 +754,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_FlipSurface(surface: *mut SDL_Surface, flip: SDL_FlipMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Creates a new surface identical to the existing surface.
     ///
     /// If the original surface has alternate images, the new surface will have a
@@ -772,9 +772,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_DestroySurface
     pub fn SDL_DuplicateSurface(surface: *mut SDL_Surface) -> *mut SDL_Surface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Creates a new surface identical to the existing surface, scaled to the
     /// desired size.
     ///
@@ -791,9 +791,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_DestroySurface
     pub fn SDL_ScaleSurface(surface: *mut SDL_Surface, width: ::core::ffi::c_int, height: ::core::ffi::c_int, scaleMode: SDL_ScaleMode) -> *mut SDL_Surface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Copy an existing surface to a new surface of the specified format.
     ///
     /// This function is used to optimize images for faster *repeat* blitting. This
@@ -817,9 +817,9 @@ extern_sdlcall! {{
     /// \sa SDL_ConvertSurfaceAndColorspace
     /// \sa SDL_DestroySurface
     pub fn SDL_ConvertSurface(surface: *mut SDL_Surface, format: SDL_PixelFormat) -> *mut SDL_Surface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Copy an existing surface to a new surface of the specified format and
     /// colorspace.
     ///
@@ -844,9 +844,9 @@ extern_sdlcall! {{
     /// \sa SDL_ConvertSurface
     /// \sa SDL_DestroySurface
     pub fn SDL_ConvertSurfaceAndColorspace(surface: *mut SDL_Surface, format: SDL_PixelFormat, palette: *mut SDL_Palette, colorspace: SDL_Colorspace, props: SDL_PropertiesID) -> *mut SDL_Surface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Copy a block of pixels of one format to another format.
     ///
     /// \param width the width of the block to copy, in pixels.
@@ -864,9 +864,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_ConvertPixelsAndColorspace
     pub fn SDL_ConvertPixels(width: ::core::ffi::c_int, height: ::core::ffi::c_int, src_format: SDL_PixelFormat, src: *const ::core::ffi::c_void, src_pitch: ::core::ffi::c_int, dst_format: SDL_PixelFormat, dst: *mut ::core::ffi::c_void, dst_pitch: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Copy a block of pixels of one format and colorspace to another format and
     /// colorspace.
     ///
@@ -893,9 +893,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_ConvertPixels
     pub fn SDL_ConvertPixelsAndColorspace(width: ::core::ffi::c_int, height: ::core::ffi::c_int, src_format: SDL_PixelFormat, src_colorspace: SDL_Colorspace, src_properties: SDL_PropertiesID, src: *const ::core::ffi::c_void, src_pitch: ::core::ffi::c_int, dst_format: SDL_PixelFormat, dst_colorspace: SDL_Colorspace, dst_properties: SDL_PropertiesID, dst: *mut ::core::ffi::c_void, dst_pitch: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Premultiply the alpha on a block of pixels.
     ///
     /// This is safe to use with src == dst, but not for other overlapping areas.
@@ -915,9 +915,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_PremultiplyAlpha(width: ::core::ffi::c_int, height: ::core::ffi::c_int, src_format: SDL_PixelFormat, src: *const ::core::ffi::c_void, src_pitch: ::core::ffi::c_int, dst_format: SDL_PixelFormat, dst: *mut ::core::ffi::c_void, dst_pitch: ::core::ffi::c_int, linear: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Premultiply the alpha in a surface.
     ///
     /// This is safe to use with src == dst, but not for other overlapping areas.
@@ -930,9 +930,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_PremultiplySurfaceAlpha(surface: *mut SDL_Surface, linear: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Clear a surface with a specific color, with floating point precision.
     ///
     /// This function handles all surface formats, and ignores any clip rectangle.
@@ -950,9 +950,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_ClearSurface(surface: *mut SDL_Surface, r: ::core::ffi::c_float, g: ::core::ffi::c_float, b: ::core::ffi::c_float, a: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Perform a fast fill of a rectangle with a specific color.
     ///
     /// `color` should be a pixel of the format used by the surface, and can be
@@ -975,9 +975,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_FillSurfaceRects
     pub fn SDL_FillSurfaceRect(dst: *mut SDL_Surface, rect: *const SDL_Rect, color: Uint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Perform a fast fill of a set of rectangles with a specific color.
     ///
     /// `color` should be a pixel of the format used by the surface, and can be
@@ -1000,9 +1000,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_FillSurfaceRect
     pub fn SDL_FillSurfaceRects(dst: *mut SDL_Surface, rects: *const SDL_Rect, count: ::core::ffi::c_int, color: Uint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Performs a fast blit from the source surface to the destination surface.
     ///
     /// This assumes that the source and destination rectangles are the same size.
@@ -1075,9 +1075,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_BlitSurfaceScaled
     pub fn SDL_BlitSurface(src: *mut SDL_Surface, srcrect: *const SDL_Rect, dst: *mut SDL_Surface, dstrect: *const SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Perform low-level surface blitting only.
     ///
     /// This is a semi-private blit function and it performs low-level surface
@@ -1100,9 +1100,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_BlitSurface
     pub fn SDL_BlitSurfaceUnchecked(src: *mut SDL_Surface, srcrect: *const SDL_Rect, dst: *mut SDL_Surface, dstrect: *const SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Perform a scaled blit to a destination surface, which may be of a different
     /// format.
     ///
@@ -1125,9 +1125,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_BlitSurface
     pub fn SDL_BlitSurfaceScaled(src: *mut SDL_Surface, srcrect: *const SDL_Rect, dst: *mut SDL_Surface, dstrect: *const SDL_Rect, scaleMode: SDL_ScaleMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Perform low-level surface scaled blitting only.
     ///
     /// This is a semi-private function and it performs low-level surface blitting,
@@ -1151,9 +1151,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_BlitSurfaceScaled
     pub fn SDL_BlitSurfaceUncheckedScaled(src: *mut SDL_Surface, srcrect: *const SDL_Rect, dst: *mut SDL_Surface, dstrect: *const SDL_Rect, scaleMode: SDL_ScaleMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Perform a tiled blit to a destination surface, which may be of a different
     /// format.
     ///
@@ -1177,9 +1177,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_BlitSurface
     pub fn SDL_BlitSurfaceTiled(src: *mut SDL_Surface, srcrect: *const SDL_Rect, dst: *mut SDL_Surface, dstrect: *const SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Perform a scaled and tiled blit to a destination surface, which may be of a
     /// different format.
     ///
@@ -1207,9 +1207,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_BlitSurface
     pub fn SDL_BlitSurfaceTiledWithScale(src: *mut SDL_Surface, srcrect: *const SDL_Rect, scale: ::core::ffi::c_float, scaleMode: SDL_ScaleMode, dst: *mut SDL_Surface, dstrect: *const SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Perform a scaled blit using the 9-grid algorithm to a destination surface,
     /// which may be of a different format.
     ///
@@ -1244,9 +1244,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_BlitSurface
     pub fn SDL_BlitSurface9Grid(src: *mut SDL_Surface, srcrect: *const SDL_Rect, left_width: ::core::ffi::c_int, right_width: ::core::ffi::c_int, top_height: ::core::ffi::c_int, bottom_height: ::core::ffi::c_int, scale: ::core::ffi::c_float, scaleMode: SDL_ScaleMode, dst: *mut SDL_Surface, dstrect: *const SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Map an RGB triple to an opaque pixel value for a surface.
     ///
     /// This function maps the RGB color value to the specified pixel format and
@@ -1274,9 +1274,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_MapSurfaceRGBA
     pub fn SDL_MapSurfaceRGB(surface: *mut SDL_Surface, r: Uint8, g: Uint8, b: Uint8) -> Uint32;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Map an RGBA quadruple to a pixel value for a surface.
     ///
     /// This function maps the RGBA color value to the specified pixel format and
@@ -1305,9 +1305,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_MapSurfaceRGB
     pub fn SDL_MapSurfaceRGBA(surface: *mut SDL_Surface, r: Uint8, g: Uint8, b: Uint8, a: Uint8) -> Uint32;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Retrieves a single pixel from a surface.
     ///
     /// This function prioritizes correctness over speed: it is suitable for unit
@@ -1332,9 +1332,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_ReadSurfacePixel(surface: *mut SDL_Surface, x: ::core::ffi::c_int, y: ::core::ffi::c_int, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8, a: *mut Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Retrieves a single pixel from a surface.
     ///
     /// This function prioritizes correctness over speed: it is suitable for unit
@@ -1356,9 +1356,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_ReadSurfacePixelFloat(surface: *mut SDL_Surface, x: ::core::ffi::c_int, y: ::core::ffi::c_int, r: *mut ::core::ffi::c_float, g: *mut ::core::ffi::c_float, b: *mut ::core::ffi::c_float, a: *mut ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Writes a single pixel to a surface.
     ///
     /// This function prioritizes correctness over speed: it is suitable for unit
@@ -1379,9 +1379,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_WriteSurfacePixel(surface: *mut SDL_Surface, x: ::core::ffi::c_int, y: ::core::ffi::c_int, r: Uint8, g: Uint8, b: Uint8, a: Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Writes a single pixel to a surface.
     ///
     /// This function prioritizes correctness over speed: it is suitable for unit
@@ -1399,7 +1399,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_WriteSurfacePixelFloat(surface: *mut SDL_Surface, x: ::core::ffi::c_int, y: ::core::ffi::c_int, r: ::core::ffi::c_float, g: ::core::ffi::c_float, b: ::core::ffi::c_float, a: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
 #[repr(C)]
 #[non_exhaustive]

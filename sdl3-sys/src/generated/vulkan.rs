@@ -41,7 +41,7 @@ pub struct __VkSurfaceKHR { _opaque: [::core::primitive::u8; 0] }
 #[cfg(not(target_pointer_width = "64"))]
 pub type VkSurfaceKHR = ::core::primitive::u64;
 
-extern_sdlcall! {{
+extern "C" {
     /// Dynamically load the Vulkan loader library.
     ///
     /// This should be called after initializing the video driver, but before
@@ -82,9 +82,9 @@ extern_sdlcall! {{
     /// \sa SDL_Vulkan_GetVkGetInstanceProcAddr
     /// \sa SDL_Vulkan_UnloadLibrary
     pub fn SDL_Vulkan_LoadLibrary(path: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the address of the `vkGetInstanceProcAddr` function.
     ///
     /// This should be called after either calling SDL_Vulkan_LoadLibrary() or
@@ -103,18 +103,18 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_Vulkan_GetVkGetInstanceProcAddr() -> SDL_FunctionPointer;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Unload the Vulkan library previously loaded by SDL_Vulkan_LoadLibrary().
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_Vulkan_LoadLibrary
     pub fn SDL_Vulkan_UnloadLibrary();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the Vulkan instance extensions needed for vkCreateInstance.
     ///
     /// This should be called after either calling SDL_Vulkan_LoadLibrary() or
@@ -136,9 +136,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_Vulkan_CreateSurface
     pub fn SDL_Vulkan_GetInstanceExtensions(count: *mut Uint32) -> *const *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a Vulkan rendering surface for a window.
     ///
     /// The `window` must have been created with the `SDL_WINDOW_VULKAN` flag and
@@ -162,9 +162,9 @@ extern_sdlcall! {{
     /// \sa SDL_Vulkan_GetInstanceExtensions
     /// \sa SDL_Vulkan_DestroySurface
     pub fn SDL_Vulkan_CreateSurface(window: *mut SDL_Window, instance: VkInstance, allocator: *const VkAllocationCallbacks, surface: *mut VkSurfaceKHR) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Destroy the Vulkan rendering surface of a window.
     ///
     /// This should be called before SDL_DestroyWindow, if SDL_Vulkan_CreateSurface
@@ -187,9 +187,9 @@ extern_sdlcall! {{
     /// \sa SDL_Vulkan_GetInstanceExtensions
     /// \sa SDL_Vulkan_CreateSurface
     pub fn SDL_Vulkan_DestroySurface(instance: VkInstance, surface: VkSurfaceKHR, allocator: *const VkAllocationCallbacks);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query support for presentation via a given physical device and queue
     /// family.
     ///
@@ -207,7 +207,7 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_Vulkan_GetInstanceExtensions
     pub fn SDL_Vulkan_GetPresentationSupport(instance: VkInstance, physicalDevice: VkPhysicalDevice, queueFamilyIndex: Uint32) -> SDL_bool;
-}}
+}
 
 #[repr(C)]
 #[non_exhaustive]

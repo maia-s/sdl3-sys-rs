@@ -73,11 +73,11 @@ pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPrio
 /// \returns a value that can be reported through SDL_WaitThread().
 ///
 /// \since This datatype is available since SDL 3.0.0.
-pub type SDL_ThreadFunction = ::core::option::Option<extern_sdlcall!(fn(data: *mut ::core::ffi::c_void) -> ::core::ffi::c_int)>;
+pub type SDL_ThreadFunction = ::core::option::Option<extern "C" fn(data: *mut ::core::ffi::c_void) -> ::core::ffi::c_int>;
 
 #[cfg(doc)]
 emit! {
-    extern_sdlcall! {{
+    extern "C" {
         /// Create a new thread with a default stack size.
         ///
         /// This is a convenience function, equivalent to calling
@@ -108,9 +108,9 @@ emit! {
         /// \sa SDL_CreateThreadWithProperties
         /// \sa SDL_WaitThread
         pub fn SDL_CreateThread(r#fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void) -> *mut SDL_Thread;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// Create a new thread with with the specified properties.
         ///
         /// These are the supported properties:
@@ -174,7 +174,7 @@ emit! {
         /// \sa SDL_CreateThread
         /// \sa SDL_WaitThread
         pub fn SDL_CreateThreadWithProperties(props: SDL_PropertiesID) -> *mut SDL_Thread;
-    }}
+    }
 
     pub const SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.entry_function\0") };
 
@@ -204,7 +204,7 @@ emit! {
 
 #[cfg(not(doc))]
 emit! {
-    extern_sdlcall! {{
+    extern "C" {
         /// The actual entry point for SDL_CreateThread.
         ///
         /// \param fn the SDL_ThreadFunction function to call in the new thread
@@ -218,9 +218,9 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_CreateThreadRuntime(r#fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
-    }}
+    }
 
-    extern_sdlcall! {{
+    extern "C" {
         /// The actual entry point for SDL_CreateThreadWithProperties.
         ///
         /// \param props the properties to use
@@ -232,7 +232,7 @@ emit! {
         ///
         /// \since This function is available since SDL 3.0.0.
         pub fn SDL_CreateThreadWithPropertiesRuntime(props: SDL_PropertiesID, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
-    }}
+    }
 
     pub const SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.entry_function\0") };
 
@@ -244,7 +244,7 @@ emit! {
 
 }
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the thread name as it was specified in SDL_CreateThread().
     ///
     /// \param thread the thread to query.
@@ -253,9 +253,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetThreadName(thread: *mut SDL_Thread) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the thread identifier for the current thread.
     ///
     /// This thread identifier is as reported by the underlying operating system.
@@ -271,9 +271,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetThreadID
     pub fn SDL_GetCurrentThreadID() -> SDL_ThreadID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the thread identifier for the specified thread.
     ///
     /// This thread identifier is as reported by the underlying operating system.
@@ -288,9 +288,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetCurrentThreadID
     pub fn SDL_GetThreadID(thread: *mut SDL_Thread) -> SDL_ThreadID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the priority for the current thread.
     ///
     /// Note that some platforms will not let you alter the priority (or at least,
@@ -303,9 +303,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetThreadPriority(priority: SDL_ThreadPriority) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Wait for a thread to finish.
     ///
     /// Threads that haven't been detached will remain (as a "zombie") until this
@@ -338,9 +338,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateThread
     /// \sa SDL_DetachThread
     pub fn SDL_WaitThread(thread: *mut SDL_Thread, status: *mut ::core::ffi::c_int);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Let a thread clean up on exit without intervention.
     ///
     /// A thread may be "detached" to signify that it should not remain until
@@ -374,9 +374,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateThread
     /// \sa SDL_WaitThread
     pub fn SDL_DetachThread(thread: *mut SDL_Thread);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current thread's value associated with a thread local storage ID.
     ///
     /// \param id a pointer to the thread local storage ID, may not be NULL.
@@ -389,7 +389,7 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetTLS
     pub fn SDL_GetTLS(id: *mut SDL_TLSID) -> *mut ::core::ffi::c_void;
-}}
+}
 
 /// The callback used to cleanup data passed to SDL_SetTLS.
 ///
@@ -400,9 +400,9 @@ extern_sdlcall! {{
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_SetTLS
-pub type SDL_TLSDestructorCallback = ::core::option::Option<extern_sdlcall!(fn(value: *mut ::core::ffi::c_void))>;
+pub type SDL_TLSDestructorCallback = ::core::option::Option<extern "C" fn(value: *mut ::core::ffi::c_void)>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the current thread's value associated with a thread local storage ID.
     ///
     /// If the thread local storage ID is not initialized (the value is 0), a new
@@ -428,9 +428,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetTLS
     pub fn SDL_SetTLS(id: *mut SDL_TLSID, value: *const ::core::ffi::c_void, destructor: SDL_TLSDestructorCallback) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Cleanup all TLS data for this thread.
     ///
     /// If you are creating your threads outside of SDL and then calling SDL
@@ -441,7 +441,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_CleanupTLS();
-}}
+}
 
 /// The SDL thread object.
 ///

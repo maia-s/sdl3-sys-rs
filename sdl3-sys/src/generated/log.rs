@@ -121,7 +121,7 @@ pub const SDL_LOG_PRIORITY_ERROR: SDL_LogPriority = SDL_LogPriority::LOG_PRIORIT
 pub const SDL_LOG_PRIORITY_CRITICAL: SDL_LogPriority = SDL_LogPriority::LOG_PRIORITY_CRITICAL;
 pub const SDL_NUM_LOG_PRIORITIES: SDL_LogPriority = SDL_LogPriority::NUM_LOG_PRIORITIES;
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the priority of all log categories.
     ///
     /// \param priority the SDL_LogPriority to assign.
@@ -131,9 +131,9 @@ extern_sdlcall! {{
     /// \sa SDL_ResetLogPriorities
     /// \sa SDL_SetLogPriority
     pub fn SDL_SetLogPriorities(priority: SDL_LogPriority);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the priority of a particular log category.
     ///
     /// \param category the category to assign a priority to.
@@ -145,9 +145,9 @@ extern_sdlcall! {{
     /// \sa SDL_ResetLogPriorities
     /// \sa SDL_SetLogPriorities
     pub fn SDL_SetLogPriority(category: ::core::ffi::c_int, priority: SDL_LogPriority);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the priority of a particular log category.
     ///
     /// \param category the category to query.
@@ -157,9 +157,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetLogPriority
     pub fn SDL_GetLogPriority(category: ::core::ffi::c_int) -> SDL_LogPriority;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Reset all priorities to default.
     ///
     /// This is called by SDL_Quit().
@@ -169,9 +169,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetLogPriorities
     /// \sa SDL_SetLogPriority
     pub fn SDL_ResetLogPriorities();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the text prepended to log messages of a given priority.
     ///
     /// By default SDL_LOG_PRIORITY_INFO and below have no prefix, and
@@ -189,9 +189,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetLogPriorities
     /// \sa SDL_SetLogPriority
     pub fn SDL_SetLogPriorityPrefix(priority: SDL_LogPriority, prefix: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Log a message with SDL_LOG_CATEGORY_APPLICATION and SDL_LOG_PRIORITY_INFO.
     ///
     /// \param fmt a printf() style message format string.
@@ -209,9 +209,9 @@ extern_sdlcall! {{
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_Log(fmt: *const ::core::ffi::c_char, ...);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_VERBOSE.
     ///
     /// \param category the category of the message.
@@ -230,9 +230,9 @@ extern_sdlcall! {{
     /// \sa SDL_LogMessageV
     /// \sa SDL_LogWarn
     pub fn SDL_LogVerbose(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_DEBUG.
     ///
     /// \param category the category of the message.
@@ -251,9 +251,9 @@ extern_sdlcall! {{
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_LogDebug(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_INFO.
     ///
     /// \param category the category of the message.
@@ -272,9 +272,9 @@ extern_sdlcall! {{
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_LogInfo(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_WARN.
     ///
     /// \param category the category of the message.
@@ -293,9 +293,9 @@ extern_sdlcall! {{
     /// \sa SDL_LogMessageV
     /// \sa SDL_LogVerbose
     pub fn SDL_LogWarn(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_ERROR.
     ///
     /// \param category the category of the message.
@@ -314,9 +314,9 @@ extern_sdlcall! {{
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_LogError(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_CRITICAL.
     ///
     /// \param category the category of the message.
@@ -335,9 +335,9 @@ extern_sdlcall! {{
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_LogCritical(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Log a message with the specified category and priority.
     ///
     /// \param category the category of the message.
@@ -357,9 +357,9 @@ extern_sdlcall! {{
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_LogMessage(category: ::core::ffi::c_int, priority: SDL_LogPriority, fmt: *const ::core::ffi::c_char, ...);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Log a message with the specified category and priority.
     ///
     /// \param category the category of the message.
@@ -378,7 +378,7 @@ extern_sdlcall! {{
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_LogMessageV(category: ::core::ffi::c_int, priority: SDL_LogPriority, fmt: *const ::core::ffi::c_char, ap: crate::ffi::VaList);
-}}
+}
 
 /// The prototype for the log output callback function.
 ///
@@ -391,9 +391,9 @@ extern_sdlcall! {{
 /// \param message the message being output.
 ///
 /// \since This datatype is available since SDL 3.0.0.
-pub type SDL_LogOutputFunction = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, category: ::core::ffi::c_int, priority: SDL_LogPriority, message: *const ::core::ffi::c_char))>;
+pub type SDL_LogOutputFunction = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, category: ::core::ffi::c_int, priority: SDL_LogPriority, message: *const ::core::ffi::c_char)>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current log output function.
     ///
     /// \param callback an SDL_LogOutputFunction filled in with the current log
@@ -405,9 +405,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetLogOutputFunction
     pub fn SDL_GetLogOutputFunction(callback: *mut SDL_LogOutputFunction, userdata: *mut *mut ::core::ffi::c_void);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Replace the default log output function with one of your own.
     ///
     /// \param callback an SDL_LogOutputFunction to call instead of the default.
@@ -417,5 +417,5 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetLogOutputFunction
     pub fn SDL_SetLogOutputFunction(callback: SDL_LogOutputFunction, userdata: *mut ::core::ffi::c_void);
-}}
+}
 

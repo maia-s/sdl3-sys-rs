@@ -80,7 +80,7 @@ pub const SDL_CAMERA_POSITION_UNKNOWN: SDL_CameraPosition = SDL_CameraPosition::
 pub const SDL_CAMERA_POSITION_FRONT_FACING: SDL_CameraPosition = SDL_CameraPosition::FRONT_FACING;
 pub const SDL_CAMERA_POSITION_BACK_FACING: SDL_CameraPosition = SDL_CameraPosition::BACK_FACING;
 
-extern_sdlcall! {{
+extern "C" {
     /// Use this function to get the number of built-in camera drivers.
     ///
     /// This function returns a hardcoded number. This never returns a negative
@@ -101,9 +101,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetCameraDriver
     pub fn SDL_GetNumCameraDrivers() -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Use this function to get the name of a built in camera driver.
     ///
     /// The list of camera drivers is given in the order that they are normally
@@ -125,9 +125,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetNumCameraDrivers
     pub fn SDL_GetCameraDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the name of the current camera driver.
     ///
     /// The names of drivers are all simple, low-ASCII identifiers, like "v4l2",
@@ -141,9 +141,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetCurrentCameraDriver() -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of currently connected camera devices.
     ///
     /// \param count a pointer filled in with the number of cameras returned, may
@@ -158,9 +158,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_OpenCamera
     pub fn SDL_GetCameras(count: *mut ::core::ffi::c_int) -> *mut SDL_CameraID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the list of native formats/sizes a camera supports.
     ///
     /// This returns a list of all formats and frame sizes that a specific camera
@@ -197,9 +197,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetCameras
     /// \sa SDL_OpenCamera
     pub fn SDL_GetCameraSupportedFormats(devid: SDL_CameraID, count: *mut ::core::ffi::c_int) -> *mut *mut SDL_CameraSpec;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the human-readable device name for a camera.
     ///
     /// \param instance_id the camera device instance ID.
@@ -212,9 +212,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetCameras
     pub fn SDL_GetCameraName(instance_id: SDL_CameraID) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the position of the camera in relation to the system.
     ///
     /// Most platforms will report UNKNOWN, but mobile devices, like phones, can
@@ -231,9 +231,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetCameras
     pub fn SDL_GetCameraPosition(instance_id: SDL_CameraID) -> SDL_CameraPosition;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Open a video recording device (a "camera").
     ///
     /// You can open the device with any reasonable spec, and if the hardware can't
@@ -277,9 +277,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetCameras
     /// \sa SDL_GetCameraFormat
     pub fn SDL_OpenCamera(instance_id: SDL_CameraID, spec: *const SDL_CameraSpec) -> *mut SDL_Camera;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query if camera access has been approved by the user.
     ///
     /// Cameras will not function between when the device is opened by the app and
@@ -310,9 +310,9 @@ extern_sdlcall! {{
     /// \sa SDL_OpenCamera
     /// \sa SDL_CloseCamera
     pub fn SDL_GetCameraPermissionState(camera: *mut SDL_Camera) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the instance ID of an opened camera.
     ///
     /// \param camera an SDL_Camera to query.
@@ -325,9 +325,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_OpenCamera
     pub fn SDL_GetCameraID(camera: *mut SDL_Camera) -> SDL_CameraID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the properties associated with an opened camera.
     ///
     /// \param camera the SDL_Camera obtained from SDL_OpenCamera().
@@ -338,9 +338,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetCameraProperties(camera: *mut SDL_Camera) -> SDL_PropertiesID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the spec that a camera is using when generating images.
     ///
     /// Note that this might not be the native format of the hardware, as SDL might
@@ -363,9 +363,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_OpenCamera
     pub fn SDL_GetCameraFormat(camera: *mut SDL_Camera, spec: *mut SDL_CameraSpec) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Acquire a frame.
     ///
     /// The frame is a memory pointer to the image data, whose size and format are
@@ -406,9 +406,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_ReleaseCameraFrame
     pub fn SDL_AcquireCameraFrame(camera: *mut SDL_Camera, timestampNS: *mut Uint64) -> *mut SDL_Surface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Release a frame of video acquired from a camera.
     ///
     /// Let the back-end re-use the internal buffer for camera.
@@ -434,9 +434,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_AcquireCameraFrame
     pub fn SDL_ReleaseCameraFrame(camera: *mut SDL_Camera, frame: *mut SDL_Surface);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Use this function to shut down camera processing and close the camera
     /// device.
     ///
@@ -450,7 +450,7 @@ extern_sdlcall! {{
     /// \sa SDL_OpenCameraWithSpec
     /// \sa SDL_OpenCamera
     pub fn SDL_CloseCamera(camera: *mut SDL_Camera);
-}}
+}
 
 /// The opaque structure used to identify an opened SDL camera.
 ///

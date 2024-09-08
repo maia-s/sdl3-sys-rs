@@ -21,7 +21,7 @@ use super::stdinc::*;
 
 use super::error::*;
 
-extern_sdlcall! {{
+extern "C" {
     /// Dynamically load a shared object.
     ///
     /// \param sofile a system-dependent name of the object file.
@@ -33,9 +33,9 @@ extern_sdlcall! {{
     /// \sa SDL_LoadFunction
     /// \sa SDL_UnloadObject
     pub fn SDL_LoadObject(sofile: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_void;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Look up the address of the named function in a shared object.
     ///
     /// This function pointer is no longer valid after calling SDL_UnloadObject().
@@ -59,9 +59,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_LoadObject
     pub fn SDL_LoadFunction(handle: *mut ::core::ffi::c_void, name: *const ::core::ffi::c_char) -> SDL_FunctionPointer;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Unload a shared object from memory.
     ///
     /// \param handle a valid shared object handle returned by SDL_LoadObject().
@@ -70,5 +70,5 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_LoadObject
     pub fn SDL_UnloadObject(handle: *mut ::core::ffi::c_void);
-}}
+}
 

@@ -133,7 +133,7 @@ pub const SDL_JOYSTICK_AXIS_MIN: ::core::primitive::i32 = -32768_i32;
 
 pub const SDL_IPHONE_MAX_GFORCE: ::core::ffi::c_double = 5.0_f64;
 
-extern_sdlcall! {{
+extern "C" {
     /// Locking for atomic access to the joystick API.
     ///
     /// The SDL joystick functions are thread-safe, however you can lock the
@@ -142,16 +142,16 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_LockJoysticks();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Unlocking for atomic access to the joystick API.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_UnlockJoysticks();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Return whether a joystick is currently connected.
     ///
     /// \returns SDL_TRUE if a joystick is connected, SDL_FALSE otherwise.
@@ -160,9 +160,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetJoysticks
     pub fn SDL_HasJoystick() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of currently connected joysticks.
     ///
     /// \param count a pointer filled in with the number of joysticks returned, may
@@ -176,9 +176,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasJoystick
     /// \sa SDL_OpenJoystick
     pub fn SDL_GetJoysticks(count: *mut ::core::ffi::c_int) -> *mut SDL_JoystickID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the implementation dependent name of a joystick.
     ///
     /// This can be called before any joysticks are opened.
@@ -192,9 +192,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetJoystickName
     /// \sa SDL_GetJoysticks
     pub fn SDL_GetJoystickNameForID(instance_id: SDL_JoystickID) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the implementation dependent path of a joystick.
     ///
     /// This can be called before any joysticks are opened.
@@ -208,9 +208,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetJoystickPath
     /// \sa SDL_GetJoysticks
     pub fn SDL_GetJoystickPathForID(instance_id: SDL_JoystickID) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the player index of a joystick.
     ///
     /// This can be called before any joysticks are opened.
@@ -223,9 +223,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetJoystickPlayerIndex
     /// \sa SDL_GetJoysticks
     pub fn SDL_GetJoystickPlayerIndexForID(instance_id: SDL_JoystickID) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the implementation-dependent GUID of a joystick.
     ///
     /// This can be called before any joysticks are opened.
@@ -239,9 +239,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetJoystickGUID
     /// \sa SDL_GUIDToString
     pub fn SDL_GetJoystickGUIDForID(instance_id: SDL_JoystickID) -> SDL_GUID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the USB vendor ID of a joystick, if available.
     ///
     /// This can be called before any joysticks are opened. If the vendor ID isn't
@@ -256,9 +256,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetJoystickVendor
     /// \sa SDL_GetJoysticks
     pub fn SDL_GetJoystickVendorForID(instance_id: SDL_JoystickID) -> Uint16;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the USB product ID of a joystick, if available.
     ///
     /// This can be called before any joysticks are opened. If the product ID isn't
@@ -273,9 +273,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetJoystickProduct
     /// \sa SDL_GetJoysticks
     pub fn SDL_GetJoystickProductForID(instance_id: SDL_JoystickID) -> Uint16;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the product version of a joystick, if available.
     ///
     /// This can be called before any joysticks are opened. If the product version
@@ -290,9 +290,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetJoystickProductVersion
     /// \sa SDL_GetJoysticks
     pub fn SDL_GetJoystickProductVersionForID(instance_id: SDL_JoystickID) -> Uint16;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the type of a joystick, if available.
     ///
     /// This can be called before any joysticks are opened.
@@ -307,9 +307,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetJoystickType
     /// \sa SDL_GetJoysticks
     pub fn SDL_GetJoystickTypeForID(instance_id: SDL_JoystickID) -> SDL_JoystickType;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Open a joystick for use.
     ///
     /// The joystick subsystem must be initialized before a joystick can be opened
@@ -323,9 +323,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_CloseJoystick
     pub fn SDL_OpenJoystick(instance_id: SDL_JoystickID) -> *mut SDL_Joystick;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the SDL_Joystick associated with an instance ID, if it has been opened.
     ///
     /// \param instance_id the instance ID to get the SDL_Joystick for.
@@ -334,9 +334,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickFromID(instance_id: SDL_JoystickID) -> *mut SDL_Joystick;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the SDL_Joystick associated with a player index.
     ///
     /// \param player_index the player index to get the SDL_Joystick for.
@@ -348,7 +348,7 @@ extern_sdlcall! {{
     /// \sa SDL_GetJoystickPlayerIndex
     /// \sa SDL_SetJoystickPlayerIndex
     pub fn SDL_GetJoystickFromPlayerIndex(player_index: ::core::ffi::c_int) -> *mut SDL_Joystick;
-}}
+}
 
 /// The structure that describes a virtual joystick touchpad.
 ///
@@ -433,26 +433,26 @@ pub struct SDL_VirtualJoystickDesc {
     /// User data pointer passed to callbacks
     pub userdata: *mut ::core::ffi::c_void,
     /// Called when the joystick state should be updated
-    pub Update: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void))>,
+    pub Update: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>,
     /// Called when the player index is set
-    pub SetPlayerIndex: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, player_index: ::core::ffi::c_int))>,
+    pub SetPlayerIndex: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, player_index: ::core::ffi::c_int)>,
     /// Implements SDL_RumbleJoystick()
-    pub Rumble: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, low_frequency_rumble: Uint16, high_frequency_rumble: Uint16) -> SDL_bool)>,
+    pub Rumble: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, low_frequency_rumble: Uint16, high_frequency_rumble: Uint16) -> SDL_bool>,
     /// Implements SDL_RumbleJoystickTriggers()
-    pub RumbleTriggers: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, left_rumble: Uint16, right_rumble: Uint16) -> SDL_bool)>,
+    pub RumbleTriggers: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, left_rumble: Uint16, right_rumble: Uint16) -> SDL_bool>,
     /// Implements SDL_SetJoystickLED()
-    pub SetLED: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, red: Uint8, green: Uint8, blue: Uint8) -> SDL_bool)>,
+    pub SetLED: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, red: Uint8, green: Uint8, blue: Uint8) -> SDL_bool>,
     /// Implements SDL_SendJoystickEffect()
-    pub SendEffect: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, data: *const ::core::ffi::c_void, size: ::core::ffi::c_int) -> SDL_bool)>,
+    pub SendEffect: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, data: *const ::core::ffi::c_void, size: ::core::ffi::c_int) -> SDL_bool>,
     /// Implements SDL_SetGamepadSensorEnabled()
-    pub SetSensorsEnabled: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, enabled: SDL_bool) -> SDL_bool)>,
+    pub SetSensorsEnabled: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, enabled: SDL_bool) -> SDL_bool>,
     /// Cleans up the userdata when the joystick is detached
-    pub Cleanup: ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void))>,
+    pub Cleanup: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>,
 }
 
 const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 84) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 136)));
 
-extern_sdlcall! {{
+extern "C" {
     /// Attach a new virtual joystick.
     ///
     /// \param desc joystick description, initialized using SDL_INIT_INTERFACE().
@@ -463,9 +463,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_DetachVirtualJoystick
     pub fn SDL_AttachVirtualJoystick(desc: *const SDL_VirtualJoystickDesc) -> SDL_JoystickID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Detach a virtual joystick.
     ///
     /// \param instance_id the joystick instance ID, previously returned from
@@ -477,9 +477,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_AttachVirtualJoystick
     pub fn SDL_DetachVirtualJoystick(instance_id: SDL_JoystickID) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query whether or not a joystick is virtual.
     ///
     /// \param instance_id the joystick instance ID.
@@ -487,9 +487,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_IsJoystickVirtual(instance_id: SDL_JoystickID) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the state of an axis on an opened virtual joystick.
     ///
     /// Please note that values set here will not be applied until the next call to
@@ -510,9 +510,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualAxis(joystick: *mut SDL_Joystick, axis: ::core::ffi::c_int, value: Sint16) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Generate ball motion on an opened virtual joystick.
     ///
     /// Please note that values set here will not be applied until the next call to
@@ -530,9 +530,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualBall(joystick: *mut SDL_Joystick, ball: ::core::ffi::c_int, xrel: Sint16, yrel: Sint16) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the state of a button on an opened virtual joystick.
     ///
     /// Please note that values set here will not be applied until the next call to
@@ -549,9 +549,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualButton(joystick: *mut SDL_Joystick, button: ::core::ffi::c_int, value: Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the state of a hat on an opened virtual joystick.
     ///
     /// Please note that values set here will not be applied until the next call to
@@ -568,9 +568,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualHat(joystick: *mut SDL_Joystick, hat: ::core::ffi::c_int, value: Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set touchpad finger state on an opened virtual joystick.
     ///
     /// Please note that values set here will not be applied until the next call to
@@ -595,9 +595,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualTouchpad(joystick: *mut SDL_Joystick, touchpad: ::core::ffi::c_int, finger: ::core::ffi::c_int, state: Uint8, x: ::core::ffi::c_float, y: ::core::ffi::c_float, pressure: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Send a sensor update for an opened virtual joystick.
     ///
     /// Please note that values set here will not be applied until the next call to
@@ -617,9 +617,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SendJoystickVirtualSensorData(joystick: *mut SDL_Joystick, r#type: SDL_SensorType, sensor_timestamp: Uint64, data: *const ::core::ffi::c_float, num_values: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the properties associated with a joystick.
     ///
     /// The following read-only properties are provided by SDL:
@@ -641,7 +641,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickProperties(joystick: *mut SDL_Joystick) -> SDL_PropertiesID;
-}}
+}
 
 pub const SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.mono_led\0") };
 
@@ -653,7 +653,7 @@ pub const SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN: &::core::ffi::CStr = unsafe { ::
 
 pub const SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.trigger_rumble\0") };
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the implementation dependent name of a joystick.
     ///
     /// \param joystick the SDL_Joystick obtained from SDL_OpenJoystick().
@@ -664,9 +664,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetJoystickNameForID
     pub fn SDL_GetJoystickName(joystick: *mut SDL_Joystick) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the implementation dependent path of a joystick.
     ///
     /// \param joystick the SDL_Joystick obtained from SDL_OpenJoystick().
@@ -677,9 +677,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetJoystickPathForID
     pub fn SDL_GetJoystickPath(joystick: *mut SDL_Joystick) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the player index of an opened joystick.
     ///
     /// For XInput controllers this returns the XInput user index. Many joysticks
@@ -692,9 +692,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetJoystickPlayerIndex
     pub fn SDL_GetJoystickPlayerIndex(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the player index of an opened joystick.
     ///
     /// \param joystick the SDL_Joystick obtained from SDL_OpenJoystick().
@@ -707,9 +707,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetJoystickPlayerIndex
     pub fn SDL_SetJoystickPlayerIndex(joystick: *mut SDL_Joystick, player_index: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the implementation-dependent GUID for the joystick.
     ///
     /// This function requires an open joystick.
@@ -724,9 +724,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetJoystickGUIDForID
     /// \sa SDL_GUIDToString
     pub fn SDL_GetJoystickGUID(joystick: *mut SDL_Joystick) -> SDL_GUID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the USB vendor ID of an opened joystick, if available.
     ///
     /// If the vendor ID isn't available this function returns 0.
@@ -738,9 +738,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetJoystickVendorForID
     pub fn SDL_GetJoystickVendor(joystick: *mut SDL_Joystick) -> Uint16;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the USB product ID of an opened joystick, if available.
     ///
     /// If the product ID isn't available this function returns 0.
@@ -752,9 +752,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetJoystickProductForID
     pub fn SDL_GetJoystickProduct(joystick: *mut SDL_Joystick) -> Uint16;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the product version of an opened joystick, if available.
     ///
     /// If the product version isn't available this function returns 0.
@@ -766,9 +766,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetJoystickProductVersionForID
     pub fn SDL_GetJoystickProductVersion(joystick: *mut SDL_Joystick) -> Uint16;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the firmware version of an opened joystick, if available.
     ///
     /// If the firmware version isn't available this function returns 0.
@@ -779,9 +779,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickFirmwareVersion(joystick: *mut SDL_Joystick) -> Uint16;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the serial number of an opened joystick, if available.
     ///
     /// Returns the serial number of the joystick, or NULL if it is not available.
@@ -792,9 +792,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickSerial(joystick: *mut SDL_Joystick) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the type of an opened joystick.
     ///
     /// \param joystick the SDL_Joystick obtained from SDL_OpenJoystick().
@@ -804,9 +804,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetJoystickTypeForID
     pub fn SDL_GetJoystickType(joystick: *mut SDL_Joystick) -> SDL_JoystickType;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the device information encoded in a SDL_GUID structure.
     ///
     /// \param guid the SDL_GUID you wish to get info about.
@@ -823,9 +823,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetJoystickGUIDForID
     pub fn SDL_GetJoystickGUIDInfo(guid: SDL_GUID, vendor: *mut Uint16, product: *mut Uint16, version: *mut Uint16, crc16: *mut Uint16);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the status of a specified joystick.
     ///
     /// \param joystick the joystick to query.
@@ -834,9 +834,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_JoystickConnected(joystick: *mut SDL_Joystick) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the instance ID of an opened joystick.
     ///
     /// \param joystick an SDL_Joystick structure containing joystick information.
@@ -845,9 +845,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickID(joystick: *mut SDL_Joystick) -> SDL_JoystickID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the number of general axis controls on a joystick.
     ///
     /// Often, the directional pad on a game controller will either look like 4
@@ -865,9 +865,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetNumJoystickButtons
     /// \sa SDL_GetNumJoystickHats
     pub fn SDL_GetNumJoystickAxes(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the number of trackballs on a joystick.
     ///
     /// Joystick trackballs have only relative motion events associated with them
@@ -886,9 +886,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetNumJoystickButtons
     /// \sa SDL_GetNumJoystickHats
     pub fn SDL_GetNumJoystickBalls(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the number of POV hats on a joystick.
     ///
     /// \param joystick an SDL_Joystick structure containing joystick information.
@@ -902,9 +902,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetNumJoystickBalls
     /// \sa SDL_GetNumJoystickButtons
     pub fn SDL_GetNumJoystickHats(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the number of buttons on a joystick.
     ///
     /// \param joystick an SDL_Joystick structure containing joystick information.
@@ -918,9 +918,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetNumJoystickBalls
     /// \sa SDL_GetNumJoystickHats
     pub fn SDL_GetNumJoystickButtons(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the state of joystick event processing.
     ///
     /// If joystick events are disabled, you must call SDL_UpdateJoysticks()
@@ -934,9 +934,9 @@ extern_sdlcall! {{
     /// \sa SDL_JoystickEventsEnabled
     /// \sa SDL_UpdateJoysticks
     pub fn SDL_SetJoystickEventsEnabled(enabled: SDL_bool);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query the state of joystick event processing.
     ///
     /// If joystick events are disabled, you must call SDL_UpdateJoysticks()
@@ -950,9 +950,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetJoystickEventsEnabled
     pub fn SDL_JoystickEventsEnabled() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Update the current state of the open joysticks.
     ///
     /// This is called automatically by the event loop if any joystick events are
@@ -960,9 +960,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_UpdateJoysticks();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current state of an axis control on a joystick.
     ///
     /// SDL makes no promises about what part of the joystick any given axis refers
@@ -984,9 +984,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetNumJoystickAxes
     pub fn SDL_GetJoystickAxis(joystick: *mut SDL_Joystick, axis: ::core::ffi::c_int) -> Sint16;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the initial state of an axis control on a joystick.
     ///
     /// The state is a value ranging from -32768 to 32767.
@@ -1000,9 +1000,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickAxisInitialState(joystick: *mut SDL_Joystick, axis: ::core::ffi::c_int, state: *mut Sint16) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the ball axis change since the last poll.
     ///
     /// Trackballs can only return relative motion since the last call to
@@ -1021,9 +1021,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetNumJoystickBalls
     pub fn SDL_GetJoystickBall(joystick: *mut SDL_Joystick, ball: ::core::ffi::c_int, dx: *mut ::core::ffi::c_int, dy: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current state of a POV hat on a joystick.
     ///
     /// The returned value will be one of the `SDL_HAT_*` values.
@@ -1036,7 +1036,7 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetNumJoystickHats
     pub fn SDL_GetJoystickHat(joystick: *mut SDL_Joystick, hat: ::core::ffi::c_int) -> Uint8;
-}}
+}
 
 pub const SDL_HAT_CENTERED: ::core::primitive::u32 = 0_u32;
 
@@ -1056,7 +1056,7 @@ pub const SDL_HAT_LEFTUP: ::core::primitive::u32 = 9_u32;
 
 pub const SDL_HAT_LEFTDOWN: ::core::primitive::u32 = 12_u32;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current state of a button on a joystick.
     ///
     /// \param joystick an SDL_Joystick structure containing joystick information.
@@ -1068,9 +1068,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetNumJoystickButtons
     pub fn SDL_GetJoystickButton(joystick: *mut SDL_Joystick, button: ::core::ffi::c_int) -> Uint8;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Start a rumble effect.
     ///
     /// Each call to this function cancels any previous rumble effect, and calling
@@ -1089,9 +1089,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_RumbleJoystick(joystick: *mut SDL_Joystick, low_frequency_rumble: Uint16, high_frequency_rumble: Uint16, duration_ms: Uint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Start a rumble effect in the joystick's triggers.
     ///
     /// Each call to this function cancels any previous trigger rumble effect, and
@@ -1118,9 +1118,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RumbleJoystick
     pub fn SDL_RumbleJoystickTriggers(joystick: *mut SDL_Joystick, left_rumble: Uint16, right_rumble: Uint16, duration_ms: Uint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Update a joystick's LED color.
     ///
     /// An example of a joystick LED is the light on the back of a PlayStation 4's
@@ -1138,9 +1138,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickLED(joystick: *mut SDL_Joystick, red: Uint8, green: Uint8, blue: Uint8) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Send a joystick specific effect packet.
     ///
     /// \param joystick the joystick to affect.
@@ -1151,9 +1151,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SendJoystickEffect(joystick: *mut SDL_Joystick, data: *const ::core::ffi::c_void, size: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Close a joystick previously opened with SDL_OpenJoystick().
     ///
     /// \param joystick the joystick device to close.
@@ -1162,9 +1162,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_OpenJoystick
     pub fn SDL_CloseJoystick(joystick: *mut SDL_Joystick);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the connection state of a joystick.
     ///
     /// \param joystick the joystick to query.
@@ -1174,9 +1174,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickConnectionState(joystick: *mut SDL_Joystick) -> SDL_JoystickConnectionState;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the battery state of a joystick.
     ///
     /// You should never take a battery status as absolute truth. Batteries
@@ -1195,7 +1195,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickPowerInfo(joystick: *mut SDL_Joystick, percent: *mut ::core::ffi::c_int) -> SDL_PowerState;
-}}
+}
 
 /// The joystick structure used to identify an SDL joystick.
 ///

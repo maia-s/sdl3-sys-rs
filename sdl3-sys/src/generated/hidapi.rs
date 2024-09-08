@@ -128,7 +128,7 @@ pub struct SDL_hid_device_info {
     pub next: *mut SDL_hid_device_info,
 }
 
-extern_sdlcall! {{
+extern "C" {
     /// Initialize the HIDAPI library.
     ///
     /// This function initializes the HIDAPI library. Calling it is not strictly
@@ -146,9 +146,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_hid_exit
     pub fn SDL_hid_init() -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Finalize the HIDAPI library.
     ///
     /// This function frees all of the static data associated with HIDAPI. It
@@ -161,9 +161,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_hid_init
     pub fn SDL_hid_exit() -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Check to see if devices may have been added or removed.
     ///
     /// Enumerating the HID devices is an expensive operation, so you can call this
@@ -182,9 +182,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_hid_enumerate
     pub fn SDL_hid_device_change_count() -> Uint32;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Enumerate the HID Devices.
     ///
     /// This function returns a linked list of all the HID devices attached to the
@@ -210,9 +210,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_hid_device_change_count
     pub fn SDL_hid_enumerate(vendor_id: ::core::ffi::c_ushort, product_id: ::core::ffi::c_ushort) -> *mut SDL_hid_device_info;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Free an enumeration linked list.
     ///
     /// This function frees a linked list created by SDL_hid_enumerate().
@@ -222,9 +222,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_free_enumeration(devs: *mut SDL_hid_device_info);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Open a HID device using a Vendor ID (VID), Product ID (PID) and optionally
     /// a serial number.
     ///
@@ -240,9 +240,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_open(vendor_id: ::core::ffi::c_ushort, product_id: ::core::ffi::c_ushort, serial_number: *const crate::ffi::c_wchar_t) -> *mut SDL_hid_device;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Open a HID device by its path name.
     ///
     /// The path name be determined by calling SDL_hid_enumerate(), or a
@@ -254,9 +254,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_open_path(path: *const ::core::ffi::c_char) -> *mut SDL_hid_device;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Write an Output report to a HID device.
     ///
     /// The first byte of `data` must contain the Report ID. For devices which only
@@ -281,9 +281,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_write(dev: *mut SDL_hid_device, data: *const ::core::ffi::c_uchar, length: ::core::primitive::usize) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Read an Input report from a HID device with timeout.
     ///
     /// Input reports are returned to the host through the INTERRUPT IN endpoint.
@@ -302,9 +302,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_read_timeout(dev: *mut SDL_hid_device, data: *mut ::core::ffi::c_uchar, length: ::core::primitive::usize, milliseconds: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Read an Input report from a HID device.
     ///
     /// Input reports are returned to the host through the INTERRUPT IN endpoint.
@@ -323,9 +323,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_read(dev: *mut SDL_hid_device, data: *mut ::core::ffi::c_uchar, length: ::core::primitive::usize) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the device handle to be non-blocking.
     ///
     /// In non-blocking mode calls to SDL_hid_read() will return immediately with a
@@ -342,9 +342,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_set_nonblocking(dev: *mut SDL_hid_device, nonblock: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Send a Feature report to the device.
     ///
     /// Feature reports are sent over the Control endpoint as a Set_Report
@@ -367,9 +367,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_send_feature_report(dev: *mut SDL_hid_device, data: *const ::core::ffi::c_uchar, length: ::core::primitive::usize) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a feature report from a HID device.
     ///
     /// Set the first byte of `data` to the Report ID of the report to be read.
@@ -390,9 +390,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_feature_report(dev: *mut SDL_hid_device, data: *mut ::core::ffi::c_uchar, length: ::core::primitive::usize) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get an input report from a HID device.
     ///
     /// Set the first byte of `data` to the Report ID of the report to be read.
@@ -413,9 +413,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_input_report(dev: *mut SDL_hid_device, data: *mut ::core::ffi::c_uchar, length: ::core::primitive::usize) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Close a HID device.
     ///
     /// \param dev a device handle returned from SDL_hid_open().
@@ -424,9 +424,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_close(dev: *mut SDL_hid_device) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get The Manufacturer String from a HID device.
     ///
     /// \param dev a device handle returned from SDL_hid_open().
@@ -437,9 +437,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_manufacturer_string(dev: *mut SDL_hid_device, string: *mut crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get The Product String from a HID device.
     ///
     /// \param dev a device handle returned from SDL_hid_open().
@@ -450,9 +450,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_product_string(dev: *mut SDL_hid_device, string: *mut crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get The Serial Number String from a HID device.
     ///
     /// \param dev a device handle returned from SDL_hid_open().
@@ -463,9 +463,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_serial_number_string(dev: *mut SDL_hid_device, string: *mut crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a string from a HID device, based on its string index.
     ///
     /// \param dev a device handle returned from SDL_hid_open().
@@ -477,9 +477,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_indexed_string(dev: *mut SDL_hid_device, string_index: ::core::ffi::c_int, string: *mut crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the device info from a HID device.
     ///
     /// \param dev a device handle returned from SDL_hid_open().
@@ -489,9 +489,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_device_info(dev: *mut SDL_hid_device) -> *mut SDL_hid_device_info;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a report descriptor from a HID device.
     ///
     /// User has to provide a preallocated buffer where descriptor will be copied
@@ -505,16 +505,16 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_report_descriptor(dev: *mut SDL_hid_device, buf: *mut ::core::ffi::c_uchar, buf_size: ::core::primitive::usize) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Start or stop a BLE scan on iOS and tvOS to pair Steam Controllers.
     ///
     /// \param active SDL_TRUE to start the scan, SDL_FALSE to stop the scan.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_hid_ble_scan(active: SDL_bool);
-}}
+}
 
 /// An opaque handle representing an open HID device.
 ///

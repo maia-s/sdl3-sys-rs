@@ -90,7 +90,7 @@ pub struct SDL_FRect {
 
 // skipped inline function `SDL_RectsEqual`
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether two rectangles intersect.
     ///
     /// If either pointer is NULL the function will return SDL_FALSE.
@@ -105,9 +105,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetRectIntersection
     pub fn SDL_HasRectIntersection(A: *const SDL_Rect, B: *const SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Calculate the intersection of two rectangles.
     ///
     /// If `result` is NULL then this function will return SDL_FALSE.
@@ -122,9 +122,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_HasRectIntersection
     pub fn SDL_GetRectIntersection(A: *const SDL_Rect, B: *const SDL_Rect, result: *mut SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Calculate the union of two rectangles.
     ///
     /// \param A an SDL_Rect structure representing the first rectangle.
@@ -136,9 +136,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRectUnion(A: *const SDL_Rect, B: *const SDL_Rect, result: *mut SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Calculate a minimal rectangle enclosing a set of points.
     ///
     /// If `clip` is not NULL then only points inside of the clipping rectangle are
@@ -155,9 +155,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRectEnclosingPoints(points: *const SDL_Point, count: ::core::ffi::c_int, clip: *const SDL_Rect, result: *mut SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Calculate the intersection of a rectangle and line segment.
     ///
     /// This function is used to clip a line segment to a rectangle. A line segment
@@ -175,7 +175,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRectAndLineIntersection(rect: *const SDL_Rect, X1: *mut ::core::ffi::c_int, Y1: *mut ::core::ffi::c_int, X2: *mut ::core::ffi::c_int, Y2: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
 // skipped inline function `SDL_PointInRectFloat`
 
@@ -185,7 +185,7 @@ extern_sdlcall! {{
 
 // skipped inline function `SDL_RectsEqualFloat`
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether two rectangles intersect with float precision.
     ///
     /// If either pointer is NULL the function will return SDL_FALSE.
@@ -198,9 +198,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetRectIntersection
     pub fn SDL_HasRectIntersectionFloat(A: *const SDL_FRect, B: *const SDL_FRect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Calculate the intersection of two rectangles with float precision.
     ///
     /// If `result` is NULL then this function will return SDL_FALSE.
@@ -215,9 +215,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_HasRectIntersectionFloat
     pub fn SDL_GetRectIntersectionFloat(A: *const SDL_FRect, B: *const SDL_FRect, result: *mut SDL_FRect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Calculate the union of two rectangles with float precision.
     ///
     /// \param A an SDL_FRect structure representing the first rectangle.
@@ -229,9 +229,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRectUnionFloat(A: *const SDL_FRect, B: *const SDL_FRect, result: *mut SDL_FRect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Calculate a minimal rectangle enclosing a set of points with float
     /// precision.
     ///
@@ -249,9 +249,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRectEnclosingPointsFloat(points: *const SDL_FPoint, count: ::core::ffi::c_int, clip: *const SDL_FRect, result: *mut SDL_FRect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Calculate the intersection of a rectangle and line segment with float
     /// precision.
     ///
@@ -270,5 +270,5 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRectAndLineIntersectionFloat(rect: *const SDL_FRect, X1: *mut ::core::ffi::c_float, Y1: *mut ::core::ffi::c_float, X2: *mut ::core::ffi::c_float, Y2: *mut ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 

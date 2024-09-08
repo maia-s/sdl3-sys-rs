@@ -57,7 +57,7 @@ pub const SDL_PROPERTY_TYPE_NUMBER: SDL_PropertyType = SDL_PropertyType::NUMBER;
 pub const SDL_PROPERTY_TYPE_FLOAT: SDL_PropertyType = SDL_PropertyType::FLOAT;
 pub const SDL_PROPERTY_TYPE_BOOLEAN: SDL_PropertyType = SDL_PropertyType::BOOLEAN;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the global SDL properties.
     ///
     /// \returns a valid property ID on success or 0 on failure; call
@@ -65,9 +65,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetGlobalProperties() -> SDL_PropertiesID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a group of properties.
     ///
     /// All properties are automatically destroyed when SDL_Quit() is called.
@@ -81,9 +81,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_DestroyProperties
     pub fn SDL_CreateProperties() -> SDL_PropertiesID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Copy a group of properties.
     ///
     /// Copy all the properties from one group of properties to another, with the
@@ -100,9 +100,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_CopyProperties(src: SDL_PropertiesID, dst: SDL_PropertiesID) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Lock a group of properties.
     ///
     /// Obtain a multi-threaded lock for these properties. Other threads will wait
@@ -124,9 +124,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_UnlockProperties
     pub fn SDL_LockProperties(props: SDL_PropertiesID) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Unlock a group of properties.
     ///
     /// \param props the properties to unlock.
@@ -137,7 +137,7 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_LockProperties
     pub fn SDL_UnlockProperties(props: SDL_PropertiesID);
-}}
+}
 
 /// A callback used to free resources when a property is deleted.
 ///
@@ -159,9 +159,9 @@ extern_sdlcall! {{
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_SetPointerPropertyWithCleanup
-pub type SDL_CleanupPropertyCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, value: *mut ::core::ffi::c_void))>;
+pub type SDL_CleanupPropertyCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, value: *mut ::core::ffi::c_void)>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a pointer property in a group of properties with a cleanup function
     /// that is called when the property is deleted.
     ///
@@ -190,9 +190,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetPointerProperty
     /// \sa SDL_CleanupPropertyCallback
     pub fn SDL_SetPointerPropertyWithCleanup(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, value: *mut ::core::ffi::c_void, cleanup: SDL_CleanupPropertyCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a pointer property in a group of properties.
     ///
     /// \param props the properties to modify.
@@ -213,9 +213,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetPointerPropertyWithCleanup
     /// \sa SDL_SetStringProperty
     pub fn SDL_SetPointerProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, value: *mut ::core::ffi::c_void) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a string property in a group of properties.
     ///
     /// This function makes a copy of the string; the caller does not have to
@@ -233,9 +233,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetStringProperty
     pub fn SDL_SetStringProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, value: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set an integer property in a group of properties.
     ///
     /// \param props the properties to modify.
@@ -250,9 +250,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetNumberProperty
     pub fn SDL_SetNumberProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, value: Sint64) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a floating point property in a group of properties.
     ///
     /// \param props the properties to modify.
@@ -267,9 +267,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetFloatProperty
     pub fn SDL_SetFloatProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, value: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a boolean property in a group of properties.
     ///
     /// \param props the properties to modify.
@@ -284,9 +284,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetBooleanProperty
     pub fn SDL_SetBooleanProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, value: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Return whether a property exists in a group of properties.
     ///
     /// \param props the properties to query.
@@ -299,9 +299,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetPropertyType
     pub fn SDL_HasProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the type of a property in a group of properties.
     ///
     /// \param props the properties to query.
@@ -315,9 +315,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_HasProperty
     pub fn SDL_GetPropertyType(props: SDL_PropertiesID, name: *const ::core::ffi::c_char) -> SDL_PropertyType;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a pointer property from a group of properties.
     ///
     /// By convention, the names of properties that SDL exposes on objects will
@@ -348,9 +348,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasProperty
     /// \sa SDL_SetPointerProperty
     pub fn SDL_GetPointerProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, default_value: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a string property from a group of properties.
     ///
     /// \param props the properties to query.
@@ -372,9 +372,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasProperty
     /// \sa SDL_SetStringProperty
     pub fn SDL_GetStringProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, default_value: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a number property from a group of properties.
     ///
     /// You can use SDL_GetPropertyType() to query whether the property exists and
@@ -394,9 +394,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasProperty
     /// \sa SDL_SetNumberProperty
     pub fn SDL_GetNumberProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, default_value: Sint64) -> Sint64;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a floating point property from a group of properties.
     ///
     /// You can use SDL_GetPropertyType() to query whether the property exists and
@@ -416,9 +416,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasProperty
     /// \sa SDL_SetFloatProperty
     pub fn SDL_GetFloatProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, default_value: ::core::ffi::c_float) -> ::core::ffi::c_float;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a boolean property from a group of properties.
     ///
     /// You can use SDL_GetPropertyType() to query whether the property exists and
@@ -438,9 +438,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasProperty
     /// \sa SDL_SetBooleanProperty
     pub fn SDL_GetBooleanProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, default_value: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Clear a property from a group of properties.
     ///
     /// \param props the properties to modify.
@@ -452,7 +452,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_ClearProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
 /// A callback used to enumerate all the properties in a group of properties.
 ///
@@ -469,9 +469,9 @@ extern_sdlcall! {{
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_EnumerateProperties
-pub type SDL_EnumeratePropertiesCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, props: SDL_PropertiesID, name: *const ::core::ffi::c_char))>;
+pub type SDL_EnumeratePropertiesCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, props: SDL_PropertiesID, name: *const ::core::ffi::c_char)>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Enumerate the properties contained in a group of properties.
     ///
     /// The callback function is called for each property in the group of
@@ -487,9 +487,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_EnumerateProperties(props: SDL_PropertiesID, callback: SDL_EnumeratePropertiesCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Destroy a group of properties.
     ///
     /// All properties are deleted and their cleanup functions will be called, if
@@ -505,5 +505,5 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_CreateProperties
     pub fn SDL_DestroyProperties(props: SDL_PropertiesID);
-}}
+}
 

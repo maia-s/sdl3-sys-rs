@@ -6,7 +6,7 @@
 
 use super::stdinc::*;
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the SDL error message for the current thread.
     ///
     /// Calling this function will replace any previous error message that was set.
@@ -30,9 +30,9 @@ extern_sdlcall! {{
     /// \sa SDL_ClearError
     /// \sa SDL_GetError
     pub fn SDL_SetError(fmt: *const ::core::ffi::c_char, ...) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set an error indicating that memory allocation failed.
     ///
     /// This function does not do any memory allocation.
@@ -41,9 +41,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_OutOfMemory() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Retrieve a message about the last error that occurred on the current
     /// thread.
     ///
@@ -76,9 +76,9 @@ extern_sdlcall! {{
     /// \sa SDL_ClearError
     /// \sa SDL_SetError
     pub fn SDL_GetError() -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Clear any previous error message for this thread.
     ///
     /// \returns SDL_TRUE.
@@ -88,5 +88,5 @@ extern_sdlcall! {{
     /// \sa SDL_GetError
     /// \sa SDL_SetError
     pub fn SDL_ClearError() -> SDL_bool;
-}}
+}
 

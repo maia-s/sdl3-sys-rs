@@ -124,7 +124,7 @@ pub struct SDL_MessageBoxData {
     pub colorScheme: *const SDL_MessageBoxColorScheme,
 }
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a modal message box.
     ///
     /// If your needs aren't complex, it might be easier to use
@@ -158,9 +158,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_ShowSimpleMessageBox
     pub fn SDL_ShowMessageBox(messageboxdata: *const SDL_MessageBoxData, buttonid: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Display a simple modal message box.
     ///
     /// If your needs aren't complex, this function is preferred over
@@ -200,5 +200,5 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_ShowMessageBox
     pub fn SDL_ShowSimpleMessageBox(flags: SDL_MessageBoxFlags, title: *const ::core::ffi::c_char, message: *const ::core::ffi::c_char, window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 

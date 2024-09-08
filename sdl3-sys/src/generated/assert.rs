@@ -156,7 +156,7 @@ pub struct SDL_AssertData {
     pub next: *const SDL_AssertData,
 }
 
-extern_sdlcall! {{
+extern "C" {
     /// Never call this directly.
     ///
     /// Use the SDL_assert* macros instead.
@@ -169,7 +169,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_ReportAssertion(data: *mut SDL_AssertData, func: *const ::core::ffi::c_char, file: *const ::core::ffi::c_char, line: ::core::ffi::c_int) -> SDL_AssertState;
-}}
+}
 
 #[cfg(doc)]
 emit! {
@@ -220,9 +220,9 @@ emit! {
 /// \returns an SDL_AssertState value indicating how to handle the failure.
 ///
 /// \since This datatype is available since SDL 3.0.0.
-pub type SDL_AssertionHandler = ::core::option::Option<extern_sdlcall!(fn(data: *const SDL_AssertData, userdata: *mut ::core::ffi::c_void) -> SDL_AssertState)>;
+pub type SDL_AssertionHandler = ::core::option::Option<extern "C" fn(data: *const SDL_AssertData, userdata: *mut ::core::ffi::c_void) -> SDL_AssertState>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Set an application-defined assertion handler.
     ///
     /// This function allows an application to show its own assertion UI and/or
@@ -243,9 +243,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetAssertionHandler
     pub fn SDL_SetAssertionHandler(handler: SDL_AssertionHandler, userdata: *mut ::core::ffi::c_void);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the default assertion handler.
     ///
     /// This returns the function pointer that is called by default when an
@@ -260,9 +260,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetAssertionHandler
     pub fn SDL_GetDefaultAssertionHandler() -> SDL_AssertionHandler;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current assertion handler.
     ///
     /// This returns the function pointer that is called when an assertion is
@@ -283,9 +283,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetAssertionHandler
     pub fn SDL_GetAssertionHandler(puserdata: *mut *mut ::core::ffi::c_void) -> SDL_AssertionHandler;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of all assertion failures.
     ///
     /// This function gets all assertions triggered since the last call to
@@ -311,9 +311,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_ResetAssertionReport
     pub fn SDL_GetAssertionReport() -> *const SDL_AssertData;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Clear the list of all assertion failures.
     ///
     /// This function will clear the list of all assertions triggered up to that
@@ -325,5 +325,5 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetAssertionReport
     pub fn SDL_ResetAssertionReport();
-}}
+}
 

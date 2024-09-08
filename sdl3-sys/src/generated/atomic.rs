@@ -47,7 +47,7 @@ use super::stdinc::*;
 /// emulated because they are used in the atomic emulation code.
 pub type SDL_SpinLock = ::core::ffi::c_int;
 
-extern_sdlcall! {{
+extern "C" {
     /// Try to lock a spin lock by setting it to a non-zero value.
     ///
     /// ***Please note that spinlocks are dangerous if you don't know what you're
@@ -62,9 +62,9 @@ extern_sdlcall! {{
     /// \sa SDL_LockSpinlock
     /// \sa SDL_UnlockSpinlock
     pub fn SDL_TryLockSpinlock(lock: *mut SDL_SpinLock) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Lock a spin lock by setting it to a non-zero value.
     ///
     /// ***Please note that spinlocks are dangerous if you don't know what you're
@@ -77,9 +77,9 @@ extern_sdlcall! {{
     /// \sa SDL_TryLockSpinlock
     /// \sa SDL_UnlockSpinlock
     pub fn SDL_LockSpinlock(lock: *mut SDL_SpinLock);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Unlock a spin lock by setting it to 0.
     ///
     /// Always returns immediately.
@@ -94,7 +94,7 @@ extern_sdlcall! {{
     /// \sa SDL_LockSpinlock
     /// \sa SDL_TryLockSpinlock
     pub fn SDL_UnlockSpinlock(lock: *mut SDL_SpinLock);
-}}
+}
 
 #[cfg(doc)]
 emit! {
@@ -125,7 +125,7 @@ emit! {
 
 }
 
-extern_sdlcall! {{
+extern "C" {
     /// Insert a memory release barrier.
     ///
     /// Memory barriers are designed to prevent reads and writes from being
@@ -152,9 +152,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_MemoryBarrierReleaseFunction();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Insert a memory acquire barrier.
     ///
     /// Please refer to SDL_MemoryBarrierReleaseFunction for the details!
@@ -167,7 +167,7 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_MemoryBarrierReleaseFunction
     pub fn SDL_MemoryBarrierAcquireFunction();
-}}
+}
 
 #[cfg(all(any(any(target_arch = "powerpc", target_arch = "powerpc64"), any(target_arch = "powerpc", target_arch = "powerpc64")), any(/* always disabled: __GNUC__ */)))]
 emit! {
@@ -232,7 +232,7 @@ pub struct SDL_AtomicInt {
     pub value: ::core::ffi::c_int,
 }
 
-extern_sdlcall! {{
+extern "C" {
     /// Set an atomic variable to a new value if it is currently an old value.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use
@@ -249,9 +249,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_AtomicCompareAndSwapPointer
     pub fn SDL_AtomicCompareAndSwap(a: *mut SDL_AtomicInt, oldval: ::core::ffi::c_int, newval: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set an atomic variable to a value.
     ///
     /// This function also acts as a full memory barrier.
@@ -269,9 +269,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_AtomicGet
     pub fn SDL_AtomicSet(a: *mut SDL_AtomicInt, v: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the value of an atomic variable.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use
@@ -286,9 +286,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_AtomicSet
     pub fn SDL_AtomicGet(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Add to an atomic variable.
     ///
     /// This function also acts as a full memory barrier.
@@ -307,9 +307,9 @@ extern_sdlcall! {{
     /// \sa SDL_AtomicDecRef
     /// \sa SDL_AtomicIncRef
     pub fn SDL_AtomicAdd(a: *mut SDL_AtomicInt, v: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a pointer to a new value if it is currently an old value.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use
@@ -328,9 +328,9 @@ extern_sdlcall! {{
     /// \sa SDL_AtomicGetPointer
     /// \sa SDL_AtomicSetPointer
     pub fn SDL_AtomicCompareAndSwapPointer(a: *mut *mut ::core::ffi::c_void, oldval: *mut ::core::ffi::c_void, newval: *mut ::core::ffi::c_void) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a pointer to a value atomically.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use
@@ -347,9 +347,9 @@ extern_sdlcall! {{
     /// \sa SDL_AtomicCompareAndSwapPointer
     /// \sa SDL_AtomicGetPointer
     pub fn SDL_AtomicSetPointer(a: *mut *mut ::core::ffi::c_void, v: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the value of a pointer atomically.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use
@@ -365,5 +365,5 @@ extern_sdlcall! {{
     /// \sa SDL_AtomicCompareAndSwapPointer
     /// \sa SDL_AtomicSetPointer
     pub fn SDL_AtomicGetPointer(a: *mut *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
-}}
+}
 

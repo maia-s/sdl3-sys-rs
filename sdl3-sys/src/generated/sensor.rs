@@ -121,7 +121,7 @@ pub const SDL_SENSOR_ACCEL_R: SDL_SensorType = SDL_SensorType::ACCEL_R;
 /// Gyroscope for right Joy-Con controller
 pub const SDL_SENSOR_GYRO_R: SDL_SensorType = SDL_SensorType::GYRO_R;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of currently connected sensors.
     ///
     /// \param count a pointer filled in with the number of sensors returned, may
@@ -132,9 +132,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSensors(count: *mut ::core::ffi::c_int) -> *mut SDL_SensorID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the implementation dependent name of a sensor.
     ///
     /// This can be called before any sensors are opened.
@@ -144,9 +144,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSensorNameForID(instance_id: SDL_SensorID) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the type of a sensor.
     ///
     /// This can be called before any sensors are opened.
@@ -157,9 +157,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSensorTypeForID(instance_id: SDL_SensorID) -> SDL_SensorType;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the platform dependent type of a sensor.
     ///
     /// This can be called before any sensors are opened.
@@ -170,9 +170,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSensorNonPortableTypeForID(instance_id: SDL_SensorID) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Open a sensor for use.
     ///
     /// \param instance_id the sensor instance ID.
@@ -181,9 +181,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_OpenSensor(instance_id: SDL_SensorID) -> *mut SDL_Sensor;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Return the SDL_Sensor associated with an instance ID.
     ///
     /// \param instance_id the sensor instance ID.
@@ -192,9 +192,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSensorFromID(instance_id: SDL_SensorID) -> *mut SDL_Sensor;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the properties associated with a sensor.
     ///
     /// \param sensor the SDL_Sensor object.
@@ -203,9 +203,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSensorProperties(sensor: *mut SDL_Sensor) -> SDL_PropertiesID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the implementation dependent name of a sensor.
     ///
     /// \param sensor the SDL_Sensor object.
@@ -214,9 +214,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSensorName(sensor: *mut SDL_Sensor) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the type of a sensor.
     ///
     /// \param sensor the SDL_Sensor object to inspect.
@@ -225,9 +225,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSensorType(sensor: *mut SDL_Sensor) -> SDL_SensorType;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the platform dependent type of a sensor.
     ///
     /// \param sensor the SDL_Sensor object to inspect.
@@ -235,9 +235,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSensorNonPortableType(sensor: *mut SDL_Sensor) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the instance ID of a sensor.
     ///
     /// \param sensor the SDL_Sensor object to inspect.
@@ -246,9 +246,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSensorID(sensor: *mut SDL_Sensor) -> SDL_SensorID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current state of an opened sensor.
     ///
     /// The number of values and interpretation of the data is sensor dependent.
@@ -261,18 +261,18 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSensorData(sensor: *mut SDL_Sensor, data: *mut ::core::ffi::c_float, num_values: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Close a sensor previously opened with SDL_OpenSensor().
     ///
     /// \param sensor the SDL_Sensor object to close.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_CloseSensor(sensor: *mut SDL_Sensor);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Update the current state of the open sensors.
     ///
     /// This is called automatically by the event loop if sensor events are
@@ -283,7 +283,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_UpdateSensors();
-}}
+}
 
 #[repr(C)]
 #[non_exhaustive]

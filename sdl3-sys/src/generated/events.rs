@@ -1461,7 +1461,7 @@ pub union SDL_Event {
 
 const _: () = ::core::assert!(::core::mem::size_of::<SDL_Event>() == 128);
 
-extern_sdlcall! {{
+extern "C" {
     /// Pump the event loop, gathering events from the input devices.
     ///
     /// This function updates the event queue and internal input device state.
@@ -1483,7 +1483,7 @@ extern_sdlcall! {{
     /// \sa SDL_PollEvent
     /// \sa SDL_WaitEvent
     pub fn SDL_PumpEvents();
-}}
+}
 
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_ADDEVENT`], [`SDL_PEEKEVENT`], [`SDL_GETEVENT`]
 #[repr(transparent)]
@@ -1499,7 +1499,7 @@ pub const SDL_ADDEVENT: SDL_EventAction = SDL_EventAction::ADDEVENT;
 pub const SDL_PEEKEVENT: SDL_EventAction = SDL_EventAction::PEEKEVENT;
 pub const SDL_GETEVENT: SDL_EventAction = SDL_EventAction::GETEVENT;
 
-extern_sdlcall! {{
+extern "C" {
     /// Check the event queue for messages and optionally return them.
     ///
     /// `action` may be any of the following:
@@ -1539,9 +1539,9 @@ extern_sdlcall! {{
     /// \sa SDL_PumpEvents
     /// \sa SDL_PushEvent
     pub fn SDL_PeepEvents(events: *mut SDL_Event, numevents: ::core::ffi::c_int, action: SDL_EventAction, minType: Uint32, maxType: Uint32) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Check for the existence of a certain event type in the event queue.
     ///
     /// If you need to check for a range of event types, use SDL_HasEvents()
@@ -1555,9 +1555,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_HasEvents
     pub fn SDL_HasEvent(r#type: Uint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Check for the existence of certain event types in the event queue.
     ///
     /// If you need to check for a single event type, use SDL_HasEvent() instead.
@@ -1573,9 +1573,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_HasEvents
     pub fn SDL_HasEvents(minType: Uint32, maxType: Uint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Clear events of a specific type from the event queue.
     ///
     /// This will unconditionally remove any events from the queue that match
@@ -1599,9 +1599,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_FlushEvents
     pub fn SDL_FlushEvent(r#type: Uint32);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Clear events of a range of types from the event queue.
     ///
     /// This will unconditionally remove any events from the queue that are in the
@@ -1624,9 +1624,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_FlushEvent
     pub fn SDL_FlushEvents(minType: Uint32, maxType: Uint32);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Poll for currently pending events.
     ///
     /// If `event` is not NULL, the next event is removed from the queue and stored
@@ -1669,9 +1669,9 @@ extern_sdlcall! {{
     /// \sa SDL_WaitEvent
     /// \sa SDL_WaitEventTimeout
     pub fn SDL_PollEvent(event: *mut SDL_Event) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Wait indefinitely for the next available event.
     ///
     /// If `event` is not NULL, the next event is removed from the queue and stored
@@ -1691,9 +1691,9 @@ extern_sdlcall! {{
     /// \sa SDL_PushEvent
     /// \sa SDL_WaitEventTimeout
     pub fn SDL_WaitEvent(event: *mut SDL_Event) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Wait until the specified timeout (in milliseconds) for the next available
     /// event.
     ///
@@ -1719,9 +1719,9 @@ extern_sdlcall! {{
     /// \sa SDL_PushEvent
     /// \sa SDL_WaitEvent
     pub fn SDL_WaitEventTimeout(event: *mut SDL_Event, timeoutMS: Sint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Add an event to the event queue.
     ///
     /// The event queue can actually be used as a two way communication channel.
@@ -1753,7 +1753,7 @@ extern_sdlcall! {{
     /// \sa SDL_PollEvent
     /// \sa SDL_RegisterEvents
     pub fn SDL_PushEvent(event: *mut SDL_Event) -> SDL_bool;
-}}
+}
 
 /// A function pointer used for callbacks that watch the event queue.
 ///
@@ -1772,9 +1772,9 @@ extern_sdlcall! {{
 ///
 /// \sa SDL_SetEventFilter
 /// \sa SDL_AddEventWatch
-pub type SDL_EventFilter = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, event: *mut SDL_Event) -> SDL_bool)>;
+pub type SDL_EventFilter = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, event: *mut SDL_Event) -> SDL_bool>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Set up a filter to process all events before they change internal state and
     /// are posted to the internal event queue.
     ///
@@ -1820,9 +1820,9 @@ extern_sdlcall! {{
     /// \sa SDL_PeepEvents
     /// \sa SDL_PushEvent
     pub fn SDL_SetEventFilter(filter: SDL_EventFilter, userdata: *mut ::core::ffi::c_void);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query the current event filter.
     ///
     /// This function can be used to "chain" filters, by saving the existing filter
@@ -1837,9 +1837,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetEventFilter
     pub fn SDL_GetEventFilter(filter: *mut SDL_EventFilter, userdata: *mut *mut ::core::ffi::c_void) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Add a callback to be triggered when an event is added to the event queue.
     ///
     /// `filter` will be called when an event happens, and its return value is
@@ -1869,9 +1869,9 @@ extern_sdlcall! {{
     /// \sa SDL_RemoveEventWatch
     /// \sa SDL_SetEventFilter
     pub fn SDL_AddEventWatch(filter: SDL_EventFilter, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Remove an event watch callback added with SDL_AddEventWatch().
     ///
     /// This function takes the same input as SDL_AddEventWatch() to identify and
@@ -1884,9 +1884,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_AddEventWatch
     pub fn SDL_RemoveEventWatch(filter: SDL_EventFilter, userdata: *mut ::core::ffi::c_void);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Run a specific filter function on the current event queue, removing any
     /// events for which the filter returns SDL_FALSE.
     ///
@@ -1902,9 +1902,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetEventFilter
     /// \sa SDL_SetEventFilter
     pub fn SDL_FilterEvents(filter: SDL_EventFilter, userdata: *mut ::core::ffi::c_void);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the state of processing events by type.
     ///
     /// \param type the type of event; see SDL_EventType for details.
@@ -1914,9 +1914,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_EventEnabled
     pub fn SDL_SetEventEnabled(r#type: Uint32, enabled: SDL_bool);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query the state of processing events by type.
     ///
     /// \param type the type of event; see SDL_EventType for details.
@@ -1926,9 +1926,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetEventEnabled
     pub fn SDL_EventEnabled(r#type: Uint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Allocate a set of user-defined events, and return the beginning event
     /// number for that set of events.
     ///
@@ -1940,9 +1940,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_PushEvent
     pub fn SDL_RegisterEvents(numevents: ::core::ffi::c_int) -> Uint32;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get window associated with an event.
     ///
     /// \param event an event containing a `windowID`.
@@ -1954,5 +1954,5 @@ extern_sdlcall! {{
     /// \sa SDL_WaitEvent
     /// \sa SDL_WaitEventTimeout
     pub fn SDL_GetWindowFromEvent(event: *const SDL_Event) -> *mut SDL_Window;
-}}
+}
 

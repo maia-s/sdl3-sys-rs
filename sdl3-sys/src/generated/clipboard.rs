@@ -11,7 +11,7 @@ use super::stdinc::*;
 
 use super::error::*;
 
-extern_sdlcall! {{
+extern "C" {
     /// Put UTF-8 text into the clipboard.
     ///
     /// \param text the text to store in the clipboard.
@@ -23,9 +23,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetClipboardText
     /// \sa SDL_HasClipboardText
     pub fn SDL_SetClipboardText(text: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get UTF-8 text from the clipboard.
     ///
     /// This functions returns empty string if there was not enough memory left for
@@ -40,9 +40,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasClipboardText
     /// \sa SDL_SetClipboardText
     pub fn SDL_GetClipboardText() -> *mut ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query whether the clipboard exists and contains a non-empty text string.
     ///
     /// \returns SDL_TRUE if the clipboard has text, or SDL_FALSE if it does not.
@@ -52,9 +52,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetClipboardText
     /// \sa SDL_SetClipboardText
     pub fn SDL_HasClipboardText() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Put UTF-8 text into the primary selection.
     ///
     /// \param text the text to store in the primary selection.
@@ -66,9 +66,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetPrimarySelectionText
     /// \sa SDL_HasPrimarySelectionText
     pub fn SDL_SetPrimarySelectionText(text: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get UTF-8 text from the primary selection.
     ///
     /// This functions returns empty string if there was not enough memory left for
@@ -83,9 +83,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasPrimarySelectionText
     /// \sa SDL_SetPrimarySelectionText
     pub fn SDL_GetPrimarySelectionText() -> *mut ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query whether the primary selection exists and contains a non-empty text
     /// string.
     ///
@@ -97,7 +97,7 @@ extern_sdlcall! {{
     /// \sa SDL_GetPrimarySelectionText
     /// \sa SDL_SetPrimarySelectionText
     pub fn SDL_HasPrimarySelectionText() -> SDL_bool;
-}}
+}
 
 /// Callback function that will be called when data for the specified mime-type
 /// is requested by the OS.
@@ -119,7 +119,7 @@ extern_sdlcall! {{
 /// \since This function is available since SDL 3.0.0.
 ///
 /// \sa SDL_SetClipboardData
-pub type SDL_ClipboardDataCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, mime_type: *const ::core::ffi::c_char, size: *mut ::core::primitive::usize) -> *const ::core::ffi::c_void)>;
+pub type SDL_ClipboardDataCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, mime_type: *const ::core::ffi::c_char, size: *mut ::core::primitive::usize) -> *const ::core::ffi::c_void>;
 
 /// Callback function that will be called when the clipboard is cleared, or new
 /// data is set.
@@ -129,9 +129,9 @@ pub type SDL_ClipboardDataCallback = ::core::option::Option<extern_sdlcall!(fn(u
 /// \since This function is available since SDL 3.0.0.
 ///
 /// \sa SDL_SetClipboardData
-pub type SDL_ClipboardCleanupCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void))>;
+pub type SDL_ClipboardCleanupCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Offer clipboard data to the OS.
     ///
     /// Tell the operating system that the application is offering clipboard data
@@ -159,9 +159,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetClipboardData
     /// \sa SDL_HasClipboardData
     pub fn SDL_SetClipboardData(callback: SDL_ClipboardDataCallback, cleanup: SDL_ClipboardCleanupCallback, userdata: *mut ::core::ffi::c_void, mime_types: *mut *const ::core::ffi::c_char, num_mime_types: ::core::primitive::usize) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Clear the clipboard data.
     ///
     /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
@@ -171,9 +171,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetClipboardData
     pub fn SDL_ClearClipboardData() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the data from clipboard for a given mime type.
     ///
     /// The size of text data does not include the terminator, but the text is
@@ -190,9 +190,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasClipboardData
     /// \sa SDL_SetClipboardData
     pub fn SDL_GetClipboardData(mime_type: *const ::core::ffi::c_char, size: *mut ::core::primitive::usize) -> *mut ::core::ffi::c_void;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query whether there is data in the clipboard for the provided mime type.
     ///
     /// \param mime_type the mime type to check for data for.
@@ -204,5 +204,5 @@ extern_sdlcall! {{
     /// \sa SDL_SetClipboardData
     /// \sa SDL_GetClipboardData
     pub fn SDL_HasClipboardData(mime_type: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 

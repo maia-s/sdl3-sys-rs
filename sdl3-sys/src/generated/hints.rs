@@ -3568,7 +3568,7 @@ pub const SDL_HINT_DEFAULT: SDL_HintPriority = SDL_HintPriority::DEFAULT;
 pub const SDL_HINT_NORMAL: SDL_HintPriority = SDL_HintPriority::NORMAL;
 pub const SDL_HINT_OVERRIDE: SDL_HintPriority = SDL_HintPriority::OVERRIDE;
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a hint with a specific priority.
     ///
     /// The priority controls the behavior when setting a hint that already has a
@@ -3589,9 +3589,9 @@ extern_sdlcall! {{
     /// \sa SDL_ResetHint
     /// \sa SDL_SetHint
     pub fn SDL_SetHintWithPriority(name: *const ::core::ffi::c_char, value: *const ::core::ffi::c_char, priority: SDL_HintPriority) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a hint with normal priority.
     ///
     /// Hints will not be set if there is an existing override hint or environment
@@ -3611,9 +3611,9 @@ extern_sdlcall! {{
     /// \sa SDL_ResetHint
     /// \sa SDL_SetHintWithPriority
     pub fn SDL_SetHint(name: *const ::core::ffi::c_char, value: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Reset a hint to the default value.
     ///
     /// This will reset a hint to the value of the environment variable, or NULL if
@@ -3631,9 +3631,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetHint
     /// \sa SDL_ResetHints
     pub fn SDL_ResetHint(name: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Reset all hints to the default values.
     ///
     /// This will reset all hints to the value of the associated environment
@@ -3646,9 +3646,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_ResetHint
     pub fn SDL_ResetHints();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the value of a hint.
     ///
     /// \param name the hint to query.
@@ -3666,9 +3666,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetHint
     /// \sa SDL_SetHintWithPriority
     pub fn SDL_GetHint(name: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the boolean value of a hint variable.
     ///
     /// \param name the name of the hint to get the boolean value from.
@@ -3683,7 +3683,7 @@ extern_sdlcall! {{
     /// \sa SDL_GetHint
     /// \sa SDL_SetHint
     pub fn SDL_GetHintBoolean(name: *const ::core::ffi::c_char, default_value: SDL_bool) -> SDL_bool;
-}}
+}
 
 /// A callback used to send notifications of hint value changes.
 ///
@@ -3702,9 +3702,9 @@ extern_sdlcall! {{
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_AddHintCallback
-pub type SDL_HintCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, name: *const ::core::ffi::c_char, oldValue: *const ::core::ffi::c_char, newValue: *const ::core::ffi::c_char))>;
+pub type SDL_HintCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, name: *const ::core::ffi::c_char, oldValue: *const ::core::ffi::c_char, newValue: *const ::core::ffi::c_char)>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Add a function to watch a particular hint.
     ///
     /// The callback function is called _during_ this function, to provide it an
@@ -3723,9 +3723,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_RemoveHintCallback
     pub fn SDL_AddHintCallback(name: *const ::core::ffi::c_char, callback: SDL_HintCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Remove a function watching a particular hint.
     ///
     /// \param name the hint being watched.
@@ -3739,5 +3739,5 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_AddHintCallback
     pub fn SDL_RemoveHintCallback(name: *const ::core::ffi::c_char, callback: SDL_HintCallback, userdata: *mut ::core::ffi::c_void);
-}}
+}
 

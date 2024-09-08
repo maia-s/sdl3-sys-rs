@@ -279,9 +279,9 @@ pub type SDL_EGLint = ::core::ffi::c_int;
 /// EGL attribute initialization callback types.
 ///
 /// \since This datatype is available since SDL 3.0.0.
-pub type SDL_EGLAttribArrayCallback = ::core::option::Option<extern_sdlcall!(fn() -> *mut SDL_EGLAttrib)>;
+pub type SDL_EGLAttribArrayCallback = ::core::option::Option<extern "C" fn() -> *mut SDL_EGLAttrib>;
 
-pub type SDL_EGLIntArrayCallback = ::core::option::Option<extern_sdlcall!(fn() -> *mut SDL_EGLint)>;
+pub type SDL_EGLIntArrayCallback = ::core::option::Option<extern "C" fn() -> *mut SDL_EGLint>;
 
 /// An enumeration of OpenGL configuration attributes.
 ///
@@ -486,7 +486,7 @@ impl SDL_GLContextResetNotification {
 pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification = SDL_GLContextResetNotification::NO_NOTIFICATION;
 pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification = SDL_GLContextResetNotification::LOSE_CONTEXT;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the number of video drivers compiled into SDL.
     ///
     /// \returns the number of built in video drivers.
@@ -495,9 +495,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetVideoDriver
     pub fn SDL_GetNumVideoDrivers() -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the name of a built in video driver.
     ///
     /// The video drivers are presented in the order in which they are normally
@@ -514,9 +514,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetNumVideoDrivers
     pub fn SDL_GetVideoDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the name of the currently initialized video driver.
     ///
     /// The names of drivers are all simple, low-ASCII identifiers, like "cocoa",
@@ -531,18 +531,18 @@ extern_sdlcall! {{
     /// \sa SDL_GetNumVideoDrivers
     /// \sa SDL_GetVideoDriver
     pub fn SDL_GetCurrentVideoDriver() -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current system theme.
     ///
     /// \returns the current system theme, light, dark, or unknown.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSystemTheme() -> SDL_SystemTheme;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of currently connected displays.
     ///
     /// \param count a pointer filled in with the number of displays returned, may
@@ -553,9 +553,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetDisplays(count: *mut ::core::ffi::c_int) -> *mut SDL_DisplayID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Return the primary display.
     ///
     /// \returns the instance ID of the primary display on success or 0 on failure;
@@ -565,9 +565,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetDisplays
     pub fn SDL_GetPrimaryDisplay() -> SDL_DisplayID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the properties associated with a display.
     ///
     /// The following read-only properties are provided by SDL:
@@ -591,13 +591,13 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetDisplayProperties(displayID: SDL_DisplayID) -> SDL_PropertiesID;
-}}
+}
 
 pub const SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.display.HDR_enabled\0") };
 
 pub const SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.display.KMSDRM.panel_orientation\0") };
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the name of a display in UTF-8 encoding.
     ///
     /// \param displayID the instance ID of the display to query.
@@ -608,9 +608,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetDisplays
     pub fn SDL_GetDisplayName(displayID: SDL_DisplayID) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the desktop area represented by a display.
     ///
     /// The primary display is always located at (0,0).
@@ -625,9 +625,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetDisplayUsableBounds
     /// \sa SDL_GetDisplays
     pub fn SDL_GetDisplayBounds(displayID: SDL_DisplayID, rect: *mut SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the usable desktop area represented by a display, in screen
     /// coordinates.
     ///
@@ -649,9 +649,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetDisplayBounds
     /// \sa SDL_GetDisplays
     pub fn SDL_GetDisplayUsableBounds(displayID: SDL_DisplayID, rect: *mut SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the orientation of a display when it is unrotated.
     ///
     /// \param displayID the instance ID of the display to query.
@@ -662,9 +662,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetDisplays
     pub fn SDL_GetNaturalDisplayOrientation(displayID: SDL_DisplayID) -> SDL_DisplayOrientation;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the orientation of a display.
     ///
     /// \param displayID the instance ID of the display to query.
@@ -675,9 +675,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetDisplays
     pub fn SDL_GetCurrentDisplayOrientation(displayID: SDL_DisplayID) -> SDL_DisplayOrientation;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the content scale of a display.
     ///
     /// The content scale is the expected scale for content based on the DPI
@@ -693,9 +693,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetDisplays
     pub fn SDL_GetDisplayContentScale(displayID: SDL_DisplayID) -> ::core::ffi::c_float;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of fullscreen display modes available on a display.
     ///
     /// The display modes are sorted in this priority:
@@ -719,9 +719,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetDisplays
     pub fn SDL_GetFullscreenDisplayModes(displayID: SDL_DisplayID, count: *mut ::core::ffi::c_int) -> *mut *mut SDL_DisplayMode;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the closest match to the requested display mode.
     ///
     /// The available display modes are scanned and `closest` is filled in with the
@@ -748,9 +748,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetDisplays
     /// \sa SDL_GetFullscreenDisplayModes
     pub fn SDL_GetClosestFullscreenDisplayMode(displayID: SDL_DisplayID, w: ::core::ffi::c_int, h: ::core::ffi::c_int, refresh_rate: ::core::ffi::c_float, include_high_density_modes: SDL_bool, mode: *mut SDL_DisplayMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get information about the desktop's display mode.
     ///
     /// There's a difference between this function and SDL_GetCurrentDisplayMode()
@@ -767,9 +767,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetCurrentDisplayMode
     /// \sa SDL_GetDisplays
     pub fn SDL_GetDesktopDisplayMode(displayID: SDL_DisplayID) -> *const SDL_DisplayMode;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get information about the current display mode.
     ///
     /// There's a difference between this function and SDL_GetDesktopDisplayMode()
@@ -786,9 +786,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetDesktopDisplayMode
     /// \sa SDL_GetDisplays
     pub fn SDL_GetCurrentDisplayMode(displayID: SDL_DisplayID) -> *const SDL_DisplayMode;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the display containing a point.
     ///
     /// \param point the point to query.
@@ -800,9 +800,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetDisplayBounds
     /// \sa SDL_GetDisplays
     pub fn SDL_GetDisplayForPoint(point: *const SDL_Point) -> SDL_DisplayID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the display primarily containing a rect.
     ///
     /// \param rect the rect to query.
@@ -815,9 +815,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetDisplayBounds
     /// \sa SDL_GetDisplays
     pub fn SDL_GetDisplayForRect(rect: *const SDL_Rect) -> SDL_DisplayID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the display associated with a window.
     ///
     /// \param window the window to query.
@@ -830,9 +830,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetDisplayBounds
     /// \sa SDL_GetDisplays
     pub fn SDL_GetDisplayForWindow(window: *mut SDL_Window) -> SDL_DisplayID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the pixel density of a window.
     ///
     /// This is a ratio of pixel size to window size. For example, if the window is
@@ -847,9 +847,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetWindowDisplayScale
     pub fn SDL_GetWindowPixelDensity(window: *mut SDL_Window) -> ::core::ffi::c_float;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the content display scale relative to a window's pixel size.
     ///
     /// This is a combination of the window pixel density and the display content
@@ -869,9 +869,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetWindowDisplayScale(window: *mut SDL_Window) -> ::core::ffi::c_float;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the display mode to use when a window is visible and fullscreen.
     ///
     /// This only affects the display mode used when the window is fullscreen. To
@@ -902,9 +902,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetWindowFullscreen
     /// \sa SDL_SyncWindow
     pub fn SDL_SetWindowFullscreenMode(window: *mut SDL_Window, mode: *const SDL_DisplayMode) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query the display mode to use when a window is visible at fullscreen.
     ///
     /// \param window the window to query.
@@ -916,9 +916,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetWindowFullscreenMode
     /// \sa SDL_SetWindowFullscreen
     pub fn SDL_GetWindowFullscreenMode(window: *mut SDL_Window) -> *const SDL_DisplayMode;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the raw ICC profile data for the screen the window is currently on.
     ///
     /// \param window the window to query.
@@ -929,9 +929,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetWindowICCProfile(window: *mut SDL_Window, size: *mut ::core::primitive::usize) -> *mut ::core::ffi::c_void;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the pixel format associated with the window.
     ///
     /// \param window the window to query.
@@ -941,9 +941,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetWindowPixelFormat(window: *mut SDL_Window) -> SDL_PixelFormat;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of valid windows.
     ///
     /// \param count a pointer filled in with the number of windows returned, may
@@ -955,9 +955,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetWindows(count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Window;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a window with the specified dimensions and flags.
     ///
     /// `flags` may be any of the following OR'd together:
@@ -1038,9 +1038,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateWindowWithProperties
     /// \sa SDL_DestroyWindow
     pub fn SDL_CreateWindow(title: *const ::core::ffi::c_char, w: ::core::ffi::c_int, h: ::core::ffi::c_int, flags: SDL_WindowFlags) -> *mut SDL_Window;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a child popup window of the specified parent window.
     ///
     /// 'flags' **must** contain exactly one of the following: -
@@ -1093,9 +1093,9 @@ extern_sdlcall! {{
     /// \sa SDL_DestroyWindow
     /// \sa SDL_GetWindowParent
     pub fn SDL_CreatePopupWindow(parent: *mut SDL_Window, offset_x: ::core::ffi::c_int, offset_y: ::core::ffi::c_int, w: ::core::ffi::c_int, h: ::core::ffi::c_int, flags: SDL_WindowFlags) -> *mut SDL_Window;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a window with the specified properties.
     ///
     /// These are the supported properties:
@@ -1209,7 +1209,7 @@ extern_sdlcall! {{
     /// \sa SDL_CreateWindow
     /// \sa SDL_DestroyWindow
     pub fn SDL_CreateWindowWithProperties(props: SDL_PropertiesID) -> *mut SDL_Window;
-}}
+}
 
 pub const SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.always_on_top\0") };
 
@@ -1279,7 +1279,7 @@ pub const SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER: &::core::ffi::
 
 pub const SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.x11.window\0") };
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the numeric ID of a window.
     ///
     /// The numeric ID is what SDL_WindowEvent references, and is necessary to map
@@ -1293,9 +1293,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetWindowFromID
     pub fn SDL_GetWindowID(window: *mut SDL_Window) -> SDL_WindowID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a window from a stored ID.
     ///
     /// The numeric ID is what SDL_WindowEvent references, and is necessary to map
@@ -1309,9 +1309,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetWindowID
     pub fn SDL_GetWindowFromID(id: SDL_WindowID) -> *mut SDL_Window;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get parent of a window.
     ///
     /// \param window the window to query.
@@ -1322,9 +1322,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_CreatePopupWindow
     pub fn SDL_GetWindowParent(window: *mut SDL_Window) -> *mut SDL_Window;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the properties associated with a window.
     ///
     /// The following read-only properties are provided by SDL:
@@ -1435,7 +1435,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetWindowProperties(window: *mut SDL_Window) -> SDL_PropertiesID;
-}}
+}
 
 pub const SDL_PROP_WINDOW_SHAPE_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.shape\0") };
 
@@ -1503,7 +1503,7 @@ pub const SDL_PROP_WINDOW_X11_SCREEN_NUMBER: &::core::ffi::CStr = unsafe { ::cor
 
 pub const SDL_PROP_WINDOW_X11_WINDOW_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.x11.window\0") };
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the window flags.
     ///
     /// \param window the window to query.
@@ -1519,9 +1519,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetWindowMouseGrab
     /// \sa SDL_ShowWindow
     pub fn SDL_GetWindowFlags(window: *mut SDL_Window) -> SDL_WindowFlags;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the title of a window.
     ///
     /// This string is expected to be in UTF-8 encoding.
@@ -1535,9 +1535,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetWindowTitle
     pub fn SDL_SetWindowTitle(window: *mut SDL_Window, title: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the title of a window.
     ///
     /// \param window the window to query.
@@ -1548,9 +1548,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetWindowTitle
     pub fn SDL_GetWindowTitle(window: *mut SDL_Window) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the icon for a window.
     ///
     /// If this function is passed a surface with alternate representations, the
@@ -1570,9 +1570,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetWindowIcon(window: *mut SDL_Window, icon: *mut SDL_Surface) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Request that the window's position be set.
     ///
     /// If, at the time of this request, the window is in a fixed-size state such
@@ -1610,9 +1610,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowPosition
     /// \sa SDL_SyncWindow
     pub fn SDL_SetWindowPosition(window: *mut SDL_Window, x: ::core::ffi::c_int, y: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the position of a window.
     ///
     /// This is the current position of the window as last reported by the
@@ -1633,9 +1633,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetWindowPosition
     pub fn SDL_GetWindowPosition(window: *mut SDL_Window, x: *mut ::core::ffi::c_int, y: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Request that the size of a window's client area be set.
     ///
     /// If, at the time of this request, the window in a fixed-size state, such as
@@ -1669,9 +1669,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetWindowFullscreenMode
     /// \sa SDL_SyncWindow
     pub fn SDL_SetWindowSize(window: *mut SDL_Window, w: ::core::ffi::c_int, h: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the size of a window's client area.
     ///
     /// The window pixel size may differ from its window coordinate size if the
@@ -1690,9 +1690,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowSizeInPixels
     /// \sa SDL_SetWindowSize
     pub fn SDL_GetWindowSize(window: *mut SDL_Window, w: *mut ::core::ffi::c_int, h: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the safe area for this window.
     ///
     /// Some devices have portions of the screen which are partially obscured or
@@ -1710,9 +1710,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetWindowSafeArea(window: *mut SDL_Window, rect: *mut SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Request that the aspect ratio of a window's client area be set.
     ///
     /// The aspect ratio is the ratio of width divided by height, e.g. 2560x1600
@@ -1749,9 +1749,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowAspectRatio
     /// \sa SDL_SyncWindow
     pub fn SDL_SetWindowAspectRatio(window: *mut SDL_Window, min_aspect: ::core::ffi::c_float, max_aspect: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the size of a window's client area.
     ///
     /// \param window the window to query the width and height from.
@@ -1766,9 +1766,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetWindowAspectRatio
     pub fn SDL_GetWindowAspectRatio(window: *mut SDL_Window, min_aspect: *mut ::core::ffi::c_float, max_aspect: *mut ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the size of a window's borders (decorations) around the client area.
     ///
     /// Note: If this function fails (returns -1), the size values will be
@@ -1800,9 +1800,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetWindowSize
     pub fn SDL_GetWindowBordersSize(window: *mut SDL_Window, top: *mut ::core::ffi::c_int, left: *mut ::core::ffi::c_int, bottom: *mut ::core::ffi::c_int, right: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the size of a window's client area, in pixels.
     ///
     /// \param window the window from which the drawable size should be queried.
@@ -1818,9 +1818,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateWindow
     /// \sa SDL_GetWindowSize
     pub fn SDL_GetWindowSizeInPixels(window: *mut SDL_Window, w: *mut ::core::ffi::c_int, h: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the minimum size of a window's client area.
     ///
     /// \param window the window to change.
@@ -1834,9 +1834,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowMinimumSize
     /// \sa SDL_SetWindowMaximumSize
     pub fn SDL_SetWindowMinimumSize(window: *mut SDL_Window, min_w: ::core::ffi::c_int, min_h: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the minimum size of a window's client area.
     ///
     /// \param window the window to query.
@@ -1852,9 +1852,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowMaximumSize
     /// \sa SDL_SetWindowMinimumSize
     pub fn SDL_GetWindowMinimumSize(window: *mut SDL_Window, w: *mut ::core::ffi::c_int, h: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the maximum size of a window's client area.
     ///
     /// \param window the window to change.
@@ -1868,9 +1868,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowMaximumSize
     /// \sa SDL_SetWindowMinimumSize
     pub fn SDL_SetWindowMaximumSize(window: *mut SDL_Window, max_w: ::core::ffi::c_int, max_h: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the maximum size of a window's client area.
     ///
     /// \param window the window to query.
@@ -1886,9 +1886,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowMinimumSize
     /// \sa SDL_SetWindowMaximumSize
     pub fn SDL_GetWindowMaximumSize(window: *mut SDL_Window, w: *mut ::core::ffi::c_int, h: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the border state of a window.
     ///
     /// This will add or remove the window's `SDL_WINDOW_BORDERLESS` flag and add
@@ -1906,9 +1906,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetWindowFlags
     pub fn SDL_SetWindowBordered(window: *mut SDL_Window, bordered: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the user-resizable state of a window.
     ///
     /// This will add or remove the window's `SDL_WINDOW_RESIZABLE` flag and
@@ -1926,9 +1926,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetWindowFlags
     pub fn SDL_SetWindowResizable(window: *mut SDL_Window, resizable: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the window to always be above the others.
     ///
     /// This will add or remove the window's `SDL_WINDOW_ALWAYS_ON_TOP` flag. This
@@ -1944,9 +1944,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetWindowFlags
     pub fn SDL_SetWindowAlwaysOnTop(window: *mut SDL_Window, on_top: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Show a window.
     ///
     /// \param window the window to show.
@@ -1958,9 +1958,9 @@ extern_sdlcall! {{
     /// \sa SDL_HideWindow
     /// \sa SDL_RaiseWindow
     pub fn SDL_ShowWindow(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Hide a window.
     ///
     /// \param window the window to hide.
@@ -1971,9 +1971,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_ShowWindow
     pub fn SDL_HideWindow(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Request that a window be raised above other windows and gain the input
     /// focus.
     ///
@@ -1989,9 +1989,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_RaiseWindow(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Request that the window be made as large as possible.
     ///
     /// Non-resizable windows can't be maximized. The window must have the
@@ -2021,9 +2021,9 @@ extern_sdlcall! {{
     /// \sa SDL_RestoreWindow
     /// \sa SDL_SyncWindow
     pub fn SDL_MaximizeWindow(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Request that the window be minimized to an iconic representation.
     ///
     /// On some windowing systems this request is asynchronous and the new window
@@ -2045,9 +2045,9 @@ extern_sdlcall! {{
     /// \sa SDL_RestoreWindow
     /// \sa SDL_SyncWindow
     pub fn SDL_MinimizeWindow(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Request that the size and position of a minimized or maximized window be
     /// restored.
     ///
@@ -2070,9 +2070,9 @@ extern_sdlcall! {{
     /// \sa SDL_MinimizeWindow
     /// \sa SDL_SyncWindow
     pub fn SDL_RestoreWindow(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Request that the window's fullscreen state be changed.
     ///
     /// By default a window in fullscreen state uses borderless fullscreen desktop
@@ -2100,9 +2100,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetWindowFullscreenMode
     /// \sa SDL_SyncWindow
     pub fn SDL_SetWindowFullscreen(window: *mut SDL_Window, fullscreen: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Block until any pending window state is finalized.
     ///
     /// On asynchronous windowing systems, this acts as a synchronization barrier
@@ -2129,9 +2129,9 @@ extern_sdlcall! {{
     /// \sa SDL_RestoreWindow
     /// \sa SDL_HINT_VIDEO_SYNC_WINDOW_OPERATIONS
     pub fn SDL_SyncWindow(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Return whether the window has a surface associated with it.
     ///
     /// \param window the window to query.
@@ -2142,9 +2142,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetWindowSurface
     pub fn SDL_WindowHasSurface(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the SDL surface associated with the window.
     ///
     /// A new surface will be created with the optimal format for the window, if
@@ -2169,9 +2169,9 @@ extern_sdlcall! {{
     /// \sa SDL_UpdateWindowSurface
     /// \sa SDL_UpdateWindowSurfaceRects
     pub fn SDL_GetWindowSurface(window: *mut SDL_Window) -> *mut SDL_Surface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Toggle VSync for the window surface.
     ///
     /// When a window surface is created, vsync defaults to
@@ -2193,13 +2193,13 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetWindowSurfaceVSync
     pub fn SDL_SetWindowSurfaceVSync(window: *mut SDL_Window, vsync: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
 pub const SDL_WINDOW_SURFACE_VSYNC_DISABLED: ::core::primitive::i32 = 0;
 
 pub const SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE: ::core::primitive::i32 = -1_i32;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get VSync for the window surface.
     ///
     /// \param window the window to query.
@@ -2212,9 +2212,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetWindowSurfaceVSync
     pub fn SDL_GetWindowSurfaceVSync(window: *mut SDL_Window, vsync: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Copy the window surface to the screen.
     ///
     /// This is the function you use to reflect any changes to the surface on the
@@ -2231,9 +2231,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowSurface
     /// \sa SDL_UpdateWindowSurfaceRects
     pub fn SDL_UpdateWindowSurface(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Copy areas of the window surface to the screen.
     ///
     /// This is the function you use to reflect changes to portions of the surface
@@ -2258,9 +2258,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowSurface
     /// \sa SDL_UpdateWindowSurface
     pub fn SDL_UpdateWindowSurfaceRects(window: *mut SDL_Window, rects: *const SDL_Rect, numrects: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Destroy the surface associated with the window.
     ///
     /// \param window the window to update.
@@ -2272,9 +2272,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowSurface
     /// \sa SDL_WindowHasSurface
     pub fn SDL_DestroyWindowSurface(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a window's keyboard grab mode.
     ///
     /// Keyboard grab enables capture of system keyboard shortcuts like Alt+Tab or
@@ -2303,9 +2303,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowKeyboardGrab
     /// \sa SDL_SetWindowMouseGrab
     pub fn SDL_SetWindowKeyboardGrab(window: *mut SDL_Window, grabbed: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a window's mouse grab mode.
     ///
     /// Mouse grab confines the mouse cursor to the window.
@@ -2320,9 +2320,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowMouseGrab
     /// \sa SDL_SetWindowKeyboardGrab
     pub fn SDL_SetWindowMouseGrab(window: *mut SDL_Window, grabbed: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a window's keyboard grab mode.
     ///
     /// \param window the window to query.
@@ -2332,9 +2332,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetWindowKeyboardGrab
     pub fn SDL_GetWindowKeyboardGrab(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a window's mouse grab mode.
     ///
     /// \param window the window to query.
@@ -2344,9 +2344,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetWindowKeyboardGrab
     pub fn SDL_GetWindowMouseGrab(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the window that currently has an input grab enabled.
     ///
     /// \returns the window if input is grabbed or NULL otherwise.
@@ -2356,9 +2356,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetWindowMouseGrab
     /// \sa SDL_SetWindowKeyboardGrab
     pub fn SDL_GetGrabbedWindow() -> *mut SDL_Window;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Confines the cursor to the specified area of a window.
     ///
     /// Note that this does NOT grab the cursor, it only defines the area a cursor
@@ -2375,9 +2375,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetWindowMouseRect
     /// \sa SDL_SetWindowMouseGrab
     pub fn SDL_SetWindowMouseRect(window: *mut SDL_Window, rect: *const SDL_Rect) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the mouse confinement rectangle of a window.
     ///
     /// \param window the window to query.
@@ -2388,9 +2388,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetWindowMouseRect
     pub fn SDL_GetWindowMouseRect(window: *mut SDL_Window) -> *const SDL_Rect;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the opacity for a window.
     ///
     /// The parameter `opacity` will be clamped internally between 0.0f
@@ -2407,9 +2407,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetWindowOpacity
     pub fn SDL_SetWindowOpacity(window: *mut SDL_Window, opacity: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the opacity of a window.
     ///
     /// If transparency isn't supported on this platform, opacity will be returned
@@ -2423,9 +2423,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetWindowOpacity
     pub fn SDL_GetWindowOpacity(window: *mut SDL_Window) -> ::core::ffi::c_float;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the window as a child of a parent window.
     ///
     /// If the window is already the child of an existing window, it will be reparented
@@ -2448,9 +2448,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetWindowModal
     pub fn SDL_SetWindowParent(window: *mut SDL_Window, parent: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Toggle the state of the window as modal.
     ///
     /// To enable modal status on a window, the window must currently be the child
@@ -2466,9 +2466,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetWindowParent
     pub fn SDL_SetWindowModal(window: *mut SDL_Window, modal: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set whether the window may have input focus.
     ///
     /// \param window the window to set focusable state.
@@ -2479,9 +2479,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetWindowFocusable(window: *mut SDL_Window, focusable: SDL_bool) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Display the system-level window menu.
     ///
     /// This default window menu is provided by the system and on some platforms
@@ -2502,7 +2502,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_ShowWindowSystemMenu(window: *mut SDL_Window, x: ::core::ffi::c_int, y: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
 /// Possible return values from the SDL_HitTest callback.
 ///
@@ -2566,9 +2566,9 @@ pub const SDL_HITTEST_RESIZE_LEFT: SDL_HitTestResult = SDL_HitTestResult::RESIZE
 /// \returns an SDL_HitTestResult value.
 ///
 /// \sa SDL_SetWindowHitTest
-pub type SDL_HitTest = ::core::option::Option<extern_sdlcall!(fn(win: *mut SDL_Window, area: *const SDL_Point, data: *mut ::core::ffi::c_void) -> SDL_HitTestResult)>;
+pub type SDL_HitTest = ::core::option::Option<extern "C" fn(win: *mut SDL_Window, area: *const SDL_Point, data: *mut ::core::ffi::c_void) -> SDL_HitTestResult>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Provide a callback that decides if a window region has special properties.
     ///
     /// Normally windows are dragged and resized by decorations provided by the
@@ -2608,9 +2608,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetWindowHitTest(window: *mut SDL_Window, callback: SDL_HitTest, callback_data: *mut ::core::ffi::c_void) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the shape of a transparent window.
     ///
     /// This sets the alpha channel of a transparent window and any fully
@@ -2632,9 +2632,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetWindowShape(window: *mut SDL_Window, shape: *mut SDL_Surface) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Request a window to demand attention from the user.
     ///
     /// \param window the window to be flashed.
@@ -2644,9 +2644,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_FlashWindow(window: *mut SDL_Window, operation: SDL_FlashOperation) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Destroy a window.
     ///
     /// Any popups or modal windows owned by the window will be recursively
@@ -2660,9 +2660,9 @@ extern_sdlcall! {{
     /// \sa SDL_CreateWindow
     /// \sa SDL_CreateWindowWithProperties
     pub fn SDL_DestroyWindow(window: *mut SDL_Window);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Check whether the screensaver is currently enabled.
     ///
     /// The screensaver is disabled by default.
@@ -2677,9 +2677,9 @@ extern_sdlcall! {{
     /// \sa SDL_DisableScreenSaver
     /// \sa SDL_EnableScreenSaver
     pub fn SDL_ScreenSaverEnabled() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Allow the screen to be blanked by a screen saver.
     ///
     /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
@@ -2690,9 +2690,9 @@ extern_sdlcall! {{
     /// \sa SDL_DisableScreenSaver
     /// \sa SDL_ScreenSaverEnabled
     pub fn SDL_EnableScreenSaver() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Prevent the screen from being blanked by a screen saver.
     ///
     /// If you disable the screensaver, it is automatically re-enabled when SDL
@@ -2709,9 +2709,9 @@ extern_sdlcall! {{
     /// \sa SDL_EnableScreenSaver
     /// \sa SDL_ScreenSaverEnabled
     pub fn SDL_DisableScreenSaver() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Dynamically load an OpenGL library.
     ///
     /// This should be done after initializing the video driver, but before
@@ -2731,9 +2731,9 @@ extern_sdlcall! {{
     /// \sa SDL_GL_GetProcAddress
     /// \sa SDL_GL_UnloadLibrary
     pub fn SDL_GL_LoadLibrary(path: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get an OpenGL function by name.
     ///
     /// If the GL library is loaded at runtime with SDL_GL_LoadLibrary(), then all
@@ -2784,9 +2784,9 @@ extern_sdlcall! {{
     /// \sa SDL_GL_LoadLibrary
     /// \sa SDL_GL_UnloadLibrary
     pub fn SDL_GL_GetProcAddress(proc: *const ::core::ffi::c_char) -> SDL_FunctionPointer;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get an EGL library function by name.
     ///
     /// If an EGL library is loaded, this function allows applications to get entry
@@ -2801,18 +2801,18 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_EGL_GetCurrentDisplay
     pub fn SDL_EGL_GetProcAddress(proc: *const ::core::ffi::c_char) -> SDL_FunctionPointer;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Unload the OpenGL library previously loaded by SDL_GL_LoadLibrary().
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GL_LoadLibrary
     pub fn SDL_GL_UnloadLibrary();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Check if an OpenGL extension is supported for the current context.
     ///
     /// This function operates on the current GL context; you must have created a
@@ -2831,9 +2831,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GL_ExtensionSupported(extension: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Reset all previously set OpenGL context attributes to their default values.
     ///
     /// \since This function is available since SDL 3.0.0.
@@ -2841,9 +2841,9 @@ extern_sdlcall! {{
     /// \sa SDL_GL_GetAttribute
     /// \sa SDL_GL_SetAttribute
     pub fn SDL_GL_ResetAttributes();
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set an OpenGL window attribute before window creation.
     ///
     /// This function sets the OpenGL attribute `attr` to `value`. The requested
@@ -2862,9 +2862,9 @@ extern_sdlcall! {{
     /// \sa SDL_GL_GetAttribute
     /// \sa SDL_GL_ResetAttributes
     pub fn SDL_GL_SetAttribute(attr: SDL_GLattr, value: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the actual value for an attribute from the current context.
     ///
     /// \param attr an SDL_GLattr enum value specifying the OpenGL attribute to
@@ -2878,9 +2878,9 @@ extern_sdlcall! {{
     /// \sa SDL_GL_ResetAttributes
     /// \sa SDL_GL_SetAttribute
     pub fn SDL_GL_GetAttribute(attr: SDL_GLattr, value: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create an OpenGL context for an OpenGL window, and make it current.
     ///
     /// Windows users new to OpenGL should note that, for historical reasons, GL
@@ -2900,9 +2900,9 @@ extern_sdlcall! {{
     /// \sa SDL_GL_DestroyContext
     /// \sa SDL_GL_MakeCurrent
     pub fn SDL_GL_CreateContext(window: *mut SDL_Window) -> SDL_GLContext;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set up an OpenGL context for rendering into an OpenGL window.
     ///
     /// The context must have been created with a compatible window.
@@ -2916,9 +2916,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GL_CreateContext
     pub fn SDL_GL_MakeCurrent(window: *mut SDL_Window, context: SDL_GLContext) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the currently active OpenGL window.
     ///
     /// \returns the currently active OpenGL window on success or NULL on failure;
@@ -2926,9 +2926,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GL_GetCurrentWindow() -> *mut SDL_Window;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the currently active OpenGL context.
     ///
     /// \returns the currently active OpenGL context or NULL on failure; call
@@ -2938,9 +2938,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GL_MakeCurrent
     pub fn SDL_GL_GetCurrentContext() -> SDL_GLContext;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the currently active EGL display.
     ///
     /// \returns the currently active EGL display or NULL on failure; call
@@ -2948,9 +2948,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_EGL_GetCurrentDisplay() -> SDL_EGLDisplay;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the currently active EGL config.
     ///
     /// \returns the currently active EGL config or NULL on failure; call
@@ -2958,9 +2958,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_EGL_GetCurrentConfig() -> SDL_EGLConfig;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the EGL surface associated with the window.
     ///
     /// \param window the window to query.
@@ -2969,9 +2969,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_EGL_GetWindowSurface(window: *mut SDL_Window) -> SDL_EGLSurface;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Sets the callbacks for defining custom EGLAttrib arrays for EGL
     /// initialization.
     ///
@@ -2993,9 +2993,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_EGL_SetAttributeCallbacks(platformAttribCallback: SDL_EGLAttribArrayCallback, surfaceAttribCallback: SDL_EGLIntArrayCallback, contextAttribCallback: SDL_EGLIntArrayCallback);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the swap interval for the current OpenGL context.
     ///
     /// Some systems allow specifying -1 for the interval, to enable adaptive
@@ -3022,9 +3022,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GL_GetSwapInterval
     pub fn SDL_GL_SetSwapInterval(interval: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the swap interval for the current OpenGL context.
     ///
     /// If the system can't determine the swap interval, or there isn't a valid
@@ -3041,9 +3041,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GL_SetSwapInterval
     pub fn SDL_GL_GetSwapInterval(interval: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Update a window with OpenGL rendering.
     ///
     /// This is used with double-buffered OpenGL contexts, which are the default.
@@ -3059,9 +3059,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GL_SwapWindow(window: *mut SDL_Window) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Delete an OpenGL context.
     ///
     /// \param context the OpenGL context to be deleted.
@@ -3072,7 +3072,7 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GL_CreateContext
     pub fn SDL_GL_DestroyContext(context: SDL_GLContext) -> SDL_bool;
-}}
+}
 
 #[repr(C)]
 #[non_exhaustive]

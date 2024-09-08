@@ -19,7 +19,7 @@ use super::stdinc::*;
 /// \since This macro is available since SDL 3.0.0.
 pub const SDL_CACHELINE_SIZE: ::core::primitive::i32 = 128;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the number of CPU cores available.
     ///
     /// \returns the total number of logical CPU cores. On CPUs that include
@@ -28,9 +28,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetCPUCount() -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine the L1 cache line size of the CPU.
     ///
     /// This is useful for determining multi-threaded structure padding or SIMD
@@ -40,9 +40,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetCPUCacheLineSize() -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has AltiVec features.
     ///
     /// This always returns false on CPUs that aren't using PowerPC instruction
@@ -52,9 +52,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_HasAltiVec() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has MMX features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -63,9 +63,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_HasMMX() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has SSE features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -79,9 +79,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasSSE41
     /// \sa SDL_HasSSE42
     pub fn SDL_HasSSE() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has SSE2 features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -95,9 +95,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasSSE41
     /// \sa SDL_HasSSE42
     pub fn SDL_HasSSE2() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has SSE3 features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -111,9 +111,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasSSE41
     /// \sa SDL_HasSSE42
     pub fn SDL_HasSSE3() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has SSE4.1 features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -127,9 +127,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasSSE3
     /// \sa SDL_HasSSE42
     pub fn SDL_HasSSE41() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has SSE4.2 features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -143,9 +143,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasSSE3
     /// \sa SDL_HasSSE41
     pub fn SDL_HasSSE42() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has AVX features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -157,9 +157,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasAVX2
     /// \sa SDL_HasAVX512F
     pub fn SDL_HasAVX() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has AVX2 features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -171,9 +171,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasAVX
     /// \sa SDL_HasAVX512F
     pub fn SDL_HasAVX2() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has AVX-512F (foundation) features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -185,9 +185,9 @@ extern_sdlcall! {{
     /// \sa SDL_HasAVX
     /// \sa SDL_HasAVX2
     pub fn SDL_HasAVX512F() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has ARM SIMD (ARMv6) features.
     ///
     /// This is different from ARM NEON, which is a different instruction set.
@@ -200,9 +200,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_HasNEON
     pub fn SDL_HasARMSIMD() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has NEON (ARM SIMD) features.
     ///
     /// This always returns false on CPUs that aren't using ARM instruction sets.
@@ -211,9 +211,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_HasNEON() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has LSX (LOONGARCH SIMD) features.
     ///
     /// This always returns false on CPUs that aren't using LOONGARCH instruction
@@ -224,9 +224,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_HasLSX() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Determine whether the CPU has LASX (LOONGARCH SIMD) features.
     ///
     /// This always returns false on CPUs that aren't using LOONGARCH instruction
@@ -237,18 +237,18 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_HasLASX() -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the amount of RAM configured in the system.
     ///
     /// \returns the amount of RAM configured in the system in MiB.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSystemRAM() -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Report the alignment this system needs for SIMD allocations.
     ///
     /// This will return the minimum number of bytes to which a pointer must be
@@ -268,5 +268,5 @@ extern_sdlcall! {{
     /// \sa SDL_aligned_alloc
     /// \sa SDL_aligned_free
     pub fn SDL_GetSIMDAlignment() -> ::core::primitive::usize;
-}}
+}
 

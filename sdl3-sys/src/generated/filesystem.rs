@@ -8,7 +8,7 @@ use super::stdinc::*;
 
 use super::error::*;
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the directory where the application was run from.
     ///
     /// SDL caches the result of this call internally, but the first call to this
@@ -47,9 +47,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetPrefPath
     pub fn SDL_GetBasePath() -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the user-and-app-specific path where files can be written.
     ///
     /// Get the "pref dir". This is meant to be where users can write personal
@@ -102,7 +102,7 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetBasePath
     pub fn SDL_GetPrefPath(org: *const ::core::ffi::c_char, app: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
-}}
+}
 
 /// The type of the OS-provided default folder for a specific purpose.
 ///
@@ -216,7 +216,7 @@ pub const SDL_FOLDER_VIDEOS: SDL_Folder = SDL_Folder::VIDEOS;
 /// total number of types in this enum, not a folder type by itself.
 pub const SDL_FOLDER_TOTAL: SDL_Folder = SDL_Folder::TOTAL;
 
-extern_sdlcall! {{
+extern "C" {
     /// Finds the most suitable user folder for a specific purpose.
     ///
     /// Many OSes provide certain standard folders for certain purposes, such as
@@ -239,7 +239,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetUserFolder(folder: SDL_Folder) -> *const ::core::ffi::c_char;
-}}
+}
 
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PATHTYPE_NONE`], [`SDL_PATHTYPE_FILE`], [`SDL_PATHTYPE_DIRECTORY`], [`SDL_PATHTYPE_OTHER`]
 #[repr(transparent)]
@@ -286,7 +286,7 @@ pub type SDL_GlobFlags = Uint32;
 
 pub const SDL_GLOB_CASEINSENSITIVE: ::core::primitive::u32 = 1_u32;
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a directory.
     ///
     /// \param path the path of the directory to create.
@@ -295,11 +295,11 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_CreateDirectory(path: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-pub type SDL_EnumerateDirectoryCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, dirname: *const ::core::ffi::c_char, fname: *const ::core::ffi::c_char) -> ::core::ffi::c_int)>;
+pub type SDL_EnumerateDirectoryCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, dirname: *const ::core::ffi::c_char, fname: *const ::core::ffi::c_char) -> ::core::ffi::c_int>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Enumerate a directory through a callback function.
     ///
     /// This function provides every directory entry through an app-provided
@@ -314,9 +314,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_EnumerateDirectory(path: *const ::core::ffi::c_char, callback: SDL_EnumerateDirectoryCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Remove a file or an empty directory.
     ///
     /// \param path the path of the directory to enumerate.
@@ -325,9 +325,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_RemovePath(path: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Rename a file or directory.
     ///
     /// \param oldpath the old path.
@@ -337,9 +337,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_RenamePath(oldpath: *const ::core::ffi::c_char, newpath: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Copy a file.
     ///
     /// \param oldpath the old path.
@@ -349,9 +349,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_CopyFile(oldpath: *const ::core::ffi::c_char, newpath: *const ::core::ffi::c_char) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get information about a filesystem path.
     ///
     /// \param path the path to query.
@@ -362,9 +362,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetPathInfo(path: *const ::core::ffi::c_char, info: *mut SDL_PathInfo) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Enumerate a directory tree, filtered by pattern, and return a list.
     ///
     /// Files are filtered out if they don't match the string in `pattern`, which
@@ -395,5 +395,5 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GlobDirectory(path: *const ::core::ffi::c_char, pattern: *const ::core::ffi::c_char, flags: SDL_GlobFlags, count: *mut ::core::ffi::c_int) -> *mut *mut ::core::ffi::c_char;
-}}
+}
 

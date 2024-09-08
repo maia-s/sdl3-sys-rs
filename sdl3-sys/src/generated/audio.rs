@@ -203,7 +203,7 @@ pub struct SDL_AudioSpec {
     pub freq: ::core::ffi::c_int,
 }
 
-extern_sdlcall! {{
+extern "C" {
     /// Use this function to get the number of built-in audio drivers.
     ///
     /// This function returns a hardcoded number. This never returns a negative
@@ -224,9 +224,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetAudioDriver
     pub fn SDL_GetNumAudioDrivers() -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Use this function to get the name of a built in audio driver.
     ///
     /// The list of audio drivers is given in the order that they are normally
@@ -248,9 +248,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetNumAudioDrivers
     pub fn SDL_GetAudioDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the name of the current audio driver.
     ///
     /// The names of drivers are all simple, low-ASCII identifiers, like "alsa",
@@ -264,9 +264,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetCurrentAudioDriver() -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of currently-connected audio playback devices.
     ///
     /// This returns of list of available devices that play sound, perhaps to
@@ -293,9 +293,9 @@ extern_sdlcall! {{
     /// \sa SDL_OpenAudioDevice
     /// \sa SDL_GetAudioRecordingDevices
     pub fn SDL_GetAudioPlaybackDevices(count: *mut ::core::ffi::c_int) -> *mut SDL_AudioDeviceID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get a list of currently-connected audio recording devices.
     ///
     /// This returns of list of available devices that record audio, like a
@@ -322,9 +322,9 @@ extern_sdlcall! {{
     /// \sa SDL_OpenAudioDevice
     /// \sa SDL_GetAudioPlaybackDevices
     pub fn SDL_GetAudioRecordingDevices(count: *mut ::core::ffi::c_int) -> *mut SDL_AudioDeviceID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the human-readable name of a specific audio device.
     ///
     /// \param devid the instance ID of the device to query.
@@ -339,9 +339,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetAudioRecordingDevices
     /// \sa SDL_GetDefaultAudioInfo
     pub fn SDL_GetAudioDeviceName(devid: SDL_AudioDeviceID) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current audio format of a specific audio device.
     ///
     /// For an opened device, this will report the format the device is currently
@@ -374,9 +374,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetAudioDeviceFormat(devid: SDL_AudioDeviceID, spec: *mut SDL_AudioSpec, sample_frames: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current channel map of an audio device.
     ///
     /// Channel maps are optional; most things do not need them, instead passing
@@ -397,9 +397,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetAudioStreamInputChannelMap
     pub fn SDL_GetAudioDeviceChannelMap(devid: SDL_AudioDeviceID, count: *mut ::core::ffi::c_int) -> *mut ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Open a specific audio device.
     ///
     /// You can open both playback and recording devices through this function.
@@ -473,9 +473,9 @@ extern_sdlcall! {{
     /// \sa SDL_CloseAudioDevice
     /// \sa SDL_GetAudioDeviceFormat
     pub fn SDL_OpenAudioDevice(devid: SDL_AudioDeviceID, spec: *const SDL_AudioSpec) -> SDL_AudioDeviceID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Use this function to pause audio playback on a specified device.
     ///
     /// This function pauses audio processing for a given device. Any bound audio
@@ -504,9 +504,9 @@ extern_sdlcall! {{
     /// \sa SDL_ResumeAudioDevice
     /// \sa SDL_AudioDevicePaused
     pub fn SDL_PauseAudioDevice(dev: SDL_AudioDeviceID) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Use this function to unpause audio playback on a specified device.
     ///
     /// This function unpauses audio processing for a given device that has
@@ -532,9 +532,9 @@ extern_sdlcall! {{
     /// \sa SDL_AudioDevicePaused
     /// \sa SDL_PauseAudioDevice
     pub fn SDL_ResumeAudioDevice(dev: SDL_AudioDeviceID) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Use this function to query if an audio device is paused.
     ///
     /// Unlike in SDL2, audio devices start in an _unpaused_ state, since an app
@@ -554,9 +554,9 @@ extern_sdlcall! {{
     /// \sa SDL_PauseAudioDevice
     /// \sa SDL_ResumeAudioDevice
     pub fn SDL_AudioDevicePaused(dev: SDL_AudioDeviceID) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the gain of an audio device.
     ///
     /// The gain of a device is its volume; a larger gain means a louder output,
@@ -577,9 +577,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetAudioDeviceGain
     pub fn SDL_GetAudioDeviceGain(devid: SDL_AudioDeviceID) -> ::core::ffi::c_float;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Change the gain of an audio device.
     ///
     /// The gain of a device is its volume; a larger gain means a louder output,
@@ -612,9 +612,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetAudioDeviceGain
     pub fn SDL_SetAudioDeviceGain(devid: SDL_AudioDeviceID, gain: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Close a previously-opened audio device.
     ///
     /// The application should close open audio devices once they are no longer
@@ -633,9 +633,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_OpenAudioDevice
     pub fn SDL_CloseAudioDevice(devid: SDL_AudioDeviceID);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Bind a list of audio streams to an audio device.
     ///
     /// Audio data will flow through any bound streams. For a playback device, data
@@ -670,9 +670,9 @@ extern_sdlcall! {{
     /// \sa SDL_UnbindAudioStream
     /// \sa SDL_GetAudioStreamDevice
     pub fn SDL_BindAudioStreams(devid: SDL_AudioDeviceID, streams: *mut *mut SDL_AudioStream, num_streams: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Bind a single audio stream to an audio device.
     ///
     /// This is a convenience function, equivalent to calling
@@ -691,9 +691,9 @@ extern_sdlcall! {{
     /// \sa SDL_UnbindAudioStream
     /// \sa SDL_GetAudioStreamDevice
     pub fn SDL_BindAudioStream(devid: SDL_AudioDeviceID, stream: *mut SDL_AudioStream) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Unbind a list of audio streams from their audio devices.
     ///
     /// The streams being unbound do not all have to be on the same device. All
@@ -711,9 +711,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_BindAudioStreams
     pub fn SDL_UnbindAudioStreams(streams: *mut *mut SDL_AudioStream, num_streams: ::core::ffi::c_int);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Unbind a single audio stream from its audio device.
     ///
     /// This is a convenience function, equivalent to calling
@@ -727,9 +727,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_BindAudioStream
     pub fn SDL_UnbindAudioStream(stream: *mut SDL_AudioStream);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query an audio stream for its currently-bound device.
     ///
     /// This reports the audio device that an audio stream is currently bound to.
@@ -747,9 +747,9 @@ extern_sdlcall! {{
     /// \sa SDL_BindAudioStream
     /// \sa SDL_BindAudioStreams
     pub fn SDL_GetAudioStreamDevice(stream: *mut SDL_AudioStream) -> SDL_AudioDeviceID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Create a new audio stream.
     ///
     /// \param src_spec the format details of the input audio.
@@ -769,9 +769,9 @@ extern_sdlcall! {{
     /// \sa SDL_SetAudioStreamFormat
     /// \sa SDL_DestroyAudioStream
     pub fn SDL_CreateAudioStream(src_spec: *const SDL_AudioSpec, dst_spec: *const SDL_AudioSpec) -> *mut SDL_AudioStream;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the properties associated with an audio stream.
     ///
     /// \param stream the SDL_AudioStream to query.
@@ -780,9 +780,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetAudioStreamProperties(stream: *mut SDL_AudioStream) -> SDL_PropertiesID;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Query the current format of an audio stream.
     ///
     /// \param stream the SDL_AudioStream to query.
@@ -798,9 +798,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetAudioStreamFormat
     pub fn SDL_GetAudioStreamFormat(stream: *mut SDL_AudioStream, src_spec: *mut SDL_AudioSpec, dst_spec: *mut SDL_AudioSpec) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Change the input and output formats of an audio stream.
     ///
     /// Future calls to and SDL_GetAudioStreamAvailable and SDL_GetAudioStreamData
@@ -829,9 +829,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetAudioStreamFormat
     /// \sa SDL_SetAudioStreamFrequencyRatio
     pub fn SDL_SetAudioStreamFormat(stream: *mut SDL_AudioStream, src_spec: *const SDL_AudioSpec, dst_spec: *const SDL_AudioSpec) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the frequency ratio of an audio stream.
     ///
     /// \param stream the SDL_AudioStream to query.
@@ -845,9 +845,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetAudioStreamFrequencyRatio
     pub fn SDL_GetAudioStreamFrequencyRatio(stream: *mut SDL_AudioStream) -> ::core::ffi::c_float;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Change the frequency ratio of an audio stream.
     ///
     /// The frequency ratio is used to adjust the rate at which input data is
@@ -873,9 +873,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetAudioStreamFrequencyRatio
     /// \sa SDL_SetAudioStreamFormat
     pub fn SDL_SetAudioStreamFrequencyRatio(stream: *mut SDL_AudioStream, ratio: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the gain of an audio stream.
     ///
     /// The gain of a stream is its volume; a larger gain means a louder output,
@@ -894,9 +894,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetAudioStreamGain
     pub fn SDL_GetAudioStreamGain(stream: *mut SDL_AudioStream) -> ::core::ffi::c_float;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Change the gain of an audio stream.
     ///
     /// The gain of a stream is its volume; a larger gain means a louder output,
@@ -919,9 +919,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_GetAudioStreamGain
     pub fn SDL_SetAudioStreamGain(stream: *mut SDL_AudioStream, gain: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current input channel map of an audio stream.
     ///
     /// Channel maps are optional; most things do not need them, instead passing
@@ -943,9 +943,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetAudioStreamInputChannelMap
     pub fn SDL_GetAudioStreamInputChannelMap(stream: *mut SDL_AudioStream, count: *mut ::core::ffi::c_int) -> *mut ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the current output channel map of an audio stream.
     ///
     /// Channel maps are optional; most things do not need them, instead passing
@@ -967,9 +967,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetAudioStreamInputChannelMap
     pub fn SDL_GetAudioStreamOutputChannelMap(stream: *mut SDL_AudioStream, count: *mut ::core::ffi::c_int) -> *mut ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the current input channel map of an audio stream.
     ///
     /// Channel maps are optional; most things do not need them, instead passing
@@ -1018,9 +1018,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetAudioStreamInputChannelMap
     pub fn SDL_SetAudioStreamInputChannelMap(stream: *mut SDL_AudioStream, chmap: *const ::core::ffi::c_int, count: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set the current output channel map of an audio stream.
     ///
     /// Channel maps are optional; most things do not need them, instead passing
@@ -1065,9 +1065,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetAudioStreamInputChannelMap
     pub fn SDL_SetAudioStreamOutputChannelMap(stream: *mut SDL_AudioStream, chmap: *const ::core::ffi::c_int, count: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Add data to the stream.
     ///
     /// This data must match the format/channels/samplerate specified in the latest
@@ -1095,9 +1095,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetAudioStreamData
     /// \sa SDL_GetAudioStreamQueued
     pub fn SDL_PutAudioStreamData(stream: *mut SDL_AudioStream, buf: *const ::core::ffi::c_void, len: ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get converted/resampled data from the stream.
     ///
     /// The input/output data format/channels/samplerate is specified when creating
@@ -1125,9 +1125,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetAudioStreamAvailable
     /// \sa SDL_PutAudioStreamData
     pub fn SDL_GetAudioStreamData(stream: *mut SDL_AudioStream, buf: *mut ::core::ffi::c_void, len: ::core::ffi::c_int) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the number of converted/resampled bytes available.
     ///
     /// The stream may be buffering data behind the scenes until it has enough to
@@ -1151,9 +1151,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetAudioStreamData
     /// \sa SDL_PutAudioStreamData
     pub fn SDL_GetAudioStreamAvailable(stream: *mut SDL_AudioStream) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the number of bytes currently queued.
     ///
     /// Note that audio streams can change their input format at any time, even if
@@ -1183,9 +1183,9 @@ extern_sdlcall! {{
     /// \sa SDL_PutAudioStreamData
     /// \sa SDL_ClearAudioStream
     pub fn SDL_GetAudioStreamQueued(stream: *mut SDL_AudioStream) -> ::core::ffi::c_int;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Tell the stream that you're done sending data, and anything being buffered
     /// should be converted/resampled and made available immediately.
     ///
@@ -1203,9 +1203,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_PutAudioStreamData
     pub fn SDL_FlushAudioStream(stream: *mut SDL_AudioStream) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Clear any pending data in the stream.
     ///
     /// This drops any queued data, so there will be nothing to read from the
@@ -1224,9 +1224,9 @@ extern_sdlcall! {{
     /// \sa SDL_GetAudioStreamQueued
     /// \sa SDL_PutAudioStreamData
     pub fn SDL_ClearAudioStream(stream: *mut SDL_AudioStream) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Use this function to pause audio playback on the audio device associated
     /// with an audio stream.
     ///
@@ -1248,9 +1248,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_ResumeAudioStreamDevice
     pub fn SDL_PauseAudioStreamDevice(stream: *mut SDL_AudioStream) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Use this function to unpause audio playback on the audio device associated
     /// with an audio stream.
     ///
@@ -1268,9 +1268,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_PauseAudioStreamDevice
     pub fn SDL_ResumeAudioStreamDevice(stream: *mut SDL_AudioStream) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Lock an audio stream for serialized access.
     ///
     /// Each SDL_AudioStream has an internal mutex it uses to protect its data
@@ -1296,9 +1296,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_UnlockAudioStream
     pub fn SDL_LockAudioStream(stream: *mut SDL_AudioStream) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Unlock an audio stream for serialized access.
     ///
     /// This unlocks an audio stream after a call to SDL_LockAudioStream.
@@ -1314,7 +1314,7 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_LockAudioStream
     pub fn SDL_UnlockAudioStream(stream: *mut SDL_AudioStream) -> SDL_bool;
-}}
+}
 
 /// A callback that fires when data passes through an SDL_AudioStream.
 ///
@@ -1354,9 +1354,9 @@ extern_sdlcall! {{
 ///
 /// \sa SDL_SetAudioStreamGetCallback
 /// \sa SDL_SetAudioStreamPutCallback
-pub type SDL_AudioStreamCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, stream: *mut SDL_AudioStream, additional_amount: ::core::ffi::c_int, total_amount: ::core::ffi::c_int))>;
+pub type SDL_AudioStreamCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, stream: *mut SDL_AudioStream, additional_amount: ::core::ffi::c_int, total_amount: ::core::ffi::c_int)>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a callback that runs when data is requested from an audio stream.
     ///
     /// This callback is called _before_ data is obtained from the stream, giving
@@ -1400,9 +1400,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetAudioStreamPutCallback
     pub fn SDL_SetAudioStreamGetCallback(stream: *mut SDL_AudioStream, callback: SDL_AudioStreamCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a callback that runs when data is added to an audio stream.
     ///
     /// This callback is called _after_ the data is added to the stream, giving the
@@ -1449,9 +1449,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_SetAudioStreamGetCallback
     pub fn SDL_SetAudioStreamPutCallback(stream: *mut SDL_AudioStream, callback: SDL_AudioStreamCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Free an audio stream.
     ///
     /// This will release all allocated data, including any audio that is still
@@ -1470,9 +1470,9 @@ extern_sdlcall! {{
     ///
     /// \sa SDL_CreateAudioStream
     pub fn SDL_DestroyAudioStream(stream: *mut SDL_AudioStream);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Convenience function for straightforward audio init for the common case.
     ///
     /// If all your app intends to do is provide a single source of PCM audio, this
@@ -1532,7 +1532,7 @@ extern_sdlcall! {{
     /// \sa SDL_GetAudioStreamDevice
     /// \sa SDL_ResumeAudioStreamDevice
     pub fn SDL_OpenAudioDeviceStream(devid: SDL_AudioDeviceID, spec: *const SDL_AudioSpec, callback: SDL_AudioStreamCallback, userdata: *mut ::core::ffi::c_void) -> *mut SDL_AudioStream;
-}}
+}
 
 /// A callback that fires when data is about to be fed to an audio device.
 ///
@@ -1567,9 +1567,9 @@ extern_sdlcall! {{
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_SetAudioPostmixCallback
-pub type SDL_AudioPostmixCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, spec: *const SDL_AudioSpec, buffer: *mut ::core::ffi::c_float, buflen: ::core::ffi::c_int))>;
+pub type SDL_AudioPostmixCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, spec: *const SDL_AudioSpec, buffer: *mut ::core::ffi::c_float, buflen: ::core::ffi::c_int)>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Set a callback that fires when data is about to be fed to an audio device.
     ///
     /// This is useful for accessing the final mix, perhaps for writing a
@@ -1621,9 +1621,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetAudioPostmixCallback(devid: SDL_AudioDeviceID, callback: SDL_AudioPostmixCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Load the audio data of a WAVE file into memory.
     ///
     /// Loading a WAVE file requires `src`, `spec`, `audio_buf` and `audio_len` to
@@ -1701,9 +1701,9 @@ extern_sdlcall! {{
     /// \sa SDL_free
     /// \sa SDL_LoadWAV
     pub fn SDL_LoadWAV_IO(src: *mut SDL_IOStream, closeio: SDL_bool, spec: *mut SDL_AudioSpec, audio_buf: *mut *mut Uint8, audio_len: *mut Uint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Loads a WAV from a file path.
     ///
     /// This is a convenience function that is effectively the same as:
@@ -1737,9 +1737,9 @@ extern_sdlcall! {{
     /// \sa SDL_free
     /// \sa SDL_LoadWAV_IO
     pub fn SDL_LoadWAV(path: *const ::core::ffi::c_char, spec: *mut SDL_AudioSpec, audio_buf: *mut *mut Uint8, audio_len: *mut Uint32) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Mix audio data in a specified format.
     ///
     /// This takes an audio buffer `src` of `len` bytes of `format` data and mixes
@@ -1773,9 +1773,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_MixAudio(dst: *mut Uint8, src: *const Uint8, format: SDL_AudioFormat, len: Uint32, volume: ::core::ffi::c_float) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Convert some audio data of one format to another format.
     ///
     /// Please note that this function is for convenience, but should not be used
@@ -1803,9 +1803,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_ConvertAudioSamples(src_spec: *const SDL_AudioSpec, src_data: *const Uint8, src_len: ::core::ffi::c_int, dst_spec: *const SDL_AudioSpec, dst_data: *mut *mut Uint8, dst_len: *mut ::core::ffi::c_int) -> SDL_bool;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the human readable name of an audio format.
     ///
     /// \param format the audio format to query.
@@ -1816,9 +1816,9 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetAudioFormatName(format: SDL_AudioFormat) -> *const ::core::ffi::c_char;
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Get the appropriate memset value for silencing an audio format.
     ///
     /// The value returned by this function can be used as the second argument to
@@ -1832,7 +1832,7 @@ extern_sdlcall! {{
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetSilenceValueForFormat(format: SDL_AudioFormat) -> ::core::ffi::c_int;
-}}
+}
 
 /// The opaque handle that represents an audio stream.
 ///

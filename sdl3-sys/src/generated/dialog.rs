@@ -64,9 +64,9 @@ pub struct SDL_DialogFileFilter {
 /// \sa SDL_ShowOpenFileDialog
 /// \sa SDL_ShowSaveFileDialog
 /// \sa SDL_ShowOpenFolderDialog
-pub type SDL_DialogFileCallback = ::core::option::Option<extern_sdlcall!(fn(userdata: *mut ::core::ffi::c_void, filelist: *const *const ::core::ffi::c_char, filter: ::core::ffi::c_int))>;
+pub type SDL_DialogFileCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, filelist: *const *const ::core::ffi::c_char, filter: ::core::ffi::c_int)>;
 
-extern_sdlcall! {{
+extern "C" {
     /// Displays a dialog that lets the user select a file on their filesystem.
     ///
     /// This function should only be invoked from the main thread.
@@ -121,9 +121,9 @@ extern_sdlcall! {{
     /// \sa SDL_ShowSaveFileDialog
     /// \sa SDL_ShowOpenFolderDialog
     pub fn SDL_ShowOpenFileDialog(callback: SDL_DialogFileCallback, userdata: *mut ::core::ffi::c_void, window: *mut SDL_Window, filters: *const SDL_DialogFileFilter, nfilters: ::core::ffi::c_int, default_location: *const ::core::ffi::c_char, allow_many: SDL_bool);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Displays a dialog that lets the user choose a new or existing file on their
     /// filesystem.
     ///
@@ -176,9 +176,9 @@ extern_sdlcall! {{
     /// \sa SDL_ShowOpenFileDialog
     /// \sa SDL_ShowOpenFolderDialog
     pub fn SDL_ShowSaveFileDialog(callback: SDL_DialogFileCallback, userdata: *mut ::core::ffi::c_void, window: *mut SDL_Window, filters: *const SDL_DialogFileFilter, nfilters: ::core::ffi::c_int, default_location: *const ::core::ffi::c_char);
-}}
+}
 
-extern_sdlcall! {{
+extern "C" {
     /// Displays a dialog that lets the user select a folder on their filesystem.
     ///
     /// This function should only be invoked from the main thread.
@@ -224,5 +224,5 @@ extern_sdlcall! {{
     /// \sa SDL_ShowOpenFileDialog
     /// \sa SDL_ShowSaveFileDialog
     pub fn SDL_ShowOpenFolderDialog(callback: SDL_DialogFileCallback, userdata: *mut ::core::ffi::c_void, window: *mut SDL_Window, default_location: *const ::core::ffi::c_char, allow_many: SDL_bool);
-}}
+}
 
