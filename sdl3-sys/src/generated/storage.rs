@@ -48,9 +48,9 @@ impl SDL_StorageInterface {
     /// Create a new `SDL_StorageInterface` initialized with `SDL_INIT_INTERFACE`
     #[inline]
     pub const fn new() -> Self {
-        ::core::assert!(::core::mem::size_of::<Self>() <= u32::MAX as usize);
+        ::core::assert!(::core::mem::size_of::<Self>() <= ::core::primitive::u32::MAX as usize);
         let mut this = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
-        this.version = ::core::mem::size_of::<Self>() as u32;
+        this.version = ::core::mem::size_of::<Self>() as ::core::primitive::u32;
         this
     }
 }

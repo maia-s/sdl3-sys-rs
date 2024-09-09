@@ -576,12 +576,12 @@ impl StructOrUnion {
                 ctx_ool.increase_indent();
                 writeln!(
                     ctx_ool,
-                    "::core::assert!(::core::mem::size_of::<Self>() <= u32::MAX as usize);"
+                    "::core::assert!(::core::mem::size_of::<Self>() <= ::core::primitive::u32::MAX as usize);"
                 )?;
                 writeln!(ctx_ool, "let mut this = unsafe {{ ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }};")?;
                 writeln!(
                     ctx_ool,
-                    "this.version = ::core::mem::size_of::<Self>() as u32;"
+                    "this.version = ::core::mem::size_of::<Self>() as ::core::primitive::u32;"
                 )?;
                 writeln!(ctx_ool, "this")?;
                 ctx_ool.decrease_indent();
