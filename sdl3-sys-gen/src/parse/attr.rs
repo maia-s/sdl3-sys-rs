@@ -104,7 +104,8 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                     | "SDL_SCANF_VARARG_FUNCV"
                     | "SDL_TRY_ACQUIRE"
                     | "SDL_TRY_ACQUIRE_SHARED"
-                    | "SDL_WPRINTF_VARARG_FUNC" => {
+                    | "SDL_WPRINTF_VARARG_FUNC"
+                    | "SDL_WPRINTF_VARARG_FUNCV" => {
                         let (rest, args) = CallArgs::parse_raw(ctx, &rest)?;
                         return Ok((
                             rest,
