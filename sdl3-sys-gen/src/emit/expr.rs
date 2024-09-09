@@ -513,7 +513,11 @@ impl Eval for Expr {
                             (Value::U31(lhs), Value::I32(rhs)) => Ok(Some(Value::I32(lhs as i32 $op rhs))),
                             (Value::U31(lhs), Value::U31(rhs)) => Ok(Some(Value::U31(lhs $op rhs))),
                             (Value::U31(lhs) | Value::U32(lhs), Value::U31(rhs) | Value::U32(rhs)) => Ok(Some(Value::U32(lhs $op rhs))),
-                            _ => todo!(),
+                            (Value::RustCode(lhs), Value::RustCode(rhs)) if lhs.ty == rhs.ty => Ok(Some(Value::RustCode(RustCode::boxed(
+                                format!("({} {} {})", lhs.value, stringify!($op), rhs.value),
+                                lhs.ty
+                            )))),
+                            x => {dbg!(x);todo!()},
                         }
                     };
                 }
@@ -799,7 +803,14 @@ impl Emit for Expr {
                 }
             }
 
-            Expr::BinaryOp(_) => todo!(),
+            Expr::BinaryOp(_) => {
+                if let Some(value) = self.try_eval(ctx)? {
+                    value.emit(ctx)
+                } else {
+                    todo!()
+                }
+            }
+
             Expr::PostOp(_) => todo!(),
             Expr::Ternary(_) => todo!(),
             Expr::ArrayIndex { .. } => todo!(),

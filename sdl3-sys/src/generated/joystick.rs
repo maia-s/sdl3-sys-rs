@@ -1060,23 +1060,23 @@ extern "C" {
     pub fn SDL_GetJoystickHat(joystick: *mut SDL_Joystick, hat: ::core::ffi::c_int) -> Uint8;
 }
 
-pub const SDL_HAT_CENTERED: ::core::primitive::u32 = 0_u32;
+pub const SDL_HAT_CENTERED: ::core::primitive::u8 = (0x00) as ::core::primitive::u8;
 
-pub const SDL_HAT_UP: ::core::primitive::u32 = 1_u32;
+pub const SDL_HAT_UP: ::core::primitive::u8 = (0x10) as ::core::primitive::u8;
 
-pub const SDL_HAT_RIGHT: ::core::primitive::u32 = 2_u32;
+pub const SDL_HAT_RIGHT: ::core::primitive::u8 = (0x20) as ::core::primitive::u8;
 
-pub const SDL_HAT_DOWN: ::core::primitive::u32 = 4_u32;
+pub const SDL_HAT_DOWN: ::core::primitive::u8 = (0x40) as ::core::primitive::u8;
 
-pub const SDL_HAT_LEFT: ::core::primitive::u32 = 8_u32;
+pub const SDL_HAT_LEFT: ::core::primitive::u8 = (0x80) as ::core::primitive::u8;
 
-pub const SDL_HAT_RIGHTUP: ::core::primitive::u32 = 3_u32;
+pub const SDL_HAT_RIGHTUP: ::core::primitive::u8 = ((((0x20) as ::core::primitive::u8 | (0x10) as ::core::primitive::u8))) as ::core::primitive::u8;
 
-pub const SDL_HAT_RIGHTDOWN: ::core::primitive::u32 = 6_u32;
+pub const SDL_HAT_RIGHTDOWN: ::core::primitive::u8 = ((((0x20) as ::core::primitive::u8 | (0x40) as ::core::primitive::u8))) as ::core::primitive::u8;
 
-pub const SDL_HAT_LEFTUP: ::core::primitive::u32 = 9_u32;
+pub const SDL_HAT_LEFTUP: ::core::primitive::u8 = ((((0x80) as ::core::primitive::u8 | (0x10) as ::core::primitive::u8))) as ::core::primitive::u8;
 
-pub const SDL_HAT_LEFTDOWN: ::core::primitive::u32 = 12_u32;
+pub const SDL_HAT_LEFTDOWN: ::core::primitive::u8 = ((((0x80) as ::core::primitive::u8 | (0x40) as ::core::primitive::u8))) as ::core::primitive::u8;
 
 extern "C" {
     /// Get the current state of a button on a joystick.

@@ -22,64 +22,6 @@ mod state;
 use state::PreProcState;
 pub use state::{DefineState, EmitContext, InnerEmitContext};
 
-pub const fn is_rust_keyword(s: &str) -> bool {
-    matches!(
-        s.as_bytes(),
-        b"abstract"
-            | b"as"
-            | b"async"
-            | b"await"
-            | b"become"
-            | b"box"
-            | b"break"
-            | b"const"
-            | b"continue"
-            | b"crate"
-            | b"do"
-            | b"dyn"
-            | b"else"
-            | b"enum"
-            | b"extern"
-            | b"false"
-            | b"final"
-            | b"fn"
-            | b"for"
-            | b"gen"
-            | b"if"
-            | b"impl"
-            | b"in"
-            | b"let"
-            | b"loop"
-            | b"macro"
-            | b"match"
-            | b"mod"
-            | b"move"
-            | b"mut"
-            | b"override"
-            | b"priv"
-            | b"pub"
-            | b"ref"
-            | b"return"
-            | b"self"
-            | b"Self"
-            | b"static"
-            | b"struct"
-            | b"super"
-            | b"trait"
-            | b"true"
-            | b"try"
-            | b"type"
-            | b"typeof"
-            | b"unsafe"
-            | b"unsized"
-            | b"use"
-            | b"virtual"
-            | b"where"
-            | b"while"
-            | b"yield"
-    )
-}
-
 pub const fn is_valid_ident(s: &str) -> bool {
     matches!(s.as_bytes()[0], b'a'..=b'z' | b'A'..=b'Z' | b'_')
 }
@@ -357,14 +299,14 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
 
 impl Emit for Define {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        ctx.preproc_state().borrow_mut().define(
-            self.ident.clone(),
-            self.args.clone(),
-            self.value.clone(),
-        )?;
         if patch_define(ctx, self)? {
             // patched
         } else if self.args.is_none() {
+            ctx.preproc_state().borrow_mut().define(
+                self.ident.clone(),
+                self.args.clone(),
+                self.value.clone(),
+            )?;
             let ident = self.ident.as_str();
             if ident.ends_with("_h_") || ident == "SDL_locale_h" {
                 // skip include guard define
@@ -414,10 +356,7 @@ impl Emit for Include {
 
 impl Emit for Ident {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        if is_rust_keyword(self.as_str()) {
-            write!(ctx, "r#")?;
-        }
-        write!(ctx, "{}", self.as_str())?;
+        write!(ctx, "{self}")?;
         Ok(())
     }
 }

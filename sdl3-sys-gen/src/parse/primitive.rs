@@ -5,7 +5,7 @@ use super::{
     WsAndComments,
 };
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum PrimitiveType {
     Char,
     SignedChar,

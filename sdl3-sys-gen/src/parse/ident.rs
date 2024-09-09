@@ -1,4 +1,5 @@
 use super::{is_keyword, GetSpan, Parse, ParseContext, ParseErr, ParseRawRes, ParseRev, Span};
+use crate::is_rust_keyword;
 use core::{borrow::Borrow, fmt::Display, hash::Hash};
 use std::borrow::Cow;
 
@@ -12,6 +13,9 @@ pub struct IdentOrKwT<const ALLOW_KEYWORDS: bool> {
 
 impl<const ALLOW_KEYWORDS: bool> Display for IdentOrKwT<ALLOW_KEYWORDS> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        if is_rust_keyword(self.as_str()) {
+            f.write_str("r#")?;
+        }
         Display::fmt(&self.span, f)
     }
 }

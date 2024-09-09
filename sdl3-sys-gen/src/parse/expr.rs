@@ -456,6 +456,12 @@ pub struct Cast {
     pub expr: Expr,
 }
 
+impl Cast {
+    pub fn boxed(span: Span, ty: Type, expr: Expr) -> Box<Self> {
+        Box::new(Self {span, ty, expr })
+    }
+}
+
 impl GetSpan for Cast {
     fn span(&self) -> Span {
         self.span.clone()

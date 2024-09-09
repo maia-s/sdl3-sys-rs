@@ -14,6 +14,12 @@ pub struct Type {
     pub ty: TypeEnum,
 }
 
+impl PartialEq for Type {
+    fn eq(&self, other: &Self) -> bool {
+        self.is_const == other.is_const && self.ty == other.ty
+    }
+}
+
 impl GetSpan for Type {
     fn span(&self) -> Span {
         self.span.clone()
@@ -116,6 +122,16 @@ impl TypeEnum {
             self,
             Self::Primitive(_) | Self::Ident(_) | Self::Enum(_) | Self::Struct(_)
         )
+    }
+}
+
+impl PartialEq for TypeEnum {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (Self::Primitive(s), Self::Primitive(o)) => s == o,
+            (Self::Ident(s), Self::Ident(o)) => s.as_str() == o.as_str(),
+            _ => todo!(),
+        }
     }
 }
 

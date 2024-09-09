@@ -1,51 +1,65 @@
 use super::{Emit, EmitContext, EmitErr};
-use crate::parse::{Define, Expr};
+use crate::parse::{Define, Expr, PrimitiveType, Type};
 use core::fmt::Write;
 
 pub struct Patch<T: ?Sized> {
     module: Option<&'static str>,
-    ident: &'static str,
+    match_ident: fn(&str) -> bool,
     patch: fn(&mut EmitContext, &T) -> Result<bool, EmitErr>,
 }
 
 type DefinePatch = Patch<Define>;
 
-const DEFINE_PATCHES: &[DefinePatch] = &[DefinePatch {
-    module: Some("stdinc"),
-    ident: "SDL_INIT_INTERFACE",
-    patch: |ctx, define| {
-        define.doc.emit(ctx)?;
-        writeln!(ctx, "///")?;
-        writeln!(ctx, "/// # Safety")?;
-        writeln!(ctx, "/// `iface` must point to an SDL interface struct")?;
-        writeln!(ctx, "#[inline(always)]")?;
-        writeln!(
-            ctx,
-            "pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {{"
-        )?;
-        ctx.increase_indent();
-        writeln!(ctx, "unsafe {{")?;
-        ctx.increase_indent();
-        writeln!(ctx, "iface.write_bytes(0, 1);")?;
-        writeln!(
+const DEFINE_PATCHES: &[DefinePatch] = &[
+    DefinePatch {
+        module: Some("joystick"),
+        match_ident: |i| i.starts_with("SDL_HAT_"),
+        patch: |ctx, define| {
+            let mut define = define.clone();
+            define.value = define
+                .value
+                .cast_expr(Type::primitive(PrimitiveType::Uint8T));
+            define.emit(ctx)?;
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("stdinc"),
+        match_ident: |i| i == "SDL_INIT_INTERFACE",
+        patch: |ctx, define| {
+            define.doc.emit(ctx)?;
+            writeln!(ctx, "///")?;
+            writeln!(ctx, "/// # Safety")?;
+            writeln!(ctx, "/// `iface` must point to an SDL interface struct")?;
+            writeln!(ctx, "#[inline(always)]")?;
+            writeln!(
+                ctx,
+                "pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {{"
+            )?;
+            ctx.increase_indent();
+            writeln!(ctx, "unsafe {{")?;
+            ctx.increase_indent();
+            writeln!(ctx, "iface.write_bytes(0, 1);")?;
+            writeln!(
             ctx,
             "iface.cast::<::core::primitive::u32>().write(::core::mem::size_of::<T>() as ::core::primitive::u32);"
         )?;
-        ctx.decrease_indent();
-        writeln!(ctx, "}}")?;
-        ctx.decrease_indent();
-        writeln!(ctx, "}}")?;
-        writeln!(ctx)?;
-        Ok(true)
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            writeln!(ctx)?;
+            Ok(true)
+        },
     },
-}];
+];
 
 type MacroCallPatch = Patch<[Expr]>;
 
 const MACRO_CALL_PATCHES: &[MacroCallPatch] = &[
     MacroCallPatch {
         module: None,
-        ident: "SDL_COMPILE_TIME_ASSERT",
+        match_ident: |i| i == "SDL_COMPILE_TIME_ASSERT",
         patch: |ctx, args| {
             let Expr::Ident(id) = &args[0] else { panic!() };
             if id.as_str() == "SDL_Event" {
@@ -62,7 +76,7 @@ const MACRO_CALL_PATCHES: &[MacroCallPatch] = &[
     },
     MacroCallPatch {
         module: Some("vulkan"),
-        ident: "VK_DEFINE_HANDLE",
+        match_ident: |i| i == "VK_DEFINE_HANDLE",
         patch: |ctx, args| {
             let Expr::Ident(arg) = &args[0] else { panic!() };
             writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
@@ -79,7 +93,7 @@ const MACRO_CALL_PATCHES: &[MacroCallPatch] = &[
     },
     MacroCallPatch {
         module: Some("vulkan"),
-        ident: "VK_DEFINE_NON_DISPATCHABLE_HANDLE",
+        match_ident: |i| i == "VK_DEFINE_NON_DISPATCHABLE_HANDLE",
         patch: |ctx, args| {
             let Expr::Ident(arg) = &args[0] else { panic!() };
             writeln!(ctx, r#"#[cfg(target_pointer_width = "64")]"#)?;
@@ -102,11 +116,14 @@ const MACRO_CALL_PATCHES: &[MacroCallPatch] = &[
 ];
 
 pub fn patch_define(ctx: &mut EmitContext, define: &Define) -> Result<bool, EmitErr> {
-    for patch in DEFINE_PATCHES.iter() {
-        if (patch.module.is_none() || patch.module == Some(&*ctx.module()))
-            && patch.ident == define.ident.as_str()
-        {
-            return (patch.patch)(ctx, define);
+    if ctx.patch_enabled() {
+        let _guard = ctx.disable_patch_guard();
+        for patch in DEFINE_PATCHES.iter() {
+            if (patch.module.is_none() || patch.module == Some(&*ctx.module()))
+                && (patch.match_ident)(define.ident.as_str())
+            {
+                return (patch.patch)(ctx, define);
+            }
         }
     }
     Ok(false)
@@ -117,10 +134,14 @@ pub fn patch_macro_call(
     ident: &str,
     args: &[Expr],
 ) -> Result<bool, EmitErr> {
-    for patch in MACRO_CALL_PATCHES.iter() {
-        if (patch.module.is_none() || patch.module == Some(&*ctx.module())) && patch.ident == ident
-        {
-            return (patch.patch)(ctx, args);
+    if ctx.patch_enabled() {
+        let _guard = ctx.disable_patch_guard();
+        for patch in MACRO_CALL_PATCHES.iter() {
+            if (patch.module.is_none() || patch.module == Some(&*ctx.module()))
+                && (patch.match_ident)(ident)
+            {
+                return (patch.patch)(ctx, args);
+            }
         }
     }
     Ok(false)

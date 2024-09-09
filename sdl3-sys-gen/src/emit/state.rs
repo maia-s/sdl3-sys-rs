@@ -6,6 +6,7 @@ use crate::{
     },
     Gen,
 };
+use core::mem;
 use std::{
     cell::{Ref, RefCell, RefMut},
     collections::{BTreeMap, BTreeSet, HashMap, HashSet},
@@ -163,6 +164,7 @@ pub struct InnerEmitContext {
     pub scope: Scope,
     preproc_eval_mode: usize,
     emitted_file_doc: bool,
+    patch_enabled: bool,
 }
 
 impl<'a, 'b> EmitContext<'a, 'b> {
@@ -324,6 +326,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                 scope: Scope::new(),
                 preproc_eval_mode: 0,
                 emitted_file_doc: false,
+                patch_enabled: true,
             })),
             output,
             indent: 0,
@@ -653,6 +656,24 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                 .0
         )?;
         Ok(())
+    }
+
+    pub fn patch_enabled(&self) -> bool {
+        self.inner().patch_enabled
+    }
+
+    pub fn disable_patch_guard(&mut self) -> impl Drop {
+        pub struct Guard(Rc<RefCell<InnerEmitContext>>, bool);
+
+        impl Drop for Guard {
+            fn drop(&mut self) {
+                self.0.borrow_mut().patch_enabled = self.1;
+            }
+        }
+
+        let patch_enabled = mem::replace(&mut self.inner_mut().patch_enabled, false);
+
+        Guard(Rc::clone(&self.inner), patch_enabled)
     }
 }
 

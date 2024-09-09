@@ -1,7 +1,7 @@
 use super::{
-    Ambiguous, DocComment, DocCommentPost, Expr, GetSpan, Ident, IdentOrKw, IntegerLiteral, Item,
-    Items, Literal, Parse, ParseContext, ParseErr, ParseRawRes, Punctuated, RustCode, Span, Type,
-    WsAndComments,
+    Ambiguous, Cast, DocComment, DocCommentPost, Expr, GetSpan, Ident, IdentOrKw, IntegerLiteral,
+    Item, Items, Literal, Parse, ParseContext, ParseErr, ParseRawRes, Punctuated, RustCode, Span,
+    Type, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -50,6 +50,17 @@ impl DefineValue {
 
     pub const fn is_target_dependent(&self) -> bool {
         matches!(self, Self::TargetDependent)
+    }
+
+    pub fn cast_expr(&self, ty: Type) -> Self {
+        match self {
+            DefineValue::Expr(expr) => DefineValue::Expr(Expr::Cast(Box::new(Cast {
+                span: Span::none(),
+                ty,
+                expr: expr.clone(),
+            }))),
+            _ => todo!(),
+        }
     }
 }
 
