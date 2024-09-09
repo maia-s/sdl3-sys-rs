@@ -1,4 +1,4 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph)]
+#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
 
 //! # CategoryTouch
 //!
@@ -55,9 +55,9 @@ pub struct SDL_Finger {
     pub pressure: ::core::ffi::c_float,
 }
 
-pub const SDL_TOUCH_MOUSEID: SDL_MouseID = (-1_i32) as SDL_MouseID;
+pub const SDL_TOUCH_MOUSEID: SDL_MouseID = -1_i32 as SDL_MouseID;
 
-pub const SDL_MOUSE_TOUCHID: SDL_TouchID = (-1_i32) as SDL_TouchID;
+pub const SDL_MOUSE_TOUCHID: SDL_TouchID = -1_i32 as SDL_TouchID;
 
 extern "C" {
     /// Get a list of registered touch devices.

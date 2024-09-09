@@ -1,4 +1,4 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph)]
+#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
 
 //! # CategoryJoystick
 //!
@@ -1060,23 +1060,23 @@ extern "C" {
     pub fn SDL_GetJoystickHat(joystick: *mut SDL_Joystick, hat: ::core::ffi::c_int) -> Uint8;
 }
 
-pub const SDL_HAT_CENTERED: ::core::primitive::u8 = (0x00) as ::core::primitive::u8;
+pub const SDL_HAT_CENTERED: ::core::primitive::u8 = 0x00 as ::core::primitive::u8;
 
-pub const SDL_HAT_UP: ::core::primitive::u8 = (0x10) as ::core::primitive::u8;
+pub const SDL_HAT_UP: ::core::primitive::u8 = 0x10 as ::core::primitive::u8;
 
-pub const SDL_HAT_RIGHT: ::core::primitive::u8 = (0x20) as ::core::primitive::u8;
+pub const SDL_HAT_RIGHT: ::core::primitive::u8 = 0x20 as ::core::primitive::u8;
 
-pub const SDL_HAT_DOWN: ::core::primitive::u8 = (0x40) as ::core::primitive::u8;
+pub const SDL_HAT_DOWN: ::core::primitive::u8 = 0x40 as ::core::primitive::u8;
 
-pub const SDL_HAT_LEFT: ::core::primitive::u8 = (0x80) as ::core::primitive::u8;
+pub const SDL_HAT_LEFT: ::core::primitive::u8 = 0x80 as ::core::primitive::u8;
 
-pub const SDL_HAT_RIGHTUP: ::core::primitive::u8 = ((((0x20) as ::core::primitive::u8 | (0x10) as ::core::primitive::u8))) as ::core::primitive::u8;
+pub const SDL_HAT_RIGHTUP: ::core::primitive::u8 = ((0x20 as ::core::primitive::u8 | 0x10 as ::core::primitive::u8)) as ::core::primitive::u8;
 
-pub const SDL_HAT_RIGHTDOWN: ::core::primitive::u8 = ((((0x20) as ::core::primitive::u8 | (0x40) as ::core::primitive::u8))) as ::core::primitive::u8;
+pub const SDL_HAT_RIGHTDOWN: ::core::primitive::u8 = ((0x20 as ::core::primitive::u8 | 0x40 as ::core::primitive::u8)) as ::core::primitive::u8;
 
-pub const SDL_HAT_LEFTUP: ::core::primitive::u8 = ((((0x80) as ::core::primitive::u8 | (0x10) as ::core::primitive::u8))) as ::core::primitive::u8;
+pub const SDL_HAT_LEFTUP: ::core::primitive::u8 = ((0x80 as ::core::primitive::u8 | 0x10 as ::core::primitive::u8)) as ::core::primitive::u8;
 
-pub const SDL_HAT_LEFTDOWN: ::core::primitive::u8 = ((((0x80) as ::core::primitive::u8 | (0x40) as ::core::primitive::u8))) as ::core::primitive::u8;
+pub const SDL_HAT_LEFTDOWN: ::core::primitive::u8 = ((0x80 as ::core::primitive::u8 | 0x40 as ::core::primitive::u8)) as ::core::primitive::u8;
 
 extern "C" {
     /// Get the current state of a button on a joystick.

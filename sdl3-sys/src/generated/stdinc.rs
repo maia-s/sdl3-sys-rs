@@ -1,4 +1,4 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph)]
+#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
 
 //! # CategoryStdinc
 //!
@@ -43,54 +43,54 @@ pub type SDL_bool = ::core::primitive::bool;
 /// \since This macro is available since SDL 3.0.0.
 pub type Sint8 = ::core::primitive::i8;
 
-pub const SDL_MAX_SINT8: Sint8 = (0x7f) as Sint8;
+pub const SDL_MAX_SINT8: Sint8 = 0x7f as Sint8;
 
-pub const SDL_MIN_SINT8: Sint8 = ((-128_i32)) as Sint8;
+pub const SDL_MIN_SINT8: Sint8 = (-128_i32) as Sint8;
 
 /// An unsigned 8-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Uint8 = ::core::primitive::u8;
 
-pub const SDL_MAX_UINT8: Uint8 = (0xff) as Uint8;
+pub const SDL_MAX_UINT8: Uint8 = 0xff as Uint8;
 
-pub const SDL_MIN_UINT8: Uint8 = (0x00) as Uint8;
+pub const SDL_MIN_UINT8: Uint8 = 0x00 as Uint8;
 
 /// A signed 16-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Sint16 = ::core::primitive::i16;
 
-pub const SDL_MAX_SINT16: Sint16 = (0x7fff) as Sint16;
+pub const SDL_MAX_SINT16: Sint16 = 0x7fff as Sint16;
 
-pub const SDL_MIN_SINT16: Sint16 = ((-32768_i32)) as Sint16;
+pub const SDL_MIN_SINT16: Sint16 = (-32768_i32) as Sint16;
 
 /// An unsigned 16-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Uint16 = ::core::primitive::u16;
 
-pub const SDL_MAX_UINT16: Uint16 = (0xffff) as Uint16;
+pub const SDL_MAX_UINT16: Uint16 = 0xffff as Uint16;
 
-pub const SDL_MIN_UINT16: Uint16 = (0x0000) as Uint16;
+pub const SDL_MIN_UINT16: Uint16 = 0x0000 as Uint16;
 
 /// A signed 32-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Sint32 = ::core::primitive::i32;
 
-pub const SDL_MAX_SINT32: Sint32 = (0x7fffffff) as Sint32;
+pub const SDL_MAX_SINT32: Sint32 = 0x7fffffff as Sint32;
 
-pub const SDL_MIN_SINT32: Sint32 = ((-2147483648_i32)) as Sint32;
+pub const SDL_MIN_SINT32: Sint32 = (-2147483648_i32) as Sint32;
 
 /// An unsigned 32-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Uint32 = ::core::primitive::u32;
 
-pub const SDL_MAX_UINT32: Uint32 = (0xffffffff) as Uint32;
+pub const SDL_MAX_UINT32: Uint32 = 0xffffffff as Uint32;
 
-pub const SDL_MIN_UINT32: Uint32 = (0x00000000) as Uint32;
+pub const SDL_MIN_UINT32: Uint32 = 0x00000000 as Uint32;
 
 /// A signed 64-bit integer type.
 ///
@@ -2833,13 +2833,13 @@ extern "C" {
     pub fn SDL_tanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-pub const SDL_ICONV_ERROR: ::core::primitive::usize = (-1_i32) as ::core::primitive::usize;
+pub const SDL_ICONV_ERROR: ::core::primitive::usize = -1_i32 as ::core::primitive::usize;
 
-pub const SDL_ICONV_E2BIG: ::core::primitive::usize = (-2_i32) as ::core::primitive::usize;
+pub const SDL_ICONV_E2BIG: ::core::primitive::usize = -2_i32 as ::core::primitive::usize;
 
-pub const SDL_ICONV_EILSEQ: ::core::primitive::usize = (-3_i32) as ::core::primitive::usize;
+pub const SDL_ICONV_EILSEQ: ::core::primitive::usize = -3_i32 as ::core::primitive::usize;
 
-pub const SDL_ICONV_EINVAL: ::core::primitive::usize = (-4_i32) as ::core::primitive::usize;
+pub const SDL_ICONV_EINVAL: ::core::primitive::usize = -4_i32 as ::core::primitive::usize;
 
 pub type SDL_iconv_t = *mut SDL_iconv_data_t;
 

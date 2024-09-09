@@ -388,9 +388,8 @@ impl Eval for Expr {
             Expr::Cast(cast) => {
                 let mut out = String::new();
                 let mut ctx2 = ctx.with_output(&mut out);
-                write!(ctx2, "(")?;
                 cast.expr.emit(&mut ctx2)?;
-                write!(ctx2, ") as ")?;
+                write!(ctx2, " as ")?;
                 cast.ty.emit(&mut ctx2)?;
                 drop(ctx2);
                 return Ok(Some(Value::RustCode(Box::new(RustCode {

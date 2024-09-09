@@ -1,4 +1,4 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph)]
+#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
 
 //! # CategoryAudio
 //!
@@ -175,7 +175,7 @@ pub type SDL_AudioDeviceID = Uint32;
 /// of the app providing a specific one.
 ///
 /// \since This macro is available since SDL 3.0.0.
-pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID = (0xffffffff) as SDL_AudioDeviceID;
+pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID = 0xffffffff as SDL_AudioDeviceID;
 
 /// A value used to request a default recording audio device.
 ///
@@ -184,7 +184,7 @@ pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID = (0xffffffff) as
 /// of the app providing a specific one.
 ///
 /// \since This macro is available since SDL 3.0.0.
-pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID = (0xfffffffe) as SDL_AudioDeviceID;
+pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID = 0xfffffffe as SDL_AudioDeviceID;
 
 /// Format specifier for audio data.
 ///
