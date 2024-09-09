@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryAtomic
 //!
 //! Atomic operations.
@@ -97,8 +95,7 @@ extern "C" {
 }
 
 #[cfg(doc)]
-emit! {
-}
+emit! {}
 
 #[cfg(not(doc))]
 emit! {
@@ -170,8 +167,7 @@ extern "C" {
 }
 
 #[cfg(all(any(any(target_arch = "powerpc", target_arch = "powerpc64"), any(target_arch = "powerpc", target_arch = "powerpc64")), any(/* always disabled: __GNUC__ */)))]
-emit! {
-}
+emit! {}
 
 #[cfg(not(all(any(any(target_arch = "powerpc", target_arch = "powerpc64"), any(target_arch = "powerpc", target_arch = "powerpc64")), any(/* always disabled: __GNUC__ */))))]
 emit! {
@@ -186,8 +182,7 @@ emit! {
 }
 
 #[cfg(doc)]
-emit! {
-}
+emit! {}
 
 #[cfg(not(doc))]
 emit! {
@@ -248,7 +243,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_AtomicCompareAndSwapPointer
-    pub fn SDL_AtomicCompareAndSwap(a: *mut SDL_AtomicInt, oldval: ::core::ffi::c_int, newval: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_AtomicCompareAndSwap(
+        a: *mut SDL_AtomicInt,
+        oldval: ::core::ffi::c_int,
+        newval: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -327,7 +326,11 @@ extern "C" {
     /// \sa SDL_AtomicCompareAndSwap
     /// \sa SDL_AtomicGetPointer
     /// \sa SDL_AtomicSetPointer
-    pub fn SDL_AtomicCompareAndSwapPointer(a: *mut *mut ::core::ffi::c_void, oldval: *mut ::core::ffi::c_void, newval: *mut ::core::ffi::c_void) -> SDL_bool;
+    pub fn SDL_AtomicCompareAndSwapPointer(
+        a: *mut *mut ::core::ffi::c_void,
+        oldval: *mut ::core::ffi::c_void,
+        newval: *mut ::core::ffi::c_void,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -346,7 +349,10 @@ extern "C" {
     ///
     /// \sa SDL_AtomicCompareAndSwapPointer
     /// \sa SDL_AtomicGetPointer
-    pub fn SDL_AtomicSetPointer(a: *mut *mut ::core::ffi::c_void, v: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
+    pub fn SDL_AtomicSetPointer(
+        a: *mut *mut ::core::ffi::c_void,
+        v: *mut ::core::ffi::c_void,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
@@ -366,4 +372,3 @@ extern "C" {
     /// \sa SDL_AtomicSetPointer
     pub fn SDL_AtomicGetPointer(a: *mut *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
 }
-

@@ -34,6 +34,10 @@ fn skip_emit(module: &str) -> bool {
     ["egl", "intrin", "oldnames"].contains(&module) || module.starts_with("opengl")
 }
 
+fn run_rustfmt(path: &Path) {
+    let _ = Command::new("rustfmt").arg(path).spawn();
+}
+
 pub fn generate(sdl_path: &Path, target_crate_path: &Path) -> Result<(), Error> {
     let mut showrev_path = sdl_path.to_path_buf();
     showrev_path.push("build-scripts/showrev.sh");
@@ -193,11 +197,6 @@ impl Gen {
                     DefineValue::parse_expr(&format!("{revision:?}"))?,
                 )?;
             }
-            writeln!(
-                ctx,
-                "#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]"
-            )?;
-            writeln!(ctx)?;
             self.parsed[module].emit(&mut ctx)?;
             let emitted = ctx.into_inner();
             file.0.into_inner().unwrap().sync_all()?;
@@ -208,6 +207,8 @@ impl Gen {
             complete_guard.0 = true;
 
             println!("emitted {module}");
+
+            run_rustfmt(&path);
 
             let mut path = self.output_path.clone();
             path.push("mod");
@@ -223,10 +224,18 @@ impl Gen {
         path.push("mod");
         path.set_extension("rs");
         let mut file = Writable(BufWriter::new(File::create(&path)?));
-
+        writeln!(
+            file,
+            concat!(
+                "#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, ",
+                "clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]"
+            )
+        )?;
+        writeln!(file)?;
         for module in self.emitted.borrow().keys() {
             writeln!(file, "pub mod {module};")?;
         }
+        run_rustfmt(&path);
 
         Ok(())
     }

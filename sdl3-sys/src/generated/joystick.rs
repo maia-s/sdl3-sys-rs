@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryJoystick
 //!
 //! SDL joystick support.
@@ -110,10 +108,14 @@ impl SDL_JoystickConnectionState {
     pub const WIRED: Self = Self(1_i32);
     pub const WIRELESS: Self = Self(2_i32);
 }
-pub const SDL_JOYSTICK_CONNECTION_INVALID: SDL_JoystickConnectionState = SDL_JoystickConnectionState::INVALID;
-pub const SDL_JOYSTICK_CONNECTION_UNKNOWN: SDL_JoystickConnectionState = SDL_JoystickConnectionState::UNKNOWN;
-pub const SDL_JOYSTICK_CONNECTION_WIRED: SDL_JoystickConnectionState = SDL_JoystickConnectionState::WIRED;
-pub const SDL_JOYSTICK_CONNECTION_WIRELESS: SDL_JoystickConnectionState = SDL_JoystickConnectionState::WIRELESS;
+pub const SDL_JOYSTICK_CONNECTION_INVALID: SDL_JoystickConnectionState =
+    SDL_JoystickConnectionState::INVALID;
+pub const SDL_JOYSTICK_CONNECTION_UNKNOWN: SDL_JoystickConnectionState =
+    SDL_JoystickConnectionState::UNKNOWN;
+pub const SDL_JOYSTICK_CONNECTION_WIRED: SDL_JoystickConnectionState =
+    SDL_JoystickConnectionState::WIRED;
+pub const SDL_JOYSTICK_CONNECTION_WIRELESS: SDL_JoystickConnectionState =
+    SDL_JoystickConnectionState::WIRELESS;
 
 /// The largest value an SDL_Joystick's axis can report.
 ///
@@ -435,17 +437,46 @@ pub struct SDL_VirtualJoystickDesc {
     /// Called when the joystick state should be updated
     pub Update: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>,
     /// Called when the player index is set
-    pub SetPlayerIndex: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, player_index: ::core::ffi::c_int)>,
+    pub SetPlayerIndex: ::core::option::Option<
+        extern "C" fn(userdata: *mut ::core::ffi::c_void, player_index: ::core::ffi::c_int),
+    >,
     /// Implements SDL_RumbleJoystick()
-    pub Rumble: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, low_frequency_rumble: Uint16, high_frequency_rumble: Uint16) -> SDL_bool>,
+    pub Rumble: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            low_frequency_rumble: Uint16,
+            high_frequency_rumble: Uint16,
+        ) -> SDL_bool,
+    >,
     /// Implements SDL_RumbleJoystickTriggers()
-    pub RumbleTriggers: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, left_rumble: Uint16, right_rumble: Uint16) -> SDL_bool>,
+    pub RumbleTriggers: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            left_rumble: Uint16,
+            right_rumble: Uint16,
+        ) -> SDL_bool,
+    >,
     /// Implements SDL_SetJoystickLED()
-    pub SetLED: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, red: Uint8, green: Uint8, blue: Uint8) -> SDL_bool>,
+    pub SetLED: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            red: Uint8,
+            green: Uint8,
+            blue: Uint8,
+        ) -> SDL_bool,
+    >,
     /// Implements SDL_SendJoystickEffect()
-    pub SendEffect: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, data: *const ::core::ffi::c_void, size: ::core::ffi::c_int) -> SDL_bool>,
+    pub SendEffect: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            data: *const ::core::ffi::c_void,
+            size: ::core::ffi::c_int,
+        ) -> SDL_bool,
+    >,
     /// Implements SDL_SetGamepadSensorEnabled()
-    pub SetSensorsEnabled: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, enabled: SDL_bool) -> SDL_bool>,
+    pub SetSensorsEnabled: ::core::option::Option<
+        extern "C" fn(userdata: *mut ::core::ffi::c_void, enabled: SDL_bool) -> SDL_bool,
+    >,
     /// Cleans up the userdata when the joystick is detached
     pub Cleanup: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>,
 }
@@ -472,7 +503,12 @@ impl ::core::default::Default for SDL_VirtualJoystickDesc {
 impl crate::sealed_interface::Sealed for SDL_VirtualJoystickDesc {}
 unsafe impl crate::Interface for SDL_VirtualJoystickDesc {}
 
-const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 84) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 136)));
+const _: () = ::core::assert!(
+    ((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4
+        && ::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 84)
+        || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8
+            && ::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 136))
+);
 
 extern "C" {
     /// Attach a new virtual joystick.
@@ -531,7 +567,11 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetJoystickVirtualAxis(joystick: *mut SDL_Joystick, axis: ::core::ffi::c_int, value: Sint16) -> SDL_bool;
+    pub fn SDL_SetJoystickVirtualAxis(
+        joystick: *mut SDL_Joystick,
+        axis: ::core::ffi::c_int,
+        value: Sint16,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -551,7 +591,12 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetJoystickVirtualBall(joystick: *mut SDL_Joystick, ball: ::core::ffi::c_int, xrel: Sint16, yrel: Sint16) -> SDL_bool;
+    pub fn SDL_SetJoystickVirtualBall(
+        joystick: *mut SDL_Joystick,
+        ball: ::core::ffi::c_int,
+        xrel: Sint16,
+        yrel: Sint16,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -570,7 +615,11 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetJoystickVirtualButton(joystick: *mut SDL_Joystick, button: ::core::ffi::c_int, value: Uint8) -> SDL_bool;
+    pub fn SDL_SetJoystickVirtualButton(
+        joystick: *mut SDL_Joystick,
+        button: ::core::ffi::c_int,
+        value: Uint8,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -589,7 +638,11 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetJoystickVirtualHat(joystick: *mut SDL_Joystick, hat: ::core::ffi::c_int, value: Uint8) -> SDL_bool;
+    pub fn SDL_SetJoystickVirtualHat(
+        joystick: *mut SDL_Joystick,
+        hat: ::core::ffi::c_int,
+        value: Uint8,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -616,7 +669,15 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetJoystickVirtualTouchpad(joystick: *mut SDL_Joystick, touchpad: ::core::ffi::c_int, finger: ::core::ffi::c_int, state: Uint8, x: ::core::ffi::c_float, y: ::core::ffi::c_float, pressure: ::core::ffi::c_float) -> SDL_bool;
+    pub fn SDL_SetJoystickVirtualTouchpad(
+        joystick: *mut SDL_Joystick,
+        touchpad: ::core::ffi::c_int,
+        finger: ::core::ffi::c_int,
+        state: Uint8,
+        x: ::core::ffi::c_float,
+        y: ::core::ffi::c_float,
+        pressure: ::core::ffi::c_float,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -638,7 +699,13 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SendJoystickVirtualSensorData(joystick: *mut SDL_Joystick, r#type: SDL_SensorType, sensor_timestamp: Uint64, data: *const ::core::ffi::c_float, num_values: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SendJoystickVirtualSensorData(
+        joystick: *mut SDL_Joystick,
+        r#type: SDL_SensorType,
+        sensor_timestamp: Uint64,
+        data: *const ::core::ffi::c_float,
+        num_values: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -665,15 +732,21 @@ extern "C" {
     pub fn SDL_GetJoystickProperties(joystick: *mut SDL_Joystick) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.mono_led\0") };
+pub const SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.mono_led\0") };
 
-pub const SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.rgb_led\0") };
+pub const SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.rgb_led\0") };
 
-pub const SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.player_led\0") };
+pub const SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.player_led\0") };
 
-pub const SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.rumble\0") };
+pub const SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.rumble\0") };
 
-pub const SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.trigger_rumble\0") };
+pub const SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.trigger_rumble\0")
+};
 
 extern "C" {
     /// Get the implementation dependent name of a joystick.
@@ -728,7 +801,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetJoystickPlayerIndex
-    pub fn SDL_SetJoystickPlayerIndex(joystick: *mut SDL_Joystick, player_index: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SetJoystickPlayerIndex(
+        joystick: *mut SDL_Joystick,
+        player_index: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -844,7 +920,13 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetJoystickGUIDForID
-    pub fn SDL_GetJoystickGUIDInfo(guid: SDL_GUID, vendor: *mut Uint16, product: *mut Uint16, version: *mut Uint16, crc16: *mut Uint16);
+    pub fn SDL_GetJoystickGUIDInfo(
+        guid: SDL_GUID,
+        vendor: *mut Uint16,
+        product: *mut Uint16,
+        version: *mut Uint16,
+        crc16: *mut Uint16,
+    );
 }
 
 extern "C" {
@@ -1021,7 +1103,11 @@ extern "C" {
     /// \returns SDL_TRUE if this axis has any initial value, or SDL_FALSE if not.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetJoystickAxisInitialState(joystick: *mut SDL_Joystick, axis: ::core::ffi::c_int, state: *mut Sint16) -> SDL_bool;
+    pub fn SDL_GetJoystickAxisInitialState(
+        joystick: *mut SDL_Joystick,
+        axis: ::core::ffi::c_int,
+        state: *mut Sint16,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1042,7 +1128,12 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetNumJoystickBalls
-    pub fn SDL_GetJoystickBall(joystick: *mut SDL_Joystick, ball: ::core::ffi::c_int, dx: *mut ::core::ffi::c_int, dy: *mut ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_GetJoystickBall(
+        joystick: *mut SDL_Joystick,
+        ball: ::core::ffi::c_int,
+        dx: *mut ::core::ffi::c_int,
+        dy: *mut ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1070,13 +1161,17 @@ pub const SDL_HAT_DOWN: ::core::primitive::u8 = 0x40 as ::core::primitive::u8;
 
 pub const SDL_HAT_LEFT: ::core::primitive::u8 = 0x80 as ::core::primitive::u8;
 
-pub const SDL_HAT_RIGHTUP: ::core::primitive::u8 = ((0x20 as ::core::primitive::u8 | 0x10 as ::core::primitive::u8)) as ::core::primitive::u8;
+pub const SDL_HAT_RIGHTUP: ::core::primitive::u8 =
+    (0x20 as ::core::primitive::u8 | 0x10 as ::core::primitive::u8) as ::core::primitive::u8;
 
-pub const SDL_HAT_RIGHTDOWN: ::core::primitive::u8 = ((0x20 as ::core::primitive::u8 | 0x40 as ::core::primitive::u8)) as ::core::primitive::u8;
+pub const SDL_HAT_RIGHTDOWN: ::core::primitive::u8 =
+    (0x20 as ::core::primitive::u8 | 0x40 as ::core::primitive::u8) as ::core::primitive::u8;
 
-pub const SDL_HAT_LEFTUP: ::core::primitive::u8 = ((0x80 as ::core::primitive::u8 | 0x10 as ::core::primitive::u8)) as ::core::primitive::u8;
+pub const SDL_HAT_LEFTUP: ::core::primitive::u8 =
+    (0x80 as ::core::primitive::u8 | 0x10 as ::core::primitive::u8) as ::core::primitive::u8;
 
-pub const SDL_HAT_LEFTDOWN: ::core::primitive::u8 = ((0x80 as ::core::primitive::u8 | 0x40 as ::core::primitive::u8)) as ::core::primitive::u8;
+pub const SDL_HAT_LEFTDOWN: ::core::primitive::u8 =
+    (0x80 as ::core::primitive::u8 | 0x40 as ::core::primitive::u8) as ::core::primitive::u8;
 
 extern "C" {
     /// Get the current state of a button on a joystick.
@@ -1110,7 +1205,12 @@ extern "C" {
     /// \returns SDL_TRUE, or SDL_FALSE if rumble isn't supported on this joystick.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_RumbleJoystick(joystick: *mut SDL_Joystick, low_frequency_rumble: Uint16, high_frequency_rumble: Uint16, duration_ms: Uint32) -> SDL_bool;
+    pub fn SDL_RumbleJoystick(
+        joystick: *mut SDL_Joystick,
+        low_frequency_rumble: Uint16,
+        high_frequency_rumble: Uint16,
+        duration_ms: Uint32,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1139,7 +1239,12 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_RumbleJoystick
-    pub fn SDL_RumbleJoystickTriggers(joystick: *mut SDL_Joystick, left_rumble: Uint16, right_rumble: Uint16, duration_ms: Uint32) -> SDL_bool;
+    pub fn SDL_RumbleJoystickTriggers(
+        joystick: *mut SDL_Joystick,
+        left_rumble: Uint16,
+        right_rumble: Uint16,
+        duration_ms: Uint32,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1159,7 +1264,12 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetJoystickLED(joystick: *mut SDL_Joystick, red: Uint8, green: Uint8, blue: Uint8) -> SDL_bool;
+    pub fn SDL_SetJoystickLED(
+        joystick: *mut SDL_Joystick,
+        red: Uint8,
+        green: Uint8,
+        blue: Uint8,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1172,7 +1282,11 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SendJoystickEffect(joystick: *mut SDL_Joystick, data: *const ::core::ffi::c_void, size: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SendJoystickEffect(
+        joystick: *mut SDL_Joystick,
+        data: *const ::core::ffi::c_void,
+        size: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1195,7 +1309,9 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetJoystickConnectionState(joystick: *mut SDL_Joystick) -> SDL_JoystickConnectionState;
+    pub fn SDL_GetJoystickConnectionState(
+        joystick: *mut SDL_Joystick,
+    ) -> SDL_JoystickConnectionState;
 }
 
 extern "C" {
@@ -1216,7 +1332,10 @@ extern "C" {
     ///          call SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetJoystickPowerInfo(joystick: *mut SDL_Joystick, percent: *mut ::core::ffi::c_int) -> SDL_PowerState;
+    pub fn SDL_GetJoystickPowerInfo(
+        joystick: *mut SDL_Joystick,
+        percent: *mut ::core::ffi::c_int,
+    ) -> SDL_PowerState;
 }
 
 /// The joystick structure used to identify an SDL joystick.
@@ -1226,5 +1345,6 @@ extern "C" {
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_Joystick { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_Joystick {
+    _opaque: [::core::primitive::u8; 0],
+}

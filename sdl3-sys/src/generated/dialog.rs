@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryDialog
 //!
 //! File dialog support.
@@ -64,7 +62,13 @@ pub struct SDL_DialogFileFilter {
 /// \sa SDL_ShowOpenFileDialog
 /// \sa SDL_ShowSaveFileDialog
 /// \sa SDL_ShowOpenFolderDialog
-pub type SDL_DialogFileCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, filelist: *const *const ::core::ffi::c_char, filter: ::core::ffi::c_int)>;
+pub type SDL_DialogFileCallback = ::core::option::Option<
+    extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        filelist: *const *const ::core::ffi::c_char,
+        filter: ::core::ffi::c_int,
+    ),
+>;
 
 extern "C" {
     /// Displays a dialog that lets the user select a file on their filesystem.
@@ -120,7 +124,15 @@ extern "C" {
     /// \sa SDL_DialogFileFilter
     /// \sa SDL_ShowSaveFileDialog
     /// \sa SDL_ShowOpenFolderDialog
-    pub fn SDL_ShowOpenFileDialog(callback: SDL_DialogFileCallback, userdata: *mut ::core::ffi::c_void, window: *mut SDL_Window, filters: *const SDL_DialogFileFilter, nfilters: ::core::ffi::c_int, default_location: *const ::core::ffi::c_char, allow_many: SDL_bool);
+    pub fn SDL_ShowOpenFileDialog(
+        callback: SDL_DialogFileCallback,
+        userdata: *mut ::core::ffi::c_void,
+        window: *mut SDL_Window,
+        filters: *const SDL_DialogFileFilter,
+        nfilters: ::core::ffi::c_int,
+        default_location: *const ::core::ffi::c_char,
+        allow_many: SDL_bool,
+    );
 }
 
 extern "C" {
@@ -175,7 +187,14 @@ extern "C" {
     /// \sa SDL_DialogFileFilter
     /// \sa SDL_ShowOpenFileDialog
     /// \sa SDL_ShowOpenFolderDialog
-    pub fn SDL_ShowSaveFileDialog(callback: SDL_DialogFileCallback, userdata: *mut ::core::ffi::c_void, window: *mut SDL_Window, filters: *const SDL_DialogFileFilter, nfilters: ::core::ffi::c_int, default_location: *const ::core::ffi::c_char);
+    pub fn SDL_ShowSaveFileDialog(
+        callback: SDL_DialogFileCallback,
+        userdata: *mut ::core::ffi::c_void,
+        window: *mut SDL_Window,
+        filters: *const SDL_DialogFileFilter,
+        nfilters: ::core::ffi::c_int,
+        default_location: *const ::core::ffi::c_char,
+    );
 }
 
 extern "C" {
@@ -223,6 +242,11 @@ extern "C" {
     /// \sa SDL_DialogFileCallback
     /// \sa SDL_ShowOpenFileDialog
     /// \sa SDL_ShowSaveFileDialog
-    pub fn SDL_ShowOpenFolderDialog(callback: SDL_DialogFileCallback, userdata: *mut ::core::ffi::c_void, window: *mut SDL_Window, default_location: *const ::core::ffi::c_char, allow_many: SDL_bool);
+    pub fn SDL_ShowOpenFolderDialog(
+        callback: SDL_DialogFileCallback,
+        userdata: *mut ::core::ffi::c_void,
+        window: *mut SDL_Window,
+        default_location: *const ::core::ffi::c_char,
+        allow_many: SDL_bool,
+    );
 }
-

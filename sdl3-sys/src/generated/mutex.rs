@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryMutex
 //!
 //! Functions to provide thread synchronization primitives.
@@ -550,7 +548,11 @@ extern "C" {
     /// \sa SDL_BroadcastCondition
     /// \sa SDL_SignalCondition
     /// \sa SDL_WaitCondition
-    pub fn SDL_WaitConditionTimeout(cond: *mut SDL_Condition, mutex: *mut SDL_Mutex, timeoutMS: Sint32) -> SDL_bool;
+    pub fn SDL_WaitConditionTimeout(
+        cond: *mut SDL_Condition,
+        mutex: *mut SDL_Mutex,
+        timeoutMS: Sint32,
+    ) -> SDL_bool;
 }
 
 /// A means to block multiple threads until a condition is satisfied.
@@ -566,7 +568,9 @@ extern "C" {
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_Condition { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_Condition {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// A means to serialize access to a resource between threads.
 ///
@@ -580,7 +584,9 @@ pub struct SDL_Condition { _opaque: [::core::primitive::u8; 0] }
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_Mutex { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_Mutex {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// A mutex that allows read-only threads to run in parallel.
 ///
@@ -600,7 +606,9 @@ pub struct SDL_Mutex { _opaque: [::core::primitive::u8; 0] }
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_RWLock { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_RWLock {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// A means to manage access to a resource, by count, between threads.
 ///
@@ -616,5 +624,6 @@ pub struct SDL_RWLock { _opaque: [::core::primitive::u8; 0] }
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_Semaphore { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_Semaphore {
+    _opaque: [::core::primitive::u8; 0],
+}

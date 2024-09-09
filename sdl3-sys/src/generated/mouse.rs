@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryMouse
 //!
 //! SDL mouse handling.
@@ -85,9 +83,11 @@ pub const SDL_SYSTEM_CURSOR_CROSSHAIR: SDL_SystemCursor = SDL_SystemCursor::SYST
 /// Program is busy but still interactive. Usually it's WAIT with an arrow.
 pub const SDL_SYSTEM_CURSOR_PROGRESS: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_PROGRESS;
 /// Double arrow pointing northwest and southeast.
-pub const SDL_SYSTEM_CURSOR_NWSE_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_NWSE_RESIZE;
+pub const SDL_SYSTEM_CURSOR_NWSE_RESIZE: SDL_SystemCursor =
+    SDL_SystemCursor::SYSTEM_CURSOR_NWSE_RESIZE;
 /// Double arrow pointing northeast and southwest.
-pub const SDL_SYSTEM_CURSOR_NESW_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_NESW_RESIZE;
+pub const SDL_SYSTEM_CURSOR_NESW_RESIZE: SDL_SystemCursor =
+    SDL_SystemCursor::SYSTEM_CURSOR_NESW_RESIZE;
 /// Double arrow pointing west and east.
 pub const SDL_SYSTEM_CURSOR_EW_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_EW_RESIZE;
 /// Double arrow pointing north and south.
@@ -95,7 +95,8 @@ pub const SDL_SYSTEM_CURSOR_NS_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYST
 /// Four pointed arrow pointing north, south, east, and west.
 pub const SDL_SYSTEM_CURSOR_MOVE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_MOVE;
 /// Not permitted. Usually a slashed circle or crossbones.
-pub const SDL_SYSTEM_CURSOR_NOT_ALLOWED: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_NOT_ALLOWED;
+pub const SDL_SYSTEM_CURSOR_NOT_ALLOWED: SDL_SystemCursor =
+    SDL_SystemCursor::SYSTEM_CURSOR_NOT_ALLOWED;
 /// Pointer that indicates a link. Usually a pointing hand.
 pub const SDL_SYSTEM_CURSOR_POINTER: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_POINTER;
 /// Window resize top-left. This may be a single arrow or a double arrow like NWSE_RESIZE.
@@ -236,7 +237,10 @@ extern "C" {
     ///
     /// \sa SDL_GetGlobalMouseState
     /// \sa SDL_GetRelativeMouseState
-    pub fn SDL_GetMouseState(x: *mut ::core::ffi::c_float, y: *mut ::core::ffi::c_float) -> SDL_MouseButtonFlags;
+    pub fn SDL_GetMouseState(
+        x: *mut ::core::ffi::c_float,
+        y: *mut ::core::ffi::c_float,
+    ) -> SDL_MouseButtonFlags;
 }
 
 extern "C" {
@@ -266,7 +270,10 @@ extern "C" {
     ///
     /// \sa SDL_CaptureMouse
     /// \sa SDL_GetMouseState
-    pub fn SDL_GetGlobalMouseState(x: *mut ::core::ffi::c_float, y: *mut ::core::ffi::c_float) -> SDL_MouseButtonFlags;
+    pub fn SDL_GetGlobalMouseState(
+        x: *mut ::core::ffi::c_float,
+        y: *mut ::core::ffi::c_float,
+    ) -> SDL_MouseButtonFlags;
 }
 
 extern "C" {
@@ -285,7 +292,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetMouseState
-    pub fn SDL_GetRelativeMouseState(x: *mut ::core::ffi::c_float, y: *mut ::core::ffi::c_float) -> SDL_MouseButtonFlags;
+    pub fn SDL_GetRelativeMouseState(
+        x: *mut ::core::ffi::c_float,
+        y: *mut ::core::ffi::c_float,
+    ) -> SDL_MouseButtonFlags;
 }
 
 extern "C" {
@@ -306,7 +316,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_WarpMouseGlobal
-    pub fn SDL_WarpMouseInWindow(window: *mut SDL_Window, x: ::core::ffi::c_float, y: ::core::ffi::c_float);
+    pub fn SDL_WarpMouseInWindow(
+        window: *mut SDL_Window,
+        x: ::core::ffi::c_float,
+        y: ::core::ffi::c_float,
+    );
 }
 
 extern "C" {
@@ -452,7 +466,14 @@ extern "C" {
     /// \sa SDL_CreateSystemCursor
     /// \sa SDL_DestroyCursor
     /// \sa SDL_SetCursor
-    pub fn SDL_CreateCursor(data: *const Uint8, mask: *const Uint8, w: ::core::ffi::c_int, h: ::core::ffi::c_int, hot_x: ::core::ffi::c_int, hot_y: ::core::ffi::c_int) -> *mut SDL_Cursor;
+    pub fn SDL_CreateCursor(
+        data: *const Uint8,
+        mask: *const Uint8,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
+        hot_x: ::core::ffi::c_int,
+        hot_y: ::core::ffi::c_int,
+    ) -> *mut SDL_Cursor;
 }
 
 extern "C" {
@@ -480,7 +501,11 @@ extern "C" {
     /// \sa SDL_CreateSystemCursor
     /// \sa SDL_DestroyCursor
     /// \sa SDL_SetCursor
-    pub fn SDL_CreateColorCursor(surface: *mut SDL_Surface, hot_x: ::core::ffi::c_int, hot_y: ::core::ffi::c_int) -> *mut SDL_Cursor;
+    pub fn SDL_CreateColorCursor(
+        surface: *mut SDL_Surface,
+        hot_x: ::core::ffi::c_int,
+        hot_y: ::core::ffi::c_int,
+    ) -> *mut SDL_Cursor;
 }
 
 extern "C" {
@@ -603,5 +628,6 @@ extern "C" {
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_Cursor { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_Cursor {
+    _opaque: [::core::primitive::u8; 0],
+}

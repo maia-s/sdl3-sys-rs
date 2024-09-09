@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategorySystem
 //!
 //! Platform-specific SDL API functions.
@@ -97,7 +95,9 @@ emit! {
 
 pub type XEvent = _XEvent;
 
-pub type SDL_X11EventHook = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, xevent: *mut XEvent) -> SDL_bool>;
+pub type SDL_X11EventHook = ::core::option::Option<
+    extern "C" fn(userdata: *mut ::core::ffi::c_void, xevent: *mut XEvent) -> SDL_bool,
+>;
 
 extern "C" {
     /// Set a callback for every X11 event.
@@ -683,17 +683,24 @@ emit! {
 
 #[repr(C)]
 #[non_exhaustive]
-pub struct XTaskQueueObject { _opaque: [::core::primitive::u8; 0] }
+pub struct XTaskQueueObject {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 #[repr(C)]
 #[non_exhaustive]
-pub struct XUser { _opaque: [::core::primitive::u8; 0] }
+pub struct XUser {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 #[repr(C)]
 #[non_exhaustive]
-pub struct tagMSG { _opaque: [::core::primitive::u8; 0] }
+pub struct tagMSG {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 #[repr(C)]
 #[non_exhaustive]
-pub struct _XEvent { _opaque: [::core::primitive::u8; 0] }
-
+pub struct _XEvent {
+    _opaque: [::core::primitive::u8; 0],
+}

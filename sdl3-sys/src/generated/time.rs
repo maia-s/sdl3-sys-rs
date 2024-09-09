@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryTime
 //!
 //! SDL realtime clock and date/time routines.
@@ -100,7 +98,10 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetDateTimeLocalePreferences(dateFormat: *mut SDL_DateFormat, timeFormat: *mut SDL_TimeFormat) -> SDL_bool;
+    pub fn SDL_GetDateTimeLocalePreferences(
+        dateFormat: *mut SDL_DateFormat,
+        timeFormat: *mut SDL_TimeFormat,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -128,7 +129,11 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_TimeToDateTime(ticks: SDL_Time, dt: *mut SDL_DateTime, localTime: SDL_bool) -> SDL_bool;
+    pub fn SDL_TimeToDateTime(
+        ticks: SDL_Time,
+        dt: *mut SDL_DateTime,
+        localTime: SDL_bool,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -159,7 +164,11 @@ extern "C" {
     ///                       Windows FILETIME value.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_TimeToWindows(ticks: SDL_Time, dwLowDateTime: *mut Uint32, dwHighDateTime: *mut Uint32);
+    pub fn SDL_TimeToWindows(
+        ticks: SDL_Time,
+        dwLowDateTime: *mut Uint32,
+        dwHighDateTime: *mut Uint32,
+    );
 }
 
 extern "C" {
@@ -186,7 +195,10 @@ extern "C" {
     ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetDaysInMonth(year: ::core::ffi::c_int, month: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn SDL_GetDaysInMonth(
+        year: ::core::ffi::c_int,
+        month: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -199,7 +211,11 @@ extern "C" {
     ///          call SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetDayOfYear(year: ::core::ffi::c_int, month: ::core::ffi::c_int, day: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn SDL_GetDayOfYear(
+        year: ::core::ffi::c_int,
+        month: ::core::ffi::c_int,
+        day: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -212,6 +228,9 @@ extern "C" {
     ///          -1 on failure; call SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetDayOfWeek(year: ::core::ffi::c_int, month: ::core::ffi::c_int, day: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn SDL_GetDayOfWeek(
+        year: ::core::ffi::c_int,
+        month: ::core::ffi::c_int,
+        day: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
-

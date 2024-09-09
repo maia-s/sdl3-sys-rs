@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryGamepad
 //!
 //! SDL provides a low-level joystick API, which just treats joysticks as an
@@ -82,10 +80,14 @@ pub const SDL_GAMEPAD_TYPE_XBOXONE: SDL_GamepadType = SDL_GamepadType::XBOXONE;
 pub const SDL_GAMEPAD_TYPE_PS3: SDL_GamepadType = SDL_GamepadType::PS3;
 pub const SDL_GAMEPAD_TYPE_PS4: SDL_GamepadType = SDL_GamepadType::PS4;
 pub const SDL_GAMEPAD_TYPE_PS5: SDL_GamepadType = SDL_GamepadType::PS5;
-pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_PRO: SDL_GamepadType = SDL_GamepadType::NINTENDO_SWITCH_PRO;
-pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT: SDL_GamepadType = SDL_GamepadType::NINTENDO_SWITCH_JOYCON_LEFT;
-pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT: SDL_GamepadType = SDL_GamepadType::NINTENDO_SWITCH_JOYCON_RIGHT;
-pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR: SDL_GamepadType = SDL_GamepadType::NINTENDO_SWITCH_JOYCON_PAIR;
+pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_PRO: SDL_GamepadType =
+    SDL_GamepadType::NINTENDO_SWITCH_PRO;
+pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT: SDL_GamepadType =
+    SDL_GamepadType::NINTENDO_SWITCH_JOYCON_LEFT;
+pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT: SDL_GamepadType =
+    SDL_GamepadType::NINTENDO_SWITCH_JOYCON_RIGHT;
+pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR: SDL_GamepadType =
+    SDL_GamepadType::NINTENDO_SWITCH_JOYCON_PAIR;
 pub const SDL_GAMEPAD_TYPE_MAX: SDL_GamepadType = SDL_GamepadType::MAX;
 
 /// The list of buttons available on a gamepad
@@ -200,7 +202,8 @@ impl SDL_GamepadButtonLabel {
     pub const SQUARE: Self = Self(7);
     pub const TRIANGLE: Self = Self(8);
 }
-pub const SDL_GAMEPAD_BUTTON_LABEL_UNKNOWN: SDL_GamepadButtonLabel = SDL_GamepadButtonLabel::UNKNOWN;
+pub const SDL_GAMEPAD_BUTTON_LABEL_UNKNOWN: SDL_GamepadButtonLabel =
+    SDL_GamepadButtonLabel::UNKNOWN;
 pub const SDL_GAMEPAD_BUTTON_LABEL_A: SDL_GamepadButtonLabel = SDL_GamepadButtonLabel::A;
 pub const SDL_GAMEPAD_BUTTON_LABEL_B: SDL_GamepadButtonLabel = SDL_GamepadButtonLabel::B;
 pub const SDL_GAMEPAD_BUTTON_LABEL_X: SDL_GamepadButtonLabel = SDL_GamepadButtonLabel::X;
@@ -208,7 +211,8 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_Y: SDL_GamepadButtonLabel = SDL_GamepadButton
 pub const SDL_GAMEPAD_BUTTON_LABEL_CROSS: SDL_GamepadButtonLabel = SDL_GamepadButtonLabel::CROSS;
 pub const SDL_GAMEPAD_BUTTON_LABEL_CIRCLE: SDL_GamepadButtonLabel = SDL_GamepadButtonLabel::CIRCLE;
 pub const SDL_GAMEPAD_BUTTON_LABEL_SQUARE: SDL_GamepadButtonLabel = SDL_GamepadButtonLabel::SQUARE;
-pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel = SDL_GamepadButtonLabel::TRIANGLE;
+pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
+    SDL_GamepadButtonLabel::TRIANGLE;
 
 /// The list of axes available on a gamepad
 ///
@@ -401,7 +405,10 @@ extern "C" {
     /// \sa SDL_AddGamepadMappingsFromFile
     /// \sa SDL_GetGamepadMapping
     /// \sa SDL_GetGamepadMappingForGUID
-    pub fn SDL_AddGamepadMappingsFromIO(src: *mut SDL_IOStream, closeio: SDL_bool) -> ::core::ffi::c_int;
+    pub fn SDL_AddGamepadMappingsFromIO(
+        src: *mut SDL_IOStream,
+        closeio: SDL_bool,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -507,7 +514,10 @@ extern "C" {
     ///
     /// \sa SDL_AddGamepadMapping
     /// \sa SDL_GetGamepadMapping
-    pub fn SDL_SetGamepadMapping(instance_id: SDL_JoystickID, mapping: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_SetGamepadMapping(
+        instance_id: SDL_JoystickID,
+        mapping: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -779,15 +789,21 @@ extern "C" {
     pub fn SDL_GetGamepadProperties(gamepad: *mut SDL_Gamepad) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.mono_led\0") };
+pub const SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.mono_led\0") };
 
-pub const SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.rgb_led\0") };
+pub const SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.rgb_led\0") };
 
-pub const SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.player_led\0") };
+pub const SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.player_led\0") };
 
-pub const SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.rumble\0") };
+pub const SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.rumble\0") };
 
-pub const SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.trigger_rumble\0") };
+pub const SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.trigger_rumble\0")
+};
 
 extern "C" {
     /// Get the instance ID of an opened gamepad.
@@ -881,7 +897,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetGamepadPlayerIndex
-    pub fn SDL_SetGamepadPlayerIndex(gamepad: *mut SDL_Gamepad, player_index: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SetGamepadPlayerIndex(
+        gamepad: *mut SDL_Gamepad,
+        player_index: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -992,7 +1011,10 @@ extern "C" {
     /// \returns the current battery state.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetGamepadPowerInfo(gamepad: *mut SDL_Gamepad, percent: *mut ::core::ffi::c_int) -> SDL_PowerState;
+    pub fn SDL_GetGamepadPowerInfo(
+        gamepad: *mut SDL_Gamepad,
+        percent: *mut ::core::ffi::c_int,
+    ) -> SDL_PowerState;
 }
 
 extern "C" {
@@ -1068,7 +1090,10 @@ extern "C" {
     ///          no longer needed.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetGamepadBindings(gamepad: *mut SDL_Gamepad, count: *mut ::core::ffi::c_int) -> *mut *mut SDL_GamepadBinding;
+    pub fn SDL_GetGamepadBindings(
+        gamepad: *mut SDL_Gamepad,
+        count: *mut ::core::ffi::c_int,
+    ) -> *mut *mut SDL_GamepadBinding;
 }
 
 extern "C" {
@@ -1264,7 +1289,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetGamepadButtonLabel
-    pub fn SDL_GetGamepadButtonLabelForType(r#type: SDL_GamepadType, button: SDL_GamepadButton) -> SDL_GamepadButtonLabel;
+    pub fn SDL_GetGamepadButtonLabelForType(
+        r#type: SDL_GamepadType,
+        button: SDL_GamepadButton,
+    ) -> SDL_GamepadButtonLabel;
 }
 
 extern "C" {
@@ -1277,7 +1305,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetGamepadButtonLabelForType
-    pub fn SDL_GetGamepadButtonLabel(gamepad: *mut SDL_Gamepad, button: SDL_GamepadButton) -> SDL_GamepadButtonLabel;
+    pub fn SDL_GetGamepadButtonLabel(
+        gamepad: *mut SDL_Gamepad,
+        button: SDL_GamepadButton,
+    ) -> SDL_GamepadButtonLabel;
 }
 
 extern "C" {
@@ -1304,7 +1335,10 @@ extern "C" {
     ///
     /// \sa SDL_GetGamepadTouchpadFinger
     /// \sa SDL_GetNumGamepadTouchpads
-    pub fn SDL_GetNumGamepadTouchpadFingers(gamepad: *mut SDL_Gamepad, touchpad: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn SDL_GetNumGamepadTouchpadFingers(
+        gamepad: *mut SDL_Gamepad,
+        touchpad: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -1325,7 +1359,15 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetNumGamepadTouchpadFingers
-    pub fn SDL_GetGamepadTouchpadFinger(gamepad: *mut SDL_Gamepad, touchpad: ::core::ffi::c_int, finger: ::core::ffi::c_int, state: *mut Uint8, x: *mut ::core::ffi::c_float, y: *mut ::core::ffi::c_float, pressure: *mut ::core::ffi::c_float) -> SDL_bool;
+    pub fn SDL_GetGamepadTouchpadFinger(
+        gamepad: *mut SDL_Gamepad,
+        touchpad: ::core::ffi::c_int,
+        finger: ::core::ffi::c_int,
+        state: *mut Uint8,
+        x: *mut ::core::ffi::c_float,
+        y: *mut ::core::ffi::c_float,
+        pressure: *mut ::core::ffi::c_float,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1356,7 +1398,11 @@ extern "C" {
     ///
     /// \sa SDL_GamepadHasSensor
     /// \sa SDL_GamepadSensorEnabled
-    pub fn SDL_SetGamepadSensorEnabled(gamepad: *mut SDL_Gamepad, r#type: SDL_SensorType, enabled: SDL_bool) -> SDL_bool;
+    pub fn SDL_SetGamepadSensorEnabled(
+        gamepad: *mut SDL_Gamepad,
+        r#type: SDL_SensorType,
+        enabled: SDL_bool,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1380,7 +1426,10 @@ extern "C" {
     /// \returns the data rate, or 0.0f if the data rate is not available.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetGamepadSensorDataRate(gamepad: *mut SDL_Gamepad, r#type: SDL_SensorType) -> ::core::ffi::c_float;
+    pub fn SDL_GetGamepadSensorDataRate(
+        gamepad: *mut SDL_Gamepad,
+        r#type: SDL_SensorType,
+    ) -> ::core::ffi::c_float;
 }
 
 extern "C" {
@@ -1397,7 +1446,12 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetGamepadSensorData(gamepad: *mut SDL_Gamepad, r#type: SDL_SensorType, data: *mut ::core::ffi::c_float, num_values: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_GetGamepadSensorData(
+        gamepad: *mut SDL_Gamepad,
+        r#type: SDL_SensorType,
+        data: *mut ::core::ffi::c_float,
+        num_values: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1419,7 +1473,12 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_RumbleGamepad(gamepad: *mut SDL_Gamepad, low_frequency_rumble: Uint16, high_frequency_rumble: Uint16, duration_ms: Uint32) -> SDL_bool;
+    pub fn SDL_RumbleGamepad(
+        gamepad: *mut SDL_Gamepad,
+        low_frequency_rumble: Uint16,
+        high_frequency_rumble: Uint16,
+        duration_ms: Uint32,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1447,7 +1506,12 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_RumbleGamepad
-    pub fn SDL_RumbleGamepadTriggers(gamepad: *mut SDL_Gamepad, left_rumble: Uint16, right_rumble: Uint16, duration_ms: Uint32) -> SDL_bool;
+    pub fn SDL_RumbleGamepadTriggers(
+        gamepad: *mut SDL_Gamepad,
+        left_rumble: Uint16,
+        right_rumble: Uint16,
+        duration_ms: Uint32,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1467,7 +1531,12 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetGamepadLED(gamepad: *mut SDL_Gamepad, red: Uint8, green: Uint8, blue: Uint8) -> SDL_bool;
+    pub fn SDL_SetGamepadLED(
+        gamepad: *mut SDL_Gamepad,
+        red: Uint8,
+        green: Uint8,
+        blue: Uint8,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1480,7 +1549,11 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SendGamepadEffect(gamepad: *mut SDL_Gamepad, data: *const ::core::ffi::c_void, size: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SendGamepadEffect(
+        gamepad: *mut SDL_Gamepad,
+        data: *const ::core::ffi::c_void,
+        size: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1506,7 +1579,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetGamepadAppleSFSymbolsNameForAxis
-    pub fn SDL_GetGamepadAppleSFSymbolsNameForButton(gamepad: *mut SDL_Gamepad, button: SDL_GamepadButton) -> *const ::core::ffi::c_char;
+    pub fn SDL_GetGamepadAppleSFSymbolsNameForButton(
+        gamepad: *mut SDL_Gamepad,
+        button: SDL_GamepadButton,
+    ) -> *const ::core::ffi::c_char;
 }
 
 extern "C" {
@@ -1519,7 +1595,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetGamepadAppleSFSymbolsNameForButton
-    pub fn SDL_GetGamepadAppleSFSymbolsNameForAxis(gamepad: *mut SDL_Gamepad, axis: SDL_GamepadAxis) -> *const ::core::ffi::c_char;
+    pub fn SDL_GetGamepadAppleSFSymbolsNameForAxis(
+        gamepad: *mut SDL_Gamepad,
+        axis: SDL_GamepadAxis,
+    ) -> *const ::core::ffi::c_char;
 }
 
 /// The structure used to identify an SDL gamepad
@@ -1527,5 +1606,6 @@ extern "C" {
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_Gamepad { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_Gamepad {
+    _opaque: [::core::primitive::u8; 0],
+}

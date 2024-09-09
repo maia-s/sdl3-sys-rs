@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryPower
 //!
 //! SDL power management routines.
@@ -73,6 +71,8 @@ extern "C" {
     ///          call SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetPowerInfo(seconds: *mut ::core::ffi::c_int, percent: *mut ::core::ffi::c_int) -> SDL_PowerState;
+    pub fn SDL_GetPowerInfo(
+        seconds: *mut ::core::ffi::c_int,
+        percent: *mut ::core::ffi::c_int,
+    ) -> SDL_PowerState;
 }
-

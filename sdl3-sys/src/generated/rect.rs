@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryRect
 //!
 //! Some helper functions for managing rectangles and 2D points, in both
@@ -121,7 +119,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_HasRectIntersection
-    pub fn SDL_GetRectIntersection(A: *const SDL_Rect, B: *const SDL_Rect, result: *mut SDL_Rect) -> SDL_bool;
+    pub fn SDL_GetRectIntersection(
+        A: *const SDL_Rect,
+        B: *const SDL_Rect,
+        result: *mut SDL_Rect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -135,7 +137,11 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetRectUnion(A: *const SDL_Rect, B: *const SDL_Rect, result: *mut SDL_Rect) -> SDL_bool;
+    pub fn SDL_GetRectUnion(
+        A: *const SDL_Rect,
+        B: *const SDL_Rect,
+        result: *mut SDL_Rect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -154,7 +160,12 @@ extern "C" {
     ///          points were outside of the clipping rectangle.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetRectEnclosingPoints(points: *const SDL_Point, count: ::core::ffi::c_int, clip: *const SDL_Rect, result: *mut SDL_Rect) -> SDL_bool;
+    pub fn SDL_GetRectEnclosingPoints(
+        points: *const SDL_Point,
+        count: ::core::ffi::c_int,
+        clip: *const SDL_Rect,
+        result: *mut SDL_Rect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -174,7 +185,13 @@ extern "C" {
     /// \returns SDL_TRUE if there is an intersection, SDL_FALSE otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetRectAndLineIntersection(rect: *const SDL_Rect, X1: *mut ::core::ffi::c_int, Y1: *mut ::core::ffi::c_int, X2: *mut ::core::ffi::c_int, Y2: *mut ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_GetRectAndLineIntersection(
+        rect: *const SDL_Rect,
+        X1: *mut ::core::ffi::c_int,
+        Y1: *mut ::core::ffi::c_int,
+        X2: *mut ::core::ffi::c_int,
+        Y2: *mut ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 // skipped inline function `SDL_PointInRectFloat`
@@ -214,7 +231,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_HasRectIntersectionFloat
-    pub fn SDL_GetRectIntersectionFloat(A: *const SDL_FRect, B: *const SDL_FRect, result: *mut SDL_FRect) -> SDL_bool;
+    pub fn SDL_GetRectIntersectionFloat(
+        A: *const SDL_FRect,
+        B: *const SDL_FRect,
+        result: *mut SDL_FRect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -228,7 +249,11 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetRectUnionFloat(A: *const SDL_FRect, B: *const SDL_FRect, result: *mut SDL_FRect) -> SDL_bool;
+    pub fn SDL_GetRectUnionFloat(
+        A: *const SDL_FRect,
+        B: *const SDL_FRect,
+        result: *mut SDL_FRect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -248,7 +273,12 @@ extern "C" {
     ///          points were outside of the clipping rectangle.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetRectEnclosingPointsFloat(points: *const SDL_FPoint, count: ::core::ffi::c_int, clip: *const SDL_FRect, result: *mut SDL_FRect) -> SDL_bool;
+    pub fn SDL_GetRectEnclosingPointsFloat(
+        points: *const SDL_FPoint,
+        count: ::core::ffi::c_int,
+        clip: *const SDL_FRect,
+        result: *mut SDL_FRect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -269,6 +299,11 @@ extern "C" {
     /// \returns SDL_TRUE if there is an intersection, SDL_FALSE otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetRectAndLineIntersectionFloat(rect: *const SDL_FRect, X1: *mut ::core::ffi::c_float, Y1: *mut ::core::ffi::c_float, X2: *mut ::core::ffi::c_float, Y2: *mut ::core::ffi::c_float) -> SDL_bool;
+    pub fn SDL_GetRectAndLineIntersectionFloat(
+        rect: *const SDL_FRect,
+        X1: *mut ::core::ffi::c_float,
+        Y1: *mut ::core::ffi::c_float,
+        X2: *mut ::core::ffi::c_float,
+        Y2: *mut ::core::ffi::c_float,
+    ) -> SDL_bool;
 }
-

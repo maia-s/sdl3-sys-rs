@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryClipboard
 //!
 //! SDL provides access to the system clipboard, both for reading information
@@ -119,7 +117,13 @@ extern "C" {
 /// \since This function is available since SDL 3.0.0.
 ///
 /// \sa SDL_SetClipboardData
-pub type SDL_ClipboardDataCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, mime_type: *const ::core::ffi::c_char, size: *mut ::core::primitive::usize) -> *const ::core::ffi::c_void>;
+pub type SDL_ClipboardDataCallback = ::core::option::Option<
+    extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        mime_type: *const ::core::ffi::c_char,
+        size: *mut ::core::primitive::usize,
+    ) -> *const ::core::ffi::c_void,
+>;
 
 /// Callback function that will be called when the clipboard is cleared, or new
 /// data is set.
@@ -129,7 +133,8 @@ pub type SDL_ClipboardDataCallback = ::core::option::Option<extern "C" fn(userda
 /// \since This function is available since SDL 3.0.0.
 ///
 /// \sa SDL_SetClipboardData
-pub type SDL_ClipboardCleanupCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
+pub type SDL_ClipboardCleanupCallback =
+    ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
 
 extern "C" {
     /// Offer clipboard data to the OS.
@@ -158,7 +163,13 @@ extern "C" {
     /// \sa SDL_ClearClipboardData
     /// \sa SDL_GetClipboardData
     /// \sa SDL_HasClipboardData
-    pub fn SDL_SetClipboardData(callback: SDL_ClipboardDataCallback, cleanup: SDL_ClipboardCleanupCallback, userdata: *mut ::core::ffi::c_void, mime_types: *mut *const ::core::ffi::c_char, num_mime_types: ::core::primitive::usize) -> SDL_bool;
+    pub fn SDL_SetClipboardData(
+        callback: SDL_ClipboardDataCallback,
+        cleanup: SDL_ClipboardCleanupCallback,
+        userdata: *mut ::core::ffi::c_void,
+        mime_types: *mut *const ::core::ffi::c_char,
+        num_mime_types: ::core::primitive::usize,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -189,7 +200,10 @@ extern "C" {
     ///
     /// \sa SDL_HasClipboardData
     /// \sa SDL_SetClipboardData
-    pub fn SDL_GetClipboardData(mime_type: *const ::core::ffi::c_char, size: *mut ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+    pub fn SDL_GetClipboardData(
+        mime_type: *const ::core::ffi::c_char,
+        size: *mut ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
@@ -205,4 +219,3 @@ extern "C" {
     /// \sa SDL_GetClipboardData
     pub fn SDL_HasClipboardData(mime_type: *const ::core::ffi::c_char) -> SDL_bool;
 }
-

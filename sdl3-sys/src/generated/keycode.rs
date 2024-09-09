@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryKeycode
 //!
 //! Defines constants which identify keyboard keys and modifiers.
@@ -576,4 +574,3 @@ pub const SDL_KMOD_ALT: ::core::primitive::u32 = 768_u32;
 
 /// Any GUI key is down.
 pub const SDL_KMOD_GUI: ::core::primitive::u32 = 3072_u32;
-

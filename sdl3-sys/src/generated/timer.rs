@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryTimer
 //!
 //! SDL time management routines.
@@ -119,7 +117,13 @@ pub type SDL_TimerID = Uint32;
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_AddTimer
-pub type SDL_TimerCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, timerID: SDL_TimerID, interval: Uint32) -> Uint32>;
+pub type SDL_TimerCallback = ::core::option::Option<
+    extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        timerID: SDL_TimerID,
+        interval: Uint32,
+    ) -> Uint32,
+>;
 
 extern "C" {
     /// Call a callback function at a future time.
@@ -156,7 +160,11 @@ extern "C" {
     ///
     /// \sa SDL_AddTimerNS
     /// \sa SDL_RemoveTimer
-    pub fn SDL_AddTimer(interval: Uint32, callback: SDL_TimerCallback, userdata: *mut ::core::ffi::c_void) -> SDL_TimerID;
+    pub fn SDL_AddTimer(
+        interval: Uint32,
+        callback: SDL_TimerCallback,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> SDL_TimerID;
 }
 
 /// Function prototype for the nanosecond timer callback function.
@@ -181,7 +189,13 @@ extern "C" {
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_AddTimerNS
-pub type SDL_NSTimerCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, timerID: SDL_TimerID, interval: Uint64) -> Uint64>;
+pub type SDL_NSTimerCallback = ::core::option::Option<
+    extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        timerID: SDL_TimerID,
+        interval: Uint64,
+    ) -> Uint64,
+>;
 
 extern "C" {
     /// Call a callback function at a future time.
@@ -218,7 +232,11 @@ extern "C" {
     ///
     /// \sa SDL_AddTimer
     /// \sa SDL_RemoveTimer
-    pub fn SDL_AddTimerNS(interval: Uint64, callback: SDL_NSTimerCallback, userdata: *mut ::core::ffi::c_void) -> SDL_TimerID;
+    pub fn SDL_AddTimerNS(
+        interval: Uint64,
+        callback: SDL_NSTimerCallback,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> SDL_TimerID;
 }
 
 extern "C" {
@@ -233,4 +251,3 @@ extern "C" {
     /// \sa SDL_AddTimer
     pub fn SDL_RemoveTimer(id: SDL_TimerID) -> SDL_bool;
 }
-

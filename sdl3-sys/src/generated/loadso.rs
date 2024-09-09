@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategorySharedObject
 //!
 //! System-dependent library loading routines.
@@ -58,7 +56,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_LoadObject
-    pub fn SDL_LoadFunction(handle: *mut ::core::ffi::c_void, name: *const ::core::ffi::c_char) -> SDL_FunctionPointer;
+    pub fn SDL_LoadFunction(
+        handle: *mut ::core::ffi::c_void,
+        name: *const ::core::ffi::c_char,
+    ) -> SDL_FunctionPointer;
 }
 
 extern "C" {
@@ -71,4 +72,3 @@ extern "C" {
     /// \sa SDL_LoadObject
     pub fn SDL_UnloadObject(handle: *mut ::core::ffi::c_void);
 }
-

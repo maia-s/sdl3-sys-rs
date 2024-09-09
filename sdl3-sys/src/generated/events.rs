@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryEvents
 //!
 //! Event queue management.
@@ -333,11 +331,14 @@ pub const SDL_EVENT_DISPLAY_REMOVED: SDL_EventType = SDL_EventType::DISPLAY_REMO
 /// Display has changed position
 pub const SDL_EVENT_DISPLAY_MOVED: SDL_EventType = SDL_EventType::DISPLAY_MOVED;
 /// Display has changed desktop mode
-pub const SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED: SDL_EventType = SDL_EventType::DISPLAY_DESKTOP_MODE_CHANGED;
+pub const SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED: SDL_EventType =
+    SDL_EventType::DISPLAY_DESKTOP_MODE_CHANGED;
 /// Display has changed current mode
-pub const SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED: SDL_EventType = SDL_EventType::DISPLAY_CURRENT_MODE_CHANGED;
+pub const SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED: SDL_EventType =
+    SDL_EventType::DISPLAY_CURRENT_MODE_CHANGED;
 /// Display has changed content scale
-pub const SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED: SDL_EventType = SDL_EventType::DISPLAY_CONTENT_SCALE_CHANGED;
+pub const SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED: SDL_EventType =
+    SDL_EventType::DISPLAY_CONTENT_SCALE_CHANGED;
 pub const SDL_EVENT_DISPLAY_FIRST: SDL_EventType = SDL_EventType::DISPLAY_FIRST;
 pub const SDL_EVENT_DISPLAY_LAST: SDL_EventType = SDL_EventType::DISPLAY_LAST;
 /// Window has been shown
@@ -351,9 +352,11 @@ pub const SDL_EVENT_WINDOW_MOVED: SDL_EventType = SDL_EventType::WINDOW_MOVED;
 /// Window has been resized to data1xdata2
 pub const SDL_EVENT_WINDOW_RESIZED: SDL_EventType = SDL_EventType::WINDOW_RESIZED;
 /// The pixel size of the window has changed to data1xdata2
-pub const SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED: SDL_EventType = SDL_EventType::WINDOW_PIXEL_SIZE_CHANGED;
+pub const SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED: SDL_EventType =
+    SDL_EventType::WINDOW_PIXEL_SIZE_CHANGED;
 /// The pixel size of a Metal view associated with the window has changed
-pub const SDL_EVENT_WINDOW_METAL_VIEW_RESIZED: SDL_EventType = SDL_EventType::WINDOW_METAL_VIEW_RESIZED;
+pub const SDL_EVENT_WINDOW_METAL_VIEW_RESIZED: SDL_EventType =
+    SDL_EventType::WINDOW_METAL_VIEW_RESIZED;
 /// Window has been minimized
 pub const SDL_EVENT_WINDOW_MINIMIZED: SDL_EventType = SDL_EventType::WINDOW_MINIMIZED;
 /// Window has been maximized
@@ -377,9 +380,11 @@ pub const SDL_EVENT_WINDOW_ICCPROF_CHANGED: SDL_EventType = SDL_EventType::WINDO
 /// Window has been moved to display data1
 pub const SDL_EVENT_WINDOW_DISPLAY_CHANGED: SDL_EventType = SDL_EventType::WINDOW_DISPLAY_CHANGED;
 /// Window display scale has been changed
-pub const SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED: SDL_EventType = SDL_EventType::WINDOW_DISPLAY_SCALE_CHANGED;
+pub const SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED: SDL_EventType =
+    SDL_EventType::WINDOW_DISPLAY_SCALE_CHANGED;
 /// The window safe area has been changed
-pub const SDL_EVENT_WINDOW_SAFE_AREA_CHANGED: SDL_EventType = SDL_EventType::WINDOW_SAFE_AREA_CHANGED;
+pub const SDL_EVENT_WINDOW_SAFE_AREA_CHANGED: SDL_EventType =
+    SDL_EventType::WINDOW_SAFE_AREA_CHANGED;
 /// The window has been occluded
 pub const SDL_EVENT_WINDOW_OCCLUDED: SDL_EventType = SDL_EventType::WINDOW_OCCLUDED;
 /// The window has entered fullscreen mode
@@ -392,7 +397,8 @@ pub const SDL_EVENT_WINDOW_LEAVE_FULLSCREEN: SDL_EventType = SDL_EventType::WIND
 /// associated with it are invalid
 pub const SDL_EVENT_WINDOW_DESTROYED: SDL_EventType = SDL_EventType::WINDOW_DESTROYED;
 /// Window HDR properties have changed
-pub const SDL_EVENT_WINDOW_HDR_STATE_CHANGED: SDL_EventType = SDL_EventType::WINDOW_HDR_STATE_CHANGED;
+pub const SDL_EVENT_WINDOW_HDR_STATE_CHANGED: SDL_EventType =
+    SDL_EventType::WINDOW_HDR_STATE_CHANGED;
 pub const SDL_EVENT_WINDOW_FIRST: SDL_EventType = SDL_EventType::WINDOW_FIRST;
 pub const SDL_EVENT_WINDOW_LAST: SDL_EventType = SDL_EventType::WINDOW_LAST;
 /// Key pressed
@@ -439,9 +445,11 @@ pub const SDL_EVENT_JOYSTICK_ADDED: SDL_EventType = SDL_EventType::JOYSTICK_ADDE
 /// An opened joystick has been removed
 pub const SDL_EVENT_JOYSTICK_REMOVED: SDL_EventType = SDL_EventType::JOYSTICK_REMOVED;
 /// Joystick battery level change
-pub const SDL_EVENT_JOYSTICK_BATTERY_UPDATED: SDL_EventType = SDL_EventType::JOYSTICK_BATTERY_UPDATED;
+pub const SDL_EVENT_JOYSTICK_BATTERY_UPDATED: SDL_EventType =
+    SDL_EventType::JOYSTICK_BATTERY_UPDATED;
 /// Joystick update is complete
-pub const SDL_EVENT_JOYSTICK_UPDATE_COMPLETE: SDL_EventType = SDL_EventType::JOYSTICK_UPDATE_COMPLETE;
+pub const SDL_EVENT_JOYSTICK_UPDATE_COMPLETE: SDL_EventType =
+    SDL_EventType::JOYSTICK_UPDATE_COMPLETE;
 /// Gamepad axis motion
 pub const SDL_EVENT_GAMEPAD_AXIS_MOTION: SDL_EventType = SDL_EventType::GAMEPAD_AXIS_MOTION;
 /// Gamepad button pressed
@@ -465,7 +473,8 @@ pub const SDL_EVENT_GAMEPAD_SENSOR_UPDATE: SDL_EventType = SDL_EventType::GAMEPA
 /// Gamepad update is complete
 pub const SDL_EVENT_GAMEPAD_UPDATE_COMPLETE: SDL_EventType = SDL_EventType::GAMEPAD_UPDATE_COMPLETE;
 /// Gamepad Steam handle has changed
-pub const SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED: SDL_EventType = SDL_EventType::GAMEPAD_STEAM_HANDLE_UPDATED;
+pub const SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED: SDL_EventType =
+    SDL_EventType::GAMEPAD_STEAM_HANDLE_UPDATED;
 pub const SDL_EVENT_FINGER_DOWN: SDL_EventType = SDL_EventType::FINGER_DOWN;
 pub const SDL_EVENT_FINGER_UP: SDL_EventType = SDL_EventType::FINGER_UP;
 pub const SDL_EVENT_FINGER_MOTION: SDL_EventType = SDL_EventType::FINGER_MOTION;
@@ -486,7 +495,8 @@ pub const SDL_EVENT_AUDIO_DEVICE_ADDED: SDL_EventType = SDL_EventType::AUDIO_DEV
 /// An audio device has been removed.
 pub const SDL_EVENT_AUDIO_DEVICE_REMOVED: SDL_EventType = SDL_EventType::AUDIO_DEVICE_REMOVED;
 /// An audio device's format has been changed by the system.
-pub const SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED: SDL_EventType = SDL_EventType::AUDIO_DEVICE_FORMAT_CHANGED;
+pub const SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED: SDL_EventType =
+    SDL_EventType::AUDIO_DEVICE_FORMAT_CHANGED;
 /// A sensor was updated
 pub const SDL_EVENT_SENSOR_UPDATE: SDL_EventType = SDL_EventType::SENSOR_UPDATE;
 /// Pressure-sensitive pen has become available
@@ -1538,7 +1548,13 @@ extern "C" {
     /// \sa SDL_PollEvent
     /// \sa SDL_PumpEvents
     /// \sa SDL_PushEvent
-    pub fn SDL_PeepEvents(events: *mut SDL_Event, numevents: ::core::ffi::c_int, action: SDL_EventAction, minType: Uint32, maxType: Uint32) -> ::core::ffi::c_int;
+    pub fn SDL_PeepEvents(
+        events: *mut SDL_Event,
+        numevents: ::core::ffi::c_int,
+        action: SDL_EventAction,
+        minType: Uint32,
+        maxType: Uint32,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -1772,7 +1788,9 @@ extern "C" {
 ///
 /// \sa SDL_SetEventFilter
 /// \sa SDL_AddEventWatch
-pub type SDL_EventFilter = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, event: *mut SDL_Event) -> SDL_bool>;
+pub type SDL_EventFilter = ::core::option::Option<
+    extern "C" fn(userdata: *mut ::core::ffi::c_void, event: *mut SDL_Event) -> SDL_bool,
+>;
 
 extern "C" {
     /// Set up a filter to process all events before they change internal state and
@@ -1836,7 +1854,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetEventFilter
-    pub fn SDL_GetEventFilter(filter: *mut SDL_EventFilter, userdata: *mut *mut ::core::ffi::c_void) -> SDL_bool;
+    pub fn SDL_GetEventFilter(
+        filter: *mut SDL_EventFilter,
+        userdata: *mut *mut ::core::ffi::c_void,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1868,7 +1889,10 @@ extern "C" {
     ///
     /// \sa SDL_RemoveEventWatch
     /// \sa SDL_SetEventFilter
-    pub fn SDL_AddEventWatch(filter: SDL_EventFilter, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
+    pub fn SDL_AddEventWatch(
+        filter: SDL_EventFilter,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1955,4 +1979,3 @@ extern "C" {
     /// \sa SDL_WaitEventTimeout
     pub fn SDL_GetWindowFromEvent(event: *const SDL_Event) -> *mut SDL_Window;
 }
-

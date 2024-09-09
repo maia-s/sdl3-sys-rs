@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryStdinc
 //!
 //! This is a general header that includes C language support. It implements a
@@ -9,12 +7,10 @@
 pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
 
 #[cfg(doc)]
-emit! {
-}
+emit! {}
 
 #[cfg(not(doc))]
-emit! {
-}
+emit! {}
 
 /// A boolean false.
 ///
@@ -221,13 +217,17 @@ emit! {
 
 }
 
-pub const SDL_PRIs32: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"d\0") };
+pub const SDL_PRIs32: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"d\0") };
 
-pub const SDL_PRIu32: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"u\0") };
+pub const SDL_PRIu32: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"u\0") };
 
-pub const SDL_PRIx32: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"x\0") };
+pub const SDL_PRIx32: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"x\0") };
 
-pub const SDL_PRIX32: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"X\0") };
+pub const SDL_PRIX32: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"X\0") };
 
 pub const SDL_PRINTF_FORMAT_STRING: ::core::primitive::i32 = 1;
 
@@ -259,7 +259,10 @@ pub struct SDL_alignment_test {
     pub b: *mut ::core::ffi::c_void,
 }
 
-const _: () = ::core::assert!(::core::mem::size_of::<SDL_alignment_test>() == (2 * ::core::mem::size_of::<*mut ::core::ffi::c_void>()));
+const _: () = ::core::assert!(
+    ::core::mem::size_of::<SDL_alignment_test>()
+        == (2 * ::core::mem::size_of::<*mut ::core::ffi::c_void>())
+);
 
 #[cfg(all(not(any(/* always disabled: SDL_PLATFORM_3DS */)), not(any(/* always disabled: SDL_PLATFORM_VITA */))))]
 emit! {
@@ -319,7 +322,9 @@ emit! {
 pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {
     unsafe {
         iface.write_bytes(0, 1);
-        iface.cast::<::core::primitive::u32>().write(::core::mem::size_of::<T>() as ::core::primitive::u32);
+        iface
+            .cast::<::core::primitive::u32>()
+            .write(::core::mem::size_of::<T>() as ::core::primitive::u32);
     }
 }
 
@@ -328,22 +333,40 @@ extern "C" {
 }
 
 extern "C" {
-    pub fn SDL_calloc(nmemb: ::core::primitive::usize, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+    pub fn SDL_calloc(
+        nmemb: ::core::primitive::usize,
+        size: ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
-    pub fn SDL_realloc(mem: *mut ::core::ffi::c_void, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+    pub fn SDL_realloc(
+        mem: *mut ::core::ffi::c_void,
+        size: ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
     pub fn SDL_free(mem: *mut ::core::ffi::c_void);
 }
 
-pub type SDL_malloc_func = ::core::option::Option<extern "C" fn(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void>;
+pub type SDL_malloc_func = ::core::option::Option<
+    extern "C" fn(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void,
+>;
 
-pub type SDL_calloc_func = ::core::option::Option<extern "C" fn(nmemb: ::core::primitive::usize, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void>;
+pub type SDL_calloc_func = ::core::option::Option<
+    extern "C" fn(
+        nmemb: ::core::primitive::usize,
+        size: ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_void,
+>;
 
-pub type SDL_realloc_func = ::core::option::Option<extern "C" fn(mem: *mut ::core::ffi::c_void, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void>;
+pub type SDL_realloc_func = ::core::option::Option<
+    extern "C" fn(
+        mem: *mut ::core::ffi::c_void,
+        size: ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_void,
+>;
 
 pub type SDL_free_func = ::core::option::Option<extern "C" fn(mem: *mut ::core::ffi::c_void)>;
 
@@ -363,7 +386,12 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetOriginalMemoryFunctions(malloc_func: *mut SDL_malloc_func, calloc_func: *mut SDL_calloc_func, realloc_func: *mut SDL_realloc_func, free_func: *mut SDL_free_func);
+    pub fn SDL_GetOriginalMemoryFunctions(
+        malloc_func: *mut SDL_malloc_func,
+        calloc_func: *mut SDL_calloc_func,
+        realloc_func: *mut SDL_realloc_func,
+        free_func: *mut SDL_free_func,
+    );
 }
 
 extern "C" {
@@ -382,7 +410,12 @@ extern "C" {
     ///
     /// \sa SDL_SetMemoryFunctions
     /// \sa SDL_GetOriginalMemoryFunctions
-    pub fn SDL_GetMemoryFunctions(malloc_func: *mut SDL_malloc_func, calloc_func: *mut SDL_calloc_func, realloc_func: *mut SDL_realloc_func, free_func: *mut SDL_free_func);
+    pub fn SDL_GetMemoryFunctions(
+        malloc_func: *mut SDL_malloc_func,
+        calloc_func: *mut SDL_calloc_func,
+        realloc_func: *mut SDL_realloc_func,
+        free_func: *mut SDL_free_func,
+    );
 }
 
 extern "C" {
@@ -410,7 +443,12 @@ extern "C" {
     ///
     /// \sa SDL_GetMemoryFunctions
     /// \sa SDL_GetOriginalMemoryFunctions
-    pub fn SDL_SetMemoryFunctions(malloc_func: SDL_malloc_func, calloc_func: SDL_calloc_func, realloc_func: SDL_realloc_func, free_func: SDL_free_func) -> SDL_bool;
+    pub fn SDL_SetMemoryFunctions(
+        malloc_func: SDL_malloc_func,
+        calloc_func: SDL_calloc_func,
+        realloc_func: SDL_realloc_func,
+        free_func: SDL_free_func,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -434,7 +472,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_aligned_free
-    pub fn SDL_aligned_alloc(alignment: ::core::primitive::usize, size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+    pub fn SDL_aligned_alloc(
+        alignment: ::core::primitive::usize,
+        size: ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
@@ -469,31 +510,70 @@ extern "C" {
 }
 
 extern "C" {
-    pub fn SDL_setenv(name: *const ::core::ffi::c_char, value: *const ::core::ffi::c_char, overwrite: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn SDL_setenv(
+        name: *const ::core::ffi::c_char,
+        value: *const ::core::ffi::c_char,
+        overwrite: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
     pub fn SDL_unsetenv(name: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
 }
 
-pub type SDL_CompareCallback = ::core::option::Option<extern "C" fn(a: *const ::core::ffi::c_void, b: *const ::core::ffi::c_void) -> ::core::ffi::c_int>;
+pub type SDL_CompareCallback = ::core::option::Option<
+    extern "C" fn(
+        a: *const ::core::ffi::c_void,
+        b: *const ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int,
+>;
 
 extern "C" {
-    pub fn SDL_qsort(base: *mut ::core::ffi::c_void, nmemb: ::core::primitive::usize, size: ::core::primitive::usize, compare: SDL_CompareCallback);
+    pub fn SDL_qsort(
+        base: *mut ::core::ffi::c_void,
+        nmemb: ::core::primitive::usize,
+        size: ::core::primitive::usize,
+        compare: SDL_CompareCallback,
+    );
 }
 
 extern "C" {
-    pub fn SDL_bsearch(key: *const ::core::ffi::c_void, base: *const ::core::ffi::c_void, nmemb: ::core::primitive::usize, size: ::core::primitive::usize, compare: SDL_CompareCallback) -> *mut ::core::ffi::c_void;
+    pub fn SDL_bsearch(
+        key: *const ::core::ffi::c_void,
+        base: *const ::core::ffi::c_void,
+        nmemb: ::core::primitive::usize,
+        size: ::core::primitive::usize,
+        compare: SDL_CompareCallback,
+    ) -> *mut ::core::ffi::c_void;
 }
 
-pub type SDL_CompareCallback_r = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, a: *const ::core::ffi::c_void, b: *const ::core::ffi::c_void) -> ::core::ffi::c_int>;
+pub type SDL_CompareCallback_r = ::core::option::Option<
+    extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        a: *const ::core::ffi::c_void,
+        b: *const ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int,
+>;
 
 extern "C" {
-    pub fn SDL_qsort_r(base: *mut ::core::ffi::c_void, nmemb: ::core::primitive::usize, size: ::core::primitive::usize, compare: SDL_CompareCallback_r, userdata: *mut ::core::ffi::c_void);
+    pub fn SDL_qsort_r(
+        base: *mut ::core::ffi::c_void,
+        nmemb: ::core::primitive::usize,
+        size: ::core::primitive::usize,
+        compare: SDL_CompareCallback_r,
+        userdata: *mut ::core::ffi::c_void,
+    );
 }
 
 extern "C" {
-    pub fn SDL_bsearch_r(key: *const ::core::ffi::c_void, base: *const ::core::ffi::c_void, nmemb: ::core::primitive::usize, size: ::core::primitive::usize, compare: SDL_CompareCallback_r, userdata: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
+    pub fn SDL_bsearch_r(
+        key: *const ::core::ffi::c_void,
+        base: *const ::core::ffi::c_void,
+        nmemb: ::core::primitive::usize,
+        size: ::core::primitive::usize,
+        compare: SDL_CompareCallback_r,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
@@ -737,31 +817,59 @@ extern "C" {
 }
 
 extern "C" {
-    pub fn SDL_crc16(crc: Uint16, data: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> Uint16;
+    pub fn SDL_crc16(
+        crc: Uint16,
+        data: *const ::core::ffi::c_void,
+        len: ::core::primitive::usize,
+    ) -> Uint16;
 }
 
 extern "C" {
-    pub fn SDL_crc32(crc: Uint32, data: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> Uint32;
+    pub fn SDL_crc32(
+        crc: Uint32,
+        data: *const ::core::ffi::c_void,
+        len: ::core::primitive::usize,
+    ) -> Uint32;
 }
 
 extern "C" {
-    pub fn SDL_memcpy(dst: *mut ::core::ffi::c_void, src: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+    pub fn SDL_memcpy(
+        dst: *mut ::core::ffi::c_void,
+        src: *const ::core::ffi::c_void,
+        len: ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
-    pub fn SDL_memmove(dst: *mut ::core::ffi::c_void, src: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+    pub fn SDL_memmove(
+        dst: *mut ::core::ffi::c_void,
+        src: *const ::core::ffi::c_void,
+        len: ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
-    pub fn SDL_memset(dst: *mut ::core::ffi::c_void, c: ::core::ffi::c_int, len: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+    pub fn SDL_memset(
+        dst: *mut ::core::ffi::c_void,
+        c: ::core::ffi::c_int,
+        len: ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
-    pub fn SDL_memset4(dst: *mut ::core::ffi::c_void, val: Uint32, dwords: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+    pub fn SDL_memset4(
+        dst: *mut ::core::ffi::c_void,
+        val: Uint32,
+        dwords: ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
-    pub fn SDL_memcmp(s1: *const ::core::ffi::c_void, s2: *const ::core::ffi::c_void, len: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_memcmp(
+        s1: *const ::core::ffi::c_void,
+        s2: *const ::core::ffi::c_void,
+        len: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -769,15 +877,26 @@ extern "C" {
 }
 
 extern "C" {
-    pub fn SDL_wcsnlen(wstr: *const crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_wcsnlen(
+        wstr: *const crate::ffi::c_wchar_t,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
-    pub fn SDL_wcslcpy(dst: *mut crate::ffi::c_wchar_t, src: *const crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_wcslcpy(
+        dst: *mut crate::ffi::c_wchar_t,
+        src: *const crate::ffi::c_wchar_t,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
-    pub fn SDL_wcslcat(dst: *mut crate::ffi::c_wchar_t, src: *const crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_wcslcat(
+        dst: *mut crate::ffi::c_wchar_t,
+        src: *const crate::ffi::c_wchar_t,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
@@ -785,11 +904,18 @@ extern "C" {
 }
 
 extern "C" {
-    pub fn SDL_wcsstr(haystack: *const crate::ffi::c_wchar_t, needle: *const crate::ffi::c_wchar_t) -> *mut crate::ffi::c_wchar_t;
+    pub fn SDL_wcsstr(
+        haystack: *const crate::ffi::c_wchar_t,
+        needle: *const crate::ffi::c_wchar_t,
+    ) -> *mut crate::ffi::c_wchar_t;
 }
 
 extern "C" {
-    pub fn SDL_wcsnstr(haystack: *const crate::ffi::c_wchar_t, needle: *const crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> *mut crate::ffi::c_wchar_t;
+    pub fn SDL_wcsnstr(
+        haystack: *const crate::ffi::c_wchar_t,
+        needle: *const crate::ffi::c_wchar_t,
+        maxlen: ::core::primitive::usize,
+    ) -> *mut crate::ffi::c_wchar_t;
 }
 
 extern "C" {
@@ -808,7 +934,10 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_wcscmp(str1: *const crate::ffi::c_wchar_t, str2: *const crate::ffi::c_wchar_t) -> ::core::ffi::c_int;
+    pub fn SDL_wcscmp(
+        str1: *const crate::ffi::c_wchar_t,
+        str2: *const crate::ffi::c_wchar_t,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -839,7 +968,11 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_wcsncmp(str1: *const crate::ffi::c_wchar_t, str2: *const crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_wcsncmp(
+        str1: *const crate::ffi::c_wchar_t,
+        str2: *const crate::ffi::c_wchar_t,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -869,7 +1002,10 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_wcscasecmp(str1: *const crate::ffi::c_wchar_t, str2: *const crate::ffi::c_wchar_t) -> ::core::ffi::c_int;
+    pub fn SDL_wcscasecmp(
+        str1: *const crate::ffi::c_wchar_t,
+        str2: *const crate::ffi::c_wchar_t,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -911,11 +1047,19 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_wcsncasecmp(str1: *const crate::ffi::c_wchar_t, str2: *const crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_wcsncasecmp(
+        str1: *const crate::ffi::c_wchar_t,
+        str2: *const crate::ffi::c_wchar_t,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
-    pub fn SDL_wcstol(str: *const crate::ffi::c_wchar_t, endp: *mut *mut crate::ffi::c_wchar_t, base: ::core::ffi::c_int) -> ::core::ffi::c_long;
+    pub fn SDL_wcstol(
+        str: *const crate::ffi::c_wchar_t,
+        endp: *mut *mut crate::ffi::c_wchar_t,
+        base: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_long;
 }
 
 extern "C" {
@@ -923,19 +1067,34 @@ extern "C" {
 }
 
 extern "C" {
-    pub fn SDL_strnlen(str: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_strnlen(
+        str: *const ::core::ffi::c_char,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
-    pub fn SDL_strlcpy(dst: *mut ::core::ffi::c_char, src: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_strlcpy(
+        dst: *mut ::core::ffi::c_char,
+        src: *const ::core::ffi::c_char,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
-    pub fn SDL_utf8strlcpy(dst: *mut ::core::ffi::c_char, src: *const ::core::ffi::c_char, dst_bytes: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_utf8strlcpy(
+        dst: *mut ::core::ffi::c_char,
+        src: *const ::core::ffi::c_char,
+        dst_bytes: ::core::primitive::usize,
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
-    pub fn SDL_strlcat(dst: *mut ::core::ffi::c_char, src: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_strlcat(
+        dst: *mut ::core::ffi::c_char,
+        src: *const ::core::ffi::c_char,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
@@ -943,7 +1102,10 @@ extern "C" {
 }
 
 extern "C" {
-    pub fn SDL_strndup(str: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> *mut ::core::ffi::c_char;
+    pub fn SDL_strndup(
+        str: *const ::core::ffi::c_char,
+        maxlen: ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
@@ -993,27 +1155,47 @@ extern "C" {
 }
 
 extern "C" {
-    pub fn SDL_strchr(str: *const ::core::ffi::c_char, c: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+    pub fn SDL_strchr(
+        str: *const ::core::ffi::c_char,
+        c: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
-    pub fn SDL_strrchr(str: *const ::core::ffi::c_char, c: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+    pub fn SDL_strrchr(
+        str: *const ::core::ffi::c_char,
+        c: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
-    pub fn SDL_strstr(haystack: *const ::core::ffi::c_char, needle: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+    pub fn SDL_strstr(
+        haystack: *const ::core::ffi::c_char,
+        needle: *const ::core::ffi::c_char,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
-    pub fn SDL_strnstr(haystack: *const ::core::ffi::c_char, needle: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> *mut ::core::ffi::c_char;
+    pub fn SDL_strnstr(
+        haystack: *const ::core::ffi::c_char,
+        needle: *const ::core::ffi::c_char,
+        maxlen: ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
-    pub fn SDL_strcasestr(haystack: *const ::core::ffi::c_char, needle: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+    pub fn SDL_strcasestr(
+        haystack: *const ::core::ffi::c_char,
+        needle: *const ::core::ffi::c_char,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
-    pub fn SDL_strtok_r(s1: *mut ::core::ffi::c_char, s2: *const ::core::ffi::c_char, saveptr: *mut *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+    pub fn SDL_strtok_r(
+        s1: *mut ::core::ffi::c_char,
+        s2: *const ::core::ffi::c_char,
+        saveptr: *mut *mut ::core::ffi::c_char,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
@@ -1021,31 +1203,58 @@ extern "C" {
 }
 
 extern "C" {
-    pub fn SDL_utf8strnlen(str: *const ::core::ffi::c_char, bytes: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_utf8strnlen(
+        str: *const ::core::ffi::c_char,
+        bytes: ::core::primitive::usize,
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
-    pub fn SDL_itoa(value: ::core::ffi::c_int, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+    pub fn SDL_itoa(
+        value: ::core::ffi::c_int,
+        str: *mut ::core::ffi::c_char,
+        radix: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
-    pub fn SDL_uitoa(value: ::core::ffi::c_uint, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+    pub fn SDL_uitoa(
+        value: ::core::ffi::c_uint,
+        str: *mut ::core::ffi::c_char,
+        radix: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
-    pub fn SDL_ltoa(value: ::core::ffi::c_long, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+    pub fn SDL_ltoa(
+        value: ::core::ffi::c_long,
+        str: *mut ::core::ffi::c_char,
+        radix: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
-    pub fn SDL_ultoa(value: ::core::ffi::c_ulong, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+    pub fn SDL_ultoa(
+        value: ::core::ffi::c_ulong,
+        str: *mut ::core::ffi::c_char,
+        radix: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
-    pub fn SDL_lltoa(value: Sint64, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+    pub fn SDL_lltoa(
+        value: Sint64,
+        str: *mut ::core::ffi::c_char,
+        radix: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
-    pub fn SDL_ulltoa(value: Uint64, str: *mut ::core::ffi::c_char, radix: ::core::ffi::c_int) -> *mut ::core::ffi::c_char;
+    pub fn SDL_ulltoa(
+        value: Uint64,
+        str: *mut ::core::ffi::c_char,
+        radix: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
@@ -1057,23 +1266,42 @@ extern "C" {
 }
 
 extern "C" {
-    pub fn SDL_strtol(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char, base: ::core::ffi::c_int) -> ::core::ffi::c_long;
+    pub fn SDL_strtol(
+        str: *const ::core::ffi::c_char,
+        endp: *mut *mut ::core::ffi::c_char,
+        base: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_long;
 }
 
 extern "C" {
-    pub fn SDL_strtoul(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char, base: ::core::ffi::c_int) -> ::core::ffi::c_ulong;
+    pub fn SDL_strtoul(
+        str: *const ::core::ffi::c_char,
+        endp: *mut *mut ::core::ffi::c_char,
+        base: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_ulong;
 }
 
 extern "C" {
-    pub fn SDL_strtoll(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char, base: ::core::ffi::c_int) -> Sint64;
+    pub fn SDL_strtoll(
+        str: *const ::core::ffi::c_char,
+        endp: *mut *mut ::core::ffi::c_char,
+        base: ::core::ffi::c_int,
+    ) -> Sint64;
 }
 
 extern "C" {
-    pub fn SDL_strtoull(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char, base: ::core::ffi::c_int) -> Uint64;
+    pub fn SDL_strtoull(
+        str: *const ::core::ffi::c_char,
+        endp: *mut *mut ::core::ffi::c_char,
+        base: ::core::ffi::c_int,
+    ) -> Uint64;
 }
 
 extern "C" {
-    pub fn SDL_strtod(str: *const ::core::ffi::c_char, endp: *mut *mut ::core::ffi::c_char) -> ::core::ffi::c_double;
+    pub fn SDL_strtod(
+        str: *const ::core::ffi::c_char,
+        endp: *mut *mut ::core::ffi::c_char,
+    ) -> ::core::ffi::c_double;
 }
 
 extern "C" {
@@ -1093,7 +1321,10 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_strcmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
+    pub fn SDL_strcmp(
+        str1: *const ::core::ffi::c_char,
+        str2: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -1123,7 +1354,11 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_strncmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_strncmp(
+        str1: *const ::core::ffi::c_char,
+        str2: *const ::core::ffi::c_char,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -1151,7 +1386,10 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_strcasecmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
+    pub fn SDL_strcasecmp(
+        str1: *const ::core::ffi::c_char,
+        str2: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -1190,7 +1428,11 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_strncasecmp(str1: *const ::core::ffi::c_char, str2: *const ::core::ffi::c_char, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_strncasecmp(
+        str1: *const ::core::ffi::c_char,
+        str2: *const ::core::ffi::c_char,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -1206,7 +1448,10 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_strpbrk(str: *const ::core::ffi::c_char, breakset: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+    pub fn SDL_strpbrk(
+        str: *const ::core::ffi::c_char,
+        breakset: *const ::core::ffi::c_char,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 /// The Unicode REPLACEMENT CHARACTER codepoint.
@@ -1263,7 +1508,10 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_StepUTF8(pstr: *mut *const ::core::ffi::c_char, pslen: *mut ::core::primitive::usize) -> Uint32;
+    pub fn SDL_StepUTF8(
+        pstr: *mut *const ::core::ffi::c_char,
+        pslen: *mut ::core::primitive::usize,
+    ) -> Uint32;
 }
 
 extern "C" {
@@ -1292,39 +1540,78 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_UCS4ToUTF8(codepoint: Uint32, dst: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+    pub fn SDL_UCS4ToUTF8(
+        codepoint: Uint32,
+        dst: *mut ::core::ffi::c_char,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
-    pub fn SDL_sscanf(text: *const ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ...) -> ::core::ffi::c_int;
+    pub fn SDL_sscanf(
+        text: *const ::core::ffi::c_char,
+        fmt: *const ::core::ffi::c_char,
+        ...
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
-    pub fn SDL_vsscanf(text: *const ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ap: crate::ffi::VaList) -> ::core::ffi::c_int;
+    pub fn SDL_vsscanf(
+        text: *const ::core::ffi::c_char,
+        fmt: *const ::core::ffi::c_char,
+        ap: crate::ffi::VaList,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
-    pub fn SDL_snprintf(text: *mut ::core::ffi::c_char, maxlen: ::core::primitive::usize, fmt: *const ::core::ffi::c_char, ...) -> ::core::ffi::c_int;
+    pub fn SDL_snprintf(
+        text: *mut ::core::ffi::c_char,
+        maxlen: ::core::primitive::usize,
+        fmt: *const ::core::ffi::c_char,
+        ...
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
-    pub fn SDL_swprintf(text: *mut crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize, fmt: *const crate::ffi::c_wchar_t, ...) -> ::core::ffi::c_int;
+    pub fn SDL_swprintf(
+        text: *mut crate::ffi::c_wchar_t,
+        maxlen: ::core::primitive::usize,
+        fmt: *const crate::ffi::c_wchar_t,
+        ...
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
-    pub fn SDL_vsnprintf(text: *mut ::core::ffi::c_char, maxlen: ::core::primitive::usize, fmt: *const ::core::ffi::c_char, ap: crate::ffi::VaList) -> ::core::ffi::c_int;
+    pub fn SDL_vsnprintf(
+        text: *mut ::core::ffi::c_char,
+        maxlen: ::core::primitive::usize,
+        fmt: *const ::core::ffi::c_char,
+        ap: crate::ffi::VaList,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
-    pub fn SDL_vswprintf(text: *mut crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize, fmt: *const crate::ffi::c_wchar_t, ap: crate::ffi::VaList) -> ::core::ffi::c_int;
+    pub fn SDL_vswprintf(
+        text: *mut crate::ffi::c_wchar_t,
+        maxlen: ::core::primitive::usize,
+        fmt: *const crate::ffi::c_wchar_t,
+        ap: crate::ffi::VaList,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
-    pub fn SDL_asprintf(strp: *mut *mut ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ...) -> ::core::ffi::c_int;
+    pub fn SDL_asprintf(
+        strp: *mut *mut ::core::ffi::c_char,
+        fmt: *const ::core::ffi::c_char,
+        ...
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
-    pub fn SDL_vasprintf(strp: *mut *mut ::core::ffi::c_char, fmt: *const ::core::ffi::c_char, ap: crate::ffi::VaList) -> ::core::ffi::c_int;
+    pub fn SDL_vasprintf(
+        strp: *mut *mut ::core::ffi::c_char,
+        fmt: *const ::core::ffi::c_char,
+        ap: crate::ffi::VaList,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -1855,7 +2142,10 @@ extern "C" {
     ///
     /// \sa SDL_copysignf
     /// \sa SDL_fabs
-    pub fn SDL_copysign(x: ::core::ffi::c_double, y: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub fn SDL_copysign(
+        x: ::core::ffi::c_double,
+        y: ::core::ffi::c_double,
+    ) -> ::core::ffi::c_double;
 }
 
 extern "C" {
@@ -2412,7 +2702,10 @@ extern "C" {
     /// \sa SDL_modff
     /// \sa SDL_trunc
     /// \sa SDL_fmod
-    pub fn SDL_modf(x: ::core::ffi::c_double, y: *mut ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub fn SDL_modf(
+        x: ::core::ffi::c_double,
+        y: *mut ::core::ffi::c_double,
+    ) -> ::core::ffi::c_double;
 }
 
 extern "C" {
@@ -2432,7 +2725,8 @@ extern "C" {
     /// \sa SDL_modf
     /// \sa SDL_truncf
     /// \sa SDL_fmodf
-    pub fn SDL_modff(x: ::core::ffi::c_float, y: *mut ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub fn SDL_modff(x: ::core::ffi::c_float, y: *mut ::core::ffi::c_float)
+        -> ::core::ffi::c_float;
 }
 
 extern "C" {
@@ -2857,7 +3151,10 @@ extern "C" {
     /// \sa SDL_iconv
     /// \sa SDL_iconv_close
     /// \sa SDL_iconv_string
-    pub fn SDL_iconv_open(tocode: *const ::core::ffi::c_char, fromcode: *const ::core::ffi::c_char) -> SDL_iconv_t;
+    pub fn SDL_iconv_open(
+        tocode: *const ::core::ffi::c_char,
+        fromcode: *const ::core::ffi::c_char,
+    ) -> SDL_iconv_t;
 }
 
 extern "C" {
@@ -2908,7 +3205,13 @@ extern "C" {
     /// \sa SDL_iconv_open
     /// \sa SDL_iconv_close
     /// \sa SDL_iconv_string
-    pub fn SDL_iconv(cd: SDL_iconv_t, inbuf: *mut *const ::core::ffi::c_char, inbytesleft: *mut ::core::primitive::usize, outbuf: *mut *mut ::core::ffi::c_char, outbytesleft: *mut ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_iconv(
+        cd: SDL_iconv_t,
+        inbuf: *mut *const ::core::ffi::c_char,
+        inbytesleft: *mut ::core::primitive::usize,
+        outbuf: *mut *mut ::core::ffi::c_char,
+        outbytesleft: *mut ::core::primitive::usize,
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
@@ -2935,7 +3238,12 @@ extern "C" {
     /// \sa SDL_iconv_open
     /// \sa SDL_iconv_close
     /// \sa SDL_iconv
-    pub fn SDL_iconv_string(tocode: *const ::core::ffi::c_char, fromcode: *const ::core::ffi::c_char, inbuf: *const ::core::ffi::c_char, inbytesleft: ::core::primitive::usize) -> *mut ::core::ffi::c_char;
+    pub fn SDL_iconv_string(
+        tocode: *const ::core::ffi::c_char,
+        fromcode: *const ::core::ffi::c_char,
+        inbuf: *const ::core::ffi::c_char,
+        inbytesleft: ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 // skipped inline function `SDL_size_mul_check_overflow`
@@ -2958,5 +3266,6 @@ pub type SDL_FunctionPointer = ::core::option::Option<extern "C" fn()>;
 
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_iconv_data_t { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_iconv_data_t {
+    _opaque: [::core::primitive::u8; 0],
+}

@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryScancode
 //!
 //! Defines keyboard scancodes.
@@ -725,7 +723,8 @@ pub const SDL_SCANCODE_MEDIA_REWIND: SDL_Scancode = SDL_Scancode::SCANCODE_MEDIA
 /// Next Track
 pub const SDL_SCANCODE_MEDIA_NEXT_TRACK: SDL_Scancode = SDL_Scancode::SCANCODE_MEDIA_NEXT_TRACK;
 /// Previous Track
-pub const SDL_SCANCODE_MEDIA_PREVIOUS_TRACK: SDL_Scancode = SDL_Scancode::SCANCODE_MEDIA_PREVIOUS_TRACK;
+pub const SDL_SCANCODE_MEDIA_PREVIOUS_TRACK: SDL_Scancode =
+    SDL_Scancode::SCANCODE_MEDIA_PREVIOUS_TRACK;
 /// Stop
 pub const SDL_SCANCODE_MEDIA_STOP: SDL_Scancode = SDL_Scancode::SCANCODE_MEDIA_STOP;
 /// Eject
@@ -780,4 +779,3 @@ pub const SDL_SCANCODE_RESERVED: SDL_Scancode = SDL_Scancode::SCANCODE_RESERVED;
 /// not a key, just marks the number of scancodes
 /// for array bounds
 pub const SDL_NUM_SCANCODES: SDL_Scancode = SDL_Scancode::NUM_SCANCODES;
-

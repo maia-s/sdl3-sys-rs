@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryError
 //!
 //! Simple error message routines for SDL.
@@ -89,4 +87,3 @@ extern "C" {
     /// \sa SDL_SetError
     pub fn SDL_ClearError() -> SDL_bool;
 }
-

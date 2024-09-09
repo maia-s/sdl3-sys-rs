@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryThread
 //!
 //! SDL thread management routines.
@@ -15,8 +13,7 @@ use super::atomic::*;
 use super::mutex::*;
 
 #[cfg(windows)]
-emit! {
-}
+emit! {}
 
 /// A unique numeric ID that identifies a thread.
 ///
@@ -73,7 +70,8 @@ pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPrio
 /// \returns a value that can be reported through SDL_WaitThread().
 ///
 /// \since This datatype is available since SDL 3.0.0.
-pub type SDL_ThreadFunction = ::core::option::Option<extern "C" fn(data: *mut ::core::ffi::c_void) -> ::core::ffi::c_int>;
+pub type SDL_ThreadFunction =
+    ::core::option::Option<extern "C" fn(data: *mut ::core::ffi::c_void) -> ::core::ffi::c_int>;
 
 #[cfg(doc)]
 emit! {
@@ -195,12 +193,10 @@ emit! {
 }
 
 #[cfg(not(doc))]
-emit! {
-}
+emit! {}
 
 #[cfg(not(doc))]
-emit! {
-}
+emit! {}
 
 #[cfg(not(doc))]
 emit! {
@@ -400,7 +396,8 @@ extern "C" {
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_SetTLS
-pub type SDL_TLSDestructorCallback = ::core::option::Option<extern "C" fn(value: *mut ::core::ffi::c_void)>;
+pub type SDL_TLSDestructorCallback =
+    ::core::option::Option<extern "C" fn(value: *mut ::core::ffi::c_void)>;
 
 extern "C" {
     /// Set the current thread's value associated with a thread local storage ID.
@@ -427,7 +424,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetTLS
-    pub fn SDL_SetTLS(id: *mut SDL_TLSID, value: *const ::core::ffi::c_void, destructor: SDL_TLSDestructorCallback) -> SDL_bool;
+    pub fn SDL_SetTLS(
+        id: *mut SDL_TLSID,
+        value: *const ::core::ffi::c_void,
+        destructor: SDL_TLSDestructorCallback,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -453,5 +454,6 @@ extern "C" {
 /// \sa SDL_WaitThread
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_Thread { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_Thread {
+    _opaque: [::core::primitive::u8; 0],
+}

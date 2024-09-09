@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryAudio
 //!
 //! Audio functionality for the SDL library.
@@ -373,7 +371,11 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetAudioDeviceFormat(devid: SDL_AudioDeviceID, spec: *mut SDL_AudioSpec, sample_frames: *mut ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_GetAudioDeviceFormat(
+        devid: SDL_AudioDeviceID,
+        spec: *mut SDL_AudioSpec,
+        sample_frames: *mut ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -396,7 +398,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetAudioStreamInputChannelMap
-    pub fn SDL_GetAudioDeviceChannelMap(devid: SDL_AudioDeviceID, count: *mut ::core::ffi::c_int) -> *mut ::core::ffi::c_int;
+    pub fn SDL_GetAudioDeviceChannelMap(
+        devid: SDL_AudioDeviceID,
+        count: *mut ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -472,7 +477,10 @@ extern "C" {
     ///
     /// \sa SDL_CloseAudioDevice
     /// \sa SDL_GetAudioDeviceFormat
-    pub fn SDL_OpenAudioDevice(devid: SDL_AudioDeviceID, spec: *const SDL_AudioSpec) -> SDL_AudioDeviceID;
+    pub fn SDL_OpenAudioDevice(
+        devid: SDL_AudioDeviceID,
+        spec: *const SDL_AudioSpec,
+    ) -> SDL_AudioDeviceID;
 }
 
 extern "C" {
@@ -611,7 +619,8 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetAudioDeviceGain
-    pub fn SDL_SetAudioDeviceGain(devid: SDL_AudioDeviceID, gain: ::core::ffi::c_float) -> SDL_bool;
+    pub fn SDL_SetAudioDeviceGain(devid: SDL_AudioDeviceID, gain: ::core::ffi::c_float)
+        -> SDL_bool;
 }
 
 extern "C" {
@@ -669,7 +678,11 @@ extern "C" {
     /// \sa SDL_BindAudioStreams
     /// \sa SDL_UnbindAudioStream
     /// \sa SDL_GetAudioStreamDevice
-    pub fn SDL_BindAudioStreams(devid: SDL_AudioDeviceID, streams: *mut *mut SDL_AudioStream, num_streams: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_BindAudioStreams(
+        devid: SDL_AudioDeviceID,
+        streams: *mut *mut SDL_AudioStream,
+        num_streams: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -710,7 +723,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_BindAudioStreams
-    pub fn SDL_UnbindAudioStreams(streams: *mut *mut SDL_AudioStream, num_streams: ::core::ffi::c_int);
+    pub fn SDL_UnbindAudioStreams(
+        streams: *mut *mut SDL_AudioStream,
+        num_streams: ::core::ffi::c_int,
+    );
 }
 
 extern "C" {
@@ -768,7 +784,10 @@ extern "C" {
     /// \sa SDL_ClearAudioStream
     /// \sa SDL_SetAudioStreamFormat
     /// \sa SDL_DestroyAudioStream
-    pub fn SDL_CreateAudioStream(src_spec: *const SDL_AudioSpec, dst_spec: *const SDL_AudioSpec) -> *mut SDL_AudioStream;
+    pub fn SDL_CreateAudioStream(
+        src_spec: *const SDL_AudioSpec,
+        dst_spec: *const SDL_AudioSpec,
+    ) -> *mut SDL_AudioStream;
 }
 
 extern "C" {
@@ -797,7 +816,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetAudioStreamFormat
-    pub fn SDL_GetAudioStreamFormat(stream: *mut SDL_AudioStream, src_spec: *mut SDL_AudioSpec, dst_spec: *mut SDL_AudioSpec) -> SDL_bool;
+    pub fn SDL_GetAudioStreamFormat(
+        stream: *mut SDL_AudioStream,
+        src_spec: *mut SDL_AudioSpec,
+        dst_spec: *mut SDL_AudioSpec,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -828,7 +851,11 @@ extern "C" {
     ///
     /// \sa SDL_GetAudioStreamFormat
     /// \sa SDL_SetAudioStreamFrequencyRatio
-    pub fn SDL_SetAudioStreamFormat(stream: *mut SDL_AudioStream, src_spec: *const SDL_AudioSpec, dst_spec: *const SDL_AudioSpec) -> SDL_bool;
+    pub fn SDL_SetAudioStreamFormat(
+        stream: *mut SDL_AudioStream,
+        src_spec: *const SDL_AudioSpec,
+        dst_spec: *const SDL_AudioSpec,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -872,7 +899,10 @@ extern "C" {
     ///
     /// \sa SDL_GetAudioStreamFrequencyRatio
     /// \sa SDL_SetAudioStreamFormat
-    pub fn SDL_SetAudioStreamFrequencyRatio(stream: *mut SDL_AudioStream, ratio: ::core::ffi::c_float) -> SDL_bool;
+    pub fn SDL_SetAudioStreamFrequencyRatio(
+        stream: *mut SDL_AudioStream,
+        ratio: ::core::ffi::c_float,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -918,7 +948,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetAudioStreamGain
-    pub fn SDL_SetAudioStreamGain(stream: *mut SDL_AudioStream, gain: ::core::ffi::c_float) -> SDL_bool;
+    pub fn SDL_SetAudioStreamGain(
+        stream: *mut SDL_AudioStream,
+        gain: ::core::ffi::c_float,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -942,7 +975,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetAudioStreamInputChannelMap
-    pub fn SDL_GetAudioStreamInputChannelMap(stream: *mut SDL_AudioStream, count: *mut ::core::ffi::c_int) -> *mut ::core::ffi::c_int;
+    pub fn SDL_GetAudioStreamInputChannelMap(
+        stream: *mut SDL_AudioStream,
+        count: *mut ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -966,7 +1002,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetAudioStreamInputChannelMap
-    pub fn SDL_GetAudioStreamOutputChannelMap(stream: *mut SDL_AudioStream, count: *mut ::core::ffi::c_int) -> *mut ::core::ffi::c_int;
+    pub fn SDL_GetAudioStreamOutputChannelMap(
+        stream: *mut SDL_AudioStream,
+        count: *mut ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -1017,7 +1056,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetAudioStreamInputChannelMap
-    pub fn SDL_SetAudioStreamInputChannelMap(stream: *mut SDL_AudioStream, chmap: *const ::core::ffi::c_int, count: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SetAudioStreamInputChannelMap(
+        stream: *mut SDL_AudioStream,
+        chmap: *const ::core::ffi::c_int,
+        count: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1064,7 +1107,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetAudioStreamInputChannelMap
-    pub fn SDL_SetAudioStreamOutputChannelMap(stream: *mut SDL_AudioStream, chmap: *const ::core::ffi::c_int, count: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SetAudioStreamOutputChannelMap(
+        stream: *mut SDL_AudioStream,
+        chmap: *const ::core::ffi::c_int,
+        count: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1094,7 +1141,11 @@ extern "C" {
     /// \sa SDL_FlushAudioStream
     /// \sa SDL_GetAudioStreamData
     /// \sa SDL_GetAudioStreamQueued
-    pub fn SDL_PutAudioStreamData(stream: *mut SDL_AudioStream, buf: *const ::core::ffi::c_void, len: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_PutAudioStreamData(
+        stream: *mut SDL_AudioStream,
+        buf: *const ::core::ffi::c_void,
+        len: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1124,7 +1175,11 @@ extern "C" {
     /// \sa SDL_ClearAudioStream
     /// \sa SDL_GetAudioStreamAvailable
     /// \sa SDL_PutAudioStreamData
-    pub fn SDL_GetAudioStreamData(stream: *mut SDL_AudioStream, buf: *mut ::core::ffi::c_void, len: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn SDL_GetAudioStreamData(
+        stream: *mut SDL_AudioStream,
+        buf: *mut ::core::ffi::c_void,
+        len: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -1354,7 +1409,14 @@ extern "C" {
 ///
 /// \sa SDL_SetAudioStreamGetCallback
 /// \sa SDL_SetAudioStreamPutCallback
-pub type SDL_AudioStreamCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, stream: *mut SDL_AudioStream, additional_amount: ::core::ffi::c_int, total_amount: ::core::ffi::c_int)>;
+pub type SDL_AudioStreamCallback = ::core::option::Option<
+    extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        stream: *mut SDL_AudioStream,
+        additional_amount: ::core::ffi::c_int,
+        total_amount: ::core::ffi::c_int,
+    ),
+>;
 
 extern "C" {
     /// Set a callback that runs when data is requested from an audio stream.
@@ -1399,7 +1461,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetAudioStreamPutCallback
-    pub fn SDL_SetAudioStreamGetCallback(stream: *mut SDL_AudioStream, callback: SDL_AudioStreamCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
+    pub fn SDL_SetAudioStreamGetCallback(
+        stream: *mut SDL_AudioStream,
+        callback: SDL_AudioStreamCallback,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1448,7 +1514,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetAudioStreamGetCallback
-    pub fn SDL_SetAudioStreamPutCallback(stream: *mut SDL_AudioStream, callback: SDL_AudioStreamCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
+    pub fn SDL_SetAudioStreamPutCallback(
+        stream: *mut SDL_AudioStream,
+        callback: SDL_AudioStreamCallback,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1531,7 +1601,12 @@ extern "C" {
     ///
     /// \sa SDL_GetAudioStreamDevice
     /// \sa SDL_ResumeAudioStreamDevice
-    pub fn SDL_OpenAudioDeviceStream(devid: SDL_AudioDeviceID, spec: *const SDL_AudioSpec, callback: SDL_AudioStreamCallback, userdata: *mut ::core::ffi::c_void) -> *mut SDL_AudioStream;
+    pub fn SDL_OpenAudioDeviceStream(
+        devid: SDL_AudioDeviceID,
+        spec: *const SDL_AudioSpec,
+        callback: SDL_AudioStreamCallback,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> *mut SDL_AudioStream;
 }
 
 /// A callback that fires when data is about to be fed to an audio device.
@@ -1567,7 +1642,14 @@ extern "C" {
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_SetAudioPostmixCallback
-pub type SDL_AudioPostmixCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, spec: *const SDL_AudioSpec, buffer: *mut ::core::ffi::c_float, buflen: ::core::ffi::c_int)>;
+pub type SDL_AudioPostmixCallback = ::core::option::Option<
+    extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        spec: *const SDL_AudioSpec,
+        buffer: *mut ::core::ffi::c_float,
+        buflen: ::core::ffi::c_int,
+    ),
+>;
 
 extern "C" {
     /// Set a callback that fires when data is about to be fed to an audio device.
@@ -1620,7 +1702,11 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetAudioPostmixCallback(devid: SDL_AudioDeviceID, callback: SDL_AudioPostmixCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
+    pub fn SDL_SetAudioPostmixCallback(
+        devid: SDL_AudioDeviceID,
+        callback: SDL_AudioPostmixCallback,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1700,7 +1786,13 @@ extern "C" {
     ///
     /// \sa SDL_free
     /// \sa SDL_LoadWAV
-    pub fn SDL_LoadWAV_IO(src: *mut SDL_IOStream, closeio: SDL_bool, spec: *mut SDL_AudioSpec, audio_buf: *mut *mut Uint8, audio_len: *mut Uint32) -> SDL_bool;
+    pub fn SDL_LoadWAV_IO(
+        src: *mut SDL_IOStream,
+        closeio: SDL_bool,
+        spec: *mut SDL_AudioSpec,
+        audio_buf: *mut *mut Uint8,
+        audio_len: *mut Uint32,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1736,7 +1828,12 @@ extern "C" {
     ///
     /// \sa SDL_free
     /// \sa SDL_LoadWAV_IO
-    pub fn SDL_LoadWAV(path: *const ::core::ffi::c_char, spec: *mut SDL_AudioSpec, audio_buf: *mut *mut Uint8, audio_len: *mut Uint32) -> SDL_bool;
+    pub fn SDL_LoadWAV(
+        path: *const ::core::ffi::c_char,
+        spec: *mut SDL_AudioSpec,
+        audio_buf: *mut *mut Uint8,
+        audio_len: *mut Uint32,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1772,7 +1869,13 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_MixAudio(dst: *mut Uint8, src: *const Uint8, format: SDL_AudioFormat, len: Uint32, volume: ::core::ffi::c_float) -> SDL_bool;
+    pub fn SDL_MixAudio(
+        dst: *mut Uint8,
+        src: *const Uint8,
+        format: SDL_AudioFormat,
+        len: Uint32,
+        volume: ::core::ffi::c_float,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1802,7 +1905,14 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ConvertAudioSamples(src_spec: *const SDL_AudioSpec, src_data: *const Uint8, src_len: ::core::ffi::c_int, dst_spec: *const SDL_AudioSpec, dst_data: *mut *mut Uint8, dst_len: *mut ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_ConvertAudioSamples(
+        src_spec: *const SDL_AudioSpec,
+        src_data: *const Uint8,
+        src_len: ::core::ffi::c_int,
+        dst_spec: *const SDL_AudioSpec,
+        dst_data: *mut *mut Uint8,
+        dst_len: *mut ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1858,5 +1968,6 @@ extern "C" {
 /// \sa SDL_CreateAudioStream
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_AudioStream { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_AudioStream {
+    _opaque: [::core::primitive::u8; 0],
+}

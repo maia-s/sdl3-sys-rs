@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryProperties
 //!
 //! A property is a variable that can be created and retrieved by name at
@@ -159,7 +157,9 @@ extern "C" {
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_SetPointerPropertyWithCleanup
-pub type SDL_CleanupPropertyCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, value: *mut ::core::ffi::c_void)>;
+pub type SDL_CleanupPropertyCallback = ::core::option::Option<
+    extern "C" fn(userdata: *mut ::core::ffi::c_void, value: *mut ::core::ffi::c_void),
+>;
 
 extern "C" {
     /// Set a pointer property in a group of properties with a cleanup function
@@ -189,7 +189,13 @@ extern "C" {
     /// \sa SDL_GetPointerProperty
     /// \sa SDL_SetPointerProperty
     /// \sa SDL_CleanupPropertyCallback
-    pub fn SDL_SetPointerPropertyWithCleanup(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, value: *mut ::core::ffi::c_void, cleanup: SDL_CleanupPropertyCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
+    pub fn SDL_SetPointerPropertyWithCleanup(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+        value: *mut ::core::ffi::c_void,
+        cleanup: SDL_CleanupPropertyCallback,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -212,7 +218,11 @@ extern "C" {
     /// \sa SDL_SetNumberProperty
     /// \sa SDL_SetPointerPropertyWithCleanup
     /// \sa SDL_SetStringProperty
-    pub fn SDL_SetPointerProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, value: *mut ::core::ffi::c_void) -> SDL_bool;
+    pub fn SDL_SetPointerProperty(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+        value: *mut ::core::ffi::c_void,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -232,7 +242,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetStringProperty
-    pub fn SDL_SetStringProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, value: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_SetStringProperty(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+        value: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -249,7 +263,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetNumberProperty
-    pub fn SDL_SetNumberProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, value: Sint64) -> SDL_bool;
+    pub fn SDL_SetNumberProperty(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+        value: Sint64,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -266,7 +284,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetFloatProperty
-    pub fn SDL_SetFloatProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, value: ::core::ffi::c_float) -> SDL_bool;
+    pub fn SDL_SetFloatProperty(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+        value: ::core::ffi::c_float,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -283,7 +305,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetBooleanProperty
-    pub fn SDL_SetBooleanProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, value: SDL_bool) -> SDL_bool;
+    pub fn SDL_SetBooleanProperty(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+        value: SDL_bool,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -314,7 +340,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_HasProperty
-    pub fn SDL_GetPropertyType(props: SDL_PropertiesID, name: *const ::core::ffi::c_char) -> SDL_PropertyType;
+    pub fn SDL_GetPropertyType(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+    ) -> SDL_PropertyType;
 }
 
 extern "C" {
@@ -347,7 +376,11 @@ extern "C" {
     /// \sa SDL_GetStringProperty
     /// \sa SDL_HasProperty
     /// \sa SDL_SetPointerProperty
-    pub fn SDL_GetPointerProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, default_value: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
+    pub fn SDL_GetPointerProperty(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+        default_value: *mut ::core::ffi::c_void,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
@@ -371,7 +404,11 @@ extern "C" {
     /// \sa SDL_GetPropertyType
     /// \sa SDL_HasProperty
     /// \sa SDL_SetStringProperty
-    pub fn SDL_GetStringProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, default_value: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
+    pub fn SDL_GetStringProperty(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+        default_value: *const ::core::ffi::c_char,
+    ) -> *const ::core::ffi::c_char;
 }
 
 extern "C" {
@@ -393,7 +430,11 @@ extern "C" {
     /// \sa SDL_GetPropertyType
     /// \sa SDL_HasProperty
     /// \sa SDL_SetNumberProperty
-    pub fn SDL_GetNumberProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, default_value: Sint64) -> Sint64;
+    pub fn SDL_GetNumberProperty(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+        default_value: Sint64,
+    ) -> Sint64;
 }
 
 extern "C" {
@@ -415,7 +456,11 @@ extern "C" {
     /// \sa SDL_GetPropertyType
     /// \sa SDL_HasProperty
     /// \sa SDL_SetFloatProperty
-    pub fn SDL_GetFloatProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, default_value: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub fn SDL_GetFloatProperty(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+        default_value: ::core::ffi::c_float,
+    ) -> ::core::ffi::c_float;
 }
 
 extern "C" {
@@ -437,7 +482,11 @@ extern "C" {
     /// \sa SDL_GetPropertyType
     /// \sa SDL_HasProperty
     /// \sa SDL_SetBooleanProperty
-    pub fn SDL_GetBooleanProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char, default_value: SDL_bool) -> SDL_bool;
+    pub fn SDL_GetBooleanProperty(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+        default_value: SDL_bool,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -451,7 +500,8 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ClearProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_ClearProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char)
+        -> SDL_bool;
 }
 
 /// A callback used to enumerate all the properties in a group of properties.
@@ -469,7 +519,13 @@ extern "C" {
 /// \since This datatype is available since SDL 3.0.0.
 ///
 /// \sa SDL_EnumerateProperties
-pub type SDL_EnumeratePropertiesCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, props: SDL_PropertiesID, name: *const ::core::ffi::c_char)>;
+pub type SDL_EnumeratePropertiesCallback = ::core::option::Option<
+    extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+    ),
+>;
 
 extern "C" {
     /// Enumerate the properties contained in a group of properties.
@@ -486,7 +542,11 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_EnumerateProperties(props: SDL_PropertiesID, callback: SDL_EnumeratePropertiesCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
+    pub fn SDL_EnumerateProperties(
+        props: SDL_PropertiesID,
+        callback: SDL_EnumeratePropertiesCallback,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -506,4 +566,3 @@ extern "C" {
     /// \sa SDL_CreateProperties
     pub fn SDL_DestroyProperties(props: SDL_PropertiesID);
 }
-

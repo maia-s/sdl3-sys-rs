@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryGUID
 //!
 //! A GUID is a 128-bit value that represents something that is uniquely
@@ -41,7 +39,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_StringToGUID
-    pub fn SDL_GUIDToString(guid: SDL_GUID, pszGUID: *mut ::core::ffi::c_char, cbGUID: ::core::ffi::c_int);
+    pub fn SDL_GUIDToString(
+        guid: SDL_GUID,
+        pszGUID: *mut ::core::ffi::c_char,
+        cbGUID: ::core::ffi::c_int,
+    );
 }
 
 extern "C" {
@@ -59,4 +61,3 @@ extern "C" {
     /// \sa SDL_GUIDToString
     pub fn SDL_StringToGUID(pchGUID: *const ::core::ffi::c_char) -> SDL_GUID;
 }
-

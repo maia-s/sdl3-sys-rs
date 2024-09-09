@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryHaptic
 //!
 //! The SDL haptic subsystem manages haptic (force feedback) devices.
@@ -1055,7 +1053,10 @@ extern "C" {
     ///
     /// \sa SDL_CreateHapticEffect
     /// \sa SDL_GetHapticFeatures
-    pub fn SDL_HapticEffectSupported(haptic: *mut SDL_Haptic, effect: *const SDL_HapticEffect) -> SDL_bool;
+    pub fn SDL_HapticEffectSupported(
+        haptic: *mut SDL_Haptic,
+        effect: *const SDL_HapticEffect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1072,7 +1073,10 @@ extern "C" {
     /// \sa SDL_DestroyHapticEffect
     /// \sa SDL_RunHapticEffect
     /// \sa SDL_UpdateHapticEffect
-    pub fn SDL_CreateHapticEffect(haptic: *mut SDL_Haptic, effect: *const SDL_HapticEffect) -> ::core::ffi::c_int;
+    pub fn SDL_CreateHapticEffect(
+        haptic: *mut SDL_Haptic,
+        effect: *const SDL_HapticEffect,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -1094,7 +1098,11 @@ extern "C" {
     ///
     /// \sa SDL_CreateHapticEffect
     /// \sa SDL_RunHapticEffect
-    pub fn SDL_UpdateHapticEffect(haptic: *mut SDL_Haptic, effect: ::core::ffi::c_int, data: *const SDL_HapticEffect) -> SDL_bool;
+    pub fn SDL_UpdateHapticEffect(
+        haptic: *mut SDL_Haptic,
+        effect: ::core::ffi::c_int,
+        data: *const SDL_HapticEffect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1118,7 +1126,11 @@ extern "C" {
     /// \sa SDL_GetHapticEffectStatus
     /// \sa SDL_StopHapticEffect
     /// \sa SDL_StopHapticEffects
-    pub fn SDL_RunHapticEffect(haptic: *mut SDL_Haptic, effect: ::core::ffi::c_int, iterations: Uint32) -> SDL_bool;
+    pub fn SDL_RunHapticEffect(
+        haptic: *mut SDL_Haptic,
+        effect: ::core::ffi::c_int,
+        iterations: Uint32,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1164,7 +1176,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetHapticFeatures
-    pub fn SDL_GetHapticEffectStatus(haptic: *mut SDL_Haptic, effect: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_GetHapticEffectStatus(
+        haptic: *mut SDL_Haptic,
+        effect: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1205,7 +1220,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetHapticFeatures
-    pub fn SDL_SetHapticAutocenter(haptic: *mut SDL_Haptic, autocenter: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SetHapticAutocenter(
+        haptic: *mut SDL_Haptic,
+        autocenter: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1296,7 +1314,11 @@ extern "C" {
     ///
     /// \sa SDL_InitHapticRumble
     /// \sa SDL_StopHapticRumble
-    pub fn SDL_PlayHapticRumble(haptic: *mut SDL_Haptic, strength: ::core::ffi::c_float, length: Uint32) -> SDL_bool;
+    pub fn SDL_PlayHapticRumble(
+        haptic: *mut SDL_Haptic,
+        strength: ::core::ffi::c_float,
+        length: Uint32,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1321,5 +1343,6 @@ extern "C" {
 /// \sa SDL_CloseHaptic
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_Haptic { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_Haptic {
+    _opaque: [::core::primitive::u8; 0],
+}

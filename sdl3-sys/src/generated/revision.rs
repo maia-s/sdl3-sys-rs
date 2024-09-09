@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 #[cfg(doc)]
 emit! {
     /// This macro is a string describing the source at a particular point in
@@ -23,4 +21,3 @@ emit! {
     pub const SDL_REVISION: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"prerelease-3.1.2-1636-g7df1caba7\0") };
 
 }
-

@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategorySensor
 //!
 //! SDL sensor management.
@@ -264,7 +262,11 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetSensorData(sensor: *mut SDL_Sensor, data: *mut ::core::ffi::c_float, num_values: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_GetSensorData(
+        sensor: *mut SDL_Sensor,
+        data: *mut ::core::ffi::c_float,
+        num_values: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -291,5 +293,6 @@ extern "C" {
 
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_Sensor { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_Sensor {
+    _opaque: [::core::primitive::u8; 0],
+}

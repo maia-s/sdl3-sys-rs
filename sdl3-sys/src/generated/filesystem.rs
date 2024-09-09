@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryFilesystem
 //!
 //! SDL Filesystem API.
@@ -101,7 +99,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetBasePath
-    pub fn SDL_GetPrefPath(org: *const ::core::ffi::c_char, app: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
+    pub fn SDL_GetPrefPath(
+        org: *const ::core::ffi::c_char,
+        app: *const ::core::ffi::c_char,
+    ) -> *mut ::core::ffi::c_char;
 }
 
 /// The type of the OS-provided default folder for a specific purpose.
@@ -297,7 +298,13 @@ extern "C" {
     pub fn SDL_CreateDirectory(path: *const ::core::ffi::c_char) -> SDL_bool;
 }
 
-pub type SDL_EnumerateDirectoryCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, dirname: *const ::core::ffi::c_char, fname: *const ::core::ffi::c_char) -> ::core::ffi::c_int>;
+pub type SDL_EnumerateDirectoryCallback = ::core::option::Option<
+    extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        dirname: *const ::core::ffi::c_char,
+        fname: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_int,
+>;
 
 extern "C" {
     /// Enumerate a directory through a callback function.
@@ -313,7 +320,11 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_EnumerateDirectory(path: *const ::core::ffi::c_char, callback: SDL_EnumerateDirectoryCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
+    pub fn SDL_EnumerateDirectory(
+        path: *const ::core::ffi::c_char,
+        callback: SDL_EnumerateDirectoryCallback,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -336,7 +347,10 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_RenamePath(oldpath: *const ::core::ffi::c_char, newpath: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_RenamePath(
+        oldpath: *const ::core::ffi::c_char,
+        newpath: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -348,7 +362,10 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_CopyFile(oldpath: *const ::core::ffi::c_char, newpath: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_CopyFile(
+        oldpath: *const ::core::ffi::c_char,
+        newpath: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -394,6 +411,10 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GlobDirectory(path: *const ::core::ffi::c_char, pattern: *const ::core::ffi::c_char, flags: SDL_GlobFlags, count: *mut ::core::ffi::c_int) -> *mut *mut ::core::ffi::c_char;
+    pub fn SDL_GlobDirectory(
+        path: *const ::core::ffi::c_char,
+        pattern: *const ::core::ffi::c_char,
+        flags: SDL_GlobFlags,
+        count: *mut ::core::ffi::c_int,
+    ) -> *mut *mut ::core::ffi::c_char;
 }
-

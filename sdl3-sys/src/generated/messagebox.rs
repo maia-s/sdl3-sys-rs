@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryMessagebox
 //!
 //! Message box support routines.
@@ -86,11 +84,15 @@ impl SDL_MessageBoxColorType {
     /// Size of the colors array of SDL_MessageBoxColorScheme.
     pub const MAX: Self = Self(5);
 }
-pub const SDL_MESSAGEBOX_COLOR_BACKGROUND: SDL_MessageBoxColorType = SDL_MessageBoxColorType::BACKGROUND;
+pub const SDL_MESSAGEBOX_COLOR_BACKGROUND: SDL_MessageBoxColorType =
+    SDL_MessageBoxColorType::BACKGROUND;
 pub const SDL_MESSAGEBOX_COLOR_TEXT: SDL_MessageBoxColorType = SDL_MessageBoxColorType::TEXT;
-pub const SDL_MESSAGEBOX_COLOR_BUTTON_BORDER: SDL_MessageBoxColorType = SDL_MessageBoxColorType::BUTTON_BORDER;
-pub const SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND: SDL_MessageBoxColorType = SDL_MessageBoxColorType::BUTTON_BACKGROUND;
-pub const SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED: SDL_MessageBoxColorType = SDL_MessageBoxColorType::BUTTON_SELECTED;
+pub const SDL_MESSAGEBOX_COLOR_BUTTON_BORDER: SDL_MessageBoxColorType =
+    SDL_MessageBoxColorType::BUTTON_BORDER;
+pub const SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND: SDL_MessageBoxColorType =
+    SDL_MessageBoxColorType::BUTTON_BACKGROUND;
+pub const SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED: SDL_MessageBoxColorType =
+    SDL_MessageBoxColorType::BUTTON_SELECTED;
 /// Size of the colors array of SDL_MessageBoxColorScheme.
 pub const SDL_MESSAGEBOX_COLOR_MAX: SDL_MessageBoxColorType = SDL_MessageBoxColorType::MAX;
 
@@ -157,7 +159,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ShowSimpleMessageBox
-    pub fn SDL_ShowMessageBox(messageboxdata: *const SDL_MessageBoxData, buttonid: *mut ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_ShowMessageBox(
+        messageboxdata: *const SDL_MessageBoxData,
+        buttonid: *mut ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -199,6 +204,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ShowMessageBox
-    pub fn SDL_ShowSimpleMessageBox(flags: SDL_MessageBoxFlags, title: *const ::core::ffi::c_char, message: *const ::core::ffi::c_char, window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_ShowSimpleMessageBox(
+        flags: SDL_MessageBoxFlags,
+        title: *const ::core::ffi::c_char,
+        message: *const ::core::ffi::c_char,
+        window: *mut SDL_Window,
+    ) -> SDL_bool;
 }
-

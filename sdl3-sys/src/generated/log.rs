@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryLog
 //!
 //! Simple log messages with priorities and categories. A message's
@@ -188,7 +186,10 @@ extern "C" {
     ///
     /// \sa SDL_SetLogPriorities
     /// \sa SDL_SetLogPriority
-    pub fn SDL_SetLogPriorityPrefix(priority: SDL_LogPriority, prefix: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_SetLogPriorityPrefix(
+        priority: SDL_LogPriority,
+        prefix: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -356,7 +357,12 @@ extern "C" {
     /// \sa SDL_LogMessageV
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
-    pub fn SDL_LogMessage(category: ::core::ffi::c_int, priority: SDL_LogPriority, fmt: *const ::core::ffi::c_char, ...);
+    pub fn SDL_LogMessage(
+        category: ::core::ffi::c_int,
+        priority: SDL_LogPriority,
+        fmt: *const ::core::ffi::c_char,
+        ...
+    );
 }
 
 extern "C" {
@@ -377,7 +383,12 @@ extern "C" {
     /// \sa SDL_LogMessage
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
-    pub fn SDL_LogMessageV(category: ::core::ffi::c_int, priority: SDL_LogPriority, fmt: *const ::core::ffi::c_char, ap: crate::ffi::VaList);
+    pub fn SDL_LogMessageV(
+        category: ::core::ffi::c_int,
+        priority: SDL_LogPriority,
+        fmt: *const ::core::ffi::c_char,
+        ap: crate::ffi::VaList,
+    );
 }
 
 /// The prototype for the log output callback function.
@@ -391,7 +402,14 @@ extern "C" {
 /// \param message the message being output.
 ///
 /// \since This datatype is available since SDL 3.0.0.
-pub type SDL_LogOutputFunction = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, category: ::core::ffi::c_int, priority: SDL_LogPriority, message: *const ::core::ffi::c_char)>;
+pub type SDL_LogOutputFunction = ::core::option::Option<
+    extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        category: ::core::ffi::c_int,
+        priority: SDL_LogPriority,
+        message: *const ::core::ffi::c_char,
+    ),
+>;
 
 extern "C" {
     /// Get the current log output function.
@@ -404,7 +422,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetLogOutputFunction
-    pub fn SDL_GetLogOutputFunction(callback: *mut SDL_LogOutputFunction, userdata: *mut *mut ::core::ffi::c_void);
+    pub fn SDL_GetLogOutputFunction(
+        callback: *mut SDL_LogOutputFunction,
+        userdata: *mut *mut ::core::ffi::c_void,
+    );
 }
 
 extern "C" {
@@ -416,6 +437,8 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetLogOutputFunction
-    pub fn SDL_SetLogOutputFunction(callback: SDL_LogOutputFunction, userdata: *mut ::core::ffi::c_void);
+    pub fn SDL_SetLogOutputFunction(
+        callback: SDL_LogOutputFunction,
+        userdata: *mut ::core::ffi::c_void,
+    );
 }
-

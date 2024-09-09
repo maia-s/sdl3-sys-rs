@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryCamera
 //!
 //! Video capture for the SDL library.
@@ -196,7 +194,10 @@ extern "C" {
     ///
     /// \sa SDL_GetCameras
     /// \sa SDL_OpenCamera
-    pub fn SDL_GetCameraSupportedFormats(devid: SDL_CameraID, count: *mut ::core::ffi::c_int) -> *mut *mut SDL_CameraSpec;
+    pub fn SDL_GetCameraSupportedFormats(
+        devid: SDL_CameraID,
+        count: *mut ::core::ffi::c_int,
+    ) -> *mut *mut SDL_CameraSpec;
 }
 
 extern "C" {
@@ -276,7 +277,10 @@ extern "C" {
     ///
     /// \sa SDL_GetCameras
     /// \sa SDL_GetCameraFormat
-    pub fn SDL_OpenCamera(instance_id: SDL_CameraID, spec: *const SDL_CameraSpec) -> *mut SDL_Camera;
+    pub fn SDL_OpenCamera(
+        instance_id: SDL_CameraID,
+        spec: *const SDL_CameraSpec,
+    ) -> *mut SDL_Camera;
 }
 
 extern "C" {
@@ -405,7 +409,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ReleaseCameraFrame
-    pub fn SDL_AcquireCameraFrame(camera: *mut SDL_Camera, timestampNS: *mut Uint64) -> *mut SDL_Surface;
+    pub fn SDL_AcquireCameraFrame(
+        camera: *mut SDL_Camera,
+        timestampNS: *mut Uint64,
+    ) -> *mut SDL_Surface;
 }
 
 extern "C" {
@@ -457,5 +464,6 @@ extern "C" {
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_Camera { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_Camera {
+    _opaque: [::core::primitive::u8; 0],
+}

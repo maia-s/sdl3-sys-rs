@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryKeyboard
 //!
 //! SDL keyboard management.
@@ -177,7 +175,11 @@ extern "C" {
     ///
     /// \sa SDL_GetKeyName
     /// \sa SDL_GetScancodeFromKey
-    pub fn SDL_GetKeyFromScancode(scancode: SDL_Scancode, modstate: SDL_Keymod, key_event: SDL_bool) -> SDL_Keycode;
+    pub fn SDL_GetKeyFromScancode(
+        scancode: SDL_Scancode,
+        modstate: SDL_Keymod,
+        key_event: SDL_bool,
+    ) -> SDL_Keycode;
 }
 
 extern "C" {
@@ -212,7 +214,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetScancodeName
-    pub fn SDL_SetScancodeName(scancode: SDL_Scancode, name: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_SetScancodeName(
+        scancode: SDL_Scancode,
+        name: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -353,15 +358,19 @@ pub const SDL_TEXTINPUT_TYPE_TEXT_EMAIL: SDL_TextInputType = SDL_TextInputType::
 /// The input is a username
 pub const SDL_TEXTINPUT_TYPE_TEXT_USERNAME: SDL_TextInputType = SDL_TextInputType::TEXT_USERNAME;
 /// The input is a secure password that is hidden
-pub const SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_HIDDEN: SDL_TextInputType = SDL_TextInputType::TEXT_PASSWORD_HIDDEN;
+pub const SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_HIDDEN: SDL_TextInputType =
+    SDL_TextInputType::TEXT_PASSWORD_HIDDEN;
 /// The input is a secure password that is visible
-pub const SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_VISIBLE: SDL_TextInputType = SDL_TextInputType::TEXT_PASSWORD_VISIBLE;
+pub const SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_VISIBLE: SDL_TextInputType =
+    SDL_TextInputType::TEXT_PASSWORD_VISIBLE;
 /// The input is a number
 pub const SDL_TEXTINPUT_TYPE_NUMBER: SDL_TextInputType = SDL_TextInputType::NUMBER;
 /// The input is a secure PIN that is hidden
-pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN: SDL_TextInputType = SDL_TextInputType::NUMBER_PASSWORD_HIDDEN;
+pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN: SDL_TextInputType =
+    SDL_TextInputType::NUMBER_PASSWORD_HIDDEN;
 /// The input is a secure PIN that is visible
-pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType = SDL_TextInputType::NUMBER_PASSWORD_VISIBLE;
+pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
+    SDL_TextInputType::NUMBER_PASSWORD_VISIBLE;
 
 /// Auto capitalization type.
 ///
@@ -443,18 +452,27 @@ extern "C" {
     /// \sa SDL_StartTextInput
     /// \sa SDL_StopTextInput
     /// \sa SDL_TextInputActive
-    pub fn SDL_StartTextInputWithProperties(window: *mut SDL_Window, props: SDL_PropertiesID) -> SDL_bool;
+    pub fn SDL_StartTextInputWithProperties(
+        window: *mut SDL_Window,
+        props: SDL_PropertiesID,
+    ) -> SDL_bool;
 }
 
-pub const SDL_PROP_TEXTINPUT_TYPE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.type\0") };
+pub const SDL_PROP_TEXTINPUT_TYPE_NUMBER: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.type\0") };
 
-pub const SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.capitalization\0") };
+pub const SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.capitalization\0") };
 
-pub const SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.autocorrect\0") };
+pub const SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.autocorrect\0") };
 
-pub const SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.multiline\0") };
+pub const SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.multiline\0") };
 
-pub const SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.android.inputtype\0") };
+pub const SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.android.inputtype\0")
+};
 
 extern "C" {
     /// Check whether or not Unicode text input events are enabled for a window.
@@ -516,7 +534,11 @@ extern "C" {
     ///
     /// \sa SDL_GetTextInputArea
     /// \sa SDL_StartTextInput
-    pub fn SDL_SetTextInputArea(window: *mut SDL_Window, rect: *const SDL_Rect, cursor: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SetTextInputArea(
+        window: *mut SDL_Window,
+        rect: *const SDL_Rect,
+        cursor: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -535,7 +557,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetTextInputArea
-    pub fn SDL_GetTextInputArea(window: *mut SDL_Window, rect: *mut SDL_Rect, cursor: *mut ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_GetTextInputArea(
+        window: *mut SDL_Window,
+        rect: *mut SDL_Rect,
+        cursor: *mut ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -562,4 +588,3 @@ extern "C" {
     /// \sa SDL_HasScreenKeyboardSupport
     pub fn SDL_ScreenKeyboardShown(window: *mut SDL_Window) -> SDL_bool;
 }
-

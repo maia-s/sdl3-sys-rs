@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryVulkan
 //!
 //! Functions for creating Vulkan surfaces on SDL windows.
@@ -11,24 +9,26 @@ use super::error::*;
 use super::video::*;
 
 #[cfg(any(any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64", target_arch = "x86_64"))]
-emit! {
-}
+emit! {}
 
 #[cfg(not(any(any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64", target_arch = "x86_64")))]
-emit! {
-}
+emit! {}
 
 pub type VkInstance = *mut __VkInstance;
 
 #[repr(C)]
 #[non_exhaustive]
-pub struct __VkInstance { _opaque: [::core::primitive::u8; 0] }
+pub struct __VkInstance {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 pub type VkPhysicalDevice = *mut __VkPhysicalDevice;
 
 #[repr(C)]
 #[non_exhaustive]
-pub struct __VkPhysicalDevice { _opaque: [::core::primitive::u8; 0] }
+pub struct __VkPhysicalDevice {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 #[cfg(target_pointer_width = "64")]
 pub type VkSurfaceKHR = *mut __VkSurfaceKHR;
@@ -36,7 +36,9 @@ pub type VkSurfaceKHR = *mut __VkSurfaceKHR;
 #[cfg(target_pointer_width = "64")]
 #[repr(C)]
 #[non_exhaustive]
-pub struct __VkSurfaceKHR { _opaque: [::core::primitive::u8; 0] }
+pub struct __VkSurfaceKHR {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 #[cfg(not(target_pointer_width = "64"))]
 pub type VkSurfaceKHR = ::core::primitive::u64;
@@ -135,7 +137,9 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_Vulkan_CreateSurface
-    pub fn SDL_Vulkan_GetInstanceExtensions(count: *mut Uint32) -> *const *const ::core::ffi::c_char;
+    pub fn SDL_Vulkan_GetInstanceExtensions(
+        count: *mut Uint32,
+    ) -> *const *const ::core::ffi::c_char;
 }
 
 extern "C" {
@@ -161,7 +165,12 @@ extern "C" {
     ///
     /// \sa SDL_Vulkan_GetInstanceExtensions
     /// \sa SDL_Vulkan_DestroySurface
-    pub fn SDL_Vulkan_CreateSurface(window: *mut SDL_Window, instance: VkInstance, allocator: *const VkAllocationCallbacks, surface: *mut VkSurfaceKHR) -> SDL_bool;
+    pub fn SDL_Vulkan_CreateSurface(
+        window: *mut SDL_Window,
+        instance: VkInstance,
+        allocator: *const VkAllocationCallbacks,
+        surface: *mut VkSurfaceKHR,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -186,7 +195,11 @@ extern "C" {
     ///
     /// \sa SDL_Vulkan_GetInstanceExtensions
     /// \sa SDL_Vulkan_CreateSurface
-    pub fn SDL_Vulkan_DestroySurface(instance: VkInstance, surface: VkSurfaceKHR, allocator: *const VkAllocationCallbacks);
+    pub fn SDL_Vulkan_DestroySurface(
+        instance: VkInstance,
+        surface: VkSurfaceKHR,
+        allocator: *const VkAllocationCallbacks,
+    );
 }
 
 extern "C" {
@@ -206,10 +219,15 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_Vulkan_GetInstanceExtensions
-    pub fn SDL_Vulkan_GetPresentationSupport(instance: VkInstance, physicalDevice: VkPhysicalDevice, queueFamilyIndex: Uint32) -> SDL_bool;
+    pub fn SDL_Vulkan_GetPresentationSupport(
+        instance: VkInstance,
+        physicalDevice: VkPhysicalDevice,
+        queueFamilyIndex: Uint32,
+    ) -> SDL_bool;
 }
 
 #[repr(C)]
 #[non_exhaustive]
-pub struct VkAllocationCallbacks { _opaque: [::core::primitive::u8; 0] }
-
+pub struct VkAllocationCallbacks {
+    _opaque: [::core::primitive::u8; 0],
+}

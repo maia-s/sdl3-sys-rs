@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryIOStream
 //!
 //! SDL provides an abstract interface for reading and writing data streams. It
@@ -103,7 +101,13 @@ pub struct SDL_IOStreamInterface {
     /// SDL_IO_SEEK_SET, SDL_IO_SEEK_CUR, SDL_IO_SEEK_END
     ///
     /// \return the final offset in the data stream, or -1 on error.
-    pub seek: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, offset: Sint64, whence: SDL_IOWhence) -> Sint64>,
+    pub seek: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            offset: Sint64,
+            whence: SDL_IOWhence,
+        ) -> Sint64,
+    >,
     /// Read up to `size` bytes from the data stream to the area pointed
     /// at by `ptr`.
     ///
@@ -112,7 +116,14 @@ pub struct SDL_IOStreamInterface {
     /// a complete, successful read.
     ///
     /// \return the number of bytes read
-    pub read: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, ptr: *mut ::core::ffi::c_void, size: ::core::primitive::usize, status: *mut SDL_IOStatus) -> ::core::primitive::usize>,
+    pub read: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            ptr: *mut ::core::ffi::c_void,
+            size: ::core::primitive::usize,
+            status: *mut SDL_IOStatus,
+        ) -> ::core::primitive::usize,
+    >,
     /// Write exactly `size` bytes from the area pointed at by `ptr`
     /// to data stream.
     ///
@@ -121,14 +132,22 @@ pub struct SDL_IOStreamInterface {
     /// a complete, successful write.
     ///
     /// \return the number of bytes written
-    pub write: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, ptr: *const ::core::ffi::c_void, size: ::core::primitive::usize, status: *mut SDL_IOStatus) -> ::core::primitive::usize>,
+    pub write: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            ptr: *const ::core::ffi::c_void,
+            size: ::core::primitive::usize,
+            status: *mut SDL_IOStatus,
+        ) -> ::core::primitive::usize,
+    >,
     /// Close and free any allocated resources.
     ///
     /// The SDL_IOStream is still destroyed even if this fails, so clean up anything
     /// even if flushing to disk returns an error.
     ///
     /// \return SDL_TRUE if successful or SDL_FALSE on write error when flushing data.
-    pub close: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool>,
+    pub close:
+        ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool>,
 }
 
 impl SDL_IOStreamInterface {
@@ -153,7 +172,12 @@ impl ::core::default::Default for SDL_IOStreamInterface {
 impl crate::sealed_interface::Sealed for SDL_IOStreamInterface {}
 unsafe impl crate::Interface for SDL_IOStreamInterface {}
 
-const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_IOStreamInterface>() == 24) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_IOStreamInterface>() == 48)));
+const _: () = ::core::assert!(
+    ((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4
+        && ::core::mem::size_of::<SDL_IOStreamInterface>() == 24)
+        || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8
+            && ::core::mem::size_of::<SDL_IOStreamInterface>() == 48))
+);
 
 extern "C" {
     /// Use this function to create a new SDL_IOStream structure for reading from
@@ -231,14 +255,20 @@ extern "C" {
     /// \sa SDL_SeekIO
     /// \sa SDL_TellIO
     /// \sa SDL_WriteIO
-    pub fn SDL_IOFromFile(file: *const ::core::ffi::c_char, mode: *const ::core::ffi::c_char) -> *mut SDL_IOStream;
+    pub fn SDL_IOFromFile(
+        file: *const ::core::ffi::c_char,
+        mode: *const ::core::ffi::c_char,
+    ) -> *mut SDL_IOStream;
 }
 
-pub const SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.windows.handle\0") };
+pub const SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.windows.handle\0") };
 
-pub const SDL_PROP_IOSTREAM_STDIO_FILE_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.stdio.file\0") };
+pub const SDL_PROP_IOSTREAM_STDIO_FILE_POINTER: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.stdio.file\0") };
 
-pub const SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.android.aasset\0") };
+pub const SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.android.aasset\0") };
 
 extern "C" {
     /// Use this function to prepare a read-write memory buffer for use with
@@ -268,7 +298,10 @@ extern "C" {
     /// \sa SDL_SeekIO
     /// \sa SDL_TellIO
     /// \sa SDL_WriteIO
-    pub fn SDL_IOFromMem(mem: *mut ::core::ffi::c_void, size: ::core::primitive::usize) -> *mut SDL_IOStream;
+    pub fn SDL_IOFromMem(
+        mem: *mut ::core::ffi::c_void,
+        size: ::core::primitive::usize,
+    ) -> *mut SDL_IOStream;
 }
 
 extern "C" {
@@ -300,7 +333,10 @@ extern "C" {
     /// \sa SDL_ReadIO
     /// \sa SDL_SeekIO
     /// \sa SDL_TellIO
-    pub fn SDL_IOFromConstMem(mem: *const ::core::ffi::c_void, size: ::core::primitive::usize) -> *mut SDL_IOStream;
+    pub fn SDL_IOFromConstMem(
+        mem: *const ::core::ffi::c_void,
+        size: ::core::primitive::usize,
+    ) -> *mut SDL_IOStream;
 }
 
 extern "C" {
@@ -331,9 +367,12 @@ extern "C" {
     pub fn SDL_IOFromDynamicMem() -> *mut SDL_IOStream;
 }
 
-pub const SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.dynamic.memory\0") };
+pub const SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.dynamic.memory\0") };
 
-pub const SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.dynamic.chunksize\0") };
+pub const SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.dynamic.chunksize\0")
+};
 
 extern "C" {
     /// Create a custom SDL_IOStream.
@@ -359,7 +398,10 @@ extern "C" {
     /// \sa SDL_IOFromConstMem
     /// \sa SDL_IOFromFile
     /// \sa SDL_IOFromMem
-    pub fn SDL_OpenIO(iface: *const SDL_IOStreamInterface, userdata: *mut ::core::ffi::c_void) -> *mut SDL_IOStream;
+    pub fn SDL_OpenIO(
+        iface: *const SDL_IOStreamInterface,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> *mut SDL_IOStream;
 }
 
 extern "C" {
@@ -491,7 +533,11 @@ extern "C" {
     ///
     /// \sa SDL_WriteIO
     /// \sa SDL_GetIOStatus
-    pub fn SDL_ReadIO(context: *mut SDL_IOStream, ptr: *mut ::core::ffi::c_void, size: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_ReadIO(
+        context: *mut SDL_IOStream,
+        ptr: *mut ::core::ffi::c_void,
+        size: ::core::primitive::usize,
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
@@ -520,7 +566,11 @@ extern "C" {
     /// \sa SDL_ReadIO
     /// \sa SDL_SeekIO
     /// \sa SDL_GetIOStatus
-    pub fn SDL_WriteIO(context: *mut SDL_IOStream, ptr: *const ::core::ffi::c_void, size: ::core::primitive::usize) -> ::core::primitive::usize;
+    pub fn SDL_WriteIO(
+        context: *mut SDL_IOStream,
+        ptr: *const ::core::ffi::c_void,
+        size: ::core::primitive::usize,
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
@@ -539,7 +589,11 @@ extern "C" {
     ///
     /// \sa SDL_IOvprintf
     /// \sa SDL_WriteIO
-    pub fn SDL_IOprintf(context: *mut SDL_IOStream, fmt: *const ::core::ffi::c_char, ...) -> ::core::primitive::usize;
+    pub fn SDL_IOprintf(
+        context: *mut SDL_IOStream,
+        fmt: *const ::core::ffi::c_char,
+        ...
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
@@ -557,7 +611,11 @@ extern "C" {
     ///
     /// \sa SDL_IOprintf
     /// \sa SDL_WriteIO
-    pub fn SDL_IOvprintf(context: *mut SDL_IOStream, fmt: *const ::core::ffi::c_char, ap: crate::ffi::VaList) -> ::core::primitive::usize;
+    pub fn SDL_IOvprintf(
+        context: *mut SDL_IOStream,
+        fmt: *const ::core::ffi::c_char,
+        ap: crate::ffi::VaList,
+    ) -> ::core::primitive::usize;
 }
 
 extern "C" {
@@ -579,7 +637,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_LoadFile
-    pub fn SDL_LoadFile_IO(src: *mut SDL_IOStream, datasize: *mut ::core::primitive::usize, closeio: SDL_bool) -> *mut ::core::ffi::c_void;
+    pub fn SDL_LoadFile_IO(
+        src: *mut SDL_IOStream,
+        datasize: *mut ::core::primitive::usize,
+        closeio: SDL_bool,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
@@ -599,7 +661,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_LoadFile_IO
-    pub fn SDL_LoadFile(file: *const ::core::ffi::c_char, datasize: *mut ::core::primitive::usize) -> *mut ::core::ffi::c_void;
+    pub fn SDL_LoadFile(
+        file: *const ::core::ffi::c_char,
+        datasize: *mut ::core::primitive::usize,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
@@ -1050,5 +1115,6 @@ extern "C" {
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_IOStream { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_IOStream {
+    _opaque: [::core::primitive::u8; 0],
+}

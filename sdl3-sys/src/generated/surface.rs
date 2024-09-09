@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategorySurface
 //!
 //! SDL_Surface definition and management functions.
@@ -133,7 +131,11 @@ extern "C" {
     ///
     /// \sa SDL_CreateSurfaceFrom
     /// \sa SDL_DestroySurface
-    pub fn SDL_CreateSurface(width: ::core::ffi::c_int, height: ::core::ffi::c_int, format: SDL_PixelFormat) -> *mut SDL_Surface;
+    pub fn SDL_CreateSurface(
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        format: SDL_PixelFormat,
+    ) -> *mut SDL_Surface;
 }
 
 extern "C" {
@@ -161,7 +163,13 @@ extern "C" {
     ///
     /// \sa SDL_CreateSurface
     /// \sa SDL_DestroySurface
-    pub fn SDL_CreateSurfaceFrom(width: ::core::ffi::c_int, height: ::core::ffi::c_int, format: SDL_PixelFormat, pixels: *mut ::core::ffi::c_void, pitch: ::core::ffi::c_int) -> *mut SDL_Surface;
+    pub fn SDL_CreateSurfaceFrom(
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        format: SDL_PixelFormat,
+        pixels: *mut ::core::ffi::c_void,
+        pitch: ::core::ffi::c_int,
+    ) -> *mut SDL_Surface;
 }
 
 extern "C" {
@@ -207,11 +215,14 @@ extern "C" {
     pub fn SDL_GetSurfaceProperties(surface: *mut SDL_Surface) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.surface.SDR_white_point\0") };
+pub const SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.surface.SDR_white_point\0") };
 
-pub const SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.surface.HDR_headroom\0") };
+pub const SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.surface.HDR_headroom\0") };
 
-pub const SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.surface.tonemap\0") };
+pub const SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.surface.tonemap\0") };
 
 extern "C" {
     /// Set the colorspace used by a surface.
@@ -228,7 +239,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetSurfaceColorspace
-    pub fn SDL_SetSurfaceColorspace(surface: *mut SDL_Surface, colorspace: SDL_Colorspace) -> SDL_bool;
+    pub fn SDL_SetSurfaceColorspace(
+        surface: *mut SDL_Surface,
+        colorspace: SDL_Colorspace,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -328,7 +342,10 @@ extern "C" {
     /// \sa SDL_RemoveSurfaceAlternateImages
     /// \sa SDL_GetSurfaceImages
     /// \sa SDL_SurfaceHasAlternateImages
-    pub fn SDL_AddSurfaceAlternateImage(surface: *mut SDL_Surface, image: *mut SDL_Surface) -> SDL_bool;
+    pub fn SDL_AddSurfaceAlternateImage(
+        surface: *mut SDL_Surface,
+        image: *mut SDL_Surface,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -368,7 +385,10 @@ extern "C" {
     /// \sa SDL_AddSurfaceAlternateImage
     /// \sa SDL_RemoveSurfaceAlternateImages
     /// \sa SDL_SurfaceHasAlternateImages
-    pub fn SDL_GetSurfaceImages(surface: *mut SDL_Surface, count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Surface;
+    pub fn SDL_GetSurfaceImages(
+        surface: *mut SDL_Surface,
+        count: *mut ::core::ffi::c_int,
+    ) -> *mut *mut SDL_Surface;
 }
 
 extern "C" {
@@ -479,7 +499,11 @@ extern "C" {
     ///
     /// \sa SDL_LoadBMP_IO
     /// \sa SDL_SaveBMP
-    pub fn SDL_SaveBMP_IO(surface: *mut SDL_Surface, dst: *mut SDL_IOStream, closeio: SDL_bool) -> SDL_bool;
+    pub fn SDL_SaveBMP_IO(
+        surface: *mut SDL_Surface,
+        dst: *mut SDL_IOStream,
+        closeio: SDL_bool,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -559,7 +583,11 @@ extern "C" {
     /// \sa SDL_GetSurfaceColorKey
     /// \sa SDL_SetSurfaceRLE
     /// \sa SDL_SurfaceHasColorKey
-    pub fn SDL_SetSurfaceColorKey(surface: *mut SDL_Surface, enabled: SDL_bool, key: Uint32) -> SDL_bool;
+    pub fn SDL_SetSurfaceColorKey(
+        surface: *mut SDL_Surface,
+        enabled: SDL_bool,
+        key: Uint32,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -617,7 +645,12 @@ extern "C" {
     ///
     /// \sa SDL_GetSurfaceColorMod
     /// \sa SDL_SetSurfaceAlphaMod
-    pub fn SDL_SetSurfaceColorMod(surface: *mut SDL_Surface, r: Uint8, g: Uint8, b: Uint8) -> SDL_bool;
+    pub fn SDL_SetSurfaceColorMod(
+        surface: *mut SDL_Surface,
+        r: Uint8,
+        g: Uint8,
+        b: Uint8,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -634,7 +667,12 @@ extern "C" {
     ///
     /// \sa SDL_GetSurfaceAlphaMod
     /// \sa SDL_SetSurfaceColorMod
-    pub fn SDL_GetSurfaceColorMod(surface: *mut SDL_Surface, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8) -> SDL_bool;
+    pub fn SDL_GetSurfaceColorMod(
+        surface: *mut SDL_Surface,
+        r: *mut Uint8,
+        g: *mut Uint8,
+        b: *mut Uint8,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -687,7 +725,8 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetSurfaceBlendMode
-    pub fn SDL_SetSurfaceBlendMode(surface: *mut SDL_Surface, blendMode: SDL_BlendMode) -> SDL_bool;
+    pub fn SDL_SetSurfaceBlendMode(surface: *mut SDL_Surface, blendMode: SDL_BlendMode)
+        -> SDL_bool;
 }
 
 extern "C" {
@@ -701,7 +740,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetSurfaceBlendMode
-    pub fn SDL_GetSurfaceBlendMode(surface: *mut SDL_Surface, blendMode: *mut SDL_BlendMode) -> SDL_bool;
+    pub fn SDL_GetSurfaceBlendMode(
+        surface: *mut SDL_Surface,
+        blendMode: *mut SDL_BlendMode,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -790,7 +832,12 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_DestroySurface
-    pub fn SDL_ScaleSurface(surface: *mut SDL_Surface, width: ::core::ffi::c_int, height: ::core::ffi::c_int, scaleMode: SDL_ScaleMode) -> *mut SDL_Surface;
+    pub fn SDL_ScaleSurface(
+        surface: *mut SDL_Surface,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        scaleMode: SDL_ScaleMode,
+    ) -> *mut SDL_Surface;
 }
 
 extern "C" {
@@ -816,7 +863,10 @@ extern "C" {
     ///
     /// \sa SDL_ConvertSurfaceAndColorspace
     /// \sa SDL_DestroySurface
-    pub fn SDL_ConvertSurface(surface: *mut SDL_Surface, format: SDL_PixelFormat) -> *mut SDL_Surface;
+    pub fn SDL_ConvertSurface(
+        surface: *mut SDL_Surface,
+        format: SDL_PixelFormat,
+    ) -> *mut SDL_Surface;
 }
 
 extern "C" {
@@ -843,7 +893,13 @@ extern "C" {
     /// \sa SDL_ConvertSurface
     /// \sa SDL_ConvertSurface
     /// \sa SDL_DestroySurface
-    pub fn SDL_ConvertSurfaceAndColorspace(surface: *mut SDL_Surface, format: SDL_PixelFormat, palette: *mut SDL_Palette, colorspace: SDL_Colorspace, props: SDL_PropertiesID) -> *mut SDL_Surface;
+    pub fn SDL_ConvertSurfaceAndColorspace(
+        surface: *mut SDL_Surface,
+        format: SDL_PixelFormat,
+        palette: *mut SDL_Palette,
+        colorspace: SDL_Colorspace,
+        props: SDL_PropertiesID,
+    ) -> *mut SDL_Surface;
 }
 
 extern "C" {
@@ -863,7 +919,16 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ConvertPixelsAndColorspace
-    pub fn SDL_ConvertPixels(width: ::core::ffi::c_int, height: ::core::ffi::c_int, src_format: SDL_PixelFormat, src: *const ::core::ffi::c_void, src_pitch: ::core::ffi::c_int, dst_format: SDL_PixelFormat, dst: *mut ::core::ffi::c_void, dst_pitch: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_ConvertPixels(
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        src_format: SDL_PixelFormat,
+        src: *const ::core::ffi::c_void,
+        src_pitch: ::core::ffi::c_int,
+        dst_format: SDL_PixelFormat,
+        dst: *mut ::core::ffi::c_void,
+        dst_pitch: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -892,7 +957,20 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ConvertPixels
-    pub fn SDL_ConvertPixelsAndColorspace(width: ::core::ffi::c_int, height: ::core::ffi::c_int, src_format: SDL_PixelFormat, src_colorspace: SDL_Colorspace, src_properties: SDL_PropertiesID, src: *const ::core::ffi::c_void, src_pitch: ::core::ffi::c_int, dst_format: SDL_PixelFormat, dst_colorspace: SDL_Colorspace, dst_properties: SDL_PropertiesID, dst: *mut ::core::ffi::c_void, dst_pitch: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_ConvertPixelsAndColorspace(
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        src_format: SDL_PixelFormat,
+        src_colorspace: SDL_Colorspace,
+        src_properties: SDL_PropertiesID,
+        src: *const ::core::ffi::c_void,
+        src_pitch: ::core::ffi::c_int,
+        dst_format: SDL_PixelFormat,
+        dst_colorspace: SDL_Colorspace,
+        dst_properties: SDL_PropertiesID,
+        dst: *mut ::core::ffi::c_void,
+        dst_pitch: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -914,7 +992,17 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_PremultiplyAlpha(width: ::core::ffi::c_int, height: ::core::ffi::c_int, src_format: SDL_PixelFormat, src: *const ::core::ffi::c_void, src_pitch: ::core::ffi::c_int, dst_format: SDL_PixelFormat, dst: *mut ::core::ffi::c_void, dst_pitch: ::core::ffi::c_int, linear: SDL_bool) -> SDL_bool;
+    pub fn SDL_PremultiplyAlpha(
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        src_format: SDL_PixelFormat,
+        src: *const ::core::ffi::c_void,
+        src_pitch: ::core::ffi::c_int,
+        dst_format: SDL_PixelFormat,
+        dst: *mut ::core::ffi::c_void,
+        dst_pitch: ::core::ffi::c_int,
+        linear: SDL_bool,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -949,7 +1037,13 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ClearSurface(surface: *mut SDL_Surface, r: ::core::ffi::c_float, g: ::core::ffi::c_float, b: ::core::ffi::c_float, a: ::core::ffi::c_float) -> SDL_bool;
+    pub fn SDL_ClearSurface(
+        surface: *mut SDL_Surface,
+        r: ::core::ffi::c_float,
+        g: ::core::ffi::c_float,
+        b: ::core::ffi::c_float,
+        a: ::core::ffi::c_float,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -974,7 +1068,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_FillSurfaceRects
-    pub fn SDL_FillSurfaceRect(dst: *mut SDL_Surface, rect: *const SDL_Rect, color: Uint32) -> SDL_bool;
+    pub fn SDL_FillSurfaceRect(
+        dst: *mut SDL_Surface,
+        rect: *const SDL_Rect,
+        color: Uint32,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -999,7 +1097,12 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_FillSurfaceRect
-    pub fn SDL_FillSurfaceRects(dst: *mut SDL_Surface, rects: *const SDL_Rect, count: ::core::ffi::c_int, color: Uint32) -> SDL_bool;
+    pub fn SDL_FillSurfaceRects(
+        dst: *mut SDL_Surface,
+        rects: *const SDL_Rect,
+        count: ::core::ffi::c_int,
+        color: Uint32,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1074,7 +1177,12 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_BlitSurfaceScaled
-    pub fn SDL_BlitSurface(src: *mut SDL_Surface, srcrect: *const SDL_Rect, dst: *mut SDL_Surface, dstrect: *const SDL_Rect) -> SDL_bool;
+    pub fn SDL_BlitSurface(
+        src: *mut SDL_Surface,
+        srcrect: *const SDL_Rect,
+        dst: *mut SDL_Surface,
+        dstrect: *const SDL_Rect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1099,7 +1207,12 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_BlitSurface
-    pub fn SDL_BlitSurfaceUnchecked(src: *mut SDL_Surface, srcrect: *const SDL_Rect, dst: *mut SDL_Surface, dstrect: *const SDL_Rect) -> SDL_bool;
+    pub fn SDL_BlitSurfaceUnchecked(
+        src: *mut SDL_Surface,
+        srcrect: *const SDL_Rect,
+        dst: *mut SDL_Surface,
+        dstrect: *const SDL_Rect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1124,7 +1237,13 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_BlitSurface
-    pub fn SDL_BlitSurfaceScaled(src: *mut SDL_Surface, srcrect: *const SDL_Rect, dst: *mut SDL_Surface, dstrect: *const SDL_Rect, scaleMode: SDL_ScaleMode) -> SDL_bool;
+    pub fn SDL_BlitSurfaceScaled(
+        src: *mut SDL_Surface,
+        srcrect: *const SDL_Rect,
+        dst: *mut SDL_Surface,
+        dstrect: *const SDL_Rect,
+        scaleMode: SDL_ScaleMode,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1150,7 +1269,13 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_BlitSurfaceScaled
-    pub fn SDL_BlitSurfaceUncheckedScaled(src: *mut SDL_Surface, srcrect: *const SDL_Rect, dst: *mut SDL_Surface, dstrect: *const SDL_Rect, scaleMode: SDL_ScaleMode) -> SDL_bool;
+    pub fn SDL_BlitSurfaceUncheckedScaled(
+        src: *mut SDL_Surface,
+        srcrect: *const SDL_Rect,
+        dst: *mut SDL_Surface,
+        dstrect: *const SDL_Rect,
+        scaleMode: SDL_ScaleMode,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1176,7 +1301,12 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_BlitSurface
-    pub fn SDL_BlitSurfaceTiled(src: *mut SDL_Surface, srcrect: *const SDL_Rect, dst: *mut SDL_Surface, dstrect: *const SDL_Rect) -> SDL_bool;
+    pub fn SDL_BlitSurfaceTiled(
+        src: *mut SDL_Surface,
+        srcrect: *const SDL_Rect,
+        dst: *mut SDL_Surface,
+        dstrect: *const SDL_Rect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1206,7 +1336,14 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_BlitSurface
-    pub fn SDL_BlitSurfaceTiledWithScale(src: *mut SDL_Surface, srcrect: *const SDL_Rect, scale: ::core::ffi::c_float, scaleMode: SDL_ScaleMode, dst: *mut SDL_Surface, dstrect: *const SDL_Rect) -> SDL_bool;
+    pub fn SDL_BlitSurfaceTiledWithScale(
+        src: *mut SDL_Surface,
+        srcrect: *const SDL_Rect,
+        scale: ::core::ffi::c_float,
+        scaleMode: SDL_ScaleMode,
+        dst: *mut SDL_Surface,
+        dstrect: *const SDL_Rect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1243,7 +1380,18 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_BlitSurface
-    pub fn SDL_BlitSurface9Grid(src: *mut SDL_Surface, srcrect: *const SDL_Rect, left_width: ::core::ffi::c_int, right_width: ::core::ffi::c_int, top_height: ::core::ffi::c_int, bottom_height: ::core::ffi::c_int, scale: ::core::ffi::c_float, scaleMode: SDL_ScaleMode, dst: *mut SDL_Surface, dstrect: *const SDL_Rect) -> SDL_bool;
+    pub fn SDL_BlitSurface9Grid(
+        src: *mut SDL_Surface,
+        srcrect: *const SDL_Rect,
+        left_width: ::core::ffi::c_int,
+        right_width: ::core::ffi::c_int,
+        top_height: ::core::ffi::c_int,
+        bottom_height: ::core::ffi::c_int,
+        scale: ::core::ffi::c_float,
+        scaleMode: SDL_ScaleMode,
+        dst: *mut SDL_Surface,
+        dstrect: *const SDL_Rect,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1304,7 +1452,13 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_MapSurfaceRGB
-    pub fn SDL_MapSurfaceRGBA(surface: *mut SDL_Surface, r: Uint8, g: Uint8, b: Uint8, a: Uint8) -> Uint32;
+    pub fn SDL_MapSurfaceRGBA(
+        surface: *mut SDL_Surface,
+        r: Uint8,
+        g: Uint8,
+        b: Uint8,
+        a: Uint8,
+    ) -> Uint32;
 }
 
 extern "C" {
@@ -1331,7 +1485,15 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadSurfacePixel(surface: *mut SDL_Surface, x: ::core::ffi::c_int, y: ::core::ffi::c_int, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8, a: *mut Uint8) -> SDL_bool;
+    pub fn SDL_ReadSurfacePixel(
+        surface: *mut SDL_Surface,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        r: *mut Uint8,
+        g: *mut Uint8,
+        b: *mut Uint8,
+        a: *mut Uint8,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1355,7 +1517,15 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadSurfacePixelFloat(surface: *mut SDL_Surface, x: ::core::ffi::c_int, y: ::core::ffi::c_int, r: *mut ::core::ffi::c_float, g: *mut ::core::ffi::c_float, b: *mut ::core::ffi::c_float, a: *mut ::core::ffi::c_float) -> SDL_bool;
+    pub fn SDL_ReadSurfacePixelFloat(
+        surface: *mut SDL_Surface,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        r: *mut ::core::ffi::c_float,
+        g: *mut ::core::ffi::c_float,
+        b: *mut ::core::ffi::c_float,
+        a: *mut ::core::ffi::c_float,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1378,7 +1548,15 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteSurfacePixel(surface: *mut SDL_Surface, x: ::core::ffi::c_int, y: ::core::ffi::c_int, r: Uint8, g: Uint8, b: Uint8, a: Uint8) -> SDL_bool;
+    pub fn SDL_WriteSurfacePixel(
+        surface: *mut SDL_Surface,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        r: Uint8,
+        g: Uint8,
+        b: Uint8,
+        a: Uint8,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -1398,10 +1576,19 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteSurfacePixelFloat(surface: *mut SDL_Surface, x: ::core::ffi::c_int, y: ::core::ffi::c_int, r: ::core::ffi::c_float, g: ::core::ffi::c_float, b: ::core::ffi::c_float, a: ::core::ffi::c_float) -> SDL_bool;
+    pub fn SDL_WriteSurfacePixelFloat(
+        surface: *mut SDL_Surface,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        r: ::core::ffi::c_float,
+        g: ::core::ffi::c_float,
+        b: ::core::ffi::c_float,
+        a: ::core::ffi::c_float,
+    ) -> SDL_bool;
 }
 
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_SurfaceData { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_SurfaceData {
+    _opaque: [::core::primitive::u8; 0],
+}

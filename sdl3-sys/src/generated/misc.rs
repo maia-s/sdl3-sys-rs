@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryMisc
 //!
 //! SDL API functions that don't fit elsewhere.
@@ -38,4 +36,3 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_OpenURL(url: *const ::core::ffi::c_char) -> SDL_bool;
 }
-

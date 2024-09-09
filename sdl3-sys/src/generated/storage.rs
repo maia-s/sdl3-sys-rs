@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryStorage
 //!
 //! SDL storage container management.
@@ -31,17 +29,69 @@ use super::properties::*;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_StorageInterface {
     pub version: Uint32,
-    pub close: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool>,
-    pub ready: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool>,
-    pub enumerate: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, path: *const ::core::ffi::c_char, callback: SDL_EnumerateDirectoryCallback, callback_userdata: *mut ::core::ffi::c_void) -> SDL_bool>,
-    pub info: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, path: *const ::core::ffi::c_char, info: *mut SDL_PathInfo) -> SDL_bool>,
-    pub read_file: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, path: *const ::core::ffi::c_char, destination: *mut ::core::ffi::c_void, length: Uint64) -> SDL_bool>,
-    pub write_file: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, path: *const ::core::ffi::c_char, source: *const ::core::ffi::c_void, length: Uint64) -> SDL_bool>,
-    pub mkdir: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, path: *const ::core::ffi::c_char) -> SDL_bool>,
-    pub remove: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, path: *const ::core::ffi::c_char) -> SDL_bool>,
-    pub rename: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, oldpath: *const ::core::ffi::c_char, newpath: *const ::core::ffi::c_char) -> SDL_bool>,
-    pub copy: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, oldpath: *const ::core::ffi::c_char, newpath: *const ::core::ffi::c_char) -> SDL_bool>,
-    pub space_remaining: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> Uint64>,
+    pub close:
+        ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool>,
+    pub ready:
+        ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool>,
+    pub enumerate: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            path: *const ::core::ffi::c_char,
+            callback: SDL_EnumerateDirectoryCallback,
+            callback_userdata: *mut ::core::ffi::c_void,
+        ) -> SDL_bool,
+    >,
+    pub info: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            path: *const ::core::ffi::c_char,
+            info: *mut SDL_PathInfo,
+        ) -> SDL_bool,
+    >,
+    pub read_file: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            path: *const ::core::ffi::c_char,
+            destination: *mut ::core::ffi::c_void,
+            length: Uint64,
+        ) -> SDL_bool,
+    >,
+    pub write_file: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            path: *const ::core::ffi::c_char,
+            source: *const ::core::ffi::c_void,
+            length: Uint64,
+        ) -> SDL_bool,
+    >,
+    pub mkdir: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            path: *const ::core::ffi::c_char,
+        ) -> SDL_bool,
+    >,
+    pub remove: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            path: *const ::core::ffi::c_char,
+        ) -> SDL_bool,
+    >,
+    pub rename: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            oldpath: *const ::core::ffi::c_char,
+            newpath: *const ::core::ffi::c_char,
+        ) -> SDL_bool,
+    >,
+    pub copy: ::core::option::Option<
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            oldpath: *const ::core::ffi::c_char,
+            newpath: *const ::core::ffi::c_char,
+        ) -> SDL_bool,
+    >,
+    pub space_remaining:
+        ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> Uint64>,
 }
 
 impl SDL_StorageInterface {
@@ -66,7 +116,12 @@ impl ::core::default::Default for SDL_StorageInterface {
 impl crate::sealed_interface::Sealed for SDL_StorageInterface {}
 unsafe impl crate::Interface for SDL_StorageInterface {}
 
-const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_StorageInterface>() == 48) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_StorageInterface>() == 96)));
+const _: () = ::core::assert!(
+    ((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4
+        && ::core::mem::size_of::<SDL_StorageInterface>() == 48)
+        || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8
+            && ::core::mem::size_of::<SDL_StorageInterface>() == 96))
+);
 
 extern "C" {
     /// Opens up a read-only container for the application's filesystem.
@@ -82,7 +137,10 @@ extern "C" {
     /// \sa SDL_GetStorageFileSize
     /// \sa SDL_OpenUserStorage
     /// \sa SDL_ReadStorageFile
-    pub fn SDL_OpenTitleStorage(r#override: *const ::core::ffi::c_char, props: SDL_PropertiesID) -> *mut SDL_Storage;
+    pub fn SDL_OpenTitleStorage(
+        r#override: *const ::core::ffi::c_char,
+        props: SDL_PropertiesID,
+    ) -> *mut SDL_Storage;
 }
 
 extern "C" {
@@ -108,7 +166,11 @@ extern "C" {
     /// \sa SDL_ReadStorageFile
     /// \sa SDL_StorageReady
     /// \sa SDL_WriteStorageFile
-    pub fn SDL_OpenUserStorage(org: *const ::core::ffi::c_char, app: *const ::core::ffi::c_char, props: SDL_PropertiesID) -> *mut SDL_Storage;
+    pub fn SDL_OpenUserStorage(
+        org: *const ::core::ffi::c_char,
+        app: *const ::core::ffi::c_char,
+        props: SDL_PropertiesID,
+    ) -> *mut SDL_Storage;
 }
 
 extern "C" {
@@ -161,7 +223,10 @@ extern "C" {
     /// \sa SDL_ReadStorageFile
     /// \sa SDL_StorageReady
     /// \sa SDL_WriteStorageFile
-    pub fn SDL_OpenStorage(iface: *const SDL_StorageInterface, userdata: *mut ::core::ffi::c_void) -> *mut SDL_Storage;
+    pub fn SDL_OpenStorage(
+        iface: *const SDL_StorageInterface,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> *mut SDL_Storage;
 }
 
 extern "C" {
@@ -209,7 +274,11 @@ extern "C" {
     ///
     /// \sa SDL_ReadStorageFile
     /// \sa SDL_StorageReady
-    pub fn SDL_GetStorageFileSize(storage: *mut SDL_Storage, path: *const ::core::ffi::c_char, length: *mut Uint64) -> SDL_bool;
+    pub fn SDL_GetStorageFileSize(
+        storage: *mut SDL_Storage,
+        path: *const ::core::ffi::c_char,
+        length: *mut Uint64,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -228,7 +297,12 @@ extern "C" {
     /// \sa SDL_GetStorageFileSize
     /// \sa SDL_StorageReady
     /// \sa SDL_WriteStorageFile
-    pub fn SDL_ReadStorageFile(storage: *mut SDL_Storage, path: *const ::core::ffi::c_char, destination: *mut ::core::ffi::c_void, length: Uint64) -> SDL_bool;
+    pub fn SDL_ReadStorageFile(
+        storage: *mut SDL_Storage,
+        path: *const ::core::ffi::c_char,
+        destination: *mut ::core::ffi::c_void,
+        length: Uint64,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -246,7 +320,12 @@ extern "C" {
     /// \sa SDL_GetStorageSpaceRemaining
     /// \sa SDL_ReadStorageFile
     /// \sa SDL_StorageReady
-    pub fn SDL_WriteStorageFile(storage: *mut SDL_Storage, path: *const ::core::ffi::c_char, source: *const ::core::ffi::c_void, length: Uint64) -> SDL_bool;
+    pub fn SDL_WriteStorageFile(
+        storage: *mut SDL_Storage,
+        path: *const ::core::ffi::c_char,
+        source: *const ::core::ffi::c_void,
+        length: Uint64,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -260,7 +339,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_StorageReady
-    pub fn SDL_CreateStorageDirectory(storage: *mut SDL_Storage, path: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_CreateStorageDirectory(
+        storage: *mut SDL_Storage,
+        path: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -280,7 +362,12 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_StorageReady
-    pub fn SDL_EnumerateStorageDirectory(storage: *mut SDL_Storage, path: *const ::core::ffi::c_char, callback: SDL_EnumerateDirectoryCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
+    pub fn SDL_EnumerateStorageDirectory(
+        storage: *mut SDL_Storage,
+        path: *const ::core::ffi::c_char,
+        callback: SDL_EnumerateDirectoryCallback,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -294,7 +381,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_StorageReady
-    pub fn SDL_RemoveStoragePath(storage: *mut SDL_Storage, path: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_RemoveStoragePath(
+        storage: *mut SDL_Storage,
+        path: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -309,7 +399,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_StorageReady
-    pub fn SDL_RenameStoragePath(storage: *mut SDL_Storage, oldpath: *const ::core::ffi::c_char, newpath: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_RenameStoragePath(
+        storage: *mut SDL_Storage,
+        oldpath: *const ::core::ffi::c_char,
+        newpath: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -324,7 +418,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_StorageReady
-    pub fn SDL_CopyStorageFile(storage: *mut SDL_Storage, oldpath: *const ::core::ffi::c_char, newpath: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_CopyStorageFile(
+        storage: *mut SDL_Storage,
+        oldpath: *const ::core::ffi::c_char,
+        newpath: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -340,7 +438,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_StorageReady
-    pub fn SDL_GetStoragePathInfo(storage: *mut SDL_Storage, path: *const ::core::ffi::c_char, info: *mut SDL_PathInfo) -> SDL_bool;
+    pub fn SDL_GetStoragePathInfo(
+        storage: *mut SDL_Storage,
+        path: *const ::core::ffi::c_char,
+        info: *mut SDL_PathInfo,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -390,7 +492,13 @@ extern "C" {
     ///               the `storage` object is thread-safe.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GlobStorageDirectory(storage: *mut SDL_Storage, path: *const ::core::ffi::c_char, pattern: *const ::core::ffi::c_char, flags: SDL_GlobFlags, count: *mut ::core::ffi::c_int) -> *mut *mut ::core::ffi::c_char;
+    pub fn SDL_GlobStorageDirectory(
+        storage: *mut SDL_Storage,
+        path: *const ::core::ffi::c_char,
+        pattern: *const ::core::ffi::c_char,
+        flags: SDL_GlobFlags,
+        count: *mut ::core::ffi::c_int,
+    ) -> *mut *mut ::core::ffi::c_char;
 }
 
 /// An abstract interface for filesystem access.
@@ -402,5 +510,6 @@ extern "C" {
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_Storage { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_Storage {
+    _opaque: [::core::primitive::u8; 0],
+}

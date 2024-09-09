@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryPen
 //!
 //! SDL pen event handling.
@@ -113,4 +111,3 @@ pub const SDL_PEN_AXIS_SLIDER: SDL_PenAxis = SDL_PenAxis::AXIS_SLIDER;
 pub const SDL_PEN_AXIS_TANGENTIAL_PRESSURE: SDL_PenAxis = SDL_PenAxis::AXIS_TANGENTIAL_PRESSURE;
 /// Total known pen axis types in this version of SDL. This number may grow in future releases!
 pub const SDL_PEN_NUM_AXES: SDL_PenAxis = SDL_PenAxis::NUM_AXES;
-

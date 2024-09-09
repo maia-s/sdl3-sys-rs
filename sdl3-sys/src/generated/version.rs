@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryVersion
 //!
 //! Functionality to query the current SDL version, both as headers the app was
@@ -73,4 +71,3 @@ extern "C" {
     /// \sa SDL_GetVersion
     pub fn SDL_GetRevision() -> *const ::core::ffi::c_char;
 }
-

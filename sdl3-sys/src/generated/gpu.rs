@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryGPU
 //!
 //! Include file for SDL GPU API functions
@@ -46,9 +44,11 @@ pub const SDL_GPU_PRIMITIVETYPE_LINELIST: SDL_GPUPrimitiveType = SDL_GPUPrimitiv
 /// A series of connected lines.
 pub const SDL_GPU_PRIMITIVETYPE_LINESTRIP: SDL_GPUPrimitiveType = SDL_GPUPrimitiveType::LINESTRIP;
 /// A series of separate triangles.
-pub const SDL_GPU_PRIMITIVETYPE_TRIANGLELIST: SDL_GPUPrimitiveType = SDL_GPUPrimitiveType::TRIANGLELIST;
+pub const SDL_GPU_PRIMITIVETYPE_TRIANGLELIST: SDL_GPUPrimitiveType =
+    SDL_GPUPrimitiveType::TRIANGLELIST;
 /// A series of connected triangles.
-pub const SDL_GPU_PRIMITIVETYPE_TRIANGLESTRIP: SDL_GPUPrimitiveType = SDL_GPUPrimitiveType::TRIANGLESTRIP;
+pub const SDL_GPU_PRIMITIVETYPE_TRIANGLESTRIP: SDL_GPUPrimitiveType =
+    SDL_GPUPrimitiveType::TRIANGLESTRIP;
 
 /// Specifies how the contents of a texture attached to a render pass are
 /// treated at the beginning of the render pass.
@@ -272,59 +272,96 @@ pub const SDL_GPU_TEXTUREFORMAT_INVALID: SDL_GPUTextureFormat = SDL_GPUTextureFo
 pub const SDL_GPU_TEXTUREFORMAT_A8_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::A8_UNORM;
 pub const SDL_GPU_TEXTUREFORMAT_R8_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8_UNORM;
 pub const SDL_GPU_TEXTUREFORMAT_R8G8_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8G8_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8G8B8A8_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R8G8B8A8_UNORM;
 pub const SDL_GPU_TEXTUREFORMAT_R16_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_R16G16_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16G16_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16G16B16A16_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_R10G10B10A2_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R10G10B10A2_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_B5G6R5_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::B5G6R5_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_B5G5R5A1_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::B5G5R5A1_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_B4G4R4A4_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::B4G4R4A4_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::B8G8R8A8_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::BC1_RGBA_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_BC2_RGBA_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::BC2_RGBA_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_BC3_RGBA_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::BC3_RGBA_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_BC4_R_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::BC4_R_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_BC5_RG_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::BC5_RG_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::BC7_RGBA_UNORM;
-pub const SDL_GPU_TEXTUREFORMAT_BC6H_RGB_FLOAT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::BC6H_RGB_FLOAT;
-pub const SDL_GPU_TEXTUREFORMAT_BC6H_RGB_UFLOAT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::BC6H_RGB_UFLOAT;
+pub const SDL_GPU_TEXTUREFORMAT_R16G16_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R16G16_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R16G16B16A16_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_R10G10B10A2_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R10G10B10A2_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_B5G6R5_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::B5G6R5_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_B5G5R5A1_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::B5G5R5A1_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_B4G4R4A4_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::B4G4R4A4_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::B8G8R8A8_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::BC1_RGBA_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_BC2_RGBA_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::BC2_RGBA_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_BC3_RGBA_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::BC3_RGBA_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_BC4_R_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::BC4_R_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_BC5_RG_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::BC5_RG_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::BC7_RGBA_UNORM;
+pub const SDL_GPU_TEXTUREFORMAT_BC6H_RGB_FLOAT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::BC6H_RGB_FLOAT;
+pub const SDL_GPU_TEXTUREFORMAT_BC6H_RGB_UFLOAT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::BC6H_RGB_UFLOAT;
 pub const SDL_GPU_TEXTUREFORMAT_R8_SNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8_SNORM;
 pub const SDL_GPU_TEXTUREFORMAT_R8G8_SNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8G8_SNORM;
-pub const SDL_GPU_TEXTUREFORMAT_R8G8B8A8_SNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8G8B8A8_SNORM;
+pub const SDL_GPU_TEXTUREFORMAT_R8G8B8A8_SNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R8G8B8A8_SNORM;
 pub const SDL_GPU_TEXTUREFORMAT_R16_SNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16_SNORM;
-pub const SDL_GPU_TEXTUREFORMAT_R16G16_SNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16G16_SNORM;
-pub const SDL_GPU_TEXTUREFORMAT_R16G16B16A16_SNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16G16B16A16_SNORM;
+pub const SDL_GPU_TEXTUREFORMAT_R16G16_SNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R16G16_SNORM;
+pub const SDL_GPU_TEXTUREFORMAT_R16G16B16A16_SNORM: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R16G16B16A16_SNORM;
 pub const SDL_GPU_TEXTUREFORMAT_R16_FLOAT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16_FLOAT;
-pub const SDL_GPU_TEXTUREFORMAT_R16G16_FLOAT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16G16_FLOAT;
-pub const SDL_GPU_TEXTUREFORMAT_R16G16B16A16_FLOAT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16G16B16A16_FLOAT;
+pub const SDL_GPU_TEXTUREFORMAT_R16G16_FLOAT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R16G16_FLOAT;
+pub const SDL_GPU_TEXTUREFORMAT_R16G16B16A16_FLOAT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R16G16B16A16_FLOAT;
 pub const SDL_GPU_TEXTUREFORMAT_R32_FLOAT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R32_FLOAT;
-pub const SDL_GPU_TEXTUREFORMAT_R32G32_FLOAT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R32G32_FLOAT;
-pub const SDL_GPU_TEXTUREFORMAT_R32G32B32A32_FLOAT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R32G32B32A32_FLOAT;
-pub const SDL_GPU_TEXTUREFORMAT_R11G11B10_UFLOAT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R11G11B10_UFLOAT;
+pub const SDL_GPU_TEXTUREFORMAT_R32G32_FLOAT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R32G32_FLOAT;
+pub const SDL_GPU_TEXTUREFORMAT_R32G32B32A32_FLOAT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R32G32B32A32_FLOAT;
+pub const SDL_GPU_TEXTUREFORMAT_R11G11B10_UFLOAT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R11G11B10_UFLOAT;
 pub const SDL_GPU_TEXTUREFORMAT_R8_UINT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8_UINT;
 pub const SDL_GPU_TEXTUREFORMAT_R8G8_UINT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8G8_UINT;
-pub const SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UINT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8G8B8A8_UINT;
+pub const SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UINT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R8G8B8A8_UINT;
 pub const SDL_GPU_TEXTUREFORMAT_R16_UINT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16_UINT;
-pub const SDL_GPU_TEXTUREFORMAT_R16G16_UINT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16G16_UINT;
-pub const SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UINT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16G16B16A16_UINT;
+pub const SDL_GPU_TEXTUREFORMAT_R16G16_UINT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R16G16_UINT;
+pub const SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UINT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R16G16B16A16_UINT;
 pub const SDL_GPU_TEXTUREFORMAT_R8_INT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8_INT;
 pub const SDL_GPU_TEXTUREFORMAT_R8G8_INT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8G8_INT;
-pub const SDL_GPU_TEXTUREFORMAT_R8G8B8A8_INT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8G8B8A8_INT;
+pub const SDL_GPU_TEXTUREFORMAT_R8G8B8A8_INT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R8G8B8A8_INT;
 pub const SDL_GPU_TEXTUREFORMAT_R16_INT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16_INT;
 pub const SDL_GPU_TEXTUREFORMAT_R16G16_INT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16G16_INT;
-pub const SDL_GPU_TEXTUREFORMAT_R16G16B16A16_INT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16G16B16A16_INT;
-pub const SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM_SRGB: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8G8B8A8_UNORM_SRGB;
-pub const SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM_SRGB: SDL_GPUTextureFormat = SDL_GPUTextureFormat::B8G8R8A8_UNORM_SRGB;
-pub const SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM_SRGB: SDL_GPUTextureFormat = SDL_GPUTextureFormat::BC1_RGBA_UNORM_SRGB;
-pub const SDL_GPU_TEXTUREFORMAT_BC2_RGBA_UNORM_SRGB: SDL_GPUTextureFormat = SDL_GPUTextureFormat::BC2_RGBA_UNORM_SRGB;
-pub const SDL_GPU_TEXTUREFORMAT_BC3_RGBA_UNORM_SRGB: SDL_GPUTextureFormat = SDL_GPUTextureFormat::BC3_RGBA_UNORM_SRGB;
-pub const SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM_SRGB: SDL_GPUTextureFormat = SDL_GPUTextureFormat::BC7_RGBA_UNORM_SRGB;
+pub const SDL_GPU_TEXTUREFORMAT_R16G16B16A16_INT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R16G16B16A16_INT;
+pub const SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM_SRGB: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R8G8B8A8_UNORM_SRGB;
+pub const SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM_SRGB: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::B8G8R8A8_UNORM_SRGB;
+pub const SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM_SRGB: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::BC1_RGBA_UNORM_SRGB;
+pub const SDL_GPU_TEXTUREFORMAT_BC2_RGBA_UNORM_SRGB: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::BC2_RGBA_UNORM_SRGB;
+pub const SDL_GPU_TEXTUREFORMAT_BC3_RGBA_UNORM_SRGB: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::BC3_RGBA_UNORM_SRGB;
+pub const SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM_SRGB: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::BC7_RGBA_UNORM_SRGB;
 pub const SDL_GPU_TEXTUREFORMAT_D16_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::D16_UNORM;
 pub const SDL_GPU_TEXTUREFORMAT_D24_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::D24_UNORM;
 pub const SDL_GPU_TEXTUREFORMAT_D32_FLOAT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::D32_FLOAT;
-pub const SDL_GPU_TEXTUREFORMAT_D24_UNORM_S8_UINT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::D24_UNORM_S8_UINT;
-pub const SDL_GPU_TEXTUREFORMAT_D32_FLOAT_S8_UINT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::D32_FLOAT_S8_UINT;
+pub const SDL_GPU_TEXTUREFORMAT_D24_UNORM_S8_UINT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::D24_UNORM_S8_UINT;
+pub const SDL_GPU_TEXTUREFORMAT_D32_FLOAT_S8_UINT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::D32_FLOAT_S8_UINT;
 
 /// Specifies how a texture is intended to be used by the client.
 ///
@@ -490,8 +527,10 @@ impl SDL_GPUTransferBufferUsage {
     pub const UPLOAD: Self = Self(0);
     pub const DOWNLOAD: Self = Self(1);
 }
-pub const SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD: SDL_GPUTransferBufferUsage = SDL_GPUTransferBufferUsage::UPLOAD;
-pub const SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD: SDL_GPUTransferBufferUsage = SDL_GPUTransferBufferUsage::DOWNLOAD;
+pub const SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD: SDL_GPUTransferBufferUsage =
+    SDL_GPUTransferBufferUsage::UPLOAD;
+pub const SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD: SDL_GPUTransferBufferUsage =
+    SDL_GPUTransferBufferUsage::DOWNLOAD;
 
 /// Specifies which stage a shader program corresponds to.
 ///
@@ -581,36 +620,66 @@ impl SDL_GPUVertexElementFormat {
     pub const HALF2: Self = Self(28);
     pub const HALF4: Self = Self(29);
 }
-pub const SDL_GPU_VERTEXELEMENTFORMAT_INT: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::INT;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_INT2: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::INT2;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_INT3: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::INT3;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_INT4: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::INT4;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_UINT: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::UINT;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_UINT2: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::UINT2;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_UINT3: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::UINT3;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_UINT4: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::UINT4;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_FLOAT: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::FLOAT;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::FLOAT2;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::FLOAT3;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::FLOAT4;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_BYTE2: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::BYTE2;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_BYTE4: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::BYTE4;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::UBYTE2;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::UBYTE4;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_BYTE2_NORM: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::BYTE2_NORM;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_BYTE4_NORM: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::BYTE4_NORM;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2_NORM: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::UBYTE2_NORM;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4_NORM: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::UBYTE4_NORM;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_SHORT2: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::SHORT2;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_SHORT4: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::SHORT4;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_USHORT2: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::USHORT2;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_USHORT4: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::USHORT4;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_SHORT2_NORM: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::SHORT2_NORM;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_SHORT4_NORM: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::SHORT4_NORM;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_USHORT2_NORM: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::USHORT2_NORM;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_USHORT4_NORM: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::USHORT4_NORM;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF2: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::HALF2;
-pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF4: SDL_GPUVertexElementFormat = SDL_GPUVertexElementFormat::HALF4;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_INT: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::INT;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_INT2: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::INT2;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_INT3: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::INT3;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_INT4: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::INT4;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_UINT: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::UINT;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_UINT2: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::UINT2;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_UINT3: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::UINT3;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_UINT4: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::UINT4;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_FLOAT: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::FLOAT;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::FLOAT2;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::FLOAT3;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::FLOAT4;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_BYTE2: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::BYTE2;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_BYTE4: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::BYTE4;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::UBYTE2;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::UBYTE4;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_BYTE2_NORM: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::BYTE2_NORM;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_BYTE4_NORM: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::BYTE4_NORM;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2_NORM: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::UBYTE2_NORM;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4_NORM: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::UBYTE4_NORM;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_SHORT2: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::SHORT2;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_SHORT4: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::SHORT4;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_USHORT2: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::USHORT2;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_USHORT4: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::USHORT4;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_SHORT2_NORM: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::SHORT2_NORM;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_SHORT4_NORM: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::SHORT4_NORM;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_USHORT2_NORM: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::USHORT2_NORM;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_USHORT4_NORM: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::USHORT4_NORM;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF2: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::HALF2;
+pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF4: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::HALF4;
 
 /// Specifies the rate at which vertex attributes are pulled from buffers.
 ///
@@ -632,7 +701,8 @@ impl SDL_GPUVertexInputRate {
 /// Attribute addressing is a function of the vertex index.
 pub const SDL_GPU_VERTEXINPUTRATE_VERTEX: SDL_GPUVertexInputRate = SDL_GPUVertexInputRate::VERTEX;
 /// Attribute addressing is a function of the instance index.
-pub const SDL_GPU_VERTEXINPUTRATE_INSTANCE: SDL_GPUVertexInputRate = SDL_GPUVertexInputRate::INSTANCE;
+pub const SDL_GPU_VERTEXINPUTRATE_INSTANCE: SDL_GPUVertexInputRate =
+    SDL_GPUVertexInputRate::INSTANCE;
 
 /// Specifies the fill mode of the graphics pipeline.
 ///
@@ -701,7 +771,8 @@ impl SDL_GPUFrontFace {
     pub const CLOCKWISE: Self = Self(1);
 }
 /// A triangle with counter-clockwise vertex winding will be considered front-facing.
-pub const SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::COUNTER_CLOCKWISE;
+pub const SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE: SDL_GPUFrontFace =
+    SDL_GPUFrontFace::COUNTER_CLOCKWISE;
 /// A triangle with clockwise vertex winding will be considered front-facing.
 pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOCKWISE;
 
@@ -788,15 +859,19 @@ pub const SDL_GPU_STENCILOP_ZERO: SDL_GPUStencilOp = SDL_GPUStencilOp::ZERO;
 /// Sets the value to reference.
 pub const SDL_GPU_STENCILOP_REPLACE: SDL_GPUStencilOp = SDL_GPUStencilOp::REPLACE;
 /// Increments the current value and clamps to the maximum value.
-pub const SDL_GPU_STENCILOP_INCREMENT_AND_CLAMP: SDL_GPUStencilOp = SDL_GPUStencilOp::INCREMENT_AND_CLAMP;
+pub const SDL_GPU_STENCILOP_INCREMENT_AND_CLAMP: SDL_GPUStencilOp =
+    SDL_GPUStencilOp::INCREMENT_AND_CLAMP;
 /// Decrements the current value and clamps to 0.
-pub const SDL_GPU_STENCILOP_DECREMENT_AND_CLAMP: SDL_GPUStencilOp = SDL_GPUStencilOp::DECREMENT_AND_CLAMP;
+pub const SDL_GPU_STENCILOP_DECREMENT_AND_CLAMP: SDL_GPUStencilOp =
+    SDL_GPUStencilOp::DECREMENT_AND_CLAMP;
 /// Bitwise-inverts the current value.
 pub const SDL_GPU_STENCILOP_INVERT: SDL_GPUStencilOp = SDL_GPUStencilOp::INVERT;
 /// Increments the current value and wraps back to 0.
-pub const SDL_GPU_STENCILOP_INCREMENT_AND_WRAP: SDL_GPUStencilOp = SDL_GPUStencilOp::INCREMENT_AND_WRAP;
+pub const SDL_GPU_STENCILOP_INCREMENT_AND_WRAP: SDL_GPUStencilOp =
+    SDL_GPUStencilOp::INCREMENT_AND_WRAP;
 /// Decrements the current value and wraps to the maximum value.
-pub const SDL_GPU_STENCILOP_DECREMENT_AND_WRAP: SDL_GPUStencilOp = SDL_GPUStencilOp::DECREMENT_AND_WRAP;
+pub const SDL_GPU_STENCILOP_DECREMENT_AND_WRAP: SDL_GPUStencilOp =
+    SDL_GPUStencilOp::DECREMENT_AND_WRAP;
 
 /// Specifies the operator to be used when pixels in a render target are
 /// blended with existing pixels in the texture.
@@ -886,25 +961,32 @@ pub const SDL_GPU_BLENDFACTOR_ONE: SDL_GPUBlendFactor = SDL_GPUBlendFactor::ONE;
 /// source color
 pub const SDL_GPU_BLENDFACTOR_SRC_COLOR: SDL_GPUBlendFactor = SDL_GPUBlendFactor::SRC_COLOR;
 /// 1 - source color
-pub const SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_COLOR: SDL_GPUBlendFactor = SDL_GPUBlendFactor::ONE_MINUS_SRC_COLOR;
+pub const SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_COLOR: SDL_GPUBlendFactor =
+    SDL_GPUBlendFactor::ONE_MINUS_SRC_COLOR;
 /// destination color
 pub const SDL_GPU_BLENDFACTOR_DST_COLOR: SDL_GPUBlendFactor = SDL_GPUBlendFactor::DST_COLOR;
 /// 1 - destination color
-pub const SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_COLOR: SDL_GPUBlendFactor = SDL_GPUBlendFactor::ONE_MINUS_DST_COLOR;
+pub const SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_COLOR: SDL_GPUBlendFactor =
+    SDL_GPUBlendFactor::ONE_MINUS_DST_COLOR;
 /// source alpha
 pub const SDL_GPU_BLENDFACTOR_SRC_ALPHA: SDL_GPUBlendFactor = SDL_GPUBlendFactor::SRC_ALPHA;
 /// 1 - source alpha
-pub const SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_ALPHA: SDL_GPUBlendFactor = SDL_GPUBlendFactor::ONE_MINUS_SRC_ALPHA;
+pub const SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_ALPHA: SDL_GPUBlendFactor =
+    SDL_GPUBlendFactor::ONE_MINUS_SRC_ALPHA;
 /// destination alpha
 pub const SDL_GPU_BLENDFACTOR_DST_ALPHA: SDL_GPUBlendFactor = SDL_GPUBlendFactor::DST_ALPHA;
 /// 1 - destination alpha
-pub const SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_ALPHA: SDL_GPUBlendFactor = SDL_GPUBlendFactor::ONE_MINUS_DST_ALPHA;
+pub const SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_ALPHA: SDL_GPUBlendFactor =
+    SDL_GPUBlendFactor::ONE_MINUS_DST_ALPHA;
 /// blend constant
-pub const SDL_GPU_BLENDFACTOR_CONSTANT_COLOR: SDL_GPUBlendFactor = SDL_GPUBlendFactor::CONSTANT_COLOR;
+pub const SDL_GPU_BLENDFACTOR_CONSTANT_COLOR: SDL_GPUBlendFactor =
+    SDL_GPUBlendFactor::CONSTANT_COLOR;
 /// 1 - blend constant
-pub const SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR: SDL_GPUBlendFactor = SDL_GPUBlendFactor::ONE_MINUS_CONSTANT_COLOR;
+pub const SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR: SDL_GPUBlendFactor =
+    SDL_GPUBlendFactor::ONE_MINUS_CONSTANT_COLOR;
 /// min(source alpha, 1 - destination alpha)
-pub const SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE: SDL_GPUBlendFactor = SDL_GPUBlendFactor::SRC_ALPHA_SATURATE;
+pub const SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE: SDL_GPUBlendFactor =
+    SDL_GPUBlendFactor::SRC_ALPHA_SATURATE;
 
 /// Specifies which color components are written in a graphics pipeline.
 ///
@@ -965,9 +1047,11 @@ impl SDL_GPUSamplerMipmapMode {
     pub const LINEAR: Self = Self(1);
 }
 /// Point filtering.
-pub const SDL_GPU_SAMPLERMIPMAPMODE_NEAREST: SDL_GPUSamplerMipmapMode = SDL_GPUSamplerMipmapMode::NEAREST;
+pub const SDL_GPU_SAMPLERMIPMAPMODE_NEAREST: SDL_GPUSamplerMipmapMode =
+    SDL_GPUSamplerMipmapMode::NEAREST;
 /// Linear filtering.
-pub const SDL_GPU_SAMPLERMIPMAPMODE_LINEAR: SDL_GPUSamplerMipmapMode = SDL_GPUSamplerMipmapMode::LINEAR;
+pub const SDL_GPU_SAMPLERMIPMAPMODE_LINEAR: SDL_GPUSamplerMipmapMode =
+    SDL_GPUSamplerMipmapMode::LINEAR;
 
 /// Specifies behavior of texture sampling when the coordinates exceed the 0-1
 /// range.
@@ -990,11 +1074,14 @@ impl SDL_GPUSamplerAddressMode {
     pub const CLAMP_TO_EDGE: Self = Self(2);
 }
 /// Specifies that the coordinates will wrap around.
-pub const SDL_GPU_SAMPLERADDRESSMODE_REPEAT: SDL_GPUSamplerAddressMode = SDL_GPUSamplerAddressMode::REPEAT;
+pub const SDL_GPU_SAMPLERADDRESSMODE_REPEAT: SDL_GPUSamplerAddressMode =
+    SDL_GPUSamplerAddressMode::REPEAT;
 /// Specifies that the coordinates will wrap around mirrored.
-pub const SDL_GPU_SAMPLERADDRESSMODE_MIRRORED_REPEAT: SDL_GPUSamplerAddressMode = SDL_GPUSamplerAddressMode::MIRRORED_REPEAT;
+pub const SDL_GPU_SAMPLERADDRESSMODE_MIRRORED_REPEAT: SDL_GPUSamplerAddressMode =
+    SDL_GPUSamplerAddressMode::MIRRORED_REPEAT;
 /// Specifies that the coordinates will clamp to the 0-1 range.
-pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode = SDL_GPUSamplerAddressMode::CLAMP_TO_EDGE;
+pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
+    SDL_GPUSamplerAddressMode::CLAMP_TO_EDGE;
 
 /// Specifies the timing that will be used to present swapchain textures to the
 /// OS.
@@ -1075,10 +1162,14 @@ impl SDL_GPUSwapchainComposition {
     pub const HDR_EXTENDED_LINEAR: Self = Self(2);
     pub const HDR10_ST2048: Self = Self(3);
 }
-pub const SDL_GPU_SWAPCHAINCOMPOSITION_SDR: SDL_GPUSwapchainComposition = SDL_GPUSwapchainComposition::SDR;
-pub const SDL_GPU_SWAPCHAINCOMPOSITION_SDR_LINEAR: SDL_GPUSwapchainComposition = SDL_GPUSwapchainComposition::SDR_LINEAR;
-pub const SDL_GPU_SWAPCHAINCOMPOSITION_HDR_EXTENDED_LINEAR: SDL_GPUSwapchainComposition = SDL_GPUSwapchainComposition::HDR_EXTENDED_LINEAR;
-pub const SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2048: SDL_GPUSwapchainComposition = SDL_GPUSwapchainComposition::HDR10_ST2048;
+pub const SDL_GPU_SWAPCHAINCOMPOSITION_SDR: SDL_GPUSwapchainComposition =
+    SDL_GPUSwapchainComposition::SDR;
+pub const SDL_GPU_SWAPCHAINCOMPOSITION_SDR_LINEAR: SDL_GPUSwapchainComposition =
+    SDL_GPUSwapchainComposition::SDR_LINEAR;
+pub const SDL_GPU_SWAPCHAINCOMPOSITION_HDR_EXTENDED_LINEAR: SDL_GPUSwapchainComposition =
+    SDL_GPUSwapchainComposition::HDR_EXTENDED_LINEAR;
+pub const SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2048: SDL_GPUSwapchainComposition =
+    SDL_GPUSwapchainComposition::HDR10_ST2048;
 
 /// Specifies a backend API supported by SDL_GPU.
 ///
@@ -1596,17 +1687,29 @@ pub struct SDL_GPUTextureCreateInfo {
     pub props: SDL_PropertiesID,
 }
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.r\0") };
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.r\0")
+};
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.g\0") };
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.g\0")
+};
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.b\0") };
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.b\0")
+};
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.a\0") };
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.a\0")
+};
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.depth\0") };
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.depth\0")
+};
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.stencil\0") };
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.stencil\0")
+};
 
 /// A structure specifying the parameters of a buffer.
 ///
@@ -2022,7 +2125,11 @@ extern "C" {
     ///
     /// \sa SDL_GetGPUDriver
     /// \sa SDL_DestroyGPUDevice
-    pub fn SDL_CreateGPUDevice(format_flags: SDL_GPUShaderFormat, debug_mode: SDL_bool, name: *const ::core::ffi::c_char) -> *mut SDL_GPUDevice;
+    pub fn SDL_CreateGPUDevice(
+        format_flags: SDL_GPUShaderFormat,
+        debug_mode: SDL_bool,
+        name: *const ::core::ffi::c_char,
+    ) -> *mut SDL_GPUDevice;
 }
 
 extern "C" {
@@ -2067,25 +2174,44 @@ extern "C" {
     pub fn SDL_CreateGPUDeviceWithProperties(props: SDL_PropertiesID) -> *mut SDL_GPUDevice;
 }
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOL: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.debugmode\0") };
+pub const SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOL: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.debugmode\0")
+};
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOL: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.preferlowpower\0") };
+pub const SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOL: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.preferlowpower\0")
+};
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.name\0") };
+pub const SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.name\0") };
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOL: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.private\0") };
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOL: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.private\0")
+};
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOL: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.spirv\0") };
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOL: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.spirv\0")
+};
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOL: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.dxbc\0") };
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOL: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.dxbc\0")
+};
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOL: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.dxil\0") };
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOL: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.dxil\0")
+};
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOL: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.msl\0") };
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOL: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.msl\0")
+};
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOL: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.metallib\0") };
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOL: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.metallib\0")
+};
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.d3d12.semantic\0") };
+pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.d3d12.semantic\0")
+};
 
 extern "C" {
     /// Destroys a GPU context previously returned by SDL_CreateGPUDevice.
@@ -2152,7 +2278,10 @@ extern "C" {
     ///
     /// \sa SDL_BindGPUComputePipeline
     /// \sa SDL_ReleaseGPUComputePipeline
-    pub fn SDL_CreateGPUComputePipeline(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUComputePipelineCreateInfo) -> *mut SDL_GPUComputePipeline;
+    pub fn SDL_CreateGPUComputePipeline(
+        device: *mut SDL_GPUDevice,
+        createinfo: *const SDL_GPUComputePipelineCreateInfo,
+    ) -> *mut SDL_GPUComputePipeline;
 }
 
 extern "C" {
@@ -2168,7 +2297,10 @@ extern "C" {
     /// \sa SDL_CreateGPUShader
     /// \sa SDL_BindGPUGraphicsPipeline
     /// \sa SDL_ReleaseGPUGraphicsPipeline
-    pub fn SDL_CreateGPUGraphicsPipeline(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUGraphicsPipelineCreateInfo) -> *mut SDL_GPUGraphicsPipeline;
+    pub fn SDL_CreateGPUGraphicsPipeline(
+        device: *mut SDL_GPUDevice,
+        createinfo: *const SDL_GPUGraphicsPipelineCreateInfo,
+    ) -> *mut SDL_GPUGraphicsPipeline;
 }
 
 extern "C" {
@@ -2184,7 +2316,10 @@ extern "C" {
     /// \sa SDL_BindGPUVertexSamplers
     /// \sa SDL_BindGPUFragmentSamplers
     /// \sa SDL_ReleaseSampler
-    pub fn SDL_CreateGPUSampler(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUSamplerCreateInfo) -> *mut SDL_GPUSampler;
+    pub fn SDL_CreateGPUSampler(
+        device: *mut SDL_GPUDevice,
+        createinfo: *const SDL_GPUSamplerCreateInfo,
+    ) -> *mut SDL_GPUSampler;
 }
 
 extern "C" {
@@ -2250,7 +2385,10 @@ extern "C" {
     ///
     /// \sa SDL_CreateGPUGraphicsPipeline
     /// \sa SDL_ReleaseGPUShader
-    pub fn SDL_CreateGPUShader(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUShaderCreateInfo) -> *mut SDL_GPUShader;
+    pub fn SDL_CreateGPUShader(
+        device: *mut SDL_GPUDevice,
+        createinfo: *const SDL_GPUShaderCreateInfo,
+    ) -> *mut SDL_GPUShader;
 }
 
 extern "C" {
@@ -2282,7 +2420,10 @@ extern "C" {
     /// \sa SDL_BlitGPUTexture
     /// \sa SDL_ReleaseGPUTexture
     /// \sa SDL_GPUTextureSupportsFormat
-    pub fn SDL_CreateGPUTexture(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUTextureCreateInfo) -> *mut SDL_GPUTexture;
+    pub fn SDL_CreateGPUTexture(
+        device: *mut SDL_GPUDevice,
+        createinfo: *const SDL_GPUTextureCreateInfo,
+    ) -> *mut SDL_GPUTexture;
 }
 
 extern "C" {
@@ -2313,7 +2454,10 @@ extern "C" {
     /// \sa SDL_BindGPUComputeStorageBuffers
     /// \sa SDL_DispatchGPUComputeIndirect
     /// \sa SDL_ReleaseGPUBuffer
-    pub fn SDL_CreateGPUBuffer(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUBufferCreateInfo) -> *mut SDL_GPUBuffer;
+    pub fn SDL_CreateGPUBuffer(
+        device: *mut SDL_GPUDevice,
+        createinfo: *const SDL_GPUBufferCreateInfo,
+    ) -> *mut SDL_GPUBuffer;
 }
 
 extern "C" {
@@ -2332,7 +2476,10 @@ extern "C" {
     /// \sa SDL_UploadToGPUTexture
     /// \sa SDL_DownloadFromGPUTexture
     /// \sa SDL_ReleaseGPUTransferBuffer
-    pub fn SDL_CreateGPUTransferBuffer(device: *mut SDL_GPUDevice, createinfo: *const SDL_GPUTransferBufferCreateInfo) -> *mut SDL_GPUTransferBuffer;
+    pub fn SDL_CreateGPUTransferBuffer(
+        device: *mut SDL_GPUDevice,
+        createinfo: *const SDL_GPUTransferBufferCreateInfo,
+    ) -> *mut SDL_GPUTransferBuffer;
 }
 
 extern "C" {
@@ -2345,7 +2492,11 @@ extern "C" {
     /// \param text a UTF-8 string constant to mark as the name of the buffer.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetGPUBufferName(device: *mut SDL_GPUDevice, buffer: *mut SDL_GPUBuffer, text: *const ::core::ffi::c_char);
+    pub fn SDL_SetGPUBufferName(
+        device: *mut SDL_GPUDevice,
+        buffer: *mut SDL_GPUBuffer,
+        text: *const ::core::ffi::c_char,
+    );
 }
 
 extern "C" {
@@ -2358,7 +2509,11 @@ extern "C" {
     /// \param text a UTF-8 string constant to mark as the name of the texture.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetGPUTextureName(device: *mut SDL_GPUDevice, texture: *mut SDL_GPUTexture, text: *const ::core::ffi::c_char);
+    pub fn SDL_SetGPUTextureName(
+        device: *mut SDL_GPUDevice,
+        texture: *mut SDL_GPUTexture,
+        text: *const ::core::ffi::c_char,
+    );
 }
 
 extern "C" {
@@ -2370,7 +2525,10 @@ extern "C" {
     /// \param text a UTF-8 string constant to insert as the label.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_InsertGPUDebugLabel(command_buffer: *mut SDL_GPUCommandBuffer, text: *const ::core::ffi::c_char);
+    pub fn SDL_InsertGPUDebugLabel(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+        text: *const ::core::ffi::c_char,
+    );
 }
 
 extern "C" {
@@ -2393,7 +2551,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_PopGPUDebugGroup
-    pub fn SDL_PushGPUDebugGroup(command_buffer: *mut SDL_GPUCommandBuffer, name: *const ::core::ffi::c_char);
+    pub fn SDL_PushGPUDebugGroup(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+        name: *const ::core::ffi::c_char,
+    );
 }
 
 extern "C" {
@@ -2452,7 +2613,10 @@ extern "C" {
     /// \param transfer_buffer a transfer buffer to be destroyed.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReleaseGPUTransferBuffer(device: *mut SDL_GPUDevice, transfer_buffer: *mut SDL_GPUTransferBuffer);
+    pub fn SDL_ReleaseGPUTransferBuffer(
+        device: *mut SDL_GPUDevice,
+        transfer_buffer: *mut SDL_GPUTransferBuffer,
+    );
 }
 
 extern "C" {
@@ -2464,7 +2628,10 @@ extern "C" {
     /// \param compute_pipeline a compute pipeline to be destroyed.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReleaseGPUComputePipeline(device: *mut SDL_GPUDevice, compute_pipeline: *mut SDL_GPUComputePipeline);
+    pub fn SDL_ReleaseGPUComputePipeline(
+        device: *mut SDL_GPUDevice,
+        compute_pipeline: *mut SDL_GPUComputePipeline,
+    );
 }
 
 extern "C" {
@@ -2488,7 +2655,10 @@ extern "C" {
     /// \param graphics_pipeline a graphics pipeline to be destroyed.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReleaseGPUGraphicsPipeline(device: *mut SDL_GPUDevice, graphics_pipeline: *mut SDL_GPUGraphicsPipeline);
+    pub fn SDL_ReleaseGPUGraphicsPipeline(
+        device: *mut SDL_GPUDevice,
+        graphics_pipeline: *mut SDL_GPUGraphicsPipeline,
+    );
 }
 
 extern "C" {
@@ -2520,7 +2690,12 @@ extern "C" {
     /// \param length the length of the data to write.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_PushGPUVertexUniformData(command_buffer: *mut SDL_GPUCommandBuffer, slot_index: Uint32, data: *const ::core::ffi::c_void, length: Uint32);
+    pub fn SDL_PushGPUVertexUniformData(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+        slot_index: Uint32,
+        data: *const ::core::ffi::c_void,
+        length: Uint32,
+    );
 }
 
 extern "C" {
@@ -2534,7 +2709,12 @@ extern "C" {
     /// \param length the length of the data to write.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_PushGPUFragmentUniformData(command_buffer: *mut SDL_GPUCommandBuffer, slot_index: Uint32, data: *const ::core::ffi::c_void, length: Uint32);
+    pub fn SDL_PushGPUFragmentUniformData(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+        slot_index: Uint32,
+        data: *const ::core::ffi::c_void,
+        length: Uint32,
+    );
 }
 
 extern "C" {
@@ -2548,7 +2728,12 @@ extern "C" {
     /// \param length the length of the data to write.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_PushGPUComputeUniformData(command_buffer: *mut SDL_GPUCommandBuffer, slot_index: Uint32, data: *const ::core::ffi::c_void, length: Uint32);
+    pub fn SDL_PushGPUComputeUniformData(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+        slot_index: Uint32,
+        data: *const ::core::ffi::c_void,
+        length: Uint32,
+    );
 }
 
 extern "C" {
@@ -2575,7 +2760,12 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_EndGPURenderPass
-    pub fn SDL_BeginGPURenderPass(command_buffer: *mut SDL_GPUCommandBuffer, color_target_infos: *const SDL_GPUColorTargetInfo, num_color_targets: Uint32, depth_stencil_target_info: *const SDL_GPUDepthStencilTargetInfo) -> *mut SDL_GPURenderPass;
+    pub fn SDL_BeginGPURenderPass(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+        color_target_infos: *const SDL_GPUColorTargetInfo,
+        num_color_targets: Uint32,
+        depth_stencil_target_info: *const SDL_GPUDepthStencilTargetInfo,
+    ) -> *mut SDL_GPURenderPass;
 }
 
 extern "C" {
@@ -2587,7 +2777,10 @@ extern "C" {
     /// \param graphics_pipeline the graphics pipeline to bind.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUGraphicsPipeline(render_pass: *mut SDL_GPURenderPass, graphics_pipeline: *mut SDL_GPUGraphicsPipeline);
+    pub fn SDL_BindGPUGraphicsPipeline(
+        render_pass: *mut SDL_GPURenderPass,
+        graphics_pipeline: *mut SDL_GPUGraphicsPipeline,
+    );
 }
 
 extern "C" {
@@ -2597,7 +2790,10 @@ extern "C" {
     /// \param viewport the viewport to set.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetGPUViewport(render_pass: *mut SDL_GPURenderPass, viewport: *const SDL_GPUViewport);
+    pub fn SDL_SetGPUViewport(
+        render_pass: *mut SDL_GPURenderPass,
+        viewport: *const SDL_GPUViewport,
+    );
 }
 
 extern "C" {
@@ -2620,7 +2816,10 @@ extern "C" {
     ///
     /// \sa SDL_GPU_BLENDFACTOR_CONSTANT_COLOR
     /// \sa SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR
-    pub fn SDL_SetGPUBlendConstants(render_pass: *mut SDL_GPURenderPass, blend_constants: SDL_FColor);
+    pub fn SDL_SetGPUBlendConstants(
+        render_pass: *mut SDL_GPURenderPass,
+        blend_constants: SDL_FColor,
+    );
 }
 
 extern "C" {
@@ -2644,7 +2843,12 @@ extern "C" {
     /// \param num_bindings the number of bindings in the bindings array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUVertexBuffers(render_pass: *mut SDL_GPURenderPass, first_binding: Uint32, bindings: *const SDL_GPUBufferBinding, num_bindings: Uint32);
+    pub fn SDL_BindGPUVertexBuffers(
+        render_pass: *mut SDL_GPURenderPass,
+        first_binding: Uint32,
+        bindings: *const SDL_GPUBufferBinding,
+        num_bindings: Uint32,
+    );
 }
 
 extern "C" {
@@ -2657,7 +2861,11 @@ extern "C" {
     ///                           32-bit.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUIndexBuffer(render_pass: *mut SDL_GPURenderPass, binding: *const SDL_GPUBufferBinding, index_element_size: SDL_GPUIndexElementSize);
+    pub fn SDL_BindGPUIndexBuffer(
+        render_pass: *mut SDL_GPURenderPass,
+        binding: *const SDL_GPUBufferBinding,
+        index_element_size: SDL_GPUIndexElementSize,
+    );
 }
 
 extern "C" {
@@ -2673,7 +2881,12 @@ extern "C" {
     ///                     array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUVertexSamplers(render_pass: *mut SDL_GPURenderPass, first_slot: Uint32, texture_sampler_bindings: *const SDL_GPUTextureSamplerBinding, num_bindings: Uint32);
+    pub fn SDL_BindGPUVertexSamplers(
+        render_pass: *mut SDL_GPURenderPass,
+        first_slot: Uint32,
+        texture_sampler_bindings: *const SDL_GPUTextureSamplerBinding,
+        num_bindings: Uint32,
+    );
 }
 
 extern "C" {
@@ -2688,7 +2901,12 @@ extern "C" {
     /// \param num_bindings the number of storage texture to bind from the array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUVertexStorageTextures(render_pass: *mut SDL_GPURenderPass, first_slot: Uint32, storage_textures: *const *mut SDL_GPUTexture, num_bindings: Uint32);
+    pub fn SDL_BindGPUVertexStorageTextures(
+        render_pass: *mut SDL_GPURenderPass,
+        first_slot: Uint32,
+        storage_textures: *const *mut SDL_GPUTexture,
+        num_bindings: Uint32,
+    );
 }
 
 extern "C" {
@@ -2703,7 +2921,12 @@ extern "C" {
     /// \param num_bindings the number of buffers to bind from the array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUVertexStorageBuffers(render_pass: *mut SDL_GPURenderPass, first_slot: Uint32, storage_buffers: *const *mut SDL_GPUBuffer, num_bindings: Uint32);
+    pub fn SDL_BindGPUVertexStorageBuffers(
+        render_pass: *mut SDL_GPURenderPass,
+        first_slot: Uint32,
+        storage_buffers: *const *mut SDL_GPUBuffer,
+        num_bindings: Uint32,
+    );
 }
 
 extern "C" {
@@ -2719,7 +2942,12 @@ extern "C" {
     ///                     array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUFragmentSamplers(render_pass: *mut SDL_GPURenderPass, first_slot: Uint32, texture_sampler_bindings: *const SDL_GPUTextureSamplerBinding, num_bindings: Uint32);
+    pub fn SDL_BindGPUFragmentSamplers(
+        render_pass: *mut SDL_GPURenderPass,
+        first_slot: Uint32,
+        texture_sampler_bindings: *const SDL_GPUTextureSamplerBinding,
+        num_bindings: Uint32,
+    );
 }
 
 extern "C" {
@@ -2734,7 +2962,12 @@ extern "C" {
     /// \param num_bindings the number of storage textures to bind from the array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUFragmentStorageTextures(render_pass: *mut SDL_GPURenderPass, first_slot: Uint32, storage_textures: *const *mut SDL_GPUTexture, num_bindings: Uint32);
+    pub fn SDL_BindGPUFragmentStorageTextures(
+        render_pass: *mut SDL_GPURenderPass,
+        first_slot: Uint32,
+        storage_textures: *const *mut SDL_GPUTexture,
+        num_bindings: Uint32,
+    );
 }
 
 extern "C" {
@@ -2749,7 +2982,12 @@ extern "C" {
     /// \param num_bindings the number of storage buffers to bind from the array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUFragmentStorageBuffers(render_pass: *mut SDL_GPURenderPass, first_slot: Uint32, storage_buffers: *const *mut SDL_GPUBuffer, num_bindings: Uint32);
+    pub fn SDL_BindGPUFragmentStorageBuffers(
+        render_pass: *mut SDL_GPURenderPass,
+        first_slot: Uint32,
+        storage_buffers: *const *mut SDL_GPUBuffer,
+        num_bindings: Uint32,
+    );
 }
 
 extern "C" {
@@ -2772,7 +3010,14 @@ extern "C" {
     /// \param first_instance the ID of the first instance to draw.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DrawGPUIndexedPrimitives(render_pass: *mut SDL_GPURenderPass, num_indices: Uint32, num_instances: Uint32, first_index: Uint32, vertex_offset: Sint32, first_instance: Uint32);
+    pub fn SDL_DrawGPUIndexedPrimitives(
+        render_pass: *mut SDL_GPURenderPass,
+        num_indices: Uint32,
+        num_instances: Uint32,
+        first_index: Uint32,
+        vertex_offset: Sint32,
+        first_instance: Uint32,
+    );
 }
 
 extern "C" {
@@ -2792,7 +3037,13 @@ extern "C" {
     /// \param first_instance the ID of the first instance to draw.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DrawGPUPrimitives(render_pass: *mut SDL_GPURenderPass, num_vertices: Uint32, num_instances: Uint32, first_vertex: Uint32, first_instance: Uint32);
+    pub fn SDL_DrawGPUPrimitives(
+        render_pass: *mut SDL_GPURenderPass,
+        num_vertices: Uint32,
+        num_instances: Uint32,
+        first_vertex: Uint32,
+        first_instance: Uint32,
+    );
 }
 
 extern "C" {
@@ -2810,7 +3061,13 @@ extern "C" {
     /// \param pitch the byte pitch between sets of draw parameters.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DrawGPUPrimitivesIndirect(render_pass: *mut SDL_GPURenderPass, buffer: *mut SDL_GPUBuffer, offset: Uint32, draw_count: Uint32, pitch: Uint32);
+    pub fn SDL_DrawGPUPrimitivesIndirect(
+        render_pass: *mut SDL_GPURenderPass,
+        buffer: *mut SDL_GPUBuffer,
+        offset: Uint32,
+        draw_count: Uint32,
+        pitch: Uint32,
+    );
 }
 
 extern "C" {
@@ -2829,7 +3086,13 @@ extern "C" {
     /// \param pitch the byte pitch between sets of draw parameters.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DrawGPUIndexedPrimitivesIndirect(render_pass: *mut SDL_GPURenderPass, buffer: *mut SDL_GPUBuffer, offset: Uint32, draw_count: Uint32, pitch: Uint32);
+    pub fn SDL_DrawGPUIndexedPrimitivesIndirect(
+        render_pass: *mut SDL_GPURenderPass,
+        buffer: *mut SDL_GPUBuffer,
+        offset: Uint32,
+        draw_count: Uint32,
+        pitch: Uint32,
+    );
 }
 
 extern "C" {
@@ -2874,7 +3137,13 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_EndGPUComputePass
-    pub fn SDL_BeginGPUComputePass(command_buffer: *mut SDL_GPUCommandBuffer, storage_texture_bindings: *const SDL_GPUStorageTextureWriteOnlyBinding, num_storage_texture_bindings: Uint32, storage_buffer_bindings: *const SDL_GPUStorageBufferWriteOnlyBinding, num_storage_buffer_bindings: Uint32) -> *mut SDL_GPUComputePass;
+    pub fn SDL_BeginGPUComputePass(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+        storage_texture_bindings: *const SDL_GPUStorageTextureWriteOnlyBinding,
+        num_storage_texture_bindings: Uint32,
+        storage_buffer_bindings: *const SDL_GPUStorageBufferWriteOnlyBinding,
+        num_storage_buffer_bindings: Uint32,
+    ) -> *mut SDL_GPUComputePass;
 }
 
 extern "C" {
@@ -2884,7 +3153,10 @@ extern "C" {
     /// \param compute_pipeline a compute pipeline to bind.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUComputePipeline(compute_pass: *mut SDL_GPUComputePass, compute_pipeline: *mut SDL_GPUComputePipeline);
+    pub fn SDL_BindGPUComputePipeline(
+        compute_pass: *mut SDL_GPUComputePass,
+        compute_pipeline: *mut SDL_GPUComputePipeline,
+    );
 }
 
 extern "C" {
@@ -2899,7 +3171,12 @@ extern "C" {
     /// \param num_bindings the number of storage textures to bind from the array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUComputeStorageTextures(compute_pass: *mut SDL_GPUComputePass, first_slot: Uint32, storage_textures: *const *mut SDL_GPUTexture, num_bindings: Uint32);
+    pub fn SDL_BindGPUComputeStorageTextures(
+        compute_pass: *mut SDL_GPUComputePass,
+        first_slot: Uint32,
+        storage_textures: *const *mut SDL_GPUTexture,
+        num_bindings: Uint32,
+    );
 }
 
 extern "C" {
@@ -2914,7 +3191,12 @@ extern "C" {
     /// \param num_bindings the number of storage buffers to bind from the array.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BindGPUComputeStorageBuffers(compute_pass: *mut SDL_GPUComputePass, first_slot: Uint32, storage_buffers: *const *mut SDL_GPUBuffer, num_bindings: Uint32);
+    pub fn SDL_BindGPUComputeStorageBuffers(
+        compute_pass: *mut SDL_GPUComputePass,
+        first_slot: Uint32,
+        storage_buffers: *const *mut SDL_GPUBuffer,
+        num_bindings: Uint32,
+    );
 }
 
 extern "C" {
@@ -2936,7 +3218,12 @@ extern "C" {
     ///                     dimension.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DispatchGPUCompute(compute_pass: *mut SDL_GPUComputePass, groupcount_x: Uint32, groupcount_y: Uint32, groupcount_z: Uint32);
+    pub fn SDL_DispatchGPUCompute(
+        compute_pass: *mut SDL_GPUComputePass,
+        groupcount_x: Uint32,
+        groupcount_y: Uint32,
+        groupcount_z: Uint32,
+    );
 }
 
 extern "C" {
@@ -2956,7 +3243,11 @@ extern "C" {
     /// \param offset the offset to start reading from the dispatch buffer.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DispatchGPUComputeIndirect(compute_pass: *mut SDL_GPUComputePass, buffer: *mut SDL_GPUBuffer, offset: Uint32);
+    pub fn SDL_DispatchGPUComputeIndirect(
+        compute_pass: *mut SDL_GPUComputePass,
+        buffer: *mut SDL_GPUBuffer,
+        offset: Uint32,
+    );
 }
 
 extern "C" {
@@ -2983,7 +3274,11 @@ extern "C" {
     /// \returns the address of the mapped transfer buffer memory.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_MapGPUTransferBuffer(device: *mut SDL_GPUDevice, transfer_buffer: *mut SDL_GPUTransferBuffer, cycle: SDL_bool) -> *mut ::core::ffi::c_void;
+    pub fn SDL_MapGPUTransferBuffer(
+        device: *mut SDL_GPUDevice,
+        transfer_buffer: *mut SDL_GPUTransferBuffer,
+        cycle: SDL_bool,
+    ) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
@@ -2993,7 +3288,10 @@ extern "C" {
     /// \param transfer_buffer a previously mapped transfer buffer.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_UnmapGPUTransferBuffer(device: *mut SDL_GPUDevice, transfer_buffer: *mut SDL_GPUTransferBuffer);
+    pub fn SDL_UnmapGPUTransferBuffer(
+        device: *mut SDL_GPUDevice,
+        transfer_buffer: *mut SDL_GPUTransferBuffer,
+    );
 }
 
 extern "C" {
@@ -3026,7 +3324,12 @@ extern "C" {
     ///              otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_UploadToGPUTexture(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTextureTransferInfo, destination: *const SDL_GPUTextureRegion, cycle: SDL_bool);
+    pub fn SDL_UploadToGPUTexture(
+        copy_pass: *mut SDL_GPUCopyPass,
+        source: *const SDL_GPUTextureTransferInfo,
+        destination: *const SDL_GPUTextureRegion,
+        cycle: SDL_bool,
+    );
 }
 
 extern "C" {
@@ -3042,7 +3345,12 @@ extern "C" {
     ///              otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_UploadToGPUBuffer(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTransferBufferLocation, destination: *const SDL_GPUBufferRegion, cycle: SDL_bool);
+    pub fn SDL_UploadToGPUBuffer(
+        copy_pass: *mut SDL_GPUCopyPass,
+        source: *const SDL_GPUTransferBufferLocation,
+        destination: *const SDL_GPUBufferRegion,
+        cycle: SDL_bool,
+    );
 }
 
 extern "C" {
@@ -3061,7 +3369,15 @@ extern "C" {
     ///              texture is bound, otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_CopyGPUTextureToTexture(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTextureLocation, destination: *const SDL_GPUTextureLocation, w: Uint32, h: Uint32, d: Uint32, cycle: SDL_bool);
+    pub fn SDL_CopyGPUTextureToTexture(
+        copy_pass: *mut SDL_GPUCopyPass,
+        source: *const SDL_GPUTextureLocation,
+        destination: *const SDL_GPUTextureLocation,
+        w: Uint32,
+        h: Uint32,
+        d: Uint32,
+        cycle: SDL_bool,
+    );
 }
 
 extern "C" {
@@ -3078,7 +3394,13 @@ extern "C" {
     ///              bound, otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_CopyGPUBufferToBuffer(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUBufferLocation, destination: *const SDL_GPUBufferLocation, size: Uint32, cycle: SDL_bool);
+    pub fn SDL_CopyGPUBufferToBuffer(
+        copy_pass: *mut SDL_GPUCopyPass,
+        source: *const SDL_GPUBufferLocation,
+        destination: *const SDL_GPUBufferLocation,
+        size: Uint32,
+        cycle: SDL_bool,
+    );
 }
 
 extern "C" {
@@ -3093,7 +3415,11 @@ extern "C" {
     ///                    information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DownloadFromGPUTexture(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUTextureRegion, destination: *const SDL_GPUTextureTransferInfo);
+    pub fn SDL_DownloadFromGPUTexture(
+        copy_pass: *mut SDL_GPUCopyPass,
+        source: *const SDL_GPUTextureRegion,
+        destination: *const SDL_GPUTextureTransferInfo,
+    );
 }
 
 extern "C" {
@@ -3107,7 +3433,11 @@ extern "C" {
     /// \param destination the destination transfer buffer with offset.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DownloadFromGPUBuffer(copy_pass: *mut SDL_GPUCopyPass, source: *const SDL_GPUBufferRegion, destination: *const SDL_GPUTransferBufferLocation);
+    pub fn SDL_DownloadFromGPUBuffer(
+        copy_pass: *mut SDL_GPUCopyPass,
+        source: *const SDL_GPUBufferRegion,
+        destination: *const SDL_GPUTransferBufferLocation,
+    );
 }
 
 extern "C" {
@@ -3128,7 +3458,10 @@ extern "C" {
     /// \param texture a texture with more than 1 mip level.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GenerateMipmapsForGPUTexture(command_buffer: *mut SDL_GPUCommandBuffer, texture: *mut SDL_GPUTexture);
+    pub fn SDL_GenerateMipmapsForGPUTexture(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+        texture: *mut SDL_GPUTexture,
+    );
 }
 
 extern "C" {
@@ -3145,7 +3478,14 @@ extern "C" {
     ///              texture is bound, otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_BlitGPUTexture(command_buffer: *mut SDL_GPUCommandBuffer, source: *const SDL_GPUBlitRegion, destination: *const SDL_GPUBlitRegion, flip_mode: SDL_FlipMode, filter: SDL_GPUFilter, cycle: SDL_bool);
+    pub fn SDL_BlitGPUTexture(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+        source: *const SDL_GPUBlitRegion,
+        destination: *const SDL_GPUBlitRegion,
+        flip_mode: SDL_FlipMode,
+        filter: SDL_GPUFilter,
+        cycle: SDL_bool,
+    );
 }
 
 extern "C" {
@@ -3161,7 +3501,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ClaimWindowForGPUDevice
-    pub fn SDL_WindowSupportsGPUSwapchainComposition(device: *mut SDL_GPUDevice, window: *mut SDL_Window, swapchain_composition: SDL_GPUSwapchainComposition) -> SDL_bool;
+    pub fn SDL_WindowSupportsGPUSwapchainComposition(
+        device: *mut SDL_GPUDevice,
+        window: *mut SDL_Window,
+        swapchain_composition: SDL_GPUSwapchainComposition,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -3177,7 +3521,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ClaimWindowForGPUDevice
-    pub fn SDL_WindowSupportsGPUPresentMode(device: *mut SDL_GPUDevice, window: *mut SDL_Window, present_mode: SDL_GPUPresentMode) -> SDL_bool;
+    pub fn SDL_WindowSupportsGPUPresentMode(
+        device: *mut SDL_GPUDevice,
+        window: *mut SDL_Window,
+        present_mode: SDL_GPUPresentMode,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -3201,7 +3549,10 @@ extern "C" {
     /// \sa SDL_ReleaseWindowFromGPUDevice
     /// \sa SDL_WindowSupportsGPUPresentMode
     /// \sa SDL_WindowSupportsGPUSwapchainComposition
-    pub fn SDL_ClaimWindowForGPUDevice(device: *mut SDL_GPUDevice, window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_ClaimWindowForGPUDevice(
+        device: *mut SDL_GPUDevice,
+        window: *mut SDL_Window,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -3237,7 +3588,12 @@ extern "C" {
     ///
     /// \sa SDL_WindowSupportsGPUPresentMode
     /// \sa SDL_WindowSupportsGPUSwapchainComposition
-    pub fn SDL_SetGPUSwapchainParameters(device: *mut SDL_GPUDevice, window: *mut SDL_Window, swapchain_composition: SDL_GPUSwapchainComposition, present_mode: SDL_GPUPresentMode) -> SDL_bool;
+    pub fn SDL_SetGPUSwapchainParameters(
+        device: *mut SDL_GPUDevice,
+        window: *mut SDL_Window,
+        swapchain_composition: SDL_GPUSwapchainComposition,
+        present_mode: SDL_GPUPresentMode,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -3248,7 +3604,10 @@ extern "C" {
     /// \returns the texture format of the swapchain.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetGPUSwapchainTextureFormat(device: *mut SDL_GPUDevice, window: *mut SDL_Window) -> SDL_GPUTextureFormat;
+    pub fn SDL_GetGPUSwapchainTextureFormat(
+        device: *mut SDL_GPUDevice,
+        window: *mut SDL_Window,
+    ) -> SDL_GPUTextureFormat;
 }
 
 extern "C" {
@@ -3273,7 +3632,12 @@ extern "C" {
     /// \sa SDL_ClaimWindowForGPUDevice
     /// \sa SDL_SubmitGPUCommandBuffer
     /// \sa SDL_SubmitGPUCommandBufferAndAcquireFence
-    pub fn SDL_AcquireGPUSwapchainTexture(command_buffer: *mut SDL_GPUCommandBuffer, window: *mut SDL_Window, w: *mut Uint32, h: *mut Uint32) -> *mut SDL_GPUTexture;
+    pub fn SDL_AcquireGPUSwapchainTexture(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+        window: *mut SDL_Window,
+        w: *mut Uint32,
+        h: *mut Uint32,
+    ) -> *mut SDL_GPUTexture;
 }
 
 extern "C" {
@@ -3317,7 +3681,9 @@ extern "C" {
     /// \sa SDL_AcquireGPUSwapchainTexture
     /// \sa SDL_SubmitGPUCommandBuffer
     /// \sa SDL_ReleaseGPUFence
-    pub fn SDL_SubmitGPUCommandBufferAndAcquireFence(command_buffer: *mut SDL_GPUCommandBuffer) -> *mut SDL_GPUFence;
+    pub fn SDL_SubmitGPUCommandBufferAndAcquireFence(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+    ) -> *mut SDL_GPUFence;
 }
 
 extern "C" {
@@ -3344,7 +3710,12 @@ extern "C" {
     ///
     /// \sa SDL_SubmitGPUCommandBufferAndAcquireFence
     /// \sa SDL_WaitForGPUIdle
-    pub fn SDL_WaitForGPUFences(device: *mut SDL_GPUDevice, wait_all: SDL_bool, fences: *const *mut SDL_GPUFence, num_fences: Uint32);
+    pub fn SDL_WaitForGPUFences(
+        device: *mut SDL_GPUDevice,
+        wait_all: SDL_bool,
+        fences: *const *mut SDL_GPUFence,
+        num_fences: Uint32,
+    );
 }
 
 extern "C" {
@@ -3395,7 +3766,12 @@ extern "C" {
     /// \returns whether the texture format is supported for this type and usage.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GPUTextureSupportsFormat(device: *mut SDL_GPUDevice, format: SDL_GPUTextureFormat, r#type: SDL_GPUTextureType, usage: SDL_GPUTextureUsageFlags) -> SDL_bool;
+    pub fn SDL_GPUTextureSupportsFormat(
+        device: *mut SDL_GPUDevice,
+        format: SDL_GPUTextureFormat,
+        r#type: SDL_GPUTextureType,
+        usage: SDL_GPUTextureUsageFlags,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -3407,7 +3783,11 @@ extern "C" {
     /// \returns a hardware-specific version of min(preferred, possible).
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GPUTextureSupportsSampleCount(device: *mut SDL_GPUDevice, format: SDL_GPUTextureFormat, sample_count: SDL_GPUSampleCount) -> SDL_bool;
+    pub fn SDL_GPUTextureSupportsSampleCount(
+        device: *mut SDL_GPUDevice,
+        format: SDL_GPUTextureFormat,
+        sample_count: SDL_GPUSampleCount,
+    ) -> SDL_bool;
 }
 
 #[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))]
@@ -3467,7 +3847,9 @@ emit! {
 /// \sa SDL_ReleaseGPUBuffer
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPUBuffer { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_GPUBuffer {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// An opaque handle representing a command buffer.
 ///
@@ -3493,7 +3875,9 @@ pub struct SDL_GPUBuffer { _opaque: [::core::primitive::u8; 0] }
 /// \sa SDL_SubmitGPUCommandBufferAndAcquireFence
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPUCommandBuffer { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_GPUCommandBuffer {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// An opaque handle representing a compute pass.
 ///
@@ -3506,7 +3890,9 @@ pub struct SDL_GPUCommandBuffer { _opaque: [::core::primitive::u8; 0] }
 /// \sa SDL_EndGPUComputePass
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPUComputePass { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_GPUComputePass {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// An opaque handle representing a compute pipeline.
 ///
@@ -3519,7 +3905,9 @@ pub struct SDL_GPUComputePass { _opaque: [::core::primitive::u8; 0] }
 /// \sa SDL_ReleaseGPUComputePipeline
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPUComputePipeline { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_GPUComputePipeline {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// An opaque handle representing a copy pass.
 ///
@@ -3532,14 +3920,18 @@ pub struct SDL_GPUComputePipeline { _opaque: [::core::primitive::u8; 0] }
 /// \sa SDL_EndGPUCopyPass
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPUCopyPass { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_GPUCopyPass {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// An opaque handle representing the SDL_GPU context.
 ///
 /// \since This struct is available since SDL 3.0.0
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPUDevice { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_GPUDevice {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// An opaque handle representing a fence.
 ///
@@ -3551,7 +3943,9 @@ pub struct SDL_GPUDevice { _opaque: [::core::primitive::u8; 0] }
 /// \sa SDL_ReleaseGPUFence
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPUFence { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_GPUFence {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// An opaque handle representing a graphics pipeline.
 ///
@@ -3564,7 +3958,9 @@ pub struct SDL_GPUFence { _opaque: [::core::primitive::u8; 0] }
 /// \sa SDL_ReleaseGPUGraphicsPipeline
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPUGraphicsPipeline { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_GPUGraphicsPipeline {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// An opaque handle representing a render pass.
 ///
@@ -3577,7 +3973,9 @@ pub struct SDL_GPUGraphicsPipeline { _opaque: [::core::primitive::u8; 0] }
 /// \sa SDL_EndGPURenderPass
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPURenderPass { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_GPURenderPass {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// An opaque handle representing a sampler.
 ///
@@ -3589,7 +3987,9 @@ pub struct SDL_GPURenderPass { _opaque: [::core::primitive::u8; 0] }
 /// \sa SDL_ReleaseGPUSampler
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPUSampler { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_GPUSampler {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// An opaque handle representing a compiled shader object.
 ///
@@ -3600,7 +4000,9 @@ pub struct SDL_GPUSampler { _opaque: [::core::primitive::u8; 0] }
 /// \sa SDL_ReleaseGPUShader
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPUShader { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_GPUShader {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// An opaque handle representing a texture.
 ///
@@ -3621,7 +4023,9 @@ pub struct SDL_GPUShader { _opaque: [::core::primitive::u8; 0] }
 /// \sa SDL_ReleaseGPUTexture
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPUTexture { _opaque: [::core::primitive::u8; 0] }
+pub struct SDL_GPUTexture {
+    _opaque: [::core::primitive::u8; 0],
+}
 
 /// An opaque handle representing a transfer buffer.
 ///
@@ -3639,5 +4043,6 @@ pub struct SDL_GPUTexture { _opaque: [::core::primitive::u8; 0] }
 /// \sa SDL_ReleaseGPUTransferBuffer
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_GPUTransferBuffer { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_GPUTransferBuffer {
+    _opaque: [::core::primitive::u8; 0],
+}

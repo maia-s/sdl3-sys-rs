@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryInit
 //!
 //! SDL subsystem init and quit functions.
@@ -87,13 +85,23 @@ pub const SDL_APP_SUCCESS: SDL_AppResult = SDL_AppResult::SUCCESS;
 /// Value that requests termination with error from the main callbacks.
 pub const SDL_APP_FAILURE: SDL_AppResult = SDL_AppResult::FAILURE;
 
-pub type SDL_AppInit_func = ::core::option::Option<extern "C" fn(appstate: *mut *mut ::core::ffi::c_void, argc: ::core::ffi::c_int, argv: *mut *mut ::core::ffi::c_char) -> SDL_AppResult>;
+pub type SDL_AppInit_func = ::core::option::Option<
+    extern "C" fn(
+        appstate: *mut *mut ::core::ffi::c_void,
+        argc: ::core::ffi::c_int,
+        argv: *mut *mut ::core::ffi::c_char,
+    ) -> SDL_AppResult,
+>;
 
-pub type SDL_AppIterate_func = ::core::option::Option<extern "C" fn(appstate: *mut ::core::ffi::c_void) -> SDL_AppResult>;
+pub type SDL_AppIterate_func =
+    ::core::option::Option<extern "C" fn(appstate: *mut ::core::ffi::c_void) -> SDL_AppResult>;
 
-pub type SDL_AppEvent_func = ::core::option::Option<extern "C" fn(appstate: *mut ::core::ffi::c_void, event: *mut SDL_Event) -> SDL_AppResult>;
+pub type SDL_AppEvent_func = ::core::option::Option<
+    extern "C" fn(appstate: *mut ::core::ffi::c_void, event: *mut SDL_Event) -> SDL_AppResult,
+>;
 
-pub type SDL_AppQuit_func = ::core::option::Option<extern "C" fn(appstate: *mut ::core::ffi::c_void)>;
+pub type SDL_AppQuit_func =
+    ::core::option::Option<extern "C" fn(appstate: *mut ::core::ffi::c_void)>;
 
 extern "C" {
     /// Initialize the SDL library.
@@ -252,7 +260,11 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetAppMetadataProperty
-    pub fn SDL_SetAppMetadata(appname: *const ::core::ffi::c_char, appversion: *const ::core::ffi::c_char, appidentifier: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_SetAppMetadata(
+        appname: *const ::core::ffi::c_char,
+        appversion: *const ::core::ffi::c_char,
+        appidentifier: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -315,22 +327,32 @@ extern "C" {
     ///
     /// \sa SDL_GetAppMetadataProperty
     /// \sa SDL_SetAppMetadata
-    pub fn SDL_SetAppMetadataProperty(name: *const ::core::ffi::c_char, value: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_SetAppMetadataProperty(
+        name: *const ::core::ffi::c_char,
+        value: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
 }
 
-pub const SDL_PROP_APP_METADATA_NAME_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.name\0") };
+pub const SDL_PROP_APP_METADATA_NAME_STRING: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.name\0") };
 
-pub const SDL_PROP_APP_METADATA_VERSION_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.version\0") };
+pub const SDL_PROP_APP_METADATA_VERSION_STRING: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.version\0") };
 
-pub const SDL_PROP_APP_METADATA_IDENTIFIER_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.identifier\0") };
+pub const SDL_PROP_APP_METADATA_IDENTIFIER_STRING: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.identifier\0") };
 
-pub const SDL_PROP_APP_METADATA_CREATOR_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.creator\0") };
+pub const SDL_PROP_APP_METADATA_CREATOR_STRING: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.creator\0") };
 
-pub const SDL_PROP_APP_METADATA_COPYRIGHT_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.copyright\0") };
+pub const SDL_PROP_APP_METADATA_COPYRIGHT_STRING: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.copyright\0") };
 
-pub const SDL_PROP_APP_METADATA_URL_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.url\0") };
+pub const SDL_PROP_APP_METADATA_URL_STRING: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.url\0") };
 
-pub const SDL_PROP_APP_METADATA_TYPE_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.type\0") };
+pub const SDL_PROP_APP_METADATA_TYPE_STRING: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.type\0") };
 
 extern "C" {
     /// Get metadata about your app.
@@ -352,6 +374,7 @@ extern "C" {
     ///
     /// \sa SDL_SetAppMetadata
     /// \sa SDL_SetAppMetadataProperty
-    pub fn SDL_GetAppMetadataProperty(name: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
+    pub fn SDL_GetAppMetadataProperty(
+        name: *const ::core::ffi::c_char,
+    ) -> *const ::core::ffi::c_char;
 }
-

@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryPixels
 //!
 //! Pixel management.
@@ -557,38 +555,57 @@ impl SDL_TransferCharacteristics {
     pub const HLG: Self = Self(18);
     pub const CUSTOM: Self = Self(31);
 }
-pub const SDL_TRANSFER_CHARACTERISTICS_UNKNOWN: SDL_TransferCharacteristics = SDL_TransferCharacteristics::UNKNOWN;
+pub const SDL_TRANSFER_CHARACTERISTICS_UNKNOWN: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::UNKNOWN;
 /// Rec. ITU-R BT.709-6 / ITU-R BT1361
-pub const SDL_TRANSFER_CHARACTERISTICS_BT709: SDL_TransferCharacteristics = SDL_TransferCharacteristics::BT709;
-pub const SDL_TRANSFER_CHARACTERISTICS_UNSPECIFIED: SDL_TransferCharacteristics = SDL_TransferCharacteristics::UNSPECIFIED;
+pub const SDL_TRANSFER_CHARACTERISTICS_BT709: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::BT709;
+pub const SDL_TRANSFER_CHARACTERISTICS_UNSPECIFIED: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::UNSPECIFIED;
 /// ITU-R BT.470-6 System M / ITU-R BT1700 625 PAL & SECAM
-pub const SDL_TRANSFER_CHARACTERISTICS_GAMMA22: SDL_TransferCharacteristics = SDL_TransferCharacteristics::GAMMA22;
+pub const SDL_TRANSFER_CHARACTERISTICS_GAMMA22: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::GAMMA22;
 /// ITU-R BT.470-6 System B, G
-pub const SDL_TRANSFER_CHARACTERISTICS_GAMMA28: SDL_TransferCharacteristics = SDL_TransferCharacteristics::GAMMA28;
+pub const SDL_TRANSFER_CHARACTERISTICS_GAMMA28: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::GAMMA28;
 /// SMPTE ST 170M / ITU-R BT.601-7 525 or 625
-pub const SDL_TRANSFER_CHARACTERISTICS_BT601: SDL_TransferCharacteristics = SDL_TransferCharacteristics::BT601;
+pub const SDL_TRANSFER_CHARACTERISTICS_BT601: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::BT601;
 /// SMPTE ST 240M
-pub const SDL_TRANSFER_CHARACTERISTICS_SMPTE240: SDL_TransferCharacteristics = SDL_TransferCharacteristics::SMPTE240;
-pub const SDL_TRANSFER_CHARACTERISTICS_LINEAR: SDL_TransferCharacteristics = SDL_TransferCharacteristics::LINEAR;
-pub const SDL_TRANSFER_CHARACTERISTICS_LOG100: SDL_TransferCharacteristics = SDL_TransferCharacteristics::LOG100;
-pub const SDL_TRANSFER_CHARACTERISTICS_LOG100_SQRT10: SDL_TransferCharacteristics = SDL_TransferCharacteristics::LOG100_SQRT10;
+pub const SDL_TRANSFER_CHARACTERISTICS_SMPTE240: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::SMPTE240;
+pub const SDL_TRANSFER_CHARACTERISTICS_LINEAR: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::LINEAR;
+pub const SDL_TRANSFER_CHARACTERISTICS_LOG100: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::LOG100;
+pub const SDL_TRANSFER_CHARACTERISTICS_LOG100_SQRT10: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::LOG100_SQRT10;
 /// IEC 61966-2-4
-pub const SDL_TRANSFER_CHARACTERISTICS_IEC61966: SDL_TransferCharacteristics = SDL_TransferCharacteristics::IEC61966;
+pub const SDL_TRANSFER_CHARACTERISTICS_IEC61966: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::IEC61966;
 /// ITU-R BT1361 Extended Colour Gamut
-pub const SDL_TRANSFER_CHARACTERISTICS_BT1361: SDL_TransferCharacteristics = SDL_TransferCharacteristics::BT1361;
+pub const SDL_TRANSFER_CHARACTERISTICS_BT1361: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::BT1361;
 /// IEC 61966-2-1 (sRGB or sYCC)
-pub const SDL_TRANSFER_CHARACTERISTICS_SRGB: SDL_TransferCharacteristics = SDL_TransferCharacteristics::SRGB;
+pub const SDL_TRANSFER_CHARACTERISTICS_SRGB: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::SRGB;
 /// ITU-R BT2020 for 10-bit system
-pub const SDL_TRANSFER_CHARACTERISTICS_BT2020_10BIT: SDL_TransferCharacteristics = SDL_TransferCharacteristics::BT2020_10BIT;
+pub const SDL_TRANSFER_CHARACTERISTICS_BT2020_10BIT: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::BT2020_10BIT;
 /// ITU-R BT2020 for 12-bit system
-pub const SDL_TRANSFER_CHARACTERISTICS_BT2020_12BIT: SDL_TransferCharacteristics = SDL_TransferCharacteristics::BT2020_12BIT;
+pub const SDL_TRANSFER_CHARACTERISTICS_BT2020_12BIT: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::BT2020_12BIT;
 /// SMPTE ST 2084 for 10-, 12-, 14- and 16-bit systems
-pub const SDL_TRANSFER_CHARACTERISTICS_PQ: SDL_TransferCharacteristics = SDL_TransferCharacteristics::PQ;
+pub const SDL_TRANSFER_CHARACTERISTICS_PQ: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::PQ;
 /// SMPTE ST 428-1
-pub const SDL_TRANSFER_CHARACTERISTICS_SMPTE428: SDL_TransferCharacteristics = SDL_TransferCharacteristics::SMPTE428;
+pub const SDL_TRANSFER_CHARACTERISTICS_SMPTE428: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::SMPTE428;
 /// ARIB STD-B67, known as "hybrid log-gamma" (HLG)
-pub const SDL_TRANSFER_CHARACTERISTICS_HLG: SDL_TransferCharacteristics = SDL_TransferCharacteristics::HLG;
-pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics = SDL_TransferCharacteristics::CUSTOM;
+pub const SDL_TRANSFER_CHARACTERISTICS_HLG: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::HLG;
+pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
+    SDL_TransferCharacteristics::CUSTOM;
 
 /// Colorspace matrix coefficients.
 ///
@@ -627,10 +644,12 @@ impl SDL_MatrixCoefficients {
     pub const ICTCP: Self = Self(14);
     pub const CUSTOM: Self = Self(31);
 }
-pub const SDL_MATRIX_COEFFICIENTS_IDENTITY: SDL_MatrixCoefficients = SDL_MatrixCoefficients::IDENTITY;
+pub const SDL_MATRIX_COEFFICIENTS_IDENTITY: SDL_MatrixCoefficients =
+    SDL_MatrixCoefficients::IDENTITY;
 /// ITU-R BT.709-6
 pub const SDL_MATRIX_COEFFICIENTS_BT709: SDL_MatrixCoefficients = SDL_MatrixCoefficients::BT709;
-pub const SDL_MATRIX_COEFFICIENTS_UNSPECIFIED: SDL_MatrixCoefficients = SDL_MatrixCoefficients::UNSPECIFIED;
+pub const SDL_MATRIX_COEFFICIENTS_UNSPECIFIED: SDL_MatrixCoefficients =
+    SDL_MatrixCoefficients::UNSPECIFIED;
 /// US FCC Title 47
 pub const SDL_MATRIX_COEFFICIENTS_FCC: SDL_MatrixCoefficients = SDL_MatrixCoefficients::FCC;
 /// ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as SDL_MATRIX_COEFFICIENTS_BT601
@@ -638,16 +657,22 @@ pub const SDL_MATRIX_COEFFICIENTS_BT470BG: SDL_MatrixCoefficients = SDL_MatrixCo
 /// ITU-R BT.601-7 525
 pub const SDL_MATRIX_COEFFICIENTS_BT601: SDL_MatrixCoefficients = SDL_MatrixCoefficients::BT601;
 /// SMPTE 240M
-pub const SDL_MATRIX_COEFFICIENTS_SMPTE240: SDL_MatrixCoefficients = SDL_MatrixCoefficients::SMPTE240;
+pub const SDL_MATRIX_COEFFICIENTS_SMPTE240: SDL_MatrixCoefficients =
+    SDL_MatrixCoefficients::SMPTE240;
 pub const SDL_MATRIX_COEFFICIENTS_YCGCO: SDL_MatrixCoefficients = SDL_MatrixCoefficients::YCGCO;
 /// ITU-R BT.2020-2 non-constant luminance
-pub const SDL_MATRIX_COEFFICIENTS_BT2020_NCL: SDL_MatrixCoefficients = SDL_MatrixCoefficients::BT2020_NCL;
+pub const SDL_MATRIX_COEFFICIENTS_BT2020_NCL: SDL_MatrixCoefficients =
+    SDL_MatrixCoefficients::BT2020_NCL;
 /// ITU-R BT.2020-2 constant luminance
-pub const SDL_MATRIX_COEFFICIENTS_BT2020_CL: SDL_MatrixCoefficients = SDL_MatrixCoefficients::BT2020_CL;
+pub const SDL_MATRIX_COEFFICIENTS_BT2020_CL: SDL_MatrixCoefficients =
+    SDL_MatrixCoefficients::BT2020_CL;
 /// SMPTE ST 2085
-pub const SDL_MATRIX_COEFFICIENTS_SMPTE2085: SDL_MatrixCoefficients = SDL_MatrixCoefficients::SMPTE2085;
-pub const SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL: SDL_MatrixCoefficients = SDL_MatrixCoefficients::CHROMA_DERIVED_NCL;
-pub const SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL: SDL_MatrixCoefficients = SDL_MatrixCoefficients::CHROMA_DERIVED_CL;
+pub const SDL_MATRIX_COEFFICIENTS_SMPTE2085: SDL_MatrixCoefficients =
+    SDL_MatrixCoefficients::SMPTE2085;
+pub const SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL: SDL_MatrixCoefficients =
+    SDL_MatrixCoefficients::CHROMA_DERIVED_NCL;
+pub const SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL: SDL_MatrixCoefficients =
+    SDL_MatrixCoefficients::CHROMA_DERIVED_CL;
 /// ITU-R BT.2100-0 ICTCP
 pub const SDL_MATRIX_COEFFICIENTS_ICTCP: SDL_MatrixCoefficients = SDL_MatrixCoefficients::ICTCP;
 pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoefficients::CUSTOM;
@@ -854,7 +879,14 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetPixelFormatForMasks
-    pub fn SDL_GetMasksForPixelFormat(format: SDL_PixelFormat, bpp: *mut ::core::ffi::c_int, Rmask: *mut Uint32, Gmask: *mut Uint32, Bmask: *mut Uint32, Amask: *mut Uint32) -> SDL_bool;
+    pub fn SDL_GetMasksForPixelFormat(
+        format: SDL_PixelFormat,
+        bpp: *mut ::core::ffi::c_int,
+        Rmask: *mut Uint32,
+        Gmask: *mut Uint32,
+        Bmask: *mut Uint32,
+        Amask: *mut Uint32,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -876,7 +908,13 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetMasksForPixelFormat
-    pub fn SDL_GetPixelFormatForMasks(bpp: ::core::ffi::c_int, Rmask: Uint32, Gmask: Uint32, Bmask: Uint32, Amask: Uint32) -> SDL_PixelFormat;
+    pub fn SDL_GetPixelFormatForMasks(
+        bpp: ::core::ffi::c_int,
+        Rmask: Uint32,
+        Gmask: Uint32,
+        Bmask: Uint32,
+        Amask: Uint32,
+    ) -> SDL_PixelFormat;
 }
 
 extern "C" {
@@ -930,7 +968,12 @@ extern "C" {
     ///               the palette is not modified or destroyed in another thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetPaletteColors(palette: *mut SDL_Palette, colors: *const SDL_Color, firstcolor: ::core::ffi::c_int, ncolors: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SetPaletteColors(
+        palette: *mut SDL_Palette,
+        colors: *const SDL_Color,
+        firstcolor: ::core::ffi::c_int,
+        ncolors: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {
@@ -982,7 +1025,13 @@ extern "C" {
     /// \sa SDL_GetRGB
     /// \sa SDL_MapRGBA
     /// \sa SDL_MapSurfaceRGB
-    pub fn SDL_MapRGB(format: *const SDL_PixelFormatDetails, palette: *const SDL_Palette, r: Uint8, g: Uint8, b: Uint8) -> Uint32;
+    pub fn SDL_MapRGB(
+        format: *const SDL_PixelFormatDetails,
+        palette: *const SDL_Palette,
+        r: Uint8,
+        g: Uint8,
+        b: Uint8,
+    ) -> Uint32;
 }
 
 extern "C" {
@@ -1021,7 +1070,14 @@ extern "C" {
     /// \sa SDL_GetRGBA
     /// \sa SDL_MapRGB
     /// \sa SDL_MapSurfaceRGBA
-    pub fn SDL_MapRGBA(format: *const SDL_PixelFormatDetails, palette: *const SDL_Palette, r: Uint8, g: Uint8, b: Uint8, a: Uint8) -> Uint32;
+    pub fn SDL_MapRGBA(
+        format: *const SDL_PixelFormatDetails,
+        palette: *const SDL_Palette,
+        r: Uint8,
+        g: Uint8,
+        b: Uint8,
+        a: Uint8,
+    ) -> Uint32;
 }
 
 extern "C" {
@@ -1049,7 +1105,14 @@ extern "C" {
     /// \sa SDL_GetRGBA
     /// \sa SDL_MapRGB
     /// \sa SDL_MapRGBA
-    pub fn SDL_GetRGB(pixel: Uint32, format: *const SDL_PixelFormatDetails, palette: *const SDL_Palette, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8);
+    pub fn SDL_GetRGB(
+        pixel: Uint32,
+        format: *const SDL_PixelFormatDetails,
+        palette: *const SDL_Palette,
+        r: *mut Uint8,
+        g: *mut Uint8,
+        b: *mut Uint8,
+    );
 }
 
 extern "C" {
@@ -1081,6 +1144,13 @@ extern "C" {
     /// \sa SDL_GetRGB
     /// \sa SDL_MapRGB
     /// \sa SDL_MapRGBA
-    pub fn SDL_GetRGBA(pixel: Uint32, format: *const SDL_PixelFormatDetails, palette: *const SDL_Palette, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8, a: *mut Uint8);
+    pub fn SDL_GetRGBA(
+        pixel: Uint32,
+        format: *const SDL_PixelFormatDetails,
+        palette: *const SDL_Palette,
+        r: *mut Uint8,
+        g: *mut Uint8,
+        b: *mut Uint8,
+        a: *mut Uint8,
+    );
 }
-

@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryBlendmode
 //!
 //! Blend modes decide how two colors will mix together. There are both
@@ -118,19 +116,23 @@ pub const SDL_BLENDFACTOR_ONE: SDL_BlendFactor = SDL_BlendFactor::ONE;
 /// srcR, srcG, srcB, srcA
 pub const SDL_BLENDFACTOR_SRC_COLOR: SDL_BlendFactor = SDL_BlendFactor::SRC_COLOR;
 /// 1-srcR, 1-srcG, 1-srcB, 1-srcA
-pub const SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR: SDL_BlendFactor = SDL_BlendFactor::ONE_MINUS_SRC_COLOR;
+pub const SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR: SDL_BlendFactor =
+    SDL_BlendFactor::ONE_MINUS_SRC_COLOR;
 /// srcA, srcA, srcA, srcA
 pub const SDL_BLENDFACTOR_SRC_ALPHA: SDL_BlendFactor = SDL_BlendFactor::SRC_ALPHA;
 /// 1-srcA, 1-srcA, 1-srcA, 1-srcA
-pub const SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA: SDL_BlendFactor = SDL_BlendFactor::ONE_MINUS_SRC_ALPHA;
+pub const SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA: SDL_BlendFactor =
+    SDL_BlendFactor::ONE_MINUS_SRC_ALPHA;
 /// dstR, dstG, dstB, dstA
 pub const SDL_BLENDFACTOR_DST_COLOR: SDL_BlendFactor = SDL_BlendFactor::DST_COLOR;
 /// 1-dstR, 1-dstG, 1-dstB, 1-dstA
-pub const SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR: SDL_BlendFactor = SDL_BlendFactor::ONE_MINUS_DST_COLOR;
+pub const SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR: SDL_BlendFactor =
+    SDL_BlendFactor::ONE_MINUS_DST_COLOR;
 /// dstA, dstA, dstA, dstA
 pub const SDL_BLENDFACTOR_DST_ALPHA: SDL_BlendFactor = SDL_BlendFactor::DST_ALPHA;
 /// 1-dstA, 1-dstA, 1-dstA, 1-dstA
-pub const SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA: SDL_BlendFactor = SDL_BlendFactor::ONE_MINUS_DST_ALPHA;
+pub const SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA: SDL_BlendFactor =
+    SDL_BlendFactor::ONE_MINUS_DST_ALPHA;
 
 extern "C" {
     /// Compose a custom blend mode for renderers.
@@ -216,6 +218,12 @@ extern "C" {
     /// \sa SDL_GetRenderDrawBlendMode
     /// \sa SDL_SetTextureBlendMode
     /// \sa SDL_GetTextureBlendMode
-    pub fn SDL_ComposeCustomBlendMode(srcColorFactor: SDL_BlendFactor, dstColorFactor: SDL_BlendFactor, colorOperation: SDL_BlendOperation, srcAlphaFactor: SDL_BlendFactor, dstAlphaFactor: SDL_BlendFactor, alphaOperation: SDL_BlendOperation) -> SDL_BlendMode;
+    pub fn SDL_ComposeCustomBlendMode(
+        srcColorFactor: SDL_BlendFactor,
+        dstColorFactor: SDL_BlendFactor,
+        colorOperation: SDL_BlendOperation,
+        srcAlphaFactor: SDL_BlendFactor,
+        dstAlphaFactor: SDL_BlendFactor,
+        alphaOperation: SDL_BlendOperation,
+    ) -> SDL_BlendMode;
 }
-

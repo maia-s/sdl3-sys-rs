@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryTouch
 //!
 //! SDL touch management.
@@ -29,8 +27,10 @@ impl SDL_TouchDeviceType {
 }
 pub const SDL_TOUCH_DEVICE_INVALID: SDL_TouchDeviceType = SDL_TouchDeviceType::INVALID;
 pub const SDL_TOUCH_DEVICE_DIRECT: SDL_TouchDeviceType = SDL_TouchDeviceType::DIRECT;
-pub const SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE: SDL_TouchDeviceType = SDL_TouchDeviceType::INDIRECT_ABSOLUTE;
-pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType = SDL_TouchDeviceType::INDIRECT_RELATIVE;
+pub const SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE: SDL_TouchDeviceType =
+    SDL_TouchDeviceType::INDIRECT_ABSOLUTE;
+pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType =
+    SDL_TouchDeviceType::INDIRECT_RELATIVE;
 
 /// Data about a single finger in a multitouch event.
 ///
@@ -109,6 +109,8 @@ extern "C" {
     ///          longer needed.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetTouchFingers(touchID: SDL_TouchID, count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Finger;
+    pub fn SDL_GetTouchFingers(
+        touchID: SDL_TouchID,
+        count: *mut ::core::ffi::c_int,
+    ) -> *mut *mut SDL_Finger;
 }
-

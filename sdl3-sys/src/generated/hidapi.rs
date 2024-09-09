@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryHIDAPI
 //!
 //! Header file for SDL HIDAPI functions.
@@ -209,7 +207,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_hid_device_change_count
-    pub fn SDL_hid_enumerate(vendor_id: ::core::ffi::c_ushort, product_id: ::core::ffi::c_ushort) -> *mut SDL_hid_device_info;
+    pub fn SDL_hid_enumerate(
+        vendor_id: ::core::ffi::c_ushort,
+        product_id: ::core::ffi::c_ushort,
+    ) -> *mut SDL_hid_device_info;
 }
 
 extern "C" {
@@ -239,7 +240,11 @@ extern "C" {
     ///          failure; call SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_open(vendor_id: ::core::ffi::c_ushort, product_id: ::core::ffi::c_ushort, serial_number: *const crate::ffi::c_wchar_t) -> *mut SDL_hid_device;
+    pub fn SDL_hid_open(
+        vendor_id: ::core::ffi::c_ushort,
+        product_id: ::core::ffi::c_ushort,
+        serial_number: *const crate::ffi::c_wchar_t,
+    ) -> *mut SDL_hid_device;
 }
 
 extern "C" {
@@ -280,7 +285,11 @@ extern "C" {
     ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_write(dev: *mut SDL_hid_device, data: *const ::core::ffi::c_uchar, length: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_hid_write(
+        dev: *mut SDL_hid_device,
+        data: *const ::core::ffi::c_uchar,
+        length: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -301,7 +310,12 @@ extern "C" {
     ///          be read within the timeout period, this function returns 0.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_read_timeout(dev: *mut SDL_hid_device, data: *mut ::core::ffi::c_uchar, length: ::core::primitive::usize, milliseconds: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn SDL_hid_read_timeout(
+        dev: *mut SDL_hid_device,
+        data: *mut ::core::ffi::c_uchar,
+        length: ::core::primitive::usize,
+        milliseconds: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -322,7 +336,11 @@ extern "C" {
     ///          returns 0.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_read(dev: *mut SDL_hid_device, data: *mut ::core::ffi::c_uchar, length: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_hid_read(
+        dev: *mut SDL_hid_device,
+        data: *mut ::core::ffi::c_uchar,
+        length: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -341,7 +359,10 @@ extern "C" {
     ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_set_nonblocking(dev: *mut SDL_hid_device, nonblock: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn SDL_hid_set_nonblocking(
+        dev: *mut SDL_hid_device,
+        nonblock: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -366,7 +387,11 @@ extern "C" {
     ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_send_feature_report(dev: *mut SDL_hid_device, data: *const ::core::ffi::c_uchar, length: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_hid_send_feature_report(
+        dev: *mut SDL_hid_device,
+        data: *const ::core::ffi::c_uchar,
+        length: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -389,7 +414,11 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_get_feature_report(dev: *mut SDL_hid_device, data: *mut ::core::ffi::c_uchar, length: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_hid_get_feature_report(
+        dev: *mut SDL_hid_device,
+        data: *mut ::core::ffi::c_uchar,
+        length: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -412,7 +441,11 @@ extern "C" {
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_get_input_report(dev: *mut SDL_hid_device, data: *mut ::core::ffi::c_uchar, length: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_hid_get_input_report(
+        dev: *mut SDL_hid_device,
+        data: *mut ::core::ffi::c_uchar,
+        length: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -436,7 +469,11 @@ extern "C" {
     ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_get_manufacturer_string(dev: *mut SDL_hid_device, string: *mut crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_hid_get_manufacturer_string(
+        dev: *mut SDL_hid_device,
+        string: *mut crate::ffi::c_wchar_t,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -449,7 +486,11 @@ extern "C" {
     ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_get_product_string(dev: *mut SDL_hid_device, string: *mut crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_hid_get_product_string(
+        dev: *mut SDL_hid_device,
+        string: *mut crate::ffi::c_wchar_t,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -462,7 +503,11 @@ extern "C" {
     ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_get_serial_number_string(dev: *mut SDL_hid_device, string: *mut crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_hid_get_serial_number_string(
+        dev: *mut SDL_hid_device,
+        string: *mut crate::ffi::c_wchar_t,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -476,7 +521,12 @@ extern "C" {
     ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_get_indexed_string(dev: *mut SDL_hid_device, string_index: ::core::ffi::c_int, string: *mut crate::ffi::c_wchar_t, maxlen: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_hid_get_indexed_string(
+        dev: *mut SDL_hid_device,
+        string_index: ::core::ffi::c_int,
+        string: *mut crate::ffi::c_wchar_t,
+        maxlen: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -504,7 +554,11 @@ extern "C" {
     ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_get_report_descriptor(dev: *mut SDL_hid_device, buf: *mut ::core::ffi::c_uchar, buf_size: ::core::primitive::usize) -> ::core::ffi::c_int;
+    pub fn SDL_hid_get_report_descriptor(
+        dev: *mut SDL_hid_device,
+        buf: *mut ::core::ffi::c_uchar,
+        buf_size: ::core::primitive::usize,
+    ) -> ::core::ffi::c_int;
 }
 
 extern "C" {
@@ -521,5 +575,6 @@ extern "C" {
 /// \since This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
-pub struct SDL_hid_device { _opaque: [::core::primitive::u8; 0] }
-
+pub struct SDL_hid_device {
+    _opaque: [::core::primitive::u8; 0],
+}

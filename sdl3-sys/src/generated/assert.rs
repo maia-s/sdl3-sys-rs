@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, clippy::approx_constant, clippy::double_parens, clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]
-
 //! # CategoryAssert
 //!
 //! A helpful assertion macro!
@@ -38,8 +36,7 @@
 use super::stdinc::*;
 
 #[cfg(doc)]
-emit! {
-}
+emit! {}
 
 #[cfg(not(doc))]
 emit! {
@@ -58,8 +55,7 @@ emit! {
 }
 
 #[cfg(doc)]
-emit! {
-}
+emit! {}
 
 #[cfg(not(doc))]
 emit! {
@@ -168,12 +164,16 @@ extern "C" {
     /// \returns assert state.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReportAssertion(data: *mut SDL_AssertData, func: *const ::core::ffi::c_char, file: *const ::core::ffi::c_char, line: ::core::ffi::c_int) -> SDL_AssertState;
+    pub fn SDL_ReportAssertion(
+        data: *mut SDL_AssertData,
+        func: *const ::core::ffi::c_char,
+        file: *const ::core::ffi::c_char,
+        line: ::core::ffi::c_int,
+    ) -> SDL_AssertState;
 }
 
 #[cfg(doc)]
-emit! {
-}
+emit! {}
 
 #[cfg(not(doc))]
 emit! {
@@ -220,7 +220,12 @@ emit! {
 /// \returns an SDL_AssertState value indicating how to handle the failure.
 ///
 /// \since This datatype is available since SDL 3.0.0.
-pub type SDL_AssertionHandler = ::core::option::Option<extern "C" fn(data: *const SDL_AssertData, userdata: *mut ::core::ffi::c_void) -> SDL_AssertState>;
+pub type SDL_AssertionHandler = ::core::option::Option<
+    extern "C" fn(
+        data: *const SDL_AssertData,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> SDL_AssertState,
+>;
 
 extern "C" {
     /// Set an application-defined assertion handler.
@@ -242,7 +247,10 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetAssertionHandler
-    pub fn SDL_SetAssertionHandler(handler: SDL_AssertionHandler, userdata: *mut ::core::ffi::c_void);
+    pub fn SDL_SetAssertionHandler(
+        handler: SDL_AssertionHandler,
+        userdata: *mut ::core::ffi::c_void,
+    );
 }
 
 extern "C" {
@@ -282,7 +290,9 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetAssertionHandler
-    pub fn SDL_GetAssertionHandler(puserdata: *mut *mut ::core::ffi::c_void) -> SDL_AssertionHandler;
+    pub fn SDL_GetAssertionHandler(
+        puserdata: *mut *mut ::core::ffi::c_void,
+    ) -> SDL_AssertionHandler;
 }
 
 extern "C" {
@@ -326,4 +336,3 @@ extern "C" {
     /// \sa SDL_GetAssertionReport
     pub fn SDL_ResetAssertionReport();
 }
-
