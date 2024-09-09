@@ -1,9 +1,10 @@
 use crate::{
     common_ident_prefix,
     parse::{
-        ArgDecl, Define, DocComment, DocCommentFile, Expr, FnAbi, FnDeclArgs, FnPointer, Function,
-        GetSpan, Ident, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock,
-        PreProcBlockKind, PrimitiveType, StructKind, StructOrUnion, Type, TypeDef, TypeEnum,
+        ArgDecl, Conditional, ConditionalExpr, Define, DocComment, DocCommentFile, Expr, FnAbi,
+        FnDeclArgs, FnPointer, Function, GetSpan, Ident, Include, IntegerLiteral, Item, Items,
+        Literal, ParseErr, PreProcBlock, PrimitiveType, StructKind, StructOrUnion, Type, TypeDef,
+        TypeEnum,
     },
 };
 use std::{
@@ -182,6 +183,7 @@ impl Emit for Item {
             Item::For(_) => todo!(),
             Item::IfElse(_) => todo!(),
             Item::Return(_) => todo!(),
+            Item::EnumVariant(_) => todo!(),
         }
     }
 }
@@ -214,10 +216,61 @@ impl Emit for DocCommentFile {
     }
 }
 
+impl Conditional {
+    fn emit_cfg(&self, ctx: &mut EmitContext) -> EmitResult {
+        fn eval(ctx: &mut EmitContext, cond: &mut DefineState, c: &ConditionalExpr) -> EmitResult {
+            match c {
+                ConditionalExpr::If(expr) => {
+                    let mut value = {
+                        let _eval_mode = ctx.preproc_eval_mode_guard();
+                        expr.try_eval(ctx)?
+                    };
+                    if value.is_none() {
+                        if let Expr::BinaryOp(bop) = &expr {
+                            if let Expr::Ident(lhs) = &bop.lhs {
+                                value = ctx.try_target_dependent_if_compare(
+                                    bop.op.as_str(),
+                                    lhs.as_str(),
+                                    &bop.rhs,
+                                );
+                            }
+                        }
+                    }
+                    if let Some(value) = value {
+                        if let Value::TargetDependent(define_state) = value {
+                            *cond = cond.clone().all(define_state);
+                        } else if value.is_truthy() {
+                            // unconditional yes
+                        } else {
+                            // unconditional no
+                            *cond = cond.clone().all(DefineState::never());
+                        }
+                        Ok(())
+                    } else {
+                        Err(ParseErr::new(expr.span(), "couldn't evaluate if expression").into())
+                    }
+                }
+                ConditionalExpr::IfDef(_ident) => todo!(),
+                ConditionalExpr::IfNDef(_ident) => todo!(),
+            }
+        }
+
+        let mut cond = DefineState::none();
+        for c in self.not.iter() {
+            eval(ctx, &mut cond, c)?;
+        }
+        cond = cond.not();
+        if let Some(req) = &self.require {
+            eval(ctx, &mut cond, req)?;
+        }
+        ctx.emit_define_state_cfg(&cond)
+    }
+}
+
 impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        match &self.kind {
-            PreProcBlockKind::If(expr) => {
+        match &self.cond_expr {
+            Some(ConditionalExpr::If(expr)) => {
                 let mut value = {
                     let _eval_mode = ctx.preproc_eval_mode_guard();
                     expr.try_eval(ctx)?
@@ -253,7 +306,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
                 }
             }
 
-            PreProcBlockKind::IfDef(ident) => {
+            Some(ConditionalExpr::IfDef(ident)) => {
                 if ctx.preproc_state().borrow().is_target_define(ident) {
                     let define_state = DefineState::defined(ident.clone());
                     let pps1 = self.block.emit_with_define_state(ctx, &define_state)?;
@@ -270,7 +323,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
                 }
             }
 
-            PreProcBlockKind::IfNDef(ident) => {
+            Some(ConditionalExpr::IfNDef(ident)) => {
                 if ctx.preproc_state().borrow().is_target_define(ident) {
                     let define_state = DefineState::defined(ident.clone());
                     let pps1 = self
@@ -289,7 +342,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
                 }
             }
 
-            PreProcBlockKind::None => {
+            None => {
                 assert!(self.else_block.is_none());
                 self.block.emit(ctx)
             }
@@ -789,9 +842,11 @@ impl Emit for TypeDef {
 
                     next_expr = expr.try_eval_plus_one(ctx)?.map(Expr::Value);
 
+                    variant.cond.emit_cfg(&mut ctx_impl)?;
                     variant.doc.emit(&mut ctx_impl)?;
                     writeln!(ctx_impl, "pub const {short_variant_ident}: Self = {value};")?;
 
+                    variant.cond.emit_cfg(&mut ctx_global)?;
                     variant.doc.emit(&mut ctx_global)?;
                     writeln!(ctx_global, "pub const {variant_ident}: {enum_ident} = {enum_ident}::{short_variant_ident};")?;
                 }

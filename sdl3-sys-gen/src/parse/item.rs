@@ -1,10 +1,11 @@
 use super::{
-    Asm, Define, Delimited, DocCommentFile, Enum, Expr, ExprNoComma, FnCall, Function, GetSpan,
-    Ident, Include, Kw_do, Kw_for, Kw_if, Kw_return, Op, Parse, ParseContext, ParseErr,
+    Asm, Define, Delimited, DocCommentFile, Enum, EnumVariant, Expr, ExprNoComma, FnCall, Function,
+    GetSpan, Ident, Include, Kw_do, Kw_for, Kw_if, Kw_return, Op, Parse, ParseContext, ParseErr,
     ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind, Punctuated, Span, StructOrUnion,
     Terminated, Type, TypeDef, TypeWithReqIdent, WsAndComments,
 };
 use crate::parse::{Kw_else, Kw_while};
+use core::iter::FusedIterator;
 use std::borrow::Cow;
 
 #[derive(Clone, Debug)]
@@ -41,6 +42,7 @@ pub enum Item {
     For(For),
     IfElse(IfElse),
     Return(Return),
+    EnumVariant(EnumVariant),
 }
 
 impl Parse for Item {
@@ -102,6 +104,10 @@ impl Parse for Item {
             Ok((rest, Some(Item::FnCall(call))))
         } else if let (rest, Some(dc)) = DocCommentFile::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::FileDoc(dc))))
+        } else if let (rest, Some(ev)) =
+            EnumVariant::try_parse_raw_if(ctx, input, |ev| ev.expr.is_some())?
+        {
+            Ok((rest, Some(Item::EnumVariant(ev))))
         } else {
             Ok((input.clone(), None))
         }
@@ -110,6 +116,14 @@ impl Parse for Item {
 
 #[derive(Clone, Debug, Default)]
 pub struct Items(pub Vec<Item>);
+
+impl Items {
+    pub fn iter(
+        &self,
+    ) -> impl Iterator<Item = &Item> + DoubleEndedIterator + ExactSizeIterator + FusedIterator {
+        self.0.iter()
+    }
+}
 
 impl Parse for Items {
     fn desc() -> Cow<'static, str> {

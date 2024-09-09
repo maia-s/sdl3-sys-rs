@@ -3,6 +3,7 @@ use super::{
     Item, Items, Literal, Parse, ParseContext, ParseErr, ParseRawRes, Punctuated, RustCode, Span,
     Type, WsAndComments,
 };
+use core::mem;
 use std::borrow::Cow;
 
 fn skip_ifdef(str: &str) -> bool {
@@ -154,7 +155,7 @@ impl Parse for Line {
 #[derive(Clone, Debug)]
 pub struct PreProcBlock<const ALLOW_INITIAL_ELSE: bool = false> {
     pub span: Span,
-    pub kind: PreProcBlockKind,
+    pub cond_expr: Option<ConditionalExpr>,
     pub block: Items,
     pub else_block: Option<Box<PreProcBlock<true>>>,
 }
@@ -166,11 +167,34 @@ impl<const ALLOW_INITIAL_ELSE: bool> GetSpan for PreProcBlock<ALLOW_INITIAL_ELSE
 }
 
 #[derive(Clone, Debug)]
-pub enum PreProcBlockKind {
+pub struct Conditional {
+    pub not: Vec<ConditionalExpr>,
+    pub require: Option<ConditionalExpr>,
+}
+
+impl Conditional {
+    pub fn new() -> Self {
+        Self {
+            not: Vec::new(),
+            require: None,
+        }
+    }
+
+    pub fn push(&mut self, mut cond_expr: Option<ConditionalExpr>) {
+        mem::swap(&mut self.require, &mut cond_expr);
+        if let Some(req) = cond_expr {
+            self.not.push(req);
+        } else {
+            assert!(self.not.is_empty())
+        }
+    }
+}
+
+#[derive(Clone, Debug)]
+pub enum ConditionalExpr {
     If(Expr),
     IfDef(Ident),
     IfNDef(Ident),
-    None,
 }
 
 impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> {
@@ -182,15 +206,15 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
         if let (mut rest, Some(line)) = PreProcLine::try_parse_raw(ctx, input)? {
             let span0 = line.span;
 
-            let (kind, is_else) = match line.kind {
-                PreProcLineKind::If(expr) => (PreProcBlockKind::If(expr), false),
-                PreProcLineKind::IfDef(ident) => (PreProcBlockKind::IfDef(ident), false),
-                PreProcLineKind::IfNDef(ident) => (PreProcBlockKind::IfNDef(ident), false),
+            let (cond_expr, is_else) = match line.kind {
+                PreProcLineKind::If(expr) => (Some(ConditionalExpr::If(expr)), false),
+                PreProcLineKind::IfDef(ident) => (Some(ConditionalExpr::IfDef(ident)), false),
+                PreProcLineKind::IfNDef(ident) => (Some(ConditionalExpr::IfNDef(ident)), false),
 
-                PreProcLineKind::ElIf(expr) => (PreProcBlockKind::If(expr), true),
-                PreProcLineKind::ElIfDef(ident) => (PreProcBlockKind::IfDef(ident), true),
-                PreProcLineKind::ElIfNDef(ident) => (PreProcBlockKind::IfNDef(ident), true),
-                PreProcLineKind::Else => (PreProcBlockKind::None, true),
+                PreProcLineKind::ElIf(expr) => (Some(ConditionalExpr::If(expr)), true),
+                PreProcLineKind::ElIfDef(ident) => (Some(ConditionalExpr::IfDef(ident)), true),
+                PreProcLineKind::ElIfNDef(ident) => (Some(ConditionalExpr::IfNDef(ident)), true),
+                PreProcLineKind::Else => (None, true),
 
                 PreProcLineKind::EndIf
                 | PreProcLineKind::Define(_)
@@ -239,15 +263,15 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                             | PreProcLineKind::ElIfNDef(_)
                             | PreProcLineKind::Else => {
                                 let block = block_start.join(&rest.start());
-                                let block = match &kind {
-                                    PreProcBlockKind::None => {
+                                let block = match &cond_expr {
+                                    None => {
                                         return Err(ParseErr::new(
                                             pp.span,
                                             "expected `#endif` after `#else`, got another else",
                                         ))
                                     }
 
-                                    PreProcBlockKind::IfDef(i) if skip_ifdef(i.as_str()) => {
+                                    Some(ConditionalExpr::IfDef(i)) if skip_ifdef(i.as_str()) => {
                                         Items(vec![Item::Skipped(block)])
                                     }
 
@@ -261,7 +285,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                     rest,
                                     Some(Self {
                                         span: span0.start().join(&span1.end()),
-                                        kind,
+                                        cond_expr,
                                         block,
                                         else_block: Some(Box::new(else_block)),
                                     }),
@@ -270,8 +294,8 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
 
                             PreProcLineKind::EndIf => {
                                 let block = block_start.join(&rest.start());
-                                let block = match &kind {
-                                    PreProcBlockKind::IfDef(i) if skip_ifdef(i.as_str()) => {
+                                let block = match &cond_expr {
+                                    Some(ConditionalExpr::IfDef(i)) if skip_ifdef(i.as_str()) => {
                                         Items(vec![Item::Skipped(block)])
                                     }
 
@@ -283,7 +307,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                     rest,
                                     Some(Self {
                                         span: span0.start().join(&span.end()),
-                                        kind,
+                                        cond_expr,
                                         block,
                                         else_block: None,
                                     }),

@@ -28,6 +28,12 @@ impl DefineState {
         Self { state: None }
     }
 
+    pub fn never() -> Self {
+        Self {
+            state: Some(Coll::Any(BTreeSet::new())),
+        }
+    }
+
     pub fn is_none(&self) -> bool {
         self.state.is_none()
     }
