@@ -34,9 +34,18 @@ fn skip_emit(module: &str) -> bool {
     ["egl", "intrin", "oldnames"].contains(&module) || module.starts_with("opengl")
 }
 
-pub fn generate(sdl_path: &Path, output_path: &Path) -> Result<(), Error> {
+pub fn generate(sdl_path: &Path, target_crate_path: &Path) -> Result<(), Error> {
     let mut showrev_path = sdl_path.to_path_buf();
     showrev_path.push("build-scripts/showrev.sh");
+
+    let mut headers_path = sdl_path.to_path_buf();
+    headers_path.push("include/SDL3");
+
+    let mut target_cargo_toml_path = target_crate_path.to_path_buf();
+    target_cargo_toml_path.push("Cargo.toml");
+
+    let mut output_path = target_crate_path.to_path_buf();
+    output_path.push("src/generated");
 
     let revision = if let Ok(output) = Command::new(showrev_path).output() {
         output
@@ -47,8 +56,25 @@ pub fn generate(sdl_path: &Path, output_path: &Path) -> Result<(), Error> {
         None
     };
 
-    let mut headers_path = sdl_path.to_path_buf();
-    headers_path.push("include/SDL3");
+    if let Some(revision) = &revision {
+        let mut buf = String::new();
+        File::open(&target_cargo_toml_path)?.read_to_string(&mut buf)?;
+        let mut out = Writable(BufWriter::new(File::create(&target_cargo_toml_path)?));
+        let mut patched = false;
+        for line in buf.lines() {
+            if !patched && line.starts_with("version =") && line.contains("+sdl3") {
+                let Some((revision_pos, _)) = line.char_indices().rev().find(|(_, c)| *c == '+')
+                else {
+                    unreachable!()
+                };
+                patched = true;
+                let pfx = &line[..=revision_pos];
+                writeln!(out, "{pfx}sdl3-{revision}\"")?;
+            } else {
+                writeln!(out, "{}", line)?;
+            }
+        }
+    }
 
     let mut gen = Gen::new(output_path.to_owned(), revision)?;
 
