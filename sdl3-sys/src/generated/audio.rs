@@ -72,8 +72,6 @@ use super::properties::*;
 
 use super::iostream::*;
 
-use super::thread::*;
-
 pub const SDL_AUDIO_MASK_BITSIZE: ::core::primitive::u32 = 255_u32;
 
 pub const SDL_AUDIO_MASK_FLOAT: ::core::primitive::u32 = 256_u32;
@@ -95,7 +93,7 @@ pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 /// \sa SDL_AUDIO_ISSIGNED
 /// \sa SDL_AUDIO_ISUNSIGNED
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_AUDIO_UNKNOWN`], [`SDL_AUDIO_U8`], [`SDL_AUDIO_S8`], [`SDL_AUDIO_S16LE`], [`SDL_AUDIO_S16BE`], [`SDL_AUDIO_S32LE`], [`SDL_AUDIO_S32BE`], [`SDL_AUDIO_F32LE`], [`SDL_AUDIO_F32BE`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_AUDIO_UNKNOWN`], [`SDL_AUDIO_U8`], [`SDL_AUDIO_S8`], [`SDL_AUDIO_S16LE`], [`SDL_AUDIO_S16BE`], [`SDL_AUDIO_S32LE`], [`SDL_AUDIO_S32BE`], [`SDL_AUDIO_F32LE`], [`SDL_AUDIO_F32BE`], [`SDL_AUDIO_S16`], [`SDL_AUDIO_S32`], [`SDL_AUDIO_F32`], [`SDL_AUDIO_S16`], [`SDL_AUDIO_S32`], [`SDL_AUDIO_F32`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -119,6 +117,18 @@ impl SDL_AudioFormat {
     pub const F32LE: Self = Self(0x8120);
     /// As above, but big-endian byte order
     pub const F32BE: Self = Self(0x9120);
+    #[cfg(target_endian = "little")]
+    pub const S16: Self = SDL_AUDIO_S16LE;
+    #[cfg(target_endian = "little")]
+    pub const S32: Self = SDL_AUDIO_S32LE;
+    #[cfg(target_endian = "little")]
+    pub const F32: Self = SDL_AUDIO_F32LE;
+    #[cfg(not(target_endian = "little"))]
+    pub const S16: Self = SDL_AUDIO_S16BE;
+    #[cfg(not(target_endian = "little"))]
+    pub const S32: Self = SDL_AUDIO_S32BE;
+    #[cfg(not(target_endian = "little"))]
+    pub const F32: Self = SDL_AUDIO_F32BE;
 }
 /// Unspecified audio format
 pub const SDL_AUDIO_UNKNOWN: SDL_AudioFormat = SDL_AudioFormat::UNKNOWN;
@@ -138,26 +148,18 @@ pub const SDL_AUDIO_S32BE: SDL_AudioFormat = SDL_AudioFormat::S32BE;
 pub const SDL_AUDIO_F32LE: SDL_AudioFormat = SDL_AudioFormat::F32LE;
 /// As above, but big-endian byte order
 pub const SDL_AUDIO_F32BE: SDL_AudioFormat = SDL_AudioFormat::F32BE;
-
 #[cfg(target_endian = "little")]
-emit! {
-    pub const SDL_AUDIO_S16: SDL_AudioFormat = SDL_AUDIO_S16LE;
-
-    pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AUDIO_S32LE;
-
-    pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AUDIO_F32LE;
-
-}
-
+pub const SDL_AUDIO_S16: SDL_AudioFormat = SDL_AudioFormat::S16;
+#[cfg(target_endian = "little")]
+pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AudioFormat::S32;
+#[cfg(target_endian = "little")]
+pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 #[cfg(not(target_endian = "little"))]
-emit! {
-    pub const SDL_AUDIO_S16: SDL_AudioFormat = SDL_AUDIO_S16BE;
-
-    pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AUDIO_S32BE;
-
-    pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AUDIO_F32BE;
-
-}
+pub const SDL_AUDIO_S16: SDL_AudioFormat = SDL_AudioFormat::S16;
+#[cfg(not(target_endian = "little"))]
+pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AudioFormat::S32;
+#[cfg(not(target_endian = "little"))]
+pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 
 /// SDL Audio Device instance IDs.
 ///

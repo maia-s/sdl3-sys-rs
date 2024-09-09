@@ -15,8 +15,6 @@
 
 use super::stdinc::*;
 
-use super::error::*;
-
 /// SDL pen instance IDs.
 ///
 /// Zero is used to signify an invalid/null device.

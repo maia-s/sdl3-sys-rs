@@ -10,8 +10,6 @@ use super::properties::*;
 
 use super::atomic::*;
 
-use super::mutex::*;
-
 #[cfg(windows)]
 emit! {}
 

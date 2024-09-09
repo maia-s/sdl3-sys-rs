@@ -8,8 +8,6 @@ use super::error::*;
 
 use super::keyboard::*;
 
-use super::render::*;
-
 use super::video::*;
 
 #[cfg(windows)]

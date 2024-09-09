@@ -5,8 +5,6 @@
 
 use super::stdinc::*;
 
-use super::error::*;
-
 /// The current major version of SDL headers.
 ///
 /// If this were SDL version 3.2.1, this value would be 3.

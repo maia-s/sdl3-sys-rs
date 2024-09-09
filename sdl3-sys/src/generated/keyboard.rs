@@ -89,9 +89,9 @@ extern "C" {
     /// valid for the whole lifetime of the application and should not be freed by
     /// the caller.
     ///
-    /// A array element with a value of 1 means that the key is pressed and a value
-    /// of 0 means that it is not. Indexes into this array are obtained by using
-    /// SDL_Scancode values.
+    /// A array element with a value of SDL_TRUE means that the key is pressed and
+    /// a value of SDL_FALSE means that it is not. Indexes into this array are
+    /// obtained by using SDL_Scancode values.
     ///
     /// Use SDL_PumpEvents() to update the state array.
     ///
@@ -110,7 +110,7 @@ extern "C" {
     ///
     /// \sa SDL_PumpEvents
     /// \sa SDL_ResetKeyboard
-    pub fn SDL_GetKeyboardState(numkeys: *mut ::core::ffi::c_int) -> *const Uint8;
+    pub fn SDL_GetKeyboardState(numkeys: *mut ::core::ffi::c_int) -> *const SDL_bool;
 }
 
 extern "C" {

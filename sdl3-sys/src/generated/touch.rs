@@ -8,8 +8,6 @@ use super::error::*;
 
 use super::mouse::*;
 
-use super::video::*;
-
 pub type SDL_TouchID = Uint64;
 
 pub type SDL_FingerID = Uint64;

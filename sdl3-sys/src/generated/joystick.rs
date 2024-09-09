@@ -610,7 +610,7 @@ extern "C" {
     ///
     /// \param joystick the virtual joystick on which to set state.
     /// \param button the index of the button on the virtual joystick to update.
-    /// \param value the new value for the specified button.
+    /// \param down SDL_TRUE if the button is pressed, SDL_FALSE otherwise.
     /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
     ///          for more information.
     ///
@@ -618,7 +618,7 @@ extern "C" {
     pub fn SDL_SetJoystickVirtualButton(
         joystick: *mut SDL_Joystick,
         button: ::core::ffi::c_int,
-        value: Uint8,
+        down: SDL_bool,
     ) -> SDL_bool;
 }
 
@@ -658,8 +658,8 @@ extern "C" {
     /// \param touchpad the index of the touchpad on the virtual joystick to
     ///                 update.
     /// \param finger the index of the finger on the touchpad to set.
-    /// \param state `SDL_PRESSED` if the finger is pressed, `SDL_RELEASED` if the
-    ///              finger is released.
+    /// \param down SDL_TRUE if the finger is pressed, SDL_FALSE if the finger is
+    ///             released.
     /// \param x the x coordinate of the finger on the touchpad, normalized 0 to 1,
     ///          with the origin in the upper left.
     /// \param y the y coordinate of the finger on the touchpad, normalized 0 to 1,
@@ -673,7 +673,7 @@ extern "C" {
         joystick: *mut SDL_Joystick,
         touchpad: ::core::ffi::c_int,
         finger: ::core::ffi::c_int,
-        state: Uint8,
+        down: SDL_bool,
         x: ::core::ffi::c_float,
         y: ::core::ffi::c_float,
         pressure: ::core::ffi::c_float,
@@ -1179,12 +1179,15 @@ extern "C" {
     /// \param joystick an SDL_Joystick structure containing joystick information.
     /// \param button the button index to get the state from; indices start at
     ///               index 0.
-    /// \returns 1 if the specified button is pressed, 0 otherwise.
+    /// \returns SDL_TRUE if the button is pressed, SDL_FALSE otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetNumJoystickButtons
-    pub fn SDL_GetJoystickButton(joystick: *mut SDL_Joystick, button: ::core::ffi::c_int) -> Uint8;
+    pub fn SDL_GetJoystickButton(
+        joystick: *mut SDL_Joystick,
+        button: ::core::ffi::c_int,
+    ) -> SDL_bool;
 }
 
 extern "C" {

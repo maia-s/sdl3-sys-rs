@@ -1269,14 +1269,13 @@ extern "C" {
     ///
     /// \param gamepad a gamepad.
     /// \param button a button index (one of the SDL_GamepadButton values).
-    /// \returns 1 for pressed state or 0 for not pressed state or failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns SDL_TRUE if the button is pressed, SDL_FALSE otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GamepadHasButton
     /// \sa SDL_GetGamepadAxis
-    pub fn SDL_GetGamepadButton(gamepad: *mut SDL_Gamepad, button: SDL_GamepadButton) -> Uint8;
+    pub fn SDL_GetGamepadButton(gamepad: *mut SDL_Gamepad, button: SDL_GamepadButton) -> SDL_bool;
 }
 
 extern "C" {
@@ -1347,12 +1346,13 @@ extern "C" {
     /// \param gamepad a gamepad.
     /// \param touchpad a touchpad.
     /// \param finger a finger.
-    /// \param state filled with state.
-    /// \param x filled with x position, normalized 0 to 1, with the origin in the
-    ///          upper left.
-    /// \param y filled with y position, normalized 0 to 1, with the origin in the
-    ///          upper left.
-    /// \param pressure filled with pressure value.
+    /// \param down a pointer filled with SDL_TRUE if the finger is down, SDL_FALSE
+    ///             otherwise, may be NULL.
+    /// \param x a pointer filled with the x position, normalized 0 to 1, with the
+    ///          origin in the upper left, may be NULL.
+    /// \param y a pointer filled with the y position, normalized 0 to 1, with the
+    ///          origin in the upper left, may be NULL.
+    /// \param pressure a pointer filled with pressure value, may be NULL.
     /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
     ///          for more information.
     ///
@@ -1363,7 +1363,7 @@ extern "C" {
         gamepad: *mut SDL_Gamepad,
         touchpad: ::core::ffi::c_int,
         finger: ::core::ffi::c_int,
-        state: *mut Uint8,
+        down: *mut SDL_bool,
         x: *mut ::core::ffi::c_float,
         y: *mut ::core::ffi::c_float,
         pressure: *mut ::core::ffi::c_float,

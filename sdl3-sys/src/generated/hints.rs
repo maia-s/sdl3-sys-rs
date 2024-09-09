@@ -3805,7 +3805,7 @@ pub const SDL_HINT_X11_WINDOW_TYPE: &::core::ffi::CStr =
 
 /// Specify the XCB library to load for the X11 driver.
 ///
-/// This defaults to "libX11-xcb.so"
+/// The default is platform-specific, often "libX11-xcb.so.1".
 ///
 /// This hint should be set before initializing the video subsystem.
 ///

@@ -1,10 +1,18 @@
 //! # CategoryStdinc
 //!
 //! This is a general header that includes C language support. It implements a
-//! subset of the C runtime: these should all behave the same way as their C
-//! runtime equivalents, but with an SDL_ prefix.
+//! subset of the C runtime APIs, but with an `SDL_` prefix. For most common
+//! use cases, these should behave the same way as their C runtime equivalents,
+//! but they may differ in how or whether they handle certain edge cases. When
+//! in doubt, consult the documentation for details.
 
 pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
+
+#[cfg(doc)]
+emit! {}
+
+#[cfg(not(doc))]
+emit! {}
 
 #[cfg(doc)]
 emit! {}
@@ -329,10 +337,48 @@ pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {
 }
 
 extern "C" {
+    /// Allocate uninitialized memory.
+    ///
+    /// The allocated memory returned by this function must be freed with
+    /// SDL_free().
+    ///
+    /// If `size` is 0, it will be set to 1.
+    ///
+    /// If you want to allocate memory aligned to a specific alignment, consider
+    /// using SDL_aligned_alloc().
+    ///
+    /// \param size the size to allocate.
+    /// \returns a pointer to the allocated memory, or NULL if allocation failed.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_free
+    /// \sa SDL_calloc
+    /// \sa SDL_realloc
+    /// \sa SDL_aligned_alloc
     pub fn SDL_malloc(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
 }
 
 extern "C" {
+    /// Allocate a zero-initialized array.
+    ///
+    /// The memory returned by this function must be freed with SDL_free().
+    ///
+    /// If either of `nmemb` or `size` is 0, they will both be set to 1.
+    ///
+    /// \param nmemb the number of elements in the array.
+    /// \param size the size of each element of the array.
+    /// \returns a pointer to the allocated array, or NULL if allocation failed.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_free
+    /// \sa SDL_malloc
+    /// \sa SDL_realloc
     pub fn SDL_calloc(
         nmemb: ::core::primitive::usize,
         size: ::core::primitive::usize,
@@ -340,6 +386,37 @@ extern "C" {
 }
 
 extern "C" {
+    /// Change the size of allocated memory.
+    ///
+    /// The memory returned by this function must be freed with SDL_free().
+    ///
+    /// If `size` is 0, it will be set to 1. Note that this is unlike some other C
+    /// runtime `realloc` implementations, which may treat `realloc(mem, 0)` the
+    /// same way as `free(mem)`.
+    ///
+    /// If `mem` is NULL, the behavior of this function is equivalent to
+    /// SDL_malloc(). Otherwise, the function can have one of three possible
+    /// outcomes:
+    ///
+    /// - If it returns the same pointer as `mem`, it means that `mem` was resized
+    ///   in place without freeing.
+    /// - If it returns a different non-NULL pointer, it means that `mem` was freed
+    ///   and cannot be dereferenced anymore.
+    /// - If it returns NULL (indicating failure), then `mem` will remain valid and
+    ///   must still be freed with SDL_free().
+    ///
+    /// \param mem a pointer to allocated memory to reallocate, or NULL.
+    /// \param size the new size of the memory.
+    /// \returns a pointer to the newly allocated memory, or NULL if allocation
+    ///          failed.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_free
+    /// \sa SDL_malloc
+    /// \sa SDL_calloc
     pub fn SDL_realloc(
         mem: *mut ::core::ffi::c_void,
         size: ::core::primitive::usize,
@@ -347,13 +424,61 @@ extern "C" {
 }
 
 extern "C" {
+    /// Free allocated memory.
+    ///
+    /// The pointer is no longer valid after this call and cannot be dereferenced
+    /// anymore.
+    ///
+    /// If `mem` is NULL, this function does nothing.
+    ///
+    /// \param mem a pointer to allocated memory, or NULL.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_malloc
+    /// \sa SDL_calloc
+    /// \sa SDL_realloc
     pub fn SDL_free(mem: *mut ::core::ffi::c_void);
 }
 
+/// A callback used to implement SDL_malloc().
+///
+/// SDL will always ensure that the passed `size` is greater than 0.
+///
+/// \param size the size to allocate.
+/// \returns a pointer to the allocated memory, or NULL if allocation failed.
+///
+/// \threadsafety It should be safe to call this callback from any thread.
+///
+/// \since This datatype is available since SDL 3.0.0.
+///
+/// \sa SDL_malloc
+/// \sa SDL_GetOriginalMemoryFunctions
+/// \sa SDL_GetMemoryFunctions
+/// \sa SDL_SetMemoryFunctions
 pub type SDL_malloc_func = ::core::option::Option<
     extern "C" fn(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void,
 >;
 
+/// A callback used to implement SDL_calloc().
+///
+/// SDL will always ensure that the passed `nmemb` and `size` are both greater
+/// than 0.
+///
+/// \param nmemb the number of elements in the array.
+/// \param size the size of each element of the array.
+/// \returns a pointer to the allocated array, or NULL if allocation failed.
+///
+/// \threadsafety It should be safe to call this callback from any thread.
+///
+/// \since This datatype is available since SDL 3.0.0.
+///
+/// \sa SDL_calloc
+/// \sa SDL_GetOriginalMemoryFunctions
+/// \sa SDL_GetMemoryFunctions
+/// \sa SDL_SetMemoryFunctions
 pub type SDL_calloc_func = ::core::option::Option<
     extern "C" fn(
         nmemb: ::core::primitive::usize,
@@ -361,6 +486,23 @@ pub type SDL_calloc_func = ::core::option::Option<
     ) -> *mut ::core::ffi::c_void,
 >;
 
+/// A callback used to implement SDL_realloc().
+///
+/// SDL will always ensure that the passed `size` is greater than 0.
+///
+/// \param mem a pointer to allocated memory to reallocate, or NULL.
+/// \param size the new size of the memory.
+/// \returns a pointer to the newly allocated memory, or NULL if allocation
+///          failed.
+///
+/// \threadsafety It should be safe to call this callback from any thread.
+///
+/// \since This datatype is available since SDL 3.0.0.
+///
+/// \sa SDL_realloc
+/// \sa SDL_GetOriginalMemoryFunctions
+/// \sa SDL_GetMemoryFunctions
+/// \sa SDL_SetMemoryFunctions
 pub type SDL_realloc_func = ::core::option::Option<
     extern "C" fn(
         mem: *mut ::core::ffi::c_void,
@@ -368,6 +510,20 @@ pub type SDL_realloc_func = ::core::option::Option<
     ) -> *mut ::core::ffi::c_void,
 >;
 
+/// A callback used to implement SDL_free().
+///
+/// SDL will always ensure that the passed `mem` is a non-NULL pointer.
+///
+/// \param mem a pointer to allocated memory.
+///
+/// \threadsafety It should be safe to call this callback from any thread.
+///
+/// \since This datatype is available since SDL 3.0.0.
+///
+/// \sa SDL_free
+/// \sa SDL_GetOriginalMemoryFunctions
+/// \sa SDL_GetMemoryFunctions
+/// \sa SDL_SetMemoryFunctions
 pub type SDL_free_func = ::core::option::Option<extern "C" fn(mem: *mut ::core::ffi::c_void)>;
 
 extern "C" {
@@ -452,20 +608,20 @@ extern "C" {
 }
 
 extern "C" {
-    /// Allocate memory aligned to a specific value.
-    ///
-    /// If `alignment` is less than the size of `void *`, then it will be increased
-    /// to match that.
-    ///
-    /// The returned memory address will be a multiple of the alignment value, and
-    /// the amount of memory allocated will be a multiple of the alignment value.
+    /// Allocate memory aligned to a specific alignment.
     ///
     /// The memory returned by this function must be freed with SDL_aligned_free(),
-    /// and _not_ SDL_free.
+    /// _not_ SDL_free().
     ///
-    /// \param alignment the alignment requested.
+    /// If `alignment` is less than the size of `void *`, it will be increased to
+    /// match that.
+    ///
+    /// The returned memory address will be a multiple of the alignment value, and
+    /// the size of the memory allocated will be a multiple of the alignment value.
+    ///
+    /// \param alignment the alignment of the memory.
     /// \param size the size to allocate.
-    /// \returns a pointer to the aligned memory.
+    /// \returns a pointer to the aligned memory, or NULL if allocation failed.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -484,7 +640,9 @@ extern "C" {
     /// The pointer is no longer valid after this call and cannot be dereferenced
     /// anymore.
     ///
-    /// \param mem a pointer previously returned by SDL_aligned_alloc.
+    /// If `mem` is NULL, this function does nothing.
+    ///
+    /// \param mem a pointer previously returned by SDL_aligned_alloc(), or NULL.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -833,6 +991,22 @@ extern "C" {
 }
 
 extern "C" {
+    /// Copy non-overlapping memory.
+    ///
+    /// The memory regions must not overlap. If they do, use SDL_memmove() instead.
+    ///
+    /// \param dst The destination memory region. Must not be NULL, and must not
+    ///            overlap with `src`.
+    /// \param src The source memory region. Must not be NULL, and must not overlap
+    ///            with `dst`.
+    /// \param len The length in bytes of both `dst` and `src`.
+    /// \returns `dst`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_memmove
     pub fn SDL_memcpy(
         dst: *mut ::core::ffi::c_void,
         src: *const ::core::ffi::c_void,
@@ -841,6 +1015,21 @@ extern "C" {
 }
 
 extern "C" {
+    /// Copy memory.
+    ///
+    /// It is okay for the memory regions to overlap. If you are confident that the
+    /// regions never overlap, using SDL_memcpy() may improve performance.
+    ///
+    /// \param dst The destination memory region. Must not be NULL.
+    /// \param src The source memory region. Must not be NULL.
+    /// \param len The length in bytes of both `dst` and `src`.
+    /// \returns `dst`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_memcpy
     pub fn SDL_memmove(
         dst: *mut ::core::ffi::c_void,
         src: *const ::core::ffi::c_void,
@@ -884,6 +1073,29 @@ extern "C" {
 }
 
 extern "C" {
+    /// Copy a wide string.
+    ///
+    /// This function copies `maxlen` - 1 wide characters from `src` to `dst`, then
+    /// appends a null terminator.
+    ///
+    /// `src` and `dst` must not overlap.
+    ///
+    /// If `maxlen` is 0, no wide characters are copied and no null terminator is
+    /// written.
+    ///
+    /// \param dst The destination buffer. Must not be NULL, and must not overlap
+    ///            with `src`.
+    /// \param src The null-terminated wide string to copy. Must not be NULL, and
+    ///            must not overlap with `dst`.
+    /// \param maxlen The length (in wide characters) of the destination buffer.
+    /// \returns The length (in wide characters, excluding the null terminator) of
+    ///          `src`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_wcslcat
     pub fn SDL_wcslcpy(
         dst: *mut crate::ffi::c_wchar_t,
         src: *const crate::ffi::c_wchar_t,
@@ -892,6 +1104,31 @@ extern "C" {
 }
 
 extern "C" {
+    /// Concatenate wide strings.
+    ///
+    /// This function appends up to `maxlen` - SDL_wcslen(dst) - 1 wide characters
+    /// from `src` to the end of the wide string in `dst`, then appends a null
+    /// terminator.
+    ///
+    /// `src` and `dst` must not overlap.
+    ///
+    /// If `maxlen` - SDL_wcslen(dst) - 1 is less than or equal to 0, then `dst` is
+    /// unmodified.
+    ///
+    /// \param dst The destination buffer already containing the first
+    ///            null-terminated wide string. Must not be NULL and must not
+    ///            overlap with `src`.
+    /// \param src The second null-terminated wide string. Must not be NULL, and
+    ///            must not overlap with `dst`.
+    /// \param maxlen The length (in wide characters) of the destination buffer.
+    /// \returns The length (in wide characters, excluding the null terminator) of
+    ///          the string in `dst` plus the length of `src`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_wcslcpy
     pub fn SDL_wcslcat(
         dst: *mut crate::ffi::c_wchar_t,
         src: *const crate::ffi::c_wchar_t,
@@ -1055,6 +1292,29 @@ extern "C" {
 }
 
 extern "C" {
+    /// Parse a `long` from a wide string.
+    ///
+    /// This function makes fewer guarantees than the C runtime `wcstol`:
+    ///
+    /// - Only the bases 10 and 16 are guaranteed to be supported. The behavior for
+    ///   other bases is unspecified.
+    /// - It is unspecified what this function returns when the parsed integer does
+    ///   not fit inside a `long`.
+    ///
+    /// \param str The null-terminated wide string to read. Must not be NULL.
+    /// \param endp If not NULL, the address of the first invalid wide character
+    ///             (i.e. the next character after the parsed number) will be
+    ///             written to this pointer.
+    /// \param base The base of the integer to read. The values 0, 10 and 16 are
+    ///             supported. If 0, the base will be inferred from the integer's
+    ///             prefix.
+    /// \returns The parsed `long`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_strtol
     pub fn SDL_wcstol(
         str: *const crate::ffi::c_wchar_t,
         endp: *mut *mut crate::ffi::c_wchar_t,
@@ -1074,6 +1334,31 @@ extern "C" {
 }
 
 extern "C" {
+    /// Copy a string.
+    ///
+    /// This function copies up to `maxlen` - 1 characters from `src` to `dst`,
+    /// then appends a null terminator.
+    ///
+    /// If `maxlen` is 0, no characters are copied and no null terminator is
+    /// written.
+    ///
+    /// If you want to copy an UTF-8 string but need to ensure that multi-byte
+    /// sequences are not truncated, consider using SDL_utf8strlcpy().
+    ///
+    /// \param dst The destination buffer. Must not be NULL, and must not overlap
+    ///            with `src`.
+    /// \param src The null-terminated string to copy. Must not be NULL, and must
+    ///            not overlap with `dst`.
+    /// \param maxlen The length (in characters) of the destination buffer.
+    /// \returns The length (in characters, excluding the null terminator) of
+    ///          `src`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_strlcat
+    /// \sa SDL_utf8strlcpy
     pub fn SDL_strlcpy(
         dst: *mut ::core::ffi::c_char,
         src: *const ::core::ffi::c_char,
@@ -1082,6 +1367,30 @@ extern "C" {
 }
 
 extern "C" {
+    /// Copy an UTF-8 string.
+    ///
+    /// This function copies up to `dst_bytes` - 1 bytes from `src` to `dst` while
+    /// also ensuring that the string written to `dst` does not end in a truncated
+    /// multi-byte sequence. Finally, it appends a null terminator.
+    ///
+    /// `src` and `dst` must not overlap.
+    ///
+    /// Note that unlike SDL_strlcpy(), this function returns the number of bytes
+    /// written, not the length of `src`.
+    ///
+    /// \param dst The destination buffer. Must not be NULL, and must not overlap
+    ///            with `src`.
+    /// \param src The null-terminated UTF-8 string to copy. Must not be NULL, and
+    ///            must not overlap with `dst`.
+    /// \param dst_bytes The length (in bytes) of the destination buffer. Must not
+    ///                  be 0.
+    /// \returns The number of bytes written, excluding the null terminator.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_strlcpy
     pub fn SDL_utf8strlcpy(
         dst: *mut ::core::ffi::c_char,
         src: *const ::core::ffi::c_char,
@@ -1090,6 +1399,30 @@ extern "C" {
 }
 
 extern "C" {
+    /// Concatenate strings.
+    ///
+    /// This function appends up to `maxlen` - SDL_strlen(dst) - 1 characters from
+    /// `src` to the end of the string in `dst`, then appends a null terminator.
+    ///
+    /// `src` and `dst` must not overlap.
+    ///
+    /// If `maxlen` - SDL_strlen(dst) - 1 is less than or equal to 0, then `dst` is
+    /// unmodified.
+    ///
+    /// \param dst The destination buffer already containing the first
+    ///            null-terminated string. Must not be NULL and must not overlap
+    ///            with `src`.
+    /// \param src The second null-terminated string. Must not be NULL, and must
+    ///            not overlap with `dst`.
+    /// \param maxlen The length (in characters) of the destination buffer.
+    /// \returns The length (in characters, excluding the null terminator) of the
+    ///          string in `dst` plus the length of `src`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_strlcpy
     pub fn SDL_strlcat(
         dst: *mut ::core::ffi::c_char,
         src: *const ::core::ffi::c_char,
@@ -1258,14 +1591,81 @@ extern "C" {
 }
 
 extern "C" {
+    /// Parse an `int` from a string.
+    ///
+    /// The result of calling `SDL_atoi(str)` is equivalent to
+    /// `(int)SDL_strtol(str, NULL, 10)`.
+    ///
+    /// \param str The null-terminated string to read. Must not be NULL.
+    /// \returns The parsed `int`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_atof
+    /// \sa SDL_strtol
+    /// \sa SDL_strtoul
+    /// \sa SDL_strtoll
+    /// \sa SDL_strtoull
+    /// \sa SDL_strtod
+    /// \sa SDL_itoa
     pub fn SDL_atoi(str: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
 }
 
 extern "C" {
+    /// Parse a `double` from a string.
+    ///
+    /// The result of calling `SDL_atof(str)` is equivalent to `SDL_strtod(str,
+    /// NULL)`.
+    ///
+    /// \param str The null-terminated string to read. Must not be NULL.
+    /// \returns The parsed `double`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_atoi
+    /// \sa SDL_strtol
+    /// \sa SDL_strtoul
+    /// \sa SDL_strtoll
+    /// \sa SDL_strtoull
+    /// \sa SDL_strtod
     pub fn SDL_atof(str: *const ::core::ffi::c_char) -> ::core::ffi::c_double;
 }
 
 extern "C" {
+    /// Parse a `long` from a string.
+    ///
+    /// This function makes fewer guarantees than the C runtime `strtol`:
+    ///
+    /// - Only the bases 10 and 16 are guaranteed to be supported. The behavior for
+    ///   other bases is unspecified.
+    /// - It is unspecified what this function returns when the parsed integer does
+    ///   not fit inside a `long`.
+    ///
+    /// \param str The null-terminated string to read. Must not be NULL.
+    /// \param endp If not NULL, the address of the first invalid character (i.e.
+    ///             the next character after the parsed number) will be written to
+    ///             this pointer.
+    /// \param base The base of the integer to read. The values 0, 10 and 16 are
+    ///             supported. If 0, the base will be inferred from the integer's
+    ///             prefix.
+    /// \returns The parsed `long`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_atoi
+    /// \sa SDL_atof
+    /// \sa SDL_strtoul
+    /// \sa SDL_strtoll
+    /// \sa SDL_strtoull
+    /// \sa SDL_strtod
+    /// \sa SDL_ltoa
+    /// \sa SDL_wcstol
     pub fn SDL_strtol(
         str: *const ::core::ffi::c_char,
         endp: *mut *mut ::core::ffi::c_char,
@@ -1274,6 +1674,35 @@ extern "C" {
 }
 
 extern "C" {
+    /// Parse an `unsigned long` from a string.
+    ///
+    /// This function makes fewer guarantees than the C runtime `strtoul`:
+    ///
+    /// - Only the bases 10 and 16 are guaranteed to be supported. The behavior for
+    ///   other bases is unspecified.
+    /// - It is unspecified what this function returns when the parsed integer does
+    ///   not fit inside an `unsigned long`.
+    ///
+    /// \param str The null-terminated string to read. Must not be NULL.
+    /// \param endp If not NULL, the address of the first invalid character (i.e.
+    ///             the next character after the parsed number) will be written to
+    ///             this pointer.
+    /// \param base The base of the integer to read. The values 0, 10 and 16 are
+    ///             supported. If 0, the base will be inferred from the integer's
+    ///             prefix.
+    /// \returns The parsed `unsigned long`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_atoi
+    /// \sa SDL_atof
+    /// \sa SDL_strtol
+    /// \sa SDL_strtoll
+    /// \sa SDL_strtoull
+    /// \sa SDL_strtod
+    /// \sa SDL_ultoa
     pub fn SDL_strtoul(
         str: *const ::core::ffi::c_char,
         endp: *mut *mut ::core::ffi::c_char,
@@ -1282,6 +1711,38 @@ extern "C" {
 }
 
 extern "C" {
+    /// Parse an Sint64 from a string.
+    ///
+    /// This function makes fewer guarantees than the C runtime `strtoll`:
+    ///
+    /// - Only the bases 10 and 16 are guaranteed to be supported. The behavior for
+    ///   other bases is unspecified.
+    /// - It is unspecified what this function returns when the parsed integer does
+    ///   not fit inside a `long long`.
+    ///
+    /// Also note that unlike the C runtime `strtoll`, this function returns an
+    /// Sint64, not a `long long`.
+    ///
+    /// \param str The null-terminated string to read. Must not be NULL.
+    /// \param endp If not NULL, the address of the first invalid character (i.e.
+    ///             the next character after the parsed number) will be written to
+    ///             this pointer.
+    /// \param base The base of the integer to read. The values 0, 10 and 16 are
+    ///             supported. If 0, the base will be inferred from the integer's
+    ///             prefix.
+    /// \returns The parsed Sint64.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_atoi
+    /// \sa SDL_atof
+    /// \sa SDL_strtol
+    /// \sa SDL_strtoul
+    /// \sa SDL_strtoull
+    /// \sa SDL_strtod
+    /// \sa SDL_lltoa
     pub fn SDL_strtoll(
         str: *const ::core::ffi::c_char,
         endp: *mut *mut ::core::ffi::c_char,
@@ -1290,6 +1751,38 @@ extern "C" {
 }
 
 extern "C" {
+    /// Parse a Uint64 from a string.
+    ///
+    /// This function makes fewer guarantees than the C runtime `strtoull`:
+    ///
+    /// - Only the bases 10 and 16 are guaranteed to be supported. The behavior for
+    ///   other bases is unspecified.
+    /// - It is unspecified what this function returns when the parsed integer does
+    ///   not fit inside a `long long`.
+    ///
+    /// Also note that unlike the C runtime `strtoull`, this function returns a
+    /// Uint64, not an `unsigned long long`.
+    ///
+    /// \param str The null-terminated string to read. Must not be NULL.
+    /// \param endp If not NULL, the address of the first invalid character (i.e.
+    ///             the next character after the parsed number) will be written to
+    ///             this pointer.
+    /// \param base The base of the integer to read. The values 0, 10 and 16 are
+    ///             supported. If 0, the base will be inferred from the integer's
+    ///             prefix.
+    /// \returns The parsed Uint64.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_atoi
+    /// \sa SDL_atof
+    /// \sa SDL_strtol
+    /// \sa SDL_strtoll
+    /// \sa SDL_strtoul
+    /// \sa SDL_strtod
+    /// \sa SDL_ulltoa
     pub fn SDL_strtoull(
         str: *const ::core::ffi::c_char,
         endp: *mut *mut ::core::ffi::c_char,
@@ -1298,6 +1791,31 @@ extern "C" {
 }
 
 extern "C" {
+    /// Parse a `double` from a string.
+    ///
+    /// This function makes fewer guarantees than the C runtime `strtod`:
+    ///
+    /// - Only decimal notation is guaranteed to be supported. The handling of
+    ///   scientific and hexadecimal notation is unspecified.
+    /// - Whether or not INF and NAN can be parsed is unspecified.
+    /// - The precision of the result is unspecified.
+    ///
+    /// \param str The null-terminated string to read. Must not be NULL.
+    /// \param endp If not NULL, the address of the first invalid character (i.e.
+    ///             the next character after the parsed number) will be written to
+    ///             this pointer.
+    /// \returns The parsed `double`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_atoi
+    /// \sa SDL_atof
+    /// \sa SDL_strtol
+    /// \sa SDL_strtoll
+    /// \sa SDL_strtoul
+    /// \sa SDL_strtoull
     pub fn SDL_strtod(
         str: *const ::core::ffi::c_char,
         endp: *mut *mut ::core::ffi::c_char,
@@ -1439,9 +1957,11 @@ extern "C" {
     /// Searches a string for the first occurence of any character contained in a
     /// breakset, and returns a pointer from the string to that character.
     ///
-    /// \param str The null-terminated string to be searched.
+    /// \param str The null-terminated string to be searched. Must not be NULL, and
+    ///            must not overlap with `breakset`.
     /// \param breakset A null-terminated string containing the list of characters
-    ///                 to look for.
+    ///                 to look for. Must not be NULL, and must not overlap with
+    ///                 `str`.
     /// \returns A pointer to the location, in str, of the first occurence of a
     ///          character present in the breakset, or NULL if none is found.
     ///
@@ -3262,7 +3782,30 @@ emit! {
 
 }
 
-pub type SDL_FunctionPointer = ::core::option::Option<extern "C" fn()>;
+#[cfg(doc)]
+emit! {
+    /// A generic function pointer.
+    ///
+    /// In theory, generic function pointers should use this, instead of `void *`,
+    /// since some platforms could treat code addresses differently than data
+    /// addresses. Although in current times no popular platforms make this
+    /// distinction, it is more correct and portable to use the correct type for a
+    /// generic pointer.
+    ///
+    /// If for some reason you need to force this typedef to be an actual `void *`,
+    /// perhaps to work around a compiler or existing code, you can define
+    /// `SDL_FUNCTION_POINTER_IS_VOID_POINTER` before including any SDL headers.
+    ///
+    /// \since This datatype is available since SDL 3.0.0.
+    pub type SDL_FunctionPointer = ::core::option::Option<extern "C" fn()>;
+
+}
+
+#[cfg(not(doc))]
+emit! {
+    pub type SDL_FunctionPointer = ::core::option::Option<extern "C" fn()>;
+
+}
 
 #[repr(C)]
 #[non_exhaustive]

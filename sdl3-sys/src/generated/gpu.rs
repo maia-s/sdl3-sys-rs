@@ -1197,25 +1197,6 @@ pub const SDL_GPU_DRIVER_D3D11: SDL_GPUDriver = SDL_GPUDriver::D3D11;
 pub const SDL_GPU_DRIVER_D3D12: SDL_GPUDriver = SDL_GPUDriver::D3D12;
 pub const SDL_GPU_DRIVER_METAL: SDL_GPUDriver = SDL_GPUDriver::METAL;
 
-/// A structure specifying a depth-stencil clear value.
-///
-/// \since This struct is available since SDL 3.0.0
-///
-/// \sa SDL_GPUDepthStencilTargetInfo
-/// \sa SDL_BeginGPURenderPass
-#[repr(C)]
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GPUDepthStencilValue {
-    /// The clear value for the depth aspect of the depth-stencil target.
-    pub depth: ::core::ffi::c_float,
-    /// The clear value for the stencil aspect of the depth-stencil target.
-    pub stencil: Uint8,
-    pub padding1: Uint8,
-    pub padding2: Uint8,
-    pub padding3: Uint8,
-}
-
 /// A structure specifying a viewport.
 ///
 /// \since This struct is available since SDL 3.0.0
@@ -2020,8 +2001,8 @@ pub struct SDL_GPUColorTargetInfo {
 pub struct SDL_GPUDepthStencilTargetInfo {
     /// The texture that will be used as the depth stencil target by the render pass.
     pub texture: *mut SDL_GPUTexture,
-    /// The depth-stencil clear values. Can be ignored by the render pass if SDL_GPU_LOADOP_CLEAR is not used.
-    pub clear_value: SDL_GPUDepthStencilValue,
+    /// The value to clear the depth component to at the beginning of the render pass. Ignored if SDL_GPU_LOADOP_CLEAR is not used.
+    pub clear_depth: ::core::ffi::c_float,
     /// What is done with the depth contents at the beginning of the render pass.
     pub load_op: SDL_GPULoadOp,
     /// What is done with the depth results of the render pass.
@@ -2032,7 +2013,36 @@ pub struct SDL_GPUDepthStencilTargetInfo {
     pub stencil_store_op: SDL_GPUStoreOp,
     /// SDL_TRUE cycles the texture if the texture is bound and any load ops are not LOAD
     pub cycle: SDL_bool,
+    /// The value to clear the stencil component to at the beginning of the render pass. Ignored if SDL_GPU_LOADOP_CLEAR is not used.
+    pub clear_stencil: Uint8,
     pub padding1: Uint8,
+    pub padding2: Uint8,
+}
+
+/// A structure containing parameters for a blit command.
+///
+/// \since This struct is available since SDL 3.0.0
+///
+/// \sa SDL_BlitGPUTexture
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_GPUBlitInfo {
+    /// The source region for the blit.
+    pub source: SDL_GPUBlitRegion,
+    /// The destination region for the blit.
+    pub destination: SDL_GPUBlitRegion,
+    /// What is done with the contents of the destination before the blit.
+    pub load_op: SDL_GPULoadOp,
+    /// The color to clear the destination region to before the blit. Ignored if load_op is not SDL_GPU_LOADOP_CLEAR.
+    pub clear_color: SDL_FColor,
+    /// The flip mode for the source region.
+    pub flip_mode: SDL_FlipMode,
+    /// The filter mode used when blitting.
+    pub filter: SDL_GPUFilter,
+    /// SDL_TRUE cycles the destination texture if it is already bound.
+    pub cycle: SDL_bool,
+    pub padding: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
 }
@@ -3470,21 +3480,12 @@ extern "C" {
     /// This function must not be called inside of any pass.
     ///
     /// \param command_buffer a command buffer.
-    /// \param source the texture region to copy from.
-    /// \param destination the texture region to copy to.
-    /// \param flip_mode the flip mode for the source texture region.
-    /// \param filter the filter mode that will be used when blitting.
-    /// \param cycle if SDL_TRUE, cycles the destination texture if the destination
-    ///              texture is bound, otherwise overwrites the data.
+    /// \param info the blit info struct containing the blit parameters.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_BlitGPUTexture(
         command_buffer: *mut SDL_GPUCommandBuffer,
-        source: *const SDL_GPUBlitRegion,
-        destination: *const SDL_GPUBlitRegion,
-        flip_mode: SDL_FlipMode,
-        filter: SDL_GPUFilter,
-        cycle: SDL_bool,
+        info: *const SDL_GPUBlitInfo,
     );
 }
 

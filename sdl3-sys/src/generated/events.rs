@@ -32,20 +32,6 @@ use super::touch::*;
 
 use super::video::*;
 
-/// A value that signifies a button is no longer pressed.
-///
-/// \since This macro is available since SDL 3.0.0.
-///
-/// \sa SDL_PRESSED
-pub const SDL_RELEASED: ::core::primitive::i32 = 0;
-
-/// A value that signifies a button has been pressed down.
-///
-/// \since This macro is available since SDL 3.0.0.
-///
-/// \sa SDL_RELEASED
-pub const SDL_PRESSED: ::core::primitive::i32 = 1;
-
 /// The types of events that can be delivered.
 ///
 /// \since This enum is available since SDL 3.0.0.
@@ -639,10 +625,10 @@ pub struct SDL_KeyboardEvent {
     pub r#mod: SDL_Keymod,
     /// The platform dependent scancode for this event
     pub raw: Uint16,
-    /// SDL_PRESSED or SDL_RELEASED
-    pub state: Uint8,
-    /// Non-zero if this is a key repeat
-    pub repeat: Uint8,
+    /// SDL_TRUE if the key is pressed
+    pub down: SDL_bool,
+    /// SDL_TRUE if this is a key repeat
+    pub repeat: SDL_bool,
 }
 
 /// Keyboard text editing event structure (event.edit.*)
@@ -784,8 +770,8 @@ pub struct SDL_MouseButtonEvent {
     pub which: SDL_MouseID,
     /// The mouse button index
     pub button: Uint8,
-    /// SDL_PRESSED or SDL_RELEASED
-    pub state: Uint8,
+    /// SDL_TRUE if the button is pressed
+    pub down: SDL_bool,
     /// 1 for single-click, 2 for double-click, etc.
     pub clicks: Uint8,
     pub padding: Uint8,
@@ -915,8 +901,8 @@ pub struct SDL_JoyButtonEvent {
     pub which: SDL_JoystickID,
     /// The joystick button index
     pub button: Uint8,
-    /// SDL_PRESSED or SDL_RELEASED
-    pub state: Uint8,
+    /// SDL_TRUE if the button is pressed
+    pub down: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
 }
@@ -997,8 +983,8 @@ pub struct SDL_GamepadButtonEvent {
     pub which: SDL_JoystickID,
     /// The gamepad button (SDL_GamepadButton)
     pub button: Uint8,
-    /// SDL_PRESSED or SDL_RELEASED
-    pub state: Uint8,
+    /// SDL_TRUE if the button is pressed
+    pub down: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
 }
@@ -1081,8 +1067,8 @@ pub struct SDL_AudioDeviceEvent {
     pub timestamp: Uint64,
     /// SDL_AudioDeviceID for the device being added or removed or changing
     pub which: SDL_AudioDeviceID,
-    /// zero if a playback device, non-zero if a recording device.
-    pub recording: Uint8,
+    /// SDL_FALSE if a playback device, SDL_TRUE if a recording device.
+    pub recording: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
@@ -1216,10 +1202,10 @@ pub struct SDL_PenTouchEvent {
     pub x: ::core::ffi::c_float,
     /// Y position of pen on tablet
     pub y: ::core::ffi::c_float,
-    /// Non-zero if eraser end is used (not all pens support this).
-    pub eraser: Uint8,
-    /// SDL_PRESSED (pen is touching) or SDL_RELEASED (pen is lifted off)
-    pub state: Uint8,
+    /// SDL_TRUE if eraser end is used (not all pens support this).
+    pub eraser: SDL_bool,
+    /// SDL_TRUE if the pen is touching or SDL_FALSE if the pen is lifted off
+    pub down: SDL_bool,
 }
 
 /// Pressure-sensitive pen button event structure (event.pbutton.*)
@@ -1249,8 +1235,8 @@ pub struct SDL_PenButtonEvent {
     pub y: ::core::ffi::c_float,
     /// The pen button index (first button is 1).
     pub button: Uint8,
-    /// SDL_PRESSED or SDL_RELEASED
-    pub state: Uint8,
+    /// SDL_TRUE if the button is pressed
+    pub down: SDL_bool,
 }
 
 /// Pressure-sensitive pen pressure / angle event structure (event.paxis.*)
@@ -1495,18 +1481,28 @@ extern "C" {
     pub fn SDL_PumpEvents();
 }
 
+/// The type of action to request from SDL_PeepEvents().
+///
+/// \since This enum is available since SDL 3.0.0.
+///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_ADDEVENT`], [`SDL_PEEKEVENT`], [`SDL_GETEVENT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_EventAction(pub ::core::ffi::c_int);
 impl SDL_EventAction {
+    /// Add events to the back of the queue.
     pub const ADDEVENT: Self = Self(0);
+    /// Check but don't remove events from the queue front.
     pub const PEEKEVENT: Self = Self(1);
+    /// Retrieve/remove events from the front of the queue.
     pub const GETEVENT: Self = Self(2);
 }
+/// Add events to the back of the queue.
 pub const SDL_ADDEVENT: SDL_EventAction = SDL_EventAction::ADDEVENT;
+/// Check but don't remove events from the queue front.
 pub const SDL_PEEKEVENT: SDL_EventAction = SDL_EventAction::PEEKEVENT;
+/// Retrieve/remove events from the front of the queue.
 pub const SDL_GETEVENT: SDL_EventAction = SDL_EventAction::GETEVENT;
 
 extern "C" {
