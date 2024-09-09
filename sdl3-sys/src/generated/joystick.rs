@@ -451,9 +451,9 @@ pub struct SDL_VirtualJoystickDesc {
 }
 
 impl SDL_VirtualJoystickDesc {
-    /// Create a new `SDL_VirtualJoystickDesc` and initialize it with `SDL_INIT_INTERFACE`
+    /// Create a new `SDL_VirtualJoystickDesc` initialized with `SDL_INIT_INTERFACE`
     #[inline]
-    pub const fn init() -> Self {
+    pub const fn new() -> Self {
         ::core::assert!(::core::mem::size_of::<Self>() <= u32::MAX as usize);
         let mut this = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
         this.version = ::core::mem::size_of::<Self>() as u32;
@@ -461,14 +461,16 @@ impl SDL_VirtualJoystickDesc {
     }
 }
 
-impl crate::sealed_interface::Sealed for SDL_VirtualJoystickDesc {}
-
-impl crate::Interface for SDL_VirtualJoystickDesc {
+impl ::core::default::Default for SDL_VirtualJoystickDesc {
+    /// Create a new `SDL_VirtualJoystickDesc` initialized with `SDL_INIT_INTERFACE`
     #[inline(always)]
-    fn init() -> Self {
-        Self::init()
+    fn default() -> Self {
+        Self::new()
     }
 }
+
+impl crate::sealed_interface::Sealed for SDL_VirtualJoystickDesc {}
+unsafe impl crate::Interface for SDL_VirtualJoystickDesc {}
 
 const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 84) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 136)));
 

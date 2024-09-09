@@ -24,7 +24,15 @@ const DEFINE_PATCHES: &[DefinePatch] = &[DefinePatch {
             "pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {{"
         )?;
         ctx.increase_indent();
-        writeln!(ctx, "unsafe {{ iface.write(T::init()) }};")?;
+        writeln!(ctx, "unsafe {{")?;
+        ctx.increase_indent();
+        writeln!(ctx, "iface.write_bytes(0, 1);")?;
+        writeln!(
+            ctx,
+            "iface.cast::<::core::primitive::u32>().write(::core::mem::size_of::<T>() as ::core::primitive::u32);"
+        )?;
+        ctx.decrease_indent();
+        writeln!(ctx, "}}")?;
         ctx.decrease_indent();
         writeln!(ctx, "}}")?;
         writeln!(ctx)?;

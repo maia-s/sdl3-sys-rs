@@ -27,6 +27,12 @@ pub(crate) mod sealed_interface {
     pub trait Sealed {}
 }
 
-pub trait Interface: sealed_interface::Sealed + Sized {
-    fn init() -> Self;
-}
+/// Implemented for SDL interface types
+///
+/// # Safety
+/// Only implement this for types that conform to the SDL interface spec:
+/// - Must be a `repr(C)` struct
+/// - The first field of the struct must be of type `u32` and contain the size
+///   of the struct in bytes (typically named `version`)
+/// - The rest of the struct must be valid when initialized as all zero bytes
+pub unsafe trait Interface: sealed_interface::Sealed + Sized {}

@@ -518,8 +518,17 @@ impl StructOrUnion {
         )?;
 
         if let Some(fields) = &self.fields {
-            let may_be_interface = if let Some(doc) = &doc {
-                doc.span.contains("SDL_INIT_INTERFACE")
+            let is_interface = if doc
+                .as_ref()
+                .map(|doc| doc.span.contains("SDL_INIT_INTERFACE"))
+                .unwrap_or(false)
+            {
+                let first_field = &fields.fields[0];
+                if let TypeEnum::Ident(ty) = &first_field.ty.ty {
+                    first_field.ident.as_str() == "version" && ty.as_str() == "Uint32"
+                } else {
+                    false
+                }
             } else {
                 false
             };
@@ -542,11 +551,7 @@ impl StructOrUnion {
             )?;
             ctx_ool.increase_indent();
 
-            let mut has_version_field = false;
             for field in fields.fields.iter() {
-                if field.ident.as_str() == "version" {
-                    has_version_field = true;
-                }
                 field.doc.emit(ctx_ool)?;
                 write!(ctx_ool, "pub ")?;
                 field.ident.emit(ctx_ool)?;
@@ -559,15 +564,15 @@ impl StructOrUnion {
             writeln!(ctx_ool, "}}")?;
             writeln!(ctx_ool)?;
 
-            if may_be_interface && has_version_field {
+            if is_interface {
                 writeln!(ctx_ool, "impl {ident} {{")?;
                 ctx_ool.increase_indent();
                 writeln!(
                     ctx_ool,
-                    "/// Create a new `{ident}` and initialize it with `SDL_INIT_INTERFACE`"
+                    "/// Create a new `{ident}` initialized with `SDL_INIT_INTERFACE`"
                 )?;
                 writeln!(ctx_ool, "#[inline]")?;
-                writeln!(ctx_ool, "pub const fn init() -> Self {{")?;
+                writeln!(ctx_ool, "pub const fn new() -> Self {{")?;
                 ctx_ool.increase_indent();
                 writeln!(
                     ctx_ool,
@@ -584,21 +589,26 @@ impl StructOrUnion {
                 ctx_ool.decrease_indent();
                 writeln!(ctx_ool, "}}")?;
                 writeln!(ctx_ool)?;
+                writeln!(ctx_ool, "impl ::core::default::Default for {ident} {{")?;
+                ctx_ool.increase_indent();
+                writeln!(
+                    ctx_ool,
+                    "/// Create a new `{ident}` initialized with `SDL_INIT_INTERFACE`"
+                )?;
+                writeln!(ctx_ool, "#[inline(always)]")?;
+                writeln!(ctx_ool, "fn default() -> Self {{")?;
+                ctx_ool.increase_indent();
+                writeln!(ctx_ool, "Self::new()")?;
+                ctx_ool.decrease_indent();
+                writeln!(ctx_ool, "}}")?;
+                ctx_ool.decrease_indent();
+                writeln!(ctx_ool, "}}")?;
+                writeln!(ctx_ool)?;
                 writeln!(
                     ctx_ool,
                     "impl crate::sealed_interface::Sealed for {ident} {{}}"
                 )?;
-                writeln!(ctx_ool)?;
-                writeln!(ctx_ool, "impl crate::Interface for {ident} {{")?;
-                ctx_ool.increase_indent();
-                writeln!(ctx_ool, "#[inline(always)]")?;
-                writeln!(ctx_ool, "fn init() -> Self {{")?;
-                ctx_ool.increase_indent();
-                writeln!(ctx_ool, "Self::init()")?;
-                ctx_ool.decrease_indent();
-                writeln!(ctx_ool, "}}")?;
-                ctx_ool.decrease_indent();
-                writeln!(ctx_ool, "}}")?;
+                writeln!(ctx_ool, "unsafe impl crate::Interface for {ident} {{}}")?;
                 writeln!(ctx_ool)?;
             }
         }

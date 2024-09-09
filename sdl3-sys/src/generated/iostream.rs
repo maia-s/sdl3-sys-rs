@@ -132,9 +132,9 @@ pub struct SDL_IOStreamInterface {
 }
 
 impl SDL_IOStreamInterface {
-    /// Create a new `SDL_IOStreamInterface` and initialize it with `SDL_INIT_INTERFACE`
+    /// Create a new `SDL_IOStreamInterface` initialized with `SDL_INIT_INTERFACE`
     #[inline]
-    pub const fn init() -> Self {
+    pub const fn new() -> Self {
         ::core::assert!(::core::mem::size_of::<Self>() <= u32::MAX as usize);
         let mut this = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
         this.version = ::core::mem::size_of::<Self>() as u32;
@@ -142,14 +142,16 @@ impl SDL_IOStreamInterface {
     }
 }
 
-impl crate::sealed_interface::Sealed for SDL_IOStreamInterface {}
-
-impl crate::Interface for SDL_IOStreamInterface {
+impl ::core::default::Default for SDL_IOStreamInterface {
+    /// Create a new `SDL_IOStreamInterface` initialized with `SDL_INIT_INTERFACE`
     #[inline(always)]
-    fn init() -> Self {
-        Self::init()
+    fn default() -> Self {
+        Self::new()
     }
 }
+
+impl crate::sealed_interface::Sealed for SDL_IOStreamInterface {}
+unsafe impl crate::Interface for SDL_IOStreamInterface {}
 
 const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_IOStreamInterface>() == 24) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_IOStreamInterface>() == 48)));
 

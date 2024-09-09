@@ -45,9 +45,9 @@ pub struct SDL_StorageInterface {
 }
 
 impl SDL_StorageInterface {
-    /// Create a new `SDL_StorageInterface` and initialize it with `SDL_INIT_INTERFACE`
+    /// Create a new `SDL_StorageInterface` initialized with `SDL_INIT_INTERFACE`
     #[inline]
-    pub const fn init() -> Self {
+    pub const fn new() -> Self {
         ::core::assert!(::core::mem::size_of::<Self>() <= u32::MAX as usize);
         let mut this = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
         this.version = ::core::mem::size_of::<Self>() as u32;
@@ -55,14 +55,16 @@ impl SDL_StorageInterface {
     }
 }
 
-impl crate::sealed_interface::Sealed for SDL_StorageInterface {}
-
-impl crate::Interface for SDL_StorageInterface {
+impl ::core::default::Default for SDL_StorageInterface {
+    /// Create a new `SDL_StorageInterface` initialized with `SDL_INIT_INTERFACE`
     #[inline(always)]
-    fn init() -> Self {
-        Self::init()
+    fn default() -> Self {
+        Self::new()
     }
 }
+
+impl crate::sealed_interface::Sealed for SDL_StorageInterface {}
+unsafe impl crate::Interface for SDL_StorageInterface {}
 
 const _: () = ::core::assert!(((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4 && ::core::mem::size_of::<SDL_StorageInterface>() == 48) || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8 && ::core::mem::size_of::<SDL_StorageInterface>() == 96)));
 

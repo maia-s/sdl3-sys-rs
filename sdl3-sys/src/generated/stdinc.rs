@@ -317,7 +317,10 @@ emit! {
 /// `iface` must point to an SDL interface struct
 #[inline(always)]
 pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {
-    unsafe { iface.write(T::init()) };
+    unsafe {
+        iface.write_bytes(0, 1);
+        iface.cast::<::core::primitive::u32>().write(::core::mem::size_of::<T>() as ::core::primitive::u32);
+    }
 }
 
 extern "C" {
