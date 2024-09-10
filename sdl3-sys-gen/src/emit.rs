@@ -218,7 +218,12 @@ impl Emit for DocCommentFile {
 
 impl Conditional {
     fn emit_cfg(&self, ctx: &mut EmitContext) -> EmitResult {
-        fn eval(ctx: &mut EmitContext, cond: &mut DefineState, c: &ConditionalExpr) -> EmitResult {
+        fn eval(
+            ctx: &mut EmitContext,
+            cond: DefineState,
+            c: &ConditionalExpr,
+            positive: bool,
+        ) -> Result<DefineState, EmitErr> {
             match c {
                 ConditionalExpr::If(expr) => {
                     let mut value = {
@@ -237,15 +242,23 @@ impl Conditional {
                         }
                     }
                     if let Some(value) = value {
-                        if let Value::TargetDependent(define_state) = value {
-                            *cond = cond.clone().all(define_state);
+                        Ok(if let Value::TargetDependent(define_state) = value {
+                            if positive {
+                                cond.all(define_state)
+                            } else {
+                                cond.any(define_state)
+                            }
                         } else if value.is_truthy() {
                             // unconditional yes
+                            cond
                         } else {
                             // unconditional no
-                            *cond = cond.clone().all(DefineState::never());
-                        }
-                        Ok(())
+                            if positive {
+                                cond.all(DefineState::never())
+                            } else {
+                                cond.any(DefineState::never())
+                            }
+                        })
                     } else {
                         Err(ParseErr::new(expr.span(), "couldn't evaluate if expression").into())
                     }
@@ -257,11 +270,11 @@ impl Conditional {
 
         let mut cond = DefineState::none();
         for c in self.not.iter() {
-            eval(ctx, &mut cond, c)?;
+            cond = eval(ctx, cond, c, false)?;
         }
         cond = cond.not();
         if let Some(req) = &self.require {
-            eval(ctx, &mut cond, req)?;
+            cond = eval(ctx, cond, req, true)?;
         }
         ctx.emit_define_state_cfg(&cond)
     }

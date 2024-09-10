@@ -103,11 +103,6 @@ impl Parse for EnumVariant {
 
     fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut rest = input.clone();
-
-        //if let Some(preproc) = PreProcBlock::<false>::try_parse(ctx, &mut rest)? {
-        //    todo!()
-        //}
-
         let doc = DocComment::try_parse(ctx, &mut rest)?;
         if let Some(ident) = Ident::try_parse(ctx, &mut rest)? {
             WsAndComments::try_parse(ctx, &mut rest)?;
