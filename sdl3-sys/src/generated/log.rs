@@ -97,27 +97,27 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 ///
 /// \since This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_LOG_PRIORITY_VERBOSE`], [`SDL_LOG_PRIORITY_DEBUG`], [`SDL_LOG_PRIORITY_INFO`], [`SDL_LOG_PRIORITY_WARN`], [`SDL_LOG_PRIORITY_ERROR`], [`SDL_LOG_PRIORITY_CRITICAL`], [`SDL_NUM_LOG_PRIORITIES`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_LOG_PRIORITY_VERBOSE`], [`SDL_LOG_PRIORITY_DEBUG`], [`SDL_LOG_PRIORITY_INFO`], [`SDL_LOG_PRIORITY_WARN`], [`SDL_LOG_PRIORITY_ERROR`], [`SDL_LOG_PRIORITY_CRITICAL`], [`SDL_LOG_PRIORITY_COUNT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_LogPriority(pub ::core::ffi::c_int);
 impl SDL_LogPriority {
-    pub const LOG_PRIORITY_VERBOSE: Self = Self(1);
-    pub const LOG_PRIORITY_DEBUG: Self = Self(2);
-    pub const LOG_PRIORITY_INFO: Self = Self(3);
-    pub const LOG_PRIORITY_WARN: Self = Self(4);
-    pub const LOG_PRIORITY_ERROR: Self = Self(5);
-    pub const LOG_PRIORITY_CRITICAL: Self = Self(6);
-    pub const NUM_LOG_PRIORITIES: Self = Self(7);
+    pub const VERBOSE: Self = Self(1);
+    pub const DEBUG: Self = Self(2);
+    pub const INFO: Self = Self(3);
+    pub const WARN: Self = Self(4);
+    pub const ERROR: Self = Self(5);
+    pub const CRITICAL: Self = Self(6);
+    pub const COUNT: Self = Self(7);
 }
-pub const SDL_LOG_PRIORITY_VERBOSE: SDL_LogPriority = SDL_LogPriority::LOG_PRIORITY_VERBOSE;
-pub const SDL_LOG_PRIORITY_DEBUG: SDL_LogPriority = SDL_LogPriority::LOG_PRIORITY_DEBUG;
-pub const SDL_LOG_PRIORITY_INFO: SDL_LogPriority = SDL_LogPriority::LOG_PRIORITY_INFO;
-pub const SDL_LOG_PRIORITY_WARN: SDL_LogPriority = SDL_LogPriority::LOG_PRIORITY_WARN;
-pub const SDL_LOG_PRIORITY_ERROR: SDL_LogPriority = SDL_LogPriority::LOG_PRIORITY_ERROR;
-pub const SDL_LOG_PRIORITY_CRITICAL: SDL_LogPriority = SDL_LogPriority::LOG_PRIORITY_CRITICAL;
-pub const SDL_NUM_LOG_PRIORITIES: SDL_LogPriority = SDL_LogPriority::NUM_LOG_PRIORITIES;
+pub const SDL_LOG_PRIORITY_VERBOSE: SDL_LogPriority = SDL_LogPriority::VERBOSE;
+pub const SDL_LOG_PRIORITY_DEBUG: SDL_LogPriority = SDL_LogPriority::DEBUG;
+pub const SDL_LOG_PRIORITY_INFO: SDL_LogPriority = SDL_LogPriority::INFO;
+pub const SDL_LOG_PRIORITY_WARN: SDL_LogPriority = SDL_LogPriority::WARN;
+pub const SDL_LOG_PRIORITY_ERROR: SDL_LogPriority = SDL_LogPriority::ERROR;
+pub const SDL_LOG_PRIORITY_CRITICAL: SDL_LogPriority = SDL_LogPriority::CRITICAL;
+pub const SDL_LOG_PRIORITY_COUNT: SDL_LogPriority = SDL_LogPriority::COUNT;
 
 extern "C" {
     /// Set the priority of all log categories.

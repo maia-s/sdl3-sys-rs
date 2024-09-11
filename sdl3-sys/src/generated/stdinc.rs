@@ -259,6 +259,15 @@ const _: () = ::core::assert!(::core::mem::size_of::<Uint64>() == 8);
 
 const _: () = ::core::assert!(::core::mem::size_of::<Sint64>() == 8);
 
+const _: () = ::core::assert!(
+    ::core::mem::size_of::<Uint64>() <= ::core::mem::size_of::<::core::ffi::c_ulonglong>()
+);
+
+const _: () = ::core::assert!(
+    ::core::mem::size_of::<::core::primitive::usize>()
+        <= ::core::mem::size_of::<::core::ffi::c_ulonglong>()
+);
+
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1576,7 +1585,7 @@ extern "C" {
 
 extern "C" {
     pub fn SDL_lltoa(
-        value: Sint64,
+        value: ::core::ffi::c_longlong,
         str: *mut ::core::ffi::c_char,
         radix: ::core::ffi::c_int,
     ) -> *mut ::core::ffi::c_char;
@@ -1584,7 +1593,7 @@ extern "C" {
 
 extern "C" {
     pub fn SDL_ulltoa(
-        value: Uint64,
+        value: ::core::ffi::c_ulonglong,
         str: *mut ::core::ffi::c_char,
         radix: ::core::ffi::c_int,
     ) -> *mut ::core::ffi::c_char;
@@ -1711,7 +1720,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Parse an Sint64 from a string.
+    /// Parse a `long long` from a string.
     ///
     /// This function makes fewer guarantees than the C runtime `strtoll`:
     ///
@@ -1720,9 +1729,6 @@ extern "C" {
     /// - It is unspecified what this function returns when the parsed integer does
     ///   not fit inside a `long long`.
     ///
-    /// Also note that unlike the C runtime `strtoll`, this function returns an
-    /// Sint64, not a `long long`.
-    ///
     /// \param str The null-terminated string to read. Must not be NULL.
     /// \param endp If not NULL, the address of the first invalid character (i.e.
     ///             the next character after the parsed number) will be written to
@@ -1730,7 +1736,7 @@ extern "C" {
     /// \param base The base of the integer to read. The values 0, 10 and 16 are
     ///             supported. If 0, the base will be inferred from the integer's
     ///             prefix.
-    /// \returns The parsed Sint64.
+    /// \returns The parsed `long long`.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -1747,11 +1753,11 @@ extern "C" {
         str: *const ::core::ffi::c_char,
         endp: *mut *mut ::core::ffi::c_char,
         base: ::core::ffi::c_int,
-    ) -> Sint64;
+    ) -> ::core::ffi::c_longlong;
 }
 
 extern "C" {
-    /// Parse a Uint64 from a string.
+    /// Parse an `unsigned long long` from a string.
     ///
     /// This function makes fewer guarantees than the C runtime `strtoull`:
     ///
@@ -1760,9 +1766,6 @@ extern "C" {
     /// - It is unspecified what this function returns when the parsed integer does
     ///   not fit inside a `long long`.
     ///
-    /// Also note that unlike the C runtime `strtoull`, this function returns a
-    /// Uint64, not an `unsigned long long`.
-    ///
     /// \param str The null-terminated string to read. Must not be NULL.
     /// \param endp If not NULL, the address of the first invalid character (i.e.
     ///             the next character after the parsed number) will be written to
@@ -1770,7 +1773,7 @@ extern "C" {
     /// \param base The base of the integer to read. The values 0, 10 and 16 are
     ///             supported. If 0, the base will be inferred from the integer's
     ///             prefix.
-    /// \returns The parsed Uint64.
+    /// \returns The parsed `unsigned long long`.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -1787,7 +1790,7 @@ extern "C" {
         str: *const ::core::ffi::c_char,
         endp: *mut *mut ::core::ffi::c_char,
         base: ::core::ffi::c_int,
-    ) -> Uint64;
+    ) -> ::core::ffi::c_ulonglong;
 }
 
 extern "C" {

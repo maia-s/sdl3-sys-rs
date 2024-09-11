@@ -54,7 +54,7 @@ use super::sensor::*;
 /// simply most closely match that console's controllers (does it have A/B/X/Y
 /// buttons or X/O/Square/Triangle? Does it have a touchpad? etc).
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GAMEPAD_TYPE_UNKNOWN`], [`SDL_GAMEPAD_TYPE_STANDARD`], [`SDL_GAMEPAD_TYPE_XBOX360`], [`SDL_GAMEPAD_TYPE_XBOXONE`], [`SDL_GAMEPAD_TYPE_PS3`], [`SDL_GAMEPAD_TYPE_PS4`], [`SDL_GAMEPAD_TYPE_PS5`], [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_PRO`], [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT`], [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT`], [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR`], [`SDL_GAMEPAD_TYPE_MAX`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GAMEPAD_TYPE_UNKNOWN`], [`SDL_GAMEPAD_TYPE_STANDARD`], [`SDL_GAMEPAD_TYPE_XBOX360`], [`SDL_GAMEPAD_TYPE_XBOXONE`], [`SDL_GAMEPAD_TYPE_PS3`], [`SDL_GAMEPAD_TYPE_PS4`], [`SDL_GAMEPAD_TYPE_PS5`], [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_PRO`], [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT`], [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT`], [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR`], [`SDL_GAMEPAD_TYPE_COUNT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -71,7 +71,7 @@ impl SDL_GamepadType {
     pub const NINTENDO_SWITCH_JOYCON_LEFT: Self = Self(8);
     pub const NINTENDO_SWITCH_JOYCON_RIGHT: Self = Self(9);
     pub const NINTENDO_SWITCH_JOYCON_PAIR: Self = Self(10);
-    pub const MAX: Self = Self(11);
+    pub const COUNT: Self = Self(11);
 }
 pub const SDL_GAMEPAD_TYPE_UNKNOWN: SDL_GamepadType = SDL_GamepadType::UNKNOWN;
 pub const SDL_GAMEPAD_TYPE_STANDARD: SDL_GamepadType = SDL_GamepadType::STANDARD;
@@ -88,7 +88,7 @@ pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT: SDL_GamepadType =
     SDL_GamepadType::NINTENDO_SWITCH_JOYCON_RIGHT;
 pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR: SDL_GamepadType =
     SDL_GamepadType::NINTENDO_SWITCH_JOYCON_PAIR;
-pub const SDL_GAMEPAD_TYPE_MAX: SDL_GamepadType = SDL_GamepadType::MAX;
+pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 
 /// The list of buttons available on a gamepad
 ///
@@ -112,7 +112,7 @@ pub const SDL_GAMEPAD_TYPE_MAX: SDL_GamepadType = SDL_GamepadType::MAX;
 ///
 /// \since This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GAMEPAD_BUTTON_INVALID`], [`SDL_GAMEPAD_BUTTON_SOUTH`], [`SDL_GAMEPAD_BUTTON_EAST`], [`SDL_GAMEPAD_BUTTON_WEST`], [`SDL_GAMEPAD_BUTTON_NORTH`], [`SDL_GAMEPAD_BUTTON_BACK`], [`SDL_GAMEPAD_BUTTON_GUIDE`], [`SDL_GAMEPAD_BUTTON_START`], [`SDL_GAMEPAD_BUTTON_LEFT_STICK`], [`SDL_GAMEPAD_BUTTON_RIGHT_STICK`], [`SDL_GAMEPAD_BUTTON_LEFT_SHOULDER`], [`SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER`], [`SDL_GAMEPAD_BUTTON_DPAD_UP`], [`SDL_GAMEPAD_BUTTON_DPAD_DOWN`], [`SDL_GAMEPAD_BUTTON_DPAD_LEFT`], [`SDL_GAMEPAD_BUTTON_DPAD_RIGHT`], [`SDL_GAMEPAD_BUTTON_MISC1`], [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1`], [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE1`], [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2`], [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE2`], [`SDL_GAMEPAD_BUTTON_TOUCHPAD`], [`SDL_GAMEPAD_BUTTON_MISC2`], [`SDL_GAMEPAD_BUTTON_MISC3`], [`SDL_GAMEPAD_BUTTON_MISC4`], [`SDL_GAMEPAD_BUTTON_MISC5`], [`SDL_GAMEPAD_BUTTON_MISC6`], [`SDL_GAMEPAD_BUTTON_MAX`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GAMEPAD_BUTTON_INVALID`], [`SDL_GAMEPAD_BUTTON_SOUTH`], [`SDL_GAMEPAD_BUTTON_EAST`], [`SDL_GAMEPAD_BUTTON_WEST`], [`SDL_GAMEPAD_BUTTON_NORTH`], [`SDL_GAMEPAD_BUTTON_BACK`], [`SDL_GAMEPAD_BUTTON_GUIDE`], [`SDL_GAMEPAD_BUTTON_START`], [`SDL_GAMEPAD_BUTTON_LEFT_STICK`], [`SDL_GAMEPAD_BUTTON_RIGHT_STICK`], [`SDL_GAMEPAD_BUTTON_LEFT_SHOULDER`], [`SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER`], [`SDL_GAMEPAD_BUTTON_DPAD_UP`], [`SDL_GAMEPAD_BUTTON_DPAD_DOWN`], [`SDL_GAMEPAD_BUTTON_DPAD_LEFT`], [`SDL_GAMEPAD_BUTTON_DPAD_RIGHT`], [`SDL_GAMEPAD_BUTTON_MISC1`], [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1`], [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE1`], [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2`], [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE2`], [`SDL_GAMEPAD_BUTTON_TOUCHPAD`], [`SDL_GAMEPAD_BUTTON_MISC2`], [`SDL_GAMEPAD_BUTTON_MISC3`], [`SDL_GAMEPAD_BUTTON_MISC4`], [`SDL_GAMEPAD_BUTTON_MISC5`], [`SDL_GAMEPAD_BUTTON_MISC6`], [`SDL_GAMEPAD_BUTTON_COUNT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -145,7 +145,7 @@ impl SDL_GamepadButton {
     pub const MISC4: Self = Self(23_i32);
     pub const MISC5: Self = Self(24_i32);
     pub const MISC6: Self = Self(25_i32);
-    pub const MAX: Self = Self(26_i32);
+    pub const COUNT: Self = Self(26_i32);
 }
 pub const SDL_GAMEPAD_BUTTON_INVALID: SDL_GamepadButton = SDL_GamepadButton::INVALID;
 pub const SDL_GAMEPAD_BUTTON_SOUTH: SDL_GamepadButton = SDL_GamepadButton::SOUTH;
@@ -174,7 +174,7 @@ pub const SDL_GAMEPAD_BUTTON_MISC3: SDL_GamepadButton = SDL_GamepadButton::MISC3
 pub const SDL_GAMEPAD_BUTTON_MISC4: SDL_GamepadButton = SDL_GamepadButton::MISC4;
 pub const SDL_GAMEPAD_BUTTON_MISC5: SDL_GamepadButton = SDL_GamepadButton::MISC5;
 pub const SDL_GAMEPAD_BUTTON_MISC6: SDL_GamepadButton = SDL_GamepadButton::MISC6;
-pub const SDL_GAMEPAD_BUTTON_MAX: SDL_GamepadButton = SDL_GamepadButton::MAX;
+pub const SDL_GAMEPAD_BUTTON_COUNT: SDL_GamepadButton = SDL_GamepadButton::COUNT;
 
 /// The set of gamepad button labels
 ///
@@ -227,7 +227,7 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
 ///
 /// \since This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GAMEPAD_AXIS_INVALID`], [`SDL_GAMEPAD_AXIS_LEFTX`], [`SDL_GAMEPAD_AXIS_LEFTY`], [`SDL_GAMEPAD_AXIS_RIGHTX`], [`SDL_GAMEPAD_AXIS_RIGHTY`], [`SDL_GAMEPAD_AXIS_LEFT_TRIGGER`], [`SDL_GAMEPAD_AXIS_RIGHT_TRIGGER`], [`SDL_GAMEPAD_AXIS_MAX`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GAMEPAD_AXIS_INVALID`], [`SDL_GAMEPAD_AXIS_LEFTX`], [`SDL_GAMEPAD_AXIS_LEFTY`], [`SDL_GAMEPAD_AXIS_RIGHTX`], [`SDL_GAMEPAD_AXIS_RIGHTY`], [`SDL_GAMEPAD_AXIS_LEFT_TRIGGER`], [`SDL_GAMEPAD_AXIS_RIGHT_TRIGGER`], [`SDL_GAMEPAD_AXIS_COUNT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -240,7 +240,7 @@ impl SDL_GamepadAxis {
     pub const RIGHTY: Self = Self(3_i32);
     pub const LEFT_TRIGGER: Self = Self(4_i32);
     pub const RIGHT_TRIGGER: Self = Self(5_i32);
-    pub const MAX: Self = Self(6_i32);
+    pub const COUNT: Self = Self(6_i32);
 }
 pub const SDL_GAMEPAD_AXIS_INVALID: SDL_GamepadAxis = SDL_GamepadAxis::INVALID;
 pub const SDL_GAMEPAD_AXIS_LEFTX: SDL_GamepadAxis = SDL_GamepadAxis::LEFTX;
@@ -249,7 +249,7 @@ pub const SDL_GAMEPAD_AXIS_RIGHTX: SDL_GamepadAxis = SDL_GamepadAxis::RIGHTX;
 pub const SDL_GAMEPAD_AXIS_RIGHTY: SDL_GamepadAxis = SDL_GamepadAxis::RIGHTY;
 pub const SDL_GAMEPAD_AXIS_LEFT_TRIGGER: SDL_GamepadAxis = SDL_GamepadAxis::LEFT_TRIGGER;
 pub const SDL_GAMEPAD_AXIS_RIGHT_TRIGGER: SDL_GamepadAxis = SDL_GamepadAxis::RIGHT_TRIGGER;
-pub const SDL_GAMEPAD_AXIS_MAX: SDL_GamepadAxis = SDL_GamepadAxis::MAX;
+pub const SDL_GAMEPAD_AXIS_COUNT: SDL_GamepadAxis = SDL_GamepadAxis::COUNT;
 
 /// Types of gamepad control bindings.
 ///

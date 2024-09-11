@@ -24,98 +24,95 @@ pub type SDL_MouseID = Uint32;
 ///
 /// \since This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_SYSTEM_CURSOR_DEFAULT`], [`SDL_SYSTEM_CURSOR_TEXT`], [`SDL_SYSTEM_CURSOR_WAIT`], [`SDL_SYSTEM_CURSOR_CROSSHAIR`], [`SDL_SYSTEM_CURSOR_PROGRESS`], [`SDL_SYSTEM_CURSOR_NWSE_RESIZE`], [`SDL_SYSTEM_CURSOR_NESW_RESIZE`], [`SDL_SYSTEM_CURSOR_EW_RESIZE`], [`SDL_SYSTEM_CURSOR_NS_RESIZE`], [`SDL_SYSTEM_CURSOR_MOVE`], [`SDL_SYSTEM_CURSOR_NOT_ALLOWED`], [`SDL_SYSTEM_CURSOR_POINTER`], [`SDL_SYSTEM_CURSOR_NW_RESIZE`], [`SDL_SYSTEM_CURSOR_N_RESIZE`], [`SDL_SYSTEM_CURSOR_NE_RESIZE`], [`SDL_SYSTEM_CURSOR_E_RESIZE`], [`SDL_SYSTEM_CURSOR_SE_RESIZE`], [`SDL_SYSTEM_CURSOR_S_RESIZE`], [`SDL_SYSTEM_CURSOR_SW_RESIZE`], [`SDL_SYSTEM_CURSOR_W_RESIZE`], [`SDL_NUM_SYSTEM_CURSORS`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_SYSTEM_CURSOR_DEFAULT`], [`SDL_SYSTEM_CURSOR_TEXT`], [`SDL_SYSTEM_CURSOR_WAIT`], [`SDL_SYSTEM_CURSOR_CROSSHAIR`], [`SDL_SYSTEM_CURSOR_PROGRESS`], [`SDL_SYSTEM_CURSOR_NWSE_RESIZE`], [`SDL_SYSTEM_CURSOR_NESW_RESIZE`], [`SDL_SYSTEM_CURSOR_EW_RESIZE`], [`SDL_SYSTEM_CURSOR_NS_RESIZE`], [`SDL_SYSTEM_CURSOR_MOVE`], [`SDL_SYSTEM_CURSOR_NOT_ALLOWED`], [`SDL_SYSTEM_CURSOR_POINTER`], [`SDL_SYSTEM_CURSOR_NW_RESIZE`], [`SDL_SYSTEM_CURSOR_N_RESIZE`], [`SDL_SYSTEM_CURSOR_NE_RESIZE`], [`SDL_SYSTEM_CURSOR_E_RESIZE`], [`SDL_SYSTEM_CURSOR_SE_RESIZE`], [`SDL_SYSTEM_CURSOR_S_RESIZE`], [`SDL_SYSTEM_CURSOR_SW_RESIZE`], [`SDL_SYSTEM_CURSOR_W_RESIZE`], [`SDL_SYSTEM_CURSOR_COUNT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_SystemCursor(pub ::core::ffi::c_int);
 impl SDL_SystemCursor {
     /// Default cursor. Usually an arrow.
-    pub const SYSTEM_CURSOR_DEFAULT: Self = Self(0);
+    pub const DEFAULT: Self = Self(0);
     /// Text selection. Usually an I-beam.
-    pub const SYSTEM_CURSOR_TEXT: Self = Self(1);
+    pub const TEXT: Self = Self(1);
     /// Wait. Usually an hourglass or watch or spinning ball.
-    pub const SYSTEM_CURSOR_WAIT: Self = Self(2);
+    pub const WAIT: Self = Self(2);
     /// Crosshair.
-    pub const SYSTEM_CURSOR_CROSSHAIR: Self = Self(3);
+    pub const CROSSHAIR: Self = Self(3);
     /// Program is busy but still interactive. Usually it's WAIT with an arrow.
-    pub const SYSTEM_CURSOR_PROGRESS: Self = Self(4);
+    pub const PROGRESS: Self = Self(4);
     /// Double arrow pointing northwest and southeast.
-    pub const SYSTEM_CURSOR_NWSE_RESIZE: Self = Self(5);
+    pub const NWSE_RESIZE: Self = Self(5);
     /// Double arrow pointing northeast and southwest.
-    pub const SYSTEM_CURSOR_NESW_RESIZE: Self = Self(6);
+    pub const NESW_RESIZE: Self = Self(6);
     /// Double arrow pointing west and east.
-    pub const SYSTEM_CURSOR_EW_RESIZE: Self = Self(7);
+    pub const EW_RESIZE: Self = Self(7);
     /// Double arrow pointing north and south.
-    pub const SYSTEM_CURSOR_NS_RESIZE: Self = Self(8);
+    pub const NS_RESIZE: Self = Self(8);
     /// Four pointed arrow pointing north, south, east, and west.
-    pub const SYSTEM_CURSOR_MOVE: Self = Self(9);
+    pub const MOVE: Self = Self(9);
     /// Not permitted. Usually a slashed circle or crossbones.
-    pub const SYSTEM_CURSOR_NOT_ALLOWED: Self = Self(10);
+    pub const NOT_ALLOWED: Self = Self(10);
     /// Pointer that indicates a link. Usually a pointing hand.
-    pub const SYSTEM_CURSOR_POINTER: Self = Self(11);
+    pub const POINTER: Self = Self(11);
     /// Window resize top-left. This may be a single arrow or a double arrow like NWSE_RESIZE.
-    pub const SYSTEM_CURSOR_NW_RESIZE: Self = Self(12);
+    pub const NW_RESIZE: Self = Self(12);
     /// Window resize top. May be NS_RESIZE.
-    pub const SYSTEM_CURSOR_N_RESIZE: Self = Self(13);
+    pub const N_RESIZE: Self = Self(13);
     /// Window resize top-right. May be NESW_RESIZE.
-    pub const SYSTEM_CURSOR_NE_RESIZE: Self = Self(14);
+    pub const NE_RESIZE: Self = Self(14);
     /// Window resize right. May be EW_RESIZE.
-    pub const SYSTEM_CURSOR_E_RESIZE: Self = Self(15);
+    pub const E_RESIZE: Self = Self(15);
     /// Window resize bottom-right. May be NWSE_RESIZE.
-    pub const SYSTEM_CURSOR_SE_RESIZE: Self = Self(16);
+    pub const SE_RESIZE: Self = Self(16);
     /// Window resize bottom. May be NS_RESIZE.
-    pub const SYSTEM_CURSOR_S_RESIZE: Self = Self(17);
+    pub const S_RESIZE: Self = Self(17);
     /// Window resize bottom-left. May be NESW_RESIZE.
-    pub const SYSTEM_CURSOR_SW_RESIZE: Self = Self(18);
+    pub const SW_RESIZE: Self = Self(18);
     /// Window resize left. May be EW_RESIZE.
-    pub const SYSTEM_CURSOR_W_RESIZE: Self = Self(19);
-    pub const NUM_SYSTEM_CURSORS: Self = Self(20);
+    pub const W_RESIZE: Self = Self(19);
+    pub const COUNT: Self = Self(20);
 }
 /// Default cursor. Usually an arrow.
-pub const SDL_SYSTEM_CURSOR_DEFAULT: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_DEFAULT;
+pub const SDL_SYSTEM_CURSOR_DEFAULT: SDL_SystemCursor = SDL_SystemCursor::DEFAULT;
 /// Text selection. Usually an I-beam.
-pub const SDL_SYSTEM_CURSOR_TEXT: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_TEXT;
+pub const SDL_SYSTEM_CURSOR_TEXT: SDL_SystemCursor = SDL_SystemCursor::TEXT;
 /// Wait. Usually an hourglass or watch or spinning ball.
-pub const SDL_SYSTEM_CURSOR_WAIT: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_WAIT;
+pub const SDL_SYSTEM_CURSOR_WAIT: SDL_SystemCursor = SDL_SystemCursor::WAIT;
 /// Crosshair.
-pub const SDL_SYSTEM_CURSOR_CROSSHAIR: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_CROSSHAIR;
+pub const SDL_SYSTEM_CURSOR_CROSSHAIR: SDL_SystemCursor = SDL_SystemCursor::CROSSHAIR;
 /// Program is busy but still interactive. Usually it's WAIT with an arrow.
-pub const SDL_SYSTEM_CURSOR_PROGRESS: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_PROGRESS;
+pub const SDL_SYSTEM_CURSOR_PROGRESS: SDL_SystemCursor = SDL_SystemCursor::PROGRESS;
 /// Double arrow pointing northwest and southeast.
-pub const SDL_SYSTEM_CURSOR_NWSE_RESIZE: SDL_SystemCursor =
-    SDL_SystemCursor::SYSTEM_CURSOR_NWSE_RESIZE;
+pub const SDL_SYSTEM_CURSOR_NWSE_RESIZE: SDL_SystemCursor = SDL_SystemCursor::NWSE_RESIZE;
 /// Double arrow pointing northeast and southwest.
-pub const SDL_SYSTEM_CURSOR_NESW_RESIZE: SDL_SystemCursor =
-    SDL_SystemCursor::SYSTEM_CURSOR_NESW_RESIZE;
+pub const SDL_SYSTEM_CURSOR_NESW_RESIZE: SDL_SystemCursor = SDL_SystemCursor::NESW_RESIZE;
 /// Double arrow pointing west and east.
-pub const SDL_SYSTEM_CURSOR_EW_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_EW_RESIZE;
+pub const SDL_SYSTEM_CURSOR_EW_RESIZE: SDL_SystemCursor = SDL_SystemCursor::EW_RESIZE;
 /// Double arrow pointing north and south.
-pub const SDL_SYSTEM_CURSOR_NS_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_NS_RESIZE;
+pub const SDL_SYSTEM_CURSOR_NS_RESIZE: SDL_SystemCursor = SDL_SystemCursor::NS_RESIZE;
 /// Four pointed arrow pointing north, south, east, and west.
-pub const SDL_SYSTEM_CURSOR_MOVE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_MOVE;
+pub const SDL_SYSTEM_CURSOR_MOVE: SDL_SystemCursor = SDL_SystemCursor::MOVE;
 /// Not permitted. Usually a slashed circle or crossbones.
-pub const SDL_SYSTEM_CURSOR_NOT_ALLOWED: SDL_SystemCursor =
-    SDL_SystemCursor::SYSTEM_CURSOR_NOT_ALLOWED;
+pub const SDL_SYSTEM_CURSOR_NOT_ALLOWED: SDL_SystemCursor = SDL_SystemCursor::NOT_ALLOWED;
 /// Pointer that indicates a link. Usually a pointing hand.
-pub const SDL_SYSTEM_CURSOR_POINTER: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_POINTER;
+pub const SDL_SYSTEM_CURSOR_POINTER: SDL_SystemCursor = SDL_SystemCursor::POINTER;
 /// Window resize top-left. This may be a single arrow or a double arrow like NWSE_RESIZE.
-pub const SDL_SYSTEM_CURSOR_NW_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_NW_RESIZE;
+pub const SDL_SYSTEM_CURSOR_NW_RESIZE: SDL_SystemCursor = SDL_SystemCursor::NW_RESIZE;
 /// Window resize top. May be NS_RESIZE.
-pub const SDL_SYSTEM_CURSOR_N_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_N_RESIZE;
+pub const SDL_SYSTEM_CURSOR_N_RESIZE: SDL_SystemCursor = SDL_SystemCursor::N_RESIZE;
 /// Window resize top-right. May be NESW_RESIZE.
-pub const SDL_SYSTEM_CURSOR_NE_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_NE_RESIZE;
+pub const SDL_SYSTEM_CURSOR_NE_RESIZE: SDL_SystemCursor = SDL_SystemCursor::NE_RESIZE;
 /// Window resize right. May be EW_RESIZE.
-pub const SDL_SYSTEM_CURSOR_E_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_E_RESIZE;
+pub const SDL_SYSTEM_CURSOR_E_RESIZE: SDL_SystemCursor = SDL_SystemCursor::E_RESIZE;
 /// Window resize bottom-right. May be NWSE_RESIZE.
-pub const SDL_SYSTEM_CURSOR_SE_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_SE_RESIZE;
+pub const SDL_SYSTEM_CURSOR_SE_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SE_RESIZE;
 /// Window resize bottom. May be NS_RESIZE.
-pub const SDL_SYSTEM_CURSOR_S_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_S_RESIZE;
+pub const SDL_SYSTEM_CURSOR_S_RESIZE: SDL_SystemCursor = SDL_SystemCursor::S_RESIZE;
 /// Window resize bottom-left. May be NESW_RESIZE.
-pub const SDL_SYSTEM_CURSOR_SW_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_SW_RESIZE;
+pub const SDL_SYSTEM_CURSOR_SW_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SW_RESIZE;
 /// Window resize left. May be EW_RESIZE.
-pub const SDL_SYSTEM_CURSOR_W_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SYSTEM_CURSOR_W_RESIZE;
-pub const SDL_NUM_SYSTEM_CURSORS: SDL_SystemCursor = SDL_SystemCursor::NUM_SYSTEM_CURSORS;
+pub const SDL_SYSTEM_CURSOR_W_RESIZE: SDL_SystemCursor = SDL_SystemCursor::W_RESIZE;
+pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 
 /// Scroll direction types for the Scroll event
 ///

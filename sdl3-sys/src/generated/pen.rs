@@ -66,46 +66,46 @@ pub const SDL_PEN_INPUT_ERASER_TIP: ::core::primitive::u32 = 1073741824_u32;
 ///
 /// \since This enum is available since SDL 3.0.0
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PEN_AXIS_PRESSURE`], [`SDL_PEN_AXIS_XTILT`], [`SDL_PEN_AXIS_YTILT`], [`SDL_PEN_AXIS_DISTANCE`], [`SDL_PEN_AXIS_ROTATION`], [`SDL_PEN_AXIS_SLIDER`], [`SDL_PEN_AXIS_TANGENTIAL_PRESSURE`], [`SDL_PEN_NUM_AXES`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PEN_AXIS_PRESSURE`], [`SDL_PEN_AXIS_XTILT`], [`SDL_PEN_AXIS_YTILT`], [`SDL_PEN_AXIS_DISTANCE`], [`SDL_PEN_AXIS_ROTATION`], [`SDL_PEN_AXIS_SLIDER`], [`SDL_PEN_AXIS_TANGENTIAL_PRESSURE`], [`SDL_PEN_AXIS_COUNT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PenAxis(pub ::core::ffi::c_int);
 impl SDL_PenAxis {
     /// Pen pressure.  Unidirectional: 0 to 1.0
-    pub const AXIS_PRESSURE: Self = Self(0);
+    pub const PRESSURE: Self = Self(0);
     /// Pen horizontal tilt angle.  Bidirectional: -90.0 to 90.0 (left-to-right).
     /// The physical max/min tilt may be smaller than -90.0 / 90.0, check SDL_PenCapabilityInfo
-    pub const AXIS_XTILT: Self = Self(1);
+    pub const XTILT: Self = Self(1);
     /// Pen vertical tilt angle.  Bidirectional: -90.0 to 90.0 (top-to-down).
     /// The physical max/min tilt may be smaller than -90.0 / 90.0 check SDL_PenCapabilityInfo
-    pub const AXIS_YTILT: Self = Self(2);
+    pub const YTILT: Self = Self(2);
     /// Pen distance to drawing surface.  Unidirectional: 0.0 to 1.0
-    pub const AXIS_DISTANCE: Self = Self(3);
+    pub const DISTANCE: Self = Self(3);
     /// Pen barrel rotation.  Bidirectional: -180 to 179.9 (clockwise, 0 is facing up, -180.0 is facing down).
-    pub const AXIS_ROTATION: Self = Self(4);
+    pub const ROTATION: Self = Self(4);
     /// Pen finger wheel or slider (e.g., Airbrush Pen).  Unidirectional: 0 to 1.0
-    pub const AXIS_SLIDER: Self = Self(5);
+    pub const SLIDER: Self = Self(5);
     /// Pressure from squeezing the pen ("barrel pressure").
-    pub const AXIS_TANGENTIAL_PRESSURE: Self = Self(6);
+    pub const TANGENTIAL_PRESSURE: Self = Self(6);
     /// Total known pen axis types in this version of SDL. This number may grow in future releases!
-    pub const NUM_AXES: Self = Self(7);
+    pub const COUNT: Self = Self(7);
 }
 /// Pen pressure.  Unidirectional: 0 to 1.0
-pub const SDL_PEN_AXIS_PRESSURE: SDL_PenAxis = SDL_PenAxis::AXIS_PRESSURE;
+pub const SDL_PEN_AXIS_PRESSURE: SDL_PenAxis = SDL_PenAxis::PRESSURE;
 /// Pen horizontal tilt angle.  Bidirectional: -90.0 to 90.0 (left-to-right).
 /// The physical max/min tilt may be smaller than -90.0 / 90.0, check SDL_PenCapabilityInfo
-pub const SDL_PEN_AXIS_XTILT: SDL_PenAxis = SDL_PenAxis::AXIS_XTILT;
+pub const SDL_PEN_AXIS_XTILT: SDL_PenAxis = SDL_PenAxis::XTILT;
 /// Pen vertical tilt angle.  Bidirectional: -90.0 to 90.0 (top-to-down).
 /// The physical max/min tilt may be smaller than -90.0 / 90.0 check SDL_PenCapabilityInfo
-pub const SDL_PEN_AXIS_YTILT: SDL_PenAxis = SDL_PenAxis::AXIS_YTILT;
+pub const SDL_PEN_AXIS_YTILT: SDL_PenAxis = SDL_PenAxis::YTILT;
 /// Pen distance to drawing surface.  Unidirectional: 0.0 to 1.0
-pub const SDL_PEN_AXIS_DISTANCE: SDL_PenAxis = SDL_PenAxis::AXIS_DISTANCE;
+pub const SDL_PEN_AXIS_DISTANCE: SDL_PenAxis = SDL_PenAxis::DISTANCE;
 /// Pen barrel rotation.  Bidirectional: -180 to 179.9 (clockwise, 0 is facing up, -180.0 is facing down).
-pub const SDL_PEN_AXIS_ROTATION: SDL_PenAxis = SDL_PenAxis::AXIS_ROTATION;
+pub const SDL_PEN_AXIS_ROTATION: SDL_PenAxis = SDL_PenAxis::ROTATION;
 /// Pen finger wheel or slider (e.g., Airbrush Pen).  Unidirectional: 0 to 1.0
-pub const SDL_PEN_AXIS_SLIDER: SDL_PenAxis = SDL_PenAxis::AXIS_SLIDER;
+pub const SDL_PEN_AXIS_SLIDER: SDL_PenAxis = SDL_PenAxis::SLIDER;
 /// Pressure from squeezing the pen ("barrel pressure").
-pub const SDL_PEN_AXIS_TANGENTIAL_PRESSURE: SDL_PenAxis = SDL_PenAxis::AXIS_TANGENTIAL_PRESSURE;
+pub const SDL_PEN_AXIS_TANGENTIAL_PRESSURE: SDL_PenAxis = SDL_PenAxis::TANGENTIAL_PRESSURE;
 /// Total known pen axis types in this version of SDL. This number may grow in future releases!
-pub const SDL_PEN_NUM_AXES: SDL_PenAxis = SDL_PenAxis::NUM_AXES;
+pub const SDL_PEN_AXIS_COUNT: SDL_PenAxis = SDL_PenAxis::COUNT;

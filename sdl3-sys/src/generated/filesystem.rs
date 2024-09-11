@@ -133,89 +133,61 @@ extern "C" {
 ///
 /// \sa SDL_GetUserFolder
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_FOLDER_HOME`], [`SDL_FOLDER_DESKTOP`], [`SDL_FOLDER_DOCUMENTS`], [`SDL_FOLDER_DOWNLOADS`], [`SDL_FOLDER_MUSIC`], [`SDL_FOLDER_PICTURES`], [`SDL_FOLDER_PUBLICSHARE`], [`SDL_FOLDER_SAVEDGAMES`], [`SDL_FOLDER_SCREENSHOTS`], [`SDL_FOLDER_TEMPLATES`], [`SDL_FOLDER_VIDEOS`], [`SDL_FOLDER_TOTAL`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_FOLDER_HOME`], [`SDL_FOLDER_DESKTOP`], [`SDL_FOLDER_DOCUMENTS`], [`SDL_FOLDER_DOWNLOADS`], [`SDL_FOLDER_MUSIC`], [`SDL_FOLDER_PICTURES`], [`SDL_FOLDER_PUBLICSHARE`], [`SDL_FOLDER_SAVEDGAMES`], [`SDL_FOLDER_SCREENSHOTS`], [`SDL_FOLDER_TEMPLATES`], [`SDL_FOLDER_VIDEOS`], [`SDL_FOLDER_COUNT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Folder(pub ::core::ffi::c_int);
 impl SDL_Folder {
-    /// The folder which contains all of the current user's data, preferences,
-    ///      and documents. It usually contains most of the other folders. If a
-    ///      requested folder does not exist, the home folder can be considered a safe
-    ///      fallback to store a user's documents.
+    /// The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents.
     pub const HOME: Self = Self(0);
-    /// The folder of files that are displayed on the desktop. Note that the
-    ///      existence of a desktop folder does not guarantee that the system does
-    ///      show icons on its desktop; certain GNU/Linux distros with a graphical
-    ///      environment may not have desktop icons.
+    /// The folder of files that are displayed on the desktop. Note that the existence of a desktop folder does not guarantee that the system does show icons on its desktop; certain GNU/Linux distros with a graphical environment may not have desktop icons.
     pub const DESKTOP: Self = Self(1);
-    /// User document files, possibly application-specific. This is a good
-    ///      place to save a user's projects.
+    /// User document files, possibly application-specific. This is a good place to save a user's projects.
     pub const DOCUMENTS: Self = Self(2);
     /// Standard folder for user files downloaded from the internet.
     pub const DOWNLOADS: Self = Self(3);
-    /// Music files that can be played using a standard music player (mp3,
-    ///      ogg...).
+    /// Music files that can be played using a standard music player (mp3, ogg...).
     pub const MUSIC: Self = Self(4);
-    /// Image files that can be displayed using a standard viewer (png,
-    ///      jpg...).
+    /// Image files that can be displayed using a standard viewer (png, jpg...).
     pub const PICTURES: Self = Self(5);
-    /// Files that are meant to be shared with other users on the same
-    ///      computer.
+    /// Files that are meant to be shared with other users on the same computer.
     pub const PUBLICSHARE: Self = Self(6);
     /// Save files for games.
     pub const SAVEDGAMES: Self = Self(7);
     /// Application screenshots.
     pub const SCREENSHOTS: Self = Self(8);
-    /// Template files to be used when the user requests the desktop environment
-    ///      to create a new file in a certain folder, such as "New Text File.txt".
-    ///      Any file in the Templates folder can be used as a starting point for a
-    ///      new file.
+    /// Template files to be used when the user requests the desktop environment to create a new file in a certain folder, such as "New Text File.txt".  Any file in the Templates folder can be used as a starting point for a new file.
     pub const TEMPLATES: Self = Self(9);
-    /// Video files that can be played using a standard video player (mp4,
-    ///      webm...).
+    /// Video files that can be played using a standard video player (mp4, webm...).
     pub const VIDEOS: Self = Self(10);
-    /// total number of types in this enum, not a folder type by itself.
-    pub const TOTAL: Self = Self(11);
+    /// Total number of types in this enum, not a folder type by itself.
+    pub const COUNT: Self = Self(11);
 }
-/// The folder which contains all of the current user's data, preferences,
-///      and documents. It usually contains most of the other folders. If a
-///      requested folder does not exist, the home folder can be considered a safe
-///      fallback to store a user's documents.
+/// The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents.
 pub const SDL_FOLDER_HOME: SDL_Folder = SDL_Folder::HOME;
-/// The folder of files that are displayed on the desktop. Note that the
-///      existence of a desktop folder does not guarantee that the system does
-///      show icons on its desktop; certain GNU/Linux distros with a graphical
-///      environment may not have desktop icons.
+/// The folder of files that are displayed on the desktop. Note that the existence of a desktop folder does not guarantee that the system does show icons on its desktop; certain GNU/Linux distros with a graphical environment may not have desktop icons.
 pub const SDL_FOLDER_DESKTOP: SDL_Folder = SDL_Folder::DESKTOP;
-/// User document files, possibly application-specific. This is a good
-///      place to save a user's projects.
+/// User document files, possibly application-specific. This is a good place to save a user's projects.
 pub const SDL_FOLDER_DOCUMENTS: SDL_Folder = SDL_Folder::DOCUMENTS;
 /// Standard folder for user files downloaded from the internet.
 pub const SDL_FOLDER_DOWNLOADS: SDL_Folder = SDL_Folder::DOWNLOADS;
-/// Music files that can be played using a standard music player (mp3,
-///      ogg...).
+/// Music files that can be played using a standard music player (mp3, ogg...).
 pub const SDL_FOLDER_MUSIC: SDL_Folder = SDL_Folder::MUSIC;
-/// Image files that can be displayed using a standard viewer (png,
-///      jpg...).
+/// Image files that can be displayed using a standard viewer (png, jpg...).
 pub const SDL_FOLDER_PICTURES: SDL_Folder = SDL_Folder::PICTURES;
-/// Files that are meant to be shared with other users on the same
-///      computer.
+/// Files that are meant to be shared with other users on the same computer.
 pub const SDL_FOLDER_PUBLICSHARE: SDL_Folder = SDL_Folder::PUBLICSHARE;
 /// Save files for games.
 pub const SDL_FOLDER_SAVEDGAMES: SDL_Folder = SDL_Folder::SAVEDGAMES;
 /// Application screenshots.
 pub const SDL_FOLDER_SCREENSHOTS: SDL_Folder = SDL_Folder::SCREENSHOTS;
-/// Template files to be used when the user requests the desktop environment
-///      to create a new file in a certain folder, such as "New Text File.txt".
-///      Any file in the Templates folder can be used as a starting point for a
-///      new file.
+/// Template files to be used when the user requests the desktop environment to create a new file in a certain folder, such as "New Text File.txt".  Any file in the Templates folder can be used as a starting point for a new file.
 pub const SDL_FOLDER_TEMPLATES: SDL_Folder = SDL_Folder::TEMPLATES;
-/// Video files that can be played using a standard video player (mp4,
-///      webm...).
+/// Video files that can be played using a standard video player (mp4, webm...).
 pub const SDL_FOLDER_VIDEOS: SDL_Folder = SDL_Folder::VIDEOS;
-/// total number of types in this enum, not a folder type by itself.
-pub const SDL_FOLDER_TOTAL: SDL_Folder = SDL_Folder::TOTAL;
+/// Total number of types in this enum, not a folder type by itself.
+pub const SDL_FOLDER_COUNT: SDL_Folder = SDL_Folder::COUNT;
 
 extern "C" {
     /// Finds the most suitable user folder for a specific purpose.
@@ -270,10 +242,15 @@ pub const SDL_PATHTYPE_OTHER: SDL_PathType = SDL_PathType::OTHER;
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PathInfo {
+    /// the path type
     pub r#type: SDL_PathType,
+    /// the file size in bytes
     pub size: Uint64,
+    /// the time when the path was created
     pub create_time: SDL_Time,
+    /// the last time the path was modified
     pub modify_time: SDL_Time,
+    /// the last time the path was read
     pub access_time: SDL_Time,
 }
 

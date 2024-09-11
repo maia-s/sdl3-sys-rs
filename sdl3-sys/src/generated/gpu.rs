@@ -20,35 +20,35 @@ use super::video::*;
 ///
 /// \sa SDL_CreateGPUGraphicsPipeline
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_PRIMITIVETYPE_POINTLIST`], [`SDL_GPU_PRIMITIVETYPE_LINELIST`], [`SDL_GPU_PRIMITIVETYPE_LINESTRIP`], [`SDL_GPU_PRIMITIVETYPE_TRIANGLELIST`], [`SDL_GPU_PRIMITIVETYPE_TRIANGLESTRIP`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_PRIMITIVETYPE_TRIANGLELIST`], [`SDL_GPU_PRIMITIVETYPE_TRIANGLESTRIP`], [`SDL_GPU_PRIMITIVETYPE_LINELIST`], [`SDL_GPU_PRIMITIVETYPE_LINESTRIP`], [`SDL_GPU_PRIMITIVETYPE_POINTLIST`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUPrimitiveType(pub ::core::ffi::c_int);
 impl SDL_GPUPrimitiveType {
-    /// A series of separate points.
-    pub const POINTLIST: Self = Self(0);
-    /// A series of separate lines.
-    pub const LINELIST: Self = Self(1);
-    /// A series of connected lines.
-    pub const LINESTRIP: Self = Self(2);
     /// A series of separate triangles.
-    pub const TRIANGLELIST: Self = Self(3);
+    pub const TRIANGLELIST: Self = Self(0);
     /// A series of connected triangles.
-    pub const TRIANGLESTRIP: Self = Self(4);
+    pub const TRIANGLESTRIP: Self = Self(1);
+    /// A series of separate lines.
+    pub const LINELIST: Self = Self(2);
+    /// A series of connected lines.
+    pub const LINESTRIP: Self = Self(3);
+    /// A series of separate points.
+    pub const POINTLIST: Self = Self(4);
 }
-/// A series of separate points.
-pub const SDL_GPU_PRIMITIVETYPE_POINTLIST: SDL_GPUPrimitiveType = SDL_GPUPrimitiveType::POINTLIST;
-/// A series of separate lines.
-pub const SDL_GPU_PRIMITIVETYPE_LINELIST: SDL_GPUPrimitiveType = SDL_GPUPrimitiveType::LINELIST;
-/// A series of connected lines.
-pub const SDL_GPU_PRIMITIVETYPE_LINESTRIP: SDL_GPUPrimitiveType = SDL_GPUPrimitiveType::LINESTRIP;
 /// A series of separate triangles.
 pub const SDL_GPU_PRIMITIVETYPE_TRIANGLELIST: SDL_GPUPrimitiveType =
     SDL_GPUPrimitiveType::TRIANGLELIST;
 /// A series of connected triangles.
 pub const SDL_GPU_PRIMITIVETYPE_TRIANGLESTRIP: SDL_GPUPrimitiveType =
     SDL_GPUPrimitiveType::TRIANGLESTRIP;
+/// A series of separate lines.
+pub const SDL_GPU_PRIMITIVETYPE_LINELIST: SDL_GPUPrimitiveType = SDL_GPUPrimitiveType::LINELIST;
+/// A series of connected lines.
+pub const SDL_GPU_PRIMITIVETYPE_LINESTRIP: SDL_GPUPrimitiveType = SDL_GPUPrimitiveType::LINESTRIP;
+/// A series of separate points.
+pub const SDL_GPU_PRIMITIVETYPE_POINTLIST: SDL_GPUPrimitiveType = SDL_GPUPrimitiveType::POINTLIST;
 
 /// Specifies how the contents of a texture attached to a render pass are
 /// treated at the beginning of the render pass.
@@ -210,63 +210,63 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureFormat(pub ::core::ffi::c_int);
 impl SDL_GPUTextureFormat {
-    pub const INVALID: Self = Self(-1_i32);
-    pub const A8_UNORM: Self = Self(0_i32);
-    pub const R8_UNORM: Self = Self(1_i32);
-    pub const R8G8_UNORM: Self = Self(2_i32);
-    pub const R8G8B8A8_UNORM: Self = Self(3_i32);
-    pub const R16_UNORM: Self = Self(4_i32);
-    pub const R16G16_UNORM: Self = Self(5_i32);
-    pub const R16G16B16A16_UNORM: Self = Self(6_i32);
-    pub const R10G10B10A2_UNORM: Self = Self(7_i32);
-    pub const B5G6R5_UNORM: Self = Self(8_i32);
-    pub const B5G5R5A1_UNORM: Self = Self(9_i32);
-    pub const B4G4R4A4_UNORM: Self = Self(10_i32);
-    pub const B8G8R8A8_UNORM: Self = Self(11_i32);
-    pub const BC1_RGBA_UNORM: Self = Self(12_i32);
-    pub const BC2_RGBA_UNORM: Self = Self(13_i32);
-    pub const BC3_RGBA_UNORM: Self = Self(14_i32);
-    pub const BC4_R_UNORM: Self = Self(15_i32);
-    pub const BC5_RG_UNORM: Self = Self(16_i32);
-    pub const BC7_RGBA_UNORM: Self = Self(17_i32);
-    pub const BC6H_RGB_FLOAT: Self = Self(18_i32);
-    pub const BC6H_RGB_UFLOAT: Self = Self(19_i32);
-    pub const R8_SNORM: Self = Self(20_i32);
-    pub const R8G8_SNORM: Self = Self(21_i32);
-    pub const R8G8B8A8_SNORM: Self = Self(22_i32);
-    pub const R16_SNORM: Self = Self(23_i32);
-    pub const R16G16_SNORM: Self = Self(24_i32);
-    pub const R16G16B16A16_SNORM: Self = Self(25_i32);
-    pub const R16_FLOAT: Self = Self(26_i32);
-    pub const R16G16_FLOAT: Self = Self(27_i32);
-    pub const R16G16B16A16_FLOAT: Self = Self(28_i32);
-    pub const R32_FLOAT: Self = Self(29_i32);
-    pub const R32G32_FLOAT: Self = Self(30_i32);
-    pub const R32G32B32A32_FLOAT: Self = Self(31_i32);
-    pub const R11G11B10_UFLOAT: Self = Self(32_i32);
-    pub const R8_UINT: Self = Self(33_i32);
-    pub const R8G8_UINT: Self = Self(34_i32);
-    pub const R8G8B8A8_UINT: Self = Self(35_i32);
-    pub const R16_UINT: Self = Self(36_i32);
-    pub const R16G16_UINT: Self = Self(37_i32);
-    pub const R16G16B16A16_UINT: Self = Self(38_i32);
-    pub const R8_INT: Self = Self(39_i32);
-    pub const R8G8_INT: Self = Self(40_i32);
-    pub const R8G8B8A8_INT: Self = Self(41_i32);
-    pub const R16_INT: Self = Self(42_i32);
-    pub const R16G16_INT: Self = Self(43_i32);
-    pub const R16G16B16A16_INT: Self = Self(44_i32);
-    pub const R8G8B8A8_UNORM_SRGB: Self = Self(45_i32);
-    pub const B8G8R8A8_UNORM_SRGB: Self = Self(46_i32);
-    pub const BC1_RGBA_UNORM_SRGB: Self = Self(47_i32);
-    pub const BC2_RGBA_UNORM_SRGB: Self = Self(48_i32);
-    pub const BC3_RGBA_UNORM_SRGB: Self = Self(49_i32);
-    pub const BC7_RGBA_UNORM_SRGB: Self = Self(50_i32);
-    pub const D16_UNORM: Self = Self(51_i32);
-    pub const D24_UNORM: Self = Self(52_i32);
-    pub const D32_FLOAT: Self = Self(53_i32);
-    pub const D24_UNORM_S8_UINT: Self = Self(54_i32);
-    pub const D32_FLOAT_S8_UINT: Self = Self(55_i32);
+    pub const INVALID: Self = Self(0);
+    pub const A8_UNORM: Self = Self(1);
+    pub const R8_UNORM: Self = Self(2);
+    pub const R8G8_UNORM: Self = Self(3);
+    pub const R8G8B8A8_UNORM: Self = Self(4);
+    pub const R16_UNORM: Self = Self(5);
+    pub const R16G16_UNORM: Self = Self(6);
+    pub const R16G16B16A16_UNORM: Self = Self(7);
+    pub const R10G10B10A2_UNORM: Self = Self(8);
+    pub const B5G6R5_UNORM: Self = Self(9);
+    pub const B5G5R5A1_UNORM: Self = Self(10);
+    pub const B4G4R4A4_UNORM: Self = Self(11);
+    pub const B8G8R8A8_UNORM: Self = Self(12);
+    pub const BC1_RGBA_UNORM: Self = Self(13);
+    pub const BC2_RGBA_UNORM: Self = Self(14);
+    pub const BC3_RGBA_UNORM: Self = Self(15);
+    pub const BC4_R_UNORM: Self = Self(16);
+    pub const BC5_RG_UNORM: Self = Self(17);
+    pub const BC7_RGBA_UNORM: Self = Self(18);
+    pub const BC6H_RGB_FLOAT: Self = Self(19);
+    pub const BC6H_RGB_UFLOAT: Self = Self(20);
+    pub const R8_SNORM: Self = Self(21);
+    pub const R8G8_SNORM: Self = Self(22);
+    pub const R8G8B8A8_SNORM: Self = Self(23);
+    pub const R16_SNORM: Self = Self(24);
+    pub const R16G16_SNORM: Self = Self(25);
+    pub const R16G16B16A16_SNORM: Self = Self(26);
+    pub const R16_FLOAT: Self = Self(27);
+    pub const R16G16_FLOAT: Self = Self(28);
+    pub const R16G16B16A16_FLOAT: Self = Self(29);
+    pub const R32_FLOAT: Self = Self(30);
+    pub const R32G32_FLOAT: Self = Self(31);
+    pub const R32G32B32A32_FLOAT: Self = Self(32);
+    pub const R11G11B10_UFLOAT: Self = Self(33);
+    pub const R8_UINT: Self = Self(34);
+    pub const R8G8_UINT: Self = Self(35);
+    pub const R8G8B8A8_UINT: Self = Self(36);
+    pub const R16_UINT: Self = Self(37);
+    pub const R16G16_UINT: Self = Self(38);
+    pub const R16G16B16A16_UINT: Self = Self(39);
+    pub const R8_INT: Self = Self(40);
+    pub const R8G8_INT: Self = Self(41);
+    pub const R8G8B8A8_INT: Self = Self(42);
+    pub const R16_INT: Self = Self(43);
+    pub const R16G16_INT: Self = Self(44);
+    pub const R16G16B16A16_INT: Self = Self(45);
+    pub const R8G8B8A8_UNORM_SRGB: Self = Self(46);
+    pub const B8G8R8A8_UNORM_SRGB: Self = Self(47);
+    pub const BC1_RGBA_UNORM_SRGB: Self = Self(48);
+    pub const BC2_RGBA_UNORM_SRGB: Self = Self(49);
+    pub const BC3_RGBA_UNORM_SRGB: Self = Self(50);
+    pub const BC7_RGBA_UNORM_SRGB: Self = Self(51);
+    pub const D16_UNORM: Self = Self(52);
+    pub const D24_UNORM: Self = Self(53);
+    pub const D32_FLOAT: Self = Self(54);
+    pub const D24_UNORM_S8_UINT: Self = Self(55);
+    pub const D32_FLOAT_S8_UINT: Self = Self(56);
 }
 pub const SDL_GPU_TEXTUREFORMAT_INVALID: SDL_GPUTextureFormat = SDL_GPUTextureFormat::INVALID;
 pub const SDL_GPU_TEXTUREFORMAT_A8_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::A8_UNORM;
@@ -554,28 +554,30 @@ pub const SDL_GPU_SHADERSTAGE_FRAGMENT: SDL_GPUShaderStage = SDL_GPUShaderStage:
 ///
 /// Each format corresponds to a specific backend that accepts it.
 ///
-/// \since This enum is available since SDL 3.0.0
+/// \since This datatype is available since SDL 3.0.0
 ///
 /// \sa SDL_CreateGPUShader
 pub type SDL_GPUShaderFormat = Uint32;
 
+pub const SDL_GPU_SHADERFORMAT_INVALID: ::core::primitive::i32 = 0;
+
 /// Shaders for NDA'd platforms.
-pub const SDL_GPU_SHADERFORMAT_PRIVATE: ::core::primitive::u32 = 1_u32;
+pub const SDL_GPU_SHADERFORMAT_PRIVATE: ::core::primitive::u32 = 2_u32;
 
 /// SPIR-V shaders for Vulkan.
-pub const SDL_GPU_SHADERFORMAT_SPIRV: ::core::primitive::u32 = 2_u32;
+pub const SDL_GPU_SHADERFORMAT_SPIRV: ::core::primitive::u32 = 4_u32;
 
 /// DXBC SM5_0 shaders for D3D11.
-pub const SDL_GPU_SHADERFORMAT_DXBC: ::core::primitive::u32 = 4_u32;
+pub const SDL_GPU_SHADERFORMAT_DXBC: ::core::primitive::u32 = 8_u32;
 
 /// DXIL shaders for D3D12.
-pub const SDL_GPU_SHADERFORMAT_DXIL: ::core::primitive::u32 = 8_u32;
+pub const SDL_GPU_SHADERFORMAT_DXIL: ::core::primitive::u32 = 16_u32;
 
 /// MSL shaders for Metal.
-pub const SDL_GPU_SHADERFORMAT_MSL: ::core::primitive::u32 = 16_u32;
+pub const SDL_GPU_SHADERFORMAT_MSL: ::core::primitive::u32 = 32_u32;
 
 /// Precompiled metallib shaders for Metal.
-pub const SDL_GPU_SHADERFORMAT_METALLIB: ::core::primitive::u32 = 32_u32;
+pub const SDL_GPU_SHADERFORMAT_METALLIB: ::core::primitive::u32 = 64_u32;
 
 /// Specifies the format of a vertex attribute.
 ///
@@ -583,43 +585,46 @@ pub const SDL_GPU_SHADERFORMAT_METALLIB: ::core::primitive::u32 = 32_u32;
 ///
 /// \sa SDL_CreateGPUGraphicsPipeline
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_VERTEXELEMENTFORMAT_INT`], [`SDL_GPU_VERTEXELEMENTFORMAT_INT2`], [`SDL_GPU_VERTEXELEMENTFORMAT_INT3`], [`SDL_GPU_VERTEXELEMENTFORMAT_INT4`], [`SDL_GPU_VERTEXELEMENTFORMAT_UINT`], [`SDL_GPU_VERTEXELEMENTFORMAT_UINT2`], [`SDL_GPU_VERTEXELEMENTFORMAT_UINT3`], [`SDL_GPU_VERTEXELEMENTFORMAT_UINT4`], [`SDL_GPU_VERTEXELEMENTFORMAT_FLOAT`], [`SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2`], [`SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3`], [`SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4`], [`SDL_GPU_VERTEXELEMENTFORMAT_BYTE2`], [`SDL_GPU_VERTEXELEMENTFORMAT_BYTE4`], [`SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2`], [`SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4`], [`SDL_GPU_VERTEXELEMENTFORMAT_BYTE2_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_BYTE4_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_SHORT2`], [`SDL_GPU_VERTEXELEMENTFORMAT_SHORT4`], [`SDL_GPU_VERTEXELEMENTFORMAT_USHORT2`], [`SDL_GPU_VERTEXELEMENTFORMAT_USHORT4`], [`SDL_GPU_VERTEXELEMENTFORMAT_SHORT2_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_SHORT4_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_USHORT2_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_USHORT4_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_HALF2`], [`SDL_GPU_VERTEXELEMENTFORMAT_HALF4`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_VERTEXELEMENTFORMAT_INVALID`], [`SDL_GPU_VERTEXELEMENTFORMAT_INT`], [`SDL_GPU_VERTEXELEMENTFORMAT_INT2`], [`SDL_GPU_VERTEXELEMENTFORMAT_INT3`], [`SDL_GPU_VERTEXELEMENTFORMAT_INT4`], [`SDL_GPU_VERTEXELEMENTFORMAT_UINT`], [`SDL_GPU_VERTEXELEMENTFORMAT_UINT2`], [`SDL_GPU_VERTEXELEMENTFORMAT_UINT3`], [`SDL_GPU_VERTEXELEMENTFORMAT_UINT4`], [`SDL_GPU_VERTEXELEMENTFORMAT_FLOAT`], [`SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2`], [`SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3`], [`SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4`], [`SDL_GPU_VERTEXELEMENTFORMAT_BYTE2`], [`SDL_GPU_VERTEXELEMENTFORMAT_BYTE4`], [`SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2`], [`SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4`], [`SDL_GPU_VERTEXELEMENTFORMAT_BYTE2_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_BYTE4_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_SHORT2`], [`SDL_GPU_VERTEXELEMENTFORMAT_SHORT4`], [`SDL_GPU_VERTEXELEMENTFORMAT_USHORT2`], [`SDL_GPU_VERTEXELEMENTFORMAT_USHORT4`], [`SDL_GPU_VERTEXELEMENTFORMAT_SHORT2_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_SHORT4_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_USHORT2_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_USHORT4_NORM`], [`SDL_GPU_VERTEXELEMENTFORMAT_HALF2`], [`SDL_GPU_VERTEXELEMENTFORMAT_HALF4`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUVertexElementFormat(pub ::core::ffi::c_int);
 impl SDL_GPUVertexElementFormat {
-    pub const INT: Self = Self(0);
-    pub const INT2: Self = Self(1);
-    pub const INT3: Self = Self(2);
-    pub const INT4: Self = Self(3);
-    pub const UINT: Self = Self(4);
-    pub const UINT2: Self = Self(5);
-    pub const UINT3: Self = Self(6);
-    pub const UINT4: Self = Self(7);
-    pub const FLOAT: Self = Self(8);
-    pub const FLOAT2: Self = Self(9);
-    pub const FLOAT3: Self = Self(10);
-    pub const FLOAT4: Self = Self(11);
-    pub const BYTE2: Self = Self(12);
-    pub const BYTE4: Self = Self(13);
-    pub const UBYTE2: Self = Self(14);
-    pub const UBYTE4: Self = Self(15);
-    pub const BYTE2_NORM: Self = Self(16);
-    pub const BYTE4_NORM: Self = Self(17);
-    pub const UBYTE2_NORM: Self = Self(18);
-    pub const UBYTE4_NORM: Self = Self(19);
-    pub const SHORT2: Self = Self(20);
-    pub const SHORT4: Self = Self(21);
-    pub const USHORT2: Self = Self(22);
-    pub const USHORT4: Self = Self(23);
-    pub const SHORT2_NORM: Self = Self(24);
-    pub const SHORT4_NORM: Self = Self(25);
-    pub const USHORT2_NORM: Self = Self(26);
-    pub const USHORT4_NORM: Self = Self(27);
-    pub const HALF2: Self = Self(28);
-    pub const HALF4: Self = Self(29);
+    pub const INVALID: Self = Self(0);
+    pub const INT: Self = Self(1);
+    pub const INT2: Self = Self(2);
+    pub const INT3: Self = Self(3);
+    pub const INT4: Self = Self(4);
+    pub const UINT: Self = Self(5);
+    pub const UINT2: Self = Self(6);
+    pub const UINT3: Self = Self(7);
+    pub const UINT4: Self = Self(8);
+    pub const FLOAT: Self = Self(9);
+    pub const FLOAT2: Self = Self(10);
+    pub const FLOAT3: Self = Self(11);
+    pub const FLOAT4: Self = Self(12);
+    pub const BYTE2: Self = Self(13);
+    pub const BYTE4: Self = Self(14);
+    pub const UBYTE2: Self = Self(15);
+    pub const UBYTE4: Self = Self(16);
+    pub const BYTE2_NORM: Self = Self(17);
+    pub const BYTE4_NORM: Self = Self(18);
+    pub const UBYTE2_NORM: Self = Self(19);
+    pub const UBYTE4_NORM: Self = Self(20);
+    pub const SHORT2: Self = Self(21);
+    pub const SHORT4: Self = Self(22);
+    pub const USHORT2: Self = Self(23);
+    pub const USHORT4: Self = Self(24);
+    pub const SHORT2_NORM: Self = Self(25);
+    pub const SHORT4_NORM: Self = Self(26);
+    pub const USHORT2_NORM: Self = Self(27);
+    pub const USHORT4_NORM: Self = Self(28);
+    pub const HALF2: Self = Self(29);
+    pub const HALF4: Self = Self(30);
 }
+pub const SDL_GPU_VERTEXELEMENTFORMAT_INVALID: SDL_GPUVertexElementFormat =
+    SDL_GPUVertexElementFormat::INVALID;
 pub const SDL_GPU_VERTEXELEMENTFORMAT_INT: SDL_GPUVertexElementFormat =
     SDL_GPUVertexElementFormat::INT;
 pub const SDL_GPU_VERTEXELEMENTFORMAT_INT2: SDL_GPUVertexElementFormat =
@@ -782,29 +787,31 @@ pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOC
 ///
 /// \sa SDL_CreateGPUGraphicsPipeline
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_COMPAREOP_NEVER`], [`SDL_GPU_COMPAREOP_LESS`], [`SDL_GPU_COMPAREOP_EQUAL`], [`SDL_GPU_COMPAREOP_LESS_OR_EQUAL`], [`SDL_GPU_COMPAREOP_GREATER`], [`SDL_GPU_COMPAREOP_NOT_EQUAL`], [`SDL_GPU_COMPAREOP_GREATER_OR_EQUAL`], [`SDL_GPU_COMPAREOP_ALWAYS`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_COMPAREOP_INVALID`], [`SDL_GPU_COMPAREOP_NEVER`], [`SDL_GPU_COMPAREOP_LESS`], [`SDL_GPU_COMPAREOP_EQUAL`], [`SDL_GPU_COMPAREOP_LESS_OR_EQUAL`], [`SDL_GPU_COMPAREOP_GREATER`], [`SDL_GPU_COMPAREOP_NOT_EQUAL`], [`SDL_GPU_COMPAREOP_GREATER_OR_EQUAL`], [`SDL_GPU_COMPAREOP_ALWAYS`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUCompareOp(pub ::core::ffi::c_int);
 impl SDL_GPUCompareOp {
+    pub const INVALID: Self = Self(0);
     /// The comparison always evaluates false.
-    pub const NEVER: Self = Self(0);
+    pub const NEVER: Self = Self(1);
     /// The comparison evaluates reference < test.
-    pub const LESS: Self = Self(1);
+    pub const LESS: Self = Self(2);
     /// The comparison evaluates reference == test.
-    pub const EQUAL: Self = Self(2);
+    pub const EQUAL: Self = Self(3);
     /// The comparison evaluates reference <= test.
-    pub const LESS_OR_EQUAL: Self = Self(3);
+    pub const LESS_OR_EQUAL: Self = Self(4);
     /// The comparison evaluates reference > test.
-    pub const GREATER: Self = Self(4);
+    pub const GREATER: Self = Self(5);
     /// The comparison evaluates reference != test.
-    pub const NOT_EQUAL: Self = Self(5);
+    pub const NOT_EQUAL: Self = Self(6);
     /// The comparison evalutes reference >= test.
-    pub const GREATER_OR_EQUAL: Self = Self(6);
+    pub const GREATER_OR_EQUAL: Self = Self(7);
     /// The comparison always evaluates true.
-    pub const ALWAYS: Self = Self(7);
+    pub const ALWAYS: Self = Self(8);
 }
+pub const SDL_GPU_COMPAREOP_INVALID: SDL_GPUCompareOp = SDL_GPUCompareOp::INVALID;
 /// The comparison always evaluates false.
 pub const SDL_GPU_COMPAREOP_NEVER: SDL_GPUCompareOp = SDL_GPUCompareOp::NEVER;
 /// The comparison evaluates reference < test.
@@ -829,29 +836,31 @@ pub const SDL_GPU_COMPAREOP_ALWAYS: SDL_GPUCompareOp = SDL_GPUCompareOp::ALWAYS;
 ///
 /// \sa SDL_CreateGPUGraphicsPipeline
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_STENCILOP_KEEP`], [`SDL_GPU_STENCILOP_ZERO`], [`SDL_GPU_STENCILOP_REPLACE`], [`SDL_GPU_STENCILOP_INCREMENT_AND_CLAMP`], [`SDL_GPU_STENCILOP_DECREMENT_AND_CLAMP`], [`SDL_GPU_STENCILOP_INVERT`], [`SDL_GPU_STENCILOP_INCREMENT_AND_WRAP`], [`SDL_GPU_STENCILOP_DECREMENT_AND_WRAP`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_STENCILOP_INVALID`], [`SDL_GPU_STENCILOP_KEEP`], [`SDL_GPU_STENCILOP_ZERO`], [`SDL_GPU_STENCILOP_REPLACE`], [`SDL_GPU_STENCILOP_INCREMENT_AND_CLAMP`], [`SDL_GPU_STENCILOP_DECREMENT_AND_CLAMP`], [`SDL_GPU_STENCILOP_INVERT`], [`SDL_GPU_STENCILOP_INCREMENT_AND_WRAP`], [`SDL_GPU_STENCILOP_DECREMENT_AND_WRAP`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUStencilOp(pub ::core::ffi::c_int);
 impl SDL_GPUStencilOp {
+    pub const INVALID: Self = Self(0);
     /// Keeps the current value.
-    pub const KEEP: Self = Self(0);
+    pub const KEEP: Self = Self(1);
     /// Sets the value to 0.
-    pub const ZERO: Self = Self(1);
+    pub const ZERO: Self = Self(2);
     /// Sets the value to reference.
-    pub const REPLACE: Self = Self(2);
+    pub const REPLACE: Self = Self(3);
     /// Increments the current value and clamps to the maximum value.
-    pub const INCREMENT_AND_CLAMP: Self = Self(3);
+    pub const INCREMENT_AND_CLAMP: Self = Self(4);
     /// Decrements the current value and clamps to 0.
-    pub const DECREMENT_AND_CLAMP: Self = Self(4);
+    pub const DECREMENT_AND_CLAMP: Self = Self(5);
     /// Bitwise-inverts the current value.
-    pub const INVERT: Self = Self(5);
+    pub const INVERT: Self = Self(6);
     /// Increments the current value and wraps back to 0.
-    pub const INCREMENT_AND_WRAP: Self = Self(6);
+    pub const INCREMENT_AND_WRAP: Self = Self(7);
     /// Decrements the current value and wraps to the maximum value.
-    pub const DECREMENT_AND_WRAP: Self = Self(7);
+    pub const DECREMENT_AND_WRAP: Self = Self(8);
 }
+pub const SDL_GPU_STENCILOP_INVALID: SDL_GPUStencilOp = SDL_GPUStencilOp::INVALID;
 /// Keeps the current value.
 pub const SDL_GPU_STENCILOP_KEEP: SDL_GPUStencilOp = SDL_GPUStencilOp::KEEP;
 /// Sets the value to 0.
@@ -883,23 +892,25 @@ pub const SDL_GPU_STENCILOP_DECREMENT_AND_WRAP: SDL_GPUStencilOp =
 ///
 /// \sa SDL_CreateGPUGraphicsPipeline
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_BLENDOP_ADD`], [`SDL_GPU_BLENDOP_SUBTRACT`], [`SDL_GPU_BLENDOP_REVERSE_SUBTRACT`], [`SDL_GPU_BLENDOP_MIN`], [`SDL_GPU_BLENDOP_MAX`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_BLENDOP_INVALID`], [`SDL_GPU_BLENDOP_ADD`], [`SDL_GPU_BLENDOP_SUBTRACT`], [`SDL_GPU_BLENDOP_REVERSE_SUBTRACT`], [`SDL_GPU_BLENDOP_MIN`], [`SDL_GPU_BLENDOP_MAX`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUBlendOp(pub ::core::ffi::c_int);
 impl SDL_GPUBlendOp {
+    pub const INVALID: Self = Self(0);
     /// (source * source_factor) + (destination * destination_factor)
-    pub const ADD: Self = Self(0);
+    pub const ADD: Self = Self(1);
     /// (source * source_factor) - (destination * destination_factor)
-    pub const SUBTRACT: Self = Self(1);
+    pub const SUBTRACT: Self = Self(2);
     /// (destination * destination_factor) - (source * source_factor)
-    pub const REVERSE_SUBTRACT: Self = Self(2);
+    pub const REVERSE_SUBTRACT: Self = Self(3);
     /// min(source, destination)
-    pub const MIN: Self = Self(3);
+    pub const MIN: Self = Self(4);
     /// max(source, destination)
-    pub const MAX: Self = Self(4);
+    pub const MAX: Self = Self(5);
 }
+pub const SDL_GPU_BLENDOP_INVALID: SDL_GPUBlendOp = SDL_GPUBlendOp::INVALID;
 /// (source * source_factor) + (destination * destination_factor)
 pub const SDL_GPU_BLENDOP_ADD: SDL_GPUBlendOp = SDL_GPUBlendOp::ADD;
 /// (source * source_factor) - (destination * destination_factor)
@@ -921,39 +932,41 @@ pub const SDL_GPU_BLENDOP_MAX: SDL_GPUBlendOp = SDL_GPUBlendOp::MAX;
 ///
 /// \sa SDL_CreateGPUGraphicsPipeline
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_BLENDFACTOR_ZERO`], [`SDL_GPU_BLENDFACTOR_ONE`], [`SDL_GPU_BLENDFACTOR_SRC_COLOR`], [`SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_COLOR`], [`SDL_GPU_BLENDFACTOR_DST_COLOR`], [`SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_COLOR`], [`SDL_GPU_BLENDFACTOR_SRC_ALPHA`], [`SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_ALPHA`], [`SDL_GPU_BLENDFACTOR_DST_ALPHA`], [`SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_ALPHA`], [`SDL_GPU_BLENDFACTOR_CONSTANT_COLOR`], [`SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR`], [`SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_BLENDFACTOR_INVALID`], [`SDL_GPU_BLENDFACTOR_ZERO`], [`SDL_GPU_BLENDFACTOR_ONE`], [`SDL_GPU_BLENDFACTOR_SRC_COLOR`], [`SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_COLOR`], [`SDL_GPU_BLENDFACTOR_DST_COLOR`], [`SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_COLOR`], [`SDL_GPU_BLENDFACTOR_SRC_ALPHA`], [`SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_ALPHA`], [`SDL_GPU_BLENDFACTOR_DST_ALPHA`], [`SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_ALPHA`], [`SDL_GPU_BLENDFACTOR_CONSTANT_COLOR`], [`SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR`], [`SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUBlendFactor(pub ::core::ffi::c_int);
 impl SDL_GPUBlendFactor {
+    pub const INVALID: Self = Self(0);
     /// 0
-    pub const ZERO: Self = Self(0);
+    pub const ZERO: Self = Self(1);
     /// 1
-    pub const ONE: Self = Self(1);
+    pub const ONE: Self = Self(2);
     /// source color
-    pub const SRC_COLOR: Self = Self(2);
+    pub const SRC_COLOR: Self = Self(3);
     /// 1 - source color
-    pub const ONE_MINUS_SRC_COLOR: Self = Self(3);
+    pub const ONE_MINUS_SRC_COLOR: Self = Self(4);
     /// destination color
-    pub const DST_COLOR: Self = Self(4);
+    pub const DST_COLOR: Self = Self(5);
     /// 1 - destination color
-    pub const ONE_MINUS_DST_COLOR: Self = Self(5);
+    pub const ONE_MINUS_DST_COLOR: Self = Self(6);
     /// source alpha
-    pub const SRC_ALPHA: Self = Self(6);
+    pub const SRC_ALPHA: Self = Self(7);
     /// 1 - source alpha
-    pub const ONE_MINUS_SRC_ALPHA: Self = Self(7);
+    pub const ONE_MINUS_SRC_ALPHA: Self = Self(8);
     /// destination alpha
-    pub const DST_ALPHA: Self = Self(8);
+    pub const DST_ALPHA: Self = Self(9);
     /// 1 - destination alpha
-    pub const ONE_MINUS_DST_ALPHA: Self = Self(9);
+    pub const ONE_MINUS_DST_ALPHA: Self = Self(10);
     /// blend constant
-    pub const CONSTANT_COLOR: Self = Self(10);
+    pub const CONSTANT_COLOR: Self = Self(11);
     /// 1 - blend constant
-    pub const ONE_MINUS_CONSTANT_COLOR: Self = Self(11);
+    pub const ONE_MINUS_CONSTANT_COLOR: Self = Self(12);
     /// min(source alpha, 1 - destination alpha)
-    pub const SRC_ALPHA_SATURATE: Self = Self(12);
+    pub const SRC_ALPHA_SATURATE: Self = Self(13);
 }
+pub const SDL_GPU_BLENDFACTOR_INVALID: SDL_GPUBlendFactor = SDL_GPUBlendFactor::INVALID;
 /// 0
 pub const SDL_GPU_BLENDFACTOR_ZERO: SDL_GPUBlendFactor = SDL_GPUBlendFactor::ZERO;
 /// 1
@@ -1183,12 +1196,12 @@ pub const SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2048: SDL_GPUSwapchainComposition
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUDriver(pub ::core::ffi::c_int);
 impl SDL_GPUDriver {
-    pub const INVALID: Self = Self(-1_i32);
-    pub const PRIVATE: Self = Self(0_i32);
-    pub const VULKAN: Self = Self(1_i32);
-    pub const D3D11: Self = Self(2_i32);
-    pub const D3D12: Self = Self(3_i32);
-    pub const METAL: Self = Self(4_i32);
+    pub const INVALID: Self = Self(0);
+    pub const PRIVATE: Self = Self(1);
+    pub const VULKAN: Self = Self(2);
+    pub const D3D11: Self = Self(3);
+    pub const D3D12: Self = Self(4);
+    pub const METAL: Self = Self(5);
 }
 pub const SDL_GPU_DRIVER_INVALID: SDL_GPUDriver = SDL_GPUDriver::INVALID;
 pub const SDL_GPU_DRIVER_PRIVATE: SDL_GPUDriver = SDL_GPUDriver::PRIVATE;
@@ -1470,18 +1483,18 @@ pub struct SDL_GPUSamplerCreateInfo {
     pub mip_lod_bias: ::core::ffi::c_float,
     /// The anisotropy value clamp used by the sampler. If enable_anisotropy is SDL_FALSE, this is ignored.
     pub max_anisotropy: ::core::ffi::c_float,
-    /// SDL_TRUE to enable anisotropic filtering.
-    pub enable_anisotropy: SDL_bool,
-    /// SDL_TRUE to enable comparison against a reference value during lookups.
-    pub enable_compare: SDL_bool,
-    pub padding1: Uint8,
-    pub padding2: Uint8,
     /// The comparison operator to apply to fetched data before filtering.
     pub compare_op: SDL_GPUCompareOp,
     /// Clamps the minimum of the computed LOD value.
     pub min_lod: ::core::ffi::c_float,
     /// Clamps the maximum of the computed LOD value.
     pub max_lod: ::core::ffi::c_float,
+    /// SDL_TRUE to enable anisotropic filtering.
+    pub enable_anisotropy: SDL_bool,
+    /// SDL_TRUE to enable comparison against a reference value during lookups.
+    pub enable_compare: SDL_bool,
+    pub padding1: Uint8,
+    pub padding2: Uint8,
     /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
 }
@@ -1583,11 +1596,6 @@ pub struct SDL_GPUStencilOpState {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUColorTargetBlendState {
-    /// Whether blending is enabled for the color target.
-    pub enable_blend: SDL_bool,
-    pub padding1: Uint8,
-    pub padding2: Uint8,
-    pub padding3: Uint8,
     /// The value to be multiplied by the source RGB value.
     pub src_color_blendfactor: SDL_GPUBlendFactor,
     /// The value to be multiplied by the destination RGB value.
@@ -1600,8 +1608,14 @@ pub struct SDL_GPUColorTargetBlendState {
     pub dst_alpha_blendfactor: SDL_GPUBlendFactor,
     /// The blend operation for the alpha component.
     pub alpha_blend_op: SDL_GPUBlendOp,
-    /// A bitmask specifying which of the RGBA components are enabled for writing.
+    /// A bitmask specifying which of the RGBA components are enabled for writing. Writes to all channels if enable_color_write_mask is SDL_FALSE.
     pub color_write_mask: SDL_GPUColorComponentFlags,
+    /// Whether blending is enabled for the color target.
+    pub enable_blend: SDL_bool,
+    /// Whether the color write mask is enabled.
+    pub enable_color_write_mask: SDL_bool,
+    pub padding2: Uint8,
+    pub padding3: Uint8,
 }
 
 /// A structure specifying code and metadata for creating a shader object.
@@ -1745,17 +1759,17 @@ pub struct SDL_GPURasterizerState {
     pub cull_mode: SDL_GPUCullMode,
     /// The vertex winding that will cause a triangle to be determined as front-facing.
     pub front_face: SDL_GPUFrontFace,
-    /// SDL_TRUE to bias fragment depth values.
-    pub enable_depth_bias: SDL_bool,
-    pub padding1: Uint8,
-    pub padding2: Uint8,
-    pub padding3: Uint8,
     /// A scalar factor controlling the depth value added to each fragment.
     pub depth_bias_constant_factor: ::core::ffi::c_float,
     /// The maximum depth bias of a fragment.
     pub depth_bias_clamp: ::core::ffi::c_float,
     /// A scalar factor applied to a fragment's slope in depth calculations.
     pub depth_bias_slope_factor: ::core::ffi::c_float,
+    /// SDL_TRUE to bias fragment depth values.
+    pub enable_depth_bias: SDL_bool,
+    pub padding1: Uint8,
+    pub padding2: Uint8,
+    pub padding3: Uint8,
 }
 
 /// A structure specifying the parameters of the graphics pipeline multisample
@@ -1770,8 +1784,13 @@ pub struct SDL_GPURasterizerState {
 pub struct SDL_GPUMultisampleState {
     /// The number of samples to be used in rasterization.
     pub sample_count: SDL_GPUSampleCount,
-    /// Determines which samples get updated in the render targets. 0xFFFFFFFF is a reasonable default.
+    /// Determines which samples get updated in the render targets. Treated as 0xFFFFFFFF if enable_mask is SDL_FALSE.
     pub sample_mask: Uint32,
+    /// Enables sample masking.
+    pub enable_mask: SDL_bool,
+    pub padding1: Uint8,
+    pub padding2: Uint8,
+    pub padding3: Uint8,
 }
 
 /// A structure specifying the parameters of the graphics pipeline depth
@@ -1784,13 +1803,6 @@ pub struct SDL_GPUMultisampleState {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUDepthStencilState {
-    /// SDL_TRUE enables the depth test.
-    pub enable_depth_test: SDL_bool,
-    /// SDL_TRUE enables depth writes. Depth writes are always disabled when enable_depth_test is SDL_FALSE.
-    pub enable_depth_write: SDL_bool,
-    /// SDL_TRUE enables the stencil test.
-    pub enable_stencil_test: SDL_bool,
-    pub padding1: Uint8,
     /// The comparison operator used for depth testing.
     pub compare_op: SDL_GPUCompareOp,
     /// The stencil op state for back-facing triangles.
@@ -1801,6 +1813,13 @@ pub struct SDL_GPUDepthStencilState {
     pub compare_mask: Uint8,
     /// Selects the bits of the stencil values updated by the stencil test.
     pub write_mask: Uint8,
+    /// SDL_TRUE enables the depth test.
+    pub enable_depth_test: SDL_bool,
+    /// SDL_TRUE enables depth writes. Depth writes are always disabled when enable_depth_test is SDL_FALSE.
+    pub enable_depth_write: SDL_bool,
+    /// SDL_TRUE enables the stencil test.
+    pub enable_stencil_test: SDL_bool,
+    pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
 }
@@ -1835,13 +1854,13 @@ pub struct SDL_GpuGraphicsPipelineTargetInfo {
     pub color_target_descriptions: *const SDL_GPUColorTargetDescription,
     /// The number of color target descriptions in the above array.
     pub num_color_targets: Uint32,
+    /// The pixel format of the depth-stencil target. Ignored if has_depth_stencil_target is SDL_FALSE.
+    pub depth_stencil_format: SDL_GPUTextureFormat,
     /// SDL_TRUE specifies that the pipeline uses a depth-stencil target.
     pub has_depth_stencil_target: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
-    /// The pixel format of the depth-stencil target. Ignored if has_depth_stencil_target is SDL_FALSE.
-    pub depth_stencil_format: SDL_GPUTextureFormat,
 }
 
 /// A structure specifying the parameters of a graphics pipeline state.
@@ -1890,6 +1909,8 @@ pub struct SDL_GPUComputePipelineCreateInfo {
     pub entrypoint: *const ::core::ffi::c_char,
     /// The format of the compute shader code.
     pub format: SDL_GPUShaderFormat,
+    /// The number of samplers defined in the shader.
+    pub num_samplers: Uint32,
     /// The number of readonly storage textures defined in the shader.
     pub num_readonly_storage_textures: Uint32,
     /// The number of readonly storage buffers defined in the shader.
@@ -2042,7 +2063,7 @@ pub struct SDL_GPUBlitInfo {
     pub filter: SDL_GPUFilter,
     /// SDL_TRUE cycles the destination texture if it is already bound.
     pub cycle: SDL_bool,
-    pub padding: Uint8,
+    pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
 }
@@ -2252,22 +2273,23 @@ extern "C" {
     ///
     /// For SPIR-V shaders, use the following resource sets:
     ///
-    /// - 0: Read-only storage textures, followed by read-only storage buffers
+    /// - 0: Sampled textures, followed by read-only storage textures, followed by
+    ///   read-only storage buffers
     /// - 1: Write-only storage textures, followed by write-only storage buffers
     /// - 2: Uniform buffers
     ///
     /// For DXBC Shader Model 5_0 shaders, use the following register order:
     ///
-    /// - t registers: Read-only storage textures, followed by read-only storage
-    ///   buffers
+    /// - t registers: Sampled textures, followed by read-only storage textures,
+    ///   followed by read-only storage buffers
     /// - u registers: Write-only storage textures, followed by write-only storage
     ///   buffers
     /// - b registers: Uniform buffers
     ///
     /// For DXIL shaders, use the following register order:
     ///
-    /// - (t[n], space0): Read-only storage textures, followed by read-only storage
-    ///   buffers
+    /// - (t[n], space0): Sampled textures, followed by read-only storage textures,
+    ///   followed by read-only storage buffers
     /// - (u[n], space1): Write-only storage textures, followed by write-only
     ///   storage buffers
     /// - (b[n], space2): Uniform buffers
@@ -2276,8 +2298,8 @@ extern "C" {
     ///
     /// - [[buffer]]: Uniform buffers, followed by write-only storage buffers,
     ///   followed by write-only storage buffers
-    /// - [[texture]]: Read-only storage textures, followed by write-only storage
-    ///   textures
+    /// - [[texture]]: Sampled textures, followed by read-only storage textures,
+    ///   followed by write-only storage textures
     ///
     /// \param device a GPU Context.
     /// \param createinfo a struct describing the state of the compute pipeline to
@@ -3166,6 +3188,27 @@ extern "C" {
     pub fn SDL_BindGPUComputePipeline(
         compute_pass: *mut SDL_GPUComputePass,
         compute_pipeline: *mut SDL_GPUComputePipeline,
+    );
+}
+
+extern "C" {
+    /// Binds texture-sampler pairs for use on the compute shader.
+    ///
+    /// The textures must have been created with SDL_GPU_TEXTUREUSAGE_SAMPLER.
+    ///
+    /// \param compute_pass a compute pass handle.
+    /// \param first_slot the compute sampler slot to begin binding from.
+    /// \param texture_sampler_bindings an array of texture-sampler binding
+    ///                                 structs.
+    /// \param num_bindings the number of texture-sampler bindings to bind from the
+    ///                     array.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    pub fn SDL_BindGPUComputeSamplers(
+        compute_pass: *mut SDL_GPUComputePass,
+        first_slot: Uint32,
+        texture_sampler_bindings: *const SDL_GPUTextureSamplerBinding,
+        num_bindings: Uint32,
     );
 }
 

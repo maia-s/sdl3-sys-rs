@@ -62,7 +62,7 @@ pub type SDL_JoystickID = Uint32;
 ///
 /// \since This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_JOYSTICK_TYPE_UNKNOWN`], [`SDL_JOYSTICK_TYPE_GAMEPAD`], [`SDL_JOYSTICK_TYPE_WHEEL`], [`SDL_JOYSTICK_TYPE_ARCADE_STICK`], [`SDL_JOYSTICK_TYPE_FLIGHT_STICK`], [`SDL_JOYSTICK_TYPE_DANCE_PAD`], [`SDL_JOYSTICK_TYPE_GUITAR`], [`SDL_JOYSTICK_TYPE_DRUM_KIT`], [`SDL_JOYSTICK_TYPE_ARCADE_PAD`], [`SDL_JOYSTICK_TYPE_THROTTLE`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_JOYSTICK_TYPE_UNKNOWN`], [`SDL_JOYSTICK_TYPE_GAMEPAD`], [`SDL_JOYSTICK_TYPE_WHEEL`], [`SDL_JOYSTICK_TYPE_ARCADE_STICK`], [`SDL_JOYSTICK_TYPE_FLIGHT_STICK`], [`SDL_JOYSTICK_TYPE_DANCE_PAD`], [`SDL_JOYSTICK_TYPE_GUITAR`], [`SDL_JOYSTICK_TYPE_DRUM_KIT`], [`SDL_JOYSTICK_TYPE_ARCADE_PAD`], [`SDL_JOYSTICK_TYPE_THROTTLE`], [`SDL_JOYSTICK_TYPE_COUNT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -78,6 +78,7 @@ impl SDL_JoystickType {
     pub const DRUM_KIT: Self = Self(7);
     pub const ARCADE_PAD: Self = Self(8);
     pub const THROTTLE: Self = Self(9);
+    pub const COUNT: Self = Self(10);
 }
 pub const SDL_JOYSTICK_TYPE_UNKNOWN: SDL_JoystickType = SDL_JoystickType::UNKNOWN;
 pub const SDL_JOYSTICK_TYPE_GAMEPAD: SDL_JoystickType = SDL_JoystickType::GAMEPAD;
@@ -89,6 +90,7 @@ pub const SDL_JOYSTICK_TYPE_GUITAR: SDL_JoystickType = SDL_JoystickType::GUITAR;
 pub const SDL_JOYSTICK_TYPE_DRUM_KIT: SDL_JoystickType = SDL_JoystickType::DRUM_KIT;
 pub const SDL_JOYSTICK_TYPE_ARCADE_PAD: SDL_JoystickType = SDL_JoystickType::ARCADE_PAD;
 pub const SDL_JOYSTICK_TYPE_THROTTLE: SDL_JoystickType = SDL_JoystickType::THROTTLE;
+pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 
 /// Possible connection states for a joystick device.
 ///

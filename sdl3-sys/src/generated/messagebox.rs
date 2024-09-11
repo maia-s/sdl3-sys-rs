@@ -70,7 +70,7 @@ pub struct SDL_MessageBoxColor {
 /// An enumeration of indices inside the colors array of
 /// SDL_MessageBoxColorScheme.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_MESSAGEBOX_COLOR_BACKGROUND`], [`SDL_MESSAGEBOX_COLOR_TEXT`], [`SDL_MESSAGEBOX_COLOR_BUTTON_BORDER`], [`SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND`], [`SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED`], [`SDL_MESSAGEBOX_COLOR_MAX`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_MESSAGEBOX_COLOR_BACKGROUND`], [`SDL_MESSAGEBOX_COLOR_TEXT`], [`SDL_MESSAGEBOX_COLOR_BUTTON_BORDER`], [`SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND`], [`SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED`], [`SDL_MESSAGEBOX_COLOR_COUNT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -82,7 +82,7 @@ impl SDL_MessageBoxColorType {
     pub const BUTTON_BACKGROUND: Self = Self(3);
     pub const BUTTON_SELECTED: Self = Self(4);
     /// Size of the colors array of SDL_MessageBoxColorScheme.
-    pub const MAX: Self = Self(5);
+    pub const COUNT: Self = Self(5);
 }
 pub const SDL_MESSAGEBOX_COLOR_BACKGROUND: SDL_MessageBoxColorType =
     SDL_MessageBoxColorType::BACKGROUND;
@@ -94,7 +94,7 @@ pub const SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND: SDL_MessageBoxColorType =
 pub const SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED: SDL_MessageBoxColorType =
     SDL_MessageBoxColorType::BUTTON_SELECTED;
 /// Size of the colors array of SDL_MessageBoxColorScheme.
-pub const SDL_MESSAGEBOX_COLOR_MAX: SDL_MessageBoxColorType = SDL_MessageBoxColorType::MAX;
+pub const SDL_MESSAGEBOX_COLOR_COUNT: SDL_MessageBoxColorType = SDL_MessageBoxColorType::COUNT;
 
 /// A set of colors to use for message box dialogs
 ///
@@ -103,7 +103,7 @@ pub const SDL_MESSAGEBOX_COLOR_MAX: SDL_MessageBoxColorType = SDL_MessageBoxColo
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MessageBoxColorScheme {
-    pub colors: [SDL_MessageBoxColor; SDL_MESSAGEBOX_COLOR_MAX.0 as ::core::primitive::usize],
+    pub colors: [SDL_MessageBoxColor; SDL_MESSAGEBOX_COLOR_COUNT.0 as ::core::primitive::usize],
 }
 
 /// MessageBox structure containing title, text, window, etc.
