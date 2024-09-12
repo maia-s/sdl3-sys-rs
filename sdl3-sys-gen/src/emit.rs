@@ -425,6 +425,15 @@ impl Emit for Ident {
 impl Emit for Function {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if self.static_kw.is_none() && !self.attr.contains("SDL_FORCE_INLINE") {
+            ctx.register_sym(
+                self.ident.clone(),
+                Some(Type::function(
+                    self.args.args.iter().map(|arg| arg.ty.clone()).collect(),
+                    self.return_type.clone(),
+                    false,
+                )),
+                false,
+            )?;
             emit_extern_start(ctx, &self.abi, false)?;
             self.doc.emit(ctx)?;
             write!(ctx, "pub fn ")?;
@@ -705,6 +714,8 @@ impl Emit for Type {
             TypeEnum::DotDotDot => write!(ctx, "...")?,
 
             TypeEnum::Rust(r, _) => write!(ctx, "{r}")?,
+
+            TypeEnum::Function(_) => todo!(),
         }
         Ok(())
     }
@@ -937,6 +948,8 @@ impl Emit for TypeDef {
                 writeln!(ctx, "pub type {} = {r};", self.ident.as_str())?;
                 Ok(())
             }
+
+            TypeEnum::Function(_) => todo!(),
         }
     }
 }

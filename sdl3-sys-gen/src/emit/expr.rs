@@ -233,6 +233,7 @@ impl Eval for SizeOf {
                 TypeEnum::FnPointer(_) => todo!(),
                 TypeEnum::DotDotDot => todo!(),
                 TypeEnum::Rust(_, _) => todo!(),
+                TypeEnum::Function(_) => todo!(),
             },
 
             SizeOf::Expr(_, Expr::Parenthesized(p)) => {

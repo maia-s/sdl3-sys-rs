@@ -59,6 +59,14 @@ impl Type {
         }
     }
 
+    pub fn function(args: Vec<Type>, return_type: Type, is_const: bool) -> Self {
+        Self {
+            span: Span::none(),
+            is_const,
+            ty: TypeEnum::Function(Box::new(FnType { return_type, args })),
+        }
+    }
+
     pub fn strictly_left_aligned(&self) -> bool {
         self.ty.strictly_left_aligned()
     }
@@ -93,6 +101,7 @@ impl Type {
             TypeEnum::FnPointer(_) => true,
             TypeEnum::DotDotDot => false,
             TypeEnum::Rust(_, can_derive_debug) => *can_derive_debug,
+            TypeEnum::Function(_) => false,
         }
     }
 }
@@ -122,6 +131,7 @@ pub enum TypeEnum {
     FnPointer(Box<FnPointer>),
     DotDotDot,
     Rust(String, bool),
+    Function(Box<FnType>),
 }
 
 impl TypeEnum {
@@ -148,6 +158,12 @@ pub struct FnPointer {
     pub abi: Option<FnAbi>,
     pub return_type: Type,
     pub args: FnDeclArgs,
+}
+
+#[derive(Clone, Debug)]
+pub struct FnType {
+    pub return_type: Type,
+    pub args: Vec<Type>,
 }
 
 const NO_IDENT: u8 = 0;
