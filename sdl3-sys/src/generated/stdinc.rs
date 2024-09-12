@@ -330,14 +330,14 @@ emit! {
 /// \sa SDL_VirtualJoystickDesc
 ///
 /// # Safety
-/// `iface` must point to an SDL interface struct
+/// The type `T` must correctly implement [`crate::Interface`], and it must be valid to write a `T` to the memory pointed to by `iface`
 #[inline(always)]
 pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {
     unsafe {
         iface.write_bytes(0, 1);
         iface
-            .cast::<::core::primitive::u32>()
-            .write(::core::mem::size_of::<T>() as ::core::primitive::u32);
+            .cast::<Uint32>()
+            .write(::core::mem::size_of::<T>() as Uint32);
     }
 }
 

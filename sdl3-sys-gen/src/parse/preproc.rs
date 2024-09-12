@@ -167,7 +167,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> GetSpan for PreProcBlock<ALLOW_INITIAL_ELSE
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct Conditional {
     pub not: Vec<ConditionalExpr>,
     pub require: Option<ConditionalExpr>,

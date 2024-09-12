@@ -30,7 +30,7 @@ const DEFINE_PATCHES: &[DefinePatch] = &[
             define.doc.emit(ctx)?;
             writeln!(ctx, "///")?;
             writeln!(ctx, "/// # Safety")?;
-            writeln!(ctx, "/// `iface` must point to an SDL interface struct")?;
+            writeln!(ctx, "/// The type `T` must correctly implement [`crate::Interface`], and it must be valid to write a `T` to the memory pointed to by `iface`")?;
             writeln!(ctx, "#[inline(always)]")?;
             writeln!(
                 ctx,
@@ -41,9 +41,9 @@ const DEFINE_PATCHES: &[DefinePatch] = &[
             ctx.increase_indent();
             writeln!(ctx, "iface.write_bytes(0, 1);")?;
             writeln!(
-            ctx,
-            "iface.cast::<::core::primitive::u32>().write(::core::mem::size_of::<T>() as ::core::primitive::u32);"
-        )?;
+                ctx,
+                "iface.cast::<Uint32>().write(::core::mem::size_of::<T>() as Uint32);"
+            )?;
             ctx.decrease_indent();
             writeln!(ctx, "}}")?;
             ctx.decrease_indent();

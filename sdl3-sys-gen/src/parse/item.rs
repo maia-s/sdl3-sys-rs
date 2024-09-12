@@ -120,7 +120,7 @@ pub struct Items(pub Vec<Item>);
 impl Items {
     pub fn iter(
         &self,
-    ) -> impl Iterator<Item = &Item> + DoubleEndedIterator + ExactSizeIterator + FusedIterator {
+    ) -> impl DoubleEndedIterator<Item = &Item> + ExactSizeIterator + FusedIterator {
         self.0.iter()
     }
 }
