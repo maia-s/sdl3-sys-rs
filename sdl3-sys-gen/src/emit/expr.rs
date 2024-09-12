@@ -142,6 +142,7 @@ impl Eval for DefineValue {
             Self::Ambiguous(amb) => amb.try_eval(ctx),
             Self::RustCode(r) => Ok(Some(Value::RustCode(r.clone()))),
             Self::TargetDependent | Self::Type(_) => Ok(None),
+            Self::Empty => Ok(None),
             _ => {
                 dbg!(self);
                 todo!()

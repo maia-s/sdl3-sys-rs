@@ -373,11 +373,6 @@ impl Emit for Define {
                 self.args.clone(),
                 self.value.clone(),
             )?;
-            let ident = self.ident.as_str();
-            if ident.ends_with("_h_") || ident == "SDL_locale_h" {
-                // skip include guard define
-                return Ok(());
-            }
             if let Some(value) = self.value.try_eval(ctx)? {
                 let ty = value.ty();
                 ctx.register_sym(

@@ -237,10 +237,6 @@ pub const SDL_PRIx32: &::core::ffi::CStr =
 pub const SDL_PRIX32: &::core::ffi::CStr =
     unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"X\0") };
 
-pub const SDL_PRINTF_FORMAT_STRING: ::core::primitive::i32 = 1;
-
-pub const SDL_SCANF_FORMAT_STRING: ::core::primitive::i32 = 1;
-
 const _: () = ::core::assert!(::core::mem::size_of::<SDL_bool>() == 1);
 
 const _: () = ::core::assert!(::core::mem::size_of::<Uint8>() == 1);

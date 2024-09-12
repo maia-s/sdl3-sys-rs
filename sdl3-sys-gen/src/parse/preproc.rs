@@ -34,6 +34,7 @@ pub enum DefineValue {
     Ambiguous(Ambiguous),
     RustCode(Box<RustCode>),
     TargetDependent,
+    Empty,
 }
 
 impl DefineValue {
@@ -72,7 +73,7 @@ impl Parse for DefineValue {
 
     fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         if input.is_empty() {
-            Ok((input.end(), Some(Self::one())))
+            Ok((input.end(), Some(Self::Empty)))
         } else if input.contains("#") || input.contains("_cast<") {
             Ok((input.end(), Some(Self::Other(input.clone()))))
         } else {
