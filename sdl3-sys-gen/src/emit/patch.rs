@@ -1,4 +1,4 @@
-use super::{Emit, EmitContext, EmitErr};
+use super::{Emit, EmitContext, EmitErr, Eval, Value};
 use crate::parse::{Define, Expr, PrimitiveType, Type};
 use core::fmt::Write;
 
@@ -60,18 +60,13 @@ const MACRO_CALL_PATCHES: &[MacroCallPatch] = &[
     MacroCallPatch {
         module: None,
         match_ident: |i| i == "SDL_COMPILE_TIME_ASSERT",
-        patch: |ctx, args| {
-            let Expr::Ident(id) = &args[0] else { panic!() };
-            if id.as_str() == "SDL_Event" {
-                writeln!(
-                    ctx,
-                    "const _: () = ::core::assert!(::core::mem::size_of::<SDL_Event>() == 128);"
-                )?;
+        patch: |ctx, args| match args[1].try_eval(ctx)? {
+            Some(Value::RustCode(s)) => {
+                writeln!(ctx, "const _: () = ::core::assert!({s});")?;
                 writeln!(ctx)?;
                 Ok(true)
-            } else {
-                Ok(false)
             }
+            _ => Ok(false),
         },
     },
     MacroCallPatch {

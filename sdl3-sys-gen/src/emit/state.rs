@@ -477,6 +477,15 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner_mut_map(|ctx| &mut ctx.scope)
     }
 
+    pub fn capture_output(
+        &self,
+        f: impl FnOnce(&mut EmitContext) -> EmitResult,
+    ) -> Result<String, EmitErr> {
+        let mut output = String::new();
+        f(&mut { self.with_output(&mut output) })?;
+        Ok(output)
+    }
+
     pub fn with_output<'o>(&self, output: &'o mut dyn Write) -> EmitContext<'o, 'b> {
         EmitContext {
             inner: Rc::clone(&self.inner),

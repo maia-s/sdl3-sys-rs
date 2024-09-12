@@ -3,10 +3,27 @@
 #![cfg_attr(feature = "nightly", feature(c_variadic))]
 #![doc = include_str!("../README.md")]
 
-// This macro is used to apply attributes (like cfg) to a group of items. Wrap
-// the items in a call to this macro and apply the attributes to the macro call
+use core::mem::size_of;
+
+// This macro is used to apply cfg attributes to a group of items. Wrap the items
+// in a call to this macro and apply the attributes to the macro call
 macro_rules! emit {
     ($($tt:tt)*) => { $($tt)* };
+}
+
+// Get the size of a field of a struct or union
+macro_rules! size_of_field {
+    ($struct:ty, $field:ident) => {
+        $crate::size_of_return_value(&|s: $struct| unsafe {
+            // safety: this is never evaluated
+            s.$field
+        })
+    };
+}
+
+#[allow(unused)] // incorrectly detected as unused
+const fn size_of_return_value<T, R>(_: &impl FnOnce(T) -> R) -> usize {
+    size_of::<R>()
 }
 
 mod generated;

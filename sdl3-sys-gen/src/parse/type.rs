@@ -63,6 +63,14 @@ impl Type {
         self.ty.strictly_left_aligned()
     }
 
+    pub fn get_pointer_type(&self) -> Option<Type> {
+        if let TypeEnum::Pointer(p) = &self.ty {
+            Some((**p).clone())
+        } else {
+            None
+        }
+    }
+
     pub fn is_array_or_pointer(&self) -> bool {
         matches!(self.ty, TypeEnum::Array(_, _) | TypeEnum::Pointer(_))
     }

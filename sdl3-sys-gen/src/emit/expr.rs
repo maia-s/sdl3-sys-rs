@@ -4,10 +4,7 @@ use crate::parse::{
     IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
     RustCode, SizeOf, Span, StringLiteral, Type, TypeEnum,
 };
-use core::{
-    fmt::{self, Display, Write},
-    ops::Deref,
-};
+use core::fmt::{self, Display, Write};
 
 #[derive(Clone, Debug)]
 pub enum Value {
@@ -198,6 +195,80 @@ impl Eval for IntegerLiteral {
             IntegerLiteralType::UnsignedLong => todo!(),
             IntegerLiteralType::LongLong => Ok(Some(Value::I64(self.value as i64))),
             IntegerLiteralType::UnsignedLongLong => Ok(Some(Value::U64(self.value))),
+        }
+    }
+}
+
+impl Eval for SizeOf {
+    fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        match self {
+            SizeOf::Type(_, ty) => match &ty.ty {
+                TypeEnum::Primitive(_) | TypeEnum::Pointer(_) => {
+                    let mut out = String::new();
+                    let mut ctx2 = ctx.with_output(&mut out);
+                    write!(ctx2, "::core::mem::size_of::<")?;
+                    ty.emit(&mut ctx2)?;
+                    write!(ctx2, ">()")?;
+                    drop(ctx2);
+                    Ok(Some(Value::RustCode(Box::new(RustCode {
+                        value: out,
+                        ty: Type::primitive(PrimitiveType::SizeT),
+                    }))))
+                }
+
+                TypeEnum::Ident(ident) => {
+                    if ctx.lookup_sym(ident).is_some() {
+                        Ok(Some(Value::RustCode(Box::new(RustCode {
+                            value: format!("::core::mem::size_of::<{}>()", ident.as_str()),
+                            ty: Type::primitive(PrimitiveType::SizeT),
+                        }))))
+                    } else {
+                        todo!()
+                    }
+                }
+
+                TypeEnum::Enum(_) => todo!(),
+                TypeEnum::Struct(_) => todo!(),
+                TypeEnum::Array(_, _) => todo!(),
+                TypeEnum::FnPointer(_) => todo!(),
+                TypeEnum::DotDotDot => todo!(),
+                TypeEnum::Rust(_, _) => todo!(),
+            },
+
+            SizeOf::Expr(_, Expr::Parenthesized(p)) => {
+                SizeOf::Expr(p.span(), p.expr.clone()).try_eval(ctx)
+            }
+
+            SizeOf::Expr(_, expr) => {
+                if let Expr::BinaryOp(bop) = &expr {
+                    // special case: sizeof((Type*)_->field)
+                    if bop.op.as_str() == "->" {
+                        let lhs = if let Expr::Parenthesized(lhs) = &bop.lhs {
+                            &lhs.expr
+                        } else {
+                            &bop.lhs
+                        };
+                        if let (Expr::Cast(lhs), Expr::Ident(rhs)) = (&lhs, &bop.rhs) {
+                            if let Some(ty) = lhs.ty.get_pointer_type() {
+                                let code = ctx.capture_output(|ctx| {
+                                    write!(ctx, "size_of_field!(")?;
+                                    ty.emit(ctx)?;
+                                    write!(ctx, ", {rhs})")?;
+                                    Ok(())
+                                })?;
+                                return Ok(Some(Value::RustCode(RustCode::boxed(
+                                    code,
+                                    Type::primitive(PrimitiveType::SizeT),
+                                ))));
+                            }
+                        }
+                    }
+                }
+
+                // !!! FIXME: size_of_val isn't const, so this'd require finding the type of the expression.
+                // skip it for now
+                Ok(None)
+            }
         }
     }
 }
@@ -401,46 +472,7 @@ impl Eval for Expr {
 
             Expr::Asm(_) => return Ok(None),
 
-            Expr::SizeOf(s) => match s.deref() {
-                SizeOf::Type(_, ty) => match &ty.ty {
-                    TypeEnum::Primitive(_) | TypeEnum::Pointer(_) => {
-                        let mut out = String::new();
-                        let mut ctx2 = ctx.with_output(&mut out);
-                        write!(ctx2, "::core::mem::size_of::<")?;
-                        ty.emit(&mut ctx2)?;
-                        write!(ctx2, ">()")?;
-                        drop(ctx2);
-                        return Ok(Some(Value::RustCode(Box::new(RustCode {
-                            value: out,
-                            ty: Type::primitive(PrimitiveType::SizeT),
-                        }))));
-                    }
-
-                    TypeEnum::Ident(ident) => {
-                        if ctx.lookup_sym(ident).is_some() {
-                            return Ok(Some(Value::RustCode(Box::new(RustCode {
-                                value: format!("::core::mem::size_of::<{}>()", ident.as_str()),
-                                ty: Type::primitive(PrimitiveType::SizeT),
-                            }))));
-                        } else {
-                            todo!()
-                        }
-                    }
-
-                    TypeEnum::Enum(_) => todo!(),
-                    TypeEnum::Struct(_) => todo!(),
-                    TypeEnum::Array(_, _) => todo!(),
-                    TypeEnum::FnPointer(_) => todo!(),
-                    TypeEnum::DotDotDot => todo!(),
-                    TypeEnum::Rust(_, _) => todo!(),
-                },
-
-                SizeOf::Expr(_, _) => {
-                    // !!! FIXME: size_of_val isn't const, so this'd require finding the type of the expression.
-                    // skip it for now
-                    return Ok(None);
-                }
-            },
+            Expr::SizeOf(s) => return s.try_eval(ctx),
 
             Expr::UnaryOp(uop) => {
                 let expr = uop.expr.try_eval(ctx)?;
@@ -836,26 +868,7 @@ impl Emit for FnCall {
             if patch_macro_call(ctx, ident.as_str(), &self.args)? {
                 Ok(())
             } else {
-                match ident.as_str() {
-                    "SDL_COMPILE_TIME_ASSERT" => {
-                        assert_eq!(self.args.len(), 2);
-                        let value = self.args[1].try_eval(ctx)?;
-                        match value {
-                            Some(Value::RustCode(s)) => {
-                                writeln!(ctx, "const _: () = ::core::assert!({s});")?;
-                                writeln!(ctx)?;
-                                Ok(())
-                            }
-
-                            _ => {
-                                dbg!(self, value);
-                                todo!()
-                            }
-                        }
-                    }
-
-                    _ => todo!(),
-                }
+                todo!()
             }
         } else {
             todo!()
