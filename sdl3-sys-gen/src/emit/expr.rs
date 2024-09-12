@@ -204,12 +204,12 @@ impl Eval for SizeOf {
         match self {
             SizeOf::Type(_, ty) => match &ty.ty {
                 TypeEnum::Primitive(_) | TypeEnum::Pointer(_) => {
-                    let mut out = String::new();
-                    let mut ctx2 = ctx.with_output(&mut out);
-                    write!(ctx2, "::core::mem::size_of::<")?;
-                    ty.emit(&mut ctx2)?;
-                    write!(ctx2, ">()")?;
-                    drop(ctx2);
+                    let out = ctx.capture_output(|ctx| {
+                        write!(ctx, "::core::mem::size_of::<")?;
+                        ty.emit(ctx)?;
+                        write!(ctx, ">()")?;
+                        Ok(())
+                    })?;
                     Ok(Some(Value::RustCode(Box::new(RustCode {
                         value: out,
                         ty: Type::primitive(PrimitiveType::SizeT),
@@ -458,12 +458,11 @@ impl Eval for Expr {
             }
 
             Expr::Cast(cast) => {
-                let mut out = String::new();
-                let mut ctx2 = ctx.with_output(&mut out);
-                cast.expr.emit(&mut ctx2)?;
-                write!(ctx2, " as ")?;
-                cast.ty.emit(&mut ctx2)?;
-                drop(ctx2);
+                let out = ctx.capture_output(|ctx| {
+                    cast.expr.emit(ctx)?;
+                    write!(ctx, " as ")?;
+                    cast.ty.emit(ctx)
+                })?;
                 return Ok(Some(Value::RustCode(Box::new(RustCode {
                     value: out,
                     ty: cast.ty.clone(),
@@ -643,11 +642,10 @@ impl Eval for Expr {
                                 Ok(Some(Value::U31((lhs $op rhs) as u32)))
                             }
                             (Value::RustCode(lhs), rhs) => {
-                                let mut code = String::new();
-                                let mut rhs_ctx = ctx.with_output(&mut code);
-                                write!(rhs_ctx, "{lhs} {op} ")?;
-                                rhs.emit(&mut rhs_ctx)?;
-                                drop(rhs_ctx);
+                                let code = ctx.capture_output(|ctx| {
+                                    write!(ctx, "{lhs} {op} ")?;
+                                    rhs.emit( ctx)
+                                })?;
                                 Ok(Some(Value::RustCode(Box::new(RustCode{ value:code, ty:Type::primitive(PrimitiveType::Bool) }))))
                             }
                             _ => Err(ParseErr::new(bop.span(), format!("invalid operands to `{op}`")).into()),
@@ -705,14 +703,14 @@ impl Eval for Expr {
                             }
                         } else if let Value::RustCode(_) = lhs {
                             let rhs = eval!(bop.rhs);
-                            let mut out = String::new();
-                            let mut ctx_out = ctx.with_output(&mut out);
-                            write!(&mut ctx_out, "(")?;
-                            lhs.emit(&mut ctx_out)?;
-                            write!(&mut ctx_out, " && ")?;
-                            rhs.emit(&mut ctx_out)?;
-                            write!(&mut ctx_out, ")")?;
-                            drop(ctx_out);
+                            let out = ctx.capture_output(|ctx| {
+                                write!(ctx, "(")?;
+                                lhs.emit(ctx)?;
+                                write!(ctx, " && ")?;
+                                rhs.emit(ctx)?;
+                                write!(ctx, ")")?;
+                                Ok(())
+                            })?;
                             Ok(Some(Value::RustCode(RustCode::boxed(
                                 out,
                                 Type::primitive(PrimitiveType::Bool),
@@ -743,14 +741,14 @@ impl Eval for Expr {
                             }
                         } else if let Value::RustCode(_) = lhs {
                             let rhs = eval!(bop.rhs);
-                            let mut out = String::new();
-                            let mut ctx_out = ctx.with_output(&mut out);
-                            write!(&mut ctx_out, "(")?;
-                            lhs.emit(&mut ctx_out)?;
-                            write!(&mut ctx_out, " || ")?;
-                            rhs.emit(&mut ctx_out)?;
-                            write!(&mut ctx_out, ")")?;
-                            drop(ctx_out);
+                            let out = ctx.capture_output(|ctx| {
+                                write!(ctx, "(")?;
+                                lhs.emit(ctx)?;
+                                write!(ctx, " || ")?;
+                                rhs.emit(ctx)?;
+                                write!(ctx, ")")?;
+                                Ok(())
+                            })?;
                             Ok(Some(Value::RustCode(RustCode::boxed(
                                 out,
                                 Type::primitive(PrimitiveType::Bool),

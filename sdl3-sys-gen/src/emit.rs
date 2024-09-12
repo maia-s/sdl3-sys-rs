@@ -826,10 +826,7 @@ impl Emit for TypeDef {
                         .into());
                     };
 
-                    let mut value = String::new();
-                    let mut ctx_value = ctx.with_output(&mut value);
-                    expr.emit(&mut ctx_value)?;
-                    drop(ctx_value);
+                    let mut value = ctx.capture_output(|ctx| expr.emit(ctx))?;
                     let need_wrap = if let Expr::Ident(ident) = &expr {
                         if let Some(TypeEnum::Ident(tid)) = ctx
                             .lookup_sym(&ident.clone().try_into().unwrap())
