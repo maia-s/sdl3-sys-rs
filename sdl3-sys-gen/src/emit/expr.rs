@@ -241,7 +241,7 @@ impl Eval for SizeOf {
 
             SizeOf::Expr(_, expr) => {
                 if let Expr::BinaryOp(bop) = &expr {
-                    // special case: sizeof((Type*)_->field)
+                    // special case: sizeof(((Type*)_)->field)
                     if bop.op.as_str() == "->" {
                         let lhs = if let Expr::Parenthesized(lhs) = &bop.lhs {
                             &lhs.expr
