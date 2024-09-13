@@ -397,7 +397,7 @@ pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE: ::core::primitive::u32 = 3
 ///
 /// \sa SDL_CreateGPUTexture
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_TEXTURETYPE_2D`], [`SDL_GPU_TEXTURETYPE_2D_ARRAY`], [`SDL_GPU_TEXTURETYPE_3D`], [`SDL_GPU_TEXTURETYPE_CUBE`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_TEXTURETYPE_2D`], [`SDL_GPU_TEXTURETYPE_2D_ARRAY`], [`SDL_GPU_TEXTURETYPE_3D`], [`SDL_GPU_TEXTURETYPE_CUBE`], [`SDL_GPU_TEXTURETYPE_CUBE_ARRAY`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -411,6 +411,8 @@ impl SDL_GPUTextureType {
     pub const _3D: Self = Self(2);
     /// The texture is a cube image.
     pub const CUBE: Self = Self(3);
+    /// The texture is a cube array image.
+    pub const CUBE_ARRAY: Self = Self(4);
 }
 /// The texture is a 2-dimensional image.
 pub const SDL_GPU_TEXTURETYPE_2D: SDL_GPUTextureType = SDL_GPUTextureType::_2D;
@@ -420,6 +422,8 @@ pub const SDL_GPU_TEXTURETYPE_2D_ARRAY: SDL_GPUTextureType = SDL_GPUTextureType:
 pub const SDL_GPU_TEXTURETYPE_3D: SDL_GPUTextureType = SDL_GPUTextureType::_3D;
 /// The texture is a cube image.
 pub const SDL_GPU_TEXTURETYPE_CUBE: SDL_GPUTextureType = SDL_GPUTextureType::CUBE;
+/// The texture is a cube array image.
+pub const SDL_GPU_TEXTURETYPE_CUBE_ARRAY: SDL_GPUTextureType = SDL_GPUTextureType::CUBE_ARRAY;
 
 /// Specifies the sample count of a texture.
 ///
@@ -562,22 +566,22 @@ pub type SDL_GPUShaderFormat = Uint32;
 pub const SDL_GPU_SHADERFORMAT_INVALID: ::core::primitive::i32 = 0;
 
 /// Shaders for NDA'd platforms.
-pub const SDL_GPU_SHADERFORMAT_PRIVATE: ::core::primitive::u32 = 2_u32;
+pub const SDL_GPU_SHADERFORMAT_PRIVATE: ::core::primitive::u32 = 1_u32;
 
 /// SPIR-V shaders for Vulkan.
-pub const SDL_GPU_SHADERFORMAT_SPIRV: ::core::primitive::u32 = 4_u32;
+pub const SDL_GPU_SHADERFORMAT_SPIRV: ::core::primitive::u32 = 2_u32;
 
 /// DXBC SM5_0 shaders for D3D11.
-pub const SDL_GPU_SHADERFORMAT_DXBC: ::core::primitive::u32 = 8_u32;
+pub const SDL_GPU_SHADERFORMAT_DXBC: ::core::primitive::u32 = 4_u32;
 
 /// DXIL shaders for D3D12.
-pub const SDL_GPU_SHADERFORMAT_DXIL: ::core::primitive::u32 = 16_u32;
+pub const SDL_GPU_SHADERFORMAT_DXIL: ::core::primitive::u32 = 8_u32;
 
 /// MSL shaders for Metal.
-pub const SDL_GPU_SHADERFORMAT_MSL: ::core::primitive::u32 = 32_u32;
+pub const SDL_GPU_SHADERFORMAT_MSL: ::core::primitive::u32 = 16_u32;
 
 /// Precompiled metallib shaders for Metal.
-pub const SDL_GPU_SHADERFORMAT_METALLIB: ::core::primitive::u32 = 64_u32;
+pub const SDL_GPU_SHADERFORMAT_METALLIB: ::core::primitive::u32 = 32_u32;
 
 /// Specifies the format of a vertex attribute.
 ///
@@ -1184,32 +1188,6 @@ pub const SDL_GPU_SWAPCHAINCOMPOSITION_HDR_EXTENDED_LINEAR: SDL_GPUSwapchainComp
 pub const SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2048: SDL_GPUSwapchainComposition =
     SDL_GPUSwapchainComposition::HDR10_ST2048;
 
-/// Specifies a backend API supported by SDL_GPU.
-///
-/// Only one of these will be in use at a time.
-///
-/// \since This enum is available since SDL 3.0.0
-///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_DRIVER_INVALID`], [`SDL_GPU_DRIVER_PRIVATE`], [`SDL_GPU_DRIVER_VULKAN`], [`SDL_GPU_DRIVER_D3D11`], [`SDL_GPU_DRIVER_D3D12`], [`SDL_GPU_DRIVER_METAL`]
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GPUDriver(pub ::core::ffi::c_int);
-impl SDL_GPUDriver {
-    pub const INVALID: Self = Self(0);
-    pub const PRIVATE: Self = Self(1);
-    pub const VULKAN: Self = Self(2);
-    pub const D3D11: Self = Self(3);
-    pub const D3D12: Self = Self(4);
-    pub const METAL: Self = Self(5);
-}
-pub const SDL_GPU_DRIVER_INVALID: SDL_GPUDriver = SDL_GPUDriver::INVALID;
-pub const SDL_GPU_DRIVER_PRIVATE: SDL_GPUDriver = SDL_GPUDriver::PRIVATE;
-pub const SDL_GPU_DRIVER_VULKAN: SDL_GPUDriver = SDL_GPUDriver::VULKAN;
-pub const SDL_GPU_DRIVER_D3D11: SDL_GPUDriver = SDL_GPUDriver::D3D11;
-pub const SDL_GPU_DRIVER_D3D12: SDL_GPUDriver = SDL_GPUDriver::D3D12;
-pub const SDL_GPU_DRIVER_METAL: SDL_GPUDriver = SDL_GPUDriver::METAL;
-
 /// A structure specifying a viewport.
 ///
 /// \since This struct is available since SDL 3.0.0
@@ -1499,16 +1477,17 @@ pub struct SDL_GPUSamplerCreateInfo {
     pub props: SDL_PropertiesID,
 }
 
-/// A structure specifying a vertex binding.
+/// A structure specifying the parameters of vertex buffers used in a graphics
+/// pipeline.
 ///
-/// When you call SDL_BindGPUVertexBuffers, you specify the binding indices of
+/// When you call SDL_BindGPUVertexBuffers, you specify the binding slots of
 /// the vertex buffers. For example if you called SDL_BindGPUVertexBuffers with
-/// a first_binding of 2 and num_bindings of 3, the binding indices 2, 3, 4
-/// would be used by the vertex buffers you pass in.
+/// a first_slot of 2 and num_bindings of 3, the binding slots 2, 3, 4 would be
+/// used by the vertex buffers you pass in.
 ///
-/// Vertex attributes are linked to bindings via the index. The binding_index
-/// field of SDL_GPUVertexAttribute specifies the vertex buffer binding index
-/// that the attribute will be read from.
+/// Vertex attributes are linked to buffers via the buffer_slot field of
+/// SDL_GPUVertexAttribute. For example, if an attribute has a buffer_slot of
+/// 0, then that attribute belongs to the vertex buffer bound at slot 0.
 ///
 /// \since This struct is available since SDL 3.0.0
 ///
@@ -1517,9 +1496,9 @@ pub struct SDL_GPUSamplerCreateInfo {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GPUVertexBinding {
-    /// The binding index.
-    pub index: Uint32,
+pub struct SDL_GPUVertexBufferDescription {
+    /// The binding slot of the vertex buffer.
+    pub slot: Uint32,
     /// The byte pitch between consecutive elements of the vertex buffer.
     pub pitch: Uint32,
     /// Whether attribute addressing is a function of the vertex index or instance index.
@@ -1530,9 +1509,12 @@ pub struct SDL_GPUVertexBinding {
 
 /// A structure specifying a vertex attribute.
 ///
+/// All vertex attribute locations provided to an SDL_GPUVertexInputState must
+/// be unique.
+///
 /// \since This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_GPUVertexBinding
+/// \sa SDL_GPUVertexBufferDescription
 /// \sa SDL_GPUVertexInputState
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1540,8 +1522,8 @@ pub struct SDL_GPUVertexBinding {
 pub struct SDL_GPUVertexAttribute {
     /// The shader input location index.
     pub location: Uint32,
-    /// The binding index.
-    pub binding_index: Uint32,
+    /// The binding slot of the associated vertex buffer.
+    pub buffer_slot: Uint32,
     /// The size and type of the attribute data.
     pub format: SDL_GPUVertexElementFormat,
     /// The byte offset of this attribute relative to the start of the vertex element.
@@ -1558,10 +1540,10 @@ pub struct SDL_GPUVertexAttribute {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUVertexInputState {
-    /// A pointer to an array of vertex binding descriptions.
-    pub vertex_bindings: *const SDL_GPUVertexBinding,
-    /// The number of vertex binding descriptions in the above array.
-    pub num_vertex_bindings: Uint32,
+    /// A pointer to an array of vertex buffer descriptions.
+    pub vertex_buffer_descriptions: *const SDL_GPUVertexBufferDescription,
+    /// The number of vertex buffer descriptions in the above array.
+    pub num_vertex_buffers: Uint32,
     /// A pointer to an array of vertex attribute descriptions.
     pub vertex_attributes: *const SDL_GPUVertexAttribute,
     /// The number of vertex attribute descriptions in the above array.
@@ -2143,6 +2125,36 @@ pub struct SDL_GPUStorageTextureWriteOnlyBinding {
 }
 
 extern "C" {
+    /// Checks for GPU runtime support.
+    ///
+    /// \param format_flags a bitflag indicating which shader formats the app is
+    ///                     able to provide.
+    /// \param name the preferred GPU driver, or NULL to let SDL pick the optimal
+    ///             driver.
+    /// \returns SDL_TRUE if supported, SDL_FALSE otherwise.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_CreateGPUDevice
+    pub fn SDL_QueryGPUSupport(
+        format_flags: SDL_GPUShaderFormat,
+        name: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
+}
+
+extern "C" {
+    /// Checks for GPU runtime support.
+    ///
+    /// \param props the properties to use.
+    /// \returns SDL_TRUE if supported, SDL_FALSE otherwise.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_CreateGPUDeviceWithProperties
+    pub fn SDL_QueryGPUSupportWithProperties(props: SDL_PropertiesID) -> SDL_bool;
+}
+
+extern "C" {
     /// Creates a GPU context.
     ///
     /// \param format_flags a bitflag indicating which shader formats the app is
@@ -2154,8 +2166,10 @@ extern "C" {
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetGPUDriver
+    /// \sa SDL_GetGPUShaderFormats
+    /// \sa SDL_GetGPUDeviceDriver
     /// \sa SDL_DestroyGPUDevice
+    /// \sa SDL_QueryGPUSupport
     pub fn SDL_CreateGPUDevice(
         format_flags: SDL_GPUShaderFormat,
         debug_mode: SDL_bool,
@@ -2200,8 +2214,10 @@ extern "C" {
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetGPUDriver
+    /// \sa SDL_GetGPUShaderFormats
+    /// \sa SDL_GetGPUDeviceDriver
     /// \sa SDL_DestroyGPUDevice
+    /// \sa SDL_QueryGPUSupportWithProperties
     pub fn SDL_CreateGPUDeviceWithProperties(props: SDL_PropertiesID) -> *mut SDL_GPUDevice;
 }
 
@@ -2256,13 +2272,54 @@ extern "C" {
 }
 
 extern "C" {
-    /// Returns the backend used to create this GPU context.
+    /// Get the number of GPU drivers compiled into SDL.
     ///
-    /// \param device a GPU context to query.
-    /// \returns an SDL_GPUDriver value, or SDL_GPU_DRIVER_INVALID on error.
+    /// \returns the number of built in GPU drivers.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetGPUDriver(device: *mut SDL_GPUDevice) -> SDL_GPUDriver;
+    ///
+    /// \sa SDL_GetGPUDriver
+    pub fn SDL_GetNumGPUDrivers() -> ::core::ffi::c_int;
+}
+
+extern "C" {
+    /// Get the name of a built in GPU driver.
+    ///
+    /// The GPU drivers are presented in the order in which they are normally
+    /// checked during initialization.
+    ///
+    /// The names of drivers are all simple, low-ASCII identifiers, like "vulkan",
+    /// "metal" or "direct3d12". These never have Unicode characters, and are not
+    /// meant to be proper names.
+    ///
+    /// \param index the index of a GPU driver.
+    /// \returns the name of the GPU driver with the given **index**.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_GetNumGPUDrivers
+    pub fn SDL_GetGPUDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
+}
+
+extern "C" {
+    /// Returns the name of the backend used to create this GPU context.
+    ///
+    /// \param device a GPU context to query.
+    /// \returns the name of the device's driver, or NULL on error.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    pub fn SDL_GetGPUDeviceDriver(device: *mut SDL_GPUDevice) -> *const ::core::ffi::c_char;
+}
+
+extern "C" {
+    /// Returns the supported shader formats for this GPU context.
+    ///
+    /// \param device a GPU context to query.
+    /// \returns a bitflag indicating which shader formats the driver is able to
+    ///          consume.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    pub fn SDL_GetGPUShaderFormats(device: *mut SDL_GPUDevice) -> SDL_GPUShaderFormat;
 }
 
 extern "C" {
@@ -2869,7 +2926,7 @@ extern "C" {
     /// calls.
     ///
     /// \param render_pass a render pass handle.
-    /// \param first_binding the starting bind point for the vertex buffers.
+    /// \param first_slot the vertex buffer slot to begin binding from.
     /// \param bindings an array of SDL_GPUBufferBinding structs containing vertex
     ///                 buffers and offset values.
     /// \param num_bindings the number of bindings in the bindings array.
@@ -2877,7 +2934,7 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_BindGPUVertexBuffers(
         render_pass: *mut SDL_GPURenderPass,
-        first_binding: Uint32,
+        first_slot: Uint32,
         bindings: *const SDL_GPUBufferBinding,
         num_bindings: Uint32,
     );
@@ -3082,15 +3139,15 @@ extern "C" {
     /// Draws data using bound graphics state and with draw parameters set from a
     /// buffer.
     ///
-    /// The buffer layout should match the layout of SDL_GPUIndirectDrawCommand.
-    /// You must not call this function before binding a graphics pipeline.
+    /// The buffer must consist of tightly-packed draw parameter sets that each
+    /// match the layout of SDL_GPUIndirectDrawCommand. You must not call this
+    /// function before binding a graphics pipeline.
     ///
     /// \param render_pass a render pass handle.
     /// \param buffer a buffer containing draw parameters.
     /// \param offset the offset to start reading from the draw buffer.
     /// \param draw_count the number of draw parameter sets that should be read
     ///                   from the draw buffer.
-    /// \param pitch the byte pitch between sets of draw parameters.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_DrawGPUPrimitivesIndirect(
@@ -3098,7 +3155,6 @@ extern "C" {
         buffer: *mut SDL_GPUBuffer,
         offset: Uint32,
         draw_count: Uint32,
-        pitch: Uint32,
     );
 }
 
@@ -3106,16 +3162,15 @@ extern "C" {
     /// Draws data using bound graphics state with an index buffer enabled and with
     /// draw parameters set from a buffer.
     ///
-    /// The buffer layout should match the layout of
-    /// SDL_GPUIndexedIndirectDrawCommand. You must not call this function before
-    /// binding a graphics pipeline.
+    /// The buffer must consist of tightly-packed draw parameter sets that each
+    /// match the layout of SDL_GPUIndexedIndirectDrawCommand. You must not call
+    /// this function before binding a graphics pipeline.
     ///
     /// \param render_pass a render pass handle.
     /// \param buffer a buffer containing draw parameters.
     /// \param offset the offset to start reading from the draw buffer.
     /// \param draw_count the number of draw parameter sets that should be read
     ///                   from the draw buffer.
-    /// \param pitch the byte pitch between sets of draw parameters.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_DrawGPUIndexedPrimitivesIndirect(
@@ -3123,7 +3178,6 @@ extern "C" {
         buffer: *mut SDL_GPUBuffer,
         offset: Uint32,
         draw_count: Uint32,
-        pitch: Uint32,
     );
 }
 

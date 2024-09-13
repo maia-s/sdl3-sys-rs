@@ -277,6 +277,10 @@ const _: () = ::core::assert!(
         == (2 * ::core::mem::size_of::<*mut ::core::ffi::c_void>())
 );
 
+const _: () = ::core::assert!(
+    !(0 as ::core::ffi::c_int) as ::core::ffi::c_int == (-1_i32) as ::core::ffi::c_int
+);
+
 #[cfg(all(not(any(/* always disabled: SDL_PLATFORM_3DS */)), not(any(/* always disabled: SDL_PLATFORM_VITA */))))]
 emit! {
     #[repr(transparent)]
@@ -1299,21 +1303,21 @@ extern "C" {
 extern "C" {
     /// Parse a `long` from a wide string.
     ///
-    /// This function makes fewer guarantees than the C runtime `wcstol`:
+    /// If `str` starts with whitespace, then those whitespace characters are
+    /// skipped before attempting to parse the number.
     ///
-    /// - Only the bases 10 and 16 are guaranteed to be supported. The behavior for
-    ///   other bases is unspecified.
-    /// - It is unspecified what this function returns when the parsed integer does
-    ///   not fit inside a `long`.
+    /// If the parsed number does not fit inside a `long`, the result is clamped to
+    /// the minimum and maximum representable `long` values.
     ///
     /// \param str The null-terminated wide string to read. Must not be NULL.
     /// \param endp If not NULL, the address of the first invalid wide character
     ///             (i.e. the next character after the parsed number) will be
     ///             written to this pointer.
-    /// \param base The base of the integer to read. The values 0, 10 and 16 are
-    ///             supported. If 0, the base will be inferred from the integer's
-    ///             prefix.
-    /// \returns The parsed `long`.
+    /// \param base The base of the integer to read. Supported values are 0 and 2
+    ///             to 36 inclusive. If 0, the base will be inferred from the
+    ///             number's prefix (0x for hexadecimal, 0 for octal, decimal
+    ///             otherwise).
+    /// \returns The parsed `long`, or 0 if no number could be parsed.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -1643,21 +1647,21 @@ extern "C" {
 extern "C" {
     /// Parse a `long` from a string.
     ///
-    /// This function makes fewer guarantees than the C runtime `strtol`:
+    /// If `str` starts with whitespace, then those whitespace characters are
+    /// skipped before attempting to parse the number.
     ///
-    /// - Only the bases 10 and 16 are guaranteed to be supported. The behavior for
-    ///   other bases is unspecified.
-    /// - It is unspecified what this function returns when the parsed integer does
-    ///   not fit inside a `long`.
+    /// If the parsed number does not fit inside a `long`, the result is clamped to
+    /// the minimum and maximum representable `long` values.
     ///
     /// \param str The null-terminated string to read. Must not be NULL.
     /// \param endp If not NULL, the address of the first invalid character (i.e.
     ///             the next character after the parsed number) will be written to
     ///             this pointer.
-    /// \param base The base of the integer to read. The values 0, 10 and 16 are
-    ///             supported. If 0, the base will be inferred from the integer's
-    ///             prefix.
-    /// \returns The parsed `long`.
+    /// \param base The base of the integer to read. Supported values are 0 and 2
+    ///             to 36 inclusive. If 0, the base will be inferred from the
+    ///             number's prefix (0x for hexadecimal, 0 for octal, decimal
+    ///             otherwise).
+    /// \returns The parsed `long`, or 0 if no number could be parsed.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -1681,21 +1685,21 @@ extern "C" {
 extern "C" {
     /// Parse an `unsigned long` from a string.
     ///
-    /// This function makes fewer guarantees than the C runtime `strtoul`:
+    /// If `str` starts with whitespace, then those whitespace characters are
+    /// skipped before attempting to parse the number.
     ///
-    /// - Only the bases 10 and 16 are guaranteed to be supported. The behavior for
-    ///   other bases is unspecified.
-    /// - It is unspecified what this function returns when the parsed integer does
-    ///   not fit inside an `unsigned long`.
+    /// If the parsed number does not fit inside an `unsigned long`, the result is
+    /// clamped to the maximum representable `unsigned long` value.
     ///
     /// \param str The null-terminated string to read. Must not be NULL.
     /// \param endp If not NULL, the address of the first invalid character (i.e.
     ///             the next character after the parsed number) will be written to
     ///             this pointer.
-    /// \param base The base of the integer to read. The values 0, 10 and 16 are
-    ///             supported. If 0, the base will be inferred from the integer's
-    ///             prefix.
-    /// \returns The parsed `unsigned long`.
+    /// \param base The base of the integer to read. Supported values are 0 and 2
+    ///             to 36 inclusive. If 0, the base will be inferred from the
+    ///             number's prefix (0x for hexadecimal, 0 for octal, decimal
+    ///             otherwise).
+    /// \returns The parsed `unsigned long`, or 0 if no number could be parsed.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -1718,21 +1722,21 @@ extern "C" {
 extern "C" {
     /// Parse a `long long` from a string.
     ///
-    /// This function makes fewer guarantees than the C runtime `strtoll`:
+    /// If `str` starts with whitespace, then those whitespace characters are
+    /// skipped before attempting to parse the number.
     ///
-    /// - Only the bases 10 and 16 are guaranteed to be supported. The behavior for
-    ///   other bases is unspecified.
-    /// - It is unspecified what this function returns when the parsed integer does
-    ///   not fit inside a `long long`.
+    /// If the parsed number does not fit inside a `long long`, the result is
+    /// clamped to the minimum and maximum representable `long long` values.
     ///
     /// \param str The null-terminated string to read. Must not be NULL.
     /// \param endp If not NULL, the address of the first invalid character (i.e.
     ///             the next character after the parsed number) will be written to
     ///             this pointer.
-    /// \param base The base of the integer to read. The values 0, 10 and 16 are
-    ///             supported. If 0, the base will be inferred from the integer's
-    ///             prefix.
-    /// \returns The parsed `long long`.
+    /// \param base The base of the integer to read. Supported values are 0 and 2
+    ///             to 36 inclusive. If 0, the base will be inferred from the
+    ///             number's prefix (0x for hexadecimal, 0 for octal, decimal
+    ///             otherwise).
+    /// \returns The parsed `long long`, or 0 if no number could be parsed.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -1755,21 +1759,22 @@ extern "C" {
 extern "C" {
     /// Parse an `unsigned long long` from a string.
     ///
-    /// This function makes fewer guarantees than the C runtime `strtoull`:
+    /// If `str` starts with whitespace, then those whitespace characters are
+    /// skipped before attempting to parse the number.
     ///
-    /// - Only the bases 10 and 16 are guaranteed to be supported. The behavior for
-    ///   other bases is unspecified.
-    /// - It is unspecified what this function returns when the parsed integer does
-    ///   not fit inside a `long long`.
+    /// If the parsed number does not fit inside an `unsigned long long`, the
+    /// result is clamped to the maximum representable `unsigned long long` value.
     ///
     /// \param str The null-terminated string to read. Must not be NULL.
     /// \param endp If not NULL, the address of the first invalid character (i.e.
     ///             the next character after the parsed number) will be written to
     ///             this pointer.
-    /// \param base The base of the integer to read. The values 0, 10 and 16 are
-    ///             supported. If 0, the base will be inferred from the integer's
-    ///             prefix.
-    /// \returns The parsed `unsigned long long`.
+    /// \param base The base of the integer to read. Supported values are 0 and 2
+    ///             to 36 inclusive. If 0, the base will be inferred from the
+    ///             number's prefix (0x for hexadecimal, 0 for octal, decimal
+    ///             otherwise).
+    /// \returns The parsed `unsigned long long`, or 0 if no number could be
+    ///          parsed.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -1803,7 +1808,7 @@ extern "C" {
     /// \param endp If not NULL, the address of the first invalid character (i.e.
     ///             the next character after the parsed number) will be written to
     ///             this pointer.
-    /// \returns The parsed `double`.
+    /// \returns The parsed `double`, or 0 if no number could be parsed.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///

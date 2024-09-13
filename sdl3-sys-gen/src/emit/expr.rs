@@ -528,6 +528,10 @@ impl Eval for Expr {
                         Value::I64(value) => Ok(Some(Value::I64(!value))),
                         Value::U63(value) => Ok(Some(Value::I64(!(value as i64)))),
                         Value::U64(value) => Ok(Some(Value::U64(!value))),
+                        Value::RustCode(c) => Ok(Some(Value::RustCode(RustCode::boxed(
+                            format!("!({})", c.value),
+                            c.ty,
+                        )))),
                         _ => todo!(),
                     },
 
