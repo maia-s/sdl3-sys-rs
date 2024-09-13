@@ -716,6 +716,14 @@ impl Emit for Type {
             TypeEnum::Rust(r, _) => write!(ctx, "{r}")?,
 
             TypeEnum::Function(_) => todo!(),
+
+            TypeEnum::Infer(i) => {
+                if let Some(ty) = &*i.borrow() {
+                    return ty.emit(ctx);
+                } else {
+                    return Err(ParseErr::new(self.span(), "can't emit uninferred type").into());
+                }
+            }
         }
         Ok(())
     }
@@ -950,6 +958,7 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Function(_) => todo!(),
+            TypeEnum::Infer(_) => todo!(),
         }
     }
 }

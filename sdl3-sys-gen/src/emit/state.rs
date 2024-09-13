@@ -1,8 +1,8 @@
 use super::{EmitErr, EmitResult, Eval, Value};
 use crate::{
     parse::{
-        DefineValue, DocComment, Expr, GetSpan, Ident, IdentOrKw, ParseErr, PrimitiveType,
-        RustCode, Span, StructKind, Type,
+        DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident, IdentOrKw, ParseErr,
+        PrimitiveType, RustCode, Span, StructKind, Type,
     },
     Gen,
 };
@@ -308,7 +308,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                 preproc_state.define($define, None, $value)?;
             };
             (@ $define:expr, ($($args:literal),*), $value:expr) => {
-                preproc_state.define($define, Some(vec![$(IdentOrKw::new_inline($args))*]), $value)?;
+                preproc_state.define($define, Some(vec![$(DefineArg::new(IdentOrKw::new_inline($args), Type::infer()))*]), $value)?;
             };
         }
         defines! {
@@ -563,7 +563,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         })
     }
 
-    pub fn lookup_preproc(&self, key: &Ident) -> Option<(Option<Vec<IdentOrKw>>, DefineValue)> {
+    pub fn lookup_preproc(&self, key: &Ident) -> Option<(Option<Vec<DefineArg>>, DefineValue)> {
         if let Ok(Some(def)) = self.preproc_state().borrow().lookup(key) {
             Some(def)
         } else {
@@ -735,7 +735,7 @@ impl Write for EmitContext<'_, '_> {
 #[derive(Debug, Default)]
 pub struct PreProcState {
     parent: Option<Rc<RefCell<PreProcState>>>,
-    defined: HashMap<Ident, (Option<Vec<IdentOrKw>>, DefineValue)>,
+    defined: HashMap<Ident, (Option<Vec<DefineArg>>, DefineValue)>,
     undefined: HashSet<Ident>,
     undefined_prefixes: HashSet<String>,
     target_defines: HashMap<&'static str, CfgExpr>,
@@ -766,7 +766,7 @@ impl PreProcState {
     pub fn define(
         &mut self,
         key: Ident,
-        args: Option<Vec<IdentOrKw>>,
+        args: Option<Vec<DefineArg>>,
         value: DefineValue,
     ) -> EmitResult {
         if let Ok(true) = self.is_defined_ignore_target(&key) {
@@ -793,7 +793,7 @@ impl PreProcState {
     pub fn lookup(
         &self,
         key: &Ident,
-    ) -> Result<Option<(Option<Vec<IdentOrKw>>, DefineValue)>, EmitErr> {
+    ) -> Result<Option<(Option<Vec<DefineArg>>, DefineValue)>, EmitErr> {
         if let Some(value) = self.defined.get(key) {
             Ok(Some(value.clone()))
         } else if self.undefined.contains(key) || self.undefined_prefixes_matches(key.as_str()) {

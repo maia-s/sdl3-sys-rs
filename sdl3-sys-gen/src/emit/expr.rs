@@ -202,7 +202,7 @@ impl Eval for IntegerLiteral {
 impl Eval for SizeOf {
     fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
         match self {
-            SizeOf::Type(_, ty) => match &ty.ty {
+            SizeOf::Type(span, ty) => match &ty.ty {
                 TypeEnum::Primitive(_) | TypeEnum::Pointer(_) => {
                     let out = ctx.capture_output(|ctx| {
                         write!(ctx, "::core::mem::size_of::<")?;
@@ -224,6 +224,14 @@ impl Eval for SizeOf {
                         }))))
                     } else {
                         todo!()
+                    }
+                }
+
+                TypeEnum::Infer(i) => {
+                    if let Some(ty) = &*i.borrow() {
+                        SizeOf::Type(span.clone(), ty.clone()).try_eval(ctx)
+                    } else {
+                        Ok(None)
                     }
                 }
 

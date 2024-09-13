@@ -15,13 +15,25 @@ pub struct Define {
     pub span: Span,
     pub doc: Option<DocComment>,
     pub ident: Ident,
-    pub args: Option<Vec<IdentOrKw>>,
+    pub args: Option<Vec<DefineArg>>,
     pub value: DefineValue,
 }
 
 impl GetSpan for Define {
     fn span(&self) -> Span {
         self.span.clone()
+    }
+}
+
+#[derive(Clone, Debug)]
+pub struct DefineArg {
+    pub ident: IdentOrKw,
+    pub ty: Type,
+}
+
+impl DefineArg {
+    pub fn new(ident: IdentOrKw, ty: Type) -> Self {
+        Self { ident, ty }
     }
 }
 
@@ -400,7 +412,14 @@ impl Parse for PreProcLine {
                                 ctx,
                                 i.slice(1..close_paren).trim_wsc()?,
                             )?
-                            .unwrap_or_default();
+                            .unwrap_or_default()
+                            .0
+                            .into_iter()
+                            .map(|(ident, _)| DefineArg {
+                                ident,
+                                ty: Type::infer(),
+                            })
+                            .collect();
                             let mut value_span = i.slice(close_paren + 1..).trim_wsc_start()?;
                             let doc = DocComment::try_parse_rev_combine_postfix(
                                 ctx,
@@ -412,7 +431,7 @@ impl Parse for PreProcLine {
                                 span: span.clone(),
                                 doc,
                                 ident,
-                                args: Some(args.into()),
+                                args: Some(args),
                                 value,
                             })
                         } else {

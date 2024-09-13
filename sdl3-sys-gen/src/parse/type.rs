@@ -5,7 +5,8 @@ use super::{
     ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion,
     WsAndComments,
 };
-use std::borrow::Cow;
+use core::cell::RefCell;
+use std::{borrow::Cow, rc::Rc};
 
 #[derive(Clone, Debug)]
 pub struct Type {
@@ -67,6 +68,14 @@ impl Type {
         }
     }
 
+    pub fn infer() -> Self {
+        Self {
+            span: Span::none(),
+            is_const: false,
+            ty: TypeEnum::Infer(Rc::new(RefCell::new(None))),
+        }
+    }
+
     pub fn strictly_left_aligned(&self) -> bool {
         self.ty.strictly_left_aligned()
     }
@@ -102,6 +111,11 @@ impl Type {
             TypeEnum::DotDotDot => false,
             TypeEnum::Rust(_, can_derive_debug) => *can_derive_debug,
             TypeEnum::Function(_) => false,
+            TypeEnum::Infer(i) => i
+                .borrow()
+                .as_ref()
+                .map(|i| i.can_derive_debug(ctx))
+                .unwrap_or(false),
         }
     }
 }
@@ -132,6 +146,7 @@ pub enum TypeEnum {
     DotDotDot,
     Rust(String, bool),
     Function(Box<FnType>),
+    Infer(Rc<RefCell<Option<Type>>>),
 }
 
 impl TypeEnum {
