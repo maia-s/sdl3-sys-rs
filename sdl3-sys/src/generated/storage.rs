@@ -1,5 +1,3 @@
-//! # CategoryStorage
-//!
 //! SDL storage container management.
 
 use super::stdinc::*;

@@ -1,5 +1,3 @@
-//! # CategoryTime
-//!
 //! SDL realtime clock and date/time routines.
 
 use super::error::*;

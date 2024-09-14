@@ -1,5 +1,3 @@
-//! # CategoryGamepad
-//!
 //! SDL provides a low-level joystick API, which just treats joysticks as an
 //! arbitrary pile of buttons, axes, and hat switches. If you're planning to
 //! write your own control configuration screen, this can give you a lot of

@@ -1,5 +1,3 @@
-//! # CategoryAtomic
-//!
 //! Atomic operations.
 //!
 //! IMPORTANT: If you are not an expert in concurrent lockless programming, you

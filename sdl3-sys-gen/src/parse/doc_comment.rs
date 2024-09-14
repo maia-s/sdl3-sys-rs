@@ -45,8 +45,7 @@ impl Display for DocComment {
             (!line.trim().is_empty()).then_some(line)
         }));
 
-        let mut empties = 0;
-        for line in self
+        let mut lines = self
             .doc
             .as_str()
             .lines()
@@ -59,7 +58,21 @@ impl Display for DocComment {
                 .trim_end()
             })
             .skip_while(|line| line.trim().is_empty())
-        {
+            .peekable();
+
+        if let Some(line) = lines.peek() {
+            if line.trim().starts_with("# Category") {
+                lines.next();
+                if let Some(line) = lines.peek() {
+                    if line.trim().is_empty() {
+                        lines.next();
+                    }
+                }
+            }
+        }
+
+        let mut empties = 0;
+        for line in lines {
             if line.trim().is_empty() {
                 empties += 1;
             } else {

@@ -1,5 +1,3 @@
-//! # CategorySharedObject
-//!
 //! System-dependent library loading routines.
 //!
 //! Some things to keep in mind:

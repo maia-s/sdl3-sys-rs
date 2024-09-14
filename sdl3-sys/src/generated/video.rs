@@ -1,5 +1,3 @@
-//! # CategoryVideo
-//!
 //! SDL video functions.
 
 use super::stdinc::*;

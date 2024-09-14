@@ -1,5 +1,3 @@
-//! # CategoryRect
-//!
 //! Some helper functions for managing rectangles and 2D points, in both
 //! interger and floating point versions.
 

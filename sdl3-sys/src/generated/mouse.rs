@@ -1,5 +1,3 @@
-//! # CategoryMouse
-//!
 //! SDL mouse handling.
 
 use super::stdinc::*;

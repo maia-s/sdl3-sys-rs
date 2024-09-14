@@ -1,5 +1,3 @@
-//! # CategoryMessagebox
-//!
 //! Message box support routines.
 
 use super::stdinc::*;

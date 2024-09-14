@@ -1,5 +1,3 @@
-//! # CategoryCPUInfo
-//!
 //! CPU feature detection for SDL.
 //!
 //! These functions are largely concerned with reporting if the system has

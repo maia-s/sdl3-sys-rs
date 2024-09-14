@@ -1,5 +1,3 @@
-//! # CategoryBits
-//!
 //! Functions for fiddling with bits and bitmasks.
 
 use super::stdinc::*;

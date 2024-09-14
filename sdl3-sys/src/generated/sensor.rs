@@ -1,5 +1,3 @@
-//! # CategorySensor
-//!
 //! SDL sensor management.
 //!
 //! In order to use these functions, SDL_Init() must have been called with the

@@ -1,5 +1,3 @@
-//! # CategorySurface
-//!
 //! SDL_Surface definition and management functions.
 
 use super::stdinc::*;

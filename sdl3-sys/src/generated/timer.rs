@@ -1,5 +1,3 @@
-//! # CategoryTimer
-//!
 //! SDL time management routines.
 
 use super::stdinc::*;

@@ -1,5 +1,3 @@
-//! # CategoryDialog
-//!
 //! File dialog support.
 
 use super::stdinc::*;

@@ -1,5 +1,3 @@
-//! # CategoryAudio
-//!
 //! Audio functionality for the SDL library.
 //!
 //! All audio in SDL3 revolves around SDL_AudioStream. Whether you want to play

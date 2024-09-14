@@ -1,5 +1,3 @@
-//! # CategoryThread
-//!
 //! SDL thread management routines.
 
 use super::stdinc::*;

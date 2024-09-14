@@ -1,5 +1,3 @@
-//! # CategorySystem
-//!
 //! Platform-specific SDL API functions.
 
 use super::stdinc::*;

@@ -1,5 +1,3 @@
-//! # CategoryLocale
-//!
 //! SDL locale services.
 
 use super::stdinc::*;

@@ -1,5 +1,3 @@
-//! # CategoryHaptic
-//!
 //! The SDL haptic subsystem manages haptic (force feedback) devices.
 //!
 //! The basic usage is as follows:

@@ -1,5 +1,3 @@
-//! # CategoryHIDAPI
-//!
 //! Header file for SDL HIDAPI functions.
 //!
 //! This is an adaptation of the original HIDAPI interface by Alan Ott, and

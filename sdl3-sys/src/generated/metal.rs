@@ -1,5 +1,3 @@
-//! # CategoryMetal
-//!
 //! Functions to creating Metal layers and views on SDL windows.
 
 use super::video::*;

@@ -1,5 +1,3 @@
-//! # CategoryTouch
-//!
 //! SDL touch management.
 
 use super::stdinc::*;

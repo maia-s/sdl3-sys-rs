@@ -1,5 +1,3 @@
-//! # CategoryPower
-//!
 //! SDL power management routines.
 
 use super::stdinc::*;

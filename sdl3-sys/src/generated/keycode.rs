@@ -1,5 +1,3 @@
-//! # CategoryKeycode
-//!
 //! Defines constants which identify keyboard keys and modifiers.
 
 use super::stdinc::*;

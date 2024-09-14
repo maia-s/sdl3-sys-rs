@@ -1,5 +1,3 @@
-//! # CategoryProperties
-//!
 //! A property is a variable that can be created and retrieved by name at
 //! runtime.
 //!

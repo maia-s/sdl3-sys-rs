@@ -1,5 +1,3 @@
-//! # CategoryClipboard
-//!
 //! SDL provides access to the system clipboard, both for reading information
 //! from other processes and publishing information of its own.
 //!

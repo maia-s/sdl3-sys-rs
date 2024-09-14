@@ -1,5 +1,3 @@
-//! # CategoryStdinc
-//!
 //! This is a general header that includes C language support. It implements a
 //! subset of the C runtime APIs, but with an `SDL_` prefix. For most common
 //! use cases, these should behave the same way as their C runtime equivalents,

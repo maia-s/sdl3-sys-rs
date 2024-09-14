@@ -1,5 +1,3 @@
-//! # CategoryKeyboard
-//!
 //! SDL keyboard management.
 
 use super::stdinc::*;

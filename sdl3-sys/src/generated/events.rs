@@ -1,5 +1,3 @@
-//! # CategoryEvents
-//!
 //! Event queue management.
 
 use super::stdinc::*;

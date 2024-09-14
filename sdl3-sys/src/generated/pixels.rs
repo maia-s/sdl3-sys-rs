@@ -1,5 +1,3 @@
-//! # CategoryPixels
-//!
 //! Pixel management.
 
 use super::stdinc::*;

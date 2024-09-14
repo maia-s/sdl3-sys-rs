@@ -1,5 +1,3 @@
-//! # CategoryGUID
-//!
 //! A GUID is a 128-bit value that represents something that is uniquely
 //! identifiable by this value: "globally unique."
 

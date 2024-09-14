@@ -1,5 +1,3 @@
-//! # CategoryScancode
-//!
 //! Defines keyboard scancodes.
 
 use super::stdinc::*;

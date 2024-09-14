@@ -1,5 +1,3 @@
-//! # CategoryMutex
-//!
 //! Functions to provide thread synchronization primitives.
 
 use super::stdinc::*;

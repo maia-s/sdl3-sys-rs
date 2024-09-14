@@ -1,5 +1,3 @@
-//! # CategoryRender
-//!
 //! Header file for SDL 2D rendering functions.
 //!
 //! This API supports the following features:

@@ -1,5 +1,3 @@
-//! # CategoryError
-//!
 //! Simple error message routines for SDL.
 
 use super::stdinc::*;

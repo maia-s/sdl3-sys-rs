@@ -1,5 +1,3 @@
-//! # CategoryJoystick
-//!
 //! SDL joystick support.
 //!
 //! This is the lower-level joystick handling. If you want the simpler option,

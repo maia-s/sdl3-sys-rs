@@ -1,5 +1,3 @@
-//! # CategoryPen
-//!
 //! SDL pen event handling.
 //!
 //! SDL provides an API for pressure-sensitive pen (stylus and/or eraser)

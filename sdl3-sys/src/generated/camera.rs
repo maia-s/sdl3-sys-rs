@@ -1,5 +1,3 @@
-//! # CategoryCamera
-//!
 //! Video capture for the SDL library.
 //!
 //! This API lets apps read input from video sources, like webcams. Camera

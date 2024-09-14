@@ -1,5 +1,3 @@
-//! # CategoryFilesystem
-//!
 //! SDL Filesystem API.
 
 use super::stdinc::*;

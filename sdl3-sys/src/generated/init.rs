@@ -1,5 +1,3 @@
-//! # CategoryInit
-//!
 //! SDL subsystem init and quit functions.
 
 use super::stdinc::*;

@@ -1,5 +1,3 @@
-//! # CategoryGPU
-//!
 //! Include file for SDL GPU API functions
 
 use super::stdinc::*;

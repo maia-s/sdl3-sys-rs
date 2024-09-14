@@ -1,5 +1,3 @@
-//! # CategoryAssert
-//!
 //! A helpful assertion macro!
 //!
 //! SDL assertions operate like your usual `assert` macro, but with some added

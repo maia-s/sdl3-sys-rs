@@ -1,5 +1,3 @@
-//! # CategoryIOStream
-//!
 //! SDL provides an abstract interface for reading and writing data streams. It
 //! offers implementations for files, memory, etc, and the app can provideo
 //! their own implementations, too.
