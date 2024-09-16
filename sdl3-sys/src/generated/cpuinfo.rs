@@ -16,14 +16,14 @@ use super::stdinc::*;
 pub const SDL_CACHELINE_SIZE: ::core::primitive::i32 = 128;
 
 extern "C" {
-    /// Get the number of CPU cores available.
+    /// Get the number of logical CPU cores available.
     ///
     /// \returns the total number of logical CPU cores. On CPUs that include
     ///          technologies such as hyperthreading, the number of logical cores
     ///          may be more than the number of physical cores.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetCPUCount() -> ::core::ffi::c_int;
+    pub fn SDL_GetNumLogicalCPUCores() -> ::core::ffi::c_int;
 }
 
 extern "C" {

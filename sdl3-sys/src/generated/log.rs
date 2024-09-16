@@ -95,12 +95,13 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 ///
 /// \since This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_LOG_PRIORITY_VERBOSE`], [`SDL_LOG_PRIORITY_DEBUG`], [`SDL_LOG_PRIORITY_INFO`], [`SDL_LOG_PRIORITY_WARN`], [`SDL_LOG_PRIORITY_ERROR`], [`SDL_LOG_PRIORITY_CRITICAL`], [`SDL_LOG_PRIORITY_COUNT`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_LOG_PRIORITY_INVALID`], [`SDL_LOG_PRIORITY_VERBOSE`], [`SDL_LOG_PRIORITY_DEBUG`], [`SDL_LOG_PRIORITY_INFO`], [`SDL_LOG_PRIORITY_WARN`], [`SDL_LOG_PRIORITY_ERROR`], [`SDL_LOG_PRIORITY_CRITICAL`], [`SDL_LOG_PRIORITY_COUNT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_LogPriority(pub ::core::ffi::c_int);
 impl SDL_LogPriority {
+    pub const INVALID: Self = Self(0);
     pub const VERBOSE: Self = Self(1);
     pub const DEBUG: Self = Self(2);
     pub const INFO: Self = Self(3);
@@ -109,6 +110,7 @@ impl SDL_LogPriority {
     pub const CRITICAL: Self = Self(6);
     pub const COUNT: Self = Self(7);
 }
+pub const SDL_LOG_PRIORITY_INVALID: SDL_LogPriority = SDL_LogPriority::INVALID;
 pub const SDL_LOG_PRIORITY_VERBOSE: SDL_LogPriority = SDL_LogPriority::VERBOSE;
 pub const SDL_LOG_PRIORITY_DEBUG: SDL_LogPriority = SDL_LogPriority::DEBUG;
 pub const SDL_LOG_PRIORITY_INFO: SDL_LogPriority = SDL_LogPriority::INFO;
@@ -122,6 +124,8 @@ extern "C" {
     ///
     /// \param priority the SDL_LogPriority to assign.
     ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ResetLogPriorities
@@ -134,6 +138,8 @@ extern "C" {
     ///
     /// \param category the category to assign a priority to.
     /// \param priority the SDL_LogPriority to assign.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -149,6 +155,8 @@ extern "C" {
     /// \param category the category to query.
     /// \returns the SDL_LogPriority for the requested category.
     ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetLogPriority
@@ -159,6 +167,8 @@ extern "C" {
     /// Reset all priorities to default.
     ///
     /// This is called by SDL_Quit().
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -180,6 +190,8 @@ extern "C" {
     /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
     ///          for more information.
     ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetLogPriorities
@@ -196,6 +208,8 @@ extern "C" {
     /// \param fmt a printf() style message format string.
     /// \param ... additional parameters matching % tokens in the `fmt` string, if
     ///            any.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -218,6 +232,8 @@ extern "C" {
     /// \param ... additional parameters matching % tokens in the **fmt** string,
     ///            if any.
     ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_Log
@@ -238,6 +254,8 @@ extern "C" {
     /// \param fmt a printf() style message format string.
     /// \param ... additional parameters matching % tokens in the **fmt** string,
     ///            if any.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -260,6 +278,8 @@ extern "C" {
     /// \param ... additional parameters matching % tokens in the **fmt** string,
     ///            if any.
     ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_Log
@@ -280,6 +300,8 @@ extern "C" {
     /// \param fmt a printf() style message format string.
     /// \param ... additional parameters matching % tokens in the **fmt** string,
     ///            if any.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -302,6 +324,8 @@ extern "C" {
     /// \param ... additional parameters matching % tokens in the **fmt** string,
     ///            if any.
     ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_Log
@@ -322,6 +346,8 @@ extern "C" {
     /// \param fmt a printf() style message format string.
     /// \param ... additional parameters matching % tokens in the **fmt** string,
     ///            if any.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -344,6 +370,8 @@ extern "C" {
     /// \param fmt a printf() style message format string.
     /// \param ... additional parameters matching % tokens in the **fmt** string,
     ///            if any.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -371,6 +399,8 @@ extern "C" {
     /// \param fmt a printf() style message format string.
     /// \param ap a variable argument list.
     ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_Log
@@ -391,7 +421,9 @@ extern "C" {
 
 /// The prototype for the log output callback function.
 ///
-/// This function is called by SDL when there is new text to be logged.
+/// This function is called by SDL when there is new text to be logged. A mutex
+/// is held so that this function is never called by more than one thread at
+/// once.
 ///
 /// \param userdata what was passed as `userdata` to
 ///                 SDL_SetLogOutputFunction().
@@ -417,6 +449,8 @@ extern "C" {
     /// \param userdata a pointer filled in with the pointer that is passed to
     ///                 `callback`.
     ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetLogOutputFunction
@@ -431,6 +465,8 @@ extern "C" {
     ///
     /// \param callback an SDL_LogOutputFunction to call instead of the default.
     /// \param userdata a pointer that is passed to `callback`.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///

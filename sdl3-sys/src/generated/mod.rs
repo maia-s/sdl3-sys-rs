@@ -44,6 +44,7 @@ pub mod pen;
 pub mod pixels;
 pub mod platform;
 pub mod power;
+pub mod process;
 pub mod properties;
 pub mod rect;
 pub mod render;

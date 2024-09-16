@@ -671,11 +671,211 @@ extern "C" {
 }
 
 extern "C" {
+    /// Get the process environment.
+    ///
+    /// This is initialized at application start and is not affected by setenv()
+    /// and unsetenv() calls after that point. Use SDL_SetEnvironmentVariable() and
+    /// SDL_UnsetEnvironmentVariable() if you want to modify this environment, or
+    /// SDL_setenv_unsafe() or SDL_unsetenv_unsafe() if you want changes to persist
+    /// in the C runtime environment after SDL_Quit().
+    ///
+    /// \returns a pointer to the environment for the process or NULL on failure;
+    ///          call SDL_GetError() for more information.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_GetEnvironmentVariable
+    /// \sa SDL_GetEnvironmentVariables
+    /// \sa SDL_SetEnvironmentVariable
+    /// \sa SDL_UnsetEnvironmentVariable
+    pub fn SDL_GetEnvironment() -> *mut SDL_Environment;
+}
+
+extern "C" {
+    /// Create a set of environment variables
+    ///
+    /// \param populated SDL_TRUE to initialize it from the C runtime environment,
+    ///                  SDL_FALSE to create an empty environment.
+    /// \returns a pointer to the new environment or NULL on failure; call
+    ///          SDL_GetError() for more information.
+    ///
+    /// \threadsafety If `populated` is SDL_FALSE, it is safe to call this function
+    ///               from any thread, otherwise it is safe if no other threads are
+    ///               calling setenv() or unsetenv()
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_GetEnvironmentVariable
+    /// \sa SDL_GetEnvironmentVariables
+    /// \sa SDL_SetEnvironmentVariable
+    /// \sa SDL_UnsetEnvironmentVariable
+    /// \sa SDL_DestroyEnvironment
+    pub fn SDL_CreateEnvironment(populated: SDL_bool) -> *mut SDL_Environment;
+}
+
+extern "C" {
+    /// Get the value of a variable in the environment.
+    ///
+    /// \param env the environment to query.
+    /// \param name the name of the variable to get.
+    /// \returns a pointer to the value of the variable or NULL if it can't be
+    ///          found.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_GetEnvironment
+    /// \sa SDL_CreateEnvironment
+    /// \sa SDL_GetEnvironmentVariables
+    /// \sa SDL_SetEnvironmentVariable
+    /// \sa SDL_UnsetEnvironmentVariable
+    pub fn SDL_GetEnvironmentVariable(
+        env: *mut SDL_Environment,
+        name: *const ::core::ffi::c_char,
+    ) -> *const ::core::ffi::c_char;
+}
+
+extern "C" {
+    /// Get all variables in the environment.
+    ///
+    /// \param env the environment to query.
+    /// \returns a NULL terminated array of pointers to environment variables in
+    ///          the form "variable=value" or NULL on failure; call SDL_GetError()
+    ///          for more information. This is a single allocation that should be
+    ///          freed with SDL_free() when it is no longer needed.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_GetEnvironment
+    /// \sa SDL_CreateEnvironment
+    /// \sa SDL_GetEnvironmentVariables
+    /// \sa SDL_SetEnvironmentVariable
+    /// \sa SDL_UnsetEnvironmentVariable
+    pub fn SDL_GetEnvironmentVariables(env: *mut SDL_Environment) -> *mut *mut ::core::ffi::c_char;
+}
+
+extern "C" {
+    /// Set the value of a variable in the environment.
+    ///
+    /// \param env the environment to modify.
+    /// \param name the name of the variable to set.
+    /// \param value the value of the variable to set.
+    /// \param overwrite SDL_TRUE to overwrite the variable if it exists, SDL_FALSE
+    ///                  to return success without setting the variable if it
+    ///                  already exists.
+    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
+    ///          for more information.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_GetEnvironment
+    /// \sa SDL_CreateEnvironment
+    /// \sa SDL_GetEnvironmentVariable
+    /// \sa SDL_GetEnvironmentVariables
+    /// \sa SDL_UnsetEnvironmentVariable
+    pub fn SDL_SetEnvironmentVariable(
+        env: *mut SDL_Environment,
+        name: *const ::core::ffi::c_char,
+        value: *const ::core::ffi::c_char,
+        overwrite: SDL_bool,
+    ) -> SDL_bool;
+}
+
+extern "C" {
+    /// Clear a variable from the environment.
+    ///
+    /// \param env the environment to modify.
+    /// \param name the name of the variable to unset.
+    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
+    ///          for more information.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_GetEnvironment
+    /// \sa SDL_CreateEnvironment
+    /// \sa SDL_GetEnvironmentVariable
+    /// \sa SDL_GetEnvironmentVariables
+    /// \sa SDL_SetEnvironmentVariable
+    /// \sa SDL_UnsetEnvironmentVariable
+    pub fn SDL_UnsetEnvironmentVariable(
+        env: *mut SDL_Environment,
+        name: *const ::core::ffi::c_char,
+    ) -> SDL_bool;
+}
+
+extern "C" {
+    /// Destroy a set of environment variables.
+    ///
+    /// \param env the environment to destroy.
+    ///
+    /// \threadsafety It is safe to call this function from any thread, as long as
+    ///               the environment is no longer in use.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_CreateEnvironment
+    pub fn SDL_DestroyEnvironment(env: *mut SDL_Environment);
+}
+
+extern "C" {
+    /// Get the value of a variable in the environment.
+    ///
+    /// This function uses SDL's cached copy of the environment and is thread-safe.
+    ///
+    /// \param name the name of the variable to get.
+    /// \returns a pointer to the value of the variable or NULL if it can't be
+    ///          found.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
     pub fn SDL_getenv(name: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
 }
 
 extern "C" {
-    pub fn SDL_setenv(
+    /// Get the value of a variable in the environment.
+    ///
+    /// This function bypasses SDL's cached copy of the environment and is not
+    /// thread-safe.
+    ///
+    /// \param name the name of the variable to get.
+    /// \returns a pointer to the value of the variable or NULL if it can't be
+    ///          found.
+    ///
+    /// \threadsafety This function is not thread safe, consider using SDL_getenv()
+    ///               instead.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_getenv
+    pub fn SDL_getenv_unsafe(name: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
+}
+
+extern "C" {
+    /// Set the value of a variable in the environment.
+    ///
+    /// \param name the name of the variable to set.
+    /// \param value the value of the variable to set.
+    /// \param overwrite 1 to overwrite the variable if it exists, 0 to return
+    ///                  success without setting the variable if it already exists.
+    /// \returns 0 on success, -1 on error.
+    ///
+    /// \threadsafety This function is not thread safe, consider using
+    ///               SDL_SetEnvironmentVariable() instead.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_SetEnvironmentVariable
+    pub fn SDL_setenv_unsafe(
         name: *const ::core::ffi::c_char,
         value: *const ::core::ffi::c_char,
         overwrite: ::core::ffi::c_int,
@@ -683,7 +883,18 @@ extern "C" {
 }
 
 extern "C" {
-    pub fn SDL_unsetenv(name: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
+    /// Clear a variable from the environment.
+    ///
+    /// \param name the name of the variable to unset.
+    /// \returns 0 on success, -1 on error.
+    ///
+    /// \threadsafety This function is not thread safe, consider using
+    ///               SDL_UnsetEnvironmentVariable() instead.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_UnsetEnvironmentVariable
+    pub fn SDL_unsetenv_unsafe(name: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
 }
 
 pub type SDL_CompareCallback = ::core::option::Option<
@@ -3807,6 +4018,23 @@ emit! {
 emit! {
     pub type SDL_FunctionPointer = ::core::option::Option<extern "C" fn()>;
 
+}
+
+/// A thread-safe set of environment variables
+///
+/// \since This struct is available since SDL 3.0.0.
+///
+/// \sa SDL_GetEnvironment
+/// \sa SDL_CreateEnvironment
+/// \sa SDL_GetEnvironmentVariable
+/// \sa SDL_GetEnvironmentVariables
+/// \sa SDL_SetEnvironmentVariable
+/// \sa SDL_UnsetEnvironmentVariable
+/// \sa SDL_DestroyEnvironment
+#[repr(C)]
+#[non_exhaustive]
+pub struct SDL_Environment {
+    _opaque: [::core::primitive::u8; 0],
 }
 
 #[repr(C)]

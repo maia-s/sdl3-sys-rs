@@ -138,6 +138,16 @@ pub struct SDL_IOStreamInterface {
             status: *mut SDL_IOStatus,
         ) -> ::core::primitive::usize,
     >,
+    /// If the stream is buffering, make sure the data is written out.
+    ///
+    /// On failure, you should set `*status` to a value from the
+    /// SDL_IOStatus enum. You do not have to explicitly set this on
+    /// a successful flush.
+    ///
+    /// \return SDL_TRUE if successful or SDL_FALSE on write error when flushing data.
+    pub flush: ::core::option::Option<
+        extern "C" fn(userdata: *mut ::core::ffi::c_void, status: *mut SDL_IOStatus) -> SDL_bool,
+    >,
     /// Close and free any allocated resources.
     ///
     /// The SDL_IOStream is still destroyed even if this fails, so clean up anything
@@ -172,9 +182,9 @@ unsafe impl crate::Interface for SDL_IOStreamInterface {}
 
 const _: () = ::core::assert!(
     ((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4
-        && ::core::mem::size_of::<SDL_IOStreamInterface>() == 24)
+        && ::core::mem::size_of::<SDL_IOStreamInterface>() == 28)
         || (::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8
-            && ::core::mem::size_of::<SDL_IOStreamInterface>() == 48))
+            && ::core::mem::size_of::<SDL_IOStreamInterface>() == 56))
 );
 
 extern "C" {
@@ -235,6 +245,8 @@ extern "C" {
     ///   than your app, trying to use this pointer will almost certainly result in
     ///   a crash! This is mostly a problem on Windows; make sure you build SDL and
     ///   your app with the same compiler and settings to avoid it.
+    /// - `SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER`: a file descriptor that this
+    ///   SDL_IOStream is using to access the filesystem.
     /// - `SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER`: a pointer, that can be cast
     ///   to an Android NDK `AAsset *`, that this SDL_IOStream is using to access
     ///   the filesystem. If SDL used some other method to access the filesystem,
@@ -249,6 +261,7 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_CloseIO
+    /// \sa SDL_FlushIO
     /// \sa SDL_ReadIO
     /// \sa SDL_SeekIO
     /// \sa SDL_TellIO
@@ -264,6 +277,9 @@ pub const SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER: &::core::ffi::CStr =
 
 pub const SDL_PROP_IOSTREAM_STDIO_FILE_POINTER: &::core::ffi::CStr =
     unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.stdio.file\0") };
+
+pub const SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER: &::core::ffi::CStr =
+    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.file_descriptor\0") };
 
 pub const SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER: &::core::ffi::CStr =
     unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.android.aasset\0") };
@@ -292,6 +308,7 @@ extern "C" {
     ///
     /// \sa SDL_IOFromConstMem
     /// \sa SDL_CloseIO
+    /// \sa SDL_FlushIO
     /// \sa SDL_ReadIO
     /// \sa SDL_SeekIO
     /// \sa SDL_TellIO
@@ -485,8 +502,8 @@ extern "C" {
     ///               negative.
     /// \param whence any of `SDL_IO_SEEK_SET`, `SDL_IO_SEEK_CUR`,
     ///               `SDL_IO_SEEK_END`.
-    /// \returns the final offset in the data stream after the seek or a negative
-    ///          error code on failure; call SDL_GetError() for more information.
+    /// \returns the final offset in the data stream after the seek or -1 on
+    ///          failure; call SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -563,6 +580,7 @@ extern "C" {
     /// \sa SDL_IOprintf
     /// \sa SDL_ReadIO
     /// \sa SDL_SeekIO
+    /// \sa SDL_FlushIO
     /// \sa SDL_GetIOStatus
     pub fn SDL_WriteIO(
         context: *mut SDL_IOStream,
@@ -617,6 +635,24 @@ extern "C" {
 }
 
 extern "C" {
+    /// Flush any buffered data in the stream.
+    ///
+    /// This function makes sure that any buffered data is written to the stream.
+    /// Normally this isn't necessary but if the stream is a pipe or socket it
+    /// guarantees that any pending data is sent.
+    ///
+    /// \param context SDL_IOStream structure to flush.
+    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
+    ///          for more information.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_OpenIO
+    /// \sa SDL_WriteIO
+    pub fn SDL_FlushIO(context: *mut SDL_IOStream) -> SDL_bool;
+}
+
+extern "C" {
     /// Load all the data from an SDL data stream.
     ///
     /// The data is allocated with a zero byte at the end (null terminated) for
@@ -626,7 +662,8 @@ extern "C" {
     /// The data should be freed with SDL_free().
     ///
     /// \param src the SDL_IOStream to read all available data from.
-    /// \param datasize if not NULL, will store the number of bytes read.
+    /// \param datasize a pointer filled in with the number of bytes read, may be
+    ///                 NULL.
     /// \param closeio if SDL_TRUE, calls SDL_CloseIO() on `src` before returning,
     ///                even in the case of an error.
     /// \returns the data or NULL on failure; call SDL_GetError() for more

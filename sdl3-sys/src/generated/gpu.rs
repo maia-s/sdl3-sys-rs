@@ -82,7 +82,7 @@ pub const SDL_GPU_LOADOP_DONT_CARE: SDL_GPULoadOp = SDL_GPULoadOp::DONT_CARE;
 ///
 /// \sa SDL_BeginGPURenderPass
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_STOREOP_STORE`], [`SDL_GPU_STOREOP_DONT_CARE`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_STOREOP_STORE`], [`SDL_GPU_STOREOP_DONT_CARE`], [`SDL_GPU_STOREOP_RESOLVE`], [`SDL_GPU_STOREOP_RESOLVE_AND_STORE`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -92,11 +92,19 @@ impl SDL_GPUStoreOp {
     pub const STORE: Self = Self(0);
     /// The contents generated during the render pass are not needed and may be discarded. The contents will be undefined.
     pub const DONT_CARE: Self = Self(1);
+    /// The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture may then be discarded and will be undefined.
+    pub const RESOLVE: Self = Self(2);
+    /// The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture will be written to memory.
+    pub const RESOLVE_AND_STORE: Self = Self(3);
 }
 /// The contents generated during the render pass will be written to memory.
 pub const SDL_GPU_STOREOP_STORE: SDL_GPUStoreOp = SDL_GPUStoreOp::STORE;
 /// The contents generated during the render pass are not needed and may be discarded. The contents will be undefined.
 pub const SDL_GPU_STOREOP_DONT_CARE: SDL_GPUStoreOp = SDL_GPUStoreOp::DONT_CARE;
+/// The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture may then be discarded and will be undefined.
+pub const SDL_GPU_STOREOP_RESOLVE: SDL_GPUStoreOp = SDL_GPUStoreOp::RESOLVE;
+/// The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture will be written to memory.
+pub const SDL_GPU_STOREOP_RESOLVE_AND_STORE: SDL_GPUStoreOp = SDL_GPUStoreOp::RESOLVE_AND_STORE;
 
 /// Specifies the size of elements in an index buffer.
 ///
@@ -1829,7 +1837,7 @@ pub struct SDL_GPUColorTargetDescription {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GpuGraphicsPipelineTargetInfo {
+pub struct SDL_GPUGraphicsPipelineTargetInfo {
     /// A pointer to an array of color target descriptions.
     pub color_target_descriptions: *const SDL_GPUColorTargetDescription,
     /// The number of color target descriptions in the above array.
@@ -1867,7 +1875,7 @@ pub struct SDL_GPUGraphicsPipelineCreateInfo {
     /// The depth-stencil state of the graphics pipeline.
     pub depth_stencil_state: SDL_GPUDepthStencilState,
     /// Formats and blend modes for the render targets of the graphics pipeline.
-    pub target_info: SDL_GpuGraphicsPipelineTargetInfo,
+    pub target_info: SDL_GPUGraphicsPipelineTargetInfo,
     /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
 }
@@ -1917,7 +1925,8 @@ pub struct SDL_GPUComputePipelineCreateInfo {
 /// The load_op field determines what is done with the texture at the beginning
 /// of the render pass.
 ///
-/// - LOAD: Loads the data currently in the texture.
+/// - LOAD: Loads the data currently in the texture. Not recommended for
+///   multisample textures as it requires significant memory bandwidth.
 /// - CLEAR: Clears the texture to a single color.
 /// - DONT_CARE: The driver will do whatever it wants with the texture memory.
 ///   This is a good option if you know that every single pixel will be touched
@@ -1926,9 +1935,19 @@ pub struct SDL_GPUComputePipelineCreateInfo {
 /// The store_op field determines what is done with the color results of the
 /// render pass.
 ///
-/// - STORE: Stores the results of the render pass in the texture.
+/// - STORE: Stores the results of the render pass in the texture. Not
+///   recommended for multisample textures as it requires significant memory
+///   bandwidth.
 /// - DONT_CARE: The driver will do whatever it wants with the texture memory.
 ///   This is often a good option for depth/stencil textures.
+/// - RESOLVE: Resolves a multisample texture into resolve_texture, which must
+///   have a sample count of 1. Then the driver may discard the multisample
+///   texture memory. This is the most performant method of resolving a
+///   multisample target.
+/// - RESOLVE_AND_STORE: Resolves a multisample texture into the
+///   resolve_texture, which must have a sample count of 1. Then the driver
+///   stores the multisample texture's contents. Not recommended as it requires
+///   significant memory bandwidth.
 ///
 /// \since This struct is available since SDL 3.0.0
 ///
@@ -1949,11 +1968,18 @@ pub struct SDL_GPUColorTargetInfo {
     pub load_op: SDL_GPULoadOp,
     /// What is done with the results of the render pass.
     pub store_op: SDL_GPUStoreOp,
+    /// The texture that will receive the results of a multisample resolve operation. Ignored if a RESOLVE* store_op is not used.
+    pub resolve_texture: *mut SDL_GPUTexture,
+    /// The mip level of the resolve texture to use for the resolve operation. Ignored if a RESOLVE* store_op is not used.
+    pub resolve_mip_level: Uint32,
+    /// The layer index of the resolve texture to use for the resolve operation. Ignored if a RESOLVE* store_op is not used.
+    pub resolve_layer: Uint32,
     /// SDL_TRUE cycles the texture if the texture is bound and load_op is not LOAD
     pub cycle: SDL_bool,
+    /// SDL_TRUE cycles the resolve texture if the resolve texture is bound. Ignored if a RESOLVE* store_op is not used.
+    pub cycle_resolve_texture: SDL_bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
-    pub padding3: Uint8,
 }
 
 /// A structure specifying the parameters of a depth-stencil target used by a
@@ -1992,6 +2018,8 @@ pub struct SDL_GPUColorTargetInfo {
 /// - DONT_CARE: The driver will do whatever it wants with the stencil results.
 ///   This is often a good option for depth/stencil textures that don't need to
 ///   be reused again.
+///
+/// Note that depth/stencil targets do not support multisample resolves.
 ///
 /// \since This struct is available since SDL 3.0.0
 ///
@@ -2134,7 +2162,7 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_CreateGPUDevice
-    pub fn SDL_QueryGPUSupport(
+    pub fn SDL_GPUSupportsShaderFormats(
         format_flags: SDL_GPUShaderFormat,
         name: *const ::core::ffi::c_char,
     ) -> SDL_bool;
@@ -2149,7 +2177,7 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_CreateGPUDeviceWithProperties
-    pub fn SDL_QueryGPUSupportWithProperties(props: SDL_PropertiesID) -> SDL_bool;
+    pub fn SDL_GPUSupportsProperties(props: SDL_PropertiesID) -> SDL_bool;
 }
 
 extern "C" {
@@ -2167,7 +2195,7 @@ extern "C" {
     /// \sa SDL_GetGPUShaderFormats
     /// \sa SDL_GetGPUDeviceDriver
     /// \sa SDL_DestroyGPUDevice
-    /// \sa SDL_QueryGPUSupport
+    /// \sa SDL_GPUSupportsShaderFormats
     pub fn SDL_CreateGPUDevice(
         format_flags: SDL_GPUShaderFormat,
         debug_mode: SDL_bool,
@@ -2215,7 +2243,7 @@ extern "C" {
     /// \sa SDL_GetGPUShaderFormats
     /// \sa SDL_GetGPUDeviceDriver
     /// \sa SDL_DestroyGPUDevice
-    /// \sa SDL_QueryGPUSupportWithProperties
+    /// \sa SDL_GPUSupportsProperties
     pub fn SDL_CreateGPUDeviceWithProperties(props: SDL_PropertiesID) -> *mut SDL_GPUDevice;
 }
 
@@ -2459,7 +2487,7 @@ extern "C" {
     /// - [[texture]]: Sampled textures, followed by storage textures
     /// - [[sampler]]: Samplers with indices corresponding to the sampled textures
     /// - [[buffer]]: Uniform buffers, followed by storage buffers. Vertex buffer 0
-    ///   is bound at [[buffer(30)]], vertex buffer 1 at [[buffer(29)]], and so on.
+    ///   is bound at [[buffer(14)]], vertex buffer 1 at [[buffer(15)]], and so on.
     ///   Rather than manually authoring vertex buffer indices, use the
     ///   [[stage_in]] attribute which will automatically use the vertex input
     ///   information from the SDL_GPUPipeline.
