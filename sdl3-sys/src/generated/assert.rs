@@ -53,7 +53,10 @@ emit! {
 }
 
 #[cfg(doc)]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped function-like define `SDL_TriggerBreakpoint`
+
+}
 
 #[cfg(not(doc))]
 emit! {
@@ -63,10 +66,14 @@ emit! {
             pub fn __debugbreak();
         }
 
+        // [sdl3-sys-gen] skipped function-like define `SDL_TriggerBreakpoint`
+
     }
 
     #[cfg(not(all(windows, target_env = "msvc")))]
     emit! {
+        // [sdl3-sys-gen] skipped function-like define `SDL_TriggerBreakpoint`
+
     }
 
 }
@@ -82,6 +89,8 @@ emit! {
     pub const SDL_NULL_WHILE_LOOP_CONDITION: ::core::primitive::i32 = 0;
 
 }
+
+// [sdl3-sys-gen] skipped function-like define `SDL_disabled_assert`
 
 /// Possible outcomes from a triggered assertion.
 ///
@@ -170,31 +179,66 @@ extern "C" {
     ) -> SDL_AssertState;
 }
 
+// [sdl3-sys-gen] skipped function-like define `SDL_AssertBreakpoint`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_enabled_assert`
+
 #[cfg(doc)]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped function-like define `SDL_assert`
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_assert_release`
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_assert_paranoid`
+
+}
 
 #[cfg(not(doc))]
 emit! {
     #[cfg(feature = "assert-level-disabled")]
     emit! {
+        // [sdl3-sys-gen] skipped function-like define `SDL_assert`
+
+        // [sdl3-sys-gen] skipped function-like define `SDL_assert_release`
+
+        // [sdl3-sys-gen] skipped function-like define `SDL_assert_paranoid`
+
     }
 
     #[cfg(not(feature = "assert-level-disabled"))]
     emit! {
         #[cfg(feature = "assert-level-release")]
         emit! {
+            // [sdl3-sys-gen] skipped function-like define `SDL_assert`
+
+            // [sdl3-sys-gen] skipped function-like define `SDL_assert_release`
+
+            // [sdl3-sys-gen] skipped function-like define `SDL_assert_paranoid`
+
         }
 
         #[cfg(not(feature = "assert-level-release"))]
         emit! {
             #[cfg(feature = "assert-level-debug")]
             emit! {
+                // [sdl3-sys-gen] skipped function-like define `SDL_assert`
+
+                // [sdl3-sys-gen] skipped function-like define `SDL_assert_release`
+
+                // [sdl3-sys-gen] skipped function-like define `SDL_assert_paranoid`
+
             }
 
             #[cfg(not(feature = "assert-level-debug"))]
             emit! {
                 #[cfg(feature = "assert-level-paranoid")]
                 emit! {
+                    // [sdl3-sys-gen] skipped function-like define `SDL_assert`
+
+                    // [sdl3-sys-gen] skipped function-like define `SDL_assert_release`
+
+                    // [sdl3-sys-gen] skipped function-like define `SDL_assert_paranoid`
+
                 }
 
                 #[cfg(not(feature = "assert-level-paranoid"))]
@@ -209,6 +253,8 @@ emit! {
     }
 
 }
+
+// [sdl3-sys-gen] skipped function-like define `SDL_assert_always`
 
 /// A callback that fires when an SDL assertion fails.
 ///

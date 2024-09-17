@@ -6,17 +6,49 @@
 
 pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
 
+// [sdl3-sys-gen] skipped function-like define `SDL_HAS_BUILTIN`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_arraysize`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_STRINGIFY_ARG`
+
 #[cfg(doc)]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped function-like define `SDL_reinterpret_cast`
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_static_cast`
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_const_cast`
+
+}
 
 #[cfg(not(doc))]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped function-like define `SDL_reinterpret_cast`
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_static_cast`
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_const_cast`
+
+}
+
+// [sdl3-sys-gen] skipped function-like define `SDL_FOURCC`
 
 #[cfg(doc)]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped function-like define `SDL_SINT64_C`
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_UINT64_C`
+
+}
 
 #[cfg(not(doc))]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped function-like define `SDL_SINT64_C`
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_UINT64_C`
+
+}
 
 /// A boolean false.
 ///
@@ -235,6 +267,34 @@ pub const SDL_PRIx32: &::core::ffi::CStr =
 pub const SDL_PRIX32: &::core::ffi::CStr =
     unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"X\0") };
 
+// [sdl3-sys-gen] skipped function-like define `SDL_IN_BYTECAP`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_INOUT_Z_CAP`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_OUT_Z_CAP`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_OUT_CAP`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_OUT_BYTECAP`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_OUT_Z_BYTECAP`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_PRINTF_VARARG_FUNC`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_PRINTF_VARARG_FUNCV`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_SCANF_VARARG_FUNC`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_SCANF_VARARG_FUNCV`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_WPRINTF_VARARG_FUNC`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_WPRINTF_VARARG_FUNCV`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_COMPILE_TIME_ASSERT`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_COMPILE_TIME_ASSERT`
+
 const _: () = ::core::assert!(::core::mem::size_of::<SDL_bool>() == 1);
 
 const _: () = ::core::assert!(::core::mem::size_of::<Uint8>() == 1);
@@ -342,6 +402,10 @@ pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {
             .write(::core::mem::size_of::<T>() as Uint32);
     }
 }
+
+// [sdl3-sys-gen] skipped function-like define `SDL_stack_alloc`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_stack_free`
 
 extern "C" {
     /// Allocate uninitialized memory.
@@ -956,6 +1020,12 @@ extern "C" {
     pub fn SDL_abs(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
+// [sdl3-sys-gen] skipped function-like define `SDL_min`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_max`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_clamp`
+
 extern "C" {
     /// Query if a character is alphabetic (a letter).
     ///
@@ -1232,6 +1302,8 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
+// [sdl3-sys-gen] skipped function-like define `SDL_copyp`
+
 extern "C" {
     /// Copy memory.
     ///
@@ -1270,6 +1342,12 @@ extern "C" {
         dwords: ::core::primitive::usize,
     ) -> *mut ::core::ffi::c_void;
 }
+
+// [sdl3-sys-gen] skipped function-like define `SDL_zero`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_zerop`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_zeroa`
 
 extern "C" {
     pub fn SDL_memcmp(
@@ -3979,19 +4057,31 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-// skipped inline function `SDL_size_mul_check_overflow`
+// [sdl3-sys-gen] skipped function-like define `SDL_iconv_utf8_locale`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_iconv_utf8_ucs2`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_iconv_utf8_ucs4`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_iconv_wchar_utf8`
+
+// [sdl3-sys-gen] skipped inline function `SDL_size_mul_check_overflow`
 
 #[cfg(not(doc))]
 emit! {
-    // skipped inline function `SDL_size_mul_check_overflow_builtin`
+    // [sdl3-sys-gen] skipped inline function `SDL_size_mul_check_overflow_builtin`
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_size_mul_check_overflow`
 
 }
 
-// skipped inline function `SDL_size_add_check_overflow`
+// [sdl3-sys-gen] skipped inline function `SDL_size_add_check_overflow`
 
 #[cfg(not(doc))]
 emit! {
-    // skipped inline function `SDL_size_add_check_overflow_builtin`
+    // [sdl3-sys-gen] skipped inline function `SDL_size_add_check_overflow_builtin`
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_size_add_check_overflow`
 
 }
 

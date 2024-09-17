@@ -19,6 +19,8 @@ pub type SDL_Keycode = Uint32;
 
 pub const SDLK_SCANCODE_MASK: ::core::primitive::u32 = 1073741824_u32;
 
+// [sdl3-sys-gen] skipped function-like define `SDL_SCANCODE_TO_KEYCODE`
+
 pub const SDLK_UNKNOWN: ::core::primitive::u32 = 0_u32;
 
 pub const SDLK_RETURN: ::core::primitive::u32 = 13_u32;

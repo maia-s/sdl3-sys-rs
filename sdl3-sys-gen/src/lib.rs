@@ -149,7 +149,6 @@ impl Gen {
         filename: String,
         contents: String,
     ) -> Result<(), ParseErr> {
-        println!("parsing {filename}");
         let contents: Span = Source::new(filename, contents).into();
         let rest = contents.trim_wsc()?;
         let ctx = ParseContext::new(Some(module.into()));
@@ -161,7 +160,7 @@ impl Gen {
     pub fn emit(&self, module: &str) -> Result<(), Error> {
         if !self.emitted.borrow().contains_key(module) && !self.skipped.borrow().contains(module) {
             if !self.parsed.contains_key(module) || skip_emit(module) {
-                eprintln!("skipping {module}");
+                eprintln!("[sdl3-sys-gen] skipped module `{module}`");
                 self.skipped.borrow_mut().insert(module.to_string());
                 return Ok(());
             }
@@ -170,10 +169,11 @@ impl Gen {
             path.push(module);
             path.set_extension("rs");
 
-            struct CompleteGuard<'a>(bool, &'a Path);
+            struct CompleteGuard<'a>(bool, &'a Path, &'a str);
             impl Drop for CompleteGuard<'_> {
                 fn drop(&mut self) {
                     if !self.0 {
+                        eprintln!("[sdl3-sys-gen] incomplete generated module `{}`", self.2);
                         use io::Write;
                         File::options()
                             .append(true)
@@ -186,7 +186,7 @@ impl Gen {
                     }
                 }
             }
-            let mut complete_guard = CompleteGuard(false, &path);
+            let mut complete_guard = CompleteGuard(false, &path, module);
 
             let mut file = Writable(BufWriter::new(File::create(&path)?));
             let mut ctx = EmitContext::new(module, &mut file, self)?;
@@ -205,8 +205,6 @@ impl Gen {
                 .insert(module.to_string(), emitted);
 
             complete_guard.0 = true;
-
-            println!("emitted {module}");
 
             run_rustfmt(&path);
 

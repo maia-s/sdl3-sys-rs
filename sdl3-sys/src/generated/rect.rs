@@ -78,13 +78,13 @@ pub struct SDL_FRect {
     pub h: ::core::ffi::c_float,
 }
 
-// skipped inline function `SDL_RectToFRect`
+// [sdl3-sys-gen] skipped inline function `SDL_RectToFRect`
 
-// skipped inline function `SDL_PointInRect`
+// [sdl3-sys-gen] skipped inline function `SDL_PointInRect`
 
-// skipped inline function `SDL_RectEmpty`
+// [sdl3-sys-gen] skipped inline function `SDL_RectEmpty`
 
-// skipped inline function `SDL_RectsEqual`
+// [sdl3-sys-gen] skipped inline function `SDL_RectsEqual`
 
 extern "C" {
     /// Determine whether two rectangles intersect.
@@ -192,13 +192,13 @@ extern "C" {
     ) -> SDL_bool;
 }
 
-// skipped inline function `SDL_PointInRectFloat`
+// [sdl3-sys-gen] skipped inline function `SDL_PointInRectFloat`
 
-// skipped inline function `SDL_RectEmptyFloat`
+// [sdl3-sys-gen] skipped inline function `SDL_RectEmptyFloat`
 
-// skipped inline function `SDL_RectsEqualEpsilon`
+// [sdl3-sys-gen] skipped inline function `SDL_RectsEqualEpsilon`
 
-// skipped inline function `SDL_RectsEqualFloat`
+// [sdl3-sys-gen] skipped inline function `SDL_RectsEqualFloat`
 
 extern "C" {
     /// Determine whether two rectangles intersect with float precision.

@@ -33,6 +33,8 @@ pub const SDL_SURFACE_LOCKED: ::core::primitive::u32 = 4_u32;
 /// Surface uses pixel memory allocated with SDL_aligned_alloc()
 pub const SDL_SURFACE_SIMD_ALIGNED: ::core::primitive::u32 = 8_u32;
 
+// [sdl3-sys-gen] skipped function-like define `SDL_MUSTLOCK`
+
 /// The scaling mode.
 ///
 /// \since This enum is available since SDL 3.0.0.

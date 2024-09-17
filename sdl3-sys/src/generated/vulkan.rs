@@ -6,11 +6,19 @@ use super::error::*;
 
 use super::video::*;
 
+// [sdl3-sys-gen] skipped function-like define `VK_DEFINE_HANDLE`
+
 #[cfg(any(any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64", target_arch = "x86_64"))]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped function-like define `VK_DEFINE_NON_DISPATCHABLE_HANDLE`
+
+}
 
 #[cfg(not(any(any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64", target_arch = "x86_64")))]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped function-like define `VK_DEFINE_NON_DISPATCHABLE_HANDLE`
+
+}
 
 pub type VkInstance = *mut __VkInstance;
 

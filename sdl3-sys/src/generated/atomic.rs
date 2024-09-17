@@ -93,7 +93,10 @@ extern "C" {
 }
 
 #[cfg(doc)]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped function-like define `SDL_CompilerBarrier`
+
+}
 
 #[cfg(not(doc))]
 emit! {
@@ -104,16 +107,22 @@ emit! {
         }
 
         // pragma `intrinsic(_ReadWriteBarrier)`
+        // [sdl3-sys-gen] skipped function-like define `SDL_CompilerBarrier`
+
     }
 
     #[cfg(not(all(not(any(/* always disabled: __clang__ */)), all(windows, target_env = "msvc"))))]
     emit! {
         #[cfg(not(target_os = "emscripten"))]
         emit! {
+            // [sdl3-sys-gen] skipped function-like define `SDL_CompilerBarrier`
+
         }
 
         #[cfg(target_os = "emscripten")]
         emit! {
+            // [sdl3-sys-gen] skipped function-like define `SDL_CompilerBarrier`
+
         }
 
     }
@@ -165,31 +174,51 @@ extern "C" {
 }
 
 #[cfg(all(any(any(target_arch = "powerpc", target_arch = "powerpc64"), any(target_arch = "powerpc", target_arch = "powerpc64")), any(/* always disabled: __GNUC__ */)))]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped function-like define `SDL_MemoryBarrierRelease`
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_MemoryBarrierAcquire`
+
+}
 
 #[cfg(not(all(any(any(target_arch = "powerpc", target_arch = "powerpc64"), any(target_arch = "powerpc", target_arch = "powerpc64")), any(/* always disabled: __GNUC__ */))))]
 emit! {
     #[cfg(all(any(/* always disabled: __GNUC__ */), target_arch = "aarch64"))]
     emit! {
+        // [sdl3-sys-gen] skipped function-like define `SDL_MemoryBarrierRelease`
+
+        // [sdl3-sys-gen] skipped function-like define `SDL_MemoryBarrierAcquire`
+
     }
 
     #[cfg(not(all(any(/* always disabled: __GNUC__ */), target_arch = "aarch64")))]
     emit! {
+        // [sdl3-sys-gen] skipped function-like define `SDL_MemoryBarrierRelease`
+
+        // [sdl3-sys-gen] skipped function-like define `SDL_MemoryBarrierAcquire`
+
     }
 
 }
 
 #[cfg(doc)]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped function-like define `SDL_CPUPauseInstruction`
+
+}
 
 #[cfg(not(doc))]
 emit! {
     #[cfg(all(any(any(/* always disabled: __GNUC__ */), any(/* always disabled: __clang__ */)), any(target_arch = "x86", target_arch = "x86_64")))]
     emit! {
+        // [sdl3-sys-gen] skipped function-like define `SDL_CPUPauseInstruction`
+
     }
 
     #[cfg(not(all(any(any(/* always disabled: __GNUC__ */), any(/* always disabled: __clang__ */)), any(target_arch = "x86", target_arch = "x86_64"))))]
     emit! {
+        // [sdl3-sys-gen] skipped function-like define `SDL_CPUPauseInstruction`
+
     }
 
 }
@@ -305,6 +334,10 @@ extern "C" {
     /// \sa SDL_AtomicIncRef
     pub fn SDL_AtomicAdd(a: *mut SDL_AtomicInt, v: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
+
+// [sdl3-sys-gen] skipped function-like define `SDL_AtomicIncRef`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_AtomicDecRef`
 
 extern "C" {
     /// Set a pointer to a new value if it is currently an old value.

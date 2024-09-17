@@ -2,6 +2,6 @@
 
 use super::stdinc::*;
 
-// skipped inline function `SDL_MostSignificantBitIndex32`
+// [sdl3-sys-gen] skipped inline function `SDL_MostSignificantBitIndex32`
 
-// skipped inline function `SDL_HasExactlyOneBitSet32`
+// [sdl3-sys-gen] skipped inline function `SDL_HasExactlyOneBitSet32`

@@ -14,6 +14,18 @@ pub const SDL_NS_PER_MS: ::core::primitive::i32 = 1000000;
 
 pub const SDL_NS_PER_US: ::core::primitive::i32 = 1000;
 
+// [sdl3-sys-gen] skipped function-like define `SDL_SECONDS_TO_NS`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_NS_TO_SECONDS`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_MS_TO_NS`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_NS_TO_MS`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_US_TO_NS`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_NS_TO_US`
+
 extern "C" {
     /// Get the number of milliseconds since SDL library initialization.
     ///

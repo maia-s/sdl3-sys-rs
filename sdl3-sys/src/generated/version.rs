@@ -24,6 +24,16 @@ pub const SDL_MINOR_VERSION: ::core::primitive::i32 = 1;
 /// \since This macro is available since SDL 3.0.0.
 pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 2;
 
+// [sdl3-sys-gen] skipped function-like define `SDL_VERSIONNUM`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_VERSIONNUM_MAJOR`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_VERSIONNUM_MINOR`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_VERSIONNUM_MICRO`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_VERSION_ATLEAST`
+
 extern "C" {
     /// Get the version of SDL that is linked against your program.
     ///

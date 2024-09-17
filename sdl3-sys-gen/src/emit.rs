@@ -366,6 +366,8 @@ impl Emit for Define {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if patch_emit_define(ctx, self)? {
             // patched
+        } else if let Some(args) = &self.args {
+            ctx.log_skipped("function-like define", self.ident.as_str())?;
         } else if self.args.is_none() {
             ctx.preproc_state().borrow_mut().define(
                 self.ident.clone(),
@@ -445,8 +447,7 @@ impl Emit for Function {
             writeln!(ctx, ";")?;
             emit_extern_end(ctx, &self.abi, false)?;
         } else {
-            writeln!(ctx, "// skipped inline function `{}`", self.ident.as_str())?;
-            writeln!(ctx)?;
+            ctx.log_skipped("inline function", self.ident.as_str())?;
         }
         Ok(())
     }

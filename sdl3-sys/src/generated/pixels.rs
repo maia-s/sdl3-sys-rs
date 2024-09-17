@@ -174,6 +174,36 @@ pub const SDL_PACKEDLAYOUT_8888: SDL_PackedLayout = SDL_PackedLayout::_8888;
 pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout::_2101010;
 pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_1010102;
 
+// [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_PIXELFOURCC`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_PIXELFORMAT`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_PIXELFLAG`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_PIXELTYPE`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_PIXELORDER`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_PIXELLAYOUT`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_BITSPERPIXEL`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_BYTESPERPIXEL`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_INDEXED`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_PACKED`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_ARRAY`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_ALPHA`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_10BIT`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_FLOAT`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_FOURCC`
+
 /// Pixel format.
 ///
 /// SDL's pixel formats have the following naming convention:
@@ -702,6 +732,30 @@ pub const SDL_CHROMA_LOCATION_LEFT: SDL_ChromaLocation = SDL_ChromaLocation::LEF
 pub const SDL_CHROMA_LOCATION_CENTER: SDL_ChromaLocation = SDL_ChromaLocation::CENTER;
 /// In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located").
 pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::TOPLEFT;
+
+// [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_COLORSPACE`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACETYPE`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACERANGE`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACECHROMA`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACEPRIMARIES`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACETRANSFER`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACEMATRIX`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ISCOLORSPACE_MATRIX_BT601`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ISCOLORSPACE_MATRIX_BT709`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ISCOLORSPACE_MATRIX_BT2020_NCL`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ISCOLORSPACE_LIMITED_RANGE`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ISCOLORSPACE_FULL_RANGE`
 
 /// Colorspace definitions.
 ///

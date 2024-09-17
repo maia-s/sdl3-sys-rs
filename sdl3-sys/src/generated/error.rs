@@ -85,3 +85,7 @@ extern "C" {
     /// \sa SDL_SetError
     pub fn SDL_ClearError() -> SDL_bool;
 }
+
+// [sdl3-sys-gen] skipped function-like define `SDL_Unsupported`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_InvalidParamError`

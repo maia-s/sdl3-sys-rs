@@ -383,6 +383,13 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         }
     }
 
+    pub fn log_skipped(&mut self, what: &str, ident: &str) -> EmitResult {
+        eprintln!("[sdl3-sys-gen] skipped {what} `{}::{ident}`", self.module());
+        writeln!(self, "// [sdl3-sys-gen] skipped {what} `{ident}`")?;
+        writeln!(self)?;
+        Ok(())
+    }
+
     pub fn into_inner(self) -> InnerEmitContext {
         let inner = Rc::clone(&self.inner);
         drop(self);

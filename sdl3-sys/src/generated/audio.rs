@@ -78,6 +78,8 @@ pub const SDL_AUDIO_MASK_BIG_ENDIAN: ::core::primitive::u32 = 4096_u32;
 
 pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 
+// [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_AUDIO_FORMAT`
+
 /// Audio format.
 ///
 /// \since This enum is available since SDL 3.0.0.
@@ -159,6 +161,22 @@ pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AudioFormat::S32;
 #[cfg(not(target_endian = "little"))]
 pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 
+// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_BITSIZE`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_BYTESIZE`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISFLOAT`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISBIGENDIAN`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISLITTLEENDIAN`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISSIGNED`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISINT`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISUNSIGNED`
+
 /// SDL Audio Device instance IDs.
 ///
 /// Zero is used to signify an invalid/null device.
@@ -200,6 +218,8 @@ pub struct SDL_AudioSpec {
     /// sample rate: sample frames per second
     pub freq: ::core::ffi::c_int,
 }
+
+// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_FRAMESIZE`
 
 extern "C" {
     /// Use this function to get the number of built-in audio drivers.

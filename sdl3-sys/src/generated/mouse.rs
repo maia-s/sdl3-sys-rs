@@ -157,6 +157,8 @@ pub const SDL_BUTTON_X1: ::core::primitive::i32 = 4;
 
 pub const SDL_BUTTON_X2: ::core::primitive::i32 = 5;
 
+// [sdl3-sys-gen] skipped function-like define `SDL_BUTTON`
+
 extern "C" {
     /// Return whether a mouse is currently connected.
     ///
