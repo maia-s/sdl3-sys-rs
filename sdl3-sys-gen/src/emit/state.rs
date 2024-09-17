@@ -314,10 +314,10 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         defines! {
             "__STDC_VERSION__" = DefineValue::parse_expr("202311L")?;
             "_MSC_VER" = DefineValue::parse_expr("1700")?;
-            "FLT_EPSILON" = DefineValue::RustCode(RustCode::boxed("::core::primitive::f32::EPSILON".into(), Type::primitive(PrimitiveType::Float)));
-            "INT64_C"("x") = DefineValue::RustCode(RustCode::boxed("{x}_i64".into(), Type::primitive(PrimitiveType::Int64T)));
-            "UINT64_C"("x") = DefineValue::RustCode(RustCode::boxed("{x}_u64".into(), Type::primitive(PrimitiveType::Uint64T)));
-            "SIZE_MAX" = DefineValue::RustCode(RustCode::boxed("::core::primitive::usize::MAX".into(), Type::primitive(PrimitiveType::SizeT)));
+            "FLT_EPSILON" = DefineValue::RustCode(RustCode::boxed("::core::primitive::f32::EPSILON".into(), Type::primitive(PrimitiveType::Float), true, false));
+            "INT64_C"("x") = DefineValue::RustCode(RustCode::boxed("{x}_i64".into(), Type::primitive(PrimitiveType::Int64T), true, false));
+            "UINT64_C"("x") = DefineValue::RustCode(RustCode::boxed("{x}_u64".into(), Type::primitive(PrimitiveType::Uint64T), true, false));
+            "SIZE_MAX" = DefineValue::RustCode(RustCode::boxed("::core::primitive::usize::MAX".into(), Type::primitive(PrimitiveType::SizeT), true, false));
             "__has_builtin"("builtin") = DefineValue::Other(Span::new_inline("__has_builtin"));
             "SDL_BIG_ENDIAN" = DefineValue::parse_expr("4321")?;
             "SDL_DISABLE_ALLOCA" = DefineValue::one();

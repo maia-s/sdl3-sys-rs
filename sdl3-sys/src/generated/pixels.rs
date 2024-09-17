@@ -749,11 +749,20 @@ pub const fn SDL_COLORSPACEMATRIX(X: ::core::primitive::i32) -> SDL_MatrixCoeffi
     SDL_MatrixCoefficients((X & 31_i32))
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_ISCOLORSPACE_MATRIX_BT601`
+pub const fn SDL_ISCOLORSPACE_MATRIX_BT601(X: ::core::primitive::i32) -> ::core::primitive::bool {
+    (::core::matches!(SDL_COLORSPACEMATRIX(X), SDL_MATRIX_COEFFICIENTS_BT601)
+        || ::core::matches!(SDL_COLORSPACEMATRIX(X), SDL_MATRIX_COEFFICIENTS_BT470BG))
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_ISCOLORSPACE_MATRIX_BT709`
+pub const fn SDL_ISCOLORSPACE_MATRIX_BT709(X: ::core::primitive::i32) -> ::core::primitive::bool {
+    ::core::matches!(SDL_COLORSPACEMATRIX(X), SDL_MATRIX_COEFFICIENTS_BT709)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_ISCOLORSPACE_MATRIX_BT2020_NCL`
+pub const fn SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(
+    X: ::core::primitive::i32,
+) -> ::core::primitive::bool {
+    ::core::matches!(SDL_COLORSPACEMATRIX(X), SDL_MATRIX_COEFFICIENTS_BT2020_NCL)
+}
 
 // [sdl3-sys-gen] skipped function-like define `SDL_ISCOLORSPACE_LIMITED_RANGE`
 

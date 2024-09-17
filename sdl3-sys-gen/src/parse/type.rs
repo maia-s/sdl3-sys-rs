@@ -1,10 +1,9 @@
-use crate::emit::EmitContext;
-
 use super::{
     DocComment, Enum, Expr, FnAbi, FnDeclArgs, GetSpan, Ident, Kw_const, Kw_typedef, Op, Parse,
     ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion,
     WsAndComments,
 };
+use crate::emit::EmitContext;
 use core::cell::RefCell;
 use std::{borrow::Cow, rc::Rc};
 
@@ -68,11 +67,16 @@ impl Type {
         }
     }
 
-    pub fn function(args: Vec<Type>, return_type: Type, is_const: bool) -> Self {
+    pub fn function(args: Vec<Type>, return_type: Type, is_const: bool, is_unsafe: bool) -> Self {
         Self {
             span: Span::none(),
-            is_const,
-            ty: TypeEnum::Function(Box::new(FnType { return_type, args })),
+            is_const: true,
+            ty: TypeEnum::Function(Box::new(FnType {
+                return_type,
+                args,
+                is_const,
+                is_unsafe,
+            })),
         }
     }
 
@@ -190,6 +194,8 @@ impl PartialEq for TypeEnum {
         match (self, other) {
             (Self::Primitive(s), Self::Primitive(o)) => s == o,
             (Self::Ident(s), Self::Ident(o)) => s.as_str() == o.as_str(),
+            (Self::Pointer(s), Self::Pointer(o)) => s == o,
+            (Self::Rust(s, _), Self::Rust(o, _)) => s.as_str() == o.as_str(),
             _ => false,
         }
     }
@@ -206,6 +212,8 @@ pub struct FnPointer {
 pub struct FnType {
     pub return_type: Type,
     pub args: Vec<Type>,
+    pub is_const: bool,
+    pub is_unsafe: bool,
 }
 
 const NO_IDENT: u8 = 0;

@@ -175,7 +175,19 @@ pub const fn SDL_AUDIO_BITSIZE(x: ::core::primitive::u32) -> ::core::primitive::
     (x & 255_u32)
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_BYTESIZE`
+/// Retrieve the size, in bytes, from an SDL_AudioFormat.
+///
+/// For example, `SDL_AUDIO_BYTESIZE(SDL_AUDIO_S16)` returns 2.
+///
+/// \param x an SDL_AudioFormat value.
+/// \returns data size in bytes.
+///
+/// \threadsafety It is safe to call this macro from any thread.
+///
+/// \since This macro is available since SDL 3.0.0.
+pub const fn SDL_AUDIO_BYTESIZE(x: ::core::primitive::u32) -> ::core::primitive::u32 {
+    (SDL_AUDIO_BITSIZE(x) / 8_u32)
+}
 
 /// Determine if an SDL_AudioFormat represents floating point data.
 ///

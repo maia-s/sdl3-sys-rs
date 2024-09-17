@@ -2,9 +2,9 @@ use crate::{
     common_ident_prefix,
     parse::{
         ArgDecl, Conditional, ConditionalExpr, Define, DocComment, DocCommentFile, Expr, FnAbi,
-        FnDeclArgs, FnPointer, Function, GetSpan, Ident, Include, IntegerLiteral, Item, Items,
-        Literal, ParseErr, PreProcBlock, PrimitiveType, StructKind, StructOrUnion, Type, TypeDef,
-        TypeEnum,
+        FnDeclArgs, FnPointer, Function, GetSpan, Ident, IdentOrKwT, Include, IntegerLiteral, Item,
+        Items, Literal, ParseErr, PreProcBlock, PrimitiveType, StructKind, StructOrUnion, Type,
+        TypeDef, TypeEnum,
     },
 };
 use std::{
@@ -17,7 +17,7 @@ use std::{
 mod expr;
 pub use expr::Value;
 mod patch;
-use patch::{patch_emit_define, patch_emit_macro_call};
+use patch::{patch_emit_define, patch_emit_function, patch_emit_macro_call};
 mod state;
 use state::PreProcState;
 pub use state::{DefineState, EmitContext, InnerEmitContext, Sym};
@@ -391,17 +391,35 @@ impl Emit for Define {
 
             if let Ok(f) = ctx.capture_output(|ctx| {
                 self.doc.emit(ctx)?;
-                write!(ctx, "pub const fn {}(", self.ident)?;
+                write!(
+                    ctx,
+                    "pub {}{}fn {}(",
+                    if body.is_const() { "const " } else { "" },
+                    if body.is_unsafe() { "unsafe " } else { "" },
+                    self.ident
+                )?;
                 for arg in args.iter() {
                     write!(ctx, "{}: ", arg.ident)?;
                     arg.ty.emit(ctx)?;
                     write!(ctx, ", ")?;
                 }
-                write!(ctx, ") -> ")?;
-                body.ty().emit(ctx)?;
+                write!(ctx, ")")?;
+                if !body.ty().is_void() {
+                    write!(ctx, " -> ")?;
+                    body.ty().emit(ctx)?;
+                }
                 writeln!(ctx, " {{")?;
                 ctx.increase_indent();
+                if body.is_unsafe() {
+                    writeln!(ctx, "unsafe {{")?;
+                    ctx.increase_indent();
+                }
                 body.emit(ctx)?;
+                writeln!(ctx)?;
+                if body.is_unsafe() {
+                    ctx.decrease_indent();
+                    writeln!(ctx, "}}")?;
+                }
                 ctx.decrease_indent();
                 writeln!(ctx, "}}")?;
                 writeln!(ctx)?;
@@ -413,7 +431,8 @@ impl Emit for Define {
                     Some(Type::function(
                         args.iter().map(|arg| arg.ty.clone()).collect(),
                         return_type,
-                        true,
+                        body.is_const(),
+                        body.is_unsafe(),
                     )),
                     false,
                 )?;
@@ -471,7 +490,7 @@ impl Emit for Include {
     }
 }
 
-impl Emit for Ident {
+impl<const ALLOW_KEYWORDS: bool> Emit for IdentOrKwT<ALLOW_KEYWORDS> {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         write!(ctx, "{self}")?;
         Ok(())
@@ -480,13 +499,15 @@ impl Emit for Ident {
 
 impl Emit for Function {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        if self.static_kw.is_none() && !self.attr.contains("SDL_FORCE_INLINE") {
+        if patch_emit_function(ctx, self)? {
+        } else if self.static_kw.is_none() && !self.attr.contains("SDL_FORCE_INLINE") {
             ctx.register_sym(
                 self.ident.clone(),
                 Some(Type::function(
                     self.args.args.iter().map(|arg| arg.ty.clone()).collect(),
                     self.return_type.clone(),
                     false,
+                    true,
                 )),
                 false,
             )?;

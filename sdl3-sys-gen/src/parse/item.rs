@@ -12,11 +12,18 @@ use std::borrow::Cow;
 pub struct RustCode {
     pub value: String,
     pub ty: Type,
+    pub is_const: bool,
+    pub is_unsafe: bool,
 }
 
 impl RustCode {
-    pub fn boxed(value: String, ty: Type) -> Box<Self> {
-        Box::new(Self { value, ty })
+    pub fn boxed(value: String, ty: Type, is_const: bool, is_unsafe: bool) -> Box<Self> {
+        Box::new(Self {
+            value,
+            ty,
+            is_const,
+            is_unsafe,
+        })
     }
 }
 

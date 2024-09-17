@@ -74,7 +74,23 @@ pub const fn SDL_VERSIONNUM_MICRO(version: ::core::primitive::i32) -> ::core::pr
     (version % 1000_i32)
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_VERSION_ATLEAST`
+/// This is the version number macro for the current SDL version.
+///
+/// \since This macro is available since SDL 3.0.0.
+pub const SDL_VERSION: ::core::primitive::i32 =
+    SDL_VERSIONNUM(SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
+
+/// This macro will evaluate to true if compiled with SDL at least X.Y.Z.
+///
+/// \since This macro is available since SDL 3.0.0.
+pub const fn SDL_VERSION_ATLEAST(
+    X: ::core::primitive::i32,
+    Y: ::core::primitive::i32,
+    Z: ::core::primitive::i32,
+) -> ::core::primitive::bool {
+    (SDL_VERSIONNUM(SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION)
+        >= SDL_VERSIONNUM(X, Y, Z))
+}
 
 extern "C" {
     /// Get the version of SDL that is linked against your program.

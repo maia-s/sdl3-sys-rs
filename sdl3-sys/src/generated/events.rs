@@ -1454,7 +1454,7 @@ pub union SDL_Event {
 }
 
 const _: () =
-    ::core::assert!(::core::mem::size_of::<SDL_Event>() == size_of_field!(SDL_Event, padding));
+    ::core::assert!((::core::mem::size_of::<SDL_Event>() == size_of_field!(SDL_Event, padding)));
 
 extern "C" {
     /// Pump the event loop, gathering events from the input devices.

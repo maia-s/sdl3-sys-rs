@@ -230,8 +230,10 @@ pub const fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: ::core::primitive::u32) -> ::cor
     (536805376_u32 | X)
 }
 
+pub const SDL_WINDOWPOS_UNDEFINED: ::core::primitive::u32 = SDL_WINDOWPOS_UNDEFINED_DISPLAY(0);
+
 pub const fn SDL_WINDOWPOS_ISUNDEFINED(X: ::core::primitive::u32) -> ::core::primitive::bool {
-    (X & 4294901760_u32) == 536805376_u32
+    ((X & 4294901760_u32) == 536805376_u32)
 }
 
 /// Used to indicate that the window position should be centered.
@@ -243,8 +245,10 @@ pub const fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: ::core::primitive::u32) -> ::core
     (805240832_u32 | X)
 }
 
+pub const SDL_WINDOWPOS_CENTERED: ::core::primitive::u32 = SDL_WINDOWPOS_CENTERED_DISPLAY(0);
+
 pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::primitive::u32) -> ::core::primitive::bool {
-    (X & 4294901760_u32) == 805240832_u32
+    ((X & 4294901760_u32) == 805240832_u32)
 }
 
 /// Window flash operation.

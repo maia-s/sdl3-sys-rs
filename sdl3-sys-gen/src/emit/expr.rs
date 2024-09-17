@@ -53,6 +53,40 @@ impl Value {
         !self.is_truthy()
     }
 
+    pub fn is_const(&self) -> bool {
+        match self {
+            Value::I32(_)
+            | Value::U31(_)
+            | Value::U32(_)
+            | Value::I64(_)
+            | Value::U63(_)
+            | Value::U64(_)
+            | Value::F32(_)
+            | Value::F64(_)
+            | Value::Bool(_)
+            | Value::String(_) => true,
+            Value::TargetDependent(_) => false,
+            Value::RustCode(rc) => rc.is_const,
+        }
+    }
+
+    pub fn is_unsafe(&self) -> bool {
+        match self {
+            Value::I32(_)
+            | Value::U31(_)
+            | Value::U32(_)
+            | Value::I64(_)
+            | Value::U63(_)
+            | Value::U64(_)
+            | Value::F32(_)
+            | Value::F64(_)
+            | Value::Bool(_)
+            | Value::String(_)
+            | Value::TargetDependent(_) => false,
+            Value::RustCode(rc) => rc.is_unsafe,
+        }
+    }
+
     pub fn ty(&self) -> Type {
         match self {
             Value::I32(_) => Type::primitive(PrimitiveType::Int32T),
@@ -288,6 +322,54 @@ impl Value {
             }
         }
     }
+
+    pub fn coerce(&self, ctx: &EmitContext, target: &Type) -> Result<Option<Value>, EmitErr> {
+        if &*ctx.module() == "error" && target.is_array_or_pointer() {
+            dbg!(self, target);
+        }
+
+        let mut is_string = false;
+        let mut is_const = false;
+        let mut is_unsafe = false;
+
+        match self {
+            Value::RustCode(rc) => {
+                if rc.ty.is_uninferred() {
+                    rc.ty.resolve_to(target.clone());
+                }
+                let ty = rc.ty.inner_ty().unwrap();
+                is_string = ty == Type::rust("&::core::ffi::CStr", true);
+                is_const = rc.is_const;
+                is_unsafe = rc.is_unsafe;
+            }
+            Value::String(_) => {
+                is_string = true;
+                is_const = true
+            }
+            _ => (),
+        }
+
+        if is_string {
+            if let Some(ptr) = target.get_pointer_type() {
+                if ptr.is_const && ptr.ty == TypeEnum::Primitive(PrimitiveType::Char) {
+                    // pass string literal to `const char*`
+                    let out = ctx.capture_output(|ctx| {
+                        self.emit(ctx)?;
+                        write!(ctx, ".as_ptr()")?;
+                        Ok(())
+                    })?;
+                    return Ok(Some(Value::RustCode(RustCode::boxed(
+                        out,
+                        target.clone(),
+                        is_const,
+                        is_unsafe,
+                    ))));
+                }
+            }
+        }
+
+        Ok(None)
+    }
 }
 
 impl TryFrom<Value> for u64 {
@@ -408,7 +490,11 @@ impl Eval for Ambiguous {
 
 impl Eval for Cast {
     fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        let mut is_const = false;
+        let mut is_unsafe = false;
         if let Some(expr) = self.expr.try_eval(ctx)? {
+            is_const = expr.is_const();
+            is_unsafe = expr.is_unsafe();
             if expr.ty().is_uninferred() {
                 expr.ty().resolve_to(self.ty.clone());
             }
@@ -427,10 +513,12 @@ impl Eval for Cast {
                 self.ty.emit(ctx)
             })
         }?;
-        Ok(Some(Value::RustCode(Box::new(RustCode {
-            value: out,
-            ty: self.ty.clone(),
-        }))))
+        Ok(Some(Value::RustCode(RustCode::boxed(
+            out,
+            self.ty.clone(),
+            is_const,
+            is_unsafe,
+        ))))
     }
 }
 
@@ -483,18 +571,22 @@ impl Eval for SizeOf {
                         write!(ctx, ">()")?;
                         Ok(())
                     })?;
-                    Ok(Some(Value::RustCode(Box::new(RustCode {
-                        value: out,
-                        ty: Type::primitive(PrimitiveType::SizeT),
-                    }))))
+                    Ok(Some(Value::RustCode(RustCode::boxed(
+                        out,
+                        Type::primitive(PrimitiveType::SizeT),
+                        true,
+                        false,
+                    ))))
                 }
 
                 TypeEnum::Ident(ident) => {
                     if ctx.lookup_sym(ident).is_some() {
-                        Ok(Some(Value::RustCode(Box::new(RustCode {
-                            value: format!("::core::mem::size_of::<{}>()", ident.as_str()),
-                            ty: Type::primitive(PrimitiveType::SizeT),
-                        }))))
+                        Ok(Some(Value::RustCode(RustCode::boxed(
+                            format!("::core::mem::size_of::<{}>()", ident.as_str()),
+                            Type::primitive(PrimitiveType::SizeT),
+                            true,
+                            false,
+                        ))))
                     } else {
                         todo!()
                     }
@@ -517,34 +609,74 @@ impl Eval for SizeOf {
                 TypeEnum::Function(_) => todo!(),
             },
 
-            SizeOf::Expr(_, Expr::Parenthesized(p)) => {
-                SizeOf::Expr(p.span(), p.expr.clone()).try_eval(ctx)
-            }
-
             SizeOf::Expr(_, expr) => {
-                if let Expr::BinaryOp(bop) = &expr {
-                    // special case: sizeof(((Type*)_)->field)
-                    if bop.op.as_str() == "->" {
-                        let lhs = if let Expr::Parenthesized(lhs) = &bop.lhs {
-                            &lhs.expr
-                        } else {
-                            &bop.lhs
-                        };
-                        if let (Expr::Cast(lhs), Expr::Ident(rhs)) = (&lhs, &bop.rhs) {
-                            if let Some(ty) = lhs.ty.get_pointer_type() {
-                                let code = ctx.capture_output(|ctx| {
-                                    write!(ctx, "size_of_field!(")?;
-                                    ty.emit(ctx)?;
-                                    write!(ctx, ", {rhs})")?;
-                                    Ok(())
-                                })?;
-                                return Ok(Some(Value::RustCode(RustCode::boxed(
-                                    code,
-                                    Type::primitive(PrimitiveType::SizeT),
-                                ))));
+                let expr = expr.deparenthesize();
+                match expr {
+                    Expr::UnaryOp(uop) => {
+                        // special case: sizeof(*pointer_variable)
+                        if uop.op.as_str() == "*" {
+                            if let Expr::Ident(ident) = &uop.expr.deparenthesize() {
+                                if let Some(Sym { ty: Some(ty), .. }) =
+                                    ctx.lookup_sym(&ident.clone().try_into().unwrap())
+                                {
+                                    if let Some(ty) = ty.get_pointer_type() {
+                                        let code = ctx.capture_output(|ctx| {
+                                            write!(ctx, "::core::mem::size_of::<")?;
+                                            ty.emit(ctx)?;
+                                            write!(ctx, ">()")?;
+                                            Ok(())
+                                        })?;
+                                        return Ok(Some(Value::RustCode(RustCode::boxed(
+                                            code,
+                                            Type::primitive(PrimitiveType::SizeT),
+                                            true,
+                                            false,
+                                        ))));
+                                    }
+                                }
                             }
                         }
                     }
+
+                    Expr::BinaryOp(bop) => {
+                        // special case: sizeof(((Type*)_)->field)
+                        if bop.op.as_str() == "->" {
+                            let lhs = bop.lhs.deparenthesize();
+                            if let (Expr::Cast(lhs), Expr::Ident(rhs)) = (&lhs, &bop.rhs) {
+                                if let Some(ty) = lhs.ty.get_pointer_type() {
+                                    let code = ctx.capture_output(|ctx| {
+                                        write!(ctx, "size_of_field!(")?;
+                                        ty.emit(ctx)?;
+                                        write!(ctx, ", {rhs})")?;
+                                        Ok(())
+                                    })?;
+                                    return Ok(Some(Value::RustCode(RustCode::boxed(
+                                        code,
+                                        Type::primitive(PrimitiveType::SizeT),
+                                        true,
+                                        false,
+                                    ))));
+                                }
+                            }
+                        }
+                    }
+
+                    _ => (),
+                }
+
+                if let Ok(Some(val)) = expr.try_eval(ctx) {
+                    let code = ctx.capture_output(|ctx| {
+                        write!(ctx, "::core::mem::size_of::<")?;
+                        val.ty().emit(ctx)?;
+                        write!(ctx, ">()")?;
+                        Ok(())
+                    })?;
+                    return Ok(Some(Value::RustCode(RustCode::boxed(
+                        code,
+                        Type::primitive(PrimitiveType::SizeT),
+                        true,
+                        false,
+                    ))));
                 }
 
                 // !!! FIXME: size_of_val isn't const, so this'd require finding the type of the expression.
@@ -600,6 +732,8 @@ impl Eval for Expr {
                                     Ok(Some(Value::RustCode(RustCode::boxed(
                                         ident.to_string(),
                                         ty.clone(),
+                                        true,
+                                        false,
                                     ))))
                                 } else {
                                     Ok(None)
@@ -621,107 +755,7 @@ impl Eval for Expr {
                 }
             }
 
-            Expr::FnCall(call) => {
-                if ctx.is_preproc_eval_mode() {
-                    if let Expr::Ident(ident) = &*call.func {
-                        match ident.as_str() {
-                            "defined" => {
-                                let args = &*call.args;
-                                let err = || {
-                                    Err(ParseErr::new(
-                                        call.span(),
-                                        "defined() in #if takes one argument of type ident",
-                                    )
-                                    .into())
-                                };
-                                if args.len() != 1 {
-                                    return err();
-                                }
-                                let Expr::Ident(define) = &args[0] else {
-                                    return err();
-                                };
-                                let define = define.clone().try_into()?;
-                                return if ctx.preproc_state().borrow().is_target_define(&define) {
-                                    Ok(Some(Value::TargetDependent(DefineState::defined(define))))
-                                } else if ctx.preproc_state().borrow().is_defined(&define)? {
-                                    Ok(Some(Value::Bool(true)))
-                                } else {
-                                    Ok(Some(Value::Bool(false)))
-                                };
-                            }
-
-                            "SDL_HAS_BUILTIN" => {
-                                let args = &*call.args;
-                                let err = || {
-                                    Err(ParseErr::new(
-                                        call.span(),
-                                        "SDL_HAS_BUILTIN takes one argument of type ident",
-                                    )
-                                    .into())
-                                };
-                                if args.len() != 1 {
-                                    return err();
-                                }
-                                let Expr::Ident(builtin) = &args[0] else {
-                                    return err();
-                                };
-                                return Ok(Some(Value::Bool(match builtin.as_str() {
-                                    "__builtin_add_overflow" | "__builtin_mul_overflow" => true,
-                                    _ => {
-                                        return Err(ParseErr::new(
-                                            builtin.span(),
-                                            "unknown builtin",
-                                        )
-                                        .into())
-                                    }
-                                })));
-                            }
-
-                            _ => (),
-                        }
-                    }
-                } else {
-                    // not preproc
-
-                    if let Expr::Ident(ident) = &*call.func {
-                        match ident.as_str() {
-                            "SDL_SINT64_C" | "SDL_UINT64_C" => {
-                                let args = &*call.args;
-                                let err = || {
-                                    Err(ParseErr::new(call.span(), "expected one argument").into())
-                                };
-                                if args.len() != 1 {
-                                    return err();
-                                }
-                                let Some(arg) = args[0].try_eval(ctx)? else {
-                                    return Ok(None);
-                                };
-                                return Ok(Some(match ident.as_str() {
-                                    "SDL_SINT64_C" => match arg {
-                                        Value::I32(i) => Value::I64(i as i64),
-                                        Value::U31(u) | Value::U32(u) => Value::I64(u as i64),
-                                        Value::I64(i) => Value::I64(i),
-                                        Value::U63(u) | Value::U64(u) => Value::I64(u as i64),
-                                        _ => todo!(),
-                                    },
-                                    "SDL_UINT64_C" => match arg {
-                                        Value::I32(i) => Value::U64(i as u64),
-                                        Value::U31(u) | Value::U32(u) => Value::U64(u as u64),
-                                        Value::I64(i) => Value::U64(i as u64),
-                                        Value::U63(u) | Value::U64(u) => Value::U64(u),
-                                        _ => todo!(),
-                                    },
-                                    _ => unreachable!(),
-                                }));
-                            }
-
-                            _ => (),
-                        }
-                    }
-
-                    return Ok(None); // !!! FIXME
-                }
-            }
+            Expr::FnCall(call) => return call.try_eval(ctx),
 
             Expr::Ambiguous(amb) => return amb.try_eval(ctx),
 
@@ -739,6 +773,23 @@ impl Eval for Expr {
                     b"!" => match expr {
                         Value::String(_) => Ok(None),
                         Value::TargetDependent(ds) => Ok(Some(Value::TargetDependent(ds.not()))),
+                        Value::RustCode(rc) => match &rc.ty.ty {
+                            TypeEnum::Primitive(PrimitiveType::Bool) => {
+                                Ok(Some(Value::RustCode(RustCode::boxed(
+                                    format!("!({})", rc.value),
+                                    Type::primitive(PrimitiveType::Bool),
+                                    rc.is_const,
+                                    rc.is_unsafe,
+                                ))))
+                            }
+                            TypeEnum::Primitive(_) => Ok(Some(Value::RustCode(RustCode::boxed(
+                                format!("(({}) != 0)", rc.value),
+                                Type::primitive(PrimitiveType::Bool),
+                                rc.is_const,
+                                rc.is_unsafe,
+                            )))),
+                            _ => Ok(None),
+                        },
                         _ => Ok(Some(Value::Bool(expr.is_falsy()))),
                     },
 
@@ -780,6 +831,8 @@ impl Eval for Expr {
                         Value::RustCode(c) => Ok(Some(Value::RustCode(RustCode::boxed(
                             format!("!({})", c.value),
                             c.ty,
+                            c.is_const,
+                            c.is_unsafe,
                         )))),
                         _ => todo!(),
                     },
@@ -813,7 +866,12 @@ impl Eval for Expr {
                                 write!(ctx, ")")?;
                                 Ok(())
                             })?;
-                            Ok(Some(Value::RustCode(RustCode::boxed(code, lhs.ty()))))
+                            Ok(Some(Value::RustCode(RustCode::boxed(
+                                code,
+                                lhs.ty(),
+                                lhs.is_const() && rhs.is_const(),
+                                lhs.is_unsafe() || rhs.is_unsafe(),
+                            ))))
                         };
                     }};
                 }
@@ -853,7 +911,7 @@ impl Eval for Expr {
                             (Value::U31(lhs), Value::RustCode(rhs)) => {
                                 // FIXME
                                 assert!(matches!(rhs.ty.ty, TypeEnum::Primitive(PrimitiveType::SizeT)));
-                                Ok(Some(Value::RustCode(RustCode::boxed(format!("({} {} {})", lhs, stringify!($op), rhs.value), rhs.ty))))
+                                Ok(Some(Value::RustCode(RustCode::boxed(format!("({} {} {})", lhs, stringify!($op), rhs.value), rhs.ty, rhs.is_const, rhs.is_unsafe))))
                             }
 
                             (mut lhs, mut rhs) => {
@@ -868,7 +926,7 @@ impl Eval for Expr {
                                         write!(ctx, ")")?;
                                         Ok(())
                                     })?;
-                                    Ok(Some(Value::RustCode(RustCode::boxed(code, lhs.ty()))))
+                                    Ok(Some(Value::RustCode(RustCode::boxed(code, lhs.ty(), lhs.is_const() && rhs.is_const(),lhs.is_unsafe() || rhs.is_unsafe()))))
                                 }
                             }
                         }
@@ -912,24 +970,53 @@ impl Eval for Expr {
                         let mut rhs = eval!(bop.rhs);
                         Value::promote(ctx, &mut lhs, &mut rhs)?;
                         match (lhs, rhs) {
-                            (Value::I32(lhs), Value::I32(rhs)) => {
-                                Ok(Some(Value::U31((lhs $op rhs) as u32)))
-                            }
-                            (Value::U31(lhs), Value::U31(rhs)) => {
-                                Ok(Some(Value::U31((lhs $op rhs) as u32)))
-                            }
-                            (Value::F32(lhs), Value::F32(rhs)) => {
-                                Ok(Some(Value::U31((lhs $op rhs) as u32)))
-                            }
-                            (Value::F64(lhs), Value::F64(rhs)) => {
-                                Ok(Some(Value::U31((lhs $op rhs) as u32)))
+                            (Value::I32(lhs), Value::I32(rhs)) => Ok(Some(Value::Bool(lhs $op rhs))),
+                            (Value::U31(lhs), Value::U31(rhs)) => Ok(Some(Value::Bool(lhs $op rhs))),
+                            (Value::U32(lhs), Value::U32(rhs)) => Ok(Some(Value::Bool(lhs $op rhs))),
+                            (Value::I64(lhs), Value::I64(rhs)) => Ok(Some(Value::Bool(lhs $op rhs))),
+                            (Value::U63(lhs), Value::U63(rhs)) => Ok(Some(Value::Bool(lhs $op rhs))),
+                            (Value::U64(lhs), Value::U64(rhs)) => Ok(Some(Value::Bool(lhs $op rhs))),
+                            (Value::F32(lhs), Value::F32(rhs)) => Ok(Some(Value::Bool(lhs $op rhs))),
+                            (Value::F64(lhs), Value::F64(rhs)) => Ok(Some(Value::Bool(lhs $op rhs))),
+                            (lhs, Value::RustCode(rhs)) => {
+                                if stringify!($op) == "==" {
+                                    if let Expr::Ident(ident) = &bop.rhs {
+                                        if ctx.lookup_sym(&ident.clone().try_into().unwrap()).is_some() {
+                                            let code = ctx.capture_output(|ctx| {
+                                                write!(ctx, "::core::matches!(")?;
+                                                lhs.emit(ctx)?;
+                                                write!(ctx, ", {rhs})")?;
+                                                Ok(())
+                                            })?;
+                                            return Ok(Some(Value::RustCode(RustCode::boxed(
+                                                code,
+                                                Type::primitive(PrimitiveType::Bool),
+                                                lhs.is_const(), lhs.is_unsafe()
+                                            ))))
+                                        }
+                                    }
+                                }
+                                let code = ctx.capture_output(|ctx| {
+                                    write!(ctx, "(")?;
+                                    lhs.emit(ctx)?;
+                                    write!(ctx, " {op} {rhs})")?;
+                                    Ok(())
+                                })?;
+                                Ok(Some(Value::RustCode(RustCode::boxed(
+                                    code,
+                                    Type::primitive(PrimitiveType::Bool),
+                                    lhs.is_const() && rhs.is_const,
+                                    lhs.is_unsafe() || rhs.is_unsafe
+                                ))))
                             }
                             (Value::RustCode(lhs), rhs) => {
                                 let code = ctx.capture_output(|ctx| {
-                                    write!(ctx, "{lhs} {op} ")?;
-                                    rhs.emit( ctx)
+                                    write!(ctx, "({lhs} {op} ")?;
+                                    rhs.emit(ctx)?;
+                                    write!(ctx, ")")?;
+                                    Ok(())
                                 })?;
-                                Ok(Some(Value::RustCode(Box::new(RustCode{ value:code, ty:Type::primitive(PrimitiveType::Bool) }))))
+                                Ok(Some(Value::RustCode(RustCode::boxed(code, Type::primitive(PrimitiveType::Bool), lhs.is_const && rhs.is_const(), lhs.is_unsafe||rhs.is_unsafe()))))
                             }
                             _ => Err(ParseErr::new(bop.span(), format!("invalid operands to `{op}`")).into()),
                         }
@@ -999,6 +1086,8 @@ impl Eval for Expr {
                             Ok(Some(Value::RustCode(RustCode::boxed(
                                 out,
                                 Type::primitive(PrimitiveType::Bool),
+                                lhs.is_const() && rhs.is_const(),
+                                lhs.is_unsafe() || rhs.is_unsafe(),
                             ))))
                         } else if lhs.is_truthy() {
                             let rhs = eval!(bop.rhs);
@@ -1037,6 +1126,8 @@ impl Eval for Expr {
                             Ok(Some(Value::RustCode(RustCode::boxed(
                                 out,
                                 Type::primitive(PrimitiveType::Bool),
+                                lhs.is_const() && rhs.is_const(),
+                                lhs.is_unsafe() || rhs.is_unsafe(),
                             ))))
                         } else if lhs.is_falsy() {
                             let rhs = eval!(bop.rhs);
@@ -1097,9 +1188,15 @@ impl Emit for Expr {
             Expr::Literal(lit) => lit.emit(ctx),
             Expr::FnCall(call) => call.emit(ctx),
             Expr::Ambiguous(amb) => amb.emit(ctx),
-            Expr::Cast(_) => todo!(),
+            Expr::Cast(cast) => cast
+                .try_eval(ctx)?
+                .ok_or_else(|| ParseErr::new(cast.span(), "couldn't eval"))?
+                .emit(ctx),
             Expr::Asm(_) => todo!(),
-            Expr::SizeOf(_) => todo!(),
+            Expr::SizeOf(sizeof) => sizeof
+                .try_eval(ctx)?
+                .ok_or_else(|| ParseErr::new(sizeof.span(), "couldn't eval"))?
+                .emit(ctx),
 
             Expr::UnaryOp(uop) => {
                 if let Some(value) = self.try_eval(ctx)? {
@@ -1163,15 +1260,16 @@ impl Emit for FnCall {
                     write!(ctx, "{ident}(")?;
                     let mut first = true;
                     for (arg, ty) in self.args.iter().zip(f.args.iter()) {
-                        if let Ok(Some(arg)) = arg.try_eval(ctx) {
-                            if arg.ty().is_uninferred() {
-                                arg.ty().resolve_to(ty.clone());
-                            }
-                        }
                         if !first {
                             write!(ctx, ", ")?
                         }
                         first = false;
+                        if let Ok(Some(argval)) = arg.try_eval(ctx) {
+                            if let Some(argval) = argval.coerce(ctx, ty)? {
+                                argval.emit(ctx)?;
+                                continue;
+                            }
+                        }
                         arg.emit(ctx)?;
                     }
                     write!(ctx, ")")?;
@@ -1180,6 +1278,144 @@ impl Emit for FnCall {
             }
         }
         Err(ParseErr::new(self.span(), "can't emit this macro call").into())
+    }
+}
+
+impl Eval for FnCall {
+    fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        if ctx.is_preproc_eval_mode() {
+            if let Expr::Ident(ident) = &*self.func {
+                match ident.as_str() {
+                    "defined" => {
+                        let args = &*self.args;
+                        let err = || {
+                            Err(ParseErr::new(
+                                self.span(),
+                                "defined() in #if takes one argument of type ident",
+                            )
+                            .into())
+                        };
+                        if args.len() != 1 {
+                            return err();
+                        }
+                        let Expr::Ident(define) = &args[0] else {
+                            return err();
+                        };
+                        let define = define.clone().try_into()?;
+                        return if ctx.preproc_state().borrow().is_target_define(&define) {
+                            Ok(Some(Value::TargetDependent(DefineState::defined(define))))
+                        } else if ctx.preproc_state().borrow().is_defined(&define)? {
+                            Ok(Some(Value::Bool(true)))
+                        } else {
+                            Ok(Some(Value::Bool(false)))
+                        };
+                    }
+
+                    "SDL_HAS_BUILTIN" => {
+                        let args = &*self.args;
+                        let err = || {
+                            Err(ParseErr::new(
+                                self.span(),
+                                "SDL_HAS_BUILTIN takes one argument of type ident",
+                            )
+                            .into())
+                        };
+                        if args.len() != 1 {
+                            return err();
+                        }
+                        let Expr::Ident(builtin) = &args[0] else {
+                            return err();
+                        };
+                        return Ok(Some(Value::Bool(match builtin.as_str() {
+                            "__builtin_add_overflow" | "__builtin_mul_overflow" => true,
+                            _ => {
+                                return Err(ParseErr::new(builtin.span(), "unknown builtin").into())
+                            }
+                        })));
+                    }
+
+                    _ => (),
+                }
+            }
+        } else {
+            // not preproc
+
+            if let Expr::Ident(ident) = &*self.func {
+                match ident.as_str() {
+                    "SDL_SINT64_C" | "SDL_UINT64_C" => {
+                        let args = &*self.args;
+                        let err =
+                            || Err(ParseErr::new(self.span(), "expected one argument").into());
+                        if args.len() != 1 {
+                            return err();
+                        }
+                        let Some(arg) = args[0].try_eval(ctx)? else {
+                            return Ok(None);
+                        };
+                        return Ok(Some(match ident.as_str() {
+                            "SDL_SINT64_C" => match arg {
+                                Value::I32(i) => Value::I64(i as i64),
+                                Value::U31(u) | Value::U32(u) => Value::I64(u as i64),
+                                Value::I64(i) => Value::I64(i),
+                                Value::U63(u) | Value::U64(u) => Value::I64(u as i64),
+                                _ => todo!(),
+                            },
+                            "SDL_UINT64_C" => match arg {
+                                Value::I32(i) => Value::U64(i as u64),
+                                Value::U31(u) | Value::U32(u) => Value::U64(u as u64),
+                                Value::I64(i) => Value::U64(i as u64),
+                                Value::U63(u) | Value::U64(u) => Value::U64(u),
+                                _ => todo!(),
+                            },
+                            _ => unreachable!(),
+                        }));
+                    }
+
+                    _ => {
+                        return if let Some(Sym {
+                            ty:
+                                Some(Type {
+                                    ty: TypeEnum::Function(f),
+                                    ..
+                                }),
+                            ..
+                        }) = ctx.lookup_sym(&ident.clone().try_into().unwrap())
+                        {
+                            let out = ctx.capture_output(|ctx| {
+                                ident.emit(ctx)?;
+                                write!(ctx, "(")?;
+                                let mut first = true;
+                                for (arg, arg_ty) in self.args.iter().zip(f.args.iter()) {
+                                    if !first {
+                                        write!(ctx, ", ")?;
+                                    }
+                                    first = false;
+                                    if let Ok(Some(argval)) = arg.try_eval(ctx) {
+                                        if let Some(argval) = argval.coerce(ctx, arg_ty)? {
+                                            argval.emit(ctx)?;
+                                            continue;
+                                        }
+                                    }
+                                    arg.emit(ctx)?;
+                                }
+                                write!(ctx, ")")?;
+                                Ok(())
+                            })?;
+                            Ok(Some(Value::RustCode(RustCode::boxed(
+                                out,
+                                f.return_type.clone(),
+                                f.is_const,
+                                f.is_unsafe,
+                            ))))
+                        } else {
+                            Ok(None)
+                        }
+                    }
+                }
+            }
+        }
+
+        Ok(None)
     }
 }
 

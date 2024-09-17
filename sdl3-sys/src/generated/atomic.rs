@@ -107,7 +107,11 @@ emit! {
         }
 
         // pragma `intrinsic(_ReadWriteBarrier)`
-        // [sdl3-sys-gen] skipped function-like define `SDL_CompilerBarrier`
+        pub unsafe fn SDL_CompilerBarrier() {
+            unsafe {
+                _ReadWriteBarrier()
+            }
+        }
 
     }
 
@@ -335,9 +339,34 @@ extern "C" {
     pub fn SDL_AtomicAdd(a: *mut SDL_AtomicInt, v: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_AtomicIncRef`
+/// Increment an atomic variable used as a reference count.
+///
+/// ***Note: If you don't know what this macro is for, you shouldn't use it!***
+///
+/// \param a a pointer to an SDL_AtomicInt to increment.
+/// \returns the previous value of the atomic variable.
+///
+/// \since This macro is available since SDL 3.0.0.
+///
+/// \sa SDL_AtomicDecRef
+pub unsafe fn SDL_AtomicIncRef(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int {
+    unsafe { SDL_AtomicAdd(a, 1) }
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_AtomicDecRef`
+/// Decrement an atomic variable used as a reference count.
+///
+/// ***Note: If you don't know what this macro is for, you shouldn't use it!***
+///
+/// \param a a pointer to an SDL_AtomicInt to increment.
+/// \returns SDL_TRUE if the variable reached zero after decrementing,
+///          SDL_FALSE otherwise.
+///
+/// \since This macro is available since SDL 3.0.0.
+///
+/// \sa SDL_AtomicIncRef
+pub unsafe fn SDL_AtomicDecRef(a: *mut SDL_AtomicInt) -> ::core::primitive::bool {
+    unsafe { (SDL_AtomicAdd(a, -1_i32) == 1) }
+}
 
 extern "C" {
     /// Set a pointer to a new value if it is currently an old value.

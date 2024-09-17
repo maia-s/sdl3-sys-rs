@@ -86,6 +86,15 @@ extern "C" {
     pub fn SDL_ClearError() -> SDL_bool;
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_Unsupported`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_InvalidParamError`
+pub unsafe fn SDL_Unsupported() -> SDL_bool {
+    unsafe {
+        SDL_SetError(
+            unsafe {
+                ::core::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"That operation is not supported\0",
+                )
+            }
+            .as_ptr(),
+        )
+    }
+}

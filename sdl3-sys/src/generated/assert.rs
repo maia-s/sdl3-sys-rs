@@ -53,27 +53,16 @@ emit! {
 }
 
 #[cfg(doc)]
-emit! {
-    // [sdl3-sys-gen] skipped function-like define `SDL_TriggerBreakpoint`
-
-}
+emit! {}
 
 #[cfg(not(doc))]
 emit! {
     #[cfg(all(windows, target_env = "msvc"))]
     emit! {
-        extern "cdecl" {
-            pub fn __debugbreak();
-        }
-
-        // [sdl3-sys-gen] skipped function-like define `SDL_TriggerBreakpoint`
-
     }
 
     #[cfg(not(all(windows, target_env = "msvc")))]
     emit! {
-        // [sdl3-sys-gen] skipped function-like define `SDL_TriggerBreakpoint`
-
     }
 
 }

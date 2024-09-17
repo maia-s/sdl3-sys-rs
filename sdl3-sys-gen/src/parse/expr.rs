@@ -202,6 +202,14 @@ impl Expr {
             _ => Err(ParseErr::new(input.start(), "expected expression")),
         }
     }
+
+    pub fn deparenthesize(&self) -> &Self {
+        let mut expr = self;
+        while let Expr::Parenthesized(e) = &expr {
+            expr = &e.expr;
+        }
+        expr
+    }
 }
 
 impl GetSpan for Expr {

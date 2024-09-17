@@ -271,31 +271,31 @@ pub const SDL_PRIX32: &::core::ffi::CStr =
 
 // [sdl3-sys-gen] skipped function-like define `SDL_COMPILE_TIME_ASSERT`
 
-const _: () = ::core::assert!(::core::mem::size_of::<SDL_bool>() == 1);
+const _: () = ::core::assert!((::core::mem::size_of::<SDL_bool>() == 1));
 
-const _: () = ::core::assert!(::core::mem::size_of::<Uint8>() == 1);
+const _: () = ::core::assert!((::core::mem::size_of::<Uint8>() == 1));
 
-const _: () = ::core::assert!(::core::mem::size_of::<Sint8>() == 1);
+const _: () = ::core::assert!((::core::mem::size_of::<Sint8>() == 1));
 
-const _: () = ::core::assert!(::core::mem::size_of::<Uint16>() == 2);
+const _: () = ::core::assert!((::core::mem::size_of::<Uint16>() == 2));
 
-const _: () = ::core::assert!(::core::mem::size_of::<Sint16>() == 2);
+const _: () = ::core::assert!((::core::mem::size_of::<Sint16>() == 2));
 
-const _: () = ::core::assert!(::core::mem::size_of::<Uint32>() == 4);
+const _: () = ::core::assert!((::core::mem::size_of::<Uint32>() == 4));
 
-const _: () = ::core::assert!(::core::mem::size_of::<Sint32>() == 4);
+const _: () = ::core::assert!((::core::mem::size_of::<Sint32>() == 4));
 
-const _: () = ::core::assert!(::core::mem::size_of::<Uint64>() == 8);
+const _: () = ::core::assert!((::core::mem::size_of::<Uint64>() == 8));
 
-const _: () = ::core::assert!(::core::mem::size_of::<Sint64>() == 8);
+const _: () = ::core::assert!((::core::mem::size_of::<Sint64>() == 8));
 
 const _: () = ::core::assert!(
-    ::core::mem::size_of::<Uint64>() <= ::core::mem::size_of::<::core::ffi::c_ulonglong>()
+    (::core::mem::size_of::<Uint64>() <= ::core::mem::size_of::<::core::ffi::c_ulonglong>())
 );
 
 const _: () = ::core::assert!(
-    ::core::mem::size_of::<::core::primitive::usize>()
-        <= ::core::mem::size_of::<::core::ffi::c_ulonglong>()
+    (::core::mem::size_of::<::core::primitive::usize>()
+        <= ::core::mem::size_of::<::core::ffi::c_ulonglong>())
 );
 
 #[repr(C)]
@@ -307,12 +307,12 @@ pub struct SDL_alignment_test {
 }
 
 const _: () = ::core::assert!(
-    ::core::mem::size_of::<SDL_alignment_test>()
-        == (2 * ::core::mem::size_of::<*mut ::core::ffi::c_void>())
+    (::core::mem::size_of::<SDL_alignment_test>()
+        == (2 * ::core::mem::size_of::<*mut ::core::ffi::c_void>()))
 );
 
 const _: () = ::core::assert!(
-    !(0 as ::core::ffi::c_int) as ::core::ffi::c_int == (-1_i32) as ::core::ffi::c_int
+    (!(0 as ::core::ffi::c_int) as ::core::ffi::c_int == (-1_i32) as ::core::ffi::c_int)
 );
 
 #[cfg(all(not(any(/* always disabled: SDL_PLATFORM_3DS */)), not(any(/* always disabled: SDL_PLATFORM_VITA */))))]
@@ -326,7 +326,7 @@ emit! {
     }
     pub const DUMMY_ENUM_VALUE: SDL_DUMMY_ENUM = SDL_DUMMY_ENUM::DUMMY_ENUM_VALUE;
 
-    const _: () = ::core::assert!(::core::mem::size_of::<SDL_DUMMY_ENUM>() == ::core::mem::size_of::<::core::ffi::c_int>());
+    const _: () = ::core::assert!((::core::mem::size_of::<SDL_DUMMY_ENUM>() == ::core::mem::size_of::<::core::ffi::c_int>()));
 
 }
 
@@ -1322,8 +1322,6 @@ extern "C" {
 // [sdl3-sys-gen] skipped function-like define `SDL_zero`
 
 // [sdl3-sys-gen] skipped function-like define `SDL_zerop`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_zeroa`
 
 extern "C" {
     pub fn SDL_memcmp(
