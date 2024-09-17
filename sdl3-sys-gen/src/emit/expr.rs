@@ -958,7 +958,7 @@ impl Emit for IntegerLiteral {
             _ => return Err(ParseErr::new(self.span(), "can't emit base").into()),
         };
         if s.len() < self.ndigits as usize {
-            s = format!("{s}{}", "0".repeat(self.ndigits as usize - s.len()));
+            s = format!("{}{s}", "0".repeat(self.ndigits as usize - s.len()));
         }
         write!(ctx, "{}{}", pfx, s)?;
         Ok(())

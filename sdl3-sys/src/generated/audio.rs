@@ -102,7 +102,7 @@ impl SDL_AudioFormat {
     /// Unspecified audio format
     pub const UNKNOWN: Self = Self(0x0000);
     /// Unsigned 8-bit samples
-    pub const U8: Self = Self(0x8000);
+    pub const U8: Self = Self(0x0008);
     /// Signed 8-bit samples
     pub const S8: Self = Self(0x8008);
     /// Signed 16-bit samples

@@ -438,10 +438,10 @@ pub const SDL_GL_EGL_PLATFORM: SDL_GLattr = SDL_GLattr::EGL_PLATFORM;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLprofile(pub ::core::ffi::c_int);
 impl SDL_GLprofile {
-    pub const CORE: Self = Self(0x1000);
-    pub const COMPATIBILITY: Self = Self(0x2000);
+    pub const CORE: Self = Self(0x0001);
+    pub const COMPATIBILITY: Self = Self(0x0002);
     /// GLX_CONTEXT_ES2_PROFILE_BIT_EXT
-    pub const ES: Self = Self(0x4000);
+    pub const ES: Self = Self(0x0004);
 }
 pub const SDL_GL_CONTEXT_PROFILE_CORE: SDL_GLprofile = SDL_GLprofile::CORE;
 pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLprofile = SDL_GLprofile::COMPATIBILITY;
@@ -458,10 +458,10 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLprofile = SDL_GLprofile::ES;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLcontextFlag(pub ::core::ffi::c_int);
 impl SDL_GLcontextFlag {
-    pub const DEBUG_FLAG: Self = Self(0x1000);
-    pub const FORWARD_COMPATIBLE_FLAG: Self = Self(0x2000);
-    pub const ROBUST_ACCESS_FLAG: Self = Self(0x4000);
-    pub const RESET_ISOLATION_FLAG: Self = Self(0x8000);
+    pub const DEBUG_FLAG: Self = Self(0x0001);
+    pub const FORWARD_COMPATIBLE_FLAG: Self = Self(0x0002);
+    pub const ROBUST_ACCESS_FLAG: Self = Self(0x0004);
+    pub const RESET_ISOLATION_FLAG: Self = Self(0x0008);
 }
 pub const SDL_GL_CONTEXT_DEBUG_FLAG: SDL_GLcontextFlag = SDL_GLcontextFlag::DEBUG_FLAG;
 pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: SDL_GLcontextFlag =
@@ -483,7 +483,7 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLcontextFlag =
 pub struct SDL_GLcontextReleaseFlag(pub ::core::ffi::c_int);
 impl SDL_GLcontextReleaseFlag {
     pub const NONE: Self = Self(0x0000);
-    pub const FLUSH: Self = Self(0x1000);
+    pub const FLUSH: Self = Self(0x0001);
 }
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: SDL_GLcontextReleaseFlag =
     SDL_GLcontextReleaseFlag::NONE;
@@ -501,7 +501,7 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLcontextReleaseFlag =
 pub struct SDL_GLContextResetNotification(pub ::core::ffi::c_int);
 impl SDL_GLContextResetNotification {
     pub const NO_NOTIFICATION: Self = Self(0x0000);
-    pub const LOSE_CONTEXT: Self = Self(0x1000);
+    pub const LOSE_CONTEXT: Self = Self(0x0001);
 }
 pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification =
     SDL_GLContextResetNotification::NO_NOTIFICATION;
