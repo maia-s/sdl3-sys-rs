@@ -66,6 +66,10 @@ impl DefineValue {
         matches!(self, Self::TargetDependent)
     }
 
+    pub const fn is_empty(&self) -> bool {
+        matches!(self, Self::Empty)
+    }
+
     pub fn cast_expr(&self, ty: Type) -> Self {
         match self {
             DefineValue::Expr(expr) => DefineValue::Expr(Expr::Cast(Box::new(Cast {

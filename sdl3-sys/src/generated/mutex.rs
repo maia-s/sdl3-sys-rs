@@ -4,8 +4,6 @@ use super::stdinc::*;
 
 use super::error::*;
 
-// [sdl3-sys-gen] skipped function-like define `SDL_THREAD_ANNOTATION_ATTRIBUTE__`
-
 // [sdl3-sys-gen] skipped function-like define `SDL_CAPABILITY`
 
 // [sdl3-sys-gen] skipped function-like define `SDL_GUARDED_BY`

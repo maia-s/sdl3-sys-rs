@@ -267,30 +267,6 @@ pub const SDL_PRIx32: &::core::ffi::CStr =
 pub const SDL_PRIX32: &::core::ffi::CStr =
     unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"X\0") };
 
-// [sdl3-sys-gen] skipped function-like define `SDL_IN_BYTECAP`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_INOUT_Z_CAP`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_OUT_Z_CAP`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_OUT_CAP`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_OUT_BYTECAP`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_OUT_Z_BYTECAP`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_PRINTF_VARARG_FUNC`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_PRINTF_VARARG_FUNCV`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_SCANF_VARARG_FUNC`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_SCANF_VARARG_FUNCV`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_WPRINTF_VARARG_FUNC`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_WPRINTF_VARARG_FUNCV`
-
 // [sdl3-sys-gen] skipped function-like define `SDL_COMPILE_TIME_ASSERT`
 
 // [sdl3-sys-gen] skipped function-like define `SDL_COMPILE_TIME_ASSERT`

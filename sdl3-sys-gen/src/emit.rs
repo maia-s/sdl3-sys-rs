@@ -367,6 +367,9 @@ impl Emit for Define {
         if patch_emit_define(ctx, self)? {
             // patched
         } else if let Some(args) = &self.args {
+            if self.value.is_empty() {
+                return Ok(());
+            }
             ctx.log_skipped("function-like define", self.ident.as_str())?;
         } else if self.args.is_none() {
             ctx.preproc_state().borrow_mut().define(
