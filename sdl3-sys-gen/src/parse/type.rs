@@ -190,7 +190,7 @@ impl PartialEq for TypeEnum {
         match (self, other) {
             (Self::Primitive(s), Self::Primitive(o)) => s == o,
             (Self::Ident(s), Self::Ident(o)) => s.as_str() == o.as_str(),
-            _ => todo!(),
+            _ => false,
         }
     }
 }

@@ -566,13 +566,13 @@ pub const SDL_KMOD_MODE: ::core::primitive::u32 = 16384_u32;
 pub const SDL_KMOD_SCROLL: ::core::primitive::u32 = 32768_u32;
 
 /// Any Ctrl key is down.
-pub const SDL_KMOD_CTRL: ::core::primitive::u32 = 192_u32;
+pub const SDL_KMOD_CTRL: ::core::primitive::u32 = (64_u32 | 128_u32);
 
 /// Any Shift key is down.
-pub const SDL_KMOD_SHIFT: ::core::primitive::u32 = 3_u32;
+pub const SDL_KMOD_SHIFT: ::core::primitive::u32 = (1_u32 | 2_u32);
 
 /// Any Alt key is down.
-pub const SDL_KMOD_ALT: ::core::primitive::u32 = 768_u32;
+pub const SDL_KMOD_ALT: ::core::primitive::u32 = (256_u32 | 512_u32);
 
 /// Any GUI key is down.
-pub const SDL_KMOD_GUI: ::core::primitive::u32 = 3072_u32;
+pub const SDL_KMOD_GUI: ::core::primitive::u32 = (1024_u32 | 2048_u32);

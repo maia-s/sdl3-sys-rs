@@ -24,13 +24,55 @@ pub const SDL_MINOR_VERSION: ::core::primitive::i32 = 1;
 /// \since This macro is available since SDL 3.0.0.
 pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 2;
 
-// [sdl3-sys-gen] skipped function-like define `SDL_VERSIONNUM`
+/// This macro turns the version numbers into a numeric value.
+///
+/// (1,2,3) becomes 1002003.
+///
+/// \param major the major version number.
+/// \param minor the minorversion number.
+/// \param patch the patch version number.
+///
+/// \since This macro is available since SDL 3.0.0.
+pub const fn SDL_VERSIONNUM(
+    major: ::core::primitive::i32,
+    minor: ::core::primitive::i32,
+    patch: ::core::primitive::i32,
+) -> ::core::primitive::i32 {
+    (((major * 1000000_i32) + (minor * 1000_i32)) + patch)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_VERSIONNUM_MAJOR`
+/// This macro extracts the major version from a version number
+///
+/// 1002003 becomes 1.
+///
+/// \param version the version number.
+///
+/// \since This macro is available since SDL 3.0.0.
+pub const fn SDL_VERSIONNUM_MAJOR(version: ::core::primitive::i32) -> ::core::primitive::i32 {
+    (version / 1000000_i32)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_VERSIONNUM_MINOR`
+/// This macro extracts the minor version from a version number
+///
+/// 1002003 becomes 2.
+///
+/// \param version the version number.
+///
+/// \since This macro is available since SDL 3.0.0.
+pub const fn SDL_VERSIONNUM_MINOR(version: ::core::primitive::i32) -> ::core::primitive::i32 {
+    ((version / 1000_i32) % 1000_i32)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_VERSIONNUM_MICRO`
+/// This macro extracts the micro version from a version number
+///
+/// 1002003 becomes 3.
+///
+/// \param version the version number.
+///
+/// \since This macro is available since SDL 3.0.0.
+pub const fn SDL_VERSIONNUM_MICRO(version: ::core::primitive::i32) -> ::core::primitive::i32 {
+    (version % 1000_i32)
+}
 
 // [sdl3-sys-gen] skipped function-like define `SDL_VERSION_ATLEAST`
 

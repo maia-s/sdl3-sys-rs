@@ -2,8 +2,8 @@ use super::{
     patch_emit_macro_call, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, Sym,
 };
 use crate::parse::{
-    Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan, Ident,
-    IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
+    Alternative, Ambiguous, BinaryOp, Cast, DefineValue, Expr, FloatLiteral, FnCall, GetSpan,
+    Ident, IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
     RustCode, SizeOf, Span, StringLiteral, Type, TypeEnum,
 };
 use core::fmt::{self, Display, Write};
@@ -22,6 +22,14 @@ pub enum Value {
     String(StringLiteral),
     TargetDependent(DefineState),
     RustCode(Box<RustCode>),
+}
+
+pub enum Promoted {
+    None = 0,
+    Equal,
+    Left,
+    Right,
+    Both,
 }
 
 impl Value {
@@ -59,6 +67,225 @@ impl Value {
             Value::String(_) => Type::rust("&::core::ffi::CStr", true),
             Value::RustCode(r) => r.ty.clone(),
             Value::TargetDependent(_) => todo!(),
+        }
+    }
+
+    pub fn promote(ctx: &EmitContext, lhs: &mut Self, rhs: &mut Self) -> Result<Promoted, EmitErr> {
+        macro_rules! set {
+            ($r:ident, $s:ident, $v:ident, $t:ident) => {{
+                *$s = Value::$t(*$v as _);
+                Ok(Promoted::$r)
+            }};
+        }
+        match (&*lhs, &*rhs) {
+            (Value::I32(_), Value::I32(_)) => Ok(Promoted::Equal),
+            (Value::I32(_), Value::U31(rhv)) => set!(Right, rhs, rhv, I32),
+            (Value::I32(lhv), Value::U32(_)) => set!(Left, lhs, lhv, U32),
+            (Value::I32(lhv), Value::I64(_)) => set!(Left, lhs, lhv, I64),
+            (Value::I32(lhv), Value::U63(rhv)) => {
+                *lhs = Value::I64(*lhv as _);
+                *rhs = Value::I64(*rhv as _);
+                Ok(Promoted::Both)
+            }
+            (Value::I32(lhv), Value::U64(_)) => set!(Left, lhs, lhv, U64),
+            (Value::I32(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
+            (Value::I32(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
+            (Value::I32(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, I32),
+
+            (Value::U31(lhv), Value::I32(_)) => set!(Left, lhs, lhv, I32),
+            (Value::U31(_), Value::U31(_)) => Ok(Promoted::Equal),
+            (Value::U31(lhv), Value::U32(_)) => set!(Left, lhs, lhv, U32),
+            (Value::U31(lhv), Value::I64(_)) => set!(Left, lhs, lhv, I64),
+            (Value::U31(lhv), Value::U63(_)) => set!(Left, lhs, lhv, U63),
+            (Value::U31(lhv), Value::U64(_)) => set!(Left, lhs, lhv, U64),
+            (Value::U31(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
+            (Value::U31(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
+            (Value::U31(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, U31),
+
+            (Value::U32(_), Value::I32(rhv)) => set!(Right, rhs, rhv, U32),
+            (Value::U32(_), Value::U31(rhv)) => set!(Right, rhs, rhv, U32),
+            (Value::U32(_), Value::U32(_)) => Ok(Promoted::Equal),
+            (Value::U32(lhv), Value::I64(_)) => set!(Left, lhs, lhv, I64),
+            (Value::U32(lhv), Value::U63(_)) => set!(Left, lhs, lhv, U63),
+            (Value::U32(lhv), Value::U64(_)) => set!(Left, lhs, lhv, U64),
+            (Value::U32(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
+            (Value::U32(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
+            (Value::U32(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, U32),
+
+            (Value::I64(_), Value::I32(rhv)) => set!(Right, rhs, rhv, I64),
+            (Value::I64(_), Value::U31(rhv)) => set!(Right, rhs, rhv, I64),
+            (Value::I64(_), Value::U32(rhv)) => set!(Right, rhs, rhv, I64),
+            (Value::I64(_), Value::I64(_)) => Ok(Promoted::Equal),
+            (Value::I64(_), Value::U63(rhv)) => set!(Right, rhs, rhv, I64),
+            (Value::I64(lhv), Value::U64(_)) => set!(Left, lhs, lhv, U64),
+            (Value::I64(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
+            (Value::I64(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
+            (Value::I64(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, I64),
+
+            (Value::U63(lhv), Value::I32(rhv)) => {
+                *lhs = Value::I64(*lhv as _);
+                *rhs = Value::I64(*rhv as _);
+                Ok(Promoted::Both)
+            }
+            (Value::U63(_), Value::U31(rhv)) => set!(Right, rhs, rhv, U63),
+            (Value::U63(_), Value::U32(rhv)) => set!(Right, rhs, rhv, U63),
+            (Value::U63(lhv), Value::I64(_)) => set!(Left, lhs, lhv, I64),
+            (Value::U63(_), Value::U63(_)) => Ok(Promoted::Equal),
+            (Value::U63(lhv), Value::U64(_)) => set!(Left, lhs, lhv, U64),
+            (Value::U63(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
+            (Value::U63(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
+            (Value::U63(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, U63),
+
+            (Value::U64(_), Value::I32(rhv)) => set!(Right, rhs, rhv, U64),
+            (Value::U64(_), Value::U31(rhv)) => set!(Right, rhs, rhv, U64),
+            (Value::U64(_), Value::U32(rhv)) => set!(Right, rhs, rhv, U64),
+            (Value::U64(_), Value::I64(rhv)) => set!(Right, rhs, rhv, U64),
+            (Value::U64(_), Value::U63(rhv)) => set!(Right, rhs, rhv, U64),
+            (Value::U64(_), Value::U64(_)) => Ok(Promoted::Equal),
+            (Value::U64(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
+            (Value::U64(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
+            (Value::U64(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, U64),
+
+            (Value::F32(_), Value::I32(rhv)) => set!(Right, rhs, rhv, F32),
+            (Value::F32(_), Value::U31(rhv)) => set!(Right, rhs, rhv, F32),
+            (Value::F32(_), Value::U32(rhv)) => set!(Right, rhs, rhv, F32),
+            (Value::F32(_), Value::I64(rhv)) => set!(Right, rhs, rhv, F32),
+            (Value::F32(_), Value::U63(rhv)) => set!(Right, rhs, rhv, F32),
+            (Value::F32(_), Value::U64(rhv)) => set!(Right, rhs, rhv, F32),
+            (Value::F32(_), Value::F32(_)) => Ok(Promoted::Equal),
+            (Value::F32(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
+            (Value::F32(_), Value::Bool(rhv)) => {
+                *rhs = Value::F32(if *rhv { 1.0 } else { 0.0 });
+                Ok(Promoted::Right)
+            }
+
+            (Value::F64(_), Value::I32(rhv)) => set!(Right, rhs, rhv, F64),
+            (Value::F64(_), Value::U31(rhv)) => set!(Right, rhs, rhv, F64),
+            (Value::F64(_), Value::U32(rhv)) => set!(Right, rhs, rhv, F64),
+            (Value::F64(_), Value::I64(rhv)) => set!(Right, rhs, rhv, F64),
+            (Value::F64(_), Value::U63(rhv)) => set!(Right, rhs, rhv, F64),
+            (Value::F64(_), Value::U64(rhv)) => set!(Right, rhs, rhv, F64),
+            (Value::F64(_), Value::F32(rhv)) => set!(Right, rhs, rhv, F64),
+            (Value::F64(_), Value::F64(_)) => Ok(Promoted::Equal),
+            (Value::F64(_), Value::Bool(rhv)) => {
+                *rhs = Value::F64(if *rhv { 1.0 } else { 0.0 });
+                Ok(Promoted::Right)
+            }
+
+            (Value::Bool(lhv), Value::I32(_)) => set!(Left, lhs, lhv, I32),
+            (Value::Bool(lhv), Value::U31(_)) => set!(Left, lhs, lhv, U31),
+            (Value::Bool(lhv), Value::U32(_)) => set!(Left, lhs, lhv, U32),
+            (Value::Bool(lhv), Value::I64(_)) => set!(Left, lhs, lhv, I64),
+            (Value::Bool(lhv), Value::U63(_)) => set!(Left, lhs, lhv, U63),
+            (Value::Bool(lhv), Value::U64(_)) => set!(Left, lhs, lhv, U64),
+            (Value::Bool(lhv), Value::F32(_)) => {
+                *lhs = Value::F32(if *lhv { 1.0 } else { 0.0 });
+                Ok(Promoted::Left)
+            }
+            (Value::Bool(lhv), Value::F64(_)) => {
+                *lhs = Value::F64(if *lhv { 1.0 } else { 0.0 });
+                Ok(Promoted::Left)
+            }
+            (Value::Bool(_), Value::Bool(_)) => Ok(Promoted::Equal),
+            (Value::Bool(_), _) => Ok(Promoted::None),
+
+            (Value::String(_), Value::String(_)) => Ok(Promoted::Equal),
+
+            (Value::String(_) | Value::TargetDependent(_), _)
+            | (_, Value::String(_) | Value::TargetDependent(_)) => Ok(Promoted::None),
+
+            (Value::RustCode(lhv), Value::RustCode(rhv)) => {
+                if let Some(lt) = lhv.ty.inner_ty() {
+                    if let Some(rt) = rhv.ty.inner_ty() {
+                        if let (Some(mut lc), Some(mut rc)) =
+                            (lt.conjure_primitive_value(), rt.conjure_primitive_value())
+                        {
+                            let p = Value::promote(ctx, &mut lc, &mut rc)?;
+                            if matches!(p, Promoted::Left | Promoted::Both) {
+                                let Some(cast) =
+                                    Cast::boxed(Span::none(), rt, Expr::Value(lhs.clone()))
+                                        .try_eval(ctx)?
+                                else {
+                                    unreachable!()
+                                };
+                                *lhs = cast;
+                            }
+                            if matches!(p, Promoted::Right | Promoted::Both) {
+                                let Some(cast) =
+                                    Cast::boxed(Span::none(), lt, Expr::Value(rhs.clone()))
+                                        .try_eval(ctx)?
+                                else {
+                                    unreachable!()
+                                };
+                                *rhs = cast;
+                            }
+                            Ok(p)
+                        } else {
+                            Ok(Promoted::None)
+                        }
+                    } else {
+                        rhv.ty.resolve_to(lt);
+                        Value::promote(ctx, lhs, rhs)
+                    }
+                } else if let Some(rt) = rhv.ty.inner_ty() {
+                    lhv.ty.resolve_to(rt);
+                    Value::promote(ctx, lhs, rhs)
+                } else {
+                    Ok(Promoted::None)
+                }
+            }
+            (Value::RustCode(lhv), _) => {
+                if let Some(lt) = lhv.ty.inner_ty() {
+                    if let Some(mut lc) = lt.conjure_primitive_value() {
+                        match Value::promote(ctx, &mut lc, rhs)? {
+                            Promoted::None => Ok(Promoted::None),
+                            Promoted::Equal => Ok(Promoted::Equal),
+                            p @ Promoted::Left | p @ Promoted::Both => {
+                                let Some(cast) =
+                                    Cast::boxed(Span::none(), rhs.ty(), Expr::Value(lhs.clone()))
+                                        .try_eval(ctx)?
+                                else {
+                                    unreachable!()
+                                };
+                                *lhs = cast;
+                                Ok(p)
+                            }
+                            Promoted::Right => Ok(Promoted::Right),
+                        }
+                    } else {
+                        Ok(Promoted::None)
+                    }
+                } else {
+                    lhv.ty.resolve_to(rhs.ty());
+                    Value::promote(ctx, lhs, rhs)
+                }
+            }
+            (_, Value::RustCode(rhv)) => {
+                if let Some(rt) = rhv.ty.inner_ty() {
+                    if let Some(mut rc) = rt.conjure_primitive_value() {
+                        match Value::promote(ctx, lhs, &mut rc)? {
+                            Promoted::None => Ok(Promoted::None),
+                            Promoted::Equal => Ok(Promoted::Equal),
+                            Promoted::Left => Ok(Promoted::Left),
+                            p @ Promoted::Right | p @ Promoted::Both => {
+                                let Some(cast) =
+                                    Cast::boxed(Span::none(), lhs.ty(), Expr::Value(rhs.clone()))
+                                        .try_eval(ctx)?
+                                else {
+                                    unreachable!()
+                                };
+                                *rhs = cast;
+                                Ok(p)
+                            }
+                        }
+                    } else {
+                        Ok(Promoted::None)
+                    }
+                } else {
+                    rhv.ty.resolve_to(lhs.ty());
+                    Value::promote(ctx, lhs, rhs)
+                }
+            }
         }
     }
 }
@@ -176,6 +403,34 @@ impl Eval for Ambiguous {
             }
         }
         Ok(result)
+    }
+}
+
+impl Eval for Cast {
+    fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        if let Some(expr) = self.expr.try_eval(ctx)? {
+            if expr.ty().is_uninferred() {
+                expr.ty().resolve_to(self.ty.clone());
+            }
+        }
+        let out = if let Some(ident) = self.ty.is_c_enum(ctx) {
+            ctx.capture_output(|ctx| {
+                write!(ctx, "{ident}(")?;
+                self.expr.emit(ctx)?;
+                write!(ctx, ")")?;
+                Ok(())
+            })
+        } else {
+            ctx.capture_output(|ctx| {
+                self.expr.emit(ctx)?;
+                write!(ctx, " as ")?;
+                self.ty.emit(ctx)
+            })
+        }?;
+        Ok(Some(Value::RustCode(Box::new(RustCode {
+            value: out,
+            ty: self.ty.clone(),
+        }))))
     }
 }
 
@@ -470,26 +725,7 @@ impl Eval for Expr {
 
             Expr::Ambiguous(amb) => return amb.try_eval(ctx),
 
-            Expr::Cast(cast) => {
-                let out = if let Some(ident) = cast.ty.is_c_enum(ctx) {
-                    ctx.capture_output(|ctx| {
-                        write!(ctx, "{ident}(")?;
-                        cast.expr.emit(ctx)?;
-                        write!(ctx, ")")?;
-                        Ok(())
-                    })
-                } else {
-                    ctx.capture_output(|ctx| {
-                        cast.expr.emit(ctx)?;
-                        write!(ctx, " as ")?;
-                        cast.ty.emit(ctx)
-                    })
-                }?;
-                return Ok(Some(Value::RustCode(Box::new(RustCode {
-                    value: out,
-                    ty: cast.ty.clone(),
-                }))));
-            }
+            Expr::Cast(cast) => return cast.try_eval(ctx),
 
             Expr::Asm(_) => return Ok(None),
 
@@ -563,39 +799,23 @@ impl Eval for Expr {
                 }
 
                 macro_rules! bitop {
-                    ($op:tt) => {
-                        match (eval!(bop.lhs), eval!(bop.rhs)) {
-                            (Value::I32(lhs), Value::I32(rhs)) => Ok(Some(Value::I32(lhs $op rhs))),
-                            (Value::I32(lhs), Value::U31(rhs)) => Ok(Some(Value::I32(lhs $op rhs as i32))),
-                            (Value::U31(lhs), Value::I32(rhs)) => Ok(Some(Value::I32(lhs as i32 $op rhs))),
-                            (Value::U31(lhs), Value::U31(rhs)) => Ok(Some(Value::U31(lhs $op rhs))),
-                            (Value::U31(lhs) | Value::U32(lhs), Value::U31(rhs) | Value::U32(rhs)) => Ok(Some(Value::U32(lhs $op rhs))),
-                            (Value::RustCode(lhs), rhs) if lhs.ty.is_uninferred() && !rhs.ty().is_uninferred() => {
-                                lhs.ty.resolve_to(rhs.ty());
-                                return self.try_eval(ctx);
-                            }
-                            (lhs, Value::RustCode(rhs)) if rhs.ty.is_uninferred() && !lhs.ty().is_uninferred() => {
-                                rhs.ty.resolve_to(lhs.ty());
-                                return self.try_eval(ctx);
-                            }
-                            (lhs, rhs) => {
-                                if let (Some(lt), Some(rt)) = (lhs.ty().inner_ty(), rhs.ty().inner_ty()) {
-                                    if lt == rt {
-                                        let code = ctx.capture_output(|ctx| {
-                                            write!(ctx, "(")?;
-                                            lhs.emit(ctx)?;
-                                            write!(ctx, " {} ", stringify!($op))?;
-                                            rhs.emit(ctx)?;
-                                            write!(ctx, ")")?;
-                                            Ok(())
-                                        })?;
-                                        return Ok(Some(Value::RustCode(RustCode::boxed(code, lt))));
-                                    }
-                                }
-                                Ok(None)
-                            }
-                        }
-                    };
+                    ($op:tt) => {{
+                        let mut lhs = eval!(bop.lhs);
+                        let mut rhs = eval!(bop.rhs);
+                        return if let Promoted::None = Value::promote(ctx, &mut lhs, &mut rhs)? {
+                            Ok(None)
+                        } else {
+                            let code = ctx.capture_output(|ctx| {
+                                write!(ctx, "(")?;
+                                lhs.emit(ctx)?;
+                                write!(ctx, " {} ", stringify!($op))?;
+                                rhs.emit(ctx)?;
+                                write!(ctx, ")")?;
+                                Ok(())
+                            })?;
+                            Ok(Some(Value::RustCode(RustCode::boxed(code, lhs.ty()))))
+                        };
+                    }};
                 }
 
                 macro_rules! calc {
@@ -630,23 +850,44 @@ impl Eval for Expr {
                             (Value::F32(lhs), Value::F32(rhs)) => Ok(Some(Value::F32(lhs $op rhs))),
                             (Value::F64(lhs), Value::F64(rhs)) => Ok(Some(Value::F64(lhs $op rhs))),
 
-                            (Value::RustCode(_), _) => {
-                                // FIXME
-                                Ok(None)
-                            }
-
                             (Value::U31(lhs), Value::RustCode(rhs)) => {
                                 // FIXME
                                 assert!(matches!(rhs.ty.ty, TypeEnum::Primitive(PrimitiveType::SizeT)));
                                 Ok(Some(Value::RustCode(RustCode::boxed(format!("({} {} {})", lhs, stringify!($op), rhs.value), rhs.ty))))
                             }
 
-                            _ => Err(ParseErr::new(bop.span(), "missing implementation for eval").into()),
+                            (mut lhs, mut rhs) => {
+                                if let Promoted::None = Value::promote(ctx, &mut lhs, &mut rhs)? {
+                                    Ok(None)
+                                } else {
+                                    let code = ctx.capture_output(|ctx| {
+                                        write!(ctx, "(")?;
+                                        lhs.emit(ctx)?;
+                                        write!(ctx, " {} ", stringify!($op))?;
+                                        rhs.emit(ctx)?;
+                                        write!(ctx, ")")?;
+                                        Ok(())
+                                    })?;
+                                    Ok(Some(Value::RustCode(RustCode::boxed(code, lhs.ty()))))
+                                }
+                            }
                         }
                     };
 
                     (@ checked * ($lhs:expr, $rhs:expr)) => {
                         $lhs.checked_mul($rhs).ok_or_else(|| {
+                            ParseErr::new(bop.span(), "evaluated value out of range")
+                        })?
+                    };
+
+                    (@ checked / ($lhs:expr, $rhs:expr)) => {
+                        $lhs.checked_div($rhs).ok_or_else(|| {
+                            ParseErr::new(bop.span(), "evaluated value out of range")
+                        })?
+                    };
+
+                    (@ checked % ($lhs:expr, $rhs:expr)) => {
+                        $lhs.checked_rem($rhs).ok_or_else(|| {
                             ParseErr::new(bop.span(), "evaluated value out of range")
                         })?
                     };
@@ -667,15 +908,12 @@ impl Eval for Expr {
                 macro_rules! compare {
                     ($op:tt) => {{
                         let op = stringify!($op);
-                        match (eval!(bop.lhs), eval!(bop.rhs)) {
+                        let mut lhs = eval!(bop.lhs);
+                        let mut rhs = eval!(bop.rhs);
+                        Value::promote(ctx, &mut lhs, &mut rhs)?;
+                        match (lhs, rhs) {
                             (Value::I32(lhs), Value::I32(rhs)) => {
                                 Ok(Some(Value::U31((lhs $op rhs) as u32)))
-                            }
-                            (Value::I32(lhs), Value::U31(rhs)) => {
-                                Ok(Some(Value::U31((lhs $op rhs as i32) as u32)))
-                            }
-                            (Value::U31(lhs), Value::I32(rhs)) => {
-                                Ok(Some(Value::U31(((lhs as i32) $op rhs) as u32)))
                             }
                             (Value::U31(lhs), Value::U31(rhs)) => {
                                 Ok(Some(Value::U31((lhs $op rhs) as u32)))
@@ -723,6 +961,8 @@ impl Eval for Expr {
 
                 return match bop.op.as_str().as_bytes() {
                     b"*" => calc!(*),
+                    b"/" => calc!(/),
+                    b"%" => calc!(%),
                     b"+" => calc!(+),
                     b"-" => calc!(-),
 
@@ -922,7 +1162,12 @@ impl Emit for FnCall {
                 if self.args.len() == f.args.len() {
                     write!(ctx, "{ident}(")?;
                     let mut first = true;
-                    for arg in self.args.iter() {
+                    for (arg, ty) in self.args.iter().zip(f.args.iter()) {
+                        if let Ok(Some(arg)) = arg.try_eval(ctx) {
+                            if arg.ty().is_uninferred() {
+                                arg.ty().resolve_to(ty.clone());
+                            }
+                        }
                         if !first {
                             write!(ctx, ", ")?
                         }

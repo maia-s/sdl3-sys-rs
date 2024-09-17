@@ -691,6 +691,28 @@ impl Type {
             None
         }
     }
+
+    pub fn conjure_primitive_value(&self) -> Option<Value> {
+        if let Some(ty) = &self.inner_ty() {
+            if let TypeEnum::Primitive(p) = &ty.ty {
+                return Some(match p {
+                    PrimitiveType::Float => Value::F32(0.0),
+                    PrimitiveType::Double => Value::F64(0.0),
+                    PrimitiveType::Bool => Value::Bool(false),
+                    PrimitiveType::Int8T => Value::I32(0),
+                    PrimitiveType::Uint8T => Value::U31(0),
+                    PrimitiveType::Int16T => Value::I32(0),
+                    PrimitiveType::Uint16T => Value::U31(0),
+                    PrimitiveType::Int32T => Value::I32(0),
+                    PrimitiveType::Uint32T => Value::U32(0),
+                    PrimitiveType::Int64T => Value::I64(0),
+                    PrimitiveType::Uint64T => Value::U64(0),
+                    _ => return None,
+                });
+            }
+        }
+        None
+    }
 }
 
 impl Emit for Type {
