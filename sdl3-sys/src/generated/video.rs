@@ -226,18 +226,26 @@ pub const SDL_WINDOW_NOT_FOCUSABLE: ::core::primitive::u64 = 2147483648_u64;
 /// \since This macro is available since SDL 3.0.0.
 pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376_u32;
 
-// [sdl3-sys-gen] skipped function-like define `SDL_WINDOWPOS_UNDEFINED_DISPLAY`
+pub const fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: ::core::primitive::u32) -> ::core::primitive::u32 {
+    (536805376_u32 | X)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_WINDOWPOS_ISUNDEFINED`
+pub const fn SDL_WINDOWPOS_ISUNDEFINED(X: ::core::primitive::u32) -> ::core::primitive::bool {
+    (X & 4294901760_u32) == 536805376_u32
+}
 
 /// Used to indicate that the window position should be centered.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 
-// [sdl3-sys-gen] skipped function-like define `SDL_WINDOWPOS_CENTERED_DISPLAY`
+pub const fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: ::core::primitive::u32) -> ::core::primitive::u32 {
+    (805240832_u32 | X)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_WINDOWPOS_ISCENTERED`
+pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::primitive::u32) -> ::core::primitive::bool {
+    (X & 4294901760_u32) == 805240832_u32
+}
 
 /// Window flash operation.
 ///

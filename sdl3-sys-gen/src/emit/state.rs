@@ -484,6 +484,20 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner_mut_map(|ctx| &mut ctx.scope)
     }
 
+    pub fn subscope_guard(&mut self) -> impl Drop {
+        pub struct Guard(Rc<RefCell<InnerEmitContext>>);
+
+        impl Drop for Guard {
+            fn drop(&mut self) {
+                self.0.borrow_mut().scope.pop();
+            }
+        }
+
+        self.scope_mut().push();
+
+        Guard(Rc::clone(&self.inner))
+    }
+
     pub fn capture_output(
         &self,
         f: impl FnOnce(&mut EmitContext) -> EmitResult,
@@ -525,8 +539,14 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         Ok(())
     }
 
-    pub fn use_ident(&self, _ident: &Ident) -> EmitResult {
-        Ok(())
+    pub fn use_ident(&self, ident: &Ident) -> EmitResult {
+        if self.lookup_sym(ident).is_some() {
+            Ok(())
+        } else {
+            //Err(ParseErr::new(ident.span(), "undefined symbol").into())
+            // FIXME
+            Ok(())
+        }
     }
 
     pub fn is_preproc_eval_mode(&self) -> bool {
@@ -903,14 +923,13 @@ impl Scope {
         }));
     }
 
-    pub fn pop(&mut self) -> EmitResult {
+    pub fn pop(&mut self) {
         let parent = self.0.borrow().parent.as_ref().map(Rc::clone);
         if let Some(parent) = parent {
             self.0 = parent;
         } else {
             panic!("popped top level scope")
         }
-        Ok(())
     }
 
     pub fn emit_opaque_structs_and_unions(&self, f: &mut dyn Write) -> EmitResult {

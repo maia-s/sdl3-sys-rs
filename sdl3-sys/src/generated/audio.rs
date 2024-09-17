@@ -161,17 +161,65 @@ pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AudioFormat::S32;
 #[cfg(not(target_endian = "little"))]
 pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 
-// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_BITSIZE`
+/// Retrieve the size, in bits, from an SDL_AudioFormat.
+///
+/// For example, `SDL_AUDIO_BITSIZE(SDL_AUDIO_S16)` returns 16.
+///
+/// \param x an SDL_AudioFormat value.
+/// \returns data size in bits.
+///
+/// \threadsafety It is safe to call this macro from any thread.
+///
+/// \since This macro is available since SDL 3.0.0.
+pub const fn SDL_AUDIO_BITSIZE(x: ::core::primitive::u32) -> ::core::primitive::u32 {
+    (x & 255_u32)
+}
 
 // [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_BYTESIZE`
 
-// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISFLOAT`
+/// Determine if an SDL_AudioFormat represents floating point data.
+///
+/// For example, `SDL_AUDIO_ISFLOAT(SDL_AUDIO_S16)` returns 0.
+///
+/// \param x an SDL_AudioFormat value.
+/// \returns non-zero if format is floating point, zero otherwise.
+///
+/// \threadsafety It is safe to call this macro from any thread.
+///
+/// \since This macro is available since SDL 3.0.0.
+pub const fn SDL_AUDIO_ISFLOAT(x: ::core::primitive::u32) -> ::core::primitive::u32 {
+    (x & 256_u32)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISBIGENDIAN`
+/// Determine if an SDL_AudioFormat represents bigendian data.
+///
+/// For example, `SDL_AUDIO_ISBIGENDIAN(SDL_AUDIO_S16LE)` returns 0.
+///
+/// \param x an SDL_AudioFormat value.
+/// \returns non-zero if format is bigendian, zero otherwise.
+///
+/// \threadsafety It is safe to call this macro from any thread.
+///
+/// \since This macro is available since SDL 3.0.0.
+pub const fn SDL_AUDIO_ISBIGENDIAN(x: ::core::primitive::u32) -> ::core::primitive::u32 {
+    (x & 4096_u32)
+}
 
 // [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISLITTLEENDIAN`
 
-// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISSIGNED`
+/// Determine if an SDL_AudioFormat represents signed data.
+///
+/// For example, `SDL_AUDIO_ISSIGNED(SDL_AUDIO_U8)` returns 0.
+///
+/// \param x an SDL_AudioFormat value.
+/// \returns non-zero if format is signed, zero otherwise.
+///
+/// \threadsafety It is safe to call this macro from any thread.
+///
+/// \since This macro is available since SDL 3.0.0.
+pub const fn SDL_AUDIO_ISSIGNED(x: ::core::primitive::u32) -> ::core::primitive::u32 {
+    (x & 32768_u32)
+}
 
 // [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISINT`
 

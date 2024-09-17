@@ -745,7 +745,9 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 
 // [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACETRANSFER`
 
-// [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACEMATRIX`
+pub const fn SDL_COLORSPACEMATRIX(X: ::core::primitive::i32) -> SDL_MatrixCoefficients {
+    SDL_MatrixCoefficients((X & 31))
+}
 
 // [sdl3-sys-gen] skipped function-like define `SDL_ISCOLORSPACE_MATRIX_BT601`
 

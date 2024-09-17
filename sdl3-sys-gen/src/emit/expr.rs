@@ -1,4 +1,6 @@
-use super::{patch_emit_macro_call, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval};
+use super::{
+    patch_emit_macro_call, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, Sym,
+};
 use crate::parse::{
     Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan, Ident,
     IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
@@ -138,26 +140,42 @@ impl Eval for DefineValue {
             Self::Expr(expr) => expr.try_eval(ctx),
             Self::Ambiguous(amb) => amb.try_eval(ctx),
             Self::RustCode(r) => Ok(Some(Value::RustCode(r.clone()))),
-            Self::TargetDependent | Self::Type(_) => Ok(None),
-            Self::Empty => Ok(None),
-            _ => {
-                dbg!(self);
-                todo!()
-            }
+            Self::TargetDependent
+            | Self::Type(_)
+            | Self::Items(_)
+            | Self::Other(_)
+            | Self::Empty => Ok(None),
+        }
+    }
+}
+
+impl Emit for Ambiguous {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        if let Some(value) = self.try_eval(ctx)? {
+            value.emit(ctx)
+        } else {
+            Err(ParseErr::new(self.span(), "can't resolve ambiguous expression").into())
         }
     }
 }
 
 impl Eval for Ambiguous {
     fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        let mut result = None;
         for alt in self.alternatives.iter() {
-            if let Alternative::Expr(expr) = alt {
-                if let Ok(Some(value)) = expr.try_eval(ctx) {
-                    return Ok(Some(value));
+            if let Ok(Some(value)) = match alt {
+                Alternative::Expr(expr) => expr.try_eval(ctx),
+                Alternative::Type(_) => continue,
+                Alternative::Items(_) => continue,
+            } {
+                if result.is_none() {
+                    result = Some(value);
+                } else {
+                    return Ok(None);
                 }
             }
         }
-        Ok(None)
+        Ok(result)
     }
 }
 
@@ -450,28 +468,23 @@ impl Eval for Expr {
                 }
             }
 
-            Expr::Ambiguous(amb) => {
-                let mut result = None;
-                for alt in amb.alternatives.iter() {
-                    if let Alternative::Expr(expr) = alt {
-                        if let Some(value) = expr.try_eval(ctx)? {
-                            if result.is_none() {
-                                result = Some(value.clone());
-                            } else {
-                                return Ok(None);
-                            }
-                        }
-                    }
-                }
-                return Ok(result);
-            }
+            Expr::Ambiguous(amb) => return amb.try_eval(ctx),
 
             Expr::Cast(cast) => {
-                let out = ctx.capture_output(|ctx| {
-                    cast.expr.emit(ctx)?;
-                    write!(ctx, " as ")?;
-                    cast.ty.emit(ctx)
-                })?;
+                let out = if let Some(ident) = cast.ty.is_c_enum(ctx) {
+                    ctx.capture_output(|ctx| {
+                        write!(ctx, "{ident}(")?;
+                        cast.expr.emit(ctx)?;
+                        write!(ctx, ")")?;
+                        Ok(())
+                    })
+                } else {
+                    ctx.capture_output(|ctx| {
+                        cast.expr.emit(ctx)?;
+                        write!(ctx, " as ")?;
+                        cast.ty.emit(ctx)
+                    })
+                }?;
                 return Ok(Some(Value::RustCode(Box::new(RustCode {
                     value: out,
                     ty: cast.ty.clone(),
@@ -557,11 +570,30 @@ impl Eval for Expr {
                             (Value::U31(lhs), Value::I32(rhs)) => Ok(Some(Value::I32(lhs as i32 $op rhs))),
                             (Value::U31(lhs), Value::U31(rhs)) => Ok(Some(Value::U31(lhs $op rhs))),
                             (Value::U31(lhs) | Value::U32(lhs), Value::U31(rhs) | Value::U32(rhs)) => Ok(Some(Value::U32(lhs $op rhs))),
-                            (Value::RustCode(lhs), Value::RustCode(rhs)) if lhs.ty == rhs.ty => Ok(Some(Value::RustCode(RustCode::boxed(
-                                format!("({} {} {})", lhs.value, stringify!($op), rhs.value),
-                                lhs.ty
-                            )))),
-                            x => {dbg!(x);todo!()},
+                            (Value::RustCode(lhs), rhs) if lhs.ty.is_uninferred() && !rhs.ty().is_uninferred() => {
+                                lhs.ty.resolve_to(rhs.ty());
+                                return self.try_eval(ctx);
+                            }
+                            (lhs, Value::RustCode(rhs)) if rhs.ty.is_uninferred() && !lhs.ty().is_uninferred() => {
+                                rhs.ty.resolve_to(lhs.ty());
+                                return self.try_eval(ctx);
+                            }
+                            (lhs, rhs) => {
+                                if let (Some(lt), Some(rt)) = (lhs.ty().inner_ty(), rhs.ty().inner_ty()) {
+                                    if lt == rt {
+                                        let code = ctx.capture_output(|ctx| {
+                                            write!(ctx, "(")?;
+                                            lhs.emit(ctx)?;
+                                            write!(ctx, " {} ", stringify!($op))?;
+                                            rhs.emit(ctx)?;
+                                            write!(ctx, ")")?;
+                                            Ok(())
+                                        })?;
+                                        return Ok(Some(Value::RustCode(RustCode::boxed(code, lt))));
+                                    }
+                                }
+                                Ok(None)
+                            }
                         }
                     };
                 }
@@ -824,7 +856,7 @@ impl Emit for Expr {
             }
             Expr::Literal(lit) => lit.emit(ctx),
             Expr::FnCall(call) => call.emit(ctx),
-            Expr::Ambiguous(_) => todo!(),
+            Expr::Ambiguous(amb) => amb.emit(ctx),
             Expr::Cast(_) => todo!(),
             Expr::Asm(_) => todo!(),
             Expr::SizeOf(_) => todo!(),
@@ -846,11 +878,11 @@ impl Emit for Expr {
                 }
             }
 
-            Expr::BinaryOp(_) => {
+            Expr::BinaryOp(bop) => {
                 if let Some(value) = self.try_eval(ctx)? {
                     value.emit(ctx)
                 } else {
-                    todo!()
+                    Err(ParseErr::new(bop.span(), "can't evaluate this expression").into())
                 }
             }
 
@@ -877,13 +909,32 @@ impl Emit for FnCall {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if let Expr::Ident(ident) = &*self.func {
             if patch_emit_macro_call(ctx, ident.as_str(), &self.args)? {
-                Ok(())
-            } else {
-                todo!()
+                return Ok(());
+            } else if let Some(Sym {
+                ty:
+                    Some(Type {
+                        ty: TypeEnum::Function(f),
+                        ..
+                    }),
+                ..
+            }) = ctx.lookup_sym(&ident.clone().try_into().unwrap())
+            {
+                if self.args.len() == f.args.len() {
+                    write!(ctx, "{ident}(")?;
+                    let mut first = true;
+                    for arg in self.args.iter() {
+                        if !first {
+                            write!(ctx, ", ")?
+                        }
+                        first = false;
+                        arg.emit(ctx)?;
+                    }
+                    write!(ctx, ")")?;
+                    return Ok(());
+                }
             }
-        } else {
-            todo!()
         }
+        Err(ParseErr::new(self.span(), "can't emit this macro call").into())
     }
 }
 
@@ -892,7 +943,7 @@ impl Emit for Literal {
         match self {
             Literal::Integer(lit) => lit.emit(ctx),
             Literal::Float(lit) => lit.emit(ctx),
-            Literal::String(_) => todo!(),
+            Literal::String(lit) => lit.emit(ctx),
         }
     }
 }

@@ -28,6 +28,14 @@ impl GetSpan for Type {
 }
 
 impl Type {
+    pub fn inner_ty(&self) -> Option<Self> {
+        if let TypeEnum::Infer(i) = &self.ty {
+            i.borrow().as_ref().cloned()
+        } else {
+            Some(self.clone())
+        }
+    }
+
     pub fn dotdotdot(span: Span) -> Self {
         Self {
             span,
@@ -94,6 +102,25 @@ impl Type {
 
     pub fn is_void(&self) -> bool {
         matches!(self.ty, TypeEnum::Primitive(PrimitiveType::Void))
+    }
+
+    pub fn is_uninferred(&self) -> bool {
+        if let TypeEnum::Infer(i) = &self.ty {
+            i.borrow().is_none()
+        } else {
+            false
+        }
+    }
+
+    pub fn resolve_to(&self, ty: Type) {
+        if let TypeEnum::Infer(i) = &self.ty {
+            let mut i = i.borrow_mut();
+            if i.is_none() {
+                *i = Some(ty);
+                return;
+            }
+        }
+        assert_eq!(*self, ty, "type already resolved to different type")
     }
 
     pub fn can_derive_debug(&self, ctx: &EmitContext) -> bool {

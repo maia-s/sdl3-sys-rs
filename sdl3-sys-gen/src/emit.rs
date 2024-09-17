@@ -20,7 +20,7 @@ mod patch;
 use patch::{patch_emit_define, patch_emit_macro_call};
 mod state;
 use state::PreProcState;
-pub use state::{DefineState, EmitContext, InnerEmitContext};
+pub use state::{DefineState, EmitContext, InnerEmitContext, Sym};
 
 pub const fn is_valid_ident(s: &str) -> bool {
     matches!(s.as_bytes()[0], b'a'..=b'z' | b'A'..=b'Z' | b'_')
@@ -367,11 +367,63 @@ impl Emit for Define {
         if patch_emit_define(ctx, self)? {
             // patched
         } else if let Some(args) = &self.args {
+            // function-like define
             if self.value.is_empty() {
                 return Ok(());
             }
+
+            let body = {
+                let _guard = ctx.subscope_guard();
+                for arg in args.iter() {
+                    let Ok(ident) = arg.ident.clone().try_into() else {
+                        ctx.log_skipped("function-like define", self.ident.as_str())?;
+                        return Ok(());
+                    };
+                    ctx.register_sym(ident, Some(arg.ty.clone()), arg.ty.can_derive_debug(ctx))?;
+                }
+                if let Ok(Some(body)) = self.value.try_eval(ctx) {
+                    body
+                } else {
+                    ctx.log_skipped("function-like define", self.ident.as_str())?;
+                    return Ok(());
+                }
+            };
+
+            if let Ok(f) = ctx.capture_output(|ctx| {
+                self.doc.emit(ctx)?;
+                write!(ctx, "pub const fn {}(", self.ident)?;
+                for arg in args.iter() {
+                    write!(ctx, "{}: ", arg.ident)?;
+                    arg.ty.emit(ctx)?;
+                    write!(ctx, ", ")?;
+                }
+                write!(ctx, ") -> ")?;
+                body.ty().emit(ctx)?;
+                writeln!(ctx, " {{")?;
+                ctx.increase_indent();
+                body.emit(ctx)?;
+                ctx.decrease_indent();
+                writeln!(ctx, "}}")?;
+                writeln!(ctx)?;
+                Ok(())
+            }) {
+                let return_type = body.ty();
+                ctx.register_sym(
+                    self.ident.clone(),
+                    Some(Type::function(
+                        args.iter().map(|arg| arg.ty.clone()).collect(),
+                        return_type,
+                        true,
+                    )),
+                    false,
+                )?;
+                write!(ctx, "{f}")?;
+                return Ok(());
+            }
+
             ctx.log_skipped("function-like define", self.ident.as_str())?;
-        } else if self.args.is_none() {
+        } else {
+            // constant value define
             ctx.preproc_state().borrow_mut().define(
                 self.ident.clone(),
                 self.args.clone(),
@@ -628,6 +680,16 @@ impl StructOrUnion {
             ident.emit(ctx)?;
         }
         Ok(())
+    }
+}
+
+impl Type {
+    pub fn is_c_enum(&self, ctx: &EmitContext) -> Option<Ident> {
+        if let TypeEnum::Ident(ident) = &self.ty {
+            ctx.lookup_enum_sym(ident)
+        } else {
+            None
+        }
     }
 }
 
