@@ -17,8 +17,7 @@ use std::{
 mod expr;
 pub use expr::Value;
 mod patch;
-use patch::patch_define;
-pub use patch::patch_macro_call;
+use patch::{patch_emit_define, patch_emit_macro_call};
 mod state;
 use state::PreProcState;
 pub use state::{DefineState, EmitContext, InnerEmitContext};
@@ -365,7 +364,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
 
 impl Emit for Define {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        if patch_define(ctx, self)? {
+        if patch_emit_define(ctx, self)? {
             // patched
         } else if self.args.is_none() {
             ctx.preproc_state().borrow_mut().define(

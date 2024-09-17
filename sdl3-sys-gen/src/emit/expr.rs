@@ -1,4 +1,4 @@
-use super::{patch_macro_call, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval};
+use super::{patch_emit_macro_call, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval};
 use crate::parse::{
     Alternative, Ambiguous, BinaryOp, DefineValue, Expr, FloatLiteral, FnCall, GetSpan, Ident,
     IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
@@ -876,7 +876,7 @@ impl Emit for Parenthesized {
 impl Emit for FnCall {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if let Expr::Ident(ident) = &*self.func {
-            if patch_macro_call(ctx, ident.as_str(), &self.args)? {
+            if patch_emit_macro_call(ctx, ident.as_str(), &self.args)? {
                 Ok(())
             } else {
                 todo!()

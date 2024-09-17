@@ -152,7 +152,7 @@ impl Gen {
         println!("parsing {filename}");
         let contents: Span = Source::new(filename, contents).into();
         let rest = contents.trim_wsc()?;
-        let ctx = ParseContext::new();
+        let ctx = ParseContext::new(Some(module.into()));
         let items = Items::try_parse_all(&ctx, rest)?.unwrap_or_default();
         self.parsed.insert(module.to_owned(), items);
         Ok(())

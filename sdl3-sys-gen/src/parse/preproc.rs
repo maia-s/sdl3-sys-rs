@@ -1,7 +1,7 @@
 use super::{
-    Ambiguous, Cast, DocComment, DocCommentPost, Expr, GetSpan, Ident, IdentOrKw, IntegerLiteral,
-    Item, Items, Literal, Parse, ParseContext, ParseErr, ParseRawRes, Punctuated, RustCode, Span,
-    Type, WsAndComments,
+    patch_parsed_define, Ambiguous, Cast, DocComment, DocCommentPost, Expr, GetSpan, Ident,
+    IdentOrKw, IntegerLiteral, Item, Items, Literal, Parse, ParseContext, ParseErr, ParseRawRes,
+    Punctuated, RustCode, Span, Type, WsAndComments,
 };
 use core::mem;
 use std::borrow::Cow;
@@ -57,7 +57,7 @@ impl DefineValue {
     pub fn parse_expr(s: &str) -> Result<Self, ParseErr> {
         let s = Span::new_inline(s.to_string());
         Ok(Self::Expr(Expr::parse_all(
-            &ParseContext::new(),
+            &ParseContext::new(None),
             s.trim_wsc()?,
         )?))
     }
@@ -427,13 +427,15 @@ impl Parse for PreProcLine {
                                 doc,
                             )?;
                             let value = DefineValue::parse_all(ctx, value_span.trim_wsc_end()?)?;
-                            PreProcLineKind::Define(Define {
+                            let mut define = Define {
                                 span: span.clone(),
                                 doc,
                                 ident,
                                 args: Some(args),
                                 value,
-                            })
+                            };
+                            patch_parsed_define(ctx, &mut define)?;
+                            PreProcLineKind::Define(define)
                         } else {
                             return Err(ParseErr::new(i.slice(0..=0), "unmatched `(`"));
                         }
@@ -443,13 +445,15 @@ impl Parse for PreProcLine {
                         let doc =
                             DocComment::try_parse_rev_combine_postfix(ctx, &mut value_span, doc)?;
                         let value = DefineValue::parse_all(ctx, value_span.trim_wsc_end()?)?;
-                        PreProcLineKind::Define(Define {
+                        let mut define = Define {
                             span: span.clone(),
                             doc,
                             ident,
                             args: None,
                             value,
-                        })
+                        };
+                        patch_parsed_define(ctx, &mut define)?;
+                        PreProcLineKind::Define(define)
                     }
                 }
 

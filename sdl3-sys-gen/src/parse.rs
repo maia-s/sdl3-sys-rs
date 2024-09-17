@@ -35,6 +35,8 @@ submodules!(
     r#struct,
     r#type,
 );
+mod patch;
+use patch::*;
 
 pub const fn op_first_ch(str: &str) -> char {
     let ch = str.as_bytes()[0];
@@ -64,6 +66,7 @@ pub const fn op_third_ch(str: &str) -> char {
 }
 
 pub struct ParseContext {
+    module: String,
     pub parent_struct_ident: RefCell<Option<Ident>>,
     pub sibling_struct_index: RefCell<usize>,
 }
@@ -71,11 +74,16 @@ pub struct ParseContext {
 impl ParseContext {
     pub const FIRST_SIBLING: usize = 1;
 
-    pub const fn new() -> Self {
+    pub fn new(module: Option<String>) -> Self {
         Self {
+            module: module.unwrap_or_default(),
             parent_struct_ident: RefCell::new(None),
             sibling_struct_index: RefCell::new(Self::FIRST_SIBLING),
         }
+    }
+
+    pub fn module(&self) -> &str {
+        &self.module
     }
 
     pub fn with_parent_struct_guard(&self, ident: Option<Ident>) -> impl Drop + '_ {
@@ -93,12 +101,6 @@ impl ParseContext {
             self.parent_struct_ident.replace(ident),
             self.sibling_struct_index.replace(Self::FIRST_SIBLING),
         )
-    }
-}
-
-impl Default for ParseContext {
-    fn default() -> Self {
-        Self::new()
     }
 }
 

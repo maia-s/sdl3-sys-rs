@@ -1,58 +1,56 @@
 use super::{Emit, EmitContext, EmitErr, Eval, Value};
-use crate::parse::{Define, Expr, PrimitiveType, Type};
+use crate::parse::{Define, Expr};
 use core::fmt::Write;
 
-pub struct Patch<T: ?Sized> {
+struct Patch<T: ?Sized> {
     module: Option<&'static str>,
     match_ident: fn(&str) -> bool,
     patch: fn(&mut EmitContext, &T) -> Result<bool, EmitErr>,
 }
 
+pub fn patch_emit_define(ctx: &mut EmitContext, define: &Define) -> Result<bool, EmitErr> {
+    patch(ctx, define, define.ident.as_str(), DEFINE_PATCHES)
+}
+
 type DefinePatch = Patch<Define>;
 
-const DEFINE_PATCHES: &[DefinePatch] = &[
-    DefinePatch {
-        module: Some("joystick"),
-        match_ident: |i| i.starts_with("SDL_HAT_"),
-        patch: |ctx, define| {
-            let mut define = define.clone();
-            define.value = define
-                .value
-                .cast_expr(Type::primitive(PrimitiveType::Uint8T));
-            define.emit(ctx)?;
-            Ok(true)
-        },
+const DEFINE_PATCHES: &[DefinePatch] = &[DefinePatch {
+    module: Some("stdinc"),
+    match_ident: |i| i == "SDL_INIT_INTERFACE",
+    patch: |ctx, define| {
+        define.doc.emit(ctx)?;
+        writeln!(ctx, "///")?;
+        writeln!(ctx, "/// # Safety")?;
+        writeln!(ctx, "/// The type `T` must correctly implement [`crate::Interface`], and it must be valid to write a `T` to the memory pointed to by `iface`")?;
+        writeln!(ctx, "#[inline(always)]")?;
+        writeln!(
+            ctx,
+            "pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {{"
+        )?;
+        ctx.increase_indent();
+        writeln!(ctx, "unsafe {{")?;
+        ctx.increase_indent();
+        writeln!(ctx, "iface.write_bytes(0, 1);")?;
+        writeln!(
+            ctx,
+            "iface.cast::<Uint32>().write(::core::mem::size_of::<T>() as Uint32);"
+        )?;
+        ctx.decrease_indent();
+        writeln!(ctx, "}}")?;
+        ctx.decrease_indent();
+        writeln!(ctx, "}}")?;
+        writeln!(ctx)?;
+        Ok(true)
     },
-    DefinePatch {
-        module: Some("stdinc"),
-        match_ident: |i| i == "SDL_INIT_INTERFACE",
-        patch: |ctx, define| {
-            define.doc.emit(ctx)?;
-            writeln!(ctx, "///")?;
-            writeln!(ctx, "/// # Safety")?;
-            writeln!(ctx, "/// The type `T` must correctly implement [`crate::Interface`], and it must be valid to write a `T` to the memory pointed to by `iface`")?;
-            writeln!(ctx, "#[inline(always)]")?;
-            writeln!(
-                ctx,
-                "pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {{"
-            )?;
-            ctx.increase_indent();
-            writeln!(ctx, "unsafe {{")?;
-            ctx.increase_indent();
-            writeln!(ctx, "iface.write_bytes(0, 1);")?;
-            writeln!(
-                ctx,
-                "iface.cast::<Uint32>().write(::core::mem::size_of::<T>() as Uint32);"
-            )?;
-            ctx.decrease_indent();
-            writeln!(ctx, "}}")?;
-            ctx.decrease_indent();
-            writeln!(ctx, "}}")?;
-            writeln!(ctx)?;
-            Ok(true)
-        },
-    },
-];
+}];
+
+pub fn patch_emit_macro_call(
+    ctx: &mut EmitContext,
+    ident: &str,
+    args: &[Expr],
+) -> Result<bool, EmitErr> {
+    patch(ctx, args, ident, MACRO_CALL_PATCHES)
+}
 
 type MacroCallPatch = Patch<[Expr]>;
 
@@ -110,32 +108,19 @@ const MACRO_CALL_PATCHES: &[MacroCallPatch] = &[
     },
 ];
 
-pub fn patch_define(ctx: &mut EmitContext, define: &Define) -> Result<bool, EmitErr> {
-    if ctx.patch_enabled() {
-        let _guard = ctx.disable_patch_guard();
-        for patch in DEFINE_PATCHES.iter() {
-            if (patch.module.is_none() || patch.module == Some(&*ctx.module()))
-                && (patch.match_ident)(define.ident.as_str())
-            {
-                return (patch.patch)(ctx, define);
-            }
-        }
-    }
-    Ok(false)
-}
-
-pub fn patch_macro_call(
+fn patch<T: ?Sized>(
     ctx: &mut EmitContext,
+    arg: &T,
     ident: &str,
-    args: &[Expr],
+    patches: &[Patch<T>],
 ) -> Result<bool, EmitErr> {
     if ctx.patch_enabled() {
         let _guard = ctx.disable_patch_guard();
-        for patch in MACRO_CALL_PATCHES.iter() {
+        for patch in patches.iter() {
             if (patch.module.is_none() || patch.module == Some(&*ctx.module()))
                 && (patch.match_ident)(ident)
             {
-                return (patch.patch)(ctx, args);
+                return (patch.patch)(ctx, arg);
             }
         }
     }
