@@ -410,16 +410,8 @@ impl Emit for Define {
                 }
                 writeln!(ctx, " {{")?;
                 ctx.increase_indent();
-                if body.is_unsafe() {
-                    writeln!(ctx, "unsafe {{")?;
-                    ctx.increase_indent();
-                }
                 body.emit(ctx)?;
                 writeln!(ctx)?;
-                if body.is_unsafe() {
-                    ctx.decrease_indent();
-                    writeln!(ctx, "}}")?;
-                }
                 ctx.decrease_indent();
                 writeln!(ctx, "}}")?;
                 writeln!(ctx)?;

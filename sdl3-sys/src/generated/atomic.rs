@@ -107,9 +107,7 @@ emit! {
 
         // pragma `intrinsic(_ReadWriteBarrier)`
         pub unsafe fn SDL_CompilerBarrier() {
-            unsafe {
-                _ReadWriteBarrier()
-            }
+            unsafe { _ReadWriteBarrier() }
         }
 
     }
@@ -366,7 +364,7 @@ pub unsafe fn SDL_AtomicIncRef(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int {
 ///
 /// \sa SDL_AtomicIncRef
 pub unsafe fn SDL_AtomicDecRef(a: *mut SDL_AtomicInt) -> ::core::primitive::bool {
-    unsafe { (SDL_AddAtomicInt(a, -1_i32) == 1) }
+    (unsafe { SDL_AddAtomicInt(a, -1_i32) } == 1)
 }
 /// A type representing an atomic unsigned 32-bit value.
 ///

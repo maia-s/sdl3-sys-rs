@@ -1257,6 +1257,9 @@ impl Emit for FnCall {
             }) = ctx.lookup_sym(&ident.clone().try_into().unwrap())
             {
                 if self.args.len() == f.args.len() {
+                    if f.is_unsafe {
+                        write!(ctx, "unsafe {{ ")?;
+                    }
                     write!(ctx, "{ident}(")?;
                     let mut first = true;
                     for (arg, ty) in self.args.iter().zip(f.args.iter()) {
@@ -1273,6 +1276,9 @@ impl Emit for FnCall {
                         arg.emit(ctx)?;
                     }
                     write!(ctx, ")")?;
+                    if f.is_unsafe {
+                        write!(ctx, " }}")?;
+                    }
                     return Ok(());
                 }
             }
@@ -1382,6 +1388,9 @@ impl Eval for FnCall {
                         }) = ctx.lookup_sym(&ident.clone().try_into().unwrap())
                         {
                             let out = ctx.capture_output(|ctx| {
+                                if f.is_unsafe {
+                                    write!(ctx, "unsafe {{ ")?;
+                                }
                                 ident.emit(ctx)?;
                                 write!(ctx, "(")?;
                                 let mut first = true;
@@ -1399,6 +1408,9 @@ impl Eval for FnCall {
                                     arg.emit(ctx)?;
                                 }
                                 write!(ctx, ")")?;
+                                if f.is_unsafe {
+                                    write!(ctx, " }}")?;
+                                }
                                 Ok(())
                             })?;
                             Ok(Some(Value::RustCode(RustCode::boxed(
