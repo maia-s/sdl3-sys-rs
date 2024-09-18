@@ -17,7 +17,7 @@ type FunctionPatch = Patch<Function>;
 const FUNCTION_PATCHES: &[FunctionPatch] = &[FunctionPatch {
     // skip emitting these
     module: None,
-    match_ident: |i| matches!(i, "__debugbreak"),
+    match_ident: |i| matches!(i, "__debugbreak" | "_ReadWriteBarrier"),
     patch: |_, _| Ok(true),
 }];
 
@@ -38,6 +38,24 @@ const DEFINE_PATCHES: &[DefinePatch] = &[
             )
         },
         patch: |_, _| Ok(true),
+    },
+    DefinePatch {
+        module: Some("atomic"),
+        match_ident: |i| i == "SDL_CompilerBarrier",
+        patch: |ctx, define| {
+            define.doc.emit(ctx)?;
+            writeln!(ctx, "#[inline(always)]")?;
+            writeln!(ctx, "pub fn SDL_CompilerBarrier() {{")?;
+            ctx.increase_indent();
+            writeln!(
+                ctx,
+                "::core::sync::atomic::fence(::core::sync::atomic::Ordering::SeqCst)"
+            )?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            writeln!(ctx)?;
+            Ok(true)
+        },
     },
     DefinePatch {
         module: Some("stdinc"),

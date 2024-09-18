@@ -324,10 +324,6 @@ impl Value {
     }
 
     pub fn coerce(&self, ctx: &EmitContext, target: &Type) -> Result<Option<Value>, EmitErr> {
-        if &*ctx.module() == "error" && target.is_array_or_pointer() {
-            dbg!(self, target);
-        }
-
         let mut is_string = false;
         let mut is_const = false;
         let mut is_unsafe = false;

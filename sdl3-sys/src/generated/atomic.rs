@@ -93,7 +93,24 @@ extern "C" {
 
 #[cfg(doc)]
 emit! {
-    // [sdl3-sys-gen] skipped function-like define `SDL_CompilerBarrier`
+    /// Mark a compiler barrier.
+    ///
+    /// A compiler barrier prevents the compiler from reordering reads and writes
+    /// to globally visible variables across the call.
+    ///
+    /// This macro only prevents the compiler from reordering reads and writes, it
+    /// does not prevent the CPU from reordering reads and writes. However, all of
+    /// the atomic operations that modify memory are full memory barriers.
+    ///
+    /// \threadsafety Obviously this macro is safe to use from any thread at any
+    ///               time, but if you find yourself needing this, you are probably
+    ///               dealing with some very sensitive code; be careful!
+    ///
+    /// \since This macro is available since SDL 3.0.0.
+    #[inline(always)]
+    pub fn SDL_CompilerBarrier() {
+        ::core::sync::atomic::fence(::core::sync::atomic::Ordering::SeqCst)
+    }
 
 }
 
@@ -101,13 +118,10 @@ emit! {
 emit! {
     #[cfg(all(not(any(/* always disabled: __clang__ */)), all(windows, target_env = "msvc")))]
     emit! {
-        extern "C" {
-            pub fn _ReadWriteBarrier();
-        }
-
         // pragma `intrinsic(_ReadWriteBarrier)`
-        pub unsafe fn SDL_CompilerBarrier() {
-            unsafe { _ReadWriteBarrier() }
+        #[inline(always)]
+        pub fn SDL_CompilerBarrier() {
+            ::core::sync::atomic::fence(::core::sync::atomic::Ordering::SeqCst)
         }
 
     }
@@ -116,13 +130,19 @@ emit! {
     emit! {
         #[cfg(not(target_os = "emscripten"))]
         emit! {
-            // [sdl3-sys-gen] skipped function-like define `SDL_CompilerBarrier`
+            #[inline(always)]
+            pub fn SDL_CompilerBarrier() {
+                ::core::sync::atomic::fence(::core::sync::atomic::Ordering::SeqCst)
+            }
 
         }
 
         #[cfg(target_os = "emscripten")]
         emit! {
-            // [sdl3-sys-gen] skipped function-like define `SDL_CompilerBarrier`
+            #[inline(always)]
+            pub fn SDL_CompilerBarrier() {
+                ::core::sync::atomic::fence(::core::sync::atomic::Ordering::SeqCst)
+            }
 
         }
 
