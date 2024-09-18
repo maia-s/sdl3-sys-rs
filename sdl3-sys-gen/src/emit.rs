@@ -419,7 +419,7 @@ impl Emit for Define {
             }) {
                 let return_type = body.ty();
                 ctx.register_sym(
-                    self.ident.clone(),
+                    self.ident.clone().try_into().unwrap(),
                     Some(Type::function(
                         args.iter().map(|arg| arg.ty.clone()).collect(),
                         return_type,
@@ -436,14 +436,14 @@ impl Emit for Define {
         } else {
             // constant value define
             ctx.preproc_state().borrow_mut().define(
-                self.ident.clone(),
+                self.ident.clone().try_into().unwrap(),
                 self.args.clone(),
                 self.value.clone(),
             )?;
             if let Some(value) = self.value.try_eval(ctx)? {
                 let ty = value.ty();
                 ctx.register_sym(
-                    self.ident.clone(),
+                    self.ident.clone().try_into().unwrap(),
                     Some(ty.clone()),
                     ty.can_derive_debug(ctx),
                 )?;

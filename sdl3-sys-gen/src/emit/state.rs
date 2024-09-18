@@ -312,6 +312,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             };
         }
         defines! {
+            "__GNUC__" = DefineValue::parse_expr("4")?; // not currently used
             "__STDC_VERSION__" = DefineValue::parse_expr("202311L")?;
             "_MSC_VER" = DefineValue::parse_expr("1700")?;
             "FLT_EPSILON" = DefineValue::RustCode(RustCode::boxed("::core::primitive::f32::EPSILON".into(), Type::primitive(PrimitiveType::Float), true, false));

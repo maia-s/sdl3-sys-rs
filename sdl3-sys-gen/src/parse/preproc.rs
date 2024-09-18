@@ -14,7 +14,7 @@ fn skip_ifdef(str: &str) -> bool {
 pub struct Define {
     pub span: Span,
     pub doc: Option<DocComment>,
-    pub ident: Ident,
+    pub ident: IdentOrKw,
     pub args: Option<Vec<DefineArg>>,
     pub value: DefineValue,
 }
@@ -409,7 +409,7 @@ impl Parse for PreProcLine {
                 "endif" => PreProcLineKind::EndIf,
 
                 "define" => {
-                    let ident = Ident::parse(ctx, &mut i)?;
+                    let ident = IdentOrKw::parse(ctx, &mut i)?;
                     if i.starts_with_ch('(') {
                         if let Some(close_paren) = i.as_bytes().iter().position(|&b| b == b')') {
                             let args = Punctuated::<IdentOrKw, Op![,]>::try_parse_all(
