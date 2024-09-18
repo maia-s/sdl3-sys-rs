@@ -390,8 +390,8 @@ extern "C" {
     /// constrained environment.
     ///
     /// \param src the data stream for the mappings to be added.
-    /// \param closeio if SDL_TRUE, calls SDL_CloseIO() on `src` before returning,
-    ///                even in the case of an error.
+    /// \param closeio if true, calls SDL_CloseIO() on `src` before returning, even
+    ///                in the case of an error.
     /// \returns the number of mappings added or -1 on failure; call SDL_GetError()
     ///          for more information.
     ///
@@ -405,7 +405,7 @@ extern "C" {
     /// \sa SDL_GetGamepadMappingForGUID
     pub fn SDL_AddGamepadMappingsFromIO(
         src: *mut SDL_IOStream,
-        closeio: SDL_bool,
+        closeio: ::core::primitive::bool,
     ) -> ::core::ffi::c_int;
 }
 
@@ -442,11 +442,11 @@ extern "C" {
     ///
     /// This will generate gamepad events as needed if device mappings change.
     ///
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReloadGamepadMappings() -> SDL_bool;
+    pub fn SDL_ReloadGamepadMappings() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -505,8 +505,8 @@ extern "C" {
     /// \param instance_id the joystick instance ID.
     /// \param mapping the mapping to use for this device, or NULL to clear the
     ///                mapping.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -515,18 +515,18 @@ extern "C" {
     pub fn SDL_SetGamepadMapping(
         instance_id: SDL_JoystickID,
         mapping: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Return whether a gamepad is currently connected.
     ///
-    /// \returns SDL_TRUE if a gamepad is connected, SDL_FALSE otherwise.
+    /// \returns true if a gamepad is connected, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetGamepads
-    pub fn SDL_HasGamepad() -> SDL_bool;
+    pub fn SDL_HasGamepad() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -549,14 +549,14 @@ extern "C" {
     /// Check if the given joystick is supported by the gamepad interface.
     ///
     /// \param instance_id the joystick instance ID.
-    /// \returns SDL_TRUE if the given joystick is supported by the gamepad
-    ///          interface, SDL_FALSE if it isn't or it's an invalid index.
+    /// \returns true if the given joystick is supported by the gamepad interface,
+    ///          false if it isn't or it's an invalid index.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetJoysticks
     /// \sa SDL_OpenGamepad
-    pub fn SDL_IsGamepad(instance_id: SDL_JoystickID) -> SDL_bool;
+    pub fn SDL_IsGamepad(instance_id: SDL_JoystickID) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -889,8 +889,8 @@ extern "C" {
     /// \param gamepad the gamepad object to adjust.
     /// \param player_index player index to assign to this gamepad, or -1 to clear
     ///                     the player index and turn off player LEDs.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -898,7 +898,7 @@ extern "C" {
     pub fn SDL_SetGamepadPlayerIndex(
         gamepad: *mut SDL_Gamepad,
         player_index: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1020,11 +1020,11 @@ extern "C" {
     ///
     /// \param gamepad a gamepad identifier previously returned by
     ///                SDL_OpenGamepad().
-    /// \returns SDL_TRUE if the gamepad has been opened and is currently
-    ///          connected, or SDL_FALSE if not.
+    /// \returns true if the gamepad has been opened and is currently connected, or
+    ///          false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GamepadConnected(gamepad: *mut SDL_Gamepad) -> SDL_bool;
+    pub fn SDL_GamepadConnected(gamepad: *mut SDL_Gamepad) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1059,7 +1059,7 @@ extern "C" {
     ///
     /// \sa SDL_GamepadEventsEnabled
     /// \sa SDL_UpdateGamepads
-    pub fn SDL_SetGamepadEventsEnabled(enabled: SDL_bool);
+    pub fn SDL_SetGamepadEventsEnabled(enabled: ::core::primitive::bool);
 }
 
 extern "C" {
@@ -1068,13 +1068,12 @@ extern "C" {
     /// If gamepad events are disabled, you must call SDL_UpdateGamepads() yourself
     /// and check the state of the gamepad when you want gamepad information.
     ///
-    /// \returns SDL_TRUE if gamepad events are being processed, SDL_FALSE
-    ///          otherwise.
+    /// \returns true if gamepad events are being processed, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetGamepadEventsEnabled
-    pub fn SDL_GamepadEventsEnabled() -> SDL_bool;
+    pub fn SDL_GamepadEventsEnabled() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1181,13 +1180,16 @@ extern "C" {
     ///
     /// \param gamepad a gamepad.
     /// \param axis an axis enum value (an SDL_GamepadAxis value).
-    /// \returns SDL_TRUE if the gamepad has this axis, SDL_FALSE otherwise.
+    /// \returns true if the gamepad has this axis, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GamepadHasButton
     /// \sa SDL_GetGamepadAxis
-    pub fn SDL_GamepadHasAxis(gamepad: *mut SDL_Gamepad, axis: SDL_GamepadAxis) -> SDL_bool;
+    pub fn SDL_GamepadHasAxis(
+        gamepad: *mut SDL_Gamepad,
+        axis: SDL_GamepadAxis,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1254,12 +1256,15 @@ extern "C" {
     ///
     /// \param gamepad a gamepad.
     /// \param button a button enum value (an SDL_GamepadButton value).
-    /// \returns SDL_TRUE if the gamepad has this button, SDL_FALSE otherwise.
+    /// \returns true if the gamepad has this button, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GamepadHasAxis
-    pub fn SDL_GamepadHasButton(gamepad: *mut SDL_Gamepad, button: SDL_GamepadButton) -> SDL_bool;
+    pub fn SDL_GamepadHasButton(
+        gamepad: *mut SDL_Gamepad,
+        button: SDL_GamepadButton,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1267,13 +1272,16 @@ extern "C" {
     ///
     /// \param gamepad a gamepad.
     /// \param button a button index (one of the SDL_GamepadButton values).
-    /// \returns SDL_TRUE if the button is pressed, SDL_FALSE otherwise.
+    /// \returns true if the button is pressed, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GamepadHasButton
     /// \sa SDL_GetGamepadAxis
-    pub fn SDL_GetGamepadButton(gamepad: *mut SDL_Gamepad, button: SDL_GamepadButton) -> SDL_bool;
+    pub fn SDL_GetGamepadButton(
+        gamepad: *mut SDL_Gamepad,
+        button: SDL_GamepadButton,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1344,15 +1352,15 @@ extern "C" {
     /// \param gamepad a gamepad.
     /// \param touchpad a touchpad.
     /// \param finger a finger.
-    /// \param down a pointer filled with SDL_TRUE if the finger is down, SDL_FALSE
+    /// \param down a pointer filled with true if the finger is down, false
     ///             otherwise, may be NULL.
     /// \param x a pointer filled with the x position, normalized 0 to 1, with the
     ///          origin in the upper left, may be NULL.
     /// \param y a pointer filled with the y position, normalized 0 to 1, with the
     ///          origin in the upper left, may be NULL.
     /// \param pressure a pointer filled with pressure value, may be NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1361,11 +1369,11 @@ extern "C" {
         gamepad: *mut SDL_Gamepad,
         touchpad: ::core::ffi::c_int,
         finger: ::core::ffi::c_int,
-        down: *mut SDL_bool,
+        down: *mut ::core::primitive::bool,
         x: *mut ::core::ffi::c_float,
         y: *mut ::core::ffi::c_float,
         pressure: *mut ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1373,14 +1381,17 @@ extern "C" {
     ///
     /// \param gamepad the gamepad to query.
     /// \param type the type of sensor to query.
-    /// \returns SDL_TRUE if the sensor exists, SDL_FALSE otherwise.
+    /// \returns true if the sensor exists, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetGamepadSensorData
     /// \sa SDL_GetGamepadSensorDataRate
     /// \sa SDL_SetGamepadSensorEnabled
-    pub fn SDL_GamepadHasSensor(gamepad: *mut SDL_Gamepad, r#type: SDL_SensorType) -> SDL_bool;
+    pub fn SDL_GamepadHasSensor(
+        gamepad: *mut SDL_Gamepad,
+        r#type: SDL_SensorType,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1389,8 +1400,8 @@ extern "C" {
     /// \param gamepad the gamepad to update.
     /// \param type the type of sensor to enable/disable.
     /// \param enabled whether data reporting should be enabled.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1399,8 +1410,8 @@ extern "C" {
     pub fn SDL_SetGamepadSensorEnabled(
         gamepad: *mut SDL_Gamepad,
         r#type: SDL_SensorType,
-        enabled: SDL_bool,
-    ) -> SDL_bool;
+        enabled: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1408,12 +1419,15 @@ extern "C" {
     ///
     /// \param gamepad the gamepad to query.
     /// \param type the type of sensor to query.
-    /// \returns SDL_TRUE if the sensor is enabled, SDL_FALSE otherwise.
+    /// \returns true if the sensor is enabled, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetGamepadSensorEnabled
-    pub fn SDL_GamepadSensorEnabled(gamepad: *mut SDL_Gamepad, r#type: SDL_SensorType) -> SDL_bool;
+    pub fn SDL_GamepadSensorEnabled(
+        gamepad: *mut SDL_Gamepad,
+        r#type: SDL_SensorType,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1440,8 +1454,8 @@ extern "C" {
     /// \param type the type of sensor to query.
     /// \param data a pointer filled with the current sensor state.
     /// \param num_values the number of values to write to data.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetGamepadSensorData(
@@ -1449,7 +1463,7 @@ extern "C" {
         r#type: SDL_SensorType,
         data: *mut ::core::ffi::c_float,
         num_values: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1467,8 +1481,8 @@ extern "C" {
     /// \param high_frequency_rumble the intensity of the high frequency (right)
     ///                              rumble motor, from 0 to 0xFFFF.
     /// \param duration_ms the duration of the rumble effect, in milliseconds.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_RumbleGamepad(
@@ -1476,7 +1490,7 @@ extern "C" {
         low_frequency_rumble: Uint16,
         high_frequency_rumble: Uint16,
         duration_ms: Uint32,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1498,8 +1512,8 @@ extern "C" {
     /// \param right_rumble the intensity of the right trigger rumble motor, from 0
     ///                     to 0xFFFF.
     /// \param duration_ms the duration of the rumble effect, in milliseconds.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1509,7 +1523,7 @@ extern "C" {
         left_rumble: Uint16,
         right_rumble: Uint16,
         duration_ms: Uint32,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1525,8 +1539,8 @@ extern "C" {
     /// \param red the intensity of the red LED.
     /// \param green the intensity of the green LED.
     /// \param blue the intensity of the blue LED.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetGamepadLED(
@@ -1534,7 +1548,7 @@ extern "C" {
         red: Uint8,
         green: Uint8,
         blue: Uint8,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1543,15 +1557,15 @@ extern "C" {
     /// \param gamepad the gamepad to affect.
     /// \param data the data to send to the gamepad.
     /// \param size the size of the data to send to the gamepad.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SendGamepadEffect(
         gamepad: *mut SDL_Gamepad,
         data: *const ::core::ffi::c_void,
         size: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

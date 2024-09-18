@@ -144,18 +144,22 @@ pub struct SDL_IOStreamInterface {
     /// SDL_IOStatus enum. You do not have to explicitly set this on
     /// a successful flush.
     ///
-    /// \return SDL_TRUE if successful or SDL_FALSE on write error when flushing data.
+    /// \return true if successful or false on write error when flushing data.
     pub flush: ::core::option::Option<
-        extern "C" fn(userdata: *mut ::core::ffi::c_void, status: *mut SDL_IOStatus) -> SDL_bool,
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            status: *mut SDL_IOStatus,
+        ) -> ::core::primitive::bool,
     >,
     /// Close and free any allocated resources.
     ///
     /// The SDL_IOStream is still destroyed even if this fails, so clean up anything
     /// even if flushing to disk returns an error.
     ///
-    /// \return SDL_TRUE if successful or SDL_FALSE on write error when flushing data.
-    pub close:
-        ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool>,
+    /// \return true if successful or false on write error when flushing data.
+    pub close: ::core::option::Option<
+        extern "C" fn(userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool,
+    >,
 }
 
 impl SDL_IOStreamInterface {
@@ -424,20 +428,20 @@ extern "C" {
     ///
     /// SDL_CloseIO() closes and cleans up the SDL_IOStream stream. It releases any
     /// resources used by the stream and frees the SDL_IOStream itself. This
-    /// returns SDL_TRUE on success, or SDL_FALSE if the stream failed to flush to
-    /// its output (e.g. to disk).
+    /// returns true on success, or false if the stream failed to flush to its
+    /// output (e.g. to disk).
     ///
     /// Note that if this fails to flush the stream to disk, this function reports
     /// an error, but the SDL_IOStream is still invalid once this function returns.
     ///
     /// \param context SDL_IOStream structure to close.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_OpenIO
-    pub fn SDL_CloseIO(context: *mut SDL_IOStream) -> SDL_bool;
+    pub fn SDL_CloseIO(context: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -642,14 +646,14 @@ extern "C" {
     /// guarantees that any pending data is sent.
     ///
     /// \param context SDL_IOStream structure to flush.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_OpenIO
     /// \sa SDL_WriteIO
-    pub fn SDL_FlushIO(context: *mut SDL_IOStream) -> SDL_bool;
+    pub fn SDL_FlushIO(context: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -664,8 +668,8 @@ extern "C" {
     /// \param src the SDL_IOStream to read all available data from.
     /// \param datasize a pointer filled in with the number of bytes read, may be
     ///                 NULL.
-    /// \param closeio if SDL_TRUE, calls SDL_CloseIO() on `src` before returning,
-    ///                even in the case of an error.
+    /// \param closeio if true, calls SDL_CloseIO() on `src` before returning, even
+    ///                in the case of an error.
     /// \returns the data or NULL on failure; call SDL_GetError() for more
     ///          information.
     ///
@@ -675,7 +679,7 @@ extern "C" {
     pub fn SDL_LoadFile_IO(
         src: *mut SDL_IOStream,
         datasize: *mut ::core::primitive::usize,
-        closeio: SDL_bool,
+        closeio: ::core::primitive::bool,
     ) -> *mut ::core::ffi::c_void;
 }
 
@@ -707,11 +711,11 @@ extern "C" {
     ///
     /// \param src the SDL_IOStream to read from.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadU8(src: *mut SDL_IOStream, value: *mut Uint8) -> SDL_bool;
+    pub fn SDL_ReadU8(src: *mut SDL_IOStream, value: *mut Uint8) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -719,11 +723,27 @@ extern "C" {
     ///
     /// \param src the SDL_IOStream to read from.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    pub fn SDL_ReadS8(src: *mut SDL_IOStream, value: *mut Sint8) -> ::core::primitive::bool;
+}
+
+extern "C" {
+    /// Use this function to read 16 bits of little-endian data from an
+    /// SDL_IOStream and return in native format.
+    ///
+    /// SDL byteswaps the data only if necessary, so the data returned will be in
+    /// the native byte order.
+    ///
+    /// \param src the stream from which to read data.
+    /// \param value a pointer filled in with the data read.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
     ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadS8(src: *mut SDL_IOStream, value: *mut Sint8) -> SDL_bool;
+    pub fn SDL_ReadU16LE(src: *mut SDL_IOStream, value: *mut Uint16) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -735,27 +755,11 @@ extern "C" {
     ///
     /// \param src the stream from which to read data.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadU16LE(src: *mut SDL_IOStream, value: *mut Uint16) -> SDL_bool;
-}
-
-extern "C" {
-    /// Use this function to read 16 bits of little-endian data from an
-    /// SDL_IOStream and return in native format.
-    ///
-    /// SDL byteswaps the data only if necessary, so the data returned will be in
-    /// the native byte order.
-    ///
-    /// \param src the stream from which to read data.
-    /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
-    ///
-    /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadS16LE(src: *mut SDL_IOStream, value: *mut Sint16) -> SDL_bool;
+    pub fn SDL_ReadS16LE(src: *mut SDL_IOStream, value: *mut Sint16) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -767,11 +771,11 @@ extern "C" {
     ///
     /// \param src the stream from which to read data.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadU16BE(src: *mut SDL_IOStream, value: *mut Uint16) -> SDL_bool;
+    pub fn SDL_ReadU16BE(src: *mut SDL_IOStream, value: *mut Uint16) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -783,11 +787,11 @@ extern "C" {
     ///
     /// \param src the stream from which to read data.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadS16BE(src: *mut SDL_IOStream, value: *mut Sint16) -> SDL_bool;
+    pub fn SDL_ReadS16BE(src: *mut SDL_IOStream, value: *mut Sint16) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -799,11 +803,11 @@ extern "C" {
     ///
     /// \param src the stream from which to read data.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadU32LE(src: *mut SDL_IOStream, value: *mut Uint32) -> SDL_bool;
+    pub fn SDL_ReadU32LE(src: *mut SDL_IOStream, value: *mut Uint32) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -815,11 +819,11 @@ extern "C" {
     ///
     /// \param src the stream from which to read data.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadS32LE(src: *mut SDL_IOStream, value: *mut Sint32) -> SDL_bool;
+    pub fn SDL_ReadS32LE(src: *mut SDL_IOStream, value: *mut Sint32) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -831,11 +835,11 @@ extern "C" {
     ///
     /// \param src the stream from which to read data.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadU32BE(src: *mut SDL_IOStream, value: *mut Uint32) -> SDL_bool;
+    pub fn SDL_ReadU32BE(src: *mut SDL_IOStream, value: *mut Uint32) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -847,11 +851,11 @@ extern "C" {
     ///
     /// \param src the stream from which to read data.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadS32BE(src: *mut SDL_IOStream, value: *mut Sint32) -> SDL_bool;
+    pub fn SDL_ReadS32BE(src: *mut SDL_IOStream, value: *mut Sint32) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -863,11 +867,11 @@ extern "C" {
     ///
     /// \param src the stream from which to read data.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadU64LE(src: *mut SDL_IOStream, value: *mut Uint64) -> SDL_bool;
+    pub fn SDL_ReadU64LE(src: *mut SDL_IOStream, value: *mut Uint64) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -879,11 +883,11 @@ extern "C" {
     ///
     /// \param src the stream from which to read data.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadS64LE(src: *mut SDL_IOStream, value: *mut Sint64) -> SDL_bool;
+    pub fn SDL_ReadS64LE(src: *mut SDL_IOStream, value: *mut Sint64) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -895,11 +899,11 @@ extern "C" {
     ///
     /// \param src the stream from which to read data.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadU64BE(src: *mut SDL_IOStream, value: *mut Uint64) -> SDL_bool;
+    pub fn SDL_ReadU64BE(src: *mut SDL_IOStream, value: *mut Uint64) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -911,11 +915,11 @@ extern "C" {
     ///
     /// \param src the stream from which to read data.
     /// \param value a pointer filled in with the data read.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ReadS64BE(src: *mut SDL_IOStream, value: *mut Sint64) -> SDL_bool;
+    pub fn SDL_ReadS64BE(src: *mut SDL_IOStream, value: *mut Sint64) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -923,11 +927,11 @@ extern "C" {
     ///
     /// \param dst the SDL_IOStream to write to.
     /// \param value the byte value to write.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteU8(dst: *mut SDL_IOStream, value: Uint8) -> SDL_bool;
+    pub fn SDL_WriteU8(dst: *mut SDL_IOStream, value: Uint8) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -935,11 +939,11 @@ extern "C" {
     ///
     /// \param dst the SDL_IOStream to write to.
     /// \param value the byte value to write.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteS8(dst: *mut SDL_IOStream, value: Sint8) -> SDL_bool;
+    pub fn SDL_WriteS8(dst: *mut SDL_IOStream, value: Sint8) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -952,11 +956,11 @@ extern "C" {
     ///
     /// \param dst the stream to which data will be written.
     /// \param value the data to be written, in native format.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteU16LE(dst: *mut SDL_IOStream, value: Uint16) -> SDL_bool;
+    pub fn SDL_WriteU16LE(dst: *mut SDL_IOStream, value: Uint16) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -969,11 +973,11 @@ extern "C" {
     ///
     /// \param dst the stream to which data will be written.
     /// \param value the data to be written, in native format.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteS16LE(dst: *mut SDL_IOStream, value: Sint16) -> SDL_bool;
+    pub fn SDL_WriteS16LE(dst: *mut SDL_IOStream, value: Sint16) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -985,11 +989,11 @@ extern "C" {
     ///
     /// \param dst the stream to which data will be written.
     /// \param value the data to be written, in native format.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteU16BE(dst: *mut SDL_IOStream, value: Uint16) -> SDL_bool;
+    pub fn SDL_WriteU16BE(dst: *mut SDL_IOStream, value: Uint16) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1001,11 +1005,11 @@ extern "C" {
     ///
     /// \param dst the stream to which data will be written.
     /// \param value the data to be written, in native format.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteS16BE(dst: *mut SDL_IOStream, value: Sint16) -> SDL_bool;
+    pub fn SDL_WriteS16BE(dst: *mut SDL_IOStream, value: Sint16) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1018,11 +1022,11 @@ extern "C" {
     ///
     /// \param dst the stream to which data will be written.
     /// \param value the data to be written, in native format.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteU32LE(dst: *mut SDL_IOStream, value: Uint32) -> SDL_bool;
+    pub fn SDL_WriteU32LE(dst: *mut SDL_IOStream, value: Uint32) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1035,11 +1039,11 @@ extern "C" {
     ///
     /// \param dst the stream to which data will be written.
     /// \param value the data to be written, in native format.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteS32LE(dst: *mut SDL_IOStream, value: Sint32) -> SDL_bool;
+    pub fn SDL_WriteS32LE(dst: *mut SDL_IOStream, value: Sint32) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1051,11 +1055,11 @@ extern "C" {
     ///
     /// \param dst the stream to which data will be written.
     /// \param value the data to be written, in native format.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteU32BE(dst: *mut SDL_IOStream, value: Uint32) -> SDL_bool;
+    pub fn SDL_WriteU32BE(dst: *mut SDL_IOStream, value: Uint32) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1067,11 +1071,11 @@ extern "C" {
     ///
     /// \param dst the stream to which data will be written.
     /// \param value the data to be written, in native format.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteS32BE(dst: *mut SDL_IOStream, value: Sint32) -> SDL_bool;
+    pub fn SDL_WriteS32BE(dst: *mut SDL_IOStream, value: Sint32) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1084,11 +1088,11 @@ extern "C" {
     ///
     /// \param dst the stream to which data will be written.
     /// \param value the data to be written, in native format.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteU64LE(dst: *mut SDL_IOStream, value: Uint64) -> SDL_bool;
+    pub fn SDL_WriteU64LE(dst: *mut SDL_IOStream, value: Uint64) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1101,11 +1105,11 @@ extern "C" {
     ///
     /// \param dst the stream to which data will be written.
     /// \param value the data to be written, in native format.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteS64LE(dst: *mut SDL_IOStream, value: Sint64) -> SDL_bool;
+    pub fn SDL_WriteS64LE(dst: *mut SDL_IOStream, value: Sint64) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1117,11 +1121,11 @@ extern "C" {
     ///
     /// \param dst the stream to which data will be written.
     /// \param value the data to be written, in native format.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteU64BE(dst: *mut SDL_IOStream, value: Uint64) -> SDL_bool;
+    pub fn SDL_WriteU64BE(dst: *mut SDL_IOStream, value: Uint64) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1133,11 +1137,11 @@ extern "C" {
     ///
     /// \param dst the stream to which data will be written.
     /// \param value the data to be written, in native format.
-    /// \returns SDL_TRUE on successful write or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on successful write or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_WriteS64BE(dst: *mut SDL_IOStream, value: Sint64) -> SDL_bool;
+    pub fn SDL_WriteS64BE(dst: *mut SDL_IOStream, value: Sint64) -> ::core::primitive::bool;
 }
 
 /// The read/write operation structure.

@@ -562,10 +562,10 @@ extern "C" {
 extern "C" {
     /// Start or stop a BLE scan on iOS and tvOS to pair Steam Controllers.
     ///
-    /// \param active SDL_TRUE to start the scan, SDL_FALSE to stop the scan.
+    /// \param active true to start the scan, false to stop the scan.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_hid_ble_scan(active: SDL_bool);
+    pub fn SDL_hid_ble_scan(active: ::core::primitive::bool);
 }
 
 /// An opaque handle representing an open HID device.

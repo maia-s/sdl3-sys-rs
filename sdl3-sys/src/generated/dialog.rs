@@ -129,7 +129,7 @@ extern "C" {
         filters: *const SDL_DialogFileFilter,
         nfilters: ::core::ffi::c_int,
         default_location: *const ::core::ffi::c_char,
-        allow_many: SDL_bool,
+        allow_many: ::core::primitive::bool,
     );
 }
 
@@ -245,6 +245,6 @@ extern "C" {
         userdata: *mut ::core::ffi::c_void,
         window: *mut SDL_Window,
         default_location: *const ::core::ffi::c_char,
-        allow_many: SDL_bool,
+        allow_many: ::core::primitive::bool,
     );
 }

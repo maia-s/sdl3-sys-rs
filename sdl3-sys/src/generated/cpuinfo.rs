@@ -44,10 +44,10 @@ extern "C" {
     /// This always returns false on CPUs that aren't using PowerPC instruction
     /// sets.
     ///
-    /// \returns SDL_TRUE if the CPU has AltiVec features or SDL_FALSE if not.
+    /// \returns true if the CPU has AltiVec features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_HasAltiVec() -> SDL_bool;
+    pub fn SDL_HasAltiVec() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -55,10 +55,10 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// \returns SDL_TRUE if the CPU has MMX features or SDL_FALSE if not.
+    /// \returns true if the CPU has MMX features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_HasMMX() -> SDL_bool;
+    pub fn SDL_HasMMX() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -66,7 +66,7 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// \returns SDL_TRUE if the CPU has SSE features or SDL_FALSE if not.
+    /// \returns true if the CPU has SSE features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -74,7 +74,7 @@ extern "C" {
     /// \sa SDL_HasSSE3
     /// \sa SDL_HasSSE41
     /// \sa SDL_HasSSE42
-    pub fn SDL_HasSSE() -> SDL_bool;
+    pub fn SDL_HasSSE() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -82,7 +82,7 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// \returns SDL_TRUE if the CPU has SSE2 features or SDL_FALSE if not.
+    /// \returns true if the CPU has SSE2 features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -90,7 +90,7 @@ extern "C" {
     /// \sa SDL_HasSSE3
     /// \sa SDL_HasSSE41
     /// \sa SDL_HasSSE42
-    pub fn SDL_HasSSE2() -> SDL_bool;
+    pub fn SDL_HasSSE2() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -98,7 +98,7 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// \returns SDL_TRUE if the CPU has SSE3 features or SDL_FALSE if not.
+    /// \returns true if the CPU has SSE3 features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -106,7 +106,7 @@ extern "C" {
     /// \sa SDL_HasSSE2
     /// \sa SDL_HasSSE41
     /// \sa SDL_HasSSE42
-    pub fn SDL_HasSSE3() -> SDL_bool;
+    pub fn SDL_HasSSE3() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -114,7 +114,7 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// \returns SDL_TRUE if the CPU has SSE4.1 features or SDL_FALSE if not.
+    /// \returns true if the CPU has SSE4.1 features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -122,7 +122,7 @@ extern "C" {
     /// \sa SDL_HasSSE2
     /// \sa SDL_HasSSE3
     /// \sa SDL_HasSSE42
-    pub fn SDL_HasSSE41() -> SDL_bool;
+    pub fn SDL_HasSSE41() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -130,7 +130,7 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// \returns SDL_TRUE if the CPU has SSE4.2 features or SDL_FALSE if not.
+    /// \returns true if the CPU has SSE4.2 features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -138,7 +138,7 @@ extern "C" {
     /// \sa SDL_HasSSE2
     /// \sa SDL_HasSSE3
     /// \sa SDL_HasSSE41
-    pub fn SDL_HasSSE42() -> SDL_bool;
+    pub fn SDL_HasSSE42() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -146,13 +146,13 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// \returns SDL_TRUE if the CPU has AVX features or SDL_FALSE if not.
+    /// \returns true if the CPU has AVX features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_HasAVX2
     /// \sa SDL_HasAVX512F
-    pub fn SDL_HasAVX() -> SDL_bool;
+    pub fn SDL_HasAVX() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -160,13 +160,13 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// \returns SDL_TRUE if the CPU has AVX2 features or SDL_FALSE if not.
+    /// \returns true if the CPU has AVX2 features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_HasAVX
     /// \sa SDL_HasAVX512F
-    pub fn SDL_HasAVX2() -> SDL_bool;
+    pub fn SDL_HasAVX2() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -174,13 +174,13 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// \returns SDL_TRUE if the CPU has AVX-512F features or SDL_FALSE if not.
+    /// \returns true if the CPU has AVX-512F features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_HasAVX
     /// \sa SDL_HasAVX2
-    pub fn SDL_HasAVX512F() -> SDL_bool;
+    pub fn SDL_HasAVX512F() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -190,12 +190,12 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using ARM instruction sets.
     ///
-    /// \returns SDL_TRUE if the CPU has ARM SIMD features or SDL_FALSE if not.
+    /// \returns true if the CPU has ARM SIMD features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_HasNEON
-    pub fn SDL_HasARMSIMD() -> SDL_bool;
+    pub fn SDL_HasARMSIMD() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -203,10 +203,10 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using ARM instruction sets.
     ///
-    /// \returns SDL_TRUE if the CPU has ARM NEON features or SDL_FALSE if not.
+    /// \returns true if the CPU has ARM NEON features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_HasNEON() -> SDL_bool;
+    pub fn SDL_HasNEON() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -215,11 +215,10 @@ extern "C" {
     /// This always returns false on CPUs that aren't using LOONGARCH instruction
     /// sets.
     ///
-    /// \returns SDL_TRUE if the CPU has LOONGARCH LSX features or SDL_FALSE if
-    ///          not.
+    /// \returns true if the CPU has LOONGARCH LSX features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_HasLSX() -> SDL_bool;
+    pub fn SDL_HasLSX() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -228,11 +227,10 @@ extern "C" {
     /// This always returns false on CPUs that aren't using LOONGARCH instruction
     /// sets.
     ///
-    /// \returns SDL_TRUE if the CPU has LOONGARCH LASX features or SDL_FALSE if
-    ///          not.
+    /// \returns true if the CPU has LOONGARCH LASX features or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_HasLASX() -> SDL_bool;
+    pub fn SDL_HasLASX() -> ::core::primitive::bool;
 }
 
 extern "C" {

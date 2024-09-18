@@ -156,12 +156,12 @@ extern "C" {
 extern "C" {
     /// Return whether a joystick is currently connected.
     ///
-    /// \returns SDL_TRUE if a joystick is connected, SDL_FALSE otherwise.
+    /// \returns true if a joystick is connected, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetJoysticks
-    pub fn SDL_HasJoystick() -> SDL_bool;
+    pub fn SDL_HasJoystick() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -446,7 +446,7 @@ pub struct SDL_VirtualJoystickDesc {
             userdata: *mut ::core::ffi::c_void,
             low_frequency_rumble: Uint16,
             high_frequency_rumble: Uint16,
-        ) -> SDL_bool,
+        ) -> ::core::primitive::bool,
     >,
     /// Implements SDL_RumbleJoystickTriggers()
     pub RumbleTriggers: ::core::option::Option<
@@ -454,7 +454,7 @@ pub struct SDL_VirtualJoystickDesc {
             userdata: *mut ::core::ffi::c_void,
             left_rumble: Uint16,
             right_rumble: Uint16,
-        ) -> SDL_bool,
+        ) -> ::core::primitive::bool,
     >,
     /// Implements SDL_SetJoystickLED()
     pub SetLED: ::core::option::Option<
@@ -463,7 +463,7 @@ pub struct SDL_VirtualJoystickDesc {
             red: Uint8,
             green: Uint8,
             blue: Uint8,
-        ) -> SDL_bool,
+        ) -> ::core::primitive::bool,
     >,
     /// Implements SDL_SendJoystickEffect()
     pub SendEffect: ::core::option::Option<
@@ -471,11 +471,14 @@ pub struct SDL_VirtualJoystickDesc {
             userdata: *mut ::core::ffi::c_void,
             data: *const ::core::ffi::c_void,
             size: ::core::ffi::c_int,
-        ) -> SDL_bool,
+        ) -> ::core::primitive::bool,
     >,
     /// Implements SDL_SetGamepadSensorEnabled()
     pub SetSensorsEnabled: ::core::option::Option<
-        extern "C" fn(userdata: *mut ::core::ffi::c_void, enabled: SDL_bool) -> SDL_bool,
+        extern "C" fn(
+            userdata: *mut ::core::ffi::c_void,
+            enabled: ::core::primitive::bool,
+        ) -> ::core::primitive::bool,
     >,
     /// Cleans up the userdata when the joystick is detached
     pub Cleanup: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>,
@@ -528,23 +531,23 @@ extern "C" {
     ///
     /// \param instance_id the joystick instance ID, previously returned from
     ///                    SDL_AttachVirtualJoystick().
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_AttachVirtualJoystick
-    pub fn SDL_DetachVirtualJoystick(instance_id: SDL_JoystickID) -> SDL_bool;
+    pub fn SDL_DetachVirtualJoystick(instance_id: SDL_JoystickID) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Query whether or not a joystick is virtual.
     ///
     /// \param instance_id the joystick instance ID.
-    /// \returns SDL_TRUE if the joystick is virtual, SDL_FALSE otherwise.
+    /// \returns true if the joystick is virtual, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_IsJoystickVirtual(instance_id: SDL_JoystickID) -> SDL_bool;
+    pub fn SDL_IsJoystickVirtual(instance_id: SDL_JoystickID) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -563,15 +566,15 @@ extern "C" {
     /// \param joystick the virtual joystick on which to set state.
     /// \param axis the index of the axis on the virtual joystick to update.
     /// \param value the new value for the specified axis.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualAxis(
         joystick: *mut SDL_Joystick,
         axis: ::core::ffi::c_int,
         value: Sint16,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -587,8 +590,8 @@ extern "C" {
     /// \param ball the index of the ball on the virtual joystick to update.
     /// \param xrel the relative motion on the X axis.
     /// \param yrel the relative motion on the Y axis.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualBall(
@@ -596,7 +599,7 @@ extern "C" {
         ball: ::core::ffi::c_int,
         xrel: Sint16,
         yrel: Sint16,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -610,16 +613,16 @@ extern "C" {
     ///
     /// \param joystick the virtual joystick on which to set state.
     /// \param button the index of the button on the virtual joystick to update.
-    /// \param down SDL_TRUE if the button is pressed, SDL_FALSE otherwise.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \param down true if the button is pressed, false otherwise.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualButton(
         joystick: *mut SDL_Joystick,
         button: ::core::ffi::c_int,
-        down: SDL_bool,
-    ) -> SDL_bool;
+        down: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -634,15 +637,15 @@ extern "C" {
     /// \param joystick the virtual joystick on which to set state.
     /// \param hat the index of the hat on the virtual joystick to update.
     /// \param value the new value for the specified hat.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualHat(
         joystick: *mut SDL_Joystick,
         hat: ::core::ffi::c_int,
         value: Uint8,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -658,26 +661,25 @@ extern "C" {
     /// \param touchpad the index of the touchpad on the virtual joystick to
     ///                 update.
     /// \param finger the index of the finger on the touchpad to set.
-    /// \param down SDL_TRUE if the finger is pressed, SDL_FALSE if the finger is
-    ///             released.
+    /// \param down true if the finger is pressed, false if the finger is released.
     /// \param x the x coordinate of the finger on the touchpad, normalized 0 to 1,
     ///          with the origin in the upper left.
     /// \param y the y coordinate of the finger on the touchpad, normalized 0 to 1,
     ///          with the origin in the upper left.
     /// \param pressure the pressure of the finger.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualTouchpad(
         joystick: *mut SDL_Joystick,
         touchpad: ::core::ffi::c_int,
         finger: ::core::ffi::c_int,
-        down: SDL_bool,
+        down: ::core::primitive::bool,
         x: ::core::ffi::c_float,
         y: ::core::ffi::c_float,
         pressure: ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -695,8 +697,8 @@ extern "C" {
     ///                         the sensor reading.
     /// \param data the data associated with the sensor reading.
     /// \param num_values the number of values pointed to by `data`.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SendJoystickVirtualSensorData(
@@ -705,7 +707,7 @@ extern "C" {
         sensor_timestamp: Uint64,
         data: *const ::core::ffi::c_float,
         num_values: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -795,8 +797,8 @@ extern "C" {
     /// \param joystick the SDL_Joystick obtained from SDL_OpenJoystick().
     /// \param player_index player index to assign to this joystick, or -1 to clear
     ///                     the player index and turn off player LEDs.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -804,7 +806,7 @@ extern "C" {
     pub fn SDL_SetJoystickPlayerIndex(
         joystick: *mut SDL_Joystick,
         player_index: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -933,11 +935,11 @@ extern "C" {
     /// Get the status of a specified joystick.
     ///
     /// \param joystick the joystick to query.
-    /// \returns SDL_TRUE if the joystick has been opened, SDL_FALSE if it has not;
-    ///          call SDL_GetError() for more information.
+    /// \returns true if the joystick has been opened, false if it has not; call
+    ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_JoystickConnected(joystick: *mut SDL_Joystick) -> SDL_bool;
+    pub fn SDL_JoystickConnected(joystick: *mut SDL_Joystick) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1037,7 +1039,7 @@ extern "C" {
     ///
     /// \sa SDL_JoystickEventsEnabled
     /// \sa SDL_UpdateJoysticks
-    pub fn SDL_SetJoystickEventsEnabled(enabled: SDL_bool);
+    pub fn SDL_SetJoystickEventsEnabled(enabled: ::core::primitive::bool);
 }
 
 extern "C" {
@@ -1047,13 +1049,12 @@ extern "C" {
     /// yourself and check the state of the joystick when you want joystick
     /// information.
     ///
-    /// \returns SDL_TRUE if joystick events are being processed, SDL_FALSE
-    ///          otherwise.
+    /// \returns true if joystick events are being processed, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetJoystickEventsEnabled
-    pub fn SDL_JoystickEventsEnabled() -> SDL_bool;
+    pub fn SDL_JoystickEventsEnabled() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1100,14 +1101,14 @@ extern "C" {
     /// \param joystick an SDL_Joystick structure containing joystick information.
     /// \param axis the axis to query; the axis indices start at index 0.
     /// \param state upon return, the initial value is supplied here.
-    /// \returns SDL_TRUE if this axis has any initial value, or SDL_FALSE if not.
+    /// \returns true if this axis has any initial value, or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickAxisInitialState(
         joystick: *mut SDL_Joystick,
         axis: ::core::ffi::c_int,
         state: *mut Sint16,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1122,8 +1123,8 @@ extern "C" {
     /// \param ball the ball index to query; ball indices start at index 0.
     /// \param dx stores the difference in the x axis position since the last poll.
     /// \param dy stores the difference in the y axis position since the last poll.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1133,7 +1134,7 @@ extern "C" {
         ball: ::core::ffi::c_int,
         dx: *mut ::core::ffi::c_int,
         dy: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1179,7 +1180,7 @@ extern "C" {
     /// \param joystick an SDL_Joystick structure containing joystick information.
     /// \param button the button index to get the state from; indices start at
     ///               index 0.
-    /// \returns SDL_TRUE if the button is pressed, SDL_FALSE otherwise.
+    /// \returns true if the button is pressed, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1187,7 +1188,7 @@ extern "C" {
     pub fn SDL_GetJoystickButton(
         joystick: *mut SDL_Joystick,
         button: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1205,7 +1206,7 @@ extern "C" {
     /// \param high_frequency_rumble the intensity of the high frequency (right)
     ///                              rumble motor, from 0 to 0xFFFF.
     /// \param duration_ms the duration of the rumble effect, in milliseconds.
-    /// \returns SDL_TRUE, or SDL_FALSE if rumble isn't supported on this joystick.
+    /// \returns true, or false if rumble isn't supported on this joystick.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_RumbleJoystick(
@@ -1213,7 +1214,7 @@ extern "C" {
         low_frequency_rumble: Uint16,
         high_frequency_rumble: Uint16,
         duration_ms: Uint32,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1236,8 +1237,8 @@ extern "C" {
     /// \param right_rumble the intensity of the right trigger rumble motor, from 0
     ///                     to 0xFFFF.
     /// \param duration_ms the duration of the rumble effect, in milliseconds.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1247,7 +1248,7 @@ extern "C" {
         left_rumble: Uint16,
         right_rumble: Uint16,
         duration_ms: Uint32,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1263,8 +1264,8 @@ extern "C" {
     /// \param red the intensity of the red LED.
     /// \param green the intensity of the green LED.
     /// \param blue the intensity of the blue LED.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickLED(
@@ -1272,7 +1273,7 @@ extern "C" {
         red: Uint8,
         green: Uint8,
         blue: Uint8,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1281,15 +1282,15 @@ extern "C" {
     /// \param joystick the joystick to affect.
     /// \param data the data to send to the joystick.
     /// \param size the size of the data to send to the joystick.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SendJoystickEffect(
         joystick: *mut SDL_Joystick,
         data: *const ::core::ffi::c_void,
         size: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

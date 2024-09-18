@@ -144,8 +144,6 @@ pub type SDL_TimerCallback = ::core::option::Option<
 extern "C" {
     /// Call a callback function at a future time.
     ///
-    /// If you use this function, you must pass `SDL_INIT_TIMER` to SDL_Init().
-    ///
     /// The callback function is passed the current timer interval and the user
     /// supplied parameter from the SDL_AddTimer() call and should return the next
     /// timer interval. If the value returned from the callback is 0, the timer is
@@ -216,8 +214,6 @@ pub type SDL_NSTimerCallback = ::core::option::Option<
 extern "C" {
     /// Call a callback function at a future time.
     ///
-    /// If you use this function, you must pass `SDL_INIT_TIMER` to SDL_Init().
-    ///
     /// The callback function is passed the current timer interval and the user
     /// supplied parameter from the SDL_AddTimerNS() call and should return the
     /// next timer interval. If the value returned from the callback is 0, the
@@ -259,11 +255,11 @@ extern "C" {
     /// Remove a timer created with SDL_AddTimer().
     ///
     /// \param id the ID of the timer to remove.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_AddTimer
-    pub fn SDL_RemoveTimer(id: SDL_TimerID) -> SDL_bool;
+    pub fn SDL_RemoveTimer(id: SDL_TimerID) -> ::core::primitive::bool;
 }

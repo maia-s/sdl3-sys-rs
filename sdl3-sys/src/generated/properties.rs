@@ -89,13 +89,16 @@ extern "C" {
     ///
     /// \param src the properties to copy.
     /// \param dst the destination properties.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_CopyProperties(src: SDL_PropertiesID, dst: SDL_PropertiesID) -> SDL_bool;
+    pub fn SDL_CopyProperties(
+        src: SDL_PropertiesID,
+        dst: SDL_PropertiesID,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -111,15 +114,15 @@ extern "C" {
     /// thread.
     ///
     /// \param props the properties to lock.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_UnlockProperties
-    pub fn SDL_LockProperties(props: SDL_PropertiesID) -> SDL_bool;
+    pub fn SDL_LockProperties(props: SDL_PropertiesID) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -177,8 +180,8 @@ extern "C" {
     /// \param cleanup the function to call when this property is deleted, or NULL
     ///                if no cleanup is necessary.
     /// \param userdata a pointer that is passed to the cleanup function.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -193,7 +196,7 @@ extern "C" {
         value: *mut ::core::ffi::c_void,
         cleanup: SDL_CleanupPropertyCallback,
         userdata: *mut ::core::ffi::c_void,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -202,8 +205,8 @@ extern "C" {
     /// \param props the properties to modify.
     /// \param name the name of the property to modify.
     /// \param value the new value of the property, or NULL to delete the property.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -220,7 +223,7 @@ extern "C" {
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
         value: *mut ::core::ffi::c_void,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -232,8 +235,8 @@ extern "C" {
     /// \param props the properties to modify.
     /// \param name the name of the property to modify.
     /// \param value the new value of the property, or NULL to delete the property.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -244,7 +247,7 @@ extern "C" {
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
         value: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -253,8 +256,8 @@ extern "C" {
     /// \param props the properties to modify.
     /// \param name the name of the property to modify.
     /// \param value the new value of the property.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -265,7 +268,7 @@ extern "C" {
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
         value: Sint64,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -274,8 +277,8 @@ extern "C" {
     /// \param props the properties to modify.
     /// \param name the name of the property to modify.
     /// \param value the new value of the property.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -286,7 +289,7 @@ extern "C" {
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
         value: ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -295,8 +298,8 @@ extern "C" {
     /// \param props the properties to modify.
     /// \param name the name of the property to modify.
     /// \param value the new value of the property.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -306,8 +309,8 @@ extern "C" {
     pub fn SDL_SetBooleanProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
-        value: SDL_bool,
-    ) -> SDL_bool;
+        value: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -315,14 +318,17 @@ extern "C" {
     ///
     /// \param props the properties to query.
     /// \param name the name of the property to query.
-    /// \returns SDL_TRUE if the property exists, or SDL_FALSE if it doesn't.
+    /// \returns true if the property exists, or false if it doesn't.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetPropertyType
-    pub fn SDL_HasProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_HasProperty(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -483,8 +489,8 @@ extern "C" {
     pub fn SDL_GetBooleanProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
-        default_value: SDL_bool,
-    ) -> SDL_bool;
+        default_value: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -492,14 +498,16 @@ extern "C" {
     ///
     /// \param props the properties to modify.
     /// \param name the name of the property to clear.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_ClearProperty(props: SDL_PropertiesID, name: *const ::core::ffi::c_char)
-        -> SDL_bool;
+    pub fn SDL_ClearProperty(
+        props: SDL_PropertiesID,
+        name: *const ::core::ffi::c_char,
+    ) -> ::core::primitive::bool;
 }
 
 /// A callback used to enumerate all the properties in a group of properties.
@@ -534,8 +542,8 @@ extern "C" {
     /// \param props the properties to query.
     /// \param callback the function to call for each property.
     /// \param userdata a pointer that is passed to `callback`.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -544,7 +552,7 @@ extern "C" {
         props: SDL_PropertiesID,
         callback: SDL_EnumeratePropertiesCallback,
         userdata: *mut ::core::ffi::c_void,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

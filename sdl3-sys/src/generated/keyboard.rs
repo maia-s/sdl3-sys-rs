@@ -27,12 +27,12 @@ pub type SDL_KeyboardID = Uint32;
 extern "C" {
     /// Return whether a keyboard is currently connected.
     ///
-    /// \returns SDL_TRUE if a keyboard is connected, SDL_FALSE otherwise.
+    /// \returns true if a keyboard is connected, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetKeyboards
-    pub fn SDL_HasKeyboard() -> SDL_bool;
+    pub fn SDL_HasKeyboard() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -87,9 +87,9 @@ extern "C" {
     /// valid for the whole lifetime of the application and should not be freed by
     /// the caller.
     ///
-    /// A array element with a value of SDL_TRUE means that the key is pressed and
-    /// a value of SDL_FALSE means that it is not. Indexes into this array are
-    /// obtained by using SDL_Scancode values.
+    /// A array element with a value of true means that the key is pressed and a
+    /// value of false means that it is not. Indexes into this array are obtained
+    /// by using SDL_Scancode values.
     ///
     /// Use SDL_PumpEvents() to update the state array.
     ///
@@ -108,7 +108,8 @@ extern "C" {
     ///
     /// \sa SDL_PumpEvents
     /// \sa SDL_ResetKeyboard
-    pub fn SDL_GetKeyboardState(numkeys: *mut ::core::ffi::c_int) -> *const SDL_bool;
+    pub fn SDL_GetKeyboardState(numkeys: *mut ::core::ffi::c_int)
+        -> *const ::core::primitive::bool;
 }
 
 extern "C" {
@@ -160,13 +161,13 @@ extern "C" {
     ///
     /// If you want to get the keycode as it would be delivered in key events,
     /// including options specified in SDL_HINT_KEYCODE_OPTIONS, then you should
-    /// pass `key_event` as SDL_TRUE. Otherwise this function simply translates the
+    /// pass `key_event` as true. Otherwise this function simply translates the
     /// scancode based on the given modifier state.
     ///
     /// \param scancode the desired SDL_Scancode to query.
     /// \param modstate the modifier state to use when translating the scancode to
     ///                 a keycode.
-    /// \param key_event SDL_TRUE if the keycode will be used in key events.
+    /// \param key_event true if the keycode will be used in key events.
     /// \returns the SDL_Keycode that corresponds to the given SDL_Scancode.
     ///
     /// \since This function is available since SDL 3.0.0.
@@ -176,7 +177,7 @@ extern "C" {
     pub fn SDL_GetKeyFromScancode(
         scancode: SDL_Scancode,
         modstate: SDL_Keymod,
-        key_event: SDL_bool,
+        key_event: ::core::primitive::bool,
     ) -> SDL_Keycode;
 }
 
@@ -206,8 +207,8 @@ extern "C" {
     /// \param name the name to use for the scancode, encoded as UTF-8. The string
     ///             is not copied, so the pointer given to this function must stay
     ///             valid while SDL is being used.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -215,7 +216,7 @@ extern "C" {
     pub fn SDL_SetScancodeName(
         scancode: SDL_Scancode,
         name: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -300,8 +301,8 @@ extern "C" {
     /// On some platforms using this function shows the screen keyboard.
     ///
     /// \param window the window to enable text input.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -309,7 +310,7 @@ extern "C" {
     /// \sa SDL_StartTextInputWithProperties
     /// \sa SDL_StopTextInput
     /// \sa SDL_TextInputActive
-    pub fn SDL_StartTextInput(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_StartTextInput(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 /// Text input type.
@@ -427,11 +428,11 @@ extern "C" {
     ///   SDL_TEXTINPUT_TYPE_TEXT_NAME, and SDL_CAPITALIZE_NONE for e-mail
     ///   addresses, usernames, and passwords.
     /// - `SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN` - true to enable auto completion
-    ///   and auto correction, defaults to SDL_TRUE.
+    ///   and auto correction, defaults to true.
     /// - `SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN` - true if multiple lines of text
-    ///   are allowed. This defaults to SDL_TRUE if SDL_HINT_RETURN_KEY_HIDES_IME
-    ///   is "0" or is not set, and defaults to SDL_FALSE if
-    ///   SDL_HINT_RETURN_KEY_HIDES_IME is "1".
+    ///   are allowed. This defaults to true if SDL_HINT_RETURN_KEY_HIDES_IME is
+    ///   "0" or is not set, and defaults to false if SDL_HINT_RETURN_KEY_HIDES_IME
+    ///   is "1".
     ///
     /// On Android you can directly specify the input type:
     ///
@@ -441,8 +442,8 @@ extern "C" {
     ///
     /// \param window the window to enable text input.
     /// \param props the properties to use.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -453,7 +454,7 @@ extern "C" {
     pub fn SDL_StartTextInputWithProperties(
         window: *mut SDL_Window,
         props: SDL_PropertiesID,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 pub const SDL_PROP_TEXTINPUT_TYPE_NUMBER: &::core::ffi::CStr =
@@ -476,12 +477,12 @@ extern "C" {
     /// Check whether or not Unicode text input events are enabled for a window.
     ///
     /// \param window the window to check.
-    /// \returns SDL_TRUE if text input events are enabled else SDL_FALSE.
+    /// \returns true if text input events are enabled else false.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_StartTextInput
-    pub fn SDL_TextInputActive(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_TextInputActive(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -491,27 +492,27 @@ extern "C" {
     /// it.
     ///
     /// \param window the window to disable text input.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_StartTextInput
-    pub fn SDL_StopTextInput(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_StopTextInput(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Dismiss the composition window/IME without disabling the subsystem.
     ///
     /// \param window the window to affect.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_StartTextInput
     /// \sa SDL_StopTextInput
-    pub fn SDL_ClearComposition(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_ClearComposition(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -525,8 +526,8 @@ extern "C" {
     ///             coordinates, or NULL to clear it.
     /// \param cursor the offset of the current cursor location relative to
     ///               `rect->x`, in window coordinates.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -536,7 +537,7 @@ extern "C" {
         window: *mut SDL_Window,
         rect: *const SDL_Rect,
         cursor: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -549,8 +550,8 @@ extern "C" {
     ///             may be NULL.
     /// \param cursor a pointer to the offset of the current cursor location
     ///               relative to `rect->x`, may be NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -559,30 +560,30 @@ extern "C" {
         window: *mut SDL_Window,
         rect: *mut SDL_Rect,
         cursor: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Check whether the platform has screen keyboard support.
     ///
-    /// \returns SDL_TRUE if the platform has some screen keyboard support or
-    ///          SDL_FALSE if not.
+    /// \returns true if the platform has some screen keyboard support or false if
+    ///          not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_StartTextInput
     /// \sa SDL_ScreenKeyboardShown
-    pub fn SDL_HasScreenKeyboardSupport() -> SDL_bool;
+    pub fn SDL_HasScreenKeyboardSupport() -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Check whether the screen keyboard is shown for given window.
     ///
     /// \param window the window for which screen keyboard should be queried.
-    /// \returns SDL_TRUE if screen keyboard is shown or SDL_FALSE if not.
+    /// \returns true if screen keyboard is shown or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_HasScreenKeyboardSupport
-    pub fn SDL_ScreenKeyboardShown(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_ScreenKeyboardShown(window: *mut SDL_Window) -> ::core::primitive::bool;
 }

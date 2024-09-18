@@ -92,14 +92,14 @@ extern "C" {
     ///                   format, may be NULL.
     /// \param timeFormat a pointer to the SDL_TimeFormat to hold the returned time
     ///                   format, may be NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetDateTimeLocalePreferences(
         dateFormat: *mut SDL_DateFormat,
         timeFormat: *mut SDL_TimeFormat,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -107,11 +107,11 @@ extern "C" {
     /// Jan 1, 1970 in Universal Coordinated Time (UTC).
     ///
     /// \param ticks the SDL_Time to hold the returned tick count.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetCurrentTime(ticks: *mut SDL_Time) -> SDL_bool;
+    pub fn SDL_GetCurrentTime(ticks: *mut SDL_Time) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -123,15 +123,15 @@ extern "C" {
     /// \param localTime the resulting SDL_DateTime will be expressed in local time
     ///                  if true, otherwise it will be in Universal Coordinated
     ///                  Time (UTC).
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_TimeToDateTime(
         ticks: SDL_Time,
         dt: *mut SDL_DateTime,
-        localTime: SDL_bool,
-    ) -> SDL_bool;
+        localTime: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -142,11 +142,14 @@ extern "C" {
     ///
     /// \param dt the source SDL_DateTime.
     /// \param ticks the resulting SDL_Time.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_DateTimeToTime(dt: *const SDL_DateTime, ticks: *mut SDL_Time) -> SDL_bool;
+    pub fn SDL_DateTimeToTime(
+        dt: *const SDL_DateTime,
+        ticks: *mut SDL_Time,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

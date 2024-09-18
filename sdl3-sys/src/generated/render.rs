@@ -172,8 +172,8 @@ extern "C" {
     ///                     SDL_CreateWindow()).
     /// \param window a pointer filled with the window, or NULL on error.
     /// \param renderer a pointer filled with the renderer, or NULL on error.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -186,7 +186,7 @@ extern "C" {
         window_flags: SDL_WindowFlags,
         window: *mut *mut SDL_Window,
         renderer: *mut *mut SDL_Renderer,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -542,8 +542,8 @@ extern "C" {
     /// \param renderer the rendering context.
     /// \param w a pointer filled in with the width in pixels.
     /// \param h a pointer filled in with the height in pixels.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -552,7 +552,7 @@ extern "C" {
         renderer: *mut SDL_Renderer,
         w: *mut ::core::ffi::c_int,
         h: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -566,8 +566,8 @@ extern "C" {
     /// \param renderer the rendering context.
     /// \param w a pointer filled in with the current width.
     /// \param h a pointer filled in with the current height.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -576,7 +576,7 @@ extern "C" {
         renderer: *mut SDL_Renderer,
         w: *mut ::core::ffi::c_int,
         h: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1038,15 +1038,15 @@ extern "C" {
     ///          argument can be NULL if you don't need this information.
     /// \param h a pointer filled in with the height of the texture in pixels. This
     ///          argument can be NULL if you don't need this information.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetTextureSize(
         texture: *mut SDL_Texture,
         w: *mut ::core::ffi::c_float,
         h: *mut ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1059,14 +1059,14 @@ extern "C" {
     /// `srcC = srcC * (color / 255)`
     ///
     /// Color modulation is not always supported by the renderer; it will return
-    /// SDL_FALSE if color modulation is not supported.
+    /// false if color modulation is not supported.
     ///
     /// \param texture the texture to update.
     /// \param r the red color value multiplied into copy operations.
     /// \param g the green color value multiplied into copy operations.
     /// \param b the blue color value multiplied into copy operations.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1078,7 +1078,7 @@ extern "C" {
         r: Uint8,
         g: Uint8,
         b: Uint8,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1091,14 +1091,14 @@ extern "C" {
     /// `srcC = srcC * color`
     ///
     /// Color modulation is not always supported by the renderer; it will return
-    /// SDL_FALSE if color modulation is not supported.
+    /// false if color modulation is not supported.
     ///
     /// \param texture the texture to update.
     /// \param r the red color value multiplied into copy operations.
     /// \param g the green color value multiplied into copy operations.
     /// \param b the blue color value multiplied into copy operations.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1110,7 +1110,7 @@ extern "C" {
         r: ::core::ffi::c_float,
         g: ::core::ffi::c_float,
         b: ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1120,8 +1120,8 @@ extern "C" {
     /// \param r a pointer filled in with the current red color value.
     /// \param g a pointer filled in with the current green color value.
     /// \param b a pointer filled in with the current blue color value.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1133,7 +1133,7 @@ extern "C" {
         r: *mut Uint8,
         g: *mut Uint8,
         b: *mut Uint8,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1143,8 +1143,8 @@ extern "C" {
     /// \param r a pointer filled in with the current red color value.
     /// \param g a pointer filled in with the current green color value.
     /// \param b a pointer filled in with the current blue color value.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1156,7 +1156,7 @@ extern "C" {
         r: *mut ::core::ffi::c_float,
         g: *mut ::core::ffi::c_float,
         b: *mut ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1168,19 +1168,22 @@ extern "C" {
     /// `srcA = srcA * (alpha / 255)`
     ///
     /// Alpha modulation is not always supported by the renderer; it will return
-    /// SDL_FALSE if alpha modulation is not supported.
+    /// false if alpha modulation is not supported.
     ///
     /// \param texture the texture to update.
     /// \param alpha the source alpha value multiplied into copy operations.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetTextureAlphaMod
     /// \sa SDL_SetTextureAlphaModFloat
     /// \sa SDL_SetTextureColorMod
-    pub fn SDL_SetTextureAlphaMod(texture: *mut SDL_Texture, alpha: Uint8) -> SDL_bool;
+    pub fn SDL_SetTextureAlphaMod(
+        texture: *mut SDL_Texture,
+        alpha: Uint8,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1192,12 +1195,12 @@ extern "C" {
     /// `srcA = srcA * alpha`
     ///
     /// Alpha modulation is not always supported by the renderer; it will return
-    /// SDL_FALSE if alpha modulation is not supported.
+    /// false if alpha modulation is not supported.
     ///
     /// \param texture the texture to update.
     /// \param alpha the source alpha value multiplied into copy operations.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1207,7 +1210,7 @@ extern "C" {
     pub fn SDL_SetTextureAlphaModFloat(
         texture: *mut SDL_Texture,
         alpha: ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1215,15 +1218,18 @@ extern "C" {
     ///
     /// \param texture the texture to query.
     /// \param alpha a pointer filled in with the current alpha value.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetTextureAlphaModFloat
     /// \sa SDL_GetTextureColorMod
     /// \sa SDL_SetTextureAlphaMod
-    pub fn SDL_GetTextureAlphaMod(texture: *mut SDL_Texture, alpha: *mut Uint8) -> SDL_bool;
+    pub fn SDL_GetTextureAlphaMod(
+        texture: *mut SDL_Texture,
+        alpha: *mut Uint8,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1231,8 +1237,8 @@ extern "C" {
     ///
     /// \param texture the texture to query.
     /// \param alpha a pointer filled in with the current alpha value.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1242,25 +1248,27 @@ extern "C" {
     pub fn SDL_GetTextureAlphaModFloat(
         texture: *mut SDL_Texture,
         alpha: *mut ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Set the blend mode for a texture, used by SDL_RenderTexture().
     ///
     /// If the blend mode is not supported, the closest supported mode is chosen
-    /// and this function returns SDL_FALSE.
+    /// and this function returns false.
     ///
     /// \param texture the texture to update.
     /// \param blendMode the SDL_BlendMode to use for texture blending.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetTextureBlendMode
-    pub fn SDL_SetTextureBlendMode(texture: *mut SDL_Texture, blendMode: SDL_BlendMode)
-        -> SDL_bool;
+    pub fn SDL_SetTextureBlendMode(
+        texture: *mut SDL_Texture,
+        blendMode: SDL_BlendMode,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1268,8 +1276,8 @@ extern "C" {
     ///
     /// \param texture the texture to query.
     /// \param blendMode a pointer filled in with the current SDL_BlendMode.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1277,7 +1285,7 @@ extern "C" {
     pub fn SDL_GetTextureBlendMode(
         texture: *mut SDL_Texture,
         blendMode: *mut SDL_BlendMode,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1289,14 +1297,16 @@ extern "C" {
     ///
     /// \param texture the texture to update.
     /// \param scaleMode the SDL_ScaleMode to use for texture scaling.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetTextureScaleMode
-    pub fn SDL_SetTextureScaleMode(texture: *mut SDL_Texture, scaleMode: SDL_ScaleMode)
-        -> SDL_bool;
+    pub fn SDL_SetTextureScaleMode(
+        texture: *mut SDL_Texture,
+        scaleMode: SDL_ScaleMode,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1304,8 +1314,8 @@ extern "C" {
     ///
     /// \param texture the texture to query.
     /// \param scaleMode a pointer filled in with the current scale mode.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1313,7 +1323,7 @@ extern "C" {
     pub fn SDL_GetTextureScaleMode(
         texture: *mut SDL_Texture,
         scaleMode: *mut SDL_ScaleMode,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1336,8 +1346,8 @@ extern "C" {
     /// \param pixels the raw pixel data in the format of the texture.
     /// \param pitch the number of bytes in a row of pixel data, including padding
     ///              between lines.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1350,7 +1360,7 @@ extern "C" {
         rect: *const SDL_Rect,
         pixels: *const ::core::ffi::c_void,
         pitch: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1373,8 +1383,8 @@ extern "C" {
     /// \param Vplane the raw pixel data for the V plane.
     /// \param Vpitch the number of bytes between rows of pixel data for the V
     ///               plane.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1389,7 +1399,7 @@ extern "C" {
         Upitch: ::core::ffi::c_int,
         Vplane: *const Uint8,
         Vpitch: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1408,8 +1418,8 @@ extern "C" {
     /// \param UVplane the raw pixel data for the UV plane.
     /// \param UVpitch the number of bytes between rows of pixel data for the UV
     ///                plane.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1422,7 +1432,7 @@ extern "C" {
         Ypitch: ::core::ffi::c_int,
         UVplane: *const Uint8,
         UVpitch: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1444,9 +1454,9 @@ extern "C" {
     ///               appropriately offset by the locked area.
     /// \param pitch this is filled in with the pitch of the locked pixels; the
     ///              pitch is the length of one row in bytes.
-    /// \returns SDL_TRUE on success or SDL_FALSE if the texture is not valid or
-    ///          was not created with `SDL_TEXTUREACCESS_STREAMING`; call
-    ///          SDL_GetError() for more information.
+    /// \returns true on success or false if the texture is not valid or was not
+    ///          created with `SDL_TEXTUREACCESS_STREAMING`; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1457,7 +1467,7 @@ extern "C" {
         rect: *const SDL_Rect,
         pixels: *mut *mut ::core::ffi::c_void,
         pitch: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1484,8 +1494,8 @@ extern "C" {
     ///             NULL, the entire texture will be locked.
     /// \param surface this is filled in with an SDL surface representing the
     ///                locked area.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1495,7 +1505,7 @@ extern "C" {
         texture: *mut SDL_Texture,
         rect: *const SDL_Rect,
         surface: *mut *mut SDL_Surface,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1528,13 +1538,16 @@ extern "C" {
     /// \param texture the targeted texture, which must be created with the
     ///                `SDL_TEXTUREACCESS_TARGET` flag, or NULL to render to the
     ///                window instead of a texture.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetRenderTarget
-    pub fn SDL_SetRenderTarget(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture) -> SDL_bool;
+    pub fn SDL_SetRenderTarget(
+        renderer: *mut SDL_Renderer,
+        texture: *mut SDL_Texture,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1571,8 +1584,8 @@ extern "C" {
     /// \param h the height of the logical resolution.
     /// \param mode the presentation mode used.
     /// \param scale_mode the scale mode used.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1585,7 +1598,7 @@ extern "C" {
         h: ::core::ffi::c_int,
         mode: SDL_RendererLogicalPresentation,
         scale_mode: SDL_ScaleMode,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1599,8 +1612,8 @@ extern "C" {
     /// \param h an int to be filled with the height.
     /// \param mode a pointer filled in with the presentation mode.
     /// \param scale_mode a pointer filled in with the scale mode.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1611,7 +1624,7 @@ extern "C" {
         h: *mut ::core::ffi::c_int,
         mode: *mut SDL_RendererLogicalPresentation,
         scale_mode: *mut SDL_ScaleMode,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1625,8 +1638,8 @@ extern "C" {
     /// \param renderer the rendering context.
     /// \param rect a pointer filled in with the final presentation rectangle, may
     ///             be NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1634,7 +1647,7 @@ extern "C" {
     pub fn SDL_GetRenderLogicalPresentationRect(
         renderer: *mut SDL_Renderer,
         rect: *mut SDL_FRect,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1645,8 +1658,8 @@ extern "C" {
     /// \param window_y the y coordinate in window coordinates.
     /// \param x a pointer filled with the x coordinate in render coordinates.
     /// \param y a pointer filled with the y coordinate in render coordinates.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1658,7 +1671,7 @@ extern "C" {
         window_y: ::core::ffi::c_float,
         x: *mut ::core::ffi::c_float,
         y: *mut ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1671,8 +1684,8 @@ extern "C" {
     ///                 coordinates.
     /// \param window_y a pointer filled with the y coordinate in window
     ///                 coordinates.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1684,7 +1697,7 @@ extern "C" {
         y: ::core::ffi::c_float,
         window_x: *mut ::core::ffi::c_float,
         window_y: *mut ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1697,8 +1710,8 @@ extern "C" {
     ///
     /// \param renderer the rendering context.
     /// \param event the event to modify.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1706,7 +1719,7 @@ extern "C" {
     pub fn SDL_ConvertEventToRenderCoordinates(
         renderer: *mut SDL_Renderer,
         event: *mut SDL_Event,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1715,14 +1728,17 @@ extern "C" {
     /// \param renderer the rendering context.
     /// \param rect the SDL_Rect structure representing the drawing area, or NULL
     ///             to set the viewport to the entire target.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetRenderViewport
     /// \sa SDL_RenderViewportSet
-    pub fn SDL_SetRenderViewport(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> SDL_bool;
+    pub fn SDL_SetRenderViewport(
+        renderer: *mut SDL_Renderer,
+        rect: *const SDL_Rect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1730,14 +1746,17 @@ extern "C" {
     ///
     /// \param renderer the rendering context.
     /// \param rect an SDL_Rect structure filled in with the current drawing area.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_RenderViewportSet
     /// \sa SDL_SetRenderViewport
-    pub fn SDL_GetRenderViewport(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect) -> SDL_bool;
+    pub fn SDL_GetRenderViewport(
+        renderer: *mut SDL_Renderer,
+        rect: *mut SDL_Rect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1748,14 +1767,14 @@ extern "C" {
     /// viewport is always reset when changing rendering targets.
     ///
     /// \param renderer the rendering context.
-    /// \returns SDL_TRUE if the viewport was set to a specific rectangle, or
-    ///          SDL_FALSE if it was set to NULL (the entire target).
+    /// \returns true if the viewport was set to a specific rectangle, or false if
+    ///          it was set to NULL (the entire target).
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetRenderViewport
     /// \sa SDL_SetRenderViewport
-    pub fn SDL_RenderViewportSet(renderer: *mut SDL_Renderer) -> SDL_bool;
+    pub fn SDL_RenderViewportSet(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1771,11 +1790,14 @@ extern "C" {
     /// \param renderer the rendering context.
     /// \param rect a pointer filled in with the area that is safe for interactive
     ///             content.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetRenderSafeArea(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect) -> SDL_bool;
+    pub fn SDL_GetRenderSafeArea(
+        renderer: *mut SDL_Renderer,
+        rect: *mut SDL_Rect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1784,14 +1806,17 @@ extern "C" {
     /// \param renderer the rendering context.
     /// \param rect an SDL_Rect structure representing the clip area, relative to
     ///             the viewport, or NULL to disable clipping.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetRenderClipRect
     /// \sa SDL_RenderClipEnabled
-    pub fn SDL_SetRenderClipRect(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> SDL_bool;
+    pub fn SDL_SetRenderClipRect(
+        renderer: *mut SDL_Renderer,
+        rect: *const SDL_Rect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1800,28 +1825,31 @@ extern "C" {
     /// \param renderer the rendering context.
     /// \param rect an SDL_Rect structure filled in with the current clipping area
     ///             or an empty rectangle if clipping is disabled.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_RenderClipEnabled
     /// \sa SDL_SetRenderClipRect
-    pub fn SDL_GetRenderClipRect(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect) -> SDL_bool;
+    pub fn SDL_GetRenderClipRect(
+        renderer: *mut SDL_Renderer,
+        rect: *mut SDL_Rect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Get whether clipping is enabled on the given renderer.
     ///
     /// \param renderer the rendering context.
-    /// \returns SDL_TRUE if clipping is enabled or SDL_FALSE if not; call
-    ///          SDL_GetError() for more information.
+    /// \returns true if clipping is enabled or false if not; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetRenderClipRect
     /// \sa SDL_SetRenderClipRect
-    pub fn SDL_RenderClipEnabled(renderer: *mut SDL_Renderer) -> SDL_bool;
+    pub fn SDL_RenderClipEnabled(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1838,8 +1866,8 @@ extern "C" {
     /// \param renderer the rendering context.
     /// \param scaleX the horizontal scaling factor.
     /// \param scaleY the vertical scaling factor.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1848,7 +1876,7 @@ extern "C" {
         renderer: *mut SDL_Renderer,
         scaleX: ::core::ffi::c_float,
         scaleY: ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1857,8 +1885,8 @@ extern "C" {
     /// \param renderer the rendering context.
     /// \param scaleX a pointer filled in with the horizontal scaling factor.
     /// \param scaleY a pointer filled in with the vertical scaling factor.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1867,7 +1895,7 @@ extern "C" {
         renderer: *mut SDL_Renderer,
         scaleX: *mut ::core::ffi::c_float,
         scaleY: *mut ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1883,8 +1911,8 @@ extern "C" {
     /// \param a the alpha value used to draw on the rendering target; usually
     ///          `SDL_ALPHA_OPAQUE` (255). Use SDL_SetRenderDrawBlendMode to
     ///          specify how the alpha channel is used.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1896,7 +1924,7 @@ extern "C" {
         g: Uint8,
         b: Uint8,
         a: Uint8,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1912,8 +1940,8 @@ extern "C" {
     /// \param a the alpha value used to draw on the rendering target. Use
     ///          SDL_SetRenderDrawBlendMode to specify how the alpha channel is
     ///          used.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1925,7 +1953,7 @@ extern "C" {
         g: ::core::ffi::c_float,
         b: ::core::ffi::c_float,
         a: ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1940,8 +1968,8 @@ extern "C" {
     ///          rendering target.
     /// \param a a pointer filled in with the alpha value used to draw on the
     ///          rendering target; usually `SDL_ALPHA_OPAQUE` (255).
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1953,7 +1981,7 @@ extern "C" {
         g: *mut Uint8,
         b: *mut Uint8,
         a: *mut Uint8,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1968,8 +1996,8 @@ extern "C" {
     ///          rendering target.
     /// \param a a pointer filled in with the alpha value used to draw on the
     ///          rendering target.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1981,7 +2009,7 @@ extern "C" {
         g: *mut ::core::ffi::c_float,
         b: *mut ::core::ffi::c_float,
         a: *mut ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1997,8 +2025,8 @@ extern "C" {
     ///
     /// \param renderer the rendering context.
     /// \param scale the color scale value.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2006,7 +2034,7 @@ extern "C" {
     pub fn SDL_SetRenderColorScale(
         renderer: *mut SDL_Renderer,
         scale: ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2014,8 +2042,8 @@ extern "C" {
     ///
     /// \param renderer the rendering context.
     /// \param scale a pointer filled in with the current color scale value.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2023,7 +2051,7 @@ extern "C" {
     pub fn SDL_GetRenderColorScale(
         renderer: *mut SDL_Renderer,
         scale: *mut ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2033,8 +2061,8 @@ extern "C" {
     ///
     /// \param renderer the rendering context.
     /// \param blendMode the SDL_BlendMode to use for blending.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2042,7 +2070,7 @@ extern "C" {
     pub fn SDL_SetRenderDrawBlendMode(
         renderer: *mut SDL_Renderer,
         blendMode: SDL_BlendMode,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2050,8 +2078,8 @@ extern "C" {
     ///
     /// \param renderer the rendering context.
     /// \param blendMode a pointer filled in with the current SDL_BlendMode.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2059,7 +2087,7 @@ extern "C" {
     pub fn SDL_GetRenderDrawBlendMode(
         renderer: *mut SDL_Renderer,
         blendMode: *mut SDL_BlendMode,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2071,13 +2099,13 @@ extern "C" {
     /// SDL_SetRenderDrawColor() when needed.
     ///
     /// \param renderer the rendering context.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetRenderDrawColor
-    pub fn SDL_RenderClear(renderer: *mut SDL_Renderer) -> SDL_bool;
+    pub fn SDL_RenderClear(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2086,8 +2114,8 @@ extern "C" {
     /// \param renderer the renderer which should draw a point.
     /// \param x the x coordinate of the point.
     /// \param y the y coordinate of the point.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2096,7 +2124,7 @@ extern "C" {
         renderer: *mut SDL_Renderer,
         x: ::core::ffi::c_float,
         y: ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2105,8 +2133,8 @@ extern "C" {
     /// \param renderer the renderer which should draw multiple points.
     /// \param points the points to draw.
     /// \param count the number of points to draw.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2115,7 +2143,7 @@ extern "C" {
         renderer: *mut SDL_Renderer,
         points: *const SDL_FPoint,
         count: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2126,8 +2154,8 @@ extern "C" {
     /// \param y1 the y coordinate of the start point.
     /// \param x2 the x coordinate of the end point.
     /// \param y2 the y coordinate of the end point.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2138,7 +2166,7 @@ extern "C" {
         y1: ::core::ffi::c_float,
         x2: ::core::ffi::c_float,
         y2: ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2148,8 +2176,8 @@ extern "C" {
     /// \param renderer the renderer which should draw multiple lines.
     /// \param points the points along the lines.
     /// \param count the number of points, drawing count-1 lines.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2158,7 +2186,7 @@ extern "C" {
         renderer: *mut SDL_Renderer,
         points: *const SDL_FPoint,
         count: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2167,13 +2195,16 @@ extern "C" {
     /// \param renderer the renderer which should draw a rectangle.
     /// \param rect a pointer to the destination rectangle, or NULL to outline the
     ///             entire rendering target.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_RenderRects
-    pub fn SDL_RenderRect(renderer: *mut SDL_Renderer, rect: *const SDL_FRect) -> SDL_bool;
+    pub fn SDL_RenderRect(
+        renderer: *mut SDL_Renderer,
+        rect: *const SDL_FRect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2183,8 +2214,8 @@ extern "C" {
     /// \param renderer the renderer which should draw multiple rectangles.
     /// \param rects a pointer to an array of destination rectangles.
     /// \param count the number of rectangles.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2193,7 +2224,7 @@ extern "C" {
         renderer: *mut SDL_Renderer,
         rects: *const SDL_FRect,
         count: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2203,13 +2234,16 @@ extern "C" {
     /// \param renderer the renderer which should fill a rectangle.
     /// \param rect a pointer to the destination rectangle, or NULL for the entire
     ///             rendering target.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_RenderFillRects
-    pub fn SDL_RenderFillRect(renderer: *mut SDL_Renderer, rect: *const SDL_FRect) -> SDL_bool;
+    pub fn SDL_RenderFillRect(
+        renderer: *mut SDL_Renderer,
+        rect: *const SDL_FRect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2219,8 +2253,8 @@ extern "C" {
     /// \param renderer the renderer which should fill multiple rectangles.
     /// \param rects a pointer to an array of destination rectangles.
     /// \param count the number of rectangles.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2229,7 +2263,7 @@ extern "C" {
         renderer: *mut SDL_Renderer,
         rects: *const SDL_FRect,
         count: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2242,8 +2276,8 @@ extern "C" {
     ///                texture.
     /// \param dstrect a pointer to the destination rectangle, or NULL for the
     ///                entire rendering target.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2254,7 +2288,7 @@ extern "C" {
         texture: *mut SDL_Texture,
         srcrect: *const SDL_FRect,
         dstrect: *const SDL_FRect,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2274,8 +2308,8 @@ extern "C" {
     ///               around dstrect.w/2, dstrect.h/2).
     /// \param flip an SDL_FlipMode value stating which flipping actions should be
     ///             performed on the texture.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2288,7 +2322,7 @@ extern "C" {
         angle: ::core::ffi::c_double,
         center: *const SDL_FPoint,
         flip: SDL_FlipMode,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2307,8 +2341,8 @@ extern "C" {
     ///              64x64 tiles.
     /// \param dstrect a pointer to the destination rectangle, or NULL for the
     ///                entire rendering target.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2319,7 +2353,7 @@ extern "C" {
         srcrect: *const SDL_FRect,
         scale: ::core::ffi::c_float,
         dstrect: *const SDL_FRect,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2345,8 +2379,8 @@ extern "C" {
     ///              corner of `dstrect`, or 0.0f for an unscaled copy.
     /// \param dstrect a pointer to the destination rectangle, or NULL for the
     ///                entire rendering target.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2361,7 +2395,7 @@ extern "C" {
         bottom_height: ::core::ffi::c_float,
         scale: ::core::ffi::c_float,
         dstrect: *const SDL_FRect,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2377,8 +2411,8 @@ extern "C" {
     ///                array, if NULL all vertices will be rendered in sequential
     ///                order.
     /// \param num_indices number of indices.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2390,7 +2424,7 @@ extern "C" {
         num_vertices: ::core::ffi::c_int,
         indices: *const ::core::ffi::c_int,
         num_indices: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2411,8 +2445,8 @@ extern "C" {
     ///                if NULL all vertices will be rendered in sequential order.
     /// \param num_indices number of indices.
     /// \param size_indices index size: 1 (byte), 2 (short), 4 (int).
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2430,7 +2464,7 @@ extern "C" {
         indices: *const ::core::ffi::c_void,
         num_indices: ::core::ffi::c_int,
         size_indices: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2481,8 +2515,8 @@ extern "C" {
     /// do not have a concept of backbuffers.
     ///
     /// \param renderer the rendering context.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety You may only call this function on the main thread.
     ///
@@ -2500,7 +2534,7 @@ extern "C" {
     /// \sa SDL_RenderRects
     /// \sa SDL_SetRenderDrawBlendMode
     /// \sa SDL_SetRenderDrawColor
-    pub fn SDL_RenderPresent(renderer: *mut SDL_Renderer) -> SDL_bool;
+    pub fn SDL_RenderPresent(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2556,11 +2590,11 @@ extern "C" {
     /// be prepared to make changes if specific state needs to be protected.
     ///
     /// \param renderer the rendering context.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_FlushRenderer(renderer: *mut SDL_Renderer) -> SDL_bool;
+    pub fn SDL_FlushRenderer(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2622,8 +2656,8 @@ extern "C" {
     /// \param signal_semaphore a VkSempahore that SDL will signal when rendering
     ///                         for the current frame is complete, or 0 if not
     ///                         needed.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is **NOT** safe to call this function from two threads at
     ///               once.
@@ -2634,7 +2668,7 @@ extern "C" {
         wait_stage_mask: Uint32,
         wait_semaphore: Sint64,
         signal_semaphore: Sint64,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2651,13 +2685,16 @@ extern "C" {
     ///
     /// \param renderer the renderer to toggle.
     /// \param vsync the vertical refresh sync interval.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetRenderVSync
-    pub fn SDL_SetRenderVSync(renderer: *mut SDL_Renderer, vsync: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SetRenderVSync(
+        renderer: *mut SDL_Renderer,
+        vsync: ::core::ffi::c_int,
+    ) -> ::core::primitive::bool;
 }
 
 pub const SDL_RENDERER_VSYNC_DISABLED: ::core::primitive::i32 = 0;
@@ -2670,8 +2707,8 @@ extern "C" {
     /// \param renderer the renderer to toggle.
     /// \param vsync an int filled with the current vertical refresh sync interval.
     ///              See SDL_SetRenderVSync() for the meaning of the value.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2679,7 +2716,7 @@ extern "C" {
     pub fn SDL_GetRenderVSync(
         renderer: *mut SDL_Renderer,
         vsync: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 /// A structure representing rendering state

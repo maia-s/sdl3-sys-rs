@@ -1636,8 +1636,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS: &::core::ffi::CStr = unsaf
 /// - "0": HIDAPI driver is not used.
 /// - "1": HIDAPI driver is used.
 ///
-/// This driver doesn't work with the dolphinbar, so the default is SDL_FALSE
-/// for now.
+/// This driver doesn't work with the dolphinbar, so the default is false for
+/// now.
 ///
 /// This hint should be set before enumerating controllers.
 ///
@@ -2376,11 +2376,11 @@ pub const SDL_HINT_MOUSE_RELATIVE_CURSOR_VISIBLE: &::core::ffi::CStr = unsafe {
 /// system while relative mode is active, in case the desired confinement state
 /// became out-of-sync due to interference from other running programs.
 ///
-/// The variable can be integers representing miliseconds between each refresh.
-/// A value of zero means SDL will not automatically refresh the confinement.
-/// The default value varies depending on the operating system, this variable
-/// might not have any effects on inapplicable platforms such as those without
-/// a cursor.
+/// The variable can be integers representing milliseconds between each
+/// refresh. A value of zero means SDL will not automatically refresh the
+/// confinement. The default value varies depending on the operating system,
+/// this variable might not have any effects on inapplicable platforms such as
+/// those without a cursor.
 ///
 /// This hint can be set anytime.
 ///
@@ -3876,8 +3876,8 @@ extern "C" {
     /// \param name the hint to set.
     /// \param value the value of the hint variable.
     /// \param priority the SDL_HintPriority level for the hint.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -3890,7 +3890,7 @@ extern "C" {
         name: *const ::core::ffi::c_char,
         value: *const ::core::ffi::c_char,
         priority: SDL_HintPriority,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3902,8 +3902,8 @@ extern "C" {
     ///
     /// \param name the hint to set.
     /// \param value the value of the hint variable.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -3915,7 +3915,7 @@ extern "C" {
     pub fn SDL_SetHint(
         name: *const ::core::ffi::c_char,
         value: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3926,8 +3926,8 @@ extern "C" {
     /// change.
     ///
     /// \param name the hint to set.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -3935,7 +3935,7 @@ extern "C" {
     ///
     /// \sa SDL_SetHint
     /// \sa SDL_ResetHints
-    pub fn SDL_ResetHint(name: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_ResetHint(name: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3989,8 +3989,8 @@ extern "C" {
     /// \sa SDL_SetHint
     pub fn SDL_GetHintBoolean(
         name: *const ::core::ffi::c_char,
-        default_value: SDL_bool,
-    ) -> SDL_bool;
+        default_value: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 /// A callback used to send notifications of hint value changes.
@@ -4029,8 +4029,8 @@ extern "C" {
     /// \param callback An SDL_HintCallback function that will be called when the
     ///                 hint value changes.
     /// \param userdata a pointer to pass to the callback function.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -4041,7 +4041,7 @@ extern "C" {
         name: *const ::core::ffi::c_char,
         callback: SDL_HintCallback,
         userdata: *mut ::core::ffi::c_void,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

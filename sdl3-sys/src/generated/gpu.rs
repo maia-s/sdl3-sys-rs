@@ -1465,7 +1465,7 @@ pub struct SDL_GPUSamplerCreateInfo {
     pub address_mode_w: SDL_GPUSamplerAddressMode,
     /// The bias to be added to mipmap LOD calculation.
     pub mip_lod_bias: ::core::ffi::c_float,
-    /// The anisotropy value clamp used by the sampler. If enable_anisotropy is SDL_FALSE, this is ignored.
+    /// The anisotropy value clamp used by the sampler. If enable_anisotropy is false, this is ignored.
     pub max_anisotropy: ::core::ffi::c_float,
     /// The comparison operator to apply to fetched data before filtering.
     pub compare_op: SDL_GPUCompareOp,
@@ -1473,10 +1473,10 @@ pub struct SDL_GPUSamplerCreateInfo {
     pub min_lod: ::core::ffi::c_float,
     /// Clamps the maximum of the computed LOD value.
     pub max_lod: ::core::ffi::c_float,
-    /// SDL_TRUE to enable anisotropic filtering.
-    pub enable_anisotropy: SDL_bool,
-    /// SDL_TRUE to enable comparison against a reference value during lookups.
-    pub enable_compare: SDL_bool,
+    /// true to enable anisotropic filtering.
+    pub enable_anisotropy: ::core::primitive::bool,
+    /// true to enable comparison against a reference value during lookups.
+    pub enable_compare: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     /// A properties ID for extensions. Should be 0 if no extensions are needed.
@@ -1596,12 +1596,12 @@ pub struct SDL_GPUColorTargetBlendState {
     pub dst_alpha_blendfactor: SDL_GPUBlendFactor,
     /// The blend operation for the alpha component.
     pub alpha_blend_op: SDL_GPUBlendOp,
-    /// A bitmask specifying which of the RGBA components are enabled for writing. Writes to all channels if enable_color_write_mask is SDL_FALSE.
+    /// A bitmask specifying which of the RGBA components are enabled for writing. Writes to all channels if enable_color_write_mask is false.
     pub color_write_mask: SDL_GPUColorComponentFlags,
     /// Whether blending is enabled for the color target.
-    pub enable_blend: SDL_bool,
+    pub enable_blend: ::core::primitive::bool,
     /// Whether the color write mask is enabled.
-    pub enable_color_write_mask: SDL_bool,
+    pub enable_color_write_mask: ::core::primitive::bool,
     pub padding2: Uint8,
     pub padding3: Uint8,
 }
@@ -1753,8 +1753,8 @@ pub struct SDL_GPURasterizerState {
     pub depth_bias_clamp: ::core::ffi::c_float,
     /// A scalar factor applied to a fragment's slope in depth calculations.
     pub depth_bias_slope_factor: ::core::ffi::c_float,
-    /// SDL_TRUE to bias fragment depth values.
-    pub enable_depth_bias: SDL_bool,
+    /// true to bias fragment depth values.
+    pub enable_depth_bias: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
@@ -1772,10 +1772,10 @@ pub struct SDL_GPURasterizerState {
 pub struct SDL_GPUMultisampleState {
     /// The number of samples to be used in rasterization.
     pub sample_count: SDL_GPUSampleCount,
-    /// Determines which samples get updated in the render targets. Treated as 0xFFFFFFFF if enable_mask is SDL_FALSE.
+    /// Determines which samples get updated in the render targets. Treated as 0xFFFFFFFF if enable_mask is false.
     pub sample_mask: Uint32,
     /// Enables sample masking.
-    pub enable_mask: SDL_bool,
+    pub enable_mask: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
@@ -1801,12 +1801,12 @@ pub struct SDL_GPUDepthStencilState {
     pub compare_mask: Uint8,
     /// Selects the bits of the stencil values updated by the stencil test.
     pub write_mask: Uint8,
-    /// SDL_TRUE enables the depth test.
-    pub enable_depth_test: SDL_bool,
-    /// SDL_TRUE enables depth writes. Depth writes are always disabled when enable_depth_test is SDL_FALSE.
-    pub enable_depth_write: SDL_bool,
-    /// SDL_TRUE enables the stencil test.
-    pub enable_stencil_test: SDL_bool,
+    /// true enables the depth test.
+    pub enable_depth_test: ::core::primitive::bool,
+    /// true enables depth writes. Depth writes are always disabled when enable_depth_test is false.
+    pub enable_depth_write: ::core::primitive::bool,
+    /// true enables the stencil test.
+    pub enable_stencil_test: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
@@ -1842,10 +1842,10 @@ pub struct SDL_GPUGraphicsPipelineTargetInfo {
     pub color_target_descriptions: *const SDL_GPUColorTargetDescription,
     /// The number of color target descriptions in the above array.
     pub num_color_targets: Uint32,
-    /// The pixel format of the depth-stencil target. Ignored if has_depth_stencil_target is SDL_FALSE.
+    /// The pixel format of the depth-stencil target. Ignored if has_depth_stencil_target is false.
     pub depth_stencil_format: SDL_GPUTextureFormat,
-    /// SDL_TRUE specifies that the pipeline uses a depth-stencil target.
-    pub has_depth_stencil_target: SDL_bool,
+    /// true specifies that the pipeline uses a depth-stencil target.
+    pub has_depth_stencil_target: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
@@ -1974,10 +1974,10 @@ pub struct SDL_GPUColorTargetInfo {
     pub resolve_mip_level: Uint32,
     /// The layer index of the resolve texture to use for the resolve operation. Ignored if a RESOLVE* store_op is not used.
     pub resolve_layer: Uint32,
-    /// SDL_TRUE cycles the texture if the texture is bound and load_op is not LOAD
-    pub cycle: SDL_bool,
-    /// SDL_TRUE cycles the resolve texture if the resolve texture is bound. Ignored if a RESOLVE* store_op is not used.
-    pub cycle_resolve_texture: SDL_bool,
+    /// true cycles the texture if the texture is bound and load_op is not LOAD
+    pub cycle: ::core::primitive::bool,
+    /// true cycles the resolve texture if the resolve texture is bound. Ignored if a RESOLVE* store_op is not used.
+    pub cycle_resolve_texture: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
 }
@@ -2040,8 +2040,8 @@ pub struct SDL_GPUDepthStencilTargetInfo {
     pub stencil_load_op: SDL_GPULoadOp,
     /// What is done with the stencil results of the render pass.
     pub stencil_store_op: SDL_GPUStoreOp,
-    /// SDL_TRUE cycles the texture if the texture is bound and any load ops are not LOAD
-    pub cycle: SDL_bool,
+    /// true cycles the texture if the texture is bound and any load ops are not LOAD
+    pub cycle: ::core::primitive::bool,
     /// The value to clear the stencil component to at the beginning of the render pass. Ignored if SDL_GPU_LOADOP_CLEAR is not used.
     pub clear_stencil: Uint8,
     pub padding1: Uint8,
@@ -2069,8 +2069,8 @@ pub struct SDL_GPUBlitInfo {
     pub flip_mode: SDL_FlipMode,
     /// The filter mode used when blitting.
     pub filter: SDL_GPUFilter,
-    /// SDL_TRUE cycles the destination texture if it is already bound.
-    pub cycle: SDL_bool,
+    /// true cycles the destination texture if it is already bound.
+    pub cycle: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
@@ -2120,8 +2120,8 @@ pub struct SDL_GPUTextureSamplerBinding {
 pub struct SDL_GPUStorageBufferWriteOnlyBinding {
     /// The buffer to bind. Must have been created with SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE.
     pub buffer: *mut SDL_GPUBuffer,
-    /// SDL_TRUE cycles the buffer if it is already bound.
-    pub cycle: SDL_bool,
+    /// true cycles the buffer if it is already bound.
+    pub cycle: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
@@ -2143,8 +2143,8 @@ pub struct SDL_GPUStorageTextureWriteOnlyBinding {
     pub mip_level: Uint32,
     /// The layer index to bind.
     pub layer: Uint32,
-    /// SDL_TRUE cycles the texture if it is already bound.
-    pub cycle: SDL_bool,
+    /// true cycles the texture if it is already bound.
+    pub cycle: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
@@ -2157,7 +2157,7 @@ extern "C" {
     ///                     able to provide.
     /// \param name the preferred GPU driver, or NULL to let SDL pick the optimal
     ///             driver.
-    /// \returns SDL_TRUE if supported, SDL_FALSE otherwise.
+    /// \returns true if supported, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2165,19 +2165,19 @@ extern "C" {
     pub fn SDL_GPUSupportsShaderFormats(
         format_flags: SDL_GPUShaderFormat,
         name: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Checks for GPU runtime support.
     ///
     /// \param props the properties to use.
-    /// \returns SDL_TRUE if supported, SDL_FALSE otherwise.
+    /// \returns true if supported, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_CreateGPUDeviceWithProperties
-    pub fn SDL_GPUSupportsProperties(props: SDL_PropertiesID) -> SDL_bool;
+    pub fn SDL_GPUSupportsProperties(props: SDL_PropertiesID) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2198,7 +2198,7 @@ extern "C" {
     /// \sa SDL_GPUSupportsShaderFormats
     pub fn SDL_CreateGPUDevice(
         format_flags: SDL_GPUShaderFormat,
-        debug_mode: SDL_bool,
+        debug_mode: ::core::primitive::bool,
         name: *const ::core::ffi::c_char,
     ) -> *mut SDL_GPUDevice;
 }
@@ -2209,9 +2209,9 @@ extern "C" {
     /// These are the supported properties:
     ///
     /// - `SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOL`: enable debug mode properties
-    ///   and validations, defaults to SDL_TRUE.
+    ///   and validations, defaults to true.
     /// - `SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOL`: enable to prefer energy
-    ///   efficiency over maximum GPU performance, defaults to SDL_FALSE.
+    ///   efficiency over maximum GPU performance, defaults to false.
     /// - `SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING`: the name of the GPU driver to
     ///   use, if a specific one is desired.
     ///
@@ -3402,15 +3402,14 @@ extern "C" {
     ///
     /// \param device a GPU context.
     /// \param transfer_buffer a transfer buffer.
-    /// \param cycle if SDL_TRUE, cycles the transfer buffer if it is already
-    ///              bound.
+    /// \param cycle if true, cycles the transfer buffer if it is already bound.
     /// \returns the address of the mapped transfer buffer memory.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_MapGPUTransferBuffer(
         device: *mut SDL_GPUDevice,
         transfer_buffer: *mut SDL_GPUTransferBuffer,
-        cycle: SDL_bool,
+        cycle: ::core::primitive::bool,
     ) -> *mut ::core::ffi::c_void;
 }
 
@@ -3453,15 +3452,15 @@ extern "C" {
     /// \param copy_pass a copy pass handle.
     /// \param source the source transfer buffer with image layout information.
     /// \param destination the destination texture region.
-    /// \param cycle if SDL_TRUE, cycles the texture if the texture is bound,
-    ///              otherwise overwrites the data.
+    /// \param cycle if true, cycles the texture if the texture is bound, otherwise
+    ///              overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_UploadToGPUTexture(
         copy_pass: *mut SDL_GPUCopyPass,
         source: *const SDL_GPUTextureTransferInfo,
         destination: *const SDL_GPUTextureRegion,
-        cycle: SDL_bool,
+        cycle: ::core::primitive::bool,
     );
 }
 
@@ -3474,15 +3473,15 @@ extern "C" {
     /// \param copy_pass a copy pass handle.
     /// \param source the source transfer buffer with offset.
     /// \param destination the destination buffer with offset and size.
-    /// \param cycle if SDL_TRUE, cycles the buffer if it is already bound,
-    ///              otherwise overwrites the data.
+    /// \param cycle if true, cycles the buffer if it is already bound, otherwise
+    ///              overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_UploadToGPUBuffer(
         copy_pass: *mut SDL_GPUCopyPass,
         source: *const SDL_GPUTransferBufferLocation,
         destination: *const SDL_GPUBufferRegion,
-        cycle: SDL_bool,
+        cycle: ::core::primitive::bool,
     );
 }
 
@@ -3498,7 +3497,7 @@ extern "C" {
     /// \param w the width of the region to copy.
     /// \param h the height of the region to copy.
     /// \param d the depth of the region to copy.
-    /// \param cycle if SDL_TRUE, cycles the destination texture if the destination
+    /// \param cycle if true, cycles the destination texture if the destination
     ///              texture is bound, otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
@@ -3509,7 +3508,7 @@ extern "C" {
         w: Uint32,
         h: Uint32,
         d: Uint32,
-        cycle: SDL_bool,
+        cycle: ::core::primitive::bool,
     );
 }
 
@@ -3523,8 +3522,8 @@ extern "C" {
     /// \param source the buffer and offset to copy from.
     /// \param destination the buffer and offset to copy to.
     /// \param size the length of the buffer to copy.
-    /// \param cycle if SDL_TRUE, cycles the destination buffer if it is already
-    ///              bound, otherwise overwrites the data.
+    /// \param cycle if true, cycles the destination buffer if it is already bound,
+    ///              otherwise overwrites the data.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_CopyGPUBufferToBuffer(
@@ -3532,7 +3531,7 @@ extern "C" {
         source: *const SDL_GPUBufferLocation,
         destination: *const SDL_GPUBufferLocation,
         size: Uint32,
-        cycle: SDL_bool,
+        cycle: ::core::primitive::bool,
     );
 }
 
@@ -3620,7 +3619,7 @@ extern "C" {
     /// \param device a GPU context.
     /// \param window an SDL_Window.
     /// \param swapchain_composition the swapchain composition to check.
-    /// \returns SDL_TRUE if supported, SDL_FALSE if unsupported (or on error).
+    /// \returns true if supported, false if unsupported (or on error).
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -3629,7 +3628,7 @@ extern "C" {
         device: *mut SDL_GPUDevice,
         window: *mut SDL_Window,
         swapchain_composition: SDL_GPUSwapchainComposition,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3640,7 +3639,7 @@ extern "C" {
     /// \param device a GPU context.
     /// \param window an SDL_Window.
     /// \param present_mode the presentation mode to check.
-    /// \returns SDL_TRUE if supported, SDL_FALSE if unsupported (or on error).
+    /// \returns true if supported, false if unsupported (or on error).
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -3649,7 +3648,7 @@ extern "C" {
         device: *mut SDL_GPUDevice,
         window: *mut SDL_Window,
         present_mode: SDL_GPUPresentMode,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3665,7 +3664,7 @@ extern "C" {
     ///
     /// \param device a GPU context.
     /// \param window an SDL_Window.
-    /// \returns SDL_TRUE on success, otherwise SDL_FALSE.
+    /// \returns true on success, otherwise false.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -3676,7 +3675,7 @@ extern "C" {
     pub fn SDL_ClaimWindowForGPUDevice(
         device: *mut SDL_GPUDevice,
         window: *mut SDL_Window,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3706,7 +3705,7 @@ extern "C" {
     /// \param window an SDL_Window that has been claimed.
     /// \param swapchain_composition the desired composition of the swapchain.
     /// \param present_mode the desired present mode for the swapchain.
-    /// \returns SDL_TRUE if successful, SDL_FALSE on error.
+    /// \returns true if successful, false on error.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -3717,7 +3716,7 @@ extern "C" {
         window: *mut SDL_Window,
         swapchain_composition: SDL_GPUSwapchainComposition,
         present_mode: SDL_GPUPresentMode,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3836,7 +3835,7 @@ extern "C" {
     /// \sa SDL_WaitForGPUIdle
     pub fn SDL_WaitForGPUFences(
         device: *mut SDL_GPUDevice,
-        wait_all: SDL_bool,
+        wait_all: ::core::primitive::bool,
         fences: *const *mut SDL_GPUFence,
         num_fences: Uint32,
     );
@@ -3847,12 +3846,15 @@ extern "C" {
     ///
     /// \param device a GPU context.
     /// \param fence a fence.
-    /// \returns SDL_TRUE if the fence is signaled, SDL_FALSE if it is not.
+    /// \returns true if the fence is signaled, false if it is not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SubmitGPUCommandBufferAndAcquireFence
-    pub fn SDL_QueryGPUFence(device: *mut SDL_GPUDevice, fence: *mut SDL_GPUFence) -> SDL_bool;
+    pub fn SDL_QueryGPUFence(
+        device: *mut SDL_GPUDevice,
+        fence: *mut SDL_GPUFence,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3895,7 +3897,7 @@ extern "C" {
         format: SDL_GPUTextureFormat,
         r#type: SDL_GPUTextureType,
         usage: SDL_GPUTextureUsageFlags,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3911,7 +3913,7 @@ extern "C" {
         device: *mut SDL_GPUDevice,
         format: SDL_GPUTextureFormat,
         sample_count: SDL_GPUSampleCount,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 #[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))]

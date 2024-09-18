@@ -347,22 +347,25 @@ extern "C" {
     /// be converting to this format behind the scenes.
     ///
     /// If the system is waiting for the user to approve access to the camera, as
-    /// some platforms require, this will return SDL_FALSE, but this isn't
-    /// necessarily a fatal error; you should either wait for an
+    /// some platforms require, this will return false, but this isn't necessarily
+    /// a fatal error; you should either wait for an
     /// SDL_EVENT_CAMERA_DEVICE_APPROVED (or SDL_EVENT_CAMERA_DEVICE_DENIED) event,
     /// or poll SDL_IsCameraApproved() occasionally until it returns non-zero.
     ///
     /// \param camera opened camera device.
     /// \param spec the SDL_CameraSpec to be initialized by this function.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_OpenCamera
-    pub fn SDL_GetCameraFormat(camera: *mut SDL_Camera, spec: *mut SDL_CameraSpec) -> SDL_bool;
+    pub fn SDL_GetCameraFormat(
+        camera: *mut SDL_Camera,
+        spec: *mut SDL_CameraSpec,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

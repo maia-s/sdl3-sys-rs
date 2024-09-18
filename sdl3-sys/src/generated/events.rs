@@ -623,10 +623,10 @@ pub struct SDL_KeyboardEvent {
     pub r#mod: SDL_Keymod,
     /// The platform dependent scancode for this event
     pub raw: Uint16,
-    /// SDL_TRUE if the key is pressed
-    pub down: SDL_bool,
-    /// SDL_TRUE if this is a key repeat
-    pub repeat: SDL_bool,
+    /// true if the key is pressed
+    pub down: ::core::primitive::bool,
+    /// true if this is a key repeat
+    pub repeat: ::core::primitive::bool,
 }
 
 /// Keyboard text editing event structure (event.edit.*)
@@ -675,8 +675,8 @@ pub struct SDL_TextEditingCandidatesEvent {
     pub num_candidates: Sint32,
     /// The index of the selected candidate, or -1 if no candidate is selected
     pub selected_candidate: Sint32,
-    /// SDL_TRUE if the list is horizontal, SDL_FALSE if it's vertical
-    pub horizontal: SDL_bool,
+    /// true if the list is horizontal, false if it's vertical
+    pub horizontal: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
@@ -768,8 +768,8 @@ pub struct SDL_MouseButtonEvent {
     pub which: SDL_MouseID,
     /// The mouse button index
     pub button: Uint8,
-    /// SDL_TRUE if the button is pressed
-    pub down: SDL_bool,
+    /// true if the button is pressed
+    pub down: ::core::primitive::bool,
     /// 1 for single-click, 2 for double-click, etc.
     pub clicks: Uint8,
     pub padding: Uint8,
@@ -899,8 +899,8 @@ pub struct SDL_JoyButtonEvent {
     pub which: SDL_JoystickID,
     /// The joystick button index
     pub button: Uint8,
-    /// SDL_TRUE if the button is pressed
-    pub down: SDL_bool,
+    /// true if the button is pressed
+    pub down: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
 }
@@ -981,8 +981,8 @@ pub struct SDL_GamepadButtonEvent {
     pub which: SDL_JoystickID,
     /// The gamepad button (SDL_GamepadButton)
     pub button: Uint8,
-    /// SDL_TRUE if the button is pressed
-    pub down: SDL_bool,
+    /// true if the button is pressed
+    pub down: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
 }
@@ -1065,8 +1065,8 @@ pub struct SDL_AudioDeviceEvent {
     pub timestamp: Uint64,
     /// SDL_AudioDeviceID for the device being added or removed or changing
     pub which: SDL_AudioDeviceID,
-    /// SDL_FALSE if a playback device, SDL_TRUE if a recording device.
-    pub recording: SDL_bool,
+    /// false if a playback device, true if a recording device.
+    pub recording: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
@@ -1200,10 +1200,10 @@ pub struct SDL_PenTouchEvent {
     pub x: ::core::ffi::c_float,
     /// Y position of pen on tablet
     pub y: ::core::ffi::c_float,
-    /// SDL_TRUE if eraser end is used (not all pens support this).
-    pub eraser: SDL_bool,
-    /// SDL_TRUE if the pen is touching or SDL_FALSE if the pen is lifted off
-    pub down: SDL_bool,
+    /// true if eraser end is used (not all pens support this).
+    pub eraser: ::core::primitive::bool,
+    /// true if the pen is touching or false if the pen is lifted off
+    pub down: ::core::primitive::bool,
 }
 
 /// Pressure-sensitive pen button event structure (event.pbutton.*)
@@ -1233,8 +1233,8 @@ pub struct SDL_PenButtonEvent {
     pub y: ::core::ffi::c_float,
     /// The pen button index (first button is 1).
     pub button: Uint8,
-    /// SDL_TRUE if the button is pressed
-    pub down: SDL_bool,
+    /// true if the button is pressed
+    pub down: ::core::primitive::bool,
 }
 
 /// Pressure-sensitive pen pressure / angle event structure (event.paxis.*)
@@ -1559,13 +1559,13 @@ extern "C" {
     /// instead.
     ///
     /// \param type the type of event to be queried; see SDL_EventType for details.
-    /// \returns SDL_TRUE if events matching `type` are present, or SDL_FALSE if
-    ///          events matching `type` are not present.
+    /// \returns true if events matching `type` are present, or false if events
+    ///          matching `type` are not present.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_HasEvents
-    pub fn SDL_HasEvent(r#type: Uint32) -> SDL_bool;
+    pub fn SDL_HasEvent(r#type: Uint32) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1577,13 +1577,13 @@ extern "C" {
     ///                SDL_EventType for details.
     /// \param maxType the high end of event type to be queried, inclusive; see
     ///                SDL_EventType for details.
-    /// \returns SDL_TRUE if events with type >= `minType` and <= `maxType` are
-    ///          present, or SDL_FALSE if not.
+    /// \returns true if events with type >= `minType` and <= `maxType` are
+    ///          present, or false if not.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_HasEvents
-    pub fn SDL_HasEvents(minType: Uint32, maxType: Uint32) -> SDL_bool;
+    pub fn SDL_HasEvents(minType: Uint32, maxType: Uint32) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1671,15 +1671,14 @@ extern "C" {
     ///
     /// \param event the SDL_Event structure to be filled with the next event from
     ///              the queue, or NULL.
-    /// \returns SDL_TRUE if this got an event or SDL_FALSE if there are none
-    ///          available.
+    /// \returns true if this got an event or false if there are none available.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_PushEvent
     /// \sa SDL_WaitEvent
     /// \sa SDL_WaitEventTimeout
-    pub fn SDL_PollEvent(event: *mut SDL_Event) -> SDL_bool;
+    pub fn SDL_PollEvent(event: *mut SDL_Event) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1693,15 +1692,15 @@ extern "C" {
     ///
     /// \param event the SDL_Event structure to be filled in with the next event
     ///              from the queue, or NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE if there was an error while
-    ///          waiting for events; call SDL_GetError() for more information.
+    /// \returns true on success or false if there was an error while waiting for
+    ///          events; call SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_PollEvent
     /// \sa SDL_PushEvent
     /// \sa SDL_WaitEventTimeout
-    pub fn SDL_WaitEvent(event: *mut SDL_Event) -> SDL_bool;
+    pub fn SDL_WaitEvent(event: *mut SDL_Event) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1721,15 +1720,18 @@ extern "C" {
     ///              from the queue, or NULL.
     /// \param timeoutMS the maximum number of milliseconds to wait for the next
     ///                  available event.
-    /// \returns SDL_TRUE if this got an event or SDL_FALSE if the timeout elapsed
-    ///          without any events available.
+    /// \returns true if this got an event or false if the timeout elapsed without
+    ///          any events available.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_PollEvent
     /// \sa SDL_PushEvent
     /// \sa SDL_WaitEvent
-    pub fn SDL_WaitEventTimeout(event: *mut SDL_Event, timeoutMS: Sint32) -> SDL_bool;
+    pub fn SDL_WaitEventTimeout(
+        event: *mut SDL_Event,
+        timeoutMS: Sint32,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1754,16 +1756,16 @@ extern "C" {
     /// its own custom event types.
     ///
     /// \param event the SDL_Event to be added to the queue.
-    /// \returns SDL_TRUE on success, SDL_FALSE if the event was filtered or on
-    ///          failure; call SDL_GetError() for more information. A common reason
-    ///          for error is the event queue being full.
+    /// \returns true on success, false if the event was filtered or on failure;
+    ///          call SDL_GetError() for more information. A common reason for
+    ///          error is the event queue being full.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_PeepEvents
     /// \sa SDL_PollEvent
     /// \sa SDL_RegisterEvents
-    pub fn SDL_PushEvent(event: *mut SDL_Event) -> SDL_bool;
+    pub fn SDL_PushEvent(event: *mut SDL_Event) -> ::core::primitive::bool;
 }
 
 /// A function pointer used for callbacks that watch the event queue.
@@ -1771,9 +1773,9 @@ extern "C" {
 /// \param userdata what was passed as `userdata` to SDL_SetEventFilter() or
 ///                 SDL_AddEventWatch, etc.
 /// \param event the event that triggered the callback.
-/// \returns SDL_TRUE to permit event to be added to the queue, and SDL_FALSE
-///          to disallow it. When used with SDL_AddEventWatch, the return value
-///          is ignored.
+/// \returns true to permit event to be added to the queue, and false to
+///          disallow it. When used with SDL_AddEventWatch, the return value is
+///          ignored.
 ///
 /// \threadsafety SDL may call this callback at any time from any thread; the
 ///               application is responsible for locking resources the callback
@@ -1784,17 +1786,20 @@ extern "C" {
 /// \sa SDL_SetEventFilter
 /// \sa SDL_AddEventWatch
 pub type SDL_EventFilter = ::core::option::Option<
-    extern "C" fn(userdata: *mut ::core::ffi::c_void, event: *mut SDL_Event) -> SDL_bool,
+    extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        event: *mut SDL_Event,
+    ) -> ::core::primitive::bool,
 >;
 
 extern "C" {
     /// Set up a filter to process all events before they change internal state and
     /// are posted to the internal event queue.
     ///
-    /// If the filter function returns SDL_TRUE when called, then the event will be
-    /// added to the internal queue. If it returns SDL_FALSE, then the event will
-    /// be dropped from the queue, but the internal state will still be updated.
-    /// This allows selective filtering of dynamically arriving events.
+    /// If the filter function returns true when called, then the event will be
+    /// added to the internal queue. If it returns false, then the event will be
+    /// dropped from the queue, but the internal state will still be updated. This
+    /// allows selective filtering of dynamically arriving events.
     ///
     /// **WARNING**: Be very careful of what you do in the event filter function,
     /// as it may run in a different thread!
@@ -1844,7 +1849,7 @@ extern "C" {
     /// \param filter the current callback function will be stored here.
     /// \param userdata the pointer that is passed to the current event filter will
     ///                 be stored here.
-    /// \returns SDL_TRUE on success or SDL_FALSE if there is no event filter set.
+    /// \returns true on success or false if there is no event filter set.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1852,7 +1857,7 @@ extern "C" {
     pub fn SDL_GetEventFilter(
         filter: *mut SDL_EventFilter,
         userdata: *mut *mut ::core::ffi::c_void,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1875,8 +1880,8 @@ extern "C" {
     ///
     /// \param filter an SDL_EventFilter function to call when an event happens.
     /// \param userdata a pointer that is passed to `filter`.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -1887,7 +1892,7 @@ extern "C" {
     pub fn SDL_AddEventWatch(
         filter: SDL_EventFilter,
         userdata: *mut ::core::ffi::c_void,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1907,7 +1912,7 @@ extern "C" {
 
 extern "C" {
     /// Run a specific filter function on the current event queue, removing any
-    /// events for which the filter returns SDL_FALSE.
+    /// events for which the filter returns false.
     ///
     /// See SDL_SetEventFilter() for more information. Unlike SDL_SetEventFilter(),
     /// this function does not change the filter permanently, it only uses the
@@ -1932,19 +1937,19 @@ extern "C" {
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_EventEnabled
-    pub fn SDL_SetEventEnabled(r#type: Uint32, enabled: SDL_bool);
+    pub fn SDL_SetEventEnabled(r#type: Uint32, enabled: ::core::primitive::bool);
 }
 
 extern "C" {
     /// Query the state of processing events by type.
     ///
     /// \param type the type of event; see SDL_EventType for details.
-    /// \returns SDL_TRUE if the event is being processed, SDL_FALSE otherwise.
+    /// \returns true if the event is being processed, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetEventEnabled
-    pub fn SDL_EventEnabled(r#type: Uint32) -> SDL_bool;
+    pub fn SDL_EventEnabled(r#type: Uint32) -> ::core::primitive::bool;
 }
 
 extern "C" {

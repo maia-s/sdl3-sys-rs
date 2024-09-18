@@ -82,14 +82,14 @@ extern "C" {
     /// library version.
     ///
     /// \param path the platform dependent Vulkan loader library name or NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_Vulkan_GetVkGetInstanceProcAddr
     /// \sa SDL_Vulkan_UnloadLibrary
-    pub fn SDL_Vulkan_LoadLibrary(path: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_Vulkan_LoadLibrary(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -164,8 +164,8 @@ extern "C" {
     ///                  allocator that creates the surface. Can be NULL.
     /// \param surface a pointer to a VkSurfaceKHR handle to output the newly
     ///                created surface.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -176,7 +176,7 @@ extern "C" {
         instance: VkInstance,
         allocator: *const VkAllocationCallbacks,
         surface: *mut VkSurfaceKHR,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -219,8 +219,7 @@ extern "C" {
     /// \param physicalDevice a valid Vulkan physical device handle.
     /// \param queueFamilyIndex a valid queue family index for the given physical
     ///                         device.
-    /// \returns SDL_TRUE if supported, SDL_FALSE if unsupported or an error
-    ///          occurred.
+    /// \returns true if supported, false if unsupported or an error occurred.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -229,7 +228,7 @@ extern "C" {
         instance: VkInstance,
         physicalDevice: VkPhysicalDevice,
         queueFamilyIndex: Uint32,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 #[repr(C)]

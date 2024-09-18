@@ -50,28 +50,6 @@ emit! {
 
 }
 
-/// A boolean false.
-///
-/// \since This macro is available since SDL 3.0.0.
-///
-/// \sa SDL_bool
-pub const SDL_FALSE: ::core::primitive::bool = false;
-
-/// A boolean true.
-///
-/// \since This macro is available since SDL 3.0.0.
-///
-/// \sa SDL_bool
-pub const SDL_TRUE: ::core::primitive::bool = true;
-
-/// A boolean type: true or false.
-///
-/// \since This datatype is available since SDL 3.0.0.
-///
-/// \sa SDL_TRUE
-/// \sa SDL_FALSE
-pub type SDL_bool = ::core::primitive::bool;
-
 /// A signed 8-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
@@ -271,7 +249,7 @@ pub const SDL_PRIX32: &::core::ffi::CStr =
 
 // [sdl3-sys-gen] skipped function-like define `SDL_COMPILE_TIME_ASSERT`
 
-const _: () = ::core::assert!((::core::mem::size_of::<SDL_bool>() == 1));
+const _: () = ::core::assert!((::core::mem::size_of::<::core::primitive::bool>() == 1));
 
 const _: () = ::core::assert!((::core::mem::size_of::<Uint8>() == 1));
 
@@ -635,8 +613,8 @@ extern "C" {
     /// \param calloc_func custom calloc function.
     /// \param realloc_func custom realloc function.
     /// \param free_func custom free function.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread, but one
     ///               should not replace the memory functions once any allocations
@@ -651,7 +629,7 @@ extern "C" {
         calloc_func: SDL_calloc_func,
         realloc_func: SDL_realloc_func,
         free_func: SDL_free_func,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -736,12 +714,12 @@ extern "C" {
 extern "C" {
     /// Create a set of environment variables
     ///
-    /// \param populated SDL_TRUE to initialize it from the C runtime environment,
-    ///                  SDL_FALSE to create an empty environment.
+    /// \param populated true to initialize it from the C runtime environment,
+    ///                  false to create an empty environment.
     /// \returns a pointer to the new environment or NULL on failure; call
     ///          SDL_GetError() for more information.
     ///
-    /// \threadsafety If `populated` is SDL_FALSE, it is safe to call this function
+    /// \threadsafety If `populated` is false, it is safe to call this function
     ///               from any thread, otherwise it is safe if no other threads are
     ///               calling setenv() or unsetenv()
     ///
@@ -752,7 +730,7 @@ extern "C" {
     /// \sa SDL_SetEnvironmentVariable
     /// \sa SDL_UnsetEnvironmentVariable
     /// \sa SDL_DestroyEnvironment
-    pub fn SDL_CreateEnvironment(populated: SDL_bool) -> *mut SDL_Environment;
+    pub fn SDL_CreateEnvironment(populated: ::core::primitive::bool) -> *mut SDL_Environment;
 }
 
 extern "C" {
@@ -805,11 +783,11 @@ extern "C" {
     /// \param env the environment to modify.
     /// \param name the name of the variable to set.
     /// \param value the value of the variable to set.
-    /// \param overwrite SDL_TRUE to overwrite the variable if it exists, SDL_FALSE
-    ///                  to return success without setting the variable if it
-    ///                  already exists.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \param overwrite true to overwrite the variable if it exists, false to
+    ///                  return success without setting the variable if it already
+    ///                  exists.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -824,8 +802,8 @@ extern "C" {
         env: *mut SDL_Environment,
         name: *const ::core::ffi::c_char,
         value: *const ::core::ffi::c_char,
-        overwrite: SDL_bool,
-    ) -> SDL_bool;
+        overwrite: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -833,8 +811,8 @@ extern "C" {
     ///
     /// \param env the environment to modify.
     /// \param name the name of the variable to unset.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -849,7 +827,7 @@ extern "C" {
     pub fn SDL_UnsetEnvironmentVariable(
         env: *mut SDL_Environment,
         name: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

@@ -934,8 +934,8 @@ extern "C" {
     /// \param Gmask a pointer filled in with the green mask for the format.
     /// \param Bmask a pointer filled in with the blue mask for the format.
     /// \param Amask a pointer filled in with the alpha mask for the format.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -949,7 +949,7 @@ extern "C" {
         Gmask: *mut Uint32,
         Bmask: *mut Uint32,
         Amask: *mut Uint32,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1024,8 +1024,8 @@ extern "C" {
     /// \param colors an array of SDL_Color structures to copy into the palette.
     /// \param firstcolor the index of the first palette entry to modify.
     /// \param ncolors the number of entries to modify.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread, as long as
     ///               the palette is not modified or destroyed in another thread.
@@ -1036,7 +1036,7 @@ extern "C" {
         colors: *const SDL_Color,
         firstcolor: ::core::ffi::c_int,
         ncolors: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

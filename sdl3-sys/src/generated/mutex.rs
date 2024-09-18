@@ -90,21 +90,21 @@ extern "C" {
     /// Try to lock a mutex without blocking.
     ///
     /// This works just like SDL_LockMutex(), but if the mutex is not available,
-    /// this function returns SDL_FALSE immediately.
+    /// this function returns false immediately.
     ///
     /// This technique is useful if you need exclusive access to a resource but
     /// don't want to wait for it, and will return to it to try again later.
     ///
-    /// This function returns SDL_TRUE if passed a NULL mutex.
+    /// This function returns true if passed a NULL mutex.
     ///
     /// \param mutex the mutex to try to lock.
-    /// \returns SDL_TRUE on success, SDL_FALSE if the mutex would block.
+    /// \returns true on success, false if the mutex would block.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_LockMutex
     /// \sa SDL_UnlockMutex
-    pub fn SDL_TryLockMutex(mutex: *mut SDL_Mutex) -> SDL_bool;
+    pub fn SDL_TryLockMutex(mutex: *mut SDL_Mutex) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -257,7 +257,7 @@ extern "C" {
     /// Try to lock a read/write lock _for reading_ without blocking.
     ///
     /// This works just like SDL_LockRWLockForReading(), but if the rwlock is not
-    /// available, then this function returns SDL_FALSE immediately.
+    /// available, then this function returns false immediately.
     ///
     /// This technique is useful if you need access to a resource but don't want to
     /// wait for it, and will return to it to try again later.
@@ -265,24 +265,24 @@ extern "C" {
     /// Trying to lock for read-only access can succeed if other threads are
     /// holding read-only locks, as this won't prevent access.
     ///
-    /// This function returns SDL_TRUE if passed a NULL rwlock.
+    /// This function returns true if passed a NULL rwlock.
     ///
     /// \param rwlock the rwlock to try to lock.
-    /// \returns SDL_TRUE on success, SDL_FALSE if the lock would block.
+    /// \returns true on success, false if the lock would block.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_LockRWLockForReading
     /// \sa SDL_TryLockRWLockForWriting
     /// \sa SDL_UnlockRWLock
-    pub fn SDL_TryLockRWLockForReading(rwlock: *mut SDL_RWLock) -> SDL_bool;
+    pub fn SDL_TryLockRWLockForReading(rwlock: *mut SDL_RWLock) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Try to lock a read/write lock _for writing_ without blocking.
     ///
     /// This works just like SDL_LockRWLockForWriting(), but if the rwlock is not
-    /// available, then this function returns SDL_FALSE immediately.
+    /// available, then this function returns false immediately.
     ///
     /// This technique is useful if you need exclusive access to a resource but
     /// don't want to wait for it, and will return to it to try again later.
@@ -295,17 +295,17 @@ extern "C" {
     /// read-only lock. Doing so results in undefined behavior. Unlock the
     /// read-only lock before requesting a write lock.
     ///
-    /// This function returns SDL_TRUE if passed a NULL rwlock.
+    /// This function returns true if passed a NULL rwlock.
     ///
     /// \param rwlock the rwlock to try to lock.
-    /// \returns SDL_TRUE on success, SDL_FALSE if the lock would block.
+    /// \returns true on success, false if the lock would block.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_LockRWLockForWriting
     /// \sa SDL_TryLockRWLockForReading
     /// \sa SDL_UnlockRWLock
-    pub fn SDL_TryLockRWLockForWriting(rwlock: *mut SDL_RWLock) -> SDL_bool;
+    pub fn SDL_TryLockRWLockForWriting(rwlock: *mut SDL_RWLock) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -414,17 +414,17 @@ extern "C" {
     /// This function checks to see if the semaphore pointed to by `sem` has a
     /// positive value and atomically decrements the semaphore value if it does. If
     /// the semaphore doesn't have a positive value, the function immediately
-    /// returns SDL_FALSE.
+    /// returns false.
     ///
     /// \param sem the semaphore to wait on.
-    /// \returns SDL_TRUE if the wait succeeds, SDL_FALSE if the wait would block.
+    /// \returns true if the wait succeeds, false if the wait would block.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SignalSemaphore
     /// \sa SDL_WaitSemaphore
     /// \sa SDL_WaitSemaphoreTimeout
-    pub fn SDL_TryWaitSemaphore(sem: *mut SDL_Semaphore) -> SDL_bool;
+    pub fn SDL_TryWaitSemaphore(sem: *mut SDL_Semaphore) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -437,14 +437,17 @@ extern "C" {
     /// \param sem the semaphore to wait on.
     /// \param timeoutMS the length of the timeout, in milliseconds, or -1 to wait
     ///                  indefinitely.
-    /// \returns SDL_TRUE if the wait succeeds or SDL_FALSE if the wait times out.
+    /// \returns true if the wait succeeds or false if the wait times out.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SignalSemaphore
     /// \sa SDL_TryWaitSemaphore
     /// \sa SDL_WaitSemaphore
-    pub fn SDL_WaitSemaphoreTimeout(sem: *mut SDL_Semaphore, timeoutMS: Sint32) -> SDL_bool;
+    pub fn SDL_WaitSemaphoreTimeout(
+        sem: *mut SDL_Semaphore,
+        timeoutMS: Sint32,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -572,8 +575,8 @@ extern "C" {
     /// \param mutex the mutex used to coordinate thread access.
     /// \param timeoutMS the maximum time to wait, in milliseconds, or -1 to wait
     ///                  indefinitely.
-    /// \returns SDL_TRUE if the condition variable is signaled, SDL_FALSE if the
-    ///          condition is not signaled in the allotted time.
+    /// \returns true if the condition variable is signaled, false if the condition
+    ///          is not signaled in the allotted time.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -586,7 +589,7 @@ extern "C" {
         cond: *mut SDL_Condition,
         mutex: *mut SDL_Mutex,
         timeoutMS: Sint32,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 /// A means to block multiple threads until a condition is satisfied.

@@ -42,7 +42,7 @@
 //! Complete example:
 //!
 //! ```c
-//! SDL_bool test_haptic(SDL_Joystick *joystick)
+//! bool test_haptic(SDL_Joystick *joystick)
 //! {
 //!    SDL_Haptic *haptic;
 //!    SDL_HapticEffect effect;
@@ -50,12 +50,12 @@
 //!
 //!    // Open the device
 //!    haptic = SDL_OpenHapticFromJoystick(joystick);
-//!    if (haptic == NULL) return SDL_FALSE; // Most likely joystick isn't haptic
+//!    if (haptic == NULL) return false; // Most likely joystick isn't haptic
 //!
 //!    // See if it can do sine waves
 //!    if ((SDL_GetHapticFeatures(haptic) & SDL_HAPTIC_SINE)==0) {
 //!       SDL_CloseHaptic(haptic); // No sine effect
-//!       return SDL_FALSE;
+//!       return false;
 //!    }
 //!
 //!    // Create the effect
@@ -82,7 +82,7 @@
 //!    // Close the device
 //!    SDL_CloseHaptic(haptic);
 //!
-//!    return SDL_TRUE; // Success
+//!    return true; // Success
 //! }
 //! ```
 //!
@@ -912,12 +912,12 @@ extern "C" {
 extern "C" {
     /// Query whether or not the current mouse has haptic capabilities.
     ///
-    /// \returns SDL_TRUE if the mouse is haptic or SDL_FALSE if it isn't.
+    /// \returns true if the mouse is haptic or false if it isn't.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_OpenHapticFromMouse
-    pub fn SDL_IsMouseHaptic() -> SDL_bool;
+    pub fn SDL_IsMouseHaptic() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -937,12 +937,12 @@ extern "C" {
     /// Query if a joystick has haptic features.
     ///
     /// \param joystick the SDL_Joystick to test for haptic capabilities.
-    /// \returns SDL_TRUE if the joystick is haptic or SDL_FALSE if it isn't.
+    /// \returns true if the joystick is haptic or false if it isn't.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_OpenHapticFromJoystick
-    pub fn SDL_IsJoystickHaptic(joystick: *mut SDL_Joystick) -> SDL_bool;
+    pub fn SDL_IsJoystickHaptic(joystick: *mut SDL_Joystick) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1045,7 +1045,7 @@ extern "C" {
     ///
     /// \param haptic the SDL_Haptic device to query.
     /// \param effect the desired effect to query.
-    /// \returns SDL_TRUE if the effect is supported or SDL_FALSE if it isn't.
+    /// \returns true if the effect is supported or false if it isn't.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1054,7 +1054,7 @@ extern "C" {
     pub fn SDL_HapticEffectSupported(
         haptic: *mut SDL_Haptic,
         effect: *const SDL_HapticEffect,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1089,8 +1089,8 @@ extern "C" {
     /// \param effect the identifier of the effect to update.
     /// \param data an SDL_HapticEffect structure containing the new effect
     ///             properties to use.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1100,7 +1100,7 @@ extern "C" {
         haptic: *mut SDL_Haptic,
         effect: ::core::ffi::c_int,
         data: *const SDL_HapticEffect,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1116,8 +1116,8 @@ extern "C" {
     /// \param effect the ID of the haptic effect to run.
     /// \param iterations the number of iterations to run the effect; use
     ///                   `SDL_HAPTIC_INFINITY` to repeat forever.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1128,7 +1128,7 @@ extern "C" {
         haptic: *mut SDL_Haptic,
         effect: ::core::ffi::c_int,
         iterations: Uint32,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1136,14 +1136,17 @@ extern "C" {
     ///
     /// \param haptic the SDL_Haptic device to stop the effect on.
     /// \param effect the ID of the haptic effect to stop.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_RunHapticEffect
     /// \sa SDL_StopHapticEffects
-    pub fn SDL_StopHapticEffect(haptic: *mut SDL_Haptic, effect: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_StopHapticEffect(
+        haptic: *mut SDL_Haptic,
+        effect: ::core::ffi::c_int,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1168,8 +1171,8 @@ extern "C" {
     ///
     /// \param haptic the SDL_Haptic device to query for the effect status on.
     /// \param effect the ID of the haptic effect to query its status.
-    /// \returns SDL_TRUE if it is playing, SDL_FALSE if it isn't playing or haptic
-    ///          status isn't supported.
+    /// \returns true if it is playing, false if it isn't playing or haptic status
+    ///          isn't supported.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1177,7 +1180,7 @@ extern "C" {
     pub fn SDL_GetHapticEffectStatus(
         haptic: *mut SDL_Haptic,
         effect: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1193,13 +1196,16 @@ extern "C" {
     /// \param haptic the SDL_Haptic device to set the gain on.
     /// \param gain value to set the gain to, should be between 0 and 100 (0 -
     ///             100).
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetHapticFeatures
-    pub fn SDL_SetHapticGain(haptic: *mut SDL_Haptic, gain: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_SetHapticGain(
+        haptic: *mut SDL_Haptic,
+        gain: ::core::ffi::c_int,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1212,8 +1218,8 @@ extern "C" {
     ///
     /// \param haptic the SDL_Haptic device to set autocentering on.
     /// \param autocenter value to set autocenter to (0-100).
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1221,7 +1227,7 @@ extern "C" {
     pub fn SDL_SetHapticAutocenter(
         haptic: *mut SDL_Haptic,
         autocenter: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1234,13 +1240,13 @@ extern "C" {
     /// can cause all sorts of weird errors.
     ///
     /// \param haptic the SDL_Haptic device to pause.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ResumeHaptic
-    pub fn SDL_PauseHaptic(haptic: *mut SDL_Haptic) -> SDL_bool;
+    pub fn SDL_PauseHaptic(haptic: *mut SDL_Haptic) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1249,54 +1255,54 @@ extern "C" {
     /// Call to unpause after SDL_PauseHaptic().
     ///
     /// \param haptic the SDL_Haptic device to unpause.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_PauseHaptic
-    pub fn SDL_ResumeHaptic(haptic: *mut SDL_Haptic) -> SDL_bool;
+    pub fn SDL_ResumeHaptic(haptic: *mut SDL_Haptic) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Stop all the currently playing effects on a haptic device.
     ///
     /// \param haptic the SDL_Haptic device to stop.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_RunHapticEffect
     /// \sa SDL_StopHapticEffects
-    pub fn SDL_StopHapticEffects(haptic: *mut SDL_Haptic) -> SDL_bool;
+    pub fn SDL_StopHapticEffects(haptic: *mut SDL_Haptic) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Check whether rumble is supported on a haptic device.
     ///
     /// \param haptic haptic device to check for rumble support.
-    /// \returns SDL_TRUE if the effect is supported or SDL_FALSE if it isn't.
+    /// \returns true if the effect is supported or false if it isn't.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_InitHapticRumble
-    pub fn SDL_HapticRumbleSupported(haptic: *mut SDL_Haptic) -> SDL_bool;
+    pub fn SDL_HapticRumbleSupported(haptic: *mut SDL_Haptic) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Initialize a haptic device for simple rumble playback.
     ///
     /// \param haptic the haptic device to initialize for simple rumble playback.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_PlayHapticRumble
     /// \sa SDL_StopHapticRumble
     /// \sa SDL_HapticRumbleSupported
-    pub fn SDL_InitHapticRumble(haptic: *mut SDL_Haptic) -> SDL_bool;
+    pub fn SDL_InitHapticRumble(haptic: *mut SDL_Haptic) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1305,8 +1311,8 @@ extern "C" {
     /// \param haptic the haptic device to play the rumble effect on.
     /// \param strength strength of the rumble to play as a 0-1 float value.
     /// \param length length of the rumble to play in milliseconds.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1316,20 +1322,20 @@ extern "C" {
         haptic: *mut SDL_Haptic,
         strength: ::core::ffi::c_float,
         length: Uint32,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Stop the simple rumble on a haptic device.
     ///
     /// \param haptic the haptic device to stop the rumble effect on.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_PlayHapticRumble
-    pub fn SDL_StopHapticRumble(haptic: *mut SDL_Haptic) -> SDL_bool;
+    pub fn SDL_StopHapticRumble(haptic: *mut SDL_Haptic) -> ::core::primitive::bool;
 }
 
 /// The haptic structure used to identify an SDL haptic.

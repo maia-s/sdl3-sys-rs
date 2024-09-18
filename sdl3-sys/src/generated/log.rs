@@ -95,22 +95,24 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 ///
 /// \since This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_LOG_PRIORITY_INVALID`], [`SDL_LOG_PRIORITY_VERBOSE`], [`SDL_LOG_PRIORITY_DEBUG`], [`SDL_LOG_PRIORITY_INFO`], [`SDL_LOG_PRIORITY_WARN`], [`SDL_LOG_PRIORITY_ERROR`], [`SDL_LOG_PRIORITY_CRITICAL`], [`SDL_LOG_PRIORITY_COUNT`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_LOG_PRIORITY_INVALID`], [`SDL_LOG_PRIORITY_TRACE`], [`SDL_LOG_PRIORITY_VERBOSE`], [`SDL_LOG_PRIORITY_DEBUG`], [`SDL_LOG_PRIORITY_INFO`], [`SDL_LOG_PRIORITY_WARN`], [`SDL_LOG_PRIORITY_ERROR`], [`SDL_LOG_PRIORITY_CRITICAL`], [`SDL_LOG_PRIORITY_COUNT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_LogPriority(pub ::core::ffi::c_int);
 impl SDL_LogPriority {
     pub const INVALID: Self = Self(0);
-    pub const VERBOSE: Self = Self(1);
-    pub const DEBUG: Self = Self(2);
-    pub const INFO: Self = Self(3);
-    pub const WARN: Self = Self(4);
-    pub const ERROR: Self = Self(5);
-    pub const CRITICAL: Self = Self(6);
-    pub const COUNT: Self = Self(7);
+    pub const TRACE: Self = Self(1);
+    pub const VERBOSE: Self = Self(2);
+    pub const DEBUG: Self = Self(3);
+    pub const INFO: Self = Self(4);
+    pub const WARN: Self = Self(5);
+    pub const ERROR: Self = Self(6);
+    pub const CRITICAL: Self = Self(7);
+    pub const COUNT: Self = Self(8);
 }
 pub const SDL_LOG_PRIORITY_INVALID: SDL_LogPriority = SDL_LogPriority::INVALID;
+pub const SDL_LOG_PRIORITY_TRACE: SDL_LogPriority = SDL_LogPriority::TRACE;
 pub const SDL_LOG_PRIORITY_VERBOSE: SDL_LogPriority = SDL_LogPriority::VERBOSE;
 pub const SDL_LOG_PRIORITY_DEBUG: SDL_LogPriority = SDL_LogPriority::DEBUG;
 pub const SDL_LOG_PRIORITY_INFO: SDL_LogPriority = SDL_LogPriority::INFO;
@@ -187,8 +189,8 @@ extern "C" {
     /// \param priority the SDL_LogPriority to modify.
     /// \param prefix the prefix to use for that log priority, or NULL to use no
     ///               prefix.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -199,7 +201,7 @@ extern "C" {
     pub fn SDL_SetLogPriorityPrefix(
         priority: SDL_LogPriority,
         prefix: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -219,9 +221,35 @@ extern "C" {
     /// \sa SDL_LogInfo
     /// \sa SDL_LogMessage
     /// \sa SDL_LogMessageV
+    /// \sa SDL_LogTrace
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_Log(fmt: *const ::core::ffi::c_char, ...);
+}
+
+extern "C" {
+    /// Log a message with SDL_LOG_PRIORITY_TRACE.
+    ///
+    /// \param category the category of the message.
+    /// \param fmt a printf() style message format string.
+    /// \param ... additional parameters matching % tokens in the **fmt** string,
+    ///            if any.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_Log
+    /// \sa SDL_LogCritical
+    /// \sa SDL_LogDebug
+    /// \sa SDL_LogError
+    /// \sa SDL_LogInfo
+    /// \sa SDL_LogMessage
+    /// \sa SDL_LogMessageV
+    /// \sa SDL_LogTrace
+    /// \sa SDL_LogVerbose
+    /// \sa SDL_LogWarn
+    pub fn SDL_LogTrace(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
 extern "C" {
@@ -265,6 +293,7 @@ extern "C" {
     /// \sa SDL_LogInfo
     /// \sa SDL_LogMessage
     /// \sa SDL_LogMessageV
+    /// \sa SDL_LogTrace
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_LogDebug(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
@@ -288,6 +317,7 @@ extern "C" {
     /// \sa SDL_LogError
     /// \sa SDL_LogMessage
     /// \sa SDL_LogMessageV
+    /// \sa SDL_LogTrace
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_LogInfo(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
@@ -312,6 +342,7 @@ extern "C" {
     /// \sa SDL_LogInfo
     /// \sa SDL_LogMessage
     /// \sa SDL_LogMessageV
+    /// \sa SDL_LogTrace
     /// \sa SDL_LogVerbose
     pub fn SDL_LogWarn(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
@@ -334,6 +365,7 @@ extern "C" {
     /// \sa SDL_LogInfo
     /// \sa SDL_LogMessage
     /// \sa SDL_LogMessageV
+    /// \sa SDL_LogTrace
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_LogError(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
@@ -357,6 +389,7 @@ extern "C" {
     /// \sa SDL_LogInfo
     /// \sa SDL_LogMessage
     /// \sa SDL_LogMessageV
+    /// \sa SDL_LogTrace
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_LogCritical(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
@@ -381,6 +414,7 @@ extern "C" {
     /// \sa SDL_LogError
     /// \sa SDL_LogInfo
     /// \sa SDL_LogMessageV
+    /// \sa SDL_LogTrace
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_LogMessage(
@@ -409,6 +443,7 @@ extern "C" {
     /// \sa SDL_LogError
     /// \sa SDL_LogInfo
     /// \sa SDL_LogMessage
+    /// \sa SDL_LogTrace
     /// \sa SDL_LogVerbose
     /// \sa SDL_LogWarn
     pub fn SDL_LogMessageV(

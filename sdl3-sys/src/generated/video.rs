@@ -646,14 +646,17 @@ extern "C" {
     ///
     /// \param displayID the instance ID of the display to query.
     /// \param rect the SDL_Rect structure filled in with the display bounds.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetDisplayUsableBounds
     /// \sa SDL_GetDisplays
-    pub fn SDL_GetDisplayBounds(displayID: SDL_DisplayID, rect: *mut SDL_Rect) -> SDL_bool;
+    pub fn SDL_GetDisplayBounds(
+        displayID: SDL_DisplayID,
+        rect: *mut SDL_Rect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -670,14 +673,17 @@ extern "C" {
     ///
     /// \param displayID the instance ID of the display to query.
     /// \param rect the SDL_Rect structure filled in with the display bounds.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetDisplayBounds
     /// \sa SDL_GetDisplays
-    pub fn SDL_GetDisplayUsableBounds(displayID: SDL_DisplayID, rect: *mut SDL_Rect) -> SDL_bool;
+    pub fn SDL_GetDisplayUsableBounds(
+        displayID: SDL_DisplayID,
+        rect: *mut SDL_Rect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -772,8 +778,8 @@ extern "C" {
     ///                                   the search.
     /// \param mode a pointer filled in with the closest display mode equal to or
     ///             larger than the desired mode.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -784,9 +790,9 @@ extern "C" {
         w: ::core::ffi::c_int,
         h: ::core::ffi::c_int,
         refresh_rate: ::core::ffi::c_float,
-        include_high_density_modes: SDL_bool,
+        include_high_density_modes: ::core::primitive::bool,
         mode: *mut SDL_DisplayMode,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -932,8 +938,8 @@ extern "C" {
     ///             borderless fullscreen desktop mode, or one of the fullscreen
     ///             modes returned by SDL_GetFullscreenDisplayModes() to set an
     ///             exclusive fullscreen mode.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -943,7 +949,7 @@ extern "C" {
     pub fn SDL_SetWindowFullscreenMode(
         window: *mut SDL_Window,
         mode: *const SDL_DisplayMode,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1680,8 +1686,8 @@ extern "C" {
     ///
     /// \param window the window to change.
     /// \param title the desired window title in UTF-8 format.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1689,7 +1695,7 @@ extern "C" {
     pub fn SDL_SetWindowTitle(
         window: *mut SDL_Window,
         title: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1720,11 +1726,14 @@ extern "C" {
     ///
     /// \param window the window to change.
     /// \param icon an SDL_Surface structure containing the icon for the window.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetWindowIcon(window: *mut SDL_Window, icon: *mut SDL_Surface) -> SDL_bool;
+    pub fn SDL_SetWindowIcon(
+        window: *mut SDL_Window,
+        icon: *mut SDL_Surface,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1757,8 +1766,8 @@ extern "C" {
     ///          `SDL_WINDOWPOS_UNDEFINED`.
     /// \param y the y coordinate of the window, or `SDL_WINDOWPOS_CENTERED` or
     ///          `SDL_WINDOWPOS_UNDEFINED`.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1768,7 +1777,7 @@ extern "C" {
         window: *mut SDL_Window,
         x: ::core::ffi::c_int,
         y: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1785,8 +1794,8 @@ extern "C" {
     ///          NULL.
     /// \param y a pointer filled in with the y position of the window, may be
     ///          NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1795,7 +1804,7 @@ extern "C" {
         window: *mut SDL_Window,
         x: *mut ::core::ffi::c_int,
         y: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1823,8 +1832,8 @@ extern "C" {
     /// \param window the window to change.
     /// \param w the width of the window, must be > 0.
     /// \param h the height of the window, must be > 0.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1835,7 +1844,7 @@ extern "C" {
         window: *mut SDL_Window,
         w: ::core::ffi::c_int,
         h: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1848,8 +1857,8 @@ extern "C" {
     /// \param window the window to query the width and height from.
     /// \param w a pointer filled in with the width of the window, may be NULL.
     /// \param h a pointer filled in with the height of the window, may be NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1860,7 +1869,7 @@ extern "C" {
         window: *mut SDL_Window,
         w: *mut ::core::ffi::c_int,
         h: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1876,11 +1885,14 @@ extern "C" {
     /// \param window the window to query.
     /// \param rect a pointer filled in with the client area that is safe for
     ///             interactive content.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetWindowSafeArea(window: *mut SDL_Window, rect: *mut SDL_Rect) -> SDL_bool;
+    pub fn SDL_GetWindowSafeArea(
+        window: *mut SDL_Window,
+        rect: *mut SDL_Rect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1912,8 +1924,8 @@ extern "C" {
     ///                   limit.
     /// \param max_aspect the maximum aspect ratio of the window, or 0.0f for no
     ///                   limit.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1923,7 +1935,7 @@ extern "C" {
         window: *mut SDL_Window,
         min_aspect: ::core::ffi::c_float,
         max_aspect: ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1934,8 +1946,8 @@ extern "C" {
     ///                   window, may be NULL.
     /// \param max_aspect a pointer filled in with the maximum aspect ratio of the
     ///                   window, may be NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1944,13 +1956,13 @@ extern "C" {
         window: *mut SDL_Window,
         min_aspect: *mut ::core::ffi::c_float,
         max_aspect: *mut ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Get the size of a window's borders (decorations) around the client area.
     ///
-    /// Note: If this function fails (returns SDL_FALSE), the size values will be
+    /// Note: If this function fails (returns false), the size values will be
     /// initialized to 0, 0, 0, 0 (if a non-NULL pointer is provided), as if the
     /// window in question was borderless.
     ///
@@ -1960,7 +1972,7 @@ extern "C" {
     /// window has been presented and composited, so that the window system has a
     /// chance to decorate the window and provide the border dimensions to SDL.
     ///
-    /// This function also returns SDL_FALSE if getting the information is not
+    /// This function also returns false if getting the information is not
     /// supported.
     ///
     /// \param window the window to query the size values of the border
@@ -1973,8 +1985,8 @@ extern "C" {
     ///               border; NULL is permitted.
     /// \param right pointer to variable for storing the size of the right border;
     ///              NULL is permitted.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -1985,7 +1997,7 @@ extern "C" {
         left: *mut ::core::ffi::c_int,
         bottom: *mut ::core::ffi::c_int,
         right: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1996,8 +2008,8 @@ extern "C" {
     ///          NULL.
     /// \param h a pointer to variable for storing the height in pixels, may be
     ///          NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2007,7 +2019,7 @@ extern "C" {
         window: *mut SDL_Window,
         w: *mut ::core::ffi::c_int,
         h: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2016,8 +2028,8 @@ extern "C" {
     /// \param window the window to change.
     /// \param min_w the minimum width of the window, or 0 for no limit.
     /// \param min_h the minimum height of the window, or 0 for no limit.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2027,7 +2039,7 @@ extern "C" {
         window: *mut SDL_Window,
         min_w: ::core::ffi::c_int,
         min_h: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2038,8 +2050,8 @@ extern "C" {
     ///          NULL.
     /// \param h a pointer filled in with the minimum height of the window, may be
     ///          NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2049,7 +2061,7 @@ extern "C" {
         window: *mut SDL_Window,
         w: *mut ::core::ffi::c_int,
         h: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2058,8 +2070,8 @@ extern "C" {
     /// \param window the window to change.
     /// \param max_w the maximum width of the window, or 0 for no limit.
     /// \param max_h the maximum height of the window, or 0 for no limit.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2069,7 +2081,7 @@ extern "C" {
         window: *mut SDL_Window,
         max_w: ::core::ffi::c_int,
         max_h: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2080,8 +2092,8 @@ extern "C" {
     ///          NULL.
     /// \param h a pointer filled in with the maximum height of the window, may be
     ///          NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2091,7 +2103,7 @@ extern "C" {
         window: *mut SDL_Window,
         w: *mut ::core::ffi::c_int,
         h: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2104,14 +2116,17 @@ extern "C" {
     /// You can't change the border state of a fullscreen window.
     ///
     /// \param window the window of which to change the border state.
-    /// \param bordered SDL_FALSE to remove border, SDL_TRUE to add border.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \param bordered false to remove border, true to add border.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetWindowFlags
-    pub fn SDL_SetWindowBordered(window: *mut SDL_Window, bordered: SDL_bool) -> SDL_bool;
+    pub fn SDL_SetWindowBordered(
+        window: *mut SDL_Window,
+        bordered: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2124,14 +2139,17 @@ extern "C" {
     /// You can't change the resizable state of a fullscreen window.
     ///
     /// \param window the window of which to change the resizable state.
-    /// \param resizable SDL_TRUE to allow resizing, SDL_FALSE to disallow.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \param resizable true to allow resizing, false to disallow.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetWindowFlags
-    pub fn SDL_SetWindowResizable(window: *mut SDL_Window, resizable: SDL_bool) -> SDL_bool;
+    pub fn SDL_SetWindowResizable(
+        window: *mut SDL_Window,
+        resizable: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2141,42 +2159,44 @@ extern "C" {
     /// will bring the window to the front and keep the window above the rest.
     ///
     /// \param window the window of which to change the always on top state.
-    /// \param on_top SDL_TRUE to set the window always on top, SDL_FALSE to
-    ///               disable.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \param on_top true to set the window always on top, false to disable.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetWindowFlags
-    pub fn SDL_SetWindowAlwaysOnTop(window: *mut SDL_Window, on_top: SDL_bool) -> SDL_bool;
+    pub fn SDL_SetWindowAlwaysOnTop(
+        window: *mut SDL_Window,
+        on_top: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Show a window.
     ///
     /// \param window the window to show.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_HideWindow
     /// \sa SDL_RaiseWindow
-    pub fn SDL_ShowWindow(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_ShowWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Hide a window.
     ///
     /// \param window the window to hide.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ShowWindow
-    pub fn SDL_HideWindow(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_HideWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2190,11 +2210,11 @@ extern "C" {
     /// the window will have the SDL_WINDOW_INPUT_FOCUS flag set.
     ///
     /// \param window the window to raise.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_RaiseWindow(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_RaiseWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2218,15 +2238,15 @@ extern "C" {
     /// and Wayland window managers may vary.
     ///
     /// \param window the window to maximize.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_MinimizeWindow
     /// \sa SDL_RestoreWindow
     /// \sa SDL_SyncWindow
-    pub fn SDL_MaximizeWindow(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_MaximizeWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2242,15 +2262,15 @@ extern "C" {
     /// deny the state change.
     ///
     /// \param window the window to minimize.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_MaximizeWindow
     /// \sa SDL_RestoreWindow
     /// \sa SDL_SyncWindow
-    pub fn SDL_MinimizeWindow(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_MinimizeWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2267,15 +2287,15 @@ extern "C" {
     /// deny the state change.
     ///
     /// \param window the window to restore.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_MaximizeWindow
     /// \sa SDL_MinimizeWindow
     /// \sa SDL_SyncWindow
-    pub fn SDL_RestoreWindow(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_RestoreWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2295,17 +2315,19 @@ extern "C" {
     /// is just a request, it can be denied by the windowing system.
     ///
     /// \param window the window to change.
-    /// \param fullscreen SDL_TRUE for fullscreen mode, SDL_FALSE for windowed
-    ///                   mode.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \param fullscreen true for fullscreen mode, false for windowed mode.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetWindowFullscreenMode
     /// \sa SDL_SetWindowFullscreenMode
     /// \sa SDL_SyncWindow
-    pub fn SDL_SetWindowFullscreen(window: *mut SDL_Window, fullscreen: SDL_bool) -> SDL_bool;
+    pub fn SDL_SetWindowFullscreen(
+        window: *mut SDL_Window,
+        fullscreen: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2322,8 +2344,8 @@ extern "C" {
     ///
     /// \param window the window for which to wait for the pending state to be
     ///               applied.
-    /// \returns SDL_TRUE on success or SDL_FALSE if the operation timed out before
-    ///          the window was in the requested state.
+    /// \returns true on success or false if the operation timed out before the
+    ///          window was in the requested state.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2334,20 +2356,20 @@ extern "C" {
     /// \sa SDL_MaximizeWindow
     /// \sa SDL_RestoreWindow
     /// \sa SDL_HINT_VIDEO_SYNC_WINDOW_OPERATIONS
-    pub fn SDL_SyncWindow(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_SyncWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Return whether the window has a surface associated with it.
     ///
     /// \param window the window to query.
-    /// \returns SDL_TRUE if there is a surface associated with the window, or
-    ///          SDL_FALSE otherwise.
+    /// \returns true if there is a surface associated with the window, or false
+    ///          otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetWindowSurface
-    pub fn SDL_WindowHasSurface(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_WindowHasSurface(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2392,8 +2414,8 @@ extern "C" {
     ///
     /// \param window the window.
     /// \param vsync the vertical refresh sync interval.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2401,7 +2423,7 @@ extern "C" {
     pub fn SDL_SetWindowSurfaceVSync(
         window: *mut SDL_Window,
         vsync: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 pub const SDL_WINDOW_SURFACE_VSYNC_DISABLED: ::core::primitive::i32 = 0;
@@ -2414,8 +2436,8 @@ extern "C" {
     /// \param window the window to query.
     /// \param vsync an int filled with the current vertical refresh sync interval.
     ///              See SDL_SetWindowSurfaceVSync() for the meaning of the value.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2423,7 +2445,7 @@ extern "C" {
     pub fn SDL_GetWindowSurfaceVSync(
         window: *mut SDL_Window,
         vsync: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2435,14 +2457,14 @@ extern "C" {
     /// This function is equivalent to the SDL 1.2 API SDL_Flip().
     ///
     /// \param window the window to update.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetWindowSurface
     /// \sa SDL_UpdateWindowSurfaceRects
-    pub fn SDL_UpdateWindowSurface(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_UpdateWindowSurface(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2462,8 +2484,8 @@ extern "C" {
     /// \param rects an array of SDL_Rect structures representing areas of the
     ///              surface to copy, in pixels.
     /// \param numrects the number of rectangles.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2473,21 +2495,21 @@ extern "C" {
         window: *mut SDL_Window,
         rects: *const SDL_Rect,
         numrects: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Destroy the surface associated with the window.
     ///
     /// \param window the window to update.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetWindowSurface
     /// \sa SDL_WindowHasSurface
-    pub fn SDL_DestroyWindowSurface(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_DestroyWindowSurface(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2510,15 +2532,18 @@ extern "C" {
     /// other window loses its grab in favor of the caller's window.
     ///
     /// \param window the window for which the keyboard grab mode should be set.
-    /// \param grabbed this is SDL_TRUE to grab keyboard, and SDL_FALSE to release.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \param grabbed this is true to grab keyboard, and false to release.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetWindowKeyboardGrab
     /// \sa SDL_SetWindowMouseGrab
-    pub fn SDL_SetWindowKeyboardGrab(window: *mut SDL_Window, grabbed: SDL_bool) -> SDL_bool;
+    pub fn SDL_SetWindowKeyboardGrab(
+        window: *mut SDL_Window,
+        grabbed: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2527,39 +2552,42 @@ extern "C" {
     /// Mouse grab confines the mouse cursor to the window.
     ///
     /// \param window the window for which the mouse grab mode should be set.
-    /// \param grabbed this is SDL_TRUE to grab mouse, and SDL_FALSE to release.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \param grabbed this is true to grab mouse, and false to release.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetWindowMouseGrab
     /// \sa SDL_SetWindowKeyboardGrab
-    pub fn SDL_SetWindowMouseGrab(window: *mut SDL_Window, grabbed: SDL_bool) -> SDL_bool;
+    pub fn SDL_SetWindowMouseGrab(
+        window: *mut SDL_Window,
+        grabbed: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Get a window's keyboard grab mode.
     ///
     /// \param window the window to query.
-    /// \returns SDL_TRUE if keyboard is grabbed, and SDL_FALSE otherwise.
+    /// \returns true if keyboard is grabbed, and false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetWindowKeyboardGrab
-    pub fn SDL_GetWindowKeyboardGrab(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_GetWindowKeyboardGrab(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Get a window's mouse grab mode.
     ///
     /// \param window the window to query.
-    /// \returns SDL_TRUE if mouse is grabbed, and SDL_FALSE otherwise.
+    /// \returns true if mouse is grabbed, and false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetWindowKeyboardGrab
-    pub fn SDL_GetWindowMouseGrab(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_GetWindowMouseGrab(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2583,14 +2611,17 @@ extern "C" {
     /// \param window the window that will be associated with the barrier.
     /// \param rect a rectangle area in window-relative coordinates. If NULL the
     ///             barrier for the specified window will be destroyed.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetWindowMouseRect
     /// \sa SDL_SetWindowMouseGrab
-    pub fn SDL_SetWindowMouseRect(window: *mut SDL_Window, rect: *const SDL_Rect) -> SDL_bool;
+    pub fn SDL_SetWindowMouseRect(
+        window: *mut SDL_Window,
+        rect: *const SDL_Rect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2612,19 +2643,20 @@ extern "C" {
     /// The parameter `opacity` will be clamped internally between 0.0f
     /// (transparent) and 1.0f (opaque).
     ///
-    /// This function also returns SDL_FALSE if setting the opacity isn't
-    /// supported.
+    /// This function also returns false if setting the opacity isn't supported.
     ///
     /// \param window the window which will be made transparent or opaque.
     /// \param opacity the opacity value (0.0f - transparent, 1.0f - opaque).
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetWindowOpacity
-    pub fn SDL_SetWindowOpacity(window: *mut SDL_Window, opacity: ::core::ffi::c_float)
-        -> SDL_bool;
+    pub fn SDL_SetWindowOpacity(
+        window: *mut SDL_Window,
+        opacity: ::core::ffi::c_float,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2659,13 +2691,16 @@ extern "C" {
     ///
     /// \param window the window that should become the child of a parent.
     /// \param parent the new parent window for the child window.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetWindowModal
-    pub fn SDL_SetWindowParent(window: *mut SDL_Window, parent: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_SetWindowParent(
+        window: *mut SDL_Window,
+        parent: *mut SDL_Window,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2675,28 +2710,32 @@ extern "C" {
     /// window of a parent, or toggling modal status on will fail.
     ///
     /// \param window the window on which to set the modal state.
-    /// \param modal SDL_TRUE to toggle modal status on, SDL_FALSE to toggle it
-    ///              off.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \param modal true to toggle modal status on, false to toggle it off.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetWindowParent
-    pub fn SDL_SetWindowModal(window: *mut SDL_Window, modal: SDL_bool) -> SDL_bool;
+    pub fn SDL_SetWindowModal(
+        window: *mut SDL_Window,
+        modal: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Set whether the window may have input focus.
     ///
     /// \param window the window to set focusable state.
-    /// \param focusable SDL_TRUE to allow input focus, SDL_FALSE to not allow
-    ///                  input focus.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \param focusable true to allow input focus, false to not allow input focus.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetWindowFocusable(window: *mut SDL_Window, focusable: SDL_bool) -> SDL_bool;
+    pub fn SDL_SetWindowFocusable(
+        window: *mut SDL_Window,
+        focusable: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2715,15 +2754,15 @@ extern "C" {
     ///          the client area.
     /// \param y the y coordinate of the menu, relative to the origin (top-left) of
     ///          the client area.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_ShowWindowSystemMenu(
         window: *mut SDL_Window,
         x: ::core::ffi::c_int,
         y: ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 /// Possible return values from the SDL_HitTest callback.
@@ -2817,7 +2856,7 @@ extern "C" {
     /// Specifying NULL for a callback disables hit-testing. Hit-testing is
     /// disabled by default.
     ///
-    /// Platforms that don't support this functionality will return SDL_FALSE
+    /// Platforms that don't support this functionality will return false
     /// unconditionally, even if you're attempting to disable hit-testing.
     ///
     /// Your callback may fire at any time, and its firing does not indicate any
@@ -2831,15 +2870,15 @@ extern "C" {
     /// \param window the window to set hit-testing on.
     /// \param callback the function to call when doing a hit-test.
     /// \param callback_data an app-defined void pointer passed to **callback**.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_SetWindowHitTest(
         window: *mut SDL_Window,
         callback: SDL_HitTest,
         callback_data: *mut ::core::ffi::c_void,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2859,11 +2898,14 @@ extern "C" {
     /// \param window the window.
     /// \param shape the surface representing the shape of the window, or NULL to
     ///              remove any current shape.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetWindowShape(window: *mut SDL_Window, shape: *mut SDL_Surface) -> SDL_bool;
+    pub fn SDL_SetWindowShape(
+        window: *mut SDL_Window,
+        shape: *mut SDL_Surface,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2871,11 +2913,14 @@ extern "C" {
     ///
     /// \param window the window to be flashed.
     /// \param operation the operation to perform.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_FlashWindow(window: *mut SDL_Window, operation: SDL_FlashOperation) -> SDL_bool;
+    pub fn SDL_FlashWindow(
+        window: *mut SDL_Window,
+        operation: SDL_FlashOperation,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2901,27 +2946,26 @@ extern "C" {
     ///
     /// The default can also be changed using `SDL_HINT_VIDEO_ALLOW_SCREENSAVER`.
     ///
-    /// \returns SDL_TRUE if the screensaver is enabled, SDL_FALSE if it is
-    ///          disabled.
+    /// \returns true if the screensaver is enabled, false if it is disabled.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_DisableScreenSaver
     /// \sa SDL_EnableScreenSaver
-    pub fn SDL_ScreenSaverEnabled() -> SDL_bool;
+    pub fn SDL_ScreenSaverEnabled() -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Allow the screen to be blanked by a screen saver.
     ///
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_DisableScreenSaver
     /// \sa SDL_ScreenSaverEnabled
-    pub fn SDL_EnableScreenSaver() -> SDL_bool;
+    pub fn SDL_EnableScreenSaver() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2933,14 +2977,14 @@ extern "C" {
     /// The screensaver is disabled by default, but this may by changed by
     /// SDL_HINT_VIDEO_ALLOW_SCREENSAVER.
     ///
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_EnableScreenSaver
     /// \sa SDL_ScreenSaverEnabled
-    pub fn SDL_DisableScreenSaver() -> SDL_bool;
+    pub fn SDL_DisableScreenSaver() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -2955,14 +2999,14 @@ extern "C" {
     ///
     /// \param path the platform dependent OpenGL library name, or NULL to open the
     ///             default OpenGL library.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GL_GetProcAddress
     /// \sa SDL_GL_UnloadLibrary
-    pub fn SDL_GL_LoadLibrary(path: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_GL_LoadLibrary(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3059,10 +3103,12 @@ extern "C" {
     /// every time you need to know.
     ///
     /// \param extension the name of the extension to check.
-    /// \returns SDL_TRUE if the extension is supported, SDL_FALSE otherwise.
+    /// \returns true if the extension is supported, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GL_ExtensionSupported(extension: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_GL_ExtensionSupported(
+        extension: *const ::core::ffi::c_char,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3086,14 +3132,17 @@ extern "C" {
     /// \param attr an SDL_GLattr enum value specifying the OpenGL attribute to
     ///             set.
     /// \param value the desired value for the attribute.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GL_GetAttribute
     /// \sa SDL_GL_ResetAttributes
-    pub fn SDL_GL_SetAttribute(attr: SDL_GLattr, value: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_GL_SetAttribute(
+        attr: SDL_GLattr,
+        value: ::core::ffi::c_int,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3102,14 +3151,17 @@ extern "C" {
     /// \param attr an SDL_GLattr enum value specifying the OpenGL attribute to
     ///             get.
     /// \param value a pointer filled in with the current value of `attr`.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GL_ResetAttributes
     /// \sa SDL_GL_SetAttribute
-    pub fn SDL_GL_GetAttribute(attr: SDL_GLattr, value: *mut ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_GL_GetAttribute(
+        attr: SDL_GLattr,
+        value: *mut ::core::ffi::c_int,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3141,13 +3193,16 @@ extern "C" {
     ///
     /// \param window the window to associate with the context.
     /// \param context the OpenGL context to associate with the window.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GL_CreateContext
-    pub fn SDL_GL_MakeCurrent(window: *mut SDL_Window, context: SDL_GLContext) -> SDL_bool;
+    pub fn SDL_GL_MakeCurrent(
+        window: *mut SDL_Window,
+        context: SDL_GLContext,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3239,7 +3294,7 @@ extern "C" {
     /// the vertical retrace for a given frame, it swaps buffers immediately, which
     /// might be less jarring for the user during occasional framerate drops. If an
     /// application requests adaptive vsync and the system does not support it,
-    /// this function will fail and return SDL_FALSE. In such a case, you should
+    /// this function will fail and return false. In such a case, you should
     /// probably retry the call with 1 for the interval.
     ///
     /// Adaptive vsync is implemented for some glX drivers with
@@ -3251,13 +3306,13 @@ extern "C" {
     ///
     /// \param interval 0 for immediate updates, 1 for updates synchronized with
     ///                 the vertical retrace, -1 for adaptive vsync.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GL_GetSwapInterval
-    pub fn SDL_GL_SetSwapInterval(interval: ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_GL_SetSwapInterval(interval: ::core::ffi::c_int) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3270,13 +3325,13 @@ extern "C" {
     ///                 synchronization, 1 if the buffer swap is synchronized with
     ///                 the vertical retrace, and -1 if late swaps happen
     ///                 immediately instead of waiting for the next retrace.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GL_SetSwapInterval
-    pub fn SDL_GL_GetSwapInterval(interval: *mut ::core::ffi::c_int) -> SDL_bool;
+    pub fn SDL_GL_GetSwapInterval(interval: *mut ::core::ffi::c_int) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3290,24 +3345,24 @@ extern "C" {
     /// extra.
     ///
     /// \param window the window to change.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GL_SwapWindow(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_GL_SwapWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Delete an OpenGL context.
     ///
     /// \param context the OpenGL context to be deleted.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GL_CreateContext
-    pub fn SDL_GL_DestroyContext(context: SDL_GLContext) -> SDL_bool;
+    pub fn SDL_GL_DestroyContext(context: SDL_GLContext) -> ::core::primitive::bool;
 }
 
 #[repr(C)]

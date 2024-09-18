@@ -162,12 +162,12 @@ pub const SDL_BUTTON_X2: ::core::primitive::i32 = 5;
 extern "C" {
     /// Return whether a mouse is currently connected.
     ///
-    /// \returns SDL_TRUE if a mouse is connected, SDL_FALSE otherwise.
+    /// \returns true if a mouse is connected, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetMice
-    pub fn SDL_HasMouse() -> SDL_bool;
+    pub fn SDL_HasMouse() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -333,13 +333,16 @@ extern "C" {
     ///
     /// \param x the x coordinate.
     /// \param y the y coordinate.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_WarpMouseInWindow
-    pub fn SDL_WarpMouseGlobal(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> SDL_bool;
+    pub fn SDL_WarpMouseGlobal(
+        x: ::core::ffi::c_float,
+        y: ::core::ffi::c_float,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -353,27 +356,29 @@ extern "C" {
     /// This function will flush any pending mouse motion for this window.
     ///
     /// \param window the window to change.
-    /// \param enabled SDL_TRUE to enable relative mode, SDL_FALSE to disable.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \param enabled true to enable relative mode, false to disable.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetWindowRelativeMouseMode
-    pub fn SDL_SetWindowRelativeMouseMode(window: *mut SDL_Window, enabled: SDL_bool) -> SDL_bool;
+    pub fn SDL_SetWindowRelativeMouseMode(
+        window: *mut SDL_Window,
+        enabled: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Query whether relative mouse mode is enabled for a window.
     ///
     /// \param window the window to query.
-    /// \returns SDL_TRUE if relative mode is enabled for a window or SDL_FALSE
-    ///          otherwise.
+    /// \returns true if relative mode is enabled for a window or false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetWindowRelativeMouseMode
-    pub fn SDL_GetWindowRelativeMouseMode(window: *mut SDL_Window) -> SDL_bool;
+    pub fn SDL_GetWindowRelativeMouseMode(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -412,14 +417,14 @@ extern "C" {
     /// app, you can disable auto capture by setting the
     /// `SDL_HINT_MOUSE_AUTO_CAPTURE` hint to zero.
     ///
-    /// \param enabled SDL_TRUE to enable capturing, SDL_FALSE to disable.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \param enabled true to enable capturing, false to disable.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetGlobalMouseState
-    pub fn SDL_CaptureMouse(enabled: SDL_bool) -> SDL_bool;
+    pub fn SDL_CaptureMouse(enabled: ::core::primitive::bool) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -527,13 +532,13 @@ extern "C" {
     /// this is desired for any reason.
     ///
     /// \param cursor a cursor to make active.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetCursor
-    pub fn SDL_SetCursor(cursor: *mut SDL_Cursor) -> SDL_bool;
+    pub fn SDL_SetCursor(cursor: *mut SDL_Cursor) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -582,40 +587,40 @@ extern "C" {
 extern "C" {
     /// Show the cursor.
     ///
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_CursorVisible
     /// \sa SDL_HideCursor
-    pub fn SDL_ShowCursor() -> SDL_bool;
+    pub fn SDL_ShowCursor() -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Hide the cursor.
     ///
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_CursorVisible
     /// \sa SDL_ShowCursor
-    pub fn SDL_HideCursor() -> SDL_bool;
+    pub fn SDL_HideCursor() -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Return whether the cursor is currently being shown.
     ///
-    /// \returns `SDL_TRUE` if the cursor is being shown, or `SDL_FALSE` if the
-    ///          cursor is hidden.
+    /// \returns `true` if the cursor is being shown, or `false` if the cursor is
+    ///          hidden.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_HideCursor
     /// \sa SDL_ShowCursor
-    pub fn SDL_CursorVisible() -> SDL_bool;
+    pub fn SDL_CursorVisible() -> ::core::primitive::bool;
 }
 
 /// The structure used to identify an SDL cursor.

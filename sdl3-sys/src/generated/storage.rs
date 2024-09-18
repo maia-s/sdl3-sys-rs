@@ -27,24 +27,26 @@ use super::properties::*;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_StorageInterface {
     pub version: Uint32,
-    pub close:
-        ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool>,
-    pub ready:
-        ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> SDL_bool>,
+    pub close: ::core::option::Option<
+        extern "C" fn(userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool,
+    >,
+    pub ready: ::core::option::Option<
+        extern "C" fn(userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool,
+    >,
     pub enumerate: ::core::option::Option<
         extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             path: *const ::core::ffi::c_char,
             callback: SDL_EnumerateDirectoryCallback,
             callback_userdata: *mut ::core::ffi::c_void,
-        ) -> SDL_bool,
+        ) -> ::core::primitive::bool,
     >,
     pub info: ::core::option::Option<
         extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             path: *const ::core::ffi::c_char,
             info: *mut SDL_PathInfo,
-        ) -> SDL_bool,
+        ) -> ::core::primitive::bool,
     >,
     pub read_file: ::core::option::Option<
         extern "C" fn(
@@ -52,7 +54,7 @@ pub struct SDL_StorageInterface {
             path: *const ::core::ffi::c_char,
             destination: *mut ::core::ffi::c_void,
             length: Uint64,
-        ) -> SDL_bool,
+        ) -> ::core::primitive::bool,
     >,
     pub write_file: ::core::option::Option<
         extern "C" fn(
@@ -60,33 +62,33 @@ pub struct SDL_StorageInterface {
             path: *const ::core::ffi::c_char,
             source: *const ::core::ffi::c_void,
             length: Uint64,
-        ) -> SDL_bool,
+        ) -> ::core::primitive::bool,
     >,
     pub mkdir: ::core::option::Option<
         extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             path: *const ::core::ffi::c_char,
-        ) -> SDL_bool,
+        ) -> ::core::primitive::bool,
     >,
     pub remove: ::core::option::Option<
         extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             path: *const ::core::ffi::c_char,
-        ) -> SDL_bool,
+        ) -> ::core::primitive::bool,
     >,
     pub rename: ::core::option::Option<
         extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             oldpath: *const ::core::ffi::c_char,
             newpath: *const ::core::ffi::c_char,
-        ) -> SDL_bool,
+        ) -> ::core::primitive::bool,
     >,
     pub copy: ::core::option::Option<
         extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             oldpath: *const ::core::ffi::c_char,
             newpath: *const ::core::ffi::c_char,
-        ) -> SDL_bool,
+        ) -> ::core::primitive::bool,
     >,
     pub space_remaining:
         ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> Uint64>,
@@ -231,10 +233,10 @@ extern "C" {
     /// Closes and frees a storage container.
     ///
     /// \param storage a storage container to close.
-    /// \returns SDL_TRUE if the container was freed with no errors, SDL_FALSE
-    ///          otherwise; call SDL_GetError() for more information. Even if the
-    ///          function returns an error, the container data will be freed; the
-    ///          error is only for informational purposes.
+    /// \returns true if the container was freed with no errors, false otherwise;
+    ///          call SDL_GetError() for more information. Even if the function
+    ///          returns an error, the container data will be freed; the error is
+    ///          only for informational purposes.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -242,21 +244,21 @@ extern "C" {
     /// \sa SDL_OpenStorage
     /// \sa SDL_OpenTitleStorage
     /// \sa SDL_OpenUserStorage
-    pub fn SDL_CloseStorage(storage: *mut SDL_Storage) -> SDL_bool;
+    pub fn SDL_CloseStorage(storage: *mut SDL_Storage) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Checks if the storage container is ready to use.
     ///
-    /// This function should be called in regular intervals until it returns
-    /// SDL_TRUE - however, it is not recommended to spinwait on this call, as the
-    /// backend may depend on a synchronous message loop.
+    /// This function should be called in regular intervals until it returns true -
+    /// however, it is not recommended to spinwait on this call, as the backend may
+    /// depend on a synchronous message loop.
     ///
     /// \param storage a storage container to query.
-    /// \returns SDL_TRUE if the container is ready, SDL_FALSE otherwise.
+    /// \returns true if the container is ready, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_StorageReady(storage: *mut SDL_Storage) -> SDL_bool;
+    pub fn SDL_StorageReady(storage: *mut SDL_Storage) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -265,8 +267,8 @@ extern "C" {
     /// \param storage a storage container to query.
     /// \param path the relative path of the file to query.
     /// \param length a pointer to be filled with the file's length.
-    /// \returns SDL_TRUE if the file could be queried or SDL_FALSE on failure;
-    ///          call SDL_GetError() for more information.
+    /// \returns true if the file could be queried or false on failure; call
+    ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -276,7 +278,7 @@ extern "C" {
         storage: *mut SDL_Storage,
         path: *const ::core::ffi::c_char,
         length: *mut Uint64,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -287,8 +289,8 @@ extern "C" {
     /// \param path the relative path of the file to read.
     /// \param destination a client-provided buffer to read the file into.
     /// \param length the length of the destination buffer.
-    /// \returns SDL_TRUE if the file was read or SDL_FALSE on failure; call
-    ///          SDL_GetError() for more information.
+    /// \returns true if the file was read or false on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -300,7 +302,7 @@ extern "C" {
         path: *const ::core::ffi::c_char,
         destination: *mut ::core::ffi::c_void,
         length: Uint64,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -310,7 +312,7 @@ extern "C" {
     /// \param path the relative path of the file to write.
     /// \param source a client-provided buffer to write from.
     /// \param length the length of the source buffer.
-    /// \returns SDL_TRUE if the file was written or SDL_FALSE on failure; call
+    /// \returns true if the file was written or false on failure; call
     ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
@@ -323,7 +325,7 @@ extern "C" {
         path: *const ::core::ffi::c_char,
         source: *const ::core::ffi::c_void,
         length: Uint64,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -331,8 +333,8 @@ extern "C" {
     ///
     /// \param storage a storage container.
     /// \param path the path of the directory to create.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -340,7 +342,7 @@ extern "C" {
     pub fn SDL_CreateStorageDirectory(
         storage: *mut SDL_Storage,
         path: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -354,8 +356,8 @@ extern "C" {
     /// \param path the path of the directory to enumerate.
     /// \param callback a function that is called for each entry in the directory.
     /// \param userdata a pointer that is passed to `callback`.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -365,7 +367,7 @@ extern "C" {
         path: *const ::core::ffi::c_char,
         callback: SDL_EnumerateDirectoryCallback,
         userdata: *mut ::core::ffi::c_void,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -373,8 +375,8 @@ extern "C" {
     ///
     /// \param storage a storage container.
     /// \param path the path of the directory to enumerate.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -382,7 +384,7 @@ extern "C" {
     pub fn SDL_RemoveStoragePath(
         storage: *mut SDL_Storage,
         path: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -391,8 +393,8 @@ extern "C" {
     /// \param storage a storage container.
     /// \param oldpath the old path.
     /// \param newpath the new path.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -401,7 +403,7 @@ extern "C" {
         storage: *mut SDL_Storage,
         oldpath: *const ::core::ffi::c_char,
         newpath: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -410,8 +412,8 @@ extern "C" {
     /// \param storage a storage container.
     /// \param oldpath the old path.
     /// \param newpath the new path.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -420,7 +422,7 @@ extern "C" {
         storage: *mut SDL_Storage,
         oldpath: *const ::core::ffi::c_char,
         newpath: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -430,8 +432,8 @@ extern "C" {
     /// \param path the path to query.
     /// \param info a pointer filled in with information about the path, or NULL to
     ///             check for the existence of a file.
-    /// \returns SDL_TRUE on success or SDL_FALSE if the file doesn't exist, or
-    ///          another failure; call SDL_GetError() for more information.
+    /// \returns true on success or false if the file doesn't exist, or another
+    ///          failure; call SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -440,7 +442,7 @@ extern "C" {
         storage: *mut SDL_Storage,
         path: *const ::core::ffi::c_char,
         info: *mut SDL_PathInfo,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

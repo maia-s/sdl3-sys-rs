@@ -151,8 +151,8 @@ extern "C" {
     ///                       other options.
     /// \param buttonid the pointer to which user id of hit button should be
     ///                 copied.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -160,7 +160,7 @@ extern "C" {
     pub fn SDL_ShowMessageBox(
         messageboxdata: *const SDL_MessageBoxData,
         buttonid: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -196,8 +196,8 @@ extern "C" {
     /// \param title uTF-8 title text.
     /// \param message uTF-8 message text.
     /// \param window the parent window, or NULL for no parent.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -207,5 +207,5 @@ extern "C" {
         title: *const ::core::ffi::c_char,
         message: *const ::core::ffi::c_char,
         window: *mut SDL_Window,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }

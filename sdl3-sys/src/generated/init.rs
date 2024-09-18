@@ -20,8 +20,6 @@ use super::events::*;
 /// \sa SDL_WasInit
 pub type SDL_InitFlags = Uint32;
 
-pub const SDL_INIT_TIMER: ::core::primitive::u32 = 1_u32;
-
 /// `SDL_INIT_AUDIO` implies `SDL_INIT_EVENTS`
 pub const SDL_INIT_AUDIO: ::core::primitive::u32 = 16_u32;
 
@@ -119,7 +117,6 @@ extern "C" {
     ///
     /// `flags` may be any of the following OR'd together:
     ///
-    /// - `SDL_INIT_TIMER`: timer subsystem
     /// - `SDL_INIT_AUDIO`: audio subsystem; automatically initializes the events
     ///   subsystem
     /// - `SDL_INIT_VIDEO`: video subsystem; automatically initializes the events
@@ -145,8 +142,8 @@ extern "C" {
     /// SDL_SetAppMetadataProperty().
     ///
     /// \param flags subsystem initialization flags.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -156,7 +153,7 @@ extern "C" {
     /// \sa SDL_Quit
     /// \sa SDL_SetMainReady
     /// \sa SDL_WasInit
-    pub fn SDL_Init(flags: SDL_InitFlags) -> SDL_bool;
+    pub fn SDL_Init(flags: SDL_InitFlags) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -165,15 +162,15 @@ extern "C" {
     /// This function and SDL_Init() are interchangeable.
     ///
     /// \param flags any of the flags used by SDL_Init(); see SDL_Init for details.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_Init
     /// \sa SDL_Quit
     /// \sa SDL_QuitSubSystem
-    pub fn SDL_InitSubSystem(flags: SDL_InitFlags) -> SDL_bool;
+    pub fn SDL_InitSubSystem(flags: SDL_InitFlags) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -250,8 +247,8 @@ extern "C" {
     ///                   hash, or whatever makes sense).
     /// \param appidentifier A unique string in reverse-domain format that
     ///                      identifies this app ("com.example.mygame2").
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -262,7 +259,7 @@ extern "C" {
         appname: *const ::core::ffi::c_char,
         appversion: *const ::core::ffi::c_char,
         appidentifier: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -316,8 +313,8 @@ extern "C" {
     ///
     /// \param name the name of the metadata property to set.
     /// \param value the value of the property, or NULL to remove that property.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -328,7 +325,7 @@ extern "C" {
     pub fn SDL_SetAppMetadataProperty(
         name: *const ::core::ffi::c_char,
         value: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 pub const SDL_PROP_APP_METADATA_NAME_STRING: &::core::ffi::CStr =

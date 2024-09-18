@@ -294,11 +294,11 @@ extern "C" {
     /// an administrator account. Be prepared for this to fail.
     ///
     /// \param priority the SDL_ThreadPriority to set.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_SetThreadPriority(priority: SDL_ThreadPriority) -> SDL_bool;
+    pub fn SDL_SetThreadPriority(priority: SDL_ThreadPriority) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -416,8 +416,8 @@ extern "C" {
     /// \param value the value to associate with the ID for the current thread.
     /// \param destructor a function called when the thread exits, to free the
     ///                   value, may be NULL.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
@@ -428,7 +428,7 @@ extern "C" {
         id: *mut SDL_TLSID,
         value: *const ::core::ffi::c_void,
         destructor: SDL_TLSDestructorCallback,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

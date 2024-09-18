@@ -7,8 +7,8 @@ extern "C" {
     ///
     /// Calling this function will replace any previous error message that was set.
     ///
-    /// This function always returns SDL_FALSE, since SDL frequently uses SDL_FALSE
-    /// to signify a failing result, leading to this idiom:
+    /// This function always returns false, since SDL frequently uses false to
+    /// signify a failing result, leading to this idiom:
     ///
     /// ```c
     /// if (error_code) {
@@ -19,13 +19,13 @@ extern "C" {
     /// \param fmt a printf()-style message format string.
     /// \param ... additional parameters matching % tokens in the `fmt` string, if
     ///            any.
-    /// \returns SDL_FALSE.
+    /// \returns false.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ClearError
     /// \sa SDL_GetError
-    pub fn SDL_SetError(fmt: *const ::core::ffi::c_char, ...) -> SDL_bool;
+    pub fn SDL_SetError(fmt: *const ::core::ffi::c_char, ...) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -33,10 +33,10 @@ extern "C" {
     ///
     /// This function does not do any memory allocation.
     ///
-    /// \returns SDL_FALSE.
+    /// \returns false.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_OutOfMemory() -> SDL_bool;
+    pub fn SDL_OutOfMemory() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -77,16 +77,16 @@ extern "C" {
 extern "C" {
     /// Clear any previous error message for this thread.
     ///
-    /// \returns SDL_TRUE.
+    /// \returns true.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetError
     /// \sa SDL_SetError
-    pub fn SDL_ClearError() -> SDL_bool;
+    pub fn SDL_ClearError() -> ::core::primitive::bool;
 }
 
-pub unsafe fn SDL_Unsupported() -> SDL_bool {
+pub unsafe fn SDL_Unsupported() -> ::core::primitive::bool {
     unsafe {
         SDL_SetError(
             unsafe {

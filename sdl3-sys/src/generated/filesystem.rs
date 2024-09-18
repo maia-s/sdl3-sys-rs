@@ -266,11 +266,11 @@ extern "C" {
     /// Create a directory.
     ///
     /// \param path the path of the directory to create.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_CreateDirectory(path: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_CreateDirectory(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
 pub type SDL_EnumerateDirectoryCallback = ::core::option::Option<
@@ -291,26 +291,26 @@ extern "C" {
     /// \param path the path of the directory to enumerate.
     /// \param callback a function that is called for each entry in the directory.
     /// \param userdata a pointer that is passed to `callback`.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_EnumerateDirectory(
         path: *const ::core::ffi::c_char,
         callback: SDL_EnumerateDirectoryCallback,
         userdata: *mut ::core::ffi::c_void,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Remove a file or an empty directory.
     ///
     /// \param path the path of the directory to enumerate.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_RemovePath(path: *const ::core::ffi::c_char) -> SDL_bool;
+    pub fn SDL_RemovePath(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -318,14 +318,14 @@ extern "C" {
     ///
     /// \param oldpath the old path.
     /// \param newpath the new path.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_RenamePath(
         oldpath: *const ::core::ffi::c_char,
         newpath: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -333,14 +333,14 @@ extern "C" {
     ///
     /// \param oldpath the old path.
     /// \param newpath the new path.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_CopyFile(
         oldpath: *const ::core::ffi::c_char,
         newpath: *const ::core::ffi::c_char,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -349,11 +349,14 @@ extern "C" {
     /// \param path the path to query.
     /// \param info a pointer filled in with information about the path, or NULL to
     ///             check for the existence of a file.
-    /// \returns SDL_TRUE on success or SDL_FALSE if the file doesn't exist, or
-    ///          another failure; call SDL_GetError() for more information.
+    /// \returns true on success or false if the file doesn't exist, or another
+    ///          failure; call SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_GetPathInfo(path: *const ::core::ffi::c_char, info: *mut SDL_PathInfo) -> SDL_bool;
+    pub fn SDL_GetPathInfo(
+        path: *const ::core::ffi::c_char,
+        info: *mut SDL_PathInfo,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

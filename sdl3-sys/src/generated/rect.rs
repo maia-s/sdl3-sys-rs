@@ -89,30 +89,33 @@ pub struct SDL_FRect {
 extern "C" {
     /// Determine whether two rectangles intersect.
     ///
-    /// If either pointer is NULL the function will return SDL_FALSE.
+    /// If either pointer is NULL the function will return false.
     ///
     /// \param A an SDL_Rect structure representing the first rectangle.
     /// \param B an SDL_Rect structure representing the second rectangle.
-    /// \returns SDL_TRUE if there is an intersection, SDL_FALSE otherwise.
+    /// \returns true if there is an intersection, false otherwise.
     ///
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetRectIntersection
-    pub fn SDL_HasRectIntersection(A: *const SDL_Rect, B: *const SDL_Rect) -> SDL_bool;
+    pub fn SDL_HasRectIntersection(
+        A: *const SDL_Rect,
+        B: *const SDL_Rect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Calculate the intersection of two rectangles.
     ///
-    /// If `result` is NULL then this function will return SDL_FALSE.
+    /// If `result` is NULL then this function will return false.
     ///
     /// \param A an SDL_Rect structure representing the first rectangle.
     /// \param B an SDL_Rect structure representing the second rectangle.
     /// \param result an SDL_Rect structure filled in with the intersection of
     ///               rectangles `A` and `B`.
-    /// \returns SDL_TRUE if there is an intersection, SDL_FALSE otherwise.
+    /// \returns true if there is an intersection, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -121,7 +124,7 @@ extern "C" {
         A: *const SDL_Rect,
         B: *const SDL_Rect,
         result: *mut SDL_Rect,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -131,15 +134,15 @@ extern "C" {
     /// \param B an SDL_Rect structure representing the second rectangle.
     /// \param result an SDL_Rect structure filled in with the union of rectangles
     ///               `A` and `B`.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRectUnion(
         A: *const SDL_Rect,
         B: *const SDL_Rect,
         result: *mut SDL_Rect,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -154,8 +157,8 @@ extern "C" {
     /// \param clip an SDL_Rect used for clipping or NULL to enclose all points.
     /// \param result an SDL_Rect structure filled in with the minimal enclosing
     ///               rectangle.
-    /// \returns SDL_TRUE if any points were enclosed or SDL_FALSE if all the
-    ///          points were outside of the clipping rectangle.
+    /// \returns true if any points were enclosed or false if all the points were
+    ///          outside of the clipping rectangle.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRectEnclosingPoints(
@@ -163,7 +166,7 @@ extern "C" {
         count: ::core::ffi::c_int,
         clip: *const SDL_Rect,
         result: *mut SDL_Rect,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -180,7 +183,7 @@ extern "C" {
     /// \param Y1 a pointer to the starting Y-coordinate of the line.
     /// \param X2 a pointer to the ending X-coordinate of the line.
     /// \param Y2 a pointer to the ending Y-coordinate of the line.
-    /// \returns SDL_TRUE if there is an intersection, SDL_FALSE otherwise.
+    /// \returns true if there is an intersection, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRectAndLineIntersection(
@@ -189,7 +192,7 @@ extern "C" {
         Y1: *mut ::core::ffi::c_int,
         X2: *mut ::core::ffi::c_int,
         Y2: *mut ::core::ffi::c_int,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 // [sdl3-sys-gen] skipped inline function `SDL_PointInRectFloat`
@@ -203,28 +206,31 @@ extern "C" {
 extern "C" {
     /// Determine whether two rectangles intersect with float precision.
     ///
-    /// If either pointer is NULL the function will return SDL_FALSE.
+    /// If either pointer is NULL the function will return false.
     ///
     /// \param A an SDL_FRect structure representing the first rectangle.
     /// \param B an SDL_FRect structure representing the second rectangle.
-    /// \returns SDL_TRUE if there is an intersection, SDL_FALSE otherwise.
+    /// \returns true if there is an intersection, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_GetRectIntersection
-    pub fn SDL_HasRectIntersectionFloat(A: *const SDL_FRect, B: *const SDL_FRect) -> SDL_bool;
+    pub fn SDL_HasRectIntersectionFloat(
+        A: *const SDL_FRect,
+        B: *const SDL_FRect,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Calculate the intersection of two rectangles with float precision.
     ///
-    /// If `result` is NULL then this function will return SDL_FALSE.
+    /// If `result` is NULL then this function will return false.
     ///
     /// \param A an SDL_FRect structure representing the first rectangle.
     /// \param B an SDL_FRect structure representing the second rectangle.
     /// \param result an SDL_FRect structure filled in with the intersection of
     ///               rectangles `A` and `B`.
-    /// \returns SDL_TRUE if there is an intersection, SDL_FALSE otherwise.
+    /// \returns true if there is an intersection, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -233,7 +239,7 @@ extern "C" {
         A: *const SDL_FRect,
         B: *const SDL_FRect,
         result: *mut SDL_FRect,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -243,15 +249,15 @@ extern "C" {
     /// \param B an SDL_FRect structure representing the second rectangle.
     /// \param result an SDL_FRect structure filled in with the union of rectangles
     ///               `A` and `B`.
-    /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-    ///          for more information.
+    /// \returns true on success or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRectUnionFloat(
         A: *const SDL_FRect,
         B: *const SDL_FRect,
         result: *mut SDL_FRect,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -267,8 +273,8 @@ extern "C" {
     /// \param clip an SDL_FRect used for clipping or NULL to enclose all points.
     /// \param result an SDL_FRect structure filled in with the minimal enclosing
     ///               rectangle.
-    /// \returns SDL_TRUE if any points were enclosed or SDL_FALSE if all the
-    ///          points were outside of the clipping rectangle.
+    /// \returns true if any points were enclosed or false if all the points were
+    ///          outside of the clipping rectangle.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRectEnclosingPointsFloat(
@@ -276,7 +282,7 @@ extern "C" {
         count: ::core::ffi::c_int,
         clip: *const SDL_FRect,
         result: *mut SDL_FRect,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -294,7 +300,7 @@ extern "C" {
     /// \param Y1 a pointer to the starting Y-coordinate of the line.
     /// \param X2 a pointer to the ending X-coordinate of the line.
     /// \param Y2 a pointer to the ending Y-coordinate of the line.
-    /// \returns SDL_TRUE if there is an intersection, SDL_FALSE otherwise.
+    /// \returns true if there is an intersection, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetRectAndLineIntersectionFloat(
@@ -303,5 +309,5 @@ extern "C" {
         Y1: *mut ::core::ffi::c_float,
         X2: *mut ::core::ffi::c_float,
         Y2: *mut ::core::ffi::c_float,
-    ) -> SDL_bool;
+    ) -> ::core::primitive::bool;
 }

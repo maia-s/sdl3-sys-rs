@@ -14,9 +14,8 @@ emit! {
 
     /// A callback to be used with SDL_SetWindowsMessageHook.
     ///
-    /// This callback may modify the message, and should return SDL_TRUE if the
-    /// message should continue to be processed, or SDL_FALSE to prevent further
-    /// processing.
+    /// This callback may modify the message, and should return true if the message
+    /// should continue to be processed, or false to prevent further processing.
     ///
     /// As this is processing a message directly from the Windows event loop, this
     /// callback should do the minimum required work and return quickly.
@@ -24,7 +23,7 @@ emit! {
     /// \param userdata the app-defined pointer provided to
     ///                 SDL_SetWindowsMessageHook.
     /// \param msg a pointer to a Win32 event structure to process.
-    /// \returns SDL_TRUE to let event continue on, SDL_FALSE to drop it.
+    /// \returns true to let event continue on, false to drop it.
     ///
     /// \threadsafety This may only be called (by SDL) from the thread handling the
     ///               Windows event loop.
@@ -33,14 +32,13 @@ emit! {
     ///
     /// \sa SDL_SetWindowsMessageHook
     /// \sa SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP
-    pub type SDL_WindowsMessageHook = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, msg: *mut MSG) -> SDL_bool>;
+    pub type SDL_WindowsMessageHook = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, msg: *mut MSG) -> ::core::primitive::bool>;
 
     extern "C" {
         /// Set a callback for every Windows message, run before TranslateMessage().
         ///
-        /// The callback may modify the message, and should return SDL_TRUE if the
-        /// message should continue to be processed, or SDL_FALSE to prevent further
-        /// processing.
+        /// The callback may modify the message, and should return true if the message
+        /// should continue to be processed, or false to prevent further processing.
         ///
         /// \param callback the SDL_WindowsMessageHook function to call.
         /// \param userdata a pointer to pass to every iteration of `callback`.
@@ -80,11 +78,11 @@ emit! {
         /// \param displayID the instance of the display to query.
         /// \param adapterIndex a pointer to be filled in with the adapter index.
         /// \param outputIndex a pointer to be filled in with the output index.
-        /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-        ///          for more information.
+        /// \returns true on success or false on failure; call SDL_GetError() for more
+        ///          information.
         ///
         /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_GetDXGIOutputInfo(displayID: SDL_DisplayID, adapterIndex: *mut ::core::ffi::c_int, outputIndex: *mut ::core::ffi::c_int) -> SDL_bool;
+        pub fn SDL_GetDXGIOutputInfo(displayID: SDL_DisplayID, adapterIndex: *mut ::core::ffi::c_int, outputIndex: *mut ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
 }
@@ -92,15 +90,17 @@ emit! {
 pub type XEvent = _XEvent;
 
 pub type SDL_X11EventHook = ::core::option::Option<
-    extern "C" fn(userdata: *mut ::core::ffi::c_void, xevent: *mut XEvent) -> SDL_bool,
+    extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        xevent: *mut XEvent,
+    ) -> ::core::primitive::bool,
 >;
 
 extern "C" {
     /// Set a callback for every X11 event.
     ///
-    /// The callback may modify the event, and should return SDL_TRUE if the event
-    /// should continue to be processed, or SDL_FALSE to prevent further
-    /// processing.
+    /// The callback may modify the event, and should return true if the event
+    /// should continue to be processed, or false to prevent further processing.
     ///
     /// \param callback the SDL_X11EventHook function to call.
     /// \param userdata a pointer to pass to every iteration of `callback`.
@@ -118,11 +118,11 @@ emit! {
         ///
         /// \param threadID the Unix thread ID to change priority of.
         /// \param priority the new, Unix-specific, priority value.
-        /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-        ///          for more information.
+        /// \returns true on success or false on failure; call SDL_GetError() for more
+        ///          information.
         ///
         /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_SetLinuxThreadPriority(threadID: Sint64, priority: ::core::ffi::c_int) -> SDL_bool;
+        pub fn SDL_SetLinuxThreadPriority(threadID: Sint64, priority: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
     extern "C" {
@@ -134,11 +134,11 @@ emit! {
         /// \param sdlPriority the new SDL_ThreadPriority value.
         /// \param schedPolicy the new scheduling policy (SCHED_FIFO, SCHED_RR,
         ///                    SCHED_OTHER, etc...).
-        /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-        ///          for more information.
+        /// \returns true on success or false on failure; call SDL_GetError() for more
+        ///          information.
         ///
         /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_SetLinuxThreadPriorityAndPolicy(threadID: Sint64, sdlPriority: ::core::ffi::c_int, schedPolicy: ::core::ffi::c_int) -> SDL_bool;
+        pub fn SDL_SetLinuxThreadPriorityAndPolicy(threadID: Sint64, sdlPriority: ::core::ffi::c_int, schedPolicy: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
 }
@@ -191,13 +191,13 @@ emit! {
         ///                 called.
         /// \param callback the function to call for every frame.
         /// \param callbackParam a pointer that is passed to `callback`.
-        /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-        ///          for more information.
+        /// \returns true on success or false on failure; call SDL_GetError() for more
+        ///          information.
         ///
         /// \since This function is available since SDL 3.0.0.
         ///
         /// \sa SDL_SetiOSEventPump
-        pub fn SDL_SetiOSAnimationCallback(window: *mut SDL_Window, interval: ::core::ffi::c_int, callback: SDL_iOSAnimationCallback, callbackParam: *mut ::core::ffi::c_void) -> SDL_bool;
+        pub fn SDL_SetiOSAnimationCallback(window: *mut SDL_Window, interval: ::core::ffi::c_int, callback: SDL_iOSAnimationCallback, callbackParam: *mut ::core::ffi::c_void) -> ::core::primitive::bool;
     }
 
     extern "C" {
@@ -205,12 +205,12 @@ emit! {
         ///
         /// This function is only available on Apple iOS.
         ///
-        /// \param enabled SDL_TRUE to enable the event pump, SDL_FALSE to disable it.
+        /// \param enabled true to enable the event pump, false to disable it.
         ///
         /// \since This function is available since SDL 3.0.0.
         ///
         /// \sa SDL_SetiOSAnimationCallback
-        pub fn SDL_SetiOSEventPump(enabled: SDL_bool);
+        pub fn SDL_SetiOSEventPump(enabled: ::core::primitive::bool);
     }
 
 }
@@ -303,28 +303,28 @@ emit! {
     extern "C" {
         /// Query if the application is running on Android TV.
         ///
-        /// \returns SDL_TRUE if this is Android TV, SDL_FALSE otherwise.
+        /// \returns true if this is Android TV, false otherwise.
         ///
         /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_IsAndroidTV() -> SDL_bool;
+        pub fn SDL_IsAndroidTV() -> ::core::primitive::bool;
     }
 
     extern "C" {
         /// Query if the application is running on a Chromebook.
         ///
-        /// \returns SDL_TRUE if this is a Chromebook, SDL_FALSE otherwise.
+        /// \returns true if this is a Chromebook, false otherwise.
         ///
         /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_IsChromebook() -> SDL_bool;
+        pub fn SDL_IsChromebook() -> ::core::primitive::bool;
     }
 
     extern "C" {
         /// Query if the application is running on a Samsung DeX docking station.
         ///
-        /// \returns SDL_TRUE if this is a DeX docking station, SDL_FALSE otherwise.
+        /// \returns true if this is a DeX docking station, false otherwise.
         ///
         /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_IsDeXMode() -> SDL_bool;
+        pub fn SDL_IsDeXMode() -> ::core::primitive::bool;
     }
 
     extern "C" {
@@ -424,7 +424,7 @@ emit! {
         pub fn SDL_GetAndroidCachePath() -> *const ::core::ffi::c_char;
     }
 
-    pub type SDL_RequestAndroidPermissionCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, permission: *const ::core::ffi::c_char, granted: SDL_bool)>;
+    pub type SDL_RequestAndroidPermissionCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, permission: *const ::core::ffi::c_char, granted: ::core::primitive::bool)>;
 
     extern "C" {
         /// Request permissions at runtime, asynchronously.
@@ -448,14 +448,14 @@ emit! {
         /// \param permission the permission to request.
         /// \param cb the callback to trigger when the request has a response.
         /// \param userdata an app-controlled pointer that is passed to the callback.
-        /// \returns SDL_TRUE if the request was submitted, SDL_FALSE if there was an
-        ///          error submitting. The result of the request is only ever reported
+        /// \returns true if the request was submitted, false if there was an error
+        ///          submitting. The result of the request is only ever reported
         ///          through the callback, not this return value.
         ///
         /// \threadsafety It is safe to call this function from any thread.
         ///
         /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_RequestAndroidPermission(permission: *const ::core::ffi::c_char, cb: SDL_RequestAndroidPermissionCallback, userdata: *mut ::core::ffi::c_void) -> SDL_bool;
+        pub fn SDL_RequestAndroidPermission(permission: *const ::core::ffi::c_char, cb: SDL_RequestAndroidPermissionCallback, userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool;
     }
 
     extern "C" {
@@ -477,13 +477,13 @@ emit! {
         /// \param gravity where the notification should appear on the screen.
         /// \param xoffset set this parameter only when gravity >=0.
         /// \param yoffset set this parameter only when gravity >=0.
-        /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-        ///          for more information.
+        /// \returns true on success or false on failure; call SDL_GetError() for more
+        ///          information.
         ///
         /// \threadsafety It is safe to call this function from any thread.
         ///
         /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_ShowAndroidToast(message: *const ::core::ffi::c_char, duration: ::core::ffi::c_int, gravity: ::core::ffi::c_int, xoffset: ::core::ffi::c_int, yoffset: ::core::ffi::c_int) -> SDL_bool;
+        pub fn SDL_ShowAndroidToast(message: *const ::core::ffi::c_char, duration: ::core::ffi::c_int, gravity: ::core::ffi::c_int, xoffset: ::core::ffi::c_int, yoffset: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
     extern "C" {
@@ -493,13 +493,13 @@ emit! {
         ///
         /// \param command user command that must be greater or equal to 0x8000.
         /// \param param user parameter.
-        /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-        ///          for more information.
+        /// \returns true on success or false on failure; call SDL_GetError() for more
+        ///          information.
         ///
         /// \threadsafety It is safe to call this function from any thread.
         ///
         /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_SendAndroidMessage(command: Uint32, param: ::core::ffi::c_int) -> SDL_bool;
+        pub fn SDL_SendAndroidMessage(command: Uint32, param: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
 }
@@ -507,12 +507,12 @@ emit! {
 extern "C" {
     /// Query if the current device is a tablet.
     ///
-    /// If SDL can't determine this, it will return SDL_FALSE.
+    /// If SDL can't determine this, it will return false.
     ///
-    /// \returns SDL_TRUE if the device is a tablet, SDL_FALSE otherwise.
+    /// \returns true if the device is a tablet, false otherwise.
     ///
     /// \since This function is available since SDL 3.0.0.
-    pub fn SDL_IsTablet() -> SDL_bool;
+    pub fn SDL_IsTablet() -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -653,11 +653,11 @@ emit! {
         /// leak.
         ///
         /// \param outTaskQueue a pointer to be filled in with task queue handle.
-        /// \returns SDL_TRUE on success or SDL_FALSE on failure; call SDL_GetError()
-        ///          for more information.
+        /// \returns true on success or false on failure; call SDL_GetError() for more
+        ///          information.
         ///
         /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_GetGDKTaskQueue(outTaskQueue: *mut XTaskQueueHandle) -> SDL_bool;
+        pub fn SDL_GetGDKTaskQueue(outTaskQueue: *mut XTaskQueueHandle) -> ::core::primitive::bool;
     }
 
     extern "C" {
@@ -668,11 +668,11 @@ emit! {
         ///
         /// \param outUserHandle a pointer to be filled in with the default user
         ///                      handle.
-        /// \returns SDL_TRUE if success or SDL_FALSE on failure; call SDL_GetError()
-        ///          for more information.
+        /// \returns true if success or false on failure; call SDL_GetError() for more
+        ///          information.
         ///
         /// \since This function is available since SDL 3.0.0.
-        pub fn SDL_GetGDKDefaultUser(outUserHandle: *mut XUserHandle) -> SDL_bool;
+        pub fn SDL_GetGDKDefaultUser(outUserHandle: *mut XUserHandle) -> ::core::primitive::bool;
     }
 
 }

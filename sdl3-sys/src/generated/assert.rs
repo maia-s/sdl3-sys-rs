@@ -132,8 +132,8 @@ pub const SDL_ASSERTION_ALWAYS_IGNORE: SDL_AssertState = SDL_AssertState::ALWAYS
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AssertData {
-    /// SDL_TRUE if app should always continue when assertion is triggered.
-    pub always_ignore: SDL_bool,
+    /// true if app should always continue when assertion is triggered.
+    pub always_ignore: ::core::primitive::bool,
     /// Number of times this assertion has been triggered.
     pub trigger_count: ::core::ffi::c_uint,
     /// A string of this assert's test code.
