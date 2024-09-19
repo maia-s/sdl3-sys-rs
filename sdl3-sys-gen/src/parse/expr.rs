@@ -1,5 +1,5 @@
 use super::{
-    Balanced, Delimited, ExprOp, GetSpan, Ident, IdentOrKw, Items, Kw_sizeof, Literal, Op, Parse, ParseContext, ParseErr, ParseRawRes, Precedence, Punctuated, Span, Type, WsAndComments
+    patch_parsed_expr, Balanced, Delimited, ExprOp, GetSpan, Ident, IdentOrKw, Items, Kw_sizeof, Literal, Op, Parse, ParseContext, ParseErr, ParseRawRes, Precedence, Punctuated, Span, Type, WsAndComments
 };
 use crate::emit::Value;
 use std::cmp::Ordering;
@@ -118,7 +118,8 @@ impl Expr {
                                 span: lhs.span().join(&args.span()),
                                 func: Box::new(lhs),
                                 args: args.into(),
-                            })
+                            });
+                            patch_parsed_expr(ctx, &mut lhs)?;
                         }
 
                         b"[" => {

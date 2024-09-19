@@ -1,4 +1,4 @@
-use super::{Define, ParseContext, ParseErr, PrimitiveType, Type};
+use super::{Cast, Define, Expr, GetSpan, ParseContext, ParseErr, PrimitiveType, Type};
 
 struct Patch<T: ?Sized> {
     module: Option<&'static str>,
@@ -22,6 +22,31 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[DefinePatch {
         Ok(true)
     },
 }];
+
+pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {
+    #[allow(clippy::single_match)]
+    match expr {
+        Expr::FnCall(f) => match &*f.func {
+            Expr::Ident(i) => match i.as_str() {
+                "SDL_const_cast" | "SDL_reinterpret_cast" | "SDL_static_cast" => {
+                    let Expr::Ident(ty) = f.args[0].clone() else {
+                        todo!()
+                    };
+                    *expr = Expr::Cast(Cast::boxed(
+                        f.span(),
+                        Type::ident(ty.try_into().unwrap()),
+                        f.args[1].clone(),
+                    ));
+                    return Ok(true);
+                }
+                _ => (),
+            },
+            _ => (),
+        },
+        _ => (),
+    }
+    Ok(false)
+}
 
 fn patch<T: ?Sized>(
     ctx: &ParseContext,
