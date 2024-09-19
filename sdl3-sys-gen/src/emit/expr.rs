@@ -25,6 +25,7 @@ pub enum Value {
     RustCode(Box<RustCode>),
 }
 
+#[derive(Clone, Copy, Debug)]
 pub enum Promoted {
     None = 0,
     Equal,
@@ -230,17 +231,13 @@ impl Value {
             | (_, Value::String(_) | Value::TargetDependent(_)) => Ok(Promoted::None),
 
             (Value::RustCode(lhv), Value::RustCode(rhv)) => {
-                if lhv.ty.is_c_enum(ctx).is_some() {
-                    if let Some(i) = lhs.coerce_to_int(ctx)? {
-                        *lhs = i;
-                        return Value::promote(ctx, lhs, rhs);
-                    }
+                if lhv.ty.is_c_enum(ctx)?.is_some() {
+                    *lhs = lhs.coerce_to_int(ctx)?.unwrap();
+                    return Value::promote(ctx, lhs, rhs);
                 }
-                if rhv.ty.is_c_enum(ctx).is_some() {
-                    if let Some(i) = rhs.coerce_to_int(ctx)? {
-                        *rhs = i;
-                        return Value::promote(ctx, lhs, rhs);
-                    }
+                if rhv.ty.is_c_enum(ctx)?.is_some() {
+                    *rhs = rhs.coerce_to_int(ctx)?.unwrap();
+                    return Value::promote(ctx, lhs, rhs);
                 }
                 if let Some(lt) = lhv.ty.inner_ty() {
                     if let Some(rt) = rhv.ty.inner_ty() {
@@ -282,11 +279,9 @@ impl Value {
                 }
             }
             (Value::RustCode(lhv), _) => {
-                if lhv.ty.is_c_enum(ctx).is_some() {
-                    if let Some(i) = lhs.coerce_to_int(ctx)? {
-                        *lhs = i;
-                        return Value::promote(ctx, lhs, rhs);
-                    }
+                if lhv.ty.is_c_enum(ctx)?.is_some() {
+                    *lhs = lhs.coerce_to_int(ctx)?.unwrap();
+                    return Value::promote(ctx, lhs, rhs);
                 }
                 if let Some(lt) = lhv.ty.inner_ty() {
                     if let Some(mut lc) = lt.conjure_primitive_value() {
@@ -314,11 +309,9 @@ impl Value {
                 }
             }
             (_, Value::RustCode(rhv)) => {
-                if rhv.ty.is_c_enum(ctx).is_some() {
-                    if let Some(i) = rhs.coerce_to_int(ctx)? {
-                        *rhs = i;
-                        return Value::promote(ctx, lhs, rhs);
-                    }
+                if rhv.ty.is_c_enum(ctx)?.is_some() {
+                    *rhs = rhs.coerce_to_int(ctx)?.unwrap();
+                    return Value::promote(ctx, lhs, rhs);
                 }
                 if let Some(rt) = rhv.ty.inner_ty() {
                     if let Some(mut rc) = rt.conjure_primitive_value() {
@@ -349,6 +342,10 @@ impl Value {
     }
 
     pub fn coerce(&self, ctx: &EmitContext, target: &Type) -> Result<Option<Value>, EmitErr> {
+        let Some(target) = target.inner_ty() else {
+            return Ok(None);
+        };
+
         let target_bool = matches!(
             target,
             Type {
@@ -392,15 +389,12 @@ impl Value {
                 is_const = rc.is_const;
                 is_unsafe = rc.is_unsafe;
 
-                if let Some(ident) = rc.ty.is_c_enum(ctx) {
+                if let Some(sym) = rc.ty.is_c_enum(ctx)? {
                     // coerce enums to their value type
-                    let Some(sym) = ctx.lookup_sym(&ident) else {
-                        unreachable!()
-                    };
                     let Some(inner_ty) = &sym.enum_base_ty else {
                         unreachable!()
                     };
-                    if target_bool || target == inner_ty {
+                    if target_bool || inner_ty.compatible_passing_to(&target) {
                         let out = ctx.capture_output(|ctx| {
                             write!(ctx, "(")?;
                             self.emit(ctx)?;
@@ -474,11 +468,8 @@ impl Value {
 
     pub fn coerce_to_int(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
         if let Self::RustCode(rc) = self {
-            if let Some(ident) = rc.ty.is_c_enum(ctx) {
+            if let Some(sym) = rc.ty.is_c_enum(ctx)? {
                 // coerce enums to their value type
-                let Some(sym) = ctx.lookup_sym(&ident) else {
-                    return Ok(None);
-                };
                 let Some(inner_ty) = &sym.enum_base_ty else {
                     unreachable!()
                 };
@@ -626,9 +617,9 @@ impl Eval for Cast {
                 expr.ty().resolve_to(self.ty.clone());
             }
         }
-        let out = if let Some(ident) = self.ty.is_c_enum(ctx) {
+        let out = if let Some(sym) = self.ty.is_c_enum(ctx)? {
             ctx.capture_output(|ctx| {
-                write!(ctx, "{ident}(")?;
+                write!(ctx, "{}(", sym.ident)?;
                 self.expr.emit(ctx)?;
                 write!(ctx, ")")?;
                 Ok(())
@@ -1106,7 +1097,7 @@ impl Eval for Expr {
                             (Value::F32(lhs), Value::F32(rhs)) => Ok(Some(Value::Bool(lhs $op rhs))),
                             (Value::F64(lhs), Value::F64(rhs)) => Ok(Some(Value::Bool(lhs $op rhs))),
                             (lhs, Value::RustCode(rhs)) => {
-                                if matches!(op, "==" | "!=") && rhs.ty.is_c_enum(ctx).is_some() {
+                                if matches!(op, "==" | "!=") && rhs.ty.is_c_enum(ctx)?.is_some() {
                                     let code = ctx.capture_output(|ctx| {
                                         if op == "!=" {
                                             write!(ctx, "!")?;
@@ -1136,7 +1127,7 @@ impl Eval for Expr {
                                 ))))
                             }
                             (Value::RustCode(lhs), rhs) => {
-                                if matches!(op, "==" | "!=") && lhs.ty.is_c_enum(ctx).is_some() {
+                                if matches!(op, "==" | "!=") && lhs.ty.is_c_enum(ctx)?.is_some() {
                                     let code = ctx.capture_output(|ctx| {
                                         if op == "!=" {
                                             write!(ctx, "!")?;
@@ -1178,19 +1169,19 @@ impl Eval for Expr {
 
                         let lhs = eval!(bop.lhs);
                         let lhs = lhs.coerce_to_int(ctx)?.unwrap_or(lhs);
-                        match lhs {
+                        match &lhs {
                             Value::I32(lhs) => Ok(Some(Value::I32(lhs $op shift))),
                             Value::U31(lhs) | Value::U32(lhs) => Ok(Some(Value::U32(lhs $op shift))),
                             Value::I64(lhs) => Ok(Some(Value::I64(lhs $op shift))),
                             Value::U63(lhs) | Value::U64(lhs) => Ok(Some(Value::U64(lhs $op shift))),
-                            Value::RustCode(lhs) => {
+                            Value::RustCode(rc) => {
                                 let code = ctx.capture_output(|ctx| {
                                     write!(ctx, "(")?;
-                                    bop.lhs.emit(ctx)?;
+                                    lhs.emit(ctx)?;
                                     write!(ctx, " << {shift})")?;
                                     Ok(())
                                 })?;
-                                Ok(Some(Value::RustCode(RustCode::boxed(code, lhs.ty, lhs.is_const, lhs.is_unsafe))))
+                                Ok(Some(Value::RustCode(RustCode::boxed(code, rc.ty.clone(), rc.is_const, rc.is_unsafe))))
                             }
 
                             _ => Err(ParseErr::new(
@@ -1328,6 +1319,25 @@ impl Eval for Expr {
             Expr::HasInclude(_) => return Ok(Some(Value::Bool(false))),
 
             Expr::Value(value) => return Ok(Some(value.clone())),
+
+            Expr::WrapEnum(ty, val) => {
+                let Some(val) = val.try_eval(ctx)? else {
+                    return Ok(None);
+                };
+                let out = ctx.capture_output(|ctx| {
+                    ty.emit(ctx)?;
+                    write!(ctx, "(")?;
+                    val.emit(ctx)?;
+                    write!(ctx, ")")?;
+                    Ok(())
+                })?;
+                return Ok(Some(Value::RustCode(RustCode::boxed(
+                    out,
+                    (**ty).clone(),
+                    val.is_const(),
+                    val.is_unsafe(),
+                ))));
+            }
         }
 
         Err(ParseErr::new(self.span(), "missing implementation for eval").into())
@@ -1389,6 +1399,11 @@ impl Emit for Expr {
             Expr::ArrayValues { .. } => todo!(),
             Expr::Value(value) => value.emit(ctx),
             Expr::HasInclude(_) => todo!(),
+
+            Expr::WrapEnum(_, expr) => self
+                .try_eval(ctx)?
+                .ok_or_else(|| ParseErr::new(expr.span(), "couldn't eval"))?
+                .emit(ctx),
         }
     }
 }

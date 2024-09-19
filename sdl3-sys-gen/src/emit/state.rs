@@ -1,4 +1,4 @@
-use super::{EmitErr, EmitResult, Eval, Value};
+use super::{Emit, EmitErr, EmitResult, Eval, Value};
 use crate::{
     parse::{
         DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident, IdentOrKw, ParseErr,
@@ -172,6 +172,8 @@ pub struct InnerEmitContext {
     emitted_file_doc: bool,
     patch_enabled: bool,
     log_debug_enabled: bool,
+    sym_dependencies: Option<Vec<Ident>>,
+    pending_emits: Vec<(Vec<Ident>, Option<Box<dyn Emit>>)>,
 }
 
 impl<'a, 'b> EmitContext<'a, 'b> {
@@ -336,6 +338,8 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                 emitted_file_doc: false,
                 patch_enabled: true,
                 log_debug_enabled: false,
+                sym_dependencies: None,
+                pending_emits: Vec::new(),
             })),
             output,
             indent: 0,
@@ -425,7 +429,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner.borrow()
     }
 
-    fn inner_mut(&mut self) -> RefMut<InnerEmitContext> {
+    fn inner_mut(&self) -> RefMut<InnerEmitContext> {
         self.inner.borrow_mut()
     }
 
@@ -434,7 +438,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     fn inner_mut_map<T: ?Sized>(
-        &mut self,
+        &self,
         map: impl FnOnce(&mut InnerEmitContext) -> &mut T,
     ) -> RefMut<T> {
         RefMut::map(self.inner_mut(), map)
@@ -505,7 +509,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner_map(|ctx| &ctx.scope)
     }
 
-    pub fn scope_mut(&mut self) -> RefMut<Scope> {
+    pub fn scope_mut(&self) -> RefMut<Scope> {
         self.inner_mut_map(|ctx| &mut ctx.scope)
     }
 
@@ -614,7 +618,9 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             ty,
             enum_base_ty,
             can_derive_debug,
-        })
+        })?;
+        self.emit_pending()?;
+        Ok(())
     }
 
     pub fn lookup_preproc(&self, key: &Ident) -> Option<(Option<Vec<DefineArg>>, DefineValue)> {
@@ -744,17 +750,93 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
         Guard(Rc::clone(&self.inner), patch_enabled)
     }
+
+    pub fn expect_unresolved_sym_dependency_guard(&mut self) -> impl Drop {
+        pub struct Guard(Rc<RefCell<InnerEmitContext>>);
+
+        impl Drop for Guard {
+            fn drop(&mut self) {
+                self.0.borrow_mut().sym_dependencies = None;
+            }
+        }
+
+        if self.inner().sym_dependencies.is_some() {
+            panic!("type dependencies already expected by something else")
+        }
+
+        self.inner_mut().sym_dependencies = Some(Vec::new());
+        Guard(Rc::clone(&self.inner))
+    }
+
+    pub fn emit_after_unresolved_sym_dependencies<T: Emit + 'static>(&self, emittable: T) -> bool {
+        let deps = self.inner().sym_dependencies.as_ref().unwrap().clone();
+        if !deps.is_empty() {
+            self.inner_mut()
+                .pending_emits
+                .push((deps, Some(Box::new(emittable))));
+            true
+        } else {
+            false
+        }
+    }
+
+    pub fn add_unresolved_sym_dependency(&self, ident: Ident) -> EmitResult {
+        if let Some(deps) = &mut self.inner_mut().sym_dependencies {
+            deps.push(ident);
+            Ok(())
+        } else {
+            Err(ParseErr::new(ident.span(), "unexpected unresolved type dependency").into())
+        }
+    }
+
+    pub fn emit_pending(&mut self) -> EmitResult {
+        let mut im = self.inner_mut();
+        let scope = Rc::clone(&im.scope.0);
+        let scope = scope.borrow();
+        let mut to_emit = Vec::new();
+        im.pending_emits.retain_mut(|(deps, emittable)| {
+            deps.retain(|dep| scope.lookup(dep).is_none());
+            if deps.is_empty() {
+                to_emit.push(emittable.take().unwrap());
+                false
+            } else {
+                true
+            }
+        });
+        drop(scope);
+        drop(im);
+        let mut ool = self.with_ool_output();
+        for e in to_emit {
+            e.emit(&mut ool)?;
+        }
+        Ok(())
+    }
+
+    pub fn flush_pending(&mut self) -> EmitResult {
+        assert!(self.inner().sym_dependencies.is_none());
+        let mut to_emit = Vec::new();
+        for (_, emittable) in self.inner_mut().pending_emits.iter_mut() {
+            to_emit.push(emittable.take().unwrap());
+        }
+        self.inner_mut().pending_emits.clear();
+        for e in to_emit {
+            e.emit(self)?;
+        }
+        Ok(())
+    }
 }
 
 impl Drop for EmitContext<'_, '_> {
     fn drop(&mut self) {
+        let module = self.module().to_string();
         self.flush_ool_output().unwrap();
         if self.top {
             self.inner
-                .borrow()
+                .borrow_mut()
                 .scope
-                .emit_opaque_structs_and_unions(self.output)
+                .emit_opaque_structs_and_unions(module, self.output)
                 .unwrap();
+            self.flush_pending().unwrap();
         }
     }
 }
@@ -960,42 +1042,43 @@ impl Scope {
         }
     }
 
-    pub fn emit_opaque_structs_and_unions(&self, f: &mut dyn Write) -> EmitResult {
+    pub fn emit_opaque_structs_and_unions(
+        &mut self,
+        module: String,
+        f: &mut dyn Write,
+    ) -> EmitResult {
         let scope = self.0.borrow();
+        let syms: Vec<(Ident, Option<DocComment>)> =
+            scope
+                .struct_syms
+                .iter()
+                .filter_map(|(s, d)| (!d).then_some((s.clone(), scope.struct_docs.get(s).cloned())))
+                .chain(scope.union_syms.iter().filter_map(|(s, d)| {
+                    (!d).then_some((s.clone(), scope.union_docs.get(s).cloned()))
+                }))
+                .collect();
+        drop(scope);
 
-        macro_rules! emit {
-            ($s:expr, $docs:expr) => {
-                if let Some(doc) = $docs.get($s) {
-                    for line in doc.to_string().lines() {
-                        writeln!(f, "///{}{}", if line.is_empty() { "" } else { " " }, line)?;
-                    }
+        for (ident, doc) in syms {
+            if let Some(doc) = doc {
+                for line in doc.to_string().lines() {
+                    writeln!(f, "///{}{}", if line.is_empty() { "" } else { " " }, line)?;
                 }
-                writeln!(f, "#[repr(C)]")?;
-                writeln!(f, "#[non_exhaustive]")?;
-                writeln!(
-                    f,
-                    "pub struct {} {{ _opaque: [::core::primitive::u8; 0] }}",
-                    $s.as_str()
-                )?;
-                writeln!(f)?;
-            };
-        }
-
-        for s in scope
-            .struct_syms
-            .iter()
-            .filter_map(|(s, d)| (!d).then_some(s))
-        {
-            emit!(s, scope.struct_docs);
-        }
-
-        for s in scope
-            .union_syms
-            .iter()
-            .filter_map(|(s, d)| (!d).then_some(s))
-        {
-            // opaque unions are emitted as opaque structs
-            emit!(s, scope.union_docs);
+            }
+            writeln!(f, "#[repr(C)]")?;
+            writeln!(f, "#[non_exhaustive]")?;
+            writeln!(
+                f,
+                "pub struct {ident} {{ _opaque: [::core::primitive::u8; 0] }}",
+            )?;
+            writeln!(f)?;
+            self.register_sym(Sym {
+                module: module.clone(),
+                ident: ident.clone(),
+                ty: None,
+                enum_base_ty: None,
+                can_derive_debug: false,
+            })?;
         }
 
         Ok(())

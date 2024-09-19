@@ -100,6 +100,20 @@ impl Type {
         }
     }
 
+    pub fn compatible_passing_to(&self, target: &Type) -> bool {
+        if self == target {
+            return true;
+        }
+        if let (TypeEnum::Primitive(src), TypeEnum::Primitive(dst)) = (&self.ty, &target.ty) {
+            return matches!(
+                (src, dst),
+                (PrimitiveType::Int, PrimitiveType::Int32T)
+                    | (PrimitiveType::Int32T, PrimitiveType::Int)
+            );
+        }
+        false
+    }
+
     pub fn strictly_left_aligned(&self) -> bool {
         self.ty.strictly_left_aligned()
     }

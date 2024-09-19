@@ -32,8 +32,6 @@ emit! {
 
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_FOURCC`
-
 #[cfg(doc)]
 emit! {
     // [sdl3-sys-gen] skipped function-like define `SDL_SINT64_C`
@@ -275,6 +273,8 @@ const _: () = ::core::assert!(
     (::core::mem::size_of::<::core::primitive::usize>()
         <= ::core::mem::size_of::<::core::ffi::c_ulonglong>())
 );
+
+// [sdl3-sys-gen] skipped function-like define `SDL_FOURCC`
 
 #[repr(C)]
 #[derive(Clone, Copy)]

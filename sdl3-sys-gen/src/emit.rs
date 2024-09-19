@@ -2,9 +2,9 @@ use crate::{
     common_ident_prefix,
     parse::{
         ArgDecl, Conditional, ConditionalExpr, Define, DocComment, DocCommentFile, Expr, FnAbi,
-        FnDeclArgs, FnPointer, Function, GetSpan, Ident, IdentOrKwT, Include, IntegerLiteral, Item,
-        Items, Literal, ParseErr, PreProcBlock, PrimitiveType, StructKind, StructOrUnion, Type,
-        TypeDef, TypeEnum,
+        FnDeclArgs, FnPointer, Function, GetSpan, IdentOrKwT, Include, IntegerLiteral, Item, Items,
+        Literal, ParseErr, PreProcBlock, PrimitiveType, StructKind, StructOrUnion, Type, TypeDef,
+        TypeEnum,
     },
 };
 use std::{
@@ -14,6 +14,7 @@ use std::{
     rc::Rc,
 };
 
+#[allow(unused_macros)]
 macro_rules! log_debug {
     ($ctx:expr, $($tt:tt)*) => {
         $ctx.log_debug(format_args!($($tt)*))?;
@@ -392,8 +393,11 @@ impl Emit for Define {
                         arg.ty.can_derive_debug(ctx),
                     )?;
                 }
+                let _guard = ctx.expect_unresolved_sym_dependency_guard();
                 if let Ok(Some(body)) = self.value.try_eval(ctx) {
                     body
+                } else if ctx.emit_after_unresolved_sym_dependencies(self.clone()) {
+                    return Ok(());
                 } else {
                     ctx.log_skipped("function-like define", self.ident.as_str())?;
                     return Ok(());
@@ -440,7 +444,7 @@ impl Emit for Define {
                     None,
                     false,
                 )?;
-                write!(ctx, "{f}")?;
+                writeln!(ctx, "{f}")?;
                 return Ok(());
             }
 
@@ -711,12 +715,18 @@ impl StructOrUnion {
 }
 
 impl Type {
-    pub fn is_c_enum(&self, ctx: &EmitContext) -> Option<Ident> {
+    pub fn is_c_enum(&self, ctx: &EmitContext) -> Result<Option<Sym>, EmitErr> {
         if let TypeEnum::Ident(ident) = &self.ty {
-            ctx.lookup_enum_sym(ident)
-        } else {
-            None
+            if let Some(sym) = ctx.lookup_sym(ident) {
+                if ctx.lookup_enum_sym(ident).is_some() {
+                    return Ok(Some(sym));
+                }
+            } else {
+                ctx.add_unresolved_sym_dependency(ident.clone())?;
+                return Err(ParseErr::new(ident.span(), "unresolved symbol").into());
+            }
         }
+        Ok(None)
     }
 
     pub fn conjure_primitive_value(&self) -> Option<Value> {
@@ -730,8 +740,8 @@ impl Type {
                     PrimitiveType::Uint8T => Value::U31(0),
                     PrimitiveType::Int16T => Value::I32(0),
                     PrimitiveType::Uint16T => Value::U31(0),
-                    PrimitiveType::Int32T => Value::I32(0),
-                    PrimitiveType::Uint32T => Value::U32(0),
+                    PrimitiveType::Int32T | PrimitiveType::Int => Value::I32(0),
+                    PrimitiveType::Uint32T | PrimitiveType::UnsignedInt => Value::U32(0),
                     PrimitiveType::Int64T => Value::I64(0),
                     PrimitiveType::Uint64T => Value::U64(0),
                     _ => return None,
@@ -922,6 +932,8 @@ impl Emit for TypeDef {
                 #[allow(clippy::unnecessary_literal_unwrap)]
                 let enum_rust_type = enum_rust_type.unwrap_or(Type::primitive(PrimitiveType::Int));
 
+                ctx.register_sym(self.ident.clone(), None, Some(enum_rust_type.clone()), true)?;
+
                 let enum_ident = self.ident.as_str();
                 writeln!(ctx, "#[repr(transparent)]")?;
                 writeln!(
@@ -998,8 +1010,6 @@ impl Emit for TypeDef {
                 drop(ctx_impl);
                 drop(ctx_global);
 
-                ctx.register_sym(self.ident.clone(), None, Some(enum_rust_type), true)?;
-
                 writeln!(ctx, "impl {enum_ident} {{")?;
                 ctx.increase_indent();
                 ctx.write_str(&impl_consts)?;
@@ -1007,6 +1017,7 @@ impl Emit for TypeDef {
                 writeln!(ctx, "}}")?;
                 ctx.write_str(&global_consts)?;
                 writeln!(ctx)?;
+                ctx.flush_ool_output()?;
                 Ok(())
             }
 

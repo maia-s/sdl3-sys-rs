@@ -20,6 +20,12 @@ impl<const ALLOW_KEYWORDS: bool> Display for IdentOrKwT<ALLOW_KEYWORDS> {
     }
 }
 
+impl From<Ident> for IdentOrKw {
+    fn from(value: Ident) -> Self {
+        Self { span: value.span }
+    }
+}
+
 impl TryFrom<IdentOrKw> for Ident {
     type Error = ParseErr;
     fn try_from(value: IdentOrKw) -> Result<Self, Self::Error> {

@@ -183,24 +183,24 @@ pub const fn SDL_DEFINE_PIXELFORMAT(
     bits: ::core::primitive::u32,
     bytes: ::core::primitive::u32,
 ) -> ::core::primitive::u32 {
-    (((((268435456_u32 | ((r#type) << 24)) | ((order) << 20)) | ((layout) << 16)) | ((bits) << 8))
-        | ((bytes) << 0))
+    (((((268435456_u32 | (r#type << 24)) | (order << 20)) | (layout << 16)) | (bits << 8))
+        | (bytes << 0))
 }
 
 pub const fn SDL_PIXELFLAG(X: ::core::primitive::i32) -> ::core::primitive::i32 {
-    (((X) << 28) & 15_i32)
+    ((X << 28) & 15_i32)
 }
 
 pub const fn SDL_PIXELTYPE(X: ::core::primitive::i32) -> ::core::primitive::i32 {
-    (((X) << 24) & 15_i32)
+    ((X << 24) & 15_i32)
 }
 
 pub const fn SDL_PIXELORDER(X: ::core::primitive::i32) -> ::core::primitive::i32 {
-    (((X) << 20) & 15_i32)
+    ((X << 20) & 15_i32)
 }
 
 pub const fn SDL_PIXELLAYOUT(X: ::core::primitive::i32) -> ::core::primitive::i32 {
-    (((X) << 16) & 15_i32)
+    ((X << 16) & 15_i32)
 }
 
 // [sdl3-sys-gen] skipped function-like define `SDL_BITSPERPIXEL`
@@ -755,23 +755,23 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 // [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_COLORSPACE`
 
 pub const fn SDL_COLORSPACETYPE(X: ::core::primitive::i32) -> SDL_ColorType {
-    SDL_ColorType((((X) << 28) & 15_i32))
+    SDL_ColorType(((X << 28) & 15_i32))
 }
 
 pub const fn SDL_COLORSPACERANGE(X: ::core::primitive::i32) -> SDL_ColorRange {
-    SDL_ColorRange((((X) << 24) & 15_i32))
+    SDL_ColorRange(((X << 24) & 15_i32))
 }
 
 pub const fn SDL_COLORSPACECHROMA(X: ::core::primitive::i32) -> SDL_ChromaLocation {
-    SDL_ChromaLocation((((X) << 20) & 15_i32))
+    SDL_ChromaLocation(((X << 20) & 15_i32))
 }
 
 pub const fn SDL_COLORSPACEPRIMARIES(X: ::core::primitive::i32) -> SDL_ColorPrimaries {
-    SDL_ColorPrimaries((((X) << 10) & 31_i32))
+    SDL_ColorPrimaries(((X << 10) & 31_i32))
 }
 
 pub const fn SDL_COLORSPACETRANSFER(X: ::core::primitive::i32) -> SDL_TransferCharacteristics {
-    SDL_TransferCharacteristics((((X) << 5) & 31_i32))
+    SDL_TransferCharacteristics(((X << 5) & 31_i32))
 }
 
 pub const fn SDL_COLORSPACEMATRIX(X: ::core::primitive::i32) -> SDL_MatrixCoefficients {

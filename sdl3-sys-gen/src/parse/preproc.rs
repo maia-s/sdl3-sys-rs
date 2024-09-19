@@ -70,6 +70,7 @@ impl DefineValue {
         matches!(self, Self::Empty)
     }
 
+    #[must_use]
     pub fn cast_expr(&self, ty: Type) -> Self {
         match self {
             DefineValue::Expr(expr) => DefineValue::Expr(Expr::Cast(Box::new(Cast {
@@ -77,6 +78,16 @@ impl DefineValue {
                 ty,
                 expr: expr.clone(),
             }))),
+            _ => todo!(),
+        }
+    }
+
+    #[must_use]
+    pub fn wrap_enum(&self, ty: Type) -> Self {
+        match self {
+            DefineValue::Expr(expr) => {
+                DefineValue::Expr(Expr::WrapEnum(Box::new(ty), Box::new(expr.clone())))
+            }
             _ => todo!(),
         }
     }
