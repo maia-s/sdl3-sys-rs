@@ -1031,7 +1031,19 @@ impl Eval for Expr {
                         };
 
                         match eval!(bop.lhs) {
-                            Value::U32(lhs) => Ok(Some(Value::U32(lhs $op shift))),
+                            Value::I32(lhs) => Ok(Some(Value::I32(lhs $op shift))),
+                            Value::U31(lhs) | Value::U32(lhs) => Ok(Some(Value::U32(lhs $op shift))),
+                            Value::I64(lhs) => Ok(Some(Value::I64(lhs $op shift))),
+                            Value::U63(lhs) | Value::U64(lhs) => Ok(Some(Value::U64(lhs $op shift))),
+                            Value::RustCode(lhs) => {
+                                let code = ctx.capture_output(|ctx| {
+                                    write!(ctx, "(")?;
+                                    bop.lhs.emit(ctx)?;
+                                    write!(ctx, " << {shift})")?;
+                                    Ok(())
+                                })?;
+                                Ok(Some(Value::RustCode(RustCode::boxed(code, lhs.ty, lhs.is_const, lhs.is_unsafe))))
+                            }
 
                             _ => Err(ParseErr::new(
                                 bop.lhs.span(),
