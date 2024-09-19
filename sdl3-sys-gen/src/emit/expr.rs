@@ -97,7 +97,7 @@ impl Value {
             Value::U64(_) => Type::primitive(PrimitiveType::Uint64T),
             Value::F32(_) => Type::primitive(PrimitiveType::Float),
             Value::F64(_) => Type::primitive(PrimitiveType::Double),
-            Value::Bool(_) => Type::primitive(PrimitiveType::Bool),
+            Value::Bool(_) => Type::bool(),
             Value::String(_) => Type::rust("&::core::ffi::CStr", true),
             Value::RustCode(r) => r.ty.clone(),
             Value::TargetDependent(_) => todo!(),
@@ -229,6 +229,18 @@ impl Value {
             | (_, Value::String(_) | Value::TargetDependent(_)) => Ok(Promoted::None),
 
             (Value::RustCode(lhv), Value::RustCode(rhv)) => {
+                if lhv.ty.is_c_enum(ctx).is_some() {
+                    if let Some(i) = lhs.coerce_to_int(ctx)? {
+                        *lhs = i;
+                        return Value::promote(ctx, lhs, rhs);
+                    }
+                }
+                if rhv.ty.is_c_enum(ctx).is_some() {
+                    if let Some(i) = rhs.coerce_to_int(ctx)? {
+                        *rhs = i;
+                        return Value::promote(ctx, lhs, rhs);
+                    }
+                }
                 if let Some(lt) = lhv.ty.inner_ty() {
                     if let Some(rt) = rhv.ty.inner_ty() {
                         if let (Some(mut lc), Some(mut rc)) =
@@ -269,6 +281,12 @@ impl Value {
                 }
             }
             (Value::RustCode(lhv), _) => {
+                if lhv.ty.is_c_enum(ctx).is_some() {
+                    if let Some(i) = lhs.coerce_to_int(ctx)? {
+                        *lhs = i;
+                        return Value::promote(ctx, lhs, rhs);
+                    }
+                }
                 if let Some(lt) = lhv.ty.inner_ty() {
                     if let Some(mut lc) = lt.conjure_primitive_value() {
                         match Value::promote(ctx, &mut lc, rhs)? {
@@ -295,6 +313,12 @@ impl Value {
                 }
             }
             (_, Value::RustCode(rhv)) => {
+                if rhv.ty.is_c_enum(ctx).is_some() {
+                    if let Some(i) = rhs.coerce_to_int(ctx)? {
+                        *rhs = i;
+                        return Value::promote(ctx, lhs, rhs);
+                    }
+                }
                 if let Some(rt) = rhv.ty.inner_ty() {
                     if let Some(mut rc) = rt.conjure_primitive_value() {
                         match Value::promote(ctx, lhs, &mut rc)? {
@@ -324,11 +348,40 @@ impl Value {
     }
 
     pub fn coerce(&self, ctx: &EmitContext, target: &Type) -> Result<Option<Value>, EmitErr> {
+        let target_bool = matches!(
+            target,
+            Type {
+                ty: TypeEnum::Primitive(PrimitiveType::Bool),
+                ..
+            }
+        );
         let mut is_string = false;
         let mut is_const = false;
         let mut is_unsafe = false;
 
         match self {
+            Value::I32(_)
+            | Value::U31(_)
+            | Value::U32(_)
+            | Value::I64(_)
+            | Value::U63(_)
+            | Value::U64(_) => {
+                if target_bool {
+                    let out = ctx.capture_output(|ctx| {
+                        write!(ctx, "(")?;
+                        self.emit(ctx)?;
+                        write!(ctx, " != 0)")?;
+                        Ok(())
+                    })?;
+                    return Ok(Some(Value::RustCode(RustCode::boxed(
+                        out,
+                        target.clone(),
+                        true,
+                        false,
+                    ))));
+                }
+            }
+
             Value::RustCode(rc) => {
                 if rc.ty.is_uninferred() {
                     rc.ty.resolve_to(target.clone());
@@ -337,11 +390,62 @@ impl Value {
                 is_string = ty == Type::rust("&::core::ffi::CStr", true);
                 is_const = rc.is_const;
                 is_unsafe = rc.is_unsafe;
+
+                if let Some(ident) = rc.ty.is_c_enum(ctx) {
+                    // coerce enums to their value type
+                    let Some(sym) = ctx.lookup_sym(&ident) else {
+                        unreachable!()
+                    };
+                    let Some(inner_ty) = &sym.enum_base_ty else {
+                        unreachable!()
+                    };
+                    if target_bool || target == inner_ty {
+                        let out = ctx.capture_output(|ctx| {
+                            write!(ctx, "(")?;
+                            self.emit(ctx)?;
+                            write!(ctx, ".0")?;
+                            if target_bool {
+                                write!(ctx, " != 0")?;
+                            }
+                            write!(ctx, ")")?;
+                            Ok(())
+                        })?;
+                        return Ok(Some(Value::RustCode(RustCode::boxed(
+                            out,
+                            target.clone(),
+                            is_const,
+                            is_unsafe,
+                        ))));
+                    }
+                } else if target_bool
+                    && !matches!(
+                        ty,
+                        Type {
+                            ty: TypeEnum::Primitive(PrimitiveType::Bool),
+                            ..
+                        }
+                    )
+                {
+                    let out = ctx.capture_output(|ctx| {
+                        write!(ctx, "(")?;
+                        self.emit(ctx)?;
+                        write!(ctx, " != 0)")?;
+                        Ok(())
+                    })?;
+                    return Ok(Some(Value::RustCode(RustCode::boxed(
+                        out,
+                        target.clone(),
+                        is_const,
+                        is_unsafe,
+                    ))));
+                }
             }
+
             Value::String(_) => {
                 is_string = true;
                 is_const = true
             }
+
             _ => (),
         }
 
@@ -364,6 +468,32 @@ impl Value {
             }
         }
 
+        Ok(None)
+    }
+
+    pub fn coerce_to_int(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        if let Self::RustCode(rc) = self {
+            if let Some(ident) = rc.ty.is_c_enum(ctx) {
+                // coerce enums to their value type
+                let Some(sym) = ctx.lookup_sym(&ident) else {
+                    return Ok(None);
+                };
+                let Some(inner_ty) = &sym.enum_base_ty else {
+                    unreachable!()
+                };
+                let out = ctx.capture_output(|ctx| {
+                    self.emit(ctx)?;
+                    write!(ctx, ".0")?;
+                    Ok(())
+                })?;
+                return Ok(Some(Value::RustCode(RustCode::boxed(
+                    out,
+                    inner_ty.clone(),
+                    rc.is_const,
+                    rc.is_unsafe,
+                ))));
+            }
+        }
         Ok(None)
     }
 }
@@ -773,14 +903,14 @@ impl Eval for Expr {
                             TypeEnum::Primitive(PrimitiveType::Bool) => {
                                 Ok(Some(Value::RustCode(RustCode::boxed(
                                     format!("!({})", rc.value),
-                                    Type::primitive(PrimitiveType::Bool),
+                                    Type::bool(),
                                     rc.is_const,
                                     rc.is_unsafe,
                                 ))))
                             }
                             TypeEnum::Primitive(_) => Ok(Some(Value::RustCode(RustCode::boxed(
                                 format!("(({}) != 0)", rc.value),
-                                Type::primitive(PrimitiveType::Bool),
+                                Type::bool(),
                                 rc.is_const,
                                 rc.is_unsafe,
                             )))),
@@ -975,22 +1105,21 @@ impl Eval for Expr {
                             (Value::F32(lhs), Value::F32(rhs)) => Ok(Some(Value::Bool(lhs $op rhs))),
                             (Value::F64(lhs), Value::F64(rhs)) => Ok(Some(Value::Bool(lhs $op rhs))),
                             (lhs, Value::RustCode(rhs)) => {
-                                if stringify!($op) == "==" {
-                                    if let Expr::Ident(ident) = &bop.rhs {
-                                        if ctx.lookup_sym(&ident.clone().try_into().unwrap()).is_some() {
-                                            let code = ctx.capture_output(|ctx| {
-                                                write!(ctx, "::core::matches!(")?;
-                                                lhs.emit(ctx)?;
-                                                write!(ctx, ", {rhs})")?;
-                                                Ok(())
-                                            })?;
-                                            return Ok(Some(Value::RustCode(RustCode::boxed(
-                                                code,
-                                                Type::primitive(PrimitiveType::Bool),
-                                                lhs.is_const(), lhs.is_unsafe()
-                                            ))))
+                                if matches!(op, "==" | "!=") && rhs.ty.is_c_enum(ctx).is_some() {
+                                    let code = ctx.capture_output(|ctx| {
+                                        if op == "!=" {
+                                            write!(ctx, "!")?;
                                         }
-                                    }
+                                        write!(ctx, "::core::matches!(")?;
+                                        lhs.emit(ctx)?;
+                                        write!(ctx, ", {rhs})")?;
+                                        Ok(())
+                                    })?;
+                                    return Ok(Some(Value::RustCode(RustCode::boxed(
+                                        code,
+                                        Type::bool(),
+                                        lhs.is_const(), lhs.is_unsafe()
+                                    ))))
                                 }
                                 let code = ctx.capture_output(|ctx| {
                                     write!(ctx, "(")?;
@@ -1000,19 +1129,35 @@ impl Eval for Expr {
                                 })?;
                                 Ok(Some(Value::RustCode(RustCode::boxed(
                                     code,
-                                    Type::primitive(PrimitiveType::Bool),
+                                    Type::bool(),
                                     lhs.is_const() && rhs.is_const,
                                     lhs.is_unsafe() || rhs.is_unsafe
                                 ))))
                             }
                             (Value::RustCode(lhs), rhs) => {
+                                if matches!(op, "==" | "!=") && lhs.ty.is_c_enum(ctx).is_some() {
+                                    let code = ctx.capture_output(|ctx| {
+                                        if op == "!=" {
+                                            write!(ctx, "!")?;
+                                        }
+                                        write!(ctx, "::core::matches!(")?;
+                                        rhs.emit(ctx)?;
+                                        write!(ctx, ", {lhs})")?;
+                                        Ok(())
+                                    })?;
+                                    return Ok(Some(Value::RustCode(RustCode::boxed(
+                                        code,
+                                        Type::bool(),
+                                        rhs.is_const(), rhs.is_unsafe()
+                                    ))))
+                                }
                                 let code = ctx.capture_output(|ctx| {
                                     write!(ctx, "({lhs} {op} ")?;
                                     rhs.emit(ctx)?;
                                     write!(ctx, ")")?;
                                     Ok(())
                                 })?;
-                                Ok(Some(Value::RustCode(RustCode::boxed(code, Type::primitive(PrimitiveType::Bool), lhs.is_const && rhs.is_const(), lhs.is_unsafe||rhs.is_unsafe()))))
+                                Ok(Some(Value::RustCode(RustCode::boxed(code, Type::bool(), lhs.is_const && rhs.is_const(), lhs.is_unsafe||rhs.is_unsafe()))))
                             }
                             _ => Err(ParseErr::new(bop.span(), format!("invalid operands to `{op}`")).into()),
                         }
@@ -1030,7 +1175,9 @@ impl Eval for Expr {
                             .into());
                         };
 
-                        match eval!(bop.lhs) {
+                        let lhs = eval!(bop.lhs);
+                        let lhs = lhs.coerce_to_int(ctx)?.unwrap_or(lhs);
+                        match lhs {
                             Value::I32(lhs) => Ok(Some(Value::I32(lhs $op shift))),
                             Value::U31(lhs) | Value::U32(lhs) => Ok(Some(Value::U32(lhs $op shift))),
                             Value::I64(lhs) => Ok(Some(Value::I64(lhs $op shift))),
@@ -1083,6 +1230,8 @@ impl Eval for Expr {
                             }
                         } else if let Value::RustCode(_) = lhs {
                             let rhs = eval!(bop.rhs);
+                            let lhs = lhs.coerce(ctx, &Type::bool())?.unwrap_or(lhs);
+                            let rhs = rhs.coerce(ctx, &Type::bool())?.unwrap_or(rhs);
                             let out = ctx.capture_output(|ctx| {
                                 write!(ctx, "(")?;
                                 lhs.emit(ctx)?;
@@ -1093,7 +1242,7 @@ impl Eval for Expr {
                             })?;
                             Ok(Some(Value::RustCode(RustCode::boxed(
                                 out,
-                                Type::primitive(PrimitiveType::Bool),
+                                Type::bool(),
                                 lhs.is_const() && rhs.is_const(),
                                 lhs.is_unsafe() || rhs.is_unsafe(),
                             ))))
@@ -1123,6 +1272,8 @@ impl Eval for Expr {
                             }
                         } else if let Value::RustCode(_) = lhs {
                             let rhs = eval!(bop.rhs);
+                            let lhs = lhs.coerce(ctx, &Type::bool())?.unwrap_or(lhs);
+                            let rhs = rhs.coerce(ctx, &Type::bool())?.unwrap_or(rhs);
                             let out = ctx.capture_output(|ctx| {
                                 write!(ctx, "(")?;
                                 lhs.emit(ctx)?;
@@ -1133,7 +1284,7 @@ impl Eval for Expr {
                             })?;
                             Ok(Some(Value::RustCode(RustCode::boxed(
                                 out,
-                                Type::primitive(PrimitiveType::Bool),
+                                Type::bool(),
                                 lhs.is_const() && rhs.is_const(),
                                 lhs.is_unsafe() || rhs.is_unsafe(),
                             ))))

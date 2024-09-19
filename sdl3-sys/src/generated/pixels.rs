@@ -176,15 +176,32 @@ pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_101010
 
 // [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_PIXELFOURCC`
 
-// [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_PIXELFORMAT`
+pub const fn SDL_DEFINE_PIXELFORMAT(
+    r#type: ::core::primitive::u32,
+    order: ::core::primitive::u32,
+    layout: ::core::primitive::u32,
+    bits: ::core::primitive::u32,
+    bytes: ::core::primitive::u32,
+) -> ::core::primitive::u32 {
+    (((((268435456_u32 | ((r#type) << 24)) | ((order) << 20)) | ((layout) << 16)) | ((bits) << 8))
+        | ((bytes) << 0))
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_PIXELFLAG`
+pub const fn SDL_PIXELFLAG(X: ::core::primitive::i32) -> ::core::primitive::i32 {
+    (((X) << 28) & 15_i32)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_PIXELTYPE`
+pub const fn SDL_PIXELTYPE(X: ::core::primitive::i32) -> ::core::primitive::i32 {
+    (((X) << 24) & 15_i32)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_PIXELORDER`
+pub const fn SDL_PIXELORDER(X: ::core::primitive::i32) -> ::core::primitive::i32 {
+    (((X) << 20) & 15_i32)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_PIXELLAYOUT`
+pub const fn SDL_PIXELLAYOUT(X: ::core::primitive::i32) -> ::core::primitive::i32 {
+    (((X) << 16) & 15_i32)
+}
 
 // [sdl3-sys-gen] skipped function-like define `SDL_BITSPERPIXEL`
 
@@ -202,7 +219,9 @@ pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_101010
 
 // [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_FLOAT`
 
-// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_FOURCC`
+pub const fn SDL_ISPIXELFORMAT_FOURCC(format: ::core::primitive::i32) -> ::core::primitive::bool {
+    ((format != 0) && (SDL_PIXELFLAG(format) != 1_i32))
+}
 
 /// Pixel format.
 ///
@@ -735,38 +754,52 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 
 // [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_COLORSPACE`
 
-// [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACETYPE`
+pub const fn SDL_COLORSPACETYPE(X: ::core::primitive::i32) -> SDL_ColorType {
+    SDL_ColorType((((X) << 28) & 15_i32))
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACERANGE`
+pub const fn SDL_COLORSPACERANGE(X: ::core::primitive::i32) -> SDL_ColorRange {
+    SDL_ColorRange((((X) << 24) & 15_i32))
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACECHROMA`
+pub const fn SDL_COLORSPACECHROMA(X: ::core::primitive::i32) -> SDL_ChromaLocation {
+    SDL_ChromaLocation((((X) << 20) & 15_i32))
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACEPRIMARIES`
+pub const fn SDL_COLORSPACEPRIMARIES(X: ::core::primitive::i32) -> SDL_ColorPrimaries {
+    SDL_ColorPrimaries((((X) << 10) & 31_i32))
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_COLORSPACETRANSFER`
+pub const fn SDL_COLORSPACETRANSFER(X: ::core::primitive::i32) -> SDL_TransferCharacteristics {
+    SDL_TransferCharacteristics((((X) << 5) & 31_i32))
+}
 
 pub const fn SDL_COLORSPACEMATRIX(X: ::core::primitive::i32) -> SDL_MatrixCoefficients {
     SDL_MatrixCoefficients((X & 31_i32))
 }
 
 pub const fn SDL_ISCOLORSPACE_MATRIX_BT601(X: ::core::primitive::i32) -> ::core::primitive::bool {
-    (::core::matches!(SDL_COLORSPACEMATRIX(X), SDL_MATRIX_COEFFICIENTS_BT601)
-        || ::core::matches!(SDL_COLORSPACEMATRIX(X), SDL_MATRIX_COEFFICIENTS_BT470BG))
+    ((SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT601.0)
+        || (SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT470BG.0))
 }
 
 pub const fn SDL_ISCOLORSPACE_MATRIX_BT709(X: ::core::primitive::i32) -> ::core::primitive::bool {
-    ::core::matches!(SDL_COLORSPACEMATRIX(X), SDL_MATRIX_COEFFICIENTS_BT709)
+    (SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT709.0)
 }
 
 pub const fn SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(
     X: ::core::primitive::i32,
 ) -> ::core::primitive::bool {
-    ::core::matches!(SDL_COLORSPACEMATRIX(X), SDL_MATRIX_COEFFICIENTS_BT2020_NCL)
+    (SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT2020_NCL.0)
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_ISCOLORSPACE_LIMITED_RANGE`
+pub const fn SDL_ISCOLORSPACE_LIMITED_RANGE(X: ::core::primitive::i32) -> ::core::primitive::bool {
+    (SDL_COLORSPACERANGE(X).0 != SDL_COLOR_RANGE_FULL.0)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_ISCOLORSPACE_FULL_RANGE`
+pub const fn SDL_ISCOLORSPACE_FULL_RANGE(X: ::core::primitive::i32) -> ::core::primitive::bool {
+    (SDL_COLORSPACERANGE(X).0 == SDL_COLOR_RANGE_FULL.0)
+}
 
 /// Colorspace definitions.
 ///

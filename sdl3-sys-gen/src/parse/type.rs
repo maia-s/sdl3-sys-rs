@@ -29,7 +29,11 @@ impl GetSpan for Type {
 impl Type {
     pub fn inner_ty(&self) -> Option<Self> {
         if let TypeEnum::Infer(i) = &self.ty {
-            i.borrow().as_ref().cloned()
+            if let Some(ty) = &*i.borrow() {
+                ty.inner_ty()
+            } else {
+                None
+            }
         } else {
             Some(self.clone())
         }
@@ -49,6 +53,10 @@ impl Type {
             is_const: false,
             ty: TypeEnum::Primitive(primitive),
         }
+    }
+
+    pub fn bool() -> Self {
+        Self::primitive(PrimitiveType::Bool)
     }
 
     pub fn ident(ident: Ident) -> Self {

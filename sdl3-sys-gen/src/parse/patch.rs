@@ -12,16 +12,29 @@ pub fn patch_parsed_define(ctx: &ParseContext, define: &mut Define) -> Result<bo
 
 type DefinePatch = Patch<Define>;
 
-const DEFINE_PATCHES: &[Patch<Define>] = &[DefinePatch {
-    module: Some("joystick"),
-    match_ident: |i| i.starts_with("SDL_HAT_"),
-    patch: |_ctx, define| {
-        define.value = define
-            .value
-            .cast_expr(Type::primitive(PrimitiveType::Uint8T));
-        Ok(true)
+const DEFINE_PATCHES: &[Patch<Define>] = &[
+    DefinePatch {
+        module: Some("joystick"),
+        match_ident: |i| i.starts_with("SDL_HAT_"),
+        patch: |_ctx, define| {
+            define.value = define
+                .value
+                .cast_expr(Type::primitive(PrimitiveType::Uint8T));
+            Ok(true)
+        },
     },
-}];
+    DefinePatch {
+        module: Some("pixels"),
+        match_ident: |i| matches!(i, "SDL_ISPIXELFORMAT_FOURCC" /*| "SDL_PIXELFLAG"*/),
+        patch: |_ctx, define| {
+            let Some(args) = &mut define.args else {
+                unreachable!()
+            };
+            //args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
+            Ok(true)
+        },
+    },
+];
 
 pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {
     #[allow(clippy::single_match)]

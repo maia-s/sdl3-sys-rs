@@ -385,7 +385,12 @@ impl Emit for Define {
                         ctx.log_skipped("function-like define", self.ident.as_str())?;
                         return Ok(());
                     };
-                    ctx.register_sym(ident, Some(arg.ty.clone()), arg.ty.can_derive_debug(ctx))?;
+                    ctx.register_sym(
+                        ident,
+                        Some(arg.ty.clone()),
+                        None,
+                        arg.ty.can_derive_debug(ctx),
+                    )?;
                 }
                 if let Ok(Some(body)) = self.value.try_eval(ctx) {
                     body
@@ -432,6 +437,7 @@ impl Emit for Define {
                         body.is_const(),
                         body.is_unsafe(),
                     )),
+                    None,
                     false,
                 )?;
                 write!(ctx, "{f}")?;
@@ -451,6 +457,7 @@ impl Emit for Define {
                 ctx.register_sym(
                     self.ident.clone().try_into().unwrap(),
                     Some(ty.clone()),
+                    None,
                     ty.can_derive_debug(ctx),
                 )?;
                 self.doc.emit(ctx)?;
@@ -507,6 +514,7 @@ impl Emit for Function {
                     false,
                     true,
                 )),
+                None,
                 false,
             )?;
             emit_extern_start(ctx, &self.abi, false)?;
@@ -839,7 +847,7 @@ impl Emit for TypeDef {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match &self.ty.ty {
             TypeEnum::Primitive(_) => {
-                ctx.register_sym(self.ident.clone(), None, true)?;
+                ctx.register_sym(self.ident.clone(), None, None, true)?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type ")?;
                 self.ident.emit(ctx)?;
@@ -854,7 +862,12 @@ impl Emit for TypeDef {
                 let sym = ctx.lookup_sym(sym).ok_or_else(|| {
                     ParseErr::new(sym.span(), format!("`{}` not defined", sym.as_str()))
                 })?;
-                ctx.register_sym(self.ident.clone(), None, sym.can_derive_debug)?;
+                ctx.register_sym(
+                    self.ident.clone(),
+                    None,
+                    sym.enum_base_ty,
+                    sym.can_derive_debug,
+                )?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type ")?;
                 self.ident.emit(ctx)?;
@@ -866,8 +879,6 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Enum(e) => {
-                ctx.register_sym(self.ident.clone(), None, true)?;
-
                 if let Some(ident) = &e.ident {
                     ctx.scope_mut().register_enum_sym(ident.clone())?;
                 }
@@ -909,7 +920,7 @@ impl Emit for TypeDef {
                 }
 
                 #[allow(clippy::unnecessary_literal_unwrap)]
-                let enum_rust_type = enum_rust_type.unwrap_or("::core::ffi::c_int");
+                let enum_rust_type = enum_rust_type.unwrap_or(Type::primitive(PrimitiveType::Int));
 
                 let enum_ident = self.ident.as_str();
                 writeln!(ctx, "#[repr(transparent)]")?;
@@ -921,7 +932,9 @@ impl Emit for TypeDef {
                     ctx,
                     r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
                 )?;
-                writeln!(ctx, "pub struct {enum_ident}(pub {enum_rust_type});")?;
+                write!(ctx, "pub struct {enum_ident}(pub ")?;
+                enum_rust_type.emit(ctx)?;
+                writeln!(ctx, ");")?;
 
                 let mut impl_consts = String::new();
                 let mut ctx_impl = ctx.with_output(&mut impl_consts);
@@ -933,6 +946,7 @@ impl Emit for TypeDef {
                     ctx.register_sym(
                         variant.ident.clone(),
                         Some(Type::ident(self.ident.clone())),
+                        None,
                         true,
                     )?;
 
@@ -984,6 +998,8 @@ impl Emit for TypeDef {
                 drop(ctx_impl);
                 drop(ctx_global);
 
+                ctx.register_sym(self.ident.clone(), None, Some(enum_rust_type), true)?;
+
                 writeln!(ctx, "impl {enum_ident} {{")?;
                 ctx.increase_indent();
                 ctx.write_str(&impl_consts)?;
@@ -995,7 +1011,7 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Struct(s) => {
-                ctx.register_sym(self.ident.clone(), None, s.can_derive_debug(ctx))?;
+                ctx.register_sym(self.ident.clone(), None, None, s.can_derive_debug(ctx))?;
 
                 s.emit_with_doc_and_ident(ctx, self.doc.clone(), false)?;
                 ctx.flush_ool_output()?;
@@ -1015,7 +1031,7 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Pointer(_) => {
-                ctx.register_sym(self.ident.clone(), None, true)?;
+                ctx.register_sym(self.ident.clone(), None, None, true)?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type {} = ", self.ident.as_str())?;
                 self.ty.emit(ctx)?;
@@ -1025,13 +1041,13 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Array(_, _) => {
-                ctx.register_sym(self.ident.clone(), None, true)?;
+                ctx.register_sym(self.ident.clone(), None, None, true)?;
                 self.doc.emit(ctx)?;
                 todo!()
             }
 
             TypeEnum::FnPointer(f) => {
-                ctx.register_sym(self.ident.clone(), None, true)?;
+                ctx.register_sym(self.ident.clone(), None, None, true)?;
                 self.doc.emit(ctx)?;
                 write!(
                     ctx,
@@ -1052,13 +1068,13 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::DotDotDot => {
-                ctx.register_sym(self.ident.clone(), None, false)?;
+                ctx.register_sym(self.ident.clone(), None, None, false)?;
                 self.doc.emit(ctx)?;
                 todo!()
             }
 
             TypeEnum::Rust(r, can_derive_debug) => {
-                ctx.register_sym(self.ident.clone(), None, *can_derive_debug)?;
+                ctx.register_sym(self.ident.clone(), None, None, *can_derive_debug)?;
                 writeln!(ctx, "pub type {} = {r};", self.ident.as_str())?;
                 Ok(())
             }

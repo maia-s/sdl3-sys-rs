@@ -604,6 +604,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         &mut self,
         ident: Ident,
         ty: Option<Type>,
+        enum_base_ty: Option<Type>,
         can_derive_debug: bool,
     ) -> EmitResult {
         let module = self.inner().module.clone();
@@ -611,6 +612,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             module,
             ident,
             ty,
+            enum_base_ty,
             can_derive_debug,
         })
     }
@@ -919,6 +921,7 @@ pub struct Sym {
     pub module: String,
     pub ident: Ident,
     pub ty: Option<Type>,
+    pub enum_base_ty: Option<Type>,
     pub can_derive_debug: bool,
 }
 
