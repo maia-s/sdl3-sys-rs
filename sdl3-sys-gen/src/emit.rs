@@ -14,6 +14,12 @@ use std::{
     rc::Rc,
 };
 
+macro_rules! log_debug {
+    ($ctx:expr, $($tt:tt)*) => {
+        $ctx.log_debug(format_args!($($tt)*))?;
+    };
+}
+
 mod expr;
 pub use expr::Value;
 mod patch;

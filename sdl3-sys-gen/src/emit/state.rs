@@ -6,7 +6,7 @@ use crate::{
     },
     Gen,
 };
-use core::mem;
+use core::{fmt::Display, mem};
 use std::{
     cell::{Ref, RefCell, RefMut},
     collections::{BTreeMap, BTreeSet, HashMap, HashSet},
@@ -171,6 +171,7 @@ pub struct InnerEmitContext {
     preproc_eval_mode: usize,
     emitted_file_doc: bool,
     patch_enabled: bool,
+    log_debug_enabled: bool,
 }
 
 impl<'a, 'b> EmitContext<'a, 'b> {
@@ -334,6 +335,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                 preproc_eval_mode: 0,
                 emitted_file_doc: false,
                 patch_enabled: true,
+                log_debug_enabled: false,
             })),
             output,
             indent: 0,
@@ -389,6 +391,28 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         writeln!(self, "// [sdl3-sys-gen] skipped {what} `{ident}`")?;
         writeln!(self)?;
         Ok(())
+    }
+
+    pub fn log_debug(&self, what: impl Display) -> EmitResult {
+        if self.inner().log_debug_enabled {
+            eprintln!("[sdl3-sys-gen][debug] {what}");
+        }
+        Ok(())
+    }
+
+    pub fn set_debug_log_guard(&self, enable: bool) -> impl Drop {
+        pub struct Guard(Rc<RefCell<InnerEmitContext>>, bool);
+
+        impl Drop for Guard {
+            fn drop(&mut self) {
+                self.0.borrow_mut().log_debug_enabled = self.1;
+            }
+        }
+
+        let was_enabled = self.inner().log_debug_enabled;
+        self.inner_mut().log_debug_enabled = enable;
+
+        Guard(Rc::clone(&self.inner), was_enabled)
     }
 
     pub fn into_inner(self) -> InnerEmitContext {
