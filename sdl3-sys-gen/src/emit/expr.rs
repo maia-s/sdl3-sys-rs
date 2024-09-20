@@ -1480,6 +1480,9 @@ impl Eval for FnCall {
                     f.is_const,
                     f.is_unsafe,
                 ))));
+            } else {
+                ctx.add_unresolved_sym_dependency(ident.clone().try_into().unwrap())?;
+                return Ok(None);
             }
         }
 

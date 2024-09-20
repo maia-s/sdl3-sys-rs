@@ -168,8 +168,6 @@ extern "C" {
     ) -> SDL_AssertState;
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_AssertBreakpoint`
-
 // [sdl3-sys-gen] skipped function-like define `SDL_enabled_assert`
 
 #[cfg(doc)]
@@ -242,8 +240,6 @@ emit! {
     }
 
 }
-
-// [sdl3-sys-gen] skipped function-like define `SDL_assert_always`
 
 /// A callback that fires when an SDL assertion fails.
 ///
@@ -369,3 +365,7 @@ extern "C" {
     /// \sa SDL_GetAssertionReport
     pub fn SDL_ResetAssertionReport();
 }
+
+// [sdl3-sys-gen] skipped function-like define `SDL_AssertBreakpoint`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_assert_always`

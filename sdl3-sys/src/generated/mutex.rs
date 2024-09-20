@@ -4,42 +4,6 @@ use super::stdinc::*;
 
 use super::error::*;
 
-// [sdl3-sys-gen] skipped function-like define `SDL_CAPABILITY`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_GUARDED_BY`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_PT_GUARDED_BY`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_ACQUIRED_BEFORE`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_ACQUIRED_AFTER`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_REQUIRES`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_REQUIRES_SHARED`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_ACQUIRE`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_ACQUIRE_SHARED`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_RELEASE`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_RELEASE_SHARED`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_RELEASE_GENERIC`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_TRY_ACQUIRE`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_TRY_ACQUIRE_SHARED`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_EXCLUDES`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_ASSERT_CAPABILITY`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_ASSERT_SHARED_CAPABILITY`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_RETURN_CAPABILITY`
-
 extern "C" {
     /// Create a new mutex.
     ///
@@ -664,3 +628,39 @@ pub struct SDL_RWLock {
 pub struct SDL_Semaphore {
     _opaque: [::core::primitive::u8; 0],
 }
+
+// [sdl3-sys-gen] skipped function-like define `SDL_CAPABILITY`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_GUARDED_BY`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_PT_GUARDED_BY`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ACQUIRED_BEFORE`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ACQUIRED_AFTER`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_REQUIRES`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_REQUIRES_SHARED`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ACQUIRE`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ACQUIRE_SHARED`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_RELEASE`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_RELEASE_SHARED`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_RELEASE_GENERIC`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_TRY_ACQUIRE`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_TRY_ACQUIRE_SHARED`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_EXCLUDES`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ASSERT_CAPABILITY`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_ASSERT_SHARED_CAPABILITY`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_RETURN_CAPABILITY`

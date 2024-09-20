@@ -174,8 +174,6 @@ pub const SDL_PACKEDLAYOUT_8888: SDL_PackedLayout = SDL_PackedLayout::_8888;
 pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout::_2101010;
 pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_1010102;
 
-// [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_PIXELFOURCC`
-
 pub const fn SDL_DEFINE_PIXELFORMAT(
     r#type: ::core::primitive::u32,
     order: ::core::primitive::u32,
@@ -206,18 +204,6 @@ pub const fn SDL_PIXELLAYOUT(X: ::core::primitive::i32) -> ::core::primitive::i3
 // [sdl3-sys-gen] skipped function-like define `SDL_BITSPERPIXEL`
 
 // [sdl3-sys-gen] skipped function-like define `SDL_BYTESPERPIXEL`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_INDEXED`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_PACKED`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_ARRAY`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_ALPHA`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_10BIT`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_ISPIXELFORMAT_FLOAT`
 
 pub const fn SDL_ISPIXELFORMAT_FOURCC(format: ::core::primitive::i32) -> ::core::primitive::bool {
     ((format != 0) && (SDL_PIXELFLAG(format) != 1_i32))
@@ -412,6 +398,50 @@ pub const SDL_PIXELFORMAT_NV21: SDL_PixelFormat = SDL_PixelFormat::NV21;
 pub const SDL_PIXELFORMAT_P010: SDL_PixelFormat = SDL_PixelFormat::P010;
 /// Android video texture format
 pub const SDL_PIXELFORMAT_EXTERNAL_OES: SDL_PixelFormat = SDL_PixelFormat::EXTERNAL_OES;
+
+pub const fn SDL_ISPIXELFORMAT_INDEXED(format: ::core::primitive::i32) -> ::core::primitive::bool {
+    (!(SDL_ISPIXELFORMAT_FOURCC(format))
+        && ((((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX1.0)
+            || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX2.0))
+            || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX4.0))
+            || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX8.0)))
+}
+
+pub const fn SDL_ISPIXELFORMAT_PACKED(format: ::core::primitive::i32) -> ::core::primitive::bool {
+    (!(SDL_ISPIXELFORMAT_FOURCC(format))
+        && (((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED8.0)
+            || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED16.0))
+            || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32.0)))
+}
+
+pub const fn SDL_ISPIXELFORMAT_ARRAY(format: ::core::primitive::i32) -> ::core::primitive::bool {
+    (!(SDL_ISPIXELFORMAT_FOURCC(format))
+        && (((((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU8.0)
+            || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU16.0))
+            || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU32.0))
+            || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16.0))
+            || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32.0)))
+}
+
+pub const fn SDL_ISPIXELFORMAT_10BIT(format: ::core::primitive::i32) -> ::core::primitive::bool {
+    (!(SDL_ISPIXELFORMAT_FOURCC(format))
+        && ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32.0)
+            && (SDL_PIXELLAYOUT(format) == SDL_PACKEDLAYOUT_2101010.0)))
+}
+
+pub const fn SDL_ISPIXELFORMAT_FLOAT(format: ::core::primitive::i32) -> ::core::primitive::bool {
+    (!(SDL_ISPIXELFORMAT_FOURCC(format))
+        && ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16.0)
+            || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32.0)))
+}
+
+pub const fn SDL_ISPIXELFORMAT_ALPHA(format: ::core::primitive::i32) -> ::core::primitive::bool {
+    (SDL_ISPIXELFORMAT_PACKED(format)
+        && ((((SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB.0)
+            || (SDL_PIXELORDER(format) == SDL_PACKEDORDER_RGBA.0))
+            || (SDL_PIXELORDER(format) == SDL_PACKEDORDER_ABGR.0))
+            || (SDL_PIXELORDER(format) == SDL_PACKEDORDER_BGRA.0)))
+}
 
 #[cfg(target_endian = "big")]
 emit! {
@@ -1250,3 +1280,5 @@ extern "C" {
         a: *mut Uint8,
     );
 }
+
+// [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_PIXELFOURCC`

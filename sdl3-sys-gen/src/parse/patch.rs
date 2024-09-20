@@ -1,4 +1,4 @@
-use super::{Cast, Define, Expr, GetSpan, ParseContext, ParseErr, PrimitiveType, Type};
+use super::{Cast, Define, Expr, GetSpan, Ident, ParseContext, ParseErr, PrimitiveType, Type};
 
 struct Patch<T: ?Sized> {
     module: Option<&'static str>,

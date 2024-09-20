@@ -6,8 +6,6 @@
 
 pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
 
-// [sdl3-sys-gen] skipped function-like define `SDL_HAS_BUILTIN`
-
 // [sdl3-sys-gen] skipped function-like define `SDL_arraysize`
 
 // [sdl3-sys-gen] skipped function-like define `SDL_STRINGIFY_ARG`
@@ -357,10 +355,6 @@ pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {
     }
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_stack_alloc`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_stack_free`
-
 extern "C" {
     /// Allocate uninitialized memory.
     ///
@@ -686,6 +680,12 @@ extern "C" {
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_GetNumAllocations() -> ::core::ffi::c_int;
+}
+
+// [sdl3-sys-gen] skipped function-like define `SDL_stack_alloc`
+
+pub unsafe fn SDL_stack_free(data: *mut ::core::ffi::c_void) {
+    unsafe { SDL_free(data) }
 }
 
 extern "C" {
@@ -4084,3 +4084,5 @@ pub struct SDL_Environment {
 pub struct SDL_iconv_data_t {
     _opaque: [::core::primitive::u8; 0],
 }
+
+// [sdl3-sys-gen] skipped function-like define `SDL_HAS_BUILTIN`

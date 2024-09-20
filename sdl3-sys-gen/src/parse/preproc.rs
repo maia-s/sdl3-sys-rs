@@ -126,7 +126,6 @@ impl Parse for DefineValue {
             } else if let Some(ty) = ty {
                 Ok((input.end(), Some(Self::Type(ty))))
             } else {
-                dbg!(input);
                 panic!()
             }
         }

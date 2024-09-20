@@ -175,7 +175,6 @@ impl Emit for Item {
                     )?;
                     Ok(())
                 } else {
-                    dbg!(s);
                     todo!()
                 }
             }
@@ -716,9 +715,13 @@ impl StructOrUnion {
 
 impl Type {
     pub fn is_c_enum(&self, ctx: &EmitContext) -> Result<Option<Sym>, EmitErr> {
-        if let TypeEnum::Ident(ident) = &self.ty {
-            if let Some(sym) = ctx.lookup_sym(ident) {
-                if ctx.lookup_enum_sym(ident).is_some() {
+        if let Some(Type {
+            ty: TypeEnum::Ident(ident),
+            ..
+        }) = self.inner_ty()
+        {
+            if let Some(sym) = ctx.lookup_sym(&ident) {
+                if ctx.lookup_enum_sym(&ident).is_some() {
                     return Ok(Some(sym));
                 }
             } else {
