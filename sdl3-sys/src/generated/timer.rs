@@ -16,18 +16,21 @@ pub const SDL_NS_PER_US: ::core::primitive::i32 = 1000;
 
 // [sdl3-sys-gen] skipped function-like define `SDL_SECONDS_TO_NS`
 
+#[inline(always)]
 pub const fn SDL_NS_TO_SECONDS(NS: ::core::primitive::i64) -> ::core::primitive::i64 {
     (NS / 1000000000_i64)
 }
 
 // [sdl3-sys-gen] skipped function-like define `SDL_MS_TO_NS`
 
+#[inline(always)]
 pub const fn SDL_NS_TO_MS(NS: ::core::primitive::i32) -> ::core::primitive::i32 {
     (NS / 1000000_i32)
 }
 
 // [sdl3-sys-gen] skipped function-like define `SDL_US_TO_NS`
 
+#[inline(always)]
 pub const fn SDL_NS_TO_US(NS: ::core::primitive::i32) -> ::core::primitive::i32 {
     (NS / 1000_i32)
 }

@@ -226,12 +226,14 @@ pub const SDL_WINDOW_NOT_FOCUSABLE: ::core::primitive::u64 = 2147483648_u64;
 /// \since This macro is available since SDL 3.0.0.
 pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376_u32;
 
+#[inline(always)]
 pub const fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: ::core::primitive::u32) -> ::core::primitive::u32 {
     (536805376_u32 | X)
 }
 
 pub const SDL_WINDOWPOS_UNDEFINED: ::core::primitive::u32 = SDL_WINDOWPOS_UNDEFINED_DISPLAY(0);
 
+#[inline(always)]
 pub const fn SDL_WINDOWPOS_ISUNDEFINED(X: ::core::primitive::u32) -> ::core::primitive::bool {
     ((X & 4294901760_u32) == 536805376_u32)
 }
@@ -241,12 +243,14 @@ pub const fn SDL_WINDOWPOS_ISUNDEFINED(X: ::core::primitive::u32) -> ::core::pri
 /// \since This macro is available since SDL 3.0.0.
 pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 
+#[inline(always)]
 pub const fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: ::core::primitive::u32) -> ::core::primitive::u32 {
     (805240832_u32 | X)
 }
 
 pub const SDL_WINDOWPOS_CENTERED: ::core::primitive::u32 = SDL_WINDOWPOS_CENTERED_DISPLAY(0);
 
+#[inline(always)]
 pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::primitive::u32) -> ::core::primitive::bool {
     ((X & 4294901760_u32) == 805240832_u32)
 }

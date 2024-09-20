@@ -171,6 +171,7 @@ pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 /// \threadsafety It is safe to call this macro from any thread.
 ///
 /// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
 pub const fn SDL_AUDIO_BITSIZE(x: ::core::primitive::u32) -> ::core::primitive::u32 {
     (x & 255_u32)
 }
@@ -185,6 +186,7 @@ pub const fn SDL_AUDIO_BITSIZE(x: ::core::primitive::u32) -> ::core::primitive::
 /// \threadsafety It is safe to call this macro from any thread.
 ///
 /// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
 pub const fn SDL_AUDIO_BYTESIZE(x: ::core::primitive::u32) -> ::core::primitive::u32 {
     (SDL_AUDIO_BITSIZE(x) / 8_u32)
 }
@@ -199,6 +201,7 @@ pub const fn SDL_AUDIO_BYTESIZE(x: ::core::primitive::u32) -> ::core::primitive:
 /// \threadsafety It is safe to call this macro from any thread.
 ///
 /// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
 pub const fn SDL_AUDIO_ISFLOAT(x: ::core::primitive::u32) -> ::core::primitive::u32 {
     (x & 256_u32)
 }
@@ -213,6 +216,7 @@ pub const fn SDL_AUDIO_ISFLOAT(x: ::core::primitive::u32) -> ::core::primitive::
 /// \threadsafety It is safe to call this macro from any thread.
 ///
 /// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
 pub const fn SDL_AUDIO_ISBIGENDIAN(x: ::core::primitive::u32) -> ::core::primitive::u32 {
     (x & 4096_u32)
 }
@@ -229,6 +233,7 @@ pub const fn SDL_AUDIO_ISBIGENDIAN(x: ::core::primitive::u32) -> ::core::primiti
 /// \threadsafety It is safe to call this macro from any thread.
 ///
 /// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
 pub const fn SDL_AUDIO_ISSIGNED(x: ::core::primitive::u32) -> ::core::primitive::u32 {
     (x & 32768_u32)
 }

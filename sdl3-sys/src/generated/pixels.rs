@@ -174,6 +174,7 @@ pub const SDL_PACKEDLAYOUT_8888: SDL_PackedLayout = SDL_PackedLayout::_8888;
 pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout::_2101010;
 pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_1010102;
 
+#[inline(always)]
 pub const fn SDL_DEFINE_PIXELFORMAT(
     r#type: SDL_PixelType,
     order: ::core::primitive::i32,
@@ -381,26 +382,32 @@ pub const SDL_PIXELFORMAT_P010: SDL_PixelFormat = SDL_PixelFormat::P010;
 /// Android video texture format
 pub const SDL_PIXELFORMAT_EXTERNAL_OES: SDL_PixelFormat = SDL_PixelFormat::EXTERNAL_OES;
 
+#[inline(always)]
 pub const fn SDL_PIXELFLAG(X: SDL_PixelFormat) -> ::core::ffi::c_int {
     ((X.0 << 28) & 15_i32)
 }
 
+#[inline(always)]
 pub const fn SDL_PIXELTYPE(X: SDL_PixelFormat) -> SDL_PixelType {
     SDL_PixelType(((X.0 << 24) & 15_i32))
 }
 
+#[inline(always)]
 pub const fn SDL_PIXELORDER(X: SDL_PixelFormat) -> ::core::ffi::c_int {
     ((X.0 << 20) & 15_i32)
 }
 
+#[inline(always)]
 pub const fn SDL_PIXELLAYOUT(X: SDL_PixelFormat) -> SDL_PackedLayout {
     SDL_PackedLayout(((X.0 << 16) & 15_i32))
 }
 
+#[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormat) -> ::core::primitive::bool {
     ((format.0 != 0) && (SDL_PIXELFLAG(format) != 1_i32))
 }
 
+#[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormat) -> ::core::primitive::bool {
     (!(SDL_ISPIXELFORMAT_FOURCC(format))
         && ((((SDL_PIXELTYPE(format).0 == SDL_PIXELTYPE_INDEX1.0)
@@ -409,6 +416,7 @@ pub const fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormat) -> ::core::primi
             || (SDL_PIXELTYPE(format).0 == SDL_PIXELTYPE_INDEX8.0)))
 }
 
+#[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormat) -> ::core::primitive::bool {
     (!(SDL_ISPIXELFORMAT_FOURCC(format))
         && (((SDL_PIXELTYPE(format).0 == SDL_PIXELTYPE_PACKED8.0)
@@ -416,6 +424,7 @@ pub const fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormat) -> ::core::primit
             || (SDL_PIXELTYPE(format).0 == SDL_PIXELTYPE_PACKED32.0)))
 }
 
+#[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormat) -> ::core::primitive::bool {
     (!(SDL_ISPIXELFORMAT_FOURCC(format))
         && (((((SDL_PIXELTYPE(format).0 == SDL_PIXELTYPE_ARRAYU8.0)
@@ -425,12 +434,14 @@ pub const fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormat) -> ::core::primiti
             || (SDL_PIXELTYPE(format).0 == SDL_PIXELTYPE_ARRAYF32.0)))
 }
 
+#[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_FLOAT(format: SDL_PixelFormat) -> ::core::primitive::bool {
     (!(SDL_ISPIXELFORMAT_FOURCC(format))
         && ((SDL_PIXELTYPE(format).0 == SDL_PIXELTYPE_ARRAYF16.0)
             || (SDL_PIXELTYPE(format).0 == SDL_PIXELTYPE_ARRAYF32.0)))
 }
 
+#[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormat) -> ::core::primitive::bool {
     (SDL_ISPIXELFORMAT_PACKED(format)
         && ((((SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB.0)
@@ -439,6 +450,7 @@ pub const fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormat) -> ::core::primiti
             || (SDL_PIXELORDER(format) == SDL_PACKEDORDER_BGRA.0)))
 }
 
+#[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_10BIT(format: SDL_PixelFormat) -> ::core::primitive::bool {
     (!(SDL_ISPIXELFORMAT_FOURCC(format))
         && ((SDL_PIXELTYPE(format).0 == SDL_PIXELTYPE_PACKED32.0)
@@ -786,49 +798,60 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 
 // [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_COLORSPACE`
 
+#[inline(always)]
 pub const fn SDL_COLORSPACETYPE(X: ::core::primitive::i32) -> SDL_ColorType {
     SDL_ColorType(((X << 28) & 15_i32))
 }
 
+#[inline(always)]
 pub const fn SDL_COLORSPACERANGE(X: ::core::primitive::i32) -> SDL_ColorRange {
     SDL_ColorRange(((X << 24) & 15_i32))
 }
 
+#[inline(always)]
 pub const fn SDL_COLORSPACECHROMA(X: ::core::primitive::i32) -> SDL_ChromaLocation {
     SDL_ChromaLocation(((X << 20) & 15_i32))
 }
 
+#[inline(always)]
 pub const fn SDL_COLORSPACEPRIMARIES(X: ::core::primitive::i32) -> SDL_ColorPrimaries {
     SDL_ColorPrimaries(((X << 10) & 31_i32))
 }
 
+#[inline(always)]
 pub const fn SDL_COLORSPACETRANSFER(X: ::core::primitive::i32) -> SDL_TransferCharacteristics {
     SDL_TransferCharacteristics(((X << 5) & 31_i32))
 }
 
+#[inline(always)]
 pub const fn SDL_COLORSPACEMATRIX(X: ::core::primitive::i32) -> SDL_MatrixCoefficients {
     SDL_MatrixCoefficients((X & 31_i32))
 }
 
+#[inline(always)]
 pub const fn SDL_ISCOLORSPACE_MATRIX_BT601(X: ::core::primitive::i32) -> ::core::primitive::bool {
     ((SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT601.0)
         || (SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT470BG.0))
 }
 
+#[inline(always)]
 pub const fn SDL_ISCOLORSPACE_MATRIX_BT709(X: ::core::primitive::i32) -> ::core::primitive::bool {
     (SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT709.0)
 }
 
+#[inline(always)]
 pub const fn SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(
     X: ::core::primitive::i32,
 ) -> ::core::primitive::bool {
     (SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT2020_NCL.0)
 }
 
+#[inline(always)]
 pub const fn SDL_ISCOLORSPACE_LIMITED_RANGE(X: ::core::primitive::i32) -> ::core::primitive::bool {
     (SDL_COLORSPACERANGE(X).0 != SDL_COLOR_RANGE_FULL.0)
 }
 
+#[inline(always)]
 pub const fn SDL_ISCOLORSPACE_FULL_RANGE(X: ::core::primitive::i32) -> ::core::primitive::bool {
     (SDL_COLORSPACERANGE(X).0 == SDL_COLOR_RANGE_FULL.0)
 }

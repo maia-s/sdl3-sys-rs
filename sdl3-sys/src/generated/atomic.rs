@@ -368,6 +368,7 @@ extern "C" {
 /// \since This macro is available since SDL 3.0.0.
 ///
 /// \sa SDL_AtomicDecRef
+#[inline(always)]
 pub unsafe fn SDL_AtomicIncRef(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int {
     unsafe { SDL_AddAtomicInt(a, 1) }
 }
@@ -383,6 +384,7 @@ pub unsafe fn SDL_AtomicIncRef(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int {
 /// \since This macro is available since SDL 3.0.0.
 ///
 /// \sa SDL_AtomicIncRef
+#[inline(always)]
 pub unsafe fn SDL_AtomicDecRef(a: *mut SDL_AtomicInt) -> ::core::primitive::bool {
     (unsafe { SDL_AddAtomicInt(a, -1_i32) } == 1_i32)
 }

@@ -33,6 +33,7 @@ pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 2;
 /// \param patch the patch version number.
 ///
 /// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
 pub const fn SDL_VERSIONNUM(
     major: ::core::primitive::i32,
     minor: ::core::primitive::i32,
@@ -48,6 +49,7 @@ pub const fn SDL_VERSIONNUM(
 /// \param version the version number.
 ///
 /// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
 pub const fn SDL_VERSIONNUM_MAJOR(version: ::core::primitive::i32) -> ::core::primitive::i32 {
     (version / 1000000_i32)
 }
@@ -59,6 +61,7 @@ pub const fn SDL_VERSIONNUM_MAJOR(version: ::core::primitive::i32) -> ::core::pr
 /// \param version the version number.
 ///
 /// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
 pub const fn SDL_VERSIONNUM_MINOR(version: ::core::primitive::i32) -> ::core::primitive::i32 {
     ((version / 1000_i32) % 1000_i32)
 }
@@ -70,6 +73,7 @@ pub const fn SDL_VERSIONNUM_MINOR(version: ::core::primitive::i32) -> ::core::pr
 /// \param version the version number.
 ///
 /// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
 pub const fn SDL_VERSIONNUM_MICRO(version: ::core::primitive::i32) -> ::core::primitive::i32 {
     (version % 1000_i32)
 }
@@ -83,6 +87,7 @@ pub const SDL_VERSION: ::core::primitive::i32 =
 /// This macro will evaluate to true if compiled with SDL at least X.Y.Z.
 ///
 /// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
 pub const fn SDL_VERSION_ATLEAST(
     X: ::core::primitive::i32,
     Y: ::core::primitive::i32,

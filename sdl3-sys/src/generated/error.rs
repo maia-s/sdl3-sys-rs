@@ -86,6 +86,7 @@ extern "C" {
     pub fn SDL_ClearError() -> ::core::primitive::bool;
 }
 
+#[inline(always)]
 pub unsafe fn SDL_Unsupported() -> ::core::primitive::bool {
     unsafe {
         SDL_SetError(

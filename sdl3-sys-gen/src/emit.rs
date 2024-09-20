@@ -405,6 +405,7 @@ impl Emit for Define {
 
             if let Ok(f) = ctx.capture_output(|ctx| {
                 self.doc.emit(ctx)?;
+                writeln!(ctx, "#[inline(always)]")?;
                 write!(
                     ctx,
                     "pub {}{}fn {}(",
