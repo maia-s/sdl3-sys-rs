@@ -226,10 +226,6 @@ emit! {
         pub fn SDL_CreateThreadWithPropertiesRuntime(props: SDL_PropertiesID, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
     }
 
-    // [sdl3-sys-gen] skipped function-like define `SDL_CreateThread`
-
-    // [sdl3-sys-gen] skipped function-like define `SDL_CreateThreadWithProperties`
-
     pub const SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.entry_function\0") };
 
     pub const SDL_PROP_THREAD_CREATE_NAME_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.name\0") };
@@ -237,6 +233,10 @@ emit! {
     pub const SDL_PROP_THREAD_CREATE_USERDATA_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.userdata\0") };
 
     pub const SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.stacksize\0") };
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_CreateThread`
+
+    // [sdl3-sys-gen] skipped function-like define `SDL_CreateThreadWithProperties`
 
 }
 

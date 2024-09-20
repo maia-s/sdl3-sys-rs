@@ -174,6 +174,7 @@ pub struct InnerEmitContext {
     log_debug_enabled: bool,
     sym_dependencies: Option<Vec<Ident>>,
     pending_emits: Vec<(Vec<Ident>, Option<Box<dyn Emit>>)>,
+    pending_enabled: bool,
 }
 
 impl<'a, 'b> EmitContext<'a, 'b> {
@@ -340,6 +341,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                 log_debug_enabled: false,
                 sym_dependencies: None,
                 pending_emits: Vec::new(),
+                pending_enabled: true,
             })),
             output,
             indent: 0,
@@ -525,6 +527,33 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.scope_mut().push();
 
         Guard(Rc::clone(&self.inner))
+    }
+
+    pub fn new_top_level(&mut self) -> EmitContext<'_, 'b> {
+        let i = self.inner();
+        let inner = Rc::new(RefCell::new(InnerEmitContext {
+            module: i.module.clone(),
+            preproc_state: Rc::clone(&i.preproc_state),
+            scope: i.scope.push_new(),
+            preproc_eval_mode: i.preproc_eval_mode,
+            emitted_file_doc: i.emitted_file_doc,
+            patch_enabled: i.patch_enabled,
+            log_debug_enabled: i.log_debug_enabled,
+            sym_dependencies: None,
+            pending_emits: Vec::new(),
+            pending_enabled: true,
+        }));
+        drop(i);
+        EmitContext {
+            inner,
+            output: self.output,
+            indent: self.indent,
+            newline_count: self.newline_count,
+            do_indent: self.do_indent,
+            ool_output: String::new(),
+            gen: self.gen,
+            top: true,
+        }
     }
 
     pub fn capture_output(
@@ -769,15 +798,16 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     pub fn emit_after_unresolved_sym_dependencies<T: Emit + 'static>(&self, emittable: T) -> bool {
-        let deps = self.inner().sym_dependencies.as_ref().unwrap().clone();
-        if !deps.is_empty() {
-            self.inner_mut()
-                .pending_emits
-                .push((deps, Some(Box::new(emittable))));
-            true
-        } else {
-            false
+        if self.inner().pending_enabled {
+            let deps = self.inner().sym_dependencies.as_ref().unwrap().clone();
+            if !deps.is_empty() {
+                self.inner_mut()
+                    .pending_emits
+                    .push((deps, Some(Box::new(emittable))));
+                return true;
+            }
         }
+        false
     }
 
     pub fn add_unresolved_sym_dependency(&self, ident: Ident) -> EmitResult {
@@ -828,16 +858,16 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
 impl Drop for EmitContext<'_, '_> {
     fn drop(&mut self) {
-        let module = self.module().to_string();
-        self.flush_ool_output().unwrap();
         if self.top {
-            self.inner
+            let scope = Rc::clone(&self.scope_mut().0);
+            scope
                 .borrow_mut()
-                .scope
-                .emit_opaque_structs_and_unions(module, self.output)
+                .emit_opaque_structs_and_unions(self)
                 .unwrap();
+            self.inner_mut().pending_enabled = false;
             self.flush_pending().unwrap();
         }
+        self.flush_ool_output().unwrap();
     }
 }
 
@@ -1027,10 +1057,15 @@ impl Scope {
     }
 
     pub fn push(&mut self) {
-        self.0 = Rc::new(RefCell::new(InnerScope {
+        *self = self.push_new();
+    }
+
+    #[must_use]
+    pub fn push_new(&self) -> Self {
+        Self(Rc::new(RefCell::new(InnerScope {
             parent: Some(Rc::clone(&self.0)),
             ..Default::default()
-        }));
+        })))
     }
 
     pub fn pop(&mut self) {
@@ -1042,48 +1077,6 @@ impl Scope {
         }
     }
 
-    pub fn emit_opaque_structs_and_unions(
-        &mut self,
-        module: String,
-        f: &mut dyn Write,
-    ) -> EmitResult {
-        let scope = self.0.borrow();
-        let syms: Vec<(Ident, Option<DocComment>)> =
-            scope
-                .struct_syms
-                .iter()
-                .filter_map(|(s, d)| (!d).then_some((s.clone(), scope.struct_docs.get(s).cloned())))
-                .chain(scope.union_syms.iter().filter_map(|(s, d)| {
-                    (!d).then_some((s.clone(), scope.union_docs.get(s).cloned()))
-                }))
-                .collect();
-        drop(scope);
-
-        for (ident, doc) in syms {
-            if let Some(doc) = doc {
-                for line in doc.to_string().lines() {
-                    writeln!(f, "///{}{}", if line.is_empty() { "" } else { " " }, line)?;
-                }
-            }
-            writeln!(f, "#[repr(C)]")?;
-            writeln!(f, "#[non_exhaustive]")?;
-            writeln!(
-                f,
-                "pub struct {ident} {{ _opaque: [::core::primitive::u8; 0] }}",
-            )?;
-            writeln!(f)?;
-            self.register_sym(Sym {
-                module: module.clone(),
-                ident: ident.clone(),
-                ty: None,
-                enum_base_ty: None,
-                can_derive_debug: false,
-            })?;
-        }
-
-        Ok(())
-    }
-
     pub fn include(&mut self, scope: &Scope) -> EmitResult {
         for sym in scope.0.borrow().syms.values() {
             self.register_sym(sym.clone())?;
@@ -1092,17 +1085,7 @@ impl Scope {
     }
 
     pub fn register_sym(&mut self, sym: Sym) -> EmitResult {
-        let span = sym.ident.span();
-        if let Some(s) = self.lookup(&sym.ident) {
-            if sym.module != s.module {
-                return Err(ParseErr::new(span, "symbol already defined in this scope").into());
-            }
-        }
-        self.0
-            .borrow_mut()
-            .syms
-            .insert(sym.ident.clone(), sym.clone());
-        Ok(())
+        self.0.borrow_mut().register_sym(sym)
     }
 
     pub fn register_enum_sym(&mut self, ident: Ident) -> EmitResult {
@@ -1197,6 +1180,17 @@ impl Scope {
 }
 
 impl InnerScope {
+    pub fn register_sym(&mut self, sym: Sym) -> EmitResult {
+        let span = sym.ident.span();
+        if let Some(s) = self.lookup(&sym.ident) {
+            if sym.module != s.module {
+                return Err(ParseErr::new(span, "symbol already defined in this scope").into());
+            }
+        }
+        self.syms.insert(sym.ident.clone(), sym.clone());
+        Ok(())
+    }
+
     pub fn lookup(&self, ident: &Ident) -> Option<Sym> {
         if let Some(sym) = self.syms.get(ident) {
             Some(sym.clone())
@@ -1243,6 +1237,41 @@ impl InnerScope {
         } else {
             None
         }
+    }
+
+    pub fn emit_opaque_structs_and_unions(&mut self, ctx: &mut EmitContext) -> EmitResult {
+        let syms: Vec<(Ident, Option<DocComment>)> =
+            self.struct_syms
+                .iter()
+                .filter_map(|(s, d)| (!d).then_some((s.clone(), self.struct_docs.get(s).cloned())))
+                .chain(self.union_syms.iter().filter_map(|(s, d)| {
+                    (!d).then_some((s.clone(), self.union_docs.get(s).cloned()))
+                }))
+                .collect();
+
+        for (ident, doc) in syms {
+            if let Some(doc) = doc {
+                for line in doc.to_string().lines() {
+                    writeln!(ctx, "///{}{}", if line.is_empty() { "" } else { " " }, line)?;
+                }
+            }
+            writeln!(ctx, "#[repr(C)]")?;
+            writeln!(ctx, "#[non_exhaustive]")?;
+            writeln!(
+                ctx,
+                "pub struct {ident} {{ _opaque: [::core::primitive::u8; 0] }}",
+            )?;
+            writeln!(ctx)?;
+            self.register_sym(Sym {
+                module: ctx.module().to_string(),
+                ident: ident.clone(),
+                ty: None,
+                enum_base_ty: None,
+                can_derive_debug: false,
+            })?;
+        }
+
+        Ok(())
     }
 }
 

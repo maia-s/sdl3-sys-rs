@@ -108,7 +108,7 @@ pub trait Emit: core::fmt::Debug {
             ctx.emit_define_state_cfg(define_state)?;
             writeln!(ctx, "emit! {{")?;
             ctx.increase_indent();
-            self.emit(ctx)?;
+            self.emit(&mut { ctx.new_top_level() })?;
             ctx.decrease_indent();
             writeln!(ctx, "}}")?;
             writeln!(ctx)?;

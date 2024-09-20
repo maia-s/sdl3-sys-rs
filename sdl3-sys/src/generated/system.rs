@@ -50,6 +50,10 @@ emit! {
         pub fn SDL_SetWindowsMessageHook(callback: SDL_WindowsMessageHook, userdata: *mut ::core::ffi::c_void);
     }
 
+    #[repr(C)]
+    #[non_exhaustive]
+    pub struct tagMSG { _opaque: [::core::primitive::u8; 0] }
+
 }
 
 #[cfg(any(windows, any(/* always disabled: SDL_PLATFORM_WINGDK */)))]
@@ -675,24 +679,14 @@ emit! {
         pub fn SDL_GetGDKDefaultUser(outUserHandle: *mut XUserHandle) -> ::core::primitive::bool;
     }
 
-}
+    #[repr(C)]
+    #[non_exhaustive]
+    pub struct XTaskQueueObject { _opaque: [::core::primitive::u8; 0] }
 
-#[repr(C)]
-#[non_exhaustive]
-pub struct XTaskQueueObject {
-    _opaque: [::core::primitive::u8; 0],
-}
+    #[repr(C)]
+    #[non_exhaustive]
+    pub struct XUser { _opaque: [::core::primitive::u8; 0] }
 
-#[repr(C)]
-#[non_exhaustive]
-pub struct XUser {
-    _opaque: [::core::primitive::u8; 0],
-}
-
-#[repr(C)]
-#[non_exhaustive]
-pub struct tagMSG {
-    _opaque: [::core::primitive::u8; 0],
 }
 
 #[repr(C)]
