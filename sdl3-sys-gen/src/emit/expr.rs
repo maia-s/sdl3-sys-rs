@@ -1406,43 +1406,13 @@ impl Emit for FnCall {
         if let Expr::Ident(ident) = &*self.func {
             if patch_emit_macro_call(ctx, ident.as_str(), &self.args)? {
                 return Ok(());
-            } else if let Some(Sym {
-                ty:
-                    Some(Type {
-                        ty: TypeEnum::Function(f),
-                        ..
-                    }),
-                ..
-            }) = ctx.lookup_sym(&ident.clone().try_into().unwrap())
-            {
-                if self.args.len() == f.args.len() {
-                    if f.is_unsafe {
-                        write!(ctx, "unsafe {{ ")?;
-                    }
-                    write!(ctx, "{ident}(")?;
-                    let mut first = true;
-                    for (arg, ty) in self.args.iter().zip(f.args.iter()) {
-                        if !first {
-                            write!(ctx, ", ")?
-                        }
-                        first = false;
-                        if let Ok(Some(argval)) = arg.try_eval(ctx) {
-                            if let Some(argval) = argval.coerce(ctx, ty)? {
-                                argval.emit(ctx)?;
-                                continue;
-                            }
-                        }
-                        arg.emit(ctx)?;
-                    }
-                    write!(ctx, ")")?;
-                    if f.is_unsafe {
-                        write!(ctx, " }}")?;
-                    }
-                    return Ok(());
-                }
             }
         }
-        Err(ParseErr::new(self.span(), "can't emit this macro call").into())
+        if let Some(value) = self.try_eval(ctx)? {
+            value.emit(ctx)
+        } else {
+            Err(ParseErr::new(self.span(), "can't emit this macro call").into())
+        }
     }
 }
 
