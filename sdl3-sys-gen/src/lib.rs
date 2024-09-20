@@ -226,8 +226,8 @@ impl Gen {
             file,
             concat!(
                 "#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, unused_parens, unused_unsafe, ",
-                "clippy::approx_constant, clippy::double_parens, clippy::missing_safety_doc, clippy::too_long_first_doc_paragraph, ",
-                "clippy::unnecessary_cast)]"
+                "clippy::approx_constant, clippy::double_parens, clippy::identity_op, clippy::missing_safety_doc, ",
+                "clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]"
             )
         )?;
         writeln!(file)?;
