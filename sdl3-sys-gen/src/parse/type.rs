@@ -59,6 +59,10 @@ impl Type {
         Self::primitive(PrimitiveType::Bool)
     }
 
+    pub fn void() -> Self {
+        Self::primitive(PrimitiveType::Void)
+    }
+
     pub fn ident(ident: Ident) -> Self {
         Self {
             span: Span::none(),

@@ -1,20 +1,25 @@
-use super::{Emit, EmitContext, EmitErr, Eval, Value};
-use crate::parse::{Define, Expr, Function};
+use super::{DefineState, Emit, EmitContext, EmitErr, Eval, Value};
+use crate::parse::{Define, Expr, FnCall, Function, GetSpan, ParseErr, Type};
 use core::fmt::Write;
 
-struct Patch<T: ?Sized> {
+struct EmitPatch<T: ?Sized> {
     module: Option<&'static str>,
     match_ident: fn(&str) -> bool,
     patch: fn(&mut EmitContext, &T) -> Result<bool, EmitErr>,
 }
 
-pub fn patch_emit_function(ctx: &mut EmitContext, f: &Function) -> Result<bool, EmitErr> {
-    patch(ctx, f, f.ident.as_str(), FUNCTION_PATCHES)
+struct EvalPatch<T: ?Sized> {
+    matches: fn(&EmitContext, &str) -> bool,
+    patch: fn(&EmitContext, &T) -> Result<Option<Value>, EmitErr>,
 }
 
-type FunctionPatch = Patch<Function>;
+pub fn patch_emit_function(ctx: &mut EmitContext, f: &Function) -> Result<bool, EmitErr> {
+    patch_emit(ctx, f, f.ident.as_str(), EMIT_FUNCTION_PATCHES)
+}
 
-const FUNCTION_PATCHES: &[FunctionPatch] = &[FunctionPatch {
+type EmitFunctionPatch = EmitPatch<Function>;
+
+const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[EmitFunctionPatch {
     // skip emitting these
     module: None,
     match_ident: |i| matches!(i, "__debugbreak" | "_ReadWriteBarrier"),
@@ -22,13 +27,13 @@ const FUNCTION_PATCHES: &[FunctionPatch] = &[FunctionPatch {
 }];
 
 pub fn patch_emit_define(ctx: &mut EmitContext, define: &Define) -> Result<bool, EmitErr> {
-    patch(ctx, define, define.ident.as_str(), DEFINE_PATCHES)
+    patch_emit(ctx, define, define.ident.as_str(), EMIT_DEFINE_PATCHES)
 }
 
-type DefinePatch = Patch<Define>;
+type EmitDefinePatch = EmitPatch<Define>;
 
-const DEFINE_PATCHES: &[DefinePatch] = &[
-    DefinePatch {
+const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
+    EmitDefinePatch {
         // skip emitting these
         module: None,
         match_ident: |i| {
@@ -39,7 +44,7 @@ const DEFINE_PATCHES: &[DefinePatch] = &[
         },
         patch: |_, _| Ok(true),
     },
-    DefinePatch {
+    EmitDefinePatch {
         module: Some("atomic"),
         match_ident: |i| i == "SDL_CompilerBarrier",
         patch: |ctx, define| {
@@ -57,7 +62,7 @@ const DEFINE_PATCHES: &[DefinePatch] = &[
             Ok(true)
         },
     },
-    DefinePatch {
+    EmitDefinePatch {
         module: Some("stdinc"),
         match_ident: |i| i == "SDL_INIT_INTERFACE",
         patch: |ctx, define| {
@@ -91,31 +96,32 @@ const DEFINE_PATCHES: &[DefinePatch] = &[
 pub fn patch_emit_macro_call(
     ctx: &mut EmitContext,
     ident: &str,
-    args: &[Expr],
+    call: &FnCall,
 ) -> Result<bool, EmitErr> {
-    patch(ctx, args, ident, MACRO_CALL_PATCHES)
+    patch_emit(ctx, call, ident, EMIT_MACRO_CALL_PATCHES)
 }
 
-type MacroCallPatch = Patch<[Expr]>;
+type EmitMacroCallPatch = EmitPatch<FnCall>;
 
-const MACRO_CALL_PATCHES: &[MacroCallPatch] = &[
-    MacroCallPatch {
+const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
+    EmitMacroCallPatch {
         module: None,
         match_ident: |i| i == "SDL_COMPILE_TIME_ASSERT",
-        patch: |ctx, args| match args[1].try_eval(ctx)? {
-            Some(Value::RustCode(s)) => {
-                writeln!(ctx, "const _: () = ::core::assert!({s});")?;
-                writeln!(ctx)?;
-                Ok(true)
-            }
-            _ => Ok(false),
+        patch: |ctx, call| {
+            write!(ctx, "const _: () = ")?;
+            call.try_eval(ctx)?.emit(ctx)?;
+            writeln!(ctx, ";")?;
+            writeln!(ctx)?;
+            Ok(true)
         },
     },
-    MacroCallPatch {
+    EmitMacroCallPatch {
         module: Some("vulkan"),
         match_ident: |i| i == "VK_DEFINE_HANDLE",
-        patch: |ctx, args| {
-            let Expr::Ident(arg) = &args[0] else { panic!() };
+        patch: |ctx, call| {
+            let Expr::Ident(arg) = &call.args[0] else {
+                panic!()
+            };
             writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
             writeln!(ctx)?;
             writeln!(ctx, "#[repr(C)]")?;
@@ -128,11 +134,13 @@ const MACRO_CALL_PATCHES: &[MacroCallPatch] = &[
             Ok(true)
         },
     },
-    MacroCallPatch {
+    EmitMacroCallPatch {
         module: Some("vulkan"),
         match_ident: |i| i == "VK_DEFINE_NON_DISPATCHABLE_HANDLE",
-        patch: |ctx, args| {
-            let Expr::Ident(arg) = &args[0] else { panic!() };
+        patch: |ctx, call| {
+            let Expr::Ident(arg) = &call.args[0] else {
+                panic!()
+            };
             writeln!(ctx, r#"#[cfg(target_pointer_width = "64")]"#)?;
             writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
             writeln!(ctx)?;
@@ -152,11 +160,118 @@ const MACRO_CALL_PATCHES: &[MacroCallPatch] = &[
     },
 ];
 
-fn patch<T: ?Sized>(
+pub fn patch_eval_macro_call(
+    ctx: &EmitContext,
+    ident: &str,
+    call: &FnCall,
+) -> Result<Option<Value>, EmitErr> {
+    patch_eval(ctx, call, ident, EVAL_MACRO_CALL_PATCHES)
+}
+
+type EvalMacroCallPatch = EvalPatch<FnCall>;
+
+const EVAL_MACRO_CALL_PATCHES: &[EvalMacroCallPatch] = &[
+    EvalMacroCallPatch {
+        matches: |ctx, i| ctx.is_preproc_eval_mode() && i == "defined",
+        patch: |ctx, call| {
+            let args = &*call.args;
+            let err = || {
+                Err(ParseErr::new(
+                    call.span(),
+                    "defined() in #if takes one argument of type ident",
+                )
+                .into())
+            };
+            if args.len() != 1 {
+                return err();
+            }
+            let Expr::Ident(define) = &args[0] else {
+                return err();
+            };
+            let define = define.clone().try_into()?;
+            if ctx.preproc_state().borrow().is_target_define(&define) {
+                Ok(Some(Value::TargetDependent(DefineState::defined(define))))
+            } else if ctx.preproc_state().borrow().is_defined(&define)? {
+                Ok(Some(Value::Bool(true)))
+            } else {
+                Ok(Some(Value::Bool(false)))
+            }
+        },
+    },
+    EvalMacroCallPatch {
+        matches: |_, i| i == "SDL_COMPILE_TIME_ASSERT",
+        patch: |ctx, call| match call.args[1].try_eval(ctx)? {
+            Some(Value::RustCode(mut rc)) if call.args.len() == 2 => {
+                rc.value.insert_str(0, "::core::assert!(");
+                rc.value.push(')');
+                rc.ty = Type::void();
+                Ok(Some(Value::RustCode(rc)))
+            }
+            _ => Err(ParseErr::new(call.span(), "invalid assert").into()),
+        },
+    },
+    EvalMacroCallPatch {
+        matches: |_, i| i == "SDL_HAS_BUILTIN",
+        patch: |_, call| {
+            let args = &*call.args;
+            let err = || {
+                Err(ParseErr::new(
+                    call.span(),
+                    "SDL_HAS_BUILTIN takes one argument of type ident",
+                )
+                .into())
+            };
+            if args.len() != 1 {
+                return err();
+            }
+            let Expr::Ident(builtin) = &args[0] else {
+                return err();
+            };
+            Ok(Some(Value::Bool(match builtin.as_str() {
+                "__builtin_add_overflow" | "__builtin_mul_overflow" => true,
+                _ => return Err(ParseErr::new(builtin.span(), "unknown builtin").into()),
+            })))
+        },
+    },
+    EvalMacroCallPatch {
+        matches: |_, i| i == "SDL_SINT64_C",
+        patch: |ctx, call| {
+            assert!(call.args.len() == 1);
+            let Some(arg) = call.args[0].try_eval(ctx)? else {
+                return Ok(None);
+            };
+            Ok(Some(match arg {
+                Value::I32(i) => Value::I64(i as i64),
+                Value::U31(u) | Value::U32(u) => Value::I64(u as i64),
+                Value::I64(i) => Value::I64(i),
+                Value::U63(u) | Value::U64(u) => Value::I64(u as i64),
+                _ => todo!(),
+            }))
+        },
+    },
+    EvalMacroCallPatch {
+        matches: |_, i| i == "SDL_UINT64_C",
+        patch: |ctx, call| {
+            assert!(call.args.len() == 1);
+            let Some(arg) = call.args[0].try_eval(ctx)? else {
+                return Ok(None);
+            };
+            Ok(Some(match arg {
+                Value::I32(i) => Value::U64(i as u64),
+                Value::U31(u) | Value::U32(u) => Value::U64(u as u64),
+                Value::I64(i) => Value::U64(i as u64),
+                Value::U63(u) | Value::U64(u) => Value::U64(u),
+                _ => todo!(),
+            }))
+        },
+    },
+];
+
+fn patch_emit<T: ?Sized>(
     ctx: &mut EmitContext,
     arg: &T,
     ident: &str,
-    patches: &[Patch<T>],
+    patches: &[EmitPatch<T>],
 ) -> Result<bool, EmitErr> {
     if ctx.patch_enabled() {
         let _guard = ctx.disable_patch_guard();
@@ -169,4 +284,18 @@ fn patch<T: ?Sized>(
         }
     }
     Ok(false)
+}
+
+fn patch_eval<T: ?Sized>(
+    ctx: &EmitContext,
+    arg: &T,
+    ident: &str,
+    patches: &[EvalPatch<T>],
+) -> Result<Option<Value>, EmitErr> {
+    for patch in patches.iter() {
+        if (patch.matches)(ctx, ident) {
+            return (patch.patch)(ctx, arg);
+        }
+    }
+    Ok(None)
 }

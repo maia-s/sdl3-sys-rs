@@ -1,5 +1,6 @@
 use super::{
-    patch_emit_macro_call, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, Sym,
+    patch::patch_eval_macro_call, patch_emit_macro_call, DefineState, Emit, EmitContext, EmitErr,
+    EmitResult, Eval, Sym,
 };
 use crate::parse::{
     Alternative, Ambiguous, BinaryOp, Cast, DefineValue, Expr, FloatLiteral, FnCall, GetSpan,
@@ -1404,7 +1405,7 @@ impl Emit for Parenthesized {
 impl Emit for FnCall {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if let Expr::Ident(ident) = &*self.func {
-            if patch_emit_macro_call(ctx, ident.as_str(), &self.args)? {
+            if patch_emit_macro_call(ctx, ident.as_str(), self)? {
                 return Ok(());
             }
         }
@@ -1418,141 +1419,52 @@ impl Emit for FnCall {
 
 impl Eval for FnCall {
     fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
-        if ctx.is_preproc_eval_mode() {
-            if let Expr::Ident(ident) = &*self.func {
-                match ident.as_str() {
-                    "defined" => {
-                        let args = &*self.args;
-                        let err = || {
-                            Err(ParseErr::new(
-                                self.span(),
-                                "defined() in #if takes one argument of type ident",
-                            )
-                            .into())
-                        };
-                        if args.len() != 1 {
-                            return err();
-                        }
-                        let Expr::Ident(define) = &args[0] else {
-                            return err();
-                        };
-                        let define = define.clone().try_into()?;
-                        return if ctx.preproc_state().borrow().is_target_define(&define) {
-                            Ok(Some(Value::TargetDependent(DefineState::defined(define))))
-                        } else if ctx.preproc_state().borrow().is_defined(&define)? {
-                            Ok(Some(Value::Bool(true)))
-                        } else {
-                            Ok(Some(Value::Bool(false)))
-                        };
-                    }
-
-                    "SDL_HAS_BUILTIN" => {
-                        let args = &*self.args;
-                        let err = || {
-                            Err(ParseErr::new(
-                                self.span(),
-                                "SDL_HAS_BUILTIN takes one argument of type ident",
-                            )
-                            .into())
-                        };
-                        if args.len() != 1 {
-                            return err();
-                        }
-                        let Expr::Ident(builtin) = &args[0] else {
-                            return err();
-                        };
-                        return Ok(Some(Value::Bool(match builtin.as_str() {
-                            "__builtin_add_overflow" | "__builtin_mul_overflow" => true,
-                            _ => {
-                                return Err(ParseErr::new(builtin.span(), "unknown builtin").into())
-                            }
-                        })));
-                    }
-
-                    _ => (),
-                }
+        if let Expr::Ident(ident) = &*self.func {
+            if let Some(value) = patch_eval_macro_call(ctx, ident.as_str(), self)? {
+                return Ok(Some(value));
             }
-        } else {
-            // not preproc
 
-            if let Expr::Ident(ident) = &*self.func {
-                match ident.as_str() {
-                    "SDL_SINT64_C" | "SDL_UINT64_C" => {
-                        let args = &*self.args;
-                        let err =
-                            || Err(ParseErr::new(self.span(), "expected one argument").into());
-                        if args.len() != 1 {
-                            return err();
-                        }
-                        let Some(arg) = args[0].try_eval(ctx)? else {
-                            return Ok(None);
-                        };
-                        return Ok(Some(match ident.as_str() {
-                            "SDL_SINT64_C" => match arg {
-                                Value::I32(i) => Value::I64(i as i64),
-                                Value::U31(u) | Value::U32(u) => Value::I64(u as i64),
-                                Value::I64(i) => Value::I64(i),
-                                Value::U63(u) | Value::U64(u) => Value::I64(u as i64),
-                                _ => todo!(),
-                            },
-                            "SDL_UINT64_C" => match arg {
-                                Value::I32(i) => Value::U64(i as u64),
-                                Value::U31(u) | Value::U32(u) => Value::U64(u as u64),
-                                Value::I64(i) => Value::U64(i as u64),
-                                Value::U63(u) | Value::U64(u) => Value::U64(u),
-                                _ => todo!(),
-                            },
-                            _ => unreachable!(),
-                        }));
+            if let Some(Sym {
+                ty:
+                    Some(Type {
+                        ty: TypeEnum::Function(f),
+                        ..
+                    }),
+                ..
+            }) = ctx.lookup_sym(&ident.clone().try_into().unwrap())
+            {
+                let out = ctx.capture_output(|ctx| {
+                    if f.is_unsafe {
+                        write!(ctx, "unsafe {{ ")?;
                     }
-
-                    _ => {
-                        return if let Some(Sym {
-                            ty:
-                                Some(Type {
-                                    ty: TypeEnum::Function(f),
-                                    ..
-                                }),
-                            ..
-                        }) = ctx.lookup_sym(&ident.clone().try_into().unwrap())
-                        {
-                            let out = ctx.capture_output(|ctx| {
-                                if f.is_unsafe {
-                                    write!(ctx, "unsafe {{ ")?;
-                                }
-                                ident.emit(ctx)?;
-                                write!(ctx, "(")?;
-                                let mut first = true;
-                                for (arg, arg_ty) in self.args.iter().zip(f.args.iter()) {
-                                    if !first {
-                                        write!(ctx, ", ")?;
-                                    }
-                                    first = false;
-                                    if let Ok(Some(argval)) = arg.try_eval(ctx) {
-                                        if let Some(argval) = argval.coerce(ctx, arg_ty)? {
-                                            argval.emit(ctx)?;
-                                            continue;
-                                        }
-                                    }
-                                    arg.emit(ctx)?;
-                                }
-                                write!(ctx, ")")?;
-                                if f.is_unsafe {
-                                    write!(ctx, " }}")?;
-                                }
-                                Ok(())
-                            })?;
-                            Ok(Some(Value::RustCode(RustCode::boxed(
-                                out,
-                                f.return_type.clone(),
-                                f.is_const,
-                                f.is_unsafe,
-                            ))))
-                        } else {
-                            Ok(None)
+                    ident.emit(ctx)?;
+                    write!(ctx, "(")?;
+                    let mut first = true;
+                    for (arg, arg_ty) in self.args.iter().zip(f.args.iter()) {
+                        if !first {
+                            write!(ctx, ", ")?;
                         }
+                        first = false;
+                        if let Ok(Some(argval)) = arg.try_eval(ctx) {
+                            if let Some(argval) = argval.coerce(ctx, arg_ty)? {
+                                argval.emit(ctx)?;
+                                continue;
+                            }
+                        }
+                        arg.emit(ctx)?;
                     }
-                }
+                    write!(ctx, ")")?;
+                    if f.is_unsafe {
+                        write!(ctx, " }}")?;
+                    }
+                    Ok(())
+                })?;
+                return Ok(Some(Value::RustCode(RustCode::boxed(
+                    out,
+                    f.return_type.clone(),
+                    f.is_const,
+                    f.is_unsafe,
+                ))));
             }
         }
 
