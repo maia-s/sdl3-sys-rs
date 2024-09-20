@@ -1171,9 +1171,11 @@ impl Eval for Expr {
                         let lhs = lhs.coerce_to_int(ctx)?.unwrap_or(lhs);
                         match &lhs {
                             Value::I32(lhs) => Ok(Some(Value::I32(lhs $op shift))),
-                            Value::U31(lhs) | Value::U32(lhs) => Ok(Some(Value::U32(lhs $op shift))),
+                            Value::U31(lhs) => Ok(Some(Value::I32((*lhs as i32) $op shift))),
+                            Value::U32(lhs) => Ok(Some(Value::U32(lhs $op shift))),
                             Value::I64(lhs) => Ok(Some(Value::I64(lhs $op shift))),
-                            Value::U63(lhs) | Value::U64(lhs) => Ok(Some(Value::U64(lhs $op shift))),
+                            Value::U63(lhs) => Ok(Some(Value::I64((*lhs as i64) $op shift))),
+                            Value::U64(lhs) => Ok(Some(Value::U64(lhs $op shift))),
                             Value::RustCode(rc) => {
                                 let code = ctx.capture_output(|ctx| {
                                     write!(ctx, "(")?;

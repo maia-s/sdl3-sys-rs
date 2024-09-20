@@ -25,12 +25,64 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
     },
     DefinePatch {
         module: Some("pixels"),
-        match_ident: |i| matches!(i, "SDL_ISPIXELFORMAT_FOURCC" /*| "SDL_PIXELFLAG"*/),
+        match_ident: |i| matches!(i, "SDL_DEFINE_PIXELFORMAT"),
         patch: |_ctx, define| {
             let Some(args) = &mut define.args else {
                 unreachable!()
             };
-            //args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
+            assert!(args[0].ident.as_str() == "type");
+            args[0].ty = Type::ident(Ident::new_inline("SDL_PixelType"));
+            assert!(args[1].ident.as_str() == "order");
+            //args[1].ty = !!! FIXME
+            assert!(args[2].ident.as_str() == "layout");
+            args[2].ty = Type::ident(Ident::new_inline("SDL_PackedLayout"));
+            define.value = define
+                .value
+                .wrap_enum(Type::ident(Ident::new_inline("SDL_PixelFormat")));
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("pixels"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_PIXELFLAG" | "SDL_PIXELORDER" | "SDL_BITSPERPIXEL" | "SDL_BYTESPERPIXEL"
+            )
+        },
+        patch: |_ctx, define| {
+            let Some(args) = &mut define.args else {
+                unreachable!()
+            };
+            args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("pixels"),
+        match_ident: |i| matches!(i, "SDL_PIXELLAYOUT"),
+        patch: |_ctx, define| {
+            let Some(args) = &mut define.args else {
+                unreachable!()
+            };
+            args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
+            define.value = define
+                .value
+                .wrap_enum(Type::ident(Ident::new_inline("SDL_PackedLayout")));
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("pixels"),
+        match_ident: |i| matches!(i, "SDL_PIXELTYPE"),
+        patch: |_ctx, define| {
+            let Some(args) = &mut define.args else {
+                unreachable!()
+            };
+            args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
+            define.value = define
+                .value
+                .wrap_enum(Type::ident(Ident::new_inline("SDL_PixelType")));
             Ok(true)
         },
     },
