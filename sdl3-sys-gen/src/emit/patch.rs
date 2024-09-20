@@ -39,7 +39,11 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
         match_ident: |i| {
             matches!(
                 i,
-                "SDL_InvalidParamError" | "SDL_TriggerBreakpoint" | "SDL_zeroa"
+                "SDL_InvalidParamError"
+                    | "SDL_stack_alloc"
+                    | "SDL_stack_free"
+                    | "SDL_TriggerBreakpoint"
+                    | "SDL_zeroa"
             )
         },
         patch: |_, _| Ok(true),

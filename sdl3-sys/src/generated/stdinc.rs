@@ -682,12 +682,6 @@ extern "C" {
     pub fn SDL_GetNumAllocations() -> ::core::ffi::c_int;
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_stack_alloc`
-
-pub unsafe fn SDL_stack_free(data: *mut ::core::ffi::c_void) {
-    unsafe { SDL_free(data) }
-}
-
 extern "C" {
     /// Get the process environment.
     ///
