@@ -1562,6 +1562,17 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM: &::core::ffi::CStr =
 pub const SDL_HINT_JOYSTICK_HIDAPI_STEAMDECK: &::core::ffi::CStr =
     unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_STEAMDECK\0") };
 
+/// A variable controlling whether the HIDAPI driver for HORI licensed Steam
+/// controllers should be used.
+///
+/// This variable can be set to the following values: "0" - HIDAPI driver is
+/// not used "1" - HIDAPI driver is used
+///
+/// The default is the value of SDL_HINT_JOYSTICK_HIDAPI
+pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI: &::core::ffi::CStr = unsafe {
+    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_STEAM_HORI\0")
+};
+
 /// A variable controlling whether the HIDAPI driver for Nintendo Switch
 /// controllers should be used.
 ///

@@ -4,6 +4,9 @@
 //! but they may differ in how or whether they handle certain edge cases. When
 //! in doubt, consult the documentation for details.
 
+#[cfg(all(windows, target_env = "msvc"))]
+emit! {}
+
 pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
 
 // [sdl3-sys-gen] skipped function-like define `SDL_arraysize`
