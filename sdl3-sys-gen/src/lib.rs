@@ -22,16 +22,20 @@ fn skip(module: &str) -> bool {
         "begin_code",
         "close_code",
         "copying",
+        "egl",
         "endian",
+        "intrin",
+        "oldnames",
         "platform_defines",
     ]
     .contains(&module)
         || module.starts_with("main")
+        || module.starts_with("opengl")
         || module.starts_with("test")
 }
 
-fn skip_emit(module: &str) -> bool {
-    ["egl", "intrin", "oldnames"].contains(&module) || module.starts_with("opengl")
+fn skip_emit(_module: &str) -> bool {
+    false
 }
 
 fn run_rustfmt(path: &Path) {
