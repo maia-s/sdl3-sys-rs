@@ -1321,25 +1321,6 @@ impl Eval for Expr {
             Expr::HasInclude(_) => return Ok(Some(Value::Bool(false))),
 
             Expr::Value(value) => return Ok(Some(value.clone())),
-
-            Expr::WrapEnum(ty, val) => {
-                let Some(val) = val.try_eval(ctx)? else {
-                    return Ok(None);
-                };
-                let out = ctx.capture_output(|ctx| {
-                    ty.emit(ctx)?;
-                    write!(ctx, "(")?;
-                    val.emit(ctx)?;
-                    write!(ctx, ")")?;
-                    Ok(())
-                })?;
-                return Ok(Some(Value::RustCode(RustCode::boxed(
-                    out,
-                    (**ty).clone(),
-                    val.is_const(),
-                    val.is_unsafe(),
-                ))));
-            }
         }
 
         Err(ParseErr::new(self.span(), "missing implementation for eval").into())
@@ -1401,11 +1382,6 @@ impl Emit for Expr {
             Expr::ArrayValues { .. } => todo!(),
             Expr::Value(value) => value.emit(ctx),
             Expr::HasInclude(_) => todo!(),
-
-            Expr::WrapEnum(_, expr) => self
-                .try_eval(ctx)?
-                .ok_or_else(|| ParseErr::new(expr.span(), "couldn't eval"))?
-                .emit(ctx),
         }
     }
 }

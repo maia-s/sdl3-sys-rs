@@ -81,16 +81,6 @@ impl DefineValue {
             _ => todo!(),
         }
     }
-
-    #[must_use]
-    pub fn wrap_enum(&self, ty: Type) -> Self {
-        match self {
-            DefineValue::Expr(expr) => {
-                DefineValue::Expr(Expr::WrapEnum(Box::new(ty), Box::new(expr.clone())))
-            }
-            _ => todo!(),
-        }
-    }
 }
 
 impl Parse for DefineValue {

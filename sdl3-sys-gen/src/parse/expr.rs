@@ -33,7 +33,6 @@ pub enum Expr {
 
     // only created by the emitter
     Value(Value),
-    WrapEnum(Box<Type>, Box<Expr>),
 }
 
 impl Expr {
@@ -232,7 +231,6 @@ impl GetSpan for Expr {
             Self::ArrayIndex { span, .. } => span.clone(),
             Self::ArrayValues { span, .. } => span.clone(),
             Self::Value(_) => Span::none(),
-            Self::WrapEnum(_, expr) => expr.span()
         }
     }
 }

@@ -38,7 +38,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             args[2].ty = Type::ident(Ident::new_inline("SDL_PackedLayout"));
             define.value = define
                 .value
-                .wrap_enum(Type::ident(Ident::new_inline("SDL_PixelFormat")));
+                .cast_expr(Type::ident(Ident::new_inline("SDL_PixelFormat")));
             Ok(true)
         },
     },
@@ -68,7 +68,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
             define.value = define
                 .value
-                .wrap_enum(Type::ident(Ident::new_inline("SDL_PackedLayout")));
+                .cast_expr(Type::ident(Ident::new_inline("SDL_PackedLayout")));
             Ok(true)
         },
     },
@@ -82,7 +82,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
             define.value = define
                 .value
-                .wrap_enum(Type::ident(Ident::new_inline("SDL_PixelType")));
+                .cast_expr(Type::ident(Ident::new_inline("SDL_PixelType")));
             Ok(true)
         },
     },

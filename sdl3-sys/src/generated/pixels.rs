@@ -174,20 +174,6 @@ pub const SDL_PACKEDLAYOUT_8888: SDL_PackedLayout = SDL_PackedLayout::_8888;
 pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout::_2101010;
 pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_1010102;
 
-#[inline(always)]
-pub const fn SDL_DEFINE_PIXELFORMAT(
-    r#type: SDL_PixelType,
-    order: ::core::primitive::i32,
-    layout: SDL_PackedLayout,
-    bits: ::core::primitive::i32,
-    bytes: ::core::primitive::i32,
-) -> SDL_PixelFormat {
-    SDL_PixelFormat(
-        (((((268435456_i32 | (r#type.0 << 24)) | (order << 20)) | (layout.0 << 16)) | (bits << 8))
-            | (bytes << 0)),
-    )
-}
-
 // [sdl3-sys-gen] skipped function-like define `SDL_BITSPERPIXEL`
 
 // [sdl3-sys-gen] skipped function-like define `SDL_BYTESPERPIXEL`
@@ -381,6 +367,20 @@ pub const SDL_PIXELFORMAT_NV21: SDL_PixelFormat = SDL_PixelFormat::NV21;
 pub const SDL_PIXELFORMAT_P010: SDL_PixelFormat = SDL_PixelFormat::P010;
 /// Android video texture format
 pub const SDL_PIXELFORMAT_EXTERNAL_OES: SDL_PixelFormat = SDL_PixelFormat::EXTERNAL_OES;
+
+#[inline(always)]
+pub const fn SDL_DEFINE_PIXELFORMAT(
+    r#type: SDL_PixelType,
+    order: ::core::primitive::i32,
+    layout: SDL_PackedLayout,
+    bits: ::core::primitive::i32,
+    bytes: ::core::primitive::i32,
+) -> SDL_PixelFormat {
+    SDL_PixelFormat(
+        (((((268435456_i32 | (r#type.0 << 24)) | (order << 20)) | (layout.0 << 16)) | (bits << 8))
+            | (bytes << 0)),
+    )
+}
 
 #[inline(always)]
 pub const fn SDL_PIXELFLAG(X: SDL_PixelFormat) -> ::core::ffi::c_int {
