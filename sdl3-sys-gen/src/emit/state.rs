@@ -406,6 +406,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         Ok(())
     }
 
+    #[must_use]
     pub fn set_debug_log_guard(&self, enable: bool) -> impl Drop {
         pub struct Guard(Rc<RefCell<InnerEmitContext>>, bool);
 
@@ -462,6 +463,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.indent -= 4;
     }
 
+    #[must_use]
     pub fn with_target_dependent_preproc_state_guard(
         &mut self,
     ) -> (Rc<RefCell<PreProcState>>, impl Drop) {
@@ -515,6 +517,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner_mut_map(|ctx| &mut ctx.scope)
     }
 
+    #[must_use]
     pub fn subscope_guard(&mut self) -> impl Drop {
         pub struct Guard(Rc<RefCell<InnerEmitContext>>);
 
@@ -611,6 +614,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner().preproc_eval_mode != 0
     }
 
+    #[must_use]
     pub fn preproc_eval_mode_guard(&mut self) -> impl Drop {
         pub struct Guard(Rc<RefCell<InnerEmitContext>>);
 
@@ -766,6 +770,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner().patch_enabled
     }
 
+    #[must_use]
     pub fn disable_patch_guard(&mut self) -> impl Drop {
         pub struct Guard(Rc<RefCell<InnerEmitContext>>, bool);
 
@@ -780,6 +785,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         Guard(Rc::clone(&self.inner), patch_enabled)
     }
 
+    #[must_use]
     pub fn expect_unresolved_sym_dependency_guard(&mut self) -> impl Drop {
         pub struct Guard(Rc<RefCell<InnerEmitContext>>);
 
