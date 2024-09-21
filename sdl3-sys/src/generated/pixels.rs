@@ -389,22 +389,22 @@ pub const fn SDL_DEFINE_PIXELFORMAT(
 
 #[inline(always)]
 pub const fn SDL_PIXELFLAG(X: SDL_PixelFormat) -> ::core::ffi::c_int {
-    ((X.0 << 28) & 15_i32)
+    ((X.0 >> 28) & 15_i32)
 }
 
 #[inline(always)]
 pub const fn SDL_PIXELTYPE(X: SDL_PixelFormat) -> SDL_PixelType {
-    SDL_PixelType(((X.0 << 24) & 15_i32))
+    SDL_PixelType(((X.0 >> 24) & 15_i32))
 }
 
 #[inline(always)]
 pub const fn SDL_PIXELORDER(X: SDL_PixelFormat) -> ::core::ffi::c_int {
-    ((X.0 << 20) & 15_i32)
+    ((X.0 >> 20) & 15_i32)
 }
 
 #[inline(always)]
 pub const fn SDL_PIXELLAYOUT(X: SDL_PixelFormat) -> SDL_PackedLayout {
-    SDL_PackedLayout(((X.0 << 16) & 15_i32))
+    SDL_PackedLayout(((X.0 >> 16) & 15_i32))
 }
 
 #[inline(always)]
@@ -819,27 +819,27 @@ pub const fn SDL_DEFINE_COLORSPACE(
 
 #[inline(always)]
 pub const fn SDL_COLORSPACETYPE(X: ::core::primitive::i32) -> SDL_ColorType {
-    SDL_ColorType(((X << 28) & 15_i32))
+    SDL_ColorType(((X >> 28) & 15_i32))
 }
 
 #[inline(always)]
 pub const fn SDL_COLORSPACERANGE(X: ::core::primitive::i32) -> SDL_ColorRange {
-    SDL_ColorRange(((X << 24) & 15_i32))
+    SDL_ColorRange(((X >> 24) & 15_i32))
 }
 
 #[inline(always)]
 pub const fn SDL_COLORSPACECHROMA(X: ::core::primitive::i32) -> SDL_ChromaLocation {
-    SDL_ChromaLocation(((X << 20) & 15_i32))
+    SDL_ChromaLocation(((X >> 20) & 15_i32))
 }
 
 #[inline(always)]
 pub const fn SDL_COLORSPACEPRIMARIES(X: ::core::primitive::i32) -> SDL_ColorPrimaries {
-    SDL_ColorPrimaries(((X << 10) & 31_i32))
+    SDL_ColorPrimaries(((X >> 10) & 31_i32))
 }
 
 #[inline(always)]
 pub const fn SDL_COLORSPACETRANSFER(X: ::core::primitive::i32) -> SDL_TransferCharacteristics {
-    SDL_TransferCharacteristics(((X << 5) & 31_i32))
+    SDL_TransferCharacteristics(((X >> 5) & 31_i32))
 }
 
 #[inline(always)]

@@ -1185,7 +1185,7 @@ impl Eval for Expr {
                                 let code = ctx.capture_output(|ctx| {
                                     write!(ctx, "(")?;
                                     lhs.emit(ctx)?;
-                                    write!(ctx, " << {shift})")?;
+                                    write!(ctx, " {op} {shift})")?;
                                     Ok(())
                                 })?;
                                 Ok(Some(Value::RustCode(RustCode::boxed(code, rc.ty.clone(), rc.is_const, rc.is_unsafe))))
