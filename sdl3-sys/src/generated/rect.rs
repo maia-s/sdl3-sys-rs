@@ -78,13 +78,160 @@ pub struct SDL_FRect {
     pub h: ::core::ffi::c_float,
 }
 
-// [sdl3-sys-gen] skipped inline function `SDL_RectToFRect`
+/// Convert an SDL_Rect to SDL_FRect
+///
+/// \param rect a pointer to an SDL_Rect.
+/// \param frect a pointer filled in with the floating point representation of
+///              `rect`.
+///
+/// \threadsafety It is safe to call this function from any thread.
+///
+/// \since This function is available since SDL 3.0.0.
+#[inline(always)]
+pub unsafe fn SDL_RectToFRect(rect: *const SDL_Rect, frect: *mut SDL_FRect) {
+    unsafe {
+        crate::ptr_write_field!(
+            frect,
+            SDL_FRect,
+            x,
+            ::core::ffi::c_float,
+            (unsafe { crate::ptr_read_field!(rect, SDL_Rect, x, ::core::ffi::c_int) }
+                as ::core::ffi::c_float)
+        )
+    };
+    unsafe {
+        crate::ptr_write_field!(
+            frect,
+            SDL_FRect,
+            y,
+            ::core::ffi::c_float,
+            (unsafe { crate::ptr_read_field!(rect, SDL_Rect, y, ::core::ffi::c_int) }
+                as ::core::ffi::c_float)
+        )
+    };
+    unsafe {
+        crate::ptr_write_field!(
+            frect,
+            SDL_FRect,
+            w,
+            ::core::ffi::c_float,
+            (unsafe { crate::ptr_read_field!(rect, SDL_Rect, w, ::core::ffi::c_int) }
+                as ::core::ffi::c_float)
+        )
+    };
+    unsafe {
+        crate::ptr_write_field!(
+            frect,
+            SDL_FRect,
+            h,
+            ::core::ffi::c_float,
+            (unsafe { crate::ptr_read_field!(rect, SDL_Rect, h, ::core::ffi::c_int) }
+                as ::core::ffi::c_float)
+        )
+    };
+}
 
-// [sdl3-sys-gen] skipped inline function `SDL_PointInRect`
+/// Determine whether a point resides inside a rectangle.
+///
+/// A point is considered part of a rectangle if both `p` and `r` are not NULL,
+/// and `p`'s x and y coordinates are >= to the rectangle's top left corner,
+/// and < the rectangle's x+w and y+h. So a 1x1 rectangle considers point (0,0)
+/// as "inside" and (0,1) as not.
+///
+/// Note that this is a forced-inline function in a header, and not a public
+/// API function available in the SDL library (which is to say, the code is
+/// embedded in the calling program and the linker and dynamic loader will not
+/// be able to find this function inside SDL itself).
+///
+/// \param p the point to test.
+/// \param r the rectangle to test.
+/// \returns true if `p` is contained by `r`, false otherwise.
+///
+/// \threadsafety It is safe to call this function from any thread.
+///
+/// \since This function is available since SDL 3.0.0.
+#[inline(always)]
+pub unsafe fn SDL_PointInRect(p: *const SDL_Point, r: *const SDL_Rect) -> ::core::primitive::bool {
+    return if (((((!p.is_null() && !r.is_null())
+        && (unsafe { crate::ptr_read_field!(p, SDL_Point, x, ::core::ffi::c_int) }
+            >= unsafe { crate::ptr_read_field!(r, SDL_Rect, x, ::core::ffi::c_int) }))
+        && (unsafe { crate::ptr_read_field!(p, SDL_Point, x, ::core::ffi::c_int) }
+            < (unsafe { crate::ptr_read_field!(r, SDL_Rect, x, ::core::ffi::c_int) }
+                + unsafe { crate::ptr_read_field!(r, SDL_Rect, w, ::core::ffi::c_int) })))
+        && (unsafe { crate::ptr_read_field!(p, SDL_Point, y, ::core::ffi::c_int) }
+            >= unsafe { crate::ptr_read_field!(r, SDL_Rect, y, ::core::ffi::c_int) }))
+        && (unsafe { crate::ptr_read_field!(p, SDL_Point, y, ::core::ffi::c_int) }
+            < (unsafe { crate::ptr_read_field!(r, SDL_Rect, y, ::core::ffi::c_int) }
+                + unsafe { crate::ptr_read_field!(r, SDL_Rect, h, ::core::ffi::c_int) })))
+    {
+        true
+    } else {
+        false
+    };
+}
 
-// [sdl3-sys-gen] skipped inline function `SDL_RectEmpty`
+/// Determine whether a rectangle has no area.
+///
+/// A rectangle is considered "empty" for this function if `r` is NULL, or if
+/// `r`'s width and/or height are <= 0.
+///
+/// Note that this is a forced-inline function in a header, and not a public
+/// API function available in the SDL library (which is to say, the code is
+/// embedded in the calling program and the linker and dynamic loader will not
+/// be able to find this function inside SDL itself).
+///
+/// \param r the rectangle to test.
+/// \returns true if the rectangle is "empty", false otherwise.
+///
+/// \threadsafety It is safe to call this function from any thread.
+///
+/// \since This function is available since SDL 3.0.0.
+#[inline(always)]
+pub unsafe fn SDL_RectEmpty(r: *const SDL_Rect) -> ::core::primitive::bool {
+    return if ((!(!r.is_null())
+        || (unsafe { crate::ptr_read_field!(r, SDL_Rect, w, ::core::ffi::c_int) } <= 0))
+        || (unsafe { crate::ptr_read_field!(r, SDL_Rect, h, ::core::ffi::c_int) } <= 0))
+    {
+        true
+    } else {
+        false
+    };
+}
 
-// [sdl3-sys-gen] skipped inline function `SDL_RectsEqual`
+/// Determine whether two rectangles are equal.
+///
+/// Rectangles are considered equal if both are not NULL and each of their x,
+/// y, width and height match.
+///
+/// Note that this is a forced-inline function in a header, and not a public
+/// API function available in the SDL library (which is to say, the code is
+/// embedded in the calling program and the linker and dynamic loader will not
+/// be able to find this function inside SDL itself).
+///
+/// \param a the first rectangle to test.
+/// \param b the second rectangle to test.
+/// \returns true if the rectangles are equal, false otherwise.
+///
+/// \threadsafety It is safe to call this function from any thread.
+///
+/// \since This function is available since SDL 3.0.0.
+#[inline(always)]
+pub unsafe fn SDL_RectsEqual(a: *const SDL_Rect, b: *const SDL_Rect) -> ::core::primitive::bool {
+    return if (((((!a.is_null() && !b.is_null())
+        && (unsafe { crate::ptr_read_field!(a, SDL_Rect, x, ::core::ffi::c_int) }
+            == unsafe { crate::ptr_read_field!(b, SDL_Rect, x, ::core::ffi::c_int) }))
+        && (unsafe { crate::ptr_read_field!(a, SDL_Rect, y, ::core::ffi::c_int) }
+            == unsafe { crate::ptr_read_field!(b, SDL_Rect, y, ::core::ffi::c_int) }))
+        && (unsafe { crate::ptr_read_field!(a, SDL_Rect, w, ::core::ffi::c_int) }
+            == unsafe { crate::ptr_read_field!(b, SDL_Rect, w, ::core::ffi::c_int) }))
+        && (unsafe { crate::ptr_read_field!(a, SDL_Rect, h, ::core::ffi::c_int) }
+            == unsafe { crate::ptr_read_field!(b, SDL_Rect, h, ::core::ffi::c_int) }))
+    {
+        true
+    } else {
+        false
+    };
+}
 
 extern "C" {
     /// Determine whether two rectangles intersect.
@@ -195,13 +342,174 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-// [sdl3-sys-gen] skipped inline function `SDL_PointInRectFloat`
+/// Determine whether a point resides inside a floating point rectangle.
+///
+/// A point is considered part of a rectangle if both `p` and `r` are not NULL,
+/// and `p`'s x and y coordinates are >= to the rectangle's top left corner,
+/// and <= the rectangle's x+w and y+h. So a 1x1 rectangle considers point
+/// (0,0) and (0,1) as "inside" and (0,2) as not.
+///
+/// Note that this is a forced-inline function in a header, and not a public
+/// API function available in the SDL library (which is to say, the code is
+/// embedded in the calling program and the linker and dynamic loader will not
+/// be able to find this function inside SDL itself).
+///
+/// \param p the point to test.
+/// \param r the rectangle to test.
+/// \returns true if `p` is contained by `r`, false otherwise.
+///
+/// \threadsafety It is safe to call this function from any thread.
+///
+/// \since This function is available since SDL 3.0.0.
+#[inline(always)]
+pub unsafe fn SDL_PointInRectFloat(
+    p: *const SDL_FPoint,
+    r: *const SDL_FRect,
+) -> ::core::primitive::bool {
+    return if (((((!p.is_null() && !r.is_null())
+        && (unsafe { crate::ptr_read_field!(p, SDL_FPoint, x, ::core::ffi::c_float) }
+            >= unsafe { crate::ptr_read_field!(r, SDL_FRect, x, ::core::ffi::c_float) }))
+        && (unsafe { crate::ptr_read_field!(p, SDL_FPoint, x, ::core::ffi::c_float) }
+            <= (unsafe { crate::ptr_read_field!(r, SDL_FRect, x, ::core::ffi::c_float) }
+                + unsafe { crate::ptr_read_field!(r, SDL_FRect, w, ::core::ffi::c_float) })))
+        && (unsafe { crate::ptr_read_field!(p, SDL_FPoint, y, ::core::ffi::c_float) }
+            >= unsafe { crate::ptr_read_field!(r, SDL_FRect, y, ::core::ffi::c_float) }))
+        && (unsafe { crate::ptr_read_field!(p, SDL_FPoint, y, ::core::ffi::c_float) }
+            <= (unsafe { crate::ptr_read_field!(r, SDL_FRect, y, ::core::ffi::c_float) }
+                + unsafe { crate::ptr_read_field!(r, SDL_FRect, h, ::core::ffi::c_float) })))
+    {
+        true
+    } else {
+        false
+    };
+}
 
-// [sdl3-sys-gen] skipped inline function `SDL_RectEmptyFloat`
+/// Determine whether a floating point rectangle can contain any point.
+///
+/// A rectangle is considered "empty" for this function if `r` is NULL, or if
+/// `r`'s width and/or height are < 0.0f.
+///
+/// Note that this is a forced-inline function in a header, and not a public
+/// API function available in the SDL library (which is to say, the code is
+/// embedded in the calling program and the linker and dynamic loader will not
+/// be able to find this function inside SDL itself).
+///
+/// \param r the rectangle to test.
+/// \returns true if the rectangle is "empty", false otherwise.
+///
+/// \threadsafety It is safe to call this function from any thread.
+///
+/// \since This function is available since SDL 3.0.0.
+#[inline(always)]
+pub unsafe fn SDL_RectEmptyFloat(r: *const SDL_FRect) -> ::core::primitive::bool {
+    return if ((!(!r.is_null())
+        || (unsafe { crate::ptr_read_field!(r, SDL_FRect, w, ::core::ffi::c_float) } < 0.0_f32))
+        || (unsafe { crate::ptr_read_field!(r, SDL_FRect, h, ::core::ffi::c_float) } < 0.0_f32))
+    {
+        true
+    } else {
+        false
+    };
+}
 
-// [sdl3-sys-gen] skipped inline function `SDL_RectsEqualEpsilon`
+/// Determine whether two floating point rectangles are equal, within some
+/// given epsilon.
+///
+/// Rectangles are considered equal if both are not NULL and each of their x,
+/// y, width and height are within `epsilon` of each other. If you don't know
+/// what value to use for `epsilon`, you should call the SDL_RectsEqualFloat
+/// function instead.
+///
+/// Note that this is a forced-inline function in a header, and not a public
+/// API function available in the SDL library (which is to say, the code is
+/// embedded in the calling program and the linker and dynamic loader will not
+/// be able to find this function inside SDL itself).
+///
+/// \param a the first rectangle to test.
+/// \param b the second rectangle to test.
+/// \param epsilon the epsilon value for comparison.
+/// \returns true if the rectangles are equal, false otherwise.
+///
+/// \threadsafety It is safe to call this function from any thread.
+///
+/// \since This function is available since SDL 3.0.0.
+///
+/// \sa SDL_RectsEqualFloat
+#[inline(always)]
+pub unsafe fn SDL_RectsEqualEpsilon(
+    a: *const SDL_FRect,
+    b: *const SDL_FRect,
+    epsilon: ::core::ffi::c_float,
+) -> ::core::primitive::bool {
+    return if ((!a.is_null() && !b.is_null())
+        && ((a == b)
+            || ((((unsafe {
+                SDL_fabsf(
+                    (unsafe { crate::ptr_read_field!(a, SDL_FRect, x, ::core::ffi::c_float) }
+                        - unsafe { crate::ptr_read_field!(b, SDL_FRect, x, ::core::ffi::c_float) }),
+                )
+            } <= epsilon)
+                && (unsafe {
+                    SDL_fabsf(
+                        (unsafe { crate::ptr_read_field!(a, SDL_FRect, y, ::core::ffi::c_float) }
+                            - unsafe {
+                                crate::ptr_read_field!(b, SDL_FRect, y, ::core::ffi::c_float)
+                            }),
+                    )
+                } <= epsilon))
+                && (unsafe {
+                    SDL_fabsf(
+                        (unsafe { crate::ptr_read_field!(a, SDL_FRect, w, ::core::ffi::c_float) }
+                            - unsafe {
+                                crate::ptr_read_field!(b, SDL_FRect, w, ::core::ffi::c_float)
+                            }),
+                    )
+                } <= epsilon))
+                && (unsafe {
+                    SDL_fabsf(
+                        (unsafe { crate::ptr_read_field!(a, SDL_FRect, h, ::core::ffi::c_float) }
+                            - unsafe {
+                                crate::ptr_read_field!(b, SDL_FRect, h, ::core::ffi::c_float)
+                            }),
+                    )
+                } <= epsilon))))
+    {
+        true
+    } else {
+        false
+    };
+}
 
-// [sdl3-sys-gen] skipped inline function `SDL_RectsEqualFloat`
+/// Determine whether two floating point rectangles are equal, within a default
+/// epsilon.
+///
+/// Rectangles are considered equal if both are not NULL and each of their x,
+/// y, width and height are within SDL_FLT_EPSILON of each other. This is often
+/// a reasonable way to compare two floating point rectangles and deal with the
+/// slight precision variations in floating point calculations that tend to pop
+/// up.
+///
+/// Note that this is a forced-inline function in a header, and not a public
+/// API function available in the SDL library (which is to say, the code is
+/// embedded in the calling program and the linker and dynamic loader will not
+/// be able to find this function inside SDL itself).
+///
+/// \param a the first rectangle to test.
+/// \param b the second rectangle to test.
+/// \returns true if the rectangles are equal, false otherwise.
+///
+/// \threadsafety It is safe to call this function from any thread.
+///
+/// \since This function is available since SDL 3.0.0.
+///
+/// \sa SDL_RectsEqualEpsilon
+#[inline(always)]
+pub unsafe fn SDL_RectsEqualFloat(
+    a: *const SDL_FRect,
+    b: *const SDL_FRect,
+) -> ::core::primitive::bool {
+    return unsafe { SDL_RectsEqualEpsilon(a, b, SDL_FLT_EPSILON) };
+}
 
 extern "C" {
     /// Determine whether two rectangles intersect with float precision.

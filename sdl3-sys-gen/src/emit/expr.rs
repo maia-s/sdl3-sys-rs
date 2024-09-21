@@ -23,6 +23,7 @@ pub enum Value {
     String(StringLiteral),
     TargetDependent(DefineState),
     RustCode(Box<RustCode>),
+    Place(Box<Value>, Option<Ident>),
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -47,7 +48,7 @@ impl Value {
             &Value::F64(f) => !f.is_nan() && f != 0.0,
             &Value::Bool(b) => b,
             Value::String(_) => true,
-            Value::TargetDependent(_) | Value::RustCode(_) => unreachable!(),
+            Value::TargetDependent(_) | Value::RustCode(_) | Value::Place(_, _) => unreachable!(),
         }
     }
 
@@ -69,6 +70,7 @@ impl Value {
             | Value::String(_) => true,
             Value::TargetDependent(_) => false,
             Value::RustCode(rc) => rc.is_const,
+            Value::Place(ptr, _) => ptr.is_const(),
         }
     }
 
@@ -86,23 +88,38 @@ impl Value {
             | Value::String(_)
             | Value::TargetDependent(_) => false,
             Value::RustCode(rc) => rc.is_unsafe,
+            Value::Place(ptr, _) => ptr.is_unsafe(),
         }
     }
 
-    pub fn ty(&self) -> Type {
+    pub fn ty(&self) -> Result<Type, EmitErr> {
         match self {
-            Value::I32(_) => Type::primitive(PrimitiveType::Int32T),
-            Value::U31(_) => Type::primitive(PrimitiveType::Int32T),
-            Value::U32(_) => Type::primitive(PrimitiveType::Uint32T),
-            Value::I64(_) => Type::primitive(PrimitiveType::Int64T),
-            Value::U63(_) => Type::primitive(PrimitiveType::Int64T),
-            Value::U64(_) => Type::primitive(PrimitiveType::Uint64T),
-            Value::F32(_) => Type::primitive(PrimitiveType::Float),
-            Value::F64(_) => Type::primitive(PrimitiveType::Double),
-            Value::Bool(_) => Type::bool(),
-            Value::String(_) => Type::rust("&::core::ffi::CStr", true),
-            Value::RustCode(r) => r.ty.clone(),
+            Value::I32(_) => Ok(Type::primitive(PrimitiveType::Int32T)),
+            Value::U31(_) => Ok(Type::primitive(PrimitiveType::Int32T)),
+            Value::U32(_) => Ok(Type::primitive(PrimitiveType::Uint32T)),
+            Value::I64(_) => Ok(Type::primitive(PrimitiveType::Int64T)),
+            Value::U63(_) => Ok(Type::primitive(PrimitiveType::Int64T)),
+            Value::U64(_) => Ok(Type::primitive(PrimitiveType::Uint64T)),
+            Value::F32(_) => Ok(Type::primitive(PrimitiveType::Float)),
+            Value::F64(_) => Ok(Type::primitive(PrimitiveType::Double)),
+            Value::Bool(_) => Ok(Type::bool()),
+            Value::String(_) => Ok(Type::rust("&::core::ffi::CStr", true)),
+            Value::RustCode(r) => Ok(r.ty.clone()),
             Value::TargetDependent(_) => todo!(),
+            Value::Place(ptr, _) => {
+                let Some(Type {
+                    ty: TypeEnum::Pointer(p),
+                    ..
+                }) = ptr.ty()?.inner_ty()
+                else {
+                    return Err(ParseErr::new(
+                        ptr.ty()?.span(),
+                        "can't get type of place of unknown type",
+                    )
+                    .into());
+                };
+                Ok(*p)
+            }
         }
     }
 
@@ -114,6 +131,14 @@ impl Value {
             }};
         }
         match (&*lhs, &*rhs) {
+            (Value::Place(_, _), _) => {
+                *lhs = lhs.clone().deref_read(ctx)?;
+                Value::promote(ctx, lhs, rhs)
+            }
+            (_, Value::Place(_, _)) => {
+                *rhs = rhs.clone().deref_read(ctx)?;
+                Value::promote(ctx, lhs, rhs)
+            }
             (Value::I32(_), Value::I32(_)) => Ok(Promoted::Equal),
             (Value::I32(_), Value::U31(rhv)) => set!(Right, rhs, rhv, I32),
             (Value::I32(lhv), Value::U32(_)) => set!(Left, lhs, lhv, U32),
@@ -243,9 +268,10 @@ impl Value {
                     if let Some(rt) = rhv.ty.inner_ty() {
                         if lt == rt {
                             Ok(Promoted::Equal)
-                        } else if let (Some(mut lc), Some(mut rc)) =
-                            (lt.conjure_primitive_value(), rt.conjure_primitive_value())
-                        {
+                        } else if let (Some(mut lc), Some(mut rc)) = (
+                            lt.conjure_primitive_value(ctx)?,
+                            rt.conjure_primitive_value(ctx)?,
+                        ) {
                             let p = Value::promote(ctx, &mut lc, &mut rc)?;
                             if matches!(p, Promoted::Left | Promoted::Both) {
                                 let Some(cast) =
@@ -286,13 +312,13 @@ impl Value {
                     return Value::promote(ctx, lhs, rhs);
                 }
                 if let Some(lt) = lhv.ty.inner_ty() {
-                    if let Some(mut lc) = lt.conjure_primitive_value() {
+                    if let Some(mut lc) = lt.conjure_primitive_value(ctx)? {
                         match Value::promote(ctx, &mut lc, rhs)? {
                             Promoted::None => Ok(Promoted::None),
                             Promoted::Equal => Ok(Promoted::Equal),
                             p @ Promoted::Left | p @ Promoted::Both => {
                                 let Some(cast) =
-                                    Cast::boxed(Span::none(), rhs.ty(), Expr::Value(lhs.clone()))
+                                    Cast::boxed(Span::none(), rhs.ty()?, Expr::Value(lhs.clone()))
                                         .try_eval(ctx)?
                                 else {
                                     unreachable!()
@@ -306,7 +332,7 @@ impl Value {
                         Ok(Promoted::None)
                     }
                 } else {
-                    lhv.ty.resolve_to(rhs.ty());
+                    lhv.ty.resolve_to(rhs.ty()?);
                     Value::promote(ctx, lhs, rhs)
                 }
             }
@@ -316,14 +342,14 @@ impl Value {
                     return Value::promote(ctx, lhs, rhs);
                 }
                 if let Some(rt) = rhv.ty.inner_ty() {
-                    if let Some(mut rc) = rt.conjure_primitive_value() {
+                    if let Some(mut rc) = rt.conjure_primitive_value(ctx)? {
                         match Value::promote(ctx, lhs, &mut rc)? {
                             Promoted::None => Ok(Promoted::None),
                             Promoted::Equal => Ok(Promoted::Equal),
                             Promoted::Left => Ok(Promoted::Left),
                             p @ Promoted::Right | p @ Promoted::Both => {
                                 let Some(cast) =
-                                    Cast::boxed(Span::none(), lhs.ty(), Expr::Value(rhs.clone()))
+                                    Cast::boxed(Span::none(), lhs.ty()?, Expr::Value(rhs.clone()))
                                         .try_eval(ctx)?
                                 else {
                                     unreachable!()
@@ -336,7 +362,7 @@ impl Value {
                         Ok(Promoted::None)
                     }
                 } else {
-                    rhv.ty.resolve_to(lhs.ty());
+                    rhv.ty.resolve_to(lhs.ty()?);
                     Value::promote(ctx, lhs, rhs)
                 }
             }
@@ -414,27 +440,46 @@ impl Value {
                             is_unsafe,
                         ))));
                     }
-                } else if target_bool
-                    && !matches!(
+                } else if target_bool {
+                    if matches!(
+                        ty,
+                        Type {
+                            ty: TypeEnum::Pointer(_),
+                            ..
+                        }
+                    ) {
+                        let value = ctx.capture_output(|ctx| {
+                            write!(ctx, "!")?;
+                            self.emit(ctx)?;
+                            write!(ctx, ".is_null()")?;
+                            Ok(())
+                        })?;
+                        return Ok(Some(Value::RustCode(RustCode::boxed(
+                            value,
+                            target.clone(),
+                            false, // FIXME: can't compare pointers in const
+                            is_unsafe,
+                        ))));
+                    } else if !matches!(
                         ty,
                         Type {
                             ty: TypeEnum::Primitive(PrimitiveType::Bool),
                             ..
                         }
-                    )
-                {
-                    let out = ctx.capture_output(|ctx| {
-                        write!(ctx, "(")?;
-                        self.emit(ctx)?;
-                        write!(ctx, " != 0)")?;
-                        Ok(())
-                    })?;
-                    return Ok(Some(Value::RustCode(RustCode::boxed(
-                        out,
-                        target.clone(),
-                        is_const,
-                        is_unsafe,
-                    ))));
+                    ) {
+                        let value = ctx.capture_output(|ctx| {
+                            write!(ctx, "(")?;
+                            self.emit(ctx)?;
+                            write!(ctx, " != 0)")?;
+                            Ok(())
+                        })?;
+                        return Ok(Some(Value::RustCode(RustCode::boxed(
+                            value,
+                            target.clone(),
+                            is_const,
+                            is_unsafe,
+                        ))));
+                    }
                 }
             }
 
@@ -489,6 +534,63 @@ impl Value {
             }
         }
         Ok(None)
+    }
+
+    pub fn deref_read(self, ctx: &EmitContext) -> Result<Value, EmitErr> {
+        if let Value::Place(ptr, field) = self {
+            let Some(ty) = ptr.ty()?.inner_ty() else {
+                return Err(
+                    ParseErr::new(ptr.ty()?.span(), "can't read value of unknown type").into(),
+                );
+            };
+            let Type {
+                ty: TypeEnum::Pointer(p),
+                ..
+            } = ty
+            else {
+                todo!()
+            };
+            let value = if let Some(field) = field {
+                let TypeEnum::Ident(s) = &p.ty else { todo!() };
+                let Some(sym) = ctx.lookup_sym(s) else {
+                    todo!()
+                };
+                let Some(fty) = sym.field_type(ctx, field.as_str()) else {
+                    todo!()
+                };
+                ctx.capture_output(|ctx| {
+                    write!(ctx, "unsafe {{ crate::ptr_read_field!(")?;
+                    ptr.emit(ctx)?;
+                    write!(ctx, ", ")?;
+                    p.emit(ctx)?;
+                    write!(ctx, ", ")?;
+                    field.emit(ctx)?;
+                    write!(ctx, ", ")?;
+                    fty.emit(ctx)?;
+                    write!(ctx, ") }}")?;
+                    Ok(())
+                })?
+            } else {
+                ctx.capture_output(|ctx| {
+                    write!(ctx, "unsafe {{ ")?;
+                    ptr.emit(ctx)?;
+                    write!(ctx, ".read() }}")?;
+                    {
+                        write!(ctx, ".")?;
+                        field.emit(ctx)?;
+                    }
+                    Ok(())
+                })?
+            };
+            Ok(Value::RustCode(RustCode::boxed(
+                value,
+                *p,
+                ptr.is_const(),
+                true,
+            )))
+        } else {
+            Ok(self)
+        }
     }
 }
 
@@ -552,6 +654,7 @@ impl Emit for Value {
                 return Err(ParseErr::new(Span::none(), "can't emit indeterminate value").into())
             }
             Value::RustCode(s) => ctx.write_str(&s.value)?,
+            Value::Place(_, _) => self.clone().deref_read(ctx)?.emit(ctx)?,
         }
         Ok(())
     }
@@ -615,8 +718,8 @@ impl Eval for Cast {
         if let Some(expr) = self.expr.try_eval(ctx)? {
             is_const = expr.is_const();
             is_unsafe = expr.is_unsafe();
-            if expr.ty().is_uninferred() {
-                expr.ty().resolve_to(self.ty.clone());
+            if expr.ty()?.is_uninferred() {
+                expr.ty()?.resolve_to(self.ty.clone());
             }
         }
         let out = if let Some(sym) = self.ty.is_c_enum(ctx)? {
@@ -739,8 +842,9 @@ impl Eval for SizeOf {
                         // special case: sizeof(*pointer_variable)
                         if uop.op.as_str() == "*" {
                             if let Expr::Ident(ident) = &uop.expr.deparenthesize() {
-                                if let Some(Sym { ty: Some(ty), .. }) =
-                                    ctx.lookup_sym(&ident.clone().try_into().unwrap())
+                                if let Some(Sym {
+                                    value_ty: Some(ty), ..
+                                }) = ctx.lookup_sym(&ident.clone().try_into().unwrap())
                                 {
                                     if let Some(ty) = ty.get_pointer_type() {
                                         let code = ctx.capture_output(|ctx| {
@@ -768,7 +872,7 @@ impl Eval for SizeOf {
                             if let (Expr::Cast(lhs), Expr::Ident(rhs)) = (&lhs, &bop.rhs) {
                                 if let Some(ty) = lhs.ty.get_pointer_type() {
                                     let code = ctx.capture_output(|ctx| {
-                                        write!(ctx, "size_of_field!(")?;
+                                        write!(ctx, "crate::size_of_field!(")?;
                                         ty.emit(ctx)?;
                                         write!(ctx, ", {rhs})")?;
                                         Ok(())
@@ -790,7 +894,7 @@ impl Eval for SizeOf {
                 if let Ok(Some(val)) = expr.try_eval(ctx) {
                     let code = ctx.capture_output(|ctx| {
                         write!(ctx, "::core::mem::size_of::<")?;
-                        val.ty().emit(ctx)?;
+                        val.ty()?.emit(ctx)?;
                         write!(ctx, ">()")?;
                         Ok(())
                     })?;
@@ -825,6 +929,24 @@ impl Expr {
 
 impl Eval for Expr {
     fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        macro_rules! eval {
+            ($expr:expr) => {{
+                let expr = &$expr;
+                match expr.try_eval(ctx) {
+                    Ok(Some(value)) => value,
+                    Ok(None) => {
+                        log_debug!(ctx, "expr evaled to None: {}", expr.span());
+                        return Ok(None);
+                    }
+                    Err(err) => {
+                        log_debug!(ctx, "expr errored: {}", expr.span());
+                        log_debug!(ctx, "{err:#?}");
+                        return Err(err);
+                    }
+                }
+            }};
+        }
+
         match self {
             Expr::Parenthesized(p) => return p.expr.try_eval(ctx),
 
@@ -840,7 +962,7 @@ impl Eval for Expr {
                         }
                         return value.try_eval(ctx);
                     } else if let Some(sym) = ctx.lookup_sym(&i) {
-                        if let Some(ty) = sym.ty {
+                        if let Some(ty) = sym.value_ty {
                             return Ok(Some(Value::RustCode(RustCode::boxed(
                                 i.to_string(),
                                 ty,
@@ -863,7 +985,7 @@ impl Eval for Expr {
                     _ => {
                         if let Ok(ident) = Ident::try_from(ident.clone()) {
                             if let Some(sym) = ctx.lookup_sym(&ident) {
-                                return if let Some(ty) = &sym.ty {
+                                return if let Some(ty) = &sym.value_ty {
                                     Ok(Some(Value::RustCode(RustCode::boxed(
                                         ident.to_string(),
                                         ty.clone(),
@@ -901,32 +1023,28 @@ impl Eval for Expr {
             Expr::SizeOf(s) => return s.try_eval(ctx),
 
             Expr::UnaryOp(uop) => {
-                let expr = uop.expr.try_eval(ctx)?;
-                let Some(expr) = expr else { return Ok(None) };
+                let expr = eval!(uop.expr);
 
                 return match uop.op.as_str().as_bytes() {
-                    b"!" => match expr {
-                        Value::String(_) => Ok(None),
-                        Value::TargetDependent(ds) => Ok(Some(Value::TargetDependent(ds.not()))),
-                        Value::RustCode(rc) => match &rc.ty.ty {
-                            TypeEnum::Primitive(PrimitiveType::Bool) => {
-                                Ok(Some(Value::RustCode(RustCode::boxed(
-                                    format!("!({})", rc.value),
-                                    Type::bool(),
-                                    rc.is_const,
-                                    rc.is_unsafe,
-                                ))))
+                    b"!" => {
+                        if ctx.is_preproc_eval_mode() {
+                            if let Value::TargetDependent(ds) = expr {
+                                return Ok(Some(Value::TargetDependent(ds.not())));
                             }
-                            TypeEnum::Primitive(_) => Ok(Some(Value::RustCode(RustCode::boxed(
-                                format!("(({}) != 0)", rc.value),
-                                Type::bool(),
-                                rc.is_const,
-                                rc.is_unsafe,
-                            )))),
-                            _ => Ok(None),
-                        },
-                        _ => Ok(Some(Value::Bool(expr.is_falsy()))),
-                    },
+                        }
+                        let expr = expr.coerce(ctx, &Type::bool())?.unwrap_or(expr);
+                        match expr {
+                            Value::Bool(b) => Ok(Some(Value::Bool(!b))),
+                            Value::RustCode(mut rc) => {
+                                rc.value.insert_str(0, "!(");
+                                rc.value.push(')');
+                                Ok(Some(Value::RustCode(rc)))
+                            }
+                            _ => unreachable!(),
+                        }
+                    }
+
+                    b"*" => Ok(Some(Value::Place(Box::new(expr), None))),
 
                     b"+" => match expr {
                         Value::String(_) => Ok(None),
@@ -977,12 +1095,67 @@ impl Eval for Expr {
             }
 
             Expr::BinaryOp(bop) => {
-                macro_rules! eval {
-                    ($expr:expr) => {{
-                        let Some(value) = $expr.try_eval(ctx)? else {
-                            return Ok(None);
-                        };
-                        value
+                macro_rules! assign {
+                    ($op:tt) => {{
+                        let rhs = eval!(bop.rhs);
+                        if let Expr::Ident(_) = &bop.lhs {
+                            todo!()
+                        } else {
+                            let lhs = eval!(bop.lhs);
+                            let Value::Place(ptr, field) = lhs else {
+                                todo!()
+                            };
+                            let Some(Type {
+                                ty: TypeEnum::Pointer(p),
+                                ..
+                            }) = ptr.ty()?.inner_ty()
+                            else {
+                                todo!()
+                            };
+                            let (value, value_ty) = if let Some(field) = field {
+                                let TypeEnum::Ident(s) = &p.ty else { todo!() };
+                                let Some(sym) = ctx.lookup_sym(s) else {
+                                    todo!()
+                                };
+                                let Some(fty) = sym.field_type(ctx, field.as_str()) else {
+                                    todo!()
+                                };
+                                let value = ctx.capture_output(|ctx| {
+                                    write!(ctx, "unsafe {{ crate::ptr_write_field!(")?;
+                                    ptr.emit(ctx)?;
+                                    write!(ctx, ", ")?;
+                                    p.emit(ctx)?;
+                                    write!(ctx, ", ")?;
+                                    field.emit(ctx)?;
+                                    write!(ctx, ", ")?;
+                                    fty.emit(ctx)?;
+                                    write!(ctx, ", ")?;
+                                    rhs.emit(ctx)?;
+                                    write!(ctx, ") }}")?;
+                                    Ok(())
+                                })?;
+                                (value, fty)
+                            } else {
+                                let value = ctx.capture_output(|ctx| {
+                                    writeln!(ctx, "unsafe {{")?;
+                                    ctx.increase_indent();
+                                    write!(ctx, "let (ptr, value) = (")?;
+                                    ptr.emit(ctx)?;
+                                    write!(ctx, ", ")?;
+                                    rhs.emit(ctx)?;
+                                    writeln!(ctx, ");")?;
+                                    writeln!(ctx, "ptr.write(value);")?;
+                                    writeln!(ctx, "value")?;
+                                    ctx.decrease_indent();
+                                    write!(ctx, "}}")?;
+                                    Ok(())
+                                })?;
+                                (value, *p)
+                            };
+                            return Ok(Some(Value::RustCode(RustCode::boxed(
+                                value, value_ty, false, true,
+                            ))));
+                        }
                     }};
                 }
 
@@ -1003,7 +1176,7 @@ impl Eval for Expr {
                             })?;
                             Ok(Some(Value::RustCode(RustCode::boxed(
                                 code,
-                                lhs.ty(),
+                                lhs.ty()?,
                                 lhs.is_const() && rhs.is_const(),
                                 lhs.is_unsafe() || rhs.is_unsafe(),
                             ))))
@@ -1012,8 +1185,10 @@ impl Eval for Expr {
                 }
 
                 macro_rules! calc {
-                    ($op:tt) => {
-                        match (eval!(bop.lhs), eval!(bop.rhs)) {
+                    ($op:tt) => {{
+                        let lhs = eval!(bop.lhs);
+                        let rhs = eval!(bop.rhs);
+                        match (lhs, rhs) {
                             (Value::I32(lhs), Value::I32(rhs)) => {
                                 Ok(Some(Value::I32(calc!(@ checked $op (lhs, rhs)))))
                             }
@@ -1061,11 +1236,11 @@ impl Eval for Expr {
                                         write!(ctx, ")")?;
                                         Ok(())
                                     })?;
-                                    Ok(Some(Value::RustCode(RustCode::boxed(code, lhs.ty(), lhs.is_const() && rhs.is_const(),lhs.is_unsafe() || rhs.is_unsafe()))))
+                                    Ok(Some(Value::RustCode(RustCode::boxed(code, lhs.ty()?, lhs.is_const() && rhs.is_const(),lhs.is_unsafe() || rhs.is_unsafe()))))
                                 }
                             }
                         }
-                    };
+                    }};
 
                     (@ checked * ($lhs:expr, $rhs:expr)) => {
                         $lhs.checked_mul($rhs).ok_or_else(|| {
@@ -1312,6 +1487,8 @@ impl Eval for Expr {
                         }
                     }
 
+                    b"=" => assign!(=),
+
                     b"==" => compare!(==),
                     b"!=" => compare!(!=),
                     b"<" => compare!(<),
@@ -1321,6 +1498,19 @@ impl Eval for Expr {
 
                     b"<<" => shift!(<<),
                     b">>" => shift!(>>),
+
+                    b"->" => {
+                        let lhs = eval!(bop.lhs);
+                        let Expr::Ident(rhs) = &bop.rhs else {
+                            return Err(
+                                ParseErr::new(bop.rhs.span(), "invalid operator to `->`").into()
+                            );
+                        };
+                        return Ok(Some(Value::Place(
+                            Box::new(lhs.deref_read(ctx)?),
+                            Some(rhs.clone().try_into().unwrap()),
+                        )));
+                    }
 
                     _ => {
                         return Err(
@@ -1361,7 +1551,7 @@ impl Eval for Expr {
                 })?;
                 return Ok(Some(Value::RustCode(RustCode::boxed(
                     value,
-                    on_true.ty(),
+                    on_true.ty()?,
                     cond.is_const() && on_true.is_const() && on_false.is_const(),
                     cond.is_unsafe() || on_true.is_unsafe() || on_false.is_unsafe(),
                 ))));
@@ -1470,7 +1660,7 @@ impl Eval for FnCall {
             }
 
             if let Some(Sym {
-                ty:
+                value_ty:
                     Some(Type {
                         ty: TypeEnum::Function(f),
                         ..

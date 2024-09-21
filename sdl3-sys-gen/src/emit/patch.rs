@@ -19,12 +19,33 @@ pub fn patch_emit_function(ctx: &mut EmitContext, f: &Function) -> Result<bool, 
 
 type EmitFunctionPatch = EmitPatch<Function>;
 
-const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[EmitFunctionPatch {
-    // skip emitting these
-    module: None,
-    match_ident: |i| matches!(i, "__debugbreak" | "_ReadWriteBarrier"),
-    patch: |_, _| Ok(true),
-}];
+const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
+    EmitFunctionPatch {
+        // skip emitting these
+        module: None,
+        match_ident: |i| matches!(i, "__debugbreak" | "_ReadWriteBarrier"),
+        patch: |_, _| Ok(true),
+    },
+    EmitFunctionPatch {
+        module: Some("bits"),
+        match_ident: |i| i == "SDL_MostSignificantBitIndex32",
+        patch: |ctx, f| {
+            f.doc.emit(ctx)?;
+            writeln!(ctx, "#[inline(always)]")?;
+            writeln!(
+                ctx,
+                "pub const fn {}(x: Uint32) -> ::core::ffi::c_int {{",
+                f.ident
+            )?;
+            ctx.increase_indent();
+            writeln!(ctx, "31 - (x.leading_zeros() as ::core::ffi::c_int)")?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            writeln!(ctx)?;
+            Ok(true)
+        },
+    },
+];
 
 pub fn patch_emit_define(ctx: &mut EmitContext, define: &Define) -> Result<bool, EmitErr> {
     patch_emit(ctx, define, define.ident.as_str(), EMIT_DEFINE_PATCHES)
@@ -232,7 +253,7 @@ const EVAL_MACRO_CALL_PATCHES: &[EvalMacroCallPatch] = &[
                 return err();
             };
             Ok(Some(Value::Bool(match builtin.as_str() {
-                "__builtin_add_overflow" | "__builtin_mul_overflow" => true,
+                "__builtin_add_overflow" | "__builtin_mul_overflow" => false,
                 _ => return Err(ParseErr::new(builtin.span(), "unknown builtin").into()),
             })))
         },

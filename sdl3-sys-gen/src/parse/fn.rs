@@ -19,6 +19,12 @@ pub struct Function {
     pub body: Option<Block>,
 }
 
+impl GetSpan for Function {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
+}
+
 impl Parse for Function {
     fn desc() -> Cow<'static, str> {
         "function declaration".into()

@@ -149,6 +149,12 @@ pub struct Block {
     pub items: Items,
 }
 
+impl GetSpan for Block {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
+}
+
 impl Parse for Block {
     fn desc() -> Cow<'static, str> {
         "block".into()
@@ -324,6 +330,12 @@ impl Parse for IfElse {
 pub struct Return {
     pub span: Span,
     pub expr: Expr,
+}
+
+impl GetSpan for Return {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
 }
 
 impl Parse for Return {

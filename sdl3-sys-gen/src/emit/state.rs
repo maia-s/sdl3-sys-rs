@@ -2,7 +2,7 @@ use super::{Emit, EmitErr, EmitResult, Eval, Value};
 use crate::{
     parse::{
         DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident, IdentOrKw, ParseErr,
-        PrimitiveType, RustCode, Span, StructKind, Type,
+        PrimitiveType, RustCode, Span, StructField, StructKind, Type, TypeEnum,
     },
     Gen,
 };
@@ -163,7 +163,6 @@ pub struct EmitContext<'a, 'b> {
     top: bool,
 }
 
-#[derive(Default)]
 pub struct InnerEmitContext {
     module: String,
     pub preproc_state: Rc<RefCell<PreProcState>>,
@@ -175,6 +174,7 @@ pub struct InnerEmitContext {
     sym_dependencies: Option<Vec<Ident>>,
     pending_emits: Vec<(Vec<Ident>, Option<Box<dyn Emit>>)>,
     pending_enabled: bool,
+    function_return_type: Type,
 }
 
 impl<'a, 'b> EmitContext<'a, 'b> {
@@ -342,6 +342,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                 sym_dependencies: None,
                 pending_emits: Vec::new(),
                 pending_enabled: true,
+                function_return_type: Type::void(),
             })),
             output,
             indent: 0,
@@ -518,7 +519,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     #[must_use]
-    pub fn subscope_guard(&mut self) -> impl Drop {
+    pub fn subscope_guard(&self) -> impl Drop {
         pub struct Guard(Rc<RefCell<InnerEmitContext>>);
 
         impl Drop for Guard {
@@ -545,6 +546,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             sym_dependencies: None,
             pending_emits: Vec::new(),
             pending_enabled: true,
+            function_return_type: Type::void(),
         }));
         drop(i);
         EmitContext {
@@ -640,16 +642,20 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     pub fn register_sym(
         &mut self,
         ident: Ident,
-        ty: Option<Type>,
+        alias_ty: Option<Type>,
+        value_ty: Option<Type>,
         enum_base_ty: Option<Type>,
+        fields: Option<Vec<StructField>>,
         can_derive_debug: bool,
     ) -> EmitResult {
         let module = self.inner().module.clone();
         self.scope_mut().register_sym(Sym {
             module,
             ident,
-            ty,
+            alias_ty,
+            value_ty,
             enum_base_ty,
+            fields: fields.unwrap_or_default(),
             can_derive_debug,
         })?;
         self.emit_pending()?;
@@ -861,6 +867,14 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         }
         Ok(())
     }
+
+    pub fn function_return_type(&self) -> Type {
+        self.inner().function_return_type.clone()
+    }
+
+    pub fn set_function_return_type(&self, return_type: Type) {
+        self.inner_mut().function_return_type = return_type;
+    }
 }
 
 impl Drop for EmitContext<'_, '_> {
@@ -1039,9 +1053,31 @@ impl PreProcState {
 pub struct Sym {
     pub module: String,
     pub ident: Ident,
-    pub ty: Option<Type>,
+    pub alias_ty: Option<Type>,
+    pub value_ty: Option<Type>,
     pub enum_base_ty: Option<Type>,
+    pub fields: Vec<StructField>,
     pub can_derive_debug: bool,
+}
+
+impl Sym {
+    pub fn field_type(&self, ctx: &EmitContext, name: &str) -> Option<Type> {
+        for field in self.fields.iter() {
+            if field.ident.as_str() == name {
+                return Some(field.ty.clone());
+            }
+        }
+        if let Some(alias) = &self.alias_ty {
+            if let Some(ty) = &alias.inner_ty() {
+                if let TypeEnum::Ident(i) = &ty.ty {
+                    if let Some(sym) = ctx.lookup_sym(i) {
+                        return sym.field_type(ctx, name);
+                    }
+                }
+            }
+        }
+        None
+    }
 }
 
 #[derive(Clone)]
@@ -1272,8 +1308,10 @@ impl InnerScope {
             self.register_sym(Sym {
                 module: ctx.module().to_string(),
                 ident: ident.clone(),
-                ty: None,
+                alias_ty: None,
+                value_ty: None,
                 enum_base_ty: None,
+                fields: Vec::new(),
                 can_derive_debug: false,
             })?;
         }

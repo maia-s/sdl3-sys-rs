@@ -55,6 +55,15 @@ impl Type {
         }
     }
 
+    pub fn pointer(mut ty: Type, is_pointer_to_const: bool) -> Self {
+        ty.is_const = is_pointer_to_const;
+        Self {
+            span: Span::none(),
+            is_const: false,
+            ty: TypeEnum::Pointer(Box::new(ty)),
+        }
+    }
+
     pub fn bool() -> Self {
         Self::primitive(PrimitiveType::Bool)
     }

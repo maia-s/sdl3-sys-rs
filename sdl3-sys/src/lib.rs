@@ -12,7 +12,7 @@ macro_rules! emit {
 }
 
 // Get the size of a field of a struct or union
-macro_rules! size_of_field {
+macro_rules! _size_of_field {
     ($struct:ty, $field:ident) => {
         $crate::size_of_return_value(&|s: $struct| unsafe {
             // safety: this is never evaluated
@@ -20,11 +20,35 @@ macro_rules! size_of_field {
         })
     };
 }
+use _size_of_field as size_of_field;
 
 #[allow(unused)] // incorrectly detected as unused
 const fn size_of_return_value<T, R>(_: &impl FnOnce(T) -> R) -> usize {
     size_of::<R>()
 }
+
+macro_rules! _ptr_read_field {
+    ($ptr:expr, $struct:ty, $field:ident, $field_ty:ty) => {{
+        let ptr: *const _ = $ptr;
+        ptr.cast::<u8>()
+            .add(::core::mem::offset_of!($struct, $field))
+            .cast::<$field_ty>()
+            .read()
+    }};
+}
+use _ptr_read_field as ptr_read_field;
+
+macro_rules! _ptr_write_field {
+    ($ptr:expr, $struct:ty, $field:ident, $field_ty:ty, $value:expr) => {{
+        let (ptr, value): (*mut _, $field_ty) = ($ptr, $value);
+        ptr.cast::<u8>()
+            .add(::core::mem::offset_of!($struct, $field))
+            .cast::<$field_ty>()
+            .write(value);
+        value
+    }};
+}
+use _ptr_write_field as ptr_write_field;
 
 mod generated;
 pub use generated::*;

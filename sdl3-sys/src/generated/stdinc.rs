@@ -1313,7 +1313,10 @@ extern "C" {
 
 // [sdl3-sys-gen] skipped function-like define `SDL_zero`
 
-// [sdl3-sys-gen] skipped function-like define `SDL_zerop`
+#[inline(always)]
+pub unsafe fn SDL_zerop(x: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void {
+    unsafe { SDL_memset((x), 0, ::core::mem::size_of::<()>()) }
+}
 
 extern "C" {
     pub fn SDL_memcmp(
@@ -4031,25 +4034,75 @@ extern "C" {
 
 // [sdl3-sys-gen] skipped function-like define `SDL_iconv_wchar_utf8`
 
-// [sdl3-sys-gen] skipped inline function `SDL_size_mul_check_overflow`
-
-#[cfg(not(doc))]
-emit! {
-    // [sdl3-sys-gen] skipped inline function `SDL_size_mul_check_overflow_builtin`
-
-    // [sdl3-sys-gen] skipped function-like define `SDL_size_mul_check_overflow`
-
+/// Multiply two integers, checking for overflow.
+///
+/// If `a * b` would overflow, return false.
+///
+/// Otherwise store `a * b` via ret and return true.
+///
+/// \param a the multiplicand.
+/// \param b the multiplier.
+/// \param ret on non-overflow output, stores the multiplication result. May
+///            not be NULL.
+/// \returns false on overflow, true if result is multiplied without overflow.
+///
+/// \threadsafety It is safe to call this function from any thread.
+///
+/// \since This function is available since SDL 3.0.0.
+#[inline(always)]
+pub unsafe fn SDL_size_mul_check_overflow(
+    a: ::core::primitive::usize,
+    b: ::core::primitive::usize,
+    ret: *mut ::core::primitive::usize,
+) -> ::core::primitive::bool {
+    if ((a != 0) && (b > (::core::primitive::usize::MAX / a))) {
+        return false;
+    }
+    unsafe {
+        let (ptr, value) = (ret, (a * b));
+        ptr.write(value);
+        value
+    };
+    return true;
 }
 
-// [sdl3-sys-gen] skipped inline function `SDL_size_add_check_overflow`
+#[cfg(not(doc))]
+emit! {}
+
+/// Add two integers, checking for overflow.
+///
+/// If `a + b` would overflow, return -1.
+///
+/// Otherwise store `a + b` via ret and return 0.
+///
+/// \param a the first addend.
+/// \param b the second addend.
+/// \param ret on non-overflow output, stores the addition result. May not be
+///            NULL.
+/// \returns false on overflow, true if result is added without overflow.
+///
+/// \threadsafety It is safe to call this function from any thread.
+///
+/// \since This function is available since SDL 3.0.0.
+#[inline(always)]
+pub unsafe fn SDL_size_add_check_overflow(
+    a: ::core::primitive::usize,
+    b: ::core::primitive::usize,
+    ret: *mut ::core::primitive::usize,
+) -> ::core::primitive::bool {
+    if (b > (::core::primitive::usize::MAX - a)) {
+        return false;
+    }
+    unsafe {
+        let (ptr, value) = (ret, (a + b));
+        ptr.write(value);
+        value
+    };
+    return true;
+}
 
 #[cfg(not(doc))]
-emit! {
-    // [sdl3-sys-gen] skipped inline function `SDL_size_add_check_overflow_builtin`
-
-    // [sdl3-sys-gen] skipped function-like define `SDL_size_add_check_overflow`
-
-}
+emit! {}
 
 #[cfg(doc)]
 emit! {

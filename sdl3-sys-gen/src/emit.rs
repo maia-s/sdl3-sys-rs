@@ -23,6 +23,7 @@ macro_rules! log_debug {
 
 mod expr;
 pub use expr::Value;
+mod item;
 mod patch;
 use patch::{patch_emit_define, patch_emit_function, patch_emit_macro_call};
 mod state;
@@ -387,7 +388,9 @@ impl Emit for Define {
                     };
                     ctx.register_sym(
                         ident,
+                        None,
                         Some(arg.ty.clone()),
+                        None,
                         None,
                         arg.ty.can_derive_debug(ctx),
                     )?;
@@ -419,9 +422,9 @@ impl Emit for Define {
                     write!(ctx, ", ")?;
                 }
                 write!(ctx, ")")?;
-                if !body.ty().is_void() {
+                if !body.ty()?.is_void() {
                     write!(ctx, " -> ")?;
-                    body.ty().emit(ctx)?;
+                    body.ty()?.emit(ctx)?;
                 }
                 writeln!(ctx, " {{")?;
                 ctx.increase_indent();
@@ -432,15 +435,17 @@ impl Emit for Define {
                 writeln!(ctx)?;
                 Ok(())
             }) {
-                let return_type = body.ty();
+                let return_type = body.ty()?;
                 ctx.register_sym(
                     self.ident.clone().try_into().unwrap(),
+                    None,
                     Some(Type::function(
                         args.iter().map(|arg| arg.ty.clone()).collect(),
                         return_type,
                         body.is_const(),
                         body.is_unsafe(),
                     )),
+                    None,
                     None,
                     false,
                 )?;
@@ -457,10 +462,12 @@ impl Emit for Define {
                 self.value.clone(),
             )?;
             if let Some(value) = self.value.try_eval(ctx)? {
-                let ty = value.ty();
+                let ty = value.ty()?;
                 ctx.register_sym(
                     self.ident.clone().try_into().unwrap(),
+                    None,
                     Some(ty.clone()),
+                    None,
                     None,
                     ty.can_derive_debug(ctx),
                 )?;
@@ -512,12 +519,14 @@ impl Emit for Function {
         } else if self.static_kw.is_none() && !self.attr.contains("SDL_FORCE_INLINE") {
             ctx.register_sym(
                 self.ident.clone(),
+                None,
                 Some(Type::function(
                     self.args.args.iter().map(|arg| arg.ty.clone()).collect(),
                     self.return_type.clone(),
                     false,
                     true,
                 )),
+                None,
                 None,
                 false,
             )?;
@@ -533,7 +542,67 @@ impl Emit for Function {
             writeln!(ctx, ";")?;
             emit_extern_end(ctx, &self.abi, false)?;
         } else {
-            ctx.log_skipped("inline function", self.ident.as_str())?;
+            let Some(body) = &self.body else {
+                ctx.log_skipped("inline function", self.ident.as_str())?;
+                return Err(ParseErr::new(self.span(), "inline function with no body").into());
+            };
+
+            let mut ctx_body = ctx.new_top_level();
+            ctx_body.set_function_return_type(self.return_type.clone());
+
+            for arg in self.args.args.iter() {
+                if let Some(ident) = &arg.ident {
+                    ctx_body.register_sym(
+                        ident.clone(),
+                        None,
+                        Some(arg.ty.clone()),
+                        None,
+                        None,
+                        arg.ty.can_derive_debug(&ctx_body),
+                    )?;
+                }
+            }
+            let Some(body) = body.try_eval(&ctx_body)? else {
+                drop(ctx_body);
+                ctx.log_skipped("inline function", self.ident.as_str())?;
+                return Err(
+                    ParseErr::new(self.span(), "can't eval body of inline function").into(),
+                );
+            };
+            drop(ctx_body);
+
+            ctx.register_sym(
+                self.ident.clone(),
+                None,
+                Some(Type::function(
+                    self.args.args.iter().map(|arg| arg.ty.clone()).collect(),
+                    self.return_type.clone(),
+                    body.is_const(),
+                    body.is_unsafe(),
+                )),
+                None,
+                None,
+                false,
+            )?;
+
+            self.doc.emit(ctx)?;
+            writeln!(ctx, "#[inline(always)]")?;
+            write!(
+                ctx,
+                "pub {}{}fn ",
+                if body.is_const() { "const " } else { "" },
+                if body.is_unsafe() { "unsafe " } else { "" }
+            )?;
+            self.ident.emit(ctx)?;
+            self.args.emit(ctx)?;
+            if !self.return_type.is_void() {
+                write!(ctx, " -> ")?;
+                self.return_type.emit(ctx)?;
+            }
+            write!(ctx, " ")?;
+            body.emit(ctx)?;
+            writeln!(ctx)?;
+            writeln!(ctx)?;
         }
         Ok(())
     }
@@ -733,26 +802,38 @@ impl Type {
         Ok(None)
     }
 
-    pub fn conjure_primitive_value(&self) -> Option<Value> {
+    pub fn conjure_primitive_value(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
         if let Some(ty) = &self.inner_ty() {
-            if let TypeEnum::Primitive(p) = &ty.ty {
-                return Some(match p {
-                    PrimitiveType::Float => Value::F32(0.0),
-                    PrimitiveType::Double => Value::F64(0.0),
-                    PrimitiveType::Bool => Value::Bool(false),
-                    PrimitiveType::Int8T => Value::I32(0),
-                    PrimitiveType::Uint8T => Value::U31(0),
-                    PrimitiveType::Int16T => Value::I32(0),
-                    PrimitiveType::Uint16T => Value::U31(0),
-                    PrimitiveType::Int32T | PrimitiveType::Int => Value::I32(0),
-                    PrimitiveType::Uint32T | PrimitiveType::UnsignedInt => Value::U32(0),
-                    PrimitiveType::Int64T => Value::I64(0),
-                    PrimitiveType::Uint64T => Value::U64(0),
-                    _ => return None,
-                });
+            match &ty.ty {
+                TypeEnum::Primitive(p) => {
+                    return Ok(Some(match p {
+                        PrimitiveType::Float => Value::F32(0.0),
+                        PrimitiveType::Double => Value::F64(0.0),
+                        PrimitiveType::Bool => Value::Bool(false),
+                        PrimitiveType::Int8T => Value::I32(0),
+                        PrimitiveType::Uint8T => Value::U31(0),
+                        PrimitiveType::Int16T => Value::I32(0),
+                        PrimitiveType::Uint16T => Value::U31(0),
+                        PrimitiveType::Int32T | PrimitiveType::Int => Value::I32(0),
+                        PrimitiveType::Uint32T | PrimitiveType::UnsignedInt => Value::U32(0),
+                        PrimitiveType::Int64T => Value::I64(0),
+                        PrimitiveType::Uint64T => Value::U64(0),
+                        _ => return Ok(None),
+                    }));
+                }
+                TypeEnum::Ident(i) => {
+                    if let Some(sym) = ctx.lookup_sym(i) {
+                        if let Some(ty) = &sym.alias_ty {
+                            return ty.conjure_primitive_value(ctx);
+                        }
+                    } else {
+                        ctx.add_unresolved_sym_dependency(i.clone())?;
+                    }
+                }
+                _ => (),
             }
         }
-        None
+        Ok(None)
     }
 }
 
@@ -825,7 +906,7 @@ impl Emit for Type {
                 if let Expr::Ident(ident) = len {
                     if let Some(ty) = ctx
                         .lookup_sym(&ident.clone().try_into().unwrap())
-                        .and_then(|s| s.ty)
+                        .and_then(|s| s.value_ty)
                     {
                         if let TypeEnum::Ident(ident) = &ty.ty {
                             if ctx.lookup_enum_sym(ident).is_some() {
@@ -861,7 +942,14 @@ impl Emit for TypeDef {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         match &self.ty.ty {
             TypeEnum::Primitive(_) => {
-                ctx.register_sym(self.ident.clone(), None, None, true)?;
+                ctx.register_sym(
+                    self.ident.clone(),
+                    Some(self.ty.clone()),
+                    None,
+                    None,
+                    None,
+                    true,
+                )?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type ")?;
                 self.ident.emit(ctx)?;
@@ -878,8 +966,10 @@ impl Emit for TypeDef {
                 })?;
                 ctx.register_sym(
                     self.ident.clone(),
+                    Some(self.ty.clone()),
                     None,
                     sym.enum_base_ty,
+                    None,
                     sym.can_derive_debug,
                 )?;
                 self.doc.emit(ctx)?;
@@ -936,7 +1026,14 @@ impl Emit for TypeDef {
                 #[allow(clippy::unnecessary_literal_unwrap)]
                 let enum_rust_type = enum_rust_type.unwrap_or(Type::primitive(PrimitiveType::Int));
 
-                ctx.register_sym(self.ident.clone(), None, Some(enum_rust_type.clone()), true)?;
+                ctx.register_sym(
+                    self.ident.clone(),
+                    Some(self.ty.clone()),
+                    None,
+                    Some(enum_rust_type.clone()),
+                    None,
+                    true,
+                )?;
 
                 let enum_ident = self.ident.as_str();
                 writeln!(ctx, "#[repr(transparent)]")?;
@@ -961,7 +1058,9 @@ impl Emit for TypeDef {
                 for variant in &e.variants {
                     ctx.register_sym(
                         variant.ident.clone(),
+                        None,
                         Some(Type::ident(self.ident.clone())),
+                        None,
                         None,
                         true,
                     )?;
@@ -985,7 +1084,7 @@ impl Emit for TypeDef {
                     let need_wrap = if let Expr::Ident(ident) = &expr {
                         if let Some(TypeEnum::Ident(tid)) = ctx
                             .lookup_sym(&ident.clone().try_into().unwrap())
-                            .and_then(|s| s.ty)
+                            .and_then(|s| s.value_ty)
                             .map(|t| t.ty)
                         {
                             tid.as_str() != enum_ident
@@ -1026,7 +1125,14 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Struct(s) => {
-                ctx.register_sym(self.ident.clone(), None, None, s.can_derive_debug(ctx))?;
+                ctx.register_sym(
+                    self.ident.clone(),
+                    Some(self.ty.clone()),
+                    None,
+                    None,
+                    s.fields.as_ref().map(|f| f.fields.clone()),
+                    s.can_derive_debug(ctx),
+                )?;
 
                 s.emit_with_doc_and_ident(ctx, self.doc.clone(), false)?;
                 ctx.flush_ool_output()?;
@@ -1046,7 +1152,14 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Pointer(_) => {
-                ctx.register_sym(self.ident.clone(), None, None, true)?;
+                ctx.register_sym(
+                    self.ident.clone(),
+                    Some(self.ty.clone()),
+                    None,
+                    None,
+                    None,
+                    true,
+                )?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type {} = ", self.ident.as_str())?;
                 self.ty.emit(ctx)?;
@@ -1056,13 +1169,27 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Array(_, _) => {
-                ctx.register_sym(self.ident.clone(), None, None, true)?;
+                ctx.register_sym(
+                    self.ident.clone(),
+                    Some(self.ty.clone()),
+                    None,
+                    None,
+                    None,
+                    true,
+                )?;
                 self.doc.emit(ctx)?;
                 todo!()
             }
 
             TypeEnum::FnPointer(f) => {
-                ctx.register_sym(self.ident.clone(), None, None, true)?;
+                ctx.register_sym(
+                    self.ident.clone(),
+                    Some(self.ty.clone()),
+                    None,
+                    None,
+                    None,
+                    true,
+                )?;
                 self.doc.emit(ctx)?;
                 write!(
                     ctx,
@@ -1082,14 +1209,17 @@ impl Emit for TypeDef {
                 Ok(())
             }
 
-            TypeEnum::DotDotDot => {
-                ctx.register_sym(self.ident.clone(), None, None, false)?;
-                self.doc.emit(ctx)?;
-                todo!()
-            }
+            TypeEnum::DotDotDot => todo!(),
 
             TypeEnum::Rust(r, can_derive_debug) => {
-                ctx.register_sym(self.ident.clone(), None, None, *can_derive_debug)?;
+                ctx.register_sym(
+                    self.ident.clone(),
+                    Some(self.ty.clone()),
+                    None,
+                    None,
+                    None,
+                    *can_derive_debug,
+                )?;
                 writeln!(ctx, "pub type {} = {r};", self.ident.as_str())?;
                 Ok(())
             }

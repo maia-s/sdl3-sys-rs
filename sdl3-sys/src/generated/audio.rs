@@ -221,7 +221,20 @@ pub const fn SDL_AUDIO_ISBIGENDIAN(x: ::core::primitive::u32) -> ::core::primiti
     (x & 4096_u32)
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISLITTLEENDIAN`
+/// Determine if an SDL_AudioFormat represents littleendian data.
+///
+/// For example, `SDL_AUDIO_ISLITTLEENDIAN(SDL_AUDIO_S16BE)` returns 0.
+///
+/// \param x an SDL_AudioFormat value.
+/// \returns non-zero if format is littleendian, zero otherwise.
+///
+/// \threadsafety It is safe to call this macro from any thread.
+///
+/// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
+pub const fn SDL_AUDIO_ISLITTLEENDIAN(x: ::core::primitive::u32) -> ::core::primitive::bool {
+    !(SDL_AUDIO_ISBIGENDIAN(x) != 0)
+}
 
 /// Determine if an SDL_AudioFormat represents signed data.
 ///
@@ -238,9 +251,35 @@ pub const fn SDL_AUDIO_ISSIGNED(x: ::core::primitive::u32) -> ::core::primitive:
     (x & 32768_u32)
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISINT`
+/// Determine if an SDL_AudioFormat represents integer data.
+///
+/// For example, `SDL_AUDIO_ISINT(SDL_AUDIO_F32)` returns 0.
+///
+/// \param x an SDL_AudioFormat value.
+/// \returns non-zero if format is integer, zero otherwise.
+///
+/// \threadsafety It is safe to call this macro from any thread.
+///
+/// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
+pub const fn SDL_AUDIO_ISINT(x: ::core::primitive::u32) -> ::core::primitive::bool {
+    !(SDL_AUDIO_ISFLOAT(x) != 0)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_ISUNSIGNED`
+/// Determine if an SDL_AudioFormat represents unsigned data.
+///
+/// For example, `SDL_AUDIO_ISUNSIGNED(SDL_AUDIO_S16)` returns 0.
+///
+/// \param x an SDL_AudioFormat value.
+/// \returns non-zero if format is unsigned, zero otherwise.
+///
+/// \threadsafety It is safe to call this macro from any thread.
+///
+/// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
+pub const fn SDL_AUDIO_ISUNSIGNED(x: ::core::primitive::u32) -> ::core::primitive::bool {
+    !(SDL_AUDIO_ISSIGNED(x) != 0)
+}
 
 /// SDL Audio Device instance IDs.
 ///
