@@ -241,7 +241,9 @@ impl Value {
                 }
                 if let Some(lt) = lhv.ty.inner_ty() {
                     if let Some(rt) = rhv.ty.inner_ty() {
-                        if let (Some(mut lc), Some(mut rc)) =
+                        if lt == rt {
+                            Ok(Promoted::Equal)
+                        } else if let (Some(mut lc), Some(mut rc)) =
                             (lt.conjure_primitive_value(), rt.conjure_primitive_value())
                         {
                             let p = Value::promote(ctx, &mut lc, &mut rc)?;
@@ -626,9 +628,12 @@ impl Eval for Cast {
             })
         } else {
             ctx.capture_output(|ctx| {
+                write!(ctx, "(")?;
                 self.expr.emit(ctx)?;
                 write!(ctx, " as ")?;
-                self.ty.emit(ctx)
+                self.ty.emit(ctx)?;
+                write!(ctx, ")")?;
+                Ok(())
             })
         }?;
         Ok(Some(Value::RustCode(RustCode::boxed(

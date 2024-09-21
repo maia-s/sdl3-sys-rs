@@ -54,54 +54,54 @@ emit! {
 /// \since This macro is available since SDL 3.0.0.
 pub type Sint8 = ::core::primitive::i8;
 
-pub const SDL_MAX_SINT8: Sint8 = 0x7f as Sint8;
+pub const SDL_MAX_SINT8: Sint8 = (0x7f as Sint8);
 
-pub const SDL_MIN_SINT8: Sint8 = (-128_i32) as Sint8;
+pub const SDL_MIN_SINT8: Sint8 = ((-128_i32) as Sint8);
 
 /// An unsigned 8-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Uint8 = ::core::primitive::u8;
 
-pub const SDL_MAX_UINT8: Uint8 = 0xff as Uint8;
+pub const SDL_MAX_UINT8: Uint8 = (0xff as Uint8);
 
-pub const SDL_MIN_UINT8: Uint8 = 0x00 as Uint8;
+pub const SDL_MIN_UINT8: Uint8 = (0x00 as Uint8);
 
 /// A signed 16-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Sint16 = ::core::primitive::i16;
 
-pub const SDL_MAX_SINT16: Sint16 = 0x7fff as Sint16;
+pub const SDL_MAX_SINT16: Sint16 = (0x7fff as Sint16);
 
-pub const SDL_MIN_SINT16: Sint16 = (-32768_i32) as Sint16;
+pub const SDL_MIN_SINT16: Sint16 = ((-32768_i32) as Sint16);
 
 /// An unsigned 16-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Uint16 = ::core::primitive::u16;
 
-pub const SDL_MAX_UINT16: Uint16 = 0xffff as Uint16;
+pub const SDL_MAX_UINT16: Uint16 = (0xffff as Uint16);
 
-pub const SDL_MIN_UINT16: Uint16 = 0x0000 as Uint16;
+pub const SDL_MIN_UINT16: Uint16 = (0x0000 as Uint16);
 
 /// A signed 32-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Sint32 = ::core::primitive::i32;
 
-pub const SDL_MAX_SINT32: Sint32 = 0x7fffffff as Sint32;
+pub const SDL_MAX_SINT32: Sint32 = (0x7fffffff as Sint32);
 
-pub const SDL_MIN_SINT32: Sint32 = (-2147483648_i32) as Sint32;
+pub const SDL_MIN_SINT32: Sint32 = ((-2147483648_i32) as Sint32);
 
 /// An unsigned 32-bit integer type.
 ///
 /// \since This macro is available since SDL 3.0.0.
 pub type Uint32 = ::core::primitive::u32;
 
-pub const SDL_MAX_UINT32: Uint32 = 0xffffffff as Uint32;
+pub const SDL_MAX_UINT32: Uint32 = (0xffffffff as Uint32);
 
-pub const SDL_MIN_UINT32: Uint32 = 0x00000000 as Uint32;
+pub const SDL_MIN_UINT32: Uint32 = (0x00000000 as Uint32);
 
 /// A signed 64-bit integer type.
 ///
@@ -275,7 +275,24 @@ const _: () = ::core::assert!(
         <= ::core::mem::size_of::<::core::ffi::c_ulonglong>())
 );
 
-// [sdl3-sys-gen] skipped function-like define `SDL_FOURCC`
+/// Define a four character code as a Uint32.
+///
+/// \param A the first ASCII character.
+/// \param B the second ASCII character.
+/// \param C the third ASCII character.
+/// \param D the fourth ASCII character.
+/// \returns the four characters converted into a Uint32, one character
+///          per-byte.
+///
+/// \threadsafety It is safe to call this macro from any thread.
+///
+/// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
+pub const fn SDL_FOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> Uint32 {
+    (((((((A) as Uint8) as Uint32) << 0) | ((((B) as Uint8) as Uint32) << 8))
+        | ((((C) as Uint8) as Uint32) << 16))
+        | ((((D) as Uint8) as Uint32) << 24))
+}
 
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -291,7 +308,7 @@ const _: () = ::core::assert!(
 );
 
 const _: () = ::core::assert!(
-    (!(0 as ::core::ffi::c_int) as ::core::ffi::c_int == (-1_i32) as ::core::ffi::c_int)
+    ((!(0 as ::core::ffi::c_int) as ::core::ffi::c_int) == ((-1_i32) as ::core::ffi::c_int))
 );
 
 #[cfg(all(not(any(/* always disabled: SDL_PLATFORM_3DS */)), not(any(/* always disabled: SDL_PLATFORM_VITA */))))]
@@ -3887,13 +3904,13 @@ extern "C" {
     pub fn SDL_tanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-pub const SDL_ICONV_ERROR: ::core::primitive::usize = -1_i32 as ::core::primitive::usize;
+pub const SDL_ICONV_ERROR: ::core::primitive::usize = (-1_i32 as ::core::primitive::usize);
 
-pub const SDL_ICONV_E2BIG: ::core::primitive::usize = -2_i32 as ::core::primitive::usize;
+pub const SDL_ICONV_E2BIG: ::core::primitive::usize = (-2_i32 as ::core::primitive::usize);
 
-pub const SDL_ICONV_EILSEQ: ::core::primitive::usize = -3_i32 as ::core::primitive::usize;
+pub const SDL_ICONV_EILSEQ: ::core::primitive::usize = (-3_i32 as ::core::primitive::usize);
 
-pub const SDL_ICONV_EINVAL: ::core::primitive::usize = -4_i32 as ::core::primitive::usize;
+pub const SDL_ICONV_EINVAL: ::core::primitive::usize = (-4_i32 as ::core::primitive::usize);
 
 pub type SDL_iconv_t = *mut SDL_iconv_data_t;
 

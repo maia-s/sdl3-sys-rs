@@ -174,6 +174,11 @@ pub const SDL_PACKEDLAYOUT_8888: SDL_PackedLayout = SDL_PackedLayout::_8888;
 pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout::_2101010;
 pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_1010102;
 
+#[inline(always)]
+pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> Uint32 {
+    SDL_FOURCC(A, B, C, D)
+}
+
 // [sdl3-sys-gen] skipped function-like define `SDL_BITSPERPIXEL`
 
 // [sdl3-sys-gen] skipped function-like define `SDL_BYTESPERPIXEL`
@@ -796,7 +801,21 @@ pub const SDL_CHROMA_LOCATION_CENTER: SDL_ChromaLocation = SDL_ChromaLocation::C
 /// In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located").
 pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::TOPLEFT;
 
-// [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_COLORSPACE`
+#[inline(always)]
+pub const fn SDL_DEFINE_COLORSPACE(
+    r#type: Uint32,
+    range: Uint32,
+    primaries: Uint32,
+    transfer: Uint32,
+    matrix: Uint32,
+    chroma: Uint32,
+) -> Uint32 {
+    ((((((((r#type) as Uint32) << 28) | (((range) as Uint32) << 24))
+        | (((chroma) as Uint32) << 20))
+        | (((primaries) as Uint32) << 10))
+        | (((transfer) as Uint32) << 5))
+        | (((matrix) as Uint32) << 0))
+}
 
 #[inline(always)]
 pub const fn SDL_COLORSPACETYPE(X: ::core::primitive::i32) -> SDL_ColorType {
@@ -1305,5 +1324,3 @@ extern "C" {
         a: *mut Uint8,
     );
 }
-
-// [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_PIXELFOURCC`
