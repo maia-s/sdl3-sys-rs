@@ -817,6 +817,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     pub fn add_unresolved_sym_dependency(&self, ident: Ident) -> EmitResult {
+        log_debug!(self, "unresolved dependency `{ident}`");
         if let Some(deps) = &mut self.inner_mut().sym_dependencies {
             deps.push(ident);
             Ok(())

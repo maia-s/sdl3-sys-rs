@@ -839,8 +839,20 @@ impl Eval for Expr {
                             .into());
                         }
                         return value.try_eval(ctx);
-                    } else if ctx.is_preproc_eval_mode() {
-                        return Err(ParseErr::new(ident.span(), "undefined macro").into());
+                    } else if let Some(sym) = ctx.lookup_sym(&i) {
+                        if let Some(ty) = sym.ty {
+                            return Ok(Some(Value::RustCode(RustCode::boxed(
+                                i.to_string(),
+                                ty,
+                                true,
+                                false,
+                            ))));
+                        } else {
+                            return Err(ParseErr::new(ident.span(), "symbol isn't a value").into());
+                        }
+                    } else {
+                        ctx.add_unresolved_sym_dependency(i)?;
+                        return Err(ParseErr::new(ident.span(), "unresolved symbol").into());
                     }
                 }
 
@@ -1319,7 +1331,42 @@ impl Eval for Expr {
             }
 
             Expr::PostOp(_) => (),
-            Expr::Ternary(_) => (),
+
+            Expr::Ternary(top) => {
+                let Some(cond) = top.cond.try_eval(ctx)? else {
+                    return Ok(None);
+                };
+                let cond = cond.coerce(ctx, &Type::bool())?.unwrap_or(cond);
+                let Some(mut on_true) = top.on_true.try_eval(ctx)? else {
+                    return Ok(None);
+                };
+                let Some(mut on_false) = top.on_false.try_eval(ctx)? else {
+                    return Ok(None);
+                };
+                if matches!(
+                    Value::promote(ctx, &mut on_true, &mut on_false)?,
+                    Promoted::None
+                ) {
+                    return Ok(None);
+                }
+                let value = ctx.capture_output(|ctx| {
+                    write!(ctx, "if ")?;
+                    cond.emit(ctx)?;
+                    write!(ctx, "{{ ")?;
+                    on_true.emit(ctx)?;
+                    write!(ctx, " }} else {{ ")?;
+                    on_false.emit(ctx)?;
+                    write!(ctx, " }}")?;
+                    Ok(())
+                })?;
+                return Ok(Some(Value::RustCode(RustCode::boxed(
+                    value,
+                    on_true.ty(),
+                    cond.is_const() && on_true.is_const() && on_false.is_const(),
+                    cond.is_unsafe() || on_true.is_unsafe() || on_false.is_unsafe(),
+                ))));
+            }
+
             Expr::ArrayIndex { .. } => (),
             Expr::ArrayValues { .. } => (),
 

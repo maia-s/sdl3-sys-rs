@@ -179,10 +179,6 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
     SDL_FOURCC(A, B, C, D)
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_BITSPERPIXEL`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_BYTESPERPIXEL`
-
 /// Pixel format.
 ///
 /// SDL's pixel formats have the following naming convention:
@@ -413,6 +409,15 @@ pub const fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormat) -> ::core::primit
 }
 
 #[inline(always)]
+pub const fn SDL_BITSPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::i32 {
+    if SDL_ISPIXELFORMAT_FOURCC(X) {
+        0_i32
+    } else {
+        ((X.0 >> 8) & 255_i32)
+    }
+}
+
+#[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormat) -> ::core::primitive::bool {
     (!(SDL_ISPIXELFORMAT_FOURCC(format))
         && ((((SDL_PIXELTYPE(format).0 == SDL_PIXELTYPE_INDEX1.0)
@@ -460,6 +465,22 @@ pub const fn SDL_ISPIXELFORMAT_10BIT(format: SDL_PixelFormat) -> ::core::primiti
     (!(SDL_ISPIXELFORMAT_FOURCC(format))
         && ((SDL_PIXELTYPE(format).0 == SDL_PIXELTYPE_PACKED32.0)
             && (SDL_PIXELLAYOUT(format).0 == SDL_PACKEDLAYOUT_2101010.0)))
+}
+
+#[inline(always)]
+pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::i32 {
+    if SDL_ISPIXELFORMAT_FOURCC(X) {
+        if ((((X.0 == SDL_PIXELFORMAT_YUY2.0) || (X.0 == SDL_PIXELFORMAT_UYVY.0))
+            || (X.0 == SDL_PIXELFORMAT_YVYU.0))
+            || (X.0 == SDL_PIXELFORMAT_P010.0))
+        {
+            2
+        } else {
+            1
+        }
+    } else {
+        ((X.0 >> 0) & 255_i32)
+    }
 }
 
 #[cfg(target_endian = "big")]
