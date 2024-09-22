@@ -79,6 +79,11 @@ impl DefineValue {
                 ty,
                 expr: expr.clone(),
             }))),
+            DefineValue::Ambiguous(amb) => DefineValue::Expr(Expr::Cast(Box::new(Cast {
+                span: Span::none(),
+                ty,
+                expr: Expr::Ambiguous(amb.clone()),
+            }))),
             _ => todo!(),
         }
     }

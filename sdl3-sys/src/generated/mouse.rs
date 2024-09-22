@@ -147,19 +147,19 @@ pub const SDL_MOUSEWHEEL_FLIPPED: SDL_MouseWheelDirection = SDL_MouseWheelDirect
 /// \sa SDL_GetRelativeMouseState
 pub type SDL_MouseButtonFlags = Uint32;
 
-pub const SDL_BUTTON_LEFT: SDL_MouseButtonFlags = (1 as SDL_MouseButtonFlags);
+pub const SDL_BUTTON_LEFT: ::core::primitive::i32 = 1;
 
-pub const SDL_BUTTON_MIDDLE: SDL_MouseButtonFlags = (2 as SDL_MouseButtonFlags);
+pub const SDL_BUTTON_MIDDLE: ::core::primitive::i32 = 2;
 
-pub const SDL_BUTTON_RIGHT: SDL_MouseButtonFlags = (3 as SDL_MouseButtonFlags);
+pub const SDL_BUTTON_RIGHT: ::core::primitive::i32 = 3;
 
-pub const SDL_BUTTON_X1: SDL_MouseButtonFlags = (4 as SDL_MouseButtonFlags);
+pub const SDL_BUTTON_X1: ::core::primitive::i32 = 4;
 
-pub const SDL_BUTTON_X2: SDL_MouseButtonFlags = (5 as SDL_MouseButtonFlags);
+pub const SDL_BUTTON_X2: ::core::primitive::i32 = 5;
 
 #[inline(always)]
-pub const fn SDL_BUTTON(X: SDL_MouseButtonFlags) -> SDL_MouseButtonFlags {
-    ((1_u32 << (X - 1_u32)) as SDL_MouseButtonFlags)
+pub const fn SDL_BUTTON(X: ::core::primitive::i32) -> SDL_MouseButtonFlags {
+    ((1_u32 << (X - 1_i32)) as SDL_MouseButtonFlags)
 }
 
 pub const SDL_BUTTON_LMASK: SDL_MouseButtonFlags = SDL_BUTTON(SDL_BUTTON_LEFT);
