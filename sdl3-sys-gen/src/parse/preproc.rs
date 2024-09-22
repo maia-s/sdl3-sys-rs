@@ -1,7 +1,7 @@
 use super::{
     patch_parsed_define, Ambiguous, Cast, DocComment, DocCommentPost, Expr, GetSpan, Ident,
     IdentOrKw, IntegerLiteral, Item, Items, Literal, Parse, ParseContext, ParseErr, ParseRawRes,
-    Punctuated, RustCode, Span, Type, WsAndComments,
+    Punctuated, Span, Type, WsAndComments,
 };
 use core::mem;
 use std::borrow::Cow;
@@ -43,8 +43,6 @@ pub enum DefineValue {
     Type(Type),
     Items(Items),
     Other(Span),
-    Ambiguous(Ambiguous),
-    RustCode(Box<RustCode>),
     TargetDependent,
     Empty,
     ExprFollowedBy(Expr, Box<DefineValue>),
@@ -79,11 +77,6 @@ impl DefineValue {
                 ty,
                 expr: expr.clone(),
             }))),
-            DefineValue::Ambiguous(amb) => DefineValue::Expr(Expr::Cast(Box::new(Cast {
-                span: Span::none(),
-                ty,
-                expr: Expr::Ambiguous(amb.clone()),
-            }))),
             _ => todo!(),
         }
     }
@@ -114,7 +107,7 @@ impl Parse for DefineValue {
                 if let Some(ty) = ty {
                     ambiguous.push_ty(ty);
                 }
-                Ok((input.end(), Some(Self::Ambiguous(ambiguous))))
+                Ok((input.end(), Some(Self::Expr(Expr::Ambiguous(ambiguous)))))
             } else if let Some(items) = items {
                 Ok((input.end(), Some(Self::Items(items))))
             } else if let Some(expr) = expr {

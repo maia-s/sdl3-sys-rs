@@ -320,14 +320,22 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                 preproc_state.define($define, Some(vec![$(DefineArg::new(IdentOrKw::new_inline($args), Type::infer()))*]), $value)?;
             };
         }
+        let rust = |value: &str, ty, is_const, is_unsafe| {
+            DefineValue::Expr(Expr::Value(Value::RustCode(RustCode::boxed(
+                value.into(),
+                ty,
+                is_const,
+                is_unsafe,
+            ))))
+        };
         defines! {
             "__GNUC__" = DefineValue::parse_expr("4")?; // not currently used
             "__STDC_VERSION__" = DefineValue::parse_expr("202311L")?;
             "_MSC_VER" = DefineValue::parse_expr("1700")?;
-            "FLT_EPSILON" = DefineValue::RustCode(RustCode::boxed("::core::primitive::f32::EPSILON".into(), Type::primitive(PrimitiveType::Float), true, false));
-            "INT64_C"("x") = DefineValue::RustCode(RustCode::boxed("{x}_i64".into(), Type::primitive(PrimitiveType::Int64T), true, false));
-            "UINT64_C"("x") = DefineValue::RustCode(RustCode::boxed("{x}_u64".into(), Type::primitive(PrimitiveType::Uint64T), true, false));
-            "SIZE_MAX" = DefineValue::RustCode(RustCode::boxed("::core::primitive::usize::MAX".into(), Type::primitive(PrimitiveType::SizeT), true, false));
+            "FLT_EPSILON" = rust("::core::primitive::f32::EPSILON", Type::primitive(PrimitiveType::Float), true, false);
+            "INT64_C"("x") = rust("{x}_i64", Type::primitive(PrimitiveType::Int64T), true, false);
+            "UINT64_C"("x") = rust("{x}_u64", Type::primitive(PrimitiveType::Uint64T), true, false);
+            "SIZE_MAX" = rust("::core::primitive::usize::MAX", Type::primitive(PrimitiveType::SizeT), true, false);
             "__has_builtin"("builtin") = DefineValue::Other(Span::new_inline("__has_builtin"));
             "SDL_BIG_ENDIAN" = DefineValue::parse_expr("4321")?;
             "SDL_DISABLE_ALLOCA" = DefineValue::one();

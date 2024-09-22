@@ -670,8 +670,6 @@ impl Eval for DefineValue {
     fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
         match self {
             Self::Expr(expr) => expr.try_eval(ctx),
-            Self::Ambiguous(amb) => amb.try_eval(ctx),
-            Self::RustCode(r) => Ok(Some(Value::RustCode(r.clone()))),
             Self::TargetDependent
             | Self::Type(_)
             | Self::Items(_)
