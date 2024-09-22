@@ -382,8 +382,6 @@ impl Emit for Define {
         } else if matches!(self.value, DefineValue::Empty) {
             // empty define
         } else if let Some(args) = &self.args {
-            let _g = ctx.set_debug_log_guard(self.ident.as_str() == "SDL_CreateThread");
-
             // function-like define
             let body = {
                 let _guard = ctx.subscope_guard();
