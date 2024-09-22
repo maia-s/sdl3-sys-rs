@@ -376,11 +376,8 @@ impl Emit for Define {
         } else if matches!(self.value, DefineValue::Empty) {
             // empty define
         } else if let Some(args) = &self.args {
-            // function-like define
-            if self.value.is_empty() {
-                return Ok(());
-            }
 
+            // function-like define
             let body = {
                 let _guard = ctx.subscope_guard();
                 for arg in args.iter() {

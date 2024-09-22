@@ -716,6 +716,22 @@ impl Eval for Cast {
     fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
         let mut is_const = false;
         let mut is_unsafe = false;
+
+        if let Some(Type {
+            ty: TypeEnum::Ident(ident),
+            ..
+        }) = self.ty.inner_ty()
+        {
+            if let Some(sym) = ctx.lookup_sym(&ident) {
+                if sym.value_ty.is_some() {
+                    // not a type
+                    return Err(ParseErr::new(self.span(), "can't cast to non-type").into());
+                }
+            } else {
+                ctx.add_unresolved_sym_dependency(ident.clone())?;
+                return Err(ParseErr::new(self.span(), "cast to unresolved type").into());
+            }
+        }
         if let Some(expr) = self.expr.try_eval(ctx)? {
             is_const = expr.is_const();
             is_unsafe = expr.is_unsafe();
@@ -1352,38 +1368,52 @@ impl Eval for Expr {
                 macro_rules! shift {
                     ($op:tt) => {{
                         let op = stringify!($op);
-                        let Ok(shift) = u64::try_from(eval!(bop.rhs)) else {
-                            return Err(ParseErr::new(
-                                bop.rhs.span(),
-                                format!("invalid shift value"),
-                            )
-                            .into());
-                        };
 
                         let lhs = eval!(bop.lhs);
                         let lhs = lhs.coerce_to_int(ctx)?.unwrap_or(lhs);
-                        match &lhs {
-                            Value::I32(lhs) => Ok(Some(Value::I32(lhs $op shift))),
-                            Value::U31(lhs) => Ok(Some(Value::I32((*lhs as i32) $op shift))),
-                            Value::U32(lhs) => Ok(Some(Value::U32(lhs $op shift))),
-                            Value::I64(lhs) => Ok(Some(Value::I64(lhs $op shift))),
-                            Value::U63(lhs) => Ok(Some(Value::I64((*lhs as i64) $op shift))),
-                            Value::U64(lhs) => Ok(Some(Value::U64(lhs $op shift))),
-                            Value::RustCode(rc) => {
-                                let code = ctx.capture_output(|ctx| {
-                                    write!(ctx, "(")?;
-                                    lhs.emit(ctx)?;
-                                    write!(ctx, " {op} {shift})")?;
-                                    Ok(())
-                                })?;
-                                Ok(Some(Value::RustCode(RustCode::boxed(code, rc.ty.clone(), rc.is_const, rc.is_unsafe))))
-                            }
 
-                            _ => Err(ParseErr::new(
-                                bop.lhs.span(),
-                                format!("invalid operand to `{op}`"),
-                            )
-                            .into()),
+                        let rhs = eval!(bop.rhs);
+                        let rhs = rhs.coerce_to_int(ctx)?.unwrap_or(rhs);
+
+                        if let Ok(shift) = u64::try_from(rhs.clone()) {
+                            match &lhs {
+                                Value::I32(lhs) => Ok(Some(Value::I32(lhs $op shift))),
+                                Value::U31(lhs) => Ok(Some(Value::I32((*lhs as i32) $op shift))),
+                                Value::U32(lhs) => Ok(Some(Value::U32(lhs $op shift))),
+                                Value::I64(lhs) => Ok(Some(Value::I64(lhs $op shift))),
+                                Value::U63(lhs) => Ok(Some(Value::I64((*lhs as i64) $op shift))),
+                                Value::U64(lhs) => Ok(Some(Value::U64(lhs $op shift))),
+                                Value::RustCode(rc) => {
+                                    let code = ctx.capture_output(|ctx| {
+                                        write!(ctx, "(")?;
+                                        lhs.emit(ctx)?;
+                                        write!(ctx, " {op} {shift})")?;
+                                        Ok(())
+                                    })?;
+                                    Ok(Some(Value::RustCode(RustCode::boxed(code, rc.ty.clone(), rc.is_const, rc.is_unsafe))))
+                                }
+
+                                _ => Err(ParseErr::new(
+                                    bop.lhs.span(),
+                                    format!("invalid operand to `{op}`"),
+                                )
+                                .into()),
+                            }
+                        } else {
+                            let code = ctx.capture_output(|ctx| {
+                                write!(ctx, "(")?;
+                                lhs.emit(ctx)?;
+                                write!(ctx, " {op} ")?;
+                                rhs.emit(ctx)?;
+                                write!(ctx, ")")?;
+                                Ok(())
+                            })?;
+                            Ok(Some(Value::RustCode(RustCode::boxed(
+                                code,
+                                lhs.ty()?,
+                                lhs.is_const() && rhs.is_const(),
+                                lhs.is_unsafe() || rhs.is_unsafe()
+                            ))))
                         }
                     }};
                 }

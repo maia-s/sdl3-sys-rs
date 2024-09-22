@@ -24,6 +24,29 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         },
     },
     DefinePatch {
+        module: Some("mouse"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_BUTTON"
+                    | "SDL_BUTTON_LEFT"
+                    | "SDL_BUTTON_MIDDLE"
+                    | "SDL_BUTTON_RIGHT"
+                    | "SDL_BUTTON_X1"
+                    | "SDL_BUTTON_X2"
+            )
+        },
+        patch: |_ctx, define| {
+            let ty = Type::ident(Ident::new_inline("SDL_MouseButtonFlags"));
+            if let Some(args) = &mut define.args {
+                // SDL_BUTTON
+                args[0].ty = ty.clone();
+            }
+            define.value = define.value.cast_expr(ty);
+            Ok(true)
+        },
+    },
+    DefinePatch {
         module: Some("pixels"),
         match_ident: |i| matches!(i, "SDL_DEFINE_PIXELFORMAT"),
         patch: |_ctx, define| {
