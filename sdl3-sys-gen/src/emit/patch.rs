@@ -1,6 +1,10 @@
 use super::{DefineState, Emit, EmitContext, EmitErr, Eval, Value};
-use crate::parse::{Define, Expr, FnCall, Function, GetSpan, ParseErr, Type};
+use crate::parse::{
+    Define, DefineValue, Expr, FnCall, Function, GetSpan, IdentOrKw, ParseErr, Span, StringLiteral,
+    Type,
+};
 use core::fmt::Write;
+use std::ffi::CString;
 
 struct EmitPatch<T: ?Sized> {
     module: Option<&'static str>,
@@ -61,6 +65,10 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             matches!(
                 i,
                 "SDL_InvalidParamError"
+                    | "SDL_PRILLd"
+                    | "SDL_PRILLu"
+                    | "SDL_PRILLx"
+                    | "SDL_PRILLX"
                     | "SDL_stack_alloc"
                     | "SDL_stack_free"
                     | "SDL_TriggerBreakpoint"
@@ -113,6 +121,34 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             ctx.decrease_indent();
             writeln!(ctx, "}}")?;
             writeln!(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitDefinePatch {
+        module: Some("stdinc"),
+        match_ident: |i| i == "SDL_PRILL_PREFIX",
+        patch: |ctx, define| {
+            define.emit(ctx)?;
+            let Some(Value::String(StringLiteral { str, .. })) = define.value.try_eval(ctx)? else {
+                unreachable!()
+            };
+            let mut bytes = str.into_bytes_with_nul();
+            let edit = bytes.len() - 1;
+            bytes.push(0);
+            for ch in [b'd', b'u', b'x', b'X'] {
+                bytes[edit] = ch;
+                Define {
+                    span: Span::none(),
+                    doc: None,
+                    ident: IdentOrKw::new_inline(format!("SDL_PRILL{}", char::from(ch))),
+                    args: None,
+                    value: DefineValue::Expr(Expr::Value(Value::String(StringLiteral {
+                        span: Span::none(),
+                        str: CString::from_vec_with_nul(bytes.clone()).unwrap(),
+                    }))),
+                }
+                .emit(ctx)?;
+            }
             Ok(true)
         },
     },

@@ -254,21 +254,29 @@ emit! {
 
     pub const SDL_PRILL_PREFIX: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64\0") };
 
+    pub const SDL_PRILLd: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64d\0") };
+
+    pub const SDL_PRILLu: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64u\0") };
+
+    pub const SDL_PRILLx: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64x\0") };
+
+    pub const SDL_PRILLX: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64X\0") };
+
 }
 
 #[cfg(not(windows))]
 emit! {
     pub const SDL_PRILL_PREFIX: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"ll\0") };
 
+    pub const SDL_PRILLd: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"lld\0") };
+
+    pub const SDL_PRILLu: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"llu\0") };
+
+    pub const SDL_PRILLx: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"llx\0") };
+
+    pub const SDL_PRILLX: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"llX\0") };
+
 }
-
-// [sdl3-sys-gen] skipped constant value define `SDL_PRILLd`
-
-// [sdl3-sys-gen] skipped constant value define `SDL_PRILLu`
-
-// [sdl3-sys-gen] skipped constant value define `SDL_PRILLx`
-
-// [sdl3-sys-gen] skipped constant value define `SDL_PRILLX`
 
 const _: () = ::core::assert!((::core::mem::size_of::<::core::primitive::bool>() == 1));
 
