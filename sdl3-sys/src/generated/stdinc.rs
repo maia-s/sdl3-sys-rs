@@ -46,12 +46,7 @@ emit! {
 }
 
 #[cfg(not(doc))]
-emit! {
-    // [sdl3-sys-gen] skipped function-like define `SDL_SINT64_C`
-
-    // [sdl3-sys-gen] skipped function-like define `SDL_UINT64_C`
-
-}
+emit! {}
 
 /// A signed 8-bit integer type.
 ///
@@ -4193,3 +4188,7 @@ pub struct SDL_iconv_data_t {
 }
 
 // [sdl3-sys-gen] skipped function-like define `SDL_HAS_BUILTIN`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_SINT64_C`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_UINT64_C`

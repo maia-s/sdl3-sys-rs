@@ -184,25 +184,15 @@ emit! {
 emit! {
     #[cfg(windows)]
     emit! {
-        // [sdl3-sys-gen] skipped constant value define `SDL_BeginThreadFunction`
-
-        // [sdl3-sys-gen] skipped constant value define `SDL_EndThreadFunction`
-
     }
 
 }
 
 #[cfg(not(doc))]
-emit! {
-    // [sdl3-sys-gen] skipped constant value define `SDL_BeginThreadFunction`
-
-}
+emit! {}
 
 #[cfg(not(doc))]
-emit! {
-    // [sdl3-sys-gen] skipped constant value define `SDL_EndThreadFunction`
-
-}
+emit! {}
 
 #[cfg(not(doc))]
 emit! {
@@ -236,6 +226,32 @@ emit! {
         pub fn SDL_CreateThreadWithPropertiesRuntime(props: SDL_PropertiesID, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
     }
 
+    #[cfg(all(not(doc), not(windows)))]
+    pub const SDL_BeginThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<*const ::core::ffi::c_void, SDL_FunctionPointer>(core::ptr::null()) };
+    #[cfg(all(not(doc), not(windows)))]
+    pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<*const ::core::ffi::c_void, SDL_FunctionPointer>(core::ptr::null()) };
+    #[cfg(all(not(doc), windows))]
+    extern "cdecl" {
+        fn _beginthreadex(security: *mut ::core::ffi::c_void, stack_size: ::core::ffi::c_uint, start_address: Option<extern "stdcall" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, arglist: *mut ::core::ffi::c_void, initflag: ::core::ffi::c_uint, thrdaddr: ::core::ffi::c_uint) -> ::core::primitive::usize;
+        fn _endthreadex(retval: ::core::ffi::c_uint);
+    }
+    #[cfg(all(not(doc), windows))]
+    pub const SDL_BeginThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<unsafe extern "cdecl" fn(*mut ::core::ffi::c_void, ::core::ffi::c_uint, Option<extern "stdcall" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, *mut ::core::ffi::c_void, ::core::ffi::c_uint, ::core::ffi::c_uint) -> ::core::primitive::usize, SDL_FunctionPointer>(_beginthreadex) };
+    #[cfg(all(not(doc), windows))]
+    pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<unsafe extern "cdecl" fn (::core::ffi::c_uint), SDL_FunctionPointer>(_endthreadex) };
+
+    #[inline(always)]
+    pub unsafe fn SDL_CreateThread(r#fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void, ) -> *mut SDL_Thread {
+        unsafe { SDL_CreateThreadRuntime((r#fn), (name), (data), ((SDL_BeginThreadFunction) as SDL_FunctionPointer), ((SDL_EndThreadFunction) as SDL_FunctionPointer)) }
+    }
+
+
+    #[inline(always)]
+    pub unsafe fn SDL_CreateThreadWithProperties(props: SDL_PropertiesID, ) -> *mut SDL_Thread {
+        unsafe { SDL_CreateThreadWithPropertiesRuntime((props), ((SDL_BeginThreadFunction) as SDL_FunctionPointer), ((SDL_EndThreadFunction) as SDL_FunctionPointer)) }
+    }
+
+
     pub const SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.entry_function\0") };
 
     pub const SDL_PROP_THREAD_CREATE_NAME_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.name\0") };
@@ -243,10 +259,6 @@ emit! {
     pub const SDL_PROP_THREAD_CREATE_USERDATA_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.userdata\0") };
 
     pub const SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.stacksize\0") };
-
-    // [sdl3-sys-gen] skipped function-like define `SDL_CreateThread`
-
-    // [sdl3-sys-gen] skipped function-like define `SDL_CreateThreadWithProperties`
 
 }
 

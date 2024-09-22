@@ -2,9 +2,9 @@ use crate::{
     common_ident_prefix,
     parse::{
         ArgDecl, Conditional, ConditionalExpr, Define, DefineValue, DocComment, DocCommentFile,
-        Expr, FnAbi, FnDeclArgs, FnPointer, Function, GetSpan, IdentOrKwT, Include, IntegerLiteral,
-        Item, Items, Literal, ParseErr, PreProcBlock, PrimitiveType, StructKind, StructOrUnion,
-        Type, TypeDef, TypeEnum,
+        Expr, FnAbi, FnDeclArgs, FnPointer, Function, GetSpan, Ident, IdentOrKwT, Include,
+        IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock, PrimitiveType, StructKind,
+        StructOrUnion, Type, TypeDef, TypeEnum,
     },
 };
 use std::{
@@ -109,7 +109,13 @@ pub trait Emit: core::fmt::Debug {
             ctx.emit_define_state_cfg(define_state)?;
             writeln!(ctx, "emit! {{")?;
             ctx.increase_indent();
-            self.emit(&mut { ctx.new_top_level() })?;
+            if define_state
+                == &DefineState::defined(Ident::new_inline("SDL_WIKI_DOCUMENTATION_SECTION")).not()
+            {
+                self.emit(ctx)?;
+            } else {
+                self.emit(&mut { ctx.new_top_level() })?;
+            }
             ctx.decrease_indent();
             writeln!(ctx, "}}")?;
             writeln!(ctx)?;
@@ -376,6 +382,7 @@ impl Emit for Define {
         } else if matches!(self.value, DefineValue::Empty) {
             // empty define
         } else if let Some(args) = &self.args {
+            let _g = ctx.set_debug_log_guard(self.ident.as_str() == "SDL_CreateThread");
 
             // function-like define
             let body = {

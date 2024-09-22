@@ -1,7 +1,7 @@
-use super::{DefineState, Emit, EmitContext, EmitErr, Eval, Value};
+use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, Value};
 use crate::parse::{
-    Define, DefineValue, Expr, FnCall, Function, GetSpan, IdentOrKw, ParseErr, Span, StringLiteral,
-    Type,
+    Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident, IdentOrKw, ParseErr, Span,
+    StringLiteral, Type,
 };
 use core::fmt::Write;
 use std::ffi::CString;
@@ -64,7 +64,9 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
         match_ident: |i| {
             matches!(
                 i,
-                "SDL_InvalidParamError"
+                "SDL_BeginThreadFunction"
+                    | "SDL_EndThreadFunction"
+                    | "SDL_InvalidParamError"
                     | "SDL_PRILLd"
                     | "SDL_PRILLu"
                     | "SDL_PRILLx"
@@ -171,7 +173,60 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             Ok(true)
         },
     },
+    EmitDefinePatch {
+        module: Some("thread"),
+        match_ident: |i| matches!(i, "SDL_CreateThread" | "SDL_CreateThreadWithProperties"),
+        patch: |ctx, define| {
+            emit_begin_end_thread_function(ctx)?;
+            define.emit(ctx)?;
+            Ok(true)
+        },
+    },
 ];
+
+fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
+    let btf = Ident::new_inline("SDL_BeginThreadFunction");
+    if ctx.lookup_sym(&btf).is_some() {
+        return Ok(());
+    }
+    let etf = Ident::new_inline("SDL_EndThreadFunction");
+    let ty = Type::ident(Ident::new_inline("SDL_FunctionPointer"));
+
+    ctx.register_sym(btf, None, Some(ty.clone()), None, None, true)?;
+    ctx.register_sym(etf, None, Some(ty), None, None, true)?;
+
+    let cfg_default = "#[cfg(all(not(doc), not(windows)))]";
+    let cfg_win = "#[cfg(all(not(doc), windows))]";
+    writeln!(ctx, "{cfg_default}")?;
+    writeln!(
+        ctx,
+        "pub const SDL_BeginThreadFunction: SDL_FunctionPointer = unsafe {{ ::core::mem::transmute::<*const ::core::ffi::c_void, SDL_FunctionPointer>(core::ptr::null()) }};"
+    )?;
+    writeln!(ctx, "{cfg_default}")?;
+    writeln!(
+        ctx,
+        "pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe {{ ::core::mem::transmute::<*const ::core::ffi::c_void, SDL_FunctionPointer>(core::ptr::null()) }};"
+    )?;
+    writeln!(ctx, "{cfg_win}")?;
+    writeln!(ctx, "extern \"cdecl\" {{")?;
+    ctx.increase_indent();
+    writeln!(ctx, "fn _beginthreadex(security: *mut ::core::ffi::c_void, stack_size: ::core::ffi::c_uint, start_address: Option<extern \"stdcall\" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, arglist: *mut ::core::ffi::c_void, initflag: ::core::ffi::c_uint, thrdaddr: ::core::ffi::c_uint) -> ::core::primitive::usize;")?;
+    writeln!(ctx, "fn _endthreadex(retval: ::core::ffi::c_uint);")?;
+    ctx.decrease_indent();
+    writeln!(ctx, "}}")?;
+    writeln!(ctx, "{cfg_win}")?;
+    writeln!(
+        ctx,
+        "pub const SDL_BeginThreadFunction: SDL_FunctionPointer = unsafe {{ ::core::mem::transmute::<unsafe extern \"cdecl\" fn(*mut ::core::ffi::c_void, ::core::ffi::c_uint, Option<extern \"stdcall\" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, *mut ::core::ffi::c_void, ::core::ffi::c_uint, ::core::ffi::c_uint) -> ::core::primitive::usize, SDL_FunctionPointer>(_beginthreadex) }};"
+    )?;
+    writeln!(ctx, "{cfg_win}")?;
+    writeln!(
+        ctx,
+        "pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe {{ ::core::mem::transmute::<unsafe extern \"cdecl\" fn (::core::ffi::c_uint), SDL_FunctionPointer>(_endthreadex) }};"
+    )?;
+    writeln!(ctx)?;
+    Ok(())
+}
 
 pub fn patch_emit_macro_call(
     ctx: &mut EmitContext,
