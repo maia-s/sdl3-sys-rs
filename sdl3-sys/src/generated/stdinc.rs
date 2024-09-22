@@ -9,6 +9,10 @@ emit! {}
 
 pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
 
+// [sdl3-sys-gen] skipped function-like define `SDL_COMPILE_TIME_ASSERT`
+
+// [sdl3-sys-gen] skipped function-like define `SDL_COMPILE_TIME_ASSERT`
+
 // [sdl3-sys-gen] skipped function-like define `SDL_arraysize`
 
 // [sdl3-sys-gen] skipped function-like define `SDL_STRINGIFY_ARG`
@@ -244,9 +248,27 @@ pub const SDL_PRIx32: &::core::ffi::CStr =
 pub const SDL_PRIX32: &::core::ffi::CStr =
     unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"X\0") };
 
-// [sdl3-sys-gen] skipped function-like define `SDL_COMPILE_TIME_ASSERT`
+#[cfg(windows)]
+emit! {
+    const _: () = ::core::assert!((::core::mem::size_of::<::core::ffi::c_longlong>() == 8));
 
-// [sdl3-sys-gen] skipped function-like define `SDL_COMPILE_TIME_ASSERT`
+    pub const SDL_PRILL_PREFIX: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64\0") };
+
+}
+
+#[cfg(not(windows))]
+emit! {
+    pub const SDL_PRILL_PREFIX: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"ll\0") };
+
+}
+
+// [sdl3-sys-gen] skipped constant value define `SDL_PRILLd`
+
+// [sdl3-sys-gen] skipped constant value define `SDL_PRILLu`
+
+// [sdl3-sys-gen] skipped constant value define `SDL_PRILLx`
+
+// [sdl3-sys-gen] skipped constant value define `SDL_PRILLX`
 
 const _: () = ::core::assert!((::core::mem::size_of::<::core::primitive::bool>() == 1));
 
@@ -1270,6 +1292,8 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
+// [sdl3-sys-gen] skipped constant value define `SDL_memcpy`
+
 // [sdl3-sys-gen] skipped function-like define `SDL_copyp`
 
 extern "C" {
@@ -1295,6 +1319,8 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
+// [sdl3-sys-gen] skipped constant value define `SDL_memmove`
+
 extern "C" {
     pub fn SDL_memset(
         dst: *mut ::core::ffi::c_void,
@@ -1310,6 +1336,8 @@ extern "C" {
         dwords: ::core::primitive::usize,
     ) -> *mut ::core::ffi::c_void;
 }
+
+// [sdl3-sys-gen] skipped constant value define `SDL_memset`
 
 // [sdl3-sys-gen] skipped function-like define `SDL_zero`
 

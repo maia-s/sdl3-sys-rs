@@ -1,10 +1,10 @@
 use crate::{
     common_ident_prefix,
     parse::{
-        ArgDecl, Conditional, ConditionalExpr, Define, DocComment, DocCommentFile, Expr, FnAbi,
-        FnDeclArgs, FnPointer, Function, GetSpan, IdentOrKwT, Include, IntegerLiteral, Item, Items,
-        Literal, ParseErr, PreProcBlock, PrimitiveType, StructKind, StructOrUnion, Type, TypeDef,
-        TypeEnum,
+        ArgDecl, Conditional, ConditionalExpr, Define, DefineValue, DocComment, DocCommentFile,
+        Expr, FnAbi, FnDeclArgs, FnPointer, Function, GetSpan, IdentOrKwT, Include, IntegerLiteral,
+        Item, Items, Literal, ParseErr, PreProcBlock, PrimitiveType, StructKind, StructOrUnion,
+        Type, TypeDef, TypeEnum,
     },
 };
 use std::{
@@ -373,6 +373,8 @@ impl Emit for Define {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if patch_emit_define(ctx, self)? {
             // patched
+        } else if matches!(self.value, DefineValue::Empty) {
+            // empty define
         } else if let Some(args) = &self.args {
             // function-like define
             if self.value.is_empty() {
@@ -480,6 +482,8 @@ impl Emit for Define {
                 value.emit(ctx)?;
                 writeln!(ctx, ";")?;
                 writeln!(ctx)?;
+            } else {
+                ctx.log_skipped("constant value define", self.ident.as_str())?;
             }
         }
         Ok(())

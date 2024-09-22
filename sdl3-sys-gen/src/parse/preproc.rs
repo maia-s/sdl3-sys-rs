@@ -47,6 +47,7 @@ pub enum DefineValue {
     RustCode(Box<RustCode>),
     TargetDependent,
     Empty,
+    ExprFollowedBy(Expr, Box<DefineValue>),
 }
 
 impl DefineValue {
@@ -116,7 +117,13 @@ impl Parse for DefineValue {
             } else if let Some(ty) = ty {
                 Ok((input.end(), Some(Self::Type(ty))))
             } else {
-                panic!()
+                if let (mut rest, Some(expr)) = Expr::try_parse_raw(ctx, input)? {
+                    WsAndComments::try_parse(ctx, &mut rest)?;
+                    if let Some(follow) = Self::try_parse(ctx, &mut rest)? {
+                        return Ok((rest, Some(Self::ExprFollowedBy(expr, Box::new(follow)))));
+                    }
+                }
+                Err(ParseErr::new(input.start(), "can't parse define value"))
             }
         }
     }

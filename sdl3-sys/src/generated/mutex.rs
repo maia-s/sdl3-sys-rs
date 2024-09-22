@@ -4,6 +4,10 @@ use super::stdinc::*;
 
 use super::error::*;
 
+// [sdl3-sys-gen] skipped constant value define `SDL_SCOPED_CAPABILITY`
+
+// [sdl3-sys-gen] skipped constant value define `SDL_NO_THREAD_SAFETY_ANALYSIS`
+
 extern "C" {
     /// Create a new mutex.
     ///

@@ -281,6 +281,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_BeginThreadFunction",
             "SDL_COMPILE_TIME_ASSERT",
             "SDL_DEFAULT_ASSERT_LEVEL", // !!! FIXME
+            "SDL_DEFINE_STDBOOL",
             "SDL_EndThreadFunction",
             "SDL_FUNCTION_POINTER_IS_VOID_POINTER",
             "SDL_memcpy",
@@ -288,6 +289,10 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_memset",
             "SDL_PI_D",
             "SDL_PI_F",
+            "SDL_PRILLd",
+            "SDL_PRILLu",
+            "SDL_PRILLx",
+            "SDL_PRILLX",
             "SDL_PRIs32",
             "SDL_PRIs64",
             "SDL_PRIu32",

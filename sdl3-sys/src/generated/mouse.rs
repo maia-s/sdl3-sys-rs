@@ -159,6 +159,16 @@ pub const SDL_BUTTON_X2: ::core::primitive::i32 = 5;
 
 // [sdl3-sys-gen] skipped function-like define `SDL_BUTTON`
 
+// [sdl3-sys-gen] skipped constant value define `SDL_BUTTON_LMASK`
+
+// [sdl3-sys-gen] skipped constant value define `SDL_BUTTON_MMASK`
+
+// [sdl3-sys-gen] skipped constant value define `SDL_BUTTON_RMASK`
+
+// [sdl3-sys-gen] skipped constant value define `SDL_BUTTON_X1MASK`
+
+// [sdl3-sys-gen] skipped constant value define `SDL_BUTTON_X2MASK`
+
 extern "C" {
     /// Return whether a mouse is currently connected.
     ///

@@ -676,7 +676,8 @@ impl Eval for DefineValue {
             | Self::Type(_)
             | Self::Items(_)
             | Self::Other(_)
-            | Self::Empty => Ok(None),
+            | Self::Empty
+            | Self::ExprFollowedBy(_, _) => Ok(None),
         }
     }
 }

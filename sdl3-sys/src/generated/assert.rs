@@ -34,7 +34,10 @@
 use super::stdinc::*;
 
 #[cfg(doc)]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped constant value define `SDL_ASSERT_LEVEL`
+
+}
 
 #[cfg(not(doc))]
 emit! {
@@ -66,6 +69,12 @@ emit! {
     }
 
 }
+
+// [sdl3-sys-gen] skipped constant value define `SDL_FUNCTION`
+
+// [sdl3-sys-gen] skipped constant value define `SDL_FILE`
+
+// [sdl3-sys-gen] skipped constant value define `SDL_LINE`
 
 #[cfg(all(windows, target_env = "msvc"))]
 emit! {

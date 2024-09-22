@@ -184,15 +184,25 @@ emit! {
 emit! {
     #[cfg(windows)]
     emit! {
+        // [sdl3-sys-gen] skipped constant value define `SDL_BeginThreadFunction`
+
+        // [sdl3-sys-gen] skipped constant value define `SDL_EndThreadFunction`
+
     }
 
 }
 
 #[cfg(not(doc))]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped constant value define `SDL_BeginThreadFunction`
+
+}
 
 #[cfg(not(doc))]
-emit! {}
+emit! {
+    // [sdl3-sys-gen] skipped constant value define `SDL_EndThreadFunction`
+
+}
 
 #[cfg(not(doc))]
 emit! {
