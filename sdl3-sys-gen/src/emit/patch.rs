@@ -116,6 +116,25 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             Ok(true)
         },
     },
+    EmitDefinePatch {
+        module: Some("stdinc"),
+        match_ident: |i| i == "SDL_zerop",
+        patch: |ctx, define| {
+            define.doc.emit(ctx)?;
+            writeln!(ctx, "///")?;
+            writeln!(ctx, "/// # Safety")?;
+            writeln!(ctx, "/// It must be valid to zero all bytes of `T`, and it must be valid to write a `T` to the memory pointed to by `x`")?;
+            writeln!(ctx, "#[inline(always)]")?;
+            writeln!(ctx, "pub unsafe fn SDL_zerop<T>(x: *mut T) -> *mut T {{")?;
+            ctx.increase_indent();
+            writeln!(ctx, "unsafe {{ x.write_bytes(0, 1) }};")?;
+            writeln!(ctx, "x")?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            writeln!(ctx)?;
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_emit_macro_call(

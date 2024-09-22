@@ -1313,9 +1313,13 @@ extern "C" {
 
 // [sdl3-sys-gen] skipped function-like define `SDL_zero`
 
+///
+/// # Safety
+/// It must be valid to zero all bytes of `T`, and it must be valid to write a `T` to the memory pointed to by `x`
 #[inline(always)]
-pub unsafe fn SDL_zerop(x: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void {
-    unsafe { SDL_memset((x), 0, ::core::mem::size_of::<()>()) }
+pub unsafe fn SDL_zerop<T>(x: *mut T) -> *mut T {
+    unsafe { x.write_bytes(0, 1) };
+    x
 }
 
 extern "C" {
