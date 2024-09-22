@@ -195,8 +195,8 @@ fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
     ctx.register_sym(btf, None, Some(ty.clone()), None, None, true)?;
     ctx.register_sym(etf, None, Some(ty), None, None, true)?;
 
-    let cfg_default = "#[cfg(all(not(doc), not(windows)))]";
-    let cfg_win = "#[cfg(all(not(doc), windows))]";
+    let cfg_default = "#[cfg(not(windows))]";
+    let cfg_win = "#[cfg(windows)]";
     writeln!(ctx, "{cfg_default}")?;
     writeln!(
         ctx,

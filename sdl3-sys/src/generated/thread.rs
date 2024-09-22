@@ -226,18 +226,18 @@ emit! {
         pub fn SDL_CreateThreadWithPropertiesRuntime(props: SDL_PropertiesID, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
     }
 
-    #[cfg(all(not(doc), not(windows)))]
+    #[cfg(not(windows))]
     pub const SDL_BeginThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<*const ::core::ffi::c_void, SDL_FunctionPointer>(core::ptr::null()) };
-    #[cfg(all(not(doc), not(windows)))]
+    #[cfg(not(windows))]
     pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<*const ::core::ffi::c_void, SDL_FunctionPointer>(core::ptr::null()) };
-    #[cfg(all(not(doc), windows))]
+    #[cfg(windows)]
     extern "cdecl" {
         fn _beginthreadex(security: *mut ::core::ffi::c_void, stack_size: ::core::ffi::c_uint, start_address: Option<extern "stdcall" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, arglist: *mut ::core::ffi::c_void, initflag: ::core::ffi::c_uint, thrdaddr: ::core::ffi::c_uint) -> ::core::primitive::usize;
         fn _endthreadex(retval: ::core::ffi::c_uint);
     }
-    #[cfg(all(not(doc), windows))]
+    #[cfg(windows)]
     pub const SDL_BeginThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<unsafe extern "cdecl" fn(*mut ::core::ffi::c_void, ::core::ffi::c_uint, Option<extern "stdcall" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, *mut ::core::ffi::c_void, ::core::ffi::c_uint, ::core::ffi::c_uint) -> ::core::primitive::usize, SDL_FunctionPointer>(_beginthreadex) };
-    #[cfg(all(not(doc), windows))]
+    #[cfg(windows)]
     pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<unsafe extern "cdecl" fn (::core::ffi::c_uint), SDL_FunctionPointer>(_endthreadex) };
 
     #[inline(always)]
