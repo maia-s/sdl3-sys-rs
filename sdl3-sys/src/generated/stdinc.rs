@@ -9,41 +9,14 @@ emit! {}
 
 pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
 
-// [sdl3-sys-gen] skipped function-like define `SDL_COMPILE_TIME_ASSERT`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_COMPILE_TIME_ASSERT`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_arraysize`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_STRINGIFY_ARG`
-
 #[cfg(doc)]
-emit! {
-    // [sdl3-sys-gen] skipped function-like define `SDL_reinterpret_cast`
-
-    // [sdl3-sys-gen] skipped function-like define `SDL_static_cast`
-
-    // [sdl3-sys-gen] skipped function-like define `SDL_const_cast`
-
-}
+emit! {}
 
 #[cfg(not(doc))]
-emit! {
-    // [sdl3-sys-gen] skipped function-like define `SDL_reinterpret_cast`
-
-    // [sdl3-sys-gen] skipped function-like define `SDL_static_cast`
-
-    // [sdl3-sys-gen] skipped function-like define `SDL_const_cast`
-
-}
+emit! {}
 
 #[cfg(doc)]
-emit! {
-    // [sdl3-sys-gen] skipped function-like define `SDL_SINT64_C`
-
-    // [sdl3-sys-gen] skipped function-like define `SDL_UINT64_C`
-
-}
+emit! {}
 
 #[cfg(not(doc))]
 emit! {}
@@ -1013,11 +986,34 @@ extern "C" {
     pub fn SDL_abs(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_min`
+#[inline(always)]
+pub fn SDL_min<T: Copy + PartialOrd>(x: T, y: T) -> T {
+    if x < y {
+        x
+    } else {
+        y
+    }
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_max`
+#[inline(always)]
+pub fn SDL_max<T: Copy + PartialOrd>(x: T, y: T) -> T {
+    if x > y {
+        x
+    } else {
+        y
+    }
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_clamp`
+#[inline(always)]
+pub fn SDL_clamp<T: Copy + PartialOrd>(x: T, a: T, b: T) -> T {
+    if x < a {
+        a
+    } else if x > b {
+        b
+    } else {
+        x
+    }
+}
 
 extern "C" {
     /// Query if a character is alphabetic (a letter).
@@ -1271,58 +1267,73 @@ extern "C" {
     ) -> Uint32;
 }
 
-extern "C" {
-    /// Copy non-overlapping memory.
-    ///
-    /// The memory regions must not overlap. If they do, use SDL_memmove() instead.
-    ///
-    /// \param dst The destination memory region. Must not be NULL, and must not
-    ///            overlap with `src`.
-    /// \param src The source memory region. Must not be NULL, and must not overlap
-    ///            with `dst`.
-    /// \param len The length in bytes of both `dst` and `src`.
-    /// \returns `dst`.
-    ///
-    /// \threadsafety It is safe to call this function from any thread.
-    ///
-    /// \since This function is available since SDL 3.0.0.
-    ///
-    /// \sa SDL_memmove
-    pub fn SDL_memcpy(
-        dst: *mut ::core::ffi::c_void,
-        src: *const ::core::ffi::c_void,
-        len: ::core::primitive::usize,
-    ) -> *mut ::core::ffi::c_void;
+/// Copy non-overlapping memory.
+///
+/// The memory regions must not overlap. If they do, use SDL_memmove() instead.
+///
+/// \param dst The destination memory region. Must not be NULL, and must not
+///            overlap with `src`.
+/// \param src The source memory region. Must not be NULL, and must not overlap
+///            with `dst`.
+/// \param len The length in bytes of both `dst` and `src`.
+/// \returns `dst`.
+///
+/// \threadsafety It is safe to call this function from any thread.
+///
+/// \since This function is available since SDL 3.0.0.
+///
+/// \sa SDL_memmove
+#[inline(always)]
+pub unsafe fn SDL_memcpy(
+    dst: *mut ::core::ffi::c_void,
+    src: *const ::core::ffi::c_void,
+    len: ::core::primitive::usize,
+) -> *mut ::core::ffi::c_void {
+    unsafe { ::core::ptr::copy_nonoverlapping(src.cast::<Uint8>(), dst.cast::<Uint8>(), len) };
+    return dst;
 }
 
-// [sdl3-sys-gen] skipped constant value define `SDL_memcpy`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_copyp`
-
-extern "C" {
-    /// Copy memory.
-    ///
-    /// It is okay for the memory regions to overlap. If you are confident that the
-    /// regions never overlap, using SDL_memcpy() may improve performance.
-    ///
-    /// \param dst The destination memory region. Must not be NULL.
-    /// \param src The source memory region. Must not be NULL.
-    /// \param len The length in bytes of both `dst` and `src`.
-    /// \returns `dst`.
-    ///
-    /// \threadsafety It is safe to call this function from any thread.
-    ///
-    /// \since This function is available since SDL 3.0.0.
-    ///
-    /// \sa SDL_memcpy
-    pub fn SDL_memmove(
-        dst: *mut ::core::ffi::c_void,
-        src: *const ::core::ffi::c_void,
-        len: ::core::primitive::usize,
-    ) -> *mut ::core::ffi::c_void;
+///
+/// # Safety
+/// It must be valid to write the memory pointed to by `src` to the memory pointed to by `dst`,
+/// and the memory pointed to by `src` and `dst` must not overlap
+#[inline(always)]
+pub unsafe fn SDL_copyp<Dst: Sized, Src: Sized>(dst: *mut Dst, src: *const Src) -> *mut Dst {
+    const { assert!(::core::mem::size_of::<Dst>() == ::core::mem::size_of::<Src>()) }
+    unsafe {
+        ::core::ptr::copy_nonoverlapping(
+            src.cast::<Uint8>(),
+            dst.cast::<Uint8>(),
+            ::core::mem::size_of::<Src>(),
+        )
+    };
+    dst
 }
 
-// [sdl3-sys-gen] skipped constant value define `SDL_memmove`
+/// Copy memory.
+///
+/// It is okay for the memory regions to overlap. If you are confident that the
+/// regions never overlap, using SDL_memcpy() may improve performance.
+///
+/// \param dst The destination memory region. Must not be NULL.
+/// \param src The source memory region. Must not be NULL.
+/// \param len The length in bytes of both `dst` and `src`.
+/// \returns `dst`.
+///
+/// \threadsafety It is safe to call this function from any thread.
+///
+/// \since This function is available since SDL 3.0.0.
+///
+/// \sa SDL_memcpy
+#[inline(always)]
+pub unsafe fn SDL_memmove(
+    dst: *mut ::core::ffi::c_void,
+    src: *const ::core::ffi::c_void,
+    len: ::core::primitive::usize,
+) -> *mut ::core::ffi::c_void {
+    unsafe { ::core::ptr::copy(src.cast::<Uint8>(), dst.cast::<Uint8>(), len) };
+    return dst;
+}
 
 extern "C" {
     pub fn SDL_memset(
@@ -1339,10 +1350,6 @@ extern "C" {
         dwords: ::core::primitive::usize,
     ) -> *mut ::core::ffi::c_void;
 }
-
-// [sdl3-sys-gen] skipped constant value define `SDL_memset`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_zero`
 
 ///
 /// # Safety
@@ -4186,9 +4193,3 @@ pub struct SDL_Environment {
 pub struct SDL_iconv_data_t {
     _opaque: [::core::primitive::u8; 0],
 }
-
-// [sdl3-sys-gen] skipped function-like define `SDL_HAS_BUILTIN`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_SINT64_C`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_UINT64_C`

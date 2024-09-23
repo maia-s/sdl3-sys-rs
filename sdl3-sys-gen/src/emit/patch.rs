@@ -1,7 +1,7 @@
 use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, Value};
 use crate::parse::{
-    Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident, IdentOrKw, ParseErr, Span,
-    StringLiteral, Type,
+    Block, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident, IdentOrKw, Item, Items,
+    Kw_static, ParseErr, RustCode, Span, StringLiteral, Type,
 };
 use core::fmt::Write;
 use std::ffi::CString;
@@ -49,6 +49,35 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
             Ok(true)
         },
     },
+    EmitFunctionPatch {
+        module: Some("stdinc"),
+        match_ident: |i| matches!(i, "SDL_memcpy" | "SDL_memmove"),
+        patch: |ctx, f| {
+            let mut f = f.clone();
+            f.extern_kw = None;
+            f.static_kw = Some(Kw_static { span: Span::none() });
+            f.body = Some(Block {
+                span: Span::none(),
+                items: Items(vec![Item::Expr(Expr::Value(Value::RustCode(
+                    RustCode::boxed(
+                        format!(
+                            "unsafe {{ ::core::ptr::{}(src.cast::<Uint8>(), dst.cast::<Uint8>(), len) }}; return dst",
+                            if f.ident.as_str() == "SDL_memcpy" {
+                                "copy_nonoverlapping"
+                            } else {
+                                "copy"
+                            }
+                        ),
+                        Type::pointer(Type::void(), true),
+                        false,
+                        true,
+                    ),
+                )))]),
+            });
+            f.emit(ctx)?;
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_emit_define(ctx: &mut EmitContext, define: &Define) -> Result<bool, EmitErr> {
@@ -64,20 +93,50 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
         match_ident: |i| {
             matches!(
                 i,
-                "SDL_BeginThreadFunction"
+                "SDL_arraysize"
+                    | "SDL_BeginThreadFunction"
+                    | "SDL_COMPILE_TIME_ASSERT"
+                    | "SDL_const_cast"
                     | "SDL_EndThreadFunction"
+                    | "SDL_HAS_BUILTIN"
                     | "SDL_InvalidParamError"
+                    | "SDL_memcpy"
+                    | "SDL_memmove"
+                    | "SDL_memset"
                     | "SDL_PRILLd"
                     | "SDL_PRILLu"
                     | "SDL_PRILLx"
                     | "SDL_PRILLX"
+                    | "SDL_reinterpret_cast"
+                    | "SDL_SINT64_C"
                     | "SDL_stack_alloc"
                     | "SDL_stack_free"
+                    | "SDL_static_cast"
+                    | "SDL_STRINGIFY_ARG"
                     | "SDL_TriggerBreakpoint"
+                    | "SDL_UINT64_C"
+                    | "SDL_zero"
                     | "SDL_zeroa"
             )
         },
         patch: |_, _| Ok(true),
+    },
+    EmitDefinePatch {
+        module: Some("stdinc"),
+        match_ident: |i| matches!(i, "SDL_clamp"),
+        patch: |ctx, _| {
+            writeln!(ctx, "#[inline(always)]")?;
+            writeln!(
+                ctx,
+                "pub fn SDL_clamp<T: Copy + PartialOrd>(x: T, a: T, b: T) -> T {{"
+            )?;
+            ctx.increase_indent();
+            writeln!(ctx, "if x < a {{ a }} else if x > b {{ b }} else {{ x }}",)?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            writeln!(ctx)?;
+            Ok(true)
+        },
     },
     EmitDefinePatch {
         module: Some("atomic"),
@@ -91,6 +150,36 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 ctx,
                 "::core::sync::atomic::fence(::core::sync::atomic::Ordering::SeqCst)"
             )?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            writeln!(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitDefinePatch {
+        module: Some("stdinc"),
+        match_ident: |i| i == "SDL_copyp",
+        patch: |ctx, define| {
+            define.doc.emit(ctx)?;
+            writeln!(ctx, "///")?;
+            writeln!(ctx, "/// # Safety")?;
+            writeln!(ctx, "/// It must be valid to write the memory pointed to by `src` to the memory pointed to by `dst`,")?;
+            writeln!(
+                ctx,
+                "/// and the memory pointed to by `src` and `dst` must not overlap"
+            )?;
+            writeln!(ctx, "#[inline(always)]")?;
+            writeln!(
+                ctx,
+                "pub unsafe fn SDL_copyp<Dst: Sized, Src: Sized>(dst: *mut Dst, src: *const Src) -> *mut Dst {{"
+            )?;
+            ctx.increase_indent();
+            writeln!(ctx, "const {{ assert!(::core::mem::size_of::<Dst>() == ::core::mem::size_of::<Src>()) }}")?;
+            writeln!(
+                ctx,
+                "unsafe {{ ::core::ptr::copy_nonoverlapping(src.cast::<Uint8>(), dst.cast::<Uint8>(), ::core::mem::size_of::<Src>()) }};"
+            )?;
+            writeln!(ctx, "dst")?;
             ctx.decrease_indent();
             writeln!(ctx, "}}")?;
             writeln!(ctx)?;
@@ -120,6 +209,32 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             )?;
             ctx.decrease_indent();
             writeln!(ctx, "}}")?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            writeln!(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitDefinePatch {
+        module: Some("stdinc"),
+        match_ident: |i| matches!(i, "SDL_min" | "SDL_max"),
+        patch: |ctx, define| {
+            writeln!(ctx, "#[inline(always)]")?;
+            writeln!(
+                ctx,
+                "pub fn {}<T: Copy + PartialOrd>(x: T, y: T) -> T {{",
+                define.ident
+            )?;
+            ctx.increase_indent();
+            writeln!(
+                ctx,
+                "if x {} y {{ x }} else {{ y }}",
+                if define.ident.as_str() == "SDL_min" {
+                    "<"
+                } else {
+                    ">"
+                }
+            )?;
             ctx.decrease_indent();
             writeln!(ctx, "}}")?;
             writeln!(ctx)?;
