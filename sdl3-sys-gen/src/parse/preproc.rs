@@ -93,9 +93,15 @@ impl Parse for DefineValue {
         } else if input.contains("#") || input.contains("_cast<") {
             Ok((input.end(), Some(Self::Other(input.clone()))))
         } else {
-            let items = Items::try_parse_try_all(ctx, input)?;
+            let mut items = Items::try_parse_try_all(ctx, input)?;
             let expr = Expr::try_parse_try_all(ctx, input)?;
             let ty = Type::try_parse_try_all(ctx, input)?;
+            if let Some(i) = &items {
+                if i.0.len() == 1 && matches!(i.0[0], Item::FnCall(_)) {
+                    // skip FnCall item as it'll have been parsed as Expr::FnCall too
+                    items = None;
+                }
+            }
             if items.is_some() as usize + expr.is_some() as usize + ty.is_some() as usize > 1 {
                 let mut ambiguous = Ambiguous::new(input.clone());
                 if let Some(items) = items {

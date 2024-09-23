@@ -1,4 +1,6 @@
-use super::{Cast, Define, Expr, GetSpan, Ident, ParseContext, ParseErr, PrimitiveType, Type};
+use super::{
+    Cast, Define, DefineValue, Expr, GetSpan, Ident, ParseContext, ParseErr, PrimitiveType, Type,
+};
 
 struct Patch<T: ?Sized> {
     module: Option<&'static str>,
@@ -31,6 +33,24 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
                 .value
                 .cast_expr(Type::ident(Ident::new_inline("SDL_MouseButtonFlags")));
             Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("mutex"),
+        match_ident: |_| true,
+        patch: |_, define| {
+            if let DefineValue::Expr(Expr::FnCall(call)) = &define.value {
+                if let Expr::Ident(ident) = &*call.func {
+                    if matches!(
+                        ident.as_str(),
+                        "__attribute__" | "SDL_THREAD_ANNOTATION_ATTRIBUTE__"
+                    ) {
+                        define.value = DefineValue::Empty;
+                        return Ok(true);
+                    }
+                }
+            }
+            Ok(false)
         },
     },
     DefinePatch {
@@ -143,8 +163,9 @@ fn patch<T: ?Sized>(
     for patch in patches.iter() {
         if (patch.module.is_none() || patch.module == Some(ctx.module()))
             && (patch.match_ident)(get_ident(parsed))
+            && (patch.patch)(ctx, parsed)?
         {
-            return (patch.patch)(ctx, parsed);
+            return Ok(true);
         }
     }
     Ok(false)
