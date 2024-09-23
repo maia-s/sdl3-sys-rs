@@ -185,10 +185,10 @@ impl crate::sealed_interface::Sealed for SDL_IOStreamInterface {}
 unsafe impl crate::Interface for SDL_IOStreamInterface {}
 
 const _: () = ::core::assert!(
-    (((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4)
-        && (::core::mem::size_of::<SDL_IOStreamInterface>() == 28))
-        || ((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8)
-            && (::core::mem::size_of::<SDL_IOStreamInterface>() == 56)))
+    (((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4_usize)
+        && (::core::mem::size_of::<SDL_IOStreamInterface>() == 28_usize))
+        || ((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8_usize)
+            && (::core::mem::size_of::<SDL_IOStreamInterface>() == 56_usize)))
 );
 
 extern "C" {

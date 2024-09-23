@@ -17,6 +17,7 @@ pub enum Value {
     I64(i64),
     U63(u64),
     U64(u64),
+    Usize(usize),
     F32(f32),
     F64(f64),
     Bool(bool),
@@ -44,6 +45,7 @@ impl Value {
             &Value::I64(i) => i != 0,
             &Value::U63(u) => u != 0,
             &Value::U64(u) => u != 0,
+            &Value::Usize(u) => u != 0,
             &Value::F32(f) => !f.is_nan() && f != 0.0,
             &Value::F64(f) => !f.is_nan() && f != 0.0,
             &Value::Bool(b) => b,
@@ -64,6 +66,7 @@ impl Value {
             | Value::I64(_)
             | Value::U63(_)
             | Value::U64(_)
+            | Value::Usize(_)
             | Value::F32(_)
             | Value::F64(_)
             | Value::Bool(_)
@@ -82,6 +85,7 @@ impl Value {
             | Value::I64(_)
             | Value::U63(_)
             | Value::U64(_)
+            | Value::Usize(_)
             | Value::F32(_)
             | Value::F64(_)
             | Value::Bool(_)
@@ -100,6 +104,7 @@ impl Value {
             Value::I64(_) => Ok(Type::primitive(PrimitiveType::Int64T)),
             Value::U63(_) => Ok(Type::primitive(PrimitiveType::Int64T)),
             Value::U64(_) => Ok(Type::primitive(PrimitiveType::Uint64T)),
+            Value::Usize(_) => Ok(Type::primitive(PrimitiveType::SizeT)),
             Value::F32(_) => Ok(Type::primitive(PrimitiveType::Float)),
             Value::F64(_) => Ok(Type::primitive(PrimitiveType::Double)),
             Value::Bool(_) => Ok(Type::bool()),
@@ -149,6 +154,7 @@ impl Value {
                 Ok(Promoted::Both)
             }
             (Value::I32(lhv), Value::U64(_)) => set!(Left, lhs, lhv, U64),
+            (Value::I32(lhv), Value::Usize(_)) => set!(Left, lhs, lhv, Usize),
             (Value::I32(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
             (Value::I32(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
             (Value::I32(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, I32),
@@ -159,6 +165,7 @@ impl Value {
             (Value::U31(lhv), Value::I64(_)) => set!(Left, lhs, lhv, I64),
             (Value::U31(lhv), Value::U63(_)) => set!(Left, lhs, lhv, U63),
             (Value::U31(lhv), Value::U64(_)) => set!(Left, lhs, lhv, U64),
+            (Value::U31(lhv), Value::Usize(_)) => set!(Left, lhs, lhv, Usize),
             (Value::U31(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
             (Value::U31(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
             (Value::U31(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, U31),
@@ -169,6 +176,7 @@ impl Value {
             (Value::U32(lhv), Value::I64(_)) => set!(Left, lhs, lhv, I64),
             (Value::U32(lhv), Value::U63(_)) => set!(Left, lhs, lhv, U63),
             (Value::U32(lhv), Value::U64(_)) => set!(Left, lhs, lhv, U64),
+            (Value::U32(lhv), Value::Usize(_)) => set!(Left, lhs, lhv, Usize),
             (Value::U32(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
             (Value::U32(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
             (Value::U32(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, U32),
@@ -179,6 +187,7 @@ impl Value {
             (Value::I64(_), Value::I64(_)) => Ok(Promoted::Equal),
             (Value::I64(_), Value::U63(rhv)) => set!(Right, rhs, rhv, I64),
             (Value::I64(lhv), Value::U64(_)) => set!(Left, lhs, lhv, U64),
+            (Value::I64(_), Value::Usize(_)) => Ok(Promoted::None),
             (Value::I64(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
             (Value::I64(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
             (Value::I64(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, I64),
@@ -193,6 +202,7 @@ impl Value {
             (Value::U63(lhv), Value::I64(_)) => set!(Left, lhs, lhv, I64),
             (Value::U63(_), Value::U63(_)) => Ok(Promoted::Equal),
             (Value::U63(lhv), Value::U64(_)) => set!(Left, lhs, lhv, U64),
+            (Value::U63(_), Value::Usize(_)) => Ok(Promoted::None),
             (Value::U63(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
             (Value::U63(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
             (Value::U63(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, U63),
@@ -203,9 +213,21 @@ impl Value {
             (Value::U64(_), Value::I64(rhv)) => set!(Right, rhs, rhv, U64),
             (Value::U64(_), Value::U63(rhv)) => set!(Right, rhs, rhv, U64),
             (Value::U64(_), Value::U64(_)) => Ok(Promoted::Equal),
+            (Value::U64(_), Value::Usize(_)) => Ok(Promoted::None),
             (Value::U64(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
             (Value::U64(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
             (Value::U64(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, U64),
+
+            (Value::Usize(_), Value::I32(rhv)) => set!(Right, rhs, rhv, Usize),
+            (Value::Usize(_), Value::U31(rhv)) => set!(Right, rhs, rhv, Usize),
+            (Value::Usize(_), Value::U32(rhv)) => set!(Right, rhs, rhv, Usize),
+            (Value::Usize(_), Value::I64(_)) => Ok(Promoted::None),
+            (Value::Usize(_), Value::U63(_)) => Ok(Promoted::None),
+            (Value::Usize(_), Value::U64(_)) => Ok(Promoted::None),
+            (Value::Usize(_), Value::Usize(_)) => Ok(Promoted::Equal),
+            (Value::Usize(lhv), Value::F32(_)) => set!(Left, lhs, lhv, F32),
+            (Value::Usize(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
+            (Value::Usize(_), Value::Bool(rhv)) => set!(Right, rhs, rhv, Usize),
 
             (Value::F32(_), Value::I32(rhv)) => set!(Right, rhs, rhv, F32),
             (Value::F32(_), Value::U31(rhv)) => set!(Right, rhs, rhv, F32),
@@ -213,6 +235,7 @@ impl Value {
             (Value::F32(_), Value::I64(rhv)) => set!(Right, rhs, rhv, F32),
             (Value::F32(_), Value::U63(rhv)) => set!(Right, rhs, rhv, F32),
             (Value::F32(_), Value::U64(rhv)) => set!(Right, rhs, rhv, F32),
+            (Value::F32(_), Value::Usize(rhv)) => set!(Right, rhs, rhv, F32),
             (Value::F32(_), Value::F32(_)) => Ok(Promoted::Equal),
             (Value::F32(lhv), Value::F64(_)) => set!(Left, lhs, lhv, F64),
             (Value::F32(_), Value::Bool(rhv)) => {
@@ -226,6 +249,7 @@ impl Value {
             (Value::F64(_), Value::I64(rhv)) => set!(Right, rhs, rhv, F64),
             (Value::F64(_), Value::U63(rhv)) => set!(Right, rhs, rhv, F64),
             (Value::F64(_), Value::U64(rhv)) => set!(Right, rhs, rhv, F64),
+            (Value::F64(_), Value::Usize(rhv)) => set!(Right, rhs, rhv, F64),
             (Value::F64(_), Value::F32(rhv)) => set!(Right, rhs, rhv, F64),
             (Value::F64(_), Value::F64(_)) => Ok(Promoted::Equal),
             (Value::F64(_), Value::Bool(rhv)) => {
@@ -239,6 +263,7 @@ impl Value {
             (Value::Bool(lhv), Value::I64(_)) => set!(Left, lhs, lhv, I64),
             (Value::Bool(lhv), Value::U63(_)) => set!(Left, lhs, lhv, U63),
             (Value::Bool(lhv), Value::U64(_)) => set!(Left, lhs, lhv, U64),
+            (Value::Bool(lhv), Value::Usize(_)) => set!(Left, lhs, lhv, Usize),
             (Value::Bool(lhv), Value::F32(_)) => {
                 *lhs = Value::F32(if *lhv { 1.0 } else { 0.0 });
                 Ok(Promoted::Left)
@@ -630,6 +655,7 @@ impl Emit for Value {
             Value::I64(i) => write!(ctx, "{i}_i64")?,
             Value::U63(i) => write!(ctx, "{i}_i64")?,
             Value::U64(u) => write!(ctx, "{u}_u64")?,
+            Value::Usize(u) => write!(ctx, "{u}_usize")?,
             &Value::F32(f) => {
                 let s = format!("{}", f);
                 if s.parse() == Ok(f) {

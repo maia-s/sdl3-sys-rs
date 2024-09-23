@@ -824,6 +824,7 @@ impl Type {
                         PrimitiveType::Uint32T | PrimitiveType::UnsignedInt => Value::U32(0),
                         PrimitiveType::Int64T => Value::I64(0),
                         PrimitiveType::Uint64T => Value::U64(0),
+                        PrimitiveType::SizeT => Value::Usize(0),
                         _ => return Ok(None),
                     }));
                 }

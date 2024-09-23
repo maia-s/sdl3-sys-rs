@@ -507,10 +507,10 @@ impl crate::sealed_interface::Sealed for SDL_VirtualJoystickDesc {}
 unsafe impl crate::Interface for SDL_VirtualJoystickDesc {}
 
 const _: () = ::core::assert!(
-    (((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4)
-        && (::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 84))
-        || ((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8)
-            && (::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 136)))
+    (((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4_usize)
+        && (::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 84_usize))
+        || ((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8_usize)
+            && (::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 136_usize)))
 );
 
 extern "C" {

@@ -218,7 +218,7 @@ pub const SDL_PRIX32: &::core::ffi::CStr =
 
 #[cfg(windows)]
 emit! {
-    const _: () = ::core::assert!((::core::mem::size_of::<::core::ffi::c_longlong>() == 8));
+    const _: () = ::core::assert!((::core::mem::size_of::<::core::ffi::c_longlong>() == 8_usize));
 
     pub const SDL_PRILL_PREFIX: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64\0") };
 
@@ -246,23 +246,23 @@ emit! {
 
 }
 
-const _: () = ::core::assert!((::core::mem::size_of::<::core::primitive::bool>() == 1));
+const _: () = ::core::assert!((::core::mem::size_of::<::core::primitive::bool>() == 1_usize));
 
-const _: () = ::core::assert!((::core::mem::size_of::<Uint8>() == 1));
+const _: () = ::core::assert!((::core::mem::size_of::<Uint8>() == 1_usize));
 
-const _: () = ::core::assert!((::core::mem::size_of::<Sint8>() == 1));
+const _: () = ::core::assert!((::core::mem::size_of::<Sint8>() == 1_usize));
 
-const _: () = ::core::assert!((::core::mem::size_of::<Uint16>() == 2));
+const _: () = ::core::assert!((::core::mem::size_of::<Uint16>() == 2_usize));
 
-const _: () = ::core::assert!((::core::mem::size_of::<Sint16>() == 2));
+const _: () = ::core::assert!((::core::mem::size_of::<Sint16>() == 2_usize));
 
-const _: () = ::core::assert!((::core::mem::size_of::<Uint32>() == 4));
+const _: () = ::core::assert!((::core::mem::size_of::<Uint32>() == 4_usize));
 
-const _: () = ::core::assert!((::core::mem::size_of::<Sint32>() == 4));
+const _: () = ::core::assert!((::core::mem::size_of::<Sint32>() == 4_usize));
 
-const _: () = ::core::assert!((::core::mem::size_of::<Uint64>() == 8));
+const _: () = ::core::assert!((::core::mem::size_of::<Uint64>() == 8_usize));
 
-const _: () = ::core::assert!((::core::mem::size_of::<Sint64>() == 8));
+const _: () = ::core::assert!((::core::mem::size_of::<Sint64>() == 8_usize));
 
 const _: () = ::core::assert!(
     (::core::mem::size_of::<Uint64>() <= ::core::mem::size_of::<::core::ffi::c_ulonglong>())
@@ -4068,13 +4068,54 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_iconv_utf8_locale`
+#[inline(always)]
+pub unsafe fn SDL_iconv_utf8_locale(S: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char {
+    unsafe {
+        SDL_iconv_string(
+            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"\0") }.as_ptr(),
+            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"UTF-8\0") }.as_ptr(),
+            S,
+            (unsafe { SDL_strlen(S) } + 1_usize),
+        )
+    }
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_iconv_utf8_ucs2`
+#[inline(always)]
+pub unsafe fn SDL_iconv_utf8_ucs2(S: *const ::core::ffi::c_char) -> *mut Uint16 {
+    (unsafe {
+        SDL_iconv_string(
+            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"UCS-2\0") }.as_ptr(),
+            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"UTF-8\0") }.as_ptr(),
+            S,
+            (unsafe { SDL_strlen(S) } + 1_usize),
+        )
+    } as *mut Uint16)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_iconv_utf8_ucs4`
+#[inline(always)]
+pub unsafe fn SDL_iconv_utf8_ucs4(S: *const ::core::ffi::c_char) -> *mut Uint32 {
+    (unsafe {
+        SDL_iconv_string(
+            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"UCS-4\0") }.as_ptr(),
+            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"UTF-8\0") }.as_ptr(),
+            S,
+            (unsafe { SDL_strlen(S) } + 1_usize),
+        )
+    } as *mut Uint32)
+}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_iconv_wchar_utf8`
+#[inline(always)]
+pub unsafe fn SDL_iconv_wchar_utf8(S: *const crate::ffi::c_wchar_t) -> *mut ::core::ffi::c_char {
+    unsafe {
+        SDL_iconv_string(
+            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"UTF-8\0") }.as_ptr(),
+            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"WCHAR_T\0") }.as_ptr(),
+            (S as *mut ::core::ffi::c_char),
+            ((unsafe { SDL_wcslen(S) } + 1_usize)
+                * ::core::mem::size_of::<crate::ffi::c_wchar_t>()),
+        )
+    }
+}
 
 /// Multiply two integers, checking for overflow.
 ///
@@ -4097,7 +4138,7 @@ pub unsafe fn SDL_size_mul_check_overflow(
     b: ::core::primitive::usize,
     ret: *mut ::core::primitive::usize,
 ) -> ::core::primitive::bool {
-    if ((a != 0) && (b > (::core::primitive::usize::MAX / a))) {
+    if ((a != 0_usize) && (b > (::core::primitive::usize::MAX / a))) {
         return false;
     }
     unsafe {

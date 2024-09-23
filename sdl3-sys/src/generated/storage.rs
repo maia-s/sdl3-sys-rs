@@ -117,10 +117,10 @@ impl crate::sealed_interface::Sealed for SDL_StorageInterface {}
 unsafe impl crate::Interface for SDL_StorageInterface {}
 
 const _: () = ::core::assert!(
-    (((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4)
-        && (::core::mem::size_of::<SDL_StorageInterface>() == 48))
-        || ((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8)
-            && (::core::mem::size_of::<SDL_StorageInterface>() == 96)))
+    (((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4_usize)
+        && (::core::mem::size_of::<SDL_StorageInterface>() == 48_usize))
+        || ((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 8_usize)
+            && (::core::mem::size_of::<SDL_StorageInterface>() == 96_usize)))
 );
 
 extern "C" {

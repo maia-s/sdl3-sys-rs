@@ -96,6 +96,17 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             Ok(true)
         },
     },
+    DefinePatch {
+        module: Some("stdinc"),
+        match_ident: |i| i == "SDL_iconv_wchar_utf8",
+        patch: |_ctx, define| {
+            let Some(args) = &mut define.args else {
+                unreachable!()
+            };
+            args[0].ty = Type::pointer(Type::primitive(PrimitiveType::WcharT), true);
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {
