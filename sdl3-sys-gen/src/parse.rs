@@ -1,4 +1,8 @@
-use core::{borrow::Borrow, cell::RefCell};
+use core::{
+    borrow::Borrow,
+    cell::{Cell, RefCell},
+    fmt::Display,
+};
 use std::{borrow::Cow, fmt::Debug, marker::PhantomData, str};
 
 macro_rules! Op {
@@ -69,6 +73,7 @@ pub struct ParseContext {
     module: String,
     pub parent_struct_ident: RefCell<Option<Ident>>,
     pub sibling_struct_index: RefCell<usize>,
+    pub log_debug_enabled: Cell<bool>,
 }
 
 impl ParseContext {
@@ -79,6 +84,7 @@ impl ParseContext {
             module: module.unwrap_or_default(),
             parent_struct_ident: RefCell::new(None),
             sibling_struct_index: RefCell::new(Self::FIRST_SIBLING),
+            log_debug_enabled: Cell::new(false),
         }
     }
 
@@ -101,6 +107,28 @@ impl ParseContext {
             self.parent_struct_ident.replace(ident),
             self.sibling_struct_index.replace(Self::FIRST_SIBLING),
         )
+    }
+
+    #[must_use]
+    pub fn set_debug_log_guard(&self, enable: bool) -> impl Drop + '_ {
+        pub struct Guard<'a>(&'a ParseContext, bool);
+
+        impl Drop for Guard<'_> {
+            fn drop(&mut self) {
+                self.0.log_debug_enabled.set(self.1);
+            }
+        }
+
+        let was_enabled = self.log_debug_enabled.replace(enable);
+
+        Guard(self, was_enabled)
+    }
+
+    pub fn log_debug(&self, what: impl Display) -> Result<(), ParseErr> {
+        if self.log_debug_enabled.get() {
+            eprintln!("[sdl3-sys-gen][debug] {what}");
+        }
+        Ok(())
     }
 }
 
