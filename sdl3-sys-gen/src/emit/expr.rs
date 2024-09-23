@@ -696,9 +696,9 @@ impl Eval for DefineValue {
     fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
         match self {
             Self::Expr(expr) => expr.try_eval(ctx),
+            Self::Items(items) => items.try_eval(ctx),
             Self::TargetDependent
             | Self::Type(_)
-            | Self::Items(_)
             | Self::Other(_)
             | Self::Empty
             | Self::ExprFollowedBy(_, _) => Ok(None),

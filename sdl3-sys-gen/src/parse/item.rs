@@ -184,6 +184,12 @@ pub struct DoWhile {
     pub cond: Expr,
 }
 
+impl GetSpan for DoWhile {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
+}
+
 impl Parse for DoWhile {
     fn desc() -> Cow<'static, str> {
         "do while".into()

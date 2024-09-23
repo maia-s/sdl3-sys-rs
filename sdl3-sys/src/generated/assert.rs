@@ -77,16 +77,10 @@ emit! {
 // [sdl3-sys-gen] skipped constant value define `SDL_LINE`
 
 #[cfg(all(windows, target_env = "msvc"))]
-emit! {
-    pub const SDL_NULL_WHILE_LOOP_CONDITION: ::core::primitive::i32 = 0;
-
-}
+emit! {}
 
 #[cfg(not(all(windows, target_env = "msvc")))]
-emit! {
-    pub const SDL_NULL_WHILE_LOOP_CONDITION: ::core::primitive::i32 = 0;
-
-}
+emit! {}
 
 // [sdl3-sys-gen] skipped function-like define `SDL_disabled_assert`
 

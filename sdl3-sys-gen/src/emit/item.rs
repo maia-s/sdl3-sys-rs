@@ -1,7 +1,7 @@
 use super::{EmitContext, EmitErr, Eval, Value};
 use crate::{
     emit::Emit,
-    parse::{Block, GetSpan, IfElse, Item, Items, ParseErr, Return, RustCode, Type},
+    parse::{Block, DoWhile, GetSpan, IfElse, Item, Items, ParseErr, Return, RustCode, Type},
 };
 use core::fmt::Write;
 
@@ -69,7 +69,7 @@ impl Eval for Item {
             Item::FnCall(_) => todo!(),
             Item::TypeDef(_) => todo!(),
             Item::VarDecl(_) => todo!(),
-            Item::DoWhile(_) => todo!(),
+            Item::DoWhile(dw) => dw.try_eval(ctx),
             Item::For(_) => todo!(),
             Item::IfElse(if_else) => if_else.try_eval(ctx),
             Item::Return(ret) => ret.try_eval(ctx),
@@ -97,6 +97,39 @@ impl Eval for Block {
             items.ty()?,
             items.is_const(),
             items.is_unsafe(),
+        ))))
+    }
+}
+
+impl Eval for DoWhile {
+    fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        let err = || ParseErr::new(self.span(), "can't eval");
+        let cond = self.cond.try_eval(ctx)?.ok_or_else(err)?;
+        let cond = cond.coerce(ctx, &Type::bool())?.unwrap_or(cond);
+        let block = self.block.try_eval(ctx)?.ok_or_else(err)?;
+        let value = ctx.capture_output(|ctx| {
+            // written so that break and continue works as expected
+            writeln!(ctx, "{{")?;
+            ctx.increase_indent();
+            writeln!(ctx, "let mut __sdl3sysgen_first = true;")?;
+            write!(ctx, "while __sdl3sysgen_first || ")?;
+            cond.emit(ctx)?;
+            write!(ctx, " {{")?;
+            ctx.increase_indent();
+            write!(ctx, "__sdl3sysgen_first = false;")?;
+            write!(ctx, "let __sdl3sysgen_first = ();")?;
+            block.emit(ctx)?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            Ok(())
+        })?;
+        Ok(Some(Value::RustCode(RustCode::boxed(
+            value,
+            Type::void(),
+            cond.is_const() && block.is_const(),
+            cond.is_unsafe() || block.is_unsafe(),
         ))))
     }
 }

@@ -103,6 +103,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                     | "SDL_memcpy"
                     | "SDL_memmove"
                     | "SDL_memset"
+                    | "SDL_NULL_WHILE_LOOP_CONDITION"
                     | "SDL_PRILLd"
                     | "SDL_PRILLu"
                     | "SDL_PRILLx"
@@ -117,6 +118,8 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                     | "SDL_UINT64_C"
                     | "SDL_zero"
                     | "SDL_zeroa"
+                    | "VK_DEFINE_HANDLE"
+                    | "VK_DEFINE_NON_DISPATCHABLE_HANDLE"
             )
         },
         patch: |_, _| Ok(true),
