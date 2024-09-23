@@ -1,8 +1,8 @@
 use super::{
     Asm, Define, Delimited, DocCommentFile, Enum, EnumVariant, Expr, ExprNoComma, FnCall, Function,
-    GetSpan, Ident, Include, Kw_do, Kw_for, Kw_if, Kw_return, Op, Parse, ParseContext, ParseErr,
-    ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind, Punctuated, Span, StructOrUnion,
-    Terminated, Type, TypeDef, TypeWithReqIdent, WsAndComments,
+    GetSpan, Ident, Include, Kw_break, Kw_continue, Kw_do, Kw_for, Kw_if, Kw_return, Kw_static, Op,
+    Parse, ParseContext, ParseErr, ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind,
+    Punctuated, Span, StructOrUnion, Terminated, Type, TypeDef, TypeWithReqIdent, WsAndComments,
 };
 use crate::parse::{Kw_else, Kw_while};
 use core::iter::FusedIterator;
@@ -46,10 +46,13 @@ pub enum Item {
     TypeDef(TypeDef),
     VarDecl(VarDecl),
     DoWhile(DoWhile),
+    While(While),
     For(For),
     IfElse(IfElse),
     Return(Return),
     EnumVariant(EnumVariant),
+    Break(Span),
+    Continue(Span),
 }
 
 impl Parse for Item {
@@ -80,8 +83,16 @@ impl Parse for Item {
                     }
                 }),
             ))
+        } else if let (rest, Some(s)) = Terminated::<Kw_break, Op![;]>::try_parse_raw(ctx, input)? {
+            Ok((rest, Some(Item::Break(s.value.span))))
+        } else if let (rest, Some(s)) =
+            Terminated::<Kw_continue, Op![;]>::try_parse_raw(ctx, input)?
+        {
+            Ok((rest, Some(Item::Continue(s.value.span))))
         } else if let (rest, Some(s)) = DoWhile::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::DoWhile(s))))
+        } else if let (rest, Some(s)) = While::try_parse_raw(ctx, input)? {
+            Ok((rest, Some(Item::While(s))))
         } else if let (rest, Some(s)) = For::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::For(s))))
         } else if let (rest, Some(s)) = IfElse::try_parse_raw(ctx, input)? {
@@ -398,6 +409,7 @@ impl Parse for StructOrUnionItem {
 #[derive(Clone, Debug)]
 pub struct VarDecl {
     pub span: Span,
+    pub kw_static: Option<Kw_static>,
     pub ident: Ident,
     pub ty: Type,
     pub init: Option<Expr>,
@@ -415,7 +427,10 @@ impl Parse for VarDecl {
     }
 
     fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(ty)) = TypeWithReqIdent::try_parse_raw(ctx, input)? {
+        let mut rest = input.clone();
+        let kw_static = Kw_static::try_parse(ctx, &mut rest)?;
+        WsAndComments::try_parse(ctx, &mut rest)?;
+        if let Some(ty) = TypeWithReqIdent::try_parse(ctx, &mut rest)? {
             WsAndComments::try_parse(ctx, &mut rest)?;
             let init = if <Op![=]>::try_parse(ctx, &mut rest)?.is_some() {
                 WsAndComments::try_parse(ctx, &mut rest)?;
@@ -449,6 +464,7 @@ impl Parse for VarDecl {
                     rest,
                     Some(Self {
                         span,
+                        kw_static,
                         ident: ty.ident.unwrap(),
                         ty: ty.ty,
                         init,
@@ -457,5 +473,44 @@ impl Parse for VarDecl {
             }
         }
         Ok((input.clone(), None))
+    }
+}
+
+#[derive(Clone, Debug)]
+pub struct While {
+    pub span: Span,
+    pub block: Block,
+    pub cond: Expr,
+}
+
+impl GetSpan for While {
+    fn span(&self) -> Span {
+        self.span.clone()
+    }
+}
+
+impl Parse for While {
+    fn desc() -> Cow<'static, str> {
+        "while".into()
+    }
+
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        if let (mut rest, Some(kw_while)) = Kw_while::try_parse_raw(ctx, input)? {
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let cond = Delimited::<Op<'('>, Expr, Op<')'>>::parse(ctx, &mut rest)?;
+            WsAndComments::try_parse(ctx, &mut rest)?;
+            let block = Block::parse(ctx, &mut rest)?;
+            let span = kw_while.span.join(&block.span);
+            Ok((
+                rest,
+                Some(Self {
+                    span,
+                    block,
+                    cond: cond.value,
+                }),
+            ))
+        } else {
+            Ok((input.clone(), None))
+        }
     }
 }

@@ -1,7 +1,9 @@
 use super::{EmitContext, EmitErr, Eval, Value};
 use crate::{
     emit::Emit,
-    parse::{Block, DoWhile, GetSpan, IfElse, Item, Items, ParseErr, Return, RustCode, Type},
+    parse::{
+        Block, DoWhile, GetSpan, IfElse, Item, Items, ParseErr, Return, RustCode, Type, While,
+    },
 };
 use core::fmt::Write;
 
@@ -70,10 +72,13 @@ impl Eval for Item {
             Item::TypeDef(_) => todo!(),
             Item::VarDecl(_) => todo!(),
             Item::DoWhile(dw) => dw.try_eval(ctx),
+            Item::While(w) => w.try_eval(ctx),
             Item::For(_) => todo!(),
             Item::IfElse(if_else) => if_else.try_eval(ctx),
             Item::Return(ret) => ret.try_eval(ctx),
             Item::EnumVariant(_) => todo!(),
+            Item::Break(_) => todo!(),
+            Item::Continue(_) => todo!(),
         }
     }
 }
@@ -193,6 +198,28 @@ impl Eval for Return {
             Type::void(),
             val.is_const(),
             val.is_unsafe(),
+        ))))
+    }
+}
+
+impl Eval for While {
+    fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        let err = || ParseErr::new(self.span(), "can't eval");
+        let cond = self.cond.try_eval(ctx)?.ok_or_else(err)?;
+        let cond = cond.coerce(ctx, &Type::bool())?.unwrap_or(cond);
+        let block = self.block.try_eval(ctx)?.ok_or_else(err)?;
+        let value = ctx.capture_output(|ctx| {
+            write!(ctx, "while ")?;
+            cond.emit(ctx)?;
+            write!(ctx, " ")?;
+            block.emit(ctx)?;
+            Ok(())
+        })?;
+        Ok(Some(Value::RustCode(RustCode::boxed(
+            value,
+            Type::void(),
+            cond.is_const() && block.is_const(),
+            cond.is_unsafe() || block.is_unsafe(),
         ))))
     }
 }

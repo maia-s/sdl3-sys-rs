@@ -1,6 +1,6 @@
 use super::{
-    DocComment, Enum, Expr, FnAbi, FnDeclArgs, GetSpan, Ident, Kw_const, Kw_typedef, Op, Parse,
-    ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion,
+    DocComment, Enum, Expr, FnAbi, FnDeclArgs, GetSpan, Ident, Kw_const, Kw_struct, Kw_typedef, Op,
+    Parse, ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion,
     WsAndComments,
 };
 use crate::emit::EmitContext;
@@ -304,6 +304,18 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
                     span,
                     is_const,
                     ty: TypeEnum::Struct(Box::new(s)),
+                }
+            } else if let Some(_kw_struct) = Kw_struct::try_parse(ctx, &mut rest2)? {
+                // FIXME: this assumes the struct is typedef'd to the same name
+                rest = rest2;
+                WsAndComments::try_parse(ctx, &mut rest)?;
+                let ident = Ident::parse(ctx, &mut rest)?;
+                let is_const = is_const || Kw_const::try_parse(ctx, &mut rest)?.is_some();
+                let span = input.start().join(&rest.start());
+                Type {
+                    span,
+                    is_const,
+                    ty: TypeEnum::Ident(ident),
                 }
             } else if let Some(ident) = Ident::try_parse(ctx, &mut rest2)? {
                 rest = rest2;
