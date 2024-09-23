@@ -434,15 +434,15 @@ impl Parse for VarDecl {
             WsAndComments::try_parse(ctx, &mut rest)?;
             let init = if <Op![=]>::try_parse(ctx, &mut rest)?.is_some() {
                 WsAndComments::try_parse(ctx, &mut rest)?;
-                let init = if ty.ty.is_array_or_pointer() {
-                    let parsed = Delimited::<
-                        Op<'{'>,
-                        Option<Punctuated<ExprNoComma, Op![,]>>,
-                        Op<'}'>,
-                    >::parse(ctx, &mut rest)?;
-                    let span = parsed.span();
+                let init = if let Some(values) = Delimited::<
+                    Op<'{'>,
+                    Option<Punctuated<ExprNoComma, Op![,]>>,
+                    Op<'}'>,
+                >::try_parse(ctx, &mut rest)?
+                {
+                    let span = values.span();
                     let values: Vec<ExprNoComma> =
-                        parsed.value.map(|v| v.into()).unwrap_or_default();
+                        values.value.map(|v| v.into()).unwrap_or_default();
                     let values = values.into_iter().map(|i| i.0).collect();
                     Some(Expr::ArrayValues { span, values })
                 } else {

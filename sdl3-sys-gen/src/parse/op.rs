@@ -80,6 +80,7 @@ impl<const OP1: char, const OP2: char, const OP3: char> Op<OP1, OP2, OP3> {
 
     const fn _unary_precedence(s: &[u8]) -> Option<Precedence> {
         match s {
+            b"#" => Some(Precedence::left_to_right(1)),
             b"+" | b"++" | b"-" | b"--" | b"!" | b"~" | b"*" | b"&" => {
                 Some(Precedence::right_to_left(2))
             }
@@ -205,9 +206,9 @@ impl<const OP1: char, const OP2: char, const OP3: char> Parse for Op<OP1, OP2, O
             }
             if input.len() >= 2 {
                 match &input.as_bytes()[..2] {
-                    b"!=" | b"%=" | b"&&" | b"&=" | b"*=" | b"++" | b"+=" | b"--" | b"-="
-                    | b"->" | b"/=" | b"<<" | b"<=" | b"==" | b">=" | b">>" | b"^=" | b"|="
-                    | b"||" => {
+                    b"!=" | b"##" | b"%=" | b"&&" | b"&=" | b"*=" | b"++" | b"+=" | b"--"
+                    | b"-=" | b"->" | b"/=" | b"<<" | b"<=" | b"==" | b">=" | b">>" | b"^="
+                    | b"|=" | b"||" => {
                         let (span, rest) = input.split_at(2);
                         return Ok((rest, Some(Self { span })));
                     }
@@ -216,8 +217,8 @@ impl<const OP1: char, const OP2: char, const OP3: char> Parse for Op<OP1, OP2, O
             }
             if !input.is_empty() {
                 match input.as_bytes()[0] {
-                    b'!' | b'%' | b'&' | b'(' | b'*' | b'+' | b',' | b'-' | b'.' | b'/' | b':'
-                    | b'<' | b'=' | b'>' | b'?' | b'[' | b'^' | b'|' | b'~' => {
+                    b'!' | b'#' | b'%' | b'&' | b'(' | b'*' | b'+' | b',' | b'-' | b'.' | b'/'
+                    | b':' | b'<' | b'=' | b'>' | b'?' | b'[' | b'^' | b'|' | b'~' => {
                         let (span, rest) = input.split_at(1);
                         return Ok((rest, Some(Self { span })));
                     }

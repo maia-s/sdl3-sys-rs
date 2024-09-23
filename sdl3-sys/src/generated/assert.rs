@@ -171,8 +171,6 @@ extern "C" {
     ) -> SDL_AssertState;
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_enabled_assert`
-
 #[cfg(doc)]
 emit! {
     // [sdl3-sys-gen] skipped function-like define `SDL_assert`

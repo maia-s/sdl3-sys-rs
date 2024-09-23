@@ -373,9 +373,6 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
 
 impl Emit for Define {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        let _g = ctx.set_debug_log_guard(self.ident.as_str() == "SDL_enabled_assert");
-        log_debug!(ctx, "Define::emit {self:#?}");
-
         if patch_emit_define(ctx, self)? {
             // patched
         } else if matches!(self.value, DefineValue::Empty) {

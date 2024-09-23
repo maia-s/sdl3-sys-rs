@@ -1,7 +1,7 @@
 use super::{
-    patch_parsed_define, Ambiguous, Cast, DocComment, DocCommentPost, Expr, GetSpan, Ident,
-    IdentOrKw, IntegerLiteral, Item, Items, Literal, Parse, ParseContext, ParseErr, ParseRawRes,
-    Punctuated, Span, Type, WsAndComments,
+    patch_parsed_define, Ambiguous, Cast, Delimited, DocComment, DocCommentPost, Expr, GetSpan,
+    Ident, IdentOrKw, IntegerLiteral, Item, Items, Literal, Op, Parse, ParseContext, ParseErr,
+    ParseRawRes, Punctuated, Span, Type, WsAndComments,
 };
 use core::mem;
 use std::borrow::Cow;
@@ -90,7 +90,7 @@ impl Parse for DefineValue {
     fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         if input.is_empty() {
             Ok((input.end(), Some(Self::Empty)))
-        } else if input.contains("#") || input.contains("_cast<") {
+        } else if input.contains("##") || input.contains("_cast<") {
             Ok((input.end(), Some(Self::Other(input.clone()))))
         } else {
             let mut items = Items::try_parse_try_all(ctx, input)?;
@@ -421,12 +421,14 @@ impl Parse for PreProcLine {
 
                 "define" => {
                     let ident = IdentOrKw::parse(ctx, &mut i)?;
-                    if i.starts_with_ch('(') {
-                        if let Some(close_paren) = i.as_bytes().iter().position(|&b| b == b')') {
-                            let args = Punctuated::<IdentOrKw, Op![,]>::try_parse_all(
-                                ctx,
-                                i.slice(1..close_paren).trim_wsc()?,
-                            )?
+                    if let Some(del) = Delimited::<
+                        Op<'('>,
+                        Option<Punctuated<IdentOrKw, Op![,]>>,
+                        Op<')'>,
+                    >::try_parse(ctx, &mut i)?
+                    {
+                        let args = del
+                            .value
                             .unwrap_or_default()
                             .0
                             .into_iter()
@@ -435,25 +437,18 @@ impl Parse for PreProcLine {
                                 ty: Type::infer(),
                             })
                             .collect();
-                            let mut value_span = i.slice(close_paren + 1..).trim_wsc_start()?;
-                            let doc = DocComment::try_parse_rev_combine_postfix(
-                                ctx,
-                                &mut value_span,
-                                doc,
-                            )?;
-                            let value = DefineValue::parse_all(ctx, value_span.trim_wsc_end()?)?;
-                            let mut define = Define {
-                                span: span.clone(),
-                                doc,
-                                ident,
-                                args: Some(args),
-                                value,
-                            };
-                            patch_parsed_define(ctx, &mut define)?;
-                            PreProcLineKind::Define(define)
-                        } else {
-                            return Err(ParseErr::new(i.slice(0..=0), "unmatched `(`"));
-                        }
+                        WsAndComments::try_parse(ctx, &mut i)?;
+                        let doc = DocComment::try_parse_rev_combine_postfix(ctx, &mut i, doc)?;
+                        let value = DefineValue::parse_all(ctx, i.trim_wsc_end()?)?;
+                        let mut define = Define {
+                            span: span.clone(),
+                            doc,
+                            ident,
+                            args: Some(args),
+                            value,
+                        };
+                        patch_parsed_define(ctx, &mut define)?;
+                        PreProcLineKind::Define(define)
                     } else {
                         WsAndComments::try_parse(ctx, &mut i)?;
                         let mut value_span = i.trim_wsc_start()?;
@@ -503,13 +498,7 @@ impl Parse for PreProcLine {
 
                 "error" => PreProcLineKind::Error(i),
 
-                _ => {
-                    let span = line.start().join(&i);
-                    return Err(ParseErr::new(
-                        span.clone(),
-                        format!("unrecognized preprocessor directive: `{span}`"),
-                    ));
-                }
+                _ => return Ok((input.clone(), None)),
             };
 
             Ok((rest, Some(Self { span, kind })))

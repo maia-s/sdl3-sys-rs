@@ -97,6 +97,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                     | "SDL_BeginThreadFunction"
                     | "SDL_COMPILE_TIME_ASSERT"
                     | "SDL_const_cast"
+                    | "SDL_enabled_assert" // FIXME
                     | "SDL_EndThreadFunction"
                     | "SDL_HAS_BUILTIN"
                     | "SDL_InvalidParamError"
