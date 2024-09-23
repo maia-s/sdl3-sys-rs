@@ -763,7 +763,14 @@ impl Eval for Cast {
                 expr.ty()?.resolve_to(self.ty.clone());
             }
         }
-        let out = if let Some(sym) = self.ty.is_c_enum(ctx)? {
+        let out = if self.ty.is_void() {
+            ctx.capture_output(|ctx| {
+                write!(ctx, "{{ let _ = ")?;
+                self.expr.emit(ctx)?;
+                write!(ctx, "; }}")?;
+                Ok(())
+            })
+        } else if let Some(sym) = self.ty.is_c_enum(ctx)? {
             ctx.capture_output(|ctx| {
                 write!(ctx, "{}(", sym.ident)?;
                 self.expr.emit(ctx)?;
