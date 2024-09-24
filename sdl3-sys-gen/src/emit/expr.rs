@@ -580,19 +580,15 @@ impl Value {
                 let Some(sym) = ctx.lookup_sym(s) else {
                     todo!()
                 };
-                let Some(fty) = sym.field_type(ctx, field.as_str()) else {
+                let Some(_) = sym.field_type(ctx, field.as_str()) else {
                     todo!()
                 };
                 ctx.capture_output(|ctx| {
-                    write!(ctx, "unsafe {{ crate::ptr_read_field!(")?;
+                    write!(ctx, "unsafe {{ ::core::ptr::addr_of!((*")?;
                     ptr.emit(ctx)?;
-                    write!(ctx, ", ")?;
-                    p.emit(ctx)?;
-                    write!(ctx, ", ")?;
+                    write!(ctx, ").")?;
                     field.emit(ctx)?;
-                    write!(ctx, ", ")?;
-                    fty.emit(ctx)?;
-                    write!(ctx, ") }}")?;
+                    write!(ctx, ").read() }}")?;
                     Ok(())
                 })?
             } else {
@@ -1171,17 +1167,19 @@ impl Eval for Expr {
                                     todo!()
                                 };
                                 let value = ctx.capture_output(|ctx| {
-                                    write!(ctx, "unsafe {{ crate::ptr_write_field!(")?;
+                                    writeln!(ctx, "{{")?;
+                                    ctx.increase_indent();
+                                    write!(ctx, "let (ptr, value) = (unsafe {{ ::core::ptr::addr_of_mut!((*")?;
                                     ptr.emit(ctx)?;
-                                    write!(ctx, ", ")?;
-                                    p.emit(ctx)?;
-                                    write!(ctx, ", ")?;
+                                    write!(ctx, ").")?;
                                     field.emit(ctx)?;
-                                    write!(ctx, ", ")?;
-                                    fty.emit(ctx)?;
-                                    write!(ctx, ", ")?;
+                                    write!(ctx, ") }}, ")?;
                                     rhs.emit(ctx)?;
-                                    write!(ctx, ") }}")?;
+                                    writeln!(ctx, ");")?;
+                                    writeln!(ctx, "unsafe {{ ptr.write(value) }};")?;
+                                    writeln!(ctx, "value")?;
+                                    ctx.decrease_indent();
+                                    write!(ctx, "}}")?;
                                     Ok(())
                                 })?;
                                 (value, fty)

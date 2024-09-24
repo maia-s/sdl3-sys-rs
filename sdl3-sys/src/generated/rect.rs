@@ -89,45 +89,37 @@ pub struct SDL_FRect {
 /// \since This function is available since SDL 3.0.0.
 #[inline(always)]
 pub unsafe fn SDL_RectToFRect(rect: *const SDL_Rect, frect: *mut SDL_FRect) {
-    unsafe {
-        crate::ptr_write_field!(
-            frect,
-            SDL_FRect,
-            x,
-            ::core::ffi::c_float,
-            (unsafe { crate::ptr_read_field!(rect, SDL_Rect, x, ::core::ffi::c_int) }
-                as ::core::ffi::c_float)
-        )
+    {
+        let (ptr, value) = (
+            unsafe { ::core::ptr::addr_of_mut!((*frect).x) },
+            (unsafe { ::core::ptr::addr_of!((*rect).x).read() } as ::core::ffi::c_float),
+        );
+        unsafe { ptr.write(value) };
+        value
     };
-    unsafe {
-        crate::ptr_write_field!(
-            frect,
-            SDL_FRect,
-            y,
-            ::core::ffi::c_float,
-            (unsafe { crate::ptr_read_field!(rect, SDL_Rect, y, ::core::ffi::c_int) }
-                as ::core::ffi::c_float)
-        )
+    {
+        let (ptr, value) = (
+            unsafe { ::core::ptr::addr_of_mut!((*frect).y) },
+            (unsafe { ::core::ptr::addr_of!((*rect).y).read() } as ::core::ffi::c_float),
+        );
+        unsafe { ptr.write(value) };
+        value
     };
-    unsafe {
-        crate::ptr_write_field!(
-            frect,
-            SDL_FRect,
-            w,
-            ::core::ffi::c_float,
-            (unsafe { crate::ptr_read_field!(rect, SDL_Rect, w, ::core::ffi::c_int) }
-                as ::core::ffi::c_float)
-        )
+    {
+        let (ptr, value) = (
+            unsafe { ::core::ptr::addr_of_mut!((*frect).w) },
+            (unsafe { ::core::ptr::addr_of!((*rect).w).read() } as ::core::ffi::c_float),
+        );
+        unsafe { ptr.write(value) };
+        value
     };
-    unsafe {
-        crate::ptr_write_field!(
-            frect,
-            SDL_FRect,
-            h,
-            ::core::ffi::c_float,
-            (unsafe { crate::ptr_read_field!(rect, SDL_Rect, h, ::core::ffi::c_int) }
-                as ::core::ffi::c_float)
-        )
+    {
+        let (ptr, value) = (
+            unsafe { ::core::ptr::addr_of_mut!((*frect).h) },
+            (unsafe { ::core::ptr::addr_of!((*rect).h).read() } as ::core::ffi::c_float),
+        );
+        unsafe { ptr.write(value) };
+        value
     };
 }
 
@@ -153,16 +145,16 @@ pub unsafe fn SDL_RectToFRect(rect: *const SDL_Rect, frect: *mut SDL_FRect) {
 #[inline(always)]
 pub unsafe fn SDL_PointInRect(p: *const SDL_Point, r: *const SDL_Rect) -> ::core::primitive::bool {
     return if (((((!p.is_null() && !r.is_null())
-        && (unsafe { crate::ptr_read_field!(p, SDL_Point, x, ::core::ffi::c_int) }
-            >= unsafe { crate::ptr_read_field!(r, SDL_Rect, x, ::core::ffi::c_int) }))
-        && (unsafe { crate::ptr_read_field!(p, SDL_Point, x, ::core::ffi::c_int) }
-            < (unsafe { crate::ptr_read_field!(r, SDL_Rect, x, ::core::ffi::c_int) }
-                + unsafe { crate::ptr_read_field!(r, SDL_Rect, w, ::core::ffi::c_int) })))
-        && (unsafe { crate::ptr_read_field!(p, SDL_Point, y, ::core::ffi::c_int) }
-            >= unsafe { crate::ptr_read_field!(r, SDL_Rect, y, ::core::ffi::c_int) }))
-        && (unsafe { crate::ptr_read_field!(p, SDL_Point, y, ::core::ffi::c_int) }
-            < (unsafe { crate::ptr_read_field!(r, SDL_Rect, y, ::core::ffi::c_int) }
-                + unsafe { crate::ptr_read_field!(r, SDL_Rect, h, ::core::ffi::c_int) })))
+        && (unsafe { ::core::ptr::addr_of!((*p).x).read() }
+            >= unsafe { ::core::ptr::addr_of!((*r).x).read() }))
+        && (unsafe { ::core::ptr::addr_of!((*p).x).read() }
+            < (unsafe { ::core::ptr::addr_of!((*r).x).read() }
+                + unsafe { ::core::ptr::addr_of!((*r).w).read() })))
+        && (unsafe { ::core::ptr::addr_of!((*p).y).read() }
+            >= unsafe { ::core::ptr::addr_of!((*r).y).read() }))
+        && (unsafe { ::core::ptr::addr_of!((*p).y).read() }
+            < (unsafe { ::core::ptr::addr_of!((*r).y).read() }
+                + unsafe { ::core::ptr::addr_of!((*r).h).read() })))
     {
         true
     } else {
@@ -188,9 +180,8 @@ pub unsafe fn SDL_PointInRect(p: *const SDL_Point, r: *const SDL_Rect) -> ::core
 /// \since This function is available since SDL 3.0.0.
 #[inline(always)]
 pub unsafe fn SDL_RectEmpty(r: *const SDL_Rect) -> ::core::primitive::bool {
-    return if ((!(!r.is_null())
-        || (unsafe { crate::ptr_read_field!(r, SDL_Rect, w, ::core::ffi::c_int) } <= 0))
-        || (unsafe { crate::ptr_read_field!(r, SDL_Rect, h, ::core::ffi::c_int) } <= 0))
+    return if ((!(!r.is_null()) || (unsafe { ::core::ptr::addr_of!((*r).w).read() } <= 0))
+        || (unsafe { ::core::ptr::addr_of!((*r).h).read() } <= 0))
     {
         true
     } else {
@@ -218,14 +209,14 @@ pub unsafe fn SDL_RectEmpty(r: *const SDL_Rect) -> ::core::primitive::bool {
 #[inline(always)]
 pub unsafe fn SDL_RectsEqual(a: *const SDL_Rect, b: *const SDL_Rect) -> ::core::primitive::bool {
     return if (((((!a.is_null() && !b.is_null())
-        && (unsafe { crate::ptr_read_field!(a, SDL_Rect, x, ::core::ffi::c_int) }
-            == unsafe { crate::ptr_read_field!(b, SDL_Rect, x, ::core::ffi::c_int) }))
-        && (unsafe { crate::ptr_read_field!(a, SDL_Rect, y, ::core::ffi::c_int) }
-            == unsafe { crate::ptr_read_field!(b, SDL_Rect, y, ::core::ffi::c_int) }))
-        && (unsafe { crate::ptr_read_field!(a, SDL_Rect, w, ::core::ffi::c_int) }
-            == unsafe { crate::ptr_read_field!(b, SDL_Rect, w, ::core::ffi::c_int) }))
-        && (unsafe { crate::ptr_read_field!(a, SDL_Rect, h, ::core::ffi::c_int) }
-            == unsafe { crate::ptr_read_field!(b, SDL_Rect, h, ::core::ffi::c_int) }))
+        && (unsafe { ::core::ptr::addr_of!((*a).x).read() }
+            == unsafe { ::core::ptr::addr_of!((*b).x).read() }))
+        && (unsafe { ::core::ptr::addr_of!((*a).y).read() }
+            == unsafe { ::core::ptr::addr_of!((*b).y).read() }))
+        && (unsafe { ::core::ptr::addr_of!((*a).w).read() }
+            == unsafe { ::core::ptr::addr_of!((*b).w).read() }))
+        && (unsafe { ::core::ptr::addr_of!((*a).h).read() }
+            == unsafe { ::core::ptr::addr_of!((*b).h).read() }))
     {
         true
     } else {
@@ -367,16 +358,16 @@ pub unsafe fn SDL_PointInRectFloat(
     r: *const SDL_FRect,
 ) -> ::core::primitive::bool {
     return if (((((!p.is_null() && !r.is_null())
-        && (unsafe { crate::ptr_read_field!(p, SDL_FPoint, x, ::core::ffi::c_float) }
-            >= unsafe { crate::ptr_read_field!(r, SDL_FRect, x, ::core::ffi::c_float) }))
-        && (unsafe { crate::ptr_read_field!(p, SDL_FPoint, x, ::core::ffi::c_float) }
-            <= (unsafe { crate::ptr_read_field!(r, SDL_FRect, x, ::core::ffi::c_float) }
-                + unsafe { crate::ptr_read_field!(r, SDL_FRect, w, ::core::ffi::c_float) })))
-        && (unsafe { crate::ptr_read_field!(p, SDL_FPoint, y, ::core::ffi::c_float) }
-            >= unsafe { crate::ptr_read_field!(r, SDL_FRect, y, ::core::ffi::c_float) }))
-        && (unsafe { crate::ptr_read_field!(p, SDL_FPoint, y, ::core::ffi::c_float) }
-            <= (unsafe { crate::ptr_read_field!(r, SDL_FRect, y, ::core::ffi::c_float) }
-                + unsafe { crate::ptr_read_field!(r, SDL_FRect, h, ::core::ffi::c_float) })))
+        && (unsafe { ::core::ptr::addr_of!((*p).x).read() }
+            >= unsafe { ::core::ptr::addr_of!((*r).x).read() }))
+        && (unsafe { ::core::ptr::addr_of!((*p).x).read() }
+            <= (unsafe { ::core::ptr::addr_of!((*r).x).read() }
+                + unsafe { ::core::ptr::addr_of!((*r).w).read() })))
+        && (unsafe { ::core::ptr::addr_of!((*p).y).read() }
+            >= unsafe { ::core::ptr::addr_of!((*r).y).read() }))
+        && (unsafe { ::core::ptr::addr_of!((*p).y).read() }
+            <= (unsafe { ::core::ptr::addr_of!((*r).y).read() }
+                + unsafe { ::core::ptr::addr_of!((*r).h).read() })))
     {
         true
     } else {
@@ -402,9 +393,8 @@ pub unsafe fn SDL_PointInRectFloat(
 /// \since This function is available since SDL 3.0.0.
 #[inline(always)]
 pub unsafe fn SDL_RectEmptyFloat(r: *const SDL_FRect) -> ::core::primitive::bool {
-    return if ((!(!r.is_null())
-        || (unsafe { crate::ptr_read_field!(r, SDL_FRect, w, ::core::ffi::c_float) } < 0.0_f32))
-        || (unsafe { crate::ptr_read_field!(r, SDL_FRect, h, ::core::ffi::c_float) } < 0.0_f32))
+    return if ((!(!r.is_null()) || (unsafe { ::core::ptr::addr_of!((*r).w).read() } < 0.0_f32))
+        || (unsafe { ::core::ptr::addr_of!((*r).h).read() } < 0.0_f32))
     {
         true
     } else {
@@ -445,32 +435,26 @@ pub unsafe fn SDL_RectsEqualEpsilon(
         && ((a == b)
             || ((((unsafe {
                 SDL_fabsf(
-                    (unsafe { crate::ptr_read_field!(a, SDL_FRect, x, ::core::ffi::c_float) }
-                        - unsafe { crate::ptr_read_field!(b, SDL_FRect, x, ::core::ffi::c_float) }),
+                    (unsafe { ::core::ptr::addr_of!((*a).x).read() }
+                        - unsafe { ::core::ptr::addr_of!((*b).x).read() }),
                 )
             } <= epsilon)
                 && (unsafe {
                     SDL_fabsf(
-                        (unsafe { crate::ptr_read_field!(a, SDL_FRect, y, ::core::ffi::c_float) }
-                            - unsafe {
-                                crate::ptr_read_field!(b, SDL_FRect, y, ::core::ffi::c_float)
-                            }),
+                        (unsafe { ::core::ptr::addr_of!((*a).y).read() }
+                            - unsafe { ::core::ptr::addr_of!((*b).y).read() }),
                     )
                 } <= epsilon))
                 && (unsafe {
                     SDL_fabsf(
-                        (unsafe { crate::ptr_read_field!(a, SDL_FRect, w, ::core::ffi::c_float) }
-                            - unsafe {
-                                crate::ptr_read_field!(b, SDL_FRect, w, ::core::ffi::c_float)
-                            }),
+                        (unsafe { ::core::ptr::addr_of!((*a).w).read() }
+                            - unsafe { ::core::ptr::addr_of!((*b).w).read() }),
                     )
                 } <= epsilon))
                 && (unsafe {
                     SDL_fabsf(
-                        (unsafe { crate::ptr_read_field!(a, SDL_FRect, h, ::core::ffi::c_float) }
-                            - unsafe {
-                                crate::ptr_read_field!(b, SDL_FRect, h, ::core::ffi::c_float)
-                            }),
+                        (unsafe { ::core::ptr::addr_of!((*a).h).read() }
+                            - unsafe { ::core::ptr::addr_of!((*b).h).read() }),
                     )
                 } <= epsilon))))
     {

@@ -27,29 +27,6 @@ const fn size_of_return_value<T, R>(_: &impl FnOnce(T) -> R) -> usize {
     size_of::<R>()
 }
 
-macro_rules! ptr_read_field {
-    ($ptr:expr, $struct:ty, $field:ident, $field_ty:ty) => {{
-        let ptr: *const _ = $ptr;
-        ptr.cast::<u8>()
-            .add(::core::mem::offset_of!($struct, $field))
-            .cast::<$field_ty>()
-            .read()
-    }};
-}
-pub(crate) use ptr_read_field;
-
-macro_rules! ptr_write_field {
-    ($ptr:expr, $struct:ty, $field:ident, $field_ty:ty, $value:expr) => {{
-        let (ptr, value): (*mut _, $field_ty) = ($ptr, $value);
-        ptr.cast::<u8>()
-            .add(::core::mem::offset_of!($struct, $field))
-            .cast::<$field_ty>()
-            .write(value);
-        value
-    }};
-}
-pub(crate) use ptr_write_field;
-
 #[doc(hidden)] // for internal use only
 #[macro_export]
 macro_rules! __static_c_str {
