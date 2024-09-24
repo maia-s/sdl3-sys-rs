@@ -179,6 +179,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             writeln!(
                 ctx,
                 str_block! {r#"
+                    #[doc(hidden)]
                     #[macro_export]
                     macro_rules! {} {{
                         ($condition:expr) => {{ $crate::assert::{}!($condition) }};
@@ -246,6 +247,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             // emit SDL_disabled_assert
             define.doc.emit(ctx)?;
             ctx.write_str(str_block! {r#"
+                #[doc(hidden)]
                 #[macro_export]
                 macro_rules! SDL_disabled_assert {
                     ($condition:expr) => {};
@@ -263,6 +265,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
         patch: |ctx, define| {
             define.doc.emit(ctx)?;
             ctx.write_str(str_block! {r#"
+                #[doc(hidden)]
                 #[macro_export]
                 macro_rules! SDL_enabled_assert {
                     ($condition:expr) => {{

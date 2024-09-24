@@ -114,6 +114,7 @@ pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 2;
 ))]
 pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 3;
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! SDL_disabled_assert {
     ($condition:expr) => {};
@@ -211,6 +212,7 @@ extern "C" {
 #[inline(never)]
 pub const unsafe fn SDL_AssertBreakpoint() {}
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! SDL_enabled_assert {
     ($condition:expr) => {{
@@ -286,6 +288,7 @@ emit! {
     /// \param condition boolean value to test.
     ///
     /// \since This macro is available since SDL 3.0.0.
+    #[doc(hidden)]
     #[macro_export]
     macro_rules! SDL_assert {
         ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
@@ -320,6 +323,7 @@ emit! {
     /// \param condition boolean value to test.
     ///
     /// \since This macro is available since SDL 3.0.0.
+    #[doc(hidden)]
     #[macro_export]
     macro_rules! SDL_assert_release {
         ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
@@ -350,6 +354,7 @@ emit! {
     /// \param condition boolean value to test.
     ///
     /// \since This macro is available since SDL 3.0.0.
+    #[doc(hidden)]
     #[macro_export]
     macro_rules! SDL_assert_paranoid {
         ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
@@ -362,6 +367,7 @@ emit! {
 emit! {
     #[cfg(feature = "assert-level-disabled")]
     emit! {
+        #[doc(hidden)]
         #[macro_export]
         macro_rules! SDL_assert {
             ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
@@ -369,6 +375,7 @@ emit! {
         #[doc(inline)]
         pub use SDL_assert;
 
+        #[doc(hidden)]
         #[macro_export]
         macro_rules! SDL_assert_release {
             ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
@@ -376,6 +383,7 @@ emit! {
         #[doc(inline)]
         pub use SDL_assert_release;
 
+        #[doc(hidden)]
         #[macro_export]
         macro_rules! SDL_assert_paranoid {
             ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
@@ -388,6 +396,7 @@ emit! {
     emit! {
         #[cfg(feature = "assert-level-release")]
         emit! {
+            #[doc(hidden)]
             #[macro_export]
             macro_rules! SDL_assert {
                 ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
@@ -395,6 +404,7 @@ emit! {
             #[doc(inline)]
             pub use SDL_assert;
 
+            #[doc(hidden)]
             #[macro_export]
             macro_rules! SDL_assert_release {
                 ($condition:expr) => { $crate::assert::SDL_enabled_assert!($condition) };
@@ -402,6 +412,7 @@ emit! {
             #[doc(inline)]
             pub use SDL_assert_release;
 
+            #[doc(hidden)]
             #[macro_export]
             macro_rules! SDL_assert_paranoid {
                 ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
@@ -414,6 +425,7 @@ emit! {
         emit! {
             #[cfg(feature = "assert-level-debug")]
             emit! {
+                #[doc(hidden)]
                 #[macro_export]
                 macro_rules! SDL_assert {
                     ($condition:expr) => { $crate::assert::SDL_enabled_assert!($condition) };
@@ -421,6 +433,7 @@ emit! {
                 #[doc(inline)]
                 pub use SDL_assert;
 
+                #[doc(hidden)]
                 #[macro_export]
                 macro_rules! SDL_assert_release {
                     ($condition:expr) => { $crate::assert::SDL_enabled_assert!($condition) };
@@ -428,6 +441,7 @@ emit! {
                 #[doc(inline)]
                 pub use SDL_assert_release;
 
+                #[doc(hidden)]
                 #[macro_export]
                 macro_rules! SDL_assert_paranoid {
                     ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
@@ -440,6 +454,7 @@ emit! {
             emit! {
                 #[cfg(feature = "assert-level-paranoid")]
                 emit! {
+                    #[doc(hidden)]
                     #[macro_export]
                     macro_rules! SDL_assert {
                         ($condition:expr) => { $crate::assert::SDL_enabled_assert!($condition) };
@@ -447,6 +462,7 @@ emit! {
                     #[doc(inline)]
                     pub use SDL_assert;
 
+                    #[doc(hidden)]
                     #[macro_export]
                     macro_rules! SDL_assert_release {
                         ($condition:expr) => { $crate::assert::SDL_enabled_assert!($condition) };
@@ -454,6 +470,7 @@ emit! {
                     #[doc(inline)]
                     pub use SDL_assert_release;
 
+                    #[doc(hidden)]
                     #[macro_export]
                     macro_rules! SDL_assert_paranoid {
                         ($condition:expr) => { $crate::assert::SDL_enabled_assert!($condition) };
@@ -492,6 +509,7 @@ emit! {
 /// \param condition boolean value to test.
 ///
 /// \since This macro is available since SDL 3.0.0.
+#[doc(hidden)]
 #[macro_export]
 macro_rules! SDL_assert_always {
     ($condition:expr) => {
