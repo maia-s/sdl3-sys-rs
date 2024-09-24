@@ -1465,6 +1465,39 @@ impl Eval for Expr {
                         Ok(Some(rhs))
                     }
 
+                    b"." => {
+                        let Expr::Ident(lhs) = bop.lhs.deparenthesize() else {
+                            todo!()
+                        };
+                        let Expr::Ident(rhs) = &bop.rhs else { todo!() };
+                        let Some(sym) = ctx.lookup_sym(&lhs.clone().try_into().unwrap()) else {
+                            todo!()
+                        };
+                        let Some(Type {
+                            ty: TypeEnum::Ident(vty),
+                            ..
+                        }) = sym.value_ty
+                        else {
+                            todo!()
+                        };
+                        let Some(sym) = ctx.lookup_sym(&vty) else {
+                            todo!()
+                        };
+                        let Some(ty) = sym.field_type(ctx, rhs.as_str()) else {
+                            dbg!(lhs, rhs, sym);
+                            todo!();
+                        };
+                        let value = ctx.capture_output(|ctx| {
+                            lhs.emit(ctx)?;
+                            write!(ctx, ".")?;
+                            rhs.emit(ctx)?;
+                            Ok(())
+                        })?;
+                        Ok(Some(Value::RustCode(RustCode::boxed(
+                            value, ty, true, false,
+                        ))))
+                    }
+
                     b"&&" => {
                         let lhs = eval!(bop.lhs);
                         if let Value::TargetDependent(lhs) = lhs {

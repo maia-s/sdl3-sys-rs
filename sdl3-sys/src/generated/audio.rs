@@ -182,8 +182,8 @@ pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 ///
 /// \since This macro is available since SDL 3.0.0.
 #[inline(always)]
-pub const fn SDL_AUDIO_BITSIZE(x: ::core::primitive::u32) -> ::core::primitive::u32 {
-    (x & 255_u32)
+pub const fn SDL_AUDIO_BITSIZE(x: SDL_AudioFormat) -> ::core::primitive::u32 {
+    ((x.0 as ::core::primitive::u32) & 255_u32)
 }
 
 /// Retrieve the size, in bytes, from an SDL_AudioFormat.
@@ -197,7 +197,7 @@ pub const fn SDL_AUDIO_BITSIZE(x: ::core::primitive::u32) -> ::core::primitive::
 ///
 /// \since This macro is available since SDL 3.0.0.
 #[inline(always)]
-pub const fn SDL_AUDIO_BYTESIZE(x: ::core::primitive::u32) -> ::core::primitive::u32 {
+pub const fn SDL_AUDIO_BYTESIZE(x: SDL_AudioFormat) -> ::core::primitive::u32 {
     (SDL_AUDIO_BITSIZE(x) / 8_u32)
 }
 
@@ -333,7 +333,21 @@ pub struct SDL_AudioSpec {
     pub freq: ::core::ffi::c_int,
 }
 
-// [sdl3-sys-gen] skipped function-like define `SDL_AUDIO_FRAMESIZE`
+/// Calculate the size of each audio frame (in bytes) from an SDL_AudioSpec.
+///
+/// This reports on the size of an audio sample frame: stereo Sint16 data (2
+/// channels of 2 bytes each) would be 4 bytes per frame, for example.
+///
+/// \param x an SDL_AudioSpec to query.
+/// \returns the number of bytes used per sample frame.
+///
+/// \threadsafety It is safe to call this macro from any thread.
+///
+/// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
+pub const fn SDL_AUDIO_FRAMESIZE(x: SDL_AudioSpec) -> ::core::primitive::u32 {
+    (SDL_AUDIO_BYTESIZE(x.format) * (x.channels as ::core::primitive::u32))
+}
 
 extern "C" {
     /// Use this function to get the number of built-in audio drivers.

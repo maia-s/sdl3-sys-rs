@@ -16,6 +16,28 @@ type DefinePatch = Patch<Define>;
 
 const DEFINE_PATCHES: &[Patch<Define>] = &[
     DefinePatch {
+        module: Some("audio"),
+        match_ident: |i| i == "SDL_AUDIO_BITSIZE",
+        patch: |_ctx, define| {
+            let Some(args) = &mut define.args else {
+                unreachable!()
+            };
+            args[0].ty = Type::ident(Ident::new_inline("SDL_AudioFormat"));
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("audio"),
+        match_ident: |i| i == "SDL_AUDIO_FRAMESIZE",
+        patch: |_ctx, define| {
+            let Some(args) = &mut define.args else {
+                unreachable!()
+            };
+            args[0].ty = Type::ident(Ident::new_inline("SDL_AudioSpec"));
+            Ok(true)
+        },
+    },
+    DefinePatch {
         module: Some("joystick"),
         match_ident: |i| i.starts_with("SDL_HAT_"),
         patch: |_ctx, define| {
