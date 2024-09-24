@@ -32,6 +32,31 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
         patch: |_, _| Ok(true),
     },
     EmitFunctionPatch {
+        module: Some("assert"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_MemoryBarrierAcquireFunction" | "SDL_MemoryBarrierReleaseFunction"
+            )
+        },
+        patch: |ctx, f| {
+            let ident = f.ident.as_str().strip_suffix("Function").unwrap();
+            let ordering = ident.strip_prefix("SDL_MemoryBarrier").unwrap();
+            writeln!(
+                ctx,
+                str_block! {r#"
+                    #[inline(always)]
+                    pub fn {}() {{
+                        ::core::sync::atomic::fence(::core::sync::atomic::Ordering::{})
+                    }}
+
+                "#},
+                ident, ordering
+            )?;
+            Ok(false)
+        },
+    },
+    EmitFunctionPatch {
         module: Some("bits"),
         match_ident: |i| i == "SDL_MostSignificantBitIndex32",
         patch: |ctx, f| {
@@ -106,6 +131,8 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                     | "SDL_LINE"
                     | "SDL_memcpy"
                     | "SDL_memmove"
+                    | "SDL_MemoryBarrierAcquire" // emitted in function patch for SDL_MemoryBarrier*Function
+                    | "SDL_MemoryBarrierRelease" // emitted in function patch for SDL_MemoryBarrier*Function
                     | "SDL_memset"
                     | "SDL_NULL_WHILE_LOOP_CONDITION"
                     | "SDL_PRILLd"
@@ -289,16 +316,32 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
         match_ident: |i| i == "SDL_CompilerBarrier",
         patch: |ctx, define| {
             define.doc.emit(ctx)?;
-            writeln!(ctx, "#[inline(always)]")?;
-            writeln!(ctx, "pub fn SDL_CompilerBarrier() {{")?;
-            ctx.increase_indent();
-            writeln!(
-                ctx,
-                "::core::sync::atomic::fence(::core::sync::atomic::Ordering::SeqCst)"
-            )?;
-            ctx.decrease_indent();
-            writeln!(ctx, "}}")?;
-            writeln!(ctx)?;
+            ctx.write_str(str_block! {r#"
+                #[inline(always)]
+                pub fn SDL_CompilerBarrier() {
+                    ::core::sync::atomic::compiler_fence(::core::sync::atomic::Ordering::SeqCst)
+                }
+
+            "#})?;
+            Ok(true)
+        },
+    },
+    EmitDefinePatch {
+        module: Some("atomic"),
+        match_ident: |i| i == "SDL_CPUPauseInstruction",
+        patch: |ctx, define| {
+            define.doc.emit(ctx)?;
+            // TODO: add more archs
+            ctx.write_str(str_block! {r#"
+                #[inline(always)]
+                pub fn SDL_CPUPauseInstruction() {
+                    #[cfg(target_arch = "x86")]
+                    unsafe { ::core::arch::x86::_mm_pause() }
+                    #[cfg(target_arch = "x86_64")]
+                    unsafe { ::core::arch::x86_64::_mm_pause() }
+                }
+
+            "#})?;
             Ok(true)
         },
     },

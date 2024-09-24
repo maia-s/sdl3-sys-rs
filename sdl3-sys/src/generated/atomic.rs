@@ -109,9 +109,8 @@ emit! {
     /// \since This macro is available since SDL 3.0.0.
     #[inline(always)]
     pub fn SDL_CompilerBarrier() {
-        ::core::sync::atomic::fence(::core::sync::atomic::Ordering::SeqCst)
+        ::core::sync::atomic::compiler_fence(::core::sync::atomic::Ordering::SeqCst)
     }
-
 }
 
 #[cfg(not(doc))]
@@ -121,9 +120,8 @@ emit! {
         // pragma `intrinsic(_ReadWriteBarrier)`
         #[inline(always)]
         pub fn SDL_CompilerBarrier() {
-            ::core::sync::atomic::fence(::core::sync::atomic::Ordering::SeqCst)
+            ::core::sync::atomic::compiler_fence(::core::sync::atomic::Ordering::SeqCst)
         }
-
     }
 
     #[cfg(not(all(not(any(/* always disabled: __clang__ */)), all(windows, target_env = "msvc"))))]
@@ -132,18 +130,16 @@ emit! {
         emit! {
             #[inline(always)]
             pub fn SDL_CompilerBarrier() {
-                ::core::sync::atomic::fence(::core::sync::atomic::Ordering::SeqCst)
+                ::core::sync::atomic::compiler_fence(::core::sync::atomic::Ordering::SeqCst)
             }
-
         }
 
         #[cfg(target_os = "emscripten")]
         emit! {
             #[inline(always)]
             pub fn SDL_CompilerBarrier() {
-                ::core::sync::atomic::fence(::core::sync::atomic::Ordering::SeqCst)
+                ::core::sync::atomic::compiler_fence(::core::sync::atomic::Ordering::SeqCst)
             }
-
         }
 
     }
@@ -195,51 +191,67 @@ extern "C" {
 }
 
 #[cfg(all(any(any(target_arch = "powerpc", target_arch = "powerpc64"), any(target_arch = "powerpc", target_arch = "powerpc64")), any(/* always disabled: __GNUC__ */)))]
-emit! {
-    // [sdl3-sys-gen] skipped function-like define `SDL_MemoryBarrierRelease`
-
-    // [sdl3-sys-gen] skipped function-like define `SDL_MemoryBarrierAcquire`
-
-}
+emit! {}
 
 #[cfg(not(all(any(any(target_arch = "powerpc", target_arch = "powerpc64"), any(target_arch = "powerpc", target_arch = "powerpc64")), any(/* always disabled: __GNUC__ */))))]
 emit! {
     #[cfg(all(any(/* always disabled: __GNUC__ */), target_arch = "aarch64"))]
     emit! {
-        // [sdl3-sys-gen] skipped function-like define `SDL_MemoryBarrierRelease`
-
-        // [sdl3-sys-gen] skipped function-like define `SDL_MemoryBarrierAcquire`
-
     }
 
     #[cfg(not(all(any(/* always disabled: __GNUC__ */), target_arch = "aarch64")))]
     emit! {
-        // [sdl3-sys-gen] skipped function-like define `SDL_MemoryBarrierRelease`
-
-        // [sdl3-sys-gen] skipped function-like define `SDL_MemoryBarrierAcquire`
-
     }
 
 }
 
 #[cfg(doc)]
 emit! {
-    // [sdl3-sys-gen] skipped function-like define `SDL_CPUPauseInstruction`
-
+    /// A macro to insert a CPU-specific "pause" instruction into the program.
+    ///
+    /// This can be useful in busy-wait loops, as it serves as a hint to the CPU as
+    /// to the program's intent; some CPUs can use this to do more efficient
+    /// processing. On some platforms, this doesn't do anything, so using this
+    /// macro might just be a harmless no-op.
+    ///
+    /// Note that if you are busy-waiting, there are often more-efficient
+    /// approaches with other synchronization primitives: mutexes, semaphores,
+    /// condition variables, etc.
+    ///
+    /// \threadsafety This macro is safe to use from any thread.
+    ///
+    /// \since This macro is available since SDL 3.0.0.
+    #[inline(always)]
+    pub fn SDL_CPUPauseInstruction() {
+        #[cfg(target_arch = "x86")]
+        unsafe { ::core::arch::x86::_mm_pause() }
+        #[cfg(target_arch = "x86_64")]
+        unsafe { ::core::arch::x86_64::_mm_pause() }
+    }
 }
 
 #[cfg(not(doc))]
 emit! {
     #[cfg(all(any(any(/* always disabled: __GNUC__ */), any(/* always disabled: __clang__ */)), any(target_arch = "x86", target_arch = "x86_64")))]
     emit! {
-        // [sdl3-sys-gen] skipped function-like define `SDL_CPUPauseInstruction`
-
+        #[inline(always)]
+        pub fn SDL_CPUPauseInstruction() {
+            #[cfg(target_arch = "x86")]
+            unsafe { ::core::arch::x86::_mm_pause() }
+            #[cfg(target_arch = "x86_64")]
+            unsafe { ::core::arch::x86_64::_mm_pause() }
+        }
     }
 
     #[cfg(not(all(any(any(/* always disabled: __GNUC__ */), any(/* always disabled: __clang__ */)), any(target_arch = "x86", target_arch = "x86_64"))))]
     emit! {
-        // [sdl3-sys-gen] skipped function-like define `SDL_CPUPauseInstruction`
-
+        #[inline(always)]
+        pub fn SDL_CPUPauseInstruction() {
+            #[cfg(target_arch = "x86")]
+            unsafe { ::core::arch::x86::_mm_pause() }
+            #[cfg(target_arch = "x86_64")]
+            unsafe { ::core::arch::x86_64::_mm_pause() }
+        }
     }
 
 }
