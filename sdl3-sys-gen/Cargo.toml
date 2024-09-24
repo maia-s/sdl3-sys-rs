@@ -12,3 +12,4 @@ default = []
 
 [dependencies]
 const-it = "0.2"
+str-block = "0.1"

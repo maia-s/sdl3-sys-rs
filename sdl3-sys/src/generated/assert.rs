@@ -35,7 +35,22 @@ use super::stdinc::*;
 
 #[cfg(doc)]
 emit! {
-    // [sdl3-sys-gen] skipped constant value define `SDL_ASSERT_LEVEL`
+    /// The level of assertion aggressiveness.
+    ///
+    /// This value changes depending on compiler options and other preprocessor
+    /// defines.
+    ///
+    /// It is currently one of the following values, but future SDL releases might
+    /// add more:
+    ///
+    /// - 0: All SDL assertion macros are disabled.
+    /// - 1: Release settings: SDL_assert disabled, SDL_assert_release enabled.
+    /// - 2: Debug settings: SDL_assert and SDL_assert_release enabled.
+    /// - 3: Paranoid settings: All SDL assertion macros enabled, including
+    ///   SDL_assert_paranoid.
+    ///
+    /// \since This macro is available since SDL 3.0.0.
+    pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 1;
 
 }
 
@@ -43,14 +58,10 @@ emit! {
 emit! {
     #[cfg(any(all(not(not(debug_assertions)), any(/* always disabled: __GNUC__ */)), debug_assertions, debug_assertions))]
     emit! {
-        pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 2;
-
     }
 
     #[cfg(not(any(all(not(not(debug_assertions)), any(/* always disabled: __GNUC__ */)), debug_assertions, debug_assertions)))]
     emit! {
-        pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 1;
-
     }
 
 }
@@ -70,19 +81,45 @@ emit! {
 
 }
 
-// [sdl3-sys-gen] skipped constant value define `SDL_FUNCTION`
-
-// [sdl3-sys-gen] skipped constant value define `SDL_FILE`
-
-// [sdl3-sys-gen] skipped constant value define `SDL_LINE`
-
 #[cfg(all(windows, target_env = "msvc"))]
 emit! {}
 
 #[cfg(not(all(windows, target_env = "msvc")))]
 emit! {}
 
-// [sdl3-sys-gen] skipped function-like define `SDL_disabled_assert`
+#[cfg(all(not(doc), feature = "assert-level-disabled"))]
+pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 0;
+#[cfg(all(
+    not(any(doc, feature = "assert-level-disabled")),
+    feature = "assert-level-release"
+))]
+pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 1;
+#[cfg(all(
+    not(any(
+        doc,
+        feature = "assert-level-disabled",
+        feature = "assert-level-release"
+    )),
+    feature = "assert-level-debug"
+))]
+pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 2;
+#[cfg(all(
+    not(any(
+        doc,
+        feature = "assert-level-disabled",
+        feature = "assert-level-release",
+        feature = "assert-level-debug"
+    )),
+    feature = "assert-level-paranoid"
+))]
+pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 3;
+
+#[macro_export]
+macro_rules! SDL_disabled_assert {
+    ($condition:expr) => {};
+}
+#[doc(inline)]
+pub use SDL_disabled_assert;
 
 /// Possible outcomes from a triggered assertion.
 ///
@@ -171,62 +208,258 @@ extern "C" {
     ) -> SDL_AssertState;
 }
 
+#[inline(never)]
+pub const unsafe fn SDL_AssertBreakpoint() {}
+
+#[macro_export]
+macro_rules! SDL_enabled_assert {
+    ($condition:expr) => {{
+        while !$condition {
+            // Yes, this is wildly unsafe, but it's fine! :thisisfine:
+            // - SDL uses a mutex to protect access to SDL_AssertData
+            // - The static mut can only be accessed through the pointer that's passed to SDL
+            let assert_data = {
+                #[repr(transparent)]
+                struct SyncAssertData($crate::assert::SDL_AssertData);
+                unsafe impl ::core::marker::Sync for SyncAssertData {}
+                $crate::__static_c_str!(CONDITION = ::core::stringify!($condition));
+                static mut SDL_ASSERT_DATA: SyncAssertData =
+                    SyncAssertData($crate::assert::SDL_AssertData {
+                        always_ignore: false,
+                        trigger_count: 0,
+                        condition: CONDITION.as_ptr(),
+                        filename: ::core::ptr::null(),
+                        linenum: 0,
+                        function: ::core::ptr::null(),
+                        next: ::core::ptr::null(),
+                    });
+                unsafe { ::core::ptr::addr_of_mut!(SDL_ASSERT_DATA.0) }
+            };
+            const LOCATION: &::core::panic::Location = ::core::panic::Location::caller();
+            $crate::__static_c_str!(FILENAME = LOCATION.file());
+            match unsafe {
+                $crate::assert::SDL_ReportAssertion(
+                    assert_data,
+                    b"???\0".as_ptr().cast::<::core::ffi::c_char>(),
+                    FILENAME.as_ptr(),
+                    LOCATION.line() as ::core::ffi::c_int,
+                )
+            } {
+                $crate::assert::SDL_ASSERTION_RETRY => continue,
+                $crate::assert::SDL_ASSERTION_BREAK => unsafe {
+                    $crate::assert::SDL_AssertBreakpoint()
+                },
+                _ => (),
+            }
+            break;
+        }
+    }};
+}
+#[doc(inline)]
+pub use SDL_enabled_assert;
+
 #[cfg(doc)]
 emit! {
-    // [sdl3-sys-gen] skipped function-like define `SDL_assert`
+    /// An assertion test that is normally performed only in debug builds.
+    ///
+    /// This macro is enabled when the SDL_ASSERT_LEVEL is >= 2, otherwise it is
+    /// disabled. This is meant to only do these tests in debug builds, so they can
+    /// tend to be more expensive, and they are meant to bring everything to a halt
+    /// when they fail, with the programmer there to assess the problem.
+    ///
+    /// In short: you can sprinkle these around liberally and assume they will
+    /// evaporate out of the build when building for end-users.
+    ///
+    /// When assertions are disabled, this wraps `condition` in a `sizeof`
+    /// operator, which means any function calls and side effects will not run, but
+    /// the compiler will not complain about any otherwise-unused variables that
+    /// are only referenced in the assertion.
+    ///
+    /// One can set the environment variable "SDL_ASSERT" to one of several strings
+    /// ("abort", "break", "retry", "ignore", "always_ignore") to force a default
+    /// behavior, which may be desirable for automation purposes. If your platform
+    /// requires GUI interfaces to happen on the main thread but you're debugging
+    /// an assertion in a background thread, it might be desirable to set this to
+    /// "break" so that your debugger takes control as soon as assert is triggered,
+    /// instead of risking a bad UI interaction (deadlock, etc) in the application.
+    ///
+    /// \param condition boolean value to test.
+    ///
+    /// \since This macro is available since SDL 3.0.0.
+    #[macro_export]
+    macro_rules! SDL_assert {
+        ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
+    }
+    #[doc(inline)]
+    pub use SDL_assert;
 
-    // [sdl3-sys-gen] skipped function-like define `SDL_assert_release`
+    /// An assertion test that is performed even in release builds.
+    ///
+    /// This macro is enabled when the SDL_ASSERT_LEVEL is >= 1, otherwise it is
+    /// disabled. This is meant to be for tests that are cheap to make and
+    /// extremely unlikely to fail; generally it is frowned upon to have an
+    /// assertion failure in a release build, so these assertions generally need to
+    /// be of more than life-and-death importance if there's a chance they might
+    /// trigger. You should almost always consider handling these cases more
+    /// gracefully than an assert allows.
+    ///
+    /// When assertions are disabled, this wraps `condition` in a `sizeof`
+    /// operator, which means any function calls and side effects will not run, but
+    /// the compiler will not complain about any otherwise-unused variables that
+    /// are only referenced in the assertion.
+    ///
+    /// One can set the environment variable "SDL_ASSERT" to one of several strings
+    /// ("abort", "break", "retry", "ignore", "always_ignore") to force a default
+    /// behavior, which may be desirable for automation purposes. If your platform
+    /// requires GUI interfaces to happen on the main thread but you're debugging
+    /// an assertion in a background thread, it might be desirable to set this to
+    /// "break" so that your debugger takes control as soon as assert is triggered,
+    /// instead of risking a bad UI interaction (deadlock, etc) in the application.
+    /// *
+    ///
+    /// \param condition boolean value to test.
+    ///
+    /// \since This macro is available since SDL 3.0.0.
+    #[macro_export]
+    macro_rules! SDL_assert_release {
+        ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
+    }
+    #[doc(inline)]
+    pub use SDL_assert_release;
 
-    // [sdl3-sys-gen] skipped function-like define `SDL_assert_paranoid`
-
+    /// An assertion test that is performed only when built with paranoid settings.
+    ///
+    /// This macro is enabled when the SDL_ASSERT_LEVEL is >= 3, otherwise it is
+    /// disabled. This is a higher level than both release and debug, so these
+    /// tests are meant to be expensive and only run when specifically looking for
+    /// extremely unexpected failure cases in a special build.
+    ///
+    /// When assertions are disabled, this wraps `condition` in a `sizeof`
+    /// operator, which means any function calls and side effects will not run, but
+    /// the compiler will not complain about any otherwise-unused variables that
+    /// are only referenced in the assertion.
+    ///
+    /// One can set the environment variable "SDL_ASSERT" to one of several strings
+    /// ("abort", "break", "retry", "ignore", "always_ignore") to force a default
+    /// behavior, which may be desirable for automation purposes. If your platform
+    /// requires GUI interfaces to happen on the main thread but you're debugging
+    /// an assertion in a background thread, it might be desirable to set this to
+    /// "break" so that your debugger takes control as soon as assert is triggered,
+    /// instead of risking a bad UI interaction (deadlock, etc) in the application.
+    ///
+    /// \param condition boolean value to test.
+    ///
+    /// \since This macro is available since SDL 3.0.0.
+    #[macro_export]
+    macro_rules! SDL_assert_paranoid {
+        ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
+    }
+    #[doc(inline)]
+    pub use SDL_assert_paranoid;
 }
 
 #[cfg(not(doc))]
 emit! {
     #[cfg(feature = "assert-level-disabled")]
     emit! {
-        // [sdl3-sys-gen] skipped function-like define `SDL_assert`
+        #[macro_export]
+        macro_rules! SDL_assert {
+            ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
+        }
+        #[doc(inline)]
+        pub use SDL_assert;
 
-        // [sdl3-sys-gen] skipped function-like define `SDL_assert_release`
+        #[macro_export]
+        macro_rules! SDL_assert_release {
+            ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
+        }
+        #[doc(inline)]
+        pub use SDL_assert_release;
 
-        // [sdl3-sys-gen] skipped function-like define `SDL_assert_paranoid`
-
+        #[macro_export]
+        macro_rules! SDL_assert_paranoid {
+            ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
+        }
+        #[doc(inline)]
+        pub use SDL_assert_paranoid;
     }
 
     #[cfg(not(feature = "assert-level-disabled"))]
     emit! {
         #[cfg(feature = "assert-level-release")]
         emit! {
-            // [sdl3-sys-gen] skipped function-like define `SDL_assert`
+            #[macro_export]
+            macro_rules! SDL_assert {
+                ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
+            }
+            #[doc(inline)]
+            pub use SDL_assert;
 
-            // [sdl3-sys-gen] skipped function-like define `SDL_assert_release`
+            #[macro_export]
+            macro_rules! SDL_assert_release {
+                ($condition:expr) => { $crate::assert::SDL_enabled_assert!($condition) };
+            }
+            #[doc(inline)]
+            pub use SDL_assert_release;
 
-            // [sdl3-sys-gen] skipped function-like define `SDL_assert_paranoid`
-
+            #[macro_export]
+            macro_rules! SDL_assert_paranoid {
+                ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
+            }
+            #[doc(inline)]
+            pub use SDL_assert_paranoid;
         }
 
         #[cfg(not(feature = "assert-level-release"))]
         emit! {
             #[cfg(feature = "assert-level-debug")]
             emit! {
-                // [sdl3-sys-gen] skipped function-like define `SDL_assert`
+                #[macro_export]
+                macro_rules! SDL_assert {
+                    ($condition:expr) => { $crate::assert::SDL_enabled_assert!($condition) };
+                }
+                #[doc(inline)]
+                pub use SDL_assert;
 
-                // [sdl3-sys-gen] skipped function-like define `SDL_assert_release`
+                #[macro_export]
+                macro_rules! SDL_assert_release {
+                    ($condition:expr) => { $crate::assert::SDL_enabled_assert!($condition) };
+                }
+                #[doc(inline)]
+                pub use SDL_assert_release;
 
-                // [sdl3-sys-gen] skipped function-like define `SDL_assert_paranoid`
-
+                #[macro_export]
+                macro_rules! SDL_assert_paranoid {
+                    ($condition:expr) => { $crate::assert::SDL_disabled_assert!($condition) };
+                }
+                #[doc(inline)]
+                pub use SDL_assert_paranoid;
             }
 
             #[cfg(not(feature = "assert-level-debug"))]
             emit! {
                 #[cfg(feature = "assert-level-paranoid")]
                 emit! {
-                    // [sdl3-sys-gen] skipped function-like define `SDL_assert`
+                    #[macro_export]
+                    macro_rules! SDL_assert {
+                        ($condition:expr) => { $crate::assert::SDL_enabled_assert!($condition) };
+                    }
+                    #[doc(inline)]
+                    pub use SDL_assert;
 
-                    // [sdl3-sys-gen] skipped function-like define `SDL_assert_release`
+                    #[macro_export]
+                    macro_rules! SDL_assert_release {
+                        ($condition:expr) => { $crate::assert::SDL_enabled_assert!($condition) };
+                    }
+                    #[doc(inline)]
+                    pub use SDL_assert_release;
 
-                    // [sdl3-sys-gen] skipped function-like define `SDL_assert_paranoid`
-
+                    #[macro_export]
+                    macro_rules! SDL_assert_paranoid {
+                        ($condition:expr) => { $crate::assert::SDL_enabled_assert!($condition) };
+                    }
+                    #[doc(inline)]
+                    pub use SDL_assert_paranoid;
                 }
 
                 #[cfg(not(feature = "assert-level-paranoid"))]
@@ -241,6 +474,32 @@ emit! {
     }
 
 }
+
+/// An assertion test that always performed.
+///
+/// This macro is always enabled no matter what SDL_ASSERT_LEVEL is set to. You
+/// almost never want to use this, as it could trigger on an end-user's system,
+/// crashing your program.
+///
+/// One can set the environment variable "SDL_ASSERT" to one of several strings
+/// ("abort", "break", "retry", "ignore", "always_ignore") to force a default
+/// behavior, which may be desirable for automation purposes. If your platform
+/// requires GUI interfaces to happen on the main thread but you're debugging
+/// an assertion in a background thread, it might be desirable to set this to
+/// "break" so that your debugger takes control as soon as assert is triggered,
+/// instead of risking a bad UI interaction (deadlock, etc) in the application.
+///
+/// \param condition boolean value to test.
+///
+/// \since This macro is available since SDL 3.0.0.
+#[macro_export]
+macro_rules! SDL_assert_always {
+    ($condition:expr) => {
+        $crate::assert::SDL_enabled_assert!($condition)
+    };
+}
+#[doc(inline)]
+pub use SDL_assert_always;
 
 /// A callback that fires when an SDL assertion fails.
 ///
@@ -366,7 +625,3 @@ extern "C" {
     /// \sa SDL_GetAssertionReport
     pub fn SDL_ResetAssertionReport();
 }
-
-// [sdl3-sys-gen] skipped function-like define `SDL_AssertBreakpoint`
-
-// [sdl3-sys-gen] skipped function-like define `SDL_assert_always`

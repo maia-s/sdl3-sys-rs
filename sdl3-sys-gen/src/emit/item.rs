@@ -70,7 +70,7 @@ impl Eval for Item {
             }
             Item::FnCall(_) => todo!(),
             Item::TypeDef(_) => todo!(),
-            Item::VarDecl(_) => todo!(),
+            Item::VarDecl(_) => Ok(None),
             Item::DoWhile(dw) => dw.try_eval(ctx),
             Item::While(w) => w.try_eval(ctx),
             Item::For(_) => todo!(),

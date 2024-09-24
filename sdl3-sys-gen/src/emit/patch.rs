@@ -5,6 +5,7 @@ use crate::parse::{
 };
 use core::fmt::Write;
 use std::ffi::CString;
+use str_block::str_block;
 
 struct EmitPatch<T: ?Sized> {
     module: Option<&'static str>,
@@ -97,10 +98,12 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                     | "SDL_BeginThreadFunction"
                     | "SDL_COMPILE_TIME_ASSERT"
                     | "SDL_const_cast"
-                    | "SDL_enabled_assert" // FIXME
                     | "SDL_EndThreadFunction"
+                    | "SDL_FILE"
+                    | "SDL_FUNCTION"
                     | "SDL_HAS_BUILTIN"
                     | "SDL_InvalidParamError"
+                    | "SDL_LINE"
                     | "SDL_memcpy"
                     | "SDL_memmove"
                     | "SDL_memset"
@@ -126,19 +129,158 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
         patch: |_, _| Ok(true),
     },
     EmitDefinePatch {
-        module: Some("stdinc"),
-        match_ident: |i| matches!(i, "SDL_clamp"),
-        patch: |ctx, _| {
-            writeln!(ctx, "#[inline(always)]")?;
+        module: Some("assert"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_assert" | "SDL_assert_always" | "SDL_assert_paranoid" | "SDL_assert_release"
+            )
+        },
+        patch: |ctx, define| {
+            let ident = define.ident.as_str();
+            let func = if let DefineValue::Expr(Expr::FnCall(call)) = &define.value {
+                let Expr::Ident(func) = &*call.func else {
+                    unreachable!()
+                };
+                func.as_str()
+            } else {
+                // doc example
+                "SDL_disabled_assert"
+            };
+
+            define.doc.emit(ctx)?;
             writeln!(
                 ctx,
-                "pub fn SDL_clamp<T: Copy + PartialOrd>(x: T, a: T, b: T) -> T {{"
+                str_block! {r#"
+                    #[macro_export]
+                    macro_rules! {} {{
+                        ($condition:expr) => {{ $crate::assert::{}!($condition) }};
+                    }}
+                    #[doc(inline)]
+                    pub use {};
+                "#},
+                ident, func, ident
             )?;
-            ctx.increase_indent();
-            writeln!(ctx, "if x < a {{ a }} else if x > b {{ b }} else {{ x }}",)?;
-            ctx.decrease_indent();
-            writeln!(ctx, "}}")?;
+            Ok(true)
+        },
+    },
+    EmitDefinePatch {
+        module: Some("assert"),
+        match_ident: |i| i == "SDL_ASSERT_LEVEL",
+        patch: |ctx, define| {
+            if let Ok(Some(_)) = define.value.try_eval(ctx) {
+                // skip non-doc
+                // (actual SDL_ASSERT_LEVEL is emitted in the patch for SDL_disabled_assert)
+            } else {
+                // doc
+                let mut define = define.clone();
+                define.value = DefineValue::one();
+                define.emit(ctx)?;
+            }
+            Ok(true)
+        },
+    },
+    EmitDefinePatch {
+        module: Some("assert"),
+        match_ident: |i| i == "SDL_AssertBreakpoint",
+        patch: |ctx, _| {
+            ctx.register_sym(
+                Ident::new_inline("SDL_AssertBreakpoint"),
+                None,
+                Some(Type::function(Vec::new(), Type::void(), true, true)),
+                None,
+                None,
+                false,
+            )?;
+            writeln!(ctx, "#[inline(never)]")?;
+            writeln!(ctx, "pub const unsafe fn SDL_AssertBreakpoint() {{}}")?;
             writeln!(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitDefinePatch {
+        module: Some("assert"),
+        match_ident: |i| matches!(i, "SDL_disabled_assert"),
+        patch: |ctx, define| {
+            // emit SDL_ASSERT_LEVEL here to avoid extra target dependent config
+            // (don't register the sym)
+            ctx.write_str(str_block! {r#"
+                #[cfg(all(not(doc), feature = "assert-level-disabled"))]
+                pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 0;
+                #[cfg(all(not(any(doc, feature = "assert-level-disabled")), feature = "assert-level-release"))]
+                pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 1;
+                #[cfg(all(not(any(doc, feature = "assert-level-disabled", feature = "assert-level-release")), feature = "assert-level-debug"))]
+                pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 2;
+                #[cfg(all(not(any(doc, feature = "assert-level-disabled", feature = "assert-level-release", feature = "assert-level-debug")), feature = "assert-level-paranoid"))]
+                pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 3;
+
+            "#})?;
+
+            // emit SDL_disabled_assert
+            define.doc.emit(ctx)?;
+            ctx.write_str(str_block! {r#"
+                #[macro_export]
+                macro_rules! SDL_disabled_assert {
+                    ($condition:expr) => {};
+                }
+                #[doc(inline)]
+                pub use SDL_disabled_assert;
+                
+            "#})?;
+            Ok(true)
+        },
+    },
+    EmitDefinePatch {
+        module: Some("assert"),
+        match_ident: |i| matches!(i, "SDL_enabled_assert"),
+        patch: |ctx, define| {
+            define.doc.emit(ctx)?;
+            ctx.write_str(str_block! {r#"
+                #[macro_export]
+                macro_rules! SDL_enabled_assert {
+                    ($condition:expr) => {{
+                        while !$condition {
+                            // Yes, this is wildly unsafe, but it's fine! :thisisfine:
+                            // - SDL uses a mutex to protect access to SDL_AssertData
+                            // - The static mut can only be accessed through the pointer that's passed to SDL
+                            let assert_data = {
+                                #[repr(transparent)]
+                                struct SyncAssertData($crate::assert::SDL_AssertData);
+                                unsafe impl ::core::marker::Sync for SyncAssertData {}
+                                $crate::__static_c_str!(CONDITION = ::core::stringify!($condition));
+                                static mut SDL_ASSERT_DATA: SyncAssertData = SyncAssertData($crate::assert::SDL_AssertData {
+                                    always_ignore: false,
+                                    trigger_count: 0,
+                                    condition: CONDITION.as_ptr(),
+                                    filename: ::core::ptr::null(),
+                                    linenum: 0,
+                                    function: ::core::ptr::null(),
+                                    next: ::core::ptr::null(),
+                                });
+                                unsafe { ::core::ptr::addr_of_mut!(SDL_ASSERT_DATA.0) }
+                            };
+                            const LOCATION: &::core::panic::Location = ::core::panic::Location::caller();
+                            $crate::__static_c_str!(FILENAME = LOCATION.file());
+                            match unsafe {
+                                $crate::assert::SDL_ReportAssertion(
+                                    assert_data,
+                                    b"???\0".as_ptr().cast::<::core::ffi::c_char>(),
+                                    FILENAME.as_ptr(),
+                                    LOCATION.line() as ::core::ffi::c_int,
+                                )
+                            } {
+                                $crate::assert::SDL_ASSERTION_RETRY => continue,
+                                $crate::assert::SDL_ASSERTION_BREAK => unsafe { $crate::assert::SDL_AssertBreakpoint() },
+                                _ => (),
+                            }
+                            break
+                        }
+                    }};
+                }
+                #[doc(inline)]
+                pub use SDL_enabled_assert;
+
+            "#})?;
             Ok(true)
         },
     },
@@ -154,6 +296,23 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 ctx,
                 "::core::sync::atomic::fence(::core::sync::atomic::Ordering::SeqCst)"
             )?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            writeln!(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitDefinePatch {
+        module: Some("stdinc"),
+        match_ident: |i| matches!(i, "SDL_clamp"),
+        patch: |ctx, _| {
+            writeln!(ctx, "#[inline(always)]")?;
+            writeln!(
+                ctx,
+                "pub fn SDL_clamp<T: Copy + PartialOrd>(x: T, a: T, b: T) -> T {{"
+            )?;
+            ctx.increase_indent();
+            writeln!(ctx, "if x < a {{ a }} else if x > b {{ b }} else {{ x }}",)?;
             ctx.decrease_indent();
             writeln!(ctx, "}}")?;
             writeln!(ctx)?;

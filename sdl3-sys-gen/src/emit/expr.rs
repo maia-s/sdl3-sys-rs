@@ -1020,6 +1020,8 @@ impl Eval for Expr {
                         } else {
                             return Err(ParseErr::new(ident.span(), "symbol isn't a value").into());
                         }
+                    } else if ctx.is_preproc_eval_mode() {
+                        return Ok(None);
                     } else {
                         ctx.add_unresolved_sym_dependency(i)?;
                         return Err(ParseErr::new(ident.span(), "unresolved symbol").into());
