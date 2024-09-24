@@ -575,37 +575,44 @@ impl Value {
             else {
                 todo!()
             };
-            let value = if let Some(field) = field {
+            let (value, ty) = if let Some(field) = field {
                 let TypeEnum::Ident(s) = &p.ty else { todo!() };
                 let Some(sym) = ctx.lookup_sym(s) else {
+                    ctx.add_unresolved_sym_dependency(s.clone())?;
+                    return Err(ParseErr::new(s.span(), "unresolved type").into());
+                };
+                let Some(fty) = sym.field_type(ctx, field.as_str()) else {
                     todo!()
                 };
-                let Some(_) = sym.field_type(ctx, field.as_str()) else {
-                    todo!()
-                };
-                ctx.capture_output(|ctx| {
-                    write!(ctx, "unsafe {{ ::core::ptr::addr_of!((*")?;
-                    ptr.emit(ctx)?;
-                    write!(ctx, ").")?;
-                    field.emit(ctx)?;
-                    write!(ctx, ").read() }}")?;
-                    Ok(())
-                })?
-            } else {
-                ctx.capture_output(|ctx| {
-                    write!(ctx, "unsafe {{ ")?;
-                    ptr.emit(ctx)?;
-                    write!(ctx, ".read() }}")?;
-                    {
-                        write!(ctx, ".")?;
+                (
+                    ctx.capture_output(|ctx| {
+                        write!(ctx, "unsafe {{ ::core::ptr::addr_of!((*")?;
+                        ptr.emit(ctx)?;
+                        write!(ctx, ").")?;
                         field.emit(ctx)?;
-                    }
-                    Ok(())
-                })?
+                        write!(ctx, ").read() }}")?;
+                        Ok(())
+                    })?,
+                    fty,
+                )
+            } else {
+                (
+                    ctx.capture_output(|ctx| {
+                        write!(ctx, "unsafe {{ ")?;
+                        ptr.emit(ctx)?;
+                        write!(ctx, ".read() }}")?;
+                        {
+                            write!(ctx, ".")?;
+                            field.emit(ctx)?;
+                        }
+                        Ok(())
+                    })?,
+                    *p,
+                )
             };
             Ok(Value::RustCode(RustCode::boxed(
                 value,
-                *p,
+                ty,
                 ptr.is_const(),
                 true,
             )))

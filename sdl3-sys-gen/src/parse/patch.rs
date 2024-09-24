@@ -149,6 +149,17 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             Ok(true)
         },
     },
+    DefinePatch {
+        module: Some("surface"),
+        match_ident: |i| i == "SDL_MUSTLOCK",
+        patch: |_ctx, define| {
+            let Some(args) = &mut define.args else {
+                unreachable!()
+            };
+            args[0].ty = Type::pointer(Type::ident(Ident::new_inline("SDL_Surface")), true);
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {

@@ -180,8 +180,8 @@ pub unsafe fn SDL_PointInRect(p: *const SDL_Point, r: *const SDL_Rect) -> ::core
 /// \since This function is available since SDL 3.0.0.
 #[inline(always)]
 pub unsafe fn SDL_RectEmpty(r: *const SDL_Rect) -> ::core::primitive::bool {
-    return if ((!(!r.is_null()) || (unsafe { ::core::ptr::addr_of!((*r).w).read() } <= 0))
-        || (unsafe { ::core::ptr::addr_of!((*r).h).read() } <= 0))
+    return if ((!(!r.is_null()) || (unsafe { ::core::ptr::addr_of!((*r).w).read() } <= 0_i32))
+        || (unsafe { ::core::ptr::addr_of!((*r).h).read() } <= 0_i32))
     {
         true
     } else {

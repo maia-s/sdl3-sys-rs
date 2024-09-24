@@ -33,8 +33,6 @@ pub const SDL_SURFACE_LOCKED: ::core::primitive::u32 = 4_u32;
 /// Surface uses pixel memory allocated with SDL_aligned_alloc()
 pub const SDL_SURFACE_SIMD_ALIGNED: ::core::primitive::u32 = 8_u32;
 
-// [sdl3-sys-gen] skipped function-like define `SDL_MUSTLOCK`
-
 /// The scaling mode.
 ///
 /// \since This enum is available since SDL 3.0.0.
@@ -78,6 +76,14 @@ pub const SDL_FLIP_NONE: SDL_FlipMode = SDL_FlipMode::NONE;
 pub const SDL_FLIP_HORIZONTAL: SDL_FlipMode = SDL_FlipMode::HORIZONTAL;
 /// flip vertically
 pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
+
+/// Evaluates to true if the surface needs to be locked before access.
+///
+/// \since This macro is available since SDL 3.0.0.
+#[inline(always)]
+pub const unsafe fn SDL_MUSTLOCK(S: *const SDL_Surface) -> ::core::primitive::bool {
+    ((unsafe { ::core::ptr::addr_of!((*S).flags).read() } & 2_u32) == 2_u32)
+}
 
 /// A collection of pixels used in software blitting.
 ///
