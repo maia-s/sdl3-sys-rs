@@ -18,6 +18,6 @@ emit! {
 
 #[cfg(not(doc))]
 emit! {
-    pub const SDL_REVISION: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"prerelease-3.1.2-1857-g3bc2bd790\0") };
+    pub const SDL_REVISION: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"prerelease-3.1.2-1876-g53bf2baac\0") };
 
 }

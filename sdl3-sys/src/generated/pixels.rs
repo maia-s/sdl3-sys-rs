@@ -215,7 +215,7 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 ///
 /// \since This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PIXELFORMAT_UNKNOWN`], [`SDL_PIXELFORMAT_INDEX1LSB`], [`SDL_PIXELFORMAT_INDEX1MSB`], [`SDL_PIXELFORMAT_INDEX2LSB`], [`SDL_PIXELFORMAT_INDEX2MSB`], [`SDL_PIXELFORMAT_INDEX4LSB`], [`SDL_PIXELFORMAT_INDEX4MSB`], [`SDL_PIXELFORMAT_INDEX8`], [`SDL_PIXELFORMAT_RGB332`], [`SDL_PIXELFORMAT_XRGB4444`], [`SDL_PIXELFORMAT_XBGR4444`], [`SDL_PIXELFORMAT_XRGB1555`], [`SDL_PIXELFORMAT_XBGR1555`], [`SDL_PIXELFORMAT_ARGB4444`], [`SDL_PIXELFORMAT_RGBA4444`], [`SDL_PIXELFORMAT_ABGR4444`], [`SDL_PIXELFORMAT_BGRA4444`], [`SDL_PIXELFORMAT_ARGB1555`], [`SDL_PIXELFORMAT_RGBA5551`], [`SDL_PIXELFORMAT_ABGR1555`], [`SDL_PIXELFORMAT_BGRA5551`], [`SDL_PIXELFORMAT_RGB565`], [`SDL_PIXELFORMAT_BGR565`], [`SDL_PIXELFORMAT_RGB24`], [`SDL_PIXELFORMAT_BGR24`], [`SDL_PIXELFORMAT_XRGB8888`], [`SDL_PIXELFORMAT_RGBX8888`], [`SDL_PIXELFORMAT_XBGR8888`], [`SDL_PIXELFORMAT_BGRX8888`], [`SDL_PIXELFORMAT_ARGB8888`], [`SDL_PIXELFORMAT_RGBA8888`], [`SDL_PIXELFORMAT_ABGR8888`], [`SDL_PIXELFORMAT_BGRA8888`], [`SDL_PIXELFORMAT_XRGB2101010`], [`SDL_PIXELFORMAT_XBGR2101010`], [`SDL_PIXELFORMAT_ARGB2101010`], [`SDL_PIXELFORMAT_ABGR2101010`], [`SDL_PIXELFORMAT_RGB48`], [`SDL_PIXELFORMAT_BGR48`], [`SDL_PIXELFORMAT_RGBA64`], [`SDL_PIXELFORMAT_ARGB64`], [`SDL_PIXELFORMAT_BGRA64`], [`SDL_PIXELFORMAT_ABGR64`], [`SDL_PIXELFORMAT_RGB48_FLOAT`], [`SDL_PIXELFORMAT_BGR48_FLOAT`], [`SDL_PIXELFORMAT_RGBA64_FLOAT`], [`SDL_PIXELFORMAT_ARGB64_FLOAT`], [`SDL_PIXELFORMAT_BGRA64_FLOAT`], [`SDL_PIXELFORMAT_ABGR64_FLOAT`], [`SDL_PIXELFORMAT_RGB96_FLOAT`], [`SDL_PIXELFORMAT_BGR96_FLOAT`], [`SDL_PIXELFORMAT_RGBA128_FLOAT`], [`SDL_PIXELFORMAT_ARGB128_FLOAT`], [`SDL_PIXELFORMAT_BGRA128_FLOAT`], [`SDL_PIXELFORMAT_ABGR128_FLOAT`], [`SDL_PIXELFORMAT_YV12`], [`SDL_PIXELFORMAT_IYUV`], [`SDL_PIXELFORMAT_YUY2`], [`SDL_PIXELFORMAT_UYVY`], [`SDL_PIXELFORMAT_YVYU`], [`SDL_PIXELFORMAT_NV12`], [`SDL_PIXELFORMAT_NV21`], [`SDL_PIXELFORMAT_P010`], [`SDL_PIXELFORMAT_EXTERNAL_OES`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PIXELFORMAT_UNKNOWN`], [`SDL_PIXELFORMAT_INDEX1LSB`], [`SDL_PIXELFORMAT_INDEX1MSB`], [`SDL_PIXELFORMAT_INDEX2LSB`], [`SDL_PIXELFORMAT_INDEX2MSB`], [`SDL_PIXELFORMAT_INDEX4LSB`], [`SDL_PIXELFORMAT_INDEX4MSB`], [`SDL_PIXELFORMAT_INDEX8`], [`SDL_PIXELFORMAT_RGB332`], [`SDL_PIXELFORMAT_XRGB4444`], [`SDL_PIXELFORMAT_XBGR4444`], [`SDL_PIXELFORMAT_XRGB1555`], [`SDL_PIXELFORMAT_XBGR1555`], [`SDL_PIXELFORMAT_ARGB4444`], [`SDL_PIXELFORMAT_RGBA4444`], [`SDL_PIXELFORMAT_ABGR4444`], [`SDL_PIXELFORMAT_BGRA4444`], [`SDL_PIXELFORMAT_ARGB1555`], [`SDL_PIXELFORMAT_RGBA5551`], [`SDL_PIXELFORMAT_ABGR1555`], [`SDL_PIXELFORMAT_BGRA5551`], [`SDL_PIXELFORMAT_RGB565`], [`SDL_PIXELFORMAT_BGR565`], [`SDL_PIXELFORMAT_RGB24`], [`SDL_PIXELFORMAT_BGR24`], [`SDL_PIXELFORMAT_XRGB8888`], [`SDL_PIXELFORMAT_RGBX8888`], [`SDL_PIXELFORMAT_XBGR8888`], [`SDL_PIXELFORMAT_BGRX8888`], [`SDL_PIXELFORMAT_ARGB8888`], [`SDL_PIXELFORMAT_RGBA8888`], [`SDL_PIXELFORMAT_ABGR8888`], [`SDL_PIXELFORMAT_BGRA8888`], [`SDL_PIXELFORMAT_XRGB2101010`], [`SDL_PIXELFORMAT_XBGR2101010`], [`SDL_PIXELFORMAT_ARGB2101010`], [`SDL_PIXELFORMAT_ABGR2101010`], [`SDL_PIXELFORMAT_RGB48`], [`SDL_PIXELFORMAT_BGR48`], [`SDL_PIXELFORMAT_RGBA64`], [`SDL_PIXELFORMAT_ARGB64`], [`SDL_PIXELFORMAT_BGRA64`], [`SDL_PIXELFORMAT_ABGR64`], [`SDL_PIXELFORMAT_RGB48_FLOAT`], [`SDL_PIXELFORMAT_BGR48_FLOAT`], [`SDL_PIXELFORMAT_RGBA64_FLOAT`], [`SDL_PIXELFORMAT_ARGB64_FLOAT`], [`SDL_PIXELFORMAT_BGRA64_FLOAT`], [`SDL_PIXELFORMAT_ABGR64_FLOAT`], [`SDL_PIXELFORMAT_RGB96_FLOAT`], [`SDL_PIXELFORMAT_BGR96_FLOAT`], [`SDL_PIXELFORMAT_RGBA128_FLOAT`], [`SDL_PIXELFORMAT_ARGB128_FLOAT`], [`SDL_PIXELFORMAT_BGRA128_FLOAT`], [`SDL_PIXELFORMAT_ABGR128_FLOAT`], [`SDL_PIXELFORMAT_YV12`], [`SDL_PIXELFORMAT_IYUV`], [`SDL_PIXELFORMAT_YUY2`], [`SDL_PIXELFORMAT_UYVY`], [`SDL_PIXELFORMAT_YVYU`], [`SDL_PIXELFORMAT_NV12`], [`SDL_PIXELFORMAT_NV21`], [`SDL_PIXELFORMAT_P010`], [`SDL_PIXELFORMAT_EXTERNAL_OES`], [`SDL_PIXELFORMAT_RGBA32`], [`SDL_PIXELFORMAT_ARGB32`], [`SDL_PIXELFORMAT_BGRA32`], [`SDL_PIXELFORMAT_ABGR32`], [`SDL_PIXELFORMAT_RGBX32`], [`SDL_PIXELFORMAT_XRGB32`], [`SDL_PIXELFORMAT_BGRX32`], [`SDL_PIXELFORMAT_XBGR32`], [`SDL_PIXELFORMAT_RGBA32`], [`SDL_PIXELFORMAT_ARGB32`], [`SDL_PIXELFORMAT_BGRA32`], [`SDL_PIXELFORMAT_ABGR32`], [`SDL_PIXELFORMAT_RGBX32`], [`SDL_PIXELFORMAT_XRGB32`], [`SDL_PIXELFORMAT_BGRX32`], [`SDL_PIXELFORMAT_XBGR32`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -294,6 +294,38 @@ impl SDL_PixelFormat {
     pub const P010: Self = Self(0x30313050);
     /// Android video texture format
     pub const EXTERNAL_OES: Self = Self(0x2053454f);
+    #[cfg(target_endian = "big")]
+    pub const RGBA32: Self = SDL_PIXELFORMAT_RGBA8888;
+    #[cfg(target_endian = "big")]
+    pub const ARGB32: Self = SDL_PIXELFORMAT_ARGB8888;
+    #[cfg(target_endian = "big")]
+    pub const BGRA32: Self = SDL_PIXELFORMAT_BGRA8888;
+    #[cfg(target_endian = "big")]
+    pub const ABGR32: Self = SDL_PIXELFORMAT_ABGR8888;
+    #[cfg(target_endian = "big")]
+    pub const RGBX32: Self = SDL_PIXELFORMAT_RGBX8888;
+    #[cfg(target_endian = "big")]
+    pub const XRGB32: Self = SDL_PIXELFORMAT_XRGB8888;
+    #[cfg(target_endian = "big")]
+    pub const BGRX32: Self = SDL_PIXELFORMAT_BGRX8888;
+    #[cfg(target_endian = "big")]
+    pub const XBGR32: Self = SDL_PIXELFORMAT_XBGR8888;
+    #[cfg(not(target_endian = "big"))]
+    pub const RGBA32: Self = SDL_PIXELFORMAT_ABGR8888;
+    #[cfg(not(target_endian = "big"))]
+    pub const ARGB32: Self = SDL_PIXELFORMAT_BGRA8888;
+    #[cfg(not(target_endian = "big"))]
+    pub const BGRA32: Self = SDL_PIXELFORMAT_ARGB8888;
+    #[cfg(not(target_endian = "big"))]
+    pub const ABGR32: Self = SDL_PIXELFORMAT_RGBA8888;
+    #[cfg(not(target_endian = "big"))]
+    pub const RGBX32: Self = SDL_PIXELFORMAT_XBGR8888;
+    #[cfg(not(target_endian = "big"))]
+    pub const XRGB32: Self = SDL_PIXELFORMAT_BGRX8888;
+    #[cfg(not(target_endian = "big"))]
+    pub const BGRX32: Self = SDL_PIXELFORMAT_XRGB8888;
+    #[cfg(not(target_endian = "big"))]
+    pub const XBGR32: Self = SDL_PIXELFORMAT_RGBX8888;
 }
 pub const SDL_PIXELFORMAT_UNKNOWN: SDL_PixelFormat = SDL_PixelFormat::UNKNOWN;
 pub const SDL_PIXELFORMAT_INDEX1LSB: SDL_PixelFormat = SDL_PixelFormat::INDEX1LSB;
@@ -368,6 +400,38 @@ pub const SDL_PIXELFORMAT_NV21: SDL_PixelFormat = SDL_PixelFormat::NV21;
 pub const SDL_PIXELFORMAT_P010: SDL_PixelFormat = SDL_PixelFormat::P010;
 /// Android video texture format
 pub const SDL_PIXELFORMAT_EXTERNAL_OES: SDL_PixelFormat = SDL_PixelFormat::EXTERNAL_OES;
+#[cfg(target_endian = "big")]
+pub const SDL_PIXELFORMAT_RGBA32: SDL_PixelFormat = SDL_PixelFormat::RGBA32;
+#[cfg(target_endian = "big")]
+pub const SDL_PIXELFORMAT_ARGB32: SDL_PixelFormat = SDL_PixelFormat::ARGB32;
+#[cfg(target_endian = "big")]
+pub const SDL_PIXELFORMAT_BGRA32: SDL_PixelFormat = SDL_PixelFormat::BGRA32;
+#[cfg(target_endian = "big")]
+pub const SDL_PIXELFORMAT_ABGR32: SDL_PixelFormat = SDL_PixelFormat::ABGR32;
+#[cfg(target_endian = "big")]
+pub const SDL_PIXELFORMAT_RGBX32: SDL_PixelFormat = SDL_PixelFormat::RGBX32;
+#[cfg(target_endian = "big")]
+pub const SDL_PIXELFORMAT_XRGB32: SDL_PixelFormat = SDL_PixelFormat::XRGB32;
+#[cfg(target_endian = "big")]
+pub const SDL_PIXELFORMAT_BGRX32: SDL_PixelFormat = SDL_PixelFormat::BGRX32;
+#[cfg(target_endian = "big")]
+pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PixelFormat::XBGR32;
+#[cfg(not(target_endian = "big"))]
+pub const SDL_PIXELFORMAT_RGBA32: SDL_PixelFormat = SDL_PixelFormat::RGBA32;
+#[cfg(not(target_endian = "big"))]
+pub const SDL_PIXELFORMAT_ARGB32: SDL_PixelFormat = SDL_PixelFormat::ARGB32;
+#[cfg(not(target_endian = "big"))]
+pub const SDL_PIXELFORMAT_BGRA32: SDL_PixelFormat = SDL_PixelFormat::BGRA32;
+#[cfg(not(target_endian = "big"))]
+pub const SDL_PIXELFORMAT_ABGR32: SDL_PixelFormat = SDL_PixelFormat::ABGR32;
+#[cfg(not(target_endian = "big"))]
+pub const SDL_PIXELFORMAT_RGBX32: SDL_PixelFormat = SDL_PixelFormat::RGBX32;
+#[cfg(not(target_endian = "big"))]
+pub const SDL_PIXELFORMAT_XRGB32: SDL_PixelFormat = SDL_PixelFormat::XRGB32;
+#[cfg(not(target_endian = "big"))]
+pub const SDL_PIXELFORMAT_BGRX32: SDL_PixelFormat = SDL_PixelFormat::BGRX32;
+#[cfg(not(target_endian = "big"))]
+pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PixelFormat::XBGR32;
 
 #[inline(always)]
 pub const fn SDL_DEFINE_PIXELFORMAT(
@@ -481,46 +545,6 @@ pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::i32 {
     } else {
         ((X.0 >> 0) & 255_i32)
     }
-}
-
-#[cfg(target_endian = "big")]
-emit! {
-    pub const SDL_PIXELFORMAT_RGBA32: SDL_PixelFormat = SDL_PIXELFORMAT_RGBA8888;
-
-    pub const SDL_PIXELFORMAT_ARGB32: SDL_PixelFormat = SDL_PIXELFORMAT_ARGB8888;
-
-    pub const SDL_PIXELFORMAT_BGRA32: SDL_PixelFormat = SDL_PIXELFORMAT_BGRA8888;
-
-    pub const SDL_PIXELFORMAT_ABGR32: SDL_PixelFormat = SDL_PIXELFORMAT_ABGR8888;
-
-    pub const SDL_PIXELFORMAT_RGBX32: SDL_PixelFormat = SDL_PIXELFORMAT_RGBX8888;
-
-    pub const SDL_PIXELFORMAT_XRGB32: SDL_PixelFormat = SDL_PIXELFORMAT_XRGB8888;
-
-    pub const SDL_PIXELFORMAT_BGRX32: SDL_PixelFormat = SDL_PIXELFORMAT_BGRX8888;
-
-    pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PIXELFORMAT_XBGR8888;
-
-}
-
-#[cfg(not(target_endian = "big"))]
-emit! {
-    pub const SDL_PIXELFORMAT_RGBA32: SDL_PixelFormat = SDL_PIXELFORMAT_ABGR8888;
-
-    pub const SDL_PIXELFORMAT_ARGB32: SDL_PixelFormat = SDL_PIXELFORMAT_BGRA8888;
-
-    pub const SDL_PIXELFORMAT_BGRA32: SDL_PixelFormat = SDL_PIXELFORMAT_ARGB8888;
-
-    pub const SDL_PIXELFORMAT_ABGR32: SDL_PixelFormat = SDL_PIXELFORMAT_RGBA8888;
-
-    pub const SDL_PIXELFORMAT_RGBX32: SDL_PixelFormat = SDL_PIXELFORMAT_XBGR8888;
-
-    pub const SDL_PIXELFORMAT_XRGB32: SDL_PixelFormat = SDL_PIXELFORMAT_BGRX8888;
-
-    pub const SDL_PIXELFORMAT_BGRX32: SDL_PixelFormat = SDL_PIXELFORMAT_XRGB8888;
-
-    pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PIXELFORMAT_RGBX8888;
-
 }
 
 /// Colorspace color type.
@@ -910,7 +934,7 @@ pub const fn SDL_ISCOLORSPACE_FULL_RANGE(X: ::core::primitive::i32) -> ::core::p
 /// \sa SDL_MatrixCoefficients
 /// \sa SDL_TransferCharacteristics
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_COLORSPACE_UNKNOWN`], [`SDL_COLORSPACE_SRGB`], [`SDL_COLORSPACE_SRGB_LINEAR`], [`SDL_COLORSPACE_HDR10`], [`SDL_COLORSPACE_JPEG`], [`SDL_COLORSPACE_BT601_LIMITED`], [`SDL_COLORSPACE_BT601_FULL`], [`SDL_COLORSPACE_BT709_LIMITED`], [`SDL_COLORSPACE_BT709_FULL`], [`SDL_COLORSPACE_BT2020_LIMITED`], [`SDL_COLORSPACE_BT2020_FULL`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_COLORSPACE_UNKNOWN`], [`SDL_COLORSPACE_SRGB`], [`SDL_COLORSPACE_SRGB_LINEAR`], [`SDL_COLORSPACE_HDR10`], [`SDL_COLORSPACE_JPEG`], [`SDL_COLORSPACE_BT601_LIMITED`], [`SDL_COLORSPACE_BT601_FULL`], [`SDL_COLORSPACE_BT709_LIMITED`], [`SDL_COLORSPACE_BT709_FULL`], [`SDL_COLORSPACE_BT2020_LIMITED`], [`SDL_COLORSPACE_BT2020_FULL`], [`SDL_COLORSPACE_RGB_DEFAULT`], [`SDL_COLORSPACE_YUV_DEFAULT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -937,6 +961,10 @@ impl SDL_Colorspace {
     pub const BT2020_LIMITED: Self = Self(0x21102609);
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P2020
     pub const BT2020_FULL: Self = Self(0x22102609);
+    /// The default colorspace for RGB surfaces if no colorspace is specified
+    pub const RGB_DEFAULT: Self = SDL_COLORSPACE_SRGB;
+    /// The default colorspace for YUV surfaces if no colorspace is specified
+    pub const YUV_DEFAULT: Self = SDL_COLORSPACE_JPEG;
 }
 pub const SDL_COLORSPACE_UNKNOWN: SDL_Colorspace = SDL_Colorspace::UNKNOWN;
 /// Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709
@@ -959,10 +987,10 @@ pub const SDL_COLORSPACE_BT709_FULL: SDL_Colorspace = SDL_Colorspace::BT709_FULL
 pub const SDL_COLORSPACE_BT2020_LIMITED: SDL_Colorspace = SDL_Colorspace::BT2020_LIMITED;
 /// Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P2020
 pub const SDL_COLORSPACE_BT2020_FULL: SDL_Colorspace = SDL_Colorspace::BT2020_FULL;
-
-pub const SDL_COLORSPACE_RGB_DEFAULT: SDL_Colorspace = SDL_COLORSPACE_SRGB;
-
-pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_COLORSPACE_JPEG;
+/// The default colorspace for RGB surfaces if no colorspace is specified
+pub const SDL_COLORSPACE_RGB_DEFAULT: SDL_Colorspace = SDL_Colorspace::RGB_DEFAULT;
+/// The default colorspace for YUV surfaces if no colorspace is specified
+pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_Colorspace::YUV_DEFAULT;
 
 /// A structure that represents a color as RGBA components.
 ///
