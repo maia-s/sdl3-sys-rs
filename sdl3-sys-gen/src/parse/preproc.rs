@@ -1,3 +1,5 @@
+use crate::parse::is_keyword;
+
 use super::{
     patch_parsed_define, Ambiguous, Cast, Delimited, DocComment, DocCommentPost, Expr, GetSpan,
     Ident, IdentOrKw, IntegerLiteral, Item, Items, Literal, Op, Parse, ParseContext, ParseErr,
@@ -427,14 +429,24 @@ impl Parse for PreProcLine {
                         Op<')'>,
                     >::try_parse(ctx, &mut i)?
                     {
+                        let _pi = ctx.patch_idents_state_guard();
                         let args = del
                             .value
                             .unwrap_or_default()
                             .0
                             .into_iter()
-                            .map(|(ident, _)| DefineArg {
-                                ident,
-                                ty: Type::infer(),
+                            .map(|(ident, _)| {
+                                let ident = if is_keyword(ident.as_str()) {
+                                    let replacement = IdentOrKw::new_inline(format!("{}_", ident));
+                                    ctx.add_patch_ident(ident, replacement.clone());
+                                    replacement
+                                } else {
+                                    ident
+                                };
+                                DefineArg {
+                                    ident,
+                                    ty: Type::infer(),
+                                }
                             })
                             .collect();
                         WsAndComments::try_parse(ctx, &mut i)?;

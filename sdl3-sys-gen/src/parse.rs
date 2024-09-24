@@ -3,7 +3,7 @@ use core::{
     cell::{Cell, RefCell},
     fmt::Display,
 };
-use std::{borrow::Cow, fmt::Debug, marker::PhantomData, str};
+use std::{borrow::Cow, collections::HashMap, fmt::Debug, marker::PhantomData, str};
 
 macro_rules! Op {
     ($($tt:tt)*) => {
@@ -74,6 +74,7 @@ pub struct ParseContext {
     pub parent_struct_ident: RefCell<Option<Ident>>,
     pub sibling_struct_index: RefCell<usize>,
     pub log_debug_enabled: Cell<bool>,
+    patch_idents: RefCell<HashMap<IdentOrKw, IdentOrKw>>,
 }
 
 impl ParseContext {
@@ -85,6 +86,7 @@ impl ParseContext {
             parent_struct_ident: RefCell::new(None),
             sibling_struct_index: RefCell::new(Self::FIRST_SIBLING),
             log_debug_enabled: Cell::new(false),
+            patch_idents: RefCell::new(HashMap::new()),
         }
     }
 
@@ -129,6 +131,29 @@ impl ParseContext {
             eprintln!("[sdl3-sys-gen][debug] {what}");
         }
         Ok(())
+    }
+
+    #[must_use]
+    pub fn patch_idents_state_guard(&self) -> impl Drop + '_ {
+        pub struct Guard<'a>(&'a ParseContext, Option<HashMap<IdentOrKw, IdentOrKw>>);
+
+        impl Drop for Guard<'_> {
+            fn drop(&mut self) {
+                self.0.patch_idents.replace(self.1.take().unwrap());
+            }
+        }
+
+        let prev = self.patch_idents.replace_with(|prev| prev.clone());
+
+        Guard(self, Some(prev))
+    }
+
+    pub fn add_patch_ident(&self, src: IdentOrKw, dst: IdentOrKw) {
+        self.patch_idents.borrow_mut().insert(src, dst);
+    }
+
+    pub fn patch_ident(&self, src: &IdentOrKw) -> Option<IdentOrKw> {
+        self.patch_idents.borrow().get(src).cloned()
     }
 }
 

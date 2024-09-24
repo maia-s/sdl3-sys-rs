@@ -78,7 +78,17 @@ pub const SDL_AUDIO_MASK_BIG_ENDIAN: ::core::primitive::u32 = 4096_u32;
 
 pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 
-// [sdl3-sys-gen] skipped function-like define `SDL_DEFINE_AUDIO_FORMAT`
+#[inline(always)]
+pub const fn SDL_DEFINE_AUDIO_FORMAT(
+    signed_: Uint16,
+    bigendian: Uint16,
+    float_: Uint16,
+    size: ::core::primitive::u32,
+) -> ::core::primitive::u32 {
+    (((((((signed_) as Uint16) << 15) | (((bigendian) as Uint16) << 12))
+        | (((float_) as Uint16) << 8)) as ::core::primitive::u32)
+        | (size & 255_u32))
+}
 
 /// Audio format.
 ///

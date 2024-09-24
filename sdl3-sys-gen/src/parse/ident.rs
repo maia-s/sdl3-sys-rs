@@ -87,12 +87,29 @@ impl<const ALLOW_KEYWORDS: bool> Hash for IdentOrKwT<ALLOW_KEYWORDS> {
     }
 }
 
-impl<const ALLOW_KEYWORDS: bool> Parse for IdentOrKwT<ALLOW_KEYWORDS> {
+trait PatchIdent {
+    fn patch_ident(_: &ParseContext, ident: Self) -> Self;
+}
+impl PatchIdent for Ident {
+    fn patch_ident(_: &ParseContext, ident: Ident) -> Ident {
+        ident
+    }
+}
+impl PatchIdent for IdentOrKw {
+    fn patch_ident(ctx: &ParseContext, ident: IdentOrKw) -> IdentOrKw {
+        ctx.patch_ident(&ident).unwrap_or(ident)
+    }
+}
+
+impl<const ALLOW_KEYWORDS: bool> Parse for IdentOrKwT<ALLOW_KEYWORDS>
+where
+    Self: PatchIdent,
+{
     fn desc() -> Cow<'static, str> {
         "ident".into()
     }
 
-    fn try_parse_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut chars = input.char_indices();
         if let Some(first) = chars.next() {
             match first.1 {
@@ -104,25 +121,38 @@ impl<const ALLOW_KEYWORDS: bool> Parse for IdentOrKwT<ALLOW_KEYWORDS> {
             match ch {
                 'a'..='z' | 'A'..='Z' | '_' | '0'..='9' => (),
                 _ => {
-                    let span = input.slice(..i);
-                    if !ALLOW_KEYWORDS && is_keyword(&span) {
+                    let ident = Self::patch_ident(
+                        ctx,
+                        Self {
+                            span: input.slice(..i),
+                        },
+                    );
+                    if !ALLOW_KEYWORDS && is_keyword(&ident.span) {
                         return Ok((input.clone(), None));
                     } else {
-                        return Ok((input.slice(i..), Some(Self { span })));
+                        return Ok((input.slice(i..), Some(ident)));
                     }
                 }
             }
         }
-        let span = input.clone();
-        if span.is_empty() || (!ALLOW_KEYWORDS && is_keyword(&span)) {
+        let ident = Self::patch_ident(
+            ctx,
+            Self {
+                span: input.clone(),
+            },
+        );
+        if ident.span.is_empty() || (!ALLOW_KEYWORDS && is_keyword(&ident.span)) {
             Ok((input.clone(), None))
         } else {
-            Ok((span.end(), Some(Self { span })))
+            Ok((ident.span.end(), Some(ident)))
         }
     }
 }
 
-impl<const ALLOW_KEYWORDS: bool> ParseRev for IdentOrKwT<ALLOW_KEYWORDS> {
+impl<const ALLOW_KEYWORDS: bool> ParseRev for IdentOrKwT<ALLOW_KEYWORDS>
+where
+    Self: PatchIdent,
+{
     fn try_parse_rev_raw(_ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let mut id_start = None;
         for (i, ch) in input.char_indices().rev() {
