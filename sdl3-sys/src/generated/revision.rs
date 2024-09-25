@@ -18,6 +18,6 @@ emit! {
 
 #[cfg(not(doc))]
 emit! {
-    pub const SDL_REVISION: &::core::ffi::CStr = c"prerelease-3.1.2-1876-g53bf2baac";
+    pub const SDL_REVISION: &::core::ffi::CStr = c"prerelease-3.1.2-1890-g81644d260";
 
 }
