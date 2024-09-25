@@ -171,7 +171,6 @@ impl Gen {
     pub fn emit(&self, module: &str) -> Result<(), Error> {
         if !self.emitted.borrow().contains_key(module) && !self.skipped.borrow().contains(module) {
             if !self.parsed.contains_key(module) || skip_emit(module) {
-                eprintln!("[sdl3-sys-gen] skipped module `{module}`");
                 self.skipped.borrow_mut().insert(module.to_string());
                 return Ok(());
             }
