@@ -29,9 +29,9 @@ const fn size_of_return_value<T, R>(_: &impl FnOnce(T) -> R) -> usize {
 
 #[doc(hidden)] // for internal use only
 #[macro_export]
-macro_rules! __static_c_str {
+macro_rules! __const_c_str {
     ($cstr:ident = $str:expr) => {
-        static $cstr: [::core::ffi::c_char; $str.len() + 1] = {
+        const $cstr: [::core::ffi::c_char; $str.len() + 1] = {
             const BYTES: &[::core::primitive::u8] = $str.as_bytes();
             let mut cstr = [0 as ::core::ffi::c_char; BYTES.len() + 1];
             let mut i = 0;

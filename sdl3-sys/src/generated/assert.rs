@@ -224,7 +224,7 @@ macro_rules! SDL_enabled_assert {
                 #[repr(transparent)]
                 struct SyncAssertData($crate::assert::SDL_AssertData);
                 unsafe impl ::core::marker::Sync for SyncAssertData {}
-                $crate::__static_c_str!(CONDITION = ::core::stringify!($condition));
+                $crate::__const_c_str!(CONDITION = ::core::stringify!($condition));
                 static mut SDL_ASSERT_DATA: SyncAssertData =
                     SyncAssertData($crate::assert::SDL_AssertData {
                         always_ignore: false,
@@ -238,7 +238,7 @@ macro_rules! SDL_enabled_assert {
                 unsafe { ::core::ptr::addr_of_mut!(SDL_ASSERT_DATA.0) }
             };
             const LOCATION: &::core::panic::Location = ::core::panic::Location::caller();
-            $crate::__static_c_str!(FILENAME = LOCATION.file());
+            $crate::__const_c_str!(FILENAME = LOCATION.file());
             match unsafe {
                 $crate::assert::SDL_ReportAssertion(
                     assert_data,
