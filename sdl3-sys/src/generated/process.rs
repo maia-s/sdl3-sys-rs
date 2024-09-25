@@ -195,43 +195,34 @@ extern "C" {
     pub fn SDL_CreateProcessWithProperties(props: SDL_PropertiesID) -> *mut SDL_Process;
 }
 
-pub const SDL_PROP_PROCESS_CREATE_ARGS_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.create.args\0") };
+pub const SDL_PROP_PROCESS_CREATE_ARGS_POINTER: &::core::ffi::CStr = c"SDL.process.create.args";
 
-pub const SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.create.environment\0")
-};
+pub const SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER: &::core::ffi::CStr =
+    c"SDL.process.create.environment";
 
-pub const SDL_PROP_PROCESS_CREATE_STDIN_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.create.stdin_option\0")
-};
+pub const SDL_PROP_PROCESS_CREATE_STDIN_NUMBER: &::core::ffi::CStr =
+    c"SDL.process.create.stdin_option";
 
-pub const SDL_PROP_PROCESS_CREATE_STDIN_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.create.stdin_source\0")
-};
+pub const SDL_PROP_PROCESS_CREATE_STDIN_POINTER: &::core::ffi::CStr =
+    c"SDL.process.create.stdin_source";
 
-pub const SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.create.stdout_option\0")
-};
+pub const SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER: &::core::ffi::CStr =
+    c"SDL.process.create.stdout_option";
 
-pub const SDL_PROP_PROCESS_CREATE_STDOUT_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.create.stdout_source\0")
-};
+pub const SDL_PROP_PROCESS_CREATE_STDOUT_POINTER: &::core::ffi::CStr =
+    c"SDL.process.create.stdout_source";
 
-pub const SDL_PROP_PROCESS_CREATE_STDERR_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.create.stderr_option\0")
-};
+pub const SDL_PROP_PROCESS_CREATE_STDERR_NUMBER: &::core::ffi::CStr =
+    c"SDL.process.create.stderr_option";
 
-pub const SDL_PROP_PROCESS_CREATE_STDERR_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.create.stderr_source\0")
-};
+pub const SDL_PROP_PROCESS_CREATE_STDERR_POINTER: &::core::ffi::CStr =
+    c"SDL.process.create.stderr_source";
 
-pub const SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.create.stderr_to_stdout\0")
-};
+pub const SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN: &::core::ffi::CStr =
+    c"SDL.process.create.stderr_to_stdout";
 
 pub const SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.create.background\0") };
+    c"SDL.process.create.background";
 
 extern "C" {
     /// Get the properties associated with a process.
@@ -257,20 +248,15 @@ extern "C" {
     pub fn SDL_GetProcessProperties(process: *mut SDL_Process) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_PROCESS_PID_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.pid\0") };
+pub const SDL_PROP_PROCESS_PID_NUMBER: &::core::ffi::CStr = c"SDL.process.pid";
 
-pub const SDL_PROP_PROCESS_STDIN_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.stdin\0") };
+pub const SDL_PROP_PROCESS_STDIN_POINTER: &::core::ffi::CStr = c"SDL.process.stdin";
 
-pub const SDL_PROP_PROCESS_STDOUT_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.stdout\0") };
+pub const SDL_PROP_PROCESS_STDOUT_POINTER: &::core::ffi::CStr = c"SDL.process.stdout";
 
-pub const SDL_PROP_PROCESS_STDERR_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.stderr\0") };
+pub const SDL_PROP_PROCESS_STDERR_POINTER: &::core::ffi::CStr = c"SDL.process.stderr";
 
-pub const SDL_PROP_PROCESS_BACKGROUND_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.process.background\0") };
+pub const SDL_PROP_PROCESS_BACKGROUND_BOOLEAN: &::core::ffi::CStr = c"SDL.process.background";
 
 extern "C" {
     /// Read all the output from a process.

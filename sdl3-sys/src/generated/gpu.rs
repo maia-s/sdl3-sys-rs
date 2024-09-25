@@ -1670,29 +1670,23 @@ pub struct SDL_GPUTextureCreateInfo {
     pub props: SDL_PropertiesID,
 }
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.r\0")
-};
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT: &::core::ffi::CStr =
+    c"SDL.gpu.createtexture.d3d12.clear.r";
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.g\0")
-};
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT: &::core::ffi::CStr =
+    c"SDL.gpu.createtexture.d3d12.clear.g";
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.b\0")
-};
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT: &::core::ffi::CStr =
+    c"SDL.gpu.createtexture.d3d12.clear.b";
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.a\0")
-};
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT: &::core::ffi::CStr =
+    c"SDL.gpu.createtexture.d3d12.clear.a";
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.depth\0")
-};
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT: &::core::ffi::CStr =
+    c"SDL.gpu.createtexture.d3d12.clear.depth";
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.createtexture.d3d12.clear.stencil\0")
-};
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8: &::core::ffi::CStr =
+    c"SDL.gpu.createtexture.d3d12.clear.stencil";
 
 /// A structure specifying the parameters of a buffer.
 ///
@@ -2247,44 +2241,35 @@ extern "C" {
     pub fn SDL_CreateGPUDeviceWithProperties(props: SDL_PropertiesID) -> *mut SDL_GPUDevice;
 }
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.debugmode\0")
-};
+pub const SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOL: &::core::ffi::CStr =
+    c"SDL.gpu.device.create.debugmode";
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.preferlowpower\0")
-};
+pub const SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOL: &::core::ffi::CStr =
+    c"SDL.gpu.device.create.preferlowpower";
 
 pub const SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.name\0") };
+    c"SDL.gpu.device.create.name";
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.private\0")
-};
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOL: &::core::ffi::CStr =
+    c"SDL.gpu.device.create.shaders.private";
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.spirv\0")
-};
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOL: &::core::ffi::CStr =
+    c"SDL.gpu.device.create.shaders.spirv";
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.dxbc\0")
-};
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOL: &::core::ffi::CStr =
+    c"SDL.gpu.device.create.shaders.dxbc";
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.dxil\0")
-};
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOL: &::core::ffi::CStr =
+    c"SDL.gpu.device.create.shaders.dxil";
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.msl\0")
-};
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOL: &::core::ffi::CStr =
+    c"SDL.gpu.device.create.shaders.msl";
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.shaders.metallib\0")
-};
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOL: &::core::ffi::CStr =
+    c"SDL.gpu.device.create.shaders.metallib";
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.gpu.device.create.d3d12.semantic\0")
-};
+pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: &::core::ffi::CStr =
+    c"SDL.gpu.device.create.d3d12.semantic";
 
 extern "C" {
     /// Destroys a GPU context previously returned by SDL_CreateGPUDevice.

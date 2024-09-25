@@ -12,12 +12,12 @@ emit! {
     /// way.
     ///
     /// \since This macro is available since SDL 3.0.0.
-    pub const SDL_REVISION: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"Some arbitrary string decided at SDL build time\0") };
+    pub const SDL_REVISION: &::core::ffi::CStr = c"Some arbitrary string decided at SDL build time";
 
 }
 
 #[cfg(not(doc))]
 emit! {
-    pub const SDL_REVISION: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"prerelease-3.1.2-1876-g53bf2baac\0") };
+    pub const SDL_REVISION: &::core::ffi::CStr = c"prerelease-3.1.2-1876-g53bf2baac";
 
 }

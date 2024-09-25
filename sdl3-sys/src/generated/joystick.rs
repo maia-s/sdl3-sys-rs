@@ -734,21 +734,17 @@ extern "C" {
     pub fn SDL_GetJoystickProperties(joystick: *mut SDL_Joystick) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.mono_led\0") };
+pub const SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN: &::core::ffi::CStr = c"SDL.joystick.cap.mono_led";
 
-pub const SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.rgb_led\0") };
+pub const SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN: &::core::ffi::CStr = c"SDL.joystick.cap.rgb_led";
 
 pub const SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.player_led\0") };
+    c"SDL.joystick.cap.player_led";
 
-pub const SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.rumble\0") };
+pub const SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN: &::core::ffi::CStr = c"SDL.joystick.cap.rumble";
 
-pub const SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.joystick.cap.trigger_rumble\0")
-};
+pub const SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN: &::core::ffi::CStr =
+    c"SDL.joystick.cap.trigger_rumble";
 
 extern "C" {
     /// Get the implementation dependent name of a joystick.

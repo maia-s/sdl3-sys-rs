@@ -222,13 +222,11 @@ extern "C" {
 }
 
 pub const SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.surface.SDR_white_point\0") };
+    c"SDL.surface.SDR_white_point";
 
-pub const SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.surface.HDR_headroom\0") };
+pub const SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT: &::core::ffi::CStr = c"SDL.surface.HDR_headroom";
 
-pub const SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.surface.tonemap\0") };
+pub const SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING: &::core::ffi::CStr = c"SDL.surface.tonemap";
 
 extern "C" {
     /// Set the colorspace used by a surface.

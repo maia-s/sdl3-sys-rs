@@ -328,26 +328,21 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-pub const SDL_PROP_APP_METADATA_NAME_STRING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.name\0") };
+pub const SDL_PROP_APP_METADATA_NAME_STRING: &::core::ffi::CStr = c"SDL.app.metadata.name";
 
-pub const SDL_PROP_APP_METADATA_VERSION_STRING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.version\0") };
+pub const SDL_PROP_APP_METADATA_VERSION_STRING: &::core::ffi::CStr = c"SDL.app.metadata.version";
 
 pub const SDL_PROP_APP_METADATA_IDENTIFIER_STRING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.identifier\0") };
+    c"SDL.app.metadata.identifier";
 
-pub const SDL_PROP_APP_METADATA_CREATOR_STRING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.creator\0") };
+pub const SDL_PROP_APP_METADATA_CREATOR_STRING: &::core::ffi::CStr = c"SDL.app.metadata.creator";
 
 pub const SDL_PROP_APP_METADATA_COPYRIGHT_STRING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.copyright\0") };
+    c"SDL.app.metadata.copyright";
 
-pub const SDL_PROP_APP_METADATA_URL_STRING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.url\0") };
+pub const SDL_PROP_APP_METADATA_URL_STRING: &::core::ffi::CStr = c"SDL.app.metadata.url";
 
-pub const SDL_PROP_APP_METADATA_TYPE_STRING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.app.metadata.type\0") };
+pub const SDL_PROP_APP_METADATA_TYPE_STRING: &::core::ffi::CStr = c"SDL.app.metadata.type";
 
 extern "C" {
     /// Get metadata about your app.

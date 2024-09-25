@@ -43,8 +43,7 @@ use super::video::*;
 /// The name of the software renderer.
 ///
 /// \since This macro is available since SDL 3.0.0.
-pub const SDL_SOFTWARE_RENDERER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"software\0") };
+pub const SDL_SOFTWARE_RENDERER: &::core::ffi::CStr = c"software";
 
 /// Vertex structure.
 ///
@@ -273,52 +272,37 @@ extern "C" {
     pub fn SDL_CreateRendererWithProperties(props: SDL_PropertiesID) -> *mut SDL_Renderer;
 }
 
-pub const SDL_PROP_RENDERER_CREATE_NAME_STRING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.create.name\0") };
+pub const SDL_PROP_RENDERER_CREATE_NAME_STRING: &::core::ffi::CStr = c"SDL.renderer.create.name";
 
 pub const SDL_PROP_RENDERER_CREATE_WINDOW_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.create.window\0") };
+    c"SDL.renderer.create.window";
 
 pub const SDL_PROP_RENDERER_CREATE_SURFACE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.create.surface\0") };
+    c"SDL.renderer.create.surface";
 
-pub const SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.create.output_colorspace\0")
-};
+pub const SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER: &::core::ffi::CStr =
+    c"SDL.renderer.create.output_colorspace";
 
-pub const SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.create.present_vsync\0")
-};
+pub const SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER: &::core::ffi::CStr =
+    c"SDL.renderer.create.present_vsync";
 
-pub const SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.create.vulkan.instance\0")
-};
+pub const SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER: &::core::ffi::CStr =
+    c"SDL.renderer.create.vulkan.instance";
 
-pub const SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.create.vulkan.surface\0")
-};
+pub const SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER: &::core::ffi::CStr =
+    c"SDL.renderer.create.vulkan.surface";
 
-pub const SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-        b"SDL.renderer.create.vulkan.physical_device\0",
-    )
-};
+pub const SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER: &::core::ffi::CStr =
+    c"SDL.renderer.create.vulkan.physical_device";
 
-pub const SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.create.vulkan.device\0")
-};
+pub const SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER: &::core::ffi::CStr =
+    c"SDL.renderer.create.vulkan.device";
 
-pub const SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-        b"SDL.renderer.create.vulkan.graphics_queue_family_index\0",
-    )
-};
+pub const SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr =
+    c"SDL.renderer.create.vulkan.graphics_queue_family_index";
 
-pub const SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-        b"SDL.renderer.create.vulkan.present_queue_family_index\0",
-    )
-};
+pub const SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr =
+    c"SDL.renderer.create.vulkan.present_queue_family_index";
 
 extern "C" {
     /// Create a 2D software rendering context for a surface.
@@ -454,84 +438,65 @@ extern "C" {
     pub fn SDL_GetRendererProperties(renderer: *mut SDL_Renderer) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_RENDERER_NAME_STRING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.name\0") };
+pub const SDL_PROP_RENDERER_NAME_STRING: &::core::ffi::CStr = c"SDL.renderer.name";
 
-pub const SDL_PROP_RENDERER_WINDOW_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.window\0") };
+pub const SDL_PROP_RENDERER_WINDOW_POINTER: &::core::ffi::CStr = c"SDL.renderer.window";
 
-pub const SDL_PROP_RENDERER_SURFACE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.surface\0") };
+pub const SDL_PROP_RENDERER_SURFACE_POINTER: &::core::ffi::CStr = c"SDL.renderer.surface";
 
-pub const SDL_PROP_RENDERER_VSYNC_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.vsync\0") };
+pub const SDL_PROP_RENDERER_VSYNC_NUMBER: &::core::ffi::CStr = c"SDL.renderer.vsync";
 
 pub const SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.max_texture_size\0") };
+    c"SDL.renderer.max_texture_size";
 
 pub const SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.texture_formats\0") };
+    c"SDL.renderer.texture_formats";
 
-pub const SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.output_colorspace\0")
-};
+pub const SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER: &::core::ffi::CStr =
+    c"SDL.renderer.output_colorspace";
 
-pub const SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.HDR_enabled\0") };
+pub const SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN: &::core::ffi::CStr = c"SDL.renderer.HDR_enabled";
 
 pub const SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.SDR_white_point\0") };
+    c"SDL.renderer.SDR_white_point";
 
-pub const SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.HDR_headroom\0") };
+pub const SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT: &::core::ffi::CStr = c"SDL.renderer.HDR_headroom";
 
-pub const SDL_PROP_RENDERER_D3D9_DEVICE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.d3d9.device\0") };
+pub const SDL_PROP_RENDERER_D3D9_DEVICE_POINTER: &::core::ffi::CStr = c"SDL.renderer.d3d9.device";
 
-pub const SDL_PROP_RENDERER_D3D11_DEVICE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.d3d11.device\0") };
+pub const SDL_PROP_RENDERER_D3D11_DEVICE_POINTER: &::core::ffi::CStr = c"SDL.renderer.d3d11.device";
 
 pub const SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.d3d11.swap_chain\0") };
+    c"SDL.renderer.d3d11.swap_chain";
 
-pub const SDL_PROP_RENDERER_D3D12_DEVICE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.d3d12.device\0") };
+pub const SDL_PROP_RENDERER_D3D12_DEVICE_POINTER: &::core::ffi::CStr = c"SDL.renderer.d3d12.device";
 
 pub const SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.d3d12.swap_chain\0") };
+    c"SDL.renderer.d3d12.swap_chain";
 
-pub const SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.d3d12.command_queue\0")
-};
+pub const SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER: &::core::ffi::CStr =
+    c"SDL.renderer.d3d12.command_queue";
 
 pub const SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.vulkan.instance\0") };
+    c"SDL.renderer.vulkan.instance";
 
 pub const SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.vulkan.surface\0") };
+    c"SDL.renderer.vulkan.surface";
 
-pub const SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.vulkan.physical_device\0")
-};
+pub const SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER: &::core::ffi::CStr =
+    c"SDL.renderer.vulkan.physical_device";
 
 pub const SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.vulkan.device\0") };
+    c"SDL.renderer.vulkan.device";
 
-pub const SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-        b"SDL.renderer.vulkan.graphics_queue_family_index\0",
-    )
-};
+pub const SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr =
+    c"SDL.renderer.vulkan.graphics_queue_family_index";
 
-pub const SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-        b"SDL.renderer.vulkan.present_queue_family_index\0",
-    )
-};
+pub const SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr =
+    c"SDL.renderer.vulkan.present_queue_family_index";
 
-pub const SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.renderer.vulkan.swapchain_image_count\0")
-};
+pub const SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER: &::core::ffi::CStr =
+    c"SDL.renderer.vulkan.swapchain_image_count";
 
 extern "C" {
     /// Get the output size in pixels of a rendering context.
@@ -753,91 +718,69 @@ extern "C" {
 }
 
 pub const SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.colorspace\0") };
+    c"SDL.texture.create.colorspace";
 
-pub const SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.format\0") };
+pub const SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER: &::core::ffi::CStr = c"SDL.texture.create.format";
 
-pub const SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.access\0") };
+pub const SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER: &::core::ffi::CStr = c"SDL.texture.create.access";
 
-pub const SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.width\0") };
+pub const SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER: &::core::ffi::CStr = c"SDL.texture.create.width";
 
-pub const SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.height\0") };
+pub const SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER: &::core::ffi::CStr = c"SDL.texture.create.height";
 
-pub const SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.SDR_white_point\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT: &::core::ffi::CStr =
+    c"SDL.texture.create.SDR_white_point";
 
-pub const SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.HDR_headroom\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT: &::core::ffi::CStr =
+    c"SDL.texture.create.HDR_headroom";
 
-pub const SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.d3d11.texture\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER: &::core::ffi::CStr =
+    c"SDL.texture.create.d3d11.texture";
 
-pub const SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.d3d11.texture_u\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER: &::core::ffi::CStr =
+    c"SDL.texture.create.d3d11.texture_u";
 
-pub const SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.d3d11.texture_v\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER: &::core::ffi::CStr =
+    c"SDL.texture.create.d3d11.texture_v";
 
-pub const SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.d3d12.texture\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER: &::core::ffi::CStr =
+    c"SDL.texture.create.d3d12.texture";
 
-pub const SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.d3d12.texture_u\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER: &::core::ffi::CStr =
+    c"SDL.texture.create.d3d12.texture_u";
 
-pub const SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.d3d12.texture_v\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER: &::core::ffi::CStr =
+    c"SDL.texture.create.d3d12.texture_v";
 
-pub const SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.metal.pixelbuffer\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER: &::core::ffi::CStr =
+    c"SDL.texture.create.metal.pixelbuffer";
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.opengl.texture\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER: &::core::ffi::CStr =
+    c"SDL.texture.create.opengl.texture";
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.opengl.texture_uv\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER: &::core::ffi::CStr =
+    c"SDL.texture.create.opengl.texture_uv";
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.opengl.texture_u\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER: &::core::ffi::CStr =
+    c"SDL.texture.create.opengl.texture_u";
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.opengl.texture_v\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER: &::core::ffi::CStr =
+    c"SDL.texture.create.opengl.texture_v";
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.opengles2.texture\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER: &::core::ffi::CStr =
+    c"SDL.texture.create.opengles2.texture";
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.opengles2.texture_uv\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER: &::core::ffi::CStr =
+    c"SDL.texture.create.opengles2.texture_uv";
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.opengles2.texture_u\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER: &::core::ffi::CStr =
+    c"SDL.texture.create.opengles2.texture_u";
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.opengles2.texture_v\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER: &::core::ffi::CStr =
+    c"SDL.texture.create.opengles2.texture_v";
 
-pub const SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.create.vulkan.texture\0")
-};
+pub const SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER: &::core::ffi::CStr =
+    c"SDL.texture.create.vulkan.texture";
 
 extern "C" {
     /// Get the properties associated with a texture.
@@ -936,86 +879,73 @@ extern "C" {
     pub fn SDL_GetTextureProperties(texture: *mut SDL_Texture) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_TEXTURE_COLORSPACE_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.colorspace\0") };
+pub const SDL_PROP_TEXTURE_COLORSPACE_NUMBER: &::core::ffi::CStr = c"SDL.texture.colorspace";
 
-pub const SDL_PROP_TEXTURE_FORMAT_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.format\0") };
+pub const SDL_PROP_TEXTURE_FORMAT_NUMBER: &::core::ffi::CStr = c"SDL.texture.format";
 
-pub const SDL_PROP_TEXTURE_ACCESS_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.access\0") };
+pub const SDL_PROP_TEXTURE_ACCESS_NUMBER: &::core::ffi::CStr = c"SDL.texture.access";
 
-pub const SDL_PROP_TEXTURE_WIDTH_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.width\0") };
+pub const SDL_PROP_TEXTURE_WIDTH_NUMBER: &::core::ffi::CStr = c"SDL.texture.width";
 
-pub const SDL_PROP_TEXTURE_HEIGHT_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.height\0") };
+pub const SDL_PROP_TEXTURE_HEIGHT_NUMBER: &::core::ffi::CStr = c"SDL.texture.height";
 
 pub const SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.SDR_white_point\0") };
+    c"SDL.texture.SDR_white_point";
 
-pub const SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.HDR_headroom\0") };
+pub const SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT: &::core::ffi::CStr = c"SDL.texture.HDR_headroom";
 
-pub const SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.d3d11.texture\0") };
+pub const SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER: &::core::ffi::CStr = c"SDL.texture.d3d11.texture";
 
 pub const SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.d3d11.texture_u\0") };
+    c"SDL.texture.d3d11.texture_u";
 
 pub const SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.d3d11.texture_v\0") };
+    c"SDL.texture.d3d11.texture_v";
 
-pub const SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.d3d12.texture\0") };
+pub const SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER: &::core::ffi::CStr = c"SDL.texture.d3d12.texture";
 
 pub const SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.d3d12.texture_u\0") };
+    c"SDL.texture.d3d12.texture_u";
 
 pub const SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.d3d12.texture_v\0") };
+    c"SDL.texture.d3d12.texture_v";
 
 pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.opengl.texture\0") };
+    c"SDL.texture.opengl.texture";
 
 pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.opengl.texture_uv\0") };
+    c"SDL.texture.opengl.texture_uv";
 
 pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.opengl.texture_u\0") };
+    c"SDL.texture.opengl.texture_u";
 
 pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.opengl.texture_v\0") };
+    c"SDL.texture.opengl.texture_v";
 
 pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.opengl.target\0") };
+    c"SDL.texture.opengl.target";
 
-pub const SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.opengl.tex_w\0") };
+pub const SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT: &::core::ffi::CStr = c"SDL.texture.opengl.tex_w";
 
-pub const SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.opengl.tex_h\0") };
+pub const SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT: &::core::ffi::CStr = c"SDL.texture.opengl.tex_h";
 
 pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.opengles2.texture\0") };
+    c"SDL.texture.opengles2.texture";
 
-pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.opengles2.texture_uv\0")
-};
+pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER: &::core::ffi::CStr =
+    c"SDL.texture.opengles2.texture_uv";
 
-pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.opengles2.texture_u\0")
-};
+pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER: &::core::ffi::CStr =
+    c"SDL.texture.opengles2.texture_u";
 
-pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.opengles2.texture_v\0")
-};
+pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER: &::core::ffi::CStr =
+    c"SDL.texture.opengles2.texture_v";
 
 pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.opengles2.target\0") };
+    c"SDL.texture.opengles2.target";
 
 pub const SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.texture.vulkan.texture\0") };
+    c"SDL.texture.vulkan.texture";
 
 extern "C" {
     /// Get the renderer that created an SDL_Texture.

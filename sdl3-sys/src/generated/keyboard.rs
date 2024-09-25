@@ -457,21 +457,17 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-pub const SDL_PROP_TEXTINPUT_TYPE_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.type\0") };
+pub const SDL_PROP_TEXTINPUT_TYPE_NUMBER: &::core::ffi::CStr = c"SDL.textinput.type";
 
 pub const SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.capitalization\0") };
+    c"SDL.textinput.capitalization";
 
-pub const SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.autocorrect\0") };
+pub const SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN: &::core::ffi::CStr = c"SDL.textinput.autocorrect";
 
-pub const SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.multiline\0") };
+pub const SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN: &::core::ffi::CStr = c"SDL.textinput.multiline";
 
-pub const SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.textinput.android.inputtype\0")
-};
+pub const SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: &::core::ffi::CStr =
+    c"SDL.textinput.android.inputtype";
 
 extern "C" {
     /// Check whether or not Unicode text input events are enabled for a window.

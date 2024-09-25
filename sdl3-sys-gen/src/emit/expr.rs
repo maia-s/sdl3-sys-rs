@@ -1850,10 +1850,7 @@ impl Emit for FloatLiteral {
 
 impl Emit for StringLiteral {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        write!(
-            ctx,
-            "unsafe {{ ::core::ffi::CStr::from_bytes_with_nul_unchecked(b\""
-        )?;
+        write!(ctx, "c\"")?;
         for &b in self.str.as_bytes() {
             match b {
                 0x20..=0x21 | 0x23..=0x5b | 0x5d..=0x7f => ctx.write_char(b as char)?,
@@ -1864,7 +1861,7 @@ impl Emit for StringLiteral {
                 _ => write!(ctx, "\\x{:02x}", b)?,
             }
         }
-        write!(ctx, "\\0\") }}")?;
+        write!(ctx, "\"")?;
         Ok(())
     }
 }

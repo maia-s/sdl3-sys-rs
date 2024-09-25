@@ -30,9 +30,8 @@ use super::stdinc::*;
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_ALLOW_ALT_TAB_WHILE_GRABBED\0")
-};
+pub const SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED: &::core::ffi::CStr =
+    c"SDL_ALLOW_ALT_TAB_WHILE_GRABBED";
 
 /// A variable to control whether the SDL activity is allowed to be re-created.
 ///
@@ -50,9 +49,8 @@ pub const SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_ANDROID_ALLOW_RECREATE_ACTIVITY: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_ANDROID_ALLOW_RECREATE_ACTIVITY\0")
-};
+pub const SDL_HINT_ANDROID_ALLOW_RECREATE_ACTIVITY: &::core::ffi::CStr =
+    c"SDL_ANDROID_ALLOW_RECREATE_ACTIVITY";
 
 /// A variable to control whether the event loop will block itself when the app
 /// is paused.
@@ -65,8 +63,7 @@ pub const SDL_HINT_ANDROID_ALLOW_RECREATE_ACTIVITY: &::core::ffi::CStr = unsafe 
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_ANDROID_BLOCK_ON_PAUSE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_ANDROID_BLOCK_ON_PAUSE\0") };
+pub const SDL_HINT_ANDROID_BLOCK_ON_PAUSE: &::core::ffi::CStr = c"SDL_ANDROID_BLOCK_ON_PAUSE";
 
 /// A variable to control whether we trap the Android back button to handle it
 /// manually.
@@ -87,8 +84,7 @@ pub const SDL_HINT_ANDROID_BLOCK_ON_PAUSE: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_ANDROID_TRAP_BACK_BUTTON: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_ANDROID_TRAP_BACK_BUTTON\0") };
+pub const SDL_HINT_ANDROID_TRAP_BACK_BUTTON: &::core::ffi::CStr = c"SDL_ANDROID_TRAP_BACK_BUTTON";
 
 /// A variable setting the app ID string.
 ///
@@ -102,8 +98,7 @@ pub const SDL_HINT_ANDROID_TRAP_BACK_BUTTON: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_APP_ID: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_APP_ID\0") };
+pub const SDL_HINT_APP_ID: &::core::ffi::CStr = c"SDL_APP_ID";
 
 /// A variable setting the application name.
 ///
@@ -119,8 +114,7 @@ pub const SDL_HINT_APP_ID: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_APP_NAME: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_APP_NAME\0") };
+pub const SDL_HINT_APP_NAME: &::core::ffi::CStr = c"SDL_APP_NAME";
 
 /// A variable controlling whether controllers used with the Apple TV generate
 /// UI events.
@@ -141,9 +135,8 @@ pub const SDL_HINT_APP_NAME: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_APPLE_TV_CONTROLLER_UI_EVENTS\0")
-};
+pub const SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS: &::core::ffi::CStr =
+    c"SDL_APPLE_TV_CONTROLLER_UI_EVENTS";
 
 /// A variable controlling whether the Apple TV remote's joystick axes will
 /// automatically match the rotation of the remote.
@@ -156,9 +149,8 @@ pub const SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_APPLE_TV_REMOTE_ALLOW_ROTATION\0")
-};
+pub const SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION: &::core::ffi::CStr =
+    c"SDL_APPLE_TV_REMOTE_ALLOW_ROTATION";
 
 /// Specify the default ALSA audio device name.
 ///
@@ -170,8 +162,7 @@ pub const SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION: &::core::ffi::CStr = unsafe {
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_ALSA_DEFAULT_DEVICE\0") };
+pub const SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE: &::core::ffi::CStr = c"SDL_AUDIO_ALSA_DEFAULT_DEVICE";
 
 /// A variable controlling the audio category on iOS and macOS.
 ///
@@ -187,8 +178,7 @@ pub const SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE: &::core::ffi::CStr =
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_CATEGORY: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_CATEGORY\0") };
+pub const SDL_HINT_AUDIO_CATEGORY: &::core::ffi::CStr = c"SDL_AUDIO_CATEGORY";
 
 /// A variable controlling the default audio channel count.
 ///
@@ -199,8 +189,7 @@ pub const SDL_HINT_AUDIO_CATEGORY: &::core::ffi::CStr =
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_CHANNELS: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_CHANNELS\0") };
+pub const SDL_HINT_AUDIO_CHANNELS: &::core::ffi::CStr = c"SDL_AUDIO_CHANNELS";
 
 /// Specify an application icon name for an audio device.
 ///
@@ -221,9 +210,8 @@ pub const SDL_HINT_AUDIO_CHANNELS: &::core::ffi::CStr =
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_DEVICE_APP_ICON_NAME: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_DEVICE_APP_ICON_NAME\0")
-};
+pub const SDL_HINT_AUDIO_DEVICE_APP_ICON_NAME: &::core::ffi::CStr =
+    c"SDL_AUDIO_DEVICE_APP_ICON_NAME";
 
 /// A variable controlling device buffer size.
 ///
@@ -243,9 +231,8 @@ pub const SDL_HINT_AUDIO_DEVICE_APP_ICON_NAME: &::core::ffi::CStr = unsafe {
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_DEVICE_SAMPLE_FRAMES: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_DEVICE_SAMPLE_FRAMES\0")
-};
+pub const SDL_HINT_AUDIO_DEVICE_SAMPLE_FRAMES: &::core::ffi::CStr =
+    c"SDL_AUDIO_DEVICE_SAMPLE_FRAMES";
 
 /// Specify an audio stream name for an audio device.
 ///
@@ -270,8 +257,7 @@ pub const SDL_HINT_AUDIO_DEVICE_SAMPLE_FRAMES: &::core::ffi::CStr = unsafe {
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_DEVICE_STREAM_NAME: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_DEVICE_STREAM_NAME\0") };
+pub const SDL_HINT_AUDIO_DEVICE_STREAM_NAME: &::core::ffi::CStr = c"SDL_AUDIO_DEVICE_STREAM_NAME";
 
 /// Specify an application role for an audio device.
 ///
@@ -295,8 +281,7 @@ pub const SDL_HINT_AUDIO_DEVICE_STREAM_NAME: &::core::ffi::CStr =
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_DEVICE_STREAM_ROLE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_DEVICE_STREAM_ROLE\0") };
+pub const SDL_HINT_AUDIO_DEVICE_STREAM_ROLE: &::core::ffi::CStr = c"SDL_AUDIO_DEVICE_STREAM_ROLE";
 
 /// Specify the input file when recording audio using the disk audio driver.
 ///
@@ -305,8 +290,7 @@ pub const SDL_HINT_AUDIO_DEVICE_STREAM_ROLE: &::core::ffi::CStr =
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_DISK_INPUT_FILE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_DISK_INPUT_FILE\0") };
+pub const SDL_HINT_AUDIO_DISK_INPUT_FILE: &::core::ffi::CStr = c"SDL_AUDIO_DISK_INPUT_FILE";
 
 /// Specify the output file when playing audio using the disk audio driver.
 ///
@@ -315,8 +299,7 @@ pub const SDL_HINT_AUDIO_DISK_INPUT_FILE: &::core::ffi::CStr =
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_DISK_OUTPUT_FILE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_DISK_OUTPUT_FILE\0") };
+pub const SDL_HINT_AUDIO_DISK_OUTPUT_FILE: &::core::ffi::CStr = c"SDL_AUDIO_DISK_OUTPUT_FILE";
 
 /// A variable controlling the audio rate when using the disk audio driver.
 ///
@@ -327,8 +310,7 @@ pub const SDL_HINT_AUDIO_DISK_OUTPUT_FILE: &::core::ffi::CStr =
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_DISK_TIMESCALE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_DISK_TIMESCALE\0") };
+pub const SDL_HINT_AUDIO_DISK_TIMESCALE: &::core::ffi::CStr = c"SDL_AUDIO_DISK_TIMESCALE";
 
 /// A variable that specifies an audio backend to use.
 ///
@@ -340,8 +322,7 @@ pub const SDL_HINT_AUDIO_DISK_TIMESCALE: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_DRIVER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_DRIVER\0") };
+pub const SDL_HINT_AUDIO_DRIVER: &::core::ffi::CStr = c"SDL_AUDIO_DRIVER";
 
 /// A variable controlling the audio rate when using the dummy audio driver.
 ///
@@ -352,8 +333,7 @@ pub const SDL_HINT_AUDIO_DRIVER: &::core::ffi::CStr =
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_DUMMY_TIMESCALE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_DUMMY_TIMESCALE\0") };
+pub const SDL_HINT_AUDIO_DUMMY_TIMESCALE: &::core::ffi::CStr = c"SDL_AUDIO_DUMMY_TIMESCALE";
 
 /// A variable controlling the default audio format.
 ///
@@ -373,8 +353,7 @@ pub const SDL_HINT_AUDIO_DUMMY_TIMESCALE: &::core::ffi::CStr =
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_FORMAT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_FORMAT\0") };
+pub const SDL_HINT_AUDIO_FORMAT: &::core::ffi::CStr = c"SDL_AUDIO_FORMAT";
 
 /// A variable controlling the default audio frequency.
 ///
@@ -385,8 +364,7 @@ pub const SDL_HINT_AUDIO_FORMAT: &::core::ffi::CStr =
 /// This hint should be set before an audio device is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_FREQUENCY: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_FREQUENCY\0") };
+pub const SDL_HINT_AUDIO_FREQUENCY: &::core::ffi::CStr = c"SDL_AUDIO_FREQUENCY";
 
 /// A variable that causes SDL to not ignore audio "monitors".
 ///
@@ -407,8 +385,7 @@ pub const SDL_HINT_AUDIO_FREQUENCY: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUDIO_INCLUDE_MONITORS: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUDIO_INCLUDE_MONITORS\0") };
+pub const SDL_HINT_AUDIO_INCLUDE_MONITORS: &::core::ffi::CStr = c"SDL_AUDIO_INCLUDE_MONITORS";
 
 /// A variable controlling whether SDL updates joystick state when getting
 /// input events.
@@ -421,8 +398,7 @@ pub const SDL_HINT_AUDIO_INCLUDE_MONITORS: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUTO_UPDATE_JOYSTICKS: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUTO_UPDATE_JOYSTICKS\0") };
+pub const SDL_HINT_AUTO_UPDATE_JOYSTICKS: &::core::ffi::CStr = c"SDL_AUTO_UPDATE_JOYSTICKS";
 
 /// A variable controlling whether SDL updates sensor state when getting input
 /// events.
@@ -435,8 +411,7 @@ pub const SDL_HINT_AUTO_UPDATE_JOYSTICKS: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_AUTO_UPDATE_SENSORS: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_AUTO_UPDATE_SENSORS\0") };
+pub const SDL_HINT_AUTO_UPDATE_SENSORS: &::core::ffi::CStr = c"SDL_AUTO_UPDATE_SENSORS";
 
 /// Prevent SDL from using version 4 of the bitmap header when saving BMPs.
 ///
@@ -457,8 +432,7 @@ pub const SDL_HINT_AUTO_UPDATE_SENSORS: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_BMP_SAVE_LEGACY_FORMAT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_BMP_SAVE_LEGACY_FORMAT\0") };
+pub const SDL_HINT_BMP_SAVE_LEGACY_FORMAT: &::core::ffi::CStr = c"SDL_BMP_SAVE_LEGACY_FORMAT";
 
 /// A variable that decides what camera backend to use.
 ///
@@ -472,8 +446,7 @@ pub const SDL_HINT_BMP_SAVE_LEGACY_FORMAT: &::core::ffi::CStr =
 /// SDL_Init() is called to be useful.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_CAMERA_DRIVER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_CAMERA_DRIVER\0") };
+pub const SDL_HINT_CAMERA_DRIVER: &::core::ffi::CStr = c"SDL_CAMERA_DRIVER";
 
 /// A variable that limits what CPU features are available.
 ///
@@ -504,8 +477,7 @@ pub const SDL_HINT_CAMERA_DRIVER: &::core::ffi::CStr =
 /// The items can be prefixed by '+'/'-' to add/remove features.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_CPU_FEATURE_MASK: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_CPU_FEATURE_MASK\0") };
+pub const SDL_HINT_CPU_FEATURE_MASK: &::core::ffi::CStr = c"SDL_CPU_FEATURE_MASK";
 
 /// A variable controlling whether DirectInput should be used for controllers.
 ///
@@ -517,8 +489,7 @@ pub const SDL_HINT_CPU_FEATURE_MASK: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_DIRECTINPUT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_DIRECTINPUT\0") };
+pub const SDL_HINT_JOYSTICK_DIRECTINPUT: &::core::ffi::CStr = c"SDL_JOYSTICK_DIRECTINPUT";
 
 /// A variable that specifies a dialog backend to use.
 ///
@@ -545,8 +516,7 @@ pub const SDL_HINT_JOYSTICK_DIRECTINPUT: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_FILE_DIALOG_DRIVER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_FILE_DIALOG_DRIVER\0") };
+pub const SDL_HINT_FILE_DIALOG_DRIVER: &::core::ffi::CStr = c"SDL_FILE_DIALOG_DRIVER";
 
 /// Override for SDL_GetDisplayUsableBounds().
 ///
@@ -562,8 +532,7 @@ pub const SDL_HINT_FILE_DIALOG_DRIVER: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_DISPLAY_USABLE_BOUNDS: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_DISPLAY_USABLE_BOUNDS\0") };
+pub const SDL_HINT_DISPLAY_USABLE_BOUNDS: &::core::ffi::CStr = c"SDL_DISPLAY_USABLE_BOUNDS";
 
 /// Disable giving back control to the browser automatically when running with
 /// asyncify.
@@ -582,8 +551,7 @@ pub const SDL_HINT_DISPLAY_USABLE_BOUNDS: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_EMSCRIPTEN_ASYNCIFY: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_EMSCRIPTEN_ASYNCIFY\0") };
+pub const SDL_HINT_EMSCRIPTEN_ASYNCIFY: &::core::ffi::CStr = c"SDL_EMSCRIPTEN_ASYNCIFY";
 
 /// Specify the CSS selector used for the "default" window/canvas.
 ///
@@ -594,9 +562,8 @@ pub const SDL_HINT_EMSCRIPTEN_ASYNCIFY: &::core::ffi::CStr =
 /// This hint should be set before creating a window.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_EMSCRIPTEN_CANVAS_SELECTOR\0")
-};
+pub const SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR: &::core::ffi::CStr =
+    c"SDL_EMSCRIPTEN_CANVAS_SELECTOR";
 
 /// Override the binding element for keyboard inputs for Emscripten builds.
 ///
@@ -614,9 +581,8 @@ pub const SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR: &::core::ffi::CStr = unsafe {
 /// This hint should be set before creating a window.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_EMSCRIPTEN_KEYBOARD_ELEMENT\0")
-};
+pub const SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT: &::core::ffi::CStr =
+    c"SDL_EMSCRIPTEN_KEYBOARD_ELEMENT";
 
 /// A variable that controls whether the on-screen keyboard should be shown
 /// when text input is active.
@@ -631,8 +597,7 @@ pub const SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT: &::core::ffi::CStr = unsafe {
 /// This hint must be set before SDL_StartTextInput() is called
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_ENABLE_SCREEN_KEYBOARD: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_ENABLE_SCREEN_KEYBOARD\0") };
+pub const SDL_HINT_ENABLE_SCREEN_KEYBOARD: &::core::ffi::CStr = c"SDL_ENABLE_SCREEN_KEYBOARD";
 
 /// A variable containing a list of evdev devices to use if udev is not
 /// available.
@@ -647,8 +612,7 @@ pub const SDL_HINT_ENABLE_SCREEN_KEYBOARD: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_EVDEV_DEVICES: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_EVDEV_DEVICES\0") };
+pub const SDL_HINT_EVDEV_DEVICES: &::core::ffi::CStr = c"SDL_EVDEV_DEVICES";
 
 /// A variable controlling verbosity of the logging of SDL events pushed onto
 /// the internal queue.
@@ -670,8 +634,7 @@ pub const SDL_HINT_EVDEV_DEVICES: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_EVENT_LOGGING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_EVENT_LOGGING\0") };
+pub const SDL_HINT_EVENT_LOGGING: &::core::ffi::CStr = c"SDL_EVENT_LOGGING";
 
 /// A variable controlling whether raising the window should be done more
 /// forcefully.
@@ -689,8 +652,7 @@ pub const SDL_HINT_EVENT_LOGGING: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_FORCE_RAISEWINDOW: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_FORCE_RAISEWINDOW\0") };
+pub const SDL_HINT_FORCE_RAISEWINDOW: &::core::ffi::CStr = c"SDL_FORCE_RAISEWINDOW";
 
 /// A variable controlling how 3D acceleration is used to accelerate the SDL
 /// screen surface.
@@ -709,8 +671,7 @@ pub const SDL_HINT_FORCE_RAISEWINDOW: &::core::ffi::CStr =
 /// This hint should be set before calling SDL_GetWindowSurface()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_FRAMEBUFFER_ACCELERATION: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_FRAMEBUFFER_ACCELERATION\0") };
+pub const SDL_HINT_FRAMEBUFFER_ACCELERATION: &::core::ffi::CStr = c"SDL_FRAMEBUFFER_ACCELERATION";
 
 /// A variable that lets you manually hint extra gamecontroller db entries.
 ///
@@ -723,8 +684,7 @@ pub const SDL_HINT_FRAMEBUFFER_ACCELERATION: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_GAMECONTROLLERCONFIG: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_GAMECONTROLLERCONFIG\0") };
+pub const SDL_HINT_GAMECONTROLLERCONFIG: &::core::ffi::CStr = c"SDL_GAMECONTROLLERCONFIG";
 
 /// A variable that lets you provide a file with extra gamecontroller db
 /// entries.
@@ -738,8 +698,7 @@ pub const SDL_HINT_GAMECONTROLLERCONFIG: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_GAMECONTROLLERCONFIG_FILE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_GAMECONTROLLERCONFIG_FILE\0") };
+pub const SDL_HINT_GAMECONTROLLERCONFIG_FILE: &::core::ffi::CStr = c"SDL_GAMECONTROLLERCONFIG_FILE";
 
 /// A variable that overrides the automatic controller type detection.
 ///
@@ -761,8 +720,7 @@ pub const SDL_HINT_GAMECONTROLLERCONFIG_FILE: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_GAMECONTROLLERTYPE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_GAMECONTROLLERTYPE\0") };
+pub const SDL_HINT_GAMECONTROLLERTYPE: &::core::ffi::CStr = c"SDL_GAMECONTROLLERTYPE";
 
 /// A variable containing a list of devices to skip when scanning for game
 /// controllers.
@@ -778,9 +736,8 @@ pub const SDL_HINT_GAMECONTROLLERTYPE: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_GAMECONTROLLER_IGNORE_DEVICES\0")
-};
+pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES: &::core::ffi::CStr =
+    c"SDL_GAMECONTROLLER_IGNORE_DEVICES";
 
 /// If set, all devices will be skipped when scanning for game controllers
 /// except for the ones listed in this variable.
@@ -796,9 +753,8 @@ pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT\0")
-};
+pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT: &::core::ffi::CStr =
+    c"SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT";
 
 /// A variable that controls whether the device's built-in accelerometer and
 /// gyro should be used as sensors for gamepads.
@@ -819,9 +775,8 @@ pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT: &::core::ffi::CStr = un
 /// This hint should be set before a gamepad is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_GAMECONTROLLER_SENSOR_FUSION: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_GAMECONTROLLER_SENSOR_FUSION\0")
-};
+pub const SDL_HINT_GAMECONTROLLER_SENSOR_FUSION: &::core::ffi::CStr =
+    c"SDL_GAMECONTROLLER_SENSOR_FUSION";
 
 /// This variable sets the default text of the TextInput window on GDK
 /// platforms.
@@ -831,9 +786,8 @@ pub const SDL_HINT_GAMECONTROLLER_SENSOR_FUSION: &::core::ffi::CStr = unsafe {
 /// This hint should be set before calling SDL_StartTextInput()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_GDK_TEXTINPUT_DEFAULT_TEXT: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_GDK_TEXTINPUT_DEFAULT_TEXT\0")
-};
+pub const SDL_HINT_GDK_TEXTINPUT_DEFAULT_TEXT: &::core::ffi::CStr =
+    c"SDL_GDK_TEXTINPUT_DEFAULT_TEXT";
 
 /// This variable sets the description of the TextInput window on GDK
 /// platforms.
@@ -843,8 +797,7 @@ pub const SDL_HINT_GDK_TEXTINPUT_DEFAULT_TEXT: &::core::ffi::CStr = unsafe {
 /// This hint should be set before calling SDL_StartTextInput()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_GDK_TEXTINPUT_DESCRIPTION: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_GDK_TEXTINPUT_DESCRIPTION\0") };
+pub const SDL_HINT_GDK_TEXTINPUT_DESCRIPTION: &::core::ffi::CStr = c"SDL_GDK_TEXTINPUT_DESCRIPTION";
 
 /// This variable sets the maximum input length of the TextInput window on GDK
 /// platforms.
@@ -857,8 +810,7 @@ pub const SDL_HINT_GDK_TEXTINPUT_DESCRIPTION: &::core::ffi::CStr =
 /// This hint should be set before calling SDL_StartTextInput()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_GDK_TEXTINPUT_MAX_LENGTH: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_GDK_TEXTINPUT_MAX_LENGTH\0") };
+pub const SDL_HINT_GDK_TEXTINPUT_MAX_LENGTH: &::core::ffi::CStr = c"SDL_GDK_TEXTINPUT_MAX_LENGTH";
 
 /// This variable sets the input scope of the TextInput window on GDK
 /// platforms.
@@ -872,8 +824,7 @@ pub const SDL_HINT_GDK_TEXTINPUT_MAX_LENGTH: &::core::ffi::CStr =
 /// This hint should be set before calling SDL_StartTextInput()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_GDK_TEXTINPUT_SCOPE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_GDK_TEXTINPUT_SCOPE\0") };
+pub const SDL_HINT_GDK_TEXTINPUT_SCOPE: &::core::ffi::CStr = c"SDL_GDK_TEXTINPUT_SCOPE";
 
 /// This variable sets the title of the TextInput window on GDK platforms.
 ///
@@ -882,8 +833,7 @@ pub const SDL_HINT_GDK_TEXTINPUT_SCOPE: &::core::ffi::CStr =
 /// This hint should be set before calling SDL_StartTextInput()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_GDK_TEXTINPUT_TITLE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_GDK_TEXTINPUT_TITLE\0") };
+pub const SDL_HINT_GDK_TEXTINPUT_TITLE: &::core::ffi::CStr = c"SDL_GDK_TEXTINPUT_TITLE";
 
 /// A variable to control whether HIDAPI uses libusb for device access.
 ///
@@ -899,8 +849,7 @@ pub const SDL_HINT_GDK_TEXTINPUT_TITLE: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_HIDAPI_LIBUSB: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_HIDAPI_LIBUSB\0") };
+pub const SDL_HINT_HIDAPI_LIBUSB: &::core::ffi::CStr = c"SDL_HIDAPI_LIBUSB";
 
 /// A variable to control whether HIDAPI uses libusb only for whitelisted
 /// devices.
@@ -916,8 +865,7 @@ pub const SDL_HINT_HIDAPI_LIBUSB: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_HIDAPI_LIBUSB_WHITELIST: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_HIDAPI_LIBUSB_WHITELIST\0") };
+pub const SDL_HINT_HIDAPI_LIBUSB_WHITELIST: &::core::ffi::CStr = c"SDL_HIDAPI_LIBUSB_WHITELIST";
 
 /// A variable to control whether HIDAPI uses udev for device detection.
 ///
@@ -929,8 +877,7 @@ pub const SDL_HINT_HIDAPI_LIBUSB_WHITELIST: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_HIDAPI_UDEV: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_HIDAPI_UDEV\0") };
+pub const SDL_HINT_HIDAPI_UDEV: &::core::ffi::CStr = c"SDL_HIDAPI_UDEV";
 
 /// A variable that specifies a GPU backend to use.
 ///
@@ -942,8 +889,7 @@ pub const SDL_HINT_HIDAPI_UDEV: &::core::ffi::CStr =
 /// This hint should be set before SDL_GPUSelectBackend() is called.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_GPU_DRIVER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_GPU_DRIVER\0") };
+pub const SDL_HINT_GPU_DRIVER: &::core::ffi::CStr = c"SDL_GPU_DRIVER";
 
 /// A variable to control whether SDL_hid_enumerate() enumerates all HID
 /// devices or only controllers.
@@ -960,9 +906,8 @@ pub const SDL_HINT_GPU_DRIVER: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_HIDAPI_ENUMERATE_ONLY_CONTROLLERS\0")
-};
+pub const SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS: &::core::ffi::CStr =
+    c"SDL_HIDAPI_ENUMERATE_ONLY_CONTROLLERS";
 
 /// A variable containing a list of devices to ignore in SDL_hid_enumerate().
 ///
@@ -977,8 +922,7 @@ pub const SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS: &::core::ffi::CStr = unsaf
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_HIDAPI_IGNORE_DEVICES: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_HIDAPI_IGNORE_DEVICES\0") };
+pub const SDL_HINT_HIDAPI_IGNORE_DEVICES: &::core::ffi::CStr = c"SDL_HIDAPI_IGNORE_DEVICES";
 
 /// A variable describing what IME UI elements the application can display.
 ///
@@ -999,8 +943,7 @@ pub const SDL_HINT_HIDAPI_IGNORE_DEVICES: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_IME_IMPLEMENTED_UI: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_IME_IMPLEMENTED_UI\0") };
+pub const SDL_HINT_IME_IMPLEMENTED_UI: &::core::ffi::CStr = c"SDL_IME_IMPLEMENTED_UI";
 
 /// A variable controlling whether the home indicator bar on iPhone X should be
 /// hidden.
@@ -1017,8 +960,7 @@ pub const SDL_HINT_IME_IMPLEMENTED_UI: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_IOS_HIDE_HOME_INDICATOR: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_IOS_HIDE_HOME_INDICATOR\0") };
+pub const SDL_HINT_IOS_HIDE_HOME_INDICATOR: &::core::ffi::CStr = c"SDL_IOS_HIDE_HOME_INDICATOR";
 
 /// A variable that lets you enable joystick (and gamecontroller) events even
 /// when your app is in the background.
@@ -1033,9 +975,8 @@ pub const SDL_HINT_IOS_HIDE_HOME_INDICATOR: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS\0")
-};
+pub const SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS";
 
 /// A variable containing a list of arcade stick style controllers.
 ///
@@ -1050,9 +991,8 @@ pub const SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS: &::core::ffi::CStr = unsafe
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_ARCADESTICK_DEVICES\0")
-};
+pub const SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_ARCADESTICK_DEVICES";
 
 /// A variable containing a list of devices that are not arcade stick style
 /// controllers.
@@ -1071,9 +1011,8 @@ pub const SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED\0")
-};
+pub const SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED";
 
 /// A variable containing a list of devices that should not be considered
 /// joysticks.
@@ -1089,9 +1028,8 @@ pub const SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED: &::core::ffi::CStr = u
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_BLACKLIST_DEVICES: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_BLACKLIST_DEVICES\0")
-};
+pub const SDL_HINT_JOYSTICK_BLACKLIST_DEVICES: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_BLACKLIST_DEVICES";
 
 /// A variable containing a list of devices that should be considered
 /// joysticks.
@@ -1110,9 +1048,8 @@ pub const SDL_HINT_JOYSTICK_BLACKLIST_DEVICES: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED\0")
-};
+pub const SDL_HINT_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED";
 
 /// A variable containing a comma separated list of devices to open as
 /// joysticks.
@@ -1120,8 +1057,7 @@ pub const SDL_HINT_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED: &::core::ffi::CStr = uns
 /// This variable is currently only used by the Linux joystick driver.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_DEVICE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_DEVICE\0") };
+pub const SDL_HINT_JOYSTICK_DEVICE: &::core::ffi::CStr = c"SDL_JOYSTICK_DEVICE";
 
 /// A variable containing a list of flightstick style controllers.
 ///
@@ -1136,9 +1072,8 @@ pub const SDL_HINT_JOYSTICK_DEVICE: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_FLIGHTSTICK_DEVICES\0")
-};
+pub const SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_FLIGHTSTICK_DEVICES";
 
 /// A variable containing a list of devices that are not flightstick style
 /// controllers.
@@ -1157,9 +1092,8 @@ pub const SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED\0")
-};
+pub const SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED";
 
 /// A variable controlling whether GameInput should be used for controller
 /// handling on Windows.
@@ -1172,8 +1106,7 @@ pub const SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED: &::core::ffi::CStr = u
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_GAMEINPUT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_GAMEINPUT\0") };
+pub const SDL_HINT_JOYSTICK_GAMEINPUT: &::core::ffi::CStr = c"SDL_JOYSTICK_GAMEINPUT";
 
 /// A variable containing a list of devices known to have a GameCube form
 /// factor.
@@ -1189,8 +1122,7 @@ pub const SDL_HINT_JOYSTICK_GAMEINPUT: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_GAMECUBE_DEVICES: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_GAMECUBE_DEVICES\0") };
+pub const SDL_HINT_JOYSTICK_GAMECUBE_DEVICES: &::core::ffi::CStr = c"SDL_JOYSTICK_GAMECUBE_DEVICES";
 
 /// A variable containing a list of devices known not to have a GameCube form
 /// factor.
@@ -1209,9 +1141,8 @@ pub const SDL_HINT_JOYSTICK_GAMECUBE_DEVICES: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED\0")
-};
+pub const SDL_HINT_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED";
 
 /// A variable controlling whether the HIDAPI joystick drivers should be used.
 ///
@@ -1226,8 +1157,7 @@ pub const SDL_HINT_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED: &::core::ffi::CStr = unsa
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI";
 
 /// A variable controlling whether Nintendo Switch Joy-Con controllers will be
 /// combined into a single Pro-like controller when using the HIDAPI driver.
@@ -1242,9 +1172,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI: &::core::ffi::CStr =
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_COMBINE_JOY_CONS\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_COMBINE_JOY_CONS";
 
 /// A variable controlling whether the HIDAPI driver for Nintendo GameCube
 /// controllers should be used.
@@ -1259,8 +1188,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS: &::core::ffi::CStr = unsafe
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_GAMECUBE\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_GAMECUBE";
 
 /// A variable controlling whether rumble is used to implement the GameCube
 /// controller's 3 rumble modes, Stop(0), Rumble(1), and StopHard(2).
@@ -1279,9 +1207,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE";
 
 /// A variable controlling whether the HIDAPI driver for Nintendo Switch
 /// Joy-Cons should be used.
@@ -1296,8 +1223,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE: &::core::ffi::CStr = u
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_JOY_CONS\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_JOY_CONS";
 
 /// A variable controlling whether the Home button LED should be turned on when
 /// a Nintendo Switch Joy-Con controller is opened.
@@ -1314,9 +1240,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_JOYCON_HOME_LED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_JOYCON_HOME_LED\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_JOYCON_HOME_LED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_JOYCON_HOME_LED";
 
 /// A variable controlling whether the HIDAPI driver for Amazon Luna
 /// controllers connected via Bluetooth should be used.
@@ -1331,8 +1256,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_JOYCON_HOME_LED: &::core::ffi::CStr = unsafe 
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_LUNA: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_LUNA\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_LUNA: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_LUNA";
 
 /// A variable controlling whether the HIDAPI driver for Nintendo Online
 /// classic controllers should be used.
@@ -1347,9 +1271,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_LUNA: &::core::ffi::CStr =
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_NINTENDO_CLASSIC: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_NINTENDO_CLASSIC\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_NINTENDO_CLASSIC: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_NINTENDO_CLASSIC";
 
 /// A variable controlling whether the HIDAPI driver for PS3 controllers should
 /// be used.
@@ -1369,8 +1292,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_NINTENDO_CLASSIC: &::core::ffi::CStr = unsafe
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_PS3: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_PS3\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS3: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_PS3";
 
 /// A variable controlling whether the Sony driver (sixaxis.sys) for PS3
 /// controllers (Sixaxis/DualShock 3) should be used.
@@ -1385,9 +1307,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_PS3: &::core::ffi::CStr =
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER";
 
 /// A variable controlling whether the HIDAPI driver for PS4 controllers should
 /// be used.
@@ -1402,8 +1323,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER: &::core::ffi::CStr = unsa
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_PS4: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_PS4\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS4: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_PS4";
 
 /// A variable controlling the update rate of the PS4 controller over Bluetooth
 /// when using the HIDAPI driver.
@@ -1416,9 +1336,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_PS4: &::core::ffi::CStr =
 /// reports are enabled.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL";
 
 /// A variable controlling whether extended input reports should be used for
 /// PS4 controllers when using the HIDAPI driver.
@@ -1442,9 +1361,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL: &::core::ffi::CStr = uns
 /// This hint can be enabled anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_PS4_RUMBLE\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_PS4_RUMBLE";
 
 /// A variable controlling whether the HIDAPI driver for PS5 controllers should
 /// be used.
@@ -1459,8 +1377,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE: &::core::ffi::CStr = unsafe {
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_PS5: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_PS5\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS5: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_PS5";
 
 /// A variable controlling whether the player LEDs should be lit to indicate
 /// which player is associated with a PS5 controller.
@@ -1471,9 +1388,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_PS5: &::core::ffi::CStr =
 /// - "1": player LEDs are enabled. (default)
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_PS5_PLAYER_LED\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_PS5_PLAYER_LED";
 
 /// A variable controlling whether extended input reports should be used for
 /// PS5 controllers when using the HIDAPI driver.
@@ -1496,9 +1412,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED: &::core::ffi::CStr = unsafe {
 /// This hint can be enabled anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_PS5_RUMBLE\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_PS5_RUMBLE";
 
 /// A variable controlling whether the HIDAPI driver for NVIDIA SHIELD
 /// controllers should be used.
@@ -1513,8 +1428,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE: &::core::ffi::CStr = unsafe {
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_SHIELD: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_SHIELD\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_SHIELD: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_SHIELD";
 
 /// A variable controlling whether the HIDAPI driver for Google Stadia
 /// controllers should be used.
@@ -1527,8 +1441,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_SHIELD: &::core::ffi::CStr =
 /// The default is the value of SDL_HINT_JOYSTICK_HIDAPI.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_STADIA: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_STADIA\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_STADIA: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_STADIA";
 
 /// A variable controlling whether the HIDAPI driver for Bluetooth Steam
 /// Controllers should be used.
@@ -1543,8 +1456,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_STADIA: &::core::ffi::CStr =
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_STEAM\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_STEAM";
 
 /// A variable controlling whether the HIDAPI driver for the Steam Deck builtin
 /// controller should be used.
@@ -1559,8 +1471,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM: &::core::ffi::CStr =
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_STEAMDECK: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_STEAMDECK\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_STEAMDECK: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_STEAMDECK";
 
 /// A variable controlling whether the HIDAPI driver for HORI licensed Steam
 /// controllers should be used.
@@ -1569,9 +1480,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_STEAMDECK: &::core::ffi::CStr =
 /// not used "1" - HIDAPI driver is used
 ///
 /// The default is the value of SDL_HINT_JOYSTICK_HIDAPI
-pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_STEAM_HORI\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_STEAM_HORI";
 
 /// A variable controlling whether the HIDAPI driver for Nintendo Switch
 /// controllers should be used.
@@ -1586,8 +1496,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI: &::core::ffi::CStr = unsafe {
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_SWITCH\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_SWITCH";
 
 /// A variable controlling whether the Home button LED should be turned on when
 /// a Nintendo Switch Pro controller is opened.
@@ -1604,9 +1513,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_SWITCH_HOME_LED\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_SWITCH_HOME_LED";
 
 /// A variable controlling whether the player LEDs should be lit to indicate
 /// which player is associated with a Nintendo Switch controller.
@@ -1619,9 +1527,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED: &::core::ffi::CStr = unsafe 
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED";
 
 /// A variable controlling whether Nintendo Switch Joy-Con controllers will be
 /// in vertical mode when using the HIDAPI driver.
@@ -1635,9 +1542,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED: &::core::ffi::CStr = unsaf
 /// This hint should be set before opening a Joy-Con controller.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS";
 
 /// A variable controlling whether the HIDAPI driver for Nintendo Wii and Wii U
 /// controllers should be used.
@@ -1653,8 +1559,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS: &::core::ffi::CStr = unsaf
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_WII: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_WII\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_WII: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_WII";
 
 /// A variable controlling whether the player LEDs should be lit to indicate
 /// which player is associated with a Wii controller.
@@ -1667,9 +1572,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_WII: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_WII_PLAYER_LED\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_WII_PLAYER_LED";
 
 /// A variable controlling whether the HIDAPI driver for XBox controllers
 /// should be used.
@@ -1685,8 +1589,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED: &::core::ffi::CStr = unsafe {
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_XBOX\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_XBOX";
 
 /// A variable controlling whether the HIDAPI driver for XBox 360 controllers
 /// should be used.
@@ -1701,8 +1604,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX: &::core::ffi::CStr =
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_360: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_XBOX_360\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_360: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_XBOX_360";
 
 /// A variable controlling whether the player LEDs should be lit to indicate
 /// which player is associated with an Xbox 360 controller.
@@ -1715,9 +1617,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_360: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED";
 
 /// A variable controlling whether the HIDAPI driver for XBox 360 wireless
 /// controllers should be used.
@@ -1732,9 +1633,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED: &::core::ffi::CStr = uns
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_XBOX_360_WIRELESS\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_XBOX_360_WIRELESS";
 
 /// A variable controlling whether the HIDAPI driver for XBox One controllers
 /// should be used.
@@ -1749,8 +1649,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS: &::core::ffi::CStr = unsaf
 /// This hint should be set before enumerating controllers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_XBOX_ONE\0") };
+pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE: &::core::ffi::CStr = c"SDL_JOYSTICK_HIDAPI_XBOX_ONE";
 
 /// A variable controlling whether the Home button LED should be turned on when
 /// an Xbox One controller is opened.
@@ -1767,9 +1666,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED\0")
-};
+pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED";
 
 /// A variable controlling whether IOKit should be used for controller
 /// handling.
@@ -1782,8 +1680,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED: &::core::ffi::CStr = unsaf
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_IOKIT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_IOKIT\0") };
+pub const SDL_HINT_JOYSTICK_IOKIT: &::core::ffi::CStr = c"SDL_JOYSTICK_IOKIT";
 
 /// A variable controlling whether to use the classic /dev/input/js* joystick
 /// interface or the newer /dev/input/event* joystick interface on Linux.
@@ -1796,8 +1693,7 @@ pub const SDL_HINT_JOYSTICK_IOKIT: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_LINUX_CLASSIC: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_LINUX_CLASSIC\0") };
+pub const SDL_HINT_JOYSTICK_LINUX_CLASSIC: &::core::ffi::CStr = c"SDL_JOYSTICK_LINUX_CLASSIC";
 
 /// A variable controlling whether joysticks on Linux adhere to their
 /// HID-defined deadzones or return unfiltered values.
@@ -1810,8 +1706,7 @@ pub const SDL_HINT_JOYSTICK_LINUX_CLASSIC: &::core::ffi::CStr =
 /// This hint should be set before a controller is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_LINUX_DEADZONES: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_LINUX_DEADZONES\0") };
+pub const SDL_HINT_JOYSTICK_LINUX_DEADZONES: &::core::ffi::CStr = c"SDL_JOYSTICK_LINUX_DEADZONES";
 
 /// A variable controlling whether joysticks on Linux will always treat 'hat'
 /// axis inputs (ABS_HAT0X - ABS_HAT3Y) as 8-way digital hats without checking
@@ -1827,9 +1722,8 @@ pub const SDL_HINT_JOYSTICK_LINUX_DEADZONES: &::core::ffi::CStr =
 /// This hint should be set before a controller is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_LINUX_DIGITAL_HATS: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_LINUX_DIGITAL_HATS\0")
-};
+pub const SDL_HINT_JOYSTICK_LINUX_DIGITAL_HATS: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_LINUX_DIGITAL_HATS";
 
 /// A variable controlling whether digital hats on Linux will apply deadzones
 /// to their underlying input axes or use unfiltered values.
@@ -1843,9 +1737,8 @@ pub const SDL_HINT_JOYSTICK_LINUX_DIGITAL_HATS: &::core::ffi::CStr = unsafe {
 /// This hint should be set before a controller is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_LINUX_HAT_DEADZONES: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_LINUX_HAT_DEADZONES\0")
-};
+pub const SDL_HINT_JOYSTICK_LINUX_HAT_DEADZONES: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_LINUX_HAT_DEADZONES";
 
 /// A variable controlling whether GCController should be used for controller
 /// handling.
@@ -1858,8 +1751,7 @@ pub const SDL_HINT_JOYSTICK_LINUX_HAT_DEADZONES: &::core::ffi::CStr = unsafe {
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_MFI: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_MFI\0") };
+pub const SDL_HINT_JOYSTICK_MFI: &::core::ffi::CStr = c"SDL_JOYSTICK_MFI";
 
 /// A variable controlling whether the RAWINPUT joystick drivers should be used
 /// for better handling XInput-capable devices.
@@ -1872,8 +1764,7 @@ pub const SDL_HINT_JOYSTICK_MFI: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_RAWINPUT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_RAWINPUT\0") };
+pub const SDL_HINT_JOYSTICK_RAWINPUT: &::core::ffi::CStr = c"SDL_JOYSTICK_RAWINPUT";
 
 /// A variable controlling whether the RAWINPUT driver should pull correlated
 /// data from XInput.
@@ -1888,9 +1779,8 @@ pub const SDL_HINT_JOYSTICK_RAWINPUT: &::core::ffi::CStr =
 /// This hint should be set before a gamepad is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_RAWINPUT_CORRELATE_XINPUT\0")
-};
+pub const SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_RAWINPUT_CORRELATE_XINPUT";
 
 /// A variable controlling whether the ROG Chakram mice should show up as
 /// joysticks.
@@ -1903,8 +1793,7 @@ pub const SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT: &::core::ffi::CStr = unsa
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_ROG_CHAKRAM: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_ROG_CHAKRAM\0") };
+pub const SDL_HINT_JOYSTICK_ROG_CHAKRAM: &::core::ffi::CStr = c"SDL_JOYSTICK_ROG_CHAKRAM";
 
 /// A variable controlling whether a separate thread should be used for
 /// handling joystick detection and raw input messages on Windows.
@@ -1917,8 +1806,7 @@ pub const SDL_HINT_JOYSTICK_ROG_CHAKRAM: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_THREAD: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_THREAD\0") };
+pub const SDL_HINT_JOYSTICK_THREAD: &::core::ffi::CStr = c"SDL_JOYSTICK_THREAD";
 
 /// A variable containing a list of throttle style controllers.
 ///
@@ -1933,8 +1821,7 @@ pub const SDL_HINT_JOYSTICK_THREAD: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_THROTTLE_DEVICES: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_THROTTLE_DEVICES\0") };
+pub const SDL_HINT_JOYSTICK_THROTTLE_DEVICES: &::core::ffi::CStr = c"SDL_JOYSTICK_THROTTLE_DEVICES";
 
 /// A variable containing a list of devices that are not throttle style
 /// controllers.
@@ -1953,9 +1840,8 @@ pub const SDL_HINT_JOYSTICK_THROTTLE_DEVICES: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_THROTTLE_DEVICES_EXCLUDED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_THROTTLE_DEVICES_EXCLUDED\0")
-};
+pub const SDL_HINT_JOYSTICK_THROTTLE_DEVICES_EXCLUDED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_THROTTLE_DEVICES_EXCLUDED";
 
 /// A variable controlling whether Windows.Gaming.Input should be used for
 /// controller handling.
@@ -1968,8 +1854,7 @@ pub const SDL_HINT_JOYSTICK_THROTTLE_DEVICES_EXCLUDED: &::core::ffi::CStr = unsa
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_WGI: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_WGI\0") };
+pub const SDL_HINT_JOYSTICK_WGI: &::core::ffi::CStr = c"SDL_JOYSTICK_WGI";
 
 /// A variable containing a list of wheel style controllers.
 ///
@@ -1984,8 +1869,7 @@ pub const SDL_HINT_JOYSTICK_WGI: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_WHEEL_DEVICES: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_WHEEL_DEVICES\0") };
+pub const SDL_HINT_JOYSTICK_WHEEL_DEVICES: &::core::ffi::CStr = c"SDL_JOYSTICK_WHEEL_DEVICES";
 
 /// A variable containing a list of devices that are not wheel style
 /// controllers.
@@ -2004,9 +1888,8 @@ pub const SDL_HINT_JOYSTICK_WHEEL_DEVICES: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_WHEEL_DEVICES_EXCLUDED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_WHEEL_DEVICES_EXCLUDED\0")
-};
+pub const SDL_HINT_JOYSTICK_WHEEL_DEVICES_EXCLUDED: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_WHEEL_DEVICES_EXCLUDED";
 
 /// A variable containing a list of devices known to have all axes centered at
 /// zero.
@@ -2022,9 +1905,8 @@ pub const SDL_HINT_JOYSTICK_WHEEL_DEVICES_EXCLUDED: &::core::ffi::CStr = unsafe 
 /// This hint should be set before a controller is opened.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_JOYSTICK_ZERO_CENTERED_DEVICES: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_JOYSTICK_ZERO_CENTERED_DEVICES\0")
-};
+pub const SDL_HINT_JOYSTICK_ZERO_CENTERED_DEVICES: &::core::ffi::CStr =
+    c"SDL_JOYSTICK_ZERO_CENTERED_DEVICES";
 
 /// A variable that controls keycode representation in keyboard events.
 ///
@@ -2056,8 +1938,7 @@ pub const SDL_HINT_JOYSTICK_ZERO_CENTERED_DEVICES: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_KEYCODE_OPTIONS: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_KEYCODE_OPTIONS\0") };
+pub const SDL_HINT_KEYCODE_OPTIONS: &::core::ffi::CStr = c"SDL_KEYCODE_OPTIONS";
 
 /// A variable that controls what KMSDRM device to use.
 ///
@@ -2069,8 +1950,7 @@ pub const SDL_HINT_KEYCODE_OPTIONS: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_KMSDRM_DEVICE_INDEX: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_KMSDRM_DEVICE_INDEX\0") };
+pub const SDL_HINT_KMSDRM_DEVICE_INDEX: &::core::ffi::CStr = c"SDL_KMSDRM_DEVICE_INDEX";
 
 /// A variable that controls whether SDL requires DRM master access in order to
 /// initialize the KMSDRM video backend.
@@ -2096,8 +1976,7 @@ pub const SDL_HINT_KMSDRM_DEVICE_INDEX: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_KMSDRM_REQUIRE_DRM_MASTER\0") };
+pub const SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER: &::core::ffi::CStr = c"SDL_KMSDRM_REQUIRE_DRM_MASTER";
 
 /// A variable controlling the default SDL log levels.
 ///
@@ -2121,8 +2000,7 @@ pub const SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_LOGGING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_LOGGING\0") };
+pub const SDL_HINT_LOGGING: &::core::ffi::CStr = c"SDL_LOGGING";
 
 /// A variable controlling whether to force the application to become the
 /// foreground process when launched on macOS.
@@ -2136,8 +2014,7 @@ pub const SDL_HINT_LOGGING: &::core::ffi::CStr =
 /// This hint should be set before applicationDidFinishLaunching() is called.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MAC_BACKGROUND_APP: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MAC_BACKGROUND_APP\0") };
+pub const SDL_HINT_MAC_BACKGROUND_APP: &::core::ffi::CStr = c"SDL_MAC_BACKGROUND_APP";
 
 /// A variable that determines whether Ctrl+Click should generate a right-click
 /// event on macOS.
@@ -2151,9 +2028,8 @@ pub const SDL_HINT_MAC_BACKGROUND_APP: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK\0")
-};
+pub const SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK: &::core::ffi::CStr =
+    c"SDL_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK";
 
 /// A variable controlling whether dispatching OpenGL context updates should
 /// block the dispatching thread until the main thread finishes processing on
@@ -2174,8 +2050,7 @@ pub const SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK: &::core::ffi::CStr = unsa
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MAC_OPENGL_ASYNC_DISPATCH\0") };
+pub const SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH: &::core::ffi::CStr = c"SDL_MAC_OPENGL_ASYNC_DISPATCH";
 
 /// Request SDL_AppIterate() be called at a specific rate.
 ///
@@ -2191,8 +2066,7 @@ pub const SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MAIN_CALLBACK_RATE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MAIN_CALLBACK_RATE\0") };
+pub const SDL_HINT_MAIN_CALLBACK_RATE: &::core::ffi::CStr = c"SDL_MAIN_CALLBACK_RATE";
 
 /// A variable controlling whether the mouse is captured while mouse buttons
 /// are pressed.
@@ -2209,24 +2083,21 @@ pub const SDL_HINT_MAIN_CALLBACK_RATE: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_AUTO_CAPTURE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_AUTO_CAPTURE\0") };
+pub const SDL_HINT_MOUSE_AUTO_CAPTURE: &::core::ffi::CStr = c"SDL_MOUSE_AUTO_CAPTURE";
 
 /// A variable setting the double click radius, in pixels.
 ///
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_DOUBLE_CLICK_RADIUS\0") };
+pub const SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS: &::core::ffi::CStr = c"SDL_MOUSE_DOUBLE_CLICK_RADIUS";
 
 /// A variable setting the double click time, in milliseconds.
 ///
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_DOUBLE_CLICK_TIME: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_DOUBLE_CLICK_TIME\0") };
+pub const SDL_HINT_MOUSE_DOUBLE_CLICK_TIME: &::core::ffi::CStr = c"SDL_MOUSE_DOUBLE_CLICK_TIME";
 
 /// A variable controlling whether warping a hidden mouse cursor will activate
 /// relative mouse mode.
@@ -2256,9 +2127,8 @@ pub const SDL_HINT_MOUSE_DOUBLE_CLICK_TIME: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_EMULATE_WARP_WITH_RELATIVE\0")
-};
+pub const SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE: &::core::ffi::CStr =
+    c"SDL_MOUSE_EMULATE_WARP_WITH_RELATIVE";
 
 /// Allow mouse click events when clicking to focus an SDL window.
 ///
@@ -2270,8 +2140,7 @@ pub const SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE: &::core::ffi::CStr = unsafe
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_FOCUS_CLICKTHROUGH\0") };
+pub const SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH: &::core::ffi::CStr = c"SDL_MOUSE_FOCUS_CLICKTHROUGH";
 
 /// A variable setting the speed scale for mouse motion, in floating point,
 /// when the mouse is not in relative mode.
@@ -2279,8 +2148,7 @@ pub const SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_NORMAL_SPEED_SCALE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_NORMAL_SPEED_SCALE\0") };
+pub const SDL_HINT_MOUSE_NORMAL_SPEED_SCALE: &::core::ffi::CStr = c"SDL_MOUSE_NORMAL_SPEED_SCALE";
 
 /// A variable controlling whether relative mouse mode constrains the mouse to
 /// the center of the window.
@@ -2299,9 +2167,8 @@ pub const SDL_HINT_MOUSE_NORMAL_SPEED_SCALE: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_RELATIVE_MODE_CENTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_RELATIVE_MODE_CENTER\0")
-};
+pub const SDL_HINT_MOUSE_RELATIVE_MODE_CENTER: &::core::ffi::CStr =
+    c"SDL_MOUSE_RELATIVE_MODE_CENTER";
 
 /// A variable controlling whether relative mouse mode is implemented using
 /// mouse warping.
@@ -2314,8 +2181,7 @@ pub const SDL_HINT_MOUSE_RELATIVE_MODE_CENTER: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime relative mode is not currently enabled.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_RELATIVE_MODE_WARP: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_RELATIVE_MODE_WARP\0") };
+pub const SDL_HINT_MOUSE_RELATIVE_MODE_WARP: &::core::ffi::CStr = c"SDL_MOUSE_RELATIVE_MODE_WARP";
 
 /// A variable setting the scale for mouse motion, in floating point, when the
 /// mouse is in relative mode.
@@ -2323,9 +2189,8 @@ pub const SDL_HINT_MOUSE_RELATIVE_MODE_WARP: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_RELATIVE_SPEED_SCALE\0")
-};
+pub const SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE: &::core::ffi::CStr =
+    c"SDL_MOUSE_RELATIVE_SPEED_SCALE";
 
 /// A variable controlling whether the system mouse acceleration curve is used
 /// for relative mouse motion.
@@ -2342,9 +2207,8 @@ pub const SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_RELATIVE_SYSTEM_SCALE: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_RELATIVE_SYSTEM_SCALE\0")
-};
+pub const SDL_HINT_MOUSE_RELATIVE_SYSTEM_SCALE: &::core::ffi::CStr =
+    c"SDL_MOUSE_RELATIVE_SYSTEM_SCALE";
 
 /// A variable controlling whether a motion event should be generated for mouse
 /// warping in relative mode.
@@ -2361,9 +2225,8 @@ pub const SDL_HINT_MOUSE_RELATIVE_SYSTEM_SCALE: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_RELATIVE_WARP_MOTION: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_RELATIVE_WARP_MOTION\0")
-};
+pub const SDL_HINT_MOUSE_RELATIVE_WARP_MOTION: &::core::ffi::CStr =
+    c"SDL_MOUSE_RELATIVE_WARP_MOTION";
 
 /// A variable controlling whether the hardware cursor stays visible when
 /// relative mode is active.
@@ -2379,9 +2242,8 @@ pub const SDL_HINT_MOUSE_RELATIVE_WARP_MOTION: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_RELATIVE_CURSOR_VISIBLE: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_RELATIVE_CURSOR_VISIBLE\0")
-};
+pub const SDL_HINT_MOUSE_RELATIVE_CURSOR_VISIBLE: &::core::ffi::CStr =
+    c"SDL_MOUSE_RELATIVE_CURSOR_VISIBLE";
 
 /// Controls how often SDL issues cursor confinement commands to the operating
 /// system while relative mode is active, in case the desired confinement state
@@ -2396,9 +2258,8 @@ pub const SDL_HINT_MOUSE_RELATIVE_CURSOR_VISIBLE: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_RELATIVE_CLIP_INTERVAL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_RELATIVE_CLIP_INTERVAL\0")
-};
+pub const SDL_HINT_MOUSE_RELATIVE_CLIP_INTERVAL: &::core::ffi::CStr =
+    c"SDL_MOUSE_RELATIVE_CLIP_INTERVAL";
 
 /// A variable controlling whether mouse events should generate synthetic touch
 /// events.
@@ -2413,8 +2274,7 @@ pub const SDL_HINT_MOUSE_RELATIVE_CLIP_INTERVAL: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MOUSE_TOUCH_EVENTS: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MOUSE_TOUCH_EVENTS\0") };
+pub const SDL_HINT_MOUSE_TOUCH_EVENTS: &::core::ffi::CStr = c"SDL_MOUSE_TOUCH_EVENTS";
 
 /// A variable controlling whether the keyboard should be muted on the console.
 ///
@@ -2430,8 +2290,7 @@ pub const SDL_HINT_MOUSE_TOUCH_EVENTS: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_MUTE_CONSOLE_KEYBOARD: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_MUTE_CONSOLE_KEYBOARD\0") };
+pub const SDL_HINT_MUTE_CONSOLE_KEYBOARD: &::core::ffi::CStr = c"SDL_MUTE_CONSOLE_KEYBOARD";
 
 /// Tell SDL not to catch the SIGINT or SIGTERM signals on POSIX platforms.
 ///
@@ -2444,8 +2303,7 @@ pub const SDL_HINT_MUTE_CONSOLE_KEYBOARD: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_NO_SIGNAL_HANDLERS: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_NO_SIGNAL_HANDLERS\0") };
+pub const SDL_HINT_NO_SIGNAL_HANDLERS: &::core::ffi::CStr = c"SDL_NO_SIGNAL_HANDLERS";
 
 /// Specify the OpenGL library to load.
 ///
@@ -2453,8 +2311,7 @@ pub const SDL_HINT_NO_SIGNAL_HANDLERS: &::core::ffi::CStr =
 /// OpenGL context.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_OPENGL_LIBRARY: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_OPENGL_LIBRARY\0") };
+pub const SDL_HINT_OPENGL_LIBRARY: &::core::ffi::CStr = c"SDL_OPENGL_LIBRARY";
 
 /// A variable controlling what driver to use for OpenGL ES contexts.
 ///
@@ -2486,8 +2343,7 @@ pub const SDL_HINT_OPENGL_LIBRARY: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_OPENGL_ES_DRIVER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_OPENGL_ES_DRIVER\0") };
+pub const SDL_HINT_OPENGL_ES_DRIVER: &::core::ffi::CStr = c"SDL_OPENGL_ES_DRIVER";
 
 /// A variable controlling which orientations are allowed on iOS/Android.
 ///
@@ -2504,8 +2360,7 @@ pub const SDL_HINT_OPENGL_ES_DRIVER: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_ORIENTATIONS: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_ORIENTATIONS\0") };
+pub const SDL_HINT_ORIENTATIONS: &::core::ffi::CStr = c"SDL_ORIENTATIONS";
 
 /// A variable controlling the use of a sentinel event when polling the event
 /// queue.
@@ -2523,8 +2378,7 @@ pub const SDL_HINT_ORIENTATIONS: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_POLL_SENTINEL: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_POLL_SENTINEL\0") };
+pub const SDL_HINT_POLL_SENTINEL: &::core::ffi::CStr = c"SDL_POLL_SENTINEL";
 
 /// Override for SDL_GetPreferredLocales().
 ///
@@ -2540,8 +2394,7 @@ pub const SDL_HINT_POLL_SENTINEL: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_PREFERRED_LOCALES: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_PREFERRED_LOCALES\0") };
+pub const SDL_HINT_PREFERRED_LOCALES: &::core::ffi::CStr = c"SDL_PREFERRED_LOCALES";
 
 /// A variable that decides whether to send SDL_EVENT_QUIT when closing the
 /// last window.
@@ -2558,8 +2411,7 @@ pub const SDL_HINT_PREFERRED_LOCALES: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_QUIT_ON_LAST_WINDOW_CLOSE\0") };
+pub const SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE: &::core::ffi::CStr = c"SDL_QUIT_ON_LAST_WINDOW_CLOSE";
 
 /// A variable controlling whether the Direct3D device is initialized for
 /// thread-safe operations.
@@ -2572,9 +2424,8 @@ pub const SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE: &::core::ffi::CStr =
 /// This hint should be set before creating a renderer.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_RENDER_DIRECT3D_THREADSAFE: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_RENDER_DIRECT3D_THREADSAFE\0")
-};
+pub const SDL_HINT_RENDER_DIRECT3D_THREADSAFE: &::core::ffi::CStr =
+    c"SDL_RENDER_DIRECT3D_THREADSAFE";
 
 /// A variable controlling whether to enable Direct3D 11+'s Debug Layer.
 ///
@@ -2588,8 +2439,7 @@ pub const SDL_HINT_RENDER_DIRECT3D_THREADSAFE: &::core::ffi::CStr = unsafe {
 /// This hint should be set before creating a renderer.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_RENDER_DIRECT3D11_DEBUG: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_RENDER_DIRECT3D11_DEBUG\0") };
+pub const SDL_HINT_RENDER_DIRECT3D11_DEBUG: &::core::ffi::CStr = c"SDL_RENDER_DIRECT3D11_DEBUG";
 
 /// A variable controlling whether to enable Vulkan Validation Layers.
 ///
@@ -2601,8 +2451,7 @@ pub const SDL_HINT_RENDER_DIRECT3D11_DEBUG: &::core::ffi::CStr =
 /// By default, SDL does not use Vulkan Validation Layers.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_RENDER_VULKAN_DEBUG: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_RENDER_VULKAN_DEBUG\0") };
+pub const SDL_HINT_RENDER_VULKAN_DEBUG: &::core::ffi::CStr = c"SDL_RENDER_VULKAN_DEBUG";
 
 /// A variable controlling whether to create the GPU device in debug mode.
 ///
@@ -2614,8 +2463,7 @@ pub const SDL_HINT_RENDER_VULKAN_DEBUG: &::core::ffi::CStr =
 /// This hint should be set before creating a renderer.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_RENDER_GPU_DEBUG: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_RENDER_GPU_DEBUG\0") };
+pub const SDL_HINT_RENDER_GPU_DEBUG: &::core::ffi::CStr = c"SDL_RENDER_GPU_DEBUG";
 
 /// A variable controlling whether to prefer a low-power GPU on multi-GPU
 /// systems.
@@ -2628,8 +2476,7 @@ pub const SDL_HINT_RENDER_GPU_DEBUG: &::core::ffi::CStr =
 /// This hint should be set before creating a renderer.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_RENDER_GPU_LOW_POWER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_RENDER_GPU_LOW_POWER\0") };
+pub const SDL_HINT_RENDER_GPU_LOW_POWER: &::core::ffi::CStr = c"SDL_RENDER_GPU_LOW_POWER";
 
 /// A variable specifying which render driver to use.
 ///
@@ -2655,8 +2502,7 @@ pub const SDL_HINT_RENDER_GPU_LOW_POWER: &::core::ffi::CStr =
 /// This hint should be set before creating a renderer.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_RENDER_DRIVER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_RENDER_DRIVER\0") };
+pub const SDL_HINT_RENDER_DRIVER: &::core::ffi::CStr = c"SDL_RENDER_DRIVER";
 
 /// A variable controlling how the 2D render API renders lines.
 ///
@@ -2672,8 +2518,7 @@ pub const SDL_HINT_RENDER_DRIVER: &::core::ffi::CStr =
 /// This hint should be set before creating a renderer.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_RENDER_LINE_METHOD: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_RENDER_LINE_METHOD\0") };
+pub const SDL_HINT_RENDER_LINE_METHOD: &::core::ffi::CStr = c"SDL_RENDER_LINE_METHOD";
 
 /// A variable controlling whether the Metal render driver select low power
 /// device over default one.
@@ -2686,9 +2531,8 @@ pub const SDL_HINT_RENDER_LINE_METHOD: &::core::ffi::CStr =
 /// This hint should be set before creating a renderer.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_RENDER_METAL_PREFER_LOW_POWER_DEVICE: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_RENDER_METAL_PREFER_LOW_POWER_DEVICE\0")
-};
+pub const SDL_HINT_RENDER_METAL_PREFER_LOW_POWER_DEVICE: &::core::ffi::CStr =
+    c"SDL_RENDER_METAL_PREFER_LOW_POWER_DEVICE";
 
 /// A variable controlling whether updates to the SDL screen surface should be
 /// synchronized with the vertical refresh, to avoid tearing.
@@ -2703,8 +2547,7 @@ pub const SDL_HINT_RENDER_METAL_PREFER_LOW_POWER_DEVICE: &::core::ffi::CStr = un
 /// This hint should be set before creating a renderer.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_RENDER_VSYNC: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_RENDER_VSYNC\0") };
+pub const SDL_HINT_RENDER_VSYNC: &::core::ffi::CStr = c"SDL_RENDER_VSYNC";
 
 /// A variable to control whether the return key on the soft keyboard should
 /// hide the soft keyboard on Android and iOS.
@@ -2719,8 +2562,7 @@ pub const SDL_HINT_RENDER_VSYNC: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_RETURN_KEY_HIDES_IME: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_RETURN_KEY_HIDES_IME\0") };
+pub const SDL_HINT_RETURN_KEY_HIDES_IME: &::core::ffi::CStr = c"SDL_RETURN_KEY_HIDES_IME";
 
 /// A variable containing a list of ROG gamepad capable mice.
 ///
@@ -2737,8 +2579,7 @@ pub const SDL_HINT_RETURN_KEY_HIDES_IME: &::core::ffi::CStr =
 /// \since This hint is available since SDL 3.0.0.
 ///
 /// \sa SDL_HINT_ROG_GAMEPAD_MICE_EXCLUDED
-pub const SDL_HINT_ROG_GAMEPAD_MICE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_ROG_GAMEPAD_MICE\0") };
+pub const SDL_HINT_ROG_GAMEPAD_MICE: &::core::ffi::CStr = c"SDL_ROG_GAMEPAD_MICE";
 
 /// A variable containing a list of devices that are not ROG gamepad capable
 /// mice.
@@ -2756,8 +2597,7 @@ pub const SDL_HINT_ROG_GAMEPAD_MICE: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_ROG_GAMEPAD_MICE_EXCLUDED: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_ROG_GAMEPAD_MICE_EXCLUDED\0") };
+pub const SDL_HINT_ROG_GAMEPAD_MICE_EXCLUDED: &::core::ffi::CStr = c"SDL_ROG_GAMEPAD_MICE_EXCLUDED";
 
 /// A variable controlling which Dispmanx layer to use on a Raspberry PI.
 ///
@@ -2767,8 +2607,7 @@ pub const SDL_HINT_ROG_GAMEPAD_MICE_EXCLUDED: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_RPI_VIDEO_LAYER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_RPI_VIDEO_LAYER\0") };
+pub const SDL_HINT_RPI_VIDEO_LAYER: &::core::ffi::CStr = c"SDL_RPI_VIDEO_LAYER";
 
 /// Specify an "activity name" for screensaver inhibition.
 ///
@@ -2788,9 +2627,8 @@ pub const SDL_HINT_RPI_VIDEO_LAYER: &::core::ffi::CStr =
 /// This hint should be set before calling SDL_DisableScreenSaver()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_SCREENSAVER_INHIBIT_ACTIVITY_NAME: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_SCREENSAVER_INHIBIT_ACTIVITY_NAME\0")
-};
+pub const SDL_HINT_SCREENSAVER_INHIBIT_ACTIVITY_NAME: &::core::ffi::CStr =
+    c"SDL_SCREENSAVER_INHIBIT_ACTIVITY_NAME";
 
 /// A variable controlling whether SDL calls dbus_shutdown() on quit.
 ///
@@ -2807,8 +2645,7 @@ pub const SDL_HINT_SCREENSAVER_INHIBIT_ACTIVITY_NAME: &::core::ffi::CStr = unsaf
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_SHUTDOWN_DBUS_ON_QUIT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_SHUTDOWN_DBUS_ON_QUIT\0") };
+pub const SDL_HINT_SHUTDOWN_DBUS_ON_QUIT: &::core::ffi::CStr = c"SDL_SHUTDOWN_DBUS_ON_QUIT";
 
 /// A variable that specifies a backend to use for title storage.
 ///
@@ -2820,8 +2657,7 @@ pub const SDL_HINT_SHUTDOWN_DBUS_ON_QUIT: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_STORAGE_TITLE_DRIVER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_STORAGE_TITLE_DRIVER\0") };
+pub const SDL_HINT_STORAGE_TITLE_DRIVER: &::core::ffi::CStr = c"SDL_STORAGE_TITLE_DRIVER";
 
 /// A variable that specifies a backend to use for user storage.
 ///
@@ -2833,8 +2669,7 @@ pub const SDL_HINT_STORAGE_TITLE_DRIVER: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_STORAGE_USER_DRIVER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_STORAGE_USER_DRIVER\0") };
+pub const SDL_HINT_STORAGE_USER_DRIVER: &::core::ffi::CStr = c"SDL_STORAGE_USER_DRIVER";
 
 /// Specifies whether SDL_THREAD_PRIORITY_TIME_CRITICAL should be treated as
 /// realtime.
@@ -2861,9 +2696,8 @@ pub const SDL_HINT_STORAGE_USER_DRIVER: &::core::ffi::CStr =
 /// This hint should be set before calling SDL_SetThreadPriority()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_THREAD_FORCE_REALTIME_TIME_CRITICAL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_THREAD_FORCE_REALTIME_TIME_CRITICAL\0")
-};
+pub const SDL_HINT_THREAD_FORCE_REALTIME_TIME_CRITICAL: &::core::ffi::CStr =
+    c"SDL_THREAD_FORCE_REALTIME_TIME_CRITICAL";
 
 /// A string specifying additional information to use with
 /// SDL_SetThreadPriority.
@@ -2884,8 +2718,7 @@ pub const SDL_HINT_THREAD_FORCE_REALTIME_TIME_CRITICAL: &::core::ffi::CStr = uns
 /// This hint should be set before calling SDL_SetThreadPriority()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_THREAD_PRIORITY_POLICY: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_THREAD_PRIORITY_POLICY\0") };
+pub const SDL_HINT_THREAD_PRIORITY_POLICY: &::core::ffi::CStr = c"SDL_THREAD_PRIORITY_POLICY";
 
 /// A variable that controls the timer resolution, in milliseconds.
 ///
@@ -2903,8 +2736,7 @@ pub const SDL_HINT_THREAD_PRIORITY_POLICY: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_TIMER_RESOLUTION: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_TIMER_RESOLUTION\0") };
+pub const SDL_HINT_TIMER_RESOLUTION: &::core::ffi::CStr = c"SDL_TIMER_RESOLUTION";
 
 /// A variable controlling whether touch events should generate synthetic mouse
 /// events.
@@ -2917,8 +2749,7 @@ pub const SDL_HINT_TIMER_RESOLUTION: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_TOUCH_MOUSE_EVENTS: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_TOUCH_MOUSE_EVENTS\0") };
+pub const SDL_HINT_TOUCH_MOUSE_EVENTS: &::core::ffi::CStr = c"SDL_TOUCH_MOUSE_EVENTS";
 
 /// A variable controlling whether trackpads should be treated as touch
 /// devices.
@@ -2937,8 +2768,7 @@ pub const SDL_HINT_TOUCH_MOUSE_EVENTS: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_TRACKPAD_IS_TOUCH_ONLY: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_TRACKPAD_IS_TOUCH_ONLY\0") };
+pub const SDL_HINT_TRACKPAD_IS_TOUCH_ONLY: &::core::ffi::CStr = c"SDL_TRACKPAD_IS_TOUCH_ONLY";
 
 /// A variable controlling whether the Android / tvOS remotes should be listed
 /// as joystick devices, instead of sending keyboard events.
@@ -2951,8 +2781,7 @@ pub const SDL_HINT_TRACKPAD_IS_TOUCH_ONLY: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_TV_REMOTE_AS_JOYSTICK: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_TV_REMOTE_AS_JOYSTICK\0") };
+pub const SDL_HINT_TV_REMOTE_AS_JOYSTICK: &::core::ffi::CStr = c"SDL_TV_REMOTE_AS_JOYSTICK";
 
 /// A variable controlling whether the screensaver is enabled.
 ///
@@ -2964,8 +2793,7 @@ pub const SDL_HINT_TV_REMOTE_AS_JOYSTICK: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_ALLOW_SCREENSAVER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_ALLOW_SCREENSAVER\0") };
+pub const SDL_HINT_VIDEO_ALLOW_SCREENSAVER: &::core::ffi::CStr = c"SDL_VIDEO_ALLOW_SCREENSAVER";
 
 /// Tell the video driver that we only want a double buffer.
 ///
@@ -2986,8 +2814,7 @@ pub const SDL_HINT_VIDEO_ALLOW_SCREENSAVER: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_DOUBLE_BUFFER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_DOUBLE_BUFFER\0") };
+pub const SDL_HINT_VIDEO_DOUBLE_BUFFER: &::core::ffi::CStr = c"SDL_VIDEO_DOUBLE_BUFFER";
 
 /// A variable that specifies a video backend to use.
 ///
@@ -2999,8 +2826,7 @@ pub const SDL_HINT_VIDEO_DOUBLE_BUFFER: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_DRIVER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_DRIVER\0") };
+pub const SDL_HINT_VIDEO_DRIVER: &::core::ffi::CStr = c"SDL_VIDEO_DRIVER";
 
 /// A variable controlling whether the dummy video driver saves output frames.
 ///
@@ -3011,8 +2837,7 @@ pub const SDL_HINT_VIDEO_DRIVER: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_DUMMY_SAVE_FRAMES: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_DUMMY_SAVE_FRAMES\0") };
+pub const SDL_HINT_VIDEO_DUMMY_SAVE_FRAMES: &::core::ffi::CStr = c"SDL_VIDEO_DUMMY_SAVE_FRAMES";
 
 /// If eglGetPlatformDisplay fails, fall back to calling eglGetDisplay.
 ///
@@ -3024,9 +2849,8 @@ pub const SDL_HINT_VIDEO_DUMMY_SAVE_FRAMES: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK\0")
-};
+pub const SDL_HINT_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK: &::core::ffi::CStr =
+    c"SDL_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK";
 
 /// A variable controlling whether the OpenGL context should be created with
 /// EGL.
@@ -3040,8 +2864,7 @@ pub const SDL_HINT_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK: &::core::ffi::CStr = uns
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_FORCE_EGL: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_FORCE_EGL\0") };
+pub const SDL_HINT_VIDEO_FORCE_EGL: &::core::ffi::CStr = c"SDL_VIDEO_FORCE_EGL";
 
 /// A variable that specifies the policy for fullscreen Spaces on macOS.
 ///
@@ -3057,9 +2880,8 @@ pub const SDL_HINT_VIDEO_FORCE_EGL: &::core::ffi::CStr =
 /// This hint should be set before creating a window.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_MAC_FULLSCREEN_SPACES\0")
-};
+pub const SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES: &::core::ffi::CStr =
+    c"SDL_VIDEO_MAC_FULLSCREEN_SPACES";
 
 /// A variable controlling whether fullscreen windows are minimized when they
 /// lose focus.
@@ -3073,9 +2895,8 @@ pub const SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS\0")
-};
+pub const SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS: &::core::ffi::CStr =
+    c"SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS";
 
 /// A variable controlling whether the offscreen video driver saves output
 /// frames.
@@ -3090,9 +2911,8 @@ pub const SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_OFFSCREEN_SAVE_FRAMES: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_OFFSCREEN_SAVE_FRAMES\0")
-};
+pub const SDL_HINT_VIDEO_OFFSCREEN_SAVE_FRAMES: &::core::ffi::CStr =
+    c"SDL_VIDEO_OFFSCREEN_SAVE_FRAMES";
 
 /// A variable controlling whether all window operations will block until
 /// complete.
@@ -3116,9 +2936,8 @@ pub const SDL_HINT_VIDEO_OFFSCREEN_SAVE_FRAMES: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_SYNC_WINDOW_OPERATIONS: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_SYNC_WINDOW_OPERATIONS\0")
-};
+pub const SDL_HINT_VIDEO_SYNC_WINDOW_OPERATIONS: &::core::ffi::CStr =
+    c"SDL_VIDEO_SYNC_WINDOW_OPERATIONS";
 
 /// A variable controlling whether the libdecor Wayland backend is allowed to
 /// be used.
@@ -3134,9 +2953,8 @@ pub const SDL_HINT_VIDEO_SYNC_WINDOW_OPERATIONS: &::core::ffi::CStr = unsafe {
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_WAYLAND_ALLOW_LIBDECOR\0")
-};
+pub const SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR: &::core::ffi::CStr =
+    c"SDL_VIDEO_WAYLAND_ALLOW_LIBDECOR";
 
 /// A variable controlling whether video mode emulation is enabled under
 /// Wayland.
@@ -3154,9 +2972,8 @@ pub const SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR: &::core::ffi::CStr = unsafe {
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_WAYLAND_MODE_EMULATION: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_WAYLAND_MODE_EMULATION\0")
-};
+pub const SDL_HINT_VIDEO_WAYLAND_MODE_EMULATION: &::core::ffi::CStr =
+    c"SDL_VIDEO_WAYLAND_MODE_EMULATION";
 
 /// A variable controlling how modes with a non-native aspect ratio are
 /// displayed under Wayland.
@@ -3176,9 +2993,8 @@ pub const SDL_HINT_VIDEO_WAYLAND_MODE_EMULATION: &::core::ffi::CStr = unsafe {
 /// This hint should be set before creating a window.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_WAYLAND_MODE_SCALING: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_WAYLAND_MODE_SCALING\0")
-};
+pub const SDL_HINT_VIDEO_WAYLAND_MODE_SCALING: &::core::ffi::CStr =
+    c"SDL_VIDEO_WAYLAND_MODE_SCALING";
 
 /// A variable controlling whether the libdecor Wayland backend is preferred
 /// over native decorations.
@@ -3196,9 +3012,8 @@ pub const SDL_HINT_VIDEO_WAYLAND_MODE_SCALING: &::core::ffi::CStr = unsafe {
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_WAYLAND_PREFER_LIBDECOR: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_WAYLAND_PREFER_LIBDECOR\0")
-};
+pub const SDL_HINT_VIDEO_WAYLAND_PREFER_LIBDECOR: &::core::ffi::CStr =
+    c"SDL_VIDEO_WAYLAND_PREFER_LIBDECOR";
 
 /// A variable forcing non-DPI-aware Wayland windows to output at 1:1 scaling.
 ///
@@ -3233,9 +3048,8 @@ pub const SDL_HINT_VIDEO_WAYLAND_PREFER_LIBDECOR: &::core::ffi::CStr = unsafe {
 /// This hint should be set before creating a window.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_WAYLAND_SCALE_TO_DISPLAY\0")
-};
+pub const SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY: &::core::ffi::CStr =
+    c"SDL_VIDEO_WAYLAND_SCALE_TO_DISPLAY";
 
 /// A variable specifying which shader compiler to preload when using the
 /// Chrome ANGLE binaries.
@@ -3255,8 +3069,7 @@ pub const SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY: &::core::ffi::CStr = unsafe {
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_WIN_D3DCOMPILER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_WIN_D3DCOMPILER\0") };
+pub const SDL_HINT_VIDEO_WIN_D3DCOMPILER: &::core::ffi::CStr = c"SDL_VIDEO_WIN_D3DCOMPILER";
 
 /// A variable controlling whether the X11 _NET_WM_BYPASS_COMPOSITOR hint
 /// should be used.
@@ -3269,9 +3082,8 @@ pub const SDL_HINT_VIDEO_WIN_D3DCOMPILER: &::core::ffi::CStr =
 /// This hint should be set before creating a window.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR\0")
-};
+pub const SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR: &::core::ffi::CStr =
+    c"SDL_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR";
 
 /// A variable controlling whether the X11 _NET_WM_PING protocol should be
 /// supported.
@@ -3288,8 +3100,7 @@ pub const SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR: &::core::ffi::CStr = unsa
 /// This hint should be set before creating a window.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_X11_NET_WM_PING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_X11_NET_WM_PING\0") };
+pub const SDL_HINT_VIDEO_X11_NET_WM_PING: &::core::ffi::CStr = c"SDL_VIDEO_X11_NET_WM_PING";
 
 /// A variable controlling whether SDL uses DirectColor visuals.
 ///
@@ -3301,8 +3112,7 @@ pub const SDL_HINT_VIDEO_X11_NET_WM_PING: &::core::ffi::CStr =
 /// This hint should be set before initializing the video subsystem.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_X11_NODIRECTCOLOR: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_X11_NODIRECTCOLOR\0") };
+pub const SDL_HINT_VIDEO_X11_NODIRECTCOLOR: &::core::ffi::CStr = c"SDL_VIDEO_X11_NODIRECTCOLOR";
 
 /// A variable forcing the content scaling factor for X11 displays.
 ///
@@ -3311,24 +3121,21 @@ pub const SDL_HINT_VIDEO_X11_NODIRECTCOLOR: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_X11_SCALING_FACTOR: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_X11_SCALING_FACTOR\0") };
+pub const SDL_HINT_VIDEO_X11_SCALING_FACTOR: &::core::ffi::CStr = c"SDL_VIDEO_X11_SCALING_FACTOR";
 
 /// A variable forcing the visual ID used for X11 display modes.
 ///
 /// This hint should be set before initializing the video subsystem.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_X11_VISUALID: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_X11_VISUALID\0") };
+pub const SDL_HINT_VIDEO_X11_VISUALID: &::core::ffi::CStr = c"SDL_VIDEO_X11_VISUALID";
 
 /// A variable forcing the visual ID chosen for new X11 windows.
 ///
 /// This hint should be set before creating a window.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_X11_WINDOW_VISUALID: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_X11_WINDOW_VISUALID\0") };
+pub const SDL_HINT_VIDEO_X11_WINDOW_VISUALID: &::core::ffi::CStr = c"SDL_VIDEO_X11_WINDOW_VISUALID";
 
 /// A variable controlling whether the X11 XRandR extension should be used.
 ///
@@ -3340,8 +3147,7 @@ pub const SDL_HINT_VIDEO_X11_WINDOW_VISUALID: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VIDEO_X11_XRANDR: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VIDEO_X11_XRANDR\0") };
+pub const SDL_HINT_VIDEO_X11_XRANDR: &::core::ffi::CStr = c"SDL_VIDEO_X11_XRANDR";
 
 /// A variable controlling whether touch should be enabled on the back panel of
 /// the PlayStation Vita.
@@ -3354,8 +3160,7 @@ pub const SDL_HINT_VIDEO_X11_XRANDR: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VITA_ENABLE_BACK_TOUCH: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VITA_ENABLE_BACK_TOUCH\0") };
+pub const SDL_HINT_VITA_ENABLE_BACK_TOUCH: &::core::ffi::CStr = c"SDL_VITA_ENABLE_BACK_TOUCH";
 
 /// A variable controlling whether touch should be enabled on the front panel
 /// of the PlayStation Vita.
@@ -3368,8 +3173,7 @@ pub const SDL_HINT_VITA_ENABLE_BACK_TOUCH: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VITA_ENABLE_FRONT_TOUCH: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VITA_ENABLE_FRONT_TOUCH\0") };
+pub const SDL_HINT_VITA_ENABLE_FRONT_TOUCH: &::core::ffi::CStr = c"SDL_VITA_ENABLE_FRONT_TOUCH";
 
 /// A variable controlling the module path on the PlayStation Vita.
 ///
@@ -3378,8 +3182,7 @@ pub const SDL_HINT_VITA_ENABLE_FRONT_TOUCH: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VITA_MODULE_PATH: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VITA_MODULE_PATH\0") };
+pub const SDL_HINT_VITA_MODULE_PATH: &::core::ffi::CStr = c"SDL_VITA_MODULE_PATH";
 
 /// A variable controlling whether to perform PVR initialization on the
 /// PlayStation Vita.
@@ -3390,8 +3193,7 @@ pub const SDL_HINT_VITA_MODULE_PATH: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VITA_PVR_INIT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VITA_PVR_INIT\0") };
+pub const SDL_HINT_VITA_PVR_INIT: &::core::ffi::CStr = c"SDL_VITA_PVR_INIT";
 
 /// A variable overriding the resolution reported on the PlayStation Vita.
 ///
@@ -3404,8 +3206,7 @@ pub const SDL_HINT_VITA_PVR_INIT: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VITA_RESOLUTION: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VITA_RESOLUTION\0") };
+pub const SDL_HINT_VITA_RESOLUTION: &::core::ffi::CStr = c"SDL_VITA_RESOLUTION";
 
 /// A variable controlling whether OpenGL should be used instead of OpenGL ES
 /// on the PlayStation Vita.
@@ -3418,8 +3219,7 @@ pub const SDL_HINT_VITA_RESOLUTION: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VITA_PVR_OPENGL: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VITA_PVR_OPENGL\0") };
+pub const SDL_HINT_VITA_PVR_OPENGL: &::core::ffi::CStr = c"SDL_VITA_PVR_OPENGL";
 
 /// A variable controlling which touchpad should generate synthetic mouse
 /// events.
@@ -3433,8 +3233,7 @@ pub const SDL_HINT_VITA_PVR_OPENGL: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VITA_TOUCH_MOUSE_DEVICE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VITA_TOUCH_MOUSE_DEVICE\0") };
+pub const SDL_HINT_VITA_TOUCH_MOUSE_DEVICE: &::core::ffi::CStr = c"SDL_VITA_TOUCH_MOUSE_DEVICE";
 
 /// A variable overriding the display index used in SDL_Vulkan_CreateSurface()
 ///
@@ -3443,8 +3242,7 @@ pub const SDL_HINT_VITA_TOUCH_MOUSE_DEVICE: &::core::ffi::CStr =
 /// This hint should be set before calling SDL_Vulkan_CreateSurface()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VULKAN_DISPLAY: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VULKAN_DISPLAY\0") };
+pub const SDL_HINT_VULKAN_DISPLAY: &::core::ffi::CStr = c"SDL_VULKAN_DISPLAY";
 
 /// Specify the Vulkan library to load.
 ///
@@ -3452,8 +3250,7 @@ pub const SDL_HINT_VULKAN_DISPLAY: &::core::ffi::CStr =
 /// SDL_Vulkan_LoadLibrary().
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_VULKAN_LIBRARY: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_VULKAN_LIBRARY\0") };
+pub const SDL_HINT_VULKAN_LIBRARY: &::core::ffi::CStr = c"SDL_VULKAN_LIBRARY";
 
 /// A variable controlling how the fact chunk affects the loading of a WAVE
 /// file.
@@ -3483,8 +3280,7 @@ pub const SDL_HINT_VULKAN_LIBRARY: &::core::ffi::CStr =
 /// This hint should be set before calling SDL_LoadWAV() or SDL_LoadWAV_IO()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WAVE_FACT_CHUNK: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WAVE_FACT_CHUNK\0") };
+pub const SDL_HINT_WAVE_FACT_CHUNK: &::core::ffi::CStr = c"SDL_WAVE_FACT_CHUNK";
 
 /// A variable controlling the maximum number of chunks in a WAVE file.
 ///
@@ -3494,8 +3290,7 @@ pub const SDL_HINT_WAVE_FACT_CHUNK: &::core::ffi::CStr =
 /// This hint should be set before calling SDL_LoadWAV() or SDL_LoadWAV_IO()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WAVE_CHUNK_LIMIT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WAVE_CHUNK_LIMIT\0") };
+pub const SDL_HINT_WAVE_CHUNK_LIMIT: &::core::ffi::CStr = c"SDL_WAVE_CHUNK_LIMIT";
 
 /// A variable controlling how the size of the RIFF chunk affects the loading
 /// of a WAVE file.
@@ -3521,8 +3316,7 @@ pub const SDL_HINT_WAVE_CHUNK_LIMIT: &::core::ffi::CStr =
 /// This hint should be set before calling SDL_LoadWAV() or SDL_LoadWAV_IO()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WAVE_RIFF_CHUNK_SIZE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WAVE_RIFF_CHUNK_SIZE\0") };
+pub const SDL_HINT_WAVE_RIFF_CHUNK_SIZE: &::core::ffi::CStr = c"SDL_WAVE_RIFF_CHUNK_SIZE";
 
 /// A variable controlling how a truncated WAVE file is handled.
 ///
@@ -3540,8 +3334,7 @@ pub const SDL_HINT_WAVE_RIFF_CHUNK_SIZE: &::core::ffi::CStr =
 /// This hint should be set before calling SDL_LoadWAV() or SDL_LoadWAV_IO()
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WAVE_TRUNCATION: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WAVE_TRUNCATION\0") };
+pub const SDL_HINT_WAVE_TRUNCATION: &::core::ffi::CStr = c"SDL_WAVE_TRUNCATION";
 
 /// A variable controlling whether the window is activated when the
 /// SDL_RaiseWindow function is called.
@@ -3556,9 +3349,8 @@ pub const SDL_HINT_WAVE_TRUNCATION: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOW_ACTIVATE_WHEN_RAISED: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOW_ACTIVATE_WHEN_RAISED\0")
-};
+pub const SDL_HINT_WINDOW_ACTIVATE_WHEN_RAISED: &::core::ffi::CStr =
+    c"SDL_WINDOW_ACTIVATE_WHEN_RAISED";
 
 /// A variable controlling whether the window is activated when the
 /// SDL_ShowWindow function is called.
@@ -3573,9 +3365,8 @@ pub const SDL_HINT_WINDOW_ACTIVATE_WHEN_RAISED: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOW_ACTIVATE_WHEN_SHOWN: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOW_ACTIVATE_WHEN_SHOWN\0")
-};
+pub const SDL_HINT_WINDOW_ACTIVATE_WHEN_SHOWN: &::core::ffi::CStr =
+    c"SDL_WINDOW_ACTIVATE_WHEN_SHOWN";
 
 /// If set to "0" then never set the top-most flag on an SDL Window even if the
 /// application requests it.
@@ -3591,8 +3382,7 @@ pub const SDL_HINT_WINDOW_ACTIVATE_WHEN_SHOWN: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOW_ALLOW_TOPMOST: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOW_ALLOW_TOPMOST\0") };
+pub const SDL_HINT_WINDOW_ALLOW_TOPMOST: &::core::ffi::CStr = c"SDL_WINDOW_ALLOW_TOPMOST";
 
 /// A variable controlling whether the window frame and title bar are
 /// interactive when the cursor is hidden.
@@ -3606,11 +3396,8 @@ pub const SDL_HINT_WINDOW_ALLOW_TOPMOST: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-        b"SDL_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN\0",
-    )
-};
+pub const SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN: &::core::ffi::CStr =
+    c"SDL_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN";
 
 /// A variable controlling whether SDL generates window-close events for Alt+F4
 /// on Windows.
@@ -3624,8 +3411,7 @@ pub const SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOWS_CLOSE_ON_ALT_F4\0") };
+pub const SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4: &::core::ffi::CStr = c"SDL_WINDOWS_CLOSE_ON_ALT_F4";
 
 /// A variable controlling whether menus can be opened with their keyboard
 /// shortcut (Alt+mnemonic).
@@ -3652,9 +3438,8 @@ pub const SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOWS_ENABLE_MENU_MNEMONICS: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOWS_ENABLE_MENU_MNEMONICS\0")
-};
+pub const SDL_HINT_WINDOWS_ENABLE_MENU_MNEMONICS: &::core::ffi::CStr =
+    c"SDL_WINDOWS_ENABLE_MENU_MNEMONICS";
 
 /// A variable controlling whether the windows message loop is processed by
 /// SDL.
@@ -3667,9 +3452,8 @@ pub const SDL_HINT_WINDOWS_ENABLE_MENU_MNEMONICS: &::core::ffi::CStr = unsafe {
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOWS_ENABLE_MESSAGELOOP\0")
-};
+pub const SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP: &::core::ffi::CStr =
+    c"SDL_WINDOWS_ENABLE_MESSAGELOOP";
 
 /// A variable controlling whether GameInput is used for raw keyboard and mouse
 /// on Windows.
@@ -3683,8 +3467,7 @@ pub const SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP: &::core::ffi::CStr = unsafe {
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOWS_GAMEINPUT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOWS_GAMEINPUT\0") };
+pub const SDL_HINT_WINDOWS_GAMEINPUT: &::core::ffi::CStr = c"SDL_WINDOWS_GAMEINPUT";
 
 /// A variable controlling whether raw keyboard events are used on Windows.
 ///
@@ -3696,8 +3479,7 @@ pub const SDL_HINT_WINDOWS_GAMEINPUT: &::core::ffi::CStr =
 /// This hint can be set anytime.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOWS_RAW_KEYBOARD: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOWS_RAW_KEYBOARD\0") };
+pub const SDL_HINT_WINDOWS_RAW_KEYBOARD: &::core::ffi::CStr = c"SDL_WINDOWS_RAW_KEYBOARD";
 
 /// A variable controlling whether SDL uses Kernel Semaphores on Windows.
 ///
@@ -3716,9 +3498,8 @@ pub const SDL_HINT_WINDOWS_RAW_KEYBOARD: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOWS_FORCE_SEMAPHORE_KERNEL\0")
-};
+pub const SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL: &::core::ffi::CStr =
+    c"SDL_WINDOWS_FORCE_SEMAPHORE_KERNEL";
 
 /// A variable to specify custom icon resource id from RC file on Windows
 /// platform.
@@ -3726,12 +3507,10 @@ pub const SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL: &::core::ffi::CStr = unsafe {
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOWS_INTRESOURCE_ICON\0") };
+pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON: &::core::ffi::CStr = c"SDL_WINDOWS_INTRESOURCE_ICON";
 
-pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOWS_INTRESOURCE_ICON_SMALL\0")
-};
+pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL: &::core::ffi::CStr =
+    c"SDL_WINDOWS_INTRESOURCE_ICON_SMALL";
 
 /// A variable controlling whether SDL uses the D3D9Ex API introduced in
 /// Windows Vista, instead of normal D3D9.
@@ -3755,8 +3534,7 @@ pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL: &::core::ffi::CStr = unsafe {
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOWS_USE_D3D9EX: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOWS_USE_D3D9EX\0") };
+pub const SDL_HINT_WINDOWS_USE_D3D9EX: &::core::ffi::CStr = c"SDL_WINDOWS_USE_D3D9EX";
 
 /// A variable controlling whether SDL will clear the window contents when the
 /// WM_ERASEBKGND message is received.
@@ -3771,9 +3549,8 @@ pub const SDL_HINT_WINDOWS_USE_D3D9EX: &::core::ffi::CStr =
 /// This hint should be set before creating a window.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_WINDOWS_ERASE_BACKGROUND_MODE: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_WINDOWS_ERASE_BACKGROUND_MODE\0")
-};
+pub const SDL_HINT_WINDOWS_ERASE_BACKGROUND_MODE: &::core::ffi::CStr =
+    c"SDL_WINDOWS_ERASE_BACKGROUND_MODE";
 
 /// A variable controlling whether X11 windows are marked as override-redirect.
 ///
@@ -3792,9 +3569,8 @@ pub const SDL_HINT_WINDOWS_ERASE_BACKGROUND_MODE: &::core::ffi::CStr = unsafe {
 /// This hint should be set before creating a window.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_X11_FORCE_OVERRIDE_REDIRECT\0")
-};
+pub const SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT: &::core::ffi::CStr =
+    c"SDL_X11_FORCE_OVERRIDE_REDIRECT";
 
 /// A variable specifying the type of an X11 window.
 ///
@@ -3809,8 +3585,7 @@ pub const SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT: &::core::ffi::CStr = unsafe {
 /// This hint should be set before creating a window.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_X11_WINDOW_TYPE: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_X11_WINDOW_TYPE\0") };
+pub const SDL_HINT_X11_WINDOW_TYPE: &::core::ffi::CStr = c"SDL_X11_WINDOW_TYPE";
 
 /// Specify the XCB library to load for the X11 driver.
 ///
@@ -3819,8 +3594,7 @@ pub const SDL_HINT_X11_WINDOW_TYPE: &::core::ffi::CStr =
 /// This hint should be set before initializing the video subsystem.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_X11_XCB_LIBRARY: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_X11_XCB_LIBRARY\0") };
+pub const SDL_HINT_X11_XCB_LIBRARY: &::core::ffi::CStr = c"SDL_X11_XCB_LIBRARY";
 
 /// A variable controlling whether XInput should be used for controller
 /// handling.
@@ -3833,8 +3607,7 @@ pub const SDL_HINT_X11_XCB_LIBRARY: &::core::ffi::CStr =
 /// This hint should be set before SDL is initialized.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_XINPUT_ENABLED: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_XINPUT_ENABLED\0") };
+pub const SDL_HINT_XINPUT_ENABLED: &::core::ffi::CStr = c"SDL_XINPUT_ENABLED";
 
 /// A variable controlling response to SDL_assert failures.
 ///
@@ -3856,8 +3629,7 @@ pub const SDL_HINT_XINPUT_ENABLED: &::core::ffi::CStr =
 /// changed at any time.
 ///
 /// \since This hint is available since SDL 3.0.0.
-pub const SDL_HINT_ASSERT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL_ASSERT\0") };
+pub const SDL_HINT_ASSERT: &::core::ffi::CStr = c"SDL_ASSERT";
 
 /// An enumeration of hint priorities.
 ///

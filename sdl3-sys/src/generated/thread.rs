@@ -170,13 +170,13 @@ emit! {
         pub fn SDL_CreateThreadWithProperties(props: SDL_PropertiesID) -> *mut SDL_Thread;
     }
 
-    pub const SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.entry_function\0") };
+    pub const SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: &::core::ffi::CStr = c"SDL.thread.create.entry_function";
 
-    pub const SDL_PROP_THREAD_CREATE_NAME_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.name\0") };
+    pub const SDL_PROP_THREAD_CREATE_NAME_STRING: &::core::ffi::CStr = c"SDL.thread.create.name";
 
-    pub const SDL_PROP_THREAD_CREATE_USERDATA_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.userdata\0") };
+    pub const SDL_PROP_THREAD_CREATE_USERDATA_POINTER: &::core::ffi::CStr = c"SDL.thread.create.userdata";
 
-    pub const SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.stacksize\0") };
+    pub const SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: &::core::ffi::CStr = c"SDL.thread.create.stacksize";
 
 }
 
@@ -252,13 +252,13 @@ emit! {
     }
 
 
-    pub const SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.entry_function\0") };
+    pub const SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: &::core::ffi::CStr = c"SDL.thread.create.entry_function";
 
-    pub const SDL_PROP_THREAD_CREATE_NAME_STRING: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.name\0") };
+    pub const SDL_PROP_THREAD_CREATE_NAME_STRING: &::core::ffi::CStr = c"SDL.thread.create.name";
 
-    pub const SDL_PROP_THREAD_CREATE_USERDATA_POINTER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.userdata\0") };
+    pub const SDL_PROP_THREAD_CREATE_USERDATA_POINTER: &::core::ffi::CStr = c"SDL.thread.create.userdata";
 
-    pub const SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.thread.create.stacksize\0") };
+    pub const SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: &::core::ffi::CStr = c"SDL.thread.create.stacksize";
 
 }
 

@@ -277,16 +277,15 @@ extern "C" {
 }
 
 pub const SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.windows.handle\0") };
+    c"SDL.iostream.windows.handle";
 
-pub const SDL_PROP_IOSTREAM_STDIO_FILE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.stdio.file\0") };
+pub const SDL_PROP_IOSTREAM_STDIO_FILE_POINTER: &::core::ffi::CStr = c"SDL.iostream.stdio.file";
 
 pub const SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.file_descriptor\0") };
+    c"SDL.iostream.file_descriptor";
 
 pub const SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.android.aasset\0") };
+    c"SDL.iostream.android.aasset";
 
 extern "C" {
     /// Use this function to prepare a read-write memory buffer for use with
@@ -387,11 +386,10 @@ extern "C" {
 }
 
 pub const SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.dynamic.memory\0") };
+    c"SDL.iostream.dynamic.memory";
 
-pub const SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.iostream.dynamic.chunksize\0")
-};
+pub const SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER: &::core::ffi::CStr =
+    c"SDL.iostream.dynamic.chunksize";
 
 extern "C" {
     /// Create a custom SDL_IOStream.

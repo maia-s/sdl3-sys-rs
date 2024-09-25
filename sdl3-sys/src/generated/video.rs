@@ -41,7 +41,7 @@ pub type SDL_WindowID = Uint32;
 /// prior to initialization, or NULL. See docs/README-wayland.md for more
 /// information.
 pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.video.wayland.wl_display\0") };
+    c"SDL.video.wayland.wl_display";
 
 /// System theme.
 ///
@@ -623,12 +623,10 @@ extern "C" {
     pub fn SDL_GetDisplayProperties(displayID: SDL_DisplayID) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.display.HDR_enabled\0") };
+pub const SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN: &::core::ffi::CStr = c"SDL.display.HDR_enabled";
 
-pub const SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.display.KMSDRM.panel_orientation\0")
-};
+pub const SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: &::core::ffi::CStr =
+    c"SDL.display.KMSDRM.panel_orientation";
 
 extern "C" {
     /// Get the name of a display in UTF-8 encoding.
@@ -1278,122 +1276,92 @@ extern "C" {
     pub fn SDL_CreateWindowWithProperties(props: SDL_PropertiesID) -> *mut SDL_Window;
 }
 
-pub const SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.always_on_top\0")
-};
+pub const SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN: &::core::ffi::CStr =
+    c"SDL.window.create.always_on_top";
 
 pub const SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.borderless\0") };
+    c"SDL.window.create.borderless";
 
 pub const SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.focusable\0") };
+    c"SDL.window.create.focusable";
 
-pub const SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-        b"SDL.window.create.external_graphics_context\0",
-    )
-};
+pub const SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN: &::core::ffi::CStr =
+    c"SDL.window.create.external_graphics_context";
 
-pub const SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.flags\0") };
+pub const SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER: &::core::ffi::CStr = c"SDL.window.create.flags";
 
 pub const SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.fullscreen\0") };
+    c"SDL.window.create.fullscreen";
 
-pub const SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.height\0") };
+pub const SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER: &::core::ffi::CStr = c"SDL.window.create.height";
 
-pub const SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.hidden\0") };
+pub const SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.hidden";
 
-pub const SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.high_pixel_density\0")
-};
+pub const SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN: &::core::ffi::CStr =
+    c"SDL.window.create.high_pixel_density";
 
 pub const SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.maximized\0") };
+    c"SDL.window.create.maximized";
 
-pub const SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.menu\0") };
+pub const SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.menu";
 
-pub const SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.metal\0") };
+pub const SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.metal";
 
 pub const SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.minimized\0") };
+    c"SDL.window.create.minimized";
 
-pub const SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.modal\0") };
+pub const SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.modal";
 
-pub const SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.mouse_grabbed\0")
-};
+pub const SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN: &::core::ffi::CStr =
+    c"SDL.window.create.mouse_grabbed";
 
-pub const SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.opengl\0") };
+pub const SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.opengl";
 
-pub const SDL_PROP_WINDOW_CREATE_PARENT_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.parent\0") };
+pub const SDL_PROP_WINDOW_CREATE_PARENT_POINTER: &::core::ffi::CStr = c"SDL.window.create.parent";
 
 pub const SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.resizable\0") };
+    c"SDL.window.create.resizable";
 
-pub const SDL_PROP_WINDOW_CREATE_TITLE_STRING: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.title\0") };
+pub const SDL_PROP_WINDOW_CREATE_TITLE_STRING: &::core::ffi::CStr = c"SDL.window.create.title";
 
 pub const SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.transparent\0") };
+    c"SDL.window.create.transparent";
 
-pub const SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.tooltip\0") };
+pub const SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.tooltip";
 
-pub const SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.utility\0") };
+pub const SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.utility";
 
-pub const SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.vulkan\0") };
+pub const SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.vulkan";
 
-pub const SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.width\0") };
+pub const SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER: &::core::ffi::CStr = c"SDL.window.create.width";
 
-pub const SDL_PROP_WINDOW_CREATE_X_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.x\0") };
+pub const SDL_PROP_WINDOW_CREATE_X_NUMBER: &::core::ffi::CStr = c"SDL.window.create.x";
 
-pub const SDL_PROP_WINDOW_CREATE_Y_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.y\0") };
+pub const SDL_PROP_WINDOW_CREATE_Y_NUMBER: &::core::ffi::CStr = c"SDL.window.create.y";
 
-pub const SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.cocoa.window\0")
-};
+pub const SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER: &::core::ffi::CStr =
+    c"SDL.window.create.cocoa.window";
 
 pub const SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.cocoa.view\0") };
+    c"SDL.window.create.cocoa.view";
 
-pub const SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-        b"SDL.window.create.wayland.surface_role_custom\0",
-    )
-};
+pub const SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN: &::core::ffi::CStr =
+    c"SDL.window.create.wayland.surface_role_custom";
 
-pub const SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-        b"SDL.window.create.wayland.create_egl_window\0",
-    )
-};
+pub const SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN: &::core::ffi::CStr =
+    c"SDL.window.create.wayland.create_egl_window";
 
-pub const SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.wayland.wl_surface\0")
-};
+pub const SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER: &::core::ffi::CStr =
+    c"SDL.window.create.wayland.wl_surface";
 
 pub const SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.win32.hwnd\0") };
+    c"SDL.window.create.win32.hwnd";
 
-pub const SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.win32.pixel_format_hwnd\0")
-};
+pub const SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER: &::core::ffi::CStr =
+    c"SDL.window.create.win32.pixel_format_hwnd";
 
 pub const SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.create.x11.window\0") };
+    c"SDL.window.create.x11.window";
 
 extern "C" {
     /// Get the numeric ID of a window.
@@ -1553,117 +1521,89 @@ extern "C" {
     pub fn SDL_GetWindowProperties(window: *mut SDL_Window) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_WINDOW_SHAPE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.shape\0") };
+pub const SDL_PROP_WINDOW_SHAPE_POINTER: &::core::ffi::CStr = c"SDL.window.shape";
 
-pub const SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.HDR_enabled\0") };
+pub const SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN: &::core::ffi::CStr = c"SDL.window.HDR_enabled";
 
-pub const SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.SDR_white_level\0") };
+pub const SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT: &::core::ffi::CStr = c"SDL.window.SDR_white_level";
 
-pub const SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.HDR_headroom\0") };
+pub const SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT: &::core::ffi::CStr = c"SDL.window.HDR_headroom";
 
-pub const SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.android.window\0") };
+pub const SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER: &::core::ffi::CStr = c"SDL.window.android.window";
 
 pub const SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.android.surface\0") };
+    c"SDL.window.android.surface";
 
-pub const SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.uikit.window\0") };
+pub const SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER: &::core::ffi::CStr = c"SDL.window.uikit.window";
 
-pub const SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.uikit.metal_view_tag\0")
-};
+pub const SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER: &::core::ffi::CStr =
+    c"SDL.window.uikit.metal_view_tag";
 
-pub const SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.uikit.opengl.framebuffer\0")
-};
+pub const SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER: &::core::ffi::CStr =
+    c"SDL.window.uikit.opengl.framebuffer";
 
-pub const SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.uikit.opengl.renderbuffer\0")
-};
+pub const SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER: &::core::ffi::CStr =
+    c"SDL.window.uikit.opengl.renderbuffer";
 
-pub const SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-        b"SDL.window.uikit.opengl.resolve_framebuffer\0",
-    )
-};
+pub const SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER: &::core::ffi::CStr =
+    c"SDL.window.uikit.opengl.resolve_framebuffer";
 
 pub const SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.kmsdrm.dev_index\0") };
+    c"SDL.window.kmsdrm.dev_index";
 
-pub const SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.kmsdrm.drm_fd\0") };
+pub const SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER: &::core::ffi::CStr = c"SDL.window.kmsdrm.drm_fd";
 
 pub const SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.kmsdrm.gbm_dev\0") };
+    c"SDL.window.kmsdrm.gbm_dev";
 
-pub const SDL_PROP_WINDOW_COCOA_WINDOW_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.cocoa.window\0") };
+pub const SDL_PROP_WINDOW_COCOA_WINDOW_POINTER: &::core::ffi::CStr = c"SDL.window.cocoa.window";
 
-pub const SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.cocoa.metal_view_tag\0")
-};
+pub const SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER: &::core::ffi::CStr =
+    c"SDL.window.cocoa.metal_view_tag";
 
 pub const SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.vivante.display\0") };
+    c"SDL.window.vivante.display";
 
-pub const SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.vivante.window\0") };
+pub const SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER: &::core::ffi::CStr = c"SDL.window.vivante.window";
 
 pub const SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.vivante.surface\0") };
+    c"SDL.window.vivante.surface";
 
-pub const SDL_PROP_WINDOW_WIN32_HWND_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.win32.hwnd\0") };
+pub const SDL_PROP_WINDOW_WIN32_HWND_POINTER: &::core::ffi::CStr = c"SDL.window.win32.hwnd";
 
-pub const SDL_PROP_WINDOW_WIN32_HDC_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.win32.hdc\0") };
+pub const SDL_PROP_WINDOW_WIN32_HDC_POINTER: &::core::ffi::CStr = c"SDL.window.win32.hdc";
 
-pub const SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.win32.instance\0") };
+pub const SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER: &::core::ffi::CStr = c"SDL.window.win32.instance";
 
 pub const SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.wayland.display\0") };
+    c"SDL.window.wayland.display";
 
 pub const SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.wayland.surface\0") };
+    c"SDL.window.wayland.surface";
 
 pub const SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.wayland.egl_window\0") };
+    c"SDL.window.wayland.egl_window";
 
-pub const SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.wayland.xdg_surface\0")
-};
+pub const SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER: &::core::ffi::CStr =
+    c"SDL.window.wayland.xdg_surface";
 
-pub const SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.wayland.xdg_toplevel\0")
-};
+pub const SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER: &::core::ffi::CStr =
+    c"SDL.window.wayland.xdg_toplevel";
 
-pub const SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-        b"SDL.window.wayland.xdg_toplevel_export_handle\0",
-    )
-};
+pub const SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING: &::core::ffi::CStr =
+    c"SDL.window.wayland.xdg_toplevel_export_handle";
 
 pub const SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.wayland.xdg_popup\0") };
+    c"SDL.window.wayland.xdg_popup";
 
-pub const SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER: &::core::ffi::CStr = unsafe {
-    ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.wayland.xdg_positioner\0")
-};
+pub const SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER: &::core::ffi::CStr =
+    c"SDL.window.wayland.xdg_positioner";
 
-pub const SDL_PROP_WINDOW_X11_DISPLAY_POINTER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.x11.display\0") };
+pub const SDL_PROP_WINDOW_X11_DISPLAY_POINTER: &::core::ffi::CStr = c"SDL.window.x11.display";
 
-pub const SDL_PROP_WINDOW_X11_SCREEN_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.x11.screen\0") };
+pub const SDL_PROP_WINDOW_X11_SCREEN_NUMBER: &::core::ffi::CStr = c"SDL.window.x11.screen";
 
-pub const SDL_PROP_WINDOW_X11_WINDOW_NUMBER: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"SDL.window.x11.window\0") };
+pub const SDL_PROP_WINDOW_X11_WINDOW_NUMBER: &::core::ffi::CStr = c"SDL.window.x11.window";
 
 extern "C" {
     /// Get the window flags.

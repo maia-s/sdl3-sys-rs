@@ -118,7 +118,7 @@ pub const SDL_FLT_EPSILON: ::core::ffi::c_float = ::core::primitive::f32::EPSILO
 
 #[cfg(windows)]
 emit! {
-    pub const SDL_PRIs64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64d\0") };
+    pub const SDL_PRIs64: &::core::ffi::CStr = c"I64d";
 
 }
 
@@ -126,13 +126,13 @@ emit! {
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
-        pub const SDL_PRIs64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"ld\0") };
+        pub const SDL_PRIs64: &::core::ffi::CStr = c"ld";
 
     }
 
     #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
-        pub const SDL_PRIs64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"lld\0") };
+        pub const SDL_PRIs64: &::core::ffi::CStr = c"lld";
 
     }
 
@@ -140,7 +140,7 @@ emit! {
 
 #[cfg(windows)]
 emit! {
-    pub const SDL_PRIu64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64u\0") };
+    pub const SDL_PRIu64: &::core::ffi::CStr = c"I64u";
 
 }
 
@@ -148,13 +148,13 @@ emit! {
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
-        pub const SDL_PRIu64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"lu\0") };
+        pub const SDL_PRIu64: &::core::ffi::CStr = c"lu";
 
     }
 
     #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
-        pub const SDL_PRIu64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"llu\0") };
+        pub const SDL_PRIu64: &::core::ffi::CStr = c"llu";
 
     }
 
@@ -162,7 +162,7 @@ emit! {
 
 #[cfg(windows)]
 emit! {
-    pub const SDL_PRIx64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64x\0") };
+    pub const SDL_PRIx64: &::core::ffi::CStr = c"I64x";
 
 }
 
@@ -170,13 +170,13 @@ emit! {
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
-        pub const SDL_PRIx64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"lx\0") };
+        pub const SDL_PRIx64: &::core::ffi::CStr = c"lx";
 
     }
 
     #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
-        pub const SDL_PRIx64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"llx\0") };
+        pub const SDL_PRIx64: &::core::ffi::CStr = c"llx";
 
     }
 
@@ -184,7 +184,7 @@ emit! {
 
 #[cfg(windows)]
 emit! {
-    pub const SDL_PRIX64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64X\0") };
+    pub const SDL_PRIX64: &::core::ffi::CStr = c"I64X";
 
 }
 
@@ -192,57 +192,53 @@ emit! {
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
-        pub const SDL_PRIX64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"lX\0") };
+        pub const SDL_PRIX64: &::core::ffi::CStr = c"lX";
 
     }
 
     #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
-        pub const SDL_PRIX64: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"llX\0") };
+        pub const SDL_PRIX64: &::core::ffi::CStr = c"llX";
 
     }
 
 }
 
-pub const SDL_PRIs32: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"d\0") };
+pub const SDL_PRIs32: &::core::ffi::CStr = c"d";
 
-pub const SDL_PRIu32: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"u\0") };
+pub const SDL_PRIu32: &::core::ffi::CStr = c"u";
 
-pub const SDL_PRIx32: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"x\0") };
+pub const SDL_PRIx32: &::core::ffi::CStr = c"x";
 
-pub const SDL_PRIX32: &::core::ffi::CStr =
-    unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"X\0") };
+pub const SDL_PRIX32: &::core::ffi::CStr = c"X";
 
 #[cfg(windows)]
 emit! {
     const _: () = ::core::assert!((::core::mem::size_of::<::core::ffi::c_longlong>() == 8_usize));
 
-    pub const SDL_PRILL_PREFIX: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64\0") };
+    pub const SDL_PRILL_PREFIX: &::core::ffi::CStr = c"I64";
 
-    pub const SDL_PRILLd: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64d\0") };
+    pub const SDL_PRILLd: &::core::ffi::CStr = c"I64d";
 
-    pub const SDL_PRILLu: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64u\0") };
+    pub const SDL_PRILLu: &::core::ffi::CStr = c"I64u";
 
-    pub const SDL_PRILLx: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64x\0") };
+    pub const SDL_PRILLx: &::core::ffi::CStr = c"I64x";
 
-    pub const SDL_PRILLX: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"I64X\0") };
+    pub const SDL_PRILLX: &::core::ffi::CStr = c"I64X";
 
 }
 
 #[cfg(not(windows))]
 emit! {
-    pub const SDL_PRILL_PREFIX: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"ll\0") };
+    pub const SDL_PRILL_PREFIX: &::core::ffi::CStr = c"ll";
 
-    pub const SDL_PRILLd: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"lld\0") };
+    pub const SDL_PRILLd: &::core::ffi::CStr = c"lld";
 
-    pub const SDL_PRILLu: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"llu\0") };
+    pub const SDL_PRILLu: &::core::ffi::CStr = c"llu";
 
-    pub const SDL_PRILLx: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"llx\0") };
+    pub const SDL_PRILLx: &::core::ffi::CStr = c"llx";
 
-    pub const SDL_PRILLX: &::core::ffi::CStr = unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"llX\0") };
+    pub const SDL_PRILLX: &::core::ffi::CStr = c"llX";
 
 }
 
@@ -4072,8 +4068,8 @@ extern "C" {
 pub unsafe fn SDL_iconv_utf8_locale(S: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char {
     unsafe {
         SDL_iconv_string(
-            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"\0") }.as_ptr(),
-            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"UTF-8\0") }.as_ptr(),
+            c"".as_ptr(),
+            c"UTF-8".as_ptr(),
             S,
             (unsafe { SDL_strlen(S) } + 1_usize),
         )
@@ -4084,8 +4080,8 @@ pub unsafe fn SDL_iconv_utf8_locale(S: *const ::core::ffi::c_char) -> *mut ::cor
 pub unsafe fn SDL_iconv_utf8_ucs2(S: *const ::core::ffi::c_char) -> *mut Uint16 {
     (unsafe {
         SDL_iconv_string(
-            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"UCS-2\0") }.as_ptr(),
-            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"UTF-8\0") }.as_ptr(),
+            c"UCS-2".as_ptr(),
+            c"UTF-8".as_ptr(),
             S,
             (unsafe { SDL_strlen(S) } + 1_usize),
         )
@@ -4096,8 +4092,8 @@ pub unsafe fn SDL_iconv_utf8_ucs2(S: *const ::core::ffi::c_char) -> *mut Uint16 
 pub unsafe fn SDL_iconv_utf8_ucs4(S: *const ::core::ffi::c_char) -> *mut Uint32 {
     (unsafe {
         SDL_iconv_string(
-            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"UCS-4\0") }.as_ptr(),
-            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"UTF-8\0") }.as_ptr(),
+            c"UCS-4".as_ptr(),
+            c"UTF-8".as_ptr(),
             S,
             (unsafe { SDL_strlen(S) } + 1_usize),
         )
@@ -4108,8 +4104,8 @@ pub unsafe fn SDL_iconv_utf8_ucs4(S: *const ::core::ffi::c_char) -> *mut Uint32 
 pub unsafe fn SDL_iconv_wchar_utf8(S: *const crate::ffi::c_wchar_t) -> *mut ::core::ffi::c_char {
     unsafe {
         SDL_iconv_string(
-            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"UTF-8\0") }.as_ptr(),
-            unsafe { ::core::ffi::CStr::from_bytes_with_nul_unchecked(b"WCHAR_T\0") }.as_ptr(),
+            c"UTF-8".as_ptr(),
+            c"WCHAR_T".as_ptr(),
             (S as *mut ::core::ffi::c_char),
             ((unsafe { SDL_wcslen(S) } + 1_usize)
                 * ::core::mem::size_of::<crate::ffi::c_wchar_t>()),

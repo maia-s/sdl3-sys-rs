@@ -88,14 +88,5 @@ extern "C" {
 
 #[inline(always)]
 pub unsafe fn SDL_Unsupported() -> ::core::primitive::bool {
-    unsafe {
-        SDL_SetError(
-            unsafe {
-                ::core::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"That operation is not supported\0",
-                )
-            }
-            .as_ptr(),
-        )
-    }
+    unsafe { SDL_SetError(c"That operation is not supported".as_ptr()) }
 }

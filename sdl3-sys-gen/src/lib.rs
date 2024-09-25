@@ -46,7 +46,11 @@ fn skip_emit(_module: &str) -> bool {
 }
 
 fn run_rustfmt(path: &Path) {
-    let _ = Command::new("rustfmt").arg(path).spawn();
+    let _ = Command::new("rustfmt")
+        .arg("--edition")
+        .arg("2021")
+        .arg(path)
+        .spawn();
 }
 
 pub fn generate(sdl_path: &Path, target_crate_path: &Path) -> Result<(), Error> {
