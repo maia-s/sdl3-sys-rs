@@ -1,6 +1,21 @@
 use std::env;
 
 fn main() {
+    #[cfg(feature = "build-from-source")]
+    {
+        use std::{ffi::OsStr, path::Path};
+        let search_path =
+            Path::new(unsafe { OsStr::from_encoded_bytes_unchecked(sdl3_src::SEARCH_PATH) });
+        println!("cargo::rustc-link-search=native={}", search_path.display());
+    }
+    if cfg!(feature = "link-static") {
+        println!("cargo::rustc-link-lib=static=SDL3");
+    } else if cfg!(feature = "link-framework") {
+        todo!()
+    } else {
+        println!("cargo::rustc-link-lib=dylib=SDL3");
+    }
+
     let enabled_assert_levels = cfg!(feature = "assert-level-disabled") as usize
         + cfg!(feature = "assert-level-release") as usize
         + cfg!(feature = "assert-level-debug") as usize

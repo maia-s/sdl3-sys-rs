@@ -1,0 +1,23 @@
+[package]
+name = "sdl3-src"
+version = "0.0.1-dev-3.1.2-pre1890-g81644d260"
+edition = "2021"
+authors = ["Maia S. R.", "SDL developers"]
+license = "Zlib"
+description = "Crate to build the SDL 3 library from source (use via sdl3-sys)"
+repository = "https://github.com/maia-s/sdl3-sys-rs"
+documentation = "https://docs.rs/sdl3-src"
+keywords = ["sdl"]
+categories = []
+
+[features]
+default = []
+
+# Build a static library. The default is to build a shared library.
+build-static = []
+
+# Build a mac framework. build-static overrides this.
+build-framework = []
+
+[build-dependencies]
+cmake = "0.1"

@@ -53,12 +53,18 @@ fn run_rustfmt(path: &Path) {
         .spawn();
 }
 
-pub fn generate(sdl_path: &Path, target_crate_path: &Path) -> Result<(), Error> {
-    let mut showrev_path = sdl_path.to_path_buf();
+pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<(), Error> {
+    let mut sdl_path = source_crate_path.to_path_buf();
+    sdl_path.push("SDL");
+
+    let mut showrev_path = sdl_path.clone();
     showrev_path.push("build-scripts/showrev.sh");
 
-    let mut headers_path = sdl_path.to_path_buf();
+    let mut headers_path = sdl_path.clone();
     headers_path.push("include/SDL3");
+
+    let mut source_cargo_toml_path = source_crate_path.to_path_buf();
+    source_cargo_toml_path.push("Cargo.toml");
 
     let mut target_cargo_toml_path = target_crate_path.to_path_buf();
     target_cargo_toml_path.push("Cargo.toml");
@@ -76,19 +82,61 @@ pub fn generate(sdl_path: &Path, target_crate_path: &Path) -> Result<(), Error> 
     };
 
     if let Some(revision) = &revision {
+        fn vernum(s: &str) -> (&str, &str, &str, &str) {
+            let (major, rest) = s.split_once('.').unwrap();
+            let (minor, rest) = rest.split_once('.').unwrap();
+            let (micro, rest) = rest.split_once('-').unwrap();
+            let (offset, hash) = rest.split_once('-').unwrap();
+            (
+                &s[..major.len() + minor.len() + micro.len() + 2],
+                offset,
+                hash,
+                &s[..major.len() + minor.len() + 1],
+            )
+        }
+        let (sdl_ver, sdl_dep) = if let Some(ver) = revision.strip_prefix("release-") {
+            let (ver, offset, _, dep) = vernum(ver);
+            assert!(offset == "0", "off tag stable release");
+            (ver.to_string(), dep.to_string())
+        } else if let Some(ver) = revision.strip_prefix("prerelease-") {
+            let (ver, offset, hash, _) = vernum(ver);
+            let ver = format!("0.0.1-dev-{ver}-pre{offset}-{hash}");
+            let dep = format!("={ver}");
+            (ver, dep)
+        } else {
+            panic!("can't parse version");
+        };
+
+        let mut buf = String::new();
+        File::open(&source_cargo_toml_path)?.read_to_string(&mut buf)?;
+        let mut out = Writable(BufWriter::new(File::create(&source_cargo_toml_path)?));
+        let mut patched_src = false;
+        for line in buf.lines() {
+            if !patched_src && line.starts_with("version =") {
+                patched_src = true;
+                writeln!(out, r#"version = "{sdl_ver}""#)?;
+            } else {
+                writeln!(out, "{}", line)?;
+            }
+        }
+
         let mut buf = String::new();
         File::open(&target_cargo_toml_path)?.read_to_string(&mut buf)?;
         let mut out = Writable(BufWriter::new(File::create(&target_cargo_toml_path)?));
-        let mut patched = false;
+        let mut patched_sys = false;
+        let mut patched_src = false;
         for line in buf.lines() {
-            if !patched && line.starts_with("version =") && line.contains("+sdl3") {
+            if !patched_sys && line.starts_with("version =") && line.contains("+sdl3") {
                 let Some((revision_pos, _)) = line.char_indices().rev().find(|(_, c)| *c == '+')
                 else {
                     unreachable!()
                 };
-                patched = true;
+                patched_sys = true;
                 let pfx = &line[..=revision_pos];
                 writeln!(out, "{pfx}sdl3-{revision}\"")?;
+            } else if !patched_src && line.starts_with("version =") {
+                patched_src = true;
+                writeln!(out, r#"version = "{sdl_dep}""#)?;
             } else {
                 writeln!(out, "{}", line)?;
             }

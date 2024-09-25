@@ -3,6 +3,24 @@
 version = 3
 
 [[package]]
+name = "cc"
+version = "1.1.21"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "07b1695e2c7e8fc85310cde85aeaab7e3097f593c91d209d3f9df76c928100f0"
+dependencies = [
+ "shlex",
+]
+
+[[package]]
+name = "cmake"
+version = "0.1.51"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fb1e43aa7fd152b1f968787f7dbcdeb306d1867ff373c69955211876c053f91a"
+dependencies = [
+ "cc",
+]
+
+[[package]]
 name = "const-it"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -27,8 +45,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "sdl3-src"
+version = "0.0.1-dev-3.1.2-pre1890-g81644d260"
+dependencies = [
+ "cmake",
+]
+
+[[package]]
 name = "sdl3-sys"
 version = "0.0.10-dev+sdl3-prerelease-3.1.2-1890-g81644d260"
+dependencies = [
+ "sdl3-src",
+]
 
 [[package]]
 name = "sdl3-sys-gen"
@@ -37,6 +65,12 @@ dependencies = [
  "const-it",
  "str-block",
 ]
+
+[[package]]
+name = "shlex"
+version = "1.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
 
 [[package]]
 name = "str-block"

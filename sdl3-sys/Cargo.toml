@@ -10,12 +10,22 @@ documentation = "https://docs.rs/sdl3-sys"
 keywords = ["sdl", "windowing", "graphics"]
 categories = ["external-ffi-bindings", "rendering", "game-development", "multimedia", "no-std"]
 rust-version = "1.79"
+links = "SDL3"
 
 [features]
 default = []
 
 # Implement the Debug trait for applicable types
 debug-impls = []
+
+# Build and link SDL 3 from source instead of linking a pre-existing library
+build-from-source = ["dep:sdl3-src"]
+
+# Link SDL as a static library. The default is to link a shared/dynamic library.
+link-static = ["sdl3-src?/build-static"]
+
+# Link SDL as a mac framework. link-static overrides this.
+link-framework = ["sdl3-src?/build-framework"]
 
 # These are mutually exlusive; if more than one is enabled, the former in the list is used
 # (so e.g. disabled overrides release). If none are selected, either release or debug will
@@ -30,3 +40,8 @@ nightly = []
 
 [package.metadata.docs.rs]
 all-features = true
+
+[build-dependencies.sdl3-src]
+path = "../sdl3-src"
+version = "=0.0.1-dev-3.1.2-pre1890-g81644d260"
+optional = true
