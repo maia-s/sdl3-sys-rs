@@ -9,7 +9,6 @@ Also, `sdl3-sys` itself is still unstable and incomplete. The generator that
 parses and generates these bindings is new and may have bugs.
 
 Known issues:
-- There's no option to build and/or link the SDL library itself yet
 - Satellite libraries (mixer, image, ttf) aren't available yet
 - There are no tests yet, except for static asserts translated from the
   original headers
