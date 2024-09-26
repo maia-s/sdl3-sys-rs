@@ -1,5 +1,6 @@
 use super::{
-    Cast, Define, DefineValue, Expr, GetSpan, Ident, ParseContext, ParseErr, PrimitiveType, Type,
+    Cast, Define, DefineValue, Enum, Expr, GetSpan, Ident, ParseContext, ParseErr, PrimitiveType,
+    Type,
 };
 
 struct Patch<T: ?Sized> {
@@ -161,6 +162,26 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         },
     },
 ];
+
+pub fn patch_parsed_enum(ctx: &ParseContext, e: &mut Enum) -> Result<bool, ParseErr> {
+    patch(
+        ctx,
+        e,
+        |e| e.ident.as_ref().map(|i| i.as_str()).unwrap_or(""),
+        ENUM_PATCHES,
+    )
+}
+
+type EnumPatch = Patch<Enum>;
+
+const ENUM_PATCHES: &[EnumPatch] = &[EnumPatch {
+    module: Some("events"),
+    match_ident: |i| i == "SDL_EventType",
+    patch: |_, e| {
+        e.base_type = Some(Type::ident(Ident::new_inline("Uint32")));
+        Ok(true)
+    },
+}];
 
 pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {
     #[allow(clippy::single_match)]

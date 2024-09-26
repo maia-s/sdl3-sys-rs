@@ -38,7 +38,7 @@ use super::video::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_EventType(pub ::core::ffi::c_int);
+pub struct SDL_EventType(pub Uint32);
 impl SDL_EventType {
     /// Unused (do not remove)
     pub const FIRST: Self = Self(0);

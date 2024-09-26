@@ -1,6 +1,6 @@
 use super::{
-    Conditional, DocComment, Expr, ExprNoComma, GetSpan, Ident, Item, Kw_enum, Op, Parse,
-    ParseContext, ParseErr, ParseRawRes, PreProcBlock, Span, WsAndComments,
+    patch_parsed_enum, Conditional, DocComment, Expr, ExprNoComma, GetSpan, Ident, Item, Kw_enum,
+    Op, Parse, ParseContext, ParseErr, ParseRawRes, PreProcBlock, Span, Type, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -10,6 +10,7 @@ pub struct Enum {
     pub doc: Option<DocComment>,
     pub ident: Option<Ident>,
     pub variants: Vec<EnumVariant>,
+    pub base_type: Option<Type>,
 }
 
 impl Parse for Enum {
@@ -72,15 +73,15 @@ impl Parse for Enum {
                 .map(|dc| dc.span.clone())
                 .unwrap_or(enum_kw.span)
                 .join(&closing_brace.span);
-            Ok((
-                rest,
-                Some(Self {
-                    span,
-                    doc,
-                    ident,
-                    variants,
-                }),
-            ))
+            let mut e = Self {
+                span,
+                doc,
+                ident,
+                variants,
+                base_type: None,
+            };
+            patch_parsed_enum(ctx, &mut e)?;
+            Ok((rest, Some(e)))
         } else {
             Ok((input.clone(), None))
         }

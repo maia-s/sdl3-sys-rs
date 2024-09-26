@@ -993,7 +993,7 @@ impl Emit for TypeDef {
                 self.doc.emit(ctx)?;
                 assert!(e.doc.is_none());
 
-                let enum_rust_type = None;
+                let enum_base_type = e.base_type.clone();
                 let mut known_values = Vec::new();
 
                 let prefix = if e.variants.len() > 1 {
@@ -1026,14 +1026,13 @@ impl Emit for TypeDef {
                     writeln!(ctx)?;
                 }
 
-                #[allow(clippy::unnecessary_literal_unwrap)]
-                let enum_rust_type = enum_rust_type.unwrap_or(Type::primitive(PrimitiveType::Int));
+                let enum_base_type = enum_base_type.unwrap_or(Type::primitive(PrimitiveType::Int));
 
                 ctx.register_sym(
                     self.ident.clone(),
                     Some(self.ty.clone()),
                     None,
-                    Some(enum_rust_type.clone()),
+                    Some(enum_base_type.clone()),
                     None,
                     true,
                 )?;
@@ -1049,7 +1048,7 @@ impl Emit for TypeDef {
                     r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
                 )?;
                 write!(ctx, "pub struct {enum_ident}(pub ")?;
-                enum_rust_type.emit(ctx)?;
+                enum_base_type.emit(ctx)?;
                 writeln!(ctx, ");")?;
 
                 let mut impl_consts = String::new();
