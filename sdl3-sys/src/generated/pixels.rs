@@ -41,6 +41,12 @@ pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PixelType(pub ::core::ffi::c_int);
+impl From<SDL_PixelType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_PixelType) -> Self {
+        value.0
+    }
+}
 impl SDL_PixelType {
     pub const UNKNOWN: Self = Self(0);
     pub const INDEX1: Self = Self(1);
@@ -79,6 +85,12 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_BitmapOrder(pub ::core::ffi::c_int);
+impl From<SDL_BitmapOrder> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_BitmapOrder) -> Self {
+        value.0
+    }
+}
 impl SDL_BitmapOrder {
     pub const NONE: Self = Self(0);
     pub const _4321: Self = Self(1);
@@ -97,6 +109,12 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PackedOrder(pub ::core::ffi::c_int);
+impl From<SDL_PackedOrder> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_PackedOrder) -> Self {
+        value.0
+    }
+}
 impl SDL_PackedOrder {
     pub const NONE: Self = Self(0);
     pub const XRGB: Self = Self(1);
@@ -127,6 +145,12 @@ pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ArrayOrder(pub ::core::ffi::c_int);
+impl From<SDL_ArrayOrder> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_ArrayOrder) -> Self {
+        value.0
+    }
+}
 impl SDL_ArrayOrder {
     pub const NONE: Self = Self(0);
     pub const RGB: Self = Self(1);
@@ -153,6 +177,12 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PackedLayout(pub ::core::ffi::c_int);
+impl From<SDL_PackedLayout> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_PackedLayout) -> Self {
+        value.0
+    }
+}
 impl SDL_PackedLayout {
     pub const NONE: Self = Self(0);
     pub const _332: Self = Self(1);
@@ -220,6 +250,12 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PixelFormat(pub ::core::ffi::c_int);
+impl From<SDL_PixelFormat> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_PixelFormat) -> Self {
+        value.0
+    }
+}
 impl SDL_PixelFormat {
     pub const UNKNOWN: Self = Self(0);
     pub const INDEX1LSB: Self = Self(0x11100100);
@@ -556,6 +592,12 @@ pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::i32 {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ColorType(pub ::core::ffi::c_int);
+impl From<SDL_ColorType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_ColorType) -> Self {
+        value.0
+    }
+}
 impl SDL_ColorType {
     pub const UNKNOWN: Self = Self(0);
     pub const RGB: Self = Self(1);
@@ -575,6 +617,12 @@ pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ColorRange(pub ::core::ffi::c_int);
+impl From<SDL_ColorRange> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_ColorRange) -> Self {
+        value.0
+    }
+}
 impl SDL_ColorRange {
     pub const UNKNOWN: Self = Self(0);
     /// Narrow range, e.g. 16-235 for 8-bit RGB and luma, and 16-240 for 8-bit chroma
@@ -598,6 +646,12 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ColorPrimaries(pub ::core::ffi::c_int);
+impl From<SDL_ColorPrimaries> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_ColorPrimaries) -> Self {
+        value.0
+    }
+}
 impl SDL_ColorPrimaries {
     pub const UNKNOWN: Self = Self(0);
     /// ITU-R BT.709-6
@@ -662,6 +716,12 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TransferCharacteristics(pub ::core::ffi::c_int);
+impl From<SDL_TransferCharacteristics> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_TransferCharacteristics) -> Self {
+        value.0
+    }
+}
 impl SDL_TransferCharacteristics {
     pub const UNKNOWN: Self = Self(0);
     /// Rec. ITU-R BT.709-6 / ITU-R BT1361
@@ -759,6 +819,12 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MatrixCoefficients(pub ::core::ffi::c_int);
+impl From<SDL_MatrixCoefficients> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_MatrixCoefficients) -> Self {
+        value.0
+    }
+}
 impl SDL_MatrixCoefficients {
     pub const IDENTITY: Self = Self(0);
     /// ITU-R BT.709-6
@@ -827,6 +893,12 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ChromaLocation(pub ::core::ffi::c_int);
+impl From<SDL_ChromaLocation> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_ChromaLocation) -> Self {
+        value.0
+    }
+}
 impl SDL_ChromaLocation {
     /// RGB, no chroma sampling
     pub const NONE: Self = Self(0);
@@ -939,6 +1011,12 @@ pub const fn SDL_ISCOLORSPACE_FULL_RANGE(X: ::core::primitive::i32) -> ::core::p
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Colorspace(pub ::core::ffi::c_int);
+impl From<SDL_Colorspace> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_Colorspace) -> Self {
+        value.0
+    }
+}
 impl SDL_Colorspace {
     pub const UNKNOWN: Self = Self(0);
     /// Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709

@@ -139,6 +139,12 @@ pub use SDL_disabled_assert;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AssertState(pub ::core::ffi::c_int);
+impl From<SDL_AssertState> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_AssertState) -> Self {
+        value.0
+    }
+}
 impl SDL_AssertState {
     /// Retry the assert immediately.
     pub const RETRY: Self = Self(0);

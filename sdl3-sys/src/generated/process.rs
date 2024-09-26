@@ -114,6 +114,12 @@ extern "C" {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ProcessIO(pub ::core::ffi::c_int);
+impl From<SDL_ProcessIO> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_ProcessIO) -> Self {
+        value.0
+    }
+}
 impl SDL_ProcessIO {
     /// The I/O stream is inherited from the application.
     pub const INHERITED: Self = Self(0);

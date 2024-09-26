@@ -328,6 +328,12 @@ extern "C" {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TextInputType(pub ::core::ffi::c_int);
+impl From<SDL_TextInputType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_TextInputType) -> Self {
+        value.0
+    }
+}
 impl SDL_TextInputType {
     /// The input is text
     pub const TEXT: Self = Self(0);
@@ -387,6 +393,12 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Capitalization(pub ::core::ffi::c_int);
+impl From<SDL_Capitalization> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_Capitalization) -> Self {
+        value.0
+    }
+}
 impl SDL_Capitalization {
     /// No auto-capitalization will be done
     pub const NONE: Self = Self(0);

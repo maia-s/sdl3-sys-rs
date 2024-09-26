@@ -15,6 +15,12 @@ pub type SDL_FingerID = Uint64;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TouchDeviceType(pub ::core::ffi::c_int);
+impl From<SDL_TouchDeviceType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_TouchDeviceType) -> Self {
+        value.0
+    }
+}
 impl SDL_TouchDeviceType {
     pub const INVALID: Self = Self(-1_i32);
     pub const DIRECT: Self = Self(0_i32);

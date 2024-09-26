@@ -48,6 +48,12 @@ pub const SDL_BLENDMODE_INVALID: ::core::primitive::u32 = 2147483647_u32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_BlendOperation(pub ::core::ffi::c_int);
+impl From<SDL_BlendOperation> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_BlendOperation) -> Self {
+        value.0
+    }
+}
 impl SDL_BlendOperation {
     /// dst + src: supported by all renderers
     pub const ADD: Self = Self(0x1);
@@ -85,6 +91,12 @@ pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_BlendFactor(pub ::core::ffi::c_int);
+impl From<SDL_BlendFactor> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_BlendFactor) -> Self {
+        value.0
+    }
+}
 impl SDL_BlendFactor {
     /// 0, 0, 0, 0
     pub const ZERO: Self = Self(0x1);

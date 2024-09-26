@@ -69,6 +69,12 @@ pub const SDL_PEN_INPUT_ERASER_TIP: ::core::primitive::u32 = 1073741824_u32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PenAxis(pub ::core::ffi::c_int);
+impl From<SDL_PenAxis> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_PenAxis) -> Self {
+        value.0
+    }
+}
 impl SDL_PenAxis {
     /// Pen pressure.  Unidirectional: 0 to 1.0
     pub const PRESSURE: Self = Self(0);

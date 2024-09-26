@@ -69,6 +69,12 @@ pub struct SDL_Vertex {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TextureAccess(pub ::core::ffi::c_int);
+impl From<SDL_TextureAccess> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_TextureAccess) -> Self {
+        value.0
+    }
+}
 impl SDL_TextureAccess {
     /// Changes rarely, not lockable
     pub const STATIC: Self = Self(0);
@@ -93,6 +99,12 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGE
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_RendererLogicalPresentation(pub ::core::ffi::c_int);
+impl From<SDL_RendererLogicalPresentation> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_RendererLogicalPresentation) -> Self {
+        value.0
+    }
+}
 impl SDL_RendererLogicalPresentation {
     /// There is no logical size in effect
     pub const DISABLED: Self = Self(0);

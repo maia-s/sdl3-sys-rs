@@ -66,6 +66,12 @@ pub const SDL_INIT_CAMERA: ::core::primitive::u32 = 65536_u32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AppResult(pub ::core::ffi::c_int);
+impl From<SDL_AppResult> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_AppResult) -> Self {
+        value.0
+    }
+}
 impl SDL_AppResult {
     /// Value that requests that the app continue from the main callbacks.
     pub const CONTINUE: Self = Self(0);

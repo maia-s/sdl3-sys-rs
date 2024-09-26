@@ -311,6 +311,12 @@ emit! {
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     #[cfg_attr(feature = "debug-impls", derive(Debug))]
     pub struct SDL_DUMMY_ENUM(pub ::core::ffi::c_int);
+    impl From<SDL_DUMMY_ENUM> for ::core::ffi::c_int{
+        #[inline(always)]
+        fn from(value: SDL_DUMMY_ENUM) -> Self {
+            value.0
+        }
+    }
     impl SDL_DUMMY_ENUM {
         pub const DUMMY_ENUM_VALUE: Self = Self(0);
     }

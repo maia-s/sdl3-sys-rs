@@ -15,6 +15,12 @@ use super::error::*;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PowerState(pub ::core::ffi::c_int);
+impl From<SDL_PowerState> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_PowerState) -> Self {
+        value.0
+    }
+}
 impl SDL_PowerState {
     /// error determining power status
     pub const ERROR: Self = Self(-1_i32);

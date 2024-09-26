@@ -20,6 +20,12 @@ use super::properties::*;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_IOStatus(pub ::core::ffi::c_int);
+impl From<SDL_IOStatus> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_IOStatus) -> Self {
+        value.0
+    }
+}
 impl SDL_IOStatus {
     /// Everything is ready (no errors and not EOF).
     pub const READY: Self = Self(0);
@@ -59,6 +65,12 @@ pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_IOWhence(pub ::core::ffi::c_int);
+impl From<SDL_IOWhence> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_IOWhence) -> Self {
+        value.0
+    }
+}
 impl SDL_IOWhence {
     /// Seek from the beginning of data
     pub const SET: Self = Self(0);

@@ -52,6 +52,12 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: &::core::ffi::CStr =
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_SystemTheme(pub ::core::ffi::c_int);
+impl From<SDL_SystemTheme> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_SystemTheme) -> Self {
+        value.0
+    }
+}
 impl SDL_SystemTheme {
     /// Unknown system theme
     pub const UNKNOWN: Self = Self(0);
@@ -109,6 +115,12 @@ pub struct SDL_DisplayMode {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DisplayOrientation(pub ::core::ffi::c_int);
+impl From<SDL_DisplayOrientation> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_DisplayOrientation) -> Self {
+        value.0
+    }
+}
 impl SDL_DisplayOrientation {
     /// The display orientation can't be determined
     pub const UNKNOWN: Self = Self(0);
@@ -264,6 +276,12 @@ pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::primitive::u32) -> ::core::prim
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_FlashOperation(pub ::core::ffi::c_int);
+impl From<SDL_FlashOperation> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_FlashOperation) -> Self {
+        value.0
+    }
+}
 impl SDL_FlashOperation {
     /// Cancel any window flash state
     pub const CANCEL: Self = Self(0);
@@ -327,6 +345,12 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<extern "C" fn() -> *mu
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLattr(pub ::core::ffi::c_int);
+impl From<SDL_GLattr> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_GLattr) -> Self {
+        value.0
+    }
+}
 impl SDL_GLattr {
     /// the minimum number of bits for the red channel of the color buffer; defaults to 3.
     pub const RED_SIZE: Self = Self(0);
@@ -445,6 +469,12 @@ pub const SDL_GL_EGL_PLATFORM: SDL_GLattr = SDL_GLattr::EGL_PLATFORM;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLprofile(pub ::core::ffi::c_int);
+impl From<SDL_GLprofile> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_GLprofile) -> Self {
+        value.0
+    }
+}
 impl SDL_GLprofile {
     pub const CORE: Self = Self(0x0001);
     pub const COMPATIBILITY: Self = Self(0x0002);
@@ -465,6 +495,12 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLprofile = SDL_GLprofile::ES;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLcontextFlag(pub ::core::ffi::c_int);
+impl From<SDL_GLcontextFlag> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_GLcontextFlag) -> Self {
+        value.0
+    }
+}
 impl SDL_GLcontextFlag {
     pub const DEBUG_FLAG: Self = Self(0x0001);
     pub const FORWARD_COMPATIBLE_FLAG: Self = Self(0x0002);
@@ -489,6 +525,12 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLcontextFlag =
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLcontextReleaseFlag(pub ::core::ffi::c_int);
+impl From<SDL_GLcontextReleaseFlag> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_GLcontextReleaseFlag) -> Self {
+        value.0
+    }
+}
 impl SDL_GLcontextReleaseFlag {
     pub const NONE: Self = Self(0x0000);
     pub const FLUSH: Self = Self(0x0001);
@@ -507,6 +549,12 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLcontextReleaseFlag =
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLContextResetNotification(pub ::core::ffi::c_int);
+impl From<SDL_GLContextResetNotification> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_GLContextResetNotification) -> Self {
+        value.0
+    }
+}
 impl SDL_GLContextResetNotification {
     pub const NO_NOTIFICATION: Self = Self(0x0000);
     pub const LOSE_CONTEXT: Self = Self(0x0001);
@@ -2720,6 +2768,12 @@ extern "C" {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HitTestResult(pub ::core::ffi::c_int);
+impl From<SDL_HitTestResult> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_HitTestResult) -> Self {
+        value.0
+    }
+}
 impl SDL_HitTestResult {
     /// Region is normal. No special properties.
     pub const NORMAL: Self = Self(0);

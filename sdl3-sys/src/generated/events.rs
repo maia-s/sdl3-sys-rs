@@ -39,6 +39,12 @@ use super::video::*;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_EventType(pub Uint32);
+impl From<SDL_EventType> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_EventType) -> Self {
+        value.0
+    }
+}
 impl SDL_EventType {
     /// Unused (do not remove)
     pub const FIRST: Self = Self(0);
@@ -1490,6 +1496,12 @@ extern "C" {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_EventAction(pub ::core::ffi::c_int);
+impl From<SDL_EventAction> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_EventAction) -> Self {
+        value.0
+    }
+}
 impl SDL_EventAction {
     /// Add events to the back of the queue.
     pub const ADDEVENT: Self = Self(0);

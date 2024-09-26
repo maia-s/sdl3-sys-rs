@@ -65,6 +65,12 @@ pub type SDL_JoystickID = Uint32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoystickType(pub ::core::ffi::c_int);
+impl From<SDL_JoystickType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_JoystickType) -> Self {
+        value.0
+    }
+}
 impl SDL_JoystickType {
     pub const UNKNOWN: Self = Self(0);
     pub const GAMEPAD: Self = Self(1);
@@ -102,6 +108,12 @@ pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoystickConnectionState(pub ::core::ffi::c_int);
+impl From<SDL_JoystickConnectionState> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_JoystickConnectionState) -> Self {
+        value.0
+    }
+}
 impl SDL_JoystickConnectionState {
     pub const INVALID: Self = Self(-1_i32);
     pub const UNKNOWN: Self = Self(0_i32);

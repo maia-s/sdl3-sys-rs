@@ -86,6 +86,12 @@ pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_SensorType(pub ::core::ffi::c_int);
+impl From<SDL_SensorType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_SensorType) -> Self {
+        value.0
+    }
+}
 impl SDL_SensorType {
     /// Returned for an invalid sensor
     pub const INVALID: Self = Self(-1_i32);

@@ -42,6 +42,12 @@ pub const SDL_SURFACE_SIMD_ALIGNED: ::core::primitive::u32 = 8_u32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ScaleMode(pub ::core::ffi::c_int);
+impl From<SDL_ScaleMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_ScaleMode) -> Self {
+        value.0
+    }
+}
 impl SDL_ScaleMode {
     /// nearest pixel sampling
     pub const NEAREST: Self = Self(0);
@@ -62,6 +68,12 @@ pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_FlipMode(pub ::core::ffi::c_int);
+impl From<SDL_FlipMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_FlipMode) -> Self {
+        value.0
+    }
+}
 impl SDL_FlipMode {
     /// Do not flip
     pub const NONE: Self = Self(0);

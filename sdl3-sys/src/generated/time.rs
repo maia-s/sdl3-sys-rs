@@ -43,6 +43,12 @@ pub struct SDL_DateTime {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DateFormat(pub ::core::ffi::c_int);
+impl From<SDL_DateFormat> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_DateFormat) -> Self {
+        value.0
+    }
+}
 impl SDL_DateFormat {
     /// Year/Month/Day
     pub const YYYYMMDD: Self = Self(0);
@@ -69,6 +75,12 @@ pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TimeFormat(pub ::core::ffi::c_int);
+impl From<SDL_TimeFormat> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_TimeFormat) -> Self {
+        value.0
+    }
+}
 impl SDL_TimeFormat {
     /// 24 hour time
     pub const _24HR: Self = Self(0);

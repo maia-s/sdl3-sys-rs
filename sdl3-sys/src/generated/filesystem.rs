@@ -136,6 +136,12 @@ extern "C" {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Folder(pub ::core::ffi::c_int);
+impl From<SDL_Folder> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_Folder) -> Self {
+        value.0
+    }
+}
 impl SDL_Folder {
     /// The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents.
     pub const HOME: Self = Self(0);
@@ -217,6 +223,12 @@ extern "C" {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PathType(pub ::core::ffi::c_int);
+impl From<SDL_PathType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_PathType) -> Self {
+        value.0
+    }
+}
 impl SDL_PathType {
     /// path does not exist
     pub const NONE: Self = Self(0);

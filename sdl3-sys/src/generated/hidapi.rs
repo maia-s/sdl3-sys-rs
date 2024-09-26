@@ -36,6 +36,12 @@ use super::error::*;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_hid_bus_type(pub ::core::ffi::c_int);
+impl From<SDL_hid_bus_type> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_hid_bus_type) -> Self {
+        value.0
+    }
+}
 impl SDL_hid_bus_type {
     /// Unknown bus type
     pub const UNKNOWN: Self = Self(0x00);

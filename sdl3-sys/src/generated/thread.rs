@@ -49,6 +49,12 @@ pub type SDL_TLSID = SDL_AtomicInt;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ThreadPriority(pub ::core::ffi::c_int);
+impl From<SDL_ThreadPriority> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_ThreadPriority) -> Self {
+        value.0
+    }
+}
 impl SDL_ThreadPriority {
     pub const LOW: Self = Self(0);
     pub const NORMAL: Self = Self(1);

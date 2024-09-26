@@ -38,6 +38,12 @@ pub type SDL_PropertiesID = Uint32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PropertyType(pub ::core::ffi::c_int);
+impl From<SDL_PropertyType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_PropertyType) -> Self {
+        value.0
+    }
+}
 impl SDL_PropertyType {
     pub const INVALID: Self = Self(0);
     pub const POINTER: Self = Self(1);

@@ -27,6 +27,12 @@ pub type SDL_MouseID = Uint32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_SystemCursor(pub ::core::ffi::c_int);
+impl From<SDL_SystemCursor> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_SystemCursor) -> Self {
+        value.0
+    }
+}
 impl SDL_SystemCursor {
     /// Default cursor. Usually an arrow.
     pub const DEFAULT: Self = Self(0);
@@ -121,6 +127,12 @@ pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MouseWheelDirection(pub ::core::ffi::c_int);
+impl From<SDL_MouseWheelDirection> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_MouseWheelDirection) -> Self {
+        value.0
+    }
+}
 impl SDL_MouseWheelDirection {
     /// The scroll direction is normal
     pub const NORMAL: Self = Self(0);

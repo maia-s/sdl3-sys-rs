@@ -48,6 +48,12 @@ use super::stdinc::*;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_LogCategory(pub ::core::ffi::c_int);
+impl From<SDL_LogCategory> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_LogCategory) -> Self {
+        value.0
+    }
+}
 impl SDL_LogCategory {
     pub const APPLICATION: Self = Self(0);
     pub const ERROR: Self = Self(1);
@@ -100,6 +106,12 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_LogPriority(pub ::core::ffi::c_int);
+impl From<SDL_LogPriority> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_LogPriority) -> Self {
+        value.0
+    }
+}
 impl SDL_LogPriority {
     pub const INVALID: Self = Self(0);
     pub const TRACE: Self = Self(1);

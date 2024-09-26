@@ -20,6 +20,12 @@ use super::stdinc::*;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Scancode(pub ::core::ffi::c_int);
+impl From<SDL_Scancode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_Scancode) -> Self {
+        value.0
+    }
+}
 impl SDL_Scancode {
     pub const UNKNOWN: Self = Self(0);
     pub const A: Self = Self(4);

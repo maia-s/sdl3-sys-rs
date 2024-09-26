@@ -13,6 +13,7 @@ use std::{
     ops::Deref,
     rc::Rc,
 };
+use str_block::str_block;
 
 mod expr;
 pub use expr::Value;
@@ -1050,6 +1051,21 @@ impl Emit for TypeDef {
                 write!(ctx, "pub struct {enum_ident}(pub ")?;
                 enum_base_type.emit(ctx)?;
                 writeln!(ctx, ");")?;
+
+                write!(ctx, "impl From<{enum_ident}> for ")?;
+                enum_base_type.emit(ctx)?;
+                write!(
+                    ctx,
+                    str_block! {r#"
+                        {{
+                            #[inline(always)]
+                            fn from(value: {}) -> Self {{
+                                value.0
+                            }}
+                        }}
+                    "#},
+                    enum_ident
+                )?;
 
                 let mut impl_consts = String::new();
                 let mut ctx_impl = ctx.with_output(&mut impl_consts);

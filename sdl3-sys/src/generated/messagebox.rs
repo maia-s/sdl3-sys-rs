@@ -73,6 +73,12 @@ pub struct SDL_MessageBoxColor {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MessageBoxColorType(pub ::core::ffi::c_int);
+impl From<SDL_MessageBoxColorType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_MessageBoxColorType) -> Self {
+        value.0
+    }
+}
 impl SDL_MessageBoxColorType {
     pub const BACKGROUND: Self = Self(0);
     pub const TEXT: Self = Self(1);
