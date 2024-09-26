@@ -74,57 +74,110 @@ pub mod vulkan;
 
 /// Reexports of everything from the other modules
 pub mod everything {
+    #[doc(no_inline)]
     pub use super::assert::*;
+    #[doc(no_inline)]
     pub use super::atomic::*;
+    #[doc(no_inline)]
     pub use super::audio::*;
+    #[doc(no_inline)]
     pub use super::bits::*;
+    #[doc(no_inline)]
     pub use super::blendmode::*;
+    #[doc(no_inline)]
     pub use super::camera::*;
+    #[doc(no_inline)]
     pub use super::clipboard::*;
+    #[doc(no_inline)]
     pub use super::cpuinfo::*;
+    #[doc(no_inline)]
     pub use super::dialog::*;
+    #[doc(no_inline)]
     pub use super::error::*;
+    #[doc(no_inline)]
     pub use super::events::*;
+    #[doc(no_inline)]
     pub use super::filesystem::*;
+    #[doc(no_inline)]
     pub use super::gamepad::*;
+    #[doc(no_inline)]
     pub use super::gpu::*;
+    #[doc(no_inline)]
     pub use super::guid::*;
+    #[doc(no_inline)]
     pub use super::haptic::*;
+    #[doc(no_inline)]
     pub use super::hidapi::*;
+    #[doc(no_inline)]
     pub use super::hints::*;
+    #[doc(no_inline)]
     pub use super::init::*;
+    #[doc(no_inline)]
     pub use super::iostream::*;
+    #[doc(no_inline)]
     pub use super::joystick::*;
+    #[doc(no_inline)]
     pub use super::keyboard::*;
+    #[doc(no_inline)]
     pub use super::keycode::*;
+    #[doc(no_inline)]
     pub use super::loadso::*;
+    #[doc(no_inline)]
     pub use super::locale::*;
+    #[doc(no_inline)]
     pub use super::log::*;
+    #[doc(no_inline)]
     pub use super::messagebox::*;
+    #[doc(no_inline)]
     pub use super::metal::*;
+    #[doc(no_inline)]
     pub use super::misc::*;
+    #[doc(no_inline)]
     pub use super::mouse::*;
+    #[doc(no_inline)]
     pub use super::mutex::*;
+    #[doc(no_inline)]
     pub use super::pen::*;
+    #[doc(no_inline)]
     pub use super::pixels::*;
+    #[doc(no_inline)]
     pub use super::platform::*;
+    #[doc(no_inline)]
     pub use super::power::*;
+    #[doc(no_inline)]
     pub use super::process::*;
+    #[doc(no_inline)]
     pub use super::properties::*;
+    #[doc(no_inline)]
     pub use super::rect::*;
+    #[doc(no_inline)]
     pub use super::render::*;
+    #[doc(no_inline)]
     pub use super::revision::*;
+    #[doc(no_inline)]
     pub use super::scancode::*;
+    #[doc(no_inline)]
     pub use super::sensor::*;
+    #[doc(no_inline)]
     pub use super::stdinc::*;
+    #[doc(no_inline)]
     pub use super::storage::*;
+    #[doc(no_inline)]
     pub use super::surface::*;
+    #[doc(no_inline)]
     pub use super::system::*;
+    #[doc(no_inline)]
     pub use super::thread::*;
+    #[doc(no_inline)]
     pub use super::time::*;
+    #[doc(no_inline)]
     pub use super::timer::*;
+    #[doc(no_inline)]
     pub use super::touch::*;
+    #[doc(no_inline)]
     pub use super::version::*;
+    #[doc(no_inline)]
     pub use super::video::*;
+    #[doc(no_inline)]
     pub use super::vulkan::*;
 }

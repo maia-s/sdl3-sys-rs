@@ -300,6 +300,7 @@ impl Gen {
         writeln!(file, "\n/// Reexports of everything from the other modules")?;
         writeln!(file, "pub mod everything {{")?;
         for module in self.emitted.borrow().keys() {
+            writeln!(file, "    #[doc(no_inline)]")?;
             writeln!(file, "    pub use super::{module}::*;")?;
         }
         writeln!(file, "}}")?;
