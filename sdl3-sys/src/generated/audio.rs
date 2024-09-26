@@ -1569,7 +1569,7 @@ extern "C" {
 /// \sa SDL_SetAudioStreamGetCallback
 /// \sa SDL_SetAudioStreamPutCallback
 pub type SDL_AudioStreamCallback = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         stream: *mut SDL_AudioStream,
         additional_amount: ::core::ffi::c_int,
@@ -1802,7 +1802,7 @@ extern "C" {
 ///
 /// \sa SDL_SetAudioPostmixCallback
 pub type SDL_AudioPostmixCallback = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         spec: *const SDL_AudioSpec,
         buffer: *mut ::core::ffi::c_float,

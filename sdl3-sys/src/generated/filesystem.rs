@@ -286,7 +286,7 @@ extern "C" {
 }
 
 pub type SDL_EnumerateDirectoryCallback = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         dirname: *const ::core::ffi::c_char,
         fname: *const ::core::ffi::c_char,

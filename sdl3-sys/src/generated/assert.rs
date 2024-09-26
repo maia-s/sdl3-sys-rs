@@ -534,7 +534,7 @@ pub use SDL_assert_always;
 ///
 /// \since This datatype is available since SDL 3.0.0.
 pub type SDL_AssertionHandler = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         data: *const SDL_AssertData,
         userdata: *mut ::core::ffi::c_void,
     ) -> SDL_AssertState,

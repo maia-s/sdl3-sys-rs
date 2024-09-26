@@ -498,7 +498,7 @@ extern "C" {
 /// \sa SDL_GetMemoryFunctions
 /// \sa SDL_SetMemoryFunctions
 pub type SDL_malloc_func = ::core::option::Option<
-    extern "C" fn(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void,
+    unsafe extern "C" fn(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void,
 >;
 
 /// A callback used to implement SDL_calloc().
@@ -519,7 +519,7 @@ pub type SDL_malloc_func = ::core::option::Option<
 /// \sa SDL_GetMemoryFunctions
 /// \sa SDL_SetMemoryFunctions
 pub type SDL_calloc_func = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         nmemb: ::core::primitive::usize,
         size: ::core::primitive::usize,
     ) -> *mut ::core::ffi::c_void,
@@ -543,7 +543,7 @@ pub type SDL_calloc_func = ::core::option::Option<
 /// \sa SDL_GetMemoryFunctions
 /// \sa SDL_SetMemoryFunctions
 pub type SDL_realloc_func = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         mem: *mut ::core::ffi::c_void,
         size: ::core::primitive::usize,
     ) -> *mut ::core::ffi::c_void,
@@ -563,7 +563,8 @@ pub type SDL_realloc_func = ::core::option::Option<
 /// \sa SDL_GetOriginalMemoryFunctions
 /// \sa SDL_GetMemoryFunctions
 /// \sa SDL_SetMemoryFunctions
-pub type SDL_free_func = ::core::option::Option<extern "C" fn(mem: *mut ::core::ffi::c_void)>;
+pub type SDL_free_func =
+    ::core::option::Option<unsafe extern "C" fn(mem: *mut ::core::ffi::c_void)>;
 
 extern "C" {
     /// Get the original set of SDL memory functions.
@@ -930,7 +931,7 @@ extern "C" {
 }
 
 pub type SDL_CompareCallback = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         a: *const ::core::ffi::c_void,
         b: *const ::core::ffi::c_void,
     ) -> ::core::ffi::c_int,
@@ -956,7 +957,7 @@ extern "C" {
 }
 
 pub type SDL_CompareCallback_r = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         a: *const ::core::ffi::c_void,
         b: *const ::core::ffi::c_void,
@@ -4204,13 +4205,13 @@ emit! {
     /// `SDL_FUNCTION_POINTER_IS_VOID_POINTER` before including any SDL headers.
     ///
     /// \since This datatype is available since SDL 3.0.0.
-    pub type SDL_FunctionPointer = ::core::option::Option<extern "C" fn()>;
+    pub type SDL_FunctionPointer = ::core::option::Option<unsafe extern "C" fn()>;
 
 }
 
 #[cfg(not(doc))]
 emit! {
-    pub type SDL_FunctionPointer = ::core::option::Option<extern "C" fn()>;
+    pub type SDL_FunctionPointer = ::core::option::Option<unsafe extern "C" fn()>;
 
 }
 

@@ -3800,7 +3800,7 @@ extern "C" {
 ///
 /// \sa SDL_AddHintCallback
 pub type SDL_HintCallback = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         name: *const ::core::ffi::c_char,
         oldValue: *const ::core::ffi::c_char,

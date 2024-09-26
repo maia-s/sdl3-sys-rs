@@ -32,7 +32,7 @@ emit! {
     ///
     /// \sa SDL_SetWindowsMessageHook
     /// \sa SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP
-    pub type SDL_WindowsMessageHook = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, msg: *mut MSG) -> ::core::primitive::bool>;
+    pub type SDL_WindowsMessageHook = ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void, msg: *mut MSG) -> ::core::primitive::bool>;
 
     extern "C" {
         /// Set a callback for every Windows message, run before TranslateMessage().
@@ -94,7 +94,7 @@ emit! {
 pub type XEvent = _XEvent;
 
 pub type SDL_X11EventHook = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         xevent: *mut XEvent,
     ) -> ::core::primitive::bool,
@@ -163,7 +163,7 @@ emit! {
     /// \since This datatype is available since SDL 3.0.0.
     ///
     /// \sa SDL_SetiOSAnimationCallback
-    pub type SDL_iOSAnimationCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
+    pub type SDL_iOSAnimationCallback = ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
 
     extern "C" {
         /// Use this function to set the animation callback on Apple iOS.
@@ -428,7 +428,7 @@ emit! {
         pub fn SDL_GetAndroidCachePath() -> *const ::core::ffi::c_char;
     }
 
-    pub type SDL_RequestAndroidPermissionCallback = ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void, permission: *const ::core::ffi::c_char, granted: ::core::primitive::bool)>;
+    pub type SDL_RequestAndroidPermissionCallback = ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void, permission: *const ::core::ffi::c_char, granted: ::core::primitive::bool)>;
 
     extern "C" {
         /// Request permissions at runtime, asynchronously.

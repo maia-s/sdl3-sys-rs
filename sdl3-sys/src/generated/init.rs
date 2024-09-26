@@ -88,22 +88,26 @@ pub const SDL_APP_SUCCESS: SDL_AppResult = SDL_AppResult::SUCCESS;
 pub const SDL_APP_FAILURE: SDL_AppResult = SDL_AppResult::FAILURE;
 
 pub type SDL_AppInit_func = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         appstate: *mut *mut ::core::ffi::c_void,
         argc: ::core::ffi::c_int,
         argv: *mut *mut ::core::ffi::c_char,
     ) -> SDL_AppResult,
 >;
 
-pub type SDL_AppIterate_func =
-    ::core::option::Option<extern "C" fn(appstate: *mut ::core::ffi::c_void) -> SDL_AppResult>;
+pub type SDL_AppIterate_func = ::core::option::Option<
+    unsafe extern "C" fn(appstate: *mut ::core::ffi::c_void) -> SDL_AppResult,
+>;
 
 pub type SDL_AppEvent_func = ::core::option::Option<
-    extern "C" fn(appstate: *mut ::core::ffi::c_void, event: *mut SDL_Event) -> SDL_AppResult,
+    unsafe extern "C" fn(
+        appstate: *mut ::core::ffi::c_void,
+        event: *mut SDL_Event,
+    ) -> SDL_AppResult,
 >;
 
 pub type SDL_AppQuit_func =
-    ::core::option::Option<extern "C" fn(appstate: *mut ::core::ffi::c_void)>;
+    ::core::option::Option<unsafe extern "C" fn(appstate: *mut ::core::ffi::c_void)>;
 
 extern "C" {
     /// Initialize the SDL library.

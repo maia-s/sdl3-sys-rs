@@ -72,8 +72,9 @@ pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPrio
 /// \returns a value that can be reported through SDL_WaitThread().
 ///
 /// \since This datatype is available since SDL 3.0.0.
-pub type SDL_ThreadFunction =
-    ::core::option::Option<extern "C" fn(data: *mut ::core::ffi::c_void) -> ::core::ffi::c_int>;
+pub type SDL_ThreadFunction = ::core::option::Option<
+    unsafe extern "C" fn(data: *mut ::core::ffi::c_void) -> ::core::ffi::c_int,
+>;
 
 #[cfg(doc)]
 emit! {
@@ -425,7 +426,7 @@ extern "C" {
 ///
 /// \sa SDL_SetTLS
 pub type SDL_TLSDestructorCallback =
-    ::core::option::Option<extern "C" fn(value: *mut ::core::ffi::c_void)>;
+    ::core::option::Option<unsafe extern "C" fn(value: *mut ::core::ffi::c_void)>;
 
 extern "C" {
     /// Set the current thread's value associated with a thread local storage ID.

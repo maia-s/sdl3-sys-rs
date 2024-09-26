@@ -165,7 +165,7 @@ extern "C" {
 ///
 /// \sa SDL_SetPointerPropertyWithCleanup
 pub type SDL_CleanupPropertyCallback = ::core::option::Option<
-    extern "C" fn(userdata: *mut ::core::ffi::c_void, value: *mut ::core::ffi::c_void),
+    unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void, value: *mut ::core::ffi::c_void),
 >;
 
 extern "C" {
@@ -532,7 +532,7 @@ extern "C" {
 ///
 /// \sa SDL_EnumerateProperties
 pub type SDL_EnumeratePropertiesCallback = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,

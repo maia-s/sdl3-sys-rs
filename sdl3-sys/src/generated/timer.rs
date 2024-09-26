@@ -146,7 +146,7 @@ pub type SDL_TimerID = Uint32;
 ///
 /// \sa SDL_AddTimer
 pub type SDL_TimerCallback = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         timerID: SDL_TimerID,
         interval: Uint32,
@@ -216,7 +216,7 @@ extern "C" {
 ///
 /// \sa SDL_AddTimerNS
 pub type SDL_NSTimerCallback = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         timerID: SDL_TimerID,
         interval: Uint64,

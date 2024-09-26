@@ -320,9 +320,11 @@ pub type SDL_EGLint = ::core::ffi::c_int;
 /// EGL attribute initialization callback types.
 ///
 /// \since This datatype is available since SDL 3.0.0.
-pub type SDL_EGLAttribArrayCallback = ::core::option::Option<extern "C" fn() -> *mut SDL_EGLAttrib>;
+pub type SDL_EGLAttribArrayCallback =
+    ::core::option::Option<unsafe extern "C" fn() -> *mut SDL_EGLAttrib>;
 
-pub type SDL_EGLIntArrayCallback = ::core::option::Option<extern "C" fn() -> *mut SDL_EGLint>;
+pub type SDL_EGLIntArrayCallback =
+    ::core::option::Option<unsafe extern "C" fn() -> *mut SDL_EGLint>;
 
 /// An enumeration of OpenGL configuration attributes.
 ///
@@ -2826,7 +2828,7 @@ pub const SDL_HITTEST_RESIZE_LEFT: SDL_HitTestResult = SDL_HitTestResult::RESIZE
 ///
 /// \sa SDL_SetWindowHitTest
 pub type SDL_HitTest = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         win: *mut SDL_Window,
         area: *const SDL_Point,
         data: *mut ::core::ffi::c_void,

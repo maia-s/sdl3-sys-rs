@@ -61,7 +61,7 @@ pub struct SDL_DialogFileFilter {
 /// \sa SDL_ShowSaveFileDialog
 /// \sa SDL_ShowOpenFolderDialog
 pub type SDL_DialogFileCallback = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         filelist: *const *const ::core::ffi::c_char,
         filter: ::core::ffi::c_int,

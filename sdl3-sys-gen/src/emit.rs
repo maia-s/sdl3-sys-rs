@@ -1211,7 +1211,7 @@ impl Emit for TypeDef {
                 self.doc.emit(ctx)?;
                 write!(
                     ctx,
-                    "pub type {} = ::core::option::Option<",
+                    "pub type {} = ::core::option::Option<unsafe ",
                     self.ident.as_str()
                 )?;
                 emit_extern_start(ctx, &f.abi, true)?;

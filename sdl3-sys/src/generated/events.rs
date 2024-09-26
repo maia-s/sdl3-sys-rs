@@ -1799,7 +1799,7 @@ extern "C" {
 /// \sa SDL_SetEventFilter
 /// \sa SDL_AddEventWatch
 pub type SDL_EventFilter = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         event: *mut SDL_Event,
     ) -> ::core::primitive::bool,

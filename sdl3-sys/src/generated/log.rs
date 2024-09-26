@@ -480,7 +480,7 @@ extern "C" {
 ///
 /// \since This datatype is available since SDL 3.0.0.
 pub type SDL_LogOutputFunction = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         category: ::core::ffi::c_int,
         priority: SDL_LogPriority,

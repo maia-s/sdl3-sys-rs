@@ -116,7 +116,7 @@ extern "C" {
 ///
 /// \sa SDL_SetClipboardData
 pub type SDL_ClipboardDataCallback = ::core::option::Option<
-    extern "C" fn(
+    unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         mime_type: *const ::core::ffi::c_char,
         size: *mut ::core::primitive::usize,
@@ -132,7 +132,7 @@ pub type SDL_ClipboardDataCallback = ::core::option::Option<
 ///
 /// \sa SDL_SetClipboardData
 pub type SDL_ClipboardCleanupCallback =
-    ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
+    ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
 
 extern "C" {
     /// Offer clipboard data to the OS.
