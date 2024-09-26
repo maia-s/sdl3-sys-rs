@@ -297,6 +297,13 @@ impl Gen {
         for module in self.emitted.borrow().keys() {
             writeln!(file, "pub mod {module};")?;
         }
+        writeln!(file, "\n/// Reexports of everything from the other modules")?;
+        writeln!(file, "pub mod everything {{")?;
+        for module in self.emitted.borrow().keys() {
+            writeln!(file, "    pub use super::{module}::*;")?;
+        }
+        writeln!(file, "}}")?;
+        drop(file);
         run_rustfmt(&path);
 
         Ok(())
