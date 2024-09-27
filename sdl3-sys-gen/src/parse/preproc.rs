@@ -251,7 +251,8 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                 | PreProcLineKind::Undef(_)
                 | PreProcLineKind::Include(_)
                 | PreProcLineKind::Pragma(_)
-                | PreProcLineKind::Error(_) => return Ok((input.clone(), None)),
+                | PreProcLineKind::Error(_)
+                | PreProcLineKind::Warning(_) => return Ok((input.clone(), None)),
             };
 
             if !ALLOW_INITIAL_ELSE && is_else {
@@ -348,7 +349,8 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                             | PreProcLineKind::Undef(_)
                             | PreProcLineKind::Include(_)
                             | PreProcLineKind::Pragma(_)
-                            | PreProcLineKind::Error(_) => {
+                            | PreProcLineKind::Error(_)
+                            | PreProcLineKind::Warning(_) => {
                                 rest = rest_;
                                 continue;
                             }
@@ -368,11 +370,13 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
     }
 }
 
+#[derive(Debug)]
 pub struct PreProcLine {
     pub span: Span,
     pub kind: PreProcLineKind,
 }
 
+#[derive(Debug)]
 pub enum PreProcLineKind {
     If(Expr),
     IfDef(Ident),
@@ -387,6 +391,7 @@ pub enum PreProcLineKind {
     Include(Include),
     Pragma(Span),
     Error(Span),
+    Warning(#[allow(dead_code)] Span),
 }
 
 impl Parse for PreProcLine {
@@ -507,12 +512,11 @@ impl Parse for PreProcLine {
                 }
 
                 "pragma" => PreProcLineKind::Pragma(i),
-
                 "error" => PreProcLineKind::Error(i),
+                "warning" => PreProcLineKind::Warning(i),
 
                 _ => return Ok((input.clone(), None)),
             };
-
             Ok((rest, Some(Self { span, kind })))
         } else {
             Ok((input.clone(), None))

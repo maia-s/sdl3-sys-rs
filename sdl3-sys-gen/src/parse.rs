@@ -228,7 +228,7 @@ pub trait Parse: Sized {
     fn try_parse_try_all(ctx: &ParseContext, input: &Span) -> ParseRes<Option<Self>> {
         match Self::try_parse_raw(ctx, input) {
             Ok((rest, parsed)) => {
-                if rest.is_empty() {
+                if rest.trim_wsc_start()?.is_empty() {
                     Ok(parsed)
                 } else {
                     Ok(None)
@@ -241,11 +241,12 @@ pub trait Parse: Sized {
     fn try_parse_all(ctx: &ParseContext, input: Span) -> ParseRes<Option<Self>> {
         match Self::try_parse_raw(ctx, &input) {
             Ok((rest, parsed)) => {
+                let rest = rest.trim_wsc_start()?;
                 if rest.is_empty() {
                     Ok(parsed)
                 } else {
                     Err(ParseErr::new(
-                        rest,
+                        rest.trim_wsc_end()?,
                         format!("unexpected data after {}", Self::desc()),
                     ))
                 }

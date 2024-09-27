@@ -244,6 +244,10 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_PLATFORM_GDK" = CfgExpr(always_false!("SDL_PLATFORM_GDK")); // change WIN32 if this is changed
             "SDL_PLATFORM_IOS" = CfgExpr(r#"any(target_os = "ios", target_os = "tvos", target_os = "watchos")"#);
             "SDL_PLATFORM_LINUX" = CfgExpr(r#"target_os = "linux""#);
+            "SDL_PLATFORM_NGAGE" = CfgExpr(always_false!("SDL_PLATFORM_NGAGE"));
+            "SDL_PLATFORM_PS2" = CfgExpr(always_false!("SDL_PLATFORM_PS2"));
+            "SDL_PLATFORM_PSP" = CfgExpr(always_false!("SDL_PLATFORM_PSP"));
+            "SDL_PLATFORM_TVOS" = CfgExpr(r#"target_os = "tvos""#);
             "SDL_PLATFORM_VITA" = CfgExpr(always_false!("SDL_PLATFORM_VITA"));
             "SDL_PLATFORM_WIN32" = CfgExpr("windows");
             "SDL_PLATFORM_WINDOWS" = CfgExpr("windows");
@@ -273,7 +277,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "PRIX64",
             "DOXYGEN_SHOULD_IGNORE_THIS",
             "NO_SDL_VULKAN_TYPEDEFS",
-            format!("SDL_{module}_h_"), "SDL_locale_h",
+            format!("SDL_{module}_h_"), "SDL_locale_h", "SDL_main_impl_h_",
             "SDL_ASSERT_LEVEL",
             "SDL_AssertBreakpoint",
             "SDL_AtomicDecRef",
@@ -284,6 +288,10 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_DEFINE_STDBOOL",
             "SDL_EndThreadFunction",
             "SDL_FUNCTION_POINTER_IS_VOID_POINTER",
+            "SDL_MAIN_AVAILABLE",
+            "SDL_MAIN_NEEDED",
+            "SDL_MAIN_NOIMPL",
+            "SDL_MAIN_USE_CALLBACKS",
             "SDL_memcpy",
             "SDL_memmove",
             "SDL_memset",
@@ -306,6 +314,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_SLOW_MEMSET",
             "SDL_THREAD_SAFETY_ANALYSIS",
             "SDL_VENDOR_INFO",
+            "SDLMAIN_DECLSPEC",
             "VULKAN_H_",
         }
 
@@ -336,11 +345,13 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "INT64_C"("x") = rust("{x}_i64", Type::primitive(PrimitiveType::Int64T), true, false);
             "UINT64_C"("x") = rust("{x}_u64", Type::primitive(PrimitiveType::Uint64T), true, false);
             "SIZE_MAX" = rust("::core::primitive::usize::MAX", Type::primitive(PrimitiveType::SizeT), true, false);
+            "UNICODE" = DefineValue::one();
             "__has_builtin"("builtin") = DefineValue::Other(Span::new_inline("__has_builtin"));
             "SDL_BIG_ENDIAN" = DefineValue::parse_expr("4321")?;
             "SDL_DISABLE_ALLOCA" = DefineValue::one();
             "SDL_DISABLE_ANALYZE_MACROS" = DefineValue::one();
             "SDL_LIL_ENDIAN" = DefineValue::parse_expr("1234")?;
+            "SDL_MAIN_HANDLED" = DefineValue::one();
             "SDL_NULL_WHILE_LOOP_CONDITION" = DefineValue::parse_expr("0")?;
         }
 

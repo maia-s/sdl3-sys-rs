@@ -15,9 +15,6 @@ links = "SDL3"
 [features]
 default = []
 
-# Implement the Debug trait for applicable types
-debug-impls = []
-
 # Build and link SDL 3 from source instead of linking a pre-existing library
 build-from-source = ["dep:sdl3-src"]
 
@@ -35,6 +32,9 @@ assert-level-release = []
 assert-level-debug = []
 assert-level-paranoid = []
 
+# Implement the Debug trait for applicable types
+debug-impls = []
+
 # Used to enable core::ffi::VaList
 nightly = []
 
@@ -42,6 +42,6 @@ nightly = []
 all-features = true
 
 [build-dependencies.sdl3-src]
-path = "../sdl3-src"
 version = "=0.0.1-dev-3.1.2-pre1890-g81644d260"
+path = "../sdl3-src"
 optional = true

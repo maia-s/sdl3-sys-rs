@@ -48,10 +48,11 @@ impl Eval for Item {
             Item::Include(_) => todo!(),
             Item::Pragma(_) => todo!(),
             Item::Error(_) => todo!(),
+            Item::Warning(_) => todo!(),
             Item::FileDoc(_) => todo!(),
             Item::StructOrUnion(_) => todo!(),
             Item::Enum(_) => todo!(),
-            Item::Function(_) => todo!(),
+            Item::Function(_) => Ok(None),
             Item::Expr(expr) => {
                 let Some(expr) = expr.try_eval(ctx)? else {
                     todo!()

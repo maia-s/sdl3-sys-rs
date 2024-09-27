@@ -41,8 +41,8 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
         if let (rest, Some(ident)) = Ident::try_parse_raw(ctx, input)? {
             match KIND {
                 ATTR_ABI => match ident.as_str() {
-                    "APIENTRY" | "APIENTRYP" | "EGLAPIENTRY" | "EGLAPIENTRYP" | "GLAPIENTRY"
-                    | "GL_APIENTRY" | "GL_APIENTRYP" | "SDLCALL" | "__cdecl" => {
+                    "__cdecl" | "APIENTRY" | "APIENTRYP" | "EGLAPIENTRY" | "EGLAPIENTRYP"
+                    | "GLAPIENTRY" | "GL_APIENTRY" | "GL_APIENTRYP" | "SDLCALL" | "WINAPI" => {
                         return Ok((rest, Some(Self { ident, args })))
                     }
 
@@ -89,6 +89,7 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                     | "SDL_DEPRECATED"
                     | "SDL_FORCE_INLINE"
                     | "SDL_MALLOC"
+                    | "SDLMAIN_DECLSPEC"
                     | "__inline"
                     | "__inline__" => return Ok((rest, Some(Self { ident, args }))),
 

@@ -1491,7 +1491,6 @@ impl Eval for Expr {
                             todo!()
                         };
                         let Some(ty) = sym.field_type(ctx, rhs.as_str()) else {
-                            dbg!(lhs, rhs, sym);
                             todo!();
                         };
                         let value = ctx.capture_output(|ctx| {

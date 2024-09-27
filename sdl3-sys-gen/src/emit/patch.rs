@@ -134,6 +134,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                     | "SDL_MemoryBarrierAcquire" // emitted in function patch for SDL_MemoryBarrier*Function
                     | "SDL_MemoryBarrierRelease" // emitted in function patch for SDL_MemoryBarrier*Function
                     | "SDL_memset"
+                    | "SDL_MAIN_USE_CALLBACKS"
                     | "SDL_NULL_WHILE_LOOP_CONDITION"
                     | "SDL_PRILLd"
                     | "SDL_PRILLu"

@@ -44,6 +44,7 @@ pub mod keycode;
 pub mod loadso;
 pub mod locale;
 pub mod log;
+pub mod main;
 pub mod messagebox;
 pub mod metal;
 pub mod misc;
@@ -126,6 +127,8 @@ pub mod everything {
     pub use super::locale::*;
     #[doc(no_inline)]
     pub use super::log::*;
+    #[doc(no_inline)]
+    pub use super::main::*;
     #[doc(no_inline)]
     pub use super::messagebox::*;
     #[doc(no_inline)]

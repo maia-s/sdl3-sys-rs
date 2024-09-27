@@ -18,7 +18,7 @@ use std::{
     collections::{BTreeMap, HashSet},
     error,
     fmt::{self, Debug, Display},
-    fs::{read_dir, DirBuilder, File, OpenOptions},
+    fs::{self, read_dir, DirBuilder, File, OpenOptions},
     io::{self, BufWriter, Read},
     path::{Path, PathBuf},
     process::Command,
@@ -32,11 +32,11 @@ fn skip(module: &str) -> bool {
         "egl",
         "endian",
         "intrin",
+        "main_impl",
         "oldnames",
         "platform_defines",
     ]
     .contains(&module)
-        || module.starts_with("main")
         || module.starts_with("opengl")
         || module.starts_with("test")
 }
@@ -51,6 +51,38 @@ fn run_rustfmt(path: &Path) {
         .arg("2021")
         .arg(path)
         .spawn();
+}
+
+struct LinesPatch<'a> {
+    match_lines: &'a [&'a dyn Fn(&str) -> bool],
+    apply: &'a dyn Fn(&[String]) -> String,
+}
+
+impl LinesPatch<'_> {
+    fn patch(&self, s: &str) -> String {
+        let mut out = String::new();
+        let mut matched_lines = Vec::new();
+        let mut lines = s.lines();
+        while let Some(line) = lines.next() {
+            if self.match_lines[matched_lines.len()](line) {
+                matched_lines.push(format!("{line}\n"));
+                if matched_lines.len() == self.match_lines.len() {
+                    out.push_str(&(self.apply)(&matched_lines));
+                    for line in lines {
+                        out.push_str(line);
+                        out.push('\n');
+                    }
+                    return out;
+                }
+            } else {
+                out.extend(matched_lines.drain(..));
+                out.push_str(line);
+                out.push('\n');
+            }
+        }
+        out.extend(matched_lines.drain(..));
+        out
+    }
 }
 
 pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<(), Error> {
@@ -107,43 +139,39 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
             panic!("can't parse version");
         };
 
-        let mut buf = String::new();
-        File::open(&source_cargo_toml_path)?.read_to_string(&mut buf)?;
-        let mut out = Writable(BufWriter::new(File::create(&source_cargo_toml_path)?));
-        let mut patched_src = false;
-        for line in buf.lines() {
-            if !patched_src && line.starts_with("version =") {
-                patched_src = true;
-                writeln!(out, r#"version = "{sdl_ver}""#)?;
-            } else {
-                writeln!(out, "{}", line)?;
+        fs::write(
+            &source_cargo_toml_path,
+            LinesPatch {
+                match_lines: &[&|s| s.starts_with("version =")],
+                apply: &|_| format!("version = \"{sdl_ver}\"\n"),
             }
-        }
+            .patch(&fs::read_to_string(&source_cargo_toml_path)?),
+        )?;
 
-        let mut buf = String::new();
-        File::open(&target_cargo_toml_path)?.read_to_string(&mut buf)?;
-        let mut out = Writable(BufWriter::new(File::create(&target_cargo_toml_path)?));
-        let mut patched_sys = false;
-        let mut patched_src = false;
-        for line in buf.lines() {
-            if !patched_sys && line.starts_with("version =") && line.contains("+sdl3") {
+        let patched = LinesPatch {
+            match_lines: &[&|s| s.starts_with("version =") && s.contains("+sdl3")],
+            apply: &|lines| {
+                let line = &lines[0];
                 let Some((revision_pos, _)) = line.char_indices().rev().find(|(_, c)| *c == '+')
                 else {
                     unreachable!()
                 };
-                patched_sys = true;
                 let pfx = &line[..=revision_pos];
-                writeln!(out, "{pfx}sdl3-{revision}\"")?;
-            } else if !patched_src && line.starts_with("version =") {
-                patched_src = true;
-                writeln!(out, r#"version = "{sdl_dep}""#)?;
-            } else {
-                writeln!(out, "{}", line)?;
-            }
+                format!("{pfx}sdl3-{revision}\"\n")
+            },
         }
+        .patch(&fs::read_to_string(&target_cargo_toml_path)?);
+        let patched = LinesPatch {
+            match_lines: &[&|s| s == "[build-dependencies.sdl3-src]", &|s| {
+                s.starts_with("version =")
+            }],
+            apply: &|lines| format!("{}version = \"{sdl_dep}\"\n", lines[0]),
+        }
+        .patch(&patched);
+        fs::write(&target_cargo_toml_path, patched)?;
     }
 
-    let mut gen = Gen::new(output_path.to_owned(), revision)?;
+    let mut gen = Gen::new(headers_path.clone(), output_path.to_owned(), revision)?;
 
     for entry in read_dir(headers_path)? {
         let entry = entry?;
@@ -160,6 +188,7 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
             }
             let mut buf = String::new();
             File::open(entry.path())?.read_to_string(&mut buf)?;
+            let buf = gen.patch_module(module, buf);
             let display_path = entry.path();
             let display_path = if let Ok(p) =
                 display_path.strip_prefix(PathBuf::from_iter([env!["CARGO_MANIFEST_DIR"], ".."]))
@@ -191,17 +220,23 @@ pub struct Gen {
     parsed: BTreeMap<String, Items>,
     emitted: RefCell<BTreeMap<String, InnerEmitContext>>,
     skipped: RefCell<HashSet<String>>,
+    headers_path: PathBuf,
     output_path: PathBuf,
 }
 
 impl Gen {
-    pub fn new(output_path: PathBuf, revision: Option<String>) -> Result<Self, Error> {
+    pub fn new(
+        headers_path: PathBuf,
+        output_path: PathBuf,
+        revision: Option<String>,
+    ) -> Result<Self, Error> {
         DirBuilder::new().recursive(true).create(&output_path)?;
         Ok(Self {
             revision,
             parsed: BTreeMap::new(),
             emitted: RefCell::new(BTreeMap::new()),
             skipped: RefCell::new(HashSet::new()),
+            headers_path,
             output_path,
         })
     }
@@ -308,6 +343,37 @@ impl Gen {
         run_rustfmt(&path);
 
         Ok(())
+    }
+
+    fn patch_module(&self, module: &str, input: String) -> String {
+        match module {
+            "main" => LinesPatch {
+                match_lines: &[&|s| s.trim_ascii() == "#include <SDL3/SDL_main_impl.h>"],
+                apply: &|_| {
+                    let mut main_impl = self.headers_path.clone();
+                    main_impl.push("SDL_main_impl.h");
+                    LinesPatch {
+                        match_lines: &[
+                            &|s| s.trim_ascii() == "#if defined( UNICODE ) && UNICODE",
+                            &|s| s.trim_ascii().starts_with("int WINAPI wWinMain"),
+                            &|s| s.trim_ascii().starts_with("#else"),
+                            &|s| s.trim_ascii().starts_with("int WINAPI WinMain"),
+                            &|s| s.trim_ascii().starts_with("#endif"),
+                        ],
+                        apply: &|lines| {
+                            let mut patched = String::from("\n");
+                            patched.push_str(&lines[1]);
+                            patched.push_str("\n\n\n");
+                            patched
+                        },
+                    }
+                    .patch(fs::read_to_string(&main_impl).unwrap().as_str())
+                },
+            }
+            .patch(input.as_str()),
+
+            _ => input,
+        }
     }
 }
 

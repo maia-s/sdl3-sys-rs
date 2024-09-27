@@ -1,10 +1,10 @@
 use crate::{
     common_ident_prefix,
     parse::{
-        ArgDecl, Conditional, ConditionalExpr, Define, DefineValue, DocComment, DocCommentFile,
-        Expr, FnAbi, FnDeclArgs, FnPointer, Function, GetSpan, Ident, IdentOrKwT, Include,
-        IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock, PrimitiveType, StructKind,
-        StructOrUnion, Type, TypeDef, TypeEnum,
+        ArgDecl, Conditional, ConditionalExpr, Define, DocComment, DocCommentFile, Expr, FnAbi,
+        FnDeclArgs, FnPointer, Function, GetSpan, Ident, IdentOrKwT, Include, IntegerLiteral, Item,
+        Items, Literal, ParseErr, PreProcBlock, PrimitiveType, StructKind, StructOrUnion, Type,
+        TypeDef, TypeEnum,
     },
 };
 use std::{
@@ -165,6 +165,7 @@ impl Emit for Item {
                 writeln!(ctx, "::core::compile_error!({:?});", e.as_str())?;
                 Ok(())
             }
+            Item::Warning(_) => todo!(),
             Item::FileDoc(dc) => dc.emit(ctx),
             Item::StructOrUnion(s) => {
                 if let (Some(ident), false) = (&s.ident, s.fields.is_some()) {
@@ -376,10 +377,11 @@ impl Emit for Define {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if patch_emit_define(ctx, self)? {
             // patched
-        } else if matches!(self.value, DefineValue::Empty) {
-            // empty define
         } else if let Some(args) = &self.args {
             // function-like define
+            if self.value.is_empty() {
+                return Ok(());
+            }
             let body = {
                 let _guard = ctx.subscope_guard();
                 for arg in args.iter() {
@@ -462,6 +464,9 @@ impl Emit for Define {
                 self.args.clone(),
                 self.value.clone(),
             )?;
+            if self.value.is_empty() {
+                return Ok(());
+            }
             if let Some(value) = self.value.try_eval(ctx)? {
                 let ty = value.ty()?;
                 ctx.register_sym(
