@@ -275,7 +275,12 @@ pub type SDL_GlobFlags = Uint32;
 pub const SDL_GLOB_CASEINSENSITIVE: ::core::primitive::u32 = 1_u32;
 
 extern "C" {
-    /// Create a directory.
+    /// Create a directory, and any missing parent directories.
+    ///
+    /// This reports success if `path` already exists as a directory.
+    ///
+    /// If parent directories are missing, it will also create them. Note that if
+    /// this fails, it will not remove any parent directories it already made.
     ///
     /// \param path the path of the directory to create.
     /// \returns true on success or false on failure; call SDL_GetError() for more
@@ -285,12 +290,63 @@ extern "C" {
     pub fn SDL_CreateDirectory(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
+/// Possible results from an enumeration callback.
+///
+/// \since This enum is available since SDL 3.0.0.
+///
+/// \sa SDL_EnumerateDirectoryCallback
+///
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_ENUM_CONTINUE`], [`SDL_ENUM_SUCCESS`], [`SDL_ENUM_FAILURE`]
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_EnumerationResult(pub ::core::ffi::c_int);
+impl From<SDL_EnumerationResult> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_EnumerationResult) -> Self {
+        value.0
+    }
+}
+impl SDL_EnumerationResult {
+    /// Value that requests that enumeration continue.
+    pub const CONTINUE: Self = Self(0);
+    /// Value that requests that enumeration stop, successfully.
+    pub const SUCCESS: Self = Self(1);
+    /// Value that requests that enumeration stop, as a failure.
+    pub const FAILURE: Self = Self(2);
+}
+/// Value that requests that enumeration continue.
+pub const SDL_ENUM_CONTINUE: SDL_EnumerationResult = SDL_EnumerationResult::CONTINUE;
+/// Value that requests that enumeration stop, successfully.
+pub const SDL_ENUM_SUCCESS: SDL_EnumerationResult = SDL_EnumerationResult::SUCCESS;
+/// Value that requests that enumeration stop, as a failure.
+pub const SDL_ENUM_FAILURE: SDL_EnumerationResult = SDL_EnumerationResult::FAILURE;
+
+/// Callback for directory enumeration.
+///
+/// Enumeration of directory entries will continue until either all entries
+/// have been provided to the callback, or the callback has requested a stop
+/// through its return value.
+///
+/// Returning SDL_ENUM_CONTINUE will let enumeration proceed, calling the
+/// callback with further entries. SDL_ENUM_SUCCESS and SDL_ENUM_FAILURE will
+/// terminate the enumeration early, and dictate the return value of the
+/// enumeration function itself.
+///
+/// \param userdata an app-controlled pointer that is passed to the callback.
+/// \param dirname the directory that is being enumerated.
+/// \param fname the next entry in the enumeration.
+/// \returns how the enumeration should proceed.
+///
+/// \since This datatype is available since SDL 3.0.0.
+///
+/// \sa SDL_EnumerateDirectory
 pub type SDL_EnumerateDirectoryCallback = ::core::option::Option<
     unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
         dirname: *const ::core::ffi::c_char,
         fname: *const ::core::ffi::c_char,
-    ) -> ::core::ffi::c_int,
+    ) -> SDL_EnumerationResult,
 >;
 
 extern "C" {
@@ -299,6 +355,10 @@ extern "C" {
     /// This function provides every directory entry through an app-provided
     /// callback, called once for each directory entry, until all results have been
     /// provided or the callback returns <= 0.
+    ///
+    /// This will return false if there was a system problem in general, or if a
+    /// callback returns -1. A successful return means a callback returned 1 to
+    /// halt enumeration, or all directory entries were enumerated.
     ///
     /// \param path the path of the directory to enumerate.
     /// \param callback a function that is called for each entry in the directory.
@@ -317,7 +377,10 @@ extern "C" {
 extern "C" {
     /// Remove a file or an empty directory.
     ///
-    /// \param path the path of the directory to enumerate.
+    /// Directories that are not empty will fail; this function will not recursely
+    /// delete directory trees.
+    ///
+    /// \param path the path to remove from the filesystem.
     /// \returns true on success or false on failure; call SDL_GetError() for more
     ///          information.
     ///
@@ -327,6 +390,17 @@ extern "C" {
 
 extern "C" {
     /// Rename a file or directory.
+    ///
+    /// If the file at `newpath` already exists, it will replaced.
+    ///
+    /// Note that this will not copy files across filesystems/drives/volumes, as
+    /// that is a much more complicated (and possibly time-consuming) operation.
+    ///
+    /// Which is to say, if this function fails, SDL_CopyFile() to a temporary file
+    /// in the same directory as `newpath`, then SDL_RenamePath() from the
+    /// temporary file to `newpath` and SDL_RemovePath() on `oldpath` might work
+    /// for files. Renaming a non-empty directory across filesystems is
+    /// dramatically more complex, however.
     ///
     /// \param oldpath the old path.
     /// \param newpath the new path.
@@ -342,6 +416,34 @@ extern "C" {
 
 extern "C" {
     /// Copy a file.
+    ///
+    /// If the file at `newpath` already exists, it will be overwritten with the
+    /// contents of the file at `oldpath`.
+    ///
+    /// This function will block until the copy is complete, which might be a
+    /// significant time for large files on slow disks. On some platforms, the copy
+    /// can be handed off to the OS itself, but on others SDL might just open both
+    /// paths, and read from one and write to the other.
+    ///
+    /// Note that this is not an atomic operation! If something tries to read from
+    /// `newpath` while the copy is in progress, it will see an incomplete copy of
+    /// the data, and if the calling thread terminates (or the power goes out)
+    /// during the copy, `oldpath`'s previous contents will be gone, replaced with
+    /// an incomplete copy of the data. To avoid this risk, it is recommended that
+    /// the app copy to a temporary file in the same directory as `newpath`, and if
+    /// the copy is successful, use SDL_RenamePath() to replace `newpath` with the
+    /// temporary file. This will ensure that reads of `newpath` will either see a
+    /// complete copy of the data, or it will see the pre-copy state of `newpath`.
+    ///
+    /// This function attempts to synchronize the newly-copied data to disk before
+    /// returning, if the platform allows it, so that the renaming trick will not
+    /// have a problem in a system crash or power failure, where the file could be
+    /// renamed but the contents never made it from the system file cache to the
+    /// physical disk.
+    ///
+    /// If the copy fails for any reason, the state of `newpath` is undefined. It
+    /// might be half a copy, it might be the untouched data of what was already
+    /// there, or it might be a zero-byte file, etc.
     ///
     /// \param oldpath the old path.
     /// \param newpath the new path.

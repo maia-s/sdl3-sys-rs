@@ -159,6 +159,9 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 /// a format is supported before using it. However, there are a few guaranteed
 /// formats.
 ///
+/// FIXME: Check universal support for 32-bit component formats FIXME: Check
+/// universal support for SIMULTANEOUS_READ_WRITE
+///
 /// For SAMPLER usage, the following formats are universally supported:
 ///
 /// - R8G8B8A8_UNORM
@@ -234,7 +237,7 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 /// \sa SDL_CreateGPUTexture
 /// \sa SDL_GPUTextureSupportsFormat
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_TEXTUREFORMAT_INVALID`], [`SDL_GPU_TEXTUREFORMAT_A8_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R8_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R8G8_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R16_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R16G16_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R10G10B10A2_UNORM`], [`SDL_GPU_TEXTUREFORMAT_B5G6R5_UNORM`], [`SDL_GPU_TEXTUREFORMAT_B5G5R5A1_UNORM`], [`SDL_GPU_TEXTUREFORMAT_B4G4R4A4_UNORM`], [`SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC2_RGBA_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC3_RGBA_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC4_R_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC5_RG_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC6H_RGB_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_BC6H_RGB_UFLOAT`], [`SDL_GPU_TEXTUREFORMAT_R8_SNORM`], [`SDL_GPU_TEXTUREFORMAT_R8G8_SNORM`], [`SDL_GPU_TEXTUREFORMAT_R8G8B8A8_SNORM`], [`SDL_GPU_TEXTUREFORMAT_R16_SNORM`], [`SDL_GPU_TEXTUREFORMAT_R16G16_SNORM`], [`SDL_GPU_TEXTUREFORMAT_R16G16B16A16_SNORM`], [`SDL_GPU_TEXTUREFORMAT_R16_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_R16G16_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_R16G16B16A16_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_R32_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_R32G32_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_R32G32B32A32_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_R11G11B10_UFLOAT`], [`SDL_GPU_TEXTUREFORMAT_R8_UINT`], [`SDL_GPU_TEXTUREFORMAT_R8G8_UINT`], [`SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UINT`], [`SDL_GPU_TEXTUREFORMAT_R16_UINT`], [`SDL_GPU_TEXTUREFORMAT_R16G16_UINT`], [`SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UINT`], [`SDL_GPU_TEXTUREFORMAT_R8_INT`], [`SDL_GPU_TEXTUREFORMAT_R8G8_INT`], [`SDL_GPU_TEXTUREFORMAT_R8G8B8A8_INT`], [`SDL_GPU_TEXTUREFORMAT_R16_INT`], [`SDL_GPU_TEXTUREFORMAT_R16G16_INT`], [`SDL_GPU_TEXTUREFORMAT_R16G16B16A16_INT`], [`SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM_SRGB`], [`SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM_SRGB`], [`SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM_SRGB`], [`SDL_GPU_TEXTUREFORMAT_BC2_RGBA_UNORM_SRGB`], [`SDL_GPU_TEXTUREFORMAT_BC3_RGBA_UNORM_SRGB`], [`SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM_SRGB`], [`SDL_GPU_TEXTUREFORMAT_D16_UNORM`], [`SDL_GPU_TEXTUREFORMAT_D24_UNORM`], [`SDL_GPU_TEXTUREFORMAT_D32_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_D24_UNORM_S8_UINT`], [`SDL_GPU_TEXTUREFORMAT_D32_FLOAT_S8_UINT`]
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_GPU_TEXTUREFORMAT_INVALID`], [`SDL_GPU_TEXTUREFORMAT_A8_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R8_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R8G8_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R16_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R16G16_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UNORM`], [`SDL_GPU_TEXTUREFORMAT_R10G10B10A2_UNORM`], [`SDL_GPU_TEXTUREFORMAT_B5G6R5_UNORM`], [`SDL_GPU_TEXTUREFORMAT_B5G5R5A1_UNORM`], [`SDL_GPU_TEXTUREFORMAT_B4G4R4A4_UNORM`], [`SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC2_RGBA_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC3_RGBA_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC4_R_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC5_RG_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM`], [`SDL_GPU_TEXTUREFORMAT_BC6H_RGB_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_BC6H_RGB_UFLOAT`], [`SDL_GPU_TEXTUREFORMAT_R8_SNORM`], [`SDL_GPU_TEXTUREFORMAT_R8G8_SNORM`], [`SDL_GPU_TEXTUREFORMAT_R8G8B8A8_SNORM`], [`SDL_GPU_TEXTUREFORMAT_R16_SNORM`], [`SDL_GPU_TEXTUREFORMAT_R16G16_SNORM`], [`SDL_GPU_TEXTUREFORMAT_R16G16B16A16_SNORM`], [`SDL_GPU_TEXTUREFORMAT_R16_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_R16G16_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_R16G16B16A16_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_R32_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_R32G32_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_R32G32B32A32_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_R11G11B10_UFLOAT`], [`SDL_GPU_TEXTUREFORMAT_R8_UINT`], [`SDL_GPU_TEXTUREFORMAT_R8G8_UINT`], [`SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UINT`], [`SDL_GPU_TEXTUREFORMAT_R16_UINT`], [`SDL_GPU_TEXTUREFORMAT_R16G16_UINT`], [`SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UINT`], [`SDL_GPU_TEXTUREFORMAT_R32_UINT`], [`SDL_GPU_TEXTUREFORMAT_R32G32_UINT`], [`SDL_GPU_TEXTUREFORMAT_R32G32B32A32_UINT`], [`SDL_GPU_TEXTUREFORMAT_R8_INT`], [`SDL_GPU_TEXTUREFORMAT_R8G8_INT`], [`SDL_GPU_TEXTUREFORMAT_R8G8B8A8_INT`], [`SDL_GPU_TEXTUREFORMAT_R16_INT`], [`SDL_GPU_TEXTUREFORMAT_R16G16_INT`], [`SDL_GPU_TEXTUREFORMAT_R16G16B16A16_INT`], [`SDL_GPU_TEXTUREFORMAT_R32_INT`], [`SDL_GPU_TEXTUREFORMAT_R32G32_INT`], [`SDL_GPU_TEXTUREFORMAT_R32G32B32A32_INT`], [`SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM_SRGB`], [`SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM_SRGB`], [`SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM_SRGB`], [`SDL_GPU_TEXTUREFORMAT_BC2_RGBA_UNORM_SRGB`], [`SDL_GPU_TEXTUREFORMAT_BC3_RGBA_UNORM_SRGB`], [`SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM_SRGB`], [`SDL_GPU_TEXTUREFORMAT_D16_UNORM`], [`SDL_GPU_TEXTUREFORMAT_D24_UNORM`], [`SDL_GPU_TEXTUREFORMAT_D32_FLOAT`], [`SDL_GPU_TEXTUREFORMAT_D24_UNORM_S8_UINT`], [`SDL_GPU_TEXTUREFORMAT_D32_FLOAT_S8_UINT`]
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -286,23 +289,29 @@ impl SDL_GPUTextureFormat {
     pub const R16_UINT: Self = Self(37);
     pub const R16G16_UINT: Self = Self(38);
     pub const R16G16B16A16_UINT: Self = Self(39);
-    pub const R8_INT: Self = Self(40);
-    pub const R8G8_INT: Self = Self(41);
-    pub const R8G8B8A8_INT: Self = Self(42);
-    pub const R16_INT: Self = Self(43);
-    pub const R16G16_INT: Self = Self(44);
-    pub const R16G16B16A16_INT: Self = Self(45);
-    pub const R8G8B8A8_UNORM_SRGB: Self = Self(46);
-    pub const B8G8R8A8_UNORM_SRGB: Self = Self(47);
-    pub const BC1_RGBA_UNORM_SRGB: Self = Self(48);
-    pub const BC2_RGBA_UNORM_SRGB: Self = Self(49);
-    pub const BC3_RGBA_UNORM_SRGB: Self = Self(50);
-    pub const BC7_RGBA_UNORM_SRGB: Self = Self(51);
-    pub const D16_UNORM: Self = Self(52);
-    pub const D24_UNORM: Self = Self(53);
-    pub const D32_FLOAT: Self = Self(54);
-    pub const D24_UNORM_S8_UINT: Self = Self(55);
-    pub const D32_FLOAT_S8_UINT: Self = Self(56);
+    pub const R32_UINT: Self = Self(40);
+    pub const R32G32_UINT: Self = Self(41);
+    pub const R32G32B32A32_UINT: Self = Self(42);
+    pub const R8_INT: Self = Self(43);
+    pub const R8G8_INT: Self = Self(44);
+    pub const R8G8B8A8_INT: Self = Self(45);
+    pub const R16_INT: Self = Self(46);
+    pub const R16G16_INT: Self = Self(47);
+    pub const R16G16B16A16_INT: Self = Self(48);
+    pub const R32_INT: Self = Self(49);
+    pub const R32G32_INT: Self = Self(50);
+    pub const R32G32B32A32_INT: Self = Self(51);
+    pub const R8G8B8A8_UNORM_SRGB: Self = Self(52);
+    pub const B8G8R8A8_UNORM_SRGB: Self = Self(53);
+    pub const BC1_RGBA_UNORM_SRGB: Self = Self(54);
+    pub const BC2_RGBA_UNORM_SRGB: Self = Self(55);
+    pub const BC3_RGBA_UNORM_SRGB: Self = Self(56);
+    pub const BC7_RGBA_UNORM_SRGB: Self = Self(57);
+    pub const D16_UNORM: Self = Self(58);
+    pub const D24_UNORM: Self = Self(59);
+    pub const D32_FLOAT: Self = Self(60);
+    pub const D24_UNORM_S8_UINT: Self = Self(61);
+    pub const D32_FLOAT_S8_UINT: Self = Self(62);
 }
 pub const SDL_GPU_TEXTUREFORMAT_INVALID: SDL_GPUTextureFormat = SDL_GPUTextureFormat::INVALID;
 pub const SDL_GPU_TEXTUREFORMAT_A8_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::A8_UNORM;
@@ -371,6 +380,11 @@ pub const SDL_GPU_TEXTUREFORMAT_R16G16_UINT: SDL_GPUTextureFormat =
     SDL_GPUTextureFormat::R16G16_UINT;
 pub const SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UINT: SDL_GPUTextureFormat =
     SDL_GPUTextureFormat::R16G16B16A16_UINT;
+pub const SDL_GPU_TEXTUREFORMAT_R32_UINT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R32_UINT;
+pub const SDL_GPU_TEXTUREFORMAT_R32G32_UINT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R32G32_UINT;
+pub const SDL_GPU_TEXTUREFORMAT_R32G32B32A32_UINT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R32G32B32A32_UINT;
 pub const SDL_GPU_TEXTUREFORMAT_R8_INT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8_INT;
 pub const SDL_GPU_TEXTUREFORMAT_R8G8_INT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8G8_INT;
 pub const SDL_GPU_TEXTUREFORMAT_R8G8B8A8_INT: SDL_GPUTextureFormat =
@@ -379,6 +393,10 @@ pub const SDL_GPU_TEXTUREFORMAT_R16_INT: SDL_GPUTextureFormat = SDL_GPUTextureFo
 pub const SDL_GPU_TEXTUREFORMAT_R16G16_INT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R16G16_INT;
 pub const SDL_GPU_TEXTUREFORMAT_R16G16B16A16_INT: SDL_GPUTextureFormat =
     SDL_GPUTextureFormat::R16G16B16A16_INT;
+pub const SDL_GPU_TEXTUREFORMAT_R32_INT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R32_INT;
+pub const SDL_GPU_TEXTUREFORMAT_R32G32_INT: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R32G32_INT;
+pub const SDL_GPU_TEXTUREFORMAT_R32G32B32A32_INT: SDL_GPUTextureFormat =
+    SDL_GPUTextureFormat::R32G32B32A32_INT;
 pub const SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM_SRGB: SDL_GPUTextureFormat =
     SDL_GPUTextureFormat::R8G8B8A8_UNORM_SRGB;
 pub const SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM_SRGB: SDL_GPUTextureFormat =
@@ -404,7 +422,17 @@ pub const SDL_GPU_TEXTUREFORMAT_D32_FLOAT_S8_UINT: SDL_GPUTextureFormat =
 /// A texture must have at least one usage flag. Note that some usage flag
 /// combinations are invalid.
 ///
-/// \since This enum is available since SDL 3.0.0
+/// With regards to compute storage usage, READ | WRITE means that you can have
+/// shader A that only writes into the texture and shader B that only reads
+/// from the texture and bind the same texture to either shader respectively.
+/// SIMULTANEOUS means that you can do reads and writes within the same shader
+/// or compute pass. It also implies that atomic ops can be used, since those
+/// are read-modify-write operations. If you use SIMULTANEOUS, you are
+/// responsible for avoiding data races, as there is no data synchronization
+/// within a compute pass. Note that SIMULTANEOUS usage is only supported by a
+/// limited number of texture formats.
+///
+/// \since This datatype is available since SDL 3.0.0
 ///
 /// \sa SDL_CreateGPUTexture
 pub type SDL_GPUTextureUsageFlags = Uint32;
@@ -426,6 +454,10 @@ pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ: ::core::primitive::u32 = 16
 
 /// Texture supports storage writes in the compute stage.
 pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE: ::core::primitive::u32 = 32_u32;
+
+/// Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE.
+pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: ::core::primitive::u32 =
+    64_u32;
 
 /// Specifies the type of a texture.
 ///
@@ -544,7 +576,10 @@ pub const SDL_GPU_CUBEMAPFACE_NEGATIVEZ: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace
 /// A buffer must have at least one usage flag. Note that some usage flag
 /// combinations are invalid.
 ///
-/// \since This enum is available since SDL 3.0.0
+/// Unlike textures, READ | WRITE can be used for simultaneous read-write
+/// usage. The same data synchronization concerns as textures apply.
+///
+/// \since This datatype is available since SDL 3.0.0
 ///
 /// \sa SDL_CreateGPUBuffer
 pub type SDL_GPUBufferUsageFlags = Uint32;
@@ -1127,7 +1162,7 @@ pub const SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE: SDL_GPUBlendFactor =
 
 /// Specifies which color components are written in a graphics pipeline.
 ///
-/// \since This enum is available since SDL 3.0.0
+/// \since This datatype is available since SDL 3.0.0
 ///
 /// \sa SDL_CreateGPUGraphicsPipeline
 pub type SDL_GPUColorComponentFlags = Uint8;
@@ -1251,15 +1286,15 @@ pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
 /// - VSYNC: Waits for vblank before presenting. No tearing is possible. If
 ///   there is a pending image to present, the new image is enqueued for
 ///   presentation. Disallows tearing at the cost of visual latency. When using
-///   this present mode, AcquireSwapchainTexture will block if too many frames
-///   are in flight.
+///   this present mode, AcquireGPUSwapchainTexture will block if too many
+///   frames are in flight.
 /// - IMMEDIATE: Immediately presents. Lowest latency option, but tearing may
-///   occur. When using this mode, AcquireSwapchainTexture will return NULL if
-///   too many frames are in flight.
+///   occur. When using this mode, AcquireGPUSwapchainTexture will return NULL
+///   if too many frames are in flight.
 /// - MAILBOX: Waits for vblank before presenting. No tearing is possible. If
 ///   there is a pending image to present, the pending image is replaced by the
 ///   new image. Similar to VSYNC, but with reduced visual latency. When using
-///   this mode, AcquireSwapchainTexture will return NULL if too many frames
+///   this mode, AcquireGPUSwapchainTexture will return NULL if too many frames
 ///   are in flight.
 ///
 /// \since This enum is available since SDL 3.0.0
@@ -1872,6 +1907,11 @@ pub struct SDL_GPUTransferBufferCreateInfo {
 /// A structure specifying the parameters of the graphics pipeline rasterizer
 /// state.
 ///
+/// NOTE: Some backend APIs (D3D11/12) will enable depth clamping even if
+/// enable_depth_clip is true. If you rely on this clamp+clip behavior,
+/// consider enabling depth clip and then manually clamping depth in your
+/// fragment shaders on Metal and Vulkan.
+///
 /// \since This struct is available since SDL 3.0.0
 ///
 /// \sa SDL_GPUGraphicsPipelineCreateInfo
@@ -1893,9 +1933,10 @@ pub struct SDL_GPURasterizerState {
     pub depth_bias_slope_factor: ::core::ffi::c_float,
     /// true to bias fragment depth values.
     pub enable_depth_bias: ::core::primitive::bool,
+    /// true to enable depth clip, false to enable depth clamp.
+    pub enable_depth_clip: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
-    pub padding3: Uint8,
 }
 
 /// A structure specifying the parameters of the graphics pipeline multisample
@@ -2041,10 +2082,10 @@ pub struct SDL_GPUComputePipelineCreateInfo {
     pub num_readonly_storage_textures: Uint32,
     /// The number of readonly storage buffers defined in the shader.
     pub num_readonly_storage_buffers: Uint32,
-    /// The number of writeonly storage textures defined in the shader.
-    pub num_writeonly_storage_textures: Uint32,
-    /// The number of writeonly storage buffers defined in the shader.
-    pub num_writeonly_storage_buffers: Uint32,
+    /// The number of read-write storage textures defined in the shader.
+    pub num_readwrite_storage_textures: Uint32,
+    /// The number of read-write storage buffers defined in the shader.
+    pub num_readwrite_storage_buffers: Uint32,
     /// The number of uniform buffers defined in the shader.
     pub num_uniform_buffers: Uint32,
     /// The number of threads in the X dimension. This should match the value in the shader.
@@ -2255,7 +2296,7 @@ pub struct SDL_GPUTextureSamplerBinding {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GPUStorageBufferWriteOnlyBinding {
+pub struct SDL_GPUStorageBufferReadWriteBinding {
     /// The buffer to bind. Must have been created with SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE.
     pub buffer: *mut SDL_GPUBuffer,
     /// true cycles the buffer if it is already bound.
@@ -2274,8 +2315,8 @@ pub struct SDL_GPUStorageBufferWriteOnlyBinding {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GPUStorageTextureWriteOnlyBinding {
-    /// The texture to bind. Must have been created with SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE.
+pub struct SDL_GPUStorageTextureReadWriteBinding {
+    /// The texture to bind. Must have been created with SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE or SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE.
     pub texture: *mut SDL_GPUTexture,
     /// The mip level index to bind.
     pub mip_level: Uint32,
@@ -2326,7 +2367,8 @@ extern "C" {
     /// \param debug_mode enable debug mode properties and validations.
     /// \param name the preferred GPU driver, or NULL to let SDL pick the optimal
     ///             driver.
-    /// \returns a GPU context on success or NULL on failure.
+    /// \returns a GPU context on success or NULL on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2374,7 +2416,8 @@ extern "C" {
     ///   use for all vertex semantics, default is "TEXCOORD".
     ///
     /// \param props the properties to use.
-    /// \returns a GPU context on success or NULL on failure.
+    /// \returns a GPU context on success or NULL on failure; call SDL_GetError()
+    ///          for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2516,7 +2559,8 @@ extern "C" {
     /// \param device a GPU Context.
     /// \param createinfo a struct describing the state of the compute pipeline to
     ///                   create.
-    /// \returns a compute pipeline object on success, or NULL on failure.
+    /// \returns a compute pipeline object on success, or NULL on failure; call
+    ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2534,7 +2578,8 @@ extern "C" {
     /// \param device a GPU Context.
     /// \param createinfo a struct describing the state of the graphics pipeline to
     ///                   create.
-    /// \returns a graphics pipeline object on success, or NULL on failure.
+    /// \returns a graphics pipeline object on success, or NULL on failure; call
+    ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2553,7 +2598,8 @@ extern "C" {
     ///
     /// \param device a GPU Context.
     /// \param createinfo a struct describing the state of the sampler to create.
-    /// \returns a sampler object on success, or NULL on failure.
+    /// \returns a sampler object on success, or NULL on failure; call
+    ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2623,7 +2669,8 @@ extern "C" {
     ///
     /// \param device a GPU Context.
     /// \param createinfo a struct describing the state of the shader to create.
-    /// \returns a shader object on success, or NULL on failure.
+    /// \returns a shader object on success, or NULL on failure; call
+    ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2650,7 +2697,8 @@ extern "C" {
     ///
     /// \param device a GPU Context.
     /// \param createinfo a struct describing the state of the texture to create.
-    /// \returns a texture object on success, or NULL on failure.
+    /// \returns a texture object on success, or NULL on failure; call
+    ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2681,7 +2729,8 @@ extern "C" {
     ///
     /// \param device a GPU Context.
     /// \param createinfo a struct describing the state of the buffer to create.
-    /// \returns a buffer object on success, or NULL on failure.
+    /// \returns a buffer object on success, or NULL on failure; call
+    ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2711,7 +2760,8 @@ extern "C" {
     /// \param device a GPU Context.
     /// \param createinfo a struct describing the state of the transfer buffer to
     ///                   create.
-    /// \returns a transfer buffer on success, or NULL on failure.
+    /// \returns a transfer buffer on success, or NULL on failure; call
+    ///          SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -2914,7 +2964,8 @@ extern "C" {
     /// acquired on.
     ///
     /// \param device a GPU context.
-    /// \returns a command buffer.
+    /// \returns a command buffer, or NULL on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -3352,17 +3403,23 @@ extern "C" {
     /// Begins a compute pass on a command buffer.
     ///
     /// A compute pass is defined by a set of texture subresources and buffers that
-    /// will be written to by compute pipelines. These textures and buffers must
-    /// have been created with the COMPUTE_STORAGE_WRITE bit. All operations
-    /// related to compute pipelines must take place inside of a compute pass. You
-    /// must not begin another compute pass, or a render pass or copy pass before
-    /// ending the compute pass.
+    /// may be written to by compute pipelines. These textures and buffers must
+    /// have been created with the COMPUTE_STORAGE_WRITE bit or the
+    /// COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE bit. If you do not create a texture
+    /// with COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE, you must not read from the
+    /// texture in the compute pass. All operations related to compute pipelines
+    /// must take place inside of a compute pass. You must not begin another
+    /// compute pass, or a render pass or copy pass before ending the compute pass.
     ///
-    /// A VERY IMPORTANT NOTE Textures and buffers bound as write-only MUST NOT be
-    /// read from during the compute pass. Doing so will result in undefined
-    /// behavior. If your compute work requires reading the output from a previous
-    /// dispatch, you MUST end the current compute pass and begin a new one before
-    /// you can safely access the data.
+    /// A VERY IMPORTANT NOTE - Reads and writes in compute passes are NOT
+    /// implicitly synchronized. This means you may cause data races by both
+    /// reading and writing a resource region in a compute pass, or by writing
+    /// multiple times to a resource region. If your compute work depends on
+    /// reading the completed output from a previous dispatch, you MUST end the
+    /// current compute pass and begin a new one before you can safely access the
+    /// data. Otherwise you will receive unexpected results. Reading and writing a
+    /// texture in the same compute pass is only supported by specific texture
+    /// formats. Make sure you check the format support!
     ///
     /// \param command_buffer a command buffer.
     /// \param storage_texture_bindings an array of writeable storage texture
@@ -3380,9 +3437,9 @@ extern "C" {
     /// \sa SDL_EndGPUComputePass
     pub fn SDL_BeginGPUComputePass(
         command_buffer: *mut SDL_GPUCommandBuffer,
-        storage_texture_bindings: *const SDL_GPUStorageTextureWriteOnlyBinding,
+        storage_texture_bindings: *const SDL_GPUStorageTextureReadWriteBinding,
         num_storage_texture_bindings: Uint32,
-        storage_buffer_bindings: *const SDL_GPUStorageBufferWriteOnlyBinding,
+        storage_buffer_bindings: *const SDL_GPUStorageBufferReadWriteBinding,
         num_storage_buffer_bindings: Uint32,
     ) -> *mut SDL_GPUComputePass;
 }
@@ -3532,7 +3589,8 @@ extern "C" {
     /// \param device a GPU context.
     /// \param transfer_buffer a transfer buffer.
     /// \param cycle if true, cycles the transfer buffer if it is already bound.
-    /// \returns the address of the mapped transfer buffer memory.
+    /// \returns the address of the mapped transfer buffer memory, or NULL on
+    ///          failure; call SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     pub fn SDL_MapGPUTransferBuffer(
@@ -3748,7 +3806,7 @@ extern "C" {
     /// \param device a GPU context.
     /// \param window an SDL_Window.
     /// \param swapchain_composition the swapchain composition to check.
-    /// \returns true if supported, false if unsupported (or on error).
+    /// \returns true if supported, false if unsupported.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -3768,7 +3826,7 @@ extern "C" {
     /// \param device a GPU context.
     /// \param window an SDL_Window.
     /// \param present_mode the presentation mode to check.
-    /// \returns true if supported, false if unsupported (or on error).
+    /// \returns true if supported, false if unsupported.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -3793,7 +3851,8 @@ extern "C" {
     ///
     /// \param device a GPU context.
     /// \param window an SDL_Window.
-    /// \returns true on success, otherwise false.
+    /// \returns true on success, or false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -3851,6 +3910,8 @@ extern "C" {
 extern "C" {
     /// Obtains the texture format of the swapchain for the given window.
     ///
+    /// Note that this format can change if the swapchain parameters change.
+    ///
     /// \param device a GPU context.
     /// \param window an SDL_Window that has been claimed.
     /// \returns the texture format of the swapchain.
@@ -3868,28 +3929,32 @@ extern "C" {
     /// When a swapchain texture is acquired on a command buffer, it will
     /// automatically be submitted for presentation when the command buffer is
     /// submitted. The swapchain texture should only be referenced by the command
-    /// buffer used to acquire it. May return NULL under certain conditions. This
-    /// is not necessarily an error. This texture is managed by the implementation
-    /// and must not be freed by the user. You MUST NOT call this function from any
-    /// thread other than the one that created the window.
+    /// buffer used to acquire it. The swapchain texture handle can be NULL under
+    /// certain conditions. This is not necessarily an error. If this function
+    /// returns false then there is an error. The swapchain texture is managed by
+    /// the implementation and must not be freed by the user. The texture
+    /// dimensions will be the width and height of the claimed window. You can
+    /// obtain these dimensions by calling SDL_GetWindowSizeInPixels. You MUST NOT
+    /// call this function from any thread other than the one that created the
+    /// window.
     ///
     /// \param command_buffer a command buffer.
     /// \param window a window that has been claimed.
-    /// \param w a pointer filled in with the swapchain width.
-    /// \param h a pointer filled in with the swapchain height.
-    /// \returns a swapchain texture.
+    /// \param swapchainTexture a pointer filled in with a swapchain texture
+    ///                         handle.
+    /// \returns true on success, false on error.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_ClaimWindowForGPUDevice
     /// \sa SDL_SubmitGPUCommandBuffer
     /// \sa SDL_SubmitGPUCommandBufferAndAcquireFence
+    /// \sa SDL_GetWindowSizeInPixels
     pub fn SDL_AcquireGPUSwapchainTexture(
         command_buffer: *mut SDL_GPUCommandBuffer,
         window: *mut SDL_Window,
-        w: *mut Uint32,
-        h: *mut Uint32,
-    ) -> *mut SDL_GPUTexture;
+        swapchainTexture: *mut *mut SDL_GPUTexture,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3903,13 +3968,17 @@ extern "C" {
     /// command in a subsequent submission begins executing.
     ///
     /// \param command_buffer a command buffer.
+    /// \returns true on success, false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_AcquireGPUCommandBuffer
     /// \sa SDL_AcquireGPUSwapchainTexture
     /// \sa SDL_SubmitGPUCommandBufferAndAcquireFence
-    pub fn SDL_SubmitGPUCommandBuffer(command_buffer: *mut SDL_GPUCommandBuffer);
+    pub fn SDL_SubmitGPUCommandBuffer(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3925,7 +3994,8 @@ extern "C" {
     /// command in a subsequent submission begins executing.
     ///
     /// \param command_buffer a command buffer.
-    /// \returns a fence associated with the command buffer.
+    /// \returns a fence associated with the command buffer, or NULL on failure;
+    ///          call SDL_GetError() for more information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -3942,11 +4012,13 @@ extern "C" {
     /// Blocks the thread until the GPU is completely idle.
     ///
     /// \param device a GPU context.
+    /// \returns true on success, false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
     /// \sa SDL_WaitForGPUFences
-    pub fn SDL_WaitForGPUIdle(device: *mut SDL_GPUDevice);
+    pub fn SDL_WaitForGPUIdle(device: *mut SDL_GPUDevice) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -3957,6 +4029,8 @@ extern "C" {
     ///                 fences to be signaled.
     /// \param fences an array of fences to wait on.
     /// \param num_fences the number of fences in the fences array.
+    /// \returns true on success, false on failure; call SDL_GetError() for more
+    ///          information.
     ///
     /// \since This function is available since SDL 3.0.0.
     ///
@@ -3967,7 +4041,7 @@ extern "C" {
         wait_all: ::core::primitive::bool,
         fences: *const *mut SDL_GPUFence,
         num_fences: Uint32,
-    );
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

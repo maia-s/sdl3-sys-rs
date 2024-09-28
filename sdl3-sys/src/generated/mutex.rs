@@ -2,7 +2,11 @@
 
 use super::stdinc::*;
 
+use super::atomic::*;
+
 use super::error::*;
+
+use super::thread::*;
 
 extern "C" {
     /// Create a new mutex.
@@ -554,6 +558,158 @@ extern "C" {
         mutex: *mut SDL_Mutex,
         timeoutMS: Sint32,
     ) -> ::core::primitive::bool;
+}
+
+/// The current status of an SDL_InitState structure.
+///
+/// \since This enum is available since SDL 3.0.0.
+///
+/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_INIT_STATUS_UNINITIALIZED`], [`SDL_INIT_STATUS_INITIALIZING`], [`SDL_INIT_STATUS_INITIALIZED`], [`SDL_INIT_STATUS_UNINITIALIZING`]
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_InitStatus(pub ::core::ffi::c_int);
+impl From<SDL_InitStatus> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_InitStatus) -> Self {
+        value.0
+    }
+}
+impl SDL_InitStatus {
+    pub const UNINITIALIZED: Self = Self(0);
+    pub const INITIALIZING: Self = Self(1);
+    pub const INITIALIZED: Self = Self(2);
+    pub const UNINITIALIZING: Self = Self(3);
+}
+pub const SDL_INIT_STATUS_UNINITIALIZED: SDL_InitStatus = SDL_InitStatus::UNINITIALIZED;
+pub const SDL_INIT_STATUS_INITIALIZING: SDL_InitStatus = SDL_InitStatus::INITIALIZING;
+pub const SDL_INIT_STATUS_INITIALIZED: SDL_InitStatus = SDL_InitStatus::INITIALIZED;
+pub const SDL_INIT_STATUS_UNINITIALIZING: SDL_InitStatus = SDL_InitStatus::UNINITIALIZING;
+
+/// A structure used for thread-safe initialization and shutdown.
+///
+/// Here is an example of using this:
+///
+/// ```c
+///    static SDL_AtomicInitState init;
+///
+///    bool InitSystem(void)
+///    {
+///        if (!SDL_ShouldInit(&init)) {
+///            // The system is initialized
+///            return true;
+///        }
+///
+///        // At this point, you should not leave this function without calling SDL_SetInitialized()
+///
+///        bool initialized = DoInitTasks();
+///        SDL_SetInitialized(&init, initialized);
+///        return initialized;
+///    }
+///
+///    bool UseSubsystem(void)
+///    {
+///        if (SDL_ShouldInit(&init)) {
+///            // Error, the subsystem isn't initialized
+///            SDL_SetInitialized(&init, false);
+///            return false;
+///        }
+///
+///        // Do work using the initialized subsystem
+///
+///        return true;
+///    }
+///
+///    void QuitSystem(void)
+///    {
+///        if (!SDL_ShouldQuit(&init)) {
+///            // The system is not initialized
+///            return true;
+///        }
+///
+///        // At this point, you should not leave this function without calling SDL_SetInitialized()
+///
+///        DoQuitTasks();
+///        SDL_SetInitialized(&init, false);
+///    }
+/// ```
+///
+/// Note that this doesn't protect any resources created during initialization,
+/// or guarantee that nobody is using those resources during cleanup. You
+/// should use other mechanisms to protect those, if that's a concern for your
+/// code.
+///
+/// \since This struct is available since SDL 3.0.0.
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_InitState {
+    pub status: SDL_AtomicInt,
+    pub thread: SDL_ThreadID,
+    pub reserved: *mut ::core::ffi::c_void,
+}
+
+extern "C" {
+    /// Return whether initialization should be done.
+    ///
+    /// This function checks the passed in state and if initialization should be
+    /// done, sets the status to `SDL_INIT_STATUS_INITIALIZING` and returns true.
+    /// If another thread is already modifying this state, it will wait until
+    /// that's done before returning.
+    ///
+    /// If this function returns true, the calling code must call
+    /// SDL_SetInitialized() to complete the initialization.
+    ///
+    /// \param state the initialization state to check.
+    /// \returns true if initialization needs to be done, false otherwise.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_SetInitialized
+    /// \sa SDL_ShouldQuit
+    pub fn SDL_ShouldInit(state: *mut SDL_InitState) -> ::core::primitive::bool;
+}
+
+extern "C" {
+    /// Return whether cleanup should be done.
+    ///
+    /// This function checks the passed in state and if cleanup should be done,
+    /// sets the status to `SDL_INIT_STATUS_UNINITIALIZING` and returns true.
+    ///
+    /// If this function returns true, the calling code must call
+    /// SDL_SetInitialized() to complete the cleanup.
+    ///
+    /// \param state the initialization state to check.
+    /// \returns true if cleanup needs to be done, false otherwise.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_SetInitialized
+    /// \sa SDL_ShouldInit
+    pub fn SDL_ShouldQuit(state: *mut SDL_InitState) -> ::core::primitive::bool;
+}
+
+extern "C" {
+    /// Finish an initialization state transition.
+    ///
+    /// This function sets the status of the passed in state to
+    /// `SDL_INIT_STATUS_INITIALIZED` or `SDL_INIT_STATUS_UNINITIALIZED` and allows
+    /// any threads waiting for the status to proceed.
+    ///
+    /// \param state the initialization state to check.
+    /// \param initialized the new initialization state.
+    ///
+    /// \threadsafety It is safe to call this function from any thread.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_ShouldInit
+    /// \sa SDL_ShouldQuit
+    pub fn SDL_SetInitialized(state: *mut SDL_InitState, initialized: ::core::primitive::bool);
 }
 
 /// A means to block multiple threads until a condition is satisfied.

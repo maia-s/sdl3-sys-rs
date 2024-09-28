@@ -4128,7 +4128,7 @@ pub unsafe fn SDL_iconv_wchar_utf8(S: *const crate::ffi::c_wchar_t) -> *mut ::co
 ///
 /// \param a the multiplicand.
 /// \param b the multiplier.
-/// \param ret on non-overflow output, stores the multiplication result. May
+/// \param ret on non-overflow output, stores the multiplication result, may
 ///            not be NULL.
 /// \returns false on overflow, true if result is multiplied without overflow.
 ///
@@ -4163,7 +4163,7 @@ emit! {}
 ///
 /// \param a the first addend.
 /// \param b the second addend.
-/// \param ret on non-overflow output, stores the addition result. May not be
+/// \param ret on non-overflow output, stores the addition result, may not be
 ///            NULL.
 /// \returns false on overflow, true if result is added without overflow.
 ///

@@ -217,3 +217,20 @@ extern "C" {
     /// \sa SDL_GetClipboardData
     pub fn SDL_HasClipboardData(mime_type: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
+
+extern "C" {
+    /// Retrieve the list of mime types available in the clipboard.
+    ///
+    /// \param num_mime_types a pointer filled with the number of mime types, may
+    ///                       be NULL.
+    /// \returns a null terminated array of strings with mime types, or NULL on
+    ///          failure; call SDL_GetError() for more information. This should be
+    ///          freed with SDL_free() when it is no longer needed.
+    ///
+    /// \since This function is available since SDL 3.0.0.
+    ///
+    /// \sa SDL_SetClipboardData
+    pub fn SDL_GetClipboardMimeTypes(
+        num_mime_types: *mut ::core::primitive::usize,
+    ) -> *mut *mut ::core::ffi::c_char;
+}
