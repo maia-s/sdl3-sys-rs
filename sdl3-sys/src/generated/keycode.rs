@@ -14,7 +14,7 @@ use super::scancode::*;
 /// A special exception is the number keys at the top of the keyboard which map
 /// to SDLK_0...SDLK_9 on AZERTY layouts.
 ///
-/// \since This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.0.0.
 pub type SDL_Keycode = Uint32;
 
 pub const SDLK_SCANCODE_MASK: ::core::primitive::u32 = 1073741824_u32;
@@ -524,7 +524,7 @@ pub const SDLK_ENDCALL: ::core::primitive::u32 = 1073742114_u32;
 
 /// Valid key modifiers (possibly OR'd together).
 ///
-/// \since This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.0.0.
 pub type SDL_Keymod = Uint16;
 
 /// no modifier is applicable.

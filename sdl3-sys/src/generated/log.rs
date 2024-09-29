@@ -41,7 +41,7 @@ use super::stdinc::*;
 /// level, the assert category is enabled at the WARN level, test is enabled at
 /// the VERBOSE level and all other categories are enabled at the ERROR level.
 ///
-/// \since This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.0.0.
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_LOG_CATEGORY_APPLICATION`], [`SDL_LOG_CATEGORY_ERROR`], [`SDL_LOG_CATEGORY_ASSERT`], [`SDL_LOG_CATEGORY_SYSTEM`], [`SDL_LOG_CATEGORY_AUDIO`], [`SDL_LOG_CATEGORY_VIDEO`], [`SDL_LOG_CATEGORY_RENDER`], [`SDL_LOG_CATEGORY_INPUT`], [`SDL_LOG_CATEGORY_TEST`], [`SDL_LOG_CATEGORY_GPU`], [`SDL_LOG_CATEGORY_RESERVED2`], [`SDL_LOG_CATEGORY_RESERVED3`], [`SDL_LOG_CATEGORY_RESERVED4`], [`SDL_LOG_CATEGORY_RESERVED5`], [`SDL_LOG_CATEGORY_RESERVED6`], [`SDL_LOG_CATEGORY_RESERVED7`], [`SDL_LOG_CATEGORY_RESERVED8`], [`SDL_LOG_CATEGORY_RESERVED9`], [`SDL_LOG_CATEGORY_RESERVED10`], [`SDL_LOG_CATEGORY_CUSTOM`]
 #[repr(transparent)]
@@ -99,7 +99,7 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 
 /// The predefined log priorities
 ///
-/// \since This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.0.0.
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_LOG_PRIORITY_INVALID`], [`SDL_LOG_PRIORITY_TRACE`], [`SDL_LOG_PRIORITY_VERBOSE`], [`SDL_LOG_PRIORITY_DEBUG`], [`SDL_LOG_PRIORITY_INFO`], [`SDL_LOG_PRIORITY_WARN`], [`SDL_LOG_PRIORITY_ERROR`], [`SDL_LOG_PRIORITY_CRITICAL`], [`SDL_LOG_PRIORITY_COUNT`]
 #[repr(transparent)]
@@ -136,44 +136,44 @@ pub const SDL_LOG_PRIORITY_COUNT: SDL_LogPriority = SDL_LogPriority::COUNT;
 extern "C" {
     /// Set the priority of all log categories.
     ///
-    /// \param priority the SDL_LogPriority to assign.
+    /// - `priority`: the SDL_LogPriority to assign.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_ResetLogPriorities
-    /// \sa SDL_SetLogPriority
+    /// See also [`SDL_ResetLogPriorities`]<br>
+    /// See also [`SDL_SetLogPriority`]<br>
     pub fn SDL_SetLogPriorities(priority: SDL_LogPriority);
 }
 
 extern "C" {
     /// Set the priority of a particular log category.
     ///
-    /// \param category the category to assign a priority to.
-    /// \param priority the SDL_LogPriority to assign.
+    /// - `category`: the category to assign a priority to.
+    /// - `priority`: the SDL_LogPriority to assign.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetLogPriority
-    /// \sa SDL_ResetLogPriorities
-    /// \sa SDL_SetLogPriorities
+    /// See also [`SDL_GetLogPriority`]<br>
+    /// See also [`SDL_ResetLogPriorities`]<br>
+    /// See also [`SDL_SetLogPriorities`]<br>
     pub fn SDL_SetLogPriority(category: ::core::ffi::c_int, priority: SDL_LogPriority);
 }
 
 extern "C" {
     /// Get the priority of a particular log category.
     ///
-    /// \param category the category to query.
-    /// \returns the SDL_LogPriority for the requested category.
+    /// - `category`: the category to query.
+    /// - Returns the SDL_LogPriority for the requested category.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetLogPriority
+    /// See also [`SDL_SetLogPriority`]<br>
     pub fn SDL_GetLogPriority(category: ::core::ffi::c_int) -> SDL_LogPriority;
 }
 
@@ -182,12 +182,12 @@ extern "C" {
     ///
     /// This is called by SDL_Quit().
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetLogPriorities
-    /// \sa SDL_SetLogPriority
+    /// See also [`SDL_SetLogPriorities`]<br>
+    /// See also [`SDL_SetLogPriority`]<br>
     pub fn SDL_ResetLogPriorities();
 }
 
@@ -198,18 +198,18 @@ extern "C" {
     /// SDL_LOG_PRIORITY_WARN and higher have a prefix showing their priority, e.g.
     /// "WARNING: ".
     ///
-    /// \param priority the SDL_LogPriority to modify.
-    /// \param prefix the prefix to use for that log priority, or NULL to use no
-    ///               prefix.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `priority`: the SDL_LogPriority to modify.
+    /// - `prefix`: the prefix to use for that log priority, or NULL to use no
+    ///   prefix.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetLogPriorities
-    /// \sa SDL_SetLogPriority
+    /// See also [`SDL_SetLogPriorities`]<br>
+    /// See also [`SDL_SetLogPriority`]<br>
     pub fn SDL_SetLogPriorityPrefix(
         priority: SDL_LogPriority,
         prefix: *const ::core::ffi::c_char,
@@ -219,216 +219,216 @@ extern "C" {
 extern "C" {
     /// Log a message with SDL_LOG_CATEGORY_APPLICATION and SDL_LOG_PRIORITY_INFO.
     ///
-    /// \param fmt a printf() style message format string.
-    /// \param ... additional parameters matching % tokens in the `fmt` string, if
-    ///            any.
+    /// - `fmt`: a printf() style message format string.
+    /// - `...`: additional parameters matching % tokens in the `fmt` string, if
+    ///   any.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LogCritical
-    /// \sa SDL_LogDebug
-    /// \sa SDL_LogError
-    /// \sa SDL_LogInfo
-    /// \sa SDL_LogMessage
-    /// \sa SDL_LogMessageV
-    /// \sa SDL_LogTrace
-    /// \sa SDL_LogVerbose
-    /// \sa SDL_LogWarn
+    /// See also [`SDL_LogCritical`]<br>
+    /// See also [`SDL_LogDebug`]<br>
+    /// See also [`SDL_LogError`]<br>
+    /// See also [`SDL_LogInfo`]<br>
+    /// See also [`SDL_LogMessage`]<br>
+    /// See also [`SDL_LogMessageV`]<br>
+    /// See also [`SDL_LogTrace`]<br>
+    /// See also [`SDL_LogVerbose`]<br>
+    /// See also [`SDL_LogWarn`]<br>
     pub fn SDL_Log(fmt: *const ::core::ffi::c_char, ...);
 }
 
 extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_TRACE.
     ///
-    /// \param category the category of the message.
-    /// \param fmt a printf() style message format string.
-    /// \param ... additional parameters matching % tokens in the **fmt** string,
-    ///            if any.
+    /// - `category`: the category of the message.
+    /// - `fmt`: a printf() style message format string.
+    /// - `...`: additional parameters matching % tokens in the **fmt** string,
+    ///   if any.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Log
-    /// \sa SDL_LogCritical
-    /// \sa SDL_LogDebug
-    /// \sa SDL_LogError
-    /// \sa SDL_LogInfo
-    /// \sa SDL_LogMessage
-    /// \sa SDL_LogMessageV
-    /// \sa SDL_LogTrace
-    /// \sa SDL_LogVerbose
-    /// \sa SDL_LogWarn
+    /// See also [`SDL_Log`]<br>
+    /// See also [`SDL_LogCritical`]<br>
+    /// See also [`SDL_LogDebug`]<br>
+    /// See also [`SDL_LogError`]<br>
+    /// See also [`SDL_LogInfo`]<br>
+    /// See also [`SDL_LogMessage`]<br>
+    /// See also [`SDL_LogMessageV`]<br>
+    /// See also [`SDL_LogTrace`]<br>
+    /// See also [`SDL_LogVerbose`]<br>
+    /// See also [`SDL_LogWarn`]<br>
     pub fn SDL_LogTrace(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
 extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_VERBOSE.
     ///
-    /// \param category the category of the message.
-    /// \param fmt a printf() style message format string.
-    /// \param ... additional parameters matching % tokens in the **fmt** string,
-    ///            if any.
+    /// - `category`: the category of the message.
+    /// - `fmt`: a printf() style message format string.
+    /// - `...`: additional parameters matching % tokens in the **fmt** string,
+    ///   if any.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Log
-    /// \sa SDL_LogCritical
-    /// \sa SDL_LogDebug
-    /// \sa SDL_LogError
-    /// \sa SDL_LogInfo
-    /// \sa SDL_LogMessage
-    /// \sa SDL_LogMessageV
-    /// \sa SDL_LogWarn
+    /// See also [`SDL_Log`]<br>
+    /// See also [`SDL_LogCritical`]<br>
+    /// See also [`SDL_LogDebug`]<br>
+    /// See also [`SDL_LogError`]<br>
+    /// See also [`SDL_LogInfo`]<br>
+    /// See also [`SDL_LogMessage`]<br>
+    /// See also [`SDL_LogMessageV`]<br>
+    /// See also [`SDL_LogWarn`]<br>
     pub fn SDL_LogVerbose(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
 extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_DEBUG.
     ///
-    /// \param category the category of the message.
-    /// \param fmt a printf() style message format string.
-    /// \param ... additional parameters matching % tokens in the **fmt** string,
-    ///            if any.
+    /// - `category`: the category of the message.
+    /// - `fmt`: a printf() style message format string.
+    /// - `...`: additional parameters matching % tokens in the **fmt** string,
+    ///   if any.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Log
-    /// \sa SDL_LogCritical
-    /// \sa SDL_LogError
-    /// \sa SDL_LogInfo
-    /// \sa SDL_LogMessage
-    /// \sa SDL_LogMessageV
-    /// \sa SDL_LogTrace
-    /// \sa SDL_LogVerbose
-    /// \sa SDL_LogWarn
+    /// See also [`SDL_Log`]<br>
+    /// See also [`SDL_LogCritical`]<br>
+    /// See also [`SDL_LogError`]<br>
+    /// See also [`SDL_LogInfo`]<br>
+    /// See also [`SDL_LogMessage`]<br>
+    /// See also [`SDL_LogMessageV`]<br>
+    /// See also [`SDL_LogTrace`]<br>
+    /// See also [`SDL_LogVerbose`]<br>
+    /// See also [`SDL_LogWarn`]<br>
     pub fn SDL_LogDebug(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
 extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_INFO.
     ///
-    /// \param category the category of the message.
-    /// \param fmt a printf() style message format string.
-    /// \param ... additional parameters matching % tokens in the **fmt** string,
-    ///            if any.
+    /// - `category`: the category of the message.
+    /// - `fmt`: a printf() style message format string.
+    /// - `...`: additional parameters matching % tokens in the **fmt** string,
+    ///   if any.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Log
-    /// \sa SDL_LogCritical
-    /// \sa SDL_LogDebug
-    /// \sa SDL_LogError
-    /// \sa SDL_LogMessage
-    /// \sa SDL_LogMessageV
-    /// \sa SDL_LogTrace
-    /// \sa SDL_LogVerbose
-    /// \sa SDL_LogWarn
+    /// See also [`SDL_Log`]<br>
+    /// See also [`SDL_LogCritical`]<br>
+    /// See also [`SDL_LogDebug`]<br>
+    /// See also [`SDL_LogError`]<br>
+    /// See also [`SDL_LogMessage`]<br>
+    /// See also [`SDL_LogMessageV`]<br>
+    /// See also [`SDL_LogTrace`]<br>
+    /// See also [`SDL_LogVerbose`]<br>
+    /// See also [`SDL_LogWarn`]<br>
     pub fn SDL_LogInfo(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
 extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_WARN.
     ///
-    /// \param category the category of the message.
-    /// \param fmt a printf() style message format string.
-    /// \param ... additional parameters matching % tokens in the **fmt** string,
-    ///            if any.
+    /// - `category`: the category of the message.
+    /// - `fmt`: a printf() style message format string.
+    /// - `...`: additional parameters matching % tokens in the **fmt** string,
+    ///   if any.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Log
-    /// \sa SDL_LogCritical
-    /// \sa SDL_LogDebug
-    /// \sa SDL_LogError
-    /// \sa SDL_LogInfo
-    /// \sa SDL_LogMessage
-    /// \sa SDL_LogMessageV
-    /// \sa SDL_LogTrace
-    /// \sa SDL_LogVerbose
+    /// See also [`SDL_Log`]<br>
+    /// See also [`SDL_LogCritical`]<br>
+    /// See also [`SDL_LogDebug`]<br>
+    /// See also [`SDL_LogError`]<br>
+    /// See also [`SDL_LogInfo`]<br>
+    /// See also [`SDL_LogMessage`]<br>
+    /// See also [`SDL_LogMessageV`]<br>
+    /// See also [`SDL_LogTrace`]<br>
+    /// See also [`SDL_LogVerbose`]<br>
     pub fn SDL_LogWarn(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
 extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_ERROR.
     ///
-    /// \param category the category of the message.
-    /// \param fmt a printf() style message format string.
-    /// \param ... additional parameters matching % tokens in the **fmt** string,
-    ///            if any.
+    /// - `category`: the category of the message.
+    /// - `fmt`: a printf() style message format string.
+    /// - `...`: additional parameters matching % tokens in the **fmt** string,
+    ///   if any.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Log
-    /// \sa SDL_LogCritical
-    /// \sa SDL_LogDebug
-    /// \sa SDL_LogInfo
-    /// \sa SDL_LogMessage
-    /// \sa SDL_LogMessageV
-    /// \sa SDL_LogTrace
-    /// \sa SDL_LogVerbose
-    /// \sa SDL_LogWarn
+    /// See also [`SDL_Log`]<br>
+    /// See also [`SDL_LogCritical`]<br>
+    /// See also [`SDL_LogDebug`]<br>
+    /// See also [`SDL_LogInfo`]<br>
+    /// See also [`SDL_LogMessage`]<br>
+    /// See also [`SDL_LogMessageV`]<br>
+    /// See also [`SDL_LogTrace`]<br>
+    /// See also [`SDL_LogVerbose`]<br>
+    /// See also [`SDL_LogWarn`]<br>
     pub fn SDL_LogError(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
 extern "C" {
     /// Log a message with SDL_LOG_PRIORITY_CRITICAL.
     ///
-    /// \param category the category of the message.
-    /// \param fmt a printf() style message format string.
-    /// \param ... additional parameters matching % tokens in the **fmt** string,
-    ///            if any.
+    /// - `category`: the category of the message.
+    /// - `fmt`: a printf() style message format string.
+    /// - `...`: additional parameters matching % tokens in the **fmt** string,
+    ///   if any.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Log
-    /// \sa SDL_LogDebug
-    /// \sa SDL_LogError
-    /// \sa SDL_LogInfo
-    /// \sa SDL_LogMessage
-    /// \sa SDL_LogMessageV
-    /// \sa SDL_LogTrace
-    /// \sa SDL_LogVerbose
-    /// \sa SDL_LogWarn
+    /// See also [`SDL_Log`]<br>
+    /// See also [`SDL_LogDebug`]<br>
+    /// See also [`SDL_LogError`]<br>
+    /// See also [`SDL_LogInfo`]<br>
+    /// See also [`SDL_LogMessage`]<br>
+    /// See also [`SDL_LogMessageV`]<br>
+    /// See also [`SDL_LogTrace`]<br>
+    /// See also [`SDL_LogVerbose`]<br>
+    /// See also [`SDL_LogWarn`]<br>
     pub fn SDL_LogCritical(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
 extern "C" {
     /// Log a message with the specified category and priority.
     ///
-    /// \param category the category of the message.
-    /// \param priority the priority of the message.
-    /// \param fmt a printf() style message format string.
-    /// \param ... additional parameters matching % tokens in the **fmt** string,
-    ///            if any.
+    /// - `category`: the category of the message.
+    /// - `priority`: the priority of the message.
+    /// - `fmt`: a printf() style message format string.
+    /// - `...`: additional parameters matching % tokens in the **fmt** string,
+    ///   if any.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Log
-    /// \sa SDL_LogCritical
-    /// \sa SDL_LogDebug
-    /// \sa SDL_LogError
-    /// \sa SDL_LogInfo
-    /// \sa SDL_LogMessageV
-    /// \sa SDL_LogTrace
-    /// \sa SDL_LogVerbose
-    /// \sa SDL_LogWarn
+    /// See also [`SDL_Log`]<br>
+    /// See also [`SDL_LogCritical`]<br>
+    /// See also [`SDL_LogDebug`]<br>
+    /// See also [`SDL_LogError`]<br>
+    /// See also [`SDL_LogInfo`]<br>
+    /// See also [`SDL_LogMessageV`]<br>
+    /// See also [`SDL_LogTrace`]<br>
+    /// See also [`SDL_LogVerbose`]<br>
+    /// See also [`SDL_LogWarn`]<br>
     pub fn SDL_LogMessage(
         category: ::core::ffi::c_int,
         priority: SDL_LogPriority,
@@ -440,24 +440,24 @@ extern "C" {
 extern "C" {
     /// Log a message with the specified category and priority.
     ///
-    /// \param category the category of the message.
-    /// \param priority the priority of the message.
-    /// \param fmt a printf() style message format string.
-    /// \param ap a variable argument list.
+    /// - `category`: the category of the message.
+    /// - `priority`: the priority of the message.
+    /// - `fmt`: a printf() style message format string.
+    /// - `ap`: a variable argument list.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Log
-    /// \sa SDL_LogCritical
-    /// \sa SDL_LogDebug
-    /// \sa SDL_LogError
-    /// \sa SDL_LogInfo
-    /// \sa SDL_LogMessage
-    /// \sa SDL_LogTrace
-    /// \sa SDL_LogVerbose
-    /// \sa SDL_LogWarn
+    /// See also [`SDL_Log`]<br>
+    /// See also [`SDL_LogCritical`]<br>
+    /// See also [`SDL_LogDebug`]<br>
+    /// See also [`SDL_LogError`]<br>
+    /// See also [`SDL_LogInfo`]<br>
+    /// See also [`SDL_LogMessage`]<br>
+    /// See also [`SDL_LogTrace`]<br>
+    /// See also [`SDL_LogVerbose`]<br>
+    /// See also [`SDL_LogWarn`]<br>
     pub fn SDL_LogMessageV(
         category: ::core::ffi::c_int,
         priority: SDL_LogPriority,
@@ -472,13 +472,13 @@ extern "C" {
 /// is held so that this function is never called by more than one thread at
 /// once.
 ///
-/// \param userdata what was passed as `userdata` to
-///                 SDL_SetLogOutputFunction().
-/// \param category the category of the message.
-/// \param priority the priority of the message.
-/// \param message the message being output.
+/// - `userdata`: what was passed as `userdata` to
+///   SDL_SetLogOutputFunction().
+/// - `category`: the category of the message.
+/// - `priority`: the priority of the message.
+/// - `message`: the message being output.
 ///
-/// \since This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.0.0.
 pub type SDL_LogOutputFunction = ::core::option::Option<
     unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
@@ -491,16 +491,16 @@ pub type SDL_LogOutputFunction = ::core::option::Option<
 extern "C" {
     /// Get the current log output function.
     ///
-    /// \param callback an SDL_LogOutputFunction filled in with the current log
-    ///                 callback.
-    /// \param userdata a pointer filled in with the pointer that is passed to
-    ///                 `callback`.
+    /// - `callback`: an SDL_LogOutputFunction filled in with the current log
+    ///   callback.
+    /// - `userdata`: a pointer filled in with the pointer that is passed to
+    ///   `callback`.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetLogOutputFunction
+    /// See also [`SDL_SetLogOutputFunction`]<br>
     pub fn SDL_GetLogOutputFunction(
         callback: *mut SDL_LogOutputFunction,
         userdata: *mut *mut ::core::ffi::c_void,
@@ -510,14 +510,14 @@ extern "C" {
 extern "C" {
     /// Replace the default log output function with one of your own.
     ///
-    /// \param callback an SDL_LogOutputFunction to call instead of the default.
-    /// \param userdata a pointer that is passed to `callback`.
+    /// - `callback`: an SDL_LogOutputFunction to call instead of the default.
+    /// - `userdata`: a pointer that is passed to `callback`.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetLogOutputFunction
+    /// See also [`SDL_GetLogOutputFunction`]<br>
     pub fn SDL_SetLogOutputFunction(
         callback: SDL_LogOutputFunction,
         userdata: *mut ::core::ffi::c_void,

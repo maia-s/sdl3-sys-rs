@@ -18,7 +18,7 @@ use super::iostream::*;
 ///
 /// These are generally considered read-only.
 ///
-/// \since This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.0.0.
 pub type SDL_SurfaceFlags = Uint32;
 
 /// Surface uses preallocated pixel memory
@@ -35,7 +35,7 @@ pub const SDL_SURFACE_SIMD_ALIGNED: ::core::primitive::u32 = 8_u32;
 
 /// The scaling mode.
 ///
-/// \since This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.0.0.
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_SCALEMODE_NEAREST`], [`SDL_SCALEMODE_LINEAR`]
 #[repr(transparent)]
@@ -61,7 +61,7 @@ pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
 
 /// The flip mode.
 ///
-/// \since This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.0.0.
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_FLIP_NONE`], [`SDL_FLIP_HORIZONTAL`], [`SDL_FLIP_VERTICAL`]
 #[repr(transparent)]
@@ -91,7 +91,7 @@ pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
 
 /// Evaluates to true if the surface needs to be locked before access.
 ///
-/// \since This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.0.0.
 #[inline(always)]
 pub const unsafe fn SDL_MUSTLOCK(S: *const SDL_Surface) -> ::core::primitive::bool {
     ((unsafe { ::core::ptr::addr_of!((*S).flags).read() } & 2_u32) == 2_u32)
@@ -111,7 +111,7 @@ pub const unsafe fn SDL_MUSTLOCK(S: *const SDL_Surface) -> ::core::primitive::bo
 /// remaining bytes to reach the pitch are used as padding to reach a desired
 /// alignment, and have undefined contents.
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -139,16 +139,16 @@ extern "C" {
     ///
     /// The pixels of the new surface are initialized to zero.
     ///
-    /// \param width the width of the surface.
-    /// \param height the height of the surface.
-    /// \param format the SDL_PixelFormat for the new surface's pixel format.
-    /// \returns the new SDL_Surface structure that is created or NULL on failure;
-    ///          call SDL_GetError() for more information.
+    /// - `width`: the width of the surface.
+    /// - `height`: the height of the surface.
+    /// - `format`: the SDL_PixelFormat for the new surface's pixel format.
+    /// - Returns the new SDL_Surface structure that is created or NULL on failure;
+    ///   call SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateSurfaceFrom
-    /// \sa SDL_DestroySurface
+    /// See also [`SDL_CreateSurfaceFrom`]<br>
+    /// See also [`SDL_DestroySurface`]<br>
     pub fn SDL_CreateSurface(
         width: ::core::ffi::c_int,
         height: ::core::ffi::c_int,
@@ -169,18 +169,18 @@ extern "C" {
     /// You may pass NULL for pixels and 0 for pitch to create a surface that you
     /// will fill in with valid values later.
     ///
-    /// \param width the width of the surface.
-    /// \param height the height of the surface.
-    /// \param format the SDL_PixelFormat for the new surface's pixel format.
-    /// \param pixels a pointer to existing pixel data.
-    /// \param pitch the number of bytes between each row, including padding.
-    /// \returns the new SDL_Surface structure that is created or NULL on failure;
-    ///          call SDL_GetError() for more information.
+    /// - `width`: the width of the surface.
+    /// - `height`: the height of the surface.
+    /// - `format`: the SDL_PixelFormat for the new surface's pixel format.
+    /// - `pixels`: a pointer to existing pixel data.
+    /// - `pitch`: the number of bytes between each row, including padding.
+    /// - Returns the new SDL_Surface structure that is created or NULL on failure;
+    ///   call SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateSurface
-    /// \sa SDL_DestroySurface
+    /// See also [`SDL_CreateSurface`]<br>
+    /// See also [`SDL_DestroySurface`]<br>
     pub fn SDL_CreateSurfaceFrom(
         width: ::core::ffi::c_int,
         height: ::core::ffi::c_int,
@@ -195,13 +195,13 @@ extern "C" {
     ///
     /// It is safe to pass NULL to this function.
     ///
-    /// \param surface the SDL_Surface to free.
+    /// - `surface`: the SDL_Surface to free.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateStackSurface
-    /// \sa SDL_CreateSurface
-    /// \sa SDL_CreateSurfaceFrom
+    /// See also [`SDL_CreateStackSurface`]<br>
+    /// See also [`SDL_CreateSurface`]<br>
+    /// See also [`SDL_CreateSurfaceFrom`]<br>
     pub fn SDL_DestroySurface(surface: *mut SDL_Surface);
 }
 
@@ -225,11 +225,11 @@ extern "C" {
     ///   where N is a floating point scale factor applied in linear space, and
     ///   "none", which disables tone mapping. This defaults to "chrome".
     ///
-    /// \param surface the SDL_Surface structure to query.
-    /// \returns a valid property ID on success or 0 on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `surface`: the SDL_Surface structure to query.
+    /// - Returns a valid property ID on success or 0 on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GetSurfaceProperties(surface: *mut SDL_Surface) -> SDL_PropertiesID;
 }
 
@@ -246,15 +246,15 @@ extern "C" {
     /// Setting the colorspace doesn't change the pixels, only how they are
     /// interpreted in color operations.
     ///
-    /// \param surface the SDL_Surface structure to update.
-    /// \param colorspace an SDL_ColorSpace value describing the surface
-    ///                   colorspace.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to update.
+    /// - `colorspace`: an SDL_ColorSpace value describing the surface
+    ///   colorspace.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetSurfaceColorspace
+    /// See also [`SDL_GetSurfaceColorspace`]<br>
     pub fn SDL_SetSurfaceColorspace(
         surface: *mut SDL_Surface,
         colorspace: SDL_Colorspace,
@@ -268,13 +268,13 @@ extern "C" {
     /// formats, SDL_COLORSPACE_HDR10 for 10-bit formats, SDL_COLORSPACE_SRGB for
     /// other RGB surfaces and SDL_COLORSPACE_BT709_FULL for YUV textures.
     ///
-    /// \param surface the SDL_Surface structure to query.
-    /// \returns the colorspace used by the surface, or SDL_COLORSPACE_UNKNOWN if
-    ///          the surface is NULL.
+    /// - `surface`: the SDL_Surface structure to query.
+    /// - Returns the colorspace used by the surface, or SDL_COLORSPACE_UNKNOWN if
+    ///   the surface is NULL.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetSurfaceColorspace
+    /// See also [`SDL_SetSurfaceColorspace`]<br>
     pub fn SDL_GetSurfaceColorspace(surface: *mut SDL_Surface) -> SDL_Colorspace;
 }
 
@@ -295,14 +295,14 @@ extern "C" {
     /// If this function is called for a surface that already has a palette, a new
     /// palette will be created to replace it.
     ///
-    /// \param surface the SDL_Surface structure to update.
-    /// \returns a new SDL_Palette structure on success or NULL on failure (e.g. if
-    ///          the surface didn't have an index format); call SDL_GetError() for
-    ///          more information.
+    /// - `surface`: the SDL_Surface structure to update.
+    /// - Returns a new SDL_Palette structure on success or NULL on failure (e.g. if
+    ///   the surface didn't have an index format); call SDL_GetError() for
+    ///   more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetPaletteColors
+    /// See also [`SDL_SetPaletteColors`]<br>
     pub fn SDL_CreateSurfacePalette(surface: *mut SDL_Surface) -> *mut SDL_Palette;
 }
 
@@ -311,15 +311,15 @@ extern "C" {
     ///
     /// A single palette can be shared with many surfaces.
     ///
-    /// \param surface the SDL_Surface structure to update.
-    /// \param palette the SDL_Palette structure to use.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to update.
+    /// - `palette`: the SDL_Palette structure to use.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreatePalette
-    /// \sa SDL_GetSurfacePalette
+    /// See also [`SDL_CreatePalette`]<br>
+    /// See also [`SDL_GetSurfacePalette`]<br>
     pub fn SDL_SetSurfacePalette(
         surface: *mut SDL_Surface,
         palette: *mut SDL_Palette,
@@ -329,13 +329,13 @@ extern "C" {
 extern "C" {
     /// Get the palette used by a surface.
     ///
-    /// \param surface the SDL_Surface structure to query.
-    /// \returns a pointer to the palette used by the surface, or NULL if there is
-    ///          no palette used.
+    /// - `surface`: the SDL_Surface structure to query.
+    /// - Returns a pointer to the palette used by the surface, or NULL if there is
+    ///   no palette used.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetSurfacePalette
+    /// See also [`SDL_SetSurfacePalette`]<br>
     pub fn SDL_GetSurfacePalette(surface: *mut SDL_Surface) -> *mut SDL_Palette;
 }
 
@@ -350,17 +350,17 @@ extern "C" {
     /// This function adds a reference to the alternate version, so you should call
     /// SDL_DestroySurface() on the image after this call.
     ///
-    /// \param surface the SDL_Surface structure to update.
-    /// \param image a pointer to an alternate SDL_Surface to associate with this
-    ///              surface.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to update.
+    /// - `image`: a pointer to an alternate SDL_Surface to associate with this
+    ///   surface.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RemoveSurfaceAlternateImages
-    /// \sa SDL_GetSurfaceImages
-    /// \sa SDL_SurfaceHasAlternateImages
+    /// See also [`SDL_RemoveSurfaceAlternateImages`]<br>
+    /// See also [`SDL_GetSurfaceImages`]<br>
+    /// See also [`SDL_SurfaceHasAlternateImages`]<br>
     pub fn SDL_AddSurfaceAlternateImage(
         surface: *mut SDL_Surface,
         image: *mut SDL_Surface,
@@ -370,14 +370,14 @@ extern "C" {
 extern "C" {
     /// Return whether a surface has alternate versions available.
     ///
-    /// \param surface the SDL_Surface structure to query.
-    /// \returns true if alternate versions are available or true otherwise.
+    /// - `surface`: the SDL_Surface structure to query.
+    /// - Returns true if alternate versions are available or true otherwise.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_AddSurfaceAlternateImage
-    /// \sa SDL_RemoveSurfaceAlternateImages
-    /// \sa SDL_GetSurfaceImages
+    /// See also [`SDL_AddSurfaceAlternateImage`]<br>
+    /// See also [`SDL_RemoveSurfaceAlternateImages`]<br>
+    /// See also [`SDL_GetSurfaceImages`]<br>
     pub fn SDL_SurfaceHasAlternateImages(surface: *mut SDL_Surface) -> ::core::primitive::bool;
 }
 
@@ -391,18 +391,18 @@ extern "C" {
     /// They are still referenced by the surface being queried and will be cleaned
     /// up normally.
     ///
-    /// \param surface the SDL_Surface structure to query.
-    /// \param count a pointer filled in with the number of surface pointers
-    ///              returned, may be NULL.
-    /// \returns a NULL terminated array of SDL_Surface pointers or NULL on
-    ///          failure; call SDL_GetError() for more information. This should be
-    ///          freed with SDL_free() when it is no longer needed.
+    /// - `surface`: the SDL_Surface structure to query.
+    /// - `count`: a pointer filled in with the number of surface pointers
+    ///   returned, may be NULL.
+    /// - Returns a NULL terminated array of SDL_Surface pointers or NULL on
+    ///   failure; call SDL_GetError() for more information. This should be
+    ///   freed with SDL_free() when it is no longer needed.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_AddSurfaceAlternateImage
-    /// \sa SDL_RemoveSurfaceAlternateImages
-    /// \sa SDL_SurfaceHasAlternateImages
+    /// See also [`SDL_AddSurfaceAlternateImage`]<br>
+    /// See also [`SDL_RemoveSurfaceAlternateImages`]<br>
+    /// See also [`SDL_SurfaceHasAlternateImages`]<br>
     pub fn SDL_GetSurfaceImages(
         surface: *mut SDL_Surface,
         count: *mut ::core::ffi::c_int,
@@ -415,13 +415,13 @@ extern "C" {
     /// This function removes a reference from all the alternative versions,
     /// destroying them if this is the last reference to them.
     ///
-    /// \param surface the SDL_Surface structure to update.
+    /// - `surface`: the SDL_Surface structure to update.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_AddSurfaceAlternateImage
-    /// \sa SDL_GetSurfaceImages
-    /// \sa SDL_SurfaceHasAlternateImages
+    /// See also [`SDL_AddSurfaceAlternateImage`]<br>
+    /// See also [`SDL_GetSurfaceImages`]<br>
+    /// See also [`SDL_SurfaceHasAlternateImages`]<br>
     pub fn SDL_RemoveSurfaceAlternateImages(surface: *mut SDL_Surface);
 }
 
@@ -437,25 +437,25 @@ extern "C" {
     /// 0, then you can read and write to the surface at any time, and the pixel
     /// format of the surface will not change.
     ///
-    /// \param surface the SDL_Surface structure to be locked.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to be locked.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_MUSTLOCK
-    /// \sa SDL_UnlockSurface
+    /// See also [`SDL_MUSTLOCK`]<br>
+    /// See also [`SDL_UnlockSurface`]<br>
     pub fn SDL_LockSurface(surface: *mut SDL_Surface) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Release a surface after directly accessing the pixels.
     ///
-    /// \param surface the SDL_Surface structure to be unlocked.
+    /// - `surface`: the SDL_Surface structure to be unlocked.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockSurface
+    /// See also [`SDL_LockSurface`]<br>
     pub fn SDL_UnlockSurface(surface: *mut SDL_Surface);
 }
 
@@ -465,17 +465,17 @@ extern "C" {
     /// The new surface should be freed with SDL_DestroySurface(). Not doing so
     /// will result in a memory leak.
     ///
-    /// \param src the data stream for the surface.
-    /// \param closeio if true, calls SDL_CloseIO() on `src` before returning, even
-    ///                in the case of an error.
-    /// \returns a pointer to a new SDL_Surface structure or NULL on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `src`: the data stream for the surface.
+    /// - `closeio`: if true, calls SDL_CloseIO() on `src` before returning, even
+    ///   in the case of an error.
+    /// - Returns a pointer to a new SDL_Surface structure or NULL on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_DestroySurface
-    /// \sa SDL_LoadBMP
-    /// \sa SDL_SaveBMP_IO
+    /// See also [`SDL_DestroySurface`]<br>
+    /// See also [`SDL_LoadBMP`]<br>
+    /// See also [`SDL_SaveBMP_IO`]<br>
     pub fn SDL_LoadBMP_IO(
         src: *mut SDL_IOStream,
         closeio: ::core::primitive::bool,
@@ -488,15 +488,15 @@ extern "C" {
     /// The new surface should be freed with SDL_DestroySurface(). Not doing so
     /// will result in a memory leak.
     ///
-    /// \param file the BMP file to load.
-    /// \returns a pointer to a new SDL_Surface structure or NULL on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `file`: the BMP file to load.
+    /// - Returns a pointer to a new SDL_Surface structure or NULL on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_DestroySurface
-    /// \sa SDL_LoadBMP_IO
-    /// \sa SDL_SaveBMP
+    /// See also [`SDL_DestroySurface`]<br>
+    /// See also [`SDL_LoadBMP_IO`]<br>
+    /// See also [`SDL_SaveBMP`]<br>
     pub fn SDL_LoadBMP(file: *const ::core::ffi::c_char) -> *mut SDL_Surface;
 }
 
@@ -509,17 +509,17 @@ extern "C" {
     /// surface before they are saved. YUV and paletted 1-bit and 4-bit formats are
     /// not supported.
     ///
-    /// \param surface the SDL_Surface structure containing the image to be saved.
-    /// \param dst a data stream to save to.
-    /// \param closeio if true, calls SDL_CloseIO() on `dst` before returning, even
-    ///                in the case of an error.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure containing the image to be saved.
+    /// - `dst`: a data stream to save to.
+    /// - `closeio`: if true, calls SDL_CloseIO() on `dst` before returning, even
+    ///   in the case of an error.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LoadBMP_IO
-    /// \sa SDL_SaveBMP
+    /// See also [`SDL_LoadBMP_IO`]<br>
+    /// See also [`SDL_SaveBMP`]<br>
     pub fn SDL_SaveBMP_IO(
         surface: *mut SDL_Surface,
         dst: *mut SDL_IOStream,
@@ -536,15 +536,15 @@ extern "C" {
     /// surface before they are saved. YUV and paletted 1-bit and 4-bit formats are
     /// not supported.
     ///
-    /// \param surface the SDL_Surface structure containing the image to be saved.
-    /// \param file a file to save to.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure containing the image to be saved.
+    /// - `file`: a file to save to.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LoadBMP
-    /// \sa SDL_SaveBMP_IO
+    /// See also [`SDL_LoadBMP`]<br>
+    /// See also [`SDL_SaveBMP_IO`]<br>
     pub fn SDL_SaveBMP(
         surface: *mut SDL_Surface,
         file: *const ::core::ffi::c_char,
@@ -557,16 +557,16 @@ extern "C" {
     /// If RLE is enabled, color key and alpha blending blits are much faster, but
     /// the surface must be locked before directly accessing the pixels.
     ///
-    /// \param surface the SDL_Surface structure to optimize.
-    /// \param enabled true to enable RLE acceleration, false to disable it.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to optimize.
+    /// - `enabled`: true to enable RLE acceleration, false to disable it.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_BlitSurface
-    /// \sa SDL_LockSurface
-    /// \sa SDL_UnlockSurface
+    /// See also [`SDL_BlitSurface`]<br>
+    /// See also [`SDL_LockSurface`]<br>
+    /// See also [`SDL_UnlockSurface`]<br>
     pub fn SDL_SetSurfaceRLE(
         surface: *mut SDL_Surface,
         enabled: ::core::primitive::bool,
@@ -578,12 +578,12 @@ extern "C" {
     ///
     /// It is safe to pass a NULL `surface` here; it will return false.
     ///
-    /// \param surface the SDL_Surface structure to query.
-    /// \returns true if the surface is RLE enabled, false otherwise.
+    /// - `surface`: the SDL_Surface structure to query.
+    /// - Returns true if the surface is RLE enabled, false otherwise.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetSurfaceRLE
+    /// See also [`SDL_SetSurfaceRLE`]<br>
     pub fn SDL_SurfaceHasRLE(surface: *mut SDL_Surface) -> ::core::primitive::bool;
 }
 
@@ -597,17 +597,17 @@ extern "C" {
     /// It is a pixel of the format used by the surface, as generated by
     /// SDL_MapRGB().
     ///
-    /// \param surface the SDL_Surface structure to update.
-    /// \param enabled true to enable color key, false to disable color key.
-    /// \param key the transparent pixel.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to update.
+    /// - `enabled`: true to enable color key, false to disable color key.
+    /// - `key`: the transparent pixel.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetSurfaceColorKey
-    /// \sa SDL_SetSurfaceRLE
-    /// \sa SDL_SurfaceHasColorKey
+    /// See also [`SDL_GetSurfaceColorKey`]<br>
+    /// See also [`SDL_SetSurfaceRLE`]<br>
+    /// See also [`SDL_SurfaceHasColorKey`]<br>
     pub fn SDL_SetSurfaceColorKey(
         surface: *mut SDL_Surface,
         enabled: ::core::primitive::bool,
@@ -620,13 +620,13 @@ extern "C" {
     ///
     /// It is safe to pass a NULL `surface` here; it will return false.
     ///
-    /// \param surface the SDL_Surface structure to query.
-    /// \returns true if the surface has a color key, false otherwise.
+    /// - `surface`: the SDL_Surface structure to query.
+    /// - Returns true if the surface has a color key, false otherwise.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetSurfaceColorKey
-    /// \sa SDL_GetSurfaceColorKey
+    /// See also [`SDL_SetSurfaceColorKey`]<br>
+    /// See also [`SDL_GetSurfaceColorKey`]<br>
     pub fn SDL_SurfaceHasColorKey(surface: *mut SDL_Surface) -> ::core::primitive::bool;
 }
 
@@ -638,15 +638,15 @@ extern "C" {
     ///
     /// If the surface doesn't have color key enabled this function returns false.
     ///
-    /// \param surface the SDL_Surface structure to query.
-    /// \param key a pointer filled in with the transparent pixel.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to query.
+    /// - `key`: a pointer filled in with the transparent pixel.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetSurfaceColorKey
-    /// \sa SDL_SurfaceHasColorKey
+    /// See also [`SDL_SetSurfaceColorKey`]<br>
+    /// See also [`SDL_SurfaceHasColorKey`]<br>
     pub fn SDL_GetSurfaceColorKey(
         surface: *mut SDL_Surface,
         key: *mut Uint32,
@@ -662,17 +662,17 @@ extern "C" {
     ///
     /// `srcC = srcC * (color / 255)`
     ///
-    /// \param surface the SDL_Surface structure to update.
-    /// \param r the red color value multiplied into blit operations.
-    /// \param g the green color value multiplied into blit operations.
-    /// \param b the blue color value multiplied into blit operations.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to update.
+    /// - `r`: the red color value multiplied into blit operations.
+    /// - `g`: the green color value multiplied into blit operations.
+    /// - `b`: the blue color value multiplied into blit operations.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetSurfaceColorMod
-    /// \sa SDL_SetSurfaceAlphaMod
+    /// See also [`SDL_GetSurfaceColorMod`]<br>
+    /// See also [`SDL_SetSurfaceAlphaMod`]<br>
     pub fn SDL_SetSurfaceColorMod(
         surface: *mut SDL_Surface,
         r: Uint8,
@@ -684,17 +684,17 @@ extern "C" {
 extern "C" {
     /// Get the additional color value multiplied into blit operations.
     ///
-    /// \param surface the SDL_Surface structure to query.
-    /// \param r a pointer filled in with the current red color value.
-    /// \param g a pointer filled in with the current green color value.
-    /// \param b a pointer filled in with the current blue color value.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to query.
+    /// - `r`: a pointer filled in with the current red color value.
+    /// - `g`: a pointer filled in with the current green color value.
+    /// - `b`: a pointer filled in with the current blue color value.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetSurfaceAlphaMod
-    /// \sa SDL_SetSurfaceColorMod
+    /// See also [`SDL_GetSurfaceAlphaMod`]<br>
+    /// See also [`SDL_SetSurfaceColorMod`]<br>
     pub fn SDL_GetSurfaceColorMod(
         surface: *mut SDL_Surface,
         r: *mut Uint8,
@@ -711,15 +711,15 @@ extern "C" {
     ///
     /// `srcA = srcA * (alpha / 255)`
     ///
-    /// \param surface the SDL_Surface structure to update.
-    /// \param alpha the alpha value multiplied into blit operations.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to update.
+    /// - `alpha`: the alpha value multiplied into blit operations.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetSurfaceAlphaMod
-    /// \sa SDL_SetSurfaceColorMod
+    /// See also [`SDL_GetSurfaceAlphaMod`]<br>
+    /// See also [`SDL_SetSurfaceColorMod`]<br>
     pub fn SDL_SetSurfaceAlphaMod(
         surface: *mut SDL_Surface,
         alpha: Uint8,
@@ -729,15 +729,15 @@ extern "C" {
 extern "C" {
     /// Get the additional alpha value used in blit operations.
     ///
-    /// \param surface the SDL_Surface structure to query.
-    /// \param alpha a pointer filled in with the current alpha value.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to query.
+    /// - `alpha`: a pointer filled in with the current alpha value.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetSurfaceColorMod
-    /// \sa SDL_SetSurfaceAlphaMod
+    /// See also [`SDL_GetSurfaceColorMod`]<br>
+    /// See also [`SDL_SetSurfaceAlphaMod`]<br>
     pub fn SDL_GetSurfaceAlphaMod(
         surface: *mut SDL_Surface,
         alpha: *mut Uint8,
@@ -751,14 +751,14 @@ extern "C" {
     /// existing data, the blendmode of the SOURCE surface should be set to
     /// `SDL_BLENDMODE_NONE`.
     ///
-    /// \param surface the SDL_Surface structure to update.
-    /// \param blendMode the SDL_BlendMode to use for blit blending.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to update.
+    /// - `blendMode`: the SDL_BlendMode to use for blit blending.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetSurfaceBlendMode
+    /// See also [`SDL_GetSurfaceBlendMode`]<br>
     pub fn SDL_SetSurfaceBlendMode(
         surface: *mut SDL_Surface,
         blendMode: SDL_BlendMode,
@@ -768,14 +768,14 @@ extern "C" {
 extern "C" {
     /// Get the blend mode used for blit operations.
     ///
-    /// \param surface the SDL_Surface structure to query.
-    /// \param blendMode a pointer filled in with the current SDL_BlendMode.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure to query.
+    /// - `blendMode`: a pointer filled in with the current SDL_BlendMode.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetSurfaceBlendMode
+    /// See also [`SDL_SetSurfaceBlendMode`]<br>
     pub fn SDL_GetSurfaceBlendMode(
         surface: *mut SDL_Surface,
         blendMode: *mut SDL_BlendMode,
@@ -791,15 +791,15 @@ extern "C" {
     /// Note that blits are automatically clipped to the edges of the source and
     /// destination surfaces.
     ///
-    /// \param surface the SDL_Surface structure to be clipped.
-    /// \param rect the SDL_Rect structure representing the clipping rectangle, or
-    ///             NULL to disable clipping.
-    /// \returns true if the rectangle intersects the surface, otherwise false and
-    ///          blits will be completely clipped.
+    /// - `surface`: the SDL_Surface structure to be clipped.
+    /// - `rect`: the SDL_Rect structure representing the clipping rectangle, or
+    ///   NULL to disable clipping.
+    /// - Returns true if the rectangle intersects the surface, otherwise false and
+    ///   blits will be completely clipped.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetSurfaceClipRect
+    /// See also [`SDL_GetSurfaceClipRect`]<br>
     pub fn SDL_SetSurfaceClipRect(
         surface: *mut SDL_Surface,
         rect: *const SDL_Rect,
@@ -812,16 +812,16 @@ extern "C" {
     /// When `surface` is the destination of a blit, only the area within the clip
     /// rectangle is drawn into.
     ///
-    /// \param surface the SDL_Surface structure representing the surface to be
-    ///                clipped.
-    /// \param rect an SDL_Rect structure filled in with the clipping rectangle for
-    ///             the surface.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface structure representing the surface to be
+    ///   clipped.
+    /// - `rect`: an SDL_Rect structure filled in with the clipping rectangle for
+    ///   the surface.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetSurfaceClipRect
+    /// See also [`SDL_SetSurfaceClipRect`]<br>
     pub fn SDL_GetSurfaceClipRect(
         surface: *mut SDL_Surface,
         rect: *mut SDL_Rect,
@@ -831,12 +831,12 @@ extern "C" {
 extern "C" {
     /// Flip a surface vertically or horizontally.
     ///
-    /// \param surface the surface to flip.
-    /// \param flip the direction to flip.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the surface to flip.
+    /// - `flip`: the direction to flip.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_FlipSurface(
         surface: *mut SDL_Surface,
         flip: SDL_FlipMode,
@@ -851,13 +851,13 @@ extern "C" {
     ///
     /// The returned surface should be freed with SDL_DestroySurface().
     ///
-    /// \param surface the surface to duplicate.
-    /// \returns a copy of the surface or NULL on failure; call SDL_GetError() for
-    ///          more information.
+    /// - `surface`: the surface to duplicate.
+    /// - Returns a copy of the surface or NULL on failure; call SDL_GetError() for
+    ///   more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_DestroySurface
+    /// See also [`SDL_DestroySurface`]<br>
     pub fn SDL_DuplicateSurface(surface: *mut SDL_Surface) -> *mut SDL_Surface;
 }
 
@@ -867,16 +867,16 @@ extern "C" {
     ///
     /// The returned surface should be freed with SDL_DestroySurface().
     ///
-    /// \param surface the surface to duplicate and scale.
-    /// \param width the width of the new surface.
-    /// \param height the height of the new surface.
-    /// \param scaleMode the SDL_ScaleMode to be used.
-    /// \returns a copy of the surface or NULL on failure; call SDL_GetError() for
-    ///          more information.
+    /// - `surface`: the surface to duplicate and scale.
+    /// - `width`: the width of the new surface.
+    /// - `height`: the height of the new surface.
+    /// - `scaleMode`: the SDL_ScaleMode to be used.
+    /// - Returns a copy of the surface or NULL on failure; call SDL_GetError() for
+    ///   more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_DestroySurface
+    /// See also [`SDL_DestroySurface`]<br>
     pub fn SDL_ScaleSurface(
         surface: *mut SDL_Surface,
         width: ::core::ffi::c_int,
@@ -899,15 +899,15 @@ extern "C" {
     /// If the original surface has alternate images, the new surface will have a
     /// reference to them as well.
     ///
-    /// \param surface the existing SDL_Surface structure to convert.
-    /// \param format the new pixel format.
-    /// \returns the new SDL_Surface structure that is created or NULL on failure;
-    ///          call SDL_GetError() for more information.
+    /// - `surface`: the existing SDL_Surface structure to convert.
+    /// - `format`: the new pixel format.
+    /// - Returns the new SDL_Surface structure that is created or NULL on failure;
+    ///   call SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_ConvertSurfaceAndColorspace
-    /// \sa SDL_DestroySurface
+    /// See also [`SDL_ConvertSurfaceAndColorspace`]<br>
+    /// See also [`SDL_DestroySurface`]<br>
     pub fn SDL_ConvertSurface(
         surface: *mut SDL_Surface,
         format: SDL_PixelFormat,
@@ -925,19 +925,19 @@ extern "C" {
     /// If the original surface has alternate images, the new surface will have a
     /// reference to them as well.
     ///
-    /// \param surface the existing SDL_Surface structure to convert.
-    /// \param format the new pixel format.
-    /// \param palette an optional palette to use for indexed formats, may be NULL.
-    /// \param colorspace the new colorspace.
-    /// \param props an SDL_PropertiesID with additional color properties, or 0.
-    /// \returns the new SDL_Surface structure that is created or NULL on failure;
-    ///          call SDL_GetError() for more information.
+    /// - `surface`: the existing SDL_Surface structure to convert.
+    /// - `format`: the new pixel format.
+    /// - `palette`: an optional palette to use for indexed formats, may be NULL.
+    /// - `colorspace`: the new colorspace.
+    /// - `props`: an SDL_PropertiesID with additional color properties, or 0.
+    /// - Returns the new SDL_Surface structure that is created or NULL on failure;
+    ///   call SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_ConvertSurface
-    /// \sa SDL_ConvertSurface
-    /// \sa SDL_DestroySurface
+    /// See also [`SDL_ConvertSurface`]<br>
+    /// See also [`SDL_ConvertSurface`]<br>
+    /// See also [`SDL_DestroySurface`]<br>
     pub fn SDL_ConvertSurfaceAndColorspace(
         surface: *mut SDL_Surface,
         format: SDL_PixelFormat,
@@ -950,20 +950,20 @@ extern "C" {
 extern "C" {
     /// Copy a block of pixels of one format to another format.
     ///
-    /// \param width the width of the block to copy, in pixels.
-    /// \param height the height of the block to copy, in pixels.
-    /// \param src_format an SDL_PixelFormat value of the `src` pixels format.
-    /// \param src a pointer to the source pixels.
-    /// \param src_pitch the pitch of the source pixels, in bytes.
-    /// \param dst_format an SDL_PixelFormat value of the `dst` pixels format.
-    /// \param dst a pointer to be filled in with new pixel data.
-    /// \param dst_pitch the pitch of the destination pixels, in bytes.
-    /// \returns false on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `width`: the width of the block to copy, in pixels.
+    /// - `height`: the height of the block to copy, in pixels.
+    /// - `src_format`: an SDL_PixelFormat value of the `src` pixels format.
+    /// - `src`: a pointer to the source pixels.
+    /// - `src_pitch`: the pitch of the source pixels, in bytes.
+    /// - `dst_format`: an SDL_PixelFormat value of the `dst` pixels format.
+    /// - `dst`: a pointer to be filled in with new pixel data.
+    /// - `dst_pitch`: the pitch of the destination pixels, in bytes.
+    /// - Returns false on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_ConvertPixelsAndColorspace
+    /// See also [`SDL_ConvertPixelsAndColorspace`]<br>
     pub fn SDL_ConvertPixels(
         width: ::core::ffi::c_int,
         height: ::core::ffi::c_int,
@@ -980,28 +980,28 @@ extern "C" {
     /// Copy a block of pixels of one format and colorspace to another format and
     /// colorspace.
     ///
-    /// \param width the width of the block to copy, in pixels.
-    /// \param height the height of the block to copy, in pixels.
-    /// \param src_format an SDL_PixelFormat value of the `src` pixels format.
-    /// \param src_colorspace an SDL_ColorSpace value describing the colorspace of
-    ///                       the `src` pixels.
-    /// \param src_properties an SDL_PropertiesID with additional source color
-    ///                       properties, or 0.
-    /// \param src a pointer to the source pixels.
-    /// \param src_pitch the pitch of the source pixels, in bytes.
-    /// \param dst_format an SDL_PixelFormat value of the `dst` pixels format.
-    /// \param dst_colorspace an SDL_ColorSpace value describing the colorspace of
-    ///                       the `dst` pixels.
-    /// \param dst_properties an SDL_PropertiesID with additional destination color
-    ///                       properties, or 0.
-    /// \param dst a pointer to be filled in with new pixel data.
-    /// \param dst_pitch the pitch of the destination pixels, in bytes.
-    /// \returns false on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `width`: the width of the block to copy, in pixels.
+    /// - `height`: the height of the block to copy, in pixels.
+    /// - `src_format`: an SDL_PixelFormat value of the `src` pixels format.
+    /// - `src_colorspace`: an SDL_ColorSpace value describing the colorspace of
+    ///   the `src` pixels.
+    /// - `src_properties`: an SDL_PropertiesID with additional source color
+    ///   properties, or 0.
+    /// - `src`: a pointer to the source pixels.
+    /// - `src_pitch`: the pitch of the source pixels, in bytes.
+    /// - `dst_format`: an SDL_PixelFormat value of the `dst` pixels format.
+    /// - `dst_colorspace`: an SDL_ColorSpace value describing the colorspace of
+    ///   the `dst` pixels.
+    /// - `dst_properties`: an SDL_PropertiesID with additional destination color
+    ///   properties, or 0.
+    /// - `dst`: a pointer to be filled in with new pixel data.
+    /// - `dst_pitch`: the pitch of the destination pixels, in bytes.
+    /// - Returns false on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_ConvertPixels
+    /// See also [`SDL_ConvertPixels`]<br>
     pub fn SDL_ConvertPixelsAndColorspace(
         width: ::core::ffi::c_int,
         height: ::core::ffi::c_int,
@@ -1023,20 +1023,20 @@ extern "C" {
     ///
     /// This is safe to use with src == dst, but not for other overlapping areas.
     ///
-    /// \param width the width of the block to convert, in pixels.
-    /// \param height the height of the block to convert, in pixels.
-    /// \param src_format an SDL_PixelFormat value of the `src` pixels format.
-    /// \param src a pointer to the source pixels.
-    /// \param src_pitch the pitch of the source pixels, in bytes.
-    /// \param dst_format an SDL_PixelFormat value of the `dst` pixels format.
-    /// \param dst a pointer to be filled in with premultiplied pixel data.
-    /// \param dst_pitch the pitch of the destination pixels, in bytes.
-    /// \param linear true to convert from sRGB to linear space for the alpha
-    ///               multiplication, false to do multiplication in sRGB space.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `width`: the width of the block to convert, in pixels.
+    /// - `height`: the height of the block to convert, in pixels.
+    /// - `src_format`: an SDL_PixelFormat value of the `src` pixels format.
+    /// - `src`: a pointer to the source pixels.
+    /// - `src_pitch`: the pitch of the source pixels, in bytes.
+    /// - `dst_format`: an SDL_PixelFormat value of the `dst` pixels format.
+    /// - `dst`: a pointer to be filled in with premultiplied pixel data.
+    /// - `dst_pitch`: the pitch of the destination pixels, in bytes.
+    /// - `linear`: true to convert from sRGB to linear space for the alpha
+    ///   multiplication, false to do multiplication in sRGB space.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_PremultiplyAlpha(
         width: ::core::ffi::c_int,
         height: ::core::ffi::c_int,
@@ -1055,13 +1055,13 @@ extern "C" {
     ///
     /// This is safe to use with src == dst, but not for other overlapping areas.
     ///
-    /// \param surface the surface to modify.
-    /// \param linear true to convert from sRGB to linear space for the alpha
-    ///               multiplication, false to do multiplication in sRGB space.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the surface to modify.
+    /// - `linear`: true to convert from sRGB to linear space for the alpha
+    ///   multiplication, false to do multiplication in sRGB space.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_PremultiplySurfaceAlpha(
         surface: *mut SDL_Surface,
         linear: ::core::primitive::bool,
@@ -1076,15 +1076,15 @@ extern "C" {
     /// If the surface is YUV, the color is assumed to be in the sRGB colorspace,
     /// otherwise the color is assumed to be in the colorspace of the suface.
     ///
-    /// \param surface the SDL_Surface to clear.
-    /// \param r the red component of the pixel, normally in the range 0-1.
-    /// \param g the green component of the pixel, normally in the range 0-1.
-    /// \param b the blue component of the pixel, normally in the range 0-1.
-    /// \param a the alpha component of the pixel, normally in the range 0-1.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the SDL_Surface to clear.
+    /// - `r`: the red component of the pixel, normally in the range 0-1.
+    /// - `g`: the green component of the pixel, normally in the range 0-1.
+    /// - `b`: the blue component of the pixel, normally in the range 0-1.
+    /// - `a`: the alpha component of the pixel, normally in the range 0-1.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_ClearSurface(
         surface: *mut SDL_Surface,
         r: ::core::ffi::c_float,
@@ -1106,16 +1106,16 @@ extern "C" {
     /// SDL_SetSurfaceClipRect()), then this function will fill based on the
     /// intersection of the clip rectangle and `rect`.
     ///
-    /// \param dst the SDL_Surface structure that is the drawing target.
-    /// \param rect the SDL_Rect structure representing the rectangle to fill, or
-    ///             NULL to fill the entire surface.
-    /// \param color the color to fill with.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `dst`: the SDL_Surface structure that is the drawing target.
+    /// - `rect`: the SDL_Rect structure representing the rectangle to fill, or
+    ///   NULL to fill the entire surface.
+    /// - `color`: the color to fill with.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_FillSurfaceRects
+    /// See also [`SDL_FillSurfaceRects`]<br>
     pub fn SDL_FillSurfaceRect(
         dst: *mut SDL_Surface,
         rect: *const SDL_Rect,
@@ -1135,16 +1135,16 @@ extern "C" {
     /// SDL_SetSurfaceClipRect()), then this function will fill based on the
     /// intersection of the clip rectangle and `rect`.
     ///
-    /// \param dst the SDL_Surface structure that is the drawing target.
-    /// \param rects an array of SDL_Rects representing the rectangles to fill.
-    /// \param count the number of rectangles in the array.
-    /// \param color the color to fill with.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `dst`: the SDL_Surface structure that is the drawing target.
+    /// - `rects`: an array of SDL_Rects representing the rectangles to fill.
+    /// - `count`: the number of rectangles in the array.
+    /// - `color`: the color to fill with.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_FillSurfaceRect
+    /// See also [`SDL_FillSurfaceRect`]<br>
     pub fn SDL_FillSurfaceRects(
         dst: *mut SDL_Surface,
         rects: *const SDL_Rect,
@@ -1206,25 +1206,25 @@ extern "C" {
     ///       source color key.
     /// ```
     ///
-    /// \param src the SDL_Surface structure to be copied from.
-    /// \param srcrect the SDL_Rect structure representing the rectangle to be
-    ///                copied, or NULL to copy the entire surface.
-    /// \param dst the SDL_Surface structure that is the blit target.
-    /// \param dstrect the SDL_Rect structure representing the x and y position in
-    ///                the destination surface, or NULL for (0,0). The width and
-    ///                height are ignored, and are copied from `srcrect`. If you
-    ///                want a specific width and height, you should use
-    ///                SDL_BlitSurfaceScaled().
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `src`: the SDL_Surface structure to be copied from.
+    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be
+    ///   copied, or NULL to copy the entire surface.
+    /// - `dst`: the SDL_Surface structure that is the blit target.
+    /// - `dstrect`: the SDL_Rect structure representing the x and y position in
+    ///   the destination surface, or NULL for (0,0). The width and
+    ///   height are ignored, and are copied from `srcrect`. If you
+    ///   want a specific width and height, you should use
+    ///   SDL_BlitSurfaceScaled().
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety The same destination surface should not be used from two
-    ///               threads at once. It is safe to use the same source surface
-    ///               from multiple threads.
+    /// Thread safety: The same destination surface should not be used from two
+    ///   threads at once. It is safe to use the same source surface
+    ///   from multiple threads.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_BlitSurfaceScaled
+    /// See also [`SDL_BlitSurfaceScaled`]<br>
     pub fn SDL_BlitSurface(
         src: *mut SDL_Surface,
         srcrect: *const SDL_Rect,
@@ -1239,22 +1239,22 @@ extern "C" {
     /// This is a semi-private blit function and it performs low-level surface
     /// blitting, assuming the input rectangles have already been clipped.
     ///
-    /// \param src the SDL_Surface structure to be copied from.
-    /// \param srcrect the SDL_Rect structure representing the rectangle to be
-    ///                copied, may not be NULL.
-    /// \param dst the SDL_Surface structure that is the blit target.
-    /// \param dstrect the SDL_Rect structure representing the target rectangle in
-    ///                the destination surface, may not be NULL.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `src`: the SDL_Surface structure to be copied from.
+    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be
+    ///   copied, may not be NULL.
+    /// - `dst`: the SDL_Surface structure that is the blit target.
+    /// - `dstrect`: the SDL_Rect structure representing the target rectangle in
+    ///   the destination surface, may not be NULL.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety The same destination surface should not be used from two
-    ///               threads at once. It is safe to use the same source surface
-    ///               from multiple threads.
+    /// Thread safety: The same destination surface should not be used from two
+    ///   threads at once. It is safe to use the same source surface
+    ///   from multiple threads.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_BlitSurface
+    /// See also [`SDL_BlitSurface`]<br>
     pub fn SDL_BlitSurfaceUnchecked(
         src: *mut SDL_Surface,
         srcrect: *const SDL_Rect,
@@ -1267,24 +1267,24 @@ extern "C" {
     /// Perform a scaled blit to a destination surface, which may be of a different
     /// format.
     ///
-    /// \param src the SDL_Surface structure to be copied from.
-    /// \param srcrect the SDL_Rect structure representing the rectangle to be
-    ///                copied, or NULL to copy the entire surface.
-    /// \param dst the SDL_Surface structure that is the blit target.
-    /// \param dstrect the SDL_Rect structure representing the target rectangle in
-    ///                the destination surface, or NULL to fill the entire
-    ///                destination surface.
-    /// \param scaleMode the SDL_ScaleMode to be used.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `src`: the SDL_Surface structure to be copied from.
+    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be
+    ///   copied, or NULL to copy the entire surface.
+    /// - `dst`: the SDL_Surface structure that is the blit target.
+    /// - `dstrect`: the SDL_Rect structure representing the target rectangle in
+    ///   the destination surface, or NULL to fill the entire
+    ///   destination surface.
+    /// - `scaleMode`: the SDL_ScaleMode to be used.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety The same destination surface should not be used from two
-    ///               threads at once. It is safe to use the same source surface
-    ///               from multiple threads.
+    /// Thread safety: The same destination surface should not be used from two
+    ///   threads at once. It is safe to use the same source surface
+    ///   from multiple threads.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_BlitSurface
+    /// See also [`SDL_BlitSurface`]<br>
     pub fn SDL_BlitSurfaceScaled(
         src: *mut SDL_Surface,
         srcrect: *const SDL_Rect,
@@ -1300,23 +1300,23 @@ extern "C" {
     /// This is a semi-private function and it performs low-level surface blitting,
     /// assuming the input rectangles have already been clipped.
     ///
-    /// \param src the SDL_Surface structure to be copied from.
-    /// \param srcrect the SDL_Rect structure representing the rectangle to be
-    ///                copied, may not be NULL.
-    /// \param dst the SDL_Surface structure that is the blit target.
-    /// \param dstrect the SDL_Rect structure representing the target rectangle in
-    ///                the destination surface, may not be NULL.
-    /// \param scaleMode the SDL_ScaleMode to be used.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `src`: the SDL_Surface structure to be copied from.
+    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be
+    ///   copied, may not be NULL.
+    /// - `dst`: the SDL_Surface structure that is the blit target.
+    /// - `dstrect`: the SDL_Rect structure representing the target rectangle in
+    ///   the destination surface, may not be NULL.
+    /// - `scaleMode`: the SDL_ScaleMode to be used.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety The same destination surface should not be used from two
-    ///               threads at once. It is safe to use the same source surface
-    ///               from multiple threads.
+    /// Thread safety: The same destination surface should not be used from two
+    ///   threads at once. It is safe to use the same source surface
+    ///   from multiple threads.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_BlitSurfaceScaled
+    /// See also [`SDL_BlitSurfaceScaled`]<br>
     pub fn SDL_BlitSurfaceUncheckedScaled(
         src: *mut SDL_Surface,
         srcrect: *const SDL_Rect,
@@ -1333,22 +1333,22 @@ extern "C" {
     /// The pixels in `srcrect` will be repeated as many times as needed to
     /// completely fill `dstrect`.
     ///
-    /// \param src the SDL_Surface structure to be copied from.
-    /// \param srcrect the SDL_Rect structure representing the rectangle to be
-    ///                copied, or NULL to copy the entire surface.
-    /// \param dst the SDL_Surface structure that is the blit target.
-    /// \param dstrect the SDL_Rect structure representing the target rectangle in
-    ///                the destination surface, or NULL to fill the entire surface.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `src`: the SDL_Surface structure to be copied from.
+    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be
+    ///   copied, or NULL to copy the entire surface.
+    /// - `dst`: the SDL_Surface structure that is the blit target.
+    /// - `dstrect`: the SDL_Rect structure representing the target rectangle in
+    ///   the destination surface, or NULL to fill the entire surface.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety The same destination surface should not be used from two
-    ///               threads at once. It is safe to use the same source surface
-    ///               from multiple threads.
+    /// Thread safety: The same destination surface should not be used from two
+    ///   threads at once. It is safe to use the same source surface
+    ///   from multiple threads.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_BlitSurface
+    /// See also [`SDL_BlitSurface`]<br>
     pub fn SDL_BlitSurfaceTiled(
         src: *mut SDL_Surface,
         srcrect: *const SDL_Rect,
@@ -1364,26 +1364,26 @@ extern "C" {
     /// The pixels in `srcrect` will be scaled and repeated as many times as needed
     /// to completely fill `dstrect`.
     ///
-    /// \param src the SDL_Surface structure to be copied from.
-    /// \param srcrect the SDL_Rect structure representing the rectangle to be
-    ///                copied, or NULL to copy the entire surface.
-    /// \param scale the scale used to transform srcrect into the destination
-    ///              rectangle, e.g. a 32x32 texture with a scale of 2 would fill
-    ///              64x64 tiles.
-    /// \param scaleMode scale algorithm to be used.
-    /// \param dst the SDL_Surface structure that is the blit target.
-    /// \param dstrect the SDL_Rect structure representing the target rectangle in
-    ///                the destination surface, or NULL to fill the entire surface.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `src`: the SDL_Surface structure to be copied from.
+    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be
+    ///   copied, or NULL to copy the entire surface.
+    /// - `scale`: the scale used to transform srcrect into the destination
+    ///   rectangle, e.g. a 32x32 texture with a scale of 2 would fill
+    ///   64x64 tiles.
+    /// - `scaleMode`: scale algorithm to be used.
+    /// - `dst`: the SDL_Surface structure that is the blit target.
+    /// - `dstrect`: the SDL_Rect structure representing the target rectangle in
+    ///   the destination surface, or NULL to fill the entire surface.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety The same destination surface should not be used from two
-    ///               threads at once. It is safe to use the same source surface
-    ///               from multiple threads.
+    /// Thread safety: The same destination surface should not be used from two
+    ///   threads at once. It is safe to use the same source surface
+    ///   from multiple threads.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_BlitSurface
+    /// See also [`SDL_BlitSurface`]<br>
     pub fn SDL_BlitSurfaceTiledWithScale(
         src: *mut SDL_Surface,
         srcrect: *const SDL_Rect,
@@ -1404,30 +1404,30 @@ extern "C" {
     /// into the corners of the destination rectangle. The sides and center are
     /// then stretched into place to cover the remaining destination rectangle.
     ///
-    /// \param src the SDL_Surface structure to be copied from.
-    /// \param srcrect the SDL_Rect structure representing the rectangle to be used
-    ///                for the 9-grid, or NULL to use the entire surface.
-    /// \param left_width the width, in pixels, of the left corners in `srcrect`.
-    /// \param right_width the width, in pixels, of the right corners in `srcrect`.
-    /// \param top_height the height, in pixels, of the top corners in `srcrect`.
-    /// \param bottom_height the height, in pixels, of the bottom corners in
-    ///                      `srcrect`.
-    /// \param scale the scale used to transform the corner of `srcrect` into the
-    ///              corner of `dstrect`, or 0.0f for an unscaled blit.
-    /// \param scaleMode scale algorithm to be used.
-    /// \param dst the SDL_Surface structure that is the blit target.
-    /// \param dstrect the SDL_Rect structure representing the target rectangle in
-    ///                the destination surface, or NULL to fill the entire surface.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `src`: the SDL_Surface structure to be copied from.
+    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be used
+    ///   for the 9-grid, or NULL to use the entire surface.
+    /// - `left_width`: the width, in pixels, of the left corners in `srcrect`.
+    /// - `right_width`: the width, in pixels, of the right corners in `srcrect`.
+    /// - `top_height`: the height, in pixels, of the top corners in `srcrect`.
+    /// - `bottom_height`: the height, in pixels, of the bottom corners in
+    ///   `srcrect`.
+    /// - `scale`: the scale used to transform the corner of `srcrect` into the
+    ///   corner of `dstrect`, or 0.0f for an unscaled blit.
+    /// - `scaleMode`: scale algorithm to be used.
+    /// - `dst`: the SDL_Surface structure that is the blit target.
+    /// - `dstrect`: the SDL_Rect structure representing the target rectangle in
+    ///   the destination surface, or NULL to fill the entire surface.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety The same destination surface should not be used from two
-    ///               threads at once. It is safe to use the same source surface
-    ///               from multiple threads.
+    /// Thread safety: The same destination surface should not be used from two
+    ///   threads at once. It is safe to use the same source surface
+    ///   from multiple threads.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_BlitSurface
+    /// See also [`SDL_BlitSurface`]<br>
     pub fn SDL_BlitSurface9Grid(
         src: *mut SDL_Surface,
         srcrect: *const SDL_Rect,
@@ -1460,15 +1460,15 @@ extern "C" {
     /// format the return value can be assigned to a Uint16, and similarly a Uint8
     /// for an 8-bpp format).
     ///
-    /// \param surface the surface to use for the pixel format and palette.
-    /// \param r the red component of the pixel in the range 0-255.
-    /// \param g the green component of the pixel in the range 0-255.
-    /// \param b the blue component of the pixel in the range 0-255.
-    /// \returns a pixel value.
+    /// - `surface`: the surface to use for the pixel format and palette.
+    /// - `r`: the red component of the pixel in the range 0-255.
+    /// - `g`: the green component of the pixel in the range 0-255.
+    /// - `b`: the blue component of the pixel in the range 0-255.
+    /// - Returns a pixel value.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_MapSurfaceRGBA
+    /// See also [`SDL_MapSurfaceRGBA`]<br>
     pub fn SDL_MapSurfaceRGB(surface: *mut SDL_Surface, r: Uint8, g: Uint8, b: Uint8) -> Uint32;
 }
 
@@ -1490,16 +1490,16 @@ extern "C" {
     /// format the return value can be assigned to a Uint16, and similarly a Uint8
     /// for an 8-bpp format).
     ///
-    /// \param surface the surface to use for the pixel format and palette.
-    /// \param r the red component of the pixel in the range 0-255.
-    /// \param g the green component of the pixel in the range 0-255.
-    /// \param b the blue component of the pixel in the range 0-255.
-    /// \param a the alpha component of the pixel in the range 0-255.
-    /// \returns a pixel value.
+    /// - `surface`: the surface to use for the pixel format and palette.
+    /// - `r`: the red component of the pixel in the range 0-255.
+    /// - `g`: the green component of the pixel in the range 0-255.
+    /// - `b`: the blue component of the pixel in the range 0-255.
+    /// - `a`: the alpha component of the pixel in the range 0-255.
+    /// - Returns a pixel value.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_MapSurfaceRGB
+    /// See also [`SDL_MapSurfaceRGB`]<br>
     pub fn SDL_MapSurfaceRGBA(
         surface: *mut SDL_Surface,
         r: Uint8,
@@ -1518,21 +1518,21 @@ extern "C" {
     /// Like SDL_GetRGBA, this uses the entire 0..255 range when converting color
     /// components from pixel formats with less than 8 bits per RGB component.
     ///
-    /// \param surface the surface to read.
-    /// \param x the horizontal coordinate, 0 <= x < width.
-    /// \param y the vertical coordinate, 0 <= y < height.
-    /// \param r a pointer filled in with the red channel, 0-255, or NULL to ignore
-    ///          this channel.
-    /// \param g a pointer filled in with the green channel, 0-255, or NULL to
-    ///          ignore this channel.
-    /// \param b a pointer filled in with the blue channel, 0-255, or NULL to
-    ///          ignore this channel.
-    /// \param a a pointer filled in with the alpha channel, 0-255, or NULL to
-    ///          ignore this channel.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the surface to read.
+    /// - `x`: the horizontal coordinate, 0 <= x < width.
+    /// - `y`: the vertical coordinate, 0 <= y < height.
+    /// - `r`: a pointer filled in with the red channel, 0-255, or NULL to ignore
+    ///   this channel.
+    /// - `g`: a pointer filled in with the green channel, 0-255, or NULL to
+    ///   ignore this channel.
+    /// - `b`: a pointer filled in with the blue channel, 0-255, or NULL to
+    ///   ignore this channel.
+    /// - `a`: a pointer filled in with the alpha channel, 0-255, or NULL to
+    ///   ignore this channel.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_ReadSurfacePixel(
         surface: *mut SDL_Surface,
         x: ::core::ffi::c_int,
@@ -1550,21 +1550,21 @@ extern "C" {
     /// This function prioritizes correctness over speed: it is suitable for unit
     /// tests, but is not intended for use in a game engine.
     ///
-    /// \param surface the surface to read.
-    /// \param x the horizontal coordinate, 0 <= x < width.
-    /// \param y the vertical coordinate, 0 <= y < height.
-    /// \param r a pointer filled in with the red channel, normally in the range
-    ///          0-1, or NULL to ignore this channel.
-    /// \param g a pointer filled in with the green channel, normally in the range
-    ///          0-1, or NULL to ignore this channel.
-    /// \param b a pointer filled in with the blue channel, normally in the range
-    ///          0-1, or NULL to ignore this channel.
-    /// \param a a pointer filled in with the alpha channel, normally in the range
-    ///          0-1, or NULL to ignore this channel.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the surface to read.
+    /// - `x`: the horizontal coordinate, 0 <= x < width.
+    /// - `y`: the vertical coordinate, 0 <= y < height.
+    /// - `r`: a pointer filled in with the red channel, normally in the range
+    ///   0-1, or NULL to ignore this channel.
+    /// - `g`: a pointer filled in with the green channel, normally in the range
+    ///   0-1, or NULL to ignore this channel.
+    /// - `b`: a pointer filled in with the blue channel, normally in the range
+    ///   0-1, or NULL to ignore this channel.
+    /// - `a`: a pointer filled in with the alpha channel, normally in the range
+    ///   0-1, or NULL to ignore this channel.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_ReadSurfacePixelFloat(
         surface: *mut SDL_Surface,
         x: ::core::ffi::c_int,
@@ -1585,17 +1585,17 @@ extern "C" {
     /// Like SDL_MapRGBA, this uses the entire 0..255 range when converting color
     /// components from pixel formats with less than 8 bits per RGB component.
     ///
-    /// \param surface the surface to write.
-    /// \param x the horizontal coordinate, 0 <= x < width.
-    /// \param y the vertical coordinate, 0 <= y < height.
-    /// \param r the red channel value, 0-255.
-    /// \param g the green channel value, 0-255.
-    /// \param b the blue channel value, 0-255.
-    /// \param a the alpha channel value, 0-255.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the surface to write.
+    /// - `x`: the horizontal coordinate, 0 <= x < width.
+    /// - `y`: the vertical coordinate, 0 <= y < height.
+    /// - `r`: the red channel value, 0-255.
+    /// - `g`: the green channel value, 0-255.
+    /// - `b`: the blue channel value, 0-255.
+    /// - `a`: the alpha channel value, 0-255.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_WriteSurfacePixel(
         surface: *mut SDL_Surface,
         x: ::core::ffi::c_int,
@@ -1613,17 +1613,17 @@ extern "C" {
     /// This function prioritizes correctness over speed: it is suitable for unit
     /// tests, but is not intended for use in a game engine.
     ///
-    /// \param surface the surface to write.
-    /// \param x the horizontal coordinate, 0 <= x < width.
-    /// \param y the vertical coordinate, 0 <= y < height.
-    /// \param r the red channel value, normally in the range 0-1.
-    /// \param g the green channel value, normally in the range 0-1.
-    /// \param b the blue channel value, normally in the range 0-1.
-    /// \param a the alpha channel value, normally in the range 0-1.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `surface`: the surface to write.
+    /// - `x`: the horizontal coordinate, 0 <= x < width.
+    /// - `y`: the vertical coordinate, 0 <= y < height.
+    /// - `r`: the red channel value, normally in the range 0-1.
+    /// - `g`: the green channel value, normally in the range 0-1.
+    /// - `b`: the blue channel value, normally in the range 0-1.
+    /// - `a`: the alpha channel value, normally in the range 0-1.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_WriteSurfacePixelFloat(
         surface: *mut SDL_Surface,
         x: ::core::ffi::c_int,

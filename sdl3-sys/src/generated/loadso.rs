@@ -20,14 +20,14 @@ use super::error::*;
 extern "C" {
     /// Dynamically load a shared object.
     ///
-    /// \param sofile a system-dependent name of the object file.
-    /// \returns an opaque pointer to the object handle or NULL on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `sofile`: a system-dependent name of the object file.
+    /// - Returns an opaque pointer to the object handle or NULL on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LoadFunction
-    /// \sa SDL_UnloadObject
+    /// See also [`SDL_LoadFunction`]<br>
+    /// See also [`SDL_UnloadObject`]<br>
     pub fn SDL_LoadObject(sofile: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_void;
 }
 
@@ -46,14 +46,14 @@ extern "C" {
     ///
     /// If the requested function doesn't exist, NULL is returned.
     ///
-    /// \param handle a valid shared object handle returned by SDL_LoadObject().
-    /// \param name the name of the function to look up.
-    /// \returns a pointer to the function or NULL on failure; call SDL_GetError()
-    ///          for more information.
+    /// - `handle`: a valid shared object handle returned by SDL_LoadObject().
+    /// - `name`: the name of the function to look up.
+    /// - Returns a pointer to the function or NULL on failure; call SDL_GetError()
+    ///   for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LoadObject
+    /// See also [`SDL_LoadObject`]<br>
     pub fn SDL_LoadFunction(
         handle: *mut ::core::ffi::c_void,
         name: *const ::core::ffi::c_char,
@@ -63,10 +63,10 @@ extern "C" {
 extern "C" {
     /// Unload a shared object from memory.
     ///
-    /// \param handle a valid shared object handle returned by SDL_LoadObject().
+    /// - `handle`: a valid shared object handle returned by SDL_LoadObject().
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LoadObject
+    /// See also [`SDL_LoadObject`]<br>
     pub fn SDL_UnloadObject(handle: *mut ::core::ffi::c_void);
 }

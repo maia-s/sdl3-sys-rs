@@ -10,9 +10,9 @@ use super::stdinc::*;
 ///
 /// Additional values may be obtained from SDL_ComposeCustomBlendMode.
 ///
-/// \since This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.0.0.
 ///
-/// \sa SDL_ComposeCustomBlendMode
+/// See also [`SDL_ComposeCustomBlendMode`]<br>
 pub type SDL_BlendMode = Uint32;
 
 /// no blending: dstRGBA = srcRGBA
@@ -41,7 +41,7 @@ pub const SDL_BLENDMODE_INVALID: ::core::primitive::u32 = 2147483647_u32;
 /// The blend operation used when combining source and destination pixel
 /// components.
 ///
-/// \since This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.0.0.
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_BLENDOPERATION_ADD`], [`SDL_BLENDOPERATION_SUBTRACT`], [`SDL_BLENDOPERATION_REV_SUBTRACT`], [`SDL_BLENDOPERATION_MINIMUM`], [`SDL_BLENDOPERATION_MAXIMUM`]
 #[repr(transparent)]
@@ -84,7 +84,7 @@ pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 /// operation. The comma-separated factors listed above are always applied in
 /// the component order red, green, blue, and alpha.
 ///
-/// \since This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.0.0.
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_BLENDFACTOR_ZERO`], [`SDL_BLENDFACTOR_ONE`], [`SDL_BLENDFACTOR_SRC_COLOR`], [`SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR`], [`SDL_BLENDFACTOR_SRC_ALPHA`], [`SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA`], [`SDL_BLENDFACTOR_DST_COLOR`], [`SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR`], [`SDL_BLENDFACTOR_DST_ALPHA`], [`SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA`]
 #[repr(transparent)]
@@ -206,28 +206,28 @@ extern "C" {
     /// `SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA` factors do not have an effect in this
     /// case.
     ///
-    /// \param srcColorFactor the SDL_BlendFactor applied to the red, green, and
-    ///                       blue components of the source pixels.
-    /// \param dstColorFactor the SDL_BlendFactor applied to the red, green, and
-    ///                       blue components of the destination pixels.
-    /// \param colorOperation the SDL_BlendOperation used to combine the red,
-    ///                       green, and blue components of the source and
-    ///                       destination pixels.
-    /// \param srcAlphaFactor the SDL_BlendFactor applied to the alpha component of
-    ///                       the source pixels.
-    /// \param dstAlphaFactor the SDL_BlendFactor applied to the alpha component of
-    ///                       the destination pixels.
-    /// \param alphaOperation the SDL_BlendOperation used to combine the alpha
-    ///                       component of the source and destination pixels.
-    /// \returns an SDL_BlendMode that represents the chosen factors and
-    ///          operations.
+    /// - `srcColorFactor`: the SDL_BlendFactor applied to the red, green, and
+    ///   blue components of the source pixels.
+    /// - `dstColorFactor`: the SDL_BlendFactor applied to the red, green, and
+    ///   blue components of the destination pixels.
+    /// - `colorOperation`: the SDL_BlendOperation used to combine the red,
+    ///   green, and blue components of the source and
+    ///   destination pixels.
+    /// - `srcAlphaFactor`: the SDL_BlendFactor applied to the alpha component of
+    ///   the source pixels.
+    /// - `dstAlphaFactor`: the SDL_BlendFactor applied to the alpha component of
+    ///   the destination pixels.
+    /// - `alphaOperation`: the SDL_BlendOperation used to combine the alpha
+    ///   component of the source and destination pixels.
+    /// - Returns an SDL_BlendMode that represents the chosen factors and
+    ///   operations.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetRenderDrawBlendMode
-    /// \sa SDL_GetRenderDrawBlendMode
-    /// \sa SDL_SetTextureBlendMode
-    /// \sa SDL_GetTextureBlendMode
+    /// See also [`SDL_SetRenderDrawBlendMode`]<br>
+    /// See also [`SDL_GetRenderDrawBlendMode`]<br>
+    /// See also [`SDL_SetTextureBlendMode`]<br>
+    /// See also [`SDL_GetTextureBlendMode`]<br>
     pub fn SDL_ComposeCustomBlendMode(
         srcColorFactor: SDL_BlendFactor,
         dstColorFactor: SDL_BlendFactor,

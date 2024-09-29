@@ -12,9 +12,9 @@ extern "C" {
     /// - "iOS"
     /// - "Android"
     ///
-    /// \returns the name of the platform. If the correct platform name is not
-    ///          available, returns a string beginning with the text "Unknown".
+    /// - Returns the name of the platform. If the correct platform name is not
+    ///   available, returns a string beginning with the text "Unknown".
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GetPlatform() -> *const ::core::ffi::c_char;
 }

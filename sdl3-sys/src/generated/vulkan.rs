@@ -73,14 +73,14 @@ extern "C" {
     /// supported. Either do not link to the Vulkan loader or link to a dynamic
     /// library version.
     ///
-    /// \param path the platform dependent Vulkan loader library name or NULL.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `path`: the platform dependent Vulkan loader library name or NULL.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Vulkan_GetVkGetInstanceProcAddr
-    /// \sa SDL_Vulkan_UnloadLibrary
+    /// See also [`SDL_Vulkan_GetVkGetInstanceProcAddr`]<br>
+    /// See also [`SDL_Vulkan_UnloadLibrary`]<br>
     pub fn SDL_Vulkan_LoadLibrary(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
@@ -98,19 +98,19 @@ extern "C" {
     /// `vkGetInstanceProcAddr =
     /// (PFN_vkGetInstanceProcAddr)SDL_Vulkan_GetVkGetInstanceProcAddr();`
     ///
-    /// \returns the function pointer for `vkGetInstanceProcAddr` or NULL on
-    ///          failure; call SDL_GetError() for more information.
+    /// - Returns the function pointer for `vkGetInstanceProcAddr` or NULL on
+    ///   failure; call SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_Vulkan_GetVkGetInstanceProcAddr() -> SDL_FunctionPointer;
 }
 
 extern "C" {
     /// Unload the Vulkan library previously loaded by SDL_Vulkan_LoadLibrary().
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Vulkan_LoadLibrary
+    /// See also [`SDL_Vulkan_LoadLibrary`]<br>
     pub fn SDL_Vulkan_UnloadLibrary();
 }
 
@@ -128,13 +128,13 @@ extern "C" {
     ///
     /// You should not free the returned array; it is owned by SDL.
     ///
-    /// \param count a pointer filled in with the number of extensions returned.
-    /// \returns an array of extension name strings on success, NULL on failure;
-    ///          call SDL_GetError() for more information.
+    /// - `count`: a pointer filled in with the number of extensions returned.
+    /// - Returns an array of extension name strings on success, NULL on failure;
+    ///   call SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Vulkan_CreateSurface
+    /// See also [`SDL_Vulkan_CreateSurface`]<br>
     pub fn SDL_Vulkan_GetInstanceExtensions(
         count: *mut Uint32,
     ) -> *const *const ::core::ffi::c_char;
@@ -150,19 +150,19 @@ extern "C" {
     /// If `allocator` is NULL, Vulkan will use the system default allocator. This
     /// argument is passed directly to Vulkan and isn't used by SDL itself.
     ///
-    /// \param window the window to which to attach the Vulkan surface.
-    /// \param instance the Vulkan instance handle.
-    /// \param allocator a VkAllocationCallbacks struct, which lets the app set the
-    ///                  allocator that creates the surface. Can be NULL.
-    /// \param surface a pointer to a VkSurfaceKHR handle to output the newly
-    ///                created surface.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `window`: the window to which to attach the Vulkan surface.
+    /// - `instance`: the Vulkan instance handle.
+    /// - `allocator`: a VkAllocationCallbacks struct, which lets the app set the
+    ///   allocator that creates the surface. Can be NULL.
+    /// - `surface`: a pointer to a VkSurfaceKHR handle to output the newly
+    ///   created surface.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Vulkan_GetInstanceExtensions
-    /// \sa SDL_Vulkan_DestroySurface
+    /// See also [`SDL_Vulkan_GetInstanceExtensions`]<br>
+    /// See also [`SDL_Vulkan_DestroySurface`]<br>
     pub fn SDL_Vulkan_CreateSurface(
         window: *mut SDL_Window,
         instance: VkInstance,
@@ -184,15 +184,15 @@ extern "C" {
     /// If `allocator` is NULL, Vulkan will use the system default allocator. This
     /// argument is passed directly to Vulkan and isn't used by SDL itself.
     ///
-    /// \param instance the Vulkan instance handle.
-    /// \param surface vkSurfaceKHR handle to destroy.
-    /// \param allocator a VkAllocationCallbacks struct, which lets the app set the
-    ///                  allocator that destroys the surface. Can be NULL.
+    /// - `instance`: the Vulkan instance handle.
+    /// - `surface`: vkSurfaceKHR handle to destroy.
+    /// - `allocator`: a VkAllocationCallbacks struct, which lets the app set the
+    ///   allocator that destroys the surface. Can be NULL.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Vulkan_GetInstanceExtensions
-    /// \sa SDL_Vulkan_CreateSurface
+    /// See also [`SDL_Vulkan_GetInstanceExtensions`]<br>
+    /// See also [`SDL_Vulkan_CreateSurface`]<br>
     pub fn SDL_Vulkan_DestroySurface(
         instance: VkInstance,
         surface: VkSurfaceKHR,
@@ -207,15 +207,15 @@ extern "C" {
     /// The `instance` must have been created with extensions returned by
     /// SDL_Vulkan_GetInstanceExtensions() enabled.
     ///
-    /// \param instance the Vulkan instance handle.
-    /// \param physicalDevice a valid Vulkan physical device handle.
-    /// \param queueFamilyIndex a valid queue family index for the given physical
-    ///                         device.
-    /// \returns true if supported, false if unsupported or an error occurred.
+    /// - `instance`: the Vulkan instance handle.
+    /// - `physicalDevice`: a valid Vulkan physical device handle.
+    /// - `queueFamilyIndex`: a valid queue family index for the given physical
+    ///   device.
+    /// - Returns true if supported, false if unsupported or an error occurred.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Vulkan_GetInstanceExtensions
+    /// See also [`SDL_Vulkan_GetInstanceExtensions`]<br>
     pub fn SDL_Vulkan_GetPresentationSupport(
         instance: VkInstance,
         physicalDevice: VkPhysicalDevice,

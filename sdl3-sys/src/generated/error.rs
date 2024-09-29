@@ -16,15 +16,15 @@ extern "C" {
     /// }
     /// ```
     ///
-    /// \param fmt a printf()-style message format string.
-    /// \param ... additional parameters matching % tokens in the `fmt` string, if
-    ///            any.
-    /// \returns false.
+    /// - `fmt`: a printf()-style message format string.
+    /// - `...`: additional parameters matching % tokens in the `fmt` string, if
+    ///   any.
+    /// - Returns false.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_ClearError
-    /// \sa SDL_GetError
+    /// See also [`SDL_ClearError`]<br>
+    /// See also [`SDL_GetError`]<br>
     pub fn SDL_SetError(fmt: *const ::core::ffi::c_char, ...) -> ::core::primitive::bool;
 }
 
@@ -33,9 +33,9 @@ extern "C" {
     ///
     /// This function does not do any memory allocation.
     ///
-    /// \returns false.
+    /// - Returns false.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_OutOfMemory() -> ::core::primitive::bool;
 }
 
@@ -63,26 +63,26 @@ extern "C" {
     /// the current thread's error string is changed. The caller should make a copy
     /// if the value is needed after the next SDL API call.
     ///
-    /// \returns a message with information about the specific error that occurred,
-    ///          or an empty string if there hasn't been an error message set since
-    ///          the last call to SDL_ClearError().
+    /// - Returns a message with information about the specific error that occurred,
+    ///   or an empty string if there hasn't been an error message set since
+    ///   the last call to SDL_ClearError().
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_ClearError
-    /// \sa SDL_SetError
+    /// See also [`SDL_ClearError`]<br>
+    /// See also [`SDL_SetError`]<br>
     pub fn SDL_GetError() -> *const ::core::ffi::c_char;
 }
 
 extern "C" {
     /// Clear any previous error message for this thread.
     ///
-    /// \returns true.
+    /// - Returns true.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetError
-    /// \sa SDL_SetError
+    /// See also [`SDL_GetError`]<br>
+    /// See also [`SDL_SetError`]<br>
     pub fn SDL_ClearError() -> ::core::primitive::bool;
 }
 

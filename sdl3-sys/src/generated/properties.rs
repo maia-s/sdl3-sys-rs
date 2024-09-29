@@ -26,12 +26,12 @@ use super::error::*;
 
 /// SDL properties ID
 ///
-/// \since This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.0.0.
 pub type SDL_PropertiesID = Uint32;
 
 /// SDL property type
 ///
-/// \since This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.0.0.
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PROPERTY_TYPE_INVALID`], [`SDL_PROPERTY_TYPE_POINTER`], [`SDL_PROPERTY_TYPE_STRING`], [`SDL_PROPERTY_TYPE_NUMBER`], [`SDL_PROPERTY_TYPE_FLOAT`], [`SDL_PROPERTY_TYPE_BOOLEAN`]
 #[repr(transparent)]
@@ -62,10 +62,10 @@ pub const SDL_PROPERTY_TYPE_BOOLEAN: SDL_PropertyType = SDL_PropertyType::BOOLEA
 extern "C" {
     /// Get the global SDL properties.
     ///
-    /// \returns a valid property ID on success or 0 on failure; call
-    ///          SDL_GetError() for more information.
+    /// - Returns a valid property ID on success or 0 on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GetGlobalProperties() -> SDL_PropertiesID;
 }
 
@@ -74,14 +74,14 @@ extern "C" {
     ///
     /// All properties are automatically destroyed when SDL_Quit() is called.
     ///
-    /// \returns an ID for a new group of properties, or 0 on failure; call
-    ///          SDL_GetError() for more information.
+    /// - Returns an ID for a new group of properties, or 0 on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_DestroyProperties
+    /// See also [`SDL_DestroyProperties`]<br>
     pub fn SDL_CreateProperties() -> SDL_PropertiesID;
 }
 
@@ -93,14 +93,14 @@ extern "C" {
     /// SDL_SetPointerPropertyWithCleanup()), which will not be copied. Any
     /// property that already exists on `dst` will be overwritten.
     ///
-    /// \param src the properties to copy.
-    /// \param dst the destination properties.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `src`: the properties to copy.
+    /// - `dst`: the destination properties.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_CopyProperties(
         src: SDL_PropertiesID,
         dst: SDL_PropertiesID,
@@ -119,28 +119,28 @@ extern "C" {
     /// or want to guarantee that properties being queried aren't freed in another
     /// thread.
     ///
-    /// \param props the properties to lock.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `props`: the properties to lock.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_UnlockProperties
+    /// See also [`SDL_UnlockProperties`]<br>
     pub fn SDL_LockProperties(props: SDL_PropertiesID) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Unlock a group of properties.
     ///
-    /// \param props the properties to unlock.
+    /// - `props`: the properties to unlock.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockProperties
+    /// See also [`SDL_LockProperties`]<br>
     pub fn SDL_UnlockProperties(props: SDL_PropertiesID);
 }
 
@@ -155,15 +155,15 @@ extern "C" {
 /// This callback will be called _during_ SDL_SetPointerPropertyWithCleanup if
 /// the function fails for any reason.
 ///
-/// \param userdata an app-defined pointer passed to the callback.
-/// \param value the pointer assigned to the property to clean up.
+/// - `userdata`: an app-defined pointer passed to the callback.
+/// - `value`: the pointer assigned to the property to clean up.
 ///
-/// \threadsafety This callback may fire without any locks held; if this is a
-///               concern, the app should provide its own locking.
+/// Thread safety: This callback may fire without any locks held; if this is a
+///   concern, the app should provide its own locking.
 ///
-/// \since This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.0.0.
 ///
-/// \sa SDL_SetPointerPropertyWithCleanup
+/// See also [`SDL_SetPointerPropertyWithCleanup`]<br>
 pub type SDL_CleanupPropertyCallback = ::core::option::Option<
     unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void, value: *mut ::core::ffi::c_void),
 >;
@@ -180,22 +180,22 @@ extern "C" {
     /// instead, as those functions will handle cleanup on your behalf. This
     /// function is only for more complex, custom data.
     ///
-    /// \param props the properties to modify.
-    /// \param name the name of the property to modify.
-    /// \param value the new value of the property, or NULL to delete the property.
-    /// \param cleanup the function to call when this property is deleted, or NULL
-    ///                if no cleanup is necessary.
-    /// \param userdata a pointer that is passed to the cleanup function.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `props`: the properties to modify.
+    /// - `name`: the name of the property to modify.
+    /// - `value`: the new value of the property, or NULL to delete the property.
+    /// - `cleanup`: the function to call when this property is deleted, or NULL
+    ///   if no cleanup is necessary.
+    /// - `userdata`: a pointer that is passed to the cleanup function.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetPointerProperty
-    /// \sa SDL_SetPointerProperty
-    /// \sa SDL_CleanupPropertyCallback
+    /// See also [`SDL_GetPointerProperty`]<br>
+    /// See also [`SDL_SetPointerProperty`]<br>
+    /// See also [`SDL_CleanupPropertyCallback`]<br>
     pub fn SDL_SetPointerPropertyWithCleanup(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -208,23 +208,23 @@ extern "C" {
 extern "C" {
     /// Set a pointer property in a group of properties.
     ///
-    /// \param props the properties to modify.
-    /// \param name the name of the property to modify.
-    /// \param value the new value of the property, or NULL to delete the property.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `props`: the properties to modify.
+    /// - `name`: the name of the property to modify.
+    /// - `value`: the new value of the property, or NULL to delete the property.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetPointerProperty
-    /// \sa SDL_HasProperty
-    /// \sa SDL_SetBooleanProperty
-    /// \sa SDL_SetFloatProperty
-    /// \sa SDL_SetNumberProperty
-    /// \sa SDL_SetPointerPropertyWithCleanup
-    /// \sa SDL_SetStringProperty
+    /// See also [`SDL_GetPointerProperty`]<br>
+    /// See also [`SDL_HasProperty`]<br>
+    /// See also [`SDL_SetBooleanProperty`]<br>
+    /// See also [`SDL_SetFloatProperty`]<br>
+    /// See also [`SDL_SetNumberProperty`]<br>
+    /// See also [`SDL_SetPointerPropertyWithCleanup`]<br>
+    /// See also [`SDL_SetStringProperty`]<br>
     pub fn SDL_SetPointerProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -238,17 +238,17 @@ extern "C" {
     /// This function makes a copy of the string; the caller does not have to
     /// preserve the data after this call completes.
     ///
-    /// \param props the properties to modify.
-    /// \param name the name of the property to modify.
-    /// \param value the new value of the property, or NULL to delete the property.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `props`: the properties to modify.
+    /// - `name`: the name of the property to modify.
+    /// - `value`: the new value of the property, or NULL to delete the property.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetStringProperty
+    /// See also [`SDL_GetStringProperty`]<br>
     pub fn SDL_SetStringProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -259,17 +259,17 @@ extern "C" {
 extern "C" {
     /// Set an integer property in a group of properties.
     ///
-    /// \param props the properties to modify.
-    /// \param name the name of the property to modify.
-    /// \param value the new value of the property.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `props`: the properties to modify.
+    /// - `name`: the name of the property to modify.
+    /// - `value`: the new value of the property.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetNumberProperty
+    /// See also [`SDL_GetNumberProperty`]<br>
     pub fn SDL_SetNumberProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -280,17 +280,17 @@ extern "C" {
 extern "C" {
     /// Set a floating point property in a group of properties.
     ///
-    /// \param props the properties to modify.
-    /// \param name the name of the property to modify.
-    /// \param value the new value of the property.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `props`: the properties to modify.
+    /// - `name`: the name of the property to modify.
+    /// - `value`: the new value of the property.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetFloatProperty
+    /// See also [`SDL_GetFloatProperty`]<br>
     pub fn SDL_SetFloatProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -301,17 +301,17 @@ extern "C" {
 extern "C" {
     /// Set a boolean property in a group of properties.
     ///
-    /// \param props the properties to modify.
-    /// \param name the name of the property to modify.
-    /// \param value the new value of the property.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `props`: the properties to modify.
+    /// - `name`: the name of the property to modify.
+    /// - `value`: the new value of the property.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetBooleanProperty
+    /// See also [`SDL_GetBooleanProperty`]<br>
     pub fn SDL_SetBooleanProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -322,15 +322,15 @@ extern "C" {
 extern "C" {
     /// Return whether a property exists in a group of properties.
     ///
-    /// \param props the properties to query.
-    /// \param name the name of the property to query.
-    /// \returns true if the property exists, or false if it doesn't.
+    /// - `props`: the properties to query.
+    /// - `name`: the name of the property to query.
+    /// - Returns true if the property exists, or false if it doesn't.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetPropertyType
+    /// See also [`SDL_GetPropertyType`]<br>
     pub fn SDL_HasProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -340,16 +340,16 @@ extern "C" {
 extern "C" {
     /// Get the type of a property in a group of properties.
     ///
-    /// \param props the properties to query.
-    /// \param name the name of the property to query.
-    /// \returns the type of the property, or SDL_PROPERTY_TYPE_INVALID if it is
-    ///          not set.
+    /// - `props`: the properties to query.
+    /// - `name`: the name of the property to query.
+    /// - Returns the type of the property, or SDL_PROPERTY_TYPE_INVALID if it is
+    ///   not set.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_HasProperty
+    /// See also [`SDL_HasProperty`]<br>
     pub fn SDL_GetPropertyType(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -364,28 +364,28 @@ extern "C" {
     /// "SDL.internal.". These should be considered read-only and should not be
     /// modified by applications.
     ///
-    /// \param props the properties to query.
-    /// \param name the name of the property to query.
-    /// \param default_value the default value of the property.
-    /// \returns the value of the property, or `default_value` if it is not set or
-    ///          not a pointer property.
+    /// - `props`: the properties to query.
+    /// - `name`: the name of the property to query.
+    /// - `default_value`: the default value of the property.
+    /// - Returns the value of the property, or `default_value` if it is not set or
+    ///   not a pointer property.
     ///
-    /// \threadsafety It is safe to call this function from any thread, although
-    ///               the data returned is not protected and could potentially be
-    ///               freed if you call SDL_SetPointerProperty() or
-    ///               SDL_ClearProperty() on these properties from another thread.
-    ///               If you need to avoid this, use SDL_LockProperties() and
-    ///               SDL_UnlockProperties().
+    /// Thread safety: It is safe to call this function from any thread, although
+    ///   the data returned is not protected and could potentially be
+    ///   freed if you call SDL_SetPointerProperty() or
+    ///   SDL_ClearProperty() on these properties from another thread.
+    ///   If you need to avoid this, use SDL_LockProperties() and
+    ///   SDL_UnlockProperties().
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetBooleanProperty
-    /// \sa SDL_GetFloatProperty
-    /// \sa SDL_GetNumberProperty
-    /// \sa SDL_GetPropertyType
-    /// \sa SDL_GetStringProperty
-    /// \sa SDL_HasProperty
-    /// \sa SDL_SetPointerProperty
+    /// See also [`SDL_GetBooleanProperty`]<br>
+    /// See also [`SDL_GetFloatProperty`]<br>
+    /// See also [`SDL_GetNumberProperty`]<br>
+    /// See also [`SDL_GetPropertyType`]<br>
+    /// See also [`SDL_GetStringProperty`]<br>
+    /// See also [`SDL_HasProperty`]<br>
+    /// See also [`SDL_SetPointerProperty`]<br>
     pub fn SDL_GetPointerProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -396,24 +396,24 @@ extern "C" {
 extern "C" {
     /// Get a string property from a group of properties.
     ///
-    /// \param props the properties to query.
-    /// \param name the name of the property to query.
-    /// \param default_value the default value of the property.
-    /// \returns the value of the property, or `default_value` if it is not set or
-    ///          not a string property.
+    /// - `props`: the properties to query.
+    /// - `name`: the name of the property to query.
+    /// - `default_value`: the default value of the property.
+    /// - Returns the value of the property, or `default_value` if it is not set or
+    ///   not a string property.
     ///
-    /// \threadsafety It is safe to call this function from any thread, although
-    ///               the data returned is not protected and could potentially be
-    ///               freed if you call SDL_SetStringProperty() or
-    ///               SDL_ClearProperty() on these properties from another thread.
-    ///               If you need to avoid this, use SDL_LockProperties() and
-    ///               SDL_UnlockProperties().
+    /// Thread safety: It is safe to call this function from any thread, although
+    ///   the data returned is not protected and could potentially be
+    ///   freed if you call SDL_SetStringProperty() or
+    ///   SDL_ClearProperty() on these properties from another thread.
+    ///   If you need to avoid this, use SDL_LockProperties() and
+    ///   SDL_UnlockProperties().
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetPropertyType
-    /// \sa SDL_HasProperty
-    /// \sa SDL_SetStringProperty
+    /// See also [`SDL_GetPropertyType`]<br>
+    /// See also [`SDL_HasProperty`]<br>
+    /// See also [`SDL_SetStringProperty`]<br>
     pub fn SDL_GetStringProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -427,19 +427,19 @@ extern "C" {
     /// You can use SDL_GetPropertyType() to query whether the property exists and
     /// is a number property.
     ///
-    /// \param props the properties to query.
-    /// \param name the name of the property to query.
-    /// \param default_value the default value of the property.
-    /// \returns the value of the property, or `default_value` if it is not set or
-    ///          not a number property.
+    /// - `props`: the properties to query.
+    /// - `name`: the name of the property to query.
+    /// - `default_value`: the default value of the property.
+    /// - Returns the value of the property, or `default_value` if it is not set or
+    ///   not a number property.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetPropertyType
-    /// \sa SDL_HasProperty
-    /// \sa SDL_SetNumberProperty
+    /// See also [`SDL_GetPropertyType`]<br>
+    /// See also [`SDL_HasProperty`]<br>
+    /// See also [`SDL_SetNumberProperty`]<br>
     pub fn SDL_GetNumberProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -453,19 +453,19 @@ extern "C" {
     /// You can use SDL_GetPropertyType() to query whether the property exists and
     /// is a floating point property.
     ///
-    /// \param props the properties to query.
-    /// \param name the name of the property to query.
-    /// \param default_value the default value of the property.
-    /// \returns the value of the property, or `default_value` if it is not set or
-    ///          not a float property.
+    /// - `props`: the properties to query.
+    /// - `name`: the name of the property to query.
+    /// - `default_value`: the default value of the property.
+    /// - Returns the value of the property, or `default_value` if it is not set or
+    ///   not a float property.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetPropertyType
-    /// \sa SDL_HasProperty
-    /// \sa SDL_SetFloatProperty
+    /// See also [`SDL_GetPropertyType`]<br>
+    /// See also [`SDL_HasProperty`]<br>
+    /// See also [`SDL_SetFloatProperty`]<br>
     pub fn SDL_GetFloatProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -479,19 +479,19 @@ extern "C" {
     /// You can use SDL_GetPropertyType() to query whether the property exists and
     /// is a boolean property.
     ///
-    /// \param props the properties to query.
-    /// \param name the name of the property to query.
-    /// \param default_value the default value of the property.
-    /// \returns the value of the property, or `default_value` if it is not set or
-    ///          not a boolean property.
+    /// - `props`: the properties to query.
+    /// - `name`: the name of the property to query.
+    /// - `default_value`: the default value of the property.
+    /// - Returns the value of the property, or `default_value` if it is not set or
+    ///   not a boolean property.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetPropertyType
-    /// \sa SDL_HasProperty
-    /// \sa SDL_SetBooleanProperty
+    /// See also [`SDL_GetPropertyType`]<br>
+    /// See also [`SDL_HasProperty`]<br>
+    /// See also [`SDL_SetBooleanProperty`]<br>
     pub fn SDL_GetBooleanProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -502,14 +502,14 @@ extern "C" {
 extern "C" {
     /// Clear a property from a group of properties.
     ///
-    /// \param props the properties to modify.
-    /// \param name the name of the property to clear.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `props`: the properties to modify.
+    /// - `name`: the name of the property to clear.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_ClearProperty(
         props: SDL_PropertiesID,
         name: *const ::core::ffi::c_char,
@@ -521,16 +521,16 @@ extern "C" {
 /// This callback is called from SDL_EnumerateProperties(), and is called once
 /// per property in the set.
 ///
-/// \param userdata an app-defined pointer passed to the callback.
-/// \param props the SDL_PropertiesID that is being enumerated.
-/// \param name the next property name in the enumeration.
+/// - `userdata`: an app-defined pointer passed to the callback.
+/// - `props`: the SDL_PropertiesID that is being enumerated.
+/// - `name`: the next property name in the enumeration.
 ///
-/// \threadsafety SDL_EnumerateProperties holds a lock on `props` during this
-///               callback.
+/// Thread safety: SDL_EnumerateProperties holds a lock on `props` during this
+///   callback.
 ///
-/// \since This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.0.0.
 ///
-/// \sa SDL_EnumerateProperties
+/// See also [`SDL_EnumerateProperties`]<br>
 pub type SDL_EnumeratePropertiesCallback = ::core::option::Option<
     unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
@@ -545,15 +545,15 @@ extern "C" {
     /// The callback function is called for each property in the group of
     /// properties. The properties are locked during enumeration.
     ///
-    /// \param props the properties to query.
-    /// \param callback the function to call for each property.
-    /// \param userdata a pointer that is passed to `callback`.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `props`: the properties to query.
+    /// - `callback`: the function to call for each property.
+    /// - `userdata`: a pointer that is passed to `callback`.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_EnumerateProperties(
         props: SDL_PropertiesID,
         callback: SDL_EnumeratePropertiesCallback,
@@ -567,14 +567,14 @@ extern "C" {
     /// All properties are deleted and their cleanup functions will be called, if
     /// any.
     ///
-    /// \param props the properties to destroy.
+    /// - `props`: the properties to destroy.
     ///
-    /// \threadsafety This function should not be called while these properties are
-    ///               locked or other threads might be setting or getting values
-    ///               from these properties.
+    /// Thread safety: This function should not be called while these properties are
+    ///   locked or other threads might be setting or getting values
+    ///   from these properties.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateProperties
+    /// See also [`SDL_CreateProperties`]<br>
     pub fn SDL_DestroyProperties(props: SDL_PropertiesID);
 }

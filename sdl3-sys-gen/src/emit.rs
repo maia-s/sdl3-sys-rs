@@ -204,12 +204,58 @@ impl Emit for Items {
     }
 }
 
-impl Emit for DocComment {
-    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        for line in self.to_string().lines() {
-            writeln!(ctx, "///{}{}", if line.is_empty() { "" } else { " " }, line)?;
+impl DocComment {
+    fn emit_rust(&self, ctx: &mut EmitContext, pfx: &str) -> EmitResult {
+        let lines = self.to_string();
+        let mut lines = lines.lines().peekable();
+        while let Some(line) = lines.next() {
+            if line.is_empty() {
+                writeln!(ctx, "{pfx}")?;
+                continue;
+            } else if let Some(cmd) = line.strip_prefix('\\') {
+                let Some((cmd, rest)) = cmd.split_once(char::is_whitespace) else {
+                    writeln!(ctx, "{pfx} {line}")?;
+                    continue;
+                };
+                let rest = rest.trim_start();
+                let mut emit_block = |ctx: &mut EmitContext, plen| -> EmitResult {
+                    let bpfx = " ".repeat(plen);
+                    while let Some(line) = lines.peek().and_then(|s| s.strip_prefix(&bpfx)) {
+                        writeln!(ctx, "{pfx}   {line}")?;
+                        lines.next();
+                    }
+                    Ok(())
+                };
+                match cmd {
+                    "param" => {
+                        let (param, rest) = rest.split_once(char::is_whitespace).unwrap();
+                        let rest = rest.trim_start();
+                        writeln!(ctx, "{pfx} - `{param}`: {rest}")?;
+                        emit_block(ctx, line.len() - rest.len())?;
+                    }
+                    "returns" => {
+                        writeln!(ctx, "{pfx} - Returns {rest}")?;
+                        emit_block(ctx, line.len() - rest.len())?;
+                    }
+                    "sa" => writeln!(ctx, "{pfx} See also [`{}`]<br>", rest.trim())?,
+                    "since" => writeln!(ctx, "{pfx} {rest}")?,
+                    "threadsafety" => {
+                        writeln!(ctx, "{pfx} Thread safety: {rest}")?;
+                        emit_block(ctx, line.len() - rest.len())?;
+                    }
+                    _ => writeln!(ctx, "{pfx} {line}")?,
+                }
+            } else {
+                writeln!(ctx, "{pfx} {line}")?;
+            }
         }
         Ok(())
+    }
+}
+
+impl Emit for DocComment {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        self.emit_rust(ctx, "///")
     }
 }
 
@@ -217,9 +263,7 @@ impl Emit for DocCommentFile {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if !ctx.emitted_file_doc() {
             ctx.set_emitted_file_doc(true);
-            for line in self.0.to_string().lines() {
-                writeln!(ctx, "//!{}{}", if line.is_empty() { "" } else { " " }, line)?;
-            }
+            self.0.emit_rust(ctx, "//!")?;
             writeln!(ctx)?;
         }
         Ok(())

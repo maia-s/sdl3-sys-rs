@@ -42,12 +42,12 @@ use super::video::*;
 
 /// The name of the software renderer.
 ///
-/// \since This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.0.0.
 pub const SDL_SOFTWARE_RENDERER: &::core::ffi::CStr = c"software";
 
 /// Vertex structure.
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -62,7 +62,7 @@ pub struct SDL_Vertex {
 
 /// The access pattern allowed for a texture.
 ///
-/// \since This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.0.0.
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_TEXTUREACCESS_STATIC`], [`SDL_TEXTUREACCESS_STREAMING`], [`SDL_TEXTUREACCESS_TARGET`]
 #[repr(transparent)]
@@ -92,7 +92,7 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGE
 
 /// How the logical size is mapped to the output.
 ///
-/// \since This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.0.0.
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_LOGICAL_PRESENTATION_DISABLED`], [`SDL_LOGICAL_PRESENTATION_STRETCH`], [`SDL_LOGICAL_PRESENTATION_LETTERBOX`], [`SDL_LOGICAL_PRESENTATION_OVERSCAN`], [`SDL_LOGICAL_PRESENTATION_INTEGER_SCALE`]
 #[repr(transparent)]
@@ -142,14 +142,14 @@ extern "C" {
     ///
     /// There may be none if SDL was compiled without render support.
     ///
-    /// \returns the number of built in render drivers.
+    /// - Returns the number of built in render drivers.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateRenderer
-    /// \sa SDL_GetRenderDriver
+    /// See also [`SDL_CreateRenderer`]<br>
+    /// See also [`SDL_GetRenderDriver`]<br>
     pub fn SDL_GetNumRenderDrivers() -> ::core::ffi::c_int;
 }
 
@@ -164,38 +164,38 @@ extern "C" {
     /// "direct3d12" or "metal". These never have Unicode characters, and are not
     /// meant to be proper names.
     ///
-    /// \param index the index of the rendering driver; the value ranges from 0 to
-    ///              SDL_GetNumRenderDrivers() - 1.
-    /// \returns the name of the rendering driver at the requested index, or NULL
-    ///          if an invalid index was specified.
+    /// - `index`: the index of the rendering driver; the value ranges from 0 to
+    ///   SDL_GetNumRenderDrivers() - 1.
+    /// - Returns the name of the rendering driver at the requested index, or NULL
+    ///   if an invalid index was specified.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetNumRenderDrivers
+    /// See also [`SDL_GetNumRenderDrivers`]<br>
     pub fn SDL_GetRenderDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
 }
 
 extern "C" {
     /// Create a window and default renderer.
     ///
-    /// \param title the title of the window, in UTF-8 encoding.
-    /// \param width the width of the window.
-    /// \param height the height of the window.
-    /// \param window_flags the flags used to create the window (see
-    ///                     SDL_CreateWindow()).
-    /// \param window a pointer filled with the window, or NULL on error.
-    /// \param renderer a pointer filled with the renderer, or NULL on error.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `title`: the title of the window, in UTF-8 encoding.
+    /// - `width`: the width of the window.
+    /// - `height`: the height of the window.
+    /// - `window_flags`: the flags used to create the window (see
+    ///   SDL_CreateWindow()).
+    /// - `window`: a pointer filled with the window, or NULL on error.
+    /// - `renderer`: a pointer filled with the renderer, or NULL on error.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateRenderer
-    /// \sa SDL_CreateWindow
+    /// See also [`SDL_CreateRenderer`]<br>
+    /// See also [`SDL_CreateWindow`]<br>
     pub fn SDL_CreateWindowAndRenderer(
         title: *const ::core::ffi::c_char,
         width: ::core::ffi::c_int,
@@ -219,22 +219,22 @@ extern "C" {
     /// can call SDL_SetRenderLogicalPresentation() to change the content size and
     /// scaling options.
     ///
-    /// \param window the window where rendering is displayed.
-    /// \param name the name of the rendering driver to initialize, or NULL to
-    ///             initialize the first one supporting the requested flags.
-    /// \returns a valid rendering context or NULL if there was an error; call
-    ///          SDL_GetError() for more information.
+    /// - `window`: the window where rendering is displayed.
+    /// - `name`: the name of the rendering driver to initialize, or NULL to
+    ///   initialize the first one supporting the requested flags.
+    /// - Returns a valid rendering context or NULL if there was an error; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateRendererWithProperties
-    /// \sa SDL_CreateSoftwareRenderer
-    /// \sa SDL_DestroyRenderer
-    /// \sa SDL_GetNumRenderDrivers
-    /// \sa SDL_GetRenderDriver
-    /// \sa SDL_GetRendererName
+    /// See also [`SDL_CreateRendererWithProperties`]<br>
+    /// See also [`SDL_CreateSoftwareRenderer`]<br>
+    /// See also [`SDL_DestroyRenderer`]<br>
+    /// See also [`SDL_GetNumRenderDrivers`]<br>
+    /// See also [`SDL_GetRenderDriver`]<br>
+    /// See also [`SDL_GetRendererName`]<br>
     pub fn SDL_CreateRenderer(
         window: *mut SDL_Window,
         name: *const ::core::ffi::c_char,
@@ -278,19 +278,19 @@ extern "C" {
     /// - `SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER`: the
     ///   queue family index used for presentation.
     ///
-    /// \param props the properties to use.
-    /// \returns a valid rendering context or NULL if there was an error; call
-    ///          SDL_GetError() for more information.
+    /// - `props`: the properties to use.
+    /// - Returns a valid rendering context or NULL if there was an error; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateProperties
-    /// \sa SDL_CreateRenderer
-    /// \sa SDL_CreateSoftwareRenderer
-    /// \sa SDL_DestroyRenderer
-    /// \sa SDL_GetRendererName
+    /// See also [`SDL_CreateProperties`]<br>
+    /// See also [`SDL_CreateRenderer`]<br>
+    /// See also [`SDL_CreateSoftwareRenderer`]<br>
+    /// See also [`SDL_DestroyRenderer`]<br>
+    /// See also [`SDL_GetRendererName`]<br>
     pub fn SDL_CreateRendererWithProperties(props: SDL_PropertiesID) -> *mut SDL_Renderer;
 }
 
@@ -334,58 +334,58 @@ extern "C" {
     /// create a software renderer, but they are intended to be used with an
     /// SDL_Window as the final destination and not an SDL_Surface.
     ///
-    /// \param surface the SDL_Surface structure representing the surface where
-    ///                rendering is done.
-    /// \returns a valid rendering context or NULL if there was an error; call
-    ///          SDL_GetError() for more information.
+    /// - `surface`: the SDL_Surface structure representing the surface where
+    ///   rendering is done.
+    /// - Returns a valid rendering context or NULL if there was an error; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_DestroyRenderer
+    /// See also [`SDL_DestroyRenderer`]<br>
     pub fn SDL_CreateSoftwareRenderer(surface: *mut SDL_Surface) -> *mut SDL_Renderer;
 }
 
 extern "C" {
     /// Get the renderer associated with a window.
     ///
-    /// \param window the window to query.
-    /// \returns the rendering context on success or NULL on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `window`: the window to query.
+    /// - Returns the rendering context on success or NULL on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GetRenderer(window: *mut SDL_Window) -> *mut SDL_Renderer;
 }
 
 extern "C" {
     /// Get the window associated with a renderer.
     ///
-    /// \param renderer the renderer to query.
-    /// \returns the window on success or NULL on failure; call SDL_GetError() for
-    ///          more information.
+    /// - `renderer`: the renderer to query.
+    /// - Returns the window on success or NULL on failure; call SDL_GetError() for
+    ///   more information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GetRenderWindow(renderer: *mut SDL_Renderer) -> *mut SDL_Window;
 }
 
 extern "C" {
     /// Get the name of a renderer.
     ///
-    /// \param renderer the rendering context.
-    /// \returns the name of the selected renderer, or NULL on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `renderer`: the rendering context.
+    /// - Returns the name of the selected renderer, or NULL on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateRenderer
-    /// \sa SDL_CreateRendererWithProperties
+    /// See also [`SDL_CreateRenderer`]<br>
+    /// See also [`SDL_CreateRendererWithProperties`]<br>
     pub fn SDL_GetRendererName(renderer: *mut SDL_Renderer) -> *const ::core::ffi::c_char;
 }
 
@@ -460,13 +460,13 @@ extern "C" {
     ///   swapchain images, or potential frames in flight, used by the Vulkan
     ///   renderer
     ///
-    /// \param renderer the rendering context.
-    /// \returns a valid property ID on success or 0 on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `renderer`: the rendering context.
+    /// - Returns a valid property ID on success or 0 on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GetRendererProperties(renderer: *mut SDL_Renderer) -> SDL_PropertiesID;
 }
 
@@ -536,17 +536,17 @@ extern "C" {
     /// This returns the true output size in pixels, ignoring any render targets or
     /// logical size and presentation.
     ///
-    /// \param renderer the rendering context.
-    /// \param w a pointer filled in with the width in pixels.
-    /// \param h a pointer filled in with the height in pixels.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `w`: a pointer filled in with the width in pixels.
+    /// - `h`: a pointer filled in with the height in pixels.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetCurrentRenderOutputSize
+    /// See also [`SDL_GetCurrentRenderOutputSize`]<br>
     pub fn SDL_GetRenderOutputSize(
         renderer: *mut SDL_Renderer,
         w: *mut ::core::ffi::c_int,
@@ -562,17 +562,17 @@ extern "C" {
     /// logical size, otherwise it will return the value of
     /// SDL_GetRenderOutputSize().
     ///
-    /// \param renderer the rendering context.
-    /// \param w a pointer filled in with the current width.
-    /// \param h a pointer filled in with the current height.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `w`: a pointer filled in with the current width.
+    /// - `h`: a pointer filled in with the current height.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderOutputSize
+    /// See also [`SDL_GetRenderOutputSize`]<br>
     pub fn SDL_GetCurrentRenderOutputSize(
         renderer: *mut SDL_Renderer,
         w: *mut ::core::ffi::c_int,
@@ -585,24 +585,24 @@ extern "C" {
     ///
     /// The contents of a texture when first created are not defined.
     ///
-    /// \param renderer the rendering context.
-    /// \param format one of the enumerated values in SDL_PixelFormat.
-    /// \param access one of the enumerated values in SDL_TextureAccess.
-    /// \param w the width of the texture in pixels.
-    /// \param h the height of the texture in pixels.
-    /// \returns a pointer to the created texture or NULL if no rendering context
-    ///          was active, the format was unsupported, or the width or height
-    ///          were out of range; call SDL_GetError() for more information.
+    /// - `renderer`: the rendering context.
+    /// - `format`: one of the enumerated values in SDL_PixelFormat.
+    /// - `access`: one of the enumerated values in SDL_TextureAccess.
+    /// - `w`: the width of the texture in pixels.
+    /// - `h`: the height of the texture in pixels.
+    /// - Returns a pointer to the created texture or NULL if no rendering context
+    ///   was active, the format was unsupported, or the width or height
+    ///   were out of range; call SDL_GetError() for more information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateTextureFromSurface
-    /// \sa SDL_CreateTextureWithProperties
-    /// \sa SDL_DestroyTexture
-    /// \sa SDL_GetTextureSize
-    /// \sa SDL_UpdateTexture
+    /// See also [`SDL_CreateTextureFromSurface`]<br>
+    /// See also [`SDL_CreateTextureWithProperties`]<br>
+    /// See also [`SDL_DestroyTexture`]<br>
+    /// See also [`SDL_GetTextureSize`]<br>
+    /// See also [`SDL_UpdateTexture`]<br>
     pub fn SDL_CreateTexture(
         renderer: *mut SDL_Renderer,
         format: SDL_PixelFormat,
@@ -624,19 +624,19 @@ extern "C" {
     /// format of the surface, and can be queried using the
     /// SDL_PROP_TEXTURE_FORMAT_NUMBER property.
     ///
-    /// \param renderer the rendering context.
-    /// \param surface the SDL_Surface structure containing pixel data used to fill
-    ///                the texture.
-    /// \returns the created texture or NULL on failure; call SDL_GetError() for
-    ///          more information.
+    /// - `renderer`: the rendering context.
+    /// - `surface`: the SDL_Surface structure containing pixel data used to fill
+    ///   the texture.
+    /// - Returns the created texture or NULL on failure; call SDL_GetError() for
+    ///   more information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateTexture
-    /// \sa SDL_CreateTextureWithProperties
-    /// \sa SDL_DestroyTexture
+    /// See also [`SDL_CreateTexture`]<br>
+    /// See also [`SDL_CreateTextureWithProperties`]<br>
+    /// See also [`SDL_DestroyTexture`]<br>
     pub fn SDL_CreateTextureFromSurface(
         renderer: *mut SDL_Renderer,
         surface: *mut SDL_Surface,
@@ -737,22 +737,22 @@ extern "C" {
     ///   VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL associated with the texture, if
     ///   you want to wrap an existing texture.
     ///
-    /// \param renderer the rendering context.
-    /// \param props the properties to use.
-    /// \returns a pointer to the created texture or NULL if no rendering context
-    ///          was active, the format was unsupported, or the width or height
-    ///          were out of range; call SDL_GetError() for more information.
+    /// - `renderer`: the rendering context.
+    /// - `props`: the properties to use.
+    /// - Returns a pointer to the created texture or NULL if no rendering context
+    ///   was active, the format was unsupported, or the width or height
+    ///   were out of range; call SDL_GetError() for more information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateProperties
-    /// \sa SDL_CreateTexture
-    /// \sa SDL_CreateTextureFromSurface
-    /// \sa SDL_DestroyTexture
-    /// \sa SDL_GetTextureSize
-    /// \sa SDL_UpdateTexture
+    /// See also [`SDL_CreateProperties`]<br>
+    /// See also [`SDL_CreateTexture`]<br>
+    /// See also [`SDL_CreateTextureFromSurface`]<br>
+    /// See also [`SDL_DestroyTexture`]<br>
+    /// See also [`SDL_GetTextureSize`]<br>
+    /// See also [`SDL_UpdateTexture`]<br>
     pub fn SDL_CreateTextureWithProperties(
         renderer: *mut SDL_Renderer,
         props: SDL_PropertiesID,
@@ -913,13 +913,13 @@ extern "C" {
     /// - `SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER`: the VkImage associated with the
     ///   texture
     ///
-    /// \param texture the texture to query.
-    /// \returns a valid property ID on success or 0 on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `texture`: the texture to query.
+    /// - Returns a valid property ID on success or 0 on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GetTextureProperties(texture: *mut SDL_Texture) -> SDL_PropertiesID;
 }
 
@@ -994,30 +994,30 @@ pub const SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER: &::core::ffi::CStr =
 extern "C" {
     /// Get the renderer that created an SDL_Texture.
     ///
-    /// \param texture the texture to query.
-    /// \returns a pointer to the SDL_Renderer that created the texture, or NULL on
-    ///          failure; call SDL_GetError() for more information.
+    /// - `texture`: the texture to query.
+    /// - Returns a pointer to the SDL_Renderer that created the texture, or NULL on
+    ///   failure; call SDL_GetError() for more information.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GetRendererFromTexture(texture: *mut SDL_Texture) -> *mut SDL_Renderer;
 }
 
 extern "C" {
     /// Get the size of a texture, as floating point values.
     ///
-    /// \param texture the texture to query.
-    /// \param w a pointer filled in with the width of the texture in pixels. This
-    ///          argument can be NULL if you don't need this information.
-    /// \param h a pointer filled in with the height of the texture in pixels. This
-    ///          argument can be NULL if you don't need this information.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to query.
+    /// - `w`: a pointer filled in with the width of the texture in pixels. This
+    ///   argument can be NULL if you don't need this information.
+    /// - `h`: a pointer filled in with the height of the texture in pixels. This
+    ///   argument can be NULL if you don't need this information.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GetTextureSize(
         texture: *mut SDL_Texture,
         w: *mut ::core::ffi::c_float,
@@ -1037,20 +1037,20 @@ extern "C" {
     /// Color modulation is not always supported by the renderer; it will return
     /// false if color modulation is not supported.
     ///
-    /// \param texture the texture to update.
-    /// \param r the red color value multiplied into copy operations.
-    /// \param g the green color value multiplied into copy operations.
-    /// \param b the blue color value multiplied into copy operations.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to update.
+    /// - `r`: the red color value multiplied into copy operations.
+    /// - `g`: the green color value multiplied into copy operations.
+    /// - `b`: the blue color value multiplied into copy operations.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetTextureColorMod
-    /// \sa SDL_SetTextureAlphaMod
-    /// \sa SDL_SetTextureColorModFloat
+    /// See also [`SDL_GetTextureColorMod`]<br>
+    /// See also [`SDL_SetTextureAlphaMod`]<br>
+    /// See also [`SDL_SetTextureColorModFloat`]<br>
     pub fn SDL_SetTextureColorMod(
         texture: *mut SDL_Texture,
         r: Uint8,
@@ -1071,20 +1071,20 @@ extern "C" {
     /// Color modulation is not always supported by the renderer; it will return
     /// false if color modulation is not supported.
     ///
-    /// \param texture the texture to update.
-    /// \param r the red color value multiplied into copy operations.
-    /// \param g the green color value multiplied into copy operations.
-    /// \param b the blue color value multiplied into copy operations.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to update.
+    /// - `r`: the red color value multiplied into copy operations.
+    /// - `g`: the green color value multiplied into copy operations.
+    /// - `b`: the blue color value multiplied into copy operations.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetTextureColorModFloat
-    /// \sa SDL_SetTextureAlphaModFloat
-    /// \sa SDL_SetTextureColorMod
+    /// See also [`SDL_GetTextureColorModFloat`]<br>
+    /// See also [`SDL_SetTextureAlphaModFloat`]<br>
+    /// See also [`SDL_SetTextureColorMod`]<br>
     pub fn SDL_SetTextureColorModFloat(
         texture: *mut SDL_Texture,
         r: ::core::ffi::c_float,
@@ -1096,20 +1096,20 @@ extern "C" {
 extern "C" {
     /// Get the additional color value multiplied into render copy operations.
     ///
-    /// \param texture the texture to query.
-    /// \param r a pointer filled in with the current red color value.
-    /// \param g a pointer filled in with the current green color value.
-    /// \param b a pointer filled in with the current blue color value.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to query.
+    /// - `r`: a pointer filled in with the current red color value.
+    /// - `g`: a pointer filled in with the current green color value.
+    /// - `b`: a pointer filled in with the current blue color value.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetTextureAlphaMod
-    /// \sa SDL_GetTextureColorModFloat
-    /// \sa SDL_SetTextureColorMod
+    /// See also [`SDL_GetTextureAlphaMod`]<br>
+    /// See also [`SDL_GetTextureColorModFloat`]<br>
+    /// See also [`SDL_SetTextureColorMod`]<br>
     pub fn SDL_GetTextureColorMod(
         texture: *mut SDL_Texture,
         r: *mut Uint8,
@@ -1121,20 +1121,20 @@ extern "C" {
 extern "C" {
     /// Get the additional color value multiplied into render copy operations.
     ///
-    /// \param texture the texture to query.
-    /// \param r a pointer filled in with the current red color value.
-    /// \param g a pointer filled in with the current green color value.
-    /// \param b a pointer filled in with the current blue color value.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to query.
+    /// - `r`: a pointer filled in with the current red color value.
+    /// - `g`: a pointer filled in with the current green color value.
+    /// - `b`: a pointer filled in with the current blue color value.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetTextureAlphaModFloat
-    /// \sa SDL_GetTextureColorMod
-    /// \sa SDL_SetTextureColorModFloat
+    /// See also [`SDL_GetTextureAlphaModFloat`]<br>
+    /// See also [`SDL_GetTextureColorMod`]<br>
+    /// See also [`SDL_SetTextureColorModFloat`]<br>
     pub fn SDL_GetTextureColorModFloat(
         texture: *mut SDL_Texture,
         r: *mut ::core::ffi::c_float,
@@ -1154,18 +1154,18 @@ extern "C" {
     /// Alpha modulation is not always supported by the renderer; it will return
     /// false if alpha modulation is not supported.
     ///
-    /// \param texture the texture to update.
-    /// \param alpha the source alpha value multiplied into copy operations.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to update.
+    /// - `alpha`: the source alpha value multiplied into copy operations.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetTextureAlphaMod
-    /// \sa SDL_SetTextureAlphaModFloat
-    /// \sa SDL_SetTextureColorMod
+    /// See also [`SDL_GetTextureAlphaMod`]<br>
+    /// See also [`SDL_SetTextureAlphaModFloat`]<br>
+    /// See also [`SDL_SetTextureColorMod`]<br>
     pub fn SDL_SetTextureAlphaMod(
         texture: *mut SDL_Texture,
         alpha: Uint8,
@@ -1183,18 +1183,18 @@ extern "C" {
     /// Alpha modulation is not always supported by the renderer; it will return
     /// false if alpha modulation is not supported.
     ///
-    /// \param texture the texture to update.
-    /// \param alpha the source alpha value multiplied into copy operations.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to update.
+    /// - `alpha`: the source alpha value multiplied into copy operations.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetTextureAlphaModFloat
-    /// \sa SDL_SetTextureAlphaMod
-    /// \sa SDL_SetTextureColorModFloat
+    /// See also [`SDL_GetTextureAlphaModFloat`]<br>
+    /// See also [`SDL_SetTextureAlphaMod`]<br>
+    /// See also [`SDL_SetTextureColorModFloat`]<br>
     pub fn SDL_SetTextureAlphaModFloat(
         texture: *mut SDL_Texture,
         alpha: ::core::ffi::c_float,
@@ -1204,18 +1204,18 @@ extern "C" {
 extern "C" {
     /// Get the additional alpha value multiplied into render copy operations.
     ///
-    /// \param texture the texture to query.
-    /// \param alpha a pointer filled in with the current alpha value.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to query.
+    /// - `alpha`: a pointer filled in with the current alpha value.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetTextureAlphaModFloat
-    /// \sa SDL_GetTextureColorMod
-    /// \sa SDL_SetTextureAlphaMod
+    /// See also [`SDL_GetTextureAlphaModFloat`]<br>
+    /// See also [`SDL_GetTextureColorMod`]<br>
+    /// See also [`SDL_SetTextureAlphaMod`]<br>
     pub fn SDL_GetTextureAlphaMod(
         texture: *mut SDL_Texture,
         alpha: *mut Uint8,
@@ -1225,18 +1225,18 @@ extern "C" {
 extern "C" {
     /// Get the additional alpha value multiplied into render copy operations.
     ///
-    /// \param texture the texture to query.
-    /// \param alpha a pointer filled in with the current alpha value.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to query.
+    /// - `alpha`: a pointer filled in with the current alpha value.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetTextureAlphaMod
-    /// \sa SDL_GetTextureColorModFloat
-    /// \sa SDL_SetTextureAlphaModFloat
+    /// See also [`SDL_GetTextureAlphaMod`]<br>
+    /// See also [`SDL_GetTextureColorModFloat`]<br>
+    /// See also [`SDL_SetTextureAlphaModFloat`]<br>
     pub fn SDL_GetTextureAlphaModFloat(
         texture: *mut SDL_Texture,
         alpha: *mut ::core::ffi::c_float,
@@ -1249,16 +1249,16 @@ extern "C" {
     /// If the blend mode is not supported, the closest supported mode is chosen
     /// and this function returns false.
     ///
-    /// \param texture the texture to update.
-    /// \param blendMode the SDL_BlendMode to use for texture blending.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to update.
+    /// - `blendMode`: the SDL_BlendMode to use for texture blending.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetTextureBlendMode
+    /// See also [`SDL_GetTextureBlendMode`]<br>
     pub fn SDL_SetTextureBlendMode(
         texture: *mut SDL_Texture,
         blendMode: SDL_BlendMode,
@@ -1268,16 +1268,16 @@ extern "C" {
 extern "C" {
     /// Get the blend mode used for texture copy operations.
     ///
-    /// \param texture the texture to query.
-    /// \param blendMode a pointer filled in with the current SDL_BlendMode.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to query.
+    /// - `blendMode`: a pointer filled in with the current SDL_BlendMode.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetTextureBlendMode
+    /// See also [`SDL_SetTextureBlendMode`]<br>
     pub fn SDL_GetTextureBlendMode(
         texture: *mut SDL_Texture,
         blendMode: *mut SDL_BlendMode,
@@ -1291,16 +1291,16 @@ extern "C" {
     ///
     /// If the scale mode is not supported, the closest supported mode is chosen.
     ///
-    /// \param texture the texture to update.
-    /// \param scaleMode the SDL_ScaleMode to use for texture scaling.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to update.
+    /// - `scaleMode`: the SDL_ScaleMode to use for texture scaling.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetTextureScaleMode
+    /// See also [`SDL_GetTextureScaleMode`]<br>
     pub fn SDL_SetTextureScaleMode(
         texture: *mut SDL_Texture,
         scaleMode: SDL_ScaleMode,
@@ -1310,16 +1310,16 @@ extern "C" {
 extern "C" {
     /// Get the scale mode used for texture scale operations.
     ///
-    /// \param texture the texture to query.
-    /// \param scaleMode a pointer filled in with the current scale mode.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to query.
+    /// - `scaleMode`: a pointer filled in with the current scale mode.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetTextureScaleMode
+    /// See also [`SDL_SetTextureScaleMode`]<br>
     pub fn SDL_GetTextureScaleMode(
         texture: *mut SDL_Texture,
         scaleMode: *mut SDL_ScaleMode,
@@ -1340,23 +1340,23 @@ extern "C" {
     /// While this function will work with streaming textures, for optimization
     /// reasons you may not get the pixels back if you lock the texture afterward.
     ///
-    /// \param texture the texture to update.
-    /// \param rect an SDL_Rect structure representing the area to update, or NULL
-    ///             to update the entire texture.
-    /// \param pixels the raw pixel data in the format of the texture.
-    /// \param pitch the number of bytes in a row of pixel data, including padding
-    ///              between lines.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to update.
+    /// - `rect`: an SDL_Rect structure representing the area to update, or NULL
+    ///   to update the entire texture.
+    /// - `pixels`: the raw pixel data in the format of the texture.
+    /// - `pitch`: the number of bytes in a row of pixel data, including padding
+    ///   between lines.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockTexture
-    /// \sa SDL_UnlockTexture
-    /// \sa SDL_UpdateNVTexture
-    /// \sa SDL_UpdateYUVTexture
+    /// See also [`SDL_LockTexture`]<br>
+    /// See also [`SDL_UnlockTexture`]<br>
+    /// See also [`SDL_UpdateNVTexture`]<br>
+    /// See also [`SDL_UpdateYUVTexture`]<br>
     pub fn SDL_UpdateTexture(
         texture: *mut SDL_Texture,
         rect: *const SDL_Rect,
@@ -1373,27 +1373,27 @@ extern "C" {
     /// block of Y and U/V planes in the proper order, but this function is
     /// available if your pixel data is not contiguous.
     ///
-    /// \param texture the texture to update.
-    /// \param rect a pointer to the rectangle of pixels to update, or NULL to
-    ///             update the entire texture.
-    /// \param Yplane the raw pixel data for the Y plane.
-    /// \param Ypitch the number of bytes between rows of pixel data for the Y
-    ///               plane.
-    /// \param Uplane the raw pixel data for the U plane.
-    /// \param Upitch the number of bytes between rows of pixel data for the U
-    ///               plane.
-    /// \param Vplane the raw pixel data for the V plane.
-    /// \param Vpitch the number of bytes between rows of pixel data for the V
-    ///               plane.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to update.
+    /// - `rect`: a pointer to the rectangle of pixels to update, or NULL to
+    ///   update the entire texture.
+    /// - `Yplane`: the raw pixel data for the Y plane.
+    /// - `Ypitch`: the number of bytes between rows of pixel data for the Y
+    ///   plane.
+    /// - `Uplane`: the raw pixel data for the U plane.
+    /// - `Upitch`: the number of bytes between rows of pixel data for the U
+    ///   plane.
+    /// - `Vplane`: the raw pixel data for the V plane.
+    /// - `Vpitch`: the number of bytes between rows of pixel data for the V
+    ///   plane.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_UpdateNVTexture
-    /// \sa SDL_UpdateTexture
+    /// See also [`SDL_UpdateNVTexture`]<br>
+    /// See also [`SDL_UpdateTexture`]<br>
     pub fn SDL_UpdateYUVTexture(
         texture: *mut SDL_Texture,
         rect: *const SDL_Rect,
@@ -1413,24 +1413,24 @@ extern "C" {
     /// block of NV12/21 planes in the proper order, but this function is available
     /// if your pixel data is not contiguous.
     ///
-    /// \param texture the texture to update.
-    /// \param rect a pointer to the rectangle of pixels to update, or NULL to
-    ///             update the entire texture.
-    /// \param Yplane the raw pixel data for the Y plane.
-    /// \param Ypitch the number of bytes between rows of pixel data for the Y
-    ///               plane.
-    /// \param UVplane the raw pixel data for the UV plane.
-    /// \param UVpitch the number of bytes between rows of pixel data for the UV
-    ///                plane.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to update.
+    /// - `rect`: a pointer to the rectangle of pixels to update, or NULL to
+    ///   update the entire texture.
+    /// - `Yplane`: the raw pixel data for the Y plane.
+    /// - `Ypitch`: the number of bytes between rows of pixel data for the Y
+    ///   plane.
+    /// - `UVplane`: the raw pixel data for the UV plane.
+    /// - `UVpitch`: the number of bytes between rows of pixel data for the UV
+    ///   plane.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_UpdateTexture
-    /// \sa SDL_UpdateYUVTexture
+    /// See also [`SDL_UpdateTexture`]<br>
+    /// See also [`SDL_UpdateYUVTexture`]<br>
     pub fn SDL_UpdateNVTexture(
         texture: *mut SDL_Texture,
         rect: *const SDL_Rect,
@@ -1452,24 +1452,24 @@ extern "C" {
     /// You must use SDL_UnlockTexture() to unlock the pixels and apply any
     /// changes.
     ///
-    /// \param texture the texture to lock for access, which was created with
-    ///                `SDL_TEXTUREACCESS_STREAMING`.
-    /// \param rect an SDL_Rect structure representing the area to lock for access;
-    ///             NULL to lock the entire texture.
-    /// \param pixels this is filled in with a pointer to the locked pixels,
-    ///               appropriately offset by the locked area.
-    /// \param pitch this is filled in with the pitch of the locked pixels; the
-    ///              pitch is the length of one row in bytes.
-    /// \returns true on success or false if the texture is not valid or was not
-    ///          created with `SDL_TEXTUREACCESS_STREAMING`; call SDL_GetError()
-    ///          for more information.
+    /// - `texture`: the texture to lock for access, which was created with
+    ///   `SDL_TEXTUREACCESS_STREAMING`.
+    /// - `rect`: an SDL_Rect structure representing the area to lock for access;
+    ///   NULL to lock the entire texture.
+    /// - `pixels`: this is filled in with a pointer to the locked pixels,
+    ///   appropriately offset by the locked area.
+    /// - `pitch`: this is filled in with the pitch of the locked pixels; the
+    ///   pitch is the length of one row in bytes.
+    /// - Returns true on success or false if the texture is not valid or was not
+    ///   created with `SDL_TEXTUREACCESS_STREAMING`; call SDL_GetError()
+    ///   for more information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockTextureToSurface
-    /// \sa SDL_UnlockTexture
+    /// See also [`SDL_LockTextureToSurface`]<br>
+    /// See also [`SDL_UnlockTexture`]<br>
     pub fn SDL_LockTexture(
         texture: *mut SDL_Texture,
         rect: *const SDL_Rect,
@@ -1496,21 +1496,21 @@ extern "C" {
     /// The returned surface is freed internally after calling SDL_UnlockTexture()
     /// or SDL_DestroyTexture(). The caller should not free it.
     ///
-    /// \param texture the texture to lock for access, which must be created with
-    ///                `SDL_TEXTUREACCESS_STREAMING`.
-    /// \param rect a pointer to the rectangle to lock for access. If the rect is
-    ///             NULL, the entire texture will be locked.
-    /// \param surface this is filled in with an SDL surface representing the
-    ///                locked area.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `texture`: the texture to lock for access, which must be created with
+    ///   `SDL_TEXTUREACCESS_STREAMING`.
+    /// - `rect`: a pointer to the rectangle to lock for access. If the rect is
+    ///   NULL, the entire texture will be locked.
+    /// - `surface`: this is filled in with an SDL surface representing the
+    ///   locked area.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockTexture
-    /// \sa SDL_UnlockTexture
+    /// See also [`SDL_LockTexture`]<br>
+    /// See also [`SDL_UnlockTexture`]<br>
     pub fn SDL_LockTextureToSurface(
         texture: *mut SDL_Texture,
         rect: *const SDL_Rect,
@@ -1529,13 +1529,13 @@ extern "C" {
     /// Which is to say: locking and immediately unlocking a texture can result in
     /// corrupted textures, depending on the renderer in use.
     ///
-    /// \param texture a texture locked by SDL_LockTexture().
+    /// - `texture`: a texture locked by SDL_LockTexture().
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockTexture
+    /// See also [`SDL_LockTexture`]<br>
     pub fn SDL_UnlockTexture(texture: *mut SDL_Texture);
 }
 
@@ -1546,18 +1546,18 @@ extern "C" {
     /// To stop rendering to a texture and render to the window again, call this
     /// function with a NULL `texture`.
     ///
-    /// \param renderer the rendering context.
-    /// \param texture the targeted texture, which must be created with the
-    ///                `SDL_TEXTUREACCESS_TARGET` flag, or NULL to render to the
-    ///                window instead of a texture.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `texture`: the targeted texture, which must be created with the
+    ///   `SDL_TEXTUREACCESS_TARGET` flag, or NULL to render to the
+    ///   window instead of a texture.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderTarget
+    /// See also [`SDL_GetRenderTarget`]<br>
     pub fn SDL_SetRenderTarget(
         renderer: *mut SDL_Renderer,
         texture: *mut SDL_Texture,
@@ -1570,14 +1570,14 @@ extern "C" {
     /// The default render target is the window for which the renderer was created,
     /// and is reported a NULL here.
     ///
-    /// \param renderer the rendering context.
-    /// \returns the current render target or NULL for the default render target.
+    /// - `renderer`: the rendering context.
+    /// - Returns the current render target or NULL for the default render target.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetRenderTarget
+    /// See also [`SDL_SetRenderTarget`]<br>
     pub fn SDL_GetRenderTarget(renderer: *mut SDL_Renderer) -> *mut SDL_Texture;
 }
 
@@ -1605,20 +1605,20 @@ extern "C" {
     /// You can convert coordinates in an event into rendering coordinates using
     /// SDL_ConvertEventToRenderCoordinates().
     ///
-    /// \param renderer the rendering context.
-    /// \param w the width of the logical resolution.
-    /// \param h the height of the logical resolution.
-    /// \param mode the presentation mode used.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `w`: the width of the logical resolution.
+    /// - `h`: the height of the logical resolution.
+    /// - `mode`: the presentation mode used.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_ConvertEventToRenderCoordinates
-    /// \sa SDL_GetRenderLogicalPresentation
-    /// \sa SDL_GetRenderLogicalPresentationRect
+    /// See also [`SDL_ConvertEventToRenderCoordinates`]<br>
+    /// See also [`SDL_GetRenderLogicalPresentation`]<br>
+    /// See also [`SDL_GetRenderLogicalPresentationRect`]<br>
     pub fn SDL_SetRenderLogicalPresentation(
         renderer: *mut SDL_Renderer,
         w: ::core::ffi::c_int,
@@ -1633,18 +1633,18 @@ extern "C" {
     /// This function gets the width and height of the logical rendering output, or
     /// the output size in pixels if a logical resolution is not enabled.
     ///
-    /// \param renderer the rendering context.
-    /// \param w an int to be filled with the width.
-    /// \param h an int to be filled with the height.
-    /// \param mode the presentation mode used.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `w`: an int to be filled with the width.
+    /// - `h`: an int to be filled with the height.
+    /// - `mode`: the presentation mode used.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetRenderLogicalPresentation
+    /// See also [`SDL_SetRenderLogicalPresentation`]<br>
     pub fn SDL_GetRenderLogicalPresentation(
         renderer: *mut SDL_Renderer,
         w: *mut ::core::ffi::c_int,
@@ -1661,17 +1661,17 @@ extern "C" {
     /// presentation is disabled, it will fill the rectangle with the output size,
     /// in pixels.
     ///
-    /// \param renderer the rendering context.
-    /// \param rect a pointer filled in with the final presentation rectangle, may
-    ///             be NULL.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `rect`: a pointer filled in with the final presentation rectangle, may
+    ///   be NULL.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetRenderLogicalPresentation
+    /// See also [`SDL_SetRenderLogicalPresentation`]<br>
     pub fn SDL_GetRenderLogicalPresentationRect(
         renderer: *mut SDL_Renderer,
         rect: *mut SDL_FRect,
@@ -1681,20 +1681,20 @@ extern "C" {
 extern "C" {
     /// Get a point in render coordinates when given a point in window coordinates.
     ///
-    /// \param renderer the rendering context.
-    /// \param window_x the x coordinate in window coordinates.
-    /// \param window_y the y coordinate in window coordinates.
-    /// \param x a pointer filled with the x coordinate in render coordinates.
-    /// \param y a pointer filled with the y coordinate in render coordinates.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `window_x`: the x coordinate in window coordinates.
+    /// - `window_y`: the y coordinate in window coordinates.
+    /// - `x`: a pointer filled with the x coordinate in render coordinates.
+    /// - `y`: a pointer filled with the y coordinate in render coordinates.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetRenderLogicalPresentation
-    /// \sa SDL_SetRenderScale
+    /// See also [`SDL_SetRenderLogicalPresentation`]<br>
+    /// See also [`SDL_SetRenderScale`]<br>
     pub fn SDL_RenderCoordinatesFromWindow(
         renderer: *mut SDL_Renderer,
         window_x: ::core::ffi::c_float,
@@ -1707,22 +1707,22 @@ extern "C" {
 extern "C" {
     /// Get a point in window coordinates when given a point in render coordinates.
     ///
-    /// \param renderer the rendering context.
-    /// \param x the x coordinate in render coordinates.
-    /// \param y the y coordinate in render coordinates.
-    /// \param window_x a pointer filled with the x coordinate in window
-    ///                 coordinates.
-    /// \param window_y a pointer filled with the y coordinate in window
-    ///                 coordinates.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `x`: the x coordinate in render coordinates.
+    /// - `y`: the y coordinate in render coordinates.
+    /// - `window_x`: a pointer filled with the x coordinate in window
+    ///   coordinates.
+    /// - `window_y`: a pointer filled with the y coordinate in window
+    ///   coordinates.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetRenderLogicalPresentation
-    /// \sa SDL_SetRenderScale
+    /// See also [`SDL_SetRenderLogicalPresentation`]<br>
+    /// See also [`SDL_SetRenderScale`]<br>
     pub fn SDL_RenderCoordinatesToWindow(
         renderer: *mut SDL_Renderer,
         x: ::core::ffi::c_float,
@@ -1740,16 +1740,16 @@ extern "C" {
     ///
     /// Once converted, the coordinates may be outside the rendering area.
     ///
-    /// \param renderer the rendering context.
-    /// \param event the event to modify.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `event`: the event to modify.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderCoordinatesFromWindow
+    /// See also [`SDL_RenderCoordinatesFromWindow`]<br>
     pub fn SDL_ConvertEventToRenderCoordinates(
         renderer: *mut SDL_Renderer,
         event: *mut SDL_Event,
@@ -1765,18 +1765,18 @@ extern "C" {
     ///
     /// The area's width and height must be >= 0.
     ///
-    /// \param renderer the rendering context.
-    /// \param rect the SDL_Rect structure representing the drawing area, or NULL
-    ///             to set the viewport to the entire target.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `rect`: the SDL_Rect structure representing the drawing area, or NULL
+    ///   to set the viewport to the entire target.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderViewport
-    /// \sa SDL_RenderViewportSet
+    /// See also [`SDL_GetRenderViewport`]<br>
+    /// See also [`SDL_RenderViewportSet`]<br>
     pub fn SDL_SetRenderViewport(
         renderer: *mut SDL_Renderer,
         rect: *const SDL_Rect,
@@ -1786,17 +1786,17 @@ extern "C" {
 extern "C" {
     /// Get the drawing area for the current target.
     ///
-    /// \param renderer the rendering context.
-    /// \param rect an SDL_Rect structure filled in with the current drawing area.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `rect`: an SDL_Rect structure filled in with the current drawing area.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderViewportSet
-    /// \sa SDL_SetRenderViewport
+    /// See also [`SDL_RenderViewportSet`]<br>
+    /// See also [`SDL_SetRenderViewport`]<br>
     pub fn SDL_GetRenderViewport(
         renderer: *mut SDL_Renderer,
         rect: *mut SDL_Rect,
@@ -1810,16 +1810,16 @@ extern "C" {
     /// whether you should restore a specific rectangle or NULL. Note that the
     /// viewport is always reset when changing rendering targets.
     ///
-    /// \param renderer the rendering context.
-    /// \returns true if the viewport was set to a specific rectangle, or false if
-    ///          it was set to NULL (the entire target).
+    /// - `renderer`: the rendering context.
+    /// - Returns true if the viewport was set to a specific rectangle, or false if
+    ///   it was set to NULL (the entire target).
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderViewport
-    /// \sa SDL_SetRenderViewport
+    /// See also [`SDL_GetRenderViewport`]<br>
+    /// See also [`SDL_SetRenderViewport`]<br>
     pub fn SDL_RenderViewportSet(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
@@ -1833,15 +1833,15 @@ extern "C" {
     /// rendering into the rest of the render target, but it should not contain
     /// visually important or interactible content.
     ///
-    /// \param renderer the rendering context.
-    /// \param rect a pointer filled in with the area that is safe for interactive
-    ///             content.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `rect`: a pointer filled in with the area that is safe for interactive
+    ///   content.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GetRenderSafeArea(
         renderer: *mut SDL_Renderer,
         rect: *mut SDL_Rect,
@@ -1851,18 +1851,18 @@ extern "C" {
 extern "C" {
     /// Set the clip rectangle for rendering on the specified target.
     ///
-    /// \param renderer the rendering context.
-    /// \param rect an SDL_Rect structure representing the clip area, relative to
-    ///             the viewport, or NULL to disable clipping.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `rect`: an SDL_Rect structure representing the clip area, relative to
+    ///   the viewport, or NULL to disable clipping.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderClipRect
-    /// \sa SDL_RenderClipEnabled
+    /// See also [`SDL_GetRenderClipRect`]<br>
+    /// See also [`SDL_RenderClipEnabled`]<br>
     pub fn SDL_SetRenderClipRect(
         renderer: *mut SDL_Renderer,
         rect: *const SDL_Rect,
@@ -1872,18 +1872,18 @@ extern "C" {
 extern "C" {
     /// Get the clip rectangle for the current target.
     ///
-    /// \param renderer the rendering context.
-    /// \param rect an SDL_Rect structure filled in with the current clipping area
-    ///             or an empty rectangle if clipping is disabled.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `rect`: an SDL_Rect structure filled in with the current clipping area
+    ///   or an empty rectangle if clipping is disabled.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderClipEnabled
-    /// \sa SDL_SetRenderClipRect
+    /// See also [`SDL_RenderClipEnabled`]<br>
+    /// See also [`SDL_SetRenderClipRect`]<br>
     pub fn SDL_GetRenderClipRect(
         renderer: *mut SDL_Renderer,
         rect: *mut SDL_Rect,
@@ -1893,16 +1893,16 @@ extern "C" {
 extern "C" {
     /// Get whether clipping is enabled on the given renderer.
     ///
-    /// \param renderer the rendering context.
-    /// \returns true if clipping is enabled or false if not; call SDL_GetError()
-    ///          for more information.
+    /// - `renderer`: the rendering context.
+    /// - Returns true if clipping is enabled or false if not; call SDL_GetError()
+    ///   for more information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderClipRect
-    /// \sa SDL_SetRenderClipRect
+    /// See also [`SDL_GetRenderClipRect`]<br>
+    /// See also [`SDL_SetRenderClipRect`]<br>
     pub fn SDL_RenderClipEnabled(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
@@ -1917,17 +1917,17 @@ extern "C" {
     /// will be handled using the appropriate quality hints. For best results use
     /// integer scaling factors.
     ///
-    /// \param renderer the rendering context.
-    /// \param scaleX the horizontal scaling factor.
-    /// \param scaleY the vertical scaling factor.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `scaleX`: the horizontal scaling factor.
+    /// - `scaleY`: the vertical scaling factor.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderScale
+    /// See also [`SDL_GetRenderScale`]<br>
     pub fn SDL_SetRenderScale(
         renderer: *mut SDL_Renderer,
         scaleX: ::core::ffi::c_float,
@@ -1938,17 +1938,17 @@ extern "C" {
 extern "C" {
     /// Get the drawing scale for the current target.
     ///
-    /// \param renderer the rendering context.
-    /// \param scaleX a pointer filled in with the horizontal scaling factor.
-    /// \param scaleY a pointer filled in with the vertical scaling factor.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `scaleX`: a pointer filled in with the horizontal scaling factor.
+    /// - `scaleY`: a pointer filled in with the vertical scaling factor.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetRenderScale
+    /// See also [`SDL_SetRenderScale`]<br>
     pub fn SDL_GetRenderScale(
         renderer: *mut SDL_Renderer,
         scaleX: *mut ::core::ffi::c_float,
@@ -1962,22 +1962,22 @@ extern "C" {
     /// Set the color for drawing or filling rectangles, lines, and points, and for
     /// SDL_RenderClear().
     ///
-    /// \param renderer the rendering context.
-    /// \param r the red value used to draw on the rendering target.
-    /// \param g the green value used to draw on the rendering target.
-    /// \param b the blue value used to draw on the rendering target.
-    /// \param a the alpha value used to draw on the rendering target; usually
-    ///          `SDL_ALPHA_OPAQUE` (255). Use SDL_SetRenderDrawBlendMode to
-    ///          specify how the alpha channel is used.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `r`: the red value used to draw on the rendering target.
+    /// - `g`: the green value used to draw on the rendering target.
+    /// - `b`: the blue value used to draw on the rendering target.
+    /// - `a`: the alpha value used to draw on the rendering target; usually
+    ///   `SDL_ALPHA_OPAQUE` (255). Use SDL_SetRenderDrawBlendMode to
+    ///   specify how the alpha channel is used.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderDrawColor
-    /// \sa SDL_SetRenderDrawColorFloat
+    /// See also [`SDL_GetRenderDrawColor`]<br>
+    /// See also [`SDL_SetRenderDrawColorFloat`]<br>
     pub fn SDL_SetRenderDrawColor(
         renderer: *mut SDL_Renderer,
         r: Uint8,
@@ -1993,22 +1993,22 @@ extern "C" {
     /// Set the color for drawing or filling rectangles, lines, and points, and for
     /// SDL_RenderClear().
     ///
-    /// \param renderer the rendering context.
-    /// \param r the red value used to draw on the rendering target.
-    /// \param g the green value used to draw on the rendering target.
-    /// \param b the blue value used to draw on the rendering target.
-    /// \param a the alpha value used to draw on the rendering target. Use
-    ///          SDL_SetRenderDrawBlendMode to specify how the alpha channel is
-    ///          used.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `r`: the red value used to draw on the rendering target.
+    /// - `g`: the green value used to draw on the rendering target.
+    /// - `b`: the blue value used to draw on the rendering target.
+    /// - `a`: the alpha value used to draw on the rendering target. Use
+    ///   SDL_SetRenderDrawBlendMode to specify how the alpha channel is
+    ///   used.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderDrawColorFloat
-    /// \sa SDL_SetRenderDrawColor
+    /// See also [`SDL_GetRenderDrawColorFloat`]<br>
+    /// See also [`SDL_SetRenderDrawColor`]<br>
     pub fn SDL_SetRenderDrawColorFloat(
         renderer: *mut SDL_Renderer,
         r: ::core::ffi::c_float,
@@ -2021,24 +2021,24 @@ extern "C" {
 extern "C" {
     /// Get the color used for drawing operations (Rect, Line and Clear).
     ///
-    /// \param renderer the rendering context.
-    /// \param r a pointer filled in with the red value used to draw on the
-    ///          rendering target.
-    /// \param g a pointer filled in with the green value used to draw on the
-    ///          rendering target.
-    /// \param b a pointer filled in with the blue value used to draw on the
-    ///          rendering target.
-    /// \param a a pointer filled in with the alpha value used to draw on the
-    ///          rendering target; usually `SDL_ALPHA_OPAQUE` (255).
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `r`: a pointer filled in with the red value used to draw on the
+    ///   rendering target.
+    /// - `g`: a pointer filled in with the green value used to draw on the
+    ///   rendering target.
+    /// - `b`: a pointer filled in with the blue value used to draw on the
+    ///   rendering target.
+    /// - `a`: a pointer filled in with the alpha value used to draw on the
+    ///   rendering target; usually `SDL_ALPHA_OPAQUE` (255).
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderDrawColorFloat
-    /// \sa SDL_SetRenderDrawColor
+    /// See also [`SDL_GetRenderDrawColorFloat`]<br>
+    /// See also [`SDL_SetRenderDrawColor`]<br>
     pub fn SDL_GetRenderDrawColor(
         renderer: *mut SDL_Renderer,
         r: *mut Uint8,
@@ -2051,24 +2051,24 @@ extern "C" {
 extern "C" {
     /// Get the color used for drawing operations (Rect, Line and Clear).
     ///
-    /// \param renderer the rendering context.
-    /// \param r a pointer filled in with the red value used to draw on the
-    ///          rendering target.
-    /// \param g a pointer filled in with the green value used to draw on the
-    ///          rendering target.
-    /// \param b a pointer filled in with the blue value used to draw on the
-    ///          rendering target.
-    /// \param a a pointer filled in with the alpha value used to draw on the
-    ///          rendering target.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `r`: a pointer filled in with the red value used to draw on the
+    ///   rendering target.
+    /// - `g`: a pointer filled in with the green value used to draw on the
+    ///   rendering target.
+    /// - `b`: a pointer filled in with the blue value used to draw on the
+    ///   rendering target.
+    /// - `a`: a pointer filled in with the alpha value used to draw on the
+    ///   rendering target.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetRenderDrawColorFloat
-    /// \sa SDL_GetRenderDrawColor
+    /// See also [`SDL_SetRenderDrawColorFloat`]<br>
+    /// See also [`SDL_GetRenderDrawColor`]<br>
     pub fn SDL_GetRenderDrawColorFloat(
         renderer: *mut SDL_Renderer,
         r: *mut ::core::ffi::c_float,
@@ -2089,16 +2089,16 @@ extern "C" {
     /// The color scale does not affect the alpha channel, only the color
     /// brightness.
     ///
-    /// \param renderer the rendering context.
-    /// \param scale the color scale value.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `scale`: the color scale value.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderColorScale
+    /// See also [`SDL_GetRenderColorScale`]<br>
     pub fn SDL_SetRenderColorScale(
         renderer: *mut SDL_Renderer,
         scale: ::core::ffi::c_float,
@@ -2108,16 +2108,16 @@ extern "C" {
 extern "C" {
     /// Get the color scale used for render operations.
     ///
-    /// \param renderer the rendering context.
-    /// \param scale a pointer filled in with the current color scale value.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `scale`: a pointer filled in with the current color scale value.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetRenderColorScale
+    /// See also [`SDL_SetRenderColorScale`]<br>
     pub fn SDL_GetRenderColorScale(
         renderer: *mut SDL_Renderer,
         scale: *mut ::core::ffi::c_float,
@@ -2129,16 +2129,16 @@ extern "C" {
     ///
     /// If the blend mode is not supported, the closest supported mode is chosen.
     ///
-    /// \param renderer the rendering context.
-    /// \param blendMode the SDL_BlendMode to use for blending.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `blendMode`: the SDL_BlendMode to use for blending.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderDrawBlendMode
+    /// See also [`SDL_GetRenderDrawBlendMode`]<br>
     pub fn SDL_SetRenderDrawBlendMode(
         renderer: *mut SDL_Renderer,
         blendMode: SDL_BlendMode,
@@ -2148,16 +2148,16 @@ extern "C" {
 extern "C" {
     /// Get the blend mode used for drawing operations.
     ///
-    /// \param renderer the rendering context.
-    /// \param blendMode a pointer filled in with the current SDL_BlendMode.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `blendMode`: a pointer filled in with the current SDL_BlendMode.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetRenderDrawBlendMode
+    /// See also [`SDL_SetRenderDrawBlendMode`]<br>
     pub fn SDL_GetRenderDrawBlendMode(
         renderer: *mut SDL_Renderer,
         blendMode: *mut SDL_BlendMode,
@@ -2172,32 +2172,32 @@ extern "C" {
     /// the rendering target to current renderer draw color, so make sure to invoke
     /// SDL_SetRenderDrawColor() when needed.
     ///
-    /// \param renderer the rendering context.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetRenderDrawColor
+    /// See also [`SDL_SetRenderDrawColor`]<br>
     pub fn SDL_RenderClear(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Draw a point on the current rendering target at subpixel precision.
     ///
-    /// \param renderer the renderer which should draw a point.
-    /// \param x the x coordinate of the point.
-    /// \param y the y coordinate of the point.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer which should draw a point.
+    /// - `x`: the x coordinate of the point.
+    /// - `y`: the y coordinate of the point.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderPoints
+    /// See also [`SDL_RenderPoints`]<br>
     pub fn SDL_RenderPoint(
         renderer: *mut SDL_Renderer,
         x: ::core::ffi::c_float,
@@ -2208,17 +2208,17 @@ extern "C" {
 extern "C" {
     /// Draw multiple points on the current rendering target at subpixel precision.
     ///
-    /// \param renderer the renderer which should draw multiple points.
-    /// \param points the points to draw.
-    /// \param count the number of points to draw.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer which should draw multiple points.
+    /// - `points`: the points to draw.
+    /// - `count`: the number of points to draw.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderPoint
+    /// See also [`SDL_RenderPoint`]<br>
     pub fn SDL_RenderPoints(
         renderer: *mut SDL_Renderer,
         points: *const SDL_FPoint,
@@ -2229,19 +2229,19 @@ extern "C" {
 extern "C" {
     /// Draw a line on the current rendering target at subpixel precision.
     ///
-    /// \param renderer the renderer which should draw a line.
-    /// \param x1 the x coordinate of the start point.
-    /// \param y1 the y coordinate of the start point.
-    /// \param x2 the x coordinate of the end point.
-    /// \param y2 the y coordinate of the end point.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer which should draw a line.
+    /// - `x1`: the x coordinate of the start point.
+    /// - `y1`: the y coordinate of the start point.
+    /// - `x2`: the x coordinate of the end point.
+    /// - `y2`: the y coordinate of the end point.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderLines
+    /// See also [`SDL_RenderLines`]<br>
     pub fn SDL_RenderLine(
         renderer: *mut SDL_Renderer,
         x1: ::core::ffi::c_float,
@@ -2255,17 +2255,17 @@ extern "C" {
     /// Draw a series of connected lines on the current rendering target at
     /// subpixel precision.
     ///
-    /// \param renderer the renderer which should draw multiple lines.
-    /// \param points the points along the lines.
-    /// \param count the number of points, drawing count-1 lines.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer which should draw multiple lines.
+    /// - `points`: the points along the lines.
+    /// - `count`: the number of points, drawing count-1 lines.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderLine
+    /// See also [`SDL_RenderLine`]<br>
     pub fn SDL_RenderLines(
         renderer: *mut SDL_Renderer,
         points: *const SDL_FPoint,
@@ -2276,17 +2276,17 @@ extern "C" {
 extern "C" {
     /// Draw a rectangle on the current rendering target at subpixel precision.
     ///
-    /// \param renderer the renderer which should draw a rectangle.
-    /// \param rect a pointer to the destination rectangle, or NULL to outline the
-    ///             entire rendering target.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer which should draw a rectangle.
+    /// - `rect`: a pointer to the destination rectangle, or NULL to outline the
+    ///   entire rendering target.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderRects
+    /// See also [`SDL_RenderRects`]<br>
     pub fn SDL_RenderRect(
         renderer: *mut SDL_Renderer,
         rect: *const SDL_FRect,
@@ -2297,17 +2297,17 @@ extern "C" {
     /// Draw some number of rectangles on the current rendering target at subpixel
     /// precision.
     ///
-    /// \param renderer the renderer which should draw multiple rectangles.
-    /// \param rects a pointer to an array of destination rectangles.
-    /// \param count the number of rectangles.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer which should draw multiple rectangles.
+    /// - `rects`: a pointer to an array of destination rectangles.
+    /// - `count`: the number of rectangles.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderRect
+    /// See also [`SDL_RenderRect`]<br>
     pub fn SDL_RenderRects(
         renderer: *mut SDL_Renderer,
         rects: *const SDL_FRect,
@@ -2319,17 +2319,17 @@ extern "C" {
     /// Fill a rectangle on the current rendering target with the drawing color at
     /// subpixel precision.
     ///
-    /// \param renderer the renderer which should fill a rectangle.
-    /// \param rect a pointer to the destination rectangle, or NULL for the entire
-    ///             rendering target.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer which should fill a rectangle.
+    /// - `rect`: a pointer to the destination rectangle, or NULL for the entire
+    ///   rendering target.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderFillRects
+    /// See also [`SDL_RenderFillRects`]<br>
     pub fn SDL_RenderFillRect(
         renderer: *mut SDL_Renderer,
         rect: *const SDL_FRect,
@@ -2340,17 +2340,17 @@ extern "C" {
     /// Fill some number of rectangles on the current rendering target with the
     /// drawing color at subpixel precision.
     ///
-    /// \param renderer the renderer which should fill multiple rectangles.
-    /// \param rects a pointer to an array of destination rectangles.
-    /// \param count the number of rectangles.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer which should fill multiple rectangles.
+    /// - `rects`: a pointer to an array of destination rectangles.
+    /// - `count`: the number of rectangles.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderFillRect
+    /// See also [`SDL_RenderFillRect`]<br>
     pub fn SDL_RenderFillRects(
         renderer: *mut SDL_Renderer,
         rects: *const SDL_FRect,
@@ -2362,21 +2362,21 @@ extern "C" {
     /// Copy a portion of the texture to the current rendering target at subpixel
     /// precision.
     ///
-    /// \param renderer the renderer which should copy parts of a texture.
-    /// \param texture the source texture.
-    /// \param srcrect a pointer to the source rectangle, or NULL for the entire
-    ///                texture.
-    /// \param dstrect a pointer to the destination rectangle, or NULL for the
-    ///                entire rendering target.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer which should copy parts of a texture.
+    /// - `texture`: the source texture.
+    /// - `srcrect`: a pointer to the source rectangle, or NULL for the entire
+    ///   texture.
+    /// - `dstrect`: a pointer to the destination rectangle, or NULL for the
+    ///   entire rendering target.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderTextureRotated
-    /// \sa SDL_RenderTextureTiled
+    /// See also [`SDL_RenderTextureRotated`]<br>
+    /// See also [`SDL_RenderTextureTiled`]<br>
     pub fn SDL_RenderTexture(
         renderer: *mut SDL_Renderer,
         texture: *mut SDL_Texture,
@@ -2389,27 +2389,27 @@ extern "C" {
     /// Copy a portion of the source texture to the current rendering target, with
     /// rotation and flipping, at subpixel precision.
     ///
-    /// \param renderer the renderer which should copy parts of a texture.
-    /// \param texture the source texture.
-    /// \param srcrect a pointer to the source rectangle, or NULL for the entire
-    ///                texture.
-    /// \param dstrect a pointer to the destination rectangle, or NULL for the
-    ///                entire rendering target.
-    /// \param angle an angle in degrees that indicates the rotation that will be
-    ///              applied to dstrect, rotating it in a clockwise direction.
-    /// \param center a pointer to a point indicating the point around which
-    ///               dstrect will be rotated (if NULL, rotation will be done
-    ///               around dstrect.w/2, dstrect.h/2).
-    /// \param flip an SDL_FlipMode value stating which flipping actions should be
-    ///             performed on the texture.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer which should copy parts of a texture.
+    /// - `texture`: the source texture.
+    /// - `srcrect`: a pointer to the source rectangle, or NULL for the entire
+    ///   texture.
+    /// - `dstrect`: a pointer to the destination rectangle, or NULL for the
+    ///   entire rendering target.
+    /// - `angle`: an angle in degrees that indicates the rotation that will be
+    ///   applied to dstrect, rotating it in a clockwise direction.
+    /// - `center`: a pointer to a point indicating the point around which
+    ///   dstrect will be rotated (if NULL, rotation will be done
+    ///   around dstrect.w/2, dstrect.h/2).
+    /// - `flip`: an SDL_FlipMode value stating which flipping actions should be
+    ///   performed on the texture.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderTexture
+    /// See also [`SDL_RenderTexture`]<br>
     pub fn SDL_RenderTextureRotated(
         renderer: *mut SDL_Renderer,
         texture: *mut SDL_Texture,
@@ -2428,23 +2428,23 @@ extern "C" {
     /// The pixels in `srcrect` will be repeated as many times as needed to
     /// completely fill `dstrect`.
     ///
-    /// \param renderer the renderer which should copy parts of a texture.
-    /// \param texture the source texture.
-    /// \param srcrect a pointer to the source rectangle, or NULL for the entire
-    ///                texture.
-    /// \param scale the scale used to transform srcrect into the destination
-    ///              rectangle, e.g. a 32x32 texture with a scale of 2 would fill
-    ///              64x64 tiles.
-    /// \param dstrect a pointer to the destination rectangle, or NULL for the
-    ///                entire rendering target.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer which should copy parts of a texture.
+    /// - `texture`: the source texture.
+    /// - `srcrect`: a pointer to the source rectangle, or NULL for the entire
+    ///   texture.
+    /// - `scale`: the scale used to transform srcrect into the destination
+    ///   rectangle, e.g. a 32x32 texture with a scale of 2 would fill
+    ///   64x64 tiles.
+    /// - `dstrect`: a pointer to the destination rectangle, or NULL for the
+    ///   entire rendering target.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderTexture
+    /// See also [`SDL_RenderTexture`]<br>
     pub fn SDL_RenderTextureTiled(
         renderer: *mut SDL_Renderer,
         texture: *mut SDL_Texture,
@@ -2464,27 +2464,27 @@ extern "C" {
     /// the corners of the destination rectangle. The sides and center are then
     /// stretched into place to cover the remaining destination rectangle.
     ///
-    /// \param renderer the renderer which should copy parts of a texture.
-    /// \param texture the source texture.
-    /// \param srcrect the SDL_Rect structure representing the rectangle to be used
-    ///                for the 9-grid, or NULL to use the entire texture.
-    /// \param left_width the width, in pixels, of the left corners in `srcrect`.
-    /// \param right_width the width, in pixels, of the right corners in `srcrect`.
-    /// \param top_height the height, in pixels, of the top corners in `srcrect`.
-    /// \param bottom_height the height, in pixels, of the bottom corners in
-    ///                      `srcrect`.
-    /// \param scale the scale used to transform the corner of `srcrect` into the
-    ///              corner of `dstrect`, or 0.0f for an unscaled copy.
-    /// \param dstrect a pointer to the destination rectangle, or NULL for the
-    ///                entire rendering target.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer which should copy parts of a texture.
+    /// - `texture`: the source texture.
+    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be used
+    ///   for the 9-grid, or NULL to use the entire texture.
+    /// - `left_width`: the width, in pixels, of the left corners in `srcrect`.
+    /// - `right_width`: the width, in pixels, of the right corners in `srcrect`.
+    /// - `top_height`: the height, in pixels, of the top corners in `srcrect`.
+    /// - `bottom_height`: the height, in pixels, of the bottom corners in
+    ///   `srcrect`.
+    /// - `scale`: the scale used to transform the corner of `srcrect` into the
+    ///   corner of `dstrect`, or 0.0f for an unscaled copy.
+    /// - `dstrect`: a pointer to the destination rectangle, or NULL for the
+    ///   entire rendering target.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderTexture
+    /// See also [`SDL_RenderTexture`]<br>
     pub fn SDL_RenderTexture9Grid(
         renderer: *mut SDL_Renderer,
         texture: *mut SDL_Texture,
@@ -2503,22 +2503,22 @@ extern "C" {
     /// vertex array Color and alpha modulation is done per vertex
     /// (SDL_SetTextureColorMod and SDL_SetTextureAlphaMod are ignored).
     ///
-    /// \param renderer the rendering context.
-    /// \param texture (optional) The SDL texture to use.
-    /// \param vertices vertices.
-    /// \param num_vertices number of vertices.
-    /// \param indices (optional) An array of integer indices into the 'vertices'
-    ///                array, if NULL all vertices will be rendered in sequential
-    ///                order.
-    /// \param num_indices number of indices.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `texture`: (optional) The SDL texture to use.
+    /// - `vertices`: vertices.
+    /// - `num_vertices`: number of vertices.
+    /// - `indices`: (optional) An array of integer indices into the 'vertices'
+    ///   array, if NULL all vertices will be rendered in sequential
+    ///   order.
+    /// - `num_indices`: number of indices.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderGeometryRaw
+    /// See also [`SDL_RenderGeometryRaw`]<br>
     pub fn SDL_RenderGeometry(
         renderer: *mut SDL_Renderer,
         texture: *mut SDL_Texture,
@@ -2534,27 +2534,27 @@ extern "C" {
     /// vertex arrays Color and alpha modulation is done per vertex
     /// (SDL_SetTextureColorMod and SDL_SetTextureAlphaMod are ignored).
     ///
-    /// \param renderer the rendering context.
-    /// \param texture (optional) The SDL texture to use.
-    /// \param xy vertex positions.
-    /// \param xy_stride byte size to move from one element to the next element.
-    /// \param color vertex colors (as SDL_FColor).
-    /// \param color_stride byte size to move from one element to the next element.
-    /// \param uv vertex normalized texture coordinates.
-    /// \param uv_stride byte size to move from one element to the next element.
-    /// \param num_vertices number of vertices.
-    /// \param indices (optional) An array of indices into the 'vertices' arrays,
-    ///                if NULL all vertices will be rendered in sequential order.
-    /// \param num_indices number of indices.
-    /// \param size_indices index size: 1 (byte), 2 (short), 4 (int).
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `texture`: (optional) The SDL texture to use.
+    /// - `xy`: vertex positions.
+    /// - `xy_stride`: byte size to move from one element to the next element.
+    /// - `color`: vertex colors (as SDL_FColor).
+    /// - `color_stride`: byte size to move from one element to the next element.
+    /// - `uv`: vertex normalized texture coordinates.
+    /// - `uv_stride`: byte size to move from one element to the next element.
+    /// - `num_vertices`: number of vertices.
+    /// - `indices`: (optional) An array of indices into the 'vertices' arrays,
+    ///   if NULL all vertices will be rendered in sequential order.
+    /// - `num_indices`: number of indices.
+    /// - `size_indices`: index size: 1 (byte), 2 (short), 4 (int).
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_RenderGeometry
+    /// See also [`SDL_RenderGeometry`]<br>
     pub fn SDL_RenderGeometryRaw(
         renderer: *mut SDL_Renderer,
         texture: *mut SDL_Texture,
@@ -2580,15 +2580,15 @@ extern "C" {
     /// frequently. If you're using this on the main rendering target, it should be
     /// called after rendering and before SDL_RenderPresent().
     ///
-    /// \param renderer the rendering context.
-    /// \param rect an SDL_Rect structure representing the area in pixels relative
-    ///             to the to current viewport, or NULL for the entire viewport.
-    /// \returns a new SDL_Surface on success or NULL on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `renderer`: the rendering context.
+    /// - `rect`: an SDL_Rect structure representing the area in pixels relative
+    ///   to the to current viewport, or NULL for the entire viewport.
+    /// - Returns a new SDL_Surface on success or NULL on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_RenderReadPixels(
         renderer: *mut SDL_Renderer,
         rect: *const SDL_Rect,
@@ -2622,26 +2622,26 @@ extern "C" {
     /// SDL_RenderPresent while rendering to a texture will still update the screen
     /// with any current drawing that has been done _to the window itself_.
     ///
-    /// \param renderer the rendering context.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateRenderer
-    /// \sa SDL_RenderClear
-    /// \sa SDL_RenderFillRect
-    /// \sa SDL_RenderFillRects
-    /// \sa SDL_RenderLine
-    /// \sa SDL_RenderLines
-    /// \sa SDL_RenderPoint
-    /// \sa SDL_RenderPoints
-    /// \sa SDL_RenderRect
-    /// \sa SDL_RenderRects
-    /// \sa SDL_SetRenderDrawBlendMode
-    /// \sa SDL_SetRenderDrawColor
+    /// See also [`SDL_CreateRenderer`]<br>
+    /// See also [`SDL_RenderClear`]<br>
+    /// See also [`SDL_RenderFillRect`]<br>
+    /// See also [`SDL_RenderFillRects`]<br>
+    /// See also [`SDL_RenderLine`]<br>
+    /// See also [`SDL_RenderLines`]<br>
+    /// See also [`SDL_RenderPoint`]<br>
+    /// See also [`SDL_RenderPoints`]<br>
+    /// See also [`SDL_RenderRect`]<br>
+    /// See also [`SDL_RenderRects`]<br>
+    /// See also [`SDL_SetRenderDrawBlendMode`]<br>
+    /// See also [`SDL_SetRenderDrawColor`]<br>
     pub fn SDL_RenderPresent(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
@@ -2651,14 +2651,14 @@ extern "C" {
     /// Passing NULL or an otherwise invalid texture will set the SDL error message
     /// to "Invalid texture".
     ///
-    /// \param texture the texture to destroy.
+    /// - `texture`: the texture to destroy.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateTexture
-    /// \sa SDL_CreateTextureFromSurface
+    /// See also [`SDL_CreateTexture`]<br>
+    /// See also [`SDL_CreateTextureFromSurface`]<br>
     pub fn SDL_DestroyTexture(texture: *mut SDL_Texture);
 }
 
@@ -2668,13 +2668,13 @@ extern "C" {
     ///
     /// This should be called before destroying the associated window.
     ///
-    /// \param renderer the rendering context.
+    /// - `renderer`: the rendering context.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateRenderer
+    /// See also [`SDL_CreateRenderer`]<br>
     pub fn SDL_DestroyRenderer(renderer: *mut SDL_Renderer);
 }
 
@@ -2701,13 +2701,13 @@ extern "C" {
     /// OpenGL state that can confuse things; you should use your best judgment and
     /// be prepared to make changes if specific state needs to be protected.
     ///
-    /// \param renderer the rendering context.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_FlushRenderer(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
@@ -2717,15 +2717,15 @@ extern "C" {
     /// This function returns `void *`, so SDL doesn't have to include Metal's
     /// headers, but it can be safely cast to a `CAMetalLayer *`.
     ///
-    /// \param renderer the renderer to query.
-    /// \returns a `CAMetalLayer *` on success, or NULL if the renderer isn't a
-    ///          Metal renderer.
+    /// - `renderer`: the renderer to query.
+    /// - Returns a `CAMetalLayer *` on success, or NULL if the renderer isn't a
+    ///   Metal renderer.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderMetalCommandEncoder
+    /// See also [`SDL_GetRenderMetalCommandEncoder`]<br>
     pub fn SDL_GetRenderMetalLayer(renderer: *mut SDL_Renderer) -> *mut ::core::ffi::c_void;
 }
 
@@ -2740,15 +2740,15 @@ extern "C" {
     /// doesn't apply to command encoders for render targets, just the window's
     /// backbuffer. Check your return values!
     ///
-    /// \param renderer the renderer to query.
-    /// \returns an `id<MTLRenderCommandEncoder>` on success, or NULL if the
-    ///          renderer isn't a Metal renderer or there was an error.
+    /// - `renderer`: the renderer to query.
+    /// - Returns an `id<MTLRenderCommandEncoder>` on success, or NULL if the
+    ///   renderer isn't a Metal renderer or there was an error.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderMetalLayer
+    /// See also [`SDL_GetRenderMetalLayer`]<br>
     pub fn SDL_GetRenderMetalCommandEncoder(
         renderer: *mut SDL_Renderer,
     ) -> *mut ::core::ffi::c_void;
@@ -2767,20 +2767,20 @@ extern "C" {
     /// SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER will give you the
     /// maximum number of semaphores you'll need.
     ///
-    /// \param renderer the rendering context.
-    /// \param wait_stage_mask the VkPipelineStageFlags for the wait.
-    /// \param wait_semaphore a VkSempahore to wait on before rendering the current
-    ///                       frame, or 0 if not needed.
-    /// \param signal_semaphore a VkSempahore that SDL will signal when rendering
-    ///                         for the current frame is complete, or 0 if not
-    ///                         needed.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the rendering context.
+    /// - `wait_stage_mask`: the VkPipelineStageFlags for the wait.
+    /// - `wait_semaphore`: a VkSempahore to wait on before rendering the current
+    ///   frame, or 0 if not needed.
+    /// - `signal_semaphore`: a VkSempahore that SDL will signal when rendering
+    ///   for the current frame is complete, or 0 if not
+    ///   needed.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety It is **NOT** safe to call this function from two threads at
-    ///               once.
+    /// Thread safety: It is **NOT** safe to call this function from two threads at
+    ///   once.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_AddVulkanRenderSemaphores(
         renderer: *mut SDL_Renderer,
         wait_stage_mask: Uint32,
@@ -2801,16 +2801,16 @@ extern "C" {
     /// supported by every driver, so you should check the return value to see
     /// whether the requested setting is supported.
     ///
-    /// \param renderer the renderer to toggle.
-    /// \param vsync the vertical refresh sync interval.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer to toggle.
+    /// - `vsync`: the vertical refresh sync interval.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetRenderVSync
+    /// See also [`SDL_GetRenderVSync`]<br>
     pub fn SDL_SetRenderVSync(
         renderer: *mut SDL_Renderer,
         vsync: ::core::ffi::c_int,
@@ -2824,17 +2824,17 @@ pub const SDL_RENDERER_VSYNC_ADAPTIVE: ::core::primitive::i32 = -1_i32;
 extern "C" {
     /// Get VSync of the given renderer.
     ///
-    /// \param renderer the renderer to toggle.
-    /// \param vsync an int filled with the current vertical refresh sync interval.
-    ///              See SDL_SetRenderVSync() for the meaning of the value.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `renderer`: the renderer to toggle.
+    /// - `vsync`: an int filled with the current vertical refresh sync interval.
+    ///   See SDL_SetRenderVSync() for the meaning of the value.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \threadsafety You may only call this function from the main thread.
+    /// Thread safety: You may only call this function from the main thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetRenderVSync
+    /// See also [`SDL_SetRenderVSync`]<br>
     pub fn SDL_GetRenderVSync(
         renderer: *mut SDL_Renderer,
         vsync: *mut ::core::ffi::c_int,

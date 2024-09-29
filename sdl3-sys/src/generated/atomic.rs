@@ -49,13 +49,13 @@ extern "C" {
     /// ***Please note that spinlocks are dangerous if you don't know what you're
     /// doing. Please be careful using any sort of spinlock!***
     ///
-    /// \param lock a pointer to a lock variable.
-    /// \returns true if the lock succeeded, false if the lock is already held.
+    /// - `lock`: a pointer to a lock variable.
+    /// - Returns true if the lock succeeded, false if the lock is already held.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockSpinlock
-    /// \sa SDL_UnlockSpinlock
+    /// See also [`SDL_LockSpinlock`]<br>
+    /// See also [`SDL_UnlockSpinlock`]<br>
     pub fn SDL_TryLockSpinlock(lock: *mut SDL_SpinLock) -> ::core::primitive::bool;
 }
 
@@ -65,12 +65,12 @@ extern "C" {
     /// ***Please note that spinlocks are dangerous if you don't know what you're
     /// doing. Please be careful using any sort of spinlock!***
     ///
-    /// \param lock a pointer to a lock variable.
+    /// - `lock`: a pointer to a lock variable.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_TryLockSpinlock
-    /// \sa SDL_UnlockSpinlock
+    /// See also [`SDL_TryLockSpinlock`]<br>
+    /// See also [`SDL_UnlockSpinlock`]<br>
     pub fn SDL_LockSpinlock(lock: *mut SDL_SpinLock);
 }
 
@@ -82,12 +82,12 @@ extern "C" {
     /// ***Please note that spinlocks are dangerous if you don't know what you're
     /// doing. Please be careful using any sort of spinlock!***
     ///
-    /// \param lock a pointer to a lock variable.
+    /// - `lock`: a pointer to a lock variable.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockSpinlock
-    /// \sa SDL_TryLockSpinlock
+    /// See also [`SDL_LockSpinlock`]<br>
+    /// See also [`SDL_TryLockSpinlock`]<br>
     pub fn SDL_UnlockSpinlock(lock: *mut SDL_SpinLock);
 }
 
@@ -102,11 +102,11 @@ emit! {
     /// does not prevent the CPU from reordering reads and writes. However, all of
     /// the atomic operations that modify memory are full memory barriers.
     ///
-    /// \threadsafety Obviously this macro is safe to use from any thread at any
-    ///               time, but if you find yourself needing this, you are probably
-    ///               dealing with some very sensitive code; be careful!
+    /// Thread safety: Obviously this macro is safe to use from any thread at any
+    ///   time, but if you find yourself needing this, you are probably
+    ///   dealing with some very sensitive code; be careful!
     ///
-    /// \since This macro is available since SDL 3.0.0.
+    /// This macro is available since SDL 3.0.0.
     #[inline(always)]
     pub fn SDL_CompilerBarrier() {
         ::core::sync::atomic::compiler_fence(::core::sync::atomic::Ordering::SeqCst)
@@ -167,11 +167,11 @@ extern "C" {
     /// For more information on these semantics, take a look at the blog post:
     /// http://preshing.com/20120913/acquire-and-release-semantics
     ///
-    /// \threadsafety Obviously this macro is safe to use from any thread at any
-    ///               time, but if you find yourself needing this, you are probably
-    ///               dealing with some very sensitive code; be careful!
+    /// Thread safety: Obviously this macro is safe to use from any thread at any
+    ///   time, but if you find yourself needing this, you are probably
+    ///   dealing with some very sensitive code; be careful!
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_MemoryBarrierReleaseFunction();
 }
 
@@ -180,13 +180,13 @@ extern "C" {
     ///
     /// Please refer to SDL_MemoryBarrierReleaseFunction for the details!
     ///
-    /// \threadsafety Obviously this function is safe to use from any thread at any
-    ///               time, but if you find yourself needing this, you are probably
-    ///               dealing with some very sensitive code; be careful!
+    /// Thread safety: Obviously this function is safe to use from any thread at any
+    ///   time, but if you find yourself needing this, you are probably
+    ///   dealing with some very sensitive code; be careful!
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_MemoryBarrierReleaseFunction
+    /// See also [`SDL_MemoryBarrierReleaseFunction`]<br>
     pub fn SDL_MemoryBarrierAcquireFunction();
 }
 
@@ -218,9 +218,9 @@ emit! {
     /// approaches with other synchronization primitives: mutexes, semaphores,
     /// condition variables, etc.
     ///
-    /// \threadsafety This macro is safe to use from any thread.
+    /// Thread safety: This macro is safe to use from any thread.
     ///
-    /// \since This macro is available since SDL 3.0.0.
+    /// This macro is available since SDL 3.0.0.
     #[inline(always)]
     pub fn SDL_CPUPauseInstruction() {
         #[cfg(target_arch = "x86")]
@@ -275,12 +275,12 @@ emit! {
 /// This is a struct so people don't accidentally use numeric operations on it
 /// directly. You have to use SDL atomic functions.
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 ///
-/// \sa SDL_CompareAndSwapAtomicInt
-/// \sa SDL_GetAtomicInt
-/// \sa SDL_SetAtomicInt
-/// \sa SDL_AddAtomicInt
+/// See also [`SDL_CompareAndSwapAtomicInt`]<br>
+/// See also [`SDL_GetAtomicInt`]<br>
+/// See also [`SDL_SetAtomicInt`]<br>
+/// See also [`SDL_AddAtomicInt`]<br>
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -294,17 +294,17 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// \param a a pointer to an SDL_AtomicInt variable to be modified.
-    /// \param oldval the old value.
-    /// \param newval the new value.
-    /// \returns true if the atomic variable was set, false otherwise.
+    /// - `a`: a pointer to an SDL_AtomicInt variable to be modified.
+    /// - `oldval`: the old value.
+    /// - `newval`: the new value.
+    /// - Returns true if the atomic variable was set, false otherwise.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetAtomicInt
-    /// \sa SDL_SetAtomicInt
+    /// See also [`SDL_GetAtomicInt`]<br>
+    /// See also [`SDL_SetAtomicInt`]<br>
     pub fn SDL_CompareAndSwapAtomicInt(
         a: *mut SDL_AtomicInt,
         oldval: ::core::ffi::c_int,
@@ -320,15 +320,15 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// \param a a pointer to an SDL_AtomicInt variable to be modified.
-    /// \param v the desired value.
-    /// \returns the previous value of the atomic variable.
+    /// - `a`: a pointer to an SDL_AtomicInt variable to be modified.
+    /// - `v`: the desired value.
+    /// - Returns the previous value of the atomic variable.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetAtomicInt
+    /// See also [`SDL_GetAtomicInt`]<br>
     pub fn SDL_SetAtomicInt(a: *mut SDL_AtomicInt, v: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -338,14 +338,14 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// \param a a pointer to an SDL_AtomicInt variable.
-    /// \returns the current value of an atomic variable.
+    /// - `a`: a pointer to an SDL_AtomicInt variable.
+    /// - Returns the current value of an atomic variable.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetAtomicInt
+    /// See also [`SDL_SetAtomicInt`]<br>
     pub fn SDL_GetAtomicInt(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int;
 }
 
@@ -357,16 +357,16 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// \param a a pointer to an SDL_AtomicInt variable to be modified.
-    /// \param v the desired value to add.
-    /// \returns the previous value of the atomic variable.
+    /// - `a`: a pointer to an SDL_AtomicInt variable to be modified.
+    /// - `v`: the desired value to add.
+    /// - Returns the previous value of the atomic variable.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_AtomicDecRef
-    /// \sa SDL_AtomicIncRef
+    /// See also [`SDL_AtomicDecRef`]<br>
+    /// See also [`SDL_AtomicIncRef`]<br>
     pub fn SDL_AddAtomicInt(a: *mut SDL_AtomicInt, v: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -374,12 +374,12 @@ extern "C" {
 ///
 /// ***Note: If you don't know what this macro is for, you shouldn't use it!***
 ///
-/// \param a a pointer to an SDL_AtomicInt to increment.
-/// \returns the previous value of the atomic variable.
+/// - `a`: a pointer to an SDL_AtomicInt to increment.
+/// - Returns the previous value of the atomic variable.
 ///
-/// \since This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.0.0.
 ///
-/// \sa SDL_AtomicDecRef
+/// See also [`SDL_AtomicDecRef`]<br>
 #[inline(always)]
 pub unsafe fn SDL_AtomicIncRef(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int {
     unsafe { SDL_AddAtomicInt(a, 1) }
@@ -389,13 +389,13 @@ pub unsafe fn SDL_AtomicIncRef(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int {
 ///
 /// ***Note: If you don't know what this macro is for, you shouldn't use it!***
 ///
-/// \param a a pointer to an SDL_AtomicInt to increment.
-/// \returns true if the variable reached zero after decrementing, false
-///          otherwise.
+/// - `a`: a pointer to an SDL_AtomicInt to increment.
+/// - Returns true if the variable reached zero after decrementing, false
+///   otherwise.
 ///
-/// \since This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.0.0.
 ///
-/// \sa SDL_AtomicIncRef
+/// See also [`SDL_AtomicIncRef`]<br>
 #[inline(always)]
 pub unsafe fn SDL_AtomicDecRef(a: *mut SDL_AtomicInt) -> ::core::primitive::bool {
     (unsafe { SDL_AddAtomicInt(a, -1_i32) } == 1_i32)
@@ -420,12 +420,12 @@ pub unsafe fn SDL_AtomicDecRef(a: *mut SDL_AtomicInt) -> ::core::primitive::bool
 /// This is a struct so people don't accidentally use numeric operations on it
 /// directly. You have to use SDL atomic functions.
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 ///
-/// \sa SDL_CompareAndSwapAtomicU32
-/// \sa SDL_GetAtomicU32
-/// \sa SDL_SetAtomicU32
-/// \sa SDL_AddAtomicU32
+/// See also [`SDL_CompareAndSwapAtomicU32`]<br>
+/// See also [`SDL_GetAtomicU32`]<br>
+/// See also [`SDL_SetAtomicU32`]<br>
+/// See also [`SDL_AddAtomicU32`]<br>
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -439,17 +439,17 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// \param a a pointer to an SDL_AtomicU32 variable to be modified.
-    /// \param oldval the old value.
-    /// \param newval the new value.
-    /// \returns true if the atomic variable was set, false otherwise.
+    /// - `a`: a pointer to an SDL_AtomicU32 variable to be modified.
+    /// - `oldval`: the old value.
+    /// - `newval`: the new value.
+    /// - Returns true if the atomic variable was set, false otherwise.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetAtomicU32
-    /// \sa SDL_SetAtomicU32
+    /// See also [`SDL_GetAtomicU32`]<br>
+    /// See also [`SDL_SetAtomicU32`]<br>
     pub fn SDL_CompareAndSwapAtomicU32(
         a: *mut SDL_AtomicU32,
         oldval: Uint32,
@@ -465,15 +465,15 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// \param a a pointer to an SDL_AtomicU32 variable to be modified.
-    /// \param v the desired value.
-    /// \returns the previous value of the atomic variable.
+    /// - `a`: a pointer to an SDL_AtomicU32 variable to be modified.
+    /// - `v`: the desired value.
+    /// - Returns the previous value of the atomic variable.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetAtomicU32
+    /// See also [`SDL_GetAtomicU32`]<br>
     pub fn SDL_SetAtomicU32(a: *mut SDL_AtomicU32, v: Uint32) -> Uint32;
 }
 
@@ -483,14 +483,14 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// \param a a pointer to an SDL_AtomicU32 variable.
-    /// \returns the current value of an atomic variable.
+    /// - `a`: a pointer to an SDL_AtomicU32 variable.
+    /// - Returns the current value of an atomic variable.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetAtomicU32
+    /// See also [`SDL_SetAtomicU32`]<br>
     pub fn SDL_GetAtomicU32(a: *mut SDL_AtomicU32) -> Uint32;
 }
 
@@ -500,18 +500,18 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// \param a a pointer to a pointer.
-    /// \param oldval the old pointer value.
-    /// \param newval the new pointer value.
-    /// \returns true if the pointer was set, false otherwise.
+    /// - `a`: a pointer to a pointer.
+    /// - `oldval`: the old pointer value.
+    /// - `newval`: the new pointer value.
+    /// - Returns true if the pointer was set, false otherwise.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CompareAndSwapAtomicInt
-    /// \sa SDL_GetAtomicPointer
-    /// \sa SDL_SetAtomicPointer
+    /// See also [`SDL_CompareAndSwapAtomicInt`]<br>
+    /// See also [`SDL_GetAtomicPointer`]<br>
+    /// See also [`SDL_SetAtomicPointer`]<br>
     pub fn SDL_CompareAndSwapAtomicPointer(
         a: *mut *mut ::core::ffi::c_void,
         oldval: *mut ::core::ffi::c_void,
@@ -525,16 +525,16 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// \param a a pointer to a pointer.
-    /// \param v the desired pointer value.
-    /// \returns the previous value of the pointer.
+    /// - `a`: a pointer to a pointer.
+    /// - `v`: the desired pointer value.
+    /// - Returns the previous value of the pointer.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CompareAndSwapAtomicPointer
-    /// \sa SDL_GetAtomicPointer
+    /// See also [`SDL_CompareAndSwapAtomicPointer`]<br>
+    /// See also [`SDL_GetAtomicPointer`]<br>
     pub fn SDL_SetAtomicPointer(
         a: *mut *mut ::core::ffi::c_void,
         v: *mut ::core::ffi::c_void,
@@ -547,14 +547,14 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// \param a a pointer to a pointer.
-    /// \returns the current value of a pointer.
+    /// - `a`: a pointer to a pointer.
+    /// - Returns the current value of a pointer.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CompareAndSwapAtomicPointer
-    /// \sa SDL_SetAtomicPointer
+    /// See also [`SDL_CompareAndSwapAtomicPointer`]<br>
+    /// See also [`SDL_SetAtomicPointer`]<br>
     pub fn SDL_GetAtomicPointer(a: *mut *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
 }

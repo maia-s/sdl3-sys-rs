@@ -8,7 +8,7 @@ use super::error::*;
 ///
 /// These are results returned by SDL_GetPowerInfo().
 ///
-/// \since This enum is available since SDL 3.0.0
+/// This enum is available since SDL 3.0.0
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_POWERSTATE_ERROR`], [`SDL_POWERSTATE_UNKNOWN`], [`SDL_POWERSTATE_ON_BATTERY`], [`SDL_POWERSTATE_NO_BATTERY`], [`SDL_POWERSTATE_CHARGING`], [`SDL_POWERSTATE_CHARGED`]
 #[repr(transparent)]
@@ -64,17 +64,17 @@ extern "C" {
     /// It's possible a platform can only report battery percentage or time left
     /// but not both.
     ///
-    /// \param seconds a pointer filled in with the seconds of battery life left,
-    ///                or NULL to ignore. This will be filled in with -1 if we
-    ///                can't determine a value or there is no battery.
-    /// \param percent a pointer filled in with the percentage of battery life
-    ///                left, between 0 and 100, or NULL to ignore. This will be
-    ///                filled in with -1 we can't determine a value or there is no
-    ///                battery.
-    /// \returns the current battery state or `SDL_POWERSTATE_ERROR` on failure;
-    ///          call SDL_GetError() for more information.
+    /// - `seconds`: a pointer filled in with the seconds of battery life left,
+    ///   or NULL to ignore. This will be filled in with -1 if we
+    ///   can't determine a value or there is no battery.
+    /// - `percent`: a pointer filled in with the percentage of battery life
+    ///   left, between 0 and 100, or NULL to ignore. This will be
+    ///   filled in with -1 we can't determine a value or there is no
+    ///   battery.
+    /// - Returns the current battery state or `SDL_POWERSTATE_ERROR` on failure;
+    ///   call SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GetPowerInfo(
         seconds: *mut ::core::ffi::c_int,
         percent: *mut ::core::ffi::c_int,

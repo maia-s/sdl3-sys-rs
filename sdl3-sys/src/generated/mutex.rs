@@ -18,15 +18,15 @@ extern "C" {
     ///
     /// SDL mutexes are reentrant.
     ///
-    /// \returns the initialized and unlocked mutex or NULL on failure; call
-    ///          SDL_GetError() for more information.
+    /// - Returns the initialized and unlocked mutex or NULL on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_DestroyMutex
-    /// \sa SDL_LockMutex
-    /// \sa SDL_TryLockMutex
-    /// \sa SDL_UnlockMutex
+    /// See also [`SDL_DestroyMutex`]<br>
+    /// See also [`SDL_LockMutex`]<br>
+    /// See also [`SDL_TryLockMutex`]<br>
+    /// See also [`SDL_UnlockMutex`]<br>
     pub fn SDL_CreateMutex() -> *mut SDL_Mutex;
 }
 
@@ -45,12 +45,12 @@ extern "C" {
     /// having locked nothing. If the mutex is valid, this function will always
     /// block until it can lock the mutex, and return with it locked.
     ///
-    /// \param mutex the mutex to lock.
+    /// - `mutex`: the mutex to lock.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_TryLockMutex
-    /// \sa SDL_UnlockMutex
+    /// See also [`SDL_TryLockMutex`]<br>
+    /// See also [`SDL_UnlockMutex`]<br>
     pub fn SDL_LockMutex(mutex: *mut SDL_Mutex);
 }
 
@@ -65,13 +65,13 @@ extern "C" {
     ///
     /// This function returns true if passed a NULL mutex.
     ///
-    /// \param mutex the mutex to try to lock.
-    /// \returns true on success, false if the mutex would block.
+    /// - `mutex`: the mutex to try to lock.
+    /// - Returns true on success, false if the mutex would block.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockMutex
-    /// \sa SDL_UnlockMutex
+    /// See also [`SDL_LockMutex`]<br>
+    /// See also [`SDL_UnlockMutex`]<br>
     pub fn SDL_TryLockMutex(mutex: *mut SDL_Mutex) -> ::core::primitive::bool;
 }
 
@@ -85,12 +85,12 @@ extern "C" {
     /// It is illegal to unlock a mutex that has not been locked by the current
     /// thread, and doing so results in undefined behavior.
     ///
-    /// \param mutex the mutex to unlock.
+    /// - `mutex`: the mutex to unlock.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockMutex
-    /// \sa SDL_TryLockMutex
+    /// See also [`SDL_LockMutex`]<br>
+    /// See also [`SDL_TryLockMutex`]<br>
     pub fn SDL_UnlockMutex(mutex: *mut SDL_Mutex);
 }
 
@@ -103,11 +103,11 @@ extern "C" {
     /// to destroy a locked mutex, and may result in undefined behavior depending
     /// on the platform.
     ///
-    /// \param mutex the mutex to destroy.
+    /// - `mutex`: the mutex to destroy.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateMutex
+    /// See also [`SDL_CreateMutex`]<br>
     pub fn SDL_DestroyMutex(mutex: *mut SDL_Mutex);
 }
 
@@ -139,17 +139,17 @@ extern "C" {
     /// and write access at the same time from the same thread (so you can't
     /// promote your read-only lock to a write lock without unlocking first).
     ///
-    /// \returns the initialized and unlocked read/write lock or NULL on failure;
-    ///          call SDL_GetError() for more information.
+    /// - Returns the initialized and unlocked read/write lock or NULL on failure;
+    ///   call SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_DestroyRWLock
-    /// \sa SDL_LockRWLockForReading
-    /// \sa SDL_LockRWLockForWriting
-    /// \sa SDL_TryLockRWLockForReading
-    /// \sa SDL_TryLockRWLockForWriting
-    /// \sa SDL_UnlockRWLock
+    /// See also [`SDL_DestroyRWLock`]<br>
+    /// See also [`SDL_LockRWLockForReading`]<br>
+    /// See also [`SDL_LockRWLockForWriting`]<br>
+    /// See also [`SDL_TryLockRWLockForReading`]<br>
+    /// See also [`SDL_TryLockRWLockForWriting`]<br>
+    /// See also [`SDL_UnlockRWLock`]<br>
     pub fn SDL_CreateRWLock() -> *mut SDL_RWLock;
 }
 
@@ -180,13 +180,13 @@ extern "C" {
     /// having locked nothing. If the rwlock is valid, this function will always
     /// block until it can lock the mutex, and return with it locked.
     ///
-    /// \param rwlock the read/write lock to lock.
+    /// - `rwlock`: the read/write lock to lock.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockRWLockForWriting
-    /// \sa SDL_TryLockRWLockForReading
-    /// \sa SDL_UnlockRWLock
+    /// See also [`SDL_LockRWLockForWriting`]<br>
+    /// See also [`SDL_TryLockRWLockForReading`]<br>
+    /// See also [`SDL_UnlockRWLock`]<br>
     pub fn SDL_LockRWLockForReading(rwlock: *mut SDL_RWLock);
 }
 
@@ -211,13 +211,13 @@ extern "C" {
     /// having locked nothing. If the rwlock is valid, this function will always
     /// block until it can lock the mutex, and return with it locked.
     ///
-    /// \param rwlock the read/write lock to lock.
+    /// - `rwlock`: the read/write lock to lock.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockRWLockForReading
-    /// \sa SDL_TryLockRWLockForWriting
-    /// \sa SDL_UnlockRWLock
+    /// See also [`SDL_LockRWLockForReading`]<br>
+    /// See also [`SDL_TryLockRWLockForWriting`]<br>
+    /// See also [`SDL_UnlockRWLock`]<br>
     pub fn SDL_LockRWLockForWriting(rwlock: *mut SDL_RWLock);
 }
 
@@ -235,14 +235,14 @@ extern "C" {
     ///
     /// This function returns true if passed a NULL rwlock.
     ///
-    /// \param rwlock the rwlock to try to lock.
-    /// \returns true on success, false if the lock would block.
+    /// - `rwlock`: the rwlock to try to lock.
+    /// - Returns true on success, false if the lock would block.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockRWLockForReading
-    /// \sa SDL_TryLockRWLockForWriting
-    /// \sa SDL_UnlockRWLock
+    /// See also [`SDL_LockRWLockForReading`]<br>
+    /// See also [`SDL_TryLockRWLockForWriting`]<br>
+    /// See also [`SDL_UnlockRWLock`]<br>
     pub fn SDL_TryLockRWLockForReading(rwlock: *mut SDL_RWLock) -> ::core::primitive::bool;
 }
 
@@ -265,14 +265,14 @@ extern "C" {
     ///
     /// This function returns true if passed a NULL rwlock.
     ///
-    /// \param rwlock the rwlock to try to lock.
-    /// \returns true on success, false if the lock would block.
+    /// - `rwlock`: the rwlock to try to lock.
+    /// - Returns true on success, false if the lock would block.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockRWLockForWriting
-    /// \sa SDL_TryLockRWLockForReading
-    /// \sa SDL_UnlockRWLock
+    /// See also [`SDL_LockRWLockForWriting`]<br>
+    /// See also [`SDL_TryLockRWLockForReading`]<br>
+    /// See also [`SDL_UnlockRWLock`]<br>
     pub fn SDL_TryLockRWLockForWriting(rwlock: *mut SDL_RWLock) -> ::core::primitive::bool;
 }
 
@@ -290,14 +290,14 @@ extern "C" {
     /// It is illegal to unlock a rwlock that has not been locked by the current
     /// thread, and doing so results in undefined behavior.
     ///
-    /// \param rwlock the rwlock to unlock.
+    /// - `rwlock`: the rwlock to unlock.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_LockRWLockForReading
-    /// \sa SDL_LockRWLockForWriting
-    /// \sa SDL_TryLockRWLockForReading
-    /// \sa SDL_TryLockRWLockForWriting
+    /// See also [`SDL_LockRWLockForReading`]<br>
+    /// See also [`SDL_LockRWLockForWriting`]<br>
+    /// See also [`SDL_TryLockRWLockForReading`]<br>
+    /// See also [`SDL_TryLockRWLockForWriting`]<br>
     pub fn SDL_UnlockRWLock(rwlock: *mut SDL_RWLock);
 }
 
@@ -310,11 +310,11 @@ extern "C" {
     /// is not safe to attempt to destroy a locked rwlock, and may result in
     /// undefined behavior depending on the platform.
     ///
-    /// \param rwlock the rwlock to destroy.
+    /// - `rwlock`: the rwlock to destroy.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateRWLock
+    /// See also [`SDL_CreateRWLock`]<br>
     pub fn SDL_DestroyRWLock(rwlock: *mut SDL_RWLock);
 }
 
@@ -327,18 +327,18 @@ extern "C" {
     /// is 0. Each post operation will atomically increment the semaphore value and
     /// wake waiting threads and allow them to retry the wait operation.
     ///
-    /// \param initial_value the starting value of the semaphore.
-    /// \returns a new semaphore or NULL on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `initial_value`: the starting value of the semaphore.
+    /// - Returns a new semaphore or NULL on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_DestroySemaphore
-    /// \sa SDL_SignalSemaphore
-    /// \sa SDL_TryWaitSemaphore
-    /// \sa SDL_GetSemaphoreValue
-    /// \sa SDL_WaitSemaphore
-    /// \sa SDL_WaitSemaphoreTimeout
+    /// See also [`SDL_DestroySemaphore`]<br>
+    /// See also [`SDL_SignalSemaphore`]<br>
+    /// See also [`SDL_TryWaitSemaphore`]<br>
+    /// See also [`SDL_GetSemaphoreValue`]<br>
+    /// See also [`SDL_WaitSemaphore`]<br>
+    /// See also [`SDL_WaitSemaphoreTimeout`]<br>
     pub fn SDL_CreateSemaphore(initial_value: Uint32) -> *mut SDL_Semaphore;
 }
 
@@ -348,11 +348,11 @@ extern "C" {
     /// It is not safe to destroy a semaphore if there are threads currently
     /// waiting on it.
     ///
-    /// \param sem the semaphore to destroy.
+    /// - `sem`: the semaphore to destroy.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateSemaphore
+    /// See also [`SDL_CreateSemaphore`]<br>
     pub fn SDL_DestroySemaphore(sem: *mut SDL_Semaphore);
 }
 
@@ -366,13 +366,13 @@ extern "C" {
     /// This function is the equivalent of calling SDL_WaitSemaphoreTimeout() with
     /// a time length of -1.
     ///
-    /// \param sem the semaphore wait on.
+    /// - `sem`: the semaphore wait on.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SignalSemaphore
-    /// \sa SDL_TryWaitSemaphore
-    /// \sa SDL_WaitSemaphoreTimeout
+    /// See also [`SDL_SignalSemaphore`]<br>
+    /// See also [`SDL_TryWaitSemaphore`]<br>
+    /// See also [`SDL_WaitSemaphoreTimeout`]<br>
     pub fn SDL_WaitSemaphore(sem: *mut SDL_Semaphore);
 }
 
@@ -384,14 +384,14 @@ extern "C" {
     /// the semaphore doesn't have a positive value, the function immediately
     /// returns false.
     ///
-    /// \param sem the semaphore to wait on.
-    /// \returns true if the wait succeeds, false if the wait would block.
+    /// - `sem`: the semaphore to wait on.
+    /// - Returns true if the wait succeeds, false if the wait would block.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SignalSemaphore
-    /// \sa SDL_WaitSemaphore
-    /// \sa SDL_WaitSemaphoreTimeout
+    /// See also [`SDL_SignalSemaphore`]<br>
+    /// See also [`SDL_WaitSemaphore`]<br>
+    /// See also [`SDL_WaitSemaphoreTimeout`]<br>
     pub fn SDL_TryWaitSemaphore(sem: *mut SDL_Semaphore) -> ::core::primitive::bool;
 }
 
@@ -402,16 +402,16 @@ extern "C" {
     /// pointed to by `sem` has a positive value or the specified time has elapsed.
     /// If the call is successful it will atomically decrement the semaphore value.
     ///
-    /// \param sem the semaphore to wait on.
-    /// \param timeoutMS the length of the timeout, in milliseconds, or -1 to wait
-    ///                  indefinitely.
-    /// \returns true if the wait succeeds or false if the wait times out.
+    /// - `sem`: the semaphore to wait on.
+    /// - `timeoutMS`: the length of the timeout, in milliseconds, or -1 to wait
+    ///   indefinitely.
+    /// - Returns true if the wait succeeds or false if the wait times out.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SignalSemaphore
-    /// \sa SDL_TryWaitSemaphore
-    /// \sa SDL_WaitSemaphore
+    /// See also [`SDL_SignalSemaphore`]<br>
+    /// See also [`SDL_TryWaitSemaphore`]<br>
+    /// See also [`SDL_WaitSemaphore`]<br>
     pub fn SDL_WaitSemaphoreTimeout(
         sem: *mut SDL_Semaphore,
         timeoutMS: Sint32,
@@ -421,80 +421,80 @@ extern "C" {
 extern "C" {
     /// Atomically increment a semaphore's value and wake waiting threads.
     ///
-    /// \param sem the semaphore to increment.
+    /// - `sem`: the semaphore to increment.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_TryWaitSemaphore
-    /// \sa SDL_WaitSemaphore
-    /// \sa SDL_WaitSemaphoreTimeout
+    /// See also [`SDL_TryWaitSemaphore`]<br>
+    /// See also [`SDL_WaitSemaphore`]<br>
+    /// See also [`SDL_WaitSemaphoreTimeout`]<br>
     pub fn SDL_SignalSemaphore(sem: *mut SDL_Semaphore);
 }
 
 extern "C" {
     /// Get the current value of a semaphore.
     ///
-    /// \param sem the semaphore to query.
-    /// \returns the current value of the semaphore.
+    /// - `sem`: the semaphore to query.
+    /// - Returns the current value of the semaphore.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GetSemaphoreValue(sem: *mut SDL_Semaphore) -> Uint32;
 }
 
 extern "C" {
     /// Create a condition variable.
     ///
-    /// \returns a new condition variable or NULL on failure; call SDL_GetError()
-    ///          for more information.
+    /// - Returns a new condition variable or NULL on failure; call SDL_GetError()
+    ///   for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_BroadcastCondition
-    /// \sa SDL_SignalCondition
-    /// \sa SDL_WaitCondition
-    /// \sa SDL_WaitConditionTimeout
-    /// \sa SDL_DestroyCondition
+    /// See also [`SDL_BroadcastCondition`]<br>
+    /// See also [`SDL_SignalCondition`]<br>
+    /// See also [`SDL_WaitCondition`]<br>
+    /// See also [`SDL_WaitConditionTimeout`]<br>
+    /// See also [`SDL_DestroyCondition`]<br>
     pub fn SDL_CreateCondition() -> *mut SDL_Condition;
 }
 
 extern "C" {
     /// Destroy a condition variable.
     ///
-    /// \param cond the condition variable to destroy.
+    /// - `cond`: the condition variable to destroy.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CreateCondition
+    /// See also [`SDL_CreateCondition`]<br>
     pub fn SDL_DestroyCondition(cond: *mut SDL_Condition);
 }
 
 extern "C" {
     /// Restart one of the threads that are waiting on the condition variable.
     ///
-    /// \param cond the condition variable to signal.
+    /// - `cond`: the condition variable to signal.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_BroadcastCondition
-    /// \sa SDL_WaitCondition
-    /// \sa SDL_WaitConditionTimeout
+    /// See also [`SDL_BroadcastCondition`]<br>
+    /// See also [`SDL_WaitCondition`]<br>
+    /// See also [`SDL_WaitConditionTimeout`]<br>
     pub fn SDL_SignalCondition(cond: *mut SDL_Condition);
 }
 
 extern "C" {
     /// Restart all threads that are waiting on the condition variable.
     ///
-    /// \param cond the condition variable to signal.
+    /// - `cond`: the condition variable to signal.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SignalCondition
-    /// \sa SDL_WaitCondition
-    /// \sa SDL_WaitConditionTimeout
+    /// See also [`SDL_SignalCondition`]<br>
+    /// See also [`SDL_WaitCondition`]<br>
+    /// See also [`SDL_WaitConditionTimeout`]<br>
     pub fn SDL_BroadcastCondition(cond: *mut SDL_Condition);
 }
 
@@ -513,16 +513,16 @@ extern "C" {
     /// This function is the equivalent of calling SDL_WaitConditionTimeout() with
     /// a time length of -1.
     ///
-    /// \param cond the condition variable to wait on.
-    /// \param mutex the mutex used to coordinate thread access.
+    /// - `cond`: the condition variable to wait on.
+    /// - `mutex`: the mutex used to coordinate thread access.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_BroadcastCondition
-    /// \sa SDL_SignalCondition
-    /// \sa SDL_WaitConditionTimeout
+    /// See also [`SDL_BroadcastCondition`]<br>
+    /// See also [`SDL_SignalCondition`]<br>
+    /// See also [`SDL_WaitConditionTimeout`]<br>
     pub fn SDL_WaitCondition(cond: *mut SDL_Condition, mutex: *mut SDL_Mutex);
 }
 
@@ -539,20 +539,20 @@ extern "C" {
     /// recursively (more than once) is not supported and leads to undefined
     /// behavior.
     ///
-    /// \param cond the condition variable to wait on.
-    /// \param mutex the mutex used to coordinate thread access.
-    /// \param timeoutMS the maximum time to wait, in milliseconds, or -1 to wait
-    ///                  indefinitely.
-    /// \returns true if the condition variable is signaled, false if the condition
-    ///          is not signaled in the allotted time.
+    /// - `cond`: the condition variable to wait on.
+    /// - `mutex`: the mutex used to coordinate thread access.
+    /// - `timeoutMS`: the maximum time to wait, in milliseconds, or -1 to wait
+    ///   indefinitely.
+    /// - Returns true if the condition variable is signaled, false if the condition
+    ///   is not signaled in the allotted time.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_BroadcastCondition
-    /// \sa SDL_SignalCondition
-    /// \sa SDL_WaitCondition
+    /// See also [`SDL_BroadcastCondition`]<br>
+    /// See also [`SDL_SignalCondition`]<br>
+    /// See also [`SDL_WaitCondition`]<br>
     pub fn SDL_WaitConditionTimeout(
         cond: *mut SDL_Condition,
         mutex: *mut SDL_Mutex,
@@ -562,7 +562,7 @@ extern "C" {
 
 /// The current status of an SDL_InitState structure.
 ///
-/// \since This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.0.0.
 ///
 /// sdl3-sys note: This is a `C` enum. Known values: [`SDL_INIT_STATUS_UNINITIALIZED`], [`SDL_INIT_STATUS_INITIALIZING`], [`SDL_INIT_STATUS_INITIALIZED`], [`SDL_INIT_STATUS_UNINITIALIZING`]
 #[repr(transparent)]
@@ -639,7 +639,7 @@ pub const SDL_INIT_STATUS_UNINITIALIZING: SDL_InitStatus = SDL_InitStatus::UNINI
 /// should use other mechanisms to protect those, if that's a concern for your
 /// code.
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -660,15 +660,15 @@ extern "C" {
     /// If this function returns true, the calling code must call
     /// SDL_SetInitialized() to complete the initialization.
     ///
-    /// \param state the initialization state to check.
-    /// \returns true if initialization needs to be done, false otherwise.
+    /// - `state`: the initialization state to check.
+    /// - Returns true if initialization needs to be done, false otherwise.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetInitialized
-    /// \sa SDL_ShouldQuit
+    /// See also [`SDL_SetInitialized`]<br>
+    /// See also [`SDL_ShouldQuit`]<br>
     pub fn SDL_ShouldInit(state: *mut SDL_InitState) -> ::core::primitive::bool;
 }
 
@@ -681,15 +681,15 @@ extern "C" {
     /// If this function returns true, the calling code must call
     /// SDL_SetInitialized() to complete the cleanup.
     ///
-    /// \param state the initialization state to check.
-    /// \returns true if cleanup needs to be done, false otherwise.
+    /// - `state`: the initialization state to check.
+    /// - Returns true if cleanup needs to be done, false otherwise.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_SetInitialized
-    /// \sa SDL_ShouldInit
+    /// See also [`SDL_SetInitialized`]<br>
+    /// See also [`SDL_ShouldInit`]<br>
     pub fn SDL_ShouldQuit(state: *mut SDL_InitState) -> ::core::primitive::bool;
 }
 
@@ -700,15 +700,15 @@ extern "C" {
     /// `SDL_INIT_STATUS_INITIALIZED` or `SDL_INIT_STATUS_UNINITIALIZED` and allows
     /// any threads waiting for the status to proceed.
     ///
-    /// \param state the initialization state to check.
-    /// \param initialized the new initialization state.
+    /// - `state`: the initialization state to check.
+    /// - `initialized`: the new initialization state.
     ///
-    /// \threadsafety It is safe to call this function from any thread.
+    /// Thread safety: It is safe to call this function from any thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_ShouldInit
-    /// \sa SDL_ShouldQuit
+    /// See also [`SDL_ShouldInit`]<br>
+    /// See also [`SDL_ShouldQuit`]<br>
     pub fn SDL_SetInitialized(state: *mut SDL_InitState, initialized: ::core::primitive::bool);
 }
 

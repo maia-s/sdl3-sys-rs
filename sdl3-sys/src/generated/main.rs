@@ -19,13 +19,13 @@ use super::init::*;
 
 /// The prototype for the application's main() function
 ///
-/// \param argc an ANSI-C style main function's argc.
-/// \param argv an ANSI-C style main function's argv.
-/// \returns an ANSI-C main return code; generally 0 is considered successful
-///          program completion, and small non-zero values are considered
-///          errors.
+/// - `argc`: an ANSI-C style main function's argc.
+/// - `argv`: an ANSI-C style main function's argv.
+/// - Returns an ANSI-C main return code; generally 0 is considered successful
+///   program completion, and small non-zero values are considered
+///   errors.
 ///
-/// \since This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.0.0.
 pub type SDL_main_func = ::core::option::Option<
     unsafe extern "C" fn(
         argc: ::core::ffi::c_int,
@@ -54,15 +54,15 @@ extern "C" {
     /// docs/README-main-functions.md in the source tree) for a more detailed
     /// explanation.
     ///
-    /// \param argc an ANSI-C style main function's argc.
-    /// \param argv an ANSI-C style main function's argv.
-    /// \returns an ANSI-C main return code; generally 0 is considered successful
-    ///          program completion, and small non-zero values are considered
-    ///          errors.
+    /// - `argc`: an ANSI-C style main function's argc.
+    /// - `argv`: an ANSI-C style main function's argv.
+    /// - Returns an ANSI-C main return code; generally 0 is considered successful
+    ///   program completion, and small non-zero values are considered
+    ///   errors.
     ///
-    /// \threadsafety This is the program entry point.
+    /// Thread safety: This is the program entry point.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_main(
         argc: ::core::ffi::c_int,
         argv: *mut *mut ::core::ffi::c_char,
@@ -78,9 +78,9 @@ extern "C" {
     /// will not be changed it is necessary to define SDL_MAIN_HANDLED before
     /// including SDL.h.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_Init
+    /// See also [`SDL_Init`]<br>
     pub fn SDL_SetMainReady();
 }
 
@@ -94,23 +94,23 @@ extern "C" {
     /// using SDL_main (like when using SDL_MAIN_HANDLED). When using this, you do
     /// *not* need SDL_SetMainReady().
     ///
-    /// \param argc the argc parameter from the application's main() function, or 0
-    ///             if the platform's main-equivalent has no argc.
-    /// \param argv the argv parameter from the application's main() function, or
-    ///             NULL if the platform's main-equivalent has no argv.
-    /// \param mainFunction your SDL app's C-style main(). NOT the function you're
-    ///                     calling this from! Its name doesn't matter; it doesn't
-    ///                     literally have to be `main`.
-    /// \param reserved should be NULL (reserved for future use, will probably be
-    ///                 platform-specific then).
-    /// \returns the return value from mainFunction: 0 on success, otherwise
-    ///          failure; SDL_GetError() might have more information on the
-    ///          failure.
+    /// - `argc`: the argc parameter from the application's main() function, or 0
+    ///   if the platform's main-equivalent has no argc.
+    /// - `argv`: the argv parameter from the application's main() function, or
+    ///   NULL if the platform's main-equivalent has no argv.
+    /// - `mainFunction`: your SDL app's C-style main(). NOT the function you're
+    ///   calling this from! Its name doesn't matter; it doesn't
+    ///   literally have to be `main`.
+    /// - `reserved`: should be NULL (reserved for future use, will probably be
+    ///   platform-specific then).
+    /// - Returns the return value from mainFunction: 0 on success, otherwise
+    ///   failure; SDL_GetError() might have more information on the
+    ///   failure.
     ///
-    /// \threadsafety Generally this is called once, near startup, from the
-    ///               process's initial thread.
+    /// Thread safety: Generally this is called once, near startup, from the
+    ///   process's initial thread.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_RunApp(
         argc: ::core::ffi::c_int,
         argv: *mut *mut ::core::ffi::c_char,
@@ -131,18 +131,18 @@ extern "C" {
     /// header-only library, and you should not call this directly unless you
     /// _really_ know what you're doing.
     ///
-    /// \param argc standard Unix main argc.
-    /// \param argv standard Unix main argv.
-    /// \param appinit the application's SDL_AppInit function.
-    /// \param appiter the application's SDL_AppIterate function.
-    /// \param appevent the application's SDL_AppEvent function.
-    /// \param appquit the application's SDL_AppQuit function.
-    /// \returns standard Unix main return value.
+    /// - `argc`: standard Unix main argc.
+    /// - `argv`: standard Unix main argv.
+    /// - `appinit`: the application's SDL_AppInit function.
+    /// - `appiter`: the application's SDL_AppIterate function.
+    /// - `appevent`: the application's SDL_AppEvent function.
+    /// - `appquit`: the application's SDL_AppQuit function.
+    /// - Returns standard Unix main return value.
     ///
-    /// \threadsafety It is not safe to call this anywhere except as the only
-    ///               function call in SDL_main.
+    /// Thread safety: It is not safe to call this anywhere except as the only
+    ///   function call in SDL_main.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_EnterAppMainCallbacks(
         argc: ::core::ffi::c_int,
         argv: *mut *mut ::core::ffi::c_char,
@@ -167,17 +167,17 @@ emit! {
         /// Most applications do not need to, and should not, call this directly; SDL
         /// will call it when initializing the video subsystem.
         ///
-        /// \param name the window class name, in UTF-8 encoding. If NULL, SDL
-        ///             currently uses "SDL_app" but this isn't guaranteed.
-        /// \param style the value to use in WNDCLASSEX::style. If `name` is NULL, SDL
-        ///              currently uses `(CS_BYTEALIGNCLIENT | CS_OWNDC)` regardless of
-        ///              what is specified here.
-        /// \param hInst the HINSTANCE to use in WNDCLASSEX::hInstance. If zero, SDL
-        ///              will use `GetModuleHandle(NULL)` instead.
-        /// \returns true on success or false on failure; call SDL_GetError() for more
-        ///          information.
+        /// - `name`: the window class name, in UTF-8 encoding. If NULL, SDL
+        ///   currently uses "SDL_app" but this isn't guaranteed.
+        /// - `style`: the value to use in WNDCLASSEX::style. If `name` is NULL, SDL
+        ///   currently uses `(CS_BYTEALIGNCLIENT | CS_OWNDC)` regardless of
+        ///   what is specified here.
+        /// - `hInst`: the HINSTANCE to use in WNDCLASSEX::hInstance. If zero, SDL
+        ///   will use `GetModuleHandle(NULL)` instead.
+        /// - Returns true on success or false on failure; call SDL_GetError() for more
+        ///   information.
         ///
-        /// \since This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.0.0.
         pub fn SDL_RegisterApp(name: *const ::core::ffi::c_char, style: Uint32, hInst: *mut ::core::ffi::c_void) -> ::core::primitive::bool;
     }
 
@@ -194,7 +194,7 @@ emit! {
         /// deregistered when the registration counter in SDL_RegisterApp decrements to
         /// zero through calls to this function.
         ///
-        /// \since This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.0.0.
         pub fn SDL_UnregisterApp();
     }
 
@@ -205,7 +205,7 @@ emit! {
     extern "C" {
         /// Callback from the application to let the suspend continue.
         ///
-        /// \since This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.0.0.
         pub fn SDL_GDKSuspendComplete();
     }
 

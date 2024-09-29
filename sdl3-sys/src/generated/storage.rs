@@ -19,9 +19,9 @@ use super::properties::*;
 ///
 /// This structure should be initialized using SDL_INIT_INTERFACE()
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 ///
-/// \sa SDL_INIT_INTERFACE
+/// See also [`SDL_INIT_INTERFACE`]<br>
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -126,17 +126,17 @@ const _: () = ::core::assert!(
 extern "C" {
     /// Opens up a read-only container for the application's filesystem.
     ///
-    /// \param override a path to override the backend's default title root.
-    /// \param props a property list that may contain backend-specific information.
-    /// \returns a title storage container on success or NULL on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `override`: a path to override the backend's default title root.
+    /// - `props`: a property list that may contain backend-specific information.
+    /// - Returns a title storage container on success or NULL on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CloseStorage
-    /// \sa SDL_GetStorageFileSize
-    /// \sa SDL_OpenUserStorage
-    /// \sa SDL_ReadStorageFile
+    /// See also [`SDL_CloseStorage`]<br>
+    /// See also [`SDL_GetStorageFileSize`]<br>
+    /// See also [`SDL_OpenUserStorage`]<br>
+    /// See also [`SDL_ReadStorageFile`]<br>
     pub fn SDL_OpenTitleStorage(
         r#override: *const ::core::ffi::c_char,
         props: SDL_PropertiesID,
@@ -151,21 +151,21 @@ extern "C" {
     /// This allows the backend to properly batch file operations and flush them
     /// when the container has been closed; ensuring safe and optimal save I/O.
     ///
-    /// \param org the name of your organization.
-    /// \param app the name of your application.
-    /// \param props a property list that may contain backend-specific information.
-    /// \returns a user storage container on success or NULL on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `org`: the name of your organization.
+    /// - `app`: the name of your application.
+    /// - `props`: a property list that may contain backend-specific information.
+    /// - Returns a user storage container on success or NULL on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CloseStorage
-    /// \sa SDL_GetStorageFileSize
-    /// \sa SDL_GetStorageSpaceRemaining
-    /// \sa SDL_OpenTitleStorage
-    /// \sa SDL_ReadStorageFile
-    /// \sa SDL_StorageReady
-    /// \sa SDL_WriteStorageFile
+    /// See also [`SDL_CloseStorage`]<br>
+    /// See also [`SDL_GetStorageFileSize`]<br>
+    /// See also [`SDL_GetStorageSpaceRemaining`]<br>
+    /// See also [`SDL_OpenTitleStorage`]<br>
+    /// See also [`SDL_ReadStorageFile`]<br>
+    /// See also [`SDL_StorageReady`]<br>
+    /// See also [`SDL_WriteStorageFile`]<br>
     pub fn SDL_OpenUserStorage(
         org: *const ::core::ffi::c_char,
         app: *const ::core::ffi::c_char,
@@ -180,20 +180,20 @@ extern "C" {
     /// use SDL_OpenTitleStorage() for access to game data and
     /// SDL_OpenUserStorage() for access to user data.
     ///
-    /// \param path the base path prepended to all storage paths, or NULL for no
-    ///             base path.
-    /// \returns a filesystem storage container on success or NULL on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `path`: the base path prepended to all storage paths, or NULL for no
+    ///   base path.
+    /// - Returns a filesystem storage container on success or NULL on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CloseStorage
-    /// \sa SDL_GetStorageFileSize
-    /// \sa SDL_GetStorageSpaceRemaining
-    /// \sa SDL_OpenTitleStorage
-    /// \sa SDL_OpenUserStorage
-    /// \sa SDL_ReadStorageFile
-    /// \sa SDL_WriteStorageFile
+    /// See also [`SDL_CloseStorage`]<br>
+    /// See also [`SDL_GetStorageFileSize`]<br>
+    /// See also [`SDL_GetStorageSpaceRemaining`]<br>
+    /// See also [`SDL_OpenTitleStorage`]<br>
+    /// See also [`SDL_OpenUserStorage`]<br>
+    /// See also [`SDL_ReadStorageFile`]<br>
+    /// See also [`SDL_WriteStorageFile`]<br>
     pub fn SDL_OpenFileStorage(path: *const ::core::ffi::c_char) -> *mut SDL_Storage;
 }
 
@@ -208,21 +208,21 @@ extern "C" {
     /// This function makes a copy of `iface` and the caller does not need to keep
     /// it around after this call.
     ///
-    /// \param iface the interface that implements this storage, initialized using
-    ///              SDL_INIT_INTERFACE().
-    /// \param userdata the pointer that will be passed to the interface functions.
-    /// \returns a storage container on success or NULL on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `iface`: the interface that implements this storage, initialized using
+    ///   SDL_INIT_INTERFACE().
+    /// - `userdata`: the pointer that will be passed to the interface functions.
+    /// - Returns a storage container on success or NULL on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_CloseStorage
-    /// \sa SDL_GetStorageFileSize
-    /// \sa SDL_GetStorageSpaceRemaining
-    /// \sa SDL_INIT_INTERFACE
-    /// \sa SDL_ReadStorageFile
-    /// \sa SDL_StorageReady
-    /// \sa SDL_WriteStorageFile
+    /// See also [`SDL_CloseStorage`]<br>
+    /// See also [`SDL_GetStorageFileSize`]<br>
+    /// See also [`SDL_GetStorageSpaceRemaining`]<br>
+    /// See also [`SDL_INIT_INTERFACE`]<br>
+    /// See also [`SDL_ReadStorageFile`]<br>
+    /// See also [`SDL_StorageReady`]<br>
+    /// See also [`SDL_WriteStorageFile`]<br>
     pub fn SDL_OpenStorage(
         iface: *const SDL_StorageInterface,
         userdata: *mut ::core::ffi::c_void,
@@ -232,18 +232,18 @@ extern "C" {
 extern "C" {
     /// Closes and frees a storage container.
     ///
-    /// \param storage a storage container to close.
-    /// \returns true if the container was freed with no errors, false otherwise;
-    ///          call SDL_GetError() for more information. Even if the function
-    ///          returns an error, the container data will be freed; the error is
-    ///          only for informational purposes.
+    /// - `storage`: a storage container to close.
+    /// - Returns true if the container was freed with no errors, false otherwise;
+    ///   call SDL_GetError() for more information. Even if the function
+    ///   returns an error, the container data will be freed; the error is
+    ///   only for informational purposes.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_OpenFileStorage
-    /// \sa SDL_OpenStorage
-    /// \sa SDL_OpenTitleStorage
-    /// \sa SDL_OpenUserStorage
+    /// See also [`SDL_OpenFileStorage`]<br>
+    /// See also [`SDL_OpenStorage`]<br>
+    /// See also [`SDL_OpenTitleStorage`]<br>
+    /// See also [`SDL_OpenUserStorage`]<br>
     pub fn SDL_CloseStorage(storage: *mut SDL_Storage) -> ::core::primitive::bool;
 }
 
@@ -254,26 +254,26 @@ extern "C" {
     /// however, it is not recommended to spinwait on this call, as the backend may
     /// depend on a synchronous message loop.
     ///
-    /// \param storage a storage container to query.
-    /// \returns true if the container is ready, false otherwise.
+    /// - `storage`: a storage container to query.
+    /// - Returns true if the container is ready, false otherwise.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_StorageReady(storage: *mut SDL_Storage) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Query the size of a file within a storage container.
     ///
-    /// \param storage a storage container to query.
-    /// \param path the relative path of the file to query.
-    /// \param length a pointer to be filled with the file's length.
-    /// \returns true if the file could be queried or false on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `storage`: a storage container to query.
+    /// - `path`: the relative path of the file to query.
+    /// - `length`: a pointer to be filled with the file's length.
+    /// - Returns true if the file could be queried or false on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_ReadStorageFile
-    /// \sa SDL_StorageReady
+    /// See also [`SDL_ReadStorageFile`]<br>
+    /// See also [`SDL_StorageReady`]<br>
     pub fn SDL_GetStorageFileSize(
         storage: *mut SDL_Storage,
         path: *const ::core::ffi::c_char,
@@ -285,18 +285,18 @@ extern "C" {
     /// Synchronously read a file from a storage container into a client-provided
     /// buffer.
     ///
-    /// \param storage a storage container to read from.
-    /// \param path the relative path of the file to read.
-    /// \param destination a client-provided buffer to read the file into.
-    /// \param length the length of the destination buffer.
-    /// \returns true if the file was read or false on failure; call SDL_GetError()
-    ///          for more information.
+    /// - `storage`: a storage container to read from.
+    /// - `path`: the relative path of the file to read.
+    /// - `destination`: a client-provided buffer to read the file into.
+    /// - `length`: the length of the destination buffer.
+    /// - Returns true if the file was read or false on failure; call SDL_GetError()
+    ///   for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetStorageFileSize
-    /// \sa SDL_StorageReady
-    /// \sa SDL_WriteStorageFile
+    /// See also [`SDL_GetStorageFileSize`]<br>
+    /// See also [`SDL_StorageReady`]<br>
+    /// See also [`SDL_WriteStorageFile`]<br>
     pub fn SDL_ReadStorageFile(
         storage: *mut SDL_Storage,
         path: *const ::core::ffi::c_char,
@@ -308,18 +308,18 @@ extern "C" {
 extern "C" {
     /// Synchronously write a file from client memory into a storage container.
     ///
-    /// \param storage a storage container to write to.
-    /// \param path the relative path of the file to write.
-    /// \param source a client-provided buffer to write from.
-    /// \param length the length of the source buffer.
-    /// \returns true if the file was written or false on failure; call
-    ///          SDL_GetError() for more information.
+    /// - `storage`: a storage container to write to.
+    /// - `path`: the relative path of the file to write.
+    /// - `source`: a client-provided buffer to write from.
+    /// - `length`: the length of the source buffer.
+    /// - Returns true if the file was written or false on failure; call
+    ///   SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_GetStorageSpaceRemaining
-    /// \sa SDL_ReadStorageFile
-    /// \sa SDL_StorageReady
+    /// See also [`SDL_GetStorageSpaceRemaining`]<br>
+    /// See also [`SDL_ReadStorageFile`]<br>
+    /// See also [`SDL_StorageReady`]<br>
     pub fn SDL_WriteStorageFile(
         storage: *mut SDL_Storage,
         path: *const ::core::ffi::c_char,
@@ -331,14 +331,14 @@ extern "C" {
 extern "C" {
     /// Create a directory in a writable storage container.
     ///
-    /// \param storage a storage container.
-    /// \param path the path of the directory to create.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `storage`: a storage container.
+    /// - `path`: the path of the directory to create.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_StorageReady
+    /// See also [`SDL_StorageReady`]<br>
     pub fn SDL_CreateStorageDirectory(
         storage: *mut SDL_Storage,
         path: *const ::core::ffi::c_char,
@@ -356,16 +356,16 @@ extern "C" {
     /// callback returns -1. A successful return means a callback returned 1 to
     /// halt enumeration, or all directory entries were enumerated.
     ///
-    /// \param storage a storage container.
-    /// \param path the path of the directory to enumerate.
-    /// \param callback a function that is called for each entry in the directory.
-    /// \param userdata a pointer that is passed to `callback`.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `storage`: a storage container.
+    /// - `path`: the path of the directory to enumerate.
+    /// - `callback`: a function that is called for each entry in the directory.
+    /// - `userdata`: a pointer that is passed to `callback`.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_StorageReady
+    /// See also [`SDL_StorageReady`]<br>
     pub fn SDL_EnumerateStorageDirectory(
         storage: *mut SDL_Storage,
         path: *const ::core::ffi::c_char,
@@ -377,14 +377,14 @@ extern "C" {
 extern "C" {
     /// Remove a file or an empty directory in a writable storage container.
     ///
-    /// \param storage a storage container.
-    /// \param path the path of the directory to enumerate.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `storage`: a storage container.
+    /// - `path`: the path of the directory to enumerate.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_StorageReady
+    /// See also [`SDL_StorageReady`]<br>
     pub fn SDL_RemoveStoragePath(
         storage: *mut SDL_Storage,
         path: *const ::core::ffi::c_char,
@@ -394,15 +394,15 @@ extern "C" {
 extern "C" {
     /// Rename a file or directory in a writable storage container.
     ///
-    /// \param storage a storage container.
-    /// \param oldpath the old path.
-    /// \param newpath the new path.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `storage`: a storage container.
+    /// - `oldpath`: the old path.
+    /// - `newpath`: the new path.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_StorageReady
+    /// See also [`SDL_StorageReady`]<br>
     pub fn SDL_RenameStoragePath(
         storage: *mut SDL_Storage,
         oldpath: *const ::core::ffi::c_char,
@@ -413,15 +413,15 @@ extern "C" {
 extern "C" {
     /// Copy a file in a writable storage container.
     ///
-    /// \param storage a storage container.
-    /// \param oldpath the old path.
-    /// \param newpath the new path.
-    /// \returns true on success or false on failure; call SDL_GetError() for more
-    ///          information.
+    /// - `storage`: a storage container.
+    /// - `oldpath`: the old path.
+    /// - `newpath`: the new path.
+    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_StorageReady
+    /// See also [`SDL_StorageReady`]<br>
     pub fn SDL_CopyStorageFile(
         storage: *mut SDL_Storage,
         oldpath: *const ::core::ffi::c_char,
@@ -432,16 +432,16 @@ extern "C" {
 extern "C" {
     /// Get information about a filesystem path in a storage container.
     ///
-    /// \param storage a storage container.
-    /// \param path the path to query.
-    /// \param info a pointer filled in with information about the path, or NULL to
-    ///             check for the existence of a file.
-    /// \returns true on success or false if the file doesn't exist, or another
-    ///          failure; call SDL_GetError() for more information.
+    /// - `storage`: a storage container.
+    /// - `path`: the path to query.
+    /// - `info`: a pointer filled in with information about the path, or NULL to
+    ///   check for the existence of a file.
+    /// - Returns true on success or false if the file doesn't exist, or another
+    ///   failure; call SDL_GetError() for more information.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_StorageReady
+    /// See also [`SDL_StorageReady`]<br>
     pub fn SDL_GetStoragePathInfo(
         storage: *mut SDL_Storage,
         path: *const ::core::ffi::c_char,
@@ -452,13 +452,13 @@ extern "C" {
 extern "C" {
     /// Queries the remaining space in a storage container.
     ///
-    /// \param storage a storage container to query.
-    /// \returns the amount of remaining space, in bytes.
+    /// - `storage`: a storage container to query.
+    /// - Returns the amount of remaining space, in bytes.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     ///
-    /// \sa SDL_StorageReady
-    /// \sa SDL_WriteStorageFile
+    /// See also [`SDL_StorageReady`]<br>
+    /// See also [`SDL_WriteStorageFile`]<br>
     pub fn SDL_GetStorageSpaceRemaining(storage: *mut SDL_Storage) -> Uint64;
 }
 
@@ -479,23 +479,23 @@ extern "C" {
     /// convenience, but if `count` is non-NULL, on return it will contain the
     /// number of items in the array, not counting the NULL terminator.
     ///
-    /// \param storage a storage container.
-    /// \param path the path of the directory to enumerate.
-    /// \param pattern the pattern that files in the directory must match. Can be
-    ///                NULL.
-    /// \param flags `SDL_GLOB_*` bitflags that affect this search.
-    /// \param count on return, will be set to the number of items in the returned
-    ///              array. Can be NULL.
-    /// \returns an array of strings on success or NULL on failure; call
-    ///          SDL_GetError() for more information. The caller should pass the
-    ///          returned pointer to SDL_free when done with it. This is a single
-    ///          allocation that should be freed with SDL_free() when it is no
-    ///          longer needed.
+    /// - `storage`: a storage container.
+    /// - `path`: the path of the directory to enumerate.
+    /// - `pattern`: the pattern that files in the directory must match. Can be
+    ///   NULL.
+    /// - `flags`: `SDL_GLOB_*` bitflags that affect this search.
+    /// - `count`: on return, will be set to the number of items in the returned
+    ///   array. Can be NULL.
+    /// - Returns an array of strings on success or NULL on failure; call
+    ///   SDL_GetError() for more information. The caller should pass the
+    ///   returned pointer to SDL_free when done with it. This is a single
+    ///   allocation that should be freed with SDL_free() when it is no
+    ///   longer needed.
     ///
-    /// \threadsafety It is safe to call this function from any thread, assuming
-    ///               the `storage` object is thread-safe.
+    /// Thread safety: It is safe to call this function from any thread, assuming
+    ///   the `storage` object is thread-safe.
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.0.0.
     pub fn SDL_GlobStorageDirectory(
         storage: *mut SDL_Storage,
         path: *const ::core::ffi::c_char,
