@@ -106,8 +106,9 @@ pub type SDL_AppEvent_func = ::core::option::Option<
     ) -> SDL_AppResult,
 >;
 
-pub type SDL_AppQuit_func =
-    ::core::option::Option<unsafe extern "C" fn(appstate: *mut ::core::ffi::c_void)>;
+pub type SDL_AppQuit_func = ::core::option::Option<
+    unsafe extern "C" fn(appstate: *mut ::core::ffi::c_void, result: SDL_AppResult),
+>;
 
 extern "C" {
     /// Initialize the SDL library.

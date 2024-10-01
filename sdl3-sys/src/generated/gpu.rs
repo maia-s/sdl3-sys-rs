@@ -3842,6 +3842,7 @@ extern "C" {
     /// Claims a window, creating a swapchain structure for it.
     ///
     /// This must be called before SDL_AcquireGPUSwapchainTexture is called using
+    /// the window. You should only call this function from the thread that created
     /// the window.
     ///
     /// The swapchain will be created with SDL_GPU_SWAPCHAINCOMPOSITION_SDR and
@@ -3893,7 +3894,8 @@ extern "C" {
     /// - `window`: an SDL_Window that has been claimed.
     /// - `swapchain_composition`: the desired composition of the swapchain.
     /// - `present_mode`: the desired present mode for the swapchain.
-    /// - Returns true if successful, false on error.
+    /// - Returns true if successful, false on error; call SDL_GetError() for more
+    ///   information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -3929,20 +3931,24 @@ extern "C" {
     /// When a swapchain texture is acquired on a command buffer, it will
     /// automatically be submitted for presentation when the command buffer is
     /// submitted. The swapchain texture should only be referenced by the command
-    /// buffer used to acquire it. The swapchain texture handle can be NULL under
-    /// certain conditions. This is not necessarily an error. If this function
-    /// returns false then there is an error. The swapchain texture is managed by
-    /// the implementation and must not be freed by the user. The texture
-    /// dimensions will be the width and height of the claimed window. You can
-    /// obtain these dimensions by calling SDL_GetWindowSizeInPixels. You MUST NOT
-    /// call this function from any thread other than the one that created the
-    /// window.
+    /// buffer used to acquire it. The swapchain texture handle can be filled in
+    /// with NULL under certain conditions. This is not necessarily an error. If
+    /// this function returns false then there is an error.
+    ///
+    /// The swapchain texture is managed by the implementation and must not be
+    /// freed by the user. You MUST NOT call this function from any thread other
+    /// than the one that created the window.
     ///
     /// - `command_buffer`: a command buffer.
     /// - `window`: a window that has been claimed.
-    /// - `swapchainTexture`: a pointer filled in with a swapchain texture
+    /// - `swapchain_texture`: a pointer filled in with a swapchain texture
     ///   handle.
-    /// - Returns true on success, false on error.
+    /// - `swapchain_texture_width`: a pointer filled in with the swapchain
+    ///   texture width, may be NULL.
+    /// - `swapchain_texture_height`: a pointer filled in with the swapchain
+    ///   texture height, may be NULL.
+    /// - Returns true on success, false on error; call SDL_GetError() for more
+    ///   information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -3953,7 +3959,9 @@ extern "C" {
     pub fn SDL_AcquireGPUSwapchainTexture(
         command_buffer: *mut SDL_GPUCommandBuffer,
         window: *mut SDL_Window,
-        swapchainTexture: *mut *mut SDL_GPUTexture,
+        swapchain_texture: *mut *mut SDL_GPUTexture,
+        swapchain_texture_width: *mut Uint32,
+        swapchain_texture_height: *mut Uint32,
     ) -> ::core::primitive::bool;
 }
 

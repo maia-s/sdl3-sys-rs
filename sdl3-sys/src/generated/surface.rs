@@ -116,17 +116,17 @@ pub const unsafe fn SDL_MUSTLOCK(S: *const SDL_Surface) -> ::core::primitive::bo
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Surface {
-    /// Read-only
+    /// The flags of the surface, read-only
     pub flags: SDL_SurfaceFlags,
-    /// Read-only
+    /// The format of the surface, read-only
     pub format: SDL_PixelFormat,
-    /// Read-only
+    /// The width of the surface, read-only.
     pub w: ::core::ffi::c_int,
-    /// Read-only
+    /// The height of the surface, read-only.
     pub h: ::core::ffi::c_int,
-    /// Read-only
+    /// The distance in bytes between rows of pixels, read-only
     pub pitch: ::core::ffi::c_int,
-    /// Read-only pointer, writable pixels if non-NULL
+    /// A pointer to the pixels of the surface, the pixels are writeable if non-NULL
     pub pixels: *mut ::core::ffi::c_void,
     /// Application reference count, used when freeing surface
     pub refcount: ::core::ffi::c_int,

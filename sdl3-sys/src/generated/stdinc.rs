@@ -4,9 +4,6 @@
 //! but they may differ in how or whether they handle certain edge cases. When
 //! in doubt, consult the documentation for details.
 
-#[cfg(all(windows, target_env = "msvc"))]
-emit! {}
-
 pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
 
 #[cfg(doc)]
@@ -930,6 +927,18 @@ extern "C" {
     pub fn SDL_unsetenv_unsafe(name: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
 }
 
+/// A callback used with SDL sorting and binary search functions.
+///
+/// - `a`: a pointer to the first element being compared.
+/// - `b`: a pointer to the second element being compared.
+/// - Returns -1 if `a` should be sorted before `b`, 1 if `b` should be sorted
+///   before `a`, 0 if they are equal. If two elements are equal, their
+///   order in the sorted array is undefined.
+///
+/// This callback is available since SDL 3.0.0.
+///
+/// See also [`SDL_bsearch`]<br>
+/// See also [`SDL_qsort`]<br>
 pub type SDL_CompareCallback = ::core::option::Option<
     unsafe extern "C" fn(
         a: *const ::core::ffi::c_void,
@@ -938,6 +947,46 @@ pub type SDL_CompareCallback = ::core::option::Option<
 >;
 
 extern "C" {
+    /// Sort an array.
+    ///
+    /// For example:
+    ///
+    /// ```c
+    /// typedef struct {
+    ///     int key;
+    ///     const char *string;
+    /// } data;
+    ///
+    /// int SDLCALL compare(const void *a, const void *b)
+    /// {
+    ///     const data *A = (const data *)a;
+    ///     const data *B = (const data *)b;
+    ///
+    ///     if (A->n < B->n) {
+    ///         return -1;
+    ///     } else if (B->n < A->n) {
+    ///         return 1;
+    ///     } else {
+    ///         return 0;
+    ///     }
+    /// }
+    ///
+    /// data values[] = {
+    ///     { 3, "third" }, { 1, "first" }, { 2, "second" }
+    /// };
+    ///
+    /// SDL_qsort(values, SDL_arraysize(values), sizeof(values[0]), compare);
+    /// ```
+    ///
+    /// - `base`: a pointer to the start of the array.
+    /// - `nmemb`: the number of elements in the array.
+    /// - `size`: the size of the elements in the array.
+    /// - `compare`: a function used to compare elements in the array.
+    ///
+    /// This function is available since SDL 3.0.0.
+    ///
+    /// See also [`SDL_bsearch`]<br>
+    /// See also [`SDL_qsort_r`]<br>
     pub fn SDL_qsort(
         base: *mut ::core::ffi::c_void,
         nmemb: ::core::primitive::usize,
@@ -947,6 +996,48 @@ extern "C" {
 }
 
 extern "C" {
+    /// Perform a binary search on a previously sorted array.
+    ///
+    /// For example:
+    ///
+    /// ```c
+    /// typedef struct {
+    ///     int key;
+    ///     const char *string;
+    /// } data;
+    ///
+    /// int SDLCALL compare(const void *a, const void *b)
+    /// {
+    ///     const data *A = (const data *)a;
+    ///     const data *B = (const data *)b;
+    ///
+    ///     if (A->n < B->n) {
+    ///         return -1;
+    ///     } else if (B->n < A->n) {
+    ///         return 1;
+    ///     } else {
+    ///         return 0;
+    ///     }
+    /// }
+    ///
+    /// data values[] = {
+    ///     { 1, "first" }, { 2, "second" }, { 3, "third" }
+    /// };
+    /// data key = { 2, NULL };
+    ///
+    /// data *result = SDL_bsearch(&key, values, SDL_arraysize(values), sizeof(values[0]), compare);
+    /// ```
+    ///
+    /// - `key`: a pointer to a key equal to the element being searched for.
+    /// - `base`: a pointer to the start of the array.
+    /// - `nmemb`: the number of elements in the array.
+    /// - `size`: the size of the elements in the array.
+    /// - `compare`: a function used to compare elements in the array.
+    ///
+    /// This function is available since SDL 3.0.0.
+    ///
+    /// See also [`SDL_bsearch_r`]<br>
+    /// See also [`SDL_qsort`]<br>
     pub fn SDL_bsearch(
         key: *const ::core::ffi::c_void,
         base: *const ::core::ffi::c_void,
@@ -956,6 +1047,19 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
+/// A callback used with SDL sorting and binary search functions.
+///
+/// - `userdata`: the `userdata` pointer passed to the sort function.
+/// - `a`: a pointer to the first element being compared.
+/// - `b`: a pointer to the second element being compared.
+/// - Returns -1 if `a` should be sorted before `b`, 1 if `b` should be sorted
+///   before `a`, 0 if they are equal. If two elements are equal, their
+///   order in the sorted array is undefined.
+///
+/// This callback is available since SDL 3.0.0.
+///
+/// See also [`SDL_qsort_r`]<br>
+/// See also [`SDL_bsearch_r`]<br>
 pub type SDL_CompareCallback_r = ::core::option::Option<
     unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
@@ -965,6 +1069,53 @@ pub type SDL_CompareCallback_r = ::core::option::Option<
 >;
 
 extern "C" {
+    /// Sort an array, passing a userdata pointer to the compare function.
+    ///
+    /// For example:
+    ///
+    /// ```c
+    /// typedef enum {
+    ///     sort_increasing,
+    ///     sort_decreasing,
+    /// } sort_method;
+    ///
+    /// typedef struct {
+    ///     int key;
+    ///     const char *string;
+    /// } data;
+    ///
+    /// int SDLCALL compare(const void *userdata, const void *a, const void *b)
+    /// {
+    ///     sort_method method = (sort_method)(uintptr_t)userdata;
+    ///     const data *A = (const data *)a;
+    ///     const data *B = (const data *)b;
+    ///
+    ///     if (A->n < B->n) {
+    ///         return (method == sort_increasing) ? -1 : 1;
+    ///     } else if (B->n < A->n) {
+    ///         return (method == sort_increasing) ? 1 : -1;
+    ///     } else {
+    ///         return 0;
+    ///     }
+    /// }
+    ///
+    /// data values[] = {
+    ///     { 3, "third" }, { 1, "first" }, { 2, "second" }
+    /// };
+    ///
+    /// SDL_qsort_r(values, SDL_arraysize(values), sizeof(values[0]), compare, (const void *)(uintptr_t)sort_increasing);
+    /// ```
+    ///
+    /// - `base`: a pointer to the start of the array.
+    /// - `nmemb`: the number of elements in the array.
+    /// - `size`: the size of the elements in the array.
+    /// - `compare`: a function used to compare elements in the array.
+    /// - `userdata`: a pointer to pass to the compare function.
+    ///
+    /// This function is available since SDL 3.0.0.
+    ///
+    /// See also [`SDL_bsearch_r`]<br>
+    /// See also [`SDL_qsort`]<br>
     pub fn SDL_qsort_r(
         base: *mut ::core::ffi::c_void,
         nmemb: ::core::primitive::usize,
@@ -975,6 +1126,56 @@ extern "C" {
 }
 
 extern "C" {
+    /// Perform a binary search on a previously sorted array, passing a userdata
+    /// pointer to the compare function.
+    ///
+    /// For example:
+    ///
+    /// ```c
+    /// typedef enum {
+    ///     sort_increasing,
+    ///     sort_decreasing,
+    /// } sort_method;
+    ///
+    /// typedef struct {
+    ///     int key;
+    ///     const char *string;
+    /// } data;
+    ///
+    /// int SDLCALL compare(const void *userdata, const void *a, const void *b)
+    /// {
+    ///     sort_method method = (sort_method)(uintptr_t)userdata;
+    ///     const data *A = (const data *)a;
+    ///     const data *B = (const data *)b;
+    ///
+    ///     if (A->n < B->n) {
+    ///         return (method == sort_increasing) ? -1 : 1;
+    ///     } else if (B->n < A->n) {
+    ///         return (method == sort_increasing) ? 1 : -1;
+    ///     } else {
+    ///         return 0;
+    ///     }
+    /// }
+    ///
+    /// data values[] = {
+    ///     { 1, "first" }, { 2, "second" }, { 3, "third" }
+    /// };
+    /// data key = { 2, NULL };
+    ///
+    /// data *result = SDL_bsearch_r(&key, values, SDL_arraysize(values), sizeof(values[0]), compare, (const void *)(uintptr_t)sort_increasing);
+    /// ```
+    ///
+    /// - `key`: a pointer to a key equal to the element being searched for.
+    /// - `base`: a pointer to the start of the array.
+    /// - `nmemb`: the number of elements in the array.
+    /// - `size`: the size of the elements in the array.
+    /// - `compare`: a function used to compare elements in the array.
+    /// - `userdata`: a pointer to pass to the compare function.
+    ///
+    /// This function is available since SDL 3.0.0.
+    ///
+    /// See also [`SDL_bsearch`]<br>
+    /// See also [`SDL_qsort_r`]<br>
     pub fn SDL_bsearch_r(
         key: *const ::core::ffi::c_void,
         base: *const ::core::ffi::c_void,
@@ -1267,6 +1468,14 @@ extern "C" {
         crc: Uint32,
         data: *const ::core::ffi::c_void,
         len: ::core::primitive::usize,
+    ) -> Uint32;
+}
+
+extern "C" {
+    pub fn SDL_murmur3_32(
+        data: *const ::core::ffi::c_void,
+        len: ::core::primitive::usize,
+        seed: Uint32,
     ) -> Uint32;
 }
 
