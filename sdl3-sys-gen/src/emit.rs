@@ -208,7 +208,7 @@ impl DocComment {
     fn emit_rust(&self, ctx: &mut EmitContext, pfx: &str) -> EmitResult {
         let lines = self.to_string();
         let mut lines = lines.lines().peekable();
-        while let Some(line) = lines.next() {
+        'lines: while let Some(line) = lines.next() {
             if line.is_empty() {
                 writeln!(ctx, "{pfx}")?;
                 continue;
@@ -275,9 +275,10 @@ impl DocComment {
                             writeln!(ctx, "{pfx}")?;
                         }
                         writeln!(ctx, "{pfx} {line}")?;
-                        break;
+                        continue 'lines;
                     }
                 }
+                writeln!(ctx, "{pfx} ```")?;
             } else {
                 writeln!(ctx, "{pfx} {line}")?;
             }

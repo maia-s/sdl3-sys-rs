@@ -49,6 +49,7 @@ impl SDL_hid_bus_type {
     /// ```text
     ///   Specifications:
     ///   https://usb.org/hid
+    /// ```
     pub const USB: Self = Self(0x01);
     /// Bluetooth or Bluetooth LE bus
     /// ```text
@@ -56,16 +57,19 @@ impl SDL_hid_bus_type {
     ///   https://www.bluetooth.com/specifications/specs/human-interface-device-profile-1-1-1/
     ///   https://www.bluetooth.com/specifications/specs/hid-service-1-0/
     ///   https://www.bluetooth.com/specifications/specs/hid-over-gatt-profile-1-0/
+    /// ```
     pub const BLUETOOTH: Self = Self(0x02);
     /// I2C bus
     /// ```text
     ///   Specifications:
     ///   https://docs.microsoft.com/previous-versions/windows/hardware/design/dn642101(v=vs.85)
+    /// ```
     pub const I2C: Self = Self(0x03);
     /// SPI bus
     /// ```text
     ///   Specifications:
     ///   https://www.microsoft.com/download/details.aspx?id=103325
+    /// ```
     pub const SPI: Self = Self(0x04);
 }
 /// Unknown bus type
@@ -74,6 +78,7 @@ pub const SDL_HID_API_BUS_UNKNOWN: SDL_hid_bus_type = SDL_hid_bus_type::UNKNOWN;
 /// ```text
 ///   Specifications:
 ///   https://usb.org/hid
+/// ```
 pub const SDL_HID_API_BUS_USB: SDL_hid_bus_type = SDL_hid_bus_type::USB;
 /// Bluetooth or Bluetooth LE bus
 /// ```text
@@ -81,16 +86,19 @@ pub const SDL_HID_API_BUS_USB: SDL_hid_bus_type = SDL_hid_bus_type::USB;
 ///   https://www.bluetooth.com/specifications/specs/human-interface-device-profile-1-1-1/
 ///   https://www.bluetooth.com/specifications/specs/hid-service-1-0/
 ///   https://www.bluetooth.com/specifications/specs/hid-over-gatt-profile-1-0/
+/// ```
 pub const SDL_HID_API_BUS_BLUETOOTH: SDL_hid_bus_type = SDL_hid_bus_type::BLUETOOTH;
 /// I2C bus
 /// ```text
 ///   Specifications:
 ///   https://docs.microsoft.com/previous-versions/windows/hardware/design/dn642101(v=vs.85)
+/// ```
 pub const SDL_HID_API_BUS_I2C: SDL_hid_bus_type = SDL_hid_bus_type::I2C;
 /// SPI bus
 /// ```text
 ///   Specifications:
 ///   https://www.microsoft.com/download/details.aspx?id=103325
+/// ```
 pub const SDL_HID_API_BUS_SPI: SDL_hid_bus_type = SDL_hid_bus_type::SPI;
 
 /// Information about a connected HID device
@@ -111,6 +119,7 @@ pub struct SDL_hid_device_info {
     /// Device Release Number in binary-coded decimal,
     /// ```text
     ///    also known as Device Version Number
+    /// ```
     pub release_number: ::core::ffi::c_ushort,
     /// Manufacturer String
     pub manufacturer_string: *mut crate::ffi::c_wchar_t,
@@ -119,10 +128,12 @@ pub struct SDL_hid_device_info {
     /// Usage Page for this Device/Interface
     /// ```text
     ///    (Windows/Mac/hidraw only)
+    /// ```
     pub usage_page: ::core::ffi::c_ushort,
     /// Usage for this Device/Interface
     /// ```text
     ///    (Windows/Mac/hidraw only)
+    /// ```
     pub usage: ::core::ffi::c_ushort,
     /// The USB interface which this logical device
     /// ```text
@@ -130,10 +141,12 @@ pub struct SDL_hid_device_info {
     ///
     ///    Valid only if the device is a USB HID device.
     ///    Set to -1 in all other cases.
+    /// ```
     pub interface_number: ::core::ffi::c_int,
     /// Additional information about the USB interface.
     /// ```text
     ///    Valid on libusb and Android implementations.
+    /// ```
     pub interface_class: ::core::ffi::c_int,
     pub interface_subclass: ::core::ffi::c_int,
     pub interface_protocol: ::core::ffi::c_int,

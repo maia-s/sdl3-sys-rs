@@ -276,6 +276,7 @@ impl SDL_EventType {
     /// Events SDL_EVENT_USER through SDL_EVENT_LAST are for your use,
     /// ```text
     /// *  and should be allocated with SDL_RegisterEvents()
+    /// ```
     pub const USER: Self = Self(0x8000);
     /// *  This last event is only for bounding internal arrays
     pub const LAST: Self = Self(0xffff);
@@ -523,6 +524,7 @@ pub const SDL_EVENT_POLL_SENTINEL: SDL_EventType = SDL_EventType::POLL_SENTINEL;
 /// Events SDL_EVENT_USER through SDL_EVENT_LAST are for your use,
 /// ```text
 /// *  and should be allocated with SDL_RegisterEvents()
+/// ```
 pub const SDL_EVENT_USER: SDL_EventType = SDL_EventType::USER;
 /// *  This last event is only for bounding internal arrays
 pub const SDL_EVENT_LAST: SDL_EventType = SDL_EventType::LAST;
