@@ -89,6 +89,24 @@ pub const SDL_FLIP_HORIZONTAL: SDL_FlipMode = SDL_FlipMode::HORIZONTAL;
 /// flip vertically
 pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
 
+/// A collection of pixels used in software blitting.
+///
+/// Pixels are arranged in memory in rows, with the top row first. Each row
+/// occupies an amount of memory given by the pitch (sometimes known as the row
+/// stride in non-SDL APIs).
+///
+/// Within each row, pixels are arranged from left to right until the width is
+/// reached. Each pixel occupies a number of bits appropriate for its format,
+/// with most formats representing each pixel as one or more whole bytes (in
+/// some indexed formats, instead multiple pixels are packed into each byte),
+/// and a byte order given by the format. After encoding all pixels, any
+/// remaining bytes to reach the pitch are used as padding to reach a desired
+/// alignment, and have undefined contents.
+///
+/// This struct is available since SDL 3.0.0.
+///
+/// See also [`SDL_CreateSurface`]<br>
+/// See also [`SDL_DestroySurface`]<br>
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

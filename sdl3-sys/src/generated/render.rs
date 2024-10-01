@@ -133,6 +133,14 @@ pub const SDL_LOGICAL_PRESENTATION_OVERSCAN: SDL_RendererLogicalPresentation =
 pub const SDL_LOGICAL_PRESENTATION_INTEGER_SCALE: SDL_RendererLogicalPresentation =
     SDL_RendererLogicalPresentation::INTEGER_SCALE;
 
+/// An efficient driver-specific representation of pixel data
+///
+/// This struct is available since SDL 3.0.0.
+///
+/// See also [`SDL_CreateTexture`]<br>
+/// See also [`SDL_CreateTextureFromSurface`]<br>
+/// See also [`SDL_CreateTextureWithProperties`]<br>
+/// See also [`SDL_DestroyTexture`]<br>
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

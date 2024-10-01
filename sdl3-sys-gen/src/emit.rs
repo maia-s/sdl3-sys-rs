@@ -778,7 +778,8 @@ impl StructOrUnion {
                 emit_status: EmitStatus::Emitted,
             })?;
 
-            let is_interface = if doc
+            let is_interface = if sym
+                .doc
                 .as_ref()
                 .map(|doc| doc.span.contains("SDL_INIT_INTERFACE"))
                 .unwrap_or(false)
@@ -794,7 +795,7 @@ impl StructOrUnion {
             };
 
             let ctx_ool = &mut { ctx.with_ool_output() };
-            doc.emit(ctx_ool)?;
+            sym.doc.emit(ctx_ool)?;
             writeln!(ctx_ool, "#[repr(C)]")?;
             writeln!(ctx_ool, "#[derive(Clone, Copy)]")?;
             if self.can_derive_debug(ctx_ool) {
