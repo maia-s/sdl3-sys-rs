@@ -320,11 +320,13 @@ pub type SDL_EGLint = ::core::ffi::c_int;
 /// EGL attribute initialization callback types.
 ///
 /// This datatype is available since SDL 3.0.0.
-pub type SDL_EGLAttribArrayCallback =
-    ::core::option::Option<unsafe extern "C" fn() -> *mut SDL_EGLAttrib>;
+pub type SDL_EGLAttribArrayCallback = ::core::option::Option<
+    unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void) -> *mut SDL_EGLAttrib,
+>;
 
-pub type SDL_EGLIntArrayCallback =
-    ::core::option::Option<unsafe extern "C" fn() -> *mut SDL_EGLint>;
+pub type SDL_EGLIntArrayCallback = ::core::option::Option<
+    unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void) -> *mut SDL_EGLint,
+>;
 
 /// An enumeration of OpenGL configuration attributes.
 ///
@@ -3277,12 +3279,14 @@ extern "C" {
     ///   eglCreateSurface.
     /// - `contextAttribCallback`: callback for attributes to pass to
     ///   eglCreateContext.
+    /// - `userdata`: a pointer that is passed to the callbacks.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_EGL_SetAttributeCallbacks(
         platformAttribCallback: SDL_EGLAttribArrayCallback,
         surfaceAttribCallback: SDL_EGLIntArrayCallback,
         contextAttribCallback: SDL_EGLIntArrayCallback,
+        userdata: *mut ::core::ffi::c_void,
     );
 }
 

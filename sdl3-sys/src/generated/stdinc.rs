@@ -1033,6 +1033,8 @@ extern "C" {
     /// - `nmemb`: the number of elements in the array.
     /// - `size`: the size of the elements in the array.
     /// - `compare`: a function used to compare elements in the array.
+    /// - Returns a pointer to the matching element in the array, or NULL if not
+    ///   found.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1171,6 +1173,8 @@ extern "C" {
     /// - `size`: the size of the elements in the array.
     /// - `compare`: a function used to compare elements in the array.
     /// - `userdata`: a pointer to pass to the compare function.
+    /// - Returns a pointer to the matching element in the array, or NULL if not
+    ///   found.
     ///
     /// This function is available since SDL 3.0.0.
     ///

@@ -1,4 +1,4 @@
-use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, Value};
+use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, SymKind, Value};
 use crate::parse::{
     Block, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident, IdentOrKw, Item, Items,
     Kw_static, ParseErr, RustCode, Span, StringLiteral, Type,
@@ -218,7 +218,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 None,
                 Some(Type::function(Vec::new(), Type::void(), true, true)),
                 None,
-                None,
+                SymKind::Other,
                 false,
             )?;
             writeln!(ctx, "#[inline(never)]")?;
@@ -517,8 +517,8 @@ fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
     let etf = Ident::new_inline("SDL_EndThreadFunction");
     let ty = Type::ident(Ident::new_inline("SDL_FunctionPointer"));
 
-    ctx.register_sym(btf, None, Some(ty.clone()), None, None, true)?;
-    ctx.register_sym(etf, None, Some(ty), None, None, true)?;
+    ctx.register_sym(btf, None, Some(ty.clone()), None, SymKind::Other, true)?;
+    ctx.register_sym(etf, None, Some(ty), None, SymKind::Other, true)?;
 
     let cfg_default = "#[cfg(not(windows))]";
     let cfg_win = "#[cfg(windows)]";

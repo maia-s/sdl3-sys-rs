@@ -2,7 +2,7 @@ use super::{Emit, EmitErr, EmitResult, Eval, Value};
 use crate::{
     parse::{
         DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident, IdentOrKw, ParseErr,
-        PrimitiveType, RustCode, Span, StructField, StructKind, Type, TypeEnum,
+        PrimitiveType, RustCode, Span, StructFields, StructKind, Type, TypeEnum,
     },
     Gen,
 };
@@ -288,6 +288,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_DEFINE_STDBOOL",
             "SDL_EndThreadFunction",
             "SDL_FUNCTION_POINTER_IS_VOID_POINTER",
+            "SDL_INTERNAL",
             "SDL_MAIN_AVAILABLE",
             "SDL_MAIN_NEEDED",
             "SDL_MAIN_NOIMPL",
@@ -670,7 +671,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         alias_ty: Option<Type>,
         value_ty: Option<Type>,
         enum_base_ty: Option<Type>,
-        fields: Option<Vec<StructField>>,
+        kind: SymKind,
         can_derive_debug: bool,
     ) -> EmitResult {
         let module = self.inner().module.clone();
@@ -680,7 +681,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             alias_ty,
             value_ty,
             enum_base_ty,
-            fields: fields.unwrap_or_default(),
+            kind,
             can_derive_debug,
         })?;
         self.emit_pending()?;
@@ -707,18 +708,14 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         }
     }
 
-    pub fn lookup_struct_or_union_sym(
-        &self,
-        kind: StructKind,
-        key: &Ident,
-    ) -> Option<(Ident, bool)> {
+    pub fn lookup_struct_or_union_sym(&self, kind: StructKind, key: &Ident) -> Option<StructSym> {
         match kind {
             StructKind::Struct => self.lookup_struct_sym(key),
             StructKind::Union => self.lookup_union_sym(key),
         }
     }
 
-    pub fn lookup_struct_sym(&self, key: &Ident) -> Option<(Ident, bool)> {
+    pub fn lookup_struct_sym(&self, key: &Ident) -> Option<StructSym> {
         if self.lookup_preproc(key).is_some() {
             todo!()
         } else {
@@ -726,7 +723,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         }
     }
 
-    pub fn lookup_union_sym(&self, key: &Ident) -> Option<(Ident, bool)> {
+    pub fn lookup_union_sym(&self, key: &Ident) -> Option<StructSym> {
         if self.lookup_preproc(key).is_some() {
             todo!()
         } else {
@@ -1075,19 +1072,31 @@ impl PreProcState {
 }
 
 #[derive(Clone, Debug)]
+pub enum SymKind {
+    StructAlias(Ident),
+    UnionAlias(Ident),
+    Other,
+}
+
+#[derive(Clone, Debug)]
 pub struct Sym {
     pub module: String,
     pub ident: Ident,
     pub alias_ty: Option<Type>,
     pub value_ty: Option<Type>,
     pub enum_base_ty: Option<Type>,
-    pub fields: Vec<StructField>,
+    pub kind: SymKind,
     pub can_derive_debug: bool,
 }
 
 impl Sym {
     pub fn field_type(&self, ctx: &EmitContext, name: &str) -> Option<Type> {
-        for field in self.fields.iter() {
+        let fields = match &self.kind {
+            SymKind::StructAlias(ident) => ctx.lookup_struct_sym(ident)?.fields?,
+            SymKind::UnionAlias(ident) => ctx.lookup_union_sym(ident)?.fields?,
+            SymKind::Other => return None,
+        };
+        for field in fields.fields.iter() {
             if field.ident.as_str() == name {
                 return Some(field.ty.clone());
             }
@@ -1105,6 +1114,22 @@ impl Sym {
     }
 }
 
+#[derive(Clone, Debug)]
+pub struct StructSym {
+    pub kind: StructKind,
+    pub ident: Ident,
+    pub doc: Option<DocComment>,
+    pub fields: Option<StructFields>,
+    pub emit_status: EmitStatus,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum EmitStatus {
+    NotEmitted,
+    Requested,
+    Emitted,
+}
+
 #[derive(Clone)]
 pub struct Scope(Rc<RefCell<InnerScope>>);
 
@@ -1113,10 +1138,8 @@ struct InnerScope {
     parent: Option<Rc<RefCell<InnerScope>>>,
     syms: HashMap<Ident, Sym>,
     enum_syms: HashSet<Ident>,
-    struct_syms: BTreeMap<Ident, bool>,
-    struct_docs: BTreeMap<Ident, DocComment>,
-    union_syms: BTreeMap<Ident, bool>,
-    union_docs: BTreeMap<Ident, DocComment>,
+    struct_syms: BTreeMap<Ident, StructSym>,
+    union_syms: BTreeMap<Ident, StructSym>,
 }
 
 impl Scope {
@@ -1165,69 +1188,68 @@ impl Scope {
         Ok(())
     }
 
-    pub fn register_struct_or_union_sym(
-        &mut self,
-        kind: StructKind,
-        ident: Ident,
-        defined: bool,
-        doc: Option<DocComment>,
-    ) -> EmitResult {
-        match kind {
-            StructKind::Struct => self.register_struct_sym(ident, defined, doc),
-            StructKind::Union => self.register_union_sym(ident, defined, doc),
+    pub fn register_struct_or_union_sym(&mut self, sym: StructSym) -> Result<StructSym, EmitErr> {
+        let (regd, mut syms) = match sym.kind {
+            StructKind::Struct => (
+                self.lookup_struct(&sym.ident),
+                RefMut::map(self.0.borrow_mut(), |s| &mut s.struct_syms),
+            ),
+            StructKind::Union => (
+                self.lookup_union(&sym.ident),
+                RefMut::map(self.0.borrow_mut(), |s| &mut s.union_syms),
+            ),
+        };
+        if let Some(mut regd) = regd {
+            let mut changed = false;
+            if regd.doc.is_some() {
+                if let Some(doc) = sym.doc {
+                    return Err(
+                        ParseErr::new(doc.span(), "docs already defined for this item").into(),
+                    );
+                }
+            } else if let Some(doc) = sym.doc {
+                changed = true;
+                regd.doc = Some(doc);
+            }
+            if regd.fields.is_some() {
+                if sym.fields.is_some() {
+                    return Err(ParseErr::new(
+                        sym.ident.span(),
+                        "fields already defined for this item",
+                    )
+                    .into());
+                }
+            } else if let Some(fields) = sym.fields {
+                changed = true;
+                regd.fields = Some(fields);
+            }
+            match (regd.emit_status, sym.emit_status) {
+                (EmitStatus::NotEmitted, EmitStatus::Requested)
+                | (EmitStatus::NotEmitted, EmitStatus::Emitted)
+                | (EmitStatus::Requested, EmitStatus::Emitted) => {
+                    changed = true;
+                    regd.emit_status = sym.emit_status;
+                }
+                _ => (),
+            }
+            if changed {
+                syms.insert(sym.ident, regd.clone());
+                Ok(regd)
+            } else {
+                Ok(regd)
+            }
+        } else {
+            syms.insert(sym.ident.clone(), sym.clone());
+            Ok(sym)
         }
     }
 
-    pub fn register_struct_sym(
-        &mut self,
-        ident: Ident,
-        defined: bool,
-        doc: Option<DocComment>,
-    ) -> EmitResult {
-        let span = ident.span();
-        if let Some(doc) = doc {
-            let mut docs = self.0.borrow_mut();
-            let docs = &mut docs.struct_docs;
-            if docs.insert(ident.clone(), doc).is_some() {
-                return Err(ParseErr::new(span, "docs already defined for this struct").into());
-            }
-        }
-        if let Some((_, true)) = self.lookup_struct(&ident) {
-            if defined {
-                return Err(
-                    ParseErr::new(span, "struct symbol already defined in this scope").into(),
-                );
-            }
-        } else {
-            self.0.borrow_mut().struct_syms.insert(ident, defined);
-        }
-        Ok(())
+    pub fn register_struct_sym(&mut self, sym: StructSym) -> Result<StructSym, EmitErr> {
+        self.register_struct_or_union_sym(sym)
     }
 
-    pub fn register_union_sym(
-        &mut self,
-        ident: Ident,
-        defined: bool,
-        doc: Option<DocComment>,
-    ) -> EmitResult {
-        let span = ident.span();
-        if let Some(doc) = doc {
-            let mut docs = self.0.borrow_mut();
-            let docs = &mut docs.union_docs;
-            if docs.insert(ident.clone(), doc).is_some() {
-                return Err(ParseErr::new(span, "docs already defined for this union").into());
-            }
-        }
-        if let Some((_, true)) = self.lookup_union(&ident) {
-            if defined {
-                return Err(
-                    ParseErr::new(span, "union symbol already defined in this scope").into(),
-                );
-            }
-        } else {
-            self.0.borrow_mut().union_syms.insert(ident, defined);
-        }
-        Ok(())
+    pub fn register_union_sym(&mut self, sym: StructSym) -> Result<StructSym, EmitErr> {
+        self.register_struct_or_union_sym(sym)
     }
 
     pub fn lookup(&self, ident: &Ident) -> Option<Sym> {
@@ -1238,11 +1260,11 @@ impl Scope {
         self.0.borrow().lookup_enum(ident)
     }
 
-    pub fn lookup_struct(&self, ident: &Ident) -> Option<(Ident, bool)> {
-        self.0.borrow().lookup_struct_(ident)
+    pub fn lookup_struct(&self, ident: &Ident) -> Option<StructSym> {
+        self.0.borrow().lookup_struct(ident)
     }
 
-    pub fn lookup_union(&self, ident: &Ident) -> Option<(Ident, bool)> {
+    pub fn lookup_union(&self, ident: &Ident) -> Option<StructSym> {
         self.0.borrow().lookup_union(ident)
     }
 }
@@ -1279,27 +1301,19 @@ impl InnerScope {
         }
     }
 
-    pub fn lookup_struct_(&self, ident: &Ident) -> Option<(Ident, bool)> {
-        if let Some(sym) = self
-            .struct_syms
-            .get_key_value(ident)
-            .map(|(i, d)| (i.clone(), *d))
-        {
-            Some(sym)
+    pub fn lookup_struct(&self, ident: &Ident) -> Option<StructSym> {
+        if let Some(sym) = self.struct_syms.get(ident) {
+            Some(sym.clone())
         } else if let Some(parent) = &self.parent {
-            parent.borrow().lookup_struct_(ident)
+            parent.borrow().lookup_struct(ident)
         } else {
             None
         }
     }
 
-    pub fn lookup_union(&self, ident: &Ident) -> Option<(Ident, bool)> {
-        if let Some(sym) = self
-            .union_syms
-            .get_key_value(ident)
-            .map(|(i, d)| (i.clone(), *d))
-        {
-            Some(sym)
+    pub fn lookup_union(&self, ident: &Ident) -> Option<StructSym> {
+        if let Some(sym) = self.union_syms.get(ident) {
+            Some(sym.clone())
         } else if let Some(parent) = &self.parent {
             parent.borrow().lookup_union(ident)
         } else {
@@ -1308,17 +1322,19 @@ impl InnerScope {
     }
 
     pub fn emit_opaque_structs_and_unions(&mut self, ctx: &mut EmitContext) -> EmitResult {
-        let syms: Vec<(Ident, Option<DocComment>)> =
-            self.struct_syms
-                .iter()
-                .filter_map(|(s, d)| (!d).then_some((s.clone(), self.struct_docs.get(s).cloned())))
-                .chain(self.union_syms.iter().filter_map(|(s, d)| {
-                    (!d).then_some((s.clone(), self.union_docs.get(s).cloned()))
-                }))
-                .collect();
+        let syms: Vec<_> = self
+            .struct_syms
+            .values_mut()
+            .filter(|s| s.fields.is_none() && s.emit_status != EmitStatus::Emitted)
+            .chain(self.union_syms.values_mut().filter(|s| s.fields.is_none()))
+            .map(|s| {
+                s.emit_status = EmitStatus::Emitted;
+                s.clone()
+            })
+            .collect();
 
-        for (ident, doc) in syms {
-            if let Some(doc) = doc {
+        for sym in syms {
+            if let Some(doc) = &sym.doc {
                 for line in doc.to_string().lines() {
                     writeln!(ctx, "///{}{}", if line.is_empty() { "" } else { " " }, line)?;
                 }
@@ -1327,16 +1343,20 @@ impl InnerScope {
             writeln!(ctx, "#[non_exhaustive]")?;
             writeln!(
                 ctx,
-                "pub struct {ident} {{ _opaque: [::core::primitive::u8; 0] }}",
+                "pub struct {} {{ _opaque: [::core::primitive::u8; 0] }}",
+                sym.ident
             )?;
             writeln!(ctx)?;
             self.register_sym(Sym {
                 module: ctx.module().to_string(),
-                ident: ident.clone(),
+                ident: sym.ident.clone(),
                 alias_ty: None,
                 value_ty: None,
                 enum_base_ty: None,
-                fields: Vec::new(),
+                kind: match sym.kind {
+                    StructKind::Struct => SymKind::StructAlias,
+                    StructKind::Union => SymKind::UnionAlias,
+                }(sym.ident.clone()),
                 can_derive_debug: false,
             })?;
         }

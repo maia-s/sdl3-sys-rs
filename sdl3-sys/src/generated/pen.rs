@@ -79,10 +79,8 @@ impl SDL_PenAxis {
     /// Pen pressure.  Unidirectional: 0 to 1.0
     pub const PRESSURE: Self = Self(0);
     /// Pen horizontal tilt angle.  Bidirectional: -90.0 to 90.0 (left-to-right).
-    /// The physical max/min tilt may be smaller than -90.0 / 90.0, check SDL_PenCapabilityInfo
     pub const XTILT: Self = Self(1);
     /// Pen vertical tilt angle.  Bidirectional: -90.0 to 90.0 (top-to-down).
-    /// The physical max/min tilt may be smaller than -90.0 / 90.0 check SDL_PenCapabilityInfo
     pub const YTILT: Self = Self(2);
     /// Pen distance to drawing surface.  Unidirectional: 0.0 to 1.0
     pub const DISTANCE: Self = Self(3);
@@ -98,10 +96,8 @@ impl SDL_PenAxis {
 /// Pen pressure.  Unidirectional: 0 to 1.0
 pub const SDL_PEN_AXIS_PRESSURE: SDL_PenAxis = SDL_PenAxis::PRESSURE;
 /// Pen horizontal tilt angle.  Bidirectional: -90.0 to 90.0 (left-to-right).
-/// The physical max/min tilt may be smaller than -90.0 / 90.0, check SDL_PenCapabilityInfo
 pub const SDL_PEN_AXIS_XTILT: SDL_PenAxis = SDL_PenAxis::XTILT;
 /// Pen vertical tilt angle.  Bidirectional: -90.0 to 90.0 (top-to-down).
-/// The physical max/min tilt may be smaller than -90.0 / 90.0 check SDL_PenCapabilityInfo
 pub const SDL_PEN_AXIS_YTILT: SDL_PenAxis = SDL_PenAxis::YTILT;
 /// Pen distance to drawing surface.  Unidirectional: 0.0 to 1.0
 pub const SDL_PEN_AXIS_DISTANCE: SDL_PenAxis = SDL_PenAxis::DISTANCE;

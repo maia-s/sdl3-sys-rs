@@ -1,5 +1,13 @@
 //! System-dependent library loading routines.
 //!
+//! Shared objects are code that is programmatically loadable at runtime.
+//! Windows calls these "DLLs", Linux calls them "shared libraries", etc.
+//!
+//! To use them, build such a library, then call SDL_LoadObject() on it. Once
+//! loaded, you can use SDL_LoadFunction() on that object to find the address
+//! of its exported symbols. When done with the object, call SDL_UnloadObject()
+//! to dispose of it.
+//!
 //! Some things to keep in mind:
 //!
 //! - These functions only work on C function names. Other languages may have
@@ -24,11 +32,13 @@ extern "C" {
     /// - Returns an opaque pointer to the object handle or NULL on failure; call
     ///   SDL_GetError() for more information.
     ///
+    /// Thread safety: It is safe to call this function from any thread.
+    ///
     /// This function is available since SDL 3.0.0.
     ///
     /// See also [`SDL_LoadFunction`]<br>
     /// See also [`SDL_UnloadObject`]<br>
-    pub fn SDL_LoadObject(sofile: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_void;
+    pub fn SDL_LoadObject(sofile: *const ::core::ffi::c_char) -> *mut SDL_SharedObject;
 }
 
 extern "C" {
@@ -51,11 +61,13 @@ extern "C" {
     /// - Returns a pointer to the function or NULL on failure; call SDL_GetError()
     ///   for more information.
     ///
+    /// Thread safety: It is safe to call this function from any thread.
+    ///
     /// This function is available since SDL 3.0.0.
     ///
     /// See also [`SDL_LoadObject`]<br>
     pub fn SDL_LoadFunction(
-        handle: *mut ::core::ffi::c_void,
+        handle: *mut SDL_SharedObject,
         name: *const ::core::ffi::c_char,
     ) -> SDL_FunctionPointer;
 }
@@ -63,10 +75,28 @@ extern "C" {
 extern "C" {
     /// Unload a shared object from memory.
     ///
+    /// Note that any pointers from this object looked up through
+    /// SDL_LoadFunction() will no longer be valid.
+    ///
     /// - `handle`: a valid shared object handle returned by SDL_LoadObject().
+    ///
+    /// Thread safety: It is safe to call this function from any thread.
     ///
     /// This function is available since SDL 3.0.0.
     ///
     /// See also [`SDL_LoadObject`]<br>
-    pub fn SDL_UnloadObject(handle: *mut ::core::ffi::c_void);
+    pub fn SDL_UnloadObject(handle: *mut SDL_SharedObject);
+}
+
+/// An opaque datatype that represents a loaded shared object.
+///
+/// \since This datatype is available since SDL 3.0.0.
+///
+/// \sa SDL_LoadObject
+/// \sa SDL_LoadFunction
+/// \sa SDL_UnloadObject
+#[repr(C)]
+#[non_exhaustive]
+pub struct SDL_SharedObject {
+    _opaque: [::core::primitive::u8; 0],
 }

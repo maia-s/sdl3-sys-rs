@@ -582,6 +582,7 @@ impl Value {
                     return Err(ParseErr::new(s.span(), "unresolved type").into());
                 };
                 let Some(fty) = sym.field_type(ctx, field.as_str()) else {
+                    dbg!(&ptr, &field);
                     todo!()
                 };
                 (

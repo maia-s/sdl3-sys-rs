@@ -1175,9 +1175,9 @@ pub struct SDL_PenMotionEvent {
     pub which: SDL_PenID,
     /// Complete pen input state at time of event
     pub pen_state: SDL_PenInputFlags,
-    /// X position of pen on tablet
+    /// X coordinate, relative to window
     pub x: ::core::ffi::c_float,
-    /// Y position of pen on tablet
+    /// Y coordinate, relative to window
     pub y: ::core::ffi::c_float,
 }
 
@@ -1202,9 +1202,9 @@ pub struct SDL_PenTouchEvent {
     pub which: SDL_PenID,
     /// Complete pen input state at time of event
     pub pen_state: SDL_PenInputFlags,
-    /// X position of pen on tablet
+    /// X coordinate, relative to window
     pub x: ::core::ffi::c_float,
-    /// Y position of pen on tablet
+    /// Y coordinate, relative to window
     pub y: ::core::ffi::c_float,
     /// true if eraser end is used (not all pens support this).
     pub eraser: ::core::primitive::bool,
@@ -1233,9 +1233,9 @@ pub struct SDL_PenButtonEvent {
     pub which: SDL_PenID,
     /// Complete pen input state at time of event
     pub pen_state: SDL_PenInputFlags,
-    /// X position of pen on tablet
+    /// X coordinate, relative to window
     pub x: ::core::ffi::c_float,
-    /// Y position of pen on tablet
+    /// Y coordinate, relative to window
     pub y: ::core::ffi::c_float,
     /// The pen button index (first button is 1).
     pub button: Uint8,
@@ -1264,9 +1264,9 @@ pub struct SDL_PenAxisEvent {
     pub which: SDL_PenID,
     /// Complete pen input state at time of event
     pub pen_state: SDL_PenInputFlags,
-    /// X position of pen on tablet
+    /// X coordinate, relative to window
     pub x: ::core::ffi::c_float,
-    /// Y position of pen on tablet
+    /// Y coordinate, relative to window
     pub y: ::core::ffi::c_float,
     /// Axis that has changed
     pub axis: SDL_PenAxis,

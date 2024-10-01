@@ -133,6 +133,20 @@ pub const SDL_LOGICAL_PRESENTATION_OVERSCAN: SDL_RendererLogicalPresentation =
 pub const SDL_LOGICAL_PRESENTATION_INTEGER_SCALE: SDL_RendererLogicalPresentation =
     SDL_RendererLogicalPresentation::INTEGER_SCALE;
 
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_Texture {
+    /// The format of the texture, read-only
+    pub format: SDL_PixelFormat,
+    /// The width of the texture, read-only.
+    pub w: ::core::ffi::c_int,
+    /// The height of the texture, read-only.
+    pub h: ::core::ffi::c_int,
+    /// Application reference count, used when freeing texture
+    pub refcount: ::core::ffi::c_int,
+}
+
 extern "C" {
     /// Get the number of 2D rendering drivers available for the current display.
     ///
@@ -2847,14 +2861,5 @@ extern "C" {
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Renderer {
-    _opaque: [::core::primitive::u8; 0],
-}
-
-/// An efficient driver-specific representation of pixel data
-///
-/// \since This struct is available since SDL 3.0.0.
-#[repr(C)]
-#[non_exhaustive]
-pub struct SDL_Texture {
     _opaque: [::core::primitive::u8; 0],
 }

@@ -21,8 +21,8 @@ mod item;
 mod patch;
 use patch::{patch_emit_define, patch_emit_function, patch_emit_macro_call};
 mod state;
-use state::PreProcState;
-pub use state::{DefineState, EmitContext, InnerEmitContext, Sym};
+pub use state::{DefineState, EmitContext, InnerEmitContext, Sym, SymKind};
+use state::{EmitStatus, PreProcState, StructSym};
 
 pub const fn is_valid_ident(s: &str) -> bool {
     matches!(s.as_bytes()[0], b'a'..=b'z' | b'A'..=b'Z' | b'_')
@@ -168,13 +168,14 @@ impl Emit for Item {
             Item::Warning(_) => todo!(),
             Item::FileDoc(dc) => dc.emit(ctx),
             Item::StructOrUnion(s) => {
-                if let (Some(ident), false) = (&s.ident, s.fields.is_some()) {
-                    ctx.scope_mut().register_struct_or_union_sym(
-                        s.kind,
-                        ident.clone(),
-                        false,
-                        s.doc.clone(),
-                    )?;
+                if let Some(ident) = &s.ident {
+                    ctx.scope_mut().register_struct_or_union_sym(StructSym {
+                        kind: s.kind,
+                        doc: s.doc.clone(),
+                        ident: ident.clone(),
+                        fields: s.fields.clone(),
+                        emit_status: EmitStatus::NotEmitted,
+                    })?;
                     Ok(())
                 } else {
                     todo!()
@@ -472,7 +473,7 @@ impl Emit for Define {
                         None,
                         Some(arg.ty.clone()),
                         None,
-                        None,
+                        SymKind::Other,
                         arg.ty.can_derive_debug(ctx),
                     )?;
                 }
@@ -527,7 +528,7 @@ impl Emit for Define {
                         body.is_unsafe(),
                     )),
                     None,
-                    None,
+                    SymKind::Other,
                     false,
                 )?;
                 writeln!(ctx, "{f}")?;
@@ -552,7 +553,7 @@ impl Emit for Define {
                     None,
                     Some(ty.clone()),
                     None,
-                    None,
+                    SymKind::Other,
                     ty.can_derive_debug(ctx),
                 )?;
                 self.doc.emit(ctx)?;
@@ -613,7 +614,7 @@ impl Emit for Function {
                     true,
                 )),
                 None,
-                None,
+                SymKind::Other,
                 false,
             )?;
             emit_extern_start(ctx, &self.abi, false)?;
@@ -643,7 +644,7 @@ impl Emit for Function {
                         None,
                         Some(arg.ty.clone()),
                         None,
-                        None,
+                        SymKind::Other,
                         arg.ty.can_derive_debug(&ctx_body),
                     )?;
                 }
@@ -667,7 +668,7 @@ impl Emit for Function {
                     body.is_unsafe(),
                 )),
                 None,
-                None,
+                SymKind::Other,
                 false,
             )?;
 
@@ -760,14 +761,23 @@ impl StructOrUnion {
         let ident = &self.generated_ident;
         let doc = self.doc.clone().or(doc);
 
-        ctx.scope_mut().register_struct_or_union_sym(
-            self.kind,
-            ident.clone(),
-            self.fields.is_some(),
-            doc.clone(),
-        )?;
+        let sym = ctx.scope_mut().register_struct_or_union_sym(StructSym {
+            kind: self.kind,
+            ident: ident.clone(),
+            fields: self.fields.clone(),
+            doc: doc.clone(),
+            emit_status: EmitStatus::Requested,
+        })?;
 
-        if let Some(fields) = &self.fields {
+        if let (true, Some(fields)) = (sym.emit_status != EmitStatus::Emitted, &sym.fields) {
+            ctx.scope_mut().register_struct_or_union_sym(StructSym {
+                kind: self.kind,
+                ident: ident.clone(),
+                fields: None,
+                doc: None,
+                emit_status: EmitStatus::Emitted,
+            })?;
+
             let is_interface = if doc
                 .as_ref()
                 .map(|doc| doc.span.contains("SDL_INIT_INTERFACE"))
@@ -1034,7 +1044,7 @@ impl Emit for TypeDef {
                     Some(self.ty.clone()),
                     None,
                     None,
-                    None,
+                    SymKind::Other,
                     true,
                 )?;
                 self.doc.emit(ctx)?;
@@ -1056,7 +1066,7 @@ impl Emit for TypeDef {
                     Some(self.ty.clone()),
                     None,
                     sym.enum_base_ty,
-                    None,
+                    sym.kind,
                     sym.can_derive_debug,
                 )?;
                 self.doc.emit(ctx)?;
@@ -1117,7 +1127,7 @@ impl Emit for TypeDef {
                     Some(self.ty.clone()),
                     None,
                     Some(enum_base_type.clone()),
-                    None,
+                    SymKind::Other,
                     true,
                 )?;
 
@@ -1162,7 +1172,7 @@ impl Emit for TypeDef {
                         None,
                         Some(Type::ident(self.ident.clone())),
                         None,
-                        None,
+                        SymKind::Other,
                         true,
                     )?;
 
@@ -1226,16 +1236,21 @@ impl Emit for TypeDef {
             }
 
             TypeEnum::Struct(s) => {
+                s.emit_with_doc_and_ident(ctx, self.doc.clone(), false)?;
+
                 ctx.register_sym(
                     self.ident.clone(),
                     Some(self.ty.clone()),
                     None,
                     None,
-                    s.fields.as_ref().map(|f| f.fields.clone()),
+                    if s.kind == StructKind::Struct {
+                        SymKind::StructAlias
+                    } else {
+                        SymKind::UnionAlias
+                    }(s.ident.clone().unwrap()),
                     s.can_derive_debug(ctx),
                 )?;
 
-                s.emit_with_doc_and_ident(ctx, self.doc.clone(), false)?;
                 ctx.flush_ool_output()?;
 
                 if let Some(ident) = &s.ident {
@@ -1258,7 +1273,7 @@ impl Emit for TypeDef {
                     Some(self.ty.clone()),
                     None,
                     None,
-                    None,
+                    SymKind::Other,
                     true,
                 )?;
                 self.doc.emit(ctx)?;
@@ -1275,7 +1290,7 @@ impl Emit for TypeDef {
                     Some(self.ty.clone()),
                     None,
                     None,
-                    None,
+                    SymKind::Other,
                     true,
                 )?;
                 self.doc.emit(ctx)?;
@@ -1288,7 +1303,7 @@ impl Emit for TypeDef {
                     Some(self.ty.clone()),
                     None,
                     None,
-                    None,
+                    SymKind::Other,
                     true,
                 )?;
                 self.doc.emit(ctx)?;
@@ -1318,7 +1333,7 @@ impl Emit for TypeDef {
                     Some(self.ty.clone()),
                     None,
                     None,
-                    None,
+                    SymKind::Other,
                     *can_derive_debug,
                 )?;
                 writeln!(ctx, "pub type {} = {r};", self.ident.as_str())?;

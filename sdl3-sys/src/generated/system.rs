@@ -305,15 +305,6 @@ emit! {
     }
 
     extern "C" {
-        /// Query if the application is running on Android TV.
-        ///
-        /// - Returns true if this is Android TV, false otherwise.
-        ///
-        /// This function is available since SDL 3.0.0.
-        pub fn SDL_IsAndroidTV() -> ::core::primitive::bool;
-    }
-
-    extern "C" {
         /// Query if the application is running on a Chromebook.
         ///
         /// - Returns true if this is a Chromebook, false otherwise.
@@ -517,6 +508,17 @@ extern "C" {
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_IsTablet() -> ::core::primitive::bool;
+}
+
+extern "C" {
+    /// Query if the current device is a TV.
+    ///
+    /// If SDL can't determine this, it will return false.
+    ///
+    /// - Returns true if the device is a TV, false otherwise.
+    ///
+    /// This function is available since SDL 3.0.0.
+    pub fn SDL_IsTV() -> ::core::primitive::bool;
 }
 
 extern "C" {

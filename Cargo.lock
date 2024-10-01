@@ -46,14 +46,14 @@ dependencies = [
 
 [[package]]
 name = "sdl3-src"
-version = "0.0.1-dev-3.1.2-pre1975-ge3dbd74fe"
+version = "0.0.1-dev-3.1.2-pre1990-g34033d583"
 dependencies = [
  "cmake",
 ]
 
 [[package]]
 name = "sdl3-sys"
-version = "0.0.10-dev+sdl3-prerelease-3.1.2-1975-ge3dbd74fe"
+version = "0.0.10-dev+sdl3-prerelease-3.1.2-1990-g34033d583"
 dependencies = [
  "sdl3-src",
 ]
