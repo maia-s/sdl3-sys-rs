@@ -4224,17 +4224,19 @@ extern "C" {
     ///   SDL_ICONV_EINVAL is returned when an incomplete input sequence is
     ///   encountered.
     ///
-    ///          On exit:
+    /// ```text
+    ///      On exit:
     ///
-    ///          - inbuf will point to the beginning of the next multibyte
-    ///            sequence. On error, this is the location of the problematic
-    ///            input sequence. On success, this is the end of the input
-    ///            sequence. - inbytesleft will be set to the number of bytes left
-    ///            to convert, which will be 0 on success. - outbuf will point to
-    ///            the location where to store the next output byte. - outbytesleft
-    ///            will be set to the number of bytes left in the output buffer.
+    ///      - inbuf will point to the beginning of the next multibyte
+    ///        sequence. On error, this is the location of the problematic
+    ///        input sequence. On success, this is the end of the input
+    ///        sequence. - inbytesleft will be set to the number of bytes left
+    ///        to convert, which will be 0 on success. - outbuf will point to
+    ///        the location where to store the next output byte. - outbytesleft
+    ///        will be set to the number of bytes left in the output buffer.
+    /// ```
     ///
-    /// This function is available since SDL 3.0.0.
+    /// \since This function is available since SDL 3.0.0.
     ///
     /// See also [`SDL_iconv_open`]<br>
     /// See also [`SDL_iconv_close`]<br>

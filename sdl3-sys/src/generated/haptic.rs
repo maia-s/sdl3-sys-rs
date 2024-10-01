@@ -313,7 +313,7 @@ pub const SDL_HAPTIC_INFINITY: ::core::primitive::u32 = 4294967295_u32;
 ///
 /// The following diagram represents the cardinal directions:
 ///
-/// ```
+/// ```text
 ///                .--.
 ///                |__| .-------.
 ///                |=.| |.-----.|
@@ -472,7 +472,7 @@ pub struct SDL_HapticConstant {
 ///
 /// Examples:
 ///
-/// ```
+/// ```text
 ///   SDL_HAPTIC_SINE
 ///     __      __      __      __
 ///    /  \    /  \    /  \    /
@@ -756,7 +756,7 @@ pub struct SDL_HapticCustom {
 ///
 /// Here we have an example of a constant effect evolution in time:
 ///
-/// ```
+/// ```text
 ///  Strength
 ///  ^
 ///  |

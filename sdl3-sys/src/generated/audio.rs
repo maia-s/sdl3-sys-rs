@@ -1932,14 +1932,16 @@ extern "C" {
     ///   allocated buffer containing the audio data, and `audio_len` is
     ///   filled with the length of that audio buffer in bytes.
     ///
-    ///          This function returns false if the .WAV file cannot be opened,
-    ///          uses an unknown data format, or is corrupt; call SDL_GetError()
-    ///          for more information.
+    /// ```text
+    ///      This function returns false if the .WAV file cannot be opened,
+    ///      uses an unknown data format, or is corrupt; call SDL_GetError()
+    ///      for more information.
     ///
-    ///          When the application is done with the data returned in
-    ///          `audio_buf`, it should call SDL_free() to dispose of it.
+    ///      When the application is done with the data returned in
+    ///      `audio_buf`, it should call SDL_free() to dispose of it.
+    /// ```
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// \threadsafety It is safe to call this function from any thread.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1974,14 +1976,16 @@ extern "C" {
     ///   allocated buffer containing the audio data, and `audio_len` is
     ///   filled with the length of that audio buffer in bytes.
     ///
-    ///          This function returns false if the .WAV file cannot be opened,
-    ///          uses an unknown data format, or is corrupt; call SDL_GetError()
-    ///          for more information.
+    /// ```text
+    ///      This function returns false if the .WAV file cannot be opened,
+    ///      uses an unknown data format, or is corrupt; call SDL_GetError()
+    ///      for more information.
     ///
-    ///          When the application is done with the data returned in
-    ///          `audio_buf`, it should call SDL_free() to dispose of it.
+    ///      When the application is done with the data returned in
+    ///      `audio_buf`, it should call SDL_free() to dispose of it.
+    /// ```
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// \threadsafety It is safe to call this function from any thread.
     ///
     /// This function is available since SDL 3.0.0.
     ///

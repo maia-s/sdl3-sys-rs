@@ -245,6 +245,39 @@ impl DocComment {
                     }
                     _ => writeln!(ctx, "{pfx} {line}")?,
                 }
+            } else if let Some(fmt) = line.strip_prefix("```") {
+                match fmt {
+                    "" => writeln!(ctx, "{pfx} ```text")?,
+                    _ => writeln!(ctx, "{pfx} {line}")?,
+                }
+                for line in lines.by_ref() {
+                    writeln!(ctx, "{pfx} {line}")?;
+                    if line.starts_with("```") {
+                        break;
+                    }
+                }
+            } else if let Some(line) = line.strip_prefix("    ") {
+                writeln!(ctx, "{pfx} ```text")?;
+                writeln!(ctx, "{pfx} {line}")?;
+                let mut empty_lines = 0;
+                for line in lines.by_ref() {
+                    if line.is_empty() {
+                        empty_lines += 1;
+                    } else if let Some(line) = line.strip_prefix("    ") {
+                        for _ in 0..empty_lines {
+                            writeln!(ctx, "{pfx}")?;
+                        }
+                        empty_lines = 0;
+                        writeln!(ctx, "{pfx} {line}")?;
+                    } else {
+                        writeln!(ctx, "{pfx} ```")?;
+                        for _ in 0..empty_lines {
+                            writeln!(ctx, "{pfx}")?;
+                        }
+                        writeln!(ctx, "{pfx} {line}")?;
+                        break;
+                    }
+                }
             } else {
                 writeln!(ctx, "{pfx} {line}")?;
             }
