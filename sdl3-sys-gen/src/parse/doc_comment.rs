@@ -25,8 +25,10 @@ impl Display for DocComment {
                     // one non-empty line
                     return f.write_str(first.trim());
                 };
-                let mut prefix =
-                    common_doc_prefix(if self.trailing { second } else { first }, second);
+                let i = second
+                    .find(|c: char| !c.is_whitespace() && c != '*')
+                    .unwrap_or(second.len());
+                let mut prefix = &second[..i];
                 for line in lines {
                     prefix = common_doc_prefix(prefix, line);
                 }

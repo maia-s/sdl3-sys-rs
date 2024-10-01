@@ -273,10 +273,8 @@ impl SDL_EventType {
     pub const RENDER_DEVICE_RESET: Self = Self(8193);
     /// Signals the end of an event poll cycle
     pub const POLL_SENTINEL: Self = Self(0x7f00);
-    /// Events SDL_EVENT_USER through SDL_EVENT_LAST are for your use,
-    /// ```text
-    /// *  and should be allocated with SDL_RegisterEvents()
-    /// ```
+    ///  Events SDL_EVENT_USER through SDL_EVENT_LAST are for your use,
+    /// and should be allocated with SDL_RegisterEvents()
     pub const USER: Self = Self(0x8000);
     /// *  This last event is only for bounding internal arrays
     pub const LAST: Self = Self(0xffff);
@@ -521,10 +519,8 @@ pub const SDL_EVENT_RENDER_TARGETS_RESET: SDL_EventType = SDL_EventType::RENDER_
 pub const SDL_EVENT_RENDER_DEVICE_RESET: SDL_EventType = SDL_EventType::RENDER_DEVICE_RESET;
 /// Signals the end of an event poll cycle
 pub const SDL_EVENT_POLL_SENTINEL: SDL_EventType = SDL_EventType::POLL_SENTINEL;
-/// Events SDL_EVENT_USER through SDL_EVENT_LAST are for your use,
-/// ```text
-/// *  and should be allocated with SDL_RegisterEvents()
-/// ```
+///  Events SDL_EVENT_USER through SDL_EVENT_LAST are for your use,
+/// and should be allocated with SDL_RegisterEvents()
 pub const SDL_EVENT_USER: SDL_EventType = SDL_EventType::USER;
 /// *  This last event is only for bounding internal arrays
 pub const SDL_EVENT_LAST: SDL_EventType = SDL_EventType::LAST;
