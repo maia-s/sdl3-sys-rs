@@ -75,6 +75,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5a2d2f3481209a6b42eec2fbb49063fb4e8d35b57023401495d4fe0f85c817f0"
 
 [[package]]
+name = "sdl3-main"
+version = "0.1.0"
+dependencies = [
+ "sdl3-main-macros",
+ "sdl3-sys",
+]
+
+[[package]]
+name = "sdl3-main-macros"
+version = "0.1.0"
+
+[[package]]
 name = "sdl3-src"
 version = "3.1.6-preview-0"
 
@@ -87,6 +99,7 @@ dependencies = [
  "libc",
  "pkg-config",
  "rpkg-config",
+ "sdl3-main",
  "sdl3-src",
  "vcpkg",
  "windows-sys",

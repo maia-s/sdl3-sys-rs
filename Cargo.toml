@@ -1,10 +1,13 @@
 [workspace]
 resolver = "2"
 members = [
+    "sdl3-main",
+    "sdl3-main-macros",
     "sdl3-src",
     "sdl3-sys",
     "sdl3-sys-gen",
 ]
 default-members = [
-    "sdl3-sys"
+    "sdl3-sys",
+    "sdl3-main",
 ]

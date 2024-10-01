@@ -108,3 +108,6 @@ optional = true
 [build-dependencies.vcpkg]
 version = "0.2"
 optional = true
+
+[dev-dependencies]
+sdl3-main = { path = "../sdl3-main" }

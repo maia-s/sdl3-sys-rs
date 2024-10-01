@@ -1,0 +1,19 @@
+[package]
+name = "sdl3-main-macros"
+version = "0.1.0"
+edition = "2021"
+authors = ["Maia S. R."]
+license = "Zlib"
+description = "Proc macros for sdl3-main"
+repository = "https://github.com/maia-s/sdl3-sys-rs"
+documentation = "https://docs.rs/sdl3-main-macros"
+keywords = ["sdl"]
+categories = []
+
+[lib]
+proc-macro = true
+
+[features]
+default = []
+alloc = []
+std = ["alloc"]
