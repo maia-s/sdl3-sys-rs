@@ -296,7 +296,11 @@ impl Gen {
             }
             self.parsed[module].emit(&mut ctx)?;
             let emitted = ctx.into_inner();
-            file.0.into_inner().unwrap().sync_all()?;
+
+            let file = file.0.into_inner().unwrap();
+            file.sync_all()?;
+            drop(file);
+
             self.emitted
                 .borrow_mut()
                 .insert(module.to_string(), emitted);
