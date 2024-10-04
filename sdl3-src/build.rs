@@ -1,12 +1,13 @@
 use cmake::Config;
 use std::{
     env,
+    error::Error,
     fs::File,
     io::{BufWriter, Write},
     path::Path,
 };
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let build = if env::var("DOCS_RS").is_ok() {
         // don't build SDL on docs.rs
         std::path::PathBuf::new()
@@ -27,16 +28,15 @@ fn main() {
 
         let mut build = config.build();
         build.push("lib");
-        build.canonicalize().unwrap()
+        build.canonicalize()?
     };
 
-    let mut out = BufWriter::new(
-        File::create(Path::new(&env::var_os("OUT_DIR").unwrap()).join("config.rs")).unwrap(),
-    );
-    write!(out, "pub const SEARCH_PATH: &[u8] = &[").unwrap();
-    for byte in build.as_os_str().as_encoded_bytes() {
-        write!(out, "0x{byte:02x},").unwrap();
-    }
-    writeln!(out, "];").unwrap();
-    out.flush().unwrap();
+    let mut out = BufWriter::new(File::create(
+        Path::new(&env::var_os("OUT_DIR").unwrap()).join("config.rs"),
+    )?);
+    // cargo requires utf-8 paths anyway so just output this as a str
+    writeln!(out, "pub const LIB_DIR: &str = {:?};", build)?;
+    out.flush()?;
+
+    Ok(())
 }
