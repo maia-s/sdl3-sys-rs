@@ -19,9 +19,10 @@ use std::{
     error,
     fmt::{self, Debug, Display},
     fs::{self, read_dir, DirBuilder, File, OpenOptions},
-    io::{self, BufWriter, Read},
+    io::{self, BufWriter, Read, Write as _},
     path::{Path, PathBuf},
-    process::Command,
+    process::{Command, Stdio},
+    thread,
 };
 
 fn skip(module: &str) -> bool {
@@ -45,12 +46,18 @@ fn skip_emit(_module: &str) -> bool {
     false
 }
 
-fn run_rustfmt(path: &Path) {
-    let _ = Command::new("rustfmt")
+fn format_and_write(input: String, path: &Path) -> Result<(), Error> {
+    let mut fmt = Command::new("rustfmt")
         .arg("--edition")
         .arg("2021")
-        .arg(path)
-        .spawn();
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .spawn()?;
+    let mut fmt_in = fmt.stdin.take().unwrap();
+    thread::spawn(move || fmt_in.write_all(input.as_bytes()));
+    let output = String::from_utf8(fmt.wait_with_output()?.stdout).unwrap();
+    fs::write(path, output)?;
+    Ok(())
 }
 
 struct LinesPatch<'a> {
@@ -285,8 +292,8 @@ impl Gen {
             }
             let mut complete_guard = CompleteGuard(false, &path, module);
 
-            let mut file = Writable(BufWriter::new(File::create(&path)?));
-            let mut ctx = EmitContext::new(module, &mut file, self)?;
+            let mut output = String::new();
+            let mut ctx = EmitContext::new(module, &mut output, self)?;
             if let Some(revision) = &self.revision {
                 ctx.preproc_state().borrow_mut().define(
                     Ident::new_inline("SDL_VENDOR_INFO"),
@@ -296,18 +303,12 @@ impl Gen {
             }
             self.parsed[module].emit(&mut ctx)?;
             let emitted = ctx.into_inner();
-
-            let file = file.0.into_inner().unwrap();
-            file.sync_all()?;
-            drop(file);
-
             self.emitted
                 .borrow_mut()
                 .insert(module.to_string(), emitted);
+            format_and_write(output, &path)?;
 
             complete_guard.0 = true;
-
-            run_rustfmt(&path);
 
             let mut path = self.output_path.clone();
             path.push("mod");
@@ -322,9 +323,9 @@ impl Gen {
         let mut path = self.output_path.clone();
         path.push("mod");
         path.set_extension("rs");
-        let mut file = Writable(BufWriter::new(File::create(&path)?));
+        let mut output = String::new();
         writeln!(
-            file,
+            output,
             concat!(
                 "#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused_imports, unused_parens, unused_unsafe, ",
                 "unused_variables, clippy::approx_constant, clippy::double_parens, clippy::eq_op, clippy::identity_op, ",
@@ -332,20 +333,21 @@ impl Gen {
                 "clippy::too_long_first_doc_paragraph, clippy::unnecessary_cast)]"
             )
         )?;
-        writeln!(file)?;
+        writeln!(output)?;
         for module in self.emitted.borrow().keys() {
-            writeln!(file, "pub mod {module};")?;
+            writeln!(output, "pub mod {module};")?;
         }
-        writeln!(file, "\n/// Reexports of everything from the other modules")?;
-        writeln!(file, "pub mod everything {{")?;
+        writeln!(
+            output,
+            "\n/// Reexports of everything from the other modules"
+        )?;
+        writeln!(output, "pub mod everything {{")?;
         for module in self.emitted.borrow().keys() {
-            writeln!(file, "    #[doc(no_inline)]")?;
-            writeln!(file, "    pub use super::{module}::*;")?;
+            writeln!(output, "    #[doc(no_inline)]")?;
+            writeln!(output, "    pub use super::{module}::*;")?;
         }
-        writeln!(file, "}}")?;
-        drop(file);
-        run_rustfmt(&path);
-
+        writeln!(output, "}}")?;
+        format_and_write(output, &path)?;
         Ok(())
     }
 
