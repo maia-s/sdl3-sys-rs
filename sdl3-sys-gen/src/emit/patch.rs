@@ -119,7 +119,8 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
         match_ident: |i| {
             matches!(
                 i,
-                "SDL_arraysize"
+                "main"
+                    | "SDL_arraysize"
                     | "SDL_BeginThreadFunction"
                     | "SDL_COMPILE_TIME_ASSERT"
                     | "SDL_const_cast"

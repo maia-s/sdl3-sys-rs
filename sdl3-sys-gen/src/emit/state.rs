@@ -292,7 +292,6 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_MAIN_AVAILABLE",
             "SDL_MAIN_NEEDED",
             "SDL_MAIN_NOIMPL",
-            "SDL_MAIN_USE_CALLBACKS",
             "SDL_memcpy",
             "SDL_memmove",
             "SDL_memset",
@@ -353,6 +352,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_DISABLE_ANALYZE_MACROS" = DefineValue::one();
             "SDL_LIL_ENDIAN" = DefineValue::parse_expr("1234")?;
             "SDL_MAIN_HANDLED" = DefineValue::one();
+            "SDL_MAIN_USE_CALLBACKS" = DefineValue::one();
             "SDL_NULL_WHILE_LOOP_CONDITION" = DefineValue::parse_expr("0")?;
         }
 

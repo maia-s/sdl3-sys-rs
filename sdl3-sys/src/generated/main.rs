@@ -17,6 +17,187 @@ emit! {}
 
 use super::init::*;
 
+extern "C" {
+    /// App-implemented initial entry point for SDL_MAIN_USE_CALLBACKS apps.
+    ///
+    /// Apps implement this function when using SDL_MAIN_USE_CALLBACKS. If using a
+    /// standard "main" function, you should not supply this.
+    ///
+    /// This function is called by SDL once, at startup. The function should
+    /// initialize whatever is necessary, possibly create windows and open audio
+    /// devices, etc. The `argc` and `argv` parameters work like they would with a
+    /// standard "main" function.
+    ///
+    /// This function should not go into an infinite mainloop; it should do any
+    /// one-time setup it requires and then return.
+    ///
+    /// The app may optionally assign a pointer to `*appstate`. This pointer will
+    /// be provided on every future call to the other entry points, to allow
+    /// application state to be preserved between functions without the app needing
+    /// to use a global variable. If this isn't set, the pointer will be NULL in
+    /// future entry points.
+    ///
+    /// If this function returns SDL_APP_CONTINUE, the app will proceed to normal
+    /// operation, and will begin receiving repeated calls to SDL_AppIterate and
+    /// SDL_AppEvent for the life of the program. If this function returns
+    /// SDL_APP_FAILURE, SDL will call SDL_AppQuit and terminate the process with
+    /// an exit code that reports an error to the platform. If it returns
+    /// SDL_APP_SUCCESS, SDL calls SDL_AppQuit and terminates with an exit code
+    /// that reports success to the platform.
+    ///
+    /// - `appstate`: a place where the app can optionally store a pointer for
+    ///   future use.
+    /// - `argc`: the standard ANSI C main's argc; number of elements in `argv`.
+    /// - `argv`: the standard ANSI C main's argv; array of command line
+    ///   arguments.
+    /// - Returns SDL_APP_FAILURE to terminate with an error, SDL_APP_SUCCESS to
+    ///   terminate with success, SDL_APP_CONTINUE to continue.
+    ///
+    /// Thread safety: This function is not thread safe.
+    ///
+    /// This function is available since SDL 3.0.0.
+    ///
+    /// See also [`SDL_AppIterate`]<br>
+    /// See also [`SDL_AppEvent`]<br>
+    /// See also [`SDL_AppQuit`]<br>
+    pub fn SDL_AppInit(
+        appstate: *mut *mut ::core::ffi::c_void,
+        argc: ::core::ffi::c_int,
+        argv: *mut *mut ::core::ffi::c_char,
+    ) -> SDL_AppResult;
+}
+
+extern "C" {
+    /// App-implemented iteration entry point for SDL_MAIN_USE_CALLBACKS apps.
+    ///
+    /// Apps implement this function when using SDL_MAIN_USE_CALLBACKS. If using a
+    /// standard "main" function, you should not supply this.
+    ///
+    /// This function is called repeatedly by SDL after SDL_AppInit returns 0. The
+    /// function should operate as a single iteration the program's primary loop;
+    /// it should update whatever state it needs and draw a new frame of video,
+    /// usually.
+    ///
+    /// On some platforms, this function will be called at the refresh rate of the
+    /// display (which might change during the life of your app!). There are no
+    /// promises made about what frequency this function might run at. You should
+    /// use SDL's timer functions if you need to see how much time has passed since
+    /// the last iteration.
+    ///
+    /// There is no need to process the SDL event queue during this function; SDL
+    /// will send events as they arrive in SDL_AppEvent, and in most cases the
+    /// event queue will be empty when this function runs anyhow.
+    ///
+    /// This function should not go into an infinite mainloop; it should do one
+    /// iteration of whatever the program does and return.
+    ///
+    /// The `appstate` parameter is an optional pointer provided by the app during
+    /// SDL_AppInit(). If the app never provided a pointer, this will be NULL.
+    ///
+    /// If this function returns SDL_APP_CONTINUE, the app will continue normal
+    /// operation, receiving repeated calls to SDL_AppIterate and SDL_AppEvent for
+    /// the life of the program. If this function returns SDL_APP_FAILURE, SDL will
+    /// call SDL_AppQuit and terminate the process with an exit code that reports
+    /// an error to the platform. If it returns SDL_APP_SUCCESS, SDL calls
+    /// SDL_AppQuit and terminates with an exit code that reports success to the
+    /// platform.
+    ///
+    /// - `appstate`: an optional pointer, provided by the app in SDL_AppInit.
+    /// - Returns SDL_APP_FAILURE to terminate with an error, SDL_APP_SUCCESS to
+    ///   terminate with success, SDL_APP_CONTINUE to continue.
+    ///
+    /// Thread safety: This function is not thread safe.
+    ///
+    /// This function is available since SDL 3.0.0.
+    ///
+    /// See also [`SDL_AppInit`]<br>
+    /// See also [`SDL_AppEvent`]<br>
+    pub fn SDL_AppIterate(appstate: *mut ::core::ffi::c_void) -> SDL_AppResult;
+}
+
+extern "C" {
+    /// App-implemented event entry point for SDL_MAIN_USE_CALLBACKS apps.
+    ///
+    /// Apps implement this function when using SDL_MAIN_USE_CALLBACKS. If using a
+    /// standard "main" function, you should not supply this.
+    ///
+    /// This function is called as needed by SDL after SDL_AppInit returns 0; It is
+    /// called once for each new event.
+    ///
+    /// There is (currently) no guarantee about what thread this will be called
+    /// from; whatever thread pushes an event onto SDL's queue will trigger this
+    /// function. SDL is responsible for pumping the event queue between each call
+    /// to SDL_AppIterate, so in normal operation one should only get events in a
+    /// serial fashion, but be careful if you have a thread that explicitly calls
+    /// SDL_PushEvent.
+    ///
+    /// Events sent to this function are not owned by the app; if you need to save
+    /// the data, you should copy it.
+    ///
+    /// This function should not go into an infinite mainloop; it should handle the
+    /// provided event appropriately and return.
+    ///
+    /// The `appstate` parameter is an optional pointer provided by the app during
+    /// SDL_AppInit(). If the app never provided a pointer, this will be NULL.
+    ///
+    /// If this function returns SDL_APP_CONTINUE, the app will continue normal
+    /// operation, receiving repeated calls to SDL_AppIterate and SDL_AppEvent for
+    /// the life of the program. If this function returns SDL_APP_FAILURE, SDL will
+    /// call SDL_AppQuit and terminate the process with an exit code that reports
+    /// an error to the platform. If it returns SDL_APP_SUCCESS, SDL calls
+    /// SDL_AppQuit and terminates with an exit code that reports success to the
+    /// platform.
+    ///
+    /// - `appstate`: an optional pointer, provided by the app in SDL_AppInit.
+    /// - `event`: the new event for the app to examine.
+    /// - Returns SDL_APP_FAILURE to terminate with an error, SDL_APP_SUCCESS to
+    ///   terminate with success, SDL_APP_CONTINUE to continue.
+    ///
+    /// Thread safety: This function is not thread safe.
+    ///
+    /// This function is available since SDL 3.0.0.
+    ///
+    /// See also [`SDL_AppInit`]<br>
+    /// See also [`SDL_AppIterate`]<br>
+    pub fn SDL_AppEvent(appstate: *mut ::core::ffi::c_void, event: *mut SDL_Event)
+        -> SDL_AppResult;
+}
+
+extern "C" {
+    /// App-implemented deinit entry point for SDL_MAIN_USE_CALLBACKS apps.
+    ///
+    /// Apps implement this function when using SDL_MAIN_USE_CALLBACKS. If using a
+    /// standard "main" function, you should not supply this.
+    ///
+    /// This function is called once by SDL before terminating the program.
+    ///
+    /// This function will be called no matter what, even if SDL_AppInit requests
+    /// termination.
+    ///
+    /// This function should not go into an infinite mainloop; it should
+    /// deinitialize any resources necessary, perform whatever shutdown activities,
+    /// and return.
+    ///
+    /// You do not need to call SDL_Quit() in this function, as SDL will call it
+    /// after this function returns and before the process terminates, but it is
+    /// safe to do so.
+    ///
+    /// The `appstate` parameter is an optional pointer provided by the app during
+    /// SDL_AppInit(). If the app never provided a pointer, this will be NULL. This
+    /// function call is the last time this pointer will be provided, so any
+    /// resources to it should be cleaned up here.
+    ///
+    /// - `appstate`: an optional pointer, provided by the app in SDL_AppInit.
+    /// - `result`: the result code that terminated the app (success or failure).
+    ///
+    /// Thread safety: This function is not thread safe.
+    ///
+    /// This function is available since SDL 3.0.0.
+    ///
+    /// See also [`SDL_AppInit`]<br>
+    pub fn SDL_AppQuit(appstate: *mut ::core::ffi::c_void, result: SDL_AppResult);
+}
+
 /// The prototype for the application's main() function
 ///
 /// - `argc`: an ANSI-C style main function's argc.
