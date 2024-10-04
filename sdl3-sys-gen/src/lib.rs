@@ -273,17 +273,17 @@ impl Gen {
             path.push(module);
             path.set_extension("rs");
 
-            struct CompleteGuard<'a>(bool, String, &'a str);
+            struct CompleteGuard<'a>(bool, &'a Path, &'a str);
             impl Drop for CompleteGuard<'_> {
                 fn drop(&mut self) {
                     if !self.0 {
                         eprintln!("[sdl3-sys-gen] incomplete generated module `{}`", self.2);
-                        self.1
-                            .push_str("\n\ncompile_error!(\"incomplete generated file\");\n");
+                        fs::write(self.1, "compile_error!(\"incomplete generated file\");\n")
+                            .unwrap();
                     }
                 }
             }
-            let mut complete_guard = CompleteGuard(false, String::new(), module);
+            let mut complete_guard = CompleteGuard(false, &path, module);
 
             let mut output = String::new();
             let mut ctx = EmitContext::new(module, &mut output, self)?;
@@ -298,9 +298,6 @@ impl Gen {
             let emitted = ctx.into_inner();
 
             complete_guard.0 = true;
-            if !complete_guard.1.is_empty() {
-                output.push_str(&complete_guard.1);
-            }
 
             format_and_write(output, &path)?;
 
