@@ -236,21 +236,28 @@ extern "C" {
     /// The following read-only properties are provided by SDL:
     ///
     /// - `SDL_PROP_PROCESS_PID_NUMBER`: the process ID of the process.
-    /// - `SDL_PROP_PROCESS_STDIN_POINTER`: an [`SDL_IOStream`] that can be used to write input to the process, if it was created with `SDL_PROP_PROCESS_CREATE_STDIN_NUMBER` set to `SDL_PROCESS_STDIO_APP`.
-    /// - `SDL_PROP_PROCESS_STDOUT_POINTER`: a non-blocking [`SDL_IOStream`] that can be used to read output from the process, if it was created with `SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER` set to `SDL_PROCESS_STDIO_APP`.
-    /// - `SDL_PROP_PROCESS_STDERR_POINTER`: a non-blocking [`SDL_IOStream`] that can be used to read error output from the process, if it was created with `SDL_PROP_PROCESS_CREATE_STDERR_NUMBER` set to `SDL_PROCESS_STDIO_APP`.
-    /// - `SDL_PROP_PROCESS_BACKGROUND_BOOLEAN`: true if the process is running in the background.
+    /// - `SDL_PROP_PROCESS_STDIN_POINTER`: an [`SDL_IOStream`] that can be used to
+    ///   write input to the process, if it was created with
+    ///   `SDL_PROP_PROCESS_CREATE_STDIN_NUMBER` set to `SDL_PROCESS_STDIO_APP`.
+    /// - `SDL_PROP_PROCESS_STDOUT_POINTER`: a non-blocking [`SDL_IOStream`] that can
+    ///   be used to read output from the process, if it was created with
+    ///   `SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER` set to `SDL_PROCESS_STDIO_APP`.
+    /// - `SDL_PROP_PROCESS_STDERR_POINTER`: a non-blocking [`SDL_IOStream`] that can
+    ///   be used to read error output from the process, if it was created with
+    ///   `SDL_PROP_PROCESS_CREATE_STDERR_NUMBER` set to `SDL_PROCESS_STDIO_APP`.
+    /// - `SDL_PROP_PROCESS_BACKGROUND_BOOLEAN`: true if the process is running in
+    ///   the background.
     ///
     /// - `process`: the process to query.
     /// - Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// See also [`SDL_CreateProcess`]<br>
-    /// See also [`SDL_CreateProcessWithProperties`]<br>
-    ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
     /// This function is available since SDL 3.0.0.
+    ///
+    /// See also [`SDL_CreateProcess`]<br>
+    /// See also [`SDL_CreateProcessWithProperties`]<br>
     pub fn SDL_GetProcessProperties(process: *mut SDL_Process) -> SDL_PropertiesID;
 }
 

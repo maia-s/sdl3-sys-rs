@@ -22,7 +22,7 @@ pub const SDL_MINOR_VERSION: ::core::primitive::i32 = 1;
 /// If this were SDL version 3.2.1, this value would be 1.
 ///
 /// This macro is available since SDL 3.0.0.
-pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 2;
+pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 3;
 
 /// This macro turns the version numbers into a numeric value.
 ///

@@ -38,9 +38,9 @@ pub type SDL_TLSID = SDL_AtomicInt;
 ///
 /// SDL will make system changes as necessary in order to apply the thread
 /// priority. Code which attempts to control thread state related to priority
-/// should be aware that calling [`SDL_SetThreadPriority`] may alter such state.
-/// [`SDL_HINT_THREAD_PRIORITY_POLICY`] can be used to control aspects of this
-/// behavior.
+/// should be aware that calling [`SDL_SetCurrentThreadPriority`] may alter such
+/// state. [`SDL_HINT_THREAD_PRIORITY_POLICY`] can be used to control aspects of
+/// this behavior.
 ///
 /// This enum is available since SDL 3.0.0.
 ///
@@ -327,7 +327,7 @@ extern "C" {
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
-    pub fn SDL_SetThreadPriority(priority: SDL_ThreadPriority) -> ::core::primitive::bool;
+    pub fn SDL_SetCurrentThreadPriority(priority: SDL_ThreadPriority) -> ::core::primitive::bool;
 }
 
 extern "C" {

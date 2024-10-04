@@ -170,19 +170,19 @@ pub const SDL_BUTTON_X1: ::core::primitive::i32 = 4;
 pub const SDL_BUTTON_X2: ::core::primitive::i32 = 5;
 
 #[inline(always)]
-pub const fn SDL_BUTTON(X: ::core::primitive::i32) -> SDL_MouseButtonFlags {
+pub const fn SDL_BUTTON_MASK(X: ::core::primitive::i32) -> SDL_MouseButtonFlags {
     ((1_u32 << (X - 1_i32)) as SDL_MouseButtonFlags)
 }
 
-pub const SDL_BUTTON_LMASK: SDL_MouseButtonFlags = SDL_BUTTON(SDL_BUTTON_LEFT);
+pub const SDL_BUTTON_LMASK: SDL_MouseButtonFlags = SDL_BUTTON_MASK(SDL_BUTTON_LEFT);
 
-pub const SDL_BUTTON_MMASK: SDL_MouseButtonFlags = SDL_BUTTON(SDL_BUTTON_MIDDLE);
+pub const SDL_BUTTON_MMASK: SDL_MouseButtonFlags = SDL_BUTTON_MASK(SDL_BUTTON_MIDDLE);
 
-pub const SDL_BUTTON_RMASK: SDL_MouseButtonFlags = SDL_BUTTON(SDL_BUTTON_RIGHT);
+pub const SDL_BUTTON_RMASK: SDL_MouseButtonFlags = SDL_BUTTON_MASK(SDL_BUTTON_RIGHT);
 
-pub const SDL_BUTTON_X1MASK: SDL_MouseButtonFlags = SDL_BUTTON(SDL_BUTTON_X1);
+pub const SDL_BUTTON_X1MASK: SDL_MouseButtonFlags = SDL_BUTTON_MASK(SDL_BUTTON_X1);
 
-pub const SDL_BUTTON_X2MASK: SDL_MouseButtonFlags = SDL_BUTTON(SDL_BUTTON_X2);
+pub const SDL_BUTTON_X2MASK: SDL_MouseButtonFlags = SDL_BUTTON_MASK(SDL_BUTTON_X2);
 
 extern "C" {
     /// Return whether a mouse is currently connected.
@@ -244,7 +244,7 @@ extern "C" {
     /// Retrieve the current state of the mouse.
     ///
     /// The current button state is returned as a button bitmask, which can be
-    /// tested using the SDL_BUTTON(X) macro (where `X` is generally 1 for the
+    /// tested using the SDL_BUTTON_MASK(X) macro (where `X` is generally 1 for the
     /// left, 2 for middle, 3 for the right button), and `x` and `y` are set to the
     /// mouse cursor position relative to the focus window. You can pass NULL for
     /// either `x` or `y`.
@@ -286,7 +286,7 @@ extern "C" {
     /// - `y`: filled in with the current Y coord relative to the desktop; can be
     ///   NULL.
     /// - Returns the current button state as a bitmask which can be tested using
-    ///   the SDL_BUTTON(X) macros.
+    ///   the SDL_BUTTON_MASK(X) macros.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -302,10 +302,10 @@ extern "C" {
     /// Retrieve the relative state of the mouse.
     ///
     /// The current button state is returned as a button bitmask, which can be
-    /// tested using the `SDL_BUTTON(X)` macros (where `X` is generally 1 for the
-    /// left, 2 for middle, 3 for the right button), and `x` and `y` are set to the
-    /// mouse deltas since the last call to [`SDL_GetRelativeMouseState()`] or since
-    /// event initialization. You can pass NULL for either `x` or `y`.
+    /// tested using the `SDL_BUTTON_MASK(X)` macros (where `X` is generally 1 for
+    /// the left, 2 for middle, 3 for the right button), and `x` and `y` are set to
+    /// the mouse deltas since the last call to [`SDL_GetRelativeMouseState()`] or
+    /// since event initialization. You can pass NULL for either `x` or `y`.
     ///
     /// - `x`: a pointer filled with the last recorded x coordinate of the mouse.
     /// - `y`: a pointer filled with the last recorded y coordinate of the mouse.

@@ -139,7 +139,12 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
             (ver.to_string(), dep.to_string())
         } else if let Some(ver) = revision.strip_prefix("prerelease-") {
             let (ver, offset, hash, _) = vernum(ver);
-            let ver = format!("0.0.1-dev-{ver}-pre{offset}-{hash}");
+            let ver = format!("0.0.1-dev-{ver}-prerelease-{offset}-{hash}");
+            let dep = format!("={ver}");
+            (ver, dep)
+        } else if let Some(ver) = revision.strip_prefix("preview-") {
+            let (ver, offset, hash, _) = vernum(ver);
+            let ver = format!("0.0.1-dev-{ver}-preview-{offset}-{hash}");
             let dep = format!("={ver}");
             (ver, dep)
         } else {

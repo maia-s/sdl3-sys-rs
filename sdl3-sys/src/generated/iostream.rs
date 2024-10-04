@@ -317,6 +317,13 @@ extern "C" {
     /// buffer, you should use [`SDL_IOFromConstMem()`] with a read-only buffer of
     /// memory instead.
     ///
+    /// The following properties will be set at creation time by SDL:
+    ///
+    /// - `SDL_PROP_IOSTREAM_MEMORY_POINTER`: this will be the `mem` parameter that
+    ///   was passed to this function.
+    /// - `SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER`: this will be the `size` parameter
+    ///   that was passed to this function.
+    ///
     /// - `mem`: a pointer to a buffer to feed an [`SDL_IOStream`] stream.
     /// - `size`: the buffer size, in bytes.
     /// - Returns a pointer to a new [`SDL_IOStream`] structure or NULL on failure; call
@@ -337,6 +344,10 @@ extern "C" {
     ) -> *mut SDL_IOStream;
 }
 
+pub const SDL_PROP_IOSTREAM_MEMORY_POINTER: &::core::ffi::CStr = c"SDL.iostream.memory.base";
+
+pub const SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER: &::core::ffi::CStr = c"SDL.iostream.memory.size";
+
 extern "C" {
     /// Use this function to prepare a read-only memory buffer for use with
     /// [`SDL_IOStream`].
@@ -353,6 +364,13 @@ extern "C" {
     ///
     /// If you need to write to a memory buffer, you should use [`SDL_IOFromMem()`]
     /// with a writable buffer of memory instead.
+    ///
+    /// The following properties will be set at creation time by SDL:
+    ///
+    /// - `SDL_PROP_IOSTREAM_MEMORY_POINTER`: this will be the `mem` parameter that
+    ///   was passed to this function.
+    /// - `SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER`: this will be the `size` parameter
+    ///   that was passed to this function.
     ///
     /// - `mem`: a pointer to a read-only buffer to feed an [`SDL_IOStream`] stream.
     /// - `size`: the buffer size, in bytes.

@@ -1,4 +1,25 @@
-//! SDL video functions.
+//! SDL's video subsystem is largely interested in abstracting window
+//! management from the underlying operating system. You can create windows,
+//! manage them in various ways, set them fullscreen, and get events when
+//! interesting things happen with them, such as the mouse or keyboard
+//! interacting with a window.
+//!
+//! The video subsystem is also interested in abstracting away some
+//! platform-specific differences in OpenGL: context creation, swapping
+//! buffers, etc. This may be crucial to your app, but also you are not
+//! required to use OpenGL at all. In fact, SDL can provide rendering to those
+//! windows as well, either with an easy-to-use
+//! [2D API](https://wiki.libsdl.org/SDL3/CategoryRender)
+//! or with a more-powerful
+//! [GPU API](https://wiki.libsdl.org/SDL3/CategoryGPU)
+//! . Of course, it can simply get out of your way and give you the window
+//! handles you need to use Vulkan, Direct3D, Metal, or whatever else you like
+//! directly, too.
+//!
+//! The video subsystem covers a lot of functionality, out of necessity, so it
+//! is worth perusing the list of functions just to see what's available, but
+//! most apps can get by with simply creating a window and listening for
+//! events, so start with [`SDL_CreateWindow()`] and [`SDL_PollEvent()`].
 
 use super::stdinc::*;
 
@@ -317,15 +338,64 @@ pub type SDL_EGLAttrib = ::core::primitive::isize;
 
 pub type SDL_EGLint = ::core::ffi::c_int;
 
-/// EGL attribute initialization callback types.
+/// EGL platform attribute initialization callback.
+///
+/// This is called when SDL is attempting to create an EGL context, to let the
+/// app add extra attributes to its eglGetPlatformDisplay() call.
+///
+/// The callback should return a pointer to an EGL attribute array terminated
+/// with `EGL_NONE`. If this function returns NULL, the [`SDL_CreateWindow`]
+/// process will fail gracefully.
+///
+/// The returned pointer should be allocated with [`SDL_malloc()`] and will be
+/// passed to [`SDL_free()`].
+///
+/// The arrays returned by each callback will be appended to the existing
+/// attribute arrays defined by SDL.
+///
+/// - `userdata`: an app-controlled pointer that is passed to the callback.
+/// - Returns a newly-allocated array of attributes, terminated with `EGL_NONE`.
 ///
 /// This datatype is available since SDL 3.0.0.
+///
+/// See also [`SDL_EGL_SetAttributeCallbacks`]<br>
 pub type SDL_EGLAttribArrayCallback = ::core::option::Option<
     unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void) -> *mut SDL_EGLAttrib,
 >;
 
+/// EGL surface/context attribute initialization callback types.
+///
+/// This is called when SDL is attempting to create an EGL surface, to let the
+/// app add extra attributes to its eglCreateWindowSurface() or
+/// eglCreateContext calls.
+///
+/// For convenience, the EGLDisplay and EGLConfig to use are provided to the
+/// callback.
+///
+/// The callback should return a pointer to an EGL attribute array terminated
+/// with `EGL_NONE`. If this function returns NULL, the [`SDL_CreateWindow`]
+/// process will fail gracefully.
+///
+/// The returned pointer should be allocated with [`SDL_malloc()`] and will be
+/// passed to [`SDL_free()`].
+///
+/// The arrays returned by each callback will be appended to the existing
+/// attribute arrays defined by SDL.
+///
+/// - `userdata`: an app-controlled pointer that is passed to the callback.
+/// - `display`: the EGL display to be used.
+/// - `config`: the EGL config to be used.
+/// - Returns a newly-allocated array of attributes, terminated with `EGL_NONE`.
+///
+/// This datatype is available since SDL 3.0.0.
+///
+/// See also [`SDL_EGL_SetAttributeCallbacks`]<br>
 pub type SDL_EGLIntArrayCallback = ::core::option::Option<
-    unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void) -> *mut SDL_EGLint,
+    unsafe extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        display: SDL_EGLDisplay,
+        config: SDL_EGLConfig,
+    ) -> *mut SDL_EGLint,
 >;
 
 /// An enumeration of OpenGL configuration attributes.
@@ -3264,21 +3334,16 @@ extern "C" {
     /// Sets the callbacks for defining custom EGLAttrib arrays for EGL
     /// initialization.
     ///
-    /// Each callback should return a pointer to an EGL attribute array terminated
-    /// with EGL_NONE. Callbacks may return NULL pointers to signal an error, which
-    /// will cause the [`SDL_CreateWindow`] process to fail gracefully.
-    ///
-    /// The arrays returned by each callback will be appended to the existing
-    /// attribute arrays defined by SDL.
+    /// Callbacks that aren't needed can be set to NULL.
     ///
     /// NOTE: These callback pointers will be reset after [`SDL_GL_ResetAttributes`].
     ///
     /// - `platformAttribCallback`: callback for attributes to pass to
-    ///   eglGetPlatformDisplay.
+    ///   eglGetPlatformDisplay. May be NULL.
     /// - `surfaceAttribCallback`: callback for attributes to pass to
-    ///   eglCreateSurface.
+    ///   eglCreateSurface. May be NULL.
     /// - `contextAttribCallback`: callback for attributes to pass to
-    ///   eglCreateContext.
+    ///   eglCreateContext. May be NULL.
     /// - `userdata`: a pointer that is passed to the callbacks.
     ///
     /// This function is available since SDL 3.0.0.

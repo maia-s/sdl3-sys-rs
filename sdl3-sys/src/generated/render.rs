@@ -1703,6 +1703,13 @@ extern "C" {
 extern "C" {
     /// Get a point in render coordinates when given a point in window coordinates.
     ///
+    /// This takes into account several states:
+    ///
+    /// - The window dimensions.
+    /// - The logical presentation settings ([`SDL_SetRenderLogicalPresentation`])
+    /// - The scale ([`SDL_SetRenderScale`])
+    /// - The viewport ([`SDL_SetRenderViewport`])
+    ///
     /// - `renderer`: the rendering context.
     /// - `window_x`: the x coordinate in window coordinates.
     /// - `window_y`: the y coordinate in window coordinates.
@@ -1729,6 +1736,13 @@ extern "C" {
 extern "C" {
     /// Get a point in window coordinates when given a point in render coordinates.
     ///
+    /// This takes into account several states:
+    ///
+    /// - The window dimensions.
+    /// - The logical presentation settings ([`SDL_SetRenderLogicalPresentation`])
+    /// - The scale ([`SDL_SetRenderScale`])
+    /// - The viewport ([`SDL_SetRenderViewport`])
+    ///
     /// - `renderer`: the rendering context.
     /// - `x`: the x coordinate in render coordinates.
     /// - `y`: the y coordinate in render coordinates.
@@ -1745,6 +1759,7 @@ extern "C" {
     ///
     /// See also [`SDL_SetRenderLogicalPresentation`]<br>
     /// See also [`SDL_SetRenderScale`]<br>
+    /// See also [`SDL_SetRenderViewport`]<br>
     pub fn SDL_RenderCoordinatesToWindow(
         renderer: *mut SDL_Renderer,
         x: ::core::ffi::c_float,
@@ -1756,6 +1771,13 @@ extern "C" {
 
 extern "C" {
     /// Convert the coordinates in an event to render coordinates.
+    ///
+    /// This takes into account several states:
+    ///
+    /// - The window dimensions.
+    /// - The logical presentation settings ([`SDL_SetRenderLogicalPresentation`])
+    /// - The scale ([`SDL_SetRenderScale`])
+    /// - The viewport ([`SDL_SetRenderViewport`])
     ///
     /// Touch coordinates are converted from normalized coordinates in the window
     /// to non-normalized rendering coordinates.

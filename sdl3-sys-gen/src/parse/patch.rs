@@ -50,7 +50,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
     },
     DefinePatch {
         module: Some("mouse"),
-        match_ident: |i| matches!(i, "SDL_BUTTON"),
+        match_ident: |i| matches!(i, "SDL_BUTTON_MASK"),
         patch: |_ctx, define| {
             define.value = define
                 .value
