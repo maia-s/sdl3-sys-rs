@@ -209,7 +209,49 @@ impl DocComment {
     fn emit_rust(&self, ctx: &mut EmitContext, pfx: &str) -> EmitResult {
         let lines = self.to_string();
         let mut lines = lines.lines().peekable();
+
+        fn insert_links(line: &str) -> Result<String, EmitErr> {
+            let mut patched = String::new();
+            let mut i0 = 0;
+            let mut quoted = 0;
+            for (i, _) in line.match_indices("SDL_") {
+                write!(patched, "{}", &line[i0..i])?;
+                quoted += line[i0..i].chars().filter(|c| *c == '`').count();
+                if (quoted & 1 == 0)
+                    && (i == 0
+                        || line.as_bytes()[i - 1].is_ascii_whitespace()
+                        || matches!(line.as_bytes()[i - 1], b'('))
+                {
+                    let end = i + line[i..]
+                        .find(|c: char| !c.is_ascii_alphanumeric() && c != '_')
+                        .unwrap_or(line.len() - i);
+                    if line.len() == end
+                        || line.as_bytes()[end].is_ascii_whitespace()
+                        || matches!(line.as_bytes()[end], b')' | b',' | b'.')
+                        || (line.as_bytes()[end] == b'('
+                            && line.as_bytes().get(end + 1).copied() == Some(b')'))
+                    {
+                        i0 = end;
+                        if line.as_bytes().get(i0).copied() == Some(b'(')
+                            && line.as_bytes().get(i0 + 1).copied() == Some(b')')
+                        {
+                            i0 += 2;
+                        }
+                        write!(patched, "[`{}`]", &line[i..i0])?;
+                    } else {
+                        i0 = i;
+                    }
+                } else {
+                    i0 = i
+                };
+            }
+            write!(patched, "{}", &line[i0..])?;
+            Ok(patched)
+        }
+
         'lines: while let Some(line) = lines.next() {
+            let line = insert_links(line)?;
+
             if line.is_empty() {
                 writeln!(ctx, "{pfx}")?;
                 continue;
@@ -222,7 +264,7 @@ impl DocComment {
                 let mut emit_block = |ctx: &mut EmitContext, plen| -> EmitResult {
                     let bpfx = " ".repeat(plen);
                     while let Some(line) = lines.peek().and_then(|s| s.strip_prefix(&bpfx)) {
-                        writeln!(ctx, "{pfx}   {line}")?;
+                        writeln!(ctx, "{pfx}   {}", insert_links(line)?)?;
                         lines.next();
                     }
                     Ok(())
@@ -238,7 +280,7 @@ impl DocComment {
                         writeln!(ctx, "{pfx} - Returns {rest}")?;
                         emit_block(ctx, line.len() - rest.len())?;
                     }
-                    "sa" => writeln!(ctx, "{pfx} See also [`{}`]<br>", rest.trim())?,
+                    "sa" => writeln!(ctx, "{pfx} See also {}<br>", rest.trim())?,
                     "since" => writeln!(ctx, "{pfx} {rest}")?,
                     "threadsafety" => {
                         writeln!(ctx, "{pfx} Thread safety: {rest}")?;

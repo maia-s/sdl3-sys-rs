@@ -100,11 +100,11 @@ extern "C" {
     /// formats can change, usually because the user has changed a system
     /// preference outside of your program.
     ///
-    /// - `dateFormat`: a pointer to the SDL_DateFormat to hold the returned date
+    /// - `dateFormat`: a pointer to the [`SDL_DateFormat`] to hold the returned date
     ///   format, may be NULL.
-    /// - `timeFormat`: a pointer to the SDL_TimeFormat to hold the returned time
+    /// - `timeFormat`: a pointer to the [`SDL_TimeFormat`] to hold the returned time
     ///   format, may be NULL.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -118,8 +118,8 @@ extern "C" {
     /// Gets the current value of the system realtime clock in nanoseconds since
     /// Jan 1, 1970 in Universal Coordinated Time (UTC).
     ///
-    /// - `ticks`: the SDL_Time to hold the returned tick count.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `ticks`: the [`SDL_Time`] to hold the returned tick count.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -127,15 +127,15 @@ extern "C" {
 }
 
 extern "C" {
-    /// Converts an SDL_Time in nanoseconds since the epoch to a calendar time in
-    /// the SDL_DateTime format.
+    /// Converts an [`SDL_Time`] in nanoseconds since the epoch to a calendar time in
+    /// the [`SDL_DateTime`] format.
     ///
-    /// - `ticks`: the SDL_Time to be converted.
-    /// - `dt`: the resulting SDL_DateTime.
-    /// - `localTime`: the resulting SDL_DateTime will be expressed in local time
+    /// - `ticks`: the [`SDL_Time`] to be converted.
+    /// - `dt`: the resulting [`SDL_DateTime`].
+    /// - `localTime`: the resulting [`SDL_DateTime`] will be expressed in local time
     ///   if true, otherwise it will be in Universal Coordinated
     ///   Time (UTC).
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -147,14 +147,14 @@ extern "C" {
 }
 
 extern "C" {
-    /// Converts a calendar time to an SDL_Time in nanoseconds since the epoch.
+    /// Converts a calendar time to an [`SDL_Time`] in nanoseconds since the epoch.
     ///
-    /// This function ignores the day_of_week member of the SDL_DateTime struct, so
+    /// This function ignores the day_of_week member of the [`SDL_DateTime`] struct, so
     /// it may remain unset.
     ///
-    /// - `dt`: the source SDL_DateTime.
-    /// - `ticks`: the resulting SDL_Time.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `dt`: the source [`SDL_DateTime`].
+    /// - `ticks`: the resulting [`SDL_Time`].
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -205,7 +205,7 @@ extern "C" {
     /// - `year`: the year.
     /// - `month`: the month [1-12].
     /// - Returns the number of days in the requested month or -1 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetDaysInMonth(
@@ -221,7 +221,7 @@ extern "C" {
     /// - `month`: the month component of the date.
     /// - `day`: the day component of the date.
     /// - Returns the day of year [0-365] if the date is valid or -1 on failure;
-    ///   call SDL_GetError() for more information.
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetDayOfYear(
@@ -238,7 +238,7 @@ extern "C" {
     /// - `month`: the month component of the date.
     /// - `day`: the day component of the date.
     /// - Returns a value between 0 and 6 (0 being Sunday) if the date is valid or
-    ///   -1 on failure; call SDL_GetError() for more information.
+    ///   -1 on failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetDayOfWeek(

@@ -3,7 +3,7 @@
 
 use super::stdinc::*;
 
-/// An SDL_GUID is a 128-bit identifier for an input device that identifies
+/// An [`SDL_GUID`] is a 128-bit identifier for an input device that identifies
 /// that device across runs of SDL programs on the same platform.
 ///
 /// If the device is detached and then re-attached to a different port, or if
@@ -26,9 +26,9 @@ pub struct SDL_GUID {
 }
 
 extern "C" {
-    /// Get an ASCII string representation for a given SDL_GUID.
+    /// Get an ASCII string representation for a given [`SDL_GUID`].
     ///
-    /// - `guid`: the SDL_GUID you wish to convert to string.
+    /// - `guid`: the [`SDL_GUID`] you wish to convert to string.
     /// - `pszGUID`: buffer in which to write the ASCII string.
     /// - `cbGUID`: the size of pszGUID, should be at least 33 bytes.
     ///
@@ -43,14 +43,14 @@ extern "C" {
 }
 
 extern "C" {
-    /// Convert a GUID string into a SDL_GUID structure.
+    /// Convert a GUID string into a [`SDL_GUID`] structure.
     ///
     /// Performs no error checking. If this function is given a string containing
     /// an invalid GUID, the function will silently succeed, but the GUID generated
     /// will not be useful.
     ///
     /// - `pchGUID`: string containing an ASCII representation of a GUID.
-    /// - Returns a SDL_GUID structure.
+    /// - Returns a [`SDL_GUID`] structure.
     ///
     /// This function is available since SDL 3.0.0.
     ///

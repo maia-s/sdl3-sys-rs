@@ -2,8 +2,8 @@
 //!
 //! This API lets apps read input from video sources, like webcams. Camera
 //! devices can be enumerated, queried, and opened. Once opened, it will
-//! provide SDL_Surface objects as new frames of video come in. These surfaces
-//! can be uploaded to an SDL_Texture or processed as pixels in memory.
+//! provide [`SDL_Surface`] objects as new frames of video come in. These surfaces
+//! can be uploaded to an [`SDL_Texture`] or processed as pixels in memory.
 
 use super::stdinc::*;
 
@@ -115,7 +115,7 @@ extern "C" {
     /// meant to be proper names.
     ///
     /// - `index`: the index of the camera driver; the value ranges from 0 to
-    ///   SDL_GetNumCameraDrivers() - 1.
+    ///   [`SDL_GetNumCameraDrivers()`] - 1.
     /// - Returns the name of the camera driver at the requested index, or NULL if
     ///   an invalid index was specified.
     ///
@@ -149,8 +149,8 @@ extern "C" {
     /// - `count`: a pointer filled in with the number of cameras returned, may
     ///   be NULL.
     /// - Returns a 0 terminated array of camera instance IDs or NULL on failure;
-    ///   call SDL_GetError() for more information. This should be freed
-    ///   with SDL_free() when it is no longer needed.
+    ///   call [`SDL_GetError()`] for more information. This should be freed
+    ///   with [`SDL_free()`] when it is no longer needed.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -168,7 +168,7 @@ extern "C" {
     /// and sizes and so want to find the optimal spec that doesn't require
     /// conversion.
     ///
-    /// This function isn't strictly required; if you call SDL_OpenCamera with a
+    /// This function isn't strictly required; if you call [`SDL_OpenCamera`] with a
     /// NULL spec, SDL will choose a native format for you, and if you instead
     /// specify a desired format, it will transparently convert to the requested
     /// format on your behalf.
@@ -185,9 +185,9 @@ extern "C" {
     /// - `devid`: the camera device instance ID to query.
     /// - `count`: a pointer filled in with the number of elements in the list,
     ///   may be NULL.
-    /// - Returns a NULL terminated array of pointers to SDL_CameraSpec or NULL on
-    ///   failure; call SDL_GetError() for more information. This is a
-    ///   single allocation that should be freed with SDL_free() when it is
+    /// - Returns a NULL terminated array of pointers to [`SDL_CameraSpec`] or NULL on
+    ///   failure; call [`SDL_GetError()`] for more information. This is a
+    ///   single allocation that should be freed with [`SDL_free()`] when it is
     ///   no longer needed.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -207,7 +207,7 @@ extern "C" {
     ///
     /// - `instance_id`: the camera device instance ID.
     /// - Returns a human-readable device name or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -247,13 +247,13 @@ extern "C" {
     /// a NULL spec here and it will choose one for you (and you can use
     /// SDL_Surface's conversion/scaling functions directly if necessary).
     ///
-    /// You can call SDL_GetCameraFormat() to get the actual data format if passing
+    /// You can call [`SDL_GetCameraFormat()`] to get the actual data format if passing
     /// a NULL spec here. You can see the exact specs a device can support without
-    /// conversion with SDL_GetCameraSupportedSpecs().
+    /// conversion with [`SDL_GetCameraSupportedSpecs()`].
     ///
     /// SDL will not attempt to emulate framerate; it will try to set the hardware
     /// to the rate closest to the requested speed, but it won't attempt to limit
-    /// or duplicate frames artificially; call SDL_GetCameraFormat() to see the
+    /// or duplicate frames artificially; call [`SDL_GetCameraFormat()`] to see the
     /// actual framerate of the opened the device, and check your timestamps if
     /// this is crucial to your app!
     ///
@@ -261,8 +261,8 @@ extern "C" {
     /// platforms, the operating system will prompt the user to permit access to
     /// the camera, and they can choose Yes or No at that point. Until they do, the
     /// camera will not be usable. The app should either wait for an
-    /// SDL_EVENT_CAMERA_DEVICE_APPROVED (or SDL_EVENT_CAMERA_DEVICE_DENIED) event,
-    /// or poll SDL_IsCameraApproved() occasionally until it returns non-zero. On
+    /// [`SDL_EVENT_CAMERA_DEVICE_APPROVED`] (or [`SDL_EVENT_CAMERA_DEVICE_DENIED`]) event,
+    /// or poll [`SDL_IsCameraApproved()`] occasionally until it returns non-zero. On
     /// platforms that don't require explicit user approval (and perhaps in places
     /// where the user previously permitted access), the approval event might come
     /// immediately, but it might come seconds, minutes, or hours later!
@@ -270,7 +270,7 @@ extern "C" {
     /// - `instance_id`: the camera device instance ID.
     /// - `spec`: the desired format for data the device will provide. Can be
     ///   NULL.
-    /// - Returns an SDL_Camera object or NULL on failure; call SDL_GetError() for
+    /// - Returns an [`SDL_Camera`] object or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -298,12 +298,12 @@ extern "C" {
     /// for use, and -1 if the user denied access.
     ///
     /// Instead of polling with this function, you can wait for a
-    /// SDL_EVENT_CAMERA_DEVICE_APPROVED (or SDL_EVENT_CAMERA_DEVICE_DENIED) event
+    /// [`SDL_EVENT_CAMERA_DEVICE_APPROVED`] (or [`SDL_EVENT_CAMERA_DEVICE_DENIED`]) event
     /// in the standard SDL event loop, which is guaranteed to be sent once when
     /// permission to use the camera is decided.
     ///
     /// If a camera is declined, there's nothing to be done but call
-    /// SDL_CloseCamera() to dispose of it.
+    /// [`SDL_CloseCamera()`] to dispose of it.
     ///
     /// - `camera`: the opened camera device to query.
     /// - Returns -1 if user denied access to the camera, 1 if user approved access,
@@ -321,9 +321,9 @@ extern "C" {
 extern "C" {
     /// Get the instance ID of an opened camera.
     ///
-    /// - `camera`: an SDL_Camera to query.
+    /// - `camera`: an [`SDL_Camera`] to query.
     /// - Returns the instance ID of the specified camera on success or 0 on
-    ///   failure; call SDL_GetError() for more information.
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -336,9 +336,9 @@ extern "C" {
 extern "C" {
     /// Get the properties associated with an opened camera.
     ///
-    /// - `camera`: the SDL_Camera obtained from SDL_OpenCamera().
+    /// - `camera`: the [`SDL_Camera`] obtained from [`SDL_OpenCamera()`].
     /// - Returns a valid property ID on success or 0 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -355,12 +355,12 @@ extern "C" {
     /// If the system is waiting for the user to approve access to the camera, as
     /// some platforms require, this will return false, but this isn't necessarily
     /// a fatal error; you should either wait for an
-    /// SDL_EVENT_CAMERA_DEVICE_APPROVED (or SDL_EVENT_CAMERA_DEVICE_DENIED) event,
-    /// or poll SDL_IsCameraApproved() occasionally until it returns non-zero.
+    /// [`SDL_EVENT_CAMERA_DEVICE_APPROVED`] (or [`SDL_EVENT_CAMERA_DEVICE_DENIED`]) event,
+    /// or poll [`SDL_IsCameraApproved()`] occasionally until it returns non-zero.
     ///
     /// - `camera`: opened camera device.
-    /// - `spec`: the SDL_CameraSpec to be initialized by this function.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `spec`: the [`SDL_CameraSpec`] to be initialized by this function.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -388,19 +388,19 @@ extern "C" {
     /// even if a camera device fails outright (a USB camera is unplugged while in
     /// use, etc), SDL will send an event separately to notify the app, but
     /// continue to provide blank frames at ongoing intervals until
-    /// SDL_CloseCamera() is called, so real failure here is almost always an out
+    /// [`SDL_CloseCamera()`] is called, so real failure here is almost always an out
     /// of memory condition.
     ///
-    /// After use, the frame should be released with SDL_ReleaseCameraFrame(). If
+    /// After use, the frame should be released with [`SDL_ReleaseCameraFrame()`]. If
     /// you don't do this, the system may stop providing more video!
     ///
-    /// Do not call SDL_FreeSurface() on the returned surface! It must be given
+    /// Do not call [`SDL_FreeSurface()`] on the returned surface! It must be given
     /// back to the camera subsystem with SDL_ReleaseCameraFrame!
     ///
     /// If the system is waiting for the user to approve access to the camera, as
     /// some platforms require, this will return NULL (no frames available); you
-    /// should either wait for an SDL_EVENT_CAMERA_DEVICE_APPROVED (or
-    /// SDL_EVENT_CAMERA_DEVICE_DENIED) event, or poll SDL_IsCameraApproved()
+    /// should either wait for an [`SDL_EVENT_CAMERA_DEVICE_APPROVED`] (or
+    /// [`SDL_EVENT_CAMERA_DEVICE_DENIED`]) event, or poll [`SDL_IsCameraApproved()`]
     /// occasionally until it returns non-zero.
     ///
     /// - `camera`: opened camera device.
@@ -426,7 +426,7 @@ extern "C" {
     /// Let the back-end re-use the internal buffer for camera.
     ///
     /// This function _must_ be called only on surface objects returned by
-    /// SDL_AcquireCameraFrame(). This function should be called as quickly as
+    /// [`SDL_AcquireCameraFrame()`]. This function should be called as quickly as
     /// possible after acquisition, as SDL keeps a small FIFO queue of surfaces for
     /// video frames; if surfaces aren't released in a timely manner, SDL may drop
     /// upcoming video frames from the camera.

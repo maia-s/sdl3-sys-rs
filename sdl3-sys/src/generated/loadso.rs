@@ -3,9 +3,9 @@
 //! Shared objects are code that is programmatically loadable at runtime.
 //! Windows calls these "DLLs", Linux calls them "shared libraries", etc.
 //!
-//! To use them, build such a library, then call SDL_LoadObject() on it. Once
-//! loaded, you can use SDL_LoadFunction() on that object to find the address
-//! of its exported symbols. When done with the object, call SDL_UnloadObject()
+//! To use them, build such a library, then call [`SDL_LoadObject()`] on it. Once
+//! loaded, you can use [`SDL_LoadFunction()`] on that object to find the address
+//! of its exported symbols. When done with the object, call [`SDL_UnloadObject()`]
 //! to dispose of it.
 //!
 //! Some things to keep in mind:
@@ -30,7 +30,7 @@ extern "C" {
     ///
     /// - `sofile`: a system-dependent name of the object file.
     /// - Returns an opaque pointer to the object handle or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -44,7 +44,7 @@ extern "C" {
 extern "C" {
     /// Look up the address of the named function in a shared object.
     ///
-    /// This function pointer is no longer valid after calling SDL_UnloadObject().
+    /// This function pointer is no longer valid after calling [`SDL_UnloadObject()`].
     ///
     /// This function can only look up C function names. Other languages may have
     /// name mangling and intrinsic language support that varies from compiler to
@@ -56,9 +56,9 @@ extern "C" {
     ///
     /// If the requested function doesn't exist, NULL is returned.
     ///
-    /// - `handle`: a valid shared object handle returned by SDL_LoadObject().
+    /// - `handle`: a valid shared object handle returned by [`SDL_LoadObject()`].
     /// - `name`: the name of the function to look up.
-    /// - Returns a pointer to the function or NULL on failure; call SDL_GetError()
+    /// - Returns a pointer to the function or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -76,9 +76,9 @@ extern "C" {
     /// Unload a shared object from memory.
     ///
     /// Note that any pointers from this object looked up through
-    /// SDL_LoadFunction() will no longer be valid.
+    /// [`SDL_LoadFunction()`] will no longer be valid.
     ///
-    /// - `handle`: a valid shared object handle returned by SDL_LoadObject().
+    /// - `handle`: a valid shared object handle returned by [`SDL_LoadObject()`].
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///

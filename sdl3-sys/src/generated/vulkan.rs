@@ -55,7 +55,7 @@ extern "C" {
     ///
     /// If you specify a non-NULL `path`, an application should retrieve all of the
     /// Vulkan functions it uses from the dynamic library using
-    /// SDL_Vulkan_GetVkGetInstanceProcAddr unless you can guarantee `path` points
+    /// [`SDL_Vulkan_GetVkGetInstanceProcAddr`] unless you can guarantee `path` points
     /// to the same vulkan loader library the application linked to.
     ///
     /// On Apple devices, if `path` is NULL, SDL will attempt to find the
@@ -74,7 +74,7 @@ extern "C" {
     /// library version.
     ///
     /// - `path`: the platform dependent Vulkan loader library name or NULL.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -87,8 +87,8 @@ extern "C" {
 extern "C" {
     /// Get the address of the `vkGetInstanceProcAddr` function.
     ///
-    /// This should be called after either calling SDL_Vulkan_LoadLibrary() or
-    /// creating an SDL_Window with the `SDL_WINDOW_VULKAN` flag.
+    /// This should be called after either calling [`SDL_Vulkan_LoadLibrary()`] or
+    /// creating an [`SDL_Window`] with the `SDL_WINDOW_VULKAN` flag.
     ///
     /// The actual type of the returned function pointer is
     /// PFN_vkGetInstanceProcAddr, but that isn't available because the Vulkan
@@ -99,14 +99,14 @@ extern "C" {
     /// (PFN_vkGetInstanceProcAddr)SDL_Vulkan_GetVkGetInstanceProcAddr();`
     ///
     /// - Returns the function pointer for `vkGetInstanceProcAddr` or NULL on
-    ///   failure; call SDL_GetError() for more information.
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_Vulkan_GetVkGetInstanceProcAddr() -> SDL_FunctionPointer;
 }
 
 extern "C" {
-    /// Unload the Vulkan library previously loaded by SDL_Vulkan_LoadLibrary().
+    /// Unload the Vulkan library previously loaded by [`SDL_Vulkan_LoadLibrary()`].
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -117,8 +117,8 @@ extern "C" {
 extern "C" {
     /// Get the Vulkan instance extensions needed for vkCreateInstance.
     ///
-    /// This should be called after either calling SDL_Vulkan_LoadLibrary() or
-    /// creating an SDL_Window with the `SDL_WINDOW_VULKAN` flag.
+    /// This should be called after either calling [`SDL_Vulkan_LoadLibrary()`] or
+    /// creating an [`SDL_Window`] with the `SDL_WINDOW_VULKAN` flag.
     ///
     /// On return, the variable pointed to by `count` will be set to the number of
     /// elements returned, suitable for using with
@@ -130,7 +130,7 @@ extern "C" {
     ///
     /// - `count`: a pointer filled in with the number of extensions returned.
     /// - Returns an array of extension name strings on success, NULL on failure;
-    ///   call SDL_GetError() for more information.
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -145,7 +145,7 @@ extern "C" {
     ///
     /// The `window` must have been created with the `SDL_WINDOW_VULKAN` flag and
     /// `instance` must have been created with extensions returned by
-    /// SDL_Vulkan_GetInstanceExtensions() enabled.
+    /// [`SDL_Vulkan_GetInstanceExtensions()`] enabled.
     ///
     /// If `allocator` is NULL, Vulkan will use the system default allocator. This
     /// argument is passed directly to Vulkan and isn't used by SDL itself.
@@ -156,7 +156,7 @@ extern "C" {
     ///   allocator that creates the surface. Can be NULL.
     /// - `surface`: a pointer to a VkSurfaceKHR handle to output the newly
     ///   created surface.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -174,12 +174,12 @@ extern "C" {
 extern "C" {
     /// Destroy the Vulkan rendering surface of a window.
     ///
-    /// This should be called before SDL_DestroyWindow, if SDL_Vulkan_CreateSurface
-    /// was called after SDL_CreateWindow.
+    /// This should be called before [`SDL_DestroyWindow`], if [`SDL_Vulkan_CreateSurface`]
+    /// was called after [`SDL_CreateWindow`].
     ///
     /// The `instance` must have been created with extensions returned by
-    /// SDL_Vulkan_GetInstanceExtensions() enabled and `surface` must have been
-    /// created successfully by an SDL_Vulkan_CreateSurface() call.
+    /// [`SDL_Vulkan_GetInstanceExtensions()`] enabled and `surface` must have been
+    /// created successfully by an [`SDL_Vulkan_CreateSurface()`] call.
     ///
     /// If `allocator` is NULL, Vulkan will use the system default allocator. This
     /// argument is passed directly to Vulkan and isn't used by SDL itself.
@@ -205,7 +205,7 @@ extern "C" {
     /// family.
     ///
     /// The `instance` must have been created with extensions returned by
-    /// SDL_Vulkan_GetInstanceExtensions() enabled.
+    /// [`SDL_Vulkan_GetInstanceExtensions()`] enabled.
     ///
     /// - `instance`: the Vulkan instance handle.
     /// - `physicalDevice`: a valid Vulkan physical device handle.

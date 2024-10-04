@@ -43,13 +43,13 @@ extern "C" {
     /// Retrieve a message about the last error that occurred on the current
     /// thread.
     ///
-    /// It is possible for multiple errors to occur before calling SDL_GetError().
+    /// It is possible for multiple errors to occur before calling [`SDL_GetError()`].
     /// Only the last error is returned.
     ///
     /// The message is only applicable when an SDL function has signaled an error.
     /// You must check the return values of SDL function calls to determine when to
-    /// appropriately call SDL_GetError(). You should *not* use the results of
-    /// SDL_GetError() to decide if an error has occurred! Sometimes SDL will set
+    /// appropriately call [`SDL_GetError()`]. You should *not* use the results of
+    /// [`SDL_GetError()`] to decide if an error has occurred! Sometimes SDL will set
     /// an error string even when reporting success.
     ///
     /// SDL will *not* clear the error string for successful API calls. You *must*
@@ -65,7 +65,7 @@ extern "C" {
     ///
     /// - Returns a message with information about the specific error that occurred,
     ///   or an empty string if there hasn't been an error message set since
-    ///   the last call to SDL_ClearError().
+    ///   the last call to [`SDL_ClearError()`].
     ///
     /// This function is available since SDL 3.0.0.
     ///

@@ -178,7 +178,7 @@ extern "C" {
 extern "C" {
     /// Insert a memory acquire barrier.
     ///
-    /// Please refer to SDL_MemoryBarrierReleaseFunction for the details!
+    /// Please refer to [`SDL_MemoryBarrierReleaseFunction`] for the details!
     ///
     /// Thread safety: Obviously this function is safe to use from any thread at any
     ///   time, but if you find yourself needing this, you are probably
@@ -260,8 +260,8 @@ emit! {
 ///
 /// This can be used to manage a value that is synchronized across multiple
 /// CPUs without a race condition; when an app sets a value with
-/// SDL_SetAtomicInt all other threads, regardless of the CPU it is running on,
-/// will see that value when retrieved with SDL_GetAtomicInt, regardless of CPU
+/// [`SDL_SetAtomicInt`] all other threads, regardless of the CPU it is running on,
+/// will see that value when retrieved with [`SDL_GetAtomicInt`], regardless of CPU
 /// caches, etc.
 ///
 /// This is also useful for atomic compare-and-swap operations: a thread can
@@ -294,7 +294,7 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// - `a`: a pointer to an SDL_AtomicInt variable to be modified.
+    /// - `a`: a pointer to an [`SDL_AtomicInt`] variable to be modified.
     /// - `oldval`: the old value.
     /// - `newval`: the new value.
     /// - Returns true if the atomic variable was set, false otherwise.
@@ -320,7 +320,7 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// - `a`: a pointer to an SDL_AtomicInt variable to be modified.
+    /// - `a`: a pointer to an [`SDL_AtomicInt`] variable to be modified.
     /// - `v`: the desired value.
     /// - Returns the previous value of the atomic variable.
     ///
@@ -338,7 +338,7 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// - `a`: a pointer to an SDL_AtomicInt variable.
+    /// - `a`: a pointer to an [`SDL_AtomicInt`] variable.
     /// - Returns the current value of an atomic variable.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -357,7 +357,7 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// - `a`: a pointer to an SDL_AtomicInt variable to be modified.
+    /// - `a`: a pointer to an [`SDL_AtomicInt`] variable to be modified.
     /// - `v`: the desired value to add.
     /// - Returns the previous value of the atomic variable.
     ///
@@ -374,7 +374,7 @@ extern "C" {
 ///
 /// ***Note: If you don't know what this macro is for, you shouldn't use it!***
 ///
-/// - `a`: a pointer to an SDL_AtomicInt to increment.
+/// - `a`: a pointer to an [`SDL_AtomicInt`] to increment.
 /// - Returns the previous value of the atomic variable.
 ///
 /// This macro is available since SDL 3.0.0.
@@ -389,7 +389,7 @@ pub unsafe fn SDL_AtomicIncRef(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int {
 ///
 /// ***Note: If you don't know what this macro is for, you shouldn't use it!***
 ///
-/// - `a`: a pointer to an SDL_AtomicInt to increment.
+/// - `a`: a pointer to an [`SDL_AtomicInt`] to increment.
 /// - Returns true if the variable reached zero after decrementing, false
 ///   otherwise.
 ///
@@ -405,8 +405,8 @@ pub unsafe fn SDL_AtomicDecRef(a: *mut SDL_AtomicInt) -> ::core::primitive::bool
 ///
 /// This can be used to manage a value that is synchronized across multiple
 /// CPUs without a race condition; when an app sets a value with
-/// SDL_SetAtomicU32 all other threads, regardless of the CPU it is running on,
-/// will see that value when retrieved with SDL_GetAtomicU32, regardless of CPU
+/// [`SDL_SetAtomicU32`] all other threads, regardless of the CPU it is running on,
+/// will see that value when retrieved with [`SDL_GetAtomicU32`], regardless of CPU
 /// caches, etc.
 ///
 /// This is also useful for atomic compare-and-swap operations: a thread can
@@ -439,7 +439,7 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// - `a`: a pointer to an SDL_AtomicU32 variable to be modified.
+    /// - `a`: a pointer to an [`SDL_AtomicU32`] variable to be modified.
     /// - `oldval`: the old value.
     /// - `newval`: the new value.
     /// - Returns true if the atomic variable was set, false otherwise.
@@ -465,7 +465,7 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// - `a`: a pointer to an SDL_AtomicU32 variable to be modified.
+    /// - `a`: a pointer to an [`SDL_AtomicU32`] variable to be modified.
     /// - `v`: the desired value.
     /// - Returns the previous value of the atomic variable.
     ///
@@ -483,7 +483,7 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// - `a`: a pointer to an SDL_AtomicU32 variable.
+    /// - `a`: a pointer to an [`SDL_AtomicU32`] variable.
     /// - Returns the current value of an atomic variable.
     ///
     /// Thread safety: It is safe to call this function from any thread.

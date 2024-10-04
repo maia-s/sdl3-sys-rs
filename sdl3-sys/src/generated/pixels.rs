@@ -663,7 +663,7 @@ impl SDL_ColorPrimaries {
     pub const BT470BG: Self = Self(5);
     /// ITU-R BT.601-7 525, SMPTE 170M
     pub const BT601: Self = Self(6);
-    /// SMPTE 240M, functionally the same as SDL_COLOR_PRIMARIES_BT601
+    /// SMPTE 240M, functionally the same as [`SDL_COLOR_PRIMARIES_BT601`]
     pub const SMPTE240: Self = Self(7);
     /// Generic film (color filters using Illuminant C)
     pub const GENERIC_FILM: Self = Self(8);
@@ -689,7 +689,7 @@ pub const SDL_COLOR_PRIMARIES_BT470M: SDL_ColorPrimaries = SDL_ColorPrimaries::B
 pub const SDL_COLOR_PRIMARIES_BT470BG: SDL_ColorPrimaries = SDL_ColorPrimaries::BT470BG;
 /// ITU-R BT.601-7 525, SMPTE 170M
 pub const SDL_COLOR_PRIMARIES_BT601: SDL_ColorPrimaries = SDL_ColorPrimaries::BT601;
-/// SMPTE 240M, functionally the same as SDL_COLOR_PRIMARIES_BT601
+/// SMPTE 240M, functionally the same as [`SDL_COLOR_PRIMARIES_BT601`]
 pub const SDL_COLOR_PRIMARIES_SMPTE240: SDL_ColorPrimaries = SDL_ColorPrimaries::SMPTE240;
 /// Generic film (color filters using Illuminant C)
 pub const SDL_COLOR_PRIMARIES_GENERIC_FILM: SDL_ColorPrimaries = SDL_ColorPrimaries::GENERIC_FILM;
@@ -832,7 +832,7 @@ impl SDL_MatrixCoefficients {
     pub const UNSPECIFIED: Self = Self(2);
     /// US FCC Title 47
     pub const FCC: Self = Self(4);
-    /// ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as SDL_MATRIX_COEFFICIENTS_BT601
+    /// ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as [`SDL_MATRIX_COEFFICIENTS_BT601`]
     pub const BT470BG: Self = Self(5);
     /// ITU-R BT.601-7 525
     pub const BT601: Self = Self(6);
@@ -859,7 +859,7 @@ pub const SDL_MATRIX_COEFFICIENTS_UNSPECIFIED: SDL_MatrixCoefficients =
     SDL_MatrixCoefficients::UNSPECIFIED;
 /// US FCC Title 47
 pub const SDL_MATRIX_COEFFICIENTS_FCC: SDL_MatrixCoefficients = SDL_MatrixCoefficients::FCC;
-/// ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as SDL_MATRIX_COEFFICIENTS_BT601
+/// ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as [`SDL_MATRIX_COEFFICIENTS_BT601`]
 pub const SDL_MATRIX_COEFFICIENTS_BT470BG: SDL_MatrixCoefficients = SDL_MatrixCoefficients::BT470BG;
 /// ITU-R BT.601-7 525
 pub const SDL_MATRIX_COEFFICIENTS_BT601: SDL_MatrixCoefficients = SDL_MatrixCoefficients::BT601;
@@ -1073,9 +1073,9 @@ pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_Colorspace::YUV_DEFAU
 /// A structure that represents a color as RGBA components.
 ///
 /// The bits of this structure can be directly reinterpreted as an
-/// integer-packed color which uses the SDL_PIXELFORMAT_RGBA32 format
-/// (SDL_PIXELFORMAT_ABGR8888 on little-endian systems and
-/// SDL_PIXELFORMAT_RGBA8888 on big-endian systems).
+/// integer-packed color which uses the [`SDL_PIXELFORMAT_RGBA32`] format
+/// ([`SDL_PIXELFORMAT_ABGR8888`] on little-endian systems and
+/// [`SDL_PIXELFORMAT_RGBA8888`] on big-endian systems).
 ///
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
@@ -1089,7 +1089,7 @@ pub struct SDL_Color {
 }
 
 /// The bits of this structure can be directly reinterpreted as a float-packed
-/// color which uses the SDL_PIXELFORMAT_RGBA128_FLOAT format
+/// color which uses the [`SDL_PIXELFORMAT_RGBA128_FLOAT`] format
 ///
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
@@ -1162,13 +1162,13 @@ extern "C" {
 extern "C" {
     /// Convert one of the enumerated pixel formats to a bpp value and RGBA masks.
     ///
-    /// - `format`: one of the SDL_PixelFormat values.
+    /// - `format`: one of the [`SDL_PixelFormat`] values.
     /// - `bpp`: a bits per pixel value; usually 15, 16, or 32.
     /// - `Rmask`: a pointer filled in with the red mask for the format.
     /// - `Gmask`: a pointer filled in with the green mask for the format.
     /// - `Bmask`: a pointer filled in with the blue mask for the format.
     /// - `Amask`: a pointer filled in with the alpha mask for the format.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1197,8 +1197,8 @@ extern "C" {
     /// - `Gmask`: the green mask for the format.
     /// - `Bmask`: the blue mask for the format.
     /// - `Amask`: the alpha mask for the format.
-    /// - Returns the SDL_PixelFormat value corresponding to the format masks, or
-    ///   SDL_PIXELFORMAT_UNKNOWN if there isn't a match.
+    /// - Returns the [`SDL_PixelFormat`] value corresponding to the format masks, or
+    ///   [`SDL_PIXELFORMAT_UNKNOWN`] if there isn't a match.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -1215,15 +1215,15 @@ extern "C" {
 }
 
 extern "C" {
-    /// Create an SDL_PixelFormatDetails structure corresponding to a pixel format.
+    /// Create an [`SDL_PixelFormatDetails`] structure corresponding to a pixel format.
     ///
     /// Returned structure may come from a shared global cache (i.e. not newly
     /// allocated), and hence should not be modified, especially the palette. Weird
     /// errors such as `Blit combination not supported` may occur.
     ///
-    /// - `format`: one of the SDL_PixelFormat values.
-    /// - Returns a pointer to a SDL_PixelFormatDetails structure or NULL on
-    ///   failure; call SDL_GetError() for more information.
+    /// - `format`: one of the [`SDL_PixelFormat`] values.
+    /// - Returns a pointer to a [`SDL_PixelFormatDetails`] structure or NULL on
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -1237,8 +1237,8 @@ extern "C" {
     /// The palette entries are initialized to white.
     ///
     /// - `ncolors`: represents the number of color entries in the color palette.
-    /// - Returns a new SDL_Palette structure on success or NULL on failure (e.g. if
-    ///   there wasn't enough memory); call SDL_GetError() for more
+    /// - Returns a new [`SDL_Palette`] structure on success or NULL on failure (e.g. if
+    ///   there wasn't enough memory); call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1254,11 +1254,11 @@ extern "C" {
 extern "C" {
     /// Set a range of colors in a palette.
     ///
-    /// - `palette`: the SDL_Palette structure to modify.
-    /// - `colors`: an array of SDL_Color structures to copy into the palette.
+    /// - `palette`: the [`SDL_Palette`] structure to modify.
+    /// - `colors`: an array of [`SDL_Color`] structures to copy into the palette.
     /// - `firstcolor`: the index of the first palette entry to modify.
     /// - `ncolors`: the number of entries to modify.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread, as long as
@@ -1274,9 +1274,9 @@ extern "C" {
 }
 
 extern "C" {
-    /// Free a palette created with SDL_CreatePalette().
+    /// Free a palette created with [`SDL_CreatePalette()`].
     ///
-    /// - `palette`: the SDL_Palette structure to be freed.
+    /// - `palette`: the [`SDL_Palette`] structure to be freed.
     ///
     /// Thread safety: It is safe to call this function from any thread, as long as
     ///   the palette is not modified or destroyed in another thread.
@@ -1305,7 +1305,7 @@ extern "C" {
     /// format the return value can be assigned to a Uint16, and similarly a Uint8
     /// for an 8-bpp format).
     ///
-    /// - `format`: a pointer to SDL_PixelFormatDetails describing the pixel
+    /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
     /// - `r`: the red component of the pixel in the range 0-255.
@@ -1349,7 +1349,7 @@ extern "C" {
     /// format the return value can be assigned to a Uint16, and similarly a Uint8
     /// for an 8-bpp format).
     ///
-    /// - `format`: a pointer to SDL_PixelFormatDetails describing the pixel
+    /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
     /// - `r`: the red component of the pixel in the range 0-255.
@@ -1386,7 +1386,7 @@ extern "C" {
     /// 0xff, 0xff] not [0xf8, 0xfc, 0xf8]).
     ///
     /// - `pixel`: a pixel value.
-    /// - `format`: a pointer to SDL_PixelFormatDetails describing the pixel
+    /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
     /// - `r`: a pointer filled in with the red component, may be NULL.
@@ -1424,7 +1424,7 @@ extern "C" {
     /// (100% opaque).
     ///
     /// - `pixel`: a pixel value.
-    /// - `format`: a pointer to SDL_PixelFormatDetails describing the pixel
+    /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
     /// - `r`: a pointer filled in with the red component, may be NULL.

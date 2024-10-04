@@ -1,6 +1,6 @@
 //! Audio functionality for the SDL library.
 //!
-//! All audio in SDL3 revolves around SDL_AudioStream. Whether you want to play
+//! All audio in SDL3 revolves around [`SDL_AudioStream`]. Whether you want to play
 //! or record audio, convert it, stream it, buffer it, or mix it, you're going
 //! to be passing it through an audio stream.
 //!
@@ -15,7 +15,7 @@
 //! Audio streams can also use an app-provided callback to supply data
 //! on-demand, which maps pretty closely to the SDL2 audio model.
 //!
-//! SDL also provides a simple .WAV loader in SDL_LoadWAV (and SDL_LoadWAV_IO
+//! SDL also provides a simple .WAV loader in [`SDL_LoadWAV`] (and [`SDL_LoadWAV_IO`]
 //! if you aren't reading from a file) as a basic means to load sound data into
 //! your program.
 //!
@@ -57,7 +57,7 @@
 //! platforms; SDL will swizzle the channels as necessary if a platform expects
 //! something different.
 //!
-//! SDL_AudioStream can also be provided channel maps to change this ordering
+//! [`SDL_AudioStream`] can also be provided channel maps to change this ordering
 //! to whatever is necessary, in other audio processing scenarios.
 
 use super::stdinc::*;
@@ -177,11 +177,11 @@ pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AudioFormat::S32;
 #[cfg(not(target_endian = "little"))]
 pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 
-/// Retrieve the size, in bits, from an SDL_AudioFormat.
+/// Retrieve the size, in bits, from an [`SDL_AudioFormat`].
 ///
 /// For example, `SDL_AUDIO_BITSIZE(SDL_AUDIO_S16)` returns 16.
 ///
-/// - `x`: an SDL_AudioFormat value.
+/// - `x`: an [`SDL_AudioFormat`] value.
 /// - Returns data size in bits.
 ///
 /// Thread safety: It is safe to call this macro from any thread.
@@ -192,11 +192,11 @@ pub const fn SDL_AUDIO_BITSIZE(x: SDL_AudioFormat) -> ::core::primitive::u32 {
     ((x.0 as ::core::primitive::u32) & 255_u32)
 }
 
-/// Retrieve the size, in bytes, from an SDL_AudioFormat.
+/// Retrieve the size, in bytes, from an [`SDL_AudioFormat`].
 ///
 /// For example, `SDL_AUDIO_BYTESIZE(SDL_AUDIO_S16)` returns 2.
 ///
-/// - `x`: an SDL_AudioFormat value.
+/// - `x`: an [`SDL_AudioFormat`] value.
 /// - Returns data size in bytes.
 ///
 /// Thread safety: It is safe to call this macro from any thread.
@@ -207,11 +207,11 @@ pub const fn SDL_AUDIO_BYTESIZE(x: SDL_AudioFormat) -> ::core::primitive::u32 {
     (SDL_AUDIO_BITSIZE(x) / 8_u32)
 }
 
-/// Determine if an SDL_AudioFormat represents floating point data.
+/// Determine if an [`SDL_AudioFormat`] represents floating point data.
 ///
 /// For example, `SDL_AUDIO_ISFLOAT(SDL_AUDIO_S16)` returns 0.
 ///
-/// - `x`: an SDL_AudioFormat value.
+/// - `x`: an [`SDL_AudioFormat`] value.
 /// - Returns non-zero if format is floating point, zero otherwise.
 ///
 /// Thread safety: It is safe to call this macro from any thread.
@@ -222,11 +222,11 @@ pub const fn SDL_AUDIO_ISFLOAT(x: ::core::primitive::u32) -> ::core::primitive::
     (x & 256_u32)
 }
 
-/// Determine if an SDL_AudioFormat represents bigendian data.
+/// Determine if an [`SDL_AudioFormat`] represents bigendian data.
 ///
 /// For example, `SDL_AUDIO_ISBIGENDIAN(SDL_AUDIO_S16LE)` returns 0.
 ///
-/// - `x`: an SDL_AudioFormat value.
+/// - `x`: an [`SDL_AudioFormat`] value.
 /// - Returns non-zero if format is bigendian, zero otherwise.
 ///
 /// Thread safety: It is safe to call this macro from any thread.
@@ -237,11 +237,11 @@ pub const fn SDL_AUDIO_ISBIGENDIAN(x: ::core::primitive::u32) -> ::core::primiti
     (x & 4096_u32)
 }
 
-/// Determine if an SDL_AudioFormat represents littleendian data.
+/// Determine if an [`SDL_AudioFormat`] represents littleendian data.
 ///
 /// For example, `SDL_AUDIO_ISLITTLEENDIAN(SDL_AUDIO_S16BE)` returns 0.
 ///
-/// - `x`: an SDL_AudioFormat value.
+/// - `x`: an [`SDL_AudioFormat`] value.
 /// - Returns non-zero if format is littleendian, zero otherwise.
 ///
 /// Thread safety: It is safe to call this macro from any thread.
@@ -252,11 +252,11 @@ pub const fn SDL_AUDIO_ISLITTLEENDIAN(x: ::core::primitive::u32) -> ::core::prim
     !(SDL_AUDIO_ISBIGENDIAN(x) != 0)
 }
 
-/// Determine if an SDL_AudioFormat represents signed data.
+/// Determine if an [`SDL_AudioFormat`] represents signed data.
 ///
 /// For example, `SDL_AUDIO_ISSIGNED(SDL_AUDIO_U8)` returns 0.
 ///
-/// - `x`: an SDL_AudioFormat value.
+/// - `x`: an [`SDL_AudioFormat`] value.
 /// - Returns non-zero if format is signed, zero otherwise.
 ///
 /// Thread safety: It is safe to call this macro from any thread.
@@ -267,11 +267,11 @@ pub const fn SDL_AUDIO_ISSIGNED(x: ::core::primitive::u32) -> ::core::primitive:
     (x & 32768_u32)
 }
 
-/// Determine if an SDL_AudioFormat represents integer data.
+/// Determine if an [`SDL_AudioFormat`] represents integer data.
 ///
 /// For example, `SDL_AUDIO_ISINT(SDL_AUDIO_F32)` returns 0.
 ///
-/// - `x`: an SDL_AudioFormat value.
+/// - `x`: an [`SDL_AudioFormat`] value.
 /// - Returns non-zero if format is integer, zero otherwise.
 ///
 /// Thread safety: It is safe to call this macro from any thread.
@@ -282,11 +282,11 @@ pub const fn SDL_AUDIO_ISINT(x: ::core::primitive::u32) -> ::core::primitive::bo
     !(SDL_AUDIO_ISFLOAT(x) != 0)
 }
 
-/// Determine if an SDL_AudioFormat represents unsigned data.
+/// Determine if an [`SDL_AudioFormat`] represents unsigned data.
 ///
 /// For example, `SDL_AUDIO_ISUNSIGNED(SDL_AUDIO_S16)` returns 0.
 ///
-/// - `x`: an SDL_AudioFormat value.
+/// - `x`: an [`SDL_AudioFormat`] value.
 /// - Returns non-zero if format is unsigned, zero otherwise.
 ///
 /// Thread safety: It is safe to call this macro from any thread.
@@ -306,7 +306,7 @@ pub type SDL_AudioDeviceID = Uint32;
 
 /// A value used to request a default playback audio device.
 ///
-/// Several functions that require an SDL_AudioDeviceID will accept this value
+/// Several functions that require an [`SDL_AudioDeviceID`] will accept this value
 /// to signify the app just wants the system to choose a default device instead
 /// of the app providing a specific one.
 ///
@@ -315,7 +315,7 @@ pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID = (0xffffffff as 
 
 /// A value used to request a default recording audio device.
 ///
-/// Several functions that require an SDL_AudioDeviceID will accept this value
+/// Several functions that require an [`SDL_AudioDeviceID`] will accept this value
 /// to signify the app just wants the system to choose a default device instead
 /// of the app providing a specific one.
 ///
@@ -339,12 +339,12 @@ pub struct SDL_AudioSpec {
     pub freq: ::core::ffi::c_int,
 }
 
-/// Calculate the size of each audio frame (in bytes) from an SDL_AudioSpec.
+/// Calculate the size of each audio frame (in bytes) from an [`SDL_AudioSpec`].
 ///
 /// This reports on the size of an audio sample frame: stereo Sint16 data (2
 /// channels of 2 bytes each) would be 4 bytes per frame, for example.
 ///
-/// - `x`: an SDL_AudioSpec to query.
+/// - `x`: an [`SDL_AudioSpec`] to query.
 /// - Returns the number of bytes used per sample frame.
 ///
 /// Thread safety: It is safe to call this macro from any thread.
@@ -390,7 +390,7 @@ extern "C" {
     /// meant to be proper names.
     ///
     /// - `index`: the index of the audio driver; the value ranges from 0 to
-    ///   SDL_GetNumAudioDrivers() - 1.
+    ///   [`SDL_GetNumAudioDrivers()`] - 1.
     /// - Returns the name of the audio driver at the requested index, or NULL if an
     ///   invalid index was specified.
     ///
@@ -424,10 +424,10 @@ extern "C" {
     /// This returns of list of available devices that play sound, perhaps to
     /// speakers or headphones ("playback" devices). If you want devices that
     /// record audio, like a microphone ("recording" devices), use
-    /// SDL_GetAudioRecordingDevices() instead.
+    /// [`SDL_GetAudioRecordingDevices()`] instead.
     ///
     /// This only returns a list of physical devices; it will not have any device
-    /// IDs returned by SDL_OpenAudioDevice().
+    /// IDs returned by [`SDL_OpenAudioDevice()`].
     ///
     /// If this function returns NULL, to signify an error, `*count` will be set to
     /// zero.
@@ -435,8 +435,8 @@ extern "C" {
     /// - `count`: a pointer filled in with the number of devices returned, may
     ///   be NULL.
     /// - Returns a 0 terminated array of device instance IDs or NULL on error; call
-    ///   SDL_GetError() for more information. This should be freed with
-    ///   SDL_free() when it is no longer needed.
+    ///   [`SDL_GetError()`] for more information. This should be freed with
+    ///   [`SDL_free()`] when it is no longer needed.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -453,10 +453,10 @@ extern "C" {
     /// This returns of list of available devices that record audio, like a
     /// microphone ("recording" devices). If you want devices that play sound,
     /// perhaps to speakers or headphones ("playback" devices), use
-    /// SDL_GetAudioPlaybackDevices() instead.
+    /// [`SDL_GetAudioPlaybackDevices()`] instead.
     ///
     /// This only returns a list of physical devices; it will not have any device
-    /// IDs returned by SDL_OpenAudioDevice().
+    /// IDs returned by [`SDL_OpenAudioDevice()`].
     ///
     /// If this function returns NULL, to signify an error, `*count` will be set to
     /// zero.
@@ -464,8 +464,8 @@ extern "C" {
     /// - `count`: a pointer filled in with the number of devices returned, may
     ///   be NULL.
     /// - Returns a 0 terminated array of device instance IDs, or NULL on failure;
-    ///   call SDL_GetError() for more information. This should be freed
-    ///   with SDL_free() when it is no longer needed.
+    ///   call [`SDL_GetError()`] for more information. This should be freed
+    ///   with [`SDL_free()`] when it is no longer needed.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -481,7 +481,7 @@ extern "C" {
     ///
     /// - `devid`: the instance ID of the device to query.
     /// - Returns the name of the audio device, or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -500,8 +500,8 @@ extern "C" {
     /// using. If the device isn't yet opened, this will report the device's
     /// preferred format (or a reasonable default if this can't be determined).
     ///
-    /// You may also specify SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK or
-    /// SDL_AUDIO_DEVICE_DEFAULT_RECORDING here, which is useful for getting a
+    /// You may also specify [`SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK`] or
+    /// [`SDL_AUDIO_DEVICE_DEFAULT_RECORDING`] here, which is useful for getting a
     /// reasonable recommendation before opening the system-recommended default
     /// device.
     ///
@@ -519,7 +519,7 @@ extern "C" {
     /// - `spec`: on return, will be filled with device details.
     /// - `sample_frames`: pointer to store device buffer size, in sample frames.
     ///   Can be NULL.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -545,7 +545,7 @@ extern "C" {
     /// - `count`: On output, set to number of channels in the map. Can be NULL.
     /// - Returns an array of the current channel mapping, with as many elements as
     ///   the current output spec's channels, or NULL if default. This
-    ///   should be freed with SDL_free() when it is no longer needed.
+    ///   should be freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -570,7 +570,7 @@ extern "C" {
     /// audio playing, bind a stream and supply audio data to it. Unlike SDL2,
     /// there is no audio callback; you only bind audio streams and make sure they
     /// have data flowing into them (however, you can simulate SDL2's semantics
-    /// fairly closely by using SDL_OpenAudioDeviceStream instead of this
+    /// fairly closely by using [`SDL_OpenAudioDeviceStream`] instead of this
     /// function).
     ///
     /// If you don't care about opening a specific device, pass a `devid` of either
@@ -588,12 +588,12 @@ extern "C" {
     /// promise the device will honor that request for several reasons. As such,
     /// it's only meant to be a hint as to what data your app will provide. Audio
     /// streams will accept data in whatever format you specify and manage
-    /// conversion for you as appropriate. SDL_GetAudioDeviceFormat can tell you
+    /// conversion for you as appropriate. [`SDL_GetAudioDeviceFormat`] can tell you
     /// the preferred format for the device before opening and the actual format
     /// the device is using after opening.
     ///
     /// It's legal to open the same device ID more than once; each successful open
-    /// will generate a new logical SDL_AudioDeviceID that is managed separately
+    /// will generate a new logical [`SDL_AudioDeviceID`] that is managed separately
     /// from others on the same physical device. This allows libraries to open a
     /// device separately from the main app and bind its own streams without
     /// conflicting.
@@ -603,7 +603,7 @@ extern "C" {
     /// device. This may be useful for making logical groupings of audio streams.
     ///
     /// This function returns the opened device ID on success. This is a new,
-    /// unique SDL_AudioDeviceID that represents a logical device.
+    /// unique [`SDL_AudioDeviceID`] that represents a logical device.
     ///
     /// Some backends might offer arbitrary devices (for example, a networked audio
     /// protocol that can connect to an arbitrary server). For these, as a change
@@ -614,15 +614,15 @@ extern "C" {
     /// need, and not something an application should specifically manage.
     ///
     /// When done with an audio device, possibly at the end of the app's life, one
-    /// should call SDL_CloseAudioDevice() on the returned device id.
+    /// should call [`SDL_CloseAudioDevice()`] on the returned device id.
     ///
     /// - `devid`: the device instance id to open, or
-    ///   SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK or
-    ///   SDL_AUDIO_DEVICE_DEFAULT_RECORDING for the most reasonable
+    ///   [`SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK`] or
+    ///   [`SDL_AUDIO_DEVICE_DEFAULT_RECORDING`] for the most reasonable
     ///   default device.
     /// - `spec`: the requested device configuration. Can be NULL to use
     ///   reasonable defaults.
-    /// - Returns the device ID on success or 0 on failure; call SDL_GetError() for
+    /// - Returns the device ID on success or 0 on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -653,10 +653,10 @@ extern "C" {
     /// loading, etc.
     ///
     /// Physical devices can not be paused or unpaused, only logical devices
-    /// created through SDL_OpenAudioDevice() can be.
+    /// created through [`SDL_OpenAudioDevice()`] can be.
     ///
-    /// - `dev`: a device opened by SDL_OpenAudioDevice().
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `dev`: a device opened by [`SDL_OpenAudioDevice()`].
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -672,7 +672,7 @@ extern "C" {
     /// Use this function to unpause audio playback on a specified device.
     ///
     /// This function unpauses audio processing for a given device that has
-    /// previously been paused with SDL_PauseAudioDevice(). Once unpaused, any
+    /// previously been paused with [`SDL_PauseAudioDevice()`]. Once unpaused, any
     /// bound audio streams will begin to progress again, and audio can be
     /// generated.
     ///
@@ -681,10 +681,10 @@ extern "C" {
     /// device is a legal no-op.
     ///
     /// Physical devices can not be paused or unpaused, only logical devices
-    /// created through SDL_OpenAudioDevice() can be.
+    /// created through [`SDL_OpenAudioDevice()`] can be.
     ///
-    /// - `dev`: a device opened by SDL_OpenAudioDevice().
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `dev`: a device opened by [`SDL_OpenAudioDevice()`].
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -703,10 +703,10 @@ extern "C" {
     /// has to bind a stream before any audio will flow.
     ///
     /// Physical devices can not be paused or unpaused, only logical devices
-    /// created through SDL_OpenAudioDevice() can be. Physical and invalid device
+    /// created through [`SDL_OpenAudioDevice()`] can be. Physical and invalid device
     /// IDs will report themselves as unpaused here.
     ///
-    /// - `dev`: a device opened by SDL_OpenAudioDevice().
+    /// - `dev`: a device opened by [`SDL_OpenAudioDevice()`].
     /// - Returns true if device is valid and paused, false otherwise.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -730,7 +730,7 @@ extern "C" {
     /// this function will always return -1.0f when used on physical devices.
     ///
     /// - `devid`: the audio device to query.
-    /// - Returns the gain of the device or -1.0f on failure; call SDL_GetError()
+    /// - Returns the gain of the device or -1.0f on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -764,7 +764,7 @@ extern "C" {
     ///
     /// - `devid`: the audio device on which to change gain.
     /// - `gain`: the gain. 1.0f is no change, 0.0f is silence.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread, as it holds
@@ -790,7 +790,7 @@ extern "C" {
     /// supplied if terminating immediately afterwards.
     ///
     /// - `devid`: an audio device id previously returned by
-    ///   SDL_OpenAudioDevice().
+    ///   [`SDL_OpenAudioDevice()`].
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -824,7 +824,7 @@ extern "C" {
     /// - `devid`: an audio device to bind a stream to.
     /// - `streams`: an array of audio streams to bind.
     /// - `num_streams`: number streams listed in the `streams` array.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -849,7 +849,7 @@ extern "C" {
     ///
     /// - `devid`: an audio device to bind a stream to.
     /// - `stream`: an audio stream to bind to a device.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -930,7 +930,7 @@ extern "C" {
     /// - `src_spec`: the format details of the input audio.
     /// - `dst_spec`: the format details of the output audio.
     /// - Returns a new audio stream on success or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -952,9 +952,9 @@ extern "C" {
 extern "C" {
     /// Get the properties associated with an audio stream.
     ///
-    /// - `stream`: the SDL_AudioStream to query.
+    /// - `stream`: the [`SDL_AudioStream`] to query.
     /// - Returns a valid property ID on success or 0 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetAudioStreamProperties(stream: *mut SDL_AudioStream) -> SDL_PropertiesID;
@@ -963,10 +963,10 @@ extern "C" {
 extern "C" {
     /// Query the current format of an audio stream.
     ///
-    /// - `stream`: the SDL_AudioStream to query.
+    /// - `stream`: the [`SDL_AudioStream`] to query.
     /// - `src_spec`: where to store the input audio format; ignored if NULL.
     /// - `dst_spec`: where to store the output audio format; ignored if NULL.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread, as it holds
@@ -985,8 +985,8 @@ extern "C" {
 extern "C" {
     /// Change the input and output formats of an audio stream.
     ///
-    /// Future calls to and SDL_GetAudioStreamAvailable and SDL_GetAudioStreamData
-    /// will reflect the new format, and future calls to SDL_PutAudioStreamData
+    /// Future calls to and [`SDL_GetAudioStreamAvailable`] and [`SDL_GetAudioStreamData`]
+    /// will reflect the new format, and future calls to [`SDL_PutAudioStreamData`]
     /// must provide data in the new input formats.
     ///
     /// Data that was previously queued in the stream will still be operated on in
@@ -1000,7 +1000,7 @@ extern "C" {
     ///   changed.
     /// - `dst_spec`: the new format of the audio output; if NULL, it is not
     ///   changed.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread, as it holds
@@ -1020,9 +1020,9 @@ extern "C" {
 extern "C" {
     /// Get the frequency ratio of an audio stream.
     ///
-    /// - `stream`: the SDL_AudioStream to query.
+    /// - `stream`: the [`SDL_AudioStream`] to query.
     /// - Returns the frequency ratio of the stream or 0.0 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread, as it holds
     ///   a stream-specific mutex while running.
@@ -1042,13 +1042,13 @@ extern "C" {
     /// pitch. A value less than 1.0 will play the audio slower, and at a lower
     /// pitch.
     ///
-    /// This is applied during SDL_GetAudioStreamData, and can be continuously
+    /// This is applied during [`SDL_GetAudioStreamData`], and can be continuously
     /// changed to create various effects.
     ///
     /// - `stream`: the stream the frequency ratio is being changed.
     /// - `ratio`: the frequency ratio. 1.0 is normal speed. Must be between 0.01
     ///   and 100.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread, as it holds
@@ -1072,8 +1072,8 @@ extern "C" {
     ///
     /// Audio streams default to a gain of 1.0f (no change in output).
     ///
-    /// - `stream`: the SDL_AudioStream to query.
-    /// - Returns the gain of the stream or -1.0f on failure; call SDL_GetError()
+    /// - `stream`: the [`SDL_AudioStream`] to query.
+    /// - Returns the gain of the stream or -1.0f on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread, as it holds
@@ -1093,12 +1093,12 @@ extern "C" {
     ///
     /// Audio streams default to a gain of 1.0f (no change in output).
     ///
-    /// This is applied during SDL_GetAudioStreamData, and can be continuously
+    /// This is applied during [`SDL_GetAudioStreamData`], and can be continuously
     /// changed to create various effects.
     ///
     /// - `stream`: the stream on which the gain is being changed.
     /// - `gain`: the gain. 1.0f is no change, 0.0f is silence.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread, as it holds
@@ -1122,11 +1122,11 @@ extern "C" {
     /// Audio streams default to no remapping applied. This is represented by
     /// returning NULL, and does not signify an error.
     ///
-    /// - `stream`: the SDL_AudioStream to query.
+    /// - `stream`: the [`SDL_AudioStream`] to query.
     /// - `count`: On output, set to number of channels in the map. Can be NULL.
     /// - Returns an array of the current channel mapping, with as many elements as
     ///   the current output spec's channels, or NULL if default. This
-    ///   should be freed with SDL_free() when it is no longer needed.
+    ///   should be freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// Thread safety: It is safe to call this function from any thread, as it holds
     ///   a stream-specific mutex while running.
@@ -1149,11 +1149,11 @@ extern "C" {
     /// Audio streams default to no remapping applied. This is represented by
     /// returning NULL, and does not signify an error.
     ///
-    /// - `stream`: the SDL_AudioStream to query.
+    /// - `stream`: the [`SDL_AudioStream`] to query.
     /// - `count`: On output, set to number of channels in the map. Can be NULL.
     /// - Returns an array of the current channel mapping, with as many elements as
     ///   the current output spec's channels, or NULL if default. This
-    ///   should be freed with SDL_free() when it is no longer needed.
+    ///   should be freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// Thread safety: It is safe to call this function from any thread, as it holds
     ///   a stream-specific mutex while running.
@@ -1174,7 +1174,7 @@ extern "C" {
     /// data in the [order that SDL expects](CategoryAudio#channel-layouts).
     ///
     /// The input channel map reorders data that is added to a stream via
-    /// SDL_PutAudioStreamData. Future calls to SDL_PutAudioStreamData must provide
+    /// [`SDL_PutAudioStreamData`]. Future calls to [`SDL_PutAudioStreamData`] must provide
     /// data in the new channel order.
     ///
     /// Each item in the array represents an input channel, and its value is the
@@ -1201,10 +1201,10 @@ extern "C" {
     /// race condition hasn't changed the format while you this call is setting the
     /// channel map.
     ///
-    /// - `stream`: the SDL_AudioStream to change.
+    /// - `stream`: the [`SDL_AudioStream`] to change.
     /// - `chmap`: the new channel map, NULL to reset to default.
     /// - `count`: The number of channels in the map.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread, as it holds
@@ -1229,7 +1229,7 @@ extern "C" {
     /// data in the [order that SDL expects](CategoryAudio#channel-layouts).
     ///
     /// The output channel map reorders data that leaving a stream via
-    /// SDL_GetAudioStreamData.
+    /// [`SDL_GetAudioStreamData`].
     ///
     /// Each item in the array represents an output channel, and its value is the
     /// channel that it should be remapped to. To reverse a stereo signal's left
@@ -1239,7 +1239,7 @@ extern "C" {
     /// number of channels through a channel map, just reorder them.
     ///
     /// The output channel map can be changed at any time, as output remapping is
-    /// applied during SDL_GetAudioStreamData.
+    /// applied during [`SDL_GetAudioStreamData`].
     ///
     /// Audio streams default to no remapping applied. Passing a NULL channel map
     /// is legal, and turns off remapping.
@@ -1252,10 +1252,10 @@ extern "C" {
     /// race condition hasn't changed the format while you this call is setting the
     /// channel map.
     ///
-    /// - `stream`: the SDL_AudioStream to change.
+    /// - `stream`: the [`SDL_AudioStream`] to change.
     /// - `chmap`: the new channel map, NULL to reset to default.
     /// - `count`: The number of channels in the map.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread, as it holds
@@ -1277,7 +1277,7 @@ extern "C" {
     /// Add data to the stream.
     ///
     /// This data must match the format/channels/samplerate specified in the latest
-    /// call to SDL_SetAudioStreamFormat, or the format specified when creating the
+    /// call to [`SDL_SetAudioStreamFormat`], or the format specified when creating the
     /// stream if it hasn't been changed.
     ///
     /// Note that this call simply copies the unconverted data for later. This is
@@ -1287,7 +1287,7 @@ extern "C" {
     /// - `stream`: the stream the audio data is being added to.
     /// - `buf`: a pointer to the audio data to add.
     /// - `len`: the number of bytes to write to the stream.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread, but if the
@@ -1312,10 +1312,10 @@ extern "C" {
     ///
     /// The input/output data format/channels/samplerate is specified when creating
     /// the stream, and can be changed after creation by calling
-    /// SDL_SetAudioStreamFormat.
+    /// [`SDL_SetAudioStreamFormat`].
     ///
     /// Note that any conversion and resampling necessary is done during this call,
-    /// and SDL_PutAudioStreamData simply queues unconverted data for later. This
+    /// and [`SDL_PutAudioStreamData`] simply queues unconverted data for later. This
     /// is different than SDL2, where that work was done while inputting new data
     /// to the stream and requesting the output just copied the converted data.
     ///
@@ -1323,7 +1323,7 @@ extern "C" {
     /// - `buf`: a buffer to fill with audio data.
     /// - `len`: the maximum number of bytes to fill.
     /// - Returns the number of bytes read from the stream or -1 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread, but if the
     ///   stream has a callback set, the caller might need to manage
@@ -1351,12 +1351,12 @@ extern "C" {
     /// If the stream has so much data that it would overflow an int, the return
     /// value is clamped to a maximum value, but no queued data is lost; if there
     /// are gigabytes of data queued, the app might need to read some of it with
-    /// SDL_GetAudioStreamData before this function's return value is no longer
+    /// [`SDL_GetAudioStreamData`] before this function's return value is no longer
     /// clamped.
     ///
     /// - `stream`: the audio stream to query.
     /// - Returns the number of converted/resampled bytes available or -1 on
-    ///   failure; call SDL_GetError() for more information.
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -1377,17 +1377,17 @@ extern "C" {
     /// a stream and plan accordingly.
     ///
     /// Queued data is not converted until it is consumed by
-    /// SDL_GetAudioStreamData, so this value should be representative of the exact
+    /// [`SDL_GetAudioStreamData`], so this value should be representative of the exact
     /// data that was put into the stream.
     ///
     /// If the stream has so much data that it would overflow an int, the return
     /// value is clamped to a maximum value, but no queued data is lost; if there
     /// are gigabytes of data queued, the app might need to read some of it with
-    /// SDL_GetAudioStreamData before this function's return value is no longer
+    /// [`SDL_GetAudioStreamData`] before this function's return value is no longer
     /// clamped.
     ///
     /// - `stream`: the audio stream to query.
-    /// - Returns the number of bytes queued or -1 on failure; call SDL_GetError()
+    /// - Returns the number of bytes queued or -1 on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1408,7 +1408,7 @@ extern "C" {
     /// input, so the complete output becomes available.
     ///
     /// - `stream`: the audio stream to flush.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1426,7 +1426,7 @@ extern "C" {
     /// stream until more is added.
     ///
     /// - `stream`: the audio stream to clear.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1453,7 +1453,7 @@ extern "C" {
     /// loading, etc.
     ///
     /// - `stream`: the audio stream associated with the audio device to pause.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1473,7 +1473,7 @@ extern "C" {
     /// to progress again, and audio can be generated.
     ///
     /// - `stream`: the audio stream associated with the audio device to resume.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1487,7 +1487,7 @@ extern "C" {
 extern "C" {
     /// Lock an audio stream for serialized access.
     ///
-    /// Each SDL_AudioStream has an internal mutex it uses to protect its data
+    /// Each [`SDL_AudioStream`] has an internal mutex it uses to protect its data
     /// structures from threading conflicts. This function allows an app to lock
     /// that mutex, which could be useful if registering callbacks on this stream.
     ///
@@ -1497,11 +1497,11 @@ extern "C" {
     /// protect shared data during those callbacks, locking the stream guarantees
     /// that the callback is not running while the lock is held.
     ///
-    /// As this is just a wrapper over SDL_LockMutex for an internal lock; it has
+    /// As this is just a wrapper over [`SDL_LockMutex`] for an internal lock; it has
     /// all the same attributes (recursive locks are allowed, etc).
     ///
     /// - `stream`: the audio stream to lock.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1515,14 +1515,14 @@ extern "C" {
 extern "C" {
     /// Unlock an audio stream for serialized access.
     ///
-    /// This unlocks an audio stream after a call to SDL_LockAudioStream.
+    /// This unlocks an audio stream after a call to [`SDL_LockAudioStream`].
     ///
     /// - `stream`: the audio stream to unlock.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: You should only call this from the same thread that
-    ///   previously called SDL_LockAudioStream.
+    ///   previously called [`SDL_LockAudioStream`].
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1530,11 +1530,11 @@ extern "C" {
     pub fn SDL_UnlockAudioStream(stream: *mut SDL_AudioStream) -> ::core::primitive::bool;
 }
 
-/// A callback that fires when data passes through an SDL_AudioStream.
+/// A callback that fires when data passes through an [`SDL_AudioStream`].
 ///
 /// Apps can (optionally) register a callback with an audio stream that is
-/// called when data is added with SDL_PutAudioStreamData, or requested with
-/// SDL_GetAudioStreamData.
+/// called when data is added with [`SDL_PutAudioStreamData`], or requested with
+/// [`SDL_GetAudioStreamData`].
 ///
 /// Two values are offered here: one is the amount of additional data needed to
 /// satisfy the immediate request (which might be zero if the stream already
@@ -1559,7 +1559,7 @@ extern "C" {
 ///   use.
 ///
 /// Thread safety: This callbacks may run from any thread, so if you need to
-///   protect shared data, you should use SDL_LockAudioStream to
+///   protect shared data, you should use [`SDL_LockAudioStream`] to
 ///   serialize access; this lock will be held before your callback
 ///   is called, so your callback does not need to manage the lock
 ///   explicitly.
@@ -1583,7 +1583,7 @@ extern "C" {
     /// This callback is called _before_ data is obtained from the stream, giving
     /// the callback the chance to add more on-demand.
     ///
-    /// The callback can (optionally) call SDL_PutAudioStreamData() to add more
+    /// The callback can (optionally) call [`SDL_PutAudioStreamData()`] to add more
     /// audio to the stream during this call; if needed, the request that triggered
     /// this callback will obtain the new data immediately.
     ///
@@ -1612,7 +1612,7 @@ extern "C" {
     ///   from the stream.
     /// - `userdata`: an opaque pointer provided to the callback for its own
     ///   personal use.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information. This only fails if `stream` is NULL.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1633,7 +1633,7 @@ extern "C" {
     /// This callback is called _after_ the data is added to the stream, giving the
     /// callback the chance to obtain it immediately.
     ///
-    /// The callback can (optionally) call SDL_GetAudioStreamData() to obtain audio
+    /// The callback can (optionally) call [`SDL_GetAudioStreamData()`] to obtain audio
     /// from the stream during this call.
     ///
     /// The callback's `approx_request` argument is how many bytes of _converted_
@@ -1644,7 +1644,7 @@ extern "C" {
     /// to aid in resampling. Which means the callback may be provided with zero
     /// bytes, and a different amount on each call.
     ///
-    /// The callback may call SDL_GetAudioStreamAvailable to see the total amount
+    /// The callback may call [`SDL_GetAudioStreamAvailable`] to see the total amount
     /// currently available to read from the stream, instead of the total provided
     /// by the current call.
     ///
@@ -1665,7 +1665,7 @@ extern "C" {
     ///   stream.
     /// - `userdata`: an opaque pointer provided to the callback for its own
     ///   personal use.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information. This only fails if `stream` is NULL.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1687,7 +1687,7 @@ extern "C" {
     /// queued. You do not need to manually clear the stream first.
     ///
     /// If this stream was bound to an audio device, it is unbound during this
-    /// call. If this stream was created with SDL_OpenAudioDeviceStream, the audio
+    /// call. If this stream was created with [`SDL_OpenAudioDeviceStream`], the audio
     /// device that was opened alongside this stream's creation will be closed,
     /// too.
     ///
@@ -1711,7 +1711,7 @@ extern "C" {
     ///
     /// This function will open an audio device, create a stream and bind it.
     /// Unlike other methods of setup, the audio device will be closed when this
-    /// stream is destroyed, so the app can treat the returned SDL_AudioStream as
+    /// stream is destroyed, so the app can treat the returned [`SDL_AudioStream`] as
     /// the only object needed to manage audio playback.
     ///
     /// Also unlike other functions, the audio device begins paused. This is to map
@@ -1724,34 +1724,34 @@ extern "C" {
     /// The `spec` parameter represents the app's side of the audio stream. That
     /// is, for recording audio, this will be the output format, and for playing
     /// audio, this will be the input format. If spec is NULL, the system will
-    /// choose the format, and the app can use SDL_GetAudioStreamFormat() to obtain
+    /// choose the format, and the app can use [`SDL_GetAudioStreamFormat()`] to obtain
     /// this information later.
     ///
     /// If you don't care about opening a specific audio device, you can (and
-    /// probably _should_), use SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK for playback and
-    /// SDL_AUDIO_DEVICE_DEFAULT_RECORDING for recording.
+    /// probably _should_), use [`SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK`] for playback and
+    /// [`SDL_AUDIO_DEVICE_DEFAULT_RECORDING`] for recording.
     ///
     /// One can optionally provide a callback function; if NULL, the app is
     /// expected to queue audio data for playback (or unqueue audio data if
     /// capturing). Otherwise, the callback will begin to fire once the device is
     /// unpaused.
     ///
-    /// Destroying the returned stream with SDL_DestroyAudioStream will also close
+    /// Destroying the returned stream with [`SDL_DestroyAudioStream`] will also close
     /// the audio device associated with this stream.
     ///
-    /// - `devid`: an audio device to open, or SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK
-    ///   or SDL_AUDIO_DEVICE_DEFAULT_RECORDING.
+    /// - `devid`: an audio device to open, or [`SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK`]
+    ///   or [`SDL_AUDIO_DEVICE_DEFAULT_RECORDING`].
     /// - `spec`: the audio stream's data format. Can be NULL.
     /// - `callback`: a callback where the app will provide new data for
     ///   playback, or receive new data for recording. Can be NULL,
     ///   in which case the app will need to call
-    ///   SDL_PutAudioStreamData or SDL_GetAudioStreamData as
+    ///   [`SDL_PutAudioStreamData`] or [`SDL_GetAudioStreamData`] as
     ///   necessary.
     /// - `userdata`: app-controlled pointer passed to callback. Can be NULL.
     ///   Ignored if callback is NULL.
     /// - Returns an audio stream on success, ready to use, or NULL on failure; call
-    ///   SDL_GetError() for more information. When done with this stream,
-    ///   call SDL_DestroyAudioStream to free resources and close the
+    ///   [`SDL_GetError()`] for more information. When done with this stream,
+    ///   call [`SDL_DestroyAudioStream`] to free resources and close the
     ///   device.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1780,14 +1780,14 @@ extern "C" {
 /// The postmix callback _must_ be able to handle any audio data format
 /// specified in `spec`, which can change between callbacks if the audio device
 /// changed. However, this only covers frequency and channel count; data is
-/// always provided here in SDL_AUDIO_F32 format.
+/// always provided here in [`SDL_AUDIO_F32`] format.
 ///
 /// The postmix callback runs _after_ logical device gain and audiostream gain
 /// have been applied, which is to say you can make the output data louder at
 /// this point than the gain settings would suggest.
 ///
 /// - `userdata`: a pointer provided by the app through
-///   SDL_SetAudioPostmixCallback, for its own use.
+///   [`SDL_SetAudioPostmixCallback`], for its own use.
 /// - `spec`: the current format of audio that is to be submitted to the
 ///   audio device.
 /// - `buffer`: the buffer of audio samples to be submitted. The callback can
@@ -1839,7 +1839,7 @@ extern "C" {
     ///
     /// All of this to say: there are specific needs this callback can fulfill, but
     /// it is not the simplest interface. Apps should generally provide audio in
-    /// their preferred format through an SDL_AudioStream and let SDL handle the
+    /// their preferred format through an [`SDL_AudioStream`] and let SDL handle the
     /// difference.
     ///
     /// This function is extremely time-sensitive; the callback should do the least
@@ -1855,7 +1855,7 @@ extern "C" {
     /// - `devid`: the ID of an opened audio device.
     /// - `callback`: a callback function to be called. Can be NULL.
     /// - `userdata`: app-controlled pointer passed to callback. Can be NULL.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1882,11 +1882,11 @@ extern "C" {
     ///
     /// If this function succeeds, the return value is zero and the pointer to the
     /// audio data allocated by the function is written to `audio_buf` and its
-    /// length in bytes to `audio_len`. The SDL_AudioSpec members `freq`,
+    /// length in bytes to `audio_len`. The [`SDL_AudioSpec`] members `freq`,
     /// `channels`, and `format` are set to the values of the audio data in the
     /// buffer.
     ///
-    /// It's necessary to use SDL_free() to free the audio data returned in
+    /// It's necessary to use [`SDL_free()`] to free the audio data returned in
     /// `audio_buf` when it is no longer used.
     ///
     /// Because of the underspecification of the .WAV format, there are many
@@ -1912,7 +1912,7 @@ extern "C" {
     /// SDL_LoadWAV_IO(SDL_IOFromFile("sample.wav", "rb"), 1, &spec, &buf, &len);
     /// ```
     ///
-    /// Note that the SDL_LoadWAV function does this same thing for you, but in a
+    /// Note that the [`SDL_LoadWAV`] function does this same thing for you, but in a
     /// less messy way:
     ///
     /// ```c
@@ -1920,9 +1920,9 @@ extern "C" {
     /// ```
     ///
     /// - `src`: the data source for the WAVE data.
-    /// - `closeio`: if true, calls SDL_CloseIO() on `src` before returning, even
+    /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `src` before returning, even
     ///   in the case of an error.
-    /// - `spec`: a pointer to an SDL_AudioSpec that will be set to the WAVE
+    /// - `spec`: a pointer to an [`SDL_AudioSpec`] that will be set to the WAVE
     ///   data's format details on successful return.
     /// - `audio_buf`: a pointer filled with the audio data, allocated by the
     ///   function.
@@ -1966,7 +1966,7 @@ extern "C" {
     /// ```
     ///
     /// - `path`: the file path of the WAV file to open.
-    /// - `spec`: a pointer to an SDL_AudioSpec that will be set to the WAVE
+    /// - `spec`: a pointer to an [`SDL_AudioSpec`] that will be set to the WAVE
     ///   data's format details on successful return.
     /// - `audio_buf`: a pointer filled with the audio data, allocated by the
     ///   function.
@@ -2016,17 +2016,17 @@ extern "C" {
     ///
     /// It is a common misconception that this function is required to write audio
     /// data to an output stream in an audio callback. While you can do that,
-    /// SDL_MixAudio() is really only needed when you're mixing a single audio
+    /// [`SDL_MixAudio()`] is really only needed when you're mixing a single audio
     /// stream with a volume adjustment.
     ///
     /// - `dst`: the destination for the mixed audio.
     /// - `src`: the source audio buffer to be mixed.
-    /// - `format`: the SDL_AudioFormat structure representing the desired audio
+    /// - `format`: the [`SDL_AudioFormat`] structure representing the desired audio
     ///   format.
     /// - `len`: the length of the audio buffer in bytes.
     /// - `volume`: ranges from 0.0 - 1.0, and should be set to 1.0 for full
     ///   audio volume.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -2048,9 +2048,9 @@ extern "C" {
     /// to resample audio in blocks, as it will introduce audio artifacts on the
     /// boundaries. You should only use this function if you are converting audio
     /// data in its entirety in one call. If you want to convert audio in smaller
-    /// chunks, use an SDL_AudioStream, which is designed for this situation.
+    /// chunks, use an [`SDL_AudioStream`], which is designed for this situation.
     ///
-    /// Internally, this function creates and destroys an SDL_AudioStream on each
+    /// Internally, this function creates and destroys an [`SDL_AudioStream`] on each
     /// use, so it's also less efficient than using one directly, if you need to
     /// convert multiple times.
     ///
@@ -2059,10 +2059,10 @@ extern "C" {
     /// - `src_len`: the len of src_data.
     /// - `dst_spec`: the format details of the output audio.
     /// - `dst_data`: will be filled with a pointer to converted audio data,
-    ///   which should be freed with SDL_free(). On error, it will be
+    ///   which should be freed with [`SDL_free()`]. On error, it will be
     ///   NULL.
     /// - `dst_len`: will be filled with the len of dst_data.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -2095,7 +2095,7 @@ extern "C" {
     /// Get the appropriate memset value for silencing an audio format.
     ///
     /// The value returned by this function can be used as the second argument to
-    /// memset (or SDL_memset) to set an audio buffer in a specific format to
+    /// memset (or [`SDL_memset`]) to set an audio buffer in a specific format to
     /// silence.
     ///
     /// - `format`: the audio data format to query.

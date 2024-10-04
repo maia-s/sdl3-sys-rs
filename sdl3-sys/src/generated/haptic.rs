@@ -2,15 +2,15 @@
 //!
 //! The basic usage is as follows:
 //!
-//! - Initialize the subsystem (SDL_INIT_HAPTIC).
+//! - Initialize the subsystem ([`SDL_INIT_HAPTIC`]).
 //! - Open a haptic device.
-//! - SDL_OpenHaptic() to open from index.
-//! - SDL_OpenHapticFromJoystick() to open from an existing joystick.
-//! - Create an effect (SDL_HapticEffect).
-//! - Upload the effect with SDL_CreateHapticEffect().
-//! - Run the effect with SDL_RunHapticEffect().
-//! - (optional) Free the effect with SDL_DestroyHapticEffect().
-//! - Close the haptic device with SDL_CloseHaptic().
+//! - [`SDL_OpenHaptic()`] to open from index.
+//! - [`SDL_OpenHapticFromJoystick()`] to open from an existing joystick.
+//! - Create an effect ([`SDL_HapticEffect`]).
+//! - Upload the effect with [`SDL_CreateHapticEffect()`].
+//! - Run the effect with [`SDL_RunHapticEffect()`].
+//! - (optional) Free the effect with [`SDL_DestroyHapticEffect()`].
+//! - Close the haptic device with [`SDL_CloseHaptic()`].
 //!
 //! Simple rumble example:
 //!
@@ -304,9 +304,9 @@ pub const SDL_HAPTIC_INFINITY: ::core::primitive::u32 = 4294967295_u32;
 ///
 /// Directions can be specified by:
 ///
-/// - SDL_HAPTIC_POLAR : Specified by polar coordinates.
-/// - SDL_HAPTIC_CARTESIAN : Specified by cartesian coordinates.
-/// - SDL_HAPTIC_SPHERICAL : Specified by spherical coordinates.
+/// - [`SDL_HAPTIC_POLAR`] : Specified by polar coordinates.
+/// - [`SDL_HAPTIC_CARTESIAN`] : Specified by cartesian coordinates.
+/// - [`SDL_HAPTIC_SPHERICAL`] : Specified by spherical coordinates.
 ///
 /// Cardinal directions of the haptic device are relative to the positioning of
 /// the device. North is considered to be away from the user.
@@ -340,8 +340,8 @@ pub const SDL_HAPTIC_INFINITY: ::core::primitive::u32 = 4294967295_u32;
 ///                 ---ooO-(_)-Ooo---
 /// ```
 ///
-/// If type is SDL_HAPTIC_POLAR, direction is encoded by hundredths of a degree
-/// starting north and turning clockwise. SDL_HAPTIC_POLAR only uses the first
+/// If type is [`SDL_HAPTIC_POLAR`], direction is encoded by hundredths of a degree
+/// starting north and turning clockwise. [`SDL_HAPTIC_POLAR`] only uses the first
 /// `dir` parameter. The cardinal directions would be:
 ///
 /// - North: 0 (0 degrees)
@@ -349,8 +349,8 @@ pub const SDL_HAPTIC_INFINITY: ::core::primitive::u32 = 4294967295_u32;
 /// - South: 18000 (180 degrees)
 /// - West: 27000 (270 degrees)
 ///
-/// If type is SDL_HAPTIC_CARTESIAN, direction is encoded by three positions (X
-/// axis, Y axis and Z axis (with 3 axes)). SDL_HAPTIC_CARTESIAN uses the first
+/// If type is [`SDL_HAPTIC_CARTESIAN`], direction is encoded by three positions (X
+/// axis, Y axis and Z axis (with 3 axes)). [`SDL_HAPTIC_CARTESIAN`] uses the first
 /// three `dir` parameters. The cardinal directions would be:
 ///
 /// - North: 0,-1, 0
@@ -362,7 +362,7 @@ pub const SDL_HAPTIC_INFINITY: ::core::primitive::u32 = 4294967295_u32;
 /// unused. In cartesian encoding (1, 2) would be the same as (2, 4), you can
 /// use any multiple you want, only the direction matters.
 ///
-/// If type is SDL_HAPTIC_SPHERICAL, direction is encoded by two rotations. The
+/// If type is [`SDL_HAPTIC_SPHERICAL`], direction is encoded by two rotations. The
 /// first two `dir` parameters are used. The `dir` parameters are as follows
 /// (all values are in hundredths of degrees):
 ///
@@ -410,7 +410,7 @@ pub struct SDL_HapticDirection {
 
 /// A structure containing a template for a Constant effect.
 ///
-/// This struct is exclusively for the SDL_HAPTIC_CONSTANT effect.
+/// This struct is exclusively for the [`SDL_HAPTIC_CONSTANT`] effect.
 ///
 /// A constant effect applies a constant force in the specified direction to
 /// the joystick.
@@ -423,7 +423,7 @@ pub struct SDL_HapticDirection {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticConstant {
-    /// SDL_HAPTIC_CONSTANT
+    /// [`SDL_HAPTIC_CONSTANT`]
     pub r#type: Uint16,
     /// Direction of the effect.
     pub direction: SDL_HapticDirection,
@@ -451,11 +451,11 @@ pub struct SDL_HapticConstant {
 ///
 /// The struct handles the following effects:
 ///
-/// - SDL_HAPTIC_SINE
-/// - SDL_HAPTIC_SQUARE
-/// - SDL_HAPTIC_TRIANGLE
-/// - SDL_HAPTIC_SAWTOOTHUP
-/// - SDL_HAPTIC_SAWTOOTHDOWN
+/// - [`SDL_HAPTIC_SINE`]
+/// - [`SDL_HAPTIC_SQUARE`]
+/// - [`SDL_HAPTIC_TRIANGLE`]
+/// - [`SDL_HAPTIC_SAWTOOTHUP`]
+/// - [`SDL_HAPTIC_SAWTOOTHDOWN`]
 ///
 /// A periodic effect consists in a wave-shaped effect that repeats itself over
 /// time. The type determines the shape of the wave and the parameters
@@ -511,9 +511,9 @@ pub struct SDL_HapticConstant {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticPeriodic {
-    /// SDL_HAPTIC_SINE, SDL_HAPTIC_SQUARE
-    /// SDL_HAPTIC_TRIANGLE, SDL_HAPTIC_SAWTOOTHUP or
-    /// SDL_HAPTIC_SAWTOOTHDOWN
+    /// [`SDL_HAPTIC_SINE`], [`SDL_HAPTIC_SQUARE`]
+    /// [`SDL_HAPTIC_TRIANGLE`], [`SDL_HAPTIC_SAWTOOTHUP`] or
+    /// [`SDL_HAPTIC_SAWTOOTHDOWN`]
     pub r#type: Uint16,
     /// Direction of the effect.
     pub direction: SDL_HapticDirection,
@@ -557,7 +557,7 @@ pub struct SDL_HapticPeriodic {
 /// refers to the X axis, the second refers to the Y axis and the third refers
 /// to the Z axis. The right terms refer to the positive side of the axis and
 /// the left terms refer to the negative side of the axis. Please refer to the
-/// SDL_HapticDirection diagram for which side is positive and which is
+/// [`SDL_HapticDirection`] diagram for which side is positive and which is
 /// negative.
 ///
 /// This struct is available since SDL 3.0.0.
@@ -572,8 +572,8 @@ pub struct SDL_HapticPeriodic {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticCondition {
-    /// SDL_HAPTIC_SPRING, SDL_HAPTIC_DAMPER,
-    /// SDL_HAPTIC_INERTIA or SDL_HAPTIC_FRICTION
+    /// [`SDL_HAPTIC_SPRING`], [`SDL_HAPTIC_DAMPER`],
+    /// [`SDL_HAPTIC_INERTIA`] or [`SDL_HAPTIC_FRICTION`]
     pub r#type: Uint16,
     /// Direction of the effect - Not used ATM.
     pub direction: SDL_HapticDirection,
@@ -601,7 +601,7 @@ pub struct SDL_HapticCondition {
 
 /// A structure containing a template for a Ramp effect.
 ///
-/// This struct is exclusively for the SDL_HAPTIC_RAMP effect.
+/// This struct is exclusively for the [`SDL_HAPTIC_RAMP`] effect.
 ///
 /// The ramp effect starts at start strength and ends at end strength. It
 /// augments in linear fashion. If you use attack and fade with a ramp the
@@ -616,7 +616,7 @@ pub struct SDL_HapticCondition {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticRamp {
-    /// SDL_HAPTIC_RAMP
+    /// [`SDL_HAPTIC_RAMP`]
     pub r#type: Uint16,
     /// Direction of the effect.
     pub direction: SDL_HapticDirection,
@@ -644,7 +644,7 @@ pub struct SDL_HapticRamp {
 
 /// A structure containing a template for a Left/Right effect.
 ///
-/// This struct is exclusively for the SDL_HAPTIC_LEFTRIGHT effect.
+/// This struct is exclusively for the [`SDL_HAPTIC_LEFTRIGHT`] effect.
 ///
 /// The Left/Right effect is used to explicitly control the large and small
 /// motors, commonly found in modern game controllers. The small (right) motor
@@ -658,7 +658,7 @@ pub struct SDL_HapticRamp {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticLeftRight {
-    /// SDL_HAPTIC_LEFTRIGHT
+    /// [`SDL_HAPTIC_LEFTRIGHT`]
     pub r#type: Uint16,
     /// Duration of the effect in milliseconds.
     pub length: Uint32,
@@ -668,9 +668,9 @@ pub struct SDL_HapticLeftRight {
     pub small_magnitude: Uint16,
 }
 
-/// A structure containing a template for the SDL_HAPTIC_CUSTOM effect.
+/// A structure containing a template for the [`SDL_HAPTIC_CUSTOM`] effect.
 ///
-/// This struct is exclusively for the SDL_HAPTIC_CUSTOM effect.
+/// This struct is exclusively for the [`SDL_HAPTIC_CUSTOM`] effect.
 ///
 /// A custom force feedback effect is much like a periodic effect, where the
 /// application can define its exact shape. You will have to allocate the data
@@ -687,7 +687,7 @@ pub struct SDL_HapticLeftRight {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticCustom {
-    /// SDL_HAPTIC_CUSTOM
+    /// [`SDL_HAPTIC_CUSTOM`]
     pub r#type: Uint16,
     /// Direction of the effect.
     pub direction: SDL_HapticDirection,
@@ -722,12 +722,12 @@ pub struct SDL_HapticCustom {
 /// All values max at 32767 (0x7FFF). Signed values also can be negative. Time
 /// values unless specified otherwise are in milliseconds.
 ///
-/// You can also pass SDL_HAPTIC_INFINITY to length instead of a 0-32767 value.
+/// You can also pass [`SDL_HAPTIC_INFINITY`] to length instead of a 0-32767 value.
 /// Neither delay, interval, attack_length nor fade_length support
-/// SDL_HAPTIC_INFINITY. Fade will also not be used since effect never ends.
+/// [`SDL_HAPTIC_INFINITY`]. Fade will also not be used since effect never ends.
 ///
-/// Additionally, the SDL_HAPTIC_RAMP effect does not support a duration of
-/// SDL_HAPTIC_INFINITY.
+/// Additionally, the [`SDL_HAPTIC_RAMP`] effect does not support a duration of
+/// [`SDL_HAPTIC_INFINITY`].
 ///
 /// Button triggers may not be supported on all devices, it is advised to not
 /// use them if possible. Buttons start at index 1 instead of index 0 like the
@@ -822,8 +822,8 @@ extern "C" {
     /// - `count`: a pointer filled in with the number of haptic devices
     ///   returned, may be NULL.
     /// - Returns a 0 terminated array of haptic device instance IDs or NULL on
-    ///   failure; call SDL_GetError() for more information. This should be
-    ///   freed with SDL_free() when it is no longer needed.
+    ///   failure; call [`SDL_GetError()`] for more information. This should be
+    ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -838,7 +838,7 @@ extern "C" {
     ///
     /// - `instance_id`: the haptic device instance ID.
     /// - Returns the name of the selected haptic device. If no name can be found,
-    ///   this function returns NULL; call SDL_GetError() for more
+    ///   this function returns NULL; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -855,11 +855,11 @@ extern "C" {
     /// system.
     ///
     /// When opening a haptic device, its gain will be set to maximum and
-    /// autocenter will be disabled. To modify these values use SDL_SetHapticGain()
-    /// and SDL_SetHapticAutocenter().
+    /// autocenter will be disabled. To modify these values use [`SDL_SetHapticGain()`]
+    /// and [`SDL_SetHapticAutocenter()`].
     ///
     /// - `instance_id`: the haptic device instance ID.
-    /// - Returns the device identifier or NULL on failure; call SDL_GetError() for
+    /// - Returns the device identifier or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -874,11 +874,11 @@ extern "C" {
 }
 
 extern "C" {
-    /// Get the SDL_Haptic associated with an instance ID, if it has been opened.
+    /// Get the [`SDL_Haptic`] associated with an instance ID, if it has been opened.
     ///
-    /// - `instance_id`: the instance ID to get the SDL_Haptic for.
-    /// - Returns an SDL_Haptic on success or NULL on failure or if it hasn't been
-    ///   opened yet; call SDL_GetError() for more information.
+    /// - `instance_id`: the instance ID to get the [`SDL_Haptic`] for.
+    /// - Returns an [`SDL_Haptic`] on success or NULL on failure or if it hasn't been
+    ///   opened yet; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetHapticFromID(instance_id: SDL_HapticID) -> *mut SDL_Haptic;
@@ -887,9 +887,9 @@ extern "C" {
 extern "C" {
     /// Get the instance ID of an opened haptic device.
     ///
-    /// - `haptic`: the SDL_Haptic device to query.
+    /// - `haptic`: the [`SDL_Haptic`] device to query.
     /// - Returns the instance ID of the specified haptic device on success or 0 on
-    ///   failure; call SDL_GetError() for more information.
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetHapticID(haptic: *mut SDL_Haptic) -> SDL_HapticID;
@@ -898,9 +898,9 @@ extern "C" {
 extern "C" {
     /// Get the implementation dependent name of a haptic device.
     ///
-    /// - `haptic`: the SDL_Haptic obtained from SDL_OpenJoystick().
+    /// - `haptic`: the [`SDL_Haptic`] obtained from [`SDL_OpenJoystick()`].
     /// - Returns the name of the selected haptic device. If no name can be found,
-    ///   this function returns NULL; call SDL_GetError() for more
+    ///   this function returns NULL; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -924,7 +924,7 @@ extern "C" {
     /// Try to open a haptic device from the current mouse.
     ///
     /// - Returns the haptic device identifier or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -936,7 +936,7 @@ extern "C" {
 extern "C" {
     /// Query if a joystick has haptic features.
     ///
-    /// - `joystick`: the SDL_Joystick to test for haptic capabilities.
+    /// - `joystick`: the [`SDL_Joystick`] to test for haptic capabilities.
     /// - Returns true if the joystick is haptic or false if it isn't.
     ///
     /// This function is available since SDL 3.0.0.
@@ -956,9 +956,9 @@ extern "C" {
     /// device will also get unallocated and you'll be unable to use force feedback
     /// on that device.
     ///
-    /// - `joystick`: the SDL_Joystick to create a haptic device from.
+    /// - `joystick`: the [`SDL_Joystick`] to create a haptic device from.
     /// - Returns a valid haptic device identifier on success or NULL on failure;
-    ///   call SDL_GetError() for more information.
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -968,9 +968,9 @@ extern "C" {
 }
 
 extern "C" {
-    /// Close a haptic device previously opened with SDL_OpenHaptic().
+    /// Close a haptic device previously opened with [`SDL_OpenHaptic()`].
     ///
-    /// - `haptic`: the SDL_Haptic device to close.
+    /// - `haptic`: the [`SDL_Haptic`] device to close.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -983,11 +983,11 @@ extern "C" {
     ///
     /// On some platforms this isn't fully supported, and therefore is an
     /// approximation. Always check to see if your created effect was actually
-    /// created and do not rely solely on SDL_GetMaxHapticEffects().
+    /// created and do not rely solely on [`SDL_GetMaxHapticEffects()`].
     ///
-    /// - `haptic`: the SDL_Haptic device to query.
+    /// - `haptic`: the [`SDL_Haptic`] device to query.
     /// - Returns the number of effects the haptic device can store or a negative
-    ///   error code on failure; call SDL_GetError() for more information.
+    ///   error code on failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1001,9 +1001,9 @@ extern "C" {
     ///
     /// This is not supported on all platforms, but will always return a value.
     ///
-    /// - `haptic`: the SDL_Haptic device to query maximum playing effects.
+    /// - `haptic`: the [`SDL_Haptic`] device to query maximum playing effects.
     /// - Returns the number of effects the haptic device can play at the same time
-    ///   or -1 on failure; call SDL_GetError() for more information.
+    ///   or -1 on failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1015,9 +1015,9 @@ extern "C" {
 extern "C" {
     /// Get the haptic device's supported features in bitwise manner.
     ///
-    /// - `haptic`: the SDL_Haptic device to query.
+    /// - `haptic`: the [`SDL_Haptic`] device to query.
     /// - Returns a list of supported haptic features in bitwise manner (OR'd), or 0
-    ///   on failure; call SDL_GetError() for more information.
+    ///   on failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1030,11 +1030,11 @@ extern "C" {
     /// Get the number of haptic axes the device has.
     ///
     /// The number of haptic axes might be useful if working with the
-    /// SDL_HapticDirection effect.
+    /// [`SDL_HapticDirection`] effect.
     ///
-    /// - `haptic`: the SDL_Haptic device to query.
+    /// - `haptic`: the [`SDL_Haptic`] device to query.
     /// - Returns the number of axes on success or -1 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetNumHapticAxes(haptic: *mut SDL_Haptic) -> ::core::ffi::c_int;
@@ -1043,7 +1043,7 @@ extern "C" {
 extern "C" {
     /// Check to see if an effect is supported by a haptic device.
     ///
-    /// - `haptic`: the SDL_Haptic device to query.
+    /// - `haptic`: the [`SDL_Haptic`] device to query.
     /// - `effect`: the desired effect to query.
     /// - Returns true if the effect is supported or false if it isn't.
     ///
@@ -1060,11 +1060,11 @@ extern "C" {
 extern "C" {
     /// Create a new haptic effect on a specified device.
     ///
-    /// - `haptic`: an SDL_Haptic device to create the effect on.
-    /// - `effect`: an SDL_HapticEffect structure containing the properties of
+    /// - `haptic`: an [`SDL_Haptic`] device to create the effect on.
+    /// - `effect`: an [`SDL_HapticEffect`] structure containing the properties of
     ///   the effect to create.
     /// - Returns the ID of the effect on success or -1 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1083,13 +1083,13 @@ extern "C" {
     /// Can be used dynamically, although behavior when dynamically changing
     /// direction may be strange. Specifically the effect may re-upload itself and
     /// start playing from the start. You also cannot change the type either when
-    /// running SDL_UpdateHapticEffect().
+    /// running [`SDL_UpdateHapticEffect()`].
     ///
-    /// - `haptic`: the SDL_Haptic device that has the effect.
+    /// - `haptic`: the [`SDL_Haptic`] device that has the effect.
     /// - `effect`: the identifier of the effect to update.
-    /// - `data`: an SDL_HapticEffect structure containing the new effect
+    /// - `data`: an [`SDL_HapticEffect`] structure containing the new effect
     ///   properties to use.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1112,11 +1112,11 @@ extern "C" {
     /// set the effect's `length` in its structure/union to `SDL_HAPTIC_INFINITY`
     /// instead.
     ///
-    /// - `haptic`: the SDL_Haptic device to run the effect on.
+    /// - `haptic`: the [`SDL_Haptic`] device to run the effect on.
     /// - `effect`: the ID of the haptic effect to run.
     /// - `iterations`: the number of iterations to run the effect; use
     ///   `SDL_HAPTIC_INFINITY` to repeat forever.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1134,9 +1134,9 @@ extern "C" {
 extern "C" {
     /// Stop the haptic effect on its associated haptic device.
     ///
-    /// - `haptic`: the SDL_Haptic device to stop the effect on.
+    /// - `haptic`: the [`SDL_Haptic`] device to stop the effect on.
     /// - `effect`: the ID of the haptic effect to stop.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1155,7 +1155,7 @@ extern "C" {
     /// This will stop the effect if it's running. Effects are automatically
     /// destroyed when the device is closed.
     ///
-    /// - `haptic`: the SDL_Haptic device to destroy the effect on.
+    /// - `haptic`: the [`SDL_Haptic`] device to destroy the effect on.
     /// - `effect`: the ID of the haptic effect to destroy.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1167,9 +1167,9 @@ extern "C" {
 extern "C" {
     /// Get the status of the current effect on the specified haptic device.
     ///
-    /// Device must support the SDL_HAPTIC_STATUS feature.
+    /// Device must support the [`SDL_HAPTIC_STATUS`] feature.
     ///
-    /// - `haptic`: the SDL_Haptic device to query for the effect status on.
+    /// - `haptic`: the [`SDL_Haptic`] device to query for the effect status on.
     /// - `effect`: the ID of the haptic effect to query its status.
     /// - Returns true if it is playing, false if it isn't playing or haptic status
     ///   isn't supported.
@@ -1186,17 +1186,17 @@ extern "C" {
 extern "C" {
     /// Set the global gain of the specified haptic device.
     ///
-    /// Device must support the SDL_HAPTIC_GAIN feature.
+    /// Device must support the [`SDL_HAPTIC_GAIN`] feature.
     ///
     /// The user may specify the maximum gain by setting the environment variable
     /// `SDL_HAPTIC_GAIN_MAX` which should be between 0 and 100. All calls to
-    /// SDL_SetHapticGain() will scale linearly using `SDL_HAPTIC_GAIN_MAX` as the
+    /// [`SDL_SetHapticGain()`] will scale linearly using `SDL_HAPTIC_GAIN_MAX` as the
     /// maximum.
     ///
-    /// - `haptic`: the SDL_Haptic device to set the gain on.
+    /// - `haptic`: the [`SDL_Haptic`] device to set the gain on.
     /// - `gain`: value to set the gain to, should be between 0 and 100 (0 -
     ///   100).
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1214,11 +1214,11 @@ extern "C" {
     /// Autocenter should be between 0 and 100. Setting it to 0 will disable
     /// autocentering.
     ///
-    /// Device must support the SDL_HAPTIC_AUTOCENTER feature.
+    /// Device must support the [`SDL_HAPTIC_AUTOCENTER`] feature.
     ///
-    /// - `haptic`: the SDL_Haptic device to set autocentering on.
+    /// - `haptic`: the [`SDL_Haptic`] device to set autocentering on.
     /// - `autocenter`: value to set autocenter to (0-100).
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1233,14 +1233,14 @@ extern "C" {
 extern "C" {
     /// Pause a haptic device.
     ///
-    /// Device must support the `SDL_HAPTIC_PAUSE` feature. Call SDL_ResumeHaptic()
+    /// Device must support the `SDL_HAPTIC_PAUSE` feature. Call [`SDL_ResumeHaptic()`]
     /// to resume playback.
     ///
     /// Do not modify the effects nor add new ones while the device is paused. That
     /// can cause all sorts of weird errors.
     ///
-    /// - `haptic`: the SDL_Haptic device to pause.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `haptic`: the [`SDL_Haptic`] device to pause.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1252,10 +1252,10 @@ extern "C" {
 extern "C" {
     /// Resume a haptic device.
     ///
-    /// Call to unpause after SDL_PauseHaptic().
+    /// Call to unpause after [`SDL_PauseHaptic()`].
     ///
-    /// - `haptic`: the SDL_Haptic device to unpause.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `haptic`: the [`SDL_Haptic`] device to unpause.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1267,8 +1267,8 @@ extern "C" {
 extern "C" {
     /// Stop all the currently playing effects on a haptic device.
     ///
-    /// - `haptic`: the SDL_Haptic device to stop.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `haptic`: the [`SDL_Haptic`] device to stop.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1294,7 +1294,7 @@ extern "C" {
     /// Initialize a haptic device for simple rumble playback.
     ///
     /// - `haptic`: the haptic device to initialize for simple rumble playback.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1311,7 +1311,7 @@ extern "C" {
     /// - `haptic`: the haptic device to play the rumble effect on.
     /// - `strength`: strength of the rumble to play as a 0-1 float value.
     /// - `length`: length of the rumble to play in milliseconds.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1329,7 +1329,7 @@ extern "C" {
     /// Stop the simple rumble on a haptic device.
     ///
     /// - `haptic`: the haptic device to stop the rumble effect on.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.

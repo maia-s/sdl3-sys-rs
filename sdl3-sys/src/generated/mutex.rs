@@ -13,13 +13,13 @@ extern "C" {
     ///
     /// All newly-created mutexes begin in the _unlocked_ state.
     ///
-    /// Calls to SDL_LockMutex() will not return while the mutex is locked by
-    /// another thread. See SDL_TryLockMutex() to attempt to lock without blocking.
+    /// Calls to [`SDL_LockMutex()`] will not return while the mutex is locked by
+    /// another thread. See [`SDL_TryLockMutex()`] to attempt to lock without blocking.
     ///
     /// SDL mutexes are reentrant.
     ///
     /// - Returns the initialized and unlocked mutex or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -57,7 +57,7 @@ extern "C" {
 extern "C" {
     /// Try to lock a mutex without blocking.
     ///
-    /// This works just like SDL_LockMutex(), but if the mutex is not available,
+    /// This works just like [`SDL_LockMutex()`], but if the mutex is not available,
     /// this function returns false immediately.
     ///
     /// This technique is useful if you need exclusive access to a resource but
@@ -95,7 +95,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Destroy a mutex created with SDL_CreateMutex().
+    /// Destroy a mutex created with [`SDL_CreateMutex()`].
     ///
     /// This function must be called on any mutex that is no longer needed. Failure
     /// to destroy a mutex will result in a system memory or resource leak. While
@@ -128,9 +128,9 @@ extern "C" {
     ///
     /// All newly-created read/write locks begin in the _unlocked_ state.
     ///
-    /// Calls to SDL_LockRWLockForReading() and SDL_LockRWLockForWriting will not
+    /// Calls to [`SDL_LockRWLockForReading()`] and [`SDL_LockRWLockForWriting`] will not
     /// return while the rwlock is locked _for writing_ by another thread. See
-    /// SDL_TryLockRWLockForReading() and SDL_TryLockRWLockForWriting() to attempt
+    /// [`SDL_TryLockRWLockForReading()`] and [`SDL_TryLockRWLockForWriting()`] to attempt
     /// to lock without blocking.
     ///
     /// SDL read/write locks are only recursive for read-only locks! They are not
@@ -140,7 +140,7 @@ extern "C" {
     /// promote your read-only lock to a write lock without unlocking first).
     ///
     /// - Returns the initialized and unlocked read/write lock or NULL on failure;
-    ///   call SDL_GetError() for more information.
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -224,7 +224,7 @@ extern "C" {
 extern "C" {
     /// Try to lock a read/write lock _for reading_ without blocking.
     ///
-    /// This works just like SDL_LockRWLockForReading(), but if the rwlock is not
+    /// This works just like [`SDL_LockRWLockForReading()`], but if the rwlock is not
     /// available, then this function returns false immediately.
     ///
     /// This technique is useful if you need access to a resource but don't want to
@@ -249,7 +249,7 @@ extern "C" {
 extern "C" {
     /// Try to lock a read/write lock _for writing_ without blocking.
     ///
-    /// This works just like SDL_LockRWLockForWriting(), but if the rwlock is not
+    /// This works just like [`SDL_LockRWLockForWriting()`], but if the rwlock is not
     /// available, then this function returns false immediately.
     ///
     /// This technique is useful if you need exclusive access to a resource but
@@ -302,7 +302,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Destroy a read/write lock created with SDL_CreateRWLock().
+    /// Destroy a read/write lock created with [`SDL_CreateRWLock()`].
     ///
     /// This function must be called on any read/write lock that is no longer
     /// needed. Failure to destroy a rwlock will result in a system memory or
@@ -328,7 +328,7 @@ extern "C" {
     /// wake waiting threads and allow them to retry the wait operation.
     ///
     /// - `initial_value`: the starting value of the semaphore.
-    /// - Returns a new semaphore or NULL on failure; call SDL_GetError() for more
+    /// - Returns a new semaphore or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -363,7 +363,7 @@ extern "C" {
     /// `sem` has a positive value, and then atomically decrement the semaphore
     /// value.
     ///
-    /// This function is the equivalent of calling SDL_WaitSemaphoreTimeout() with
+    /// This function is the equivalent of calling [`SDL_WaitSemaphoreTimeout()`] with
     /// a time length of -1.
     ///
     /// - `sem`: the semaphore wait on.
@@ -444,7 +444,7 @@ extern "C" {
 extern "C" {
     /// Create a condition variable.
     ///
-    /// - Returns a new condition variable or NULL on failure; call SDL_GetError()
+    /// - Returns a new condition variable or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -502,7 +502,7 @@ extern "C" {
     /// Wait until a condition variable is signaled.
     ///
     /// This function unlocks the specified `mutex` and waits for another thread to
-    /// call SDL_SignalCondition() or SDL_BroadcastCondition() on the condition
+    /// call [`SDL_SignalCondition()`] or [`SDL_BroadcastCondition()`] on the condition
     /// variable `cond`. Once the condition variable is signaled, the mutex is
     /// re-locked and the function returns.
     ///
@@ -510,7 +510,7 @@ extern "C" {
     /// recursively (more than once) is not supported and leads to undefined
     /// behavior.
     ///
-    /// This function is the equivalent of calling SDL_WaitConditionTimeout() with
+    /// This function is the equivalent of calling [`SDL_WaitConditionTimeout()`] with
     /// a time length of -1.
     ///
     /// - `cond`: the condition variable to wait on.
@@ -530,7 +530,7 @@ extern "C" {
     /// Wait until a condition variable is signaled or a certain time has passed.
     ///
     /// This function unlocks the specified `mutex` and waits for another thread to
-    /// call SDL_SignalCondition() or SDL_BroadcastCondition() on the condition
+    /// call [`SDL_SignalCondition()`] or [`SDL_BroadcastCondition()`] on the condition
     /// variable `cond`, or for the specified time to elapse. Once the condition
     /// variable is signaled or the time elapsed, the mutex is re-locked and the
     /// function returns.
@@ -560,7 +560,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-/// The current status of an SDL_InitState structure.
+/// The current status of an [`SDL_InitState`] structure.
 ///
 /// This enum is available since SDL 3.0.0.
 ///
@@ -658,7 +658,7 @@ extern "C" {
     /// that's done before returning.
     ///
     /// If this function returns true, the calling code must call
-    /// SDL_SetInitialized() to complete the initialization.
+    /// [`SDL_SetInitialized()`] to complete the initialization.
     ///
     /// - `state`: the initialization state to check.
     /// - Returns true if initialization needs to be done, false otherwise.
@@ -679,7 +679,7 @@ extern "C" {
     /// sets the status to `SDL_INIT_STATUS_UNINITIALIZING` and returns true.
     ///
     /// If this function returns true, the calling code must call
-    /// SDL_SetInitialized() to complete the cleanup.
+    /// [`SDL_SetInitialized()`] to complete the cleanup.
     ///
     /// - `state`: the initialization state to check.
     /// - Returns true if cleanup needs to be done, false otherwise.

@@ -1,4 +1,4 @@
-//! SDL_Surface definition and management functions.
+//! [`SDL_Surface`] definition and management functions.
 
 use super::stdinc::*;
 
@@ -14,7 +14,7 @@ use super::rect::*;
 
 use super::iostream::*;
 
-/// The flags on an SDL_Surface.
+/// The flags on an [`SDL_Surface`].
 ///
 /// These are generally considered read-only.
 ///
@@ -30,7 +30,7 @@ pub const SDL_SURFACE_LOCK_NEEDED: ::core::primitive::u32 = 2_u32;
 /// Surface is currently locked
 pub const SDL_SURFACE_LOCKED: ::core::primitive::u32 = 4_u32;
 
-/// Surface uses pixel memory allocated with SDL_aligned_alloc()
+/// Surface uses pixel memory allocated with [`SDL_aligned_alloc()`]
 pub const SDL_SURFACE_SIMD_ALIGNED: ::core::primitive::u32 = 8_u32;
 
 /// The scaling mode.
@@ -144,9 +144,9 @@ extern "C" {
     ///
     /// - `width`: the width of the surface.
     /// - `height`: the height of the surface.
-    /// - `format`: the SDL_PixelFormat for the new surface's pixel format.
-    /// - Returns the new SDL_Surface structure that is created or NULL on failure;
-    ///   call SDL_GetError() for more information.
+    /// - `format`: the [`SDL_PixelFormat`] for the new surface's pixel format.
+    /// - Returns the new [`SDL_Surface`] structure that is created or NULL on failure;
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -174,11 +174,11 @@ extern "C" {
     ///
     /// - `width`: the width of the surface.
     /// - `height`: the height of the surface.
-    /// - `format`: the SDL_PixelFormat for the new surface's pixel format.
+    /// - `format`: the [`SDL_PixelFormat`] for the new surface's pixel format.
     /// - `pixels`: a pointer to existing pixel data.
     /// - `pitch`: the number of bytes between each row, including padding.
-    /// - Returns the new SDL_Surface structure that is created or NULL on failure;
-    ///   call SDL_GetError() for more information.
+    /// - Returns the new [`SDL_Surface`] structure that is created or NULL on failure;
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -198,7 +198,7 @@ extern "C" {
     ///
     /// It is safe to pass NULL to this function.
     ///
-    /// - `surface`: the SDL_Surface to free.
+    /// - `surface`: the [`SDL_Surface`] to free.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -228,9 +228,9 @@ extern "C" {
     ///   where N is a floating point scale factor applied in linear space, and
     ///   "none", which disables tone mapping. This defaults to "chrome".
     ///
-    /// - `surface`: the SDL_Surface structure to query.
+    /// - `surface`: the [`SDL_Surface`] structure to query.
     /// - Returns a valid property ID on success or 0 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetSurfaceProperties(surface: *mut SDL_Surface) -> SDL_PropertiesID;
@@ -249,10 +249,10 @@ extern "C" {
     /// Setting the colorspace doesn't change the pixels, only how they are
     /// interpreted in color operations.
     ///
-    /// - `surface`: the SDL_Surface structure to update.
-    /// - `colorspace`: an SDL_ColorSpace value describing the surface
+    /// - `surface`: the [`SDL_Surface`] structure to update.
+    /// - `colorspace`: an [`SDL_ColorSpace`] value describing the surface
     ///   colorspace.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -267,12 +267,12 @@ extern "C" {
 extern "C" {
     /// Get the colorspace used by a surface.
     ///
-    /// The colorspace defaults to SDL_COLORSPACE_SRGB_LINEAR for floating point
-    /// formats, SDL_COLORSPACE_HDR10 for 10-bit formats, SDL_COLORSPACE_SRGB for
-    /// other RGB surfaces and SDL_COLORSPACE_BT709_FULL for YUV textures.
+    /// The colorspace defaults to [`SDL_COLORSPACE_SRGB_LINEAR`] for floating point
+    /// formats, [`SDL_COLORSPACE_HDR10`] for 10-bit formats, [`SDL_COLORSPACE_SRGB`] for
+    /// other RGB surfaces and [`SDL_COLORSPACE_BT709_FULL`] for YUV textures.
     ///
-    /// - `surface`: the SDL_Surface structure to query.
-    /// - Returns the colorspace used by the surface, or SDL_COLORSPACE_UNKNOWN if
+    /// - `surface`: the [`SDL_Surface`] structure to query.
+    /// - Returns the colorspace used by the surface, or [`SDL_COLORSPACE_UNKNOWN`] if
     ///   the surface is NULL.
     ///
     /// This function is available since SDL 3.0.0.
@@ -290,17 +290,17 @@ extern "C" {
     /// destroy the returned palette, it will be freed when the reference count
     /// reaches 0, usually when the surface is destroyed.
     ///
-    /// Bitmap surfaces (with format SDL_PIXELFORMAT_INDEX1LSB or
-    /// SDL_PIXELFORMAT_INDEX1MSB) will have the palette initialized with 0 as
+    /// Bitmap surfaces (with format [`SDL_PIXELFORMAT_INDEX1LSB`] or
+    /// [`SDL_PIXELFORMAT_INDEX1MSB`]) will have the palette initialized with 0 as
     /// white and 1 as black. Other surfaces will get a palette initialized with
     /// white in every entry.
     ///
     /// If this function is called for a surface that already has a palette, a new
     /// palette will be created to replace it.
     ///
-    /// - `surface`: the SDL_Surface structure to update.
-    /// - Returns a new SDL_Palette structure on success or NULL on failure (e.g. if
-    ///   the surface didn't have an index format); call SDL_GetError() for
+    /// - `surface`: the [`SDL_Surface`] structure to update.
+    /// - Returns a new [`SDL_Palette`] structure on success or NULL on failure (e.g. if
+    ///   the surface didn't have an index format); call [`SDL_GetError()`] for
     ///   more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -314,9 +314,9 @@ extern "C" {
     ///
     /// A single palette can be shared with many surfaces.
     ///
-    /// - `surface`: the SDL_Surface structure to update.
-    /// - `palette`: the SDL_Palette structure to use.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `surface`: the [`SDL_Surface`] structure to update.
+    /// - `palette`: the [`SDL_Palette`] structure to use.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -332,7 +332,7 @@ extern "C" {
 extern "C" {
     /// Get the palette used by a surface.
     ///
-    /// - `surface`: the SDL_Surface structure to query.
+    /// - `surface`: the [`SDL_Surface`] structure to query.
     /// - Returns a pointer to the palette used by the surface, or NULL if there is
     ///   no palette used.
     ///
@@ -351,12 +351,12 @@ extern "C" {
     /// alternate versions will not be updated when the original surface changes.
     ///
     /// This function adds a reference to the alternate version, so you should call
-    /// SDL_DestroySurface() on the image after this call.
+    /// [`SDL_DestroySurface()`] on the image after this call.
     ///
-    /// - `surface`: the SDL_Surface structure to update.
-    /// - `image`: a pointer to an alternate SDL_Surface to associate with this
+    /// - `surface`: the [`SDL_Surface`] structure to update.
+    /// - `image`: a pointer to an alternate [`SDL_Surface`] to associate with this
     ///   surface.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -373,7 +373,7 @@ extern "C" {
 extern "C" {
     /// Return whether a surface has alternate versions available.
     ///
-    /// - `surface`: the SDL_Surface structure to query.
+    /// - `surface`: the [`SDL_Surface`] structure to query.
     /// - Returns true if alternate versions are available or true otherwise.
     ///
     /// This function is available since SDL 3.0.0.
@@ -394,12 +394,12 @@ extern "C" {
     /// They are still referenced by the surface being queried and will be cleaned
     /// up normally.
     ///
-    /// - `surface`: the SDL_Surface structure to query.
+    /// - `surface`: the [`SDL_Surface`] structure to query.
     /// - `count`: a pointer filled in with the number of surface pointers
     ///   returned, may be NULL.
-    /// - Returns a NULL terminated array of SDL_Surface pointers or NULL on
-    ///   failure; call SDL_GetError() for more information. This should be
-    ///   freed with SDL_free() when it is no longer needed.
+    /// - Returns a NULL terminated array of [`SDL_Surface`] pointers or NULL on
+    ///   failure; call [`SDL_GetError()`] for more information. This should be
+    ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -418,7 +418,7 @@ extern "C" {
     /// This function removes a reference from all the alternative versions,
     /// destroying them if this is the last reference to them.
     ///
-    /// - `surface`: the SDL_Surface structure to update.
+    /// - `surface`: the [`SDL_Surface`] structure to update.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -431,17 +431,17 @@ extern "C" {
 extern "C" {
     /// Set up a surface for directly accessing the pixels.
     ///
-    /// Between calls to SDL_LockSurface() / SDL_UnlockSurface(), you can write to
+    /// Between calls to [`SDL_LockSurface()`] / [`SDL_UnlockSurface()`], you can write to
     /// and read from `surface->pixels`, using the pixel format stored in
     /// `surface->format`. Once you are done accessing the surface, you should use
-    /// SDL_UnlockSurface() to release it.
+    /// [`SDL_UnlockSurface()`] to release it.
     ///
     /// Not all surfaces require locking. If `SDL_MUSTLOCK(surface)` evaluates to
     /// 0, then you can read and write to the surface at any time, and the pixel
     /// format of the surface will not change.
     ///
-    /// - `surface`: the SDL_Surface structure to be locked.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `surface`: the [`SDL_Surface`] structure to be locked.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -454,7 +454,7 @@ extern "C" {
 extern "C" {
     /// Release a surface after directly accessing the pixels.
     ///
-    /// - `surface`: the SDL_Surface structure to be unlocked.
+    /// - `surface`: the [`SDL_Surface`] structure to be unlocked.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -465,14 +465,14 @@ extern "C" {
 extern "C" {
     /// Load a BMP image from a seekable SDL data stream.
     ///
-    /// The new surface should be freed with SDL_DestroySurface(). Not doing so
+    /// The new surface should be freed with [`SDL_DestroySurface()`]. Not doing so
     /// will result in a memory leak.
     ///
     /// - `src`: the data stream for the surface.
-    /// - `closeio`: if true, calls SDL_CloseIO() on `src` before returning, even
+    /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `src` before returning, even
     ///   in the case of an error.
-    /// - Returns a pointer to a new SDL_Surface structure or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    /// - Returns a pointer to a new [`SDL_Surface`] structure or NULL on failure; call
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -488,12 +488,12 @@ extern "C" {
 extern "C" {
     /// Load a BMP image from a file.
     ///
-    /// The new surface should be freed with SDL_DestroySurface(). Not doing so
+    /// The new surface should be freed with [`SDL_DestroySurface()`]. Not doing so
     /// will result in a memory leak.
     ///
     /// - `file`: the BMP file to load.
-    /// - Returns a pointer to a new SDL_Surface structure or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    /// - Returns a pointer to a new [`SDL_Surface`] structure or NULL on failure; call
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -512,11 +512,11 @@ extern "C" {
     /// surface before they are saved. YUV and paletted 1-bit and 4-bit formats are
     /// not supported.
     ///
-    /// - `surface`: the SDL_Surface structure containing the image to be saved.
+    /// - `surface`: the [`SDL_Surface`] structure containing the image to be saved.
     /// - `dst`: a data stream to save to.
-    /// - `closeio`: if true, calls SDL_CloseIO() on `dst` before returning, even
+    /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `dst` before returning, even
     ///   in the case of an error.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -539,9 +539,9 @@ extern "C" {
     /// surface before they are saved. YUV and paletted 1-bit and 4-bit formats are
     /// not supported.
     ///
-    /// - `surface`: the SDL_Surface structure containing the image to be saved.
+    /// - `surface`: the [`SDL_Surface`] structure containing the image to be saved.
     /// - `file`: a file to save to.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -560,9 +560,9 @@ extern "C" {
     /// If RLE is enabled, color key and alpha blending blits are much faster, but
     /// the surface must be locked before directly accessing the pixels.
     ///
-    /// - `surface`: the SDL_Surface structure to optimize.
+    /// - `surface`: the [`SDL_Surface`] structure to optimize.
     /// - `enabled`: true to enable RLE acceleration, false to disable it.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -581,7 +581,7 @@ extern "C" {
     ///
     /// It is safe to pass a NULL `surface` here; it will return false.
     ///
-    /// - `surface`: the SDL_Surface structure to query.
+    /// - `surface`: the [`SDL_Surface`] structure to query.
     /// - Returns true if the surface is RLE enabled, false otherwise.
     ///
     /// This function is available since SDL 3.0.0.
@@ -598,12 +598,12 @@ extern "C" {
     /// considered transparent, and therefore not rendered.
     ///
     /// It is a pixel of the format used by the surface, as generated by
-    /// SDL_MapRGB().
+    /// [`SDL_MapRGB()`].
     ///
-    /// - `surface`: the SDL_Surface structure to update.
+    /// - `surface`: the [`SDL_Surface`] structure to update.
     /// - `enabled`: true to enable color key, false to disable color key.
     /// - `key`: the transparent pixel.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -623,7 +623,7 @@ extern "C" {
     ///
     /// It is safe to pass a NULL `surface` here; it will return false.
     ///
-    /// - `surface`: the SDL_Surface structure to query.
+    /// - `surface`: the [`SDL_Surface`] structure to query.
     /// - Returns true if the surface has a color key, false otherwise.
     ///
     /// This function is available since SDL 3.0.0.
@@ -637,13 +637,13 @@ extern "C" {
     /// Get the color key (transparent pixel) for a surface.
     ///
     /// The color key is a pixel of the format used by the surface, as generated by
-    /// SDL_MapRGB().
+    /// [`SDL_MapRGB()`].
     ///
     /// If the surface doesn't have color key enabled this function returns false.
     ///
-    /// - `surface`: the SDL_Surface structure to query.
+    /// - `surface`: the [`SDL_Surface`] structure to query.
     /// - `key`: a pointer filled in with the transparent pixel.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -665,11 +665,11 @@ extern "C" {
     ///
     /// `srcC = srcC * (color / 255)`
     ///
-    /// - `surface`: the SDL_Surface structure to update.
+    /// - `surface`: the [`SDL_Surface`] structure to update.
     /// - `r`: the red color value multiplied into blit operations.
     /// - `g`: the green color value multiplied into blit operations.
     /// - `b`: the blue color value multiplied into blit operations.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -687,11 +687,11 @@ extern "C" {
 extern "C" {
     /// Get the additional color value multiplied into blit operations.
     ///
-    /// - `surface`: the SDL_Surface structure to query.
+    /// - `surface`: the [`SDL_Surface`] structure to query.
     /// - `r`: a pointer filled in with the current red color value.
     /// - `g`: a pointer filled in with the current green color value.
     /// - `b`: a pointer filled in with the current blue color value.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -714,9 +714,9 @@ extern "C" {
     ///
     /// `srcA = srcA * (alpha / 255)`
     ///
-    /// - `surface`: the SDL_Surface structure to update.
+    /// - `surface`: the [`SDL_Surface`] structure to update.
     /// - `alpha`: the alpha value multiplied into blit operations.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -732,9 +732,9 @@ extern "C" {
 extern "C" {
     /// Get the additional alpha value used in blit operations.
     ///
-    /// - `surface`: the SDL_Surface structure to query.
+    /// - `surface`: the [`SDL_Surface`] structure to query.
     /// - `alpha`: a pointer filled in with the current alpha value.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -754,9 +754,9 @@ extern "C" {
     /// existing data, the blendmode of the SOURCE surface should be set to
     /// `SDL_BLENDMODE_NONE`.
     ///
-    /// - `surface`: the SDL_Surface structure to update.
-    /// - `blendMode`: the SDL_BlendMode to use for blit blending.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `surface`: the [`SDL_Surface`] structure to update.
+    /// - `blendMode`: the [`SDL_BlendMode`] to use for blit blending.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -771,9 +771,9 @@ extern "C" {
 extern "C" {
     /// Get the blend mode used for blit operations.
     ///
-    /// - `surface`: the SDL_Surface structure to query.
-    /// - `blendMode`: a pointer filled in with the current SDL_BlendMode.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `surface`: the [`SDL_Surface`] structure to query.
+    /// - `blendMode`: a pointer filled in with the current [`SDL_BlendMode`].
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -794,8 +794,8 @@ extern "C" {
     /// Note that blits are automatically clipped to the edges of the source and
     /// destination surfaces.
     ///
-    /// - `surface`: the SDL_Surface structure to be clipped.
-    /// - `rect`: the SDL_Rect structure representing the clipping rectangle, or
+    /// - `surface`: the [`SDL_Surface`] structure to be clipped.
+    /// - `rect`: the [`SDL_Rect`] structure representing the clipping rectangle, or
     ///   NULL to disable clipping.
     /// - Returns true if the rectangle intersects the surface, otherwise false and
     ///   blits will be completely clipped.
@@ -815,11 +815,11 @@ extern "C" {
     /// When `surface` is the destination of a blit, only the area within the clip
     /// rectangle is drawn into.
     ///
-    /// - `surface`: the SDL_Surface structure representing the surface to be
+    /// - `surface`: the [`SDL_Surface`] structure representing the surface to be
     ///   clipped.
-    /// - `rect`: an SDL_Rect structure filled in with the clipping rectangle for
+    /// - `rect`: an [`SDL_Rect`] structure filled in with the clipping rectangle for
     ///   the surface.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -836,7 +836,7 @@ extern "C" {
     ///
     /// - `surface`: the surface to flip.
     /// - `flip`: the direction to flip.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -852,10 +852,10 @@ extern "C" {
     /// If the original surface has alternate images, the new surface will have a
     /// reference to them as well.
     ///
-    /// The returned surface should be freed with SDL_DestroySurface().
+    /// The returned surface should be freed with [`SDL_DestroySurface()`].
     ///
     /// - `surface`: the surface to duplicate.
-    /// - Returns a copy of the surface or NULL on failure; call SDL_GetError() for
+    /// - Returns a copy of the surface or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -868,13 +868,13 @@ extern "C" {
     /// Creates a new surface identical to the existing surface, scaled to the
     /// desired size.
     ///
-    /// The returned surface should be freed with SDL_DestroySurface().
+    /// The returned surface should be freed with [`SDL_DestroySurface()`].
     ///
     /// - `surface`: the surface to duplicate and scale.
     /// - `width`: the width of the new surface.
     /// - `height`: the height of the new surface.
-    /// - `scaleMode`: the SDL_ScaleMode to be used.
-    /// - Returns a copy of the surface or NULL on failure; call SDL_GetError() for
+    /// - `scaleMode`: the [`SDL_ScaleMode`] to be used.
+    /// - Returns a copy of the surface or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -897,15 +897,15 @@ extern "C" {
     /// future blits, making them faster.
     ///
     /// If you are converting to an indexed surface and want to map colors to a
-    /// palette, you can use SDL_ConvertSurfaceAndColorspace() instead.
+    /// palette, you can use [`SDL_ConvertSurfaceAndColorspace()`] instead.
     ///
     /// If the original surface has alternate images, the new surface will have a
     /// reference to them as well.
     ///
-    /// - `surface`: the existing SDL_Surface structure to convert.
+    /// - `surface`: the existing [`SDL_Surface`] structure to convert.
     /// - `format`: the new pixel format.
-    /// - Returns the new SDL_Surface structure that is created or NULL on failure;
-    ///   call SDL_GetError() for more information.
+    /// - Returns the new [`SDL_Surface`] structure that is created or NULL on failure;
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -928,13 +928,13 @@ extern "C" {
     /// If the original surface has alternate images, the new surface will have a
     /// reference to them as well.
     ///
-    /// - `surface`: the existing SDL_Surface structure to convert.
+    /// - `surface`: the existing [`SDL_Surface`] structure to convert.
     /// - `format`: the new pixel format.
     /// - `palette`: an optional palette to use for indexed formats, may be NULL.
     /// - `colorspace`: the new colorspace.
-    /// - `props`: an SDL_PropertiesID with additional color properties, or 0.
-    /// - Returns the new SDL_Surface structure that is created or NULL on failure;
-    ///   call SDL_GetError() for more information.
+    /// - `props`: an [`SDL_PropertiesID`] with additional color properties, or 0.
+    /// - Returns the new [`SDL_Surface`] structure that is created or NULL on failure;
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -955,13 +955,13 @@ extern "C" {
     ///
     /// - `width`: the width of the block to copy, in pixels.
     /// - `height`: the height of the block to copy, in pixels.
-    /// - `src_format`: an SDL_PixelFormat value of the `src` pixels format.
+    /// - `src_format`: an [`SDL_PixelFormat`] value of the `src` pixels format.
     /// - `src`: a pointer to the source pixels.
     /// - `src_pitch`: the pitch of the source pixels, in bytes.
-    /// - `dst_format`: an SDL_PixelFormat value of the `dst` pixels format.
+    /// - `dst_format`: an [`SDL_PixelFormat`] value of the `dst` pixels format.
     /// - `dst`: a pointer to be filled in with new pixel data.
     /// - `dst_pitch`: the pitch of the destination pixels, in bytes.
-    /// - Returns false on success or false on failure; call SDL_GetError() for more
+    /// - Returns false on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -985,21 +985,21 @@ extern "C" {
     ///
     /// - `width`: the width of the block to copy, in pixels.
     /// - `height`: the height of the block to copy, in pixels.
-    /// - `src_format`: an SDL_PixelFormat value of the `src` pixels format.
-    /// - `src_colorspace`: an SDL_ColorSpace value describing the colorspace of
+    /// - `src_format`: an [`SDL_PixelFormat`] value of the `src` pixels format.
+    /// - `src_colorspace`: an [`SDL_ColorSpace`] value describing the colorspace of
     ///   the `src` pixels.
-    /// - `src_properties`: an SDL_PropertiesID with additional source color
+    /// - `src_properties`: an [`SDL_PropertiesID`] with additional source color
     ///   properties, or 0.
     /// - `src`: a pointer to the source pixels.
     /// - `src_pitch`: the pitch of the source pixels, in bytes.
-    /// - `dst_format`: an SDL_PixelFormat value of the `dst` pixels format.
-    /// - `dst_colorspace`: an SDL_ColorSpace value describing the colorspace of
+    /// - `dst_format`: an [`SDL_PixelFormat`] value of the `dst` pixels format.
+    /// - `dst_colorspace`: an [`SDL_ColorSpace`] value describing the colorspace of
     ///   the `dst` pixels.
-    /// - `dst_properties`: an SDL_PropertiesID with additional destination color
+    /// - `dst_properties`: an [`SDL_PropertiesID`] with additional destination color
     ///   properties, or 0.
     /// - `dst`: a pointer to be filled in with new pixel data.
     /// - `dst_pitch`: the pitch of the destination pixels, in bytes.
-    /// - Returns false on success or false on failure; call SDL_GetError() for more
+    /// - Returns false on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1028,15 +1028,15 @@ extern "C" {
     ///
     /// - `width`: the width of the block to convert, in pixels.
     /// - `height`: the height of the block to convert, in pixels.
-    /// - `src_format`: an SDL_PixelFormat value of the `src` pixels format.
+    /// - `src_format`: an [`SDL_PixelFormat`] value of the `src` pixels format.
     /// - `src`: a pointer to the source pixels.
     /// - `src_pitch`: the pitch of the source pixels, in bytes.
-    /// - `dst_format`: an SDL_PixelFormat value of the `dst` pixels format.
+    /// - `dst_format`: an [`SDL_PixelFormat`] value of the `dst` pixels format.
     /// - `dst`: a pointer to be filled in with premultiplied pixel data.
     /// - `dst_pitch`: the pitch of the destination pixels, in bytes.
     /// - `linear`: true to convert from sRGB to linear space for the alpha
     ///   multiplication, false to do multiplication in sRGB space.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1061,7 +1061,7 @@ extern "C" {
     /// - `surface`: the surface to modify.
     /// - `linear`: true to convert from sRGB to linear space for the alpha
     ///   multiplication, false to do multiplication in sRGB space.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1079,12 +1079,12 @@ extern "C" {
     /// If the surface is YUV, the color is assumed to be in the sRGB colorspace,
     /// otherwise the color is assumed to be in the colorspace of the suface.
     ///
-    /// - `surface`: the SDL_Surface to clear.
+    /// - `surface`: the [`SDL_Surface`] to clear.
     /// - `r`: the red component of the pixel, normally in the range 0-1.
     /// - `g`: the green component of the pixel, normally in the range 0-1.
     /// - `b`: the blue component of the pixel, normally in the range 0-1.
     /// - `a`: the alpha component of the pixel, normally in the range 0-1.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1101,19 +1101,19 @@ extern "C" {
     /// Perform a fast fill of a rectangle with a specific color.
     ///
     /// `color` should be a pixel of the format used by the surface, and can be
-    /// generated by SDL_MapRGB() or SDL_MapRGBA(). If the color value contains an
+    /// generated by [`SDL_MapRGB()`] or [`SDL_MapRGBA()`]. If the color value contains an
     /// alpha component then the destination is simply filled with that alpha
     /// information, no blending takes place.
     ///
     /// If there is a clip rectangle set on the destination (set via
-    /// SDL_SetSurfaceClipRect()), then this function will fill based on the
+    /// [`SDL_SetSurfaceClipRect()`]), then this function will fill based on the
     /// intersection of the clip rectangle and `rect`.
     ///
-    /// - `dst`: the SDL_Surface structure that is the drawing target.
-    /// - `rect`: the SDL_Rect structure representing the rectangle to fill, or
+    /// - `dst`: the [`SDL_Surface`] structure that is the drawing target.
+    /// - `rect`: the [`SDL_Rect`] structure representing the rectangle to fill, or
     ///   NULL to fill the entire surface.
     /// - `color`: the color to fill with.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1130,19 +1130,19 @@ extern "C" {
     /// Perform a fast fill of a set of rectangles with a specific color.
     ///
     /// `color` should be a pixel of the format used by the surface, and can be
-    /// generated by SDL_MapRGB() or SDL_MapRGBA(). If the color value contains an
+    /// generated by [`SDL_MapRGB()`] or [`SDL_MapRGBA()`]. If the color value contains an
     /// alpha component then the destination is simply filled with that alpha
     /// information, no blending takes place.
     ///
     /// If there is a clip rectangle set on the destination (set via
-    /// SDL_SetSurfaceClipRect()), then this function will fill based on the
+    /// [`SDL_SetSurfaceClipRect()`]), then this function will fill based on the
     /// intersection of the clip rectangle and `rect`.
     ///
-    /// - `dst`: the SDL_Surface structure that is the drawing target.
-    /// - `rects`: an array of SDL_Rects representing the rectangles to fill.
+    /// - `dst`: the [`SDL_Surface`] structure that is the drawing target.
+    /// - `rects`: an array of [`SDL_Rects`] representing the rectangles to fill.
     /// - `count`: the number of rectangles in the array.
     /// - `color`: the color to fill with.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1209,16 +1209,16 @@ extern "C" {
     ///       source color key.
     /// ```
     ///
-    /// - `src`: the SDL_Surface structure to be copied from.
-    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be
+    /// - `src`: the [`SDL_Surface`] structure to be copied from.
+    /// - `srcrect`: the [`SDL_Rect`] structure representing the rectangle to be
     ///   copied, or NULL to copy the entire surface.
-    /// - `dst`: the SDL_Surface structure that is the blit target.
-    /// - `dstrect`: the SDL_Rect structure representing the x and y position in
+    /// - `dst`: the [`SDL_Surface`] structure that is the blit target.
+    /// - `dstrect`: the [`SDL_Rect`] structure representing the x and y position in
     ///   the destination surface, or NULL for (0,0). The width and
     ///   height are ignored, and are copied from `srcrect`. If you
     ///   want a specific width and height, you should use
-    ///   SDL_BlitSurfaceScaled().
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    ///   [`SDL_BlitSurfaceScaled()`].
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: The same destination surface should not be used from two
@@ -1242,13 +1242,13 @@ extern "C" {
     /// This is a semi-private blit function and it performs low-level surface
     /// blitting, assuming the input rectangles have already been clipped.
     ///
-    /// - `src`: the SDL_Surface structure to be copied from.
-    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be
+    /// - `src`: the [`SDL_Surface`] structure to be copied from.
+    /// - `srcrect`: the [`SDL_Rect`] structure representing the rectangle to be
     ///   copied, may not be NULL.
-    /// - `dst`: the SDL_Surface structure that is the blit target.
-    /// - `dstrect`: the SDL_Rect structure representing the target rectangle in
+    /// - `dst`: the [`SDL_Surface`] structure that is the blit target.
+    /// - `dstrect`: the [`SDL_Rect`] structure representing the target rectangle in
     ///   the destination surface, may not be NULL.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: The same destination surface should not be used from two
@@ -1270,15 +1270,15 @@ extern "C" {
     /// Perform a scaled blit to a destination surface, which may be of a different
     /// format.
     ///
-    /// - `src`: the SDL_Surface structure to be copied from.
-    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be
+    /// - `src`: the [`SDL_Surface`] structure to be copied from.
+    /// - `srcrect`: the [`SDL_Rect`] structure representing the rectangle to be
     ///   copied, or NULL to copy the entire surface.
-    /// - `dst`: the SDL_Surface structure that is the blit target.
-    /// - `dstrect`: the SDL_Rect structure representing the target rectangle in
+    /// - `dst`: the [`SDL_Surface`] structure that is the blit target.
+    /// - `dstrect`: the [`SDL_Rect`] structure representing the target rectangle in
     ///   the destination surface, or NULL to fill the entire
     ///   destination surface.
-    /// - `scaleMode`: the SDL_ScaleMode to be used.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `scaleMode`: the [`SDL_ScaleMode`] to be used.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: The same destination surface should not be used from two
@@ -1303,14 +1303,14 @@ extern "C" {
     /// This is a semi-private function and it performs low-level surface blitting,
     /// assuming the input rectangles have already been clipped.
     ///
-    /// - `src`: the SDL_Surface structure to be copied from.
-    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be
+    /// - `src`: the [`SDL_Surface`] structure to be copied from.
+    /// - `srcrect`: the [`SDL_Rect`] structure representing the rectangle to be
     ///   copied, may not be NULL.
-    /// - `dst`: the SDL_Surface structure that is the blit target.
-    /// - `dstrect`: the SDL_Rect structure representing the target rectangle in
+    /// - `dst`: the [`SDL_Surface`] structure that is the blit target.
+    /// - `dstrect`: the [`SDL_Rect`] structure representing the target rectangle in
     ///   the destination surface, may not be NULL.
-    /// - `scaleMode`: the SDL_ScaleMode to be used.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `scaleMode`: the [`SDL_ScaleMode`] to be used.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: The same destination surface should not be used from two
@@ -1336,13 +1336,13 @@ extern "C" {
     /// The pixels in `srcrect` will be repeated as many times as needed to
     /// completely fill `dstrect`.
     ///
-    /// - `src`: the SDL_Surface structure to be copied from.
-    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be
+    /// - `src`: the [`SDL_Surface`] structure to be copied from.
+    /// - `srcrect`: the [`SDL_Rect`] structure representing the rectangle to be
     ///   copied, or NULL to copy the entire surface.
-    /// - `dst`: the SDL_Surface structure that is the blit target.
-    /// - `dstrect`: the SDL_Rect structure representing the target rectangle in
+    /// - `dst`: the [`SDL_Surface`] structure that is the blit target.
+    /// - `dstrect`: the [`SDL_Rect`] structure representing the target rectangle in
     ///   the destination surface, or NULL to fill the entire surface.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: The same destination surface should not be used from two
@@ -1367,17 +1367,17 @@ extern "C" {
     /// The pixels in `srcrect` will be scaled and repeated as many times as needed
     /// to completely fill `dstrect`.
     ///
-    /// - `src`: the SDL_Surface structure to be copied from.
-    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be
+    /// - `src`: the [`SDL_Surface`] structure to be copied from.
+    /// - `srcrect`: the [`SDL_Rect`] structure representing the rectangle to be
     ///   copied, or NULL to copy the entire surface.
     /// - `scale`: the scale used to transform srcrect into the destination
     ///   rectangle, e.g. a 32x32 texture with a scale of 2 would fill
     ///   64x64 tiles.
     /// - `scaleMode`: scale algorithm to be used.
-    /// - `dst`: the SDL_Surface structure that is the blit target.
-    /// - `dstrect`: the SDL_Rect structure representing the target rectangle in
+    /// - `dst`: the [`SDL_Surface`] structure that is the blit target.
+    /// - `dstrect`: the [`SDL_Rect`] structure representing the target rectangle in
     ///   the destination surface, or NULL to fill the entire surface.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: The same destination surface should not be used from two
@@ -1407,8 +1407,8 @@ extern "C" {
     /// into the corners of the destination rectangle. The sides and center are
     /// then stretched into place to cover the remaining destination rectangle.
     ///
-    /// - `src`: the SDL_Surface structure to be copied from.
-    /// - `srcrect`: the SDL_Rect structure representing the rectangle to be used
+    /// - `src`: the [`SDL_Surface`] structure to be copied from.
+    /// - `srcrect`: the [`SDL_Rect`] structure representing the rectangle to be used
     ///   for the 9-grid, or NULL to use the entire surface.
     /// - `left_width`: the width, in pixels, of the left corners in `srcrect`.
     /// - `right_width`: the width, in pixels, of the right corners in `srcrect`.
@@ -1418,10 +1418,10 @@ extern "C" {
     /// - `scale`: the scale used to transform the corner of `srcrect` into the
     ///   corner of `dstrect`, or 0.0f for an unscaled blit.
     /// - `scaleMode`: scale algorithm to be used.
-    /// - `dst`: the SDL_Surface structure that is the blit target.
-    /// - `dstrect`: the SDL_Rect structure representing the target rectangle in
+    /// - `dst`: the [`SDL_Surface`] structure that is the blit target.
+    /// - `dstrect`: the [`SDL_Rect`] structure representing the target rectangle in
     ///   the destination surface, or NULL to fill the entire surface.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: The same destination surface should not be used from two
@@ -1518,7 +1518,7 @@ extern "C" {
     /// This function prioritizes correctness over speed: it is suitable for unit
     /// tests, but is not intended for use in a game engine.
     ///
-    /// Like SDL_GetRGBA, this uses the entire 0..255 range when converting color
+    /// Like [`SDL_GetRGBA`], this uses the entire 0..255 range when converting color
     /// components from pixel formats with less than 8 bits per RGB component.
     ///
     /// - `surface`: the surface to read.
@@ -1532,7 +1532,7 @@ extern "C" {
     ///   ignore this channel.
     /// - `a`: a pointer filled in with the alpha channel, 0-255, or NULL to
     ///   ignore this channel.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1564,7 +1564,7 @@ extern "C" {
     ///   0-1, or NULL to ignore this channel.
     /// - `a`: a pointer filled in with the alpha channel, normally in the range
     ///   0-1, or NULL to ignore this channel.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1585,7 +1585,7 @@ extern "C" {
     /// This function prioritizes correctness over speed: it is suitable for unit
     /// tests, but is not intended for use in a game engine.
     ///
-    /// Like SDL_MapRGBA, this uses the entire 0..255 range when converting color
+    /// Like [`SDL_MapRGBA`], this uses the entire 0..255 range when converting color
     /// components from pixel formats with less than 8 bits per RGB component.
     ///
     /// - `surface`: the surface to write.
@@ -1595,7 +1595,7 @@ extern "C" {
     /// - `g`: the green channel value, 0-255.
     /// - `b`: the blue channel value, 0-255.
     /// - `a`: the alpha channel value, 0-255.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1623,7 +1623,7 @@ extern "C" {
     /// - `g`: the green channel value, normally in the range 0-1.
     /// - `b`: the blue channel value, normally in the range 0-1.
     /// - `a`: the alpha channel value, normally in the range 0-1.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.

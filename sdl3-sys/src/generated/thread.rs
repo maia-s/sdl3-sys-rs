@@ -13,7 +13,7 @@ emit! {}
 
 /// A unique numeric ID that identifies a thread.
 ///
-/// These are different from SDL_Thread objects, which are generally what an
+/// These are different from [`SDL_Thread`] objects, which are generally what an
 /// application will operate on, but having a way to uniquely identify a thread
 /// can be useful at times.
 ///
@@ -38,8 +38,8 @@ pub type SDL_TLSID = SDL_AtomicInt;
 ///
 /// SDL will make system changes as necessary in order to apply the thread
 /// priority. Code which attempts to control thread state related to priority
-/// should be aware that calling SDL_SetThreadPriority may alter such state.
-/// SDL_HINT_THREAD_PRIORITY_POLICY can be used to control aspects of this
+/// should be aware that calling [`SDL_SetThreadPriority`] may alter such state.
+/// [`SDL_HINT_THREAD_PRIORITY_POLICY`] can be used to control aspects of this
 /// behavior.
 ///
 /// This enum is available since SDL 3.0.0.
@@ -66,10 +66,10 @@ pub const SDL_THREAD_PRIORITY_NORMAL: SDL_ThreadPriority = SDL_ThreadPriority::N
 pub const SDL_THREAD_PRIORITY_HIGH: SDL_ThreadPriority = SDL_ThreadPriority::HIGH;
 pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPriority::TIME_CRITICAL;
 
-/// The function passed to SDL_CreateThread() as the new thread's entry point.
+/// The function passed to [`SDL_CreateThread()`] as the new thread's entry point.
 ///
-/// - `data`: what was passed as `data` to SDL_CreateThread().
-/// - Returns a value that can be reported through SDL_WaitThread().
+/// - `data`: what was passed as `data` to [`SDL_CreateThread()`].
+/// - Returns a value that can be reported through [`SDL_WaitThread()`].
 ///
 /// This datatype is available since SDL 3.0.0.
 pub type SDL_ThreadFunction = ::core::option::Option<
@@ -82,7 +82,7 @@ emit! {
         /// Create a new thread with a default stack size.
         ///
         /// This is a convenience function, equivalent to calling
-        /// SDL_CreateThreadWithProperties with the following properties set:
+        /// [`SDL_CreateThreadWithProperties`] with the following properties set:
         ///
         /// - `SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER`: `fn`
         /// - `SDL_PROP_THREAD_CREATE_NAME_STRING`: `name`
@@ -97,11 +97,11 @@ emit! {
         /// Usually, apps should just call this function the same way on every platform
         /// and let the macros hide the details.
         ///
-        /// - `fn`: the SDL_ThreadFunction function to call in the new thread.
+        /// - `fn`: the [`SDL_ThreadFunction`] function to call in the new thread.
         /// - `name`: the name of the thread.
         /// - `data`: a pointer that is passed to `fn`.
         /// - Returns an opaque pointer to the new thread object on success, NULL if the
-        ///   new thread could not be created; call SDL_GetError() for more
+        ///   new thread could not be created; call [`SDL_GetError()`] for more
         ///   information.
         ///
         /// This function is available since SDL 3.0.0.
@@ -116,7 +116,7 @@ emit! {
         ///
         /// These are the supported properties:
         ///
-        /// - `SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER`: an SDL_ThreadFunction
+        /// - `SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER`: an [`SDL_ThreadFunction`]
         ///   value that will be called at the start of the new thread's life.
         ///   Required.
         /// - `SDL_PROP_THREAD_CREATE_NAME_STRING`: the name of the new thread, which
@@ -142,7 +142,7 @@ emit! {
         ///
         /// If a system imposes requirements, SDL will try to munge the string for it
         /// (truncate, etc), but the original string contents will be available from
-        /// SDL_GetThreadName().
+        /// [`SDL_GetThreadName()`].
         ///
         /// The size (in bytes) of the new stack can be specified with
         /// `SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER`. Zero means "use the system
@@ -167,7 +167,7 @@ emit! {
         ///
         /// - `props`: the properties to use.
         /// - Returns an opaque pointer to the new thread object on success, NULL if the
-        ///   new thread could not be created; call SDL_GetError() for more
+        ///   new thread could not be created; call [`SDL_GetError()`] for more
         ///   information.
         ///
         /// This function is available since SDL 3.0.0.
@@ -204,15 +204,15 @@ emit! {}
 #[cfg(not(doc))]
 emit! {
     extern "C" {
-        /// The actual entry point for SDL_CreateThread.
+        /// The actual entry point for [`SDL_CreateThread`].
         ///
-        /// - `fn`: the SDL_ThreadFunction function to call in the new thread
+        /// - `fn`: the [`SDL_ThreadFunction`] function to call in the new thread
         /// - `name`: the name of the thread
         /// - `data`: a pointer that is passed to `fn`
         /// - `pfnBeginThread`: the C runtime's _beginthreadex (or whatnot). Can be NULL.
         /// - `pfnEndThread`: the C runtime's _endthreadex (or whatnot). Can be NULL.
         /// - Returns an opaque pointer to the new thread object on success, NULL if the
-        ///   new thread could not be created; call SDL_GetError() for more
+        ///   new thread could not be created; call [`SDL_GetError()`] for more
         ///   information.
         ///
         /// This function is available since SDL 3.0.0.
@@ -220,13 +220,13 @@ emit! {
     }
 
     extern "C" {
-        /// The actual entry point for SDL_CreateThreadWithProperties.
+        /// The actual entry point for [`SDL_CreateThreadWithProperties`].
         ///
         /// - `props`: the properties to use
         /// - `pfnBeginThread`: the C runtime's _beginthreadex (or whatnot). Can be NULL.
         /// - `pfnEndThread`: the C runtime's _endthreadex (or whatnot). Can be NULL.
         /// - Returns an opaque pointer to the new thread object on success, NULL if the
-        ///   new thread could not be created; call SDL_GetError() for more
+        ///   new thread could not be created; call [`SDL_GetError()`] for more
         ///   information.
         ///
         /// This function is available since SDL 3.0.0.
@@ -270,7 +270,7 @@ emit! {
 }
 
 extern "C" {
-    /// Get the thread name as it was specified in SDL_CreateThread().
+    /// Get the thread name as it was specified in [`SDL_CreateThread()`].
     ///
     /// - `thread`: the thread to query.
     /// - Returns a pointer to a UTF-8 string that names the specified thread, or
@@ -322,8 +322,8 @@ extern "C" {
     /// promote the thread to a higher priority) at all, and some require you to be
     /// an administrator account. Be prepared for this to fail.
     ///
-    /// - `priority`: the SDL_ThreadPriority to set.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `priority`: the [`SDL_ThreadPriority`] to set.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -336,15 +336,15 @@ extern "C" {
     /// Threads that haven't been detached will remain (as a "zombie") until this
     /// function cleans them up. Not doing so is a resource leak.
     ///
-    /// Once a thread has been cleaned up through this function, the SDL_Thread
+    /// Once a thread has been cleaned up through this function, the [`SDL_Thread`]
     /// that references it becomes invalid and should not be referenced again. As
-    /// such, only one thread may call SDL_WaitThread() on another.
+    /// such, only one thread may call [`SDL_WaitThread()`] on another.
     ///
     /// The return code for the thread function is placed in the area pointed to by
     /// `status`, if `status` is not NULL.
     ///
     /// You may not wait on a thread that has been used in a call to
-    /// SDL_DetachThread(). Use either that function or this one, but not both, or
+    /// [`SDL_DetachThread()`]. Use either that function or this one, but not both, or
     /// behavior is undefined.
     ///
     /// It is safe to pass a NULL thread to this function; it is a no-op.
@@ -352,8 +352,8 @@ extern "C" {
     /// Note that the thread pointer is freed by this function and is not valid
     /// afterward.
     ///
-    /// - `thread`: the SDL_Thread pointer that was returned from the
-    ///   SDL_CreateThread() call that started this thread.
+    /// - `thread`: the [`SDL_Thread`] pointer that was returned from the
+    ///   [`SDL_CreateThread()`] call that started this thread.
     /// - `status`: pointer to an integer that will receive the value returned
     ///   from the thread function by its 'return', or NULL to not
     ///   receive such value back.
@@ -369,30 +369,30 @@ extern "C" {
     /// Let a thread clean up on exit without intervention.
     ///
     /// A thread may be "detached" to signify that it should not remain until
-    /// another thread has called SDL_WaitThread() on it. Detaching a thread is
+    /// another thread has called [`SDL_WaitThread()`] on it. Detaching a thread is
     /// useful for long-running threads that nothing needs to synchronize with or
     /// further manage. When a detached thread is done, it simply goes away.
     ///
     /// There is no way to recover the return code of a detached thread. If you
-    /// need this, don't detach the thread and instead use SDL_WaitThread().
+    /// need this, don't detach the thread and instead use [`SDL_WaitThread()`].
     ///
-    /// Once a thread is detached, you should usually assume the SDL_Thread isn't
+    /// Once a thread is detached, you should usually assume the [`SDL_Thread`] isn't
     /// safe to reference again, as it will become invalid immediately upon the
     /// detached thread's exit, instead of remaining until someone has called
-    /// SDL_WaitThread() to finally clean it up. As such, don't detach the same
+    /// [`SDL_WaitThread()`] to finally clean it up. As such, don't detach the same
     /// thread more than once.
     ///
-    /// If a thread has already exited when passed to SDL_DetachThread(), it will
-    /// stop waiting for a call to SDL_WaitThread() and clean up immediately. It is
-    /// not safe to detach a thread that might be used with SDL_WaitThread().
+    /// If a thread has already exited when passed to [`SDL_DetachThread()`], it will
+    /// stop waiting for a call to [`SDL_WaitThread()`] and clean up immediately. It is
+    /// not safe to detach a thread that might be used with [`SDL_WaitThread()`].
     ///
-    /// You may not call SDL_WaitThread() on a thread that has been detached. Use
+    /// You may not call [`SDL_WaitThread()`] on a thread that has been detached. Use
     /// either that function or this one, but not both, or behavior is undefined.
     ///
     /// It is safe to pass NULL to this function; it is a no-op.
     ///
-    /// - `thread`: the SDL_Thread pointer that was returned from the
-    ///   SDL_CreateThread() call that started this thread.
+    /// - `thread`: the [`SDL_Thread`] pointer that was returned from the
+    ///   [`SDL_CreateThread()`] call that started this thread.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -406,7 +406,7 @@ extern "C" {
     ///
     /// - `id`: a pointer to the thread local storage ID, may not be NULL.
     /// - Returns the value associated with the ID for the current thread or NULL if
-    ///   no value has been set; call SDL_GetError() for more information.
+    ///   no value has been set; call [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -416,11 +416,11 @@ extern "C" {
     pub fn SDL_GetTLS(id: *mut SDL_TLSID) -> *mut ::core::ffi::c_void;
 }
 
-/// The callback used to cleanup data passed to SDL_SetTLS.
+/// The callback used to cleanup data passed to [`SDL_SetTLS`].
 ///
 /// This is called when a thread exits, to allow an app to free any resources.
 ///
-/// - `value`: a pointer previously handed to SDL_SetTLS.
+/// - `value`: a pointer previously handed to [`SDL_SetTLS`].
 ///
 /// This datatype is available since SDL 3.0.0.
 ///
@@ -445,7 +445,7 @@ extern "C" {
     /// - `value`: the value to associate with the ID for the current thread.
     /// - `destructor`: a function called when the thread exits, to free the
     ///   value, may be NULL.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.

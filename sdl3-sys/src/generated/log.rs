@@ -1,6 +1,6 @@
 //! Simple log messages with priorities and categories. A message's
-//! SDL_LogPriority signifies how important the message is. A message's
-//! SDL_LogCategory signifies from what domain it belongs to. Every category
+//! [`SDL_LogPriority`] signifies how important the message is. A message's
+//! [`SDL_LogCategory`] signifies from what domain it belongs to. Every category
 //! has a minimum priority specified: when a message belongs to that category,
 //! it will only be sent out if it has that minimum priority or higher.
 //!
@@ -8,7 +8,7 @@
 //! quiet by default.
 //!
 //! You can change the log verbosity programmatically using
-//! SDL_SetLogPriority() or with SDL_SetHint(SDL_HINT_LOGGING, ...), or with
+//! [`SDL_SetLogPriority()`] or with SDL_SetHint([`SDL_HINT_LOGGING`], ...), or with
 //! the "SDL_LOGGING" environment variable. This variable is a comma separated
 //! set of category=level tokens that define the default logging levels for SDL
 //! applications.
@@ -136,7 +136,7 @@ pub const SDL_LOG_PRIORITY_COUNT: SDL_LogPriority = SDL_LogPriority::COUNT;
 extern "C" {
     /// Set the priority of all log categories.
     ///
-    /// - `priority`: the SDL_LogPriority to assign.
+    /// - `priority`: the [`SDL_LogPriority`] to assign.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -151,7 +151,7 @@ extern "C" {
     /// Set the priority of a particular log category.
     ///
     /// - `category`: the category to assign a priority to.
-    /// - `priority`: the SDL_LogPriority to assign.
+    /// - `priority`: the [`SDL_LogPriority`] to assign.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -167,7 +167,7 @@ extern "C" {
     /// Get the priority of a particular log category.
     ///
     /// - `category`: the category to query.
-    /// - Returns the SDL_LogPriority for the requested category.
+    /// - Returns the [`SDL_LogPriority`] for the requested category.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -180,7 +180,7 @@ extern "C" {
 extern "C" {
     /// Reset all priorities to default.
     ///
-    /// This is called by SDL_Quit().
+    /// This is called by [`SDL_Quit()`].
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -194,14 +194,14 @@ extern "C" {
 extern "C" {
     /// Set the text prepended to log messages of a given priority.
     ///
-    /// By default SDL_LOG_PRIORITY_INFO and below have no prefix, and
-    /// SDL_LOG_PRIORITY_WARN and higher have a prefix showing their priority, e.g.
+    /// By default [`SDL_LOG_PRIORITY_INFO`] and below have no prefix, and
+    /// [`SDL_LOG_PRIORITY_WARN`] and higher have a prefix showing their priority, e.g.
     /// "WARNING: ".
     ///
-    /// - `priority`: the SDL_LogPriority to modify.
+    /// - `priority`: the [`SDL_LogPriority`] to modify.
     /// - `prefix`: the prefix to use for that log priority, or NULL to use no
     ///   prefix.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -217,7 +217,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Log a message with SDL_LOG_CATEGORY_APPLICATION and SDL_LOG_PRIORITY_INFO.
+    /// Log a message with [`SDL_LOG_CATEGORY_APPLICATION`] and [`SDL_LOG_PRIORITY_INFO`].
     ///
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the `fmt` string, if
@@ -240,7 +240,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Log a message with SDL_LOG_PRIORITY_TRACE.
+    /// Log a message with [`SDL_LOG_PRIORITY_TRACE`].
     ///
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
@@ -265,7 +265,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Log a message with SDL_LOG_PRIORITY_VERBOSE.
+    /// Log a message with [`SDL_LOG_PRIORITY_VERBOSE`].
     ///
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
@@ -288,7 +288,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Log a message with SDL_LOG_PRIORITY_DEBUG.
+    /// Log a message with [`SDL_LOG_PRIORITY_DEBUG`].
     ///
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
@@ -312,7 +312,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Log a message with SDL_LOG_PRIORITY_INFO.
+    /// Log a message with [`SDL_LOG_PRIORITY_INFO`].
     ///
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
@@ -336,7 +336,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Log a message with SDL_LOG_PRIORITY_WARN.
+    /// Log a message with [`SDL_LOG_PRIORITY_WARN`].
     ///
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
@@ -360,7 +360,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Log a message with SDL_LOG_PRIORITY_ERROR.
+    /// Log a message with [`SDL_LOG_PRIORITY_ERROR`].
     ///
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
@@ -384,7 +384,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Log a message with SDL_LOG_PRIORITY_CRITICAL.
+    /// Log a message with [`SDL_LOG_PRIORITY_CRITICAL`].
     ///
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
@@ -473,7 +473,7 @@ extern "C" {
 /// once.
 ///
 /// - `userdata`: what was passed as `userdata` to
-///   SDL_SetLogOutputFunction().
+///   [`SDL_SetLogOutputFunction()`].
 /// - `category`: the category of the message.
 /// - `priority`: the priority of the message.
 /// - `message`: the message being output.
@@ -491,7 +491,7 @@ pub type SDL_LogOutputFunction = ::core::option::Option<
 extern "C" {
     /// Get the current log output function.
     ///
-    /// - `callback`: an SDL_LogOutputFunction filled in with the current log
+    /// - `callback`: an [`SDL_LogOutputFunction`] filled in with the current log
     ///   callback.
     /// - `userdata`: a pointer filled in with the pointer that is passed to
     ///   `callback`.
@@ -510,7 +510,7 @@ extern "C" {
 extern "C" {
     /// Replace the default log output function with one of your own.
     ///
-    /// - `callback`: an SDL_LogOutputFunction to call instead of the default.
+    /// - `callback`: an [`SDL_LogOutputFunction`] to call instead of the default.
     /// - `userdata`: a pointer that is passed to `callback`.
     ///
     /// Thread safety: It is safe to call this function from any thread.

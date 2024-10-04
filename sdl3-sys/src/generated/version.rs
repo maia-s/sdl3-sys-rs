@@ -102,10 +102,10 @@ extern "C" {
     ///
     /// If you are linking to SDL dynamically, then it is possible that the current
     /// version will be different than the version you compiled against. This
-    /// function returns the current version, while SDL_VERSION is the version you
+    /// function returns the current version, while [`SDL_VERSION`] is the version you
     /// compiled with.
     ///
-    /// This function may be called safely at any time, even before SDL_Init().
+    /// This function may be called safely at any time, even before [`SDL_Init()`].
     ///
     /// - Returns the version of the linked library.
     ///
@@ -120,7 +120,7 @@ extern "C" {
     ///
     /// This value is the revision of the code you are linked with and may be
     /// different from the code you are compiling with, which is found in the
-    /// constant SDL_REVISION.
+    /// constant [`SDL_REVISION`].
     ///
     /// The revision is arbitrary string (a hash value) uniquely identifying the
     /// exact revision of the SDL library in use, and is only useful in comparing

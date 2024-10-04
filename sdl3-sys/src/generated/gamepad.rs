@@ -20,13 +20,13 @@
 //! add their own controller details through an environment variable if it's
 //! otherwise unknown to SDL.
 //!
-//! In order to use these functions, SDL_Init() must have been called with the
-//! SDL_INIT_GAMEPAD flag. This causes SDL to scan the system for gamepads, and
+//! In order to use these functions, [`SDL_Init()`] must have been called with the
+//! [`SDL_INIT_GAMEPAD`] flag. This causes SDL to scan the system for gamepads, and
 //! load appropriate drivers.
 //!
 //! If you would like to receive gamepad updates while the application is in
 //! the background, you should set the following hint before calling
-//! SDL_Init(): SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS
+//! [`SDL_Init()`]: [`SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS`]
 
 use super::stdinc::*;
 
@@ -112,7 +112,7 @@ pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 /// should allow remapping actions based on user preferences.
 ///
 /// You can query the labels for the face buttons using
-/// SDL_GetGamepadButtonLabel()
+/// [`SDL_GetGamepadButtonLabel()`]
 ///
 /// This enum is available since SDL 3.0.0.
 ///
@@ -232,14 +232,14 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
 
 /// The list of axes available on a gamepad
 ///
-/// Thumbstick axis values range from SDL_JOYSTICK_AXIS_MIN to
-/// SDL_JOYSTICK_AXIS_MAX, and are centered within ~8000 of zero, though
+/// Thumbstick axis values range from [`SDL_JOYSTICK_AXIS_MIN`] to
+/// [`SDL_JOYSTICK_AXIS_MAX`], and are centered within ~8000 of zero, though
 /// advanced UI will allow users to set or autodetect the dead zone, which
 /// varies between gamepads.
 ///
-/// Trigger axis values range from 0 (released) to SDL_JOYSTICK_AXIS_MAX (fully
-/// pressed) when reported by SDL_GetGamepadAxis(). Note that this is not the
-/// same range that will be reported by the lower-level SDL_GetJoystickAxis().
+/// Trigger axis values range from 0 (released) to [`SDL_JOYSTICK_AXIS_MAX`] (fully
+/// pressed) when reported by [`SDL_GetGamepadAxis()`]. Note that this is not the
+/// same range that will be reported by the lower-level [`SDL_GetJoystickAxis()`].
 ///
 /// This enum is available since SDL 3.0.0.
 ///
@@ -277,7 +277,7 @@ pub const SDL_GAMEPAD_AXIS_COUNT: SDL_GamepadAxis = SDL_GamepadAxis::COUNT;
 ///
 /// A gamepad is a collection of bindings that map arbitrary joystick buttons,
 /// axes and hat switches to specific positions on a generic console-style
-/// gamepad. This enum is used as part of SDL_GamepadBinding to specify those
+/// gamepad. This enum is used as part of [`SDL_GamepadBinding`] to specify those
 /// mappings.
 ///
 /// This enum is available since SDL 3.0.0.
@@ -372,7 +372,7 @@ extern "C" {
     /// existing gamepad.
     ///
     /// The mapping string has the format "GUID,name,mapping", where GUID is the
-    /// string value from SDL_GUIDToString(), name is the human readable string for
+    /// string value from [`SDL_GUIDToString()`], name is the human readable string for
     /// the device and mappings are gamepad mappings to joystick ones. Under
     /// Windows there is a reserved GUID of "xinput" that covers all XInput
     /// devices. The mapping format for joystick is:
@@ -391,7 +391,7 @@ extern "C" {
     ///
     /// - `mapping`: the mapping string.
     /// - Returns 1 if a new mapping is added, 0 if an existing mapping is updated,
-    ///   -1 on failure; call SDL_GetError() for more information.
+    ///   -1 on failure; call [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -403,7 +403,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Load a set of gamepad mappings from an SDL_IOStream.
+    /// Load a set of gamepad mappings from an [`SDL_IOStream`].
     ///
     /// You can call this function several times, if needed, to load different
     /// database files.
@@ -420,9 +420,9 @@ extern "C" {
     /// constrained environment.
     ///
     /// - `src`: the data stream for the mappings to be added.
-    /// - `closeio`: if true, calls SDL_CloseIO() on `src` before returning, even
+    /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `src` before returning, even
     ///   in the case of an error.
-    /// - Returns the number of mappings added or -1 on failure; call SDL_GetError()
+    /// - Returns the number of mappings added or -1 on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -453,7 +453,7 @@ extern "C" {
     /// Windows, etc).
     ///
     /// - `file`: the mappings file to load.
-    /// - Returns the number of mappings added or -1 on failure; call SDL_GetError()
+    /// - Returns the number of mappings added or -1 on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -472,7 +472,7 @@ extern "C" {
     ///
     /// This will generate gamepad events as needed if device mappings change.
     ///
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -485,8 +485,8 @@ extern "C" {
     /// - `count`: a pointer filled in with the number of mappings returned, can
     ///   be NULL.
     /// - Returns an array of the mapping strings, NULL-terminated, or NULL on
-    ///   failure; call SDL_GetError() for more information. This is a
-    ///   single allocation that should be freed with SDL_free() when it is
+    ///   failure; call [`SDL_GetError()`] for more information. This is a
+    ///   single allocation that should be freed with [`SDL_free()`] when it is
     ///   no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
@@ -497,8 +497,8 @@ extern "C" {
     /// Get the gamepad mapping string for a given GUID.
     ///
     /// - `guid`: a structure containing the GUID for which a mapping is desired.
-    /// - Returns a mapping string or NULL on failure; call SDL_GetError() for more
-    ///   information. This should be freed with SDL_free() when it is no
+    /// - Returns a mapping string or NULL on failure; call [`SDL_GetError()`] for more
+    ///   information. This should be freed with [`SDL_free()`] when it is no
     ///   longer needed.
     ///
     /// This function is available since SDL 3.0.0.
@@ -511,12 +511,12 @@ extern "C" {
 extern "C" {
     /// Get the current mapping of a gamepad.
     ///
-    /// Details about mappings are discussed with SDL_AddGamepadMapping().
+    /// Details about mappings are discussed with [`SDL_AddGamepadMapping()`].
     ///
     /// - `gamepad`: the gamepad you want to get the current mapping for.
     /// - Returns a string that has the gamepad's mapping or NULL if no mapping is
-    ///   available; call SDL_GetError() for more information. This should
-    ///   be freed with SDL_free() when it is no longer needed.
+    ///   available; call [`SDL_GetError()`] for more information. This should
+    ///   be freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -530,12 +530,12 @@ extern "C" {
 extern "C" {
     /// Set the current mapping of a joystick or gamepad.
     ///
-    /// Details about mappings are discussed with SDL_AddGamepadMapping().
+    /// Details about mappings are discussed with [`SDL_AddGamepadMapping()`].
     ///
     /// - `instance_id`: the joystick instance ID.
     /// - `mapping`: the mapping to use for this device, or NULL to clear the
     ///   mapping.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -565,8 +565,8 @@ extern "C" {
     /// - `count`: a pointer filled in with the number of gamepads returned, may
     ///   be NULL.
     /// - Returns a 0 terminated array of joystick instance IDs or NULL on failure;
-    ///   call SDL_GetError() for more information. This should be freed
-    ///   with SDL_free() when it is no longer needed.
+    ///   call [`SDL_GetError()`] for more information. This should be freed
+    ///   with [`SDL_free()`] when it is no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -596,7 +596,7 @@ extern "C" {
     ///
     /// - `instance_id`: the joystick instance ID.
     /// - Returns the name of the selected gamepad. If no name can be found, this
-    ///   function returns NULL; call SDL_GetError() for more information.
+    ///   function returns NULL; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -612,7 +612,7 @@ extern "C" {
     ///
     /// - `instance_id`: the joystick instance ID.
     /// - Returns the path of the selected gamepad. If no path can be found, this
-    ///   function returns NULL; call SDL_GetError() for more information.
+    ///   function returns NULL; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -742,7 +742,7 @@ extern "C" {
     ///
     /// - `instance_id`: the joystick instance ID.
     /// - Returns the mapping string. Returns NULL if no mapping is available. This
-    ///   should be freed with SDL_free() when it is no longer needed.
+    ///   should be freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -756,7 +756,7 @@ extern "C" {
     ///
     /// - `instance_id`: the joystick instance ID.
     /// - Returns a gamepad identifier or NULL if an error occurred; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -766,22 +766,22 @@ extern "C" {
 }
 
 extern "C" {
-    /// Get the SDL_Gamepad associated with a joystick instance ID, if it has been
+    /// Get the [`SDL_Gamepad`] associated with a joystick instance ID, if it has been
     /// opened.
     ///
     /// - `instance_id`: the joystick instance ID of the gamepad.
-    /// - Returns an SDL_Gamepad on success or NULL on failure or if it hasn't been
-    ///   opened yet; call SDL_GetError() for more information.
+    /// - Returns an [`SDL_Gamepad`] on success or NULL on failure or if it hasn't been
+    ///   opened yet; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetGamepadFromID(instance_id: SDL_JoystickID) -> *mut SDL_Gamepad;
 }
 
 extern "C" {
-    /// Get the SDL_Gamepad associated with a player index.
+    /// Get the [`SDL_Gamepad`] associated with a player index.
     ///
     /// - `player_index`: the player index, which different from the instance ID.
-    /// - Returns the SDL_Gamepad associated with a player index.
+    /// - Returns the [`SDL_Gamepad`] associated with a player index.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -809,9 +809,9 @@ extern "C" {
     ///   simple trigger rumble
     ///
     /// - `gamepad`: a gamepad identifier previously returned by
-    ///   SDL_OpenGamepad().
+    ///   [`SDL_OpenGamepad()`].
     /// - Returns a valid property ID on success or 0 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetGamepadProperties(gamepad: *mut SDL_Gamepad) -> SDL_PropertiesID;
@@ -833,9 +833,9 @@ extern "C" {
     /// Get the instance ID of an opened gamepad.
     ///
     /// - `gamepad`: a gamepad identifier previously returned by
-    ///   SDL_OpenGamepad().
+    ///   [`SDL_OpenGamepad()`].
     /// - Returns the instance ID of the specified gamepad on success or 0 on
-    ///   failure; call SDL_GetError() for more information.
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetGamepadID(gamepad: *mut SDL_Gamepad) -> SDL_JoystickID;
@@ -845,7 +845,7 @@ extern "C" {
     /// Get the implementation-dependent name for an opened gamepad.
     ///
     /// - `gamepad`: a gamepad identifier previously returned by
-    ///   SDL_OpenGamepad().
+    ///   [`SDL_OpenGamepad()`].
     /// - Returns the implementation dependent name for the gamepad, or NULL if
     ///   there is no name or the identifier passed is invalid.
     ///
@@ -859,7 +859,7 @@ extern "C" {
     /// Get the implementation-dependent path for an opened gamepad.
     ///
     /// - `gamepad`: a gamepad identifier previously returned by
-    ///   SDL_OpenGamepad().
+    ///   [`SDL_OpenGamepad()`].
     /// - Returns the implementation dependent path for the gamepad, or NULL if
     ///   there is no path or the identifier passed is invalid.
     ///
@@ -873,7 +873,7 @@ extern "C" {
     /// Get the type of an opened gamepad.
     ///
     /// - `gamepad`: the gamepad object to query.
-    /// - Returns the gamepad type, or SDL_GAMEPAD_TYPE_UNKNOWN if it's not
+    /// - Returns the gamepad type, or [`SDL_GAMEPAD_TYPE_UNKNOWN`] if it's not
     ///   available.
     ///
     /// This function is available since SDL 3.0.0.
@@ -886,7 +886,7 @@ extern "C" {
     /// Get the type of an opened gamepad, ignoring any mapping override.
     ///
     /// - `gamepad`: the gamepad object to query.
-    /// - Returns the gamepad type, or SDL_GAMEPAD_TYPE_UNKNOWN if it's not
+    /// - Returns the gamepad type, or [`SDL_GAMEPAD_TYPE_UNKNOWN`] if it's not
     ///   available.
     ///
     /// This function is available since SDL 3.0.0.
@@ -915,7 +915,7 @@ extern "C" {
     /// - `gamepad`: the gamepad object to adjust.
     /// - `player_index`: player index to assign to this gamepad, or -1 to clear
     ///   the player index and turn off player LEDs.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1011,7 +1011,7 @@ extern "C" {
     ///
     /// - `gamepad`: the gamepad object to query.
     /// - Returns the connection state on success or
-    ///   `SDL_JOYSTICK_CONNECTION_INVALID` on failure; call SDL_GetError()
+    ///   `SDL_JOYSTICK_CONNECTION_INVALID` on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1045,7 +1045,7 @@ extern "C" {
     /// Check if a gamepad has been opened and is currently connected.
     ///
     /// - `gamepad`: a gamepad identifier previously returned by
-    ///   SDL_OpenGamepad().
+    ///   [`SDL_OpenGamepad()`].
     /// - Returns true if the gamepad has been opened and is currently connected, or
     ///   false if not.
     ///
@@ -1056,17 +1056,17 @@ extern "C" {
 extern "C" {
     /// Get the underlying joystick from a gamepad.
     ///
-    /// This function will give you a SDL_Joystick object, which allows you to use
-    /// the SDL_Joystick functions with a SDL_Gamepad object. This would be useful
+    /// This function will give you a [`SDL_Joystick`] object, which allows you to use
+    /// the [`SDL_Joystick`] functions with a [`SDL_Gamepad`] object. This would be useful
     /// for getting a joystick's position at any given time, even if it hasn't
     /// moved (moving it would produce an event, which would have the axis' value).
     ///
-    /// The pointer returned is owned by the SDL_Gamepad. You should not call
-    /// SDL_CloseJoystick() on it, for example, since doing so will likely cause
+    /// The pointer returned is owned by the [`SDL_Gamepad`]. You should not call
+    /// [`SDL_CloseJoystick()`] on it, for example, since doing so will likely cause
     /// SDL to crash.
     ///
     /// - `gamepad`: the gamepad object that you want to get a joystick from.
-    /// - Returns an SDL_Joystick object, or NULL on failure; call SDL_GetError()
+    /// - Returns an [`SDL_Joystick`] object, or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1076,7 +1076,7 @@ extern "C" {
 extern "C" {
     /// Set the state of gamepad event processing.
     ///
-    /// If gamepad events are disabled, you must call SDL_UpdateGamepads() yourself
+    /// If gamepad events are disabled, you must call [`SDL_UpdateGamepads()`] yourself
     /// and check the state of the gamepad when you want gamepad information.
     ///
     /// - `enabled`: whether to process gamepad events or not.
@@ -1091,7 +1091,7 @@ extern "C" {
 extern "C" {
     /// Query the state of gamepad event processing.
     ///
-    /// If gamepad events are disabled, you must call SDL_UpdateGamepads() yourself
+    /// If gamepad events are disabled, you must call [`SDL_UpdateGamepads()`] yourself
     /// and check the state of the gamepad when you want gamepad information.
     ///
     /// - Returns true if gamepad events are being processed, false otherwise.
@@ -1108,8 +1108,8 @@ extern "C" {
     /// - `gamepad`: a gamepad.
     /// - `count`: a pointer filled in with the number of bindings returned.
     /// - Returns a NULL terminated array of pointers to bindings or NULL on
-    ///   failure; call SDL_GetError() for more information. This is a
-    ///   single allocation that should be freed with SDL_free() when it is
+    ///   failure; call [`SDL_GetError()`] for more information. This is a
+    ///   single allocation that should be freed with [`SDL_free()`] when it is
     ///   no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1131,15 +1131,15 @@ extern "C" {
 }
 
 extern "C" {
-    /// Convert a string into SDL_GamepadType enum.
+    /// Convert a string into [`SDL_GamepadType`] enum.
     ///
-    /// This function is called internally to translate SDL_Gamepad mapping strings
-    /// for the underlying joystick device into the consistent SDL_Gamepad mapping.
+    /// This function is called internally to translate [`SDL_Gamepad`] mapping strings
+    /// for the underlying joystick device into the consistent [`SDL_Gamepad`] mapping.
     /// You do not normally need to call this function unless you are parsing
-    /// SDL_Gamepad mappings in your own code.
+    /// [`SDL_Gamepad`] mappings in your own code.
     ///
-    /// - `str`: string representing a SDL_GamepadType type.
-    /// - Returns the SDL_GamepadType enum corresponding to the input string, or
+    /// - `str`: string representing a [`SDL_GamepadType`] type.
+    /// - Returns the [`SDL_GamepadType`] enum corresponding to the input string, or
     ///   `SDL_GAMEPAD_TYPE_UNKNOWN` if no match was found.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1149,12 +1149,12 @@ extern "C" {
 }
 
 extern "C" {
-    /// Convert from an SDL_GamepadType enum to a string.
+    /// Convert from an [`SDL_GamepadType`] enum to a string.
     ///
-    /// - `type`: an enum value for a given SDL_GamepadType.
+    /// - `type`: an enum value for a given [`SDL_GamepadType`].
     /// - Returns a string for the given type, or NULL if an invalid type is
     ///   specified. The string returned is of the format used by
-    ///   SDL_Gamepad mapping strings.
+    ///   [`SDL_Gamepad`] mapping strings.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1163,19 +1163,19 @@ extern "C" {
 }
 
 extern "C" {
-    /// Convert a string into SDL_GamepadAxis enum.
+    /// Convert a string into [`SDL_GamepadAxis`] enum.
     ///
-    /// This function is called internally to translate SDL_Gamepad mapping strings
-    /// for the underlying joystick device into the consistent SDL_Gamepad mapping.
+    /// This function is called internally to translate [`SDL_Gamepad`] mapping strings
+    /// for the underlying joystick device into the consistent [`SDL_Gamepad`] mapping.
     /// You do not normally need to call this function unless you are parsing
-    /// SDL_Gamepad mappings in your own code.
+    /// [`SDL_Gamepad`] mappings in your own code.
     ///
     /// Note specially that "righttrigger" and "lefttrigger" map to
     /// `SDL_GAMEPAD_AXIS_RIGHT_TRIGGER` and `SDL_GAMEPAD_AXIS_LEFT_TRIGGER`,
     /// respectively.
     ///
-    /// - `str`: string representing a SDL_Gamepad axis.
-    /// - Returns the SDL_GamepadAxis enum corresponding to the input string, or
+    /// - `str`: string representing a [`SDL_Gamepad`] axis.
+    /// - Returns the [`SDL_GamepadAxis`] enum corresponding to the input string, or
     ///   `SDL_GAMEPAD_AXIS_INVALID` if no match was found.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1185,12 +1185,12 @@ extern "C" {
 }
 
 extern "C" {
-    /// Convert from an SDL_GamepadAxis enum to a string.
+    /// Convert from an [`SDL_GamepadAxis`] enum to a string.
     ///
-    /// - `axis`: an enum value for a given SDL_GamepadAxis.
+    /// - `axis`: an enum value for a given [`SDL_GamepadAxis`].
     /// - Returns a string for the given axis, or NULL if an invalid axis is
     ///   specified. The string returned is of the format used by
-    ///   SDL_Gamepad mapping strings.
+    ///   [`SDL_Gamepad`] mapping strings.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1205,7 +1205,7 @@ extern "C" {
     /// that is all the information SDL has about the physical device.
     ///
     /// - `gamepad`: a gamepad.
-    /// - `axis`: an axis enum value (an SDL_GamepadAxis value).
+    /// - `axis`: an axis enum value (an [`SDL_GamepadAxis`] value).
     /// - Returns true if the gamepad has this axis, false otherwise.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1228,12 +1228,12 @@ extern "C" {
     ///
     /// Triggers range from 0 when released to 32767 when fully pressed, and never
     /// return a negative value. Note that this differs from the value reported by
-    /// the lower-level SDL_GetJoystickAxis(), which normally uses the full range.
+    /// the lower-level [`SDL_GetJoystickAxis()`], which normally uses the full range.
     ///
     /// - `gamepad`: a gamepad.
-    /// - `axis`: an axis index (one of the SDL_GamepadAxis values).
+    /// - `axis`: an axis index (one of the [`SDL_GamepadAxis`] values).
     /// - Returns axis state (including 0) on success or 0 (also) on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1243,15 +1243,15 @@ extern "C" {
 }
 
 extern "C" {
-    /// Convert a string into an SDL_GamepadButton enum.
+    /// Convert a string into an [`SDL_GamepadButton`] enum.
     ///
-    /// This function is called internally to translate SDL_Gamepad mapping strings
-    /// for the underlying joystick device into the consistent SDL_Gamepad mapping.
+    /// This function is called internally to translate [`SDL_Gamepad`] mapping strings
+    /// for the underlying joystick device into the consistent [`SDL_Gamepad`] mapping.
     /// You do not normally need to call this function unless you are parsing
-    /// SDL_Gamepad mappings in your own code.
+    /// [`SDL_Gamepad`] mappings in your own code.
     ///
-    /// - `str`: string representing a SDL_Gamepad axis.
-    /// - Returns the SDL_GamepadButton enum corresponding to the input string, or
+    /// - `str`: string representing a [`SDL_Gamepad`] axis.
+    /// - Returns the [`SDL_GamepadButton`] enum corresponding to the input string, or
     ///   `SDL_GAMEPAD_BUTTON_INVALID` if no match was found.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1261,12 +1261,12 @@ extern "C" {
 }
 
 extern "C" {
-    /// Convert from an SDL_GamepadButton enum to a string.
+    /// Convert from an [`SDL_GamepadButton`] enum to a string.
     ///
-    /// - `button`: an enum value for a given SDL_GamepadButton.
+    /// - `button`: an enum value for a given [`SDL_GamepadButton`].
     /// - Returns a string for the given button, or NULL if an invalid button is
     ///   specified. The string returned is of the format used by
-    ///   SDL_Gamepad mapping strings.
+    ///   [`SDL_Gamepad`] mapping strings.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1281,7 +1281,7 @@ extern "C" {
     /// that is all the information SDL has about the physical device.
     ///
     /// - `gamepad`: a gamepad.
-    /// - `button`: a button enum value (an SDL_GamepadButton value).
+    /// - `button`: a button enum value (an [`SDL_GamepadButton`] value).
     /// - Returns true if the gamepad has this button, false otherwise.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1297,7 +1297,7 @@ extern "C" {
     /// Get the current state of a button on a gamepad.
     ///
     /// - `gamepad`: a gamepad.
-    /// - `button`: a button index (one of the SDL_GamepadButton values).
+    /// - `button`: a button index (one of the [`SDL_GamepadButton`] values).
     /// - Returns true if the button is pressed, false otherwise.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1314,8 +1314,8 @@ extern "C" {
     /// Get the label of a button on a gamepad.
     ///
     /// - `type`: the type of gamepad to check.
-    /// - `button`: a button index (one of the SDL_GamepadButton values).
-    /// - Returns the SDL_GamepadButtonLabel enum corresponding to the button label.
+    /// - `button`: a button index (one of the [`SDL_GamepadButton`] values).
+    /// - Returns the [`SDL_GamepadButtonLabel`] enum corresponding to the button label.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1330,8 +1330,8 @@ extern "C" {
     /// Get the label of a button on a gamepad.
     ///
     /// - `gamepad`: a gamepad.
-    /// - `button`: a button index (one of the SDL_GamepadButton values).
-    /// - Returns the SDL_GamepadButtonLabel enum corresponding to the button label.
+    /// - `button`: a button index (one of the [`SDL_GamepadButton`] values).
+    /// - Returns the [`SDL_GamepadButtonLabel`] enum corresponding to the button label.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1385,7 +1385,7 @@ extern "C" {
     /// - `y`: a pointer filled with the y position, normalized 0 to 1, with the
     ///   origin in the upper left, may be NULL.
     /// - `pressure`: a pointer filled with pressure value, may be NULL.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1426,7 +1426,7 @@ extern "C" {
     /// - `gamepad`: the gamepad to update.
     /// - `type`: the type of sensor to enable/disable.
     /// - `enabled`: whether data reporting should be enabled.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1474,13 +1474,13 @@ extern "C" {
     /// Get the current state of a gamepad sensor.
     ///
     /// The number of values and interpretation of the data is sensor dependent.
-    /// See SDL_sensor.h for the details for each type of sensor.
+    /// See [`SDL_sensor`].h for the details for each type of sensor.
     ///
     /// - `gamepad`: the gamepad to query.
     /// - `type`: the type of sensor to query.
     /// - `data`: a pointer filled with the current sensor state.
     /// - `num_values`: the number of values to write to data.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1499,7 +1499,7 @@ extern "C" {
     /// it with 0 intensity stops any rumbling.
     ///
     /// This function requires you to process SDL events or call
-    /// SDL_UpdateJoysticks() to update rumble state.
+    /// [`SDL_UpdateJoysticks()`] to update rumble state.
     ///
     /// - `gamepad`: the gamepad to vibrate.
     /// - `low_frequency_rumble`: the intensity of the low frequency (left)
@@ -1507,7 +1507,7 @@ extern "C" {
     /// - `high_frequency_rumble`: the intensity of the high frequency (right)
     ///   rumble motor, from 0 to 0xFFFF.
     /// - `duration_ms`: the duration of the rumble effect, in milliseconds.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1527,10 +1527,10 @@ extern "C" {
     ///
     /// Note that this is rumbling of the _triggers_ and not the gamepad as a
     /// whole. This is currently only supported on Xbox One gamepads. If you want
-    /// the (more common) whole-gamepad rumble, use SDL_RumbleGamepad() instead.
+    /// the (more common) whole-gamepad rumble, use [`SDL_RumbleGamepad()`] instead.
     ///
     /// This function requires you to process SDL events or call
-    /// SDL_UpdateJoysticks() to update rumble state.
+    /// [`SDL_UpdateJoysticks()`] to update rumble state.
     ///
     /// - `gamepad`: the gamepad to vibrate.
     /// - `left_rumble`: the intensity of the left trigger rumble motor, from 0
@@ -1538,7 +1538,7 @@ extern "C" {
     /// - `right_rumble`: the intensity of the right trigger rumble motor, from 0
     ///   to 0xFFFF.
     /// - `duration_ms`: the duration of the rumble effect, in milliseconds.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1565,7 +1565,7 @@ extern "C" {
     /// - `red`: the intensity of the red LED.
     /// - `green`: the intensity of the green LED.
     /// - `blue`: the intensity of the blue LED.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1583,7 +1583,7 @@ extern "C" {
     /// - `gamepad`: the gamepad to affect.
     /// - `data`: the data to send to the gamepad.
     /// - `size`: the size of the data to send to the gamepad.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1595,10 +1595,10 @@ extern "C" {
 }
 
 extern "C" {
-    /// Close a gamepad previously opened with SDL_OpenGamepad().
+    /// Close a gamepad previously opened with [`SDL_OpenGamepad()`].
     ///
     /// - `gamepad`: a gamepad identifier previously returned by
-    ///   SDL_OpenGamepad().
+    ///   [`SDL_OpenGamepad()`].
     ///
     /// This function is available since SDL 3.0.0.
     ///

@@ -11,7 +11,7 @@ extern "C" {
     /// Put UTF-8 text into the clipboard.
     ///
     /// - `text`: the text to store in the clipboard.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -28,8 +28,8 @@ extern "C" {
     /// a copy of the clipboard's content.
     ///
     /// - Returns the clipboard text on success or an empty string on failure; call
-    ///   SDL_GetError() for more information. This should be freed with
-    ///   SDL_free() when it is no longer needed.
+    ///   [`SDL_GetError()`] for more information. This should be freed with
+    ///   [`SDL_free()`] when it is no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -54,7 +54,7 @@ extern "C" {
     /// Put UTF-8 text into the primary selection.
     ///
     /// - `text`: the text to store in the primary selection.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -72,8 +72,8 @@ extern "C" {
     /// a copy of the primary selection's content.
     ///
     /// - Returns the primary selection text on success or an empty string on
-    ///   failure; call SDL_GetError() for more information. This should be
-    ///   freed with SDL_free() when it is no longer needed.
+    ///   failure; call [`SDL_GetError()`] for more information. This should be
+    ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -100,7 +100,7 @@ extern "C" {
 ///
 /// The callback function is called with NULL as the mime_type when the
 /// clipboard is cleared or new data is set. The clipboard is automatically
-/// cleared in SDL_Quit().
+/// cleared in [`SDL_Quit()`].
 ///
 /// - `userdata`: a pointer to provided user data.
 /// - `mime_type`: the requested mime-type.
@@ -153,7 +153,7 @@ extern "C" {
     /// - `userdata`: an opaque pointer that will be forwarded to the callbacks.
     /// - `mime_types`: a list of mime-types that are being offered.
     /// - `num_mime_types`: the number of mime-types in the mime_types list.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -173,7 +173,7 @@ extern "C" {
 extern "C" {
     /// Clear the clipboard data.
     ///
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -190,8 +190,8 @@ extern "C" {
     ///
     /// - `mime_type`: the mime type to read from the clipboard.
     /// - `size`: a pointer filled in with the length of the returned data.
-    /// - Returns the retrieved data buffer or NULL on failure; call SDL_GetError()
-    ///   for more information. This should be freed with SDL_free() when it
+    /// - Returns the retrieved data buffer or NULL on failure; call [`SDL_GetError()`]
+    ///   for more information. This should be freed with [`SDL_free()`] when it
     ///   is no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
@@ -224,8 +224,8 @@ extern "C" {
     /// - `num_mime_types`: a pointer filled with the number of mime types, may
     ///   be NULL.
     /// - Returns a null terminated array of strings with mime types, or NULL on
-    ///   failure; call SDL_GetError() for more information. This should be
-    ///   freed with SDL_free() when it is no longer needed.
+    ///   failure; call [`SDL_GetError()`] for more information. This should be
+    ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
     ///

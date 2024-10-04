@@ -28,7 +28,7 @@ extern "C" {
     ///
     /// - `url`: a valid URL/URI to open. Use `file:///full/path/to/file` for
     ///   local files, if supported.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.

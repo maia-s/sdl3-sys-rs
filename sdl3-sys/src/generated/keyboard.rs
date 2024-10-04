@@ -46,8 +46,8 @@ extern "C" {
     /// - `count`: a pointer filled in with the number of keyboards returned, may
     ///   be NULL.
     /// - Returns a 0 terminated array of keyboards instance IDs or NULL on failure;
-    ///   call SDL_GetError() for more information. This should be freed
-    ///   with SDL_free() when it is no longer needed.
+    ///   call [`SDL_GetError()`] for more information. This should be freed
+    ///   with [`SDL_free()`] when it is no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -63,7 +63,7 @@ extern "C" {
     ///
     /// - `instance_id`: the keyboard instance ID.
     /// - Returns the name of the selected keyboard or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -89,14 +89,14 @@ extern "C" {
     ///
     /// A array element with a value of true means that the key is pressed and a
     /// value of false means that it is not. Indexes into this array are obtained
-    /// by using SDL_Scancode values.
+    /// by using [`SDL_Scancode`] values.
     ///
-    /// Use SDL_PumpEvents() to update the state array.
+    /// Use [`SDL_PumpEvents()`] to update the state array.
     ///
     /// This function gives you the current state after all events have been
     /// processed, so if a key or button has been pressed and released before you
     /// process events, then the pressed state will never show up in the
-    /// SDL_GetKeyboardState() calls.
+    /// [`SDL_GetKeyboardState()`] calls.
     ///
     /// Note: This function doesn't take into account whether shift has been
     /// pressed or not.
@@ -127,7 +127,7 @@ extern "C" {
     /// Get the current key modifier state for the keyboard.
     ///
     /// - Returns an OR'd combination of the modifier keys for the keyboard. See
-    ///   SDL_Keymod for details.
+    ///   [`SDL_Keymod`] for details.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -139,15 +139,15 @@ extern "C" {
 extern "C" {
     /// Set the current key modifier state for the keyboard.
     ///
-    /// The inverse of SDL_GetModState(), SDL_SetModState() allows you to impose
+    /// The inverse of [`SDL_GetModState()`], [`SDL_SetModState()`] allows you to impose
     /// modifier key states on your application. Simply pass your desired modifier
     /// states into `modstate`. This value may be a bitwise, OR'd combination of
-    /// SDL_Keymod values.
+    /// [`SDL_Keymod`] values.
     ///
     /// This does not change the keyboard state, only the key modifier flags that
     /// SDL reports.
     ///
-    /// - `modstate`: the desired SDL_Keymod for the keyboard.
+    /// - `modstate`: the desired [`SDL_Keymod`] for the keyboard.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -160,15 +160,15 @@ extern "C" {
     /// current keyboard layout.
     ///
     /// If you want to get the keycode as it would be delivered in key events,
-    /// including options specified in SDL_HINT_KEYCODE_OPTIONS, then you should
+    /// including options specified in [`SDL_HINT_KEYCODE_OPTIONS`], then you should
     /// pass `key_event` as true. Otherwise this function simply translates the
     /// scancode based on the given modifier state.
     ///
-    /// - `scancode`: the desired SDL_Scancode to query.
+    /// - `scancode`: the desired [`SDL_Scancode`] to query.
     /// - `modstate`: the modifier state to use when translating the scancode to
     ///   a keycode.
     /// - `key_event`: true if the keycode will be used in key events.
-    /// - Returns the SDL_Keycode that corresponds to the given SDL_Scancode.
+    /// - Returns the [`SDL_Keycode`] that corresponds to the given [`SDL_Scancode`].
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -188,10 +188,10 @@ extern "C" {
     /// Note that there may be multiple scancode+modifier states that can generate
     /// this keycode, this will just return the first one found.
     ///
-    /// - `key`: the desired SDL_Keycode to query.
+    /// - `key`: the desired [`SDL_Keycode`] to query.
     /// - `modstate`: a pointer to the modifier state that would be used when the
     ///   scancode generates this key, may be NULL.
-    /// - Returns the SDL_Scancode that corresponds to the given SDL_Keycode.
+    /// - Returns the [`SDL_Scancode`] that corresponds to the given [`SDL_Keycode`].
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -203,11 +203,11 @@ extern "C" {
 extern "C" {
     /// Set a human-readable name for a scancode.
     ///
-    /// - `scancode`: the desired SDL_Scancode.
+    /// - `scancode`: the desired [`SDL_Scancode`].
     /// - `name`: the name to use for the scancode, encoded as UTF-8. The string
     ///   is not copied, so the pointer given to this function must stay
     ///   valid while SDL is being used.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -231,7 +231,7 @@ extern "C" {
     /// unsuitable for creating a stable cross-platform two-way mapping between
     /// strings and scancodes.
     ///
-    /// - `scancode`: the desired SDL_Scancode to query.
+    /// - `scancode`: the desired [`SDL_Scancode`] to query.
     /// - Returns a pointer to the name for the scancode. If the scancode doesn't
     ///   have a name this function returns an empty string ("").
     ///
@@ -247,8 +247,8 @@ extern "C" {
     /// Get a scancode from a human-readable name.
     ///
     /// - `name`: the human-readable scancode name.
-    /// - Returns the SDL_Scancode, or `SDL_SCANCODE_UNKNOWN` if the name wasn't
-    ///   recognized; call SDL_GetError() for more information.
+    /// - Returns the [`SDL_Scancode`], or `SDL_SCANCODE_UNKNOWN` if the name wasn't
+    ///   recognized; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -263,7 +263,7 @@ extern "C" {
     ///
     /// If the key doesn't have a name, this function returns an empty string ("").
     ///
-    /// - `key`: the desired SDL_Keycode to query.
+    /// - `key`: the desired [`SDL_Keycode`] to query.
     /// - Returns a UTF-8 encoded string of the key name.
     ///
     /// This function is available since SDL 3.0.0.
@@ -279,7 +279,7 @@ extern "C" {
     ///
     /// - `name`: the human-readable key name.
     /// - Returns key code, or `SDLK_UNKNOWN` if the name wasn't recognized; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -292,16 +292,16 @@ extern "C" {
 extern "C" {
     /// Start accepting Unicode text input events in a window.
     ///
-    /// This function will enable text input (SDL_EVENT_TEXT_INPUT and
-    /// SDL_EVENT_TEXT_EDITING events) in the specified window. Please use this
-    /// function paired with SDL_StopTextInput().
+    /// This function will enable text input ([`SDL_EVENT_TEXT_INPUT`] and
+    /// [`SDL_EVENT_TEXT_EDITING`] events) in the specified window. Please use this
+    /// function paired with [`SDL_StopTextInput()`].
     ///
     /// Text input events are not received by default.
     ///
     /// On some platforms using this function shows the screen keyboard.
     ///
     /// - `window`: the window to enable text input.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -315,7 +315,7 @@ extern "C" {
 
 /// Text input type.
 ///
-/// These are the valid values for SDL_PROP_TEXTINPUT_TYPE_NUMBER. Not every
+/// These are the valid values for [`SDL_PROP_TEXTINPUT_TYPE_NUMBER`]. Not every
 /// value is valid on every platform, but where a value isn't supported, a
 /// reasonable fallback will be used.
 ///
@@ -380,7 +380,7 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
 /// Auto capitalization type.
 ///
 /// These are the valid values for
-/// SDL_PROP_TEXTINPUT_AUTOCAPITALIZATION_NUMBER. Not every value is valid on
+/// [`SDL_PROP_TEXTINPUT_AUTOCAPITALIZATION_NUMBER`]. Not every value is valid on
 /// every platform, but where a value isn't supported, a reasonable fallback
 /// will be used.
 ///
@@ -422,9 +422,9 @@ extern "C" {
     /// Start accepting Unicode text input events in a window, with properties
     /// describing the input.
     ///
-    /// This function will enable text input (SDL_EVENT_TEXT_INPUT and
-    /// SDL_EVENT_TEXT_EDITING events) in the specified window. Please use this
-    /// function paired with SDL_StopTextInput().
+    /// This function will enable text input ([`SDL_EVENT_TEXT_INPUT`] and
+    /// [`SDL_EVENT_TEXT_EDITING`] events) in the specified window. Please use this
+    /// function paired with [`SDL_StopTextInput()`].
     ///
     /// Text input events are not received by default.
     ///
@@ -432,18 +432,18 @@ extern "C" {
     ///
     /// These are the supported properties:
     ///
-    /// - `SDL_PROP_TEXTINPUT_TYPE_NUMBER` - an SDL_TextInputType value that
-    ///   describes text being input, defaults to SDL_TEXTINPUT_TYPE_TEXT.
-    /// - `SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER` - an SDL_Capitalization value
+    /// - `SDL_PROP_TEXTINPUT_TYPE_NUMBER` - an [`SDL_TextInputType`] value that
+    ///   describes text being input, defaults to [`SDL_TEXTINPUT_TYPE_TEXT`].
+    /// - `SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER` - an [`SDL_Capitalization`] value
     ///   that describes how text should be capitalized, defaults to
-    ///   SDL_CAPITALIZE_SENTENCES for normal text entry, SDL_CAPITALIZE_WORDS for
-    ///   SDL_TEXTINPUT_TYPE_TEXT_NAME, and SDL_CAPITALIZE_NONE for e-mail
+    ///   [`SDL_CAPITALIZE_SENTENCES`] for normal text entry, [`SDL_CAPITALIZE_WORDS`] for
+    ///   [`SDL_TEXTINPUT_TYPE_TEXT_NAME`], and [`SDL_CAPITALIZE_NONE`] for e-mail
     ///   addresses, usernames, and passwords.
     /// - `SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN` - true to enable auto completion
     ///   and auto correction, defaults to true.
     /// - `SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN` - true if multiple lines of text
-    ///   are allowed. This defaults to true if SDL_HINT_RETURN_KEY_HIDES_IME is
-    ///   "0" or is not set, and defaults to false if SDL_HINT_RETURN_KEY_HIDES_IME
+    ///   are allowed. This defaults to true if [`SDL_HINT_RETURN_KEY_HIDES_IME`] is
+    ///   "0" or is not set, and defaults to false if [`SDL_HINT_RETURN_KEY_HIDES_IME`]
     ///   is "1".
     ///
     /// On Android you can directly specify the input type:
@@ -454,7 +454,7 @@ extern "C" {
     ///
     /// - `window`: the window to enable text input.
     /// - `props`: the properties to use.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -496,11 +496,11 @@ extern "C" {
 extern "C" {
     /// Stop receiving any text input events in a window.
     ///
-    /// If SDL_StartTextInput() showed the screen keyboard, this function will hide
+    /// If [`SDL_StartTextInput()`] showed the screen keyboard, this function will hide
     /// it.
     ///
     /// - `window`: the window to disable text input.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -513,7 +513,7 @@ extern "C" {
     /// Dismiss the composition window/IME without disabling the subsystem.
     ///
     /// - `window`: the window to affect.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -530,11 +530,11 @@ extern "C" {
     /// cursor, without covering the text being entered.
     ///
     /// - `window`: the window for which to set the text input area.
-    /// - `rect`: the SDL_Rect representing the text input area, in window
+    /// - `rect`: the [`SDL_Rect`] representing the text input area, in window
     ///   coordinates, or NULL to clear it.
     /// - `cursor`: the offset of the current cursor location relative to
     ///   `rect->x`, in window coordinates.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -551,14 +551,14 @@ extern "C" {
 extern "C" {
     /// Get the area used to type Unicode text input.
     ///
-    /// This returns the values previously set by SDL_SetTextInputArea().
+    /// This returns the values previously set by [`SDL_SetTextInputArea()`].
     ///
     /// - `window`: the window for which to query the text input area.
-    /// - `rect`: a pointer to an SDL_Rect filled in with the text input area,
+    /// - `rect`: a pointer to an [`SDL_Rect`] filled in with the text input area,
     ///   may be NULL.
     /// - `cursor`: a pointer to the offset of the current cursor location
     ///   relative to `rect->x`, may be NULL.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.

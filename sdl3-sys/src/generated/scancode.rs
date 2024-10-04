@@ -8,7 +8,7 @@ use super::stdinc::*;
 /// independent of language and keyboard mapping.
 ///
 /// Values of this type are used to represent keyboard keys, among other places
-/// in the `scancode` field of the SDL_KeyboardEvent structure.
+/// in the `scancode` field of the [`SDL_KeyboardEvent`] structure.
 ///
 /// The values in this enumeration are based on the USB usage page standard:
 /// https://usb.org/sites/default/files/hut1_5.pdf
@@ -93,7 +93,7 @@ impl SDL_Scancode {
     /// identically. So, as an implementor, unless
     /// your keyboard generates both of those
     /// codes and your OS treats them differently,
-    /// you should generate SDL_SCANCODE_BACKSLASH
+    /// you should generate [`SDL_SCANCODE_BACKSLASH`]
     /// instead of this code. As a user, you
     /// should not rely on this code because SDL
     /// will never generate it with most (all?)
@@ -326,7 +326,7 @@ impl SDL_Scancode {
     pub const RGUI: Self = Self(231);
     /// I'm not sure if this is really not covered
     /// by any of the above, but since there's a
-    /// special SDL_KMOD_MODE for it I'm adding it here
+    /// special [`SDL_KMOD_MODE`] for it I'm adding it here
     pub const MODE: Self = Self(257);
     /// Sleep
     pub const SLEEP: Self = Self(258);
@@ -470,7 +470,7 @@ pub const SDL_SCANCODE_BACKSLASH: SDL_Scancode = SDL_Scancode::BACKSLASH;
 /// identically. So, as an implementor, unless
 /// your keyboard generates both of those
 /// codes and your OS treats them differently,
-/// you should generate SDL_SCANCODE_BACKSLASH
+/// you should generate [`SDL_SCANCODE_BACKSLASH`]
 /// instead of this code. As a user, you
 /// should not rely on this code because SDL
 /// will never generate it with most (all?)
@@ -703,7 +703,7 @@ pub const SDL_SCANCODE_RALT: SDL_Scancode = SDL_Scancode::RALT;
 pub const SDL_SCANCODE_RGUI: SDL_Scancode = SDL_Scancode::RGUI;
 /// I'm not sure if this is really not covered
 /// by any of the above, but since there's a
-/// special SDL_KMOD_MODE for it I'm adding it here
+/// special [`SDL_KMOD_MODE`] for it I'm adding it here
 pub const SDL_SCANCODE_MODE: SDL_Scancode = SDL_Scancode::MODE;
 /// Sleep
 pub const SDL_SCANCODE_SLEEP: SDL_Scancode = SDL_Scancode::SLEEP;

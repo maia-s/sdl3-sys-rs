@@ -6,9 +6,9 @@ use super::error::*;
 
 use super::events::*;
 
-/// Initialization flags for SDL_Init and/or SDL_InitSubSystem
+/// Initialization flags for [`SDL_Init`] and/or [`SDL_InitSubSystem`]
 ///
-/// These are the flags which may be passed to SDL_Init(). You should specify
+/// These are the flags which may be passed to [`SDL_Init()`]. You should specify
 /// the subsystems which you will be using in your application.
 ///
 /// This datatype is available since SDL 3.0.0.
@@ -26,7 +26,7 @@ pub const SDL_INIT_AUDIO: ::core::primitive::u32 = 16_u32;
 /// `SDL_INIT_VIDEO` implies `SDL_INIT_EVENTS`
 pub const SDL_INIT_VIDEO: ::core::primitive::u32 = 32_u32;
 
-/// `SDL_INIT_JOYSTICK` implies `SDL_INIT_EVENTS`, should be initialized on the same thread as SDL_INIT_VIDEO on Windows if you don't set SDL_HINT_JOYSTICK_THREAD
+/// `SDL_INIT_JOYSTICK` implies `SDL_INIT_EVENTS`, should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`]
 pub const SDL_INIT_JOYSTICK: ::core::primitive::u32 = 512_u32;
 
 pub const SDL_INIT_HAPTIC: ::core::primitive::u32 = 4096_u32;
@@ -44,15 +44,15 @@ pub const SDL_INIT_CAMERA: ::core::primitive::u32 = 65536_u32;
 
 /// Return values for optional main callbacks.
 ///
-/// Returning SDL_APP_SUCCESS or SDL_APP_FAILURE from SDL_AppInit,
-/// SDL_AppEvent, or SDL_AppIterate will terminate the program and report
+/// Returning [`SDL_APP_SUCCESS`] or [`SDL_APP_FAILURE`] from [`SDL_AppInit`],
+/// [`SDL_AppEvent`], or [`SDL_AppIterate`] will terminate the program and report
 /// success/failure to the operating system. What that means is
 /// platform-dependent. On Unix, for example, on success, the process error
 /// code will be zero, and on failure it will be 1. This interface doesn't
 /// allow you to return specific exit codes, just whether there was an error
 /// generally or not.
 ///
-/// Returning SDL_APP_CONTINUE from these functions will let the app continue
+/// Returning [`SDL_APP_CONTINUE`] from these functions will let the app continue
 /// to run.
 ///
 /// See
@@ -113,18 +113,18 @@ pub type SDL_AppQuit_func = ::core::option::Option<
 extern "C" {
     /// Initialize the SDL library.
     ///
-    /// SDL_Init() simply forwards to calling SDL_InitSubSystem(). Therefore, the
+    /// [`SDL_Init()`] simply forwards to calling [`SDL_InitSubSystem()`]. Therefore, the
     /// two may be used interchangeably. Though for readability of your code
-    /// SDL_InitSubSystem() might be preferred.
+    /// [`SDL_InitSubSystem()`] might be preferred.
     ///
-    /// The file I/O (for example: SDL_IOFromFile) and threading (SDL_CreateThread)
+    /// The file I/O (for example: [`SDL_IOFromFile`]) and threading ([`SDL_CreateThread`])
     /// subsystems are initialized by default. Message boxes
-    /// (SDL_ShowSimpleMessageBox) also attempt to work without initializing the
+    /// ([`SDL_ShowSimpleMessageBox`]) also attempt to work without initializing the
     /// video subsystem, in hopes of being useful in showing an error dialog when
-    /// SDL_Init fails. You must specifically initialize other subsystems if you
+    /// [`SDL_Init`] fails. You must specifically initialize other subsystems if you
     /// use them in your application.
     ///
-    /// Logging (such as SDL_Log) works without initialization, too.
+    /// Logging (such as [`SDL_Log`]) works without initialization, too.
     ///
     /// `flags` may be any of the following OR'd together:
     ///
@@ -143,17 +143,17 @@ extern "C" {
     /// - `SDL_INIT_CAMERA`: camera subsystem; automatically initializes the events
     ///   subsystem
     ///
-    /// Subsystem initialization is ref-counted, you must call SDL_QuitSubSystem()
-    /// for each SDL_InitSubSystem() to correctly shutdown a subsystem manually (or
-    /// call SDL_Quit() to force shutdown). If a subsystem is already loaded then
+    /// Subsystem initialization is ref-counted, you must call [`SDL_QuitSubSystem()`]
+    /// for each [`SDL_InitSubSystem()`] to correctly shutdown a subsystem manually (or
+    /// call [`SDL_Quit()`] to force shutdown). If a subsystem is already loaded then
     /// this call will increase the ref-count and return.
     ///
     /// Consider reporting some basic metadata about your application before
-    /// calling SDL_Init, using either SDL_SetAppMetadata() or
-    /// SDL_SetAppMetadataProperty().
+    /// calling [`SDL_Init`], using either [`SDL_SetAppMetadata()`] or
+    /// [`SDL_SetAppMetadataProperty()`].
     ///
     /// - `flags`: subsystem initialization flags.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -170,10 +170,10 @@ extern "C" {
 extern "C" {
     /// Compatibility function to initialize the SDL library.
     ///
-    /// This function and SDL_Init() are interchangeable.
+    /// This function and [`SDL_Init()`] are interchangeable.
     ///
-    /// - `flags`: any of the flags used by SDL_Init(); see SDL_Init for details.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `flags`: any of the flags used by [`SDL_Init()`]; see [`SDL_Init`] for details.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -187,10 +187,10 @@ extern "C" {
 extern "C" {
     /// Shut down specific SDL subsystems.
     ///
-    /// You still need to call SDL_Quit() even if you close all open subsystems
-    /// with SDL_QuitSubSystem().
+    /// You still need to call [`SDL_Quit()`] even if you close all open subsystems
+    /// with [`SDL_QuitSubSystem()`].
     ///
-    /// - `flags`: any of the flags used by SDL_Init(); see SDL_Init for details.
+    /// - `flags`: any of the flags used by [`SDL_Init()`]; see [`SDL_Init`] for details.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -202,7 +202,7 @@ extern "C" {
 extern "C" {
     /// Get a mask of the specified subsystems which are currently initialized.
     ///
-    /// - `flags`: any of the flags used by SDL_Init(); see SDL_Init for details.
+    /// - `flags`: any of the flags used by [`SDL_Init()`]; see [`SDL_Init`] for details.
     /// - Returns a mask of all initialized subsystems if `flags` is 0, otherwise it
     ///   returns the initialization status of the specified subsystems.
     ///
@@ -217,7 +217,7 @@ extern "C" {
     /// Clean up all initialized subsystems.
     ///
     /// You should call this function even if you have already shutdown each
-    /// initialized subsystem with SDL_QuitSubSystem(). It is safe to call this
+    /// initialized subsystem with [`SDL_QuitSubSystem()`]. It is safe to call this
     /// function even in the case of errors in initialization.
     ///
     /// You can use this function with atexit() to ensure that it is run when your
@@ -242,7 +242,7 @@ extern "C" {
     /// mixers, etc). Any piece of metadata can be left as NULL, if a specific
     /// detail doesn't make sense for the app.
     ///
-    /// This function should be called as early as possible, before SDL_Init.
+    /// This function should be called as early as possible, before [`SDL_Init`].
     /// Multiple calls to this function are allowed, but various state might not
     /// change once it has been set up with a previous call to this function.
     ///
@@ -250,7 +250,7 @@ extern "C" {
     ///
     /// This is a simplified interface for the most important information. You can
     /// supply significantly more detailed metadata with
-    /// SDL_SetAppMetadataProperty().
+    /// [`SDL_SetAppMetadataProperty()`].
     ///
     /// - `appname`: The name of the application ("My Game 2: Bad Guy's
     ///   Revenge!").
@@ -258,7 +258,7 @@ extern "C" {
     ///   hash, or whatever makes sense).
     /// - `appidentifier`: A unique string in reverse-domain format that
     ///   identifies this app ("com.example.mygame2").
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -284,11 +284,11 @@ extern "C" {
     /// mixers, etc). Any piece of metadata can be left out, if a specific detail
     /// doesn't make sense for the app.
     ///
-    /// This function should be called as early as possible, before SDL_Init.
+    /// This function should be called as early as possible, before [`SDL_Init`].
     /// Multiple calls to this function are allowed, but various state might not
     /// change once it has been set up with a previous call to this function.
     ///
-    /// Once set, this metadata can be read using SDL_GetMetadataProperty().
+    /// Once set, this metadata can be read using [`SDL_GetMetadataProperty()`].
     ///
     /// These are the supported properties:
     ///
@@ -324,7 +324,7 @@ extern "C" {
     ///
     /// - `name`: the name of the metadata property to set.
     /// - `value`: the value of the property, or NULL to remove that property.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -358,8 +358,8 @@ pub const SDL_PROP_APP_METADATA_TYPE_STRING: &::core::ffi::CStr = c"SDL.app.meta
 extern "C" {
     /// Get metadata about your app.
     ///
-    /// This returns metadata previously set using SDL_SetAppMetadata() or
-    /// SDL_SetAppMetadataProperty(). See SDL_SetAppMetadataProperty() for the list
+    /// This returns metadata previously set using [`SDL_SetAppMetadata()`] or
+    /// [`SDL_SetAppMetadataProperty()`]. See [`SDL_SetAppMetadataProperty()`] for the list
     /// of available properties and their meanings.
     ///
     /// - `name`: the name of the metadata property to get.
@@ -368,7 +368,7 @@ extern "C" {
     ///
     /// Thread safety: It is safe to call this function from any thread, although
     ///   the string returned is not protected and could potentially be
-    ///   freed if you call SDL_SetAppMetadataProperty() to set that
+    ///   freed if you call [`SDL_SetAppMetadataProperty()`] to set that
     ///   property from another thread.
     ///
     /// This function is available since SDL 3.0.0.

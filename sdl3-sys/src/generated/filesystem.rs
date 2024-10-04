@@ -14,10 +14,10 @@ extern "C" {
     /// bundle, this function returns the Resource directory (e.g.
     /// MyApp.app/Contents/Resources/). This behaviour can be overridden by adding
     /// a property to the Info.plist file. Adding a string key with the name
-    /// SDL_FILESYSTEM_BASE_DIR_TYPE with a supported value will change the
+    /// [`SDL_FILESYSTEM_BASE_DIR_TYPE`] with a supported value will change the
     /// behaviour.
     ///
-    /// Supported values for the SDL_FILESYSTEM_BASE_DIR_TYPE property (Given an
+    /// Supported values for the [`SDL_FILESYSTEM_BASE_DIR_TYPE`] property (Given an
     /// application in /Applications/SDLApp/MyApp.app):
     ///
     /// - `resource`: bundle resource directory (the default). For example:
@@ -36,7 +36,7 @@ extern "C" {
     ///
     /// - Returns an absolute path in UTF-8 encoding to the application data
     ///   directory. NULL will be returned on error or when the platform
-    ///   doesn't implement this functionality, call SDL_GetError() for more
+    ///   doesn't implement this functionality, call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -69,7 +69,7 @@ extern "C" {
     /// `/Users/bob/Library/Application Support/My Program Name/`
     ///
     /// You should assume the path returned by this function is the only safe place
-    /// to write files (and that SDL_GetBasePath(), while it might be writable, or
+    /// to write files (and that [`SDL_GetBasePath()`], while it might be writable, or
     /// even the parent of the returned path, isn't where you should be writing
     /// things).
     ///
@@ -91,7 +91,7 @@ extern "C" {
     /// - `app`: the name of your application.
     /// - Returns a UTF-8 string of the user directory in platform-dependent
     ///   notation. NULL if there's a problem (creating directory failed,
-    ///   etc.). This should be freed with SDL_free() when it is no longer
+    ///   etc.). This should be freed with [`SDL_free()`] when it is no longer
     ///   needed.
     ///
     /// This function is available since SDL 3.0.0.
@@ -202,13 +202,13 @@ extern "C" {
     ///
     /// This function is specifically for _user_ folders, which are meant for the
     /// user to access and manage. For application-specific folders, meant to hold
-    /// data for the application to manage, see SDL_GetBasePath() and
-    /// SDL_GetPrefPath().
+    /// data for the application to manage, see [`SDL_GetBasePath()`] and
+    /// [`SDL_GetPrefPath()`].
     ///
     /// The returned path is guaranteed to end with a path separator ('\\' on
     /// Windows, '/' on most other platforms).
     ///
-    /// If NULL is returned, the error may be obtained with SDL_GetError().
+    /// If NULL is returned, the error may be obtained with [`SDL_GetError()`].
     ///
     /// - `folder`: the type of folder to find.
     /// - Returns either a null-terminated C string containing the full path to the
@@ -283,7 +283,7 @@ extern "C" {
     /// this fails, it will not remove any parent directories it already made.
     ///
     /// - `path`: the path of the directory to create.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -328,8 +328,8 @@ pub const SDL_ENUM_FAILURE: SDL_EnumerationResult = SDL_EnumerationResult::FAILU
 /// have been provided to the callback, or the callback has requested a stop
 /// through its return value.
 ///
-/// Returning SDL_ENUM_CONTINUE will let enumeration proceed, calling the
-/// callback with further entries. SDL_ENUM_SUCCESS and SDL_ENUM_FAILURE will
+/// Returning [`SDL_ENUM_CONTINUE`] will let enumeration proceed, calling the
+/// callback with further entries. [`SDL_ENUM_SUCCESS`] and [`SDL_ENUM_FAILURE`] will
 /// terminate the enumeration early, and dictate the return value of the
 /// enumeration function itself.
 ///
@@ -363,7 +363,7 @@ extern "C" {
     /// - `path`: the path of the directory to enumerate.
     /// - `callback`: a function that is called for each entry in the directory.
     /// - `userdata`: a pointer that is passed to `callback`.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -381,7 +381,7 @@ extern "C" {
     /// delete directory trees.
     ///
     /// - `path`: the path to remove from the filesystem.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -396,15 +396,15 @@ extern "C" {
     /// Note that this will not copy files across filesystems/drives/volumes, as
     /// that is a much more complicated (and possibly time-consuming) operation.
     ///
-    /// Which is to say, if this function fails, SDL_CopyFile() to a temporary file
-    /// in the same directory as `newpath`, then SDL_RenamePath() from the
-    /// temporary file to `newpath` and SDL_RemovePath() on `oldpath` might work
+    /// Which is to say, if this function fails, [`SDL_CopyFile()`] to a temporary file
+    /// in the same directory as `newpath`, then [`SDL_RenamePath()`] from the
+    /// temporary file to `newpath` and [`SDL_RemovePath()`] on `oldpath` might work
     /// for files. Renaming a non-empty directory across filesystems is
     /// dramatically more complex, however.
     ///
     /// - `oldpath`: the old path.
     /// - `newpath`: the new path.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -431,7 +431,7 @@ extern "C" {
     /// during the copy, `oldpath`'s previous contents will be gone, replaced with
     /// an incomplete copy of the data. To avoid this risk, it is recommended that
     /// the app copy to a temporary file in the same directory as `newpath`, and if
-    /// the copy is successful, use SDL_RenamePath() to replace `newpath` with the
+    /// the copy is successful, use [`SDL_RenamePath()`] to replace `newpath` with the
     /// temporary file. This will ensure that reads of `newpath` will either see a
     /// complete copy of the data, or it will see the pre-copy state of `newpath`.
     ///
@@ -447,7 +447,7 @@ extern "C" {
     ///
     /// - `oldpath`: the old path.
     /// - `newpath`: the new path.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -464,7 +464,7 @@ extern "C" {
     /// - `info`: a pointer filled in with information about the path, or NULL to
     ///   check for the existence of a file.
     /// - Returns true on success or false if the file doesn't exist, or another
-    ///   failure; call SDL_GetError() for more information.
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetPathInfo(
@@ -483,7 +483,7 @@ extern "C" {
     /// separator of '/'. Wildcard characters '*' and '?' never match a path
     /// separator.
     ///
-    /// `flags` may be set to SDL_GLOB_CASEINSENSITIVE to make the pattern matching
+    /// `flags` may be set to [`SDL_GLOB_CASEINSENSITIVE`] to make the pattern matching
     /// case-insensitive.
     ///
     /// The returned array is always NULL-terminated, for your iterating
@@ -497,8 +497,8 @@ extern "C" {
     /// - `count`: on return, will be set to the number of items in the returned
     ///   array. Can be NULL.
     /// - Returns an array of strings on success or NULL on failure; call
-    ///   SDL_GetError() for more information. This is a single allocation
-    ///   that should be freed with SDL_free() when it is no longer needed.
+    ///   [`SDL_GetError()`] for more information. This is a single allocation
+    ///   that should be freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///

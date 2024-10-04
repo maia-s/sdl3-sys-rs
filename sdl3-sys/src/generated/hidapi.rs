@@ -19,7 +19,7 @@
 //! it adds no new requirements on the user.)
 //!
 //! If you would like a version of SDL without this code, you can build SDL
-//! with SDL_HIDAPI_DISABLED defined to 1. You might want to do this for
+//! with [`SDL_HIDAPI_DISABLED`] defined to 1. You might want to do this for
 //! example on iOS or tvOS to avoid a dependency on the CoreBluetooth
 //! framework.
 
@@ -134,15 +134,15 @@ extern "C" {
     /// Initialize the HIDAPI library.
     ///
     /// This function initializes the HIDAPI library. Calling it is not strictly
-    /// necessary, as it will be called automatically by SDL_hid_enumerate() and
+    /// necessary, as it will be called automatically by [`SDL_hid_enumerate()`] and
     /// any of the SDL_hid_open_*() functions if it is needed. This function should
     /// be called at the beginning of execution however, if there is a chance of
     /// HIDAPI handles being opened by different threads simultaneously.
     ///
-    /// Each call to this function should have a matching call to SDL_hid_exit()
+    /// Each call to this function should have a matching call to [`SDL_hid_exit()`]
     ///
     /// - Returns 0 on success or a negative error code on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -157,7 +157,7 @@ extern "C" {
     /// should be called at the end of execution to avoid memory leaks.
     ///
     /// - Returns 0 on success or a negative error code on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -171,7 +171,7 @@ extern "C" {
     /// Enumerating the HID devices is an expensive operation, so you can call this
     /// to see if there have been any system device changes since the last call to
     /// this function. A change in the counter returned doesn't necessarily mean
-    /// that anything has changed, but you can call SDL_hid_enumerate() to get an
+    /// that anything has changed, but you can call [`SDL_hid_enumerate()`] to get an
     /// updated device list.
     ///
     /// Calling this function for the first time may cause a thread or other system
@@ -196,17 +196,17 @@ extern "C" {
     /// devices will be returned.
     ///
     /// By default SDL will only enumerate controllers, to reduce risk of hanging
-    /// or crashing on bad drivers, but SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS
+    /// or crashing on bad drivers, but [`SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS`]
     /// can be set to "0" to enumerate all HID devices.
     ///
     /// - `vendor_id`: the Vendor ID (VID) of the types of device to open, or 0
     ///   to match any vendor.
     /// - `product_id`: the Product ID (PID) of the types of device to open, or 0
     ///   to match any product.
-    /// - Returns a pointer to a linked list of type SDL_hid_device_info, containing
+    /// - Returns a pointer to a linked list of type [`SDL_hid_device_info`], containing
     ///   information about the HID devices attached to the system, or NULL
     ///   in the case of failure. Free this linked list by calling
-    ///   SDL_hid_free_enumeration().
+    ///   [`SDL_hid_free_enumeration()`].
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -220,10 +220,10 @@ extern "C" {
 extern "C" {
     /// Free an enumeration linked list.
     ///
-    /// This function frees a linked list created by SDL_hid_enumerate().
+    /// This function frees a linked list created by [`SDL_hid_enumerate()`].
     ///
     /// - `devs`: pointer to a list of struct_device returned from
-    ///   SDL_hid_enumerate().
+    ///   [`SDL_hid_enumerate()`].
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_free_enumeration(devs: *mut SDL_hid_device_info);
@@ -240,8 +240,8 @@ extern "C" {
     /// - `product_id`: the Product ID (PID) of the device to open.
     /// - `serial_number`: the Serial Number of the device to open (Optionally
     ///   NULL).
-    /// - Returns a pointer to a SDL_hid_device object on success or NULL on
-    ///   failure; call SDL_GetError() for more information.
+    /// - Returns a pointer to a [`SDL_hid_device`] object on success or NULL on
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_open(
@@ -254,12 +254,12 @@ extern "C" {
 extern "C" {
     /// Open a HID device by its path name.
     ///
-    /// The path name be determined by calling SDL_hid_enumerate(), or a
+    /// The path name be determined by calling [`SDL_hid_enumerate()`], or a
     /// platform-specific path name can be used (eg: /dev/hidraw0 on Linux).
     ///
     /// - `path`: the path name of the device to open.
-    /// - Returns a pointer to a SDL_hid_device object on success or NULL on
-    ///   failure; call SDL_GetError() for more information.
+    /// - Returns a pointer to a [`SDL_hid_device`] object on success or NULL on
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_open_path(path: *const ::core::ffi::c_char) -> *mut SDL_hid_device;
@@ -271,22 +271,22 @@ extern "C" {
     /// The first byte of `data` must contain the Report ID. For devices which only
     /// support a single report, this must be set to 0x0. The remaining bytes
     /// contain the report data. Since the Report ID is mandatory, calls to
-    /// SDL_hid_write() will always contain one more byte than the report contains.
+    /// [`SDL_hid_write()`] will always contain one more byte than the report contains.
     /// For example, if a hid report is 16 bytes long, 17 bytes must be passed to
-    /// SDL_hid_write(), the Report ID (or 0x0, for devices with a single report),
+    /// [`SDL_hid_write()`], the Report ID (or 0x0, for devices with a single report),
     /// followed by the report data (16 bytes). In this example, the length passed
     /// in would be 17.
     ///
-    /// SDL_hid_write() will send the data on the first OUT endpoint, if one
+    /// [`SDL_hid_write()`] will send the data on the first OUT endpoint, if one
     /// exists. If it does not, it will send the data through the Control Endpoint
     /// (Endpoint 0).
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `data`: the data to send, including the report number as the first
     ///   byte.
     /// - `length`: the length in bytes of the data to send.
     /// - Returns the actual number of bytes written and -1 on on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_write(
@@ -303,14 +303,14 @@ extern "C" {
     /// The first byte will contain the Report number if the device uses numbered
     /// reports.
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `data`: a buffer to put the read data into.
     /// - `length`: the number of bytes to read. For devices with multiple
     ///   reports, make sure to read an extra byte for the report
     ///   number.
     /// - `milliseconds`: timeout in milliseconds or -1 for blocking wait.
     /// - Returns the actual number of bytes read and -1 on on failure; call
-    ///   SDL_GetError() for more information. If no packet was available to
+    ///   [`SDL_GetError()`] for more information. If no packet was available to
     ///   be read within the timeout period, this function returns 0.
     ///
     /// This function is available since SDL 3.0.0.
@@ -329,13 +329,13 @@ extern "C" {
     /// The first byte will contain the Report number if the device uses numbered
     /// reports.
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `data`: a buffer to put the read data into.
     /// - `length`: the number of bytes to read. For devices with multiple
     ///   reports, make sure to read an extra byte for the report
     ///   number.
     /// - Returns the actual number of bytes read and -1 on failure; call
-    ///   SDL_GetError() for more information. If no packet was available to
+    ///   [`SDL_GetError()`] for more information. If no packet was available to
     ///   be read and the handle is in non-blocking mode, this function
     ///   returns 0.
     ///
@@ -350,17 +350,17 @@ extern "C" {
 extern "C" {
     /// Set the device handle to be non-blocking.
     ///
-    /// In non-blocking mode calls to SDL_hid_read() will return immediately with a
-    /// value of 0 if there is no data to be read. In blocking mode, SDL_hid_read()
+    /// In non-blocking mode calls to [`SDL_hid_read()`] will return immediately with a
+    /// value of 0 if there is no data to be read. In blocking mode, [`SDL_hid_read()`]
     /// will wait (block) until there is data to read before returning.
     ///
     /// Nonblocking can be turned on and off at any time.
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `nonblock`: enable or not the nonblocking reads - 1 to enable
     ///   nonblocking - 0 to disable nonblocking.
     /// - Returns 0 on success or a negative error code on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_set_nonblocking(
@@ -376,19 +376,19 @@ extern "C" {
     /// transfer. The first byte of `data` must contain the Report ID. For devices
     /// which only support a single report, this must be set to 0x0. The remaining
     /// bytes contain the report data. Since the Report ID is mandatory, calls to
-    /// SDL_hid_send_feature_report() will always contain one more byte than the
+    /// [`SDL_hid_send_feature_report()`] will always contain one more byte than the
     /// report contains. For example, if a hid report is 16 bytes long, 17 bytes
-    /// must be passed to SDL_hid_send_feature_report(): the Report ID (or 0x0, for
+    /// must be passed to [`SDL_hid_send_feature_report()`]: the Report ID (or 0x0, for
     /// devices which do not use numbered reports), followed by the report data (16
     /// bytes). In this example, the length passed in would be 17.
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `data`: the data to send, including the report number as the first
     ///   byte.
     /// - `length`: the length in bytes of the data to send, including the report
     ///   number.
     /// - Returns the actual number of bytes written and -1 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_send_feature_report(
@@ -406,7 +406,7 @@ extern "C" {
     /// first byte will still contain the Report ID, and the report data will start
     /// in data[1].
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `data`: a buffer to put the read data into, including the Report ID.
     ///   Set the first byte of `data` to the Report ID of the report to
     ///   be read, or set it to zero if your device does not use numbered
@@ -414,7 +414,7 @@ extern "C" {
     /// - `length`: the number of bytes to read, including an extra byte for the
     ///   report ID. The buffer can be longer than the actual report.
     /// - Returns the number of bytes read plus one for the report ID (which is
-    ///   still in the first byte), or -1 on on failure; call SDL_GetError()
+    ///   still in the first byte), or -1 on on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -433,7 +433,7 @@ extern "C" {
     /// first byte will still contain the Report ID, and the report data will start
     /// in data[1].
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `data`: a buffer to put the read data into, including the Report ID.
     ///   Set the first byte of `data` to the Report ID of the report to
     ///   be read, or set it to zero if your device does not use numbered
@@ -441,7 +441,7 @@ extern "C" {
     /// - `length`: the number of bytes to read, including an extra byte for the
     ///   report ID. The buffer can be longer than the actual report.
     /// - Returns the number of bytes read plus one for the report ID (which is
-    ///   still in the first byte), or -1 on on failure; call SDL_GetError()
+    ///   still in the first byte), or -1 on on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -455,9 +455,9 @@ extern "C" {
 extern "C" {
     /// Close a HID device.
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - Returns 0 on success or a negative error code on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_close(dev: *mut SDL_hid_device) -> ::core::ffi::c_int;
@@ -466,11 +466,11 @@ extern "C" {
 extern "C" {
     /// Get The Manufacturer String from a HID device.
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `string`: a wide string buffer to put the data into.
     /// - `maxlen`: the length of the buffer in multiples of wchar_t.
     /// - Returns 0 on success or a negative error code on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_manufacturer_string(
@@ -483,11 +483,11 @@ extern "C" {
 extern "C" {
     /// Get The Product String from a HID device.
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `string`: a wide string buffer to put the data into.
     /// - `maxlen`: the length of the buffer in multiples of wchar_t.
     /// - Returns 0 on success or a negative error code on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_product_string(
@@ -500,11 +500,11 @@ extern "C" {
 extern "C" {
     /// Get The Serial Number String from a HID device.
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `string`: a wide string buffer to put the data into.
     /// - `maxlen`: the length of the buffer in multiples of wchar_t.
     /// - Returns 0 on success or a negative error code on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_serial_number_string(
@@ -517,12 +517,12 @@ extern "C" {
 extern "C" {
     /// Get a string from a HID device, based on its string index.
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `string_index`: the index of the string to get.
     /// - `string`: a wide string buffer to put the data into.
     /// - `maxlen`: the length of the buffer in multiples of wchar_t.
     /// - Returns 0 on success or a negative error code on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_indexed_string(
@@ -536,10 +536,10 @@ extern "C" {
 extern "C" {
     /// Get the device info from a HID device.
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
-    /// - Returns a pointer to the SDL_hid_device_info for this hid_device or NULL
-    ///   on failure; call SDL_GetError() for more information. This struct
-    ///   is valid until the device is closed with SDL_hid_close().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
+    /// - Returns a pointer to the [`SDL_hid_device_info`] for this hid_device or NULL
+    ///   on failure; call [`SDL_GetError()`] for more information. This struct
+    ///   is valid until the device is closed with [`SDL_hid_close()`].
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_device_info(dev: *mut SDL_hid_device) -> *mut SDL_hid_device_info;
@@ -551,11 +551,11 @@ extern "C" {
     /// User has to provide a preallocated buffer where descriptor will be copied
     /// to. The recommended size for a preallocated buffer is 4096 bytes.
     ///
-    /// - `dev`: a device handle returned from SDL_hid_open().
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `buf`: the buffer to copy descriptor into.
     /// - `buf_size`: the size of the buffer in bytes.
     /// - Returns the number of bytes actually copied or -1 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_hid_get_report_descriptor(

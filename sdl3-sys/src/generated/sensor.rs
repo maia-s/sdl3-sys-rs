@@ -1,7 +1,7 @@
 //! SDL sensor management.
 //!
-//! In order to use these functions, SDL_Init() must have been called with the
-//! SDL_INIT_SENSOR flag. This causes SDL to scan the system for sensors, and
+//! In order to use these functions, [`SDL_Init()`] must have been called with the
+//! [`SDL_INIT_SENSOR`] flag. This causes SDL to scan the system for sensors, and
 //! load appropriate drivers.
 
 use super::stdinc::*;
@@ -22,7 +22,7 @@ pub type SDL_SensorID = Uint32;
 ///
 /// The accelerometer returns the current acceleration in SI meters per second
 /// squared. This measurement includes the force of gravity, so a device at
-/// rest will have an value of SDL_STANDARD_GRAVITY away from the center of the
+/// rest will have an value of [`SDL_STANDARD_GRAVITY`] away from the center of the
 /// earth, which is a positive Y value.
 ///
 /// This macro is available since SDL 3.0.0.
@@ -40,7 +40,7 @@ pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 ///
 /// The accelerometer returns the current acceleration in SI meters per second
 /// squared. This measurement includes the force of gravity, so a device at
-/// rest will have an value of SDL_STANDARD_GRAVITY away from the center of the
+/// rest will have an value of [`SDL_STANDARD_GRAVITY`] away from the center of the
 /// earth, which is a positive Y value.
 ///
 /// - `values[0]`: Acceleration on the x axis
@@ -133,8 +133,8 @@ extern "C" {
     /// - `count`: a pointer filled in with the number of sensors returned, may
     ///   be NULL.
     /// - Returns a 0 terminated array of sensor instance IDs or NULL on failure;
-    ///   call SDL_GetError() for more information. This should be freed
-    ///   with SDL_free() when it is no longer needed.
+    ///   call [`SDL_GetError()`] for more information. This should be freed
+    ///   with [`SDL_free()`] when it is no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetSensors(count: *mut ::core::ffi::c_int) -> *mut SDL_SensorID;
@@ -158,7 +158,7 @@ extern "C" {
     /// This can be called before any sensors are opened.
     ///
     /// - `instance_id`: the sensor instance ID.
-    /// - Returns the SDL_SensorType, or `SDL_SENSOR_INVALID` if `instance_id` is
+    /// - Returns the [`SDL_SensorType`], or `SDL_SENSOR_INVALID` if `instance_id` is
     ///   not valid.
     ///
     /// This function is available since SDL 3.0.0.
@@ -182,7 +182,7 @@ extern "C" {
     /// Open a sensor for use.
     ///
     /// - `instance_id`: the sensor instance ID.
-    /// - Returns an SDL_Sensor object or NULL on failure; call SDL_GetError() for
+    /// - Returns an [`SDL_Sensor`] object or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -190,10 +190,10 @@ extern "C" {
 }
 
 extern "C" {
-    /// Return the SDL_Sensor associated with an instance ID.
+    /// Return the [`SDL_Sensor`] associated with an instance ID.
     ///
     /// - `instance_id`: the sensor instance ID.
-    /// - Returns an SDL_Sensor object or NULL on failure; call SDL_GetError() for
+    /// - Returns an [`SDL_Sensor`] object or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -203,9 +203,9 @@ extern "C" {
 extern "C" {
     /// Get the properties associated with a sensor.
     ///
-    /// - `sensor`: the SDL_Sensor object.
+    /// - `sensor`: the [`SDL_Sensor`] object.
     /// - Returns a valid property ID on success or 0 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetSensorProperties(sensor: *mut SDL_Sensor) -> SDL_PropertiesID;
@@ -214,8 +214,8 @@ extern "C" {
 extern "C" {
     /// Get the implementation dependent name of a sensor.
     ///
-    /// - `sensor`: the SDL_Sensor object.
-    /// - Returns the sensor name or NULL on failure; call SDL_GetError() for more
+    /// - `sensor`: the [`SDL_Sensor`] object.
+    /// - Returns the sensor name or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -225,8 +225,8 @@ extern "C" {
 extern "C" {
     /// Get the type of a sensor.
     ///
-    /// - `sensor`: the SDL_Sensor object to inspect.
-    /// - Returns the SDL_SensorType type, or `SDL_SENSOR_INVALID` if `sensor` is
+    /// - `sensor`: the [`SDL_Sensor`] object to inspect.
+    /// - Returns the [`SDL_SensorType`] type, or `SDL_SENSOR_INVALID` if `sensor` is
     ///   NULL.
     ///
     /// This function is available since SDL 3.0.0.
@@ -236,7 +236,7 @@ extern "C" {
 extern "C" {
     /// Get the platform dependent type of a sensor.
     ///
-    /// - `sensor`: the SDL_Sensor object to inspect.
+    /// - `sensor`: the [`SDL_Sensor`] object to inspect.
     /// - Returns the sensor platform dependent type, or -1 if `sensor` is NULL.
     ///
     /// This function is available since SDL 3.0.0.
@@ -246,8 +246,8 @@ extern "C" {
 extern "C" {
     /// Get the instance ID of a sensor.
     ///
-    /// - `sensor`: the SDL_Sensor object to inspect.
-    /// - Returns the sensor instance ID, or 0 on failure; call SDL_GetError() for
+    /// - `sensor`: the [`SDL_Sensor`] object to inspect.
+    /// - Returns the sensor instance ID, or 0 on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -259,10 +259,10 @@ extern "C" {
     ///
     /// The number of values and interpretation of the data is sensor dependent.
     ///
-    /// - `sensor`: the SDL_Sensor object to query.
+    /// - `sensor`: the [`SDL_Sensor`] object to query.
     /// - `data`: a pointer filled with the current sensor state.
     /// - `num_values`: the number of values to write to data.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -274,9 +274,9 @@ extern "C" {
 }
 
 extern "C" {
-    /// Close a sensor previously opened with SDL_OpenSensor().
+    /// Close a sensor previously opened with [`SDL_OpenSensor()`].
     ///
-    /// - `sensor`: the SDL_Sensor object to close.
+    /// - `sensor`: the [`SDL_Sensor`] object to close.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_CloseSensor(sensor: *mut SDL_Sensor);

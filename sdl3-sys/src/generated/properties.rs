@@ -1,24 +1,24 @@
 //! A property is a variable that can be created and retrieved by name at
 //! runtime.
 //!
-//! All properties are part of a property group (SDL_PropertiesID). A property
-//! group can be created with the SDL_CreateProperties function and destroyed
-//! with the SDL_DestroyProperties function.
+//! All properties are part of a property group ([`SDL_PropertiesID`]). A property
+//! group can be created with the [`SDL_CreateProperties`] function and destroyed
+//! with the [`SDL_DestroyProperties`] function.
 //!
 //! Properties can be added to and retrieved from a property group through the
 //! following functions:
 //!
-//! - SDL_SetPointerProperty and SDL_GetPointerProperty operate on `void*`
+//! - [`SDL_SetPointerProperty`] and [`SDL_GetPointerProperty`] operate on `void*`
 //!   pointer types.
-//! - SDL_SetStringProperty and SDL_GetStringProperty operate on string types.
-//! - SDL_SetNumberProperty and SDL_GetNumberProperty operate on signed 64-bit
+//! - [`SDL_SetStringProperty`] and [`SDL_GetStringProperty`] operate on string types.
+//! - [`SDL_SetNumberProperty`] and [`SDL_GetNumberProperty`] operate on signed 64-bit
 //!   integer types.
-//! - SDL_SetFloatProperty and SDL_GetFloatProperty operate on floating point
+//! - [`SDL_SetFloatProperty`] and [`SDL_GetFloatProperty`] operate on floating point
 //!   types.
-//! - SDL_SetBooleanProperty and SDL_GetBooleanProperty operate on boolean
+//! - [`SDL_SetBooleanProperty`] and [`SDL_GetBooleanProperty`] operate on boolean
 //!   types.
 //!
-//! Properties can be removed from a group by using SDL_ClearProperty.
+//! Properties can be removed from a group by using [`SDL_ClearProperty`].
 
 use super::stdinc::*;
 
@@ -63,7 +63,7 @@ extern "C" {
     /// Get the global SDL properties.
     ///
     /// - Returns a valid property ID on success or 0 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetGlobalProperties() -> SDL_PropertiesID;
@@ -72,10 +72,10 @@ extern "C" {
 extern "C" {
     /// Create a group of properties.
     ///
-    /// All properties are automatically destroyed when SDL_Quit() is called.
+    /// All properties are automatically destroyed when [`SDL_Quit()`] is called.
     ///
     /// - Returns an ID for a new group of properties, or 0 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -90,12 +90,12 @@ extern "C" {
     ///
     /// Copy all the properties from one group of properties to another, with the
     /// exception of properties requiring cleanup (set using
-    /// SDL_SetPointerPropertyWithCleanup()), which will not be copied. Any
+    /// [`SDL_SetPointerPropertyWithCleanup()`]), which will not be copied. Any
     /// property that already exists on `dst` will be overwritten.
     ///
     /// - `src`: the properties to copy.
     /// - `dst`: the destination properties.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -120,7 +120,7 @@ extern "C" {
     /// thread.
     ///
     /// - `props`: the properties to lock.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -152,7 +152,7 @@ extern "C" {
 /// This callback is set per-property. Different properties in the same group
 /// can have different cleanup callbacks.
 ///
-/// This callback will be called _during_ SDL_SetPointerPropertyWithCleanup if
+/// This callback will be called _during_ [`SDL_SetPointerPropertyWithCleanup`] if
 /// the function fails for any reason.
 ///
 /// - `userdata`: an app-defined pointer passed to the callback.
@@ -176,7 +176,7 @@ extern "C" {
     /// reason.
     ///
     /// For simply setting basic data types, like numbers, bools, or strings, use
-    /// SDL_SetNumberProperty, SDL_SetBooleanProperty, or SDL_SetStringProperty
+    /// [`SDL_SetNumberProperty`], [`SDL_SetBooleanProperty`], or [`SDL_SetStringProperty`]
     /// instead, as those functions will handle cleanup on your behalf. This
     /// function is only for more complex, custom data.
     ///
@@ -186,7 +186,7 @@ extern "C" {
     /// - `cleanup`: the function to call when this property is deleted, or NULL
     ///   if no cleanup is necessary.
     /// - `userdata`: a pointer that is passed to the cleanup function.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -211,7 +211,7 @@ extern "C" {
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to modify.
     /// - `value`: the new value of the property, or NULL to delete the property.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -241,7 +241,7 @@ extern "C" {
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to modify.
     /// - `value`: the new value of the property, or NULL to delete the property.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -262,7 +262,7 @@ extern "C" {
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to modify.
     /// - `value`: the new value of the property.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -283,7 +283,7 @@ extern "C" {
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to modify.
     /// - `value`: the new value of the property.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -304,7 +304,7 @@ extern "C" {
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to modify.
     /// - `value`: the new value of the property.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -342,7 +342,7 @@ extern "C" {
     ///
     /// - `props`: the properties to query.
     /// - `name`: the name of the property to query.
-    /// - Returns the type of the property, or SDL_PROPERTY_TYPE_INVALID if it is
+    /// - Returns the type of the property, or [`SDL_PROPERTY_TYPE_INVALID`] if it is
     ///   not set.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -372,10 +372,10 @@ extern "C" {
     ///
     /// Thread safety: It is safe to call this function from any thread, although
     ///   the data returned is not protected and could potentially be
-    ///   freed if you call SDL_SetPointerProperty() or
-    ///   SDL_ClearProperty() on these properties from another thread.
-    ///   If you need to avoid this, use SDL_LockProperties() and
-    ///   SDL_UnlockProperties().
+    ///   freed if you call [`SDL_SetPointerProperty()`] or
+    ///   [`SDL_ClearProperty()`] on these properties from another thread.
+    ///   If you need to avoid this, use [`SDL_LockProperties()`] and
+    ///   [`SDL_UnlockProperties()`].
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -404,10 +404,10 @@ extern "C" {
     ///
     /// Thread safety: It is safe to call this function from any thread, although
     ///   the data returned is not protected and could potentially be
-    ///   freed if you call SDL_SetStringProperty() or
-    ///   SDL_ClearProperty() on these properties from another thread.
-    ///   If you need to avoid this, use SDL_LockProperties() and
-    ///   SDL_UnlockProperties().
+    ///   freed if you call [`SDL_SetStringProperty()`] or
+    ///   [`SDL_ClearProperty()`] on these properties from another thread.
+    ///   If you need to avoid this, use [`SDL_LockProperties()`] and
+    ///   [`SDL_UnlockProperties()`].
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -424,7 +424,7 @@ extern "C" {
 extern "C" {
     /// Get a number property from a group of properties.
     ///
-    /// You can use SDL_GetPropertyType() to query whether the property exists and
+    /// You can use [`SDL_GetPropertyType()`] to query whether the property exists and
     /// is a number property.
     ///
     /// - `props`: the properties to query.
@@ -450,7 +450,7 @@ extern "C" {
 extern "C" {
     /// Get a floating point property from a group of properties.
     ///
-    /// You can use SDL_GetPropertyType() to query whether the property exists and
+    /// You can use [`SDL_GetPropertyType()`] to query whether the property exists and
     /// is a floating point property.
     ///
     /// - `props`: the properties to query.
@@ -476,7 +476,7 @@ extern "C" {
 extern "C" {
     /// Get a boolean property from a group of properties.
     ///
-    /// You can use SDL_GetPropertyType() to query whether the property exists and
+    /// You can use [`SDL_GetPropertyType()`] to query whether the property exists and
     /// is a boolean property.
     ///
     /// - `props`: the properties to query.
@@ -504,7 +504,7 @@ extern "C" {
     ///
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to clear.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -518,14 +518,14 @@ extern "C" {
 
 /// A callback used to enumerate all the properties in a group of properties.
 ///
-/// This callback is called from SDL_EnumerateProperties(), and is called once
+/// This callback is called from [`SDL_EnumerateProperties()`], and is called once
 /// per property in the set.
 ///
 /// - `userdata`: an app-defined pointer passed to the callback.
-/// - `props`: the SDL_PropertiesID that is being enumerated.
+/// - `props`: the [`SDL_PropertiesID`] that is being enumerated.
 /// - `name`: the next property name in the enumeration.
 ///
-/// Thread safety: SDL_EnumerateProperties holds a lock on `props` during this
+/// Thread safety: [`SDL_EnumerateProperties`] holds a lock on `props` during this
 ///   callback.
 ///
 /// This datatype is available since SDL 3.0.0.
@@ -548,7 +548,7 @@ extern "C" {
     /// - `props`: the properties to query.
     /// - `callback`: the function to call for each property.
     /// - `userdata`: a pointer that is passed to `callback`.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.

@@ -71,7 +71,7 @@ extern "C" {
     ///
     /// The counter values are only meaningful relative to each other. Differences
     /// between values can be converted to times by using
-    /// SDL_GetPerformanceFrequency().
+    /// [`SDL_GetPerformanceFrequency()`].
     ///
     /// - Returns the current counter value.
     ///
@@ -132,7 +132,7 @@ pub type SDL_TimerID = Uint32;
 /// will be removed.
 ///
 /// - `userdata`: an arbitrary pointer provided by the app through
-///   SDL_AddTimer, for its own use.
+///   [`SDL_AddTimer`], for its own use.
 /// - `timerID`: the current timer being processed.
 /// - `interval`: the current callback time interval.
 /// - Returns the new callback time interval, or 0 to disable further runs of
@@ -157,7 +157,7 @@ extern "C" {
     /// Call a callback function at a future time.
     ///
     /// The callback function is passed the current timer interval and the user
-    /// supplied parameter from the SDL_AddTimer() call and should return the next
+    /// supplied parameter from the [`SDL_AddTimer()`] call and should return the next
     /// timer interval. If the value returned from the callback is 0, the timer is
     /// canceled and will be removed.
     ///
@@ -170,14 +170,14 @@ extern "C" {
     /// iteration.
     ///
     /// Timing may be inexact due to OS scheduling. Be sure to note the current
-    /// time with SDL_GetTicksNS() or SDL_GetPerformanceCounter() in case your
+    /// time with [`SDL_GetTicksNS()`] or [`SDL_GetPerformanceCounter()`] in case your
     /// callback needs to adjust for variances.
     ///
     /// - `interval`: the timer delay, in milliseconds, passed to `callback`.
-    /// - `callback`: the SDL_TimerCallback function to call when the specified
+    /// - `callback`: the [`SDL_TimerCallback`] function to call when the specified
     ///   `interval` elapses.
     /// - `userdata`: a pointer that is passed to `callback`.
-    /// - Returns a timer ID or 0 on failure; call SDL_GetError() for more
+    /// - Returns a timer ID or 0 on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -202,7 +202,7 @@ extern "C" {
 /// will be removed.
 ///
 /// - `userdata`: an arbitrary pointer provided by the app through
-///   SDL_AddTimer, for its own use.
+///   [`SDL_AddTimer`], for its own use.
 /// - `timerID`: the current timer being processed.
 /// - `interval`: the current callback time interval.
 /// - Returns the new callback time interval, or 0 to disable further runs of
@@ -227,7 +227,7 @@ extern "C" {
     /// Call a callback function at a future time.
     ///
     /// The callback function is passed the current timer interval and the user
-    /// supplied parameter from the SDL_AddTimerNS() call and should return the
+    /// supplied parameter from the [`SDL_AddTimerNS()`] call and should return the
     /// next timer interval. If the value returned from the callback is 0, the
     /// timer is canceled and will be removed.
     ///
@@ -240,14 +240,14 @@ extern "C" {
     /// iteration.
     ///
     /// Timing may be inexact due to OS scheduling. Be sure to note the current
-    /// time with SDL_GetTicksNS() or SDL_GetPerformanceCounter() in case your
+    /// time with [`SDL_GetTicksNS()`] or [`SDL_GetPerformanceCounter()`] in case your
     /// callback needs to adjust for variances.
     ///
     /// - `interval`: the timer delay, in nanoseconds, passed to `callback`.
-    /// - `callback`: the SDL_TimerCallback function to call when the specified
+    /// - `callback`: the [`SDL_TimerCallback`] function to call when the specified
     ///   `interval` elapses.
     /// - `userdata`: a pointer that is passed to `callback`.
-    /// - Returns a timer ID or 0 on failure; call SDL_GetError() for more
+    /// - Returns a timer ID or 0 on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -264,10 +264,10 @@ extern "C" {
 }
 
 extern "C" {
-    /// Remove a timer created with SDL_AddTimer().
+    /// Remove a timer created with [`SDL_AddTimer()`].
     ///
     /// - `id`: the ID of the timer to remove.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.

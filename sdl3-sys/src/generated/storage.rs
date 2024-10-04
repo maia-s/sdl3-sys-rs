@@ -8,16 +8,16 @@ use super::filesystem::*;
 
 use super::properties::*;
 
-/// Function interface for SDL_Storage.
+/// Function interface for [`SDL_Storage`].
 ///
-/// Apps that want to supply a custom implementation of SDL_Storage will fill
-/// in all the functions in this struct, and then pass it to SDL_OpenStorage to
-/// create a custom SDL_Storage object.
+/// Apps that want to supply a custom implementation of [`SDL_Storage`] will fill
+/// in all the functions in this struct, and then pass it to [`SDL_OpenStorage`] to
+/// create a custom [`SDL_Storage`] object.
 ///
 /// It is not usually necessary to do this; SDL provides standard
-/// implementations for many things you might expect to do with an SDL_Storage.
+/// implementations for many things you might expect to do with an [`SDL_Storage`].
 ///
-/// This structure should be initialized using SDL_INIT_INTERFACE()
+/// This structure should be initialized using [`SDL_INIT_INTERFACE()`]
 ///
 /// This struct is available since SDL 3.0.0.
 ///
@@ -129,7 +129,7 @@ extern "C" {
     /// - `override`: a path to override the backend's default title root.
     /// - `props`: a property list that may contain backend-specific information.
     /// - Returns a title storage container on success or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -155,7 +155,7 @@ extern "C" {
     /// - `app`: the name of your application.
     /// - `props`: a property list that may contain backend-specific information.
     /// - Returns a user storage container on success or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -177,13 +177,13 @@ extern "C" {
     /// Opens up a container for local filesystem storage.
     ///
     /// This is provided for development and tools. Portable applications should
-    /// use SDL_OpenTitleStorage() for access to game data and
-    /// SDL_OpenUserStorage() for access to user data.
+    /// use [`SDL_OpenTitleStorage()`] for access to game data and
+    /// [`SDL_OpenUserStorage()`] for access to user data.
     ///
     /// - `path`: the base path prepended to all storage paths, or NULL for no
     ///   base path.
     /// - Returns a filesystem storage container on success or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -201,18 +201,18 @@ extern "C" {
     /// Opens up a container using a client-provided storage interface.
     ///
     /// Applications do not need to use this function unless they are providing
-    /// their own SDL_Storage implementation. If you just need an SDL_Storage, you
-    /// should use the built-in implementations in SDL, like SDL_OpenTitleStorage()
-    /// or SDL_OpenUserStorage().
+    /// their own [`SDL_Storage`] implementation. If you just need an [`SDL_Storage`], you
+    /// should use the built-in implementations in SDL, like [`SDL_OpenTitleStorage()`]
+    /// or [`SDL_OpenUserStorage()`].
     ///
     /// This function makes a copy of `iface` and the caller does not need to keep
     /// it around after this call.
     ///
     /// - `iface`: the interface that implements this storage, initialized using
-    ///   SDL_INIT_INTERFACE().
+    ///   [`SDL_INIT_INTERFACE()`].
     /// - `userdata`: the pointer that will be passed to the interface functions.
     /// - Returns a storage container on success or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -234,7 +234,7 @@ extern "C" {
     ///
     /// - `storage`: a storage container to close.
     /// - Returns true if the container was freed with no errors, false otherwise;
-    ///   call SDL_GetError() for more information. Even if the function
+    ///   call [`SDL_GetError()`] for more information. Even if the function
     ///   returns an error, the container data will be freed; the error is
     ///   only for informational purposes.
     ///
@@ -268,7 +268,7 @@ extern "C" {
     /// - `path`: the relative path of the file to query.
     /// - `length`: a pointer to be filled with the file's length.
     /// - Returns true if the file could be queried or false on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -289,7 +289,7 @@ extern "C" {
     /// - `path`: the relative path of the file to read.
     /// - `destination`: a client-provided buffer to read the file into.
     /// - `length`: the length of the destination buffer.
-    /// - Returns true if the file was read or false on failure; call SDL_GetError()
+    /// - Returns true if the file was read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -313,7 +313,7 @@ extern "C" {
     /// - `source`: a client-provided buffer to write from.
     /// - `length`: the length of the source buffer.
     /// - Returns true if the file was written or false on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -333,7 +333,7 @@ extern "C" {
     ///
     /// - `storage`: a storage container.
     /// - `path`: the path of the directory to create.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -360,7 +360,7 @@ extern "C" {
     /// - `path`: the path of the directory to enumerate.
     /// - `callback`: a function that is called for each entry in the directory.
     /// - `userdata`: a pointer that is passed to `callback`.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -379,7 +379,7 @@ extern "C" {
     ///
     /// - `storage`: a storage container.
     /// - `path`: the path of the directory to enumerate.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -397,7 +397,7 @@ extern "C" {
     /// - `storage`: a storage container.
     /// - `oldpath`: the old path.
     /// - `newpath`: the new path.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -416,7 +416,7 @@ extern "C" {
     /// - `storage`: a storage container.
     /// - `oldpath`: the old path.
     /// - `newpath`: the new path.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -437,7 +437,7 @@ extern "C" {
     /// - `info`: a pointer filled in with information about the path, or NULL to
     ///   check for the existence of a file.
     /// - Returns true on success or false if the file doesn't exist, or another
-    ///   failure; call SDL_GetError() for more information.
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -472,7 +472,7 @@ extern "C" {
     /// separator of '/'. Wildcard characters '*' and '?' never match a path
     /// separator.
     ///
-    /// `flags` may be set to SDL_GLOB_CASEINSENSITIVE to make the pattern matching
+    /// `flags` may be set to [`SDL_GLOB_CASEINSENSITIVE`] to make the pattern matching
     /// case-insensitive.
     ///
     /// The returned array is always NULL-terminated, for your iterating
@@ -487,9 +487,9 @@ extern "C" {
     /// - `count`: on return, will be set to the number of items in the returned
     ///   array. Can be NULL.
     /// - Returns an array of strings on success or NULL on failure; call
-    ///   SDL_GetError() for more information. The caller should pass the
-    ///   returned pointer to SDL_free when done with it. This is a single
-    ///   allocation that should be freed with SDL_free() when it is no
+    ///   [`SDL_GetError()`] for more information. The caller should pass the
+    ///   returned pointer to [`SDL_free`] when done with it. This is a single
+    ///   allocation that should be freed with [`SDL_free()`] when it is no
     ///   longer needed.
     ///
     /// Thread safety: It is safe to call this function from any thread, assuming

@@ -52,15 +52,15 @@ extern "C" {
     /// This might be a "slow" call that has to query the operating system. It's
     /// best to ask for this once and save the results. However, this list can
     /// change, usually because the user has changed a system preference outside of
-    /// your program; SDL will send an SDL_EVENT_LOCALE_CHANGED event in this case,
+    /// your program; SDL will send an [`SDL_EVENT_LOCALE_CHANGED`] event in this case,
     /// if possible, and you can call this function again to get an updated copy of
     /// preferred locales.
     ///
     /// - `count`: a pointer filled in with the number of locales returned, may
     ///   be NULL.
     /// - Returns a NULL terminated array of locale pointers, or NULL on failure;
-    ///   call SDL_GetError() for more information. This is a single
-    ///   allocation that should be freed with SDL_free() when it is no
+    ///   call [`SDL_GetError()`] for more information. This is a single
+    ///   allocation that should be freed with [`SDL_free()`] when it is no
     ///   longer needed.
     ///
     /// This function is available since SDL 3.0.0.

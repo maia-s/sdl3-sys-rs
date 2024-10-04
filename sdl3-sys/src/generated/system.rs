@@ -12,7 +12,7 @@ use super::video::*;
 emit! {
     pub type MSG = tagMSG;
 
-    /// A callback to be used with SDL_SetWindowsMessageHook.
+    /// A callback to be used with [`SDL_SetWindowsMessageHook`].
     ///
     /// This callback may modify the message, and should return true if the message
     /// should continue to be processed, or false to prevent further processing.
@@ -21,7 +21,7 @@ emit! {
     /// callback should do the minimum required work and return quickly.
     ///
     /// - `userdata`: the app-defined pointer provided to
-    ///   SDL_SetWindowsMessageHook.
+    ///   [`SDL_SetWindowsMessageHook`].
     /// - `msg`: a pointer to a Win32 event structure to process.
     /// - Returns true to let event continue on, false to drop it.
     ///
@@ -40,7 +40,7 @@ emit! {
         /// The callback may modify the message, and should return true if the message
         /// should continue to be processed, or false to prevent further processing.
         ///
-        /// - `callback`: the SDL_WindowsMessageHook function to call.
+        /// - `callback`: the [`SDL_WindowsMessageHook`] function to call.
         /// - `userdata`: a pointer to pass to every iteration of `callback`.
         ///
         /// This function is available since SDL 3.0.0.
@@ -66,7 +66,7 @@ emit! {
         ///
         /// - `displayID`: the instance of the display to query.
         /// - Returns the D3D9 adapter index on success or -1 on failure; call
-        ///   SDL_GetError() for more information.
+        ///   [`SDL_GetError()`] for more information.
         ///
         /// This function is available since SDL 3.0.0.
         pub fn SDL_GetDirect3D9AdapterIndex(displayID: SDL_DisplayID) -> ::core::ffi::c_int;
@@ -82,7 +82,7 @@ emit! {
         /// - `displayID`: the instance of the display to query.
         /// - `adapterIndex`: a pointer to be filled in with the adapter index.
         /// - `outputIndex`: a pointer to be filled in with the output index.
-        /// - Returns true on success or false on failure; call SDL_GetError() for more
+        /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
         ///
         /// This function is available since SDL 3.0.0.
@@ -106,7 +106,7 @@ extern "C" {
     /// The callback may modify the event, and should return true if the event
     /// should continue to be processed, or false to prevent further processing.
     ///
-    /// - `callback`: the SDL_X11EventHook function to call.
+    /// - `callback`: the [`SDL_X11EventHook`] function to call.
     /// - `userdata`: a pointer to pass to every iteration of `callback`.
     ///
     /// This function is available since SDL 3.0.0.
@@ -122,7 +122,7 @@ emit! {
         ///
         /// - `threadID`: the Unix thread ID to change priority of.
         /// - `priority`: the new, Unix-specific, priority value.
-        /// - Returns true on success or false on failure; call SDL_GetError() for more
+        /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
         ///
         /// This function is available since SDL 3.0.0.
@@ -135,10 +135,10 @@ emit! {
         /// This uses setpriority() if possible, and RealtimeKit if available.
         ///
         /// - `threadID`: the Unix thread ID to change priority of.
-        /// - `sdlPriority`: the new SDL_ThreadPriority value.
+        /// - `sdlPriority`: the new [`SDL_ThreadPriority`] value.
         /// - `schedPolicy`: the new scheduling policy (SCHED_FIFO, SCHED_RR,
         ///   SCHED_OTHER, etc...).
-        /// - Returns true on success or false on failure; call SDL_GetError() for more
+        /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
         ///
         /// This function is available since SDL 3.0.0.
@@ -154,11 +154,11 @@ emit! {
     /// This datatype is only useful on Apple iOS.
     ///
     /// After passing a function pointer of this type to
-    /// SDL_SetiOSAnimationCallback, the system will call that function pointer at
+    /// [`SDL_SetiOSAnimationCallback`], the system will call that function pointer at
     /// a regular interval.
     ///
     /// - `userdata`: what was passed as `callbackParam` to
-    ///   SDL_SetiOSAnimationCallback as `callbackParam`.
+    ///   [`SDL_SetiOSAnimationCallback`] as `callbackParam`.
     ///
     /// This datatype is available since SDL 3.0.0.
     ///
@@ -175,7 +175,7 @@ emit! {
         /// ```
         ///
         /// Where its parameter, `callbackParam`, is what was passed as `callbackParam`
-        /// to SDL_SetiOSAnimationCallback().
+        /// to [`SDL_SetiOSAnimationCallback()`].
         ///
         /// This function is only available on Apple iOS.
         ///
@@ -195,7 +195,7 @@ emit! {
         ///   called.
         /// - `callback`: the function to call for every frame.
         /// - `callbackParam`: a pointer that is passed to `callback`.
-        /// - Returns true on success or false on failure; call SDL_GetError() for more
+        /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
         ///
         /// This function is available since SDL 3.0.0.
@@ -233,7 +233,7 @@ emit! {
         ///
         /// - Returns a pointer to Java native interface object (JNIEnv) to which the
         ///   current thread is attached, or NULL on failure; call
-        ///   SDL_GetError() for more information.
+        ///   [`SDL_GetError()`] for more information.
         ///
         /// Thread safety: It is safe to call this function from any thread.
         ///
@@ -257,7 +257,7 @@ emit! {
         /// https://docs.oracle.com/javase/1.5.0/docs/guide/jni/spec/functions.html
         ///
         /// - Returns the jobject representing the instance of the Activity class of the
-        ///   Android application, or NULL on failure; call SDL_GetError() for
+        ///   Android application, or NULL on failure; call [`SDL_GetError()`] for
         ///   more information.
         ///
         /// Thread safety: It is safe to call this function from any thread.
@@ -353,7 +353,7 @@ emit! {
         /// https://developer.android.com/reference/android/content/Context#getFilesDir()
         ///
         /// - Returns the path used for internal storage or NULL on failure; call
-        ///   SDL_GetError() for more information.
+        ///   [`SDL_GetError()`] for more information.
         ///
         /// This function is available since SDL 3.0.0.
         ///
@@ -392,7 +392,7 @@ emit! {
         /// https://developer.android.com/reference/android/content/Context#getExternalFilesDir()
         ///
         /// - Returns the path used for external storage for this application on success
-        ///   or NULL on failure; call SDL_GetError() for more information.
+        ///   or NULL on failure; call [`SDL_GetError()`] for more information.
         ///
         /// This function is available since SDL 3.0.0.
         ///
@@ -413,7 +413,7 @@ emit! {
         /// https://developer.android.com/reference/android/content/Context#getCacheDir()
         ///
         /// - Returns the path used for caches for this application on success or NULL
-        ///   on failure; call SDL_GetError() for more information.
+        ///   on failure; call [`SDL_GetError()`] for more information.
         ///
         /// This function is available since SDL 3.0.0.
         pub fn SDL_GetAndroidCachePath() -> *const ::core::ffi::c_char;
@@ -472,7 +472,7 @@ emit! {
         /// - `gravity`: where the notification should appear on the screen.
         /// - `xoffset`: set this parameter only when gravity >=0.
         /// - `yoffset`: set this parameter only when gravity >=0.
-        /// - Returns true on success or false on failure; call SDL_GetError() for more
+        /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
         ///
         /// Thread safety: It is safe to call this function from any thread.
@@ -488,7 +488,7 @@ emit! {
         ///
         /// - `command`: user command that must be greater or equal to 0x8000.
         /// - `param`: user parameter.
-        /// - Returns true on success or false on failure; call SDL_GetError() for more
+        /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
         ///
         /// Thread safety: It is safe to call this function from any thread.
@@ -659,7 +659,7 @@ emit! {
         /// leak.
         ///
         /// - `outTaskQueue`: a pointer to be filled in with task queue handle.
-        /// - Returns true on success or false on failure; call SDL_GetError() for more
+        /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
         ///
         /// This function is available since SDL 3.0.0.
@@ -674,7 +674,7 @@ emit! {
         ///
         /// - `outUserHandle`: a pointer to be filled in with the default user
         ///   handle.
-        /// - Returns true if success or false on failure; call SDL_GetError() for more
+        /// - Returns true if success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
         ///
         /// This function is available since SDL 3.0.0.

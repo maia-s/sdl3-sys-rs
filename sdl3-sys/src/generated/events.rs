@@ -50,27 +50,27 @@ impl SDL_EventType {
     pub const FIRST: Self = Self(0);
     /// User-requested quit
     pub const QUIT: Self = Self(0x100);
-    /// The application is being terminated by the OS. This event must be handled in a callback set with SDL_AddEventWatch().
+    /// The application is being terminated by the OS. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationWillTerminate()
     /// Called on Android in onDestroy()
     pub const TERMINATING: Self = Self(257);
-    /// The application is low on memory, free memory if possible. This event must be handled in a callback set with SDL_AddEventWatch().
+    /// The application is low on memory, free memory if possible. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationDidReceiveMemoryWarning()
     /// Called on Android in onTrimMemory()
     pub const LOW_MEMORY: Self = Self(258);
-    /// The application is about to enter the background. This event must be handled in a callback set with SDL_AddEventWatch().
+    /// The application is about to enter the background. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationWillResignActive()
     /// Called on Android in onPause()
     pub const WILL_ENTER_BACKGROUND: Self = Self(259);
-    /// The application did enter the background and may not get CPU for some time. This event must be handled in a callback set with SDL_AddEventWatch().
+    /// The application did enter the background and may not get CPU for some time. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationDidEnterBackground()
     /// Called on Android in onPause()
     pub const DID_ENTER_BACKGROUND: Self = Self(260);
-    /// The application is about to enter the foreground. This event must be handled in a callback set with SDL_AddEventWatch().
+    /// The application is about to enter the foreground. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationWillEnterForeground()
     /// Called on Android in onResume()
     pub const WILL_ENTER_FOREGROUND: Self = Self(261);
-    /// The application is now interactive. This event must be handled in a callback set with SDL_AddEventWatch().
+    /// The application is now interactive. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationDidBecomeActive()
     /// Called on Android in onResume()
     pub const DID_ENTER_FOREGROUND: Self = Self(262);
@@ -124,7 +124,7 @@ impl SDL_EventType {
     pub const WINDOW_FOCUS_LOST: Self = Self(527);
     /// The window manager requests that the window be closed
     pub const WINDOW_CLOSE_REQUESTED: Self = Self(528);
-    /// Window had a hit test that wasn't SDL_HITTEST_NORMAL
+    /// Window had a hit test that wasn't [`SDL_HITTEST_NORMAL`]
     pub const WINDOW_HIT_TEST: Self = Self(529);
     /// The ICC profile of the window's display has changed
     pub const WINDOW_ICCPROF_CHANGED: Self = Self(530);
@@ -273,8 +273,8 @@ impl SDL_EventType {
     pub const RENDER_DEVICE_RESET: Self = Self(8193);
     /// Signals the end of an event poll cycle
     pub const POLL_SENTINEL: Self = Self(0x7f00);
-    ///  Events SDL_EVENT_USER through SDL_EVENT_LAST are for your use,
-    /// and should be allocated with SDL_RegisterEvents()
+    ///  Events [`SDL_EVENT_USER`] through [`SDL_EVENT_LAST`] are for your use,
+    /// and should be allocated with [`SDL_RegisterEvents()`]
     pub const USER: Self = Self(0x8000);
     /// *  This last event is only for bounding internal arrays
     pub const LAST: Self = Self(0xffff);
@@ -284,27 +284,27 @@ impl SDL_EventType {
 pub const SDL_EVENT_FIRST: SDL_EventType = SDL_EventType::FIRST;
 /// User-requested quit
 pub const SDL_EVENT_QUIT: SDL_EventType = SDL_EventType::QUIT;
-/// The application is being terminated by the OS. This event must be handled in a callback set with SDL_AddEventWatch().
+/// The application is being terminated by the OS. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
 /// Called on iOS in applicationWillTerminate()
 /// Called on Android in onDestroy()
 pub const SDL_EVENT_TERMINATING: SDL_EventType = SDL_EventType::TERMINATING;
-/// The application is low on memory, free memory if possible. This event must be handled in a callback set with SDL_AddEventWatch().
+/// The application is low on memory, free memory if possible. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
 /// Called on iOS in applicationDidReceiveMemoryWarning()
 /// Called on Android in onTrimMemory()
 pub const SDL_EVENT_LOW_MEMORY: SDL_EventType = SDL_EventType::LOW_MEMORY;
-/// The application is about to enter the background. This event must be handled in a callback set with SDL_AddEventWatch().
+/// The application is about to enter the background. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
 /// Called on iOS in applicationWillResignActive()
 /// Called on Android in onPause()
 pub const SDL_EVENT_WILL_ENTER_BACKGROUND: SDL_EventType = SDL_EventType::WILL_ENTER_BACKGROUND;
-/// The application did enter the background and may not get CPU for some time. This event must be handled in a callback set with SDL_AddEventWatch().
+/// The application did enter the background and may not get CPU for some time. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
 /// Called on iOS in applicationDidEnterBackground()
 /// Called on Android in onPause()
 pub const SDL_EVENT_DID_ENTER_BACKGROUND: SDL_EventType = SDL_EventType::DID_ENTER_BACKGROUND;
-/// The application is about to enter the foreground. This event must be handled in a callback set with SDL_AddEventWatch().
+/// The application is about to enter the foreground. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
 /// Called on iOS in applicationWillEnterForeground()
 /// Called on Android in onResume()
 pub const SDL_EVENT_WILL_ENTER_FOREGROUND: SDL_EventType = SDL_EventType::WILL_ENTER_FOREGROUND;
-/// The application is now interactive. This event must be handled in a callback set with SDL_AddEventWatch().
+/// The application is now interactive. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
 /// Called on iOS in applicationDidBecomeActive()
 /// Called on Android in onResume()
 pub const SDL_EVENT_DID_ENTER_FOREGROUND: SDL_EventType = SDL_EventType::DID_ENTER_FOREGROUND;
@@ -363,7 +363,7 @@ pub const SDL_EVENT_WINDOW_FOCUS_GAINED: SDL_EventType = SDL_EventType::WINDOW_F
 pub const SDL_EVENT_WINDOW_FOCUS_LOST: SDL_EventType = SDL_EventType::WINDOW_FOCUS_LOST;
 /// The window manager requests that the window be closed
 pub const SDL_EVENT_WINDOW_CLOSE_REQUESTED: SDL_EventType = SDL_EventType::WINDOW_CLOSE_REQUESTED;
-/// Window had a hit test that wasn't SDL_HITTEST_NORMAL
+/// Window had a hit test that wasn't [`SDL_HITTEST_NORMAL`]
 pub const SDL_EVENT_WINDOW_HIT_TEST: SDL_EventType = SDL_EventType::WINDOW_HIT_TEST;
 /// The ICC profile of the window's display has changed
 pub const SDL_EVENT_WINDOW_ICCPROF_CHANGED: SDL_EventType = SDL_EventType::WINDOW_ICCPROF_CHANGED;
@@ -519,8 +519,8 @@ pub const SDL_EVENT_RENDER_TARGETS_RESET: SDL_EventType = SDL_EventType::RENDER_
 pub const SDL_EVENT_RENDER_DEVICE_RESET: SDL_EventType = SDL_EventType::RENDER_DEVICE_RESET;
 /// Signals the end of an event poll cycle
 pub const SDL_EVENT_POLL_SENTINEL: SDL_EventType = SDL_EventType::POLL_SENTINEL;
-///  Events SDL_EVENT_USER through SDL_EVENT_LAST are for your use,
-/// and should be allocated with SDL_RegisterEvents()
+///  Events [`SDL_EVENT_USER`] through [`SDL_EVENT_LAST`] are for your use,
+/// and should be allocated with [`SDL_RegisterEvents()`]
 pub const SDL_EVENT_USER: SDL_EventType = SDL_EventType::USER;
 /// *  This last event is only for bounding internal arrays
 pub const SDL_EVENT_LAST: SDL_EventType = SDL_EventType::LAST;
@@ -533,10 +533,10 @@ pub const SDL_EVENT_ENUM_PADDING: SDL_EventType = SDL_EventType::ENUM_PADDING;
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_CommonEvent {
-    /// Event type, shared with all events, Uint32 to cover user events which are not in the SDL_EventType enumeration
+    /// Event type, shared with all events, Uint32 to cover user events which are not in the [`SDL_EventType`] enumeration
     pub r#type: Uint32,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
 }
 
@@ -550,7 +550,7 @@ pub struct SDL_DisplayEvent {
     /// SDL_DISPLAYEVENT_*
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The associated display
     pub displayID: SDL_DisplayID,
@@ -570,7 +570,7 @@ pub struct SDL_WindowEvent {
     /// SDL_EVENT_WINDOW_*
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The associated window
     pub windowID: SDL_WindowID,
@@ -587,10 +587,10 @@ pub struct SDL_WindowEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_KeyboardDeviceEvent {
-    /// SDL_EVENT_KEYBOARD_ADDED or SDL_EVENT_KEYBOARD_REMOVED
+    /// [`SDL_EVENT_KEYBOARD_ADDED`] or [`SDL_EVENT_KEYBOARD_REMOVED`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The keyboard instance id
     pub which: SDL_KeyboardID,
@@ -598,11 +598,11 @@ pub struct SDL_KeyboardDeviceEvent {
 
 /// Keyboard button event structure (event.key.*)
 ///
-/// The `key` is the base SDL_Keycode generated by pressing the `scancode`
+/// The `key` is the base [`SDL_Keycode`] generated by pressing the `scancode`
 /// using the current keyboard layout, applying any options specified in
-/// SDL_HINT_KEYCODE_OPTIONS. You can get the SDL_Keycode corresponding to the
+/// [`SDL_HINT_KEYCODE_OPTIONS`]. You can get the [`SDL_Keycode`] corresponding to the
 /// event scancode and modifiers directly from the keyboard layout, bypassing
-/// SDL_HINT_KEYCODE_OPTIONS, by calling SDL_GetKeyFromScancode().
+/// [`SDL_HINT_KEYCODE_OPTIONS`], by calling [`SDL_GetKeyFromScancode()`].
 ///
 /// This struct is available since SDL 3.0.0.
 ///
@@ -612,10 +612,10 @@ pub struct SDL_KeyboardDeviceEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_KeyboardEvent {
-    /// SDL_EVENT_KEY_DOWN or SDL_EVENT_KEY_UP
+    /// [`SDL_EVENT_KEY_DOWN`] or [`SDL_EVENT_KEY_UP`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window with keyboard focus, if any
     pub windowID: SDL_WindowID,
@@ -646,10 +646,10 @@ pub struct SDL_KeyboardEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TextEditingEvent {
-    /// SDL_EVENT_TEXT_EDITING
+    /// [`SDL_EVENT_TEXT_EDITING`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window with keyboard focus, if any
     pub windowID: SDL_WindowID,
@@ -668,10 +668,10 @@ pub struct SDL_TextEditingEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TextEditingCandidatesEvent {
-    /// SDL_EVENT_TEXT_EDITING_CANDIDATES
+    /// [`SDL_EVENT_TEXT_EDITING_CANDIDATES`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window with keyboard focus, if any
     pub windowID: SDL_WindowID,
@@ -691,7 +691,7 @@ pub struct SDL_TextEditingCandidatesEvent {
 /// Keyboard text input event structure (event.text.*)
 ///
 /// This event will never be delivered unless text input is enabled by calling
-/// SDL_StartTextInput(). Text input is disabled by default!
+/// [`SDL_StartTextInput()`]. Text input is disabled by default!
 ///
 /// This struct is available since SDL 3.0.0.
 ///
@@ -701,10 +701,10 @@ pub struct SDL_TextEditingCandidatesEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TextInputEvent {
-    /// SDL_EVENT_TEXT_INPUT
+    /// [`SDL_EVENT_TEXT_INPUT`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window with keyboard focus, if any
     pub windowID: SDL_WindowID,
@@ -719,10 +719,10 @@ pub struct SDL_TextInputEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MouseDeviceEvent {
-    /// SDL_EVENT_MOUSE_ADDED or SDL_EVENT_MOUSE_REMOVED
+    /// [`SDL_EVENT_MOUSE_ADDED`] or [`SDL_EVENT_MOUSE_REMOVED`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The mouse instance id
     pub which: SDL_MouseID,
@@ -735,14 +735,14 @@ pub struct SDL_MouseDeviceEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MouseMotionEvent {
-    /// SDL_EVENT_MOUSE_MOTION
+    /// [`SDL_EVENT_MOUSE_MOTION`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window with mouse focus, if any
     pub windowID: SDL_WindowID,
-    /// The mouse instance id or SDL_TOUCH_MOUSEID
+    /// The mouse instance id or [`SDL_TOUCH_MOUSEID`]
     pub which: SDL_MouseID,
     /// The current button state
     pub state: SDL_MouseButtonFlags,
@@ -763,14 +763,14 @@ pub struct SDL_MouseMotionEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MouseButtonEvent {
-    /// SDL_EVENT_MOUSE_BUTTON_DOWN or SDL_EVENT_MOUSE_BUTTON_UP
+    /// [`SDL_EVENT_MOUSE_BUTTON_DOWN`] or [`SDL_EVENT_MOUSE_BUTTON_UP`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window with mouse focus, if any
     pub windowID: SDL_WindowID,
-    /// The mouse instance id, SDL_TOUCH_MOUSEID
+    /// The mouse instance id, [`SDL_TOUCH_MOUSEID`]
     pub which: SDL_MouseID,
     /// The mouse button index
     pub button: Uint8,
@@ -792,14 +792,14 @@ pub struct SDL_MouseButtonEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MouseWheelEvent {
-    /// SDL_EVENT_MOUSE_WHEEL
+    /// [`SDL_EVENT_MOUSE_WHEEL`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window with mouse focus, if any
     pub windowID: SDL_WindowID,
-    /// The mouse instance id, SDL_TOUCH_MOUSEID
+    /// The mouse instance id, [`SDL_TOUCH_MOUSEID`]
     pub which: SDL_MouseID,
     /// The amount scrolled horizontally, positive to the right and negative to the left
     pub x: ::core::ffi::c_float,
@@ -820,10 +820,10 @@ pub struct SDL_MouseWheelEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoyAxisEvent {
-    /// SDL_EVENT_JOYSTICK_AXIS_MOTION
+    /// [`SDL_EVENT_JOYSTICK_AXIS_MOTION`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The joystick instance id
     pub which: SDL_JoystickID,
@@ -844,10 +844,10 @@ pub struct SDL_JoyAxisEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoyBallEvent {
-    /// SDL_EVENT_JOYSTICK_BALL_MOTION
+    /// [`SDL_EVENT_JOYSTICK_BALL_MOTION`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The joystick instance id
     pub which: SDL_JoystickID,
@@ -869,19 +869,19 @@ pub struct SDL_JoyBallEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoyHatEvent {
-    /// SDL_EVENT_JOYSTICK_HAT_MOTION
+    /// [`SDL_EVENT_JOYSTICK_HAT_MOTION`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The joystick instance id
     pub which: SDL_JoystickID,
     /// The joystick hat index
     pub hat: Uint8,
     /// The hat position value.
-    /// See also [`SDL_HAT_LEFTUP SDL_HAT_UP SDL_HAT_RIGHTUP`]<br>
-    /// See also [`SDL_HAT_LEFT SDL_HAT_CENTERED SDL_HAT_RIGHT`]<br>
-    /// See also [`SDL_HAT_LEFTDOWN SDL_HAT_DOWN SDL_HAT_RIGHTDOWN`]<br>
+    /// See also [`SDL_HAT_LEFTUP`] [`SDL_HAT_UP`] [`SDL_HAT_RIGHTUP`]<br>
+    /// See also [`SDL_HAT_LEFT`] [`SDL_HAT_CENTERED`] [`SDL_HAT_RIGHT`]<br>
+    /// See also [`SDL_HAT_LEFTDOWN`] [`SDL_HAT_DOWN`] [`SDL_HAT_RIGHTDOWN`]<br>
     ///
     /// Note that zero means the POV is centered.
     pub value: Uint8,
@@ -896,10 +896,10 @@ pub struct SDL_JoyHatEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoyButtonEvent {
-    /// SDL_EVENT_JOYSTICK_BUTTON_DOWN or SDL_EVENT_JOYSTICK_BUTTON_UP
+    /// [`SDL_EVENT_JOYSTICK_BUTTON_DOWN`] or [`SDL_EVENT_JOYSTICK_BUTTON_UP`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The joystick instance id
     pub which: SDL_JoystickID,
@@ -918,10 +918,10 @@ pub struct SDL_JoyButtonEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoyDeviceEvent {
-    /// SDL_EVENT_JOYSTICK_ADDED or SDL_EVENT_JOYSTICK_REMOVED or SDL_EVENT_JOYSTICK_UPDATE_COMPLETE
+    /// [`SDL_EVENT_JOYSTICK_ADDED`] or [`SDL_EVENT_JOYSTICK_REMOVED`] or [`SDL_EVENT_JOYSTICK_UPDATE_COMPLETE`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The joystick instance id
     pub which: SDL_JoystickID,
@@ -934,10 +934,10 @@ pub struct SDL_JoyDeviceEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoyBatteryEvent {
-    /// SDL_EVENT_JOYSTICK_BATTERY_UPDATED
+    /// [`SDL_EVENT_JOYSTICK_BATTERY_UPDATED`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The joystick instance id
     pub which: SDL_JoystickID,
@@ -954,14 +954,14 @@ pub struct SDL_JoyBatteryEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GamepadAxisEvent {
-    /// SDL_EVENT_GAMEPAD_AXIS_MOTION
+    /// [`SDL_EVENT_GAMEPAD_AXIS_MOTION`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The joystick instance id
     pub which: SDL_JoystickID,
-    /// The gamepad axis (SDL_GamepadAxis)
+    /// The gamepad axis ([`SDL_GamepadAxis`])
     pub axis: Uint8,
     pub padding1: Uint8,
     pub padding2: Uint8,
@@ -978,14 +978,14 @@ pub struct SDL_GamepadAxisEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GamepadButtonEvent {
-    /// SDL_EVENT_GAMEPAD_BUTTON_DOWN or SDL_EVENT_GAMEPAD_BUTTON_UP
+    /// [`SDL_EVENT_GAMEPAD_BUTTON_DOWN`] or [`SDL_EVENT_GAMEPAD_BUTTON_UP`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The joystick instance id
     pub which: SDL_JoystickID,
-    /// The gamepad button (SDL_GamepadButton)
+    /// The gamepad button ([`SDL_GamepadButton`])
     pub button: Uint8,
     /// true if the button is pressed
     pub down: ::core::primitive::bool,
@@ -1000,10 +1000,10 @@ pub struct SDL_GamepadButtonEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GamepadDeviceEvent {
-    /// SDL_EVENT_GAMEPAD_ADDED, SDL_EVENT_GAMEPAD_REMOVED, or SDL_EVENT_GAMEPAD_REMAPPED, SDL_EVENT_GAMEPAD_UPDATE_COMPLETE or SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED
+    /// [`SDL_EVENT_GAMEPAD_ADDED`], [`SDL_EVENT_GAMEPAD_REMOVED`], or [`SDL_EVENT_GAMEPAD_REMAPPED`], [`SDL_EVENT_GAMEPAD_UPDATE_COMPLETE`] or [`SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The joystick instance id
     pub which: SDL_JoystickID,
@@ -1016,10 +1016,10 @@ pub struct SDL_GamepadDeviceEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GamepadTouchpadEvent {
-    /// SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN or SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION or SDL_EVENT_GAMEPAD_TOUCHPAD_UP
+    /// [`SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN`] or [`SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION`] or [`SDL_EVENT_GAMEPAD_TOUCHPAD_UP`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The joystick instance id
     pub which: SDL_JoystickID,
@@ -1042,16 +1042,16 @@ pub struct SDL_GamepadTouchpadEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GamepadSensorEvent {
-    /// SDL_EVENT_GAMEPAD_SENSOR_UPDATE
+    /// [`SDL_EVENT_GAMEPAD_SENSOR_UPDATE`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The joystick instance id
     pub which: SDL_JoystickID,
-    /// The type of the sensor, one of the values of SDL_SensorType
+    /// The type of the sensor, one of the values of [`SDL_SensorType`]
     pub sensor: Sint32,
-    /// Up to 3 values from the sensor, as defined in SDL_sensor.h
+    /// Up to 3 values from the sensor, as defined in [`SDL_sensor`].h
     pub data: [::core::ffi::c_float; 3],
     /// The timestamp of the sensor reading in nanoseconds, not necessarily synchronized with the system clock
     pub sensor_timestamp: Uint64,
@@ -1064,12 +1064,12 @@ pub struct SDL_GamepadSensorEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AudioDeviceEvent {
-    /// SDL_EVENT_AUDIO_DEVICE_ADDED, or SDL_EVENT_AUDIO_DEVICE_REMOVED, or SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED
+    /// [`SDL_EVENT_AUDIO_DEVICE_ADDED`], or [`SDL_EVENT_AUDIO_DEVICE_REMOVED`], or [`SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
-    /// SDL_AudioDeviceID for the device being added or removed or changing
+    /// [`SDL_AudioDeviceID`] for the device being added or removed or changing
     pub which: SDL_AudioDeviceID,
     /// false if a playback device, true if a recording device.
     pub recording: ::core::primitive::bool,
@@ -1085,12 +1085,12 @@ pub struct SDL_AudioDeviceEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_CameraDeviceEvent {
-    /// SDL_EVENT_CAMERA_DEVICE_ADDED, SDL_EVENT_CAMERA_DEVICE_REMOVED, SDL_EVENT_CAMERA_DEVICE_APPROVED, SDL_EVENT_CAMERA_DEVICE_DENIED
+    /// [`SDL_EVENT_CAMERA_DEVICE_ADDED`], [`SDL_EVENT_CAMERA_DEVICE_REMOVED`], [`SDL_EVENT_CAMERA_DEVICE_APPROVED`], [`SDL_EVENT_CAMERA_DEVICE_DENIED`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
-    /// SDL_CameraID for the device being added or removed or changing
+    /// [`SDL_CameraID`] for the device being added or removed or changing
     pub which: SDL_CameraID,
 }
 
@@ -1101,10 +1101,10 @@ pub struct SDL_CameraDeviceEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TouchFingerEvent {
-    /// SDL_EVENT_FINGER_MOTION or SDL_EVENT_FINGER_DOWN or SDL_EVENT_FINGER_UP
+    /// [`SDL_EVENT_FINGER_MOTION`] or [`SDL_EVENT_FINGER_DOWN`] or [`SDL_EVENT_FINGER_UP`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The touch device id
     pub touchID: SDL_TouchID,
@@ -1126,24 +1126,24 @@ pub struct SDL_TouchFingerEvent {
 /// Pressure-sensitive pen proximity event structure (event.pmotion.*)
 ///
 /// When a pen becomes visible to the system (it is close enough to a tablet,
-/// etc), SDL will send an SDL_EVENT_PEN_PROXIMITY_IN event with the new pen's
+/// etc), SDL will send an [`SDL_EVENT_PEN_PROXIMITY_IN`] event with the new pen's
 /// ID. This ID is valid until the pen leaves proximity again (has been removed
 /// from the tablet's area, the tablet has been unplugged, etc). If the same
 /// pen reenters proximity again, it will be given a new ID.
 ///
 /// Note that "proximity" means "close enough for the tablet to know the tool
 /// is there." The pen touching and lifting off from the tablet while not
-/// leaving the area are handled by SDL_EVENT_PEN_DOWN and SDL_EVENT_PEN_UP.
+/// leaving the area are handled by [`SDL_EVENT_PEN_DOWN`] and [`SDL_EVENT_PEN_UP`].
 ///
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PenProximityEvent {
-    /// SDL_EVENT_PEN_PROXIMITY_IN or SDL_EVENT_PEN_PROXIMITY_OUT
+    /// [`SDL_EVENT_PEN_PROXIMITY_IN`] or [`SDL_EVENT_PEN_PROXIMITY_OUT`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window with mouse focus, if any
     pub windowID: SDL_WindowID,
@@ -1155,7 +1155,7 @@ pub struct SDL_PenProximityEvent {
 ///
 /// Depending on the hardware, you may get motion events when the pen is not
 /// touching a tablet, for tracking a pen even when it isn't drawing. You
-/// should listen for SDL_EVENT_PEN_DOWN and SDL_EVENT_PEN_UP events, or check
+/// should listen for [`SDL_EVENT_PEN_DOWN`] and [`SDL_EVENT_PEN_UP`] events, or check
 /// `pen_state & SDL_PEN_INPUT_DOWN` to decide if a pen is "drawing" when
 /// dealing with pen motion.
 ///
@@ -1164,10 +1164,10 @@ pub struct SDL_PenProximityEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PenMotionEvent {
-    /// SDL_EVENT_PEN_MOTION
+    /// [`SDL_EVENT_PEN_MOTION`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window with mouse focus, if any
     pub windowID: SDL_WindowID,
@@ -1191,10 +1191,10 @@ pub struct SDL_PenMotionEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PenTouchEvent {
-    /// SDL_EVENT_PEN_DOWN or SDL_EVENT_PEN_UP
+    /// [`SDL_EVENT_PEN_DOWN`] or [`SDL_EVENT_PEN_UP`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window with pen focus, if any
     pub windowID: SDL_WindowID,
@@ -1215,17 +1215,17 @@ pub struct SDL_PenTouchEvent {
 /// Pressure-sensitive pen button event structure (event.pbutton.*)
 ///
 /// This is for buttons on the pen itself that the user might click. The pen
-/// itself pressing down to draw triggers a SDL_EVENT_PEN_DOWN event instead.
+/// itself pressing down to draw triggers a [`SDL_EVENT_PEN_DOWN`] event instead.
 ///
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PenButtonEvent {
-    /// SDL_EVENT_PEN_BUTTON_DOWN or SDL_EVENT_PEN_BUTTON_UP
+    /// [`SDL_EVENT_PEN_BUTTON_DOWN`] or [`SDL_EVENT_PEN_BUTTON_UP`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window with mouse focus, if any
     pub windowID: SDL_WindowID,
@@ -1253,10 +1253,10 @@ pub struct SDL_PenButtonEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PenAxisEvent {
-    /// SDL_EVENT_PEN_AXIS
+    /// [`SDL_EVENT_PEN_AXIS`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window with pen focus, if any
     pub windowID: SDL_WindowID,
@@ -1282,10 +1282,10 @@ pub struct SDL_PenAxisEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DropEvent {
-    /// SDL_EVENT_DROP_BEGIN or SDL_EVENT_DROP_FILE or SDL_EVENT_DROP_TEXT or SDL_EVENT_DROP_COMPLETE or SDL_EVENT_DROP_POSITION
+    /// [`SDL_EVENT_DROP_BEGIN`] or [`SDL_EVENT_DROP_FILE`] or [`SDL_EVENT_DROP_TEXT`] or [`SDL_EVENT_DROP_COMPLETE`] or [`SDL_EVENT_DROP_POSITION`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The window that was dropped on, if any
     pub windowID: SDL_WindowID,
@@ -1295,7 +1295,7 @@ pub struct SDL_DropEvent {
     pub y: ::core::ffi::c_float,
     /// The source app that sent this drop event, or NULL if that isn't available
     pub source: *const ::core::ffi::c_char,
-    /// The text for SDL_EVENT_DROP_TEXT and the file name for SDL_EVENT_DROP_FILE, NULL for other events
+    /// The text for [`SDL_EVENT_DROP_TEXT`] and the file name for [`SDL_EVENT_DROP_FILE`], NULL for other events
     pub data: *const ::core::ffi::c_char,
 }
 
@@ -1307,10 +1307,10 @@ pub struct SDL_DropEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ClipboardEvent {
-    /// SDL_EVENT_CLIPBOARD_UPDATE
+    /// [`SDL_EVENT_CLIPBOARD_UPDATE`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
 }
 
@@ -1321,14 +1321,14 @@ pub struct SDL_ClipboardEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_SensorEvent {
-    /// SDL_EVENT_SENSOR_UPDATE
+    /// [`SDL_EVENT_SENSOR_UPDATE`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The instance ID of the sensor
     pub which: SDL_SensorID,
-    /// Up to 6 values from the sensor - additional values can be queried using SDL_GetSensorData()
+    /// Up to 6 values from the sensor - additional values can be queried using [`SDL_GetSensorData()`]
     pub data: [::core::ffi::c_float; 6],
     /// The timestamp of the sensor reading in nanoseconds, not necessarily synchronized with the system clock
     pub sensor_timestamp: Uint64,
@@ -1341,10 +1341,10 @@ pub struct SDL_SensorEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_QuitEvent {
-    /// SDL_EVENT_QUIT
+    /// [`SDL_EVENT_QUIT`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
 }
 
@@ -1352,19 +1352,19 @@ pub struct SDL_QuitEvent {
 ///
 /// This event is unique; it is never created by SDL, but only by the
 /// application. The event can be pushed onto the event queue using
-/// SDL_PushEvent(). The contents of the structure members are completely up to
+/// [`SDL_PushEvent()`]. The contents of the structure members are completely up to
 /// the programmer; the only requirement is that '''type''' is a value obtained
-/// from SDL_RegisterEvents().
+/// from [`SDL_RegisterEvents()`].
 ///
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_UserEvent {
-    /// SDL_EVENT_USER through SDL_EVENT_LAST-1, Uint32 because these are not in the SDL_EventType enumeration
+    /// [`SDL_EVENT_USER`] through SDL_EVENT_LAST-1, Uint32 because these are not in the [`SDL_EventType`] enumeration
     pub r#type: Uint32,
     pub reserved: Uint32,
-    /// In nanoseconds, populated using SDL_GetTicksNS()
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     /// The associated window if any
     pub windowID: SDL_WindowID,
@@ -1382,7 +1382,7 @@ pub struct SDL_UserEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub union SDL_Event {
-    /// Event type, shared with all events, Uint32 to cover user events which are not in the SDL_EventType enumeration
+    /// Event type, shared with all events, Uint32 to cover user events which are not in the [`SDL_EventType`] enumeration
     pub r#type: Uint32,
     /// Common event data
     pub common: SDL_CommonEvent,
@@ -1472,13 +1472,13 @@ extern "C" {
     /// video subsystem, and for extra safety, you should consider only doing those
     /// things on the main thread in any case.
     ///
-    /// SDL_PumpEvents() gathers all the pending input information from devices and
-    /// places it in the event queue. Without calls to SDL_PumpEvents() no events
+    /// [`SDL_PumpEvents()`] gathers all the pending input information from devices and
+    /// places it in the event queue. Without calls to [`SDL_PumpEvents()`] no events
     /// would ever be placed on the queue. Often the need for calls to
-    /// SDL_PumpEvents() is hidden from the user since SDL_PollEvent() and
-    /// SDL_WaitEvent() implicitly call SDL_PumpEvents(). However, if you are not
+    /// [`SDL_PumpEvents()`] is hidden from the user since [`SDL_PollEvent()`] and
+    /// [`SDL_WaitEvent()`] implicitly call [`SDL_PumpEvents()`]. However, if you are not
     /// polling or waiting for events (e.g. you are filtering them), then you must
-    /// call SDL_PumpEvents() to force an event queue update.
+    /// call [`SDL_PumpEvents()`] to force an event queue update.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1487,7 +1487,7 @@ extern "C" {
     pub fn SDL_PumpEvents();
 }
 
-/// The type of action to request from SDL_PeepEvents().
+/// The type of action to request from [`SDL_PeepEvents()`].
 ///
 /// This enum is available since SDL 3.0.0.
 ///
@@ -1533,25 +1533,25 @@ extern "C" {
     ///   within the specified minimum and maximum type, will be returned to the
     ///   caller and will be removed from the queue.
     ///
-    /// You may have to call SDL_PumpEvents() before calling this function.
+    /// You may have to call [`SDL_PumpEvents()`] before calling this function.
     /// Otherwise, the events may not be ready to be filtered when you call
-    /// SDL_PeepEvents().
+    /// [`SDL_PeepEvents()`].
     ///
     /// This function is thread-safe.
     ///
     /// - `events`: destination buffer for the retrieved events, may be NULL to
     ///   leave the events in the queue and return the number of events
     ///   that would have been stored.
-    /// - `numevents`: if action is SDL_ADDEVENT, the number of events to add
-    ///   back to the event queue; if action is SDL_PEEKEVENT or
-    ///   SDL_GETEVENT, the maximum number of events to retrieve.
+    /// - `numevents`: if action is [`SDL_ADDEVENT`], the number of events to add
+    ///   back to the event queue; if action is [`SDL_PEEKEVENT`] or
+    ///   [`SDL_GETEVENT`], the maximum number of events to retrieve.
     /// - `action`: action to take; see [[#action|Remarks]] for details.
     /// - `minType`: minimum value of the event type to be considered;
-    ///   SDL_EVENT_FIRST is a safe choice.
+    ///   [`SDL_EVENT_FIRST`] is a safe choice.
     /// - `maxType`: maximum value of the event type to be considered;
-    ///   SDL_EVENT_LAST is a safe choice.
+    ///   [`SDL_EVENT_LAST`] is a safe choice.
     /// - Returns the number of events actually stored or -1 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1570,10 +1570,10 @@ extern "C" {
 extern "C" {
     /// Check for the existence of a certain event type in the event queue.
     ///
-    /// If you need to check for a range of event types, use SDL_HasEvents()
+    /// If you need to check for a range of event types, use [`SDL_HasEvents()`]
     /// instead.
     ///
-    /// - `type`: the type of event to be queried; see SDL_EventType for details.
+    /// - `type`: the type of event to be queried; see [`SDL_EventType`] for details.
     /// - Returns true if events matching `type` are present, or false if events
     ///   matching `type` are not present.
     ///
@@ -1586,12 +1586,12 @@ extern "C" {
 extern "C" {
     /// Check for the existence of certain event types in the event queue.
     ///
-    /// If you need to check for a single event type, use SDL_HasEvent() instead.
+    /// If you need to check for a single event type, use [`SDL_HasEvent()`] instead.
     ///
     /// - `minType`: the low end of event type to be queried, inclusive; see
-    ///   SDL_EventType for details.
+    ///   [`SDL_EventType`] for details.
     /// - `maxType`: the high end of event type to be queried, inclusive; see
-    ///   SDL_EventType for details.
+    ///   [`SDL_EventType`] for details.
     /// - Returns true if events with type >= `minType` and <= `maxType` are
     ///   present, or false if not.
     ///
@@ -1605,21 +1605,21 @@ extern "C" {
     /// Clear events of a specific type from the event queue.
     ///
     /// This will unconditionally remove any events from the queue that match
-    /// `type`. If you need to remove a range of event types, use SDL_FlushEvents()
+    /// `type`. If you need to remove a range of event types, use [`SDL_FlushEvents()`]
     /// instead.
     ///
     /// It's also normal to just ignore events you don't care about in your event
     /// loop without calling this function.
     ///
     /// This function only affects currently queued events. If you want to make
-    /// sure that all pending OS events are flushed, you can call SDL_PumpEvents()
+    /// sure that all pending OS events are flushed, you can call [`SDL_PumpEvents()`]
     /// on the main thread immediately before the flush call.
     ///
     /// If you have user events with custom data that needs to be freed, you should
-    /// use SDL_PeepEvents() to remove and clean up those events before calling
+    /// use [`SDL_PeepEvents()`] to remove and clean up those events before calling
     /// this function.
     ///
-    /// - `type`: the type of event to be cleared; see SDL_EventType for details.
+    /// - `type`: the type of event to be cleared; see [`SDL_EventType`] for details.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1632,19 +1632,19 @@ extern "C" {
     ///
     /// This will unconditionally remove any events from the queue that are in the
     /// range of `minType` to `maxType`, inclusive. If you need to remove a single
-    /// event type, use SDL_FlushEvent() instead.
+    /// event type, use [`SDL_FlushEvent()`] instead.
     ///
     /// It's also normal to just ignore events you don't care about in your event
     /// loop without calling this function.
     ///
     /// This function only affects currently queued events. If you want to make
-    /// sure that all pending OS events are flushed, you can call SDL_PumpEvents()
+    /// sure that all pending OS events are flushed, you can call [`SDL_PumpEvents()`]
     /// on the main thread immediately before the flush call.
     ///
     /// - `minType`: the low end of event type to be cleared, inclusive; see
-    ///   SDL_EventType for details.
+    ///   [`SDL_EventType`] for details.
     /// - `maxType`: the high end of event type to be cleared, inclusive; see
-    ///   SDL_EventType for details.
+    ///   [`SDL_EventType`] for details.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1656,17 +1656,17 @@ extern "C" {
     /// Poll for currently pending events.
     ///
     /// If `event` is not NULL, the next event is removed from the queue and stored
-    /// in the SDL_Event structure pointed to by `event`. The 1 returned refers to
+    /// in the [`SDL_Event`] structure pointed to by `event`. The 1 returned refers to
     /// this event, immediately stored in the SDL Event structure -- not an event
     /// to follow.
     ///
     /// If `event` is NULL, it simply returns 1 if there is an event in the queue,
     /// but will not remove it from the queue.
     ///
-    /// As this function may implicitly call SDL_PumpEvents(), you can only call
+    /// As this function may implicitly call [`SDL_PumpEvents()`], you can only call
     /// this function in the thread that set the video mode.
     ///
-    /// SDL_PollEvent() is the favored way of receiving system events since it can
+    /// [`SDL_PollEvent()`] is the favored way of receiving system events since it can
     /// be done from the main loop and does not suspend the main loop while waiting
     /// on an event to be posted.
     ///
@@ -1684,7 +1684,7 @@ extern "C" {
     /// }
     /// ```
     ///
-    /// - `event`: the SDL_Event structure to be filled with the next event from
+    /// - `event`: the [`SDL_Event`] structure to be filled with the next event from
     ///   the queue, or NULL.
     /// - Returns true if this got an event or false if there are none available.
     ///
@@ -1700,15 +1700,15 @@ extern "C" {
     /// Wait indefinitely for the next available event.
     ///
     /// If `event` is not NULL, the next event is removed from the queue and stored
-    /// in the SDL_Event structure pointed to by `event`.
+    /// in the [`SDL_Event`] structure pointed to by `event`.
     ///
-    /// As this function may implicitly call SDL_PumpEvents(), you can only call
+    /// As this function may implicitly call [`SDL_PumpEvents()`], you can only call
     /// this function in the thread that initialized the video subsystem.
     ///
-    /// - `event`: the SDL_Event structure to be filled in with the next event
+    /// - `event`: the [`SDL_Event`] structure to be filled in with the next event
     ///   from the queue, or NULL.
     /// - Returns true on success or false if there was an error while waiting for
-    ///   events; call SDL_GetError() for more information.
+    ///   events; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1723,15 +1723,15 @@ extern "C" {
     /// event.
     ///
     /// If `event` is not NULL, the next event is removed from the queue and stored
-    /// in the SDL_Event structure pointed to by `event`.
+    /// in the [`SDL_Event`] structure pointed to by `event`.
     ///
-    /// As this function may implicitly call SDL_PumpEvents(), you can only call
+    /// As this function may implicitly call [`SDL_PumpEvents()`], you can only call
     /// this function in the thread that initialized the video subsystem.
     ///
     /// The timeout is not guaranteed, the actual wait time could be longer due to
     /// system scheduling.
     ///
-    /// - `event`: the SDL_Event structure to be filled in with the next event
+    /// - `event`: the [`SDL_Event`] structure to be filled in with the next event
     ///   from the queue, or NULL.
     /// - `timeoutMS`: the maximum number of milliseconds to wait for the next
     ///   available event.
@@ -1756,23 +1756,23 @@ extern "C" {
     /// Not only can events be read from the queue, but the user can also push
     /// their own events onto it. `event` is a pointer to the event structure you
     /// wish to push onto the queue. The event is copied into the queue, and the
-    /// caller may dispose of the memory pointed to after SDL_PushEvent() returns.
+    /// caller may dispose of the memory pointed to after [`SDL_PushEvent()`] returns.
     ///
     /// Note: Pushing device input events onto the queue doesn't modify the state
     /// of the device within SDL.
     ///
     /// This function is thread-safe, and can be called from other threads safely.
     ///
-    /// Note: Events pushed onto the queue with SDL_PushEvent() get passed through
-    /// the event filter but events added with SDL_PeepEvents() do not.
+    /// Note: Events pushed onto the queue with [`SDL_PushEvent()`] get passed through
+    /// the event filter but events added with [`SDL_PeepEvents()`] do not.
     ///
-    /// For pushing application-specific events, please use SDL_RegisterEvents() to
+    /// For pushing application-specific events, please use [`SDL_RegisterEvents()`] to
     /// get an event type that does not conflict with other code that also wants
     /// its own custom event types.
     ///
-    /// - `event`: the SDL_Event to be added to the queue.
+    /// - `event`: the [`SDL_Event`] to be added to the queue.
     /// - Returns true on success, false if the event was filtered or on failure;
-    ///   call SDL_GetError() for more information. A common reason for
+    ///   call [`SDL_GetError()`] for more information. A common reason for
     ///   error is the event queue being full.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1785,11 +1785,11 @@ extern "C" {
 
 /// A function pointer used for callbacks that watch the event queue.
 ///
-/// - `userdata`: what was passed as `userdata` to SDL_SetEventFilter() or
-///   SDL_AddEventWatch, etc.
+/// - `userdata`: what was passed as `userdata` to [`SDL_SetEventFilter()`] or
+///   [`SDL_AddEventWatch`], etc.
 /// - `event`: the event that triggered the callback.
 /// - Returns true to permit event to be added to the queue, and false to
-///   disallow it. When used with SDL_AddEventWatch, the return value is
+///   disallow it. When used with [`SDL_AddEventWatch`], the return value is
 ///   ignored.
 ///
 /// Thread safety: SDL may call this callback at any time from any thread; the
@@ -1823,22 +1823,22 @@ extern "C" {
     /// interrupt signal (e.g. pressing Ctrl-C), it will be delivered to the
     /// application at the next event poll.
     ///
-    /// There is one caveat when dealing with the SDL_QuitEvent event type. The
+    /// There is one caveat when dealing with the [`SDL_QuitEvent`] event type. The
     /// event filter is only called when the window manager desires to close the
     /// application window. If the event filter returns 1, then the window will be
     /// closed, otherwise the window will remain open if possible.
     ///
     /// Note: Disabled events never make it to the event filter function; see
-    /// SDL_SetEventEnabled().
+    /// [`SDL_SetEventEnabled()`].
     ///
     /// Note: If you just want to inspect events without filtering, you should use
-    /// SDL_AddEventWatch() instead.
+    /// [`SDL_AddEventWatch()`] instead.
     ///
-    /// Note: Events pushed onto the queue with SDL_PushEvent() get passed through
-    /// the event filter, but events pushed onto the queue with SDL_PeepEvents() do
+    /// Note: Events pushed onto the queue with [`SDL_PushEvent()`] get passed through
+    /// the event filter, but events pushed onto the queue with [`SDL_PeepEvents()`] do
     /// not.
     ///
-    /// - `filter`: an SDL_EventFilter function to call when an event happens.
+    /// - `filter`: an [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
     /// Thread safety: SDL may call the filter callback at any time from any thread;
@@ -1889,13 +1889,13 @@ extern "C" {
     /// arrive at the next event poll.
     ///
     /// Note: the callback is called for events posted by the user through
-    /// SDL_PushEvent(), but not for disabled events, nor for events by a filter
-    /// callback set with SDL_SetEventFilter(), nor for events posted by the user
-    /// through SDL_PeepEvents().
+    /// [`SDL_PushEvent()`], but not for disabled events, nor for events by a filter
+    /// callback set with [`SDL_SetEventFilter()`], nor for events posted by the user
+    /// through [`SDL_PeepEvents()`].
     ///
-    /// - `filter`: an SDL_EventFilter function to call when an event happens.
+    /// - `filter`: an [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -1911,13 +1911,13 @@ extern "C" {
 }
 
 extern "C" {
-    /// Remove an event watch callback added with SDL_AddEventWatch().
+    /// Remove an event watch callback added with [`SDL_AddEventWatch()`].
     ///
-    /// This function takes the same input as SDL_AddEventWatch() to identify and
+    /// This function takes the same input as [`SDL_AddEventWatch()`] to identify and
     /// delete the corresponding callback.
     ///
-    /// - `filter`: the function originally passed to SDL_AddEventWatch().
-    /// - `userdata`: the pointer originally passed to SDL_AddEventWatch().
+    /// - `filter`: the function originally passed to [`SDL_AddEventWatch()`].
+    /// - `userdata`: the pointer originally passed to [`SDL_AddEventWatch()`].
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1929,11 +1929,11 @@ extern "C" {
     /// Run a specific filter function on the current event queue, removing any
     /// events for which the filter returns false.
     ///
-    /// See SDL_SetEventFilter() for more information. Unlike SDL_SetEventFilter(),
+    /// See [`SDL_SetEventFilter()`] for more information. Unlike [`SDL_SetEventFilter()`],
     /// this function does not change the filter permanently, it only uses the
     /// supplied filter until this function returns.
     ///
-    /// - `filter`: the SDL_EventFilter function to call when an event happens.
+    /// - `filter`: the [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1946,7 +1946,7 @@ extern "C" {
 extern "C" {
     /// Set the state of processing events by type.
     ///
-    /// - `type`: the type of event; see SDL_EventType for details.
+    /// - `type`: the type of event; see [`SDL_EventType`] for details.
     /// - `enabled`: whether to process the event or not.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1958,7 +1958,7 @@ extern "C" {
 extern "C" {
     /// Query the state of processing events by type.
     ///
-    /// - `type`: the type of event; see SDL_EventType for details.
+    /// - `type`: the type of event; see [`SDL_EventType`] for details.
     /// - Returns true if the event is being processed, false otherwise.
     ///
     /// This function is available since SDL 3.0.0.

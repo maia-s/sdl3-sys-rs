@@ -2,7 +2,7 @@
 //! offers implementations for files, memory, etc, and the app can provideo
 //! their own implementations, too.
 //!
-//! SDL_IOStream is not related to the standard C++ iostream class, other than
+//! [`SDL_IOStream`] is not related to the standard C++ iostream class, other than
 //! both are abstract interfaces to read/write data.
 
 use super::stdinc::*;
@@ -11,7 +11,7 @@ use super::error::*;
 
 use super::properties::*;
 
-/// SDL_IOStream status, set by a read or write operation.
+/// [`SDL_IOStream`] status, set by a read or write operation.
 ///
 /// This enum is available since SDL 3.0.0.
 ///
@@ -53,7 +53,7 @@ pub const SDL_IO_STATUS_READONLY: SDL_IOStatus = SDL_IOStatus::READONLY;
 /// Tried to read a write-only buffer
 pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 
-/// Possible `whence` values for SDL_IOStream seeking.
+/// Possible `whence` values for [`SDL_IOStream`] seeking.
 ///
 /// These map to the same "whence" concept that `fseek` or `lseek` use in the
 /// standard C runtime.
@@ -86,14 +86,14 @@ pub const SDL_IO_SEEK_CUR: SDL_IOWhence = SDL_IOWhence::CUR;
 /// Seek relative to the end of data
 pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
 
-/// The function pointers that drive an SDL_IOStream.
+/// The function pointers that drive an [`SDL_IOStream`].
 ///
-/// Applications can provide this struct to SDL_OpenIO() to create their own
-/// implementation of SDL_IOStream. This is not necessarily required, as SDL
+/// Applications can provide this struct to [`SDL_OpenIO()`] to create their own
+/// implementation of [`SDL_IOStream`]. This is not necessarily required, as SDL
 /// already offers several common types of I/O streams, via functions like
-/// SDL_IOFromFile() and SDL_IOFromMem().
+/// [`SDL_IOFromFile()`] and [`SDL_IOFromMem()`].
 ///
-/// This structure should be initialized using SDL_INIT_INTERFACE()
+/// This structure should be initialized using [`SDL_INIT_INTERFACE()`]
 ///
 /// This struct is available since SDL 3.0.0.
 ///
@@ -103,12 +103,12 @@ pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_IOStreamInterface {
     pub version: Uint32,
-    /// Return the number of bytes in this SDL_IOStream
+    /// Return the number of bytes in this [`SDL_IOStream`]
     ///
     /// \return the total size of the data stream, or -1 on error.
     pub size: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> Sint64>,
     /// Seek to `offset` relative to `whence`, one of stdio's whence values:
-    /// SDL_IO_SEEK_SET, SDL_IO_SEEK_CUR, SDL_IO_SEEK_END
+    /// [`SDL_IO_SEEK_SET`], [`SDL_IO_SEEK_CUR`], [`SDL_IO_SEEK_END`]
     ///
     /// \return the final offset in the data stream, or -1 on error.
     pub seek: ::core::option::Option<
@@ -122,7 +122,7 @@ pub struct SDL_IOStreamInterface {
     /// at by `ptr`.
     ///
     /// On an incomplete read, you should set `*status` to a value from the
-    /// SDL_IOStatus enum. You do not have to explicitly set this on
+    /// [`SDL_IOStatus`] enum. You do not have to explicitly set this on
     /// a complete, successful read.
     ///
     /// \return the number of bytes read
@@ -138,7 +138,7 @@ pub struct SDL_IOStreamInterface {
     /// to data stream.
     ///
     /// On an incomplete write, you should set `*status` to a value from the
-    /// SDL_IOStatus enum. You do not have to explicitly set this on
+    /// [`SDL_IOStatus`] enum. You do not have to explicitly set this on
     /// a complete, successful write.
     ///
     /// \return the number of bytes written
@@ -153,7 +153,7 @@ pub struct SDL_IOStreamInterface {
     /// If the stream is buffering, make sure the data is written out.
     ///
     /// On failure, you should set `*status` to a value from the
-    /// SDL_IOStatus enum. You do not have to explicitly set this on
+    /// [`SDL_IOStatus`] enum. You do not have to explicitly set this on
     /// a successful flush.
     ///
     /// \return true if successful or false on write error when flushing data.
@@ -168,7 +168,7 @@ pub struct SDL_IOStreamInterface {
     /// This does not guarantee file writes will sync to physical media; they
     /// can be in the system's file cache, waiting to go to disk.
     ///
-    /// The SDL_IOStream is still destroyed even if this fails, so clean up anything
+    /// The [`SDL_IOStream`] is still destroyed even if this fails, so clean up anything
     /// even if flushing buffers, etc, returns an error.
     ///
     /// \return true if successful or false on write error when flushing data.
@@ -207,7 +207,7 @@ const _: () = ::core::assert!(
 );
 
 extern "C" {
-    /// Use this function to create a new SDL_IOStream structure for reading from
+    /// Use this function to create a new [`SDL_IOStream`] structure for reading from
     /// and/or writing to a named file.
     ///
     /// The `mode` string is treated roughly the same as in a call to the C
@@ -245,37 +245,37 @@ extern "C" {
     /// This function supports Unicode filenames, but they must be encoded in UTF-8
     /// format, regardless of the underlying operating system.
     ///
-    /// In Android, SDL_IOFromFile() can be used to open content:// URIs. As a
-    /// fallback, SDL_IOFromFile() will transparently open a matching filename in
+    /// In Android, [`SDL_IOFromFile()`] can be used to open content:// URIs. As a
+    /// fallback, [`SDL_IOFromFile()`] will transparently open a matching filename in
     /// the app's `assets`.
     ///
-    /// Closing the SDL_IOStream will close SDL's internal file handle.
+    /// Closing the [`SDL_IOStream`] will close SDL's internal file handle.
     ///
     /// The following properties may be set at creation time by SDL:
     ///
     /// - `SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER`: a pointer, that can be cast
-    ///   to a win32 `HANDLE`, that this SDL_IOStream is using to access the
+    ///   to a win32 `HANDLE`, that this [`SDL_IOStream`] is using to access the
     ///   filesystem. If the program isn't running on Windows, or SDL used some
     ///   other method to access the filesystem, this property will not be set.
     /// - `SDL_PROP_IOSTREAM_STDIO_FILE_POINTER`: a pointer, that can be cast to a
-    ///   stdio `FILE *`, that this SDL_IOStream is using to access the filesystem.
+    ///   stdio `FILE *`, that this [`SDL_IOStream`] is using to access the filesystem.
     ///   If SDL used some other method to access the filesystem, this property
     ///   will not be set. PLEASE NOTE that if SDL is using a different C runtime
     ///   than your app, trying to use this pointer will almost certainly result in
     ///   a crash! This is mostly a problem on Windows; make sure you build SDL and
     ///   your app with the same compiler and settings to avoid it.
     /// - `SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER`: a file descriptor that this
-    ///   SDL_IOStream is using to access the filesystem.
+    ///   [`SDL_IOStream`] is using to access the filesystem.
     /// - `SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER`: a pointer, that can be cast
-    ///   to an Android NDK `AAsset *`, that this SDL_IOStream is using to access
+    ///   to an Android NDK `AAsset *`, that this [`SDL_IOStream`] is using to access
     ///   the filesystem. If SDL used some other method to access the filesystem,
     ///   this property will not be set.
     ///
     /// - `file`: a UTF-8 string representing the filename to open.
     /// - `mode`: an ASCII string representing the mode to be used for opening
     ///   the file.
-    /// - Returns a pointer to the SDL_IOStream structure that is created or NULL on
-    ///   failure; call SDL_GetError() for more information.
+    /// - Returns a pointer to the [`SDL_IOStream`] structure that is created or NULL on
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -304,23 +304,23 @@ pub const SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER: &::core::ffi::CStr =
 
 extern "C" {
     /// Use this function to prepare a read-write memory buffer for use with
-    /// SDL_IOStream.
+    /// [`SDL_IOStream`].
     ///
-    /// This function sets up an SDL_IOStream struct based on a memory area of a
+    /// This function sets up an [`SDL_IOStream`] struct based on a memory area of a
     /// certain size, for both read and write access.
     ///
     /// This memory buffer is not copied by the SDL_IOStream; the pointer you
     /// provide must remain valid until you close the stream. Closing the stream
     /// will not free the original buffer.
     ///
-    /// If you need to make sure the SDL_IOStream never writes to the memory
-    /// buffer, you should use SDL_IOFromConstMem() with a read-only buffer of
+    /// If you need to make sure the [`SDL_IOStream`] never writes to the memory
+    /// buffer, you should use [`SDL_IOFromConstMem()`] with a read-only buffer of
     /// memory instead.
     ///
-    /// - `mem`: a pointer to a buffer to feed an SDL_IOStream stream.
+    /// - `mem`: a pointer to a buffer to feed an [`SDL_IOStream`] stream.
     /// - `size`: the buffer size, in bytes.
-    /// - Returns a pointer to a new SDL_IOStream structure or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    /// - Returns a pointer to a new [`SDL_IOStream`] structure or NULL on failure; call
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -339,25 +339,25 @@ extern "C" {
 
 extern "C" {
     /// Use this function to prepare a read-only memory buffer for use with
-    /// SDL_IOStream.
+    /// [`SDL_IOStream`].
     ///
-    /// This function sets up an SDL_IOStream struct based on a memory area of a
+    /// This function sets up an [`SDL_IOStream`] struct based on a memory area of a
     /// certain size. It assumes the memory area is not writable.
     ///
-    /// Attempting to write to this SDL_IOStream stream will report an error
+    /// Attempting to write to this [`SDL_IOStream`] stream will report an error
     /// without writing to the memory buffer.
     ///
     /// This memory buffer is not copied by the SDL_IOStream; the pointer you
     /// provide must remain valid until you close the stream. Closing the stream
     /// will not free the original buffer.
     ///
-    /// If you need to write to a memory buffer, you should use SDL_IOFromMem()
+    /// If you need to write to a memory buffer, you should use [`SDL_IOFromMem()`]
     /// with a writable buffer of memory instead.
     ///
-    /// - `mem`: a pointer to a read-only buffer to feed an SDL_IOStream stream.
+    /// - `mem`: a pointer to a read-only buffer to feed an [`SDL_IOStream`] stream.
     /// - `size`: the buffer size, in bytes.
-    /// - Returns a pointer to a new SDL_IOStream structure or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    /// - Returns a pointer to a new [`SDL_IOStream`] structure or NULL on failure; call
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -373,7 +373,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to create an SDL_IOStream that is backed by dynamically
+    /// Use this function to create an [`SDL_IOStream`] that is backed by dynamically
     /// allocated memory.
     ///
     /// This supports the following properties to provide access to the memory and
@@ -382,13 +382,13 @@ extern "C" {
     /// - `SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER`: a pointer to the internal
     ///   memory of the stream. This can be set to NULL to transfer ownership of
     ///   the memory to the application, which should free the memory with
-    ///   SDL_free(). If this is done, the next operation on the stream must be
-    ///   SDL_CloseIO().
+    ///   [`SDL_free()`]. If this is done, the next operation on the stream must be
+    ///   [`SDL_CloseIO()`].
     /// - `SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER`: memory will be allocated in
     ///   multiples of this size, defaulting to 1024.
     ///
-    /// - Returns a pointer to a new SDL_IOStream structure or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    /// - Returns a pointer to a new [`SDL_IOStream`] structure or NULL on failure; call
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -407,21 +407,21 @@ pub const SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER: &::core::ffi::CStr =
     c"SDL.iostream.dynamic.chunksize";
 
 extern "C" {
-    /// Create a custom SDL_IOStream.
+    /// Create a custom [`SDL_IOStream`].
     ///
     /// Applications do not need to use this function unless they are providing
-    /// their own SDL_IOStream implementation. If you just need an SDL_IOStream to
+    /// their own [`SDL_IOStream`] implementation. If you just need an [`SDL_IOStream`] to
     /// read/write a common data source, you should use the built-in
-    /// implementations in SDL, like SDL_IOFromFile() or SDL_IOFromMem(), etc.
+    /// implementations in SDL, like [`SDL_IOFromFile()`] or [`SDL_IOFromMem()`], etc.
     ///
     /// This function makes a copy of `iface` and the caller does not need to keep
     /// it around after this call.
     ///
-    /// - `iface`: the interface that implements this SDL_IOStream, initialized
-    ///   using SDL_INIT_INTERFACE().
+    /// - `iface`: the interface that implements this [`SDL_IOStream`], initialized
+    ///   using [`SDL_INIT_INTERFACE()`].
     /// - `userdata`: the pointer that will be passed to the interface functions.
     /// - Returns a pointer to the allocated memory on success or NULL on failure;
-    ///   call SDL_GetError() for more information.
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -437,15 +437,15 @@ extern "C" {
 }
 
 extern "C" {
-    /// Close and free an allocated SDL_IOStream structure.
+    /// Close and free an allocated [`SDL_IOStream`] structure.
     ///
-    /// SDL_CloseIO() closes and cleans up the SDL_IOStream stream. It releases any
-    /// resources used by the stream and frees the SDL_IOStream itself. This
+    /// [`SDL_CloseIO()`] closes and cleans up the [`SDL_IOStream`] stream. It releases any
+    /// resources used by the stream and frees the [`SDL_IOStream`] itself. This
     /// returns true on success, or false if the stream failed to flush to its
     /// output (e.g. to disk).
     ///
     /// Note that if this fails to flush the stream for any reason, this function
-    /// reports an error, but the SDL_IOStream is still invalid once this function
+    /// reports an error, but the [`SDL_IOStream`] is still invalid once this function
     /// returns.
     ///
     /// This call flushes any buffered writes to the operating system, but there
@@ -453,11 +453,11 @@ extern "C" {
     /// be in the OS's file cache, waiting to go to disk later. If it's absolutely
     /// crucial that writes go to disk immediately, so they are definitely stored
     /// even if the power fails before the file cache would have caught up, one
-    /// should call SDL_FlushIO() before closing. Note that flushing takes time and
+    /// should call [`SDL_FlushIO()`] before closing. Note that flushing takes time and
     /// makes the system and your app operate less efficiently, so do so sparingly.
     ///
-    /// - `context`: SDL_IOStream structure to close.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `context`: [`SDL_IOStream`] structure to close.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -467,43 +467,43 @@ extern "C" {
 }
 
 extern "C" {
-    /// Get the properties associated with an SDL_IOStream.
+    /// Get the properties associated with an [`SDL_IOStream`].
     ///
-    /// - `context`: a pointer to an SDL_IOStream structure.
+    /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - Returns a valid property ID on success or 0 on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetIOProperties(context: *mut SDL_IOStream) -> SDL_PropertiesID;
 }
 
 extern "C" {
-    /// Query the stream status of an SDL_IOStream.
+    /// Query the stream status of an [`SDL_IOStream`].
     ///
     /// This information can be useful to decide if a short read or write was due
     /// to an error, an EOF, or a non-blocking operation that isn't yet ready to
     /// complete.
     ///
-    /// An SDL_IOStream's status is only expected to change after a SDL_ReadIO or
-    /// SDL_WriteIO call; don't expect it to change if you just call this query
+    /// An SDL_IOStream's status is only expected to change after a [`SDL_ReadIO`] or
+    /// [`SDL_WriteIO`] call; don't expect it to change if you just call this query
     /// function in a tight loop.
     ///
-    /// - `context`: the SDL_IOStream to query.
-    /// - Returns an SDL_IOStatus enum with the current state.
+    /// - `context`: the [`SDL_IOStream`] to query.
+    /// - Returns an [`SDL_IOStatus`] enum with the current state.
     ///
     /// Thread safety: This function should not be called at the same time that
-    ///   another thread is operating on the same SDL_IOStream.
+    ///   another thread is operating on the same [`SDL_IOStream`].
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetIOStatus(context: *mut SDL_IOStream) -> SDL_IOStatus;
 }
 
 extern "C" {
-    /// Use this function to get the size of the data stream in an SDL_IOStream.
+    /// Use this function to get the size of the data stream in an [`SDL_IOStream`].
     ///
-    /// - `context`: the SDL_IOStream to get the size of the data stream from.
-    /// - Returns the size of the data stream in the SDL_IOStream on success or a
-    ///   negative error code on failure; call SDL_GetError() for more
+    /// - `context`: the [`SDL_IOStream`] to get the size of the data stream from.
+    /// - Returns the size of the data stream in the [`SDL_IOStream`] on success or a
+    ///   negative error code on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -511,7 +511,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Seek within an SDL_IOStream data stream.
+    /// Seek within an [`SDL_IOStream`] data stream.
     ///
     /// This function seeks to byte `offset`, relative to `whence`.
     ///
@@ -523,13 +523,13 @@ extern "C" {
     ///
     /// If this stream can not seek, it will return -1.
     ///
-    /// - `context`: a pointer to an SDL_IOStream structure.
+    /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `offset`: an offset in bytes, relative to `whence` location; can be
     ///   negative.
     /// - `whence`: any of `SDL_IO_SEEK_SET`, `SDL_IO_SEEK_CUR`,
     ///   `SDL_IO_SEEK_END`.
     /// - Returns the final offset in the data stream after the seek or -1 on
-    ///   failure; call SDL_GetError() for more information.
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -538,13 +538,13 @@ extern "C" {
 }
 
 extern "C" {
-    /// Determine the current read/write offset in an SDL_IOStream data stream.
+    /// Determine the current read/write offset in an [`SDL_IOStream`] data stream.
     ///
-    /// SDL_TellIO is actually a wrapper function that calls the SDL_IOStream's
+    /// [`SDL_TellIO`] is actually a wrapper function that calls the SDL_IOStream's
     /// `seek` method, with an offset of 0 bytes from `SDL_IO_SEEK_CUR`, to
     /// simplify application development.
     ///
-    /// - `context`: an SDL_IOStream data stream object from which to get the
+    /// - `context`: an [`SDL_IOStream`] data stream object from which to get the
     ///   current offset.
     /// - Returns the current offset in the stream, or -1 if the information can not
     ///   be determined.
@@ -561,14 +561,14 @@ extern "C" {
     /// This function reads up `size` bytes from the data source to the area
     /// pointed at by `ptr`. This function may read less bytes than requested. It
     /// will return zero when the data stream is completely read, and
-    /// SDL_GetIOStatus() will return SDL_IO_STATUS_EOF, or on error, and
-    /// SDL_GetIOStatus() will return SDL_IO_STATUS_ERROR.
+    /// [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`], or on error, and
+    /// [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_ERROR`].
     ///
-    /// - `context`: a pointer to an SDL_IOStream structure.
+    /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `ptr`: a pointer to a buffer to read data into.
     /// - `size`: the number of bytes to read from the data source.
     /// - Returns the number of bytes read, or 0 on end of file or other failure;
-    ///   call SDL_GetError() for more information.
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -582,7 +582,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Write to an SDL_IOStream data stream.
+    /// Write to an [`SDL_IOStream`] data stream.
     ///
     /// This function writes exactly `size` bytes from the area pointed at by `ptr`
     /// to the stream. If this fails for any reason, it'll return less than `size`
@@ -591,15 +591,15 @@ extern "C" {
     /// On error, this function still attempts to write as much as possible, so it
     /// might return a positive value less than the requested write size.
     ///
-    /// The caller can use SDL_GetIOStatus() to determine if the problem is
+    /// The caller can use [`SDL_GetIOStatus()`] to determine if the problem is
     /// recoverable, such as a non-blocking write that can simply be retried later,
     /// or a fatal error.
     ///
-    /// - `context`: a pointer to an SDL_IOStream structure.
+    /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `ptr`: a pointer to a buffer containing data to write.
     /// - `size`: the number of bytes to write.
     /// - Returns the number of bytes written, which will be less than `size` on
-    ///   failure; call SDL_GetError() for more information.
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -616,15 +616,15 @@ extern "C" {
 }
 
 extern "C" {
-    /// Print to an SDL_IOStream data stream.
+    /// Print to an [`SDL_IOStream`] data stream.
     ///
     /// This function does formatted printing to the stream.
     ///
-    /// - `context`: a pointer to an SDL_IOStream structure.
+    /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `fmt`: a printf() style format string.
     /// - `...`: additional parameters matching % tokens in the `fmt` string, if
     ///   any.
-    /// - Returns the number of bytes written or 0 on failure; call SDL_GetError()
+    /// - Returns the number of bytes written or 0 on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -639,14 +639,14 @@ extern "C" {
 }
 
 extern "C" {
-    /// Print to an SDL_IOStream data stream.
+    /// Print to an [`SDL_IOStream`] data stream.
     ///
     /// This function does formatted printing to the stream.
     ///
-    /// - `context`: a pointer to an SDL_IOStream structure.
+    /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `fmt`: a printf() style format string.
     /// - `ap`: a variable argument list.
-    /// - Returns the number of bytes written or 0 on failure; call SDL_GetError()
+    /// - Returns the number of bytes written or 0 on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -667,8 +667,8 @@ extern "C" {
     /// Normally this isn't necessary but if the stream is a pipe or socket it
     /// guarantees that any pending data is sent.
     ///
-    /// - `context`: SDL_IOStream structure to flush.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - `context`: [`SDL_IOStream`] structure to flush.
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -685,14 +685,14 @@ extern "C" {
     /// convenience. This extra byte is not included in the value reported via
     /// `datasize`.
     ///
-    /// The data should be freed with SDL_free().
+    /// The data should be freed with [`SDL_free()`].
     ///
-    /// - `src`: the SDL_IOStream to read all available data from.
+    /// - `src`: the [`SDL_IOStream`] to read all available data from.
     /// - `datasize`: a pointer filled in with the number of bytes read, may be
     ///   NULL.
-    /// - `closeio`: if true, calls SDL_CloseIO() on `src` before returning, even
+    /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `src` before returning, even
     ///   in the case of an error.
-    /// - Returns the data or NULL on failure; call SDL_GetError() for more
+    /// - Returns the data or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -712,11 +712,11 @@ extern "C" {
     /// convenience. This extra byte is not included in the value reported via
     /// `datasize`.
     ///
-    /// The data should be freed with SDL_free().
+    /// The data should be freed with [`SDL_free()`].
     ///
     /// - `file`: the path to read all available data from.
     /// - `datasize`: if not NULL, will store the number of bytes read.
-    /// - Returns the data or NULL on failure; call SDL_GetError() for more
+    /// - Returns the data or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -729,11 +729,11 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to read a byte from an SDL_IOStream.
+    /// Use this function to read a byte from an [`SDL_IOStream`].
     ///
-    /// - `src`: the SDL_IOStream to read from.
+    /// - `src`: the [`SDL_IOStream`] to read from.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -741,11 +741,11 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to read a signed byte from an SDL_IOStream.
+    /// Use this function to read a signed byte from an [`SDL_IOStream`].
     ///
-    /// - `src`: the SDL_IOStream to read from.
+    /// - `src`: the [`SDL_IOStream`] to read from.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -754,14 +754,14 @@ extern "C" {
 
 extern "C" {
     /// Use this function to read 16 bits of little-endian data from an
-    /// SDL_IOStream and return in native format.
+    /// [`SDL_IOStream`] and return in native format.
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -770,14 +770,14 @@ extern "C" {
 
 extern "C" {
     /// Use this function to read 16 bits of little-endian data from an
-    /// SDL_IOStream and return in native format.
+    /// [`SDL_IOStream`] and return in native format.
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -785,7 +785,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to read 16 bits of big-endian data from an SDL_IOStream
+    /// Use this function to read 16 bits of big-endian data from an [`SDL_IOStream`]
     /// and return in native format.
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
@@ -793,7 +793,7 @@ extern "C" {
     ///
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -801,7 +801,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to read 16 bits of big-endian data from an SDL_IOStream
+    /// Use this function to read 16 bits of big-endian data from an [`SDL_IOStream`]
     /// and return in native format.
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
@@ -809,7 +809,7 @@ extern "C" {
     ///
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -818,14 +818,14 @@ extern "C" {
 
 extern "C" {
     /// Use this function to read 32 bits of little-endian data from an
-    /// SDL_IOStream and return in native format.
+    /// [`SDL_IOStream`] and return in native format.
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -834,14 +834,14 @@ extern "C" {
 
 extern "C" {
     /// Use this function to read 32 bits of little-endian data from an
-    /// SDL_IOStream and return in native format.
+    /// [`SDL_IOStream`] and return in native format.
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -849,7 +849,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to read 32 bits of big-endian data from an SDL_IOStream
+    /// Use this function to read 32 bits of big-endian data from an [`SDL_IOStream`]
     /// and return in native format.
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
@@ -857,7 +857,7 @@ extern "C" {
     ///
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -865,7 +865,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to read 32 bits of big-endian data from an SDL_IOStream
+    /// Use this function to read 32 bits of big-endian data from an [`SDL_IOStream`]
     /// and return in native format.
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
@@ -873,7 +873,7 @@ extern "C" {
     ///
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -882,14 +882,14 @@ extern "C" {
 
 extern "C" {
     /// Use this function to read 64 bits of little-endian data from an
-    /// SDL_IOStream and return in native format.
+    /// [`SDL_IOStream`] and return in native format.
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -898,14 +898,14 @@ extern "C" {
 
 extern "C" {
     /// Use this function to read 64 bits of little-endian data from an
-    /// SDL_IOStream and return in native format.
+    /// [`SDL_IOStream`] and return in native format.
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -913,7 +913,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to read 64 bits of big-endian data from an SDL_IOStream
+    /// Use this function to read 64 bits of big-endian data from an [`SDL_IOStream`]
     /// and return in native format.
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
@@ -921,7 +921,7 @@ extern "C" {
     ///
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -929,7 +929,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to read 64 bits of big-endian data from an SDL_IOStream
+    /// Use this function to read 64 bits of big-endian data from an [`SDL_IOStream`]
     /// and return in native format.
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
@@ -937,7 +937,7 @@ extern "C" {
     ///
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -945,11 +945,11 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write a byte to an SDL_IOStream.
+    /// Use this function to write a byte to an [`SDL_IOStream`].
     ///
-    /// - `dst`: the SDL_IOStream to write to.
+    /// - `dst`: the [`SDL_IOStream`] to write to.
     /// - `value`: the byte value to write.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -957,11 +957,11 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write a signed byte to an SDL_IOStream.
+    /// Use this function to write a signed byte to an [`SDL_IOStream`].
     ///
-    /// - `dst`: the SDL_IOStream to write to.
+    /// - `dst`: the [`SDL_IOStream`] to write to.
     /// - `value`: the byte value to write.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -969,7 +969,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write 16 bits in native format to an SDL_IOStream as
+    /// Use this function to write 16 bits in native format to an [`SDL_IOStream`] as
     /// little-endian data.
     ///
     /// SDL byteswaps the data only if necessary, so the application always
@@ -978,7 +978,7 @@ extern "C" {
     ///
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -986,7 +986,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write 16 bits in native format to an SDL_IOStream as
+    /// Use this function to write 16 bits in native format to an [`SDL_IOStream`] as
     /// little-endian data.
     ///
     /// SDL byteswaps the data only if necessary, so the application always
@@ -995,7 +995,7 @@ extern "C" {
     ///
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1003,7 +1003,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write 16 bits in native format to an SDL_IOStream as
+    /// Use this function to write 16 bits in native format to an [`SDL_IOStream`] as
     /// big-endian data.
     ///
     /// SDL byteswaps the data only if necessary, so the application always
@@ -1011,7 +1011,7 @@ extern "C" {
     ///
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1019,7 +1019,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write 16 bits in native format to an SDL_IOStream as
+    /// Use this function to write 16 bits in native format to an [`SDL_IOStream`] as
     /// big-endian data.
     ///
     /// SDL byteswaps the data only if necessary, so the application always
@@ -1027,7 +1027,7 @@ extern "C" {
     ///
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1035,7 +1035,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write 32 bits in native format to an SDL_IOStream as
+    /// Use this function to write 32 bits in native format to an [`SDL_IOStream`] as
     /// little-endian data.
     ///
     /// SDL byteswaps the data only if necessary, so the application always
@@ -1044,7 +1044,7 @@ extern "C" {
     ///
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1052,7 +1052,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write 32 bits in native format to an SDL_IOStream as
+    /// Use this function to write 32 bits in native format to an [`SDL_IOStream`] as
     /// little-endian data.
     ///
     /// SDL byteswaps the data only if necessary, so the application always
@@ -1061,7 +1061,7 @@ extern "C" {
     ///
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1069,7 +1069,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write 32 bits in native format to an SDL_IOStream as
+    /// Use this function to write 32 bits in native format to an [`SDL_IOStream`] as
     /// big-endian data.
     ///
     /// SDL byteswaps the data only if necessary, so the application always
@@ -1077,7 +1077,7 @@ extern "C" {
     ///
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1085,7 +1085,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write 32 bits in native format to an SDL_IOStream as
+    /// Use this function to write 32 bits in native format to an [`SDL_IOStream`] as
     /// big-endian data.
     ///
     /// SDL byteswaps the data only if necessary, so the application always
@@ -1093,7 +1093,7 @@ extern "C" {
     ///
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1101,7 +1101,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write 64 bits in native format to an SDL_IOStream as
+    /// Use this function to write 64 bits in native format to an [`SDL_IOStream`] as
     /// little-endian data.
     ///
     /// SDL byteswaps the data only if necessary, so the application always
@@ -1110,7 +1110,7 @@ extern "C" {
     ///
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1118,7 +1118,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write 64 bits in native format to an SDL_IOStream as
+    /// Use this function to write 64 bits in native format to an [`SDL_IOStream`] as
     /// little-endian data.
     ///
     /// SDL byteswaps the data only if necessary, so the application always
@@ -1127,7 +1127,7 @@ extern "C" {
     ///
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1135,7 +1135,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write 64 bits in native format to an SDL_IOStream as
+    /// Use this function to write 64 bits in native format to an [`SDL_IOStream`] as
     /// big-endian data.
     ///
     /// SDL byteswaps the data only if necessary, so the application always
@@ -1143,7 +1143,7 @@ extern "C" {
     ///
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -1151,7 +1151,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Use this function to write 64 bits in native format to an SDL_IOStream as
+    /// Use this function to write 64 bits in native format to an [`SDL_IOStream`] as
     /// big-endian data.
     ///
     /// SDL byteswaps the data only if necessary, so the application always
@@ -1159,7 +1159,7 @@ extern "C" {
     ///
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
-    /// - Returns true on successful write or false on failure; call SDL_GetError()
+    /// - Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.

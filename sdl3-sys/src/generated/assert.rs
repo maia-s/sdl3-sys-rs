@@ -10,8 +10,8 @@
 //!   do_something();`
 //! - It works the same everywhere, instead of counting on various platforms'
 //!   compiler and C runtime to behave.
-//! - It provides multiple levels of assertion (SDL_assert, SDL_assert_release,
-//!   SDL_assert_paranoid) instead of a single all-or-nothing option.
+//! - It provides multiple levels of assertion ([`SDL_assert`], [`SDL_assert_release`],
+//!   [`SDL_assert_paranoid`]) instead of a single all-or-nothing option.
 //! - It offers a variety of responses when an assertion fails (retry, trigger
 //!   the debugger, abort the program, ignore the failure once, ignore it for
 //!   the rest of the program's run).
@@ -44,10 +44,10 @@ emit! {
     /// add more:
     ///
     /// - 0: All SDL assertion macros are disabled.
-    /// - 1: Release settings: SDL_assert disabled, SDL_assert_release enabled.
-    /// - 2: Debug settings: SDL_assert and SDL_assert_release enabled.
+    /// - 1: Release settings: [`SDL_assert`] disabled, [`SDL_assert_release`] enabled.
+    /// - 2: Debug settings: [`SDL_assert`] and [`SDL_assert_release`] enabled.
     /// - 3: Paranoid settings: All SDL assertion macros enabled, including
-    ///   SDL_assert_paranoid.
+    ///   [`SDL_assert_paranoid`].
     ///
     /// This macro is available since SDL 3.0.0.
     pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 1;
@@ -125,7 +125,7 @@ pub use SDL_disabled_assert;
 /// Possible outcomes from a triggered assertion.
 ///
 /// When an enabled assertion triggers, it may call the assertion handler
-/// (possibly one provided by the app via SDL_SetAssertionHandler), which will
+/// (possibly one provided by the app via [`SDL_SetAssertionHandler`]), which will
 /// return one of these values, possibly after asking the user.
 ///
 /// Then SDL will respond based on this outcome (loop around to retry the
@@ -172,7 +172,7 @@ pub const SDL_ASSERTION_ALWAYS_IGNORE: SDL_AssertState = SDL_AssertState::ALWAYS
 ///
 /// This structure is filled in with information about a triggered assertion,
 /// used by the assertion handler, then added to the assertion report. This is
-/// returned as a linked list from SDL_GetAssertionReport().
+/// returned as a linked list from [`SDL_GetAssertionReport()`].
 ///
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
@@ -270,7 +270,7 @@ pub use SDL_enabled_assert;
 emit! {
     /// An assertion test that is normally performed only in debug builds.
     ///
-    /// This macro is enabled when the SDL_ASSERT_LEVEL is >= 2, otherwise it is
+    /// This macro is enabled when the [`SDL_ASSERT_LEVEL`] is >= 2, otherwise it is
     /// disabled. This is meant to only do these tests in debug builds, so they can
     /// tend to be more expensive, and they are meant to bring everything to a halt
     /// when they fail, with the programmer there to assess the problem.
@@ -304,7 +304,7 @@ emit! {
 
     /// An assertion test that is performed even in release builds.
     ///
-    /// This macro is enabled when the SDL_ASSERT_LEVEL is >= 1, otherwise it is
+    /// This macro is enabled when the [`SDL_ASSERT_LEVEL`] is >= 1, otherwise it is
     /// disabled. This is meant to be for tests that are cheap to make and
     /// extremely unlikely to fail; generally it is frowned upon to have an
     /// assertion failure in a release build, so these assertions generally need to
@@ -339,7 +339,7 @@ emit! {
 
     /// An assertion test that is performed only when built with paranoid settings.
     ///
-    /// This macro is enabled when the SDL_ASSERT_LEVEL is >= 3, otherwise it is
+    /// This macro is enabled when the [`SDL_ASSERT_LEVEL`] is >= 3, otherwise it is
     /// disabled. This is a higher level than both release and debug, so these
     /// tests are meant to be expensive and only run when specifically looking for
     /// extremely unexpected failure cases in a special build.
@@ -500,7 +500,7 @@ emit! {
 
 /// An assertion test that always performed.
 ///
-/// This macro is always enabled no matter what SDL_ASSERT_LEVEL is set to. You
+/// This macro is always enabled no matter what [`SDL_ASSERT_LEVEL`] is set to. You
 /// almost never want to use this, as it could trigger on an end-user's system,
 /// crashing your program.
 ///
@@ -527,10 +527,10 @@ pub use SDL_assert_always;
 
 /// A callback that fires when an SDL assertion fails.
 ///
-/// - `data`: a pointer to the SDL_AssertData structure corresponding to the
+/// - `data`: a pointer to the [`SDL_AssertData`] structure corresponding to the
 ///   current assertion.
-/// - `userdata`: what was passed as `userdata` to SDL_SetAssertionHandler().
-/// - Returns an SDL_AssertState value indicating how to handle the failure.
+/// - `userdata`: what was passed as `userdata` to [`SDL_SetAssertionHandler()`].
+/// - Returns an [`SDL_AssertState`] value indicating how to handle the failure.
 ///
 /// This datatype is available since SDL 3.0.0.
 pub type SDL_AssertionHandler = ::core::option::Option<
@@ -551,9 +551,9 @@ extern "C" {
     /// This callback may fire from any thread, but it runs wrapped in a mutex, so
     /// it will only fire from one thread at a time.
     ///
-    /// This callback is NOT reset to SDL's internal handler upon SDL_Quit()!
+    /// This callback is NOT reset to SDL's internal handler upon [`SDL_Quit()`]!
     ///
-    /// - `handler`: the SDL_AssertionHandler function to call when an assertion
+    /// - `handler`: the [`SDL_AssertionHandler`] function to call when an assertion
     ///   fails or NULL for the default handler.
     /// - `userdata`: a pointer that is passed to `handler`.
     ///
@@ -571,10 +571,10 @@ extern "C" {
     ///
     /// This returns the function pointer that is called by default when an
     /// assertion is triggered. This is an internal function provided by SDL, that
-    /// is used for assertions when SDL_SetAssertionHandler() hasn't been used to
+    /// is used for assertions when [`SDL_SetAssertionHandler()`] hasn't been used to
     /// provide a different function.
     ///
-    /// - Returns the default SDL_AssertionHandler that is called when an assert
+    /// - Returns the default [`SDL_AssertionHandler`] that is called when an assert
     ///   triggers.
     ///
     /// This function is available since SDL 3.0.0.
@@ -588,17 +588,17 @@ extern "C" {
     ///
     /// This returns the function pointer that is called when an assertion is
     /// triggered. This is either the value last passed to
-    /// SDL_SetAssertionHandler(), or if no application-specified function is set,
-    /// is equivalent to calling SDL_GetDefaultAssertionHandler().
+    /// [`SDL_SetAssertionHandler()`], or if no application-specified function is set,
+    /// is equivalent to calling [`SDL_GetDefaultAssertionHandler()`].
     ///
     /// The parameter `puserdata` is a pointer to a void*, which will store the
-    /// "userdata" pointer that was passed to SDL_SetAssertionHandler(). This value
+    /// "userdata" pointer that was passed to [`SDL_SetAssertionHandler()`]. This value
     /// will always be NULL for the default handler. If you don't care about this
     /// data, it is safe to pass a NULL pointer to this function to ignore it.
     ///
     /// - `puserdata`: pointer which is filled with the "userdata" pointer that
-    ///   was passed to SDL_SetAssertionHandler().
-    /// - Returns the SDL_AssertionHandler that is called when an assert triggers.
+    ///   was passed to [`SDL_SetAssertionHandler()`].
+    /// - Returns the [`SDL_AssertionHandler`] that is called when an assert triggers.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -612,7 +612,7 @@ extern "C" {
     /// Get a list of all assertion failures.
     ///
     /// This function gets all assertions triggered since the last call to
-    /// SDL_ResetAssertionReport(), or the start of the program.
+    /// [`SDL_ResetAssertionReport()`], or the start of the program.
     ///
     /// The proper way to examine this data looks something like this:
     ///
@@ -640,7 +640,7 @@ extern "C" {
     /// Clear the list of all assertion failures.
     ///
     /// This function will clear the list of all assertions triggered up to that
-    /// point. Immediately following this call, SDL_GetAssertionReport will return
+    /// point. Immediately following this call, [`SDL_GetAssertionReport`] will return
     /// no items. In addition, any previously-triggered assertions will be reset to
     /// a trigger_count of zero, and their always_ignore state will be false.
     ///

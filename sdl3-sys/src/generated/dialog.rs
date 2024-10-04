@@ -36,7 +36,7 @@ pub struct SDL_DialogFileFilter {
 ///
 /// If `filelist` is:
 ///
-/// - NULL, an error occurred. Details can be obtained with SDL_GetError().
+/// - NULL, an error occurred. Details can be obtained with [`SDL_GetError()`].
 /// - A pointer to NULL, the user either didn't choose any file or canceled the
 ///   dialog.
 /// - A pointer to non-`NULL`, the user chose one or more files. The argument
@@ -88,15 +88,15 @@ extern "C" {
     ///
     /// On Linux, dialogs may require XDG Portals, which requires DBus, which
     /// requires an event-handling loop. Apps that do not use SDL to handle events
-    /// should add a call to SDL_PumpEvents in their main loop.
+    /// should add a call to [`SDL_PumpEvents`] in their main loop.
     ///
-    /// - `callback`: an SDL_DialogFileCallback to be invoked when the user
+    /// - `callback`: an [`SDL_DialogFileCallback`] to be invoked when the user
     ///   selects a file and accepts, or cancels the dialog, or an
     ///   error occurs. The first argument is a null-terminated list
     ///   of C strings, representing the paths chosen by the user.
     ///   The list will be empty if the user canceled the dialog, and
     ///   it will be NULL if an error occurred. If an error occurred,
-    ///   it can be fetched with SDL_GetError(). The second argument
+    ///   it can be fetched with [`SDL_GetError()`]. The second argument
     ///   is the userdata pointer passed to the function. The third
     ///   argument is the index of the filter selected by the user,
     ///   or one past the index of the last filter (therefore the
@@ -153,15 +153,15 @@ extern "C" {
     ///
     /// On Linux, dialogs may require XDG Portals, which requires DBus, which
     /// requires an event-handling loop. Apps that do not use SDL to handle events
-    /// should add a call to SDL_PumpEvents in their main loop.
+    /// should add a call to [`SDL_PumpEvents`] in their main loop.
     ///
-    /// - `callback`: an SDL_DialogFileCallback to be invoked when the user
+    /// - `callback`: an [`SDL_DialogFileCallback`] to be invoked when the user
     ///   selects a file and accepts, or cancels the dialog, or an
     ///   error occurs. The first argument is a null-terminated list
     ///   of C strings, representing the paths chosen by the user.
     ///   The list will be empty if the user canceled the dialog, and
     ///   it will be NULL if an error occurred. If an error occurred,
-    ///   it can be fetched with SDL_GetError(). The second argument
+    ///   it can be fetched with [`SDL_GetError()`]. The second argument
     ///   is the userdata pointer passed to the function. The third
     ///   argument is the index of the filter selected by the user,
     ///   or one past the index of the last filter (therefore the
@@ -215,17 +215,17 @@ extern "C" {
     ///
     /// On Linux, dialogs may require XDG Portals, which requires DBus, which
     /// requires an event-handling loop. Apps that do not use SDL to handle events
-    /// should add a call to SDL_PumpEvents in their main loop.
+    /// should add a call to [`SDL_PumpEvents`] in their main loop.
     ///
-    /// - `callback`: an SDL_DialogFileCallback to be invoked when the user
+    /// - `callback`: an [`SDL_DialogFileCallback`] to be invoked when the user
     ///   selects a file and accepts, or cancels the dialog, or an
     ///   error occurs. The first argument is a null-terminated list
     ///   of C strings, representing the paths chosen by the user.
     ///   The list will be empty if the user canceled the dialog, and
     ///   it will be NULL if an error occurred. If an error occurred,
-    ///   it can be fetched with SDL_GetError(). The second argument
+    ///   it can be fetched with [`SDL_GetError()`]. The second argument
     ///   is the userdata pointer passed to the function. The third
-    ///   argument is always -1 for SDL_ShowOpenFolderDialog.
+    ///   argument is always -1 for [`SDL_ShowOpenFolderDialog`].
     /// - `userdata`: an optional pointer to pass extra data to the callback when
     ///   it will be invoked.
     /// - `window`: the window that the dialog should be modal for, may be NULL.

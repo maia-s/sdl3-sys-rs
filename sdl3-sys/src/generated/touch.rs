@@ -71,8 +71,8 @@ extern "C" {
     /// - `count`: a pointer filled in with the number of devices returned, may
     ///   be NULL.
     /// - Returns a 0 terminated array of touch device IDs or NULL on failure; call
-    ///   SDL_GetError() for more information. This should be freed with
-    ///   SDL_free() when it is no longer needed.
+    ///   [`SDL_GetError()`] for more information. This should be freed with
+    ///   [`SDL_free()`] when it is no longer needed.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetTouchDevices(count: *mut ::core::ffi::c_int) -> *mut SDL_TouchID;
@@ -82,7 +82,7 @@ extern "C" {
     /// Get the touch device name as reported from the driver.
     ///
     /// - `touchID`: the touch device instance ID.
-    /// - Returns touch device name, or NULL on failure; call SDL_GetError() for
+    /// - Returns touch device name, or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -105,9 +105,9 @@ extern "C" {
     /// - `touchID`: the ID of a touch device.
     /// - `count`: a pointer filled in with the number of fingers returned, can
     ///   be NULL.
-    /// - Returns a NULL terminated array of SDL_Finger pointers or NULL on failure;
-    ///   call SDL_GetError() for more information. This is a single
-    ///   allocation that should be freed with SDL_free() when it is no
+    /// - Returns a NULL terminated array of [`SDL_Finger`] pointers or NULL on failure;
+    ///   call [`SDL_GetError()`] for more information. This is a single
+    ///   allocation that should be freed with [`SDL_free()`] when it is no
     ///   longer needed.
     ///
     /// This function is available since SDL 3.0.0.

@@ -6,7 +6,7 @@ use super::error::*;
 
 /// The basic state for the system's power supply.
 ///
-/// These are results returned by SDL_GetPowerInfo().
+/// These are results returned by [`SDL_GetPowerInfo()`].
 ///
 /// This enum is available since SDL 3.0.0
 ///
@@ -72,7 +72,7 @@ extern "C" {
     ///   filled in with -1 we can't determine a value or there is no
     ///   battery.
     /// - Returns the current battery state or `SDL_POWERSTATE_ERROR` on failure;
-    ///   call SDL_GetError() for more information.
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetPowerInfo(

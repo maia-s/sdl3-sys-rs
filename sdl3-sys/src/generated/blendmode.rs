@@ -8,7 +8,7 @@ use super::stdinc::*;
 ///
 /// These predefined blend modes are supported everywhere.
 ///
-/// Additional values may be obtained from SDL_ComposeCustomBlendMode.
+/// Additional values may be obtained from [`SDL_ComposeCustomBlendMode`].
 ///
 /// This datatype is available since SDL 3.0.0.
 ///
@@ -147,8 +147,8 @@ pub const SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA: SDL_BlendFactor =
 extern "C" {
     /// Compose a custom blend mode for renderers.
     ///
-    /// The functions SDL_SetRenderDrawBlendMode and SDL_SetTextureBlendMode accept
-    /// the SDL_BlendMode returned by this function if the renderer supports it.
+    /// The functions [`SDL_SetRenderDrawBlendMode`] and [`SDL_SetTextureBlendMode`] accept
+    /// the [`SDL_BlendMode`] returned by this function if the renderer supports it.
     ///
     /// A blend mode controls how the pixels from a drawing operation (source) get
     /// combined with the pixels from the render target (destination). First, the
@@ -173,20 +173,20 @@ extern "C" {
     /// - `max(src, dst)`
     ///
     /// The red, green, and blue components are always multiplied with the first,
-    /// second, and third components of the SDL_BlendFactor, respectively. The
+    /// second, and third components of the [`SDL_BlendFactor`], respectively. The
     /// fourth component is not used.
     ///
     /// The alpha component is always multiplied with the fourth component of the
-    /// SDL_BlendFactor. The other components are not used in the alpha
+    /// [`SDL_BlendFactor`]. The other components are not used in the alpha
     /// calculation.
     ///
     /// Support for these blend modes varies for each renderer. To check if a
-    /// specific SDL_BlendMode is supported, create a renderer and pass it to
-    /// either SDL_SetRenderDrawBlendMode or SDL_SetTextureBlendMode. They will
+    /// specific [`SDL_BlendMode`] is supported, create a renderer and pass it to
+    /// either [`SDL_SetRenderDrawBlendMode`] or [`SDL_SetTextureBlendMode`]. They will
     /// return with an error if the blend mode is not supported.
     ///
     /// This list describes the support of custom blend modes for each renderer.
-    /// All renderers support the four blend modes listed in the SDL_BlendMode
+    /// All renderers support the four blend modes listed in the [`SDL_BlendMode`]
     /// enumeration.
     ///
     /// - **direct3d**: Supports all operations with all factors. However, some
@@ -206,20 +206,20 @@ extern "C" {
     /// `SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA` factors do not have an effect in this
     /// case.
     ///
-    /// - `srcColorFactor`: the SDL_BlendFactor applied to the red, green, and
+    /// - `srcColorFactor`: the [`SDL_BlendFactor`] applied to the red, green, and
     ///   blue components of the source pixels.
-    /// - `dstColorFactor`: the SDL_BlendFactor applied to the red, green, and
+    /// - `dstColorFactor`: the [`SDL_BlendFactor`] applied to the red, green, and
     ///   blue components of the destination pixels.
-    /// - `colorOperation`: the SDL_BlendOperation used to combine the red,
+    /// - `colorOperation`: the [`SDL_BlendOperation`] used to combine the red,
     ///   green, and blue components of the source and
     ///   destination pixels.
-    /// - `srcAlphaFactor`: the SDL_BlendFactor applied to the alpha component of
+    /// - `srcAlphaFactor`: the [`SDL_BlendFactor`] applied to the alpha component of
     ///   the source pixels.
-    /// - `dstAlphaFactor`: the SDL_BlendFactor applied to the alpha component of
+    /// - `dstAlphaFactor`: the [`SDL_BlendFactor`] applied to the alpha component of
     ///   the destination pixels.
-    /// - `alphaOperation`: the SDL_BlendOperation used to combine the alpha
+    /// - `alphaOperation`: the [`SDL_BlendOperation`] used to combine the alpha
     ///   component of the source and destination pixels.
-    /// - Returns an SDL_BlendMode that represents the chosen factors and
+    /// - Returns an [`SDL_BlendMode`] that represents the chosen factors and
     ///   operations.
     ///
     /// This function is available since SDL 3.0.0.

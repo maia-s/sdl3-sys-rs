@@ -97,9 +97,9 @@ pub const SDL_MIN_UINT64: ::core::primitive::u64 = 0_u64;
 /// SDL times are signed, 64-bit integers representing nanoseconds since the
 /// Unix epoch (Jan 1, 1970).
 ///
-/// They can be converted between POSIX time_t values with SDL_NS_TO_SECONDS()
-/// and SDL_SECONDS_TO_NS(), and between Windows FILETIME values with
-/// SDL_TimeToWindows() and SDL_TimeFromWindows().
+/// They can be converted between POSIX time_t values with [`SDL_NS_TO_SECONDS()`]
+/// and [`SDL_SECONDS_TO_NS()`], and between Windows FILETIME values with
+/// [`SDL_TimeToWindows()`] and [`SDL_TimeFromWindows()`].
 ///
 /// This macro is available since SDL 3.0.0.
 ///
@@ -376,12 +376,12 @@ extern "C" {
     /// Allocate uninitialized memory.
     ///
     /// The allocated memory returned by this function must be freed with
-    /// SDL_free().
+    /// [`SDL_free()`].
     ///
     /// If `size` is 0, it will be set to 1.
     ///
     /// If you want to allocate memory aligned to a specific alignment, consider
-    /// using SDL_aligned_alloc().
+    /// using [`SDL_aligned_alloc()`].
     ///
     /// - `size`: the size to allocate.
     /// - Returns a pointer to the allocated memory, or NULL if allocation failed.
@@ -400,7 +400,7 @@ extern "C" {
 extern "C" {
     /// Allocate a zero-initialized array.
     ///
-    /// The memory returned by this function must be freed with SDL_free().
+    /// The memory returned by this function must be freed with [`SDL_free()`].
     ///
     /// If either of `nmemb` or `size` is 0, they will both be set to 1.
     ///
@@ -424,14 +424,14 @@ extern "C" {
 extern "C" {
     /// Change the size of allocated memory.
     ///
-    /// The memory returned by this function must be freed with SDL_free().
+    /// The memory returned by this function must be freed with [`SDL_free()`].
     ///
     /// If `size` is 0, it will be set to 1. Note that this is unlike some other C
     /// runtime `realloc` implementations, which may treat `realloc(mem, 0)` the
     /// same way as `free(mem)`.
     ///
     /// If `mem` is NULL, the behavior of this function is equivalent to
-    /// SDL_malloc(). Otherwise, the function can have one of three possible
+    /// [`SDL_malloc()`]. Otherwise, the function can have one of three possible
     /// outcomes:
     ///
     /// - If it returns the same pointer as `mem`, it means that `mem` was resized
@@ -439,7 +439,7 @@ extern "C" {
     /// - If it returns a different non-NULL pointer, it means that `mem` was freed
     ///   and cannot be dereferenced anymore.
     /// - If it returns NULL (indicating failure), then `mem` will remain valid and
-    ///   must still be freed with SDL_free().
+    ///   must still be freed with [`SDL_free()`].
     ///
     /// - `mem`: a pointer to allocated memory to reallocate, or NULL.
     /// - `size`: the new size of the memory.
@@ -479,7 +479,7 @@ extern "C" {
     pub fn SDL_free(mem: *mut ::core::ffi::c_void);
 }
 
-/// A callback used to implement SDL_malloc().
+/// A callback used to implement [`SDL_malloc()`].
 ///
 /// SDL will always ensure that the passed `size` is greater than 0.
 ///
@@ -498,7 +498,7 @@ pub type SDL_malloc_func = ::core::option::Option<
     unsafe extern "C" fn(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void,
 >;
 
-/// A callback used to implement SDL_calloc().
+/// A callback used to implement [`SDL_calloc()`].
 ///
 /// SDL will always ensure that the passed `nmemb` and `size` are both greater
 /// than 0.
@@ -522,7 +522,7 @@ pub type SDL_calloc_func = ::core::option::Option<
     ) -> *mut ::core::ffi::c_void,
 >;
 
-/// A callback used to implement SDL_realloc().
+/// A callback used to implement [`SDL_realloc()`].
 ///
 /// SDL will always ensure that the passed `size` is greater than 0.
 ///
@@ -546,7 +546,7 @@ pub type SDL_realloc_func = ::core::option::Option<
     ) -> *mut ::core::ffi::c_void,
 >;
 
-/// A callback used to implement SDL_free().
+/// A callback used to implement [`SDL_free()`].
 ///
 /// SDL will always ensure that the passed `mem` is a non-NULL pointer.
 ///
@@ -566,8 +566,8 @@ pub type SDL_free_func =
 extern "C" {
     /// Get the original set of SDL memory functions.
     ///
-    /// This is what SDL_malloc and friends will use by default, if there has been
-    /// no call to SDL_SetMemoryFunctions. This is not necessarily using the C
+    /// This is what [`SDL_malloc`] and friends will use by default, if there has been
+    /// no call to [`SDL_SetMemoryFunctions`]. This is not necessarily using the C
     /// runtime's `malloc` functions behind the scenes! Different platforms and
     /// build configurations might do any number of unexpected things.
     ///
@@ -597,7 +597,7 @@ extern "C" {
     ///
     /// Thread safety: This does not hold a lock, so do not call this in the
     ///   unlikely event of a background thread calling
-    ///   SDL_SetMemoryFunctions simultaneously.
+    ///   [`SDL_SetMemoryFunctions`] simultaneously.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -615,8 +615,8 @@ extern "C" {
     /// Replace SDL's memory allocation functions with a custom set.
     ///
     /// It is not safe to call this function once any allocations have been made,
-    /// as future calls to SDL_free will use the new allocator, even if they came
-    /// from an SDL_malloc made with the old one!
+    /// as future calls to [`SDL_free`] will use the new allocator, even if they came
+    /// from an [`SDL_malloc`] made with the old one!
     ///
     /// If used, usually this needs to be the first call made into the SDL library,
     /// if not the very first thing done at program startup time.
@@ -625,7 +625,7 @@ extern "C" {
     /// - `calloc_func`: custom calloc function.
     /// - `realloc_func`: custom realloc function.
     /// - `free_func`: custom free function.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread, but one
@@ -647,8 +647,8 @@ extern "C" {
 extern "C" {
     /// Allocate memory aligned to a specific alignment.
     ///
-    /// The memory returned by this function must be freed with SDL_aligned_free(),
-    /// _not_ SDL_free().
+    /// The memory returned by this function must be freed with [`SDL_aligned_free()`],
+    /// _not_ [`SDL_free()`].
     ///
     /// If `alignment` is less than the size of `void *`, it will be increased to
     /// match that.
@@ -672,14 +672,14 @@ extern "C" {
 }
 
 extern "C" {
-    /// Free memory allocated by SDL_aligned_alloc().
+    /// Free memory allocated by [`SDL_aligned_alloc()`].
     ///
     /// The pointer is no longer valid after this call and cannot be dereferenced
     /// anymore.
     ///
     /// If `mem` is NULL, this function does nothing.
     ///
-    /// - `mem`: a pointer previously returned by SDL_aligned_alloc(), or NULL.
+    /// - `mem`: a pointer previously returned by [`SDL_aligned_alloc()`], or NULL.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -704,13 +704,13 @@ extern "C" {
     /// Get the process environment.
     ///
     /// This is initialized at application start and is not affected by setenv()
-    /// and unsetenv() calls after that point. Use SDL_SetEnvironmentVariable() and
-    /// SDL_UnsetEnvironmentVariable() if you want to modify this environment, or
-    /// SDL_setenv_unsafe() or SDL_unsetenv_unsafe() if you want changes to persist
-    /// in the C runtime environment after SDL_Quit().
+    /// and unsetenv() calls after that point. Use [`SDL_SetEnvironmentVariable()`] and
+    /// [`SDL_UnsetEnvironmentVariable()`] if you want to modify this environment, or
+    /// [`SDL_setenv_unsafe()`] or [`SDL_unsetenv_unsafe()`] if you want changes to persist
+    /// in the C runtime environment after [`SDL_Quit()`].
     ///
     /// - Returns a pointer to the environment for the process or NULL on failure;
-    ///   call SDL_GetError() for more information.
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -729,7 +729,7 @@ extern "C" {
     /// - `populated`: true to initialize it from the C runtime environment,
     ///   false to create an empty environment.
     /// - Returns a pointer to the new environment or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// Thread safety: If `populated` is false, it is safe to call this function
     ///   from any thread, otherwise it is safe if no other threads are
@@ -773,9 +773,9 @@ extern "C" {
     ///
     /// - `env`: the environment to query.
     /// - Returns a NULL terminated array of pointers to environment variables in
-    ///   the form "variable=value" or NULL on failure; call SDL_GetError()
+    ///   the form "variable=value" or NULL on failure; call [`SDL_GetError()`]
     ///   for more information. This is a single allocation that should be
-    ///   freed with SDL_free() when it is no longer needed.
+    ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// Thread safety: It is safe to call this function from any thread.
     ///
@@ -798,7 +798,7 @@ extern "C" {
     /// - `overwrite`: true to overwrite the variable if it exists, false to
     ///   return success without setting the variable if it already
     ///   exists.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -823,7 +823,7 @@ extern "C" {
     ///
     /// - `env`: the environment to modify.
     /// - `name`: the name of the variable to unset.
-    /// - Returns true on success or false on failure; call SDL_GetError() for more
+    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// Thread safety: It is safe to call this function from any thread.
@@ -881,7 +881,7 @@ extern "C" {
     /// - Returns a pointer to the value of the variable or NULL if it can't be
     ///   found.
     ///
-    /// Thread safety: This function is not thread safe, consider using SDL_getenv()
+    /// Thread safety: This function is not thread safe, consider using [`SDL_getenv()`]
     ///   instead.
     ///
     /// This function is available since SDL 3.0.0.
@@ -900,7 +900,7 @@ extern "C" {
     /// - Returns 0 on success, -1 on error.
     ///
     /// Thread safety: This function is not thread safe, consider using
-    ///   SDL_SetEnvironmentVariable() instead.
+    ///   [`SDL_SetEnvironmentVariable()`] instead.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -919,7 +919,7 @@ extern "C" {
     /// - Returns 0 on success, -1 on error.
     ///
     /// Thread safety: This function is not thread safe, consider using
-    ///   SDL_UnsetEnvironmentVariable() instead.
+    ///   [`SDL_UnsetEnvironmentVariable()`] instead.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -1485,7 +1485,7 @@ extern "C" {
 
 /// Copy non-overlapping memory.
 ///
-/// The memory regions must not overlap. If they do, use SDL_memmove() instead.
+/// The memory regions must not overlap. If they do, use [`SDL_memmove()`] instead.
 ///
 /// - `dst`: The destination memory region. Must not be NULL, and must not
 ///   overlap with `src`.
@@ -1529,7 +1529,7 @@ pub unsafe fn SDL_copyp<Dst: Sized, Src: Sized>(dst: *mut Dst, src: *const Src) 
 /// Copy memory.
 ///
 /// It is okay for the memory regions to overlap. If you are confident that the
-/// regions never overlap, using SDL_memcpy() may improve performance.
+/// regions never overlap, using [`SDL_memcpy()`] may improve performance.
 ///
 /// - `dst`: The destination memory region. Must not be NULL.
 /// - `src`: The source memory region. Must not be NULL.
@@ -1866,7 +1866,7 @@ extern "C" {
     /// written.
     ///
     /// If you want to copy an UTF-8 string but need to ensure that multi-byte
-    /// sequences are not truncated, consider using SDL_utf8strlcpy().
+    /// sequences are not truncated, consider using [`SDL_utf8strlcpy()`].
     ///
     /// - `dst`: The destination buffer. Must not be NULL, and must not overlap
     ///   with `src`.
@@ -1898,7 +1898,7 @@ extern "C" {
     ///
     /// `src` and `dst` must not overlap.
     ///
-    /// Note that unlike SDL_strlcpy(), this function returns the number of bytes
+    /// Note that unlike [`SDL_strlcpy()`], this function returns the number of bytes
     /// written, not the length of `src`.
     ///
     /// - `dst`: The destination buffer. Must not be NULL, and must not overlap
@@ -2346,7 +2346,7 @@ extern "C" {
     /// Due to the nature of UTF-8 encoding, this will work with Unicode strings,
     /// since effectively this function just compares bytes until it hits a
     /// null-terminating character. Also due to the nature of UTF-8, this can be
-    /// used with SDL_qsort() to put strings in (roughly) alphabetical order.
+    /// used with [`SDL_qsort()`] to put strings in (roughly) alphabetical order.
     ///
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
@@ -2369,7 +2369,7 @@ extern "C" {
     /// Due to the nature of UTF-8 encoding, this will work with Unicode strings,
     /// since effectively this function just compares bytes until it hits a
     /// null-terminating character. Also due to the nature of UTF-8, this can be
-    /// used with SDL_qsort() to put strings in (roughly) alphabetical order.
+    /// used with [`SDL_qsort()`] to put strings in (roughly) alphabetical order.
     ///
     /// Note that while this function is intended to be used with UTF-8, it is
     /// doing a bytewise comparison, and `maxlen` specifies a _byte_ limit! If the
@@ -2494,7 +2494,7 @@ extern "C" {
 
 /// The Unicode REPLACEMENT CHARACTER codepoint.
 ///
-/// SDL_StepUTF8() reports this codepoint when it encounters a UTF-8 string
+/// [`SDL_StepUTF8()`] reports this codepoint when it encounters a UTF-8 string
 /// with encoding errors.
 ///
 /// This tends to render as something like a question mark in most places.
@@ -2527,9 +2527,9 @@ extern "C" {
     /// adjusting its parameters each iteration.
     ///
     /// If an invalid UTF-8 sequence is encountered, this function returns
-    /// SDL_INVALID_UNICODE_CODEPOINT and advances the string/length by one byte
+    /// [`SDL_INVALID_UNICODE_CODEPOINT`] and advances the string/length by one byte
     /// (which is to say, a multibyte sequence might produce several
-    /// SDL_INVALID_UNICODE_CODEPOINT returns before it syncs to the next valid
+    /// [`SDL_INVALID_UNICODE_CODEPOINT`] returns before it syncs to the next valid
     /// UTF-8 sequence).
     ///
     /// Several things can generate invalid UTF-8 sequences, including overlong
@@ -2659,7 +2659,7 @@ extern "C" {
     /// of 'random' numbers.
     ///
     /// - `seed`: the value to use as a random number seed, or 0 to use
-    ///   SDL_GetPerformanceCounter().
+    ///   [`SDL_GetPerformanceCounter()`].
     ///
     /// Thread safety: This should be called on the same thread that calls
     ///   SDL_rand*()
@@ -2685,7 +2685,7 @@ extern "C" {
     /// If you want to generate a pseudo-random number in the full range of Sint32,
     /// you should use: (Sint32)SDL_rand_bits()
     ///
-    /// If you want reproducible output, be sure to initialize with SDL_srand()
+    /// If you want reproducible output, be sure to initialize with [`SDL_srand()`]
     /// first.
     ///
     /// There are no guarantees as to the quality of the random sequence produced,
@@ -2709,7 +2709,7 @@ extern "C" {
 extern "C" {
     /// Generate a uniform pseudo-random floating point number less than 1.0
     ///
-    /// If you want reproducible output, be sure to initialize with SDL_srand()
+    /// If you want reproducible output, be sure to initialize with [`SDL_srand()`]
     /// first.
     ///
     /// There are no guarantees as to the quality of the random sequence produced,
@@ -2732,7 +2732,7 @@ extern "C" {
 extern "C" {
     /// Generate 32 pseudo-random bits.
     ///
-    /// You likely want to use SDL_rand() to get a psuedo-random number instead.
+    /// You likely want to use [`SDL_rand()`] to get a psuedo-random number instead.
     ///
     /// There are no guarantees as to the quality of the random sequence produced,
     /// and this should not be used for security (cryptography, passwords) or where
@@ -2790,7 +2790,7 @@ extern "C" {
 extern "C" {
     /// Generate a uniform pseudo-random floating point number less than 1.0
     ///
-    /// If you want reproducible output, be sure to initialize with SDL_srand()
+    /// If you want reproducible output, be sure to initialize with [`SDL_srand()`]
     /// first.
     ///
     /// There are no guarantees as to the quality of the random sequence produced,
@@ -2817,7 +2817,7 @@ extern "C" {
 extern "C" {
     /// Generate 32 pseudo-random bits.
     ///
-    /// You likely want to use SDL_rand_r() to get a psuedo-random number instead.
+    /// You likely want to use [`SDL_rand_r()`] to get a psuedo-random number instead.
     ///
     /// There are no guarantees as to the quality of the random sequence produced,
     /// and this should not be used for security (cryptography, passwords) or where
@@ -2855,7 +2855,7 @@ extern "C" {
     /// Range: `0 <= y <= Pi`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_acosf for single-precision floats.
+    /// [`SDL_acosf`] for single-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -2885,7 +2885,7 @@ extern "C" {
     /// Range: `0 <= y <= Pi`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_acos for double-precision floats.
+    /// [`SDL_acos`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -2915,7 +2915,7 @@ extern "C" {
     /// Range: `-Pi/2 <= y <= Pi/2`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_asinf for single-precision floats.
+    /// [`SDL_asinf`] for single-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -2945,7 +2945,7 @@ extern "C" {
     /// Range: `-Pi/2 <= y <= Pi/2`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_asin for double-precision floats.
+    /// [`SDL_asin`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -2975,9 +2975,9 @@ extern "C" {
     /// Range: `-Pi/2 <= y <= Pi/2`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_atanf for single-precision floats.
+    /// [`SDL_atanf`] for single-precision floats.
     ///
-    /// To calculate the arc tangent of y / x, use SDL_atan2.
+    /// To calculate the arc tangent of y / x, use [`SDL_atan2`].
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3007,9 +3007,9 @@ extern "C" {
     /// Range: `-Pi/2 <= y <= Pi/2`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_atan for dboule-precision floats.
+    /// [`SDL_atan`] for dboule-precision floats.
     ///
-    /// To calculate the arc tangent of y / x, use SDL_atan2f.
+    /// To calculate the arc tangent of y / x, use [`SDL_atan2f`].
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3041,9 +3041,9 @@ extern "C" {
     /// Range: `-Pi/2 <= y <= Pi/2`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_atan2f for single-precision floats.
+    /// [`SDL_atan2f`] for single-precision floats.
     ///
-    /// To calculate the arc tangent of a single value, use SDL_atan.
+    /// To calculate the arc tangent of a single value, use [`SDL_atan`].
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3077,9 +3077,9 @@ extern "C" {
     /// Range: `-Pi/2 <= y <= Pi/2`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_atan2 for double-precision floats.
+    /// [`SDL_atan2`] for double-precision floats.
     ///
-    /// To calculate the arc tangent of a single value, use SDL_atanf.
+    /// To calculate the arc tangent of a single value, use [`SDL_atanf`].
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3112,7 +3112,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`, y integer
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_ceilf for single-precision floats.
+    /// [`SDL_ceilf`] for single-precision floats.
     ///
     /// - `x`: floating point value.
     /// - Returns the ceiling of `x`.
@@ -3140,7 +3140,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`, y integer
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_ceil for double-precision floats.
+    /// [`SDL_ceil`] for double-precision floats.
     ///
     /// - `x`: floating point value.
     /// - Returns the ceiling of `x`.
@@ -3167,7 +3167,7 @@ extern "C" {
     /// Range: `-INF <= z <= INF`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_copysignf for single-precision floats.
+    /// [`SDL_copysignf`] for single-precision floats.
     ///
     /// - `x`: floating point value to use as the magnitude.
     /// - `y`: floating point value to use as the sign.
@@ -3196,7 +3196,7 @@ extern "C" {
     /// Range: `-INF <= z <= INF`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_copysign for double-precision floats.
+    /// [`SDL_copysign`] for double-precision floats.
     ///
     /// - `x`: floating point value to use as the magnitude.
     /// - `y`: floating point value to use as the sign.
@@ -3220,7 +3220,7 @@ extern "C" {
     /// Range: `-1 <= y <= 1`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_cosf for single-precision floats.
+    /// [`SDL_cosf`] for single-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3248,7 +3248,7 @@ extern "C" {
     /// Range: `-1 <= y <= 1`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_cos for double-precision floats.
+    /// [`SDL_cos`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3272,7 +3272,7 @@ extern "C" {
     /// Compute the exponential of `x`.
     ///
     /// The definition of `y = exp(x)` is `y = e^x`, where `e` is the base of the
-    /// natural logarithm. The inverse is the natural logarithm, SDL_log.
+    /// natural logarithm. The inverse is the natural logarithm, [`SDL_log`].
     ///
     /// Domain: `-INF <= x <= INF`
     ///
@@ -3281,7 +3281,7 @@ extern "C" {
     /// The output will overflow if `exp(x)` is too large to be represented.
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_expf for single-precision floats.
+    /// [`SDL_expf`] for single-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3304,7 +3304,7 @@ extern "C" {
     /// Compute the exponential of `x`.
     ///
     /// The definition of `y = exp(x)` is `y = e^x`, where `e` is the base of the
-    /// natural logarithm. The inverse is the natural logarithm, SDL_logf.
+    /// natural logarithm. The inverse is the natural logarithm, [`SDL_logf`].
     ///
     /// Domain: `-INF <= x <= INF`
     ///
@@ -3313,7 +3313,7 @@ extern "C" {
     /// The output will overflow if `exp(x)` is too large to be represented.
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_exp for double-precision floats.
+    /// [`SDL_exp`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3340,7 +3340,7 @@ extern "C" {
     /// Range: `0 <= y <= INF`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_copysignf for single-precision floats.
+    /// [`SDL_copysignf`] for single-precision floats.
     ///
     /// - `x`: floating point value to use as the magnitude.
     /// - Returns the absolute value of `x`.
@@ -3361,7 +3361,7 @@ extern "C" {
     /// Range: `0 <= y <= INF`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_copysignf for double-precision floats.
+    /// [`SDL_copysignf`] for double-precision floats.
     ///
     /// - `x`: floating point value to use as the magnitude.
     /// - Returns the absolute value of `x`.
@@ -3385,7 +3385,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`, y integer
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_floorf for single-precision floats.
+    /// [`SDL_floorf`] for single-precision floats.
     ///
     /// - `x`: floating point value.
     /// - Returns the floor of `x`.
@@ -3413,7 +3413,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`, y integer
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_floorf for double-precision floats.
+    /// [`SDL_floorf`] for double-precision floats.
     ///
     /// - `x`: floating point value.
     /// - Returns the floor of `x`.
@@ -3441,7 +3441,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`, y integer
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_truncf for single-precision floats.
+    /// [`SDL_truncf`] for single-precision floats.
     ///
     /// - `x`: floating point value.
     /// - Returns `x` truncated to an integer.
@@ -3470,7 +3470,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`, y integer
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_truncf for double-precision floats.
+    /// [`SDL_truncf`] for double-precision floats.
     ///
     /// - `x`: floating point value.
     /// - Returns `x` truncated to an integer.
@@ -3498,7 +3498,7 @@ extern "C" {
     /// Range: `-y <= z <= y`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_fmodf for single-precision floats.
+    /// [`SDL_fmodf`] for single-precision floats.
     ///
     /// - `x`: the numerator.
     /// - `y`: the denominator. Must not be 0.
@@ -3528,7 +3528,7 @@ extern "C" {
     /// Range: `-y <= z <= y`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_fmod for single-precision floats.
+    /// [`SDL_fmod`] for single-precision floats.
     ///
     /// - `x`: the numerator.
     /// - `y`: the denominator. Must not be 0.
@@ -3614,7 +3614,7 @@ extern "C" {
     /// It is an error for `x` to be less than or equal to 0.
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_logf for single-precision floats.
+    /// [`SDL_logf`] for single-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3644,7 +3644,7 @@ extern "C" {
     /// It is an error for `x` to be less than or equal to 0.
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_log for double-precision floats.
+    /// [`SDL_log`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3673,7 +3673,7 @@ extern "C" {
     /// It is an error for `x` to be less than or equal to 0.
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_log10f for single-precision floats.
+    /// [`SDL_log10f`] for single-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3703,7 +3703,7 @@ extern "C" {
     /// It is an error for `x` to be less than or equal to 0.
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_log10 for double-precision floats.
+    /// [`SDL_log10`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3727,7 +3727,7 @@ extern "C" {
     /// Split `x` into integer and fractional parts
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_modff for single-precision floats.
+    /// [`SDL_modff`] for single-precision floats.
     ///
     /// - `x`: floating point value.
     /// - `y`: output pointer to store the integer part of `x`.
@@ -3750,7 +3750,7 @@ extern "C" {
     /// Split `x` into integer and fractional parts
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_modf for double-precision floats.
+    /// [`SDL_modf`] for double-precision floats.
     ///
     /// - `x`: floating point value.
     /// - `y`: output pointer to store the integer part of `x`.
@@ -3774,11 +3774,11 @@ extern "C" {
     ///
     /// Range: `-INF <= z <= INF`
     ///
-    /// If `y` is the base of the natural logarithm (e), consider using SDL_exp
+    /// If `y` is the base of the natural logarithm (e), consider using [`SDL_exp`]
     /// instead.
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_powf for single-precision floats.
+    /// [`SDL_powf`] for single-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3806,11 +3806,11 @@ extern "C" {
     ///
     /// Range: `-INF <= z <= INF`
     ///
-    /// If `y` is the base of the natural logarithm (e), consider using SDL_exp
+    /// If `y` is the base of the natural logarithm (e), consider using [`SDL_exp`]
     /// instead.
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_powf for double-precision floats.
+    /// [`SDL_powf`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -3842,8 +3842,8 @@ extern "C" {
     /// Range: `-INF <= y <= INF`, y integer
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_roundf for single-precision floats. To get the result as an integer
-    /// type, use SDL_lround.
+    /// [`SDL_roundf`] for single-precision floats. To get the result as an integer
+    /// type, use [`SDL_lround`].
     ///
     /// - `x`: floating point value.
     /// - Returns the nearest integer to `x`.
@@ -3871,8 +3871,8 @@ extern "C" {
     /// Range: `-INF <= y <= INF`, y integer
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_roundf for single-precision floats. To get the result as an integer
-    /// type, use SDL_lroundf.
+    /// [`SDL_roundf`] for single-precision floats. To get the result as an integer
+    /// type, use [`SDL_lroundf`].
     ///
     /// - `x`: floating point value.
     /// - Returns the nearest integer to `x`.
@@ -3900,8 +3900,8 @@ extern "C" {
     /// Range: `MIN_LONG <= y <= MAX_LONG`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_lround for single-precision floats. To get the result as a
-    /// floating-point type, use SDL_round.
+    /// [`SDL_lround`] for single-precision floats. To get the result as a
+    /// floating-point type, use [`SDL_round`].
     ///
     /// - `x`: floating point value.
     /// - Returns the nearest integer to `x`.
@@ -3929,8 +3929,8 @@ extern "C" {
     /// Range: `MIN_LONG <= y <= MAX_LONG`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_lroundf for double-precision floats. To get the result as a
-    /// floating-point type, use SDL_roundf,
+    /// [`SDL_lroundf`] for double-precision floats. To get the result as a
+    /// floating-point type, use [`SDL_roundf`],
     ///
     /// - `x`: floating point value.
     /// - Returns the nearest integer to `x`.
@@ -3957,7 +3957,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_scalbnf for single-precision floats.
+    /// [`SDL_scalbnf`] for single-precision floats.
     ///
     /// - `x`: floating point value to be scaled.
     /// - `n`: integer exponent.
@@ -3982,7 +3982,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_scalbn for double-precision floats.
+    /// [`SDL_scalbn`] for double-precision floats.
     ///
     /// - `x`: floating point value to be scaled.
     /// - `n`: integer exponent.
@@ -4005,7 +4005,7 @@ extern "C" {
     /// Range: `-1 <= y <= 1`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_sinf for single-precision floats.
+    /// [`SDL_sinf`] for single-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -4033,7 +4033,7 @@ extern "C" {
     /// Range: `-1 <= y <= 1`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_sinf for double-precision floats.
+    /// [`SDL_sinf`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -4061,7 +4061,7 @@ extern "C" {
     /// Range: `0 <= y <= INF`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_sqrtf for single-precision floats.
+    /// [`SDL_sqrtf`] for single-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -4087,7 +4087,7 @@ extern "C" {
     /// Range: `0 <= y <= INF`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_sqrt for double-precision floats.
+    /// [`SDL_sqrt`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -4113,7 +4113,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`
     ///
     /// This function operates on double-precision floating point values, use
-    /// SDL_tanf for single-precision floats.
+    /// [`SDL_tanf`] for single-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -4143,7 +4143,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`
     ///
     /// This function operates on single-precision floating point values, use
-    /// SDL_tanf for double-precision floats.
+    /// [`SDL_tanf`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -4181,8 +4181,8 @@ extern "C" {
     ///
     /// - `tocode`: The target character encoding, must not be NULL.
     /// - `fromcode`: The source character encoding, must not be NULL.
-    /// - Returns a handle that must be freed with SDL_iconv_close, or
-    ///   SDL_ICONV_ERROR on failure.
+    /// - Returns a handle that must be freed with [`SDL_iconv_close`], or
+    ///   [`SDL_ICONV_ERROR`] on failure.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -4216,16 +4216,16 @@ extern "C" {
     /// It returns the number of succesful conversions.
     ///
     /// - `cd`: The character set conversion context, created in
-    ///   SDL_iconv_open().
+    ///   [`SDL_iconv_open()`].
     /// - `inbuf`: Address of variable that points to the first character of the
     ///   input sequence.
     /// - `inbytesleft`: The number of bytes in the input buffer.
     /// - `outbuf`: Address of variable that points to the output buffer.
     /// - `outbytesleft`: The number of bytes in the output buffer.
-    /// - Returns the number of conversions on success, else SDL_ICONV_E2BIG is
-    ///   returned when the output buffer is too small, or SDL_ICONV_EILSEQ
+    /// - Returns the number of conversions on success, else [`SDL_ICONV_E2BIG`] is
+    ///   returned when the output buffer is too small, or [`SDL_ICONV_EILSEQ`]
     ///   is returned when an invalid input sequence is encountered, or
-    ///   SDL_ICONV_EINVAL is returned when an incomplete input sequence is
+    ///   [`SDL_ICONV_EINVAL`] is returned when an incomplete input sequence is
     ///   encountered.
     ///
     /// ```text
@@ -4264,7 +4264,7 @@ extern "C" {
     /// character anywhere in the buffer.
     ///
     /// The returned string is owned by the caller, and should be passed to
-    /// SDL_free when no longer needed.
+    /// [`SDL_free`] when no longer needed.
     ///
     /// - `tocode`: the character encoding of the output string. Examples are
     ///   "UTF-8", "UCS-4", etc.

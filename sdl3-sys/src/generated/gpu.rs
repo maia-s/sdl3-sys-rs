@@ -155,7 +155,7 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 /// Specifies the pixel format of a texture.
 ///
 /// Texture format support varies depending on driver, hardware, and usage
-/// flags. In general, you should use SDL_GPUTextureSupportsFormat to query if
+/// flags. In general, you should use [`SDL_GPUTextureSupportsFormat`] to query if
 /// a format is supported before using it. However, there are a few guaranteed
 /// formats.
 ///
@@ -1277,10 +1277,10 @@ pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
 /// OS.
 ///
 /// Note that this value affects the behavior of
-/// SDL_AcquireGPUSwapchainTexture. VSYNC mode will always be supported.
+/// [`SDL_AcquireGPUSwapchainTexture`]. VSYNC mode will always be supported.
 /// IMMEDIATE and MAILBOX modes may not be supported on certain systems.
 ///
-/// It is recommended to query SDL_WindowSupportsGPUPresentMode after claiming
+/// It is recommended to query [`SDL_WindowSupportsGPUPresentMode`] after claiming
 /// the window if you wish to change the present mode to IMMEDIATE or MAILBOX.
 ///
 /// - VSYNC: Waits for vblank before presenting. No tearing is possible. If
@@ -1328,7 +1328,7 @@ pub const SDL_GPU_PRESENTMODE_MAILBOX: SDL_GPUPresentMode = SDL_GPUPresentMode::
 /// SDR will always be supported. Other compositions may not be supported on
 /// certain systems.
 ///
-/// It is recommended to query SDL_WindowSupportsGPUSwapchainComposition after
+/// It is recommended to query [`SDL_WindowSupportsGPUSwapchainComposition`] after
 /// claiming the window if you wish to change the swapchain composition from
 /// SDR.
 ///
@@ -1665,13 +1665,13 @@ pub struct SDL_GPUSamplerCreateInfo {
 /// A structure specifying the parameters of vertex buffers used in a graphics
 /// pipeline.
 ///
-/// When you call SDL_BindGPUVertexBuffers, you specify the binding slots of
-/// the vertex buffers. For example if you called SDL_BindGPUVertexBuffers with
+/// When you call [`SDL_BindGPUVertexBuffers`], you specify the binding slots of
+/// the vertex buffers. For example if you called [`SDL_BindGPUVertexBuffers`] with
 /// a first_slot of 2 and num_bindings of 3, the binding slots 2, 3, 4 would be
 /// used by the vertex buffers you pass in.
 ///
 /// Vertex attributes are linked to buffers via the buffer_slot field of
-/// SDL_GPUVertexAttribute. For example, if an attribute has a buffer_slot of
+/// [`SDL_GPUVertexAttribute`]. For example, if an attribute has a buffer_slot of
 /// 0, then that attribute belongs to the vertex buffer bound at slot 0.
 ///
 /// This struct is available since SDL 3.0.0
@@ -1688,13 +1688,13 @@ pub struct SDL_GPUVertexBufferDescription {
     pub pitch: Uint32,
     /// Whether attribute addressing is a function of the vertex index or instance index.
     pub input_rate: SDL_GPUVertexInputRate,
-    /// The number of instances to draw using the same per-instance data before advancing in the instance buffer by one element. Ignored unless input_rate is SDL_GPU_VERTEXINPUTRATE_INSTANCE
+    /// The number of instances to draw using the same per-instance data before advancing in the instance buffer by one element. Ignored unless input_rate is [`SDL_GPU_VERTEXINPUTRATE_INSTANCE`]
     pub instance_step_rate: Uint32,
 }
 
 /// A structure specifying a vertex attribute.
 ///
-/// All vertex attribute locations provided to an SDL_GPUVertexInputState must
+/// All vertex attribute locations provided to an [`SDL_GPUVertexInputState`] must
 /// be unique.
 ///
 /// This struct is available since SDL 3.0.0
@@ -2141,7 +2141,7 @@ pub struct SDL_GPUColorTargetInfo {
     pub mip_level: Uint32,
     /// The layer index or depth plane to use as a color target. This value is treated as a layer index on 2D array and cube textures, and as a depth plane on 3D textures.
     pub layer_or_depth_plane: Uint32,
-    /// The color to clear the color target to at the start of the render pass. Ignored if SDL_GPU_LOADOP_CLEAR is not used.
+    /// The color to clear the color target to at the start of the render pass. Ignored if [`SDL_GPU_LOADOP_CLEAR`] is not used.
     pub clear_color: SDL_FColor,
     /// What is done with the contents of the color target at the beginning of the render pass.
     pub load_op: SDL_GPULoadOp,
@@ -2209,7 +2209,7 @@ pub struct SDL_GPUColorTargetInfo {
 pub struct SDL_GPUDepthStencilTargetInfo {
     /// The texture that will be used as the depth stencil target by the render pass.
     pub texture: *mut SDL_GPUTexture,
-    /// The value to clear the depth component to at the beginning of the render pass. Ignored if SDL_GPU_LOADOP_CLEAR is not used.
+    /// The value to clear the depth component to at the beginning of the render pass. Ignored if [`SDL_GPU_LOADOP_CLEAR`] is not used.
     pub clear_depth: ::core::ffi::c_float,
     /// What is done with the depth contents at the beginning of the render pass.
     pub load_op: SDL_GPULoadOp,
@@ -2221,7 +2221,7 @@ pub struct SDL_GPUDepthStencilTargetInfo {
     pub stencil_store_op: SDL_GPUStoreOp,
     /// true cycles the texture if the texture is bound and any load ops are not LOAD
     pub cycle: ::core::primitive::bool,
-    /// The value to clear the stencil component to at the beginning of the render pass. Ignored if SDL_GPU_LOADOP_CLEAR is not used.
+    /// The value to clear the stencil component to at the beginning of the render pass. Ignored if [`SDL_GPU_LOADOP_CLEAR`] is not used.
     pub clear_stencil: Uint8,
     pub padding1: Uint8,
     pub padding2: Uint8,
@@ -2242,7 +2242,7 @@ pub struct SDL_GPUBlitInfo {
     pub destination: SDL_GPUBlitRegion,
     /// What is done with the contents of the destination before the blit.
     pub load_op: SDL_GPULoadOp,
-    /// The color to clear the destination region to before the blit. Ignored if load_op is not SDL_GPU_LOADOP_CLEAR.
+    /// The color to clear the destination region to before the blit. Ignored if load_op is not [`SDL_GPU_LOADOP_CLEAR`].
     pub clear_color: SDL_FColor,
     /// The flip mode for the source region.
     pub flip_mode: SDL_FlipMode,
@@ -2265,7 +2265,7 @@ pub struct SDL_GPUBlitInfo {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUBufferBinding {
-    /// The buffer to bind. Must have been created with SDL_GPU_BUFFERUSAGE_VERTEX for SDL_BindGPUVertexBuffers, or SDL_GPU_BUFFERUSAGE_INDEX for SDL_BindGPUIndexBuffers.
+    /// The buffer to bind. Must have been created with [`SDL_GPU_BUFFERUSAGE_VERTEX`] for [`SDL_BindGPUVertexBuffers`], or [`SDL_GPU_BUFFERUSAGE_INDEX`] for [`SDL_BindGPUIndexBuffers`].
     pub buffer: *mut SDL_GPUBuffer,
     /// The starting byte of the data to bind in the buffer.
     pub offset: Uint32,
@@ -2281,7 +2281,7 @@ pub struct SDL_GPUBufferBinding {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureSamplerBinding {
-    /// The texture to bind. Must have been created with SDL_GPU_TEXTUREUSAGE_SAMPLER.
+    /// The texture to bind. Must have been created with [`SDL_GPU_TEXTUREUSAGE_SAMPLER`].
     pub texture: *mut SDL_GPUTexture,
     /// The sampler to bind.
     pub sampler: *mut SDL_GPUSampler,
@@ -2297,7 +2297,7 @@ pub struct SDL_GPUTextureSamplerBinding {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUStorageBufferReadWriteBinding {
-    /// The buffer to bind. Must have been created with SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE.
+    /// The buffer to bind. Must have been created with [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE`].
     pub buffer: *mut SDL_GPUBuffer,
     /// true cycles the buffer if it is already bound.
     pub cycle: ::core::primitive::bool,
@@ -2316,7 +2316,7 @@ pub struct SDL_GPUStorageBufferReadWriteBinding {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUStorageTextureReadWriteBinding {
-    /// The texture to bind. Must have been created with SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE or SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE.
+    /// The texture to bind. Must have been created with [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE`] or [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE`].
     pub texture: *mut SDL_GPUTexture,
     /// The mip level index to bind.
     pub mip_level: Uint32,
@@ -2367,7 +2367,7 @@ extern "C" {
     /// - `debug_mode`: enable debug mode properties and validations.
     /// - `name`: the preferred GPU driver, or NULL to let SDL pick the optimal
     ///   driver.
-    /// - Returns a GPU context on success or NULL on failure; call SDL_GetError()
+    /// - Returns a GPU context on success or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -2416,7 +2416,7 @@ extern "C" {
     ///   use for all vertex semantics, default is "TEXCOORD".
     ///
     /// - `props`: the properties to use.
-    /// - Returns a GPU context on success or NULL on failure; call SDL_GetError()
+    /// - Returns a GPU context on success or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -2459,7 +2459,7 @@ pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: &::core::ffi::C
     c"SDL.gpu.device.create.d3d12.semantic";
 
 extern "C" {
-    /// Destroys a GPU context previously returned by SDL_CreateGPUDevice.
+    /// Destroys a GPU context previously returned by [`SDL_CreateGPUDevice`].
     ///
     /// - `device`: a GPU Context to destroy.
     ///
@@ -2560,7 +2560,7 @@ extern "C" {
     /// - `createinfo`: a struct describing the state of the compute pipeline to
     ///   create.
     /// - Returns a compute pipeline object on success, or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -2579,7 +2579,7 @@ extern "C" {
     /// - `createinfo`: a struct describing the state of the graphics pipeline to
     ///   create.
     /// - Returns a graphics pipeline object on success, or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -2599,7 +2599,7 @@ extern "C" {
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the sampler to create.
     /// - Returns a sampler object on success, or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -2665,12 +2665,12 @@ extern "C" {
     ///   is bound at [[buffer(14)]], vertex buffer 1 at [[buffer(15)]], and so on.
     ///   Rather than manually authoring vertex buffer indices, use the
     ///   [[stage_in]] attribute which will automatically use the vertex input
-    ///   information from the SDL_GPUPipeline.
+    ///   information from the [`SDL_GPUPipeline`].
     ///
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the shader to create.
     /// - Returns a shader object on success, or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -2698,7 +2698,7 @@ extern "C" {
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the texture to create.
     /// - Returns a texture object on success, or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -2730,7 +2730,7 @@ extern "C" {
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the buffer to create.
     /// - Returns a buffer object on success, or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -2761,7 +2761,7 @@ extern "C" {
     /// - `createinfo`: a struct describing the state of the transfer buffer to
     ///   create.
     /// - Returns a transfer buffer on success, or NULL on failure; call
-    ///   SDL_GetError() for more information.
+    ///   [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -2831,8 +2831,8 @@ extern "C" {
     /// Used for denoting groups of calls when viewing the command buffer
     /// callstream in a graphics debugging tool.
     ///
-    /// Each call to SDL_PushGPUDebugGroup must have a corresponding call to
-    /// SDL_PopGPUDebugGroup.
+    /// Each call to [`SDL_PushGPUDebugGroup`] must have a corresponding call to
+    /// [`SDL_PopGPUDebugGroup`].
     ///
     /// On some backends (e.g. Metal), pushing a debug group during a
     /// render/blit/compute pass will create a group that is scoped to the native
@@ -2964,7 +2964,7 @@ extern "C" {
     /// acquired on.
     ///
     /// - `device`: a GPU context.
-    /// - Returns a command buffer, or NULL on failure; call SDL_GetError() for more
+    /// - Returns a command buffer, or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -3133,7 +3133,7 @@ extern "C" {
     ///
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the vertex buffer slot to begin binding from.
-    /// - `bindings`: an array of SDL_GPUBufferBinding structs containing vertex
+    /// - `bindings`: an array of [`SDL_GPUBufferBinding`] structs containing vertex
     ///   buffers and offset values.
     /// - `num_bindings`: the number of bindings in the bindings array.
     ///
@@ -3166,7 +3166,7 @@ extern "C" {
 extern "C" {
     /// Binds texture-sampler pairs for use on the vertex shader.
     ///
-    /// The textures must have been created with SDL_GPU_TEXTUREUSAGE_SAMPLER.
+    /// The textures must have been created with [`SDL_GPU_TEXTUREUSAGE_SAMPLER`].
     ///
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the vertex sampler slot to begin binding from.
@@ -3188,7 +3188,7 @@ extern "C" {
     /// Binds storage textures for use on the vertex shader.
     ///
     /// These textures must have been created with
-    /// SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ.
+    /// [`SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ`].
     ///
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the vertex storage texture slot to begin binding from.
@@ -3208,7 +3208,7 @@ extern "C" {
     /// Binds storage buffers for use on the vertex shader.
     ///
     /// These buffers must have been created with
-    /// SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ.
+    /// [`SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ`].
     ///
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the vertex storage buffer slot to begin binding from.
@@ -3227,7 +3227,7 @@ extern "C" {
 extern "C" {
     /// Binds texture-sampler pairs for use on the fragment shader.
     ///
-    /// The textures must have been created with SDL_GPU_TEXTUREUSAGE_SAMPLER.
+    /// The textures must have been created with [`SDL_GPU_TEXTUREUSAGE_SAMPLER`].
     ///
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the fragment sampler slot to begin binding from.
@@ -3249,7 +3249,7 @@ extern "C" {
     /// Binds storage textures for use on the fragment shader.
     ///
     /// These textures must have been created with
-    /// SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ.
+    /// [`SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ`].
     ///
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the fragment storage texture slot to begin binding from.
@@ -3269,7 +3269,7 @@ extern "C" {
     /// Binds storage buffers for use on the fragment shader.
     ///
     /// These buffers must have been created with
-    /// SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ.
+    /// [`SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ`].
     ///
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the fragment storage buffer slot to begin binding from.
@@ -3346,7 +3346,7 @@ extern "C" {
     /// buffer.
     ///
     /// The buffer must consist of tightly-packed draw parameter sets that each
-    /// match the layout of SDL_GPUIndirectDrawCommand. You must not call this
+    /// match the layout of [`SDL_GPUIndirectDrawCommand`]. You must not call this
     /// function before binding a graphics pipeline.
     ///
     /// - `render_pass`: a render pass handle.
@@ -3369,7 +3369,7 @@ extern "C" {
     /// draw parameters set from a buffer.
     ///
     /// The buffer must consist of tightly-packed draw parameter sets that each
-    /// match the layout of SDL_GPUIndexedIndirectDrawCommand. You must not call
+    /// match the layout of [`SDL_GPUIndexedIndirectDrawCommand`]. You must not call
     /// this function before binding a graphics pipeline.
     ///
     /// - `render_pass`: a render pass handle.
@@ -3460,7 +3460,7 @@ extern "C" {
 extern "C" {
     /// Binds texture-sampler pairs for use on the compute shader.
     ///
-    /// The textures must have been created with SDL_GPU_TEXTUREUSAGE_SAMPLER.
+    /// The textures must have been created with [`SDL_GPU_TEXTUREUSAGE_SAMPLER`].
     ///
     /// - `compute_pass`: a compute pass handle.
     /// - `first_slot`: the compute sampler slot to begin binding from.
@@ -3482,7 +3482,7 @@ extern "C" {
     /// Binds storage textures as readonly for use on the compute pipeline.
     ///
     /// These textures must have been created with
-    /// SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ.
+    /// [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ`].
     ///
     /// - `compute_pass`: a compute pass handle.
     /// - `first_slot`: the compute storage texture slot to begin binding from.
@@ -3502,7 +3502,7 @@ extern "C" {
     /// Binds storage buffers as readonly for use on the compute pipeline.
     ///
     /// These buffers must have been created with
-    /// SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ.
+    /// [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ`].
     ///
     /// - `compute_pass`: a compute pass handle.
     /// - `first_slot`: the compute storage buffer slot to begin binding from.
@@ -3549,7 +3549,7 @@ extern "C" {
     /// Dispatches compute work with parameters set from a buffer.
     ///
     /// The buffer layout should match the layout of
-    /// SDL_GPUIndirectDispatchCommand. You must not call this function before
+    /// [`SDL_GPUIndirectDispatchCommand`]. You must not call this function before
     /// binding a compute pipeline.
     ///
     /// A VERY IMPORTANT NOTE If you dispatch multiple times in a compute pass, and
@@ -3590,7 +3590,7 @@ extern "C" {
     /// - `transfer_buffer`: a transfer buffer.
     /// - `cycle`: if true, cycles the transfer buffer if it is already bound.
     /// - Returns the address of the mapped transfer buffer memory, or NULL on
-    ///   failure; call SDL_GetError() for more information.
+    ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_MapGPUTransferBuffer(
@@ -3804,7 +3804,7 @@ extern "C" {
     /// The window must be claimed before calling this function.
     ///
     /// - `device`: a GPU context.
-    /// - `window`: an SDL_Window.
+    /// - `window`: an [`SDL_Window`].
     /// - `swapchain_composition`: the swapchain composition to check.
     /// - Returns true if supported, false if unsupported.
     ///
@@ -3824,7 +3824,7 @@ extern "C" {
     /// The window must be claimed before calling this function.
     ///
     /// - `device`: a GPU context.
-    /// - `window`: an SDL_Window.
+    /// - `window`: an [`SDL_Window`].
     /// - `present_mode`: the presentation mode to check.
     /// - Returns true if supported, false if unsupported.
     ///
@@ -3841,18 +3841,18 @@ extern "C" {
 extern "C" {
     /// Claims a window, creating a swapchain structure for it.
     ///
-    /// This must be called before SDL_AcquireGPUSwapchainTexture is called using
+    /// This must be called before [`SDL_AcquireGPUSwapchainTexture`] is called using
     /// the window. You should only call this function from the thread that created
     /// the window.
     ///
-    /// The swapchain will be created with SDL_GPU_SWAPCHAINCOMPOSITION_SDR and
-    /// SDL_GPU_PRESENTMODE_VSYNC. If you want to have different swapchain
-    /// parameters, you must call SDL_SetGPUSwapchainParameters after claiming the
+    /// The swapchain will be created with [`SDL_GPU_SWAPCHAINCOMPOSITION_SDR`] and
+    /// [`SDL_GPU_PRESENTMODE_VSYNC`]. If you want to have different swapchain
+    /// parameters, you must call [`SDL_SetGPUSwapchainParameters`] after claiming the
     /// window.
     ///
     /// - `device`: a GPU context.
-    /// - `window`: an SDL_Window.
-    /// - Returns true on success, or false on failure; call SDL_GetError() for more
+    /// - `window`: an [`SDL_Window`].
+    /// - Returns true on success, or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -3871,7 +3871,7 @@ extern "C" {
     /// Unclaims a window, destroying its swapchain structure.
     ///
     /// - `device`: a GPU context.
-    /// - `window`: an SDL_Window that has been claimed.
+    /// - `window`: an [`SDL_Window`] that has been claimed.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -3884,17 +3884,17 @@ extern "C" {
     ///
     /// This function will fail if the requested present mode or swapchain
     /// composition are unsupported by the device. Check if the parameters are
-    /// supported via SDL_WindowSupportsGPUPresentMode /
-    /// SDL_WindowSupportsGPUSwapchainComposition prior to calling this function.
+    /// supported via [`SDL_WindowSupportsGPUPresentMode`] /
+    /// [`SDL_WindowSupportsGPUSwapchainComposition`] prior to calling this function.
     ///
-    /// SDL_GPU_PRESENTMODE_VSYNC and SDL_GPU_SWAPCHAINCOMPOSITION_SDR are always
+    /// [`SDL_GPU_PRESENTMODE_VSYNC`] and [`SDL_GPU_SWAPCHAINCOMPOSITION_SDR`] are always
     /// supported.
     ///
     /// - `device`: a GPU context.
-    /// - `window`: an SDL_Window that has been claimed.
+    /// - `window`: an [`SDL_Window`] that has been claimed.
     /// - `swapchain_composition`: the desired composition of the swapchain.
     /// - `present_mode`: the desired present mode for the swapchain.
-    /// - Returns true if successful, false on error; call SDL_GetError() for more
+    /// - Returns true if successful, false on error; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -3915,7 +3915,7 @@ extern "C" {
     /// Note that this format can change if the swapchain parameters change.
     ///
     /// - `device`: a GPU context.
-    /// - `window`: an SDL_Window that has been claimed.
+    /// - `window`: an [`SDL_Window`] that has been claimed.
     /// - Returns the texture format of the swapchain.
     ///
     /// This function is available since SDL 3.0.0.
@@ -3947,7 +3947,7 @@ extern "C" {
     ///   texture width, may be NULL.
     /// - `swapchain_texture_height`: a pointer filled in with the swapchain
     ///   texture height, may be NULL.
-    /// - Returns true on success, false on error; call SDL_GetError() for more
+    /// - Returns true on success, false on error; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -3976,7 +3976,7 @@ extern "C" {
     /// command in a subsequent submission begins executing.
     ///
     /// - `command_buffer`: a command buffer.
-    /// - Returns true on success, false on failure; call SDL_GetError() for more
+    /// - Returns true on success, false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -4003,7 +4003,7 @@ extern "C" {
     ///
     /// - `command_buffer`: a command buffer.
     /// - Returns a fence associated with the command buffer, or NULL on failure;
-    ///   call SDL_GetError() for more information.
+    ///   call [`SDL_GetError()`] for more information.
     ///
     /// This function is available since SDL 3.0.0.
     ///
@@ -4020,7 +4020,7 @@ extern "C" {
     /// Blocks the thread until the GPU is completely idle.
     ///
     /// - `device`: a GPU context.
-    /// - Returns true on success, false on failure; call SDL_GetError() for more
+    /// - Returns true on success, false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -4037,7 +4037,7 @@ extern "C" {
     ///   fences to be signaled.
     /// - `fences`: an array of fences to wait on.
     /// - `num_fences`: the number of fences in the fences array.
-    /// - Returns true on success, false on failure; call SDL_GetError() for more
+    /// - Returns true on success, false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// This function is available since SDL 3.0.0.
@@ -4069,7 +4069,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Releases a fence obtained from SDL_SubmitGPUCommandBufferAndAcquireFence.
+    /// Releases a fence obtained from [`SDL_SubmitGPUCommandBufferAndAcquireFence`].
     ///
     /// - `device`: a GPU context.
     /// - `fence`: a fence.
@@ -4131,10 +4131,10 @@ extern "C" {
 emit! {
     extern "C" {
         /// Call this to suspend GPU operation on Xbox when you receive the
-        /// SDL_EVENT_DID_ENTER_BACKGROUND event.
+        /// [`SDL_EVENT_DID_ENTER_BACKGROUND`] event.
         ///
-        /// Do NOT call any SDL_GPU functions after calling this function! This must
-        /// also be called before calling SDL_GDKSuspendComplete.
+        /// Do NOT call any [`SDL_GPU`] functions after calling this function! This must
+        /// also be called before calling [`SDL_GDKSuspendComplete`].
         ///
         /// - `device`: a GPU context.
         ///
@@ -4146,10 +4146,10 @@ emit! {
 
     extern "C" {
         /// Call this to resume GPU operation on Xbox when you receive the
-        /// SDL_EVENT_WILL_ENTER_FOREGROUND event.
+        /// [`SDL_EVENT_WILL_ENTER_FOREGROUND`] event.
         ///
         /// When resuming, this function MUST be called before calling any other
-        /// SDL_GPU functions.
+        /// [`SDL_GPU`] functions.
         ///
         /// - `device`: a GPU context.
         ///
