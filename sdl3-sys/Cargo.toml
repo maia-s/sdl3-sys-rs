@@ -25,11 +25,12 @@ link-static = ["sdl3-src?/build-static"]
 link-framework = ["sdl3-src?/build-framework"]
 
 # Use pkg-config to get link flags for SDL. Only used when not building from source.
-# The link-framework feature has no effect when using pkg-config
+# This has no effect if the link-framework feature is enabled.
 use-pkg-config = ["dep:pkg-config"]
 
 # Use vcpkg to get link flags for SDL. Only used when not building from source.
-# The link-framework and link-static features have no effect when using vcpkg
+# The link-static feature has no effect when using vcpkg.
+# This has no effect if the link-framework feature is enabled.
 use-vcpkg = ["dep:vcpkg"]
 
 # These are mutually exlusive; if more than one is enabled, the former in the list is used
