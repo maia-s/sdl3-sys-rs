@@ -27,6 +27,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f2cb6b2bb0b3b03d18eb4feb1b0fe49df04ece2e656bbfdd77ea62ca111a1ba9"
 
 [[package]]
+name = "pkg-config"
+version = "0.3.31"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "953ec861398dccce10c670dfeaf3ec4911ca479e9c02154b3a215178c5f566f2"
+
+[[package]]
 name = "proc-macro2"
 version = "1.0.86"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -61,8 +67,10 @@ dependencies = [
 name = "sdl3-sys"
 version = "0.0.10-dev+sdl3-preview-3.1.3-0-ge292d1f5a"
 dependencies = [
+ "pkg-config",
  "rpkg-config",
  "sdl3-src",
+ "vcpkg",
 ]
 
 [[package]]
@@ -93,3 +101,9 @@ name = "unicode-ident"
 version = "1.0.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e91b56cd4cadaeb79bbf1a5645f6b4f8dc5bde8834ad5894a8db35fda9efa1fe"
+
+[[package]]
+name = "vcpkg"
+version = "0.2.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "accd4ea62f7bb7a82fe23066fb0957d48ef677f6eeb8215f372f52e48bb32426"

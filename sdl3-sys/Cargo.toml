@@ -21,8 +21,16 @@ build-from-source = ["dep:sdl3-src", "dep:rpkg-config"]
 # Link SDL as a static library. The default is to link a shared/dynamic library.
 link-static = ["sdl3-src?/build-static"]
 
-# Link SDL as a mac framework. link-static overrides this.
+# Link SDL as a mac framework. The link-static feature has no effect if this is enabled.
 link-framework = ["sdl3-src?/build-framework"]
+
+# Use pkg-config to get link flags for SDL. Only used when not building from source.
+# The link-framework feature has no effect when using pkg-config
+use-pkg-config = ["dep:pkg-config"]
+
+# Use vcpkg to get link flags for SDL. Only used when not building from source.
+# The link-framework and link-static features have no effect when using vcpkg
+use-vcpkg = ["dep:vcpkg"]
 
 # These are mutually exlusive; if more than one is enabled, the former in the list is used
 # (so e.g. disabled overrides release). If none are selected, either release or debug will
@@ -41,6 +49,10 @@ nightly = []
 [package.metadata.docs.rs]
 all-features = true
 
+[build-dependencies.pkg-config]
+version = "0.3.0"
+optional = true
+
 [build-dependencies.rpkg-config]
 version = "0.1.0"
 optional = true
@@ -48,4 +60,8 @@ optional = true
 [build-dependencies.sdl3-src]
 version = "=0.0.1-dev-3.1.3-preview-0-ge292d1f5a"
 path = "../sdl3-src"
+optional = true
+
+[build-dependencies.vcpkg]
+version = "0.2.0"
 optional = true

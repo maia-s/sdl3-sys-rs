@@ -16,7 +16,7 @@ default = []
 # Build a static library. The default is to build a shared library.
 build-static = []
 
-# Build a mac framework. build-static overrides this.
+# Build a mac framework. This overrides build-static.
 build-framework = []
 
 [build-dependencies]
