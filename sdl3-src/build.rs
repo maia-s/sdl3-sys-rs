@@ -8,7 +8,7 @@ use std::{
 };
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let build_dir = if env::var("DOCS_RS").is_ok() {
+    let out_dir = if env::var("DOCS_RS").is_ok() {
         // don't build SDL on docs.rs
         std::path::PathBuf::new()
     } else {
@@ -33,7 +33,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         Path::new(&env::var_os("OUT_DIR").unwrap()).join("config.rs"),
     )?);
     // cargo requires utf-8 paths anyway so just output this as a str
-    writeln!(out, "pub const BUILD_DIR: &str = {:?};", build_dir)?;
+    writeln!(out, "pub const OUT_DIR: &str = {:?};", out_dir)?;
     out.flush()?;
 
     Ok(())

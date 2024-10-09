@@ -10,7 +10,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             use std::path::PathBuf;
 
             if let Ok(cfg) = PkgConfig::open(&PathBuf::from_iter([
-                sdl3_src::BUILD_DIR,
+                sdl3_src::OUT_DIR,
                 "lib",
                 "pkgconfig",
                 "sdl3.pc",
@@ -42,11 +42,11 @@ fn main() -> Result<(), Box<dyn Error>> {
                     }
                 }
             } else if cfg!(feature = "link-framework") {
-                println!("cargo::rustc-link-search=framework={}", sdl3_src::BUILD_DIR);
+                println!("cargo::rustc-link-search=framework={}", sdl3_src::OUT_DIR);
                 println!("cargo::rustc-link-lib=framework=SDL3");
             } else {
-                println!("cargo::rustc-link-search={}", sdl3_src::BUILD_DIR);
-                println!("cargo::rustc-link-search={}/lib", sdl3_src::BUILD_DIR);
+                println!("cargo::rustc-link-search={}", sdl3_src::OUT_DIR);
+                println!("cargo::rustc-link-search={}/lib", sdl3_src::OUT_DIR);
                 println!("cargo::rustc-link-lib=SDL3");
             }
         }
