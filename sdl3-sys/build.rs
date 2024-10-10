@@ -76,16 +76,16 @@ fn main() -> Result<(), Box<dyn Error>> {
                 let link_search = |name| {
                     println!("cargo::rustc-link-search=framework=/Library/Frameworks/SDL3.xcframework/{name}");
                 };
-                if cfg!(target_os = "macos") {
+                if env::var("CARGO_CFG_TARGET_OS").unwrap() == "macos" {
                     link_search("macos-arm64_x86_64");
-                } else if cfg!(target_os = "ios") {
-                    if cfg!(target_abi = "sim") {
+                } else if env::var("CARGO_CFG_TARGET_OS").unwrap() == "ios" {
+                    if env::var("CARGO_CFG_TARGET_ABI").unwrap() == "sim" {
                         link_search("ios-arm64_x86_64-simulator");
                     } else {
                         link_search("ios-arm64");
                     }
-                } else if cfg!(target_os = "tvos") {
-                    if cfg!(target_abi = "sim") {
+                } else if env::var("CARGO_CFG_TARGET_OS").unwrap() == "tvos" {
+                    if env::var("CARGO_CFG_TARGET_ABI").unwrap() == "sim" {
                         link_search("tvos-arm64_x86_64-simulator");
                     } else {
                         link_search("tvos-arm64");
