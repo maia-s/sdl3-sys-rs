@@ -20,10 +20,6 @@ fn main() -> Result<(), Box<dyn Error>> {
             config.define("SDL_FRAMEWORK", "ON");
         } else if build_static {
             config.define("SDL_STATIC", "ON");
-            config.define("SDL_SHARED", "OFF");
-        } else {
-            config.define("SDL_STATIC", "OFF");
-            config.define("SDL_SHARED", "ON");
         }
 
         config.build().canonicalize()?

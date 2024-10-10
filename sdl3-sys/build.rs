@@ -21,34 +21,42 @@ fn main() -> Result<(), Box<dyn Error>> {
                 "pkgconfig",
                 "sdl3.pc",
             ])) {
+                let handle = |link| match link {
+                    Link::SearchLib(path) => {
+                        println!("cargo::rustc-link-search=native={}", path.display())
+                    }
+
+                    Link::SearchFramework(path) => {
+                        println!("cargo::rustc-link-search=framework={}", path.display())
+                    }
+
+                    Link::Lib(path) => {
+                        if path == Path::new("SDL3") {
+                            println!("cargo::rustc-link-lib={link_kind}{}", path.display())
+                        } else {
+                            println!("cargo::rustc-link-lib={}", path.display())
+                        }
+                    }
+
+                    Link::Framework(path) => {
+                        println!("cargo::rustc-link-lib=framework={}", path.display())
+                    }
+
+                    Link::WeakFramework(path) => {
+                        // FIXME: rust doesn't support weak linking to frameworks for normal crates
+                        println!("cargo::rustc-link-lib=framework={}", path.display())
+                    }
+
+                    _ => (),
+                };
+
                 for link in cfg.libs()? {
-                    match link {
-                        Link::SearchLib(path) => {
-                            println!("cargo::rustc-link-search=native={}", path.display())
-                        }
+                    handle(link);
+                }
 
-                        Link::SearchFramework(path) => {
-                            println!("cargo::rustc-link-search=framework={}", path.display())
-                        }
-
-                        Link::Lib(path) => {
-                            if path == Path::new("SDL3") {
-                                println!("cargo::rustc-link-lib={link_kind}{}", path.display())
-                            } else {
-                                println!("cargo::rustc-link-lib={}", path.display())
-                            }
-                        }
-
-                        Link::Framework(path) => {
-                            println!("cargo::rustc-link-lib=framework={}", path.display())
-                        }
-
-                        Link::WeakFramework(path) => {
-                            // FIXME: rust doesn't support weak linking to frameworks for normal crates
-                            println!("cargo::rustc-link-lib=framework={}", path.display())
-                        }
-
-                        _ => (),
+                if cfg!(feature = "link-static") {
+                    for link in cfg.libs_private()? {
+                        handle(link);
                     }
                 }
             } else if cfg!(feature = "link-framework") {
