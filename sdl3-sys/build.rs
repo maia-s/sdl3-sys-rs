@@ -4,10 +4,16 @@ fn main() -> Result<(), Box<dyn Error>> {
     if env::var("DOCS_RS").is_ok() {
         // don't build/link SDL on docs.rs
     } else {
+        let link_kind = if cfg!(feature = "link-static") {
+            "static="
+        } else {
+            ""
+        };
+
         #[cfg(feature = "build-from-source")]
         {
             use rpkg_config::{Link, PkgConfig};
-            use std::path::PathBuf;
+            use std::path::{Path, PathBuf};
 
             if let Ok(cfg) = PkgConfig::open(&PathBuf::from_iter([
                 sdl3_src::OUT_DIR,
@@ -26,7 +32,11 @@ fn main() -> Result<(), Box<dyn Error>> {
                         }
 
                         Link::Lib(path) => {
-                            println!("cargo::rustc-link-lib={}", path.display())
+                            if path == Path::new("SDL3") {
+                                println!("cargo::rustc-link-lib={link_kind}{}", path.display())
+                            } else {
+                                println!("cargo::rustc-link-lib={}", path.display())
+                            }
                         }
 
                         Link::Framework(path) => {
@@ -47,7 +57,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             } else {
                 println!("cargo::rustc-link-search={}", sdl3_src::OUT_DIR);
                 println!("cargo::rustc-link-search={}/lib", sdl3_src::OUT_DIR);
-                println!("cargo::rustc-link-lib=SDL3");
+                println!("cargo::rustc-link-lib={link_kind}SDL3");
             }
         }
 
@@ -93,7 +103,11 @@ fn main() -> Result<(), Box<dyn Error>> {
                             println!("cargo::rustc-link-search=framework={}", path.display());
                         }
                         for s in lib.libs.iter() {
-                            println!("cargo::rustc-link-lib={s}");
+                            if s == "SDL3" {
+                                println!("cargo::rustc-link-lib={link_kind}{s}");
+                            } else {
+                                println!("cargo::rustc-link-lib={s}");
+                            }
                         }
                         for s in lib.frameworks.iter() {
                             println!("cargo::rustc-link-lib=framework={s}")
@@ -108,11 +122,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
                 if !handled {
                     // yolo
-                    if cfg!(feature = "link-static") {
-                        println!("cargo::rustc-link-lib=static=SDL3");
-                    } else {
-                        println!("cargo::rustc-link-lib=SDL3");
-                    }
+                    println!("cargo::rustc-link-lib={link_kind}SDL3");
                 }
             }
         }
