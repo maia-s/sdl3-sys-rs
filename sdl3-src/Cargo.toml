@@ -10,14 +10,5 @@ documentation = "https://docs.rs/sdl3-src"
 keywords = ["sdl"]
 categories = []
 
-[features]
-default = []
-
-# Build a static library. The default is to build a shared library.
-build-static = []
-
-# Build a mac framework. This overrides build-static.
-build-framework = []
-
-[build-dependencies]
+[dependencies]
 cmake = "0.1"

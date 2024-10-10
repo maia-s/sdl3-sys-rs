@@ -13,14 +13,17 @@ fn main() -> Result<(), Box<dyn Error>> {
         #[cfg(feature = "build-from-source")]
         {
             use rpkg_config::{Link, PkgConfig};
-            use std::path::{Path, PathBuf};
+            use sdl3_src::Kind;
+            use std::path::Path;
 
-            if let Ok(cfg) = PkgConfig::open(&PathBuf::from_iter([
-                sdl3_src::OUT_DIR,
-                "lib",
-                "pkgconfig",
-                "sdl3.pc",
-            ])) {
+            let out_dir = sdl3_src::build(if cfg!(feature = "link-framework") {
+                Kind::Framework
+            } else if cfg!(feature = "link-static") {
+                Kind::Static
+            } else {
+                Kind::Default
+            })?;
+            if let Ok(cfg) = PkgConfig::open(&out_dir.join("lib/pkgconfig/sdl3.pc")) {
                 let handle = |link| match link {
                     Link::SearchLib(path) => {
                         println!("cargo::rustc-link-search=native={}", path.display())
@@ -60,11 +63,11 @@ fn main() -> Result<(), Box<dyn Error>> {
                     }
                 }
             } else if cfg!(feature = "link-framework") {
-                println!("cargo::rustc-link-search=framework={}", sdl3_src::OUT_DIR);
+                println!("cargo::rustc-link-search=framework={}", out_dir.display());
                 println!("cargo::rustc-link-lib=framework=SDL3");
             } else {
-                println!("cargo::rustc-link-search={}", sdl3_src::OUT_DIR);
-                println!("cargo::rustc-link-search={}/lib", sdl3_src::OUT_DIR);
+                println!("cargo::rustc-link-search={}", out_dir.display());
+                println!("cargo::rustc-link-search={}/lib", out_dir.display());
                 println!("cargo::rustc-link-lib={link_kind}SDL3");
             }
         }
