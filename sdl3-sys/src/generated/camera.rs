@@ -249,7 +249,7 @@ extern "C" {
     ///
     /// You can call [`SDL_GetCameraFormat()`] to get the actual data format if passing
     /// a NULL spec here. You can see the exact specs a device can support without
-    /// conversion with [`SDL_GetCameraSupportedSpecs()`].
+    /// conversion with [`SDL_GetCameraSupportedFormats()`].
     ///
     /// SDL will not attempt to emulate framerate; it will try to set the hardware
     /// to the rate closest to the requested speed, but it won't attempt to limit
@@ -262,10 +262,11 @@ extern "C" {
     /// the camera, and they can choose Yes or No at that point. Until they do, the
     /// camera will not be usable. The app should either wait for an
     /// [`SDL_EVENT_CAMERA_DEVICE_APPROVED`] (or [`SDL_EVENT_CAMERA_DEVICE_DENIED`]) event,
-    /// or poll [`SDL_IsCameraApproved()`] occasionally until it returns non-zero. On
-    /// platforms that don't require explicit user approval (and perhaps in places
-    /// where the user previously permitted access), the approval event might come
-    /// immediately, but it might come seconds, minutes, or hours later!
+    /// or poll [`SDL_GetCameraPermissionState()`] occasionally until it returns
+    /// non-zero. On platforms that don't require explicit user approval (and
+    /// perhaps in places where the user previously permitted access), the approval
+    /// event might come immediately, but it might come seconds, minutes, or hours
+    /// later!
     ///
     /// - `instance_id`: the camera device instance ID.
     /// - `spec`: the desired format for data the device will provide. Can be
@@ -356,7 +357,8 @@ extern "C" {
     /// some platforms require, this will return false, but this isn't necessarily
     /// a fatal error; you should either wait for an
     /// [`SDL_EVENT_CAMERA_DEVICE_APPROVED`] (or [`SDL_EVENT_CAMERA_DEVICE_DENIED`]) event,
-    /// or poll [`SDL_IsCameraApproved()`] occasionally until it returns non-zero.
+    /// or poll [`SDL_GetCameraPermissionState()`] occasionally until it returns
+    /// non-zero.
     ///
     /// - `camera`: opened camera device.
     /// - `spec`: the [`SDL_CameraSpec`] to be initialized by this function.
@@ -400,8 +402,8 @@ extern "C" {
     /// If the system is waiting for the user to approve access to the camera, as
     /// some platforms require, this will return NULL (no frames available); you
     /// should either wait for an [`SDL_EVENT_CAMERA_DEVICE_APPROVED`] (or
-    /// [`SDL_EVENT_CAMERA_DEVICE_DENIED`]) event, or poll [`SDL_IsCameraApproved()`]
-    /// occasionally until it returns non-zero.
+    /// [`SDL_EVENT_CAMERA_DEVICE_DENIED`]) event, or poll
+    /// [`SDL_GetCameraPermissionState()`] occasionally until it returns non-zero.
     ///
     /// - `camera`: opened camera device.
     /// - `timestampNS`: a pointer filled in with the frame's timestamp, or 0 on

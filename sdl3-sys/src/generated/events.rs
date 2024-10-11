@@ -141,7 +141,7 @@ impl SDL_EventType {
     /// The window has left fullscreen mode
     pub const WINDOW_LEAVE_FULLSCREEN: Self = Self(536);
     /// The window with the associated ID is being or has been destroyed. If this message is being handled
-    /// in an event watcher, the window handle is still valid and can still be used to retrieve any userdata
+    /// in an event watcher, the window handle is still valid and can still be used to retrieve any properties
     /// associated with the window. Otherwise, the handle has already been destroyed and all resources
     /// associated with it are invalid
     pub const WINDOW_DESTROYED: Self = Self(537);
@@ -382,7 +382,7 @@ pub const SDL_EVENT_WINDOW_ENTER_FULLSCREEN: SDL_EventType = SDL_EventType::WIND
 /// The window has left fullscreen mode
 pub const SDL_EVENT_WINDOW_LEAVE_FULLSCREEN: SDL_EventType = SDL_EventType::WINDOW_LEAVE_FULLSCREEN;
 /// The window with the associated ID is being or has been destroyed. If this message is being handled
-/// in an event watcher, the window handle is still valid and can still be used to retrieve any userdata
+/// in an event watcher, the window handle is still valid and can still be used to retrieve any properties
 /// associated with the window. Otherwise, the handle has already been destroyed and all resources
 /// associated with it are invalid
 pub const SDL_EVENT_WINDOW_DESTROYED: SDL_EventType = SDL_EventType::WINDOW_DESTROYED;
@@ -927,7 +927,7 @@ pub struct SDL_JoyDeviceEvent {
     pub which: SDL_JoystickID,
 }
 
-/// Joysick battery level change event structure (event.jbattery.*)
+/// Joystick battery level change event structure (event.jbattery.*)
 ///
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
@@ -1312,6 +1312,12 @@ pub struct SDL_ClipboardEvent {
     pub reserved: Uint32,
     /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
+    /// are we owning the clipboard (internal update)
+    pub owner: ::core::primitive::bool,
+    /// number of mime types
+    pub n_mime_types: Sint32,
+    /// current mime types
+    pub mime_types: *mut *const ::core::ffi::c_char,
 }
 
 /// Sensor event structure (event.sensor.*)

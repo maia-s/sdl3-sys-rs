@@ -1098,8 +1098,10 @@ pub const SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED: &::core::ffi::CStr =
 ///
 /// The variable can be set to the following values:
 ///
-/// - "0": GameInput is not used. (default)
+/// - "0": GameInput is not used.
 /// - "1": GameInput is used.
+///
+/// The default is "1" on GDK platforms, and "0" otherwise.
 ///
 /// This hint should be set before SDL is initialized.
 ///
@@ -2009,7 +2011,7 @@ pub const SDL_HINT_LOGGING: &::core::ffi::CStr = c"SDL_LOGGING";
 ///   (default)
 /// - "1": The application may remain in the background when launched.
 ///
-/// This hint should be set before applicationDidFinishLaunching() is called.
+/// This hint needs to be set before [`SDL_Init()`].
 ///
 /// This hint is available since SDL 3.0.0.
 pub const SDL_HINT_MAC_BACKGROUND_APP: &::core::ffi::CStr = c"SDL_MAC_BACKGROUND_APP";
@@ -2049,6 +2051,19 @@ pub const SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK: &::core::ffi::CStr =
 ///
 /// This hint is available since SDL 3.0.0.
 pub const SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH: &::core::ffi::CStr = c"SDL_MAC_OPENGL_ASYNC_DISPATCH";
+
+/// A variable controlling whether [`SDL_EVENT_MOUSE_WHEEL`] event values will have
+/// momentum on macOS.
+///
+/// The variable can be set to the following values:
+///
+/// - "0": The mouse wheel events will have no momentum. (default)
+/// - "1": The mouse wheel events will have momentum.
+///
+/// This hint needs to be set before [`SDL_Init()`].
+///
+/// This hint is available since SDL 3.0.0.
+pub const SDL_HINT_MAC_SCROLL_MOMENTUM: &::core::ffi::CStr = c"SDL_MAC_SCROLL_MOMENTUM";
 
 /// Request [`SDL_AppIterate()`] be called at a specific rate.
 ///
@@ -2480,7 +2495,7 @@ pub const SDL_HINT_RENDER_GPU_LOW_POWER: &::core::ffi::CStr = c"SDL_RENDER_GPU_L
 ///
 /// If the application doesn't pick a specific renderer to use, this variable
 /// specifies the name of the preferred renderer. If the preferred renderer
-/// can't be initialized, the normal default renderer is used.
+/// can't be initialized, creating a renderer will fail.
 ///
 /// This variable is case insensitive and can be set to the following values:
 ///

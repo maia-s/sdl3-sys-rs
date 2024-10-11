@@ -298,7 +298,9 @@ extern "C" {
     ///
     /// Text input events are not received by default.
     ///
-    /// On some platforms using this function shows the screen keyboard.
+    /// On some platforms using this function shows the screen keyboard and/or
+    /// activates an IME, which can prevent some key press events from being passed
+    /// through.
     ///
     /// - `window`: the window to enable text input.
     /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
@@ -428,7 +430,9 @@ extern "C" {
     ///
     /// Text input events are not received by default.
     ///
-    /// On some platforms using this function shows the screen keyboard.
+    /// On some platforms using this function shows the screen keyboard and/or
+    /// activates an IME, which can prevent some key press events from being passed
+    /// through.
     ///
     /// These are the supported properties:
     ///

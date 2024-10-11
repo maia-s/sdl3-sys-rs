@@ -121,13 +121,13 @@ emit! {
 
 #[cfg(not(windows))]
 emit! {
-    #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
+    #[cfg(all(not(target_vendor = "apple"), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))]
     emit! {
         pub const SDL_PRIs64: &::core::ffi::CStr = c"ld";
 
     }
 
-    #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
+    #[cfg(not(all(not(target_vendor = "apple"), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
         pub const SDL_PRIs64: &::core::ffi::CStr = c"lld";
 
@@ -143,13 +143,13 @@ emit! {
 
 #[cfg(not(windows))]
 emit! {
-    #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
+    #[cfg(all(not(target_vendor = "apple"), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))]
     emit! {
         pub const SDL_PRIu64: &::core::ffi::CStr = c"lu";
 
     }
 
-    #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
+    #[cfg(not(all(not(target_vendor = "apple"), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
         pub const SDL_PRIu64: &::core::ffi::CStr = c"llu";
 
@@ -2494,13 +2494,14 @@ extern "C" {
 
 /// The Unicode REPLACEMENT CHARACTER codepoint.
 ///
-/// [`SDL_StepUTF8()`] reports this codepoint when it encounters a UTF-8 string
-/// with encoding errors.
+/// [`SDL_StepUTF8()`] and [`SDL_StepBackUTF8()`] report this codepoint when they
+/// encounter a UTF-8 string with encoding errors.
 ///
 /// This tends to render as something like a question mark in most places.
 ///
 /// This macro is available since SDL 3.0.0.
 ///
+/// See also [`SDL_StepBackUTF8`]<br>
 /// See also [`SDL_StepUTF8`]<br>
 pub const SDL_INVALID_UNICODE_CODEPOINT: ::core::primitive::i32 = 65533;
 
@@ -2549,6 +2550,40 @@ extern "C" {
     pub fn SDL_StepUTF8(
         pstr: *mut *const ::core::ffi::c_char,
         pslen: *mut ::core::primitive::usize,
+    ) -> Uint32;
+}
+
+extern "C" {
+    /// Decode a UTF-8 string in reverse, one Unicode codepoint at a time.
+    ///
+    /// This will go to the start of the previous Unicode codepoint in the string,
+    /// move `*pstr` to that location and return that codepoint.
+    ///
+    /// If the resulting codepoint is zero (already at the start of the string), it
+    /// will not advance `*pstr` at all.
+    ///
+    /// Generally this function is called in a loop until it returns zero,
+    /// adjusting its parameter each iteration.
+    ///
+    /// If an invalid UTF-8 sequence is encountered, this function returns
+    /// [`SDL_INVALID_UNICODE_CODEPOINT`].
+    ///
+    /// Several things can generate invalid UTF-8 sequences, including overlong
+    /// encodings, the use of UTF-16 surrogate values, and truncated data. Please
+    /// refer to
+    /// [RFC3629](https://www.ietf.org/rfc/rfc3629.txt)
+    /// for details.
+    ///
+    /// - `start`: a pointer to the beginning of the UTF-8 string.
+    /// - `pstr`: a pointer to a UTF-8 string pointer to be read and adjusted.
+    /// - Returns the previous Unicode codepoint in the string.
+    ///
+    /// Thread safety: It is safe to call this function from any thread.
+    ///
+    /// This function is available since SDL 3.1.4.
+    pub fn SDL_StepBackUTF8(
+        start: *const ::core::ffi::c_char,
+        pstr: *mut *const ::core::ffi::c_char,
     ) -> Uint32;
 }
 

@@ -109,13 +109,26 @@ extern "C" {
     /// Wait a specified number of nanoseconds before returning.
     ///
     /// This function waits a specified number of nanoseconds before returning. It
-    /// will attempt to wait as close to the requested time as possible, busy
-    /// waiting if necessary, but could return later due to OS scheduling.
+    /// waits at least the specified time, but possibly longer due to OS
+    /// scheduling.
     ///
     /// - `ns`: the number of nanoseconds to delay.
     ///
     /// This function is available since SDL 3.0.0.
     pub fn SDL_DelayNS(ns: Uint64);
+}
+
+extern "C" {
+    /// Wait a specified number of nanoseconds before returning.
+    ///
+    /// This function waits a specified number of nanoseconds before returning. It
+    /// will attempt to wait as close to the requested time as possible, busy
+    /// waiting if necessary, but could return later due to OS scheduling.
+    ///
+    /// - `ns`: the number of nanoseconds to delay.
+    ///
+    /// This function is available since SDL 3.1.4.
+    pub fn SDL_DelayPrecise(ns: Uint64);
 }
 
 /// Definition of the timer ID type.
