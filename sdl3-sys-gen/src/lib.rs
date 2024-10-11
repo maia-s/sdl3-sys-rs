@@ -129,13 +129,13 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
             (version.to_string(), version.to_string())
         }
         "preview" => {
-            let dep = format!("{version}-{revision_tag_base}-{revision_offset}");
+            let ver = format!("{version}-{revision_tag_base}-{revision_offset}");
             let ver = if revision_offset == "0" {
-                dep.clone()
+                ver
             } else {
-                format!("{dep}+{revision_hash}")
+                format!("{ver}-{revision_hash}")
             };
-            (ver, dep)
+            (ver.clone(), ver)
         }
         _ => return Err("unrecognized SDL tag".into()),
     };
