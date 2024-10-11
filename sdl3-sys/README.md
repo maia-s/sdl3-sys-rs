@@ -1,12 +1,14 @@
 # sdl3-sys (preview release)
 
-This is a preview release of the `sdl3-sys` SDL 3 bindings for Rust.
+This is a preview release of the `sdl3-sys` SDL 3 bindings for Rust!
 
-Please note that SDL 3 itself is still unstable and may get breaking changes
-at any point.
+SDL 3 is now ABI stable as of the 3.1.3 preview release, but `sdl3-sys` itself
+is still considered unstable. The generator that parses and generates these
+bindings is new and may have bugs. In particular, functions and constants
+generated from C defines with inferred types may need to have their types
+changed.
 
-Also, `sdl3-sys` itself is still unstable and incomplete. The generator that
-parses and generates these bindings is new and may have bugs.
+Please submit an issue at github if you have any issues or comments!
 
 Known issues:
 - Satellite libraries (mixer, image, ttf) aren't available yet
@@ -17,5 +19,3 @@ Known issues:
 - Some external types are generated as opaque structs; these could use a
   feature to use a definition from another crate (e.g. vulkan types)
 - Documentation could be formatted better
-
-That said, please try it out and let me know if you have any comments!
