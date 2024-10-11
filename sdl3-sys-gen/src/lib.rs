@@ -121,15 +121,16 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
 
     let (rest, revision_hash) = revision.rsplit_once('-').unwrap();
     let (rest, revision_offset) = rest.rsplit_once('-').unwrap();
-    let (revision_tag, version) = rest.rsplit_once('-').unwrap();
+    let (revision_tag_base, version) = rest.rsplit_once('-').unwrap();
+    let revision_tag = format!("{revision_tag_base}-{version}");
 
-    let (sdl3_src_ver, sdl3_src_dep) = match revision_tag {
+    let (sdl3_src_ver, sdl3_src_dep) = match revision_tag_base {
         "release" => {
             assert_eq!(revision_offset, "0", "off tag stable release");
             (version.to_string(), version.to_string())
         }
         "preview" => {
-            let dep = format!("{version}-{revision_tag}-{revision_offset}");
+            let dep = format!("{version}-{revision_tag_base}-{revision_offset}");
             let ver = if revision_offset == "0" {
                 dep.clone()
             } else {
@@ -142,9 +143,9 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
 
     // match what SDL's cmake script does
     let revision = if revision_offset == "0" {
-        format!("SDL-{revision_tag}-{version}")
+        format!("SDL-{revision_tag}")
     } else {
-        format!("SDL-{revision_tag}-{version}-{revision_offset}-{revision_hash}")
+        format!("SDL-{revision_tag}-{revision_offset}-{revision_hash}")
     };
 
     patch_file(
@@ -169,6 +170,10 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
             LinesPatch {
                 match_lines: &[&|s| s.starts_with("pub const REVISION_TAG:")],
                 apply: &|_| format!("pub const REVISION_TAG: &str = {revision_tag:?};\n"),
+            },
+            LinesPatch {
+                match_lines: &[&|s| s.starts_with("pub const REVISION_TAG_BASE:")],
+                apply: &|_| format!("pub const REVISION_TAG_BASE: &str = {revision_tag_base:?};\n"),
             },
             LinesPatch {
                 match_lines: &[&|s| s.starts_with("pub const REVISION_OFFSET:")],

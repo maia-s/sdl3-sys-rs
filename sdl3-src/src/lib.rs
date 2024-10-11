@@ -14,7 +14,10 @@ pub const REVISION: &str = "SDL-preview-3.1.3";
 pub const VERSION: &str = "3.1.3";
 
 /// Tag part of the revision
-pub const REVISION_TAG: &str = "preview";
+pub const REVISION_TAG: &str = "preview-3.1.3";
+
+/// Tag part of the revision without version
+pub const REVISION_TAG_BASE: &str = "preview";
 
 /// Offset from tag part of the revision
 pub const REVISION_OFFSET: &str = "0";
