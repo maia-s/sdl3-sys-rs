@@ -1,8 +1,5 @@
+#![no_std]
 #![doc = include_str!("../README.md")]
 
-use std::path::PathBuf;
-
-/// Get path of the SDL source code
-pub fn source_path() -> PathBuf {
-    PathBuf::from_iter([env!("CARGO_MANIFEST_DIR"), "SDL"])
-}
+/// Location of the SDL 3 source code
+pub const SOURCE_DIR: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/SDL");

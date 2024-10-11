@@ -16,7 +16,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             use rpkg_config::{Link, PkgConfig};
             use std::path::Path;
 
-            let mut config = Config::new(sdl3_src::source_path());
+            let mut config = Config::new(sdl3_src::SOURCE_DIR);
             if cfg!(feature = "link-framework") {
                 config.define("SDL_FRAMEWORK", "ON");
             } else if cfg!(feature = "link-static") {
