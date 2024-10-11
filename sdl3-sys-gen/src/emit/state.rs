@@ -220,6 +220,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__ARM_ARCH_7S__" = CfgExpr(always_false!("__ARM_ARCH_7S__")); // ?
             "__ARM_ARCH_8A__" = CfgExpr(always_false!("__ARM_ARCH_8A__")); // ?
             "__clang__" = CfgExpr(always_false!("__clang__"));
+            "__EMSCRIPTEN__" = CfgExpr(r#"target_os = "emscripten""#);
             "__GNUC__" = CfgExpr(always_false!("__GNUC__"));
             "__i386__" = CfgExpr(r#"target_arch = "x86""#);
             "__ia64" = CfgExpr(always_false!("__ia64"));

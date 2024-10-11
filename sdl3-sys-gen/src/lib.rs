@@ -120,9 +120,8 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
     };
 
     let (rest, revision_hash) = revision.rsplit_once('-').unwrap();
-    let (rest, revision_offset) = rest.rsplit_once('-').unwrap();
-    let (revision_tag_base, version) = rest.rsplit_once('-').unwrap();
-    let revision_tag = format!("{revision_tag_base}-{version}");
+    let (revision_tag, revision_offset) = rest.rsplit_once('-').unwrap();
+    let (revision_tag_base, version) = revision_tag.rsplit_once('-').unwrap();
 
     let (sdl3_src_ver, sdl3_src_dep) = match revision_tag_base {
         "release" => {
@@ -385,7 +384,7 @@ impl Gen {
                     main_impl.push("SDL_main_impl.h");
                     LinesPatch {
                         match_lines: &[
-                            &|s| s.trim_ascii() == "#if defined( UNICODE ) && UNICODE",
+                            &|s| s.trim_ascii().starts_with("#if defined"),
                             &|s| s.trim_ascii().starts_with("int WINAPI wWinMain"),
                             &|s| s.trim_ascii().starts_with("#else"),
                             &|s| s.trim_ascii().starts_with("int WINAPI WinMain"),
