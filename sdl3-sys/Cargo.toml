@@ -16,7 +16,7 @@ links = "SDL3"
 default = []
 
 # Build and link SDL 3 from source instead of linking a pre-existing library
-build-from-source = ["dep:sdl3-src", "dep:rpkg-config"]
+build-from-source = ["dep:cmake", "dep:rpkg-config", "dep:sdl3-src"]
 
 # Link SDL as a static library. The default is to link a shared/dynamic library.
 link-static = []
@@ -49,6 +49,10 @@ nightly = []
 
 [package.metadata.docs.rs]
 all-features = true
+
+[build-dependencies.cmake]
+version = "0.1.0"
+optional = true
 
 [build-dependencies.pkg-config]
 version = "0.3.0"

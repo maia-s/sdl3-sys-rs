@@ -12,17 +12,18 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         #[cfg(feature = "build-from-source")]
         {
+            use cmake::Config;
             use rpkg_config::{Link, PkgConfig};
-            use sdl3_src::Kind;
             use std::path::Path;
 
-            let out_dir = sdl3_src::build(if cfg!(feature = "link-framework") {
-                Kind::Framework
+            let mut config = Config::new(sdl3_src::source_path());
+            if cfg!(feature = "link-framework") {
+                config.define("SDL_FRAMEWORK", "ON");
             } else if cfg!(feature = "link-static") {
-                Kind::Static
-            } else {
-                Kind::Default
-            })?;
+                config.define("SDL_STATIC", "ON");
+            }
+            let out_dir = config.build().canonicalize()?;
+
             if let Ok(cfg) = PkgConfig::open(&out_dir.join("lib/pkgconfig/sdl3.pc")) {
                 let handle = |link| match link {
                     Link::SearchLib(path) => {
