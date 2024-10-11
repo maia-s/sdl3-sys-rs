@@ -18,6 +18,9 @@ default = []
 # Build and link SDL 3 from source instead of linking a pre-existing library
 build-from-source = ["dep:cmake", "dep:rpkg-config", "dep:sdl3-src"]
 
+# Build and link a static SDL library from source
+build-from-source-static = ["build-from-source", "link-static"]
+
 # Link SDL as a static library. The default is to link a shared/dynamic library.
 link-static = []
 
