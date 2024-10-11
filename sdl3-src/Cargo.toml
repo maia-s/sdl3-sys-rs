@@ -1,11 +1,11 @@
 [package]
 name = "sdl3-src"
-version = "0.0.1-dev-3.1.3-preview-0-ge292d1f5a"
+version = "3.1.3-preview-0"
 edition = "2021"
-authors = ["Maia S. R.", "SDL developers"]
+authors = ["SDL developers"]
 license = "Zlib"
-description = "Crate to build the SDL 3 library from source (use via sdl3-sys)"
+description = "Source code of the SDL 3 library"
 repository = "https://github.com/maia-s/sdl3-sys-rs"
 documentation = "https://docs.rs/sdl3-src"
 keywords = ["sdl"]
-categories = []
+categories = ["no-std"]

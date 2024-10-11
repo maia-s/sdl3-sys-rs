@@ -93,23 +93,13 @@ impl LinesPatch<'_> {
 }
 
 pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<(), Error> {
-    let mut sdl_path = source_crate_path.to_path_buf();
-    sdl_path.push("SDL");
-
-    let mut showrev_path = sdl_path.clone();
-    showrev_path.push("build-scripts/showrev.sh");
-
-    let mut headers_path = sdl_path.clone();
-    headers_path.push("include/SDL3");
-
-    let mut source_cargo_toml_path = source_crate_path.to_path_buf();
-    source_cargo_toml_path.push("Cargo.toml");
-
-    let mut target_cargo_toml_path = target_crate_path.to_path_buf();
-    target_cargo_toml_path.push("Cargo.toml");
-
-    let mut output_path = target_crate_path.to_path_buf();
-    output_path.push("src/generated");
+    let sdl_path = source_crate_path.join("SDL");
+    let showrev_path = sdl_path.join("build-scripts/showrev.sh");
+    let headers_path = sdl_path.join("include/SDL3");
+    let source_cargo_toml_path = source_crate_path.join("Cargo.toml");
+    let source_lib_rs_path = source_crate_path.join("src/lib.rs");
+    let target_cargo_toml_path = target_crate_path.join("Cargo.toml");
+    let output_path = target_crate_path.join("src/generated");
 
     let revision = if let Ok(output) = Command::new(showrev_path).output() {
         output
@@ -134,18 +124,17 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
             )
         }
         let (sdl_ver, sdl_dep) = if let Some(ver) = revision.strip_prefix("release-") {
-            let (ver, offset, _, dep) = vernum(ver);
+            let (ver, offset, _hash, dep) = vernum(ver);
             assert!(offset == "0", "off tag stable release");
             (ver.to_string(), dep.to_string())
-        } else if let Some(ver) = revision.strip_prefix("prerelease-") {
-            let (ver, offset, hash, _) = vernum(ver);
-            let ver = format!("0.0.1-dev-{ver}-prerelease-{offset}-{hash}");
-            let dep = format!("={ver}");
-            (ver, dep)
         } else if let Some(ver) = revision.strip_prefix("preview-") {
             let (ver, offset, hash, _) = vernum(ver);
-            let ver = format!("0.0.1-dev-{ver}-preview-{offset}-{hash}");
-            let dep = format!("={ver}");
+            let dep = format!("{ver}-preview-{offset}");
+            let ver = if offset == "0" {
+                dep.clone()
+            } else {
+                format!("{dep}+{hash}")
+            };
             (ver, dep)
         } else {
             panic!("can't parse version");
@@ -158,6 +147,14 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
                 apply: &|_| format!("version = \"{sdl_ver}\"\n"),
             }
             .patch(&fs::read_to_string(&source_cargo_toml_path)?),
+        )?;
+        fs::write(
+            &source_lib_rs_path,
+            LinesPatch {
+                match_lines: &[&|s| s.starts_with("pub const REVISION:")],
+                apply: &|_| format!("pub const REVISION: &str = {revision:?};\n"),
+            }
+            .patch(&fs::read_to_string(&source_lib_rs_path)?),
         )?;
 
         let patched = LinesPatch {
