@@ -92,6 +92,14 @@ impl LinesPatch<'_> {
     }
 }
 
+fn patch_file(path: &Path, patches: &[LinesPatch]) -> io::Result<()> {
+    let mut contents = fs::read_to_string(path)?;
+    for patch in patches {
+        contents = patch.patch(&contents);
+    }
+    fs::write(path, contents)
+}
+
 pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<(), Error> {
     let sdl_path = source_crate_path.join("SDL");
     let showrev_path = sdl_path.join("build-scripts/showrev.sh");
@@ -101,84 +109,101 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
     let target_cargo_toml_path = target_crate_path.join("Cargo.toml");
     let output_path = target_crate_path.join("src/generated");
 
-    let revision = if let Ok(output) = Command::new(showrev_path).output() {
+    let Some(revision) = ({
+        let output = Command::new(showrev_path).output()?;
         output
             .status
             .success()
             .then(|| String::from_utf8_lossy(output.stdout.trim_ascii()).into_owned())
-    } else {
-        None
+    }) else {
+        return Err("couldn't get SDL revision".into());
     };
 
-    if let Some(revision) = &revision {
-        fn vernum(s: &str) -> (&str, &str, &str, &str) {
-            let (major, rest) = s.split_once('.').unwrap();
-            let (minor, rest) = rest.split_once('.').unwrap();
-            let (micro, rest) = rest.split_once('-').unwrap();
-            let (offset, hash) = rest.split_once('-').unwrap();
-            (
-                &s[..major.len() + minor.len() + micro.len() + 2],
-                offset,
-                hash,
-                &s[..major.len() + minor.len() + 1],
-            )
+    let (rest, revision_hash) = revision.rsplit_once('-').unwrap();
+    let (rest, revision_offset) = rest.rsplit_once('-').unwrap();
+    let (revision_tag, version) = rest.rsplit_once('-').unwrap();
+
+    let (sdl3_src_ver, sdl3_src_dep) = match revision_tag {
+        "release" => {
+            assert_eq!(revision_offset, "0", "off tag stable release");
+            (version.to_string(), version.to_string())
         }
-        let (sdl_ver, sdl_dep) = if let Some(ver) = revision.strip_prefix("release-") {
-            let (ver, offset, _hash, dep) = vernum(ver);
-            assert!(offset == "0", "off tag stable release");
-            (ver.to_string(), dep.to_string())
-        } else if let Some(ver) = revision.strip_prefix("preview-") {
-            let (ver, offset, hash, _) = vernum(ver);
-            let dep = format!("{ver}-preview-{offset}");
-            let ver = if offset == "0" {
+        "preview" => {
+            let dep = format!("{version}-{revision_tag}-{revision_offset}");
+            let ver = if revision_offset == "0" {
                 dep.clone()
             } else {
-                format!("{dep}+{hash}")
+                format!("{dep}+{revision_hash}")
             };
             (ver, dep)
-        } else {
-            panic!("can't parse version");
-        };
+        }
+        _ => return Err("unrecognized SDL tag".into()),
+    };
 
-        fs::write(
-            &source_cargo_toml_path,
-            LinesPatch {
-                match_lines: &[&|s| s.starts_with("version =")],
-                apply: &|_| format!("version = \"{sdl_ver}\"\n"),
-            }
-            .patch(&fs::read_to_string(&source_cargo_toml_path)?),
-        )?;
-        fs::write(
-            &source_lib_rs_path,
+    // match what SDL's cmake script does
+    let revision = if revision_offset == "0" {
+        format!("SDL-{revision_tag}-{version}")
+    } else {
+        format!("SDL-{revision_tag}-{version}-{revision_offset}-{revision_hash}")
+    };
+
+    patch_file(
+        &source_cargo_toml_path,
+        &[LinesPatch {
+            match_lines: &[&|s| s.starts_with("version =")],
+            apply: &|_| format!("version = \"{sdl3_src_ver}\"\n"),
+        }],
+    )?;
+
+    patch_file(
+        &source_lib_rs_path,
+        &[
             LinesPatch {
                 match_lines: &[&|s| s.starts_with("pub const REVISION:")],
                 apply: &|_| format!("pub const REVISION: &str = {revision:?};\n"),
-            }
-            .patch(&fs::read_to_string(&source_lib_rs_path)?),
-        )?;
-
-        let patched = LinesPatch {
-            match_lines: &[&|s| s.starts_with("version =") && s.contains("+sdl3")],
-            apply: &|lines| {
-                let line = &lines[0];
-                let Some((revision_pos, _)) = line.char_indices().rev().find(|(_, c)| *c == '+')
-                else {
-                    unreachable!()
-                };
-                let pfx = &line[..=revision_pos];
-                format!("{pfx}sdl3-{revision}\"\n")
             },
-        }
-        .patch(&fs::read_to_string(&target_cargo_toml_path)?);
-        let patched = LinesPatch {
-            match_lines: &[&|s| s == "[build-dependencies.sdl3-src]", &|s| {
-                s.starts_with("version =")
-            }],
-            apply: &|lines| format!("{}version = \"{sdl_dep}\"\n", lines[0]),
-        }
-        .patch(&patched);
-        fs::write(&target_cargo_toml_path, patched)?;
-    }
+            LinesPatch {
+                match_lines: &[&|s| s.starts_with("pub const VERSION:")],
+                apply: &|_| format!("pub const VERSION: &str = {version:?};\n"),
+            },
+            LinesPatch {
+                match_lines: &[&|s| s.starts_with("pub const REVISION_TAG:")],
+                apply: &|_| format!("pub const REVISION_TAG: &str = {revision_tag:?};\n"),
+            },
+            LinesPatch {
+                match_lines: &[&|s| s.starts_with("pub const REVISION_OFFSET:")],
+                apply: &|_| format!("pub const REVISION_OFFSET: &str = {revision_offset:?};\n"),
+            },
+            LinesPatch {
+                match_lines: &[&|s| s.starts_with("pub const REVISION_HASH:")],
+                apply: &|_| format!("pub const REVISION_HASH: &str = {revision_hash:?};\n"),
+            },
+        ],
+    )?;
+
+    patch_file(
+        &target_cargo_toml_path,
+        &[
+            LinesPatch {
+                match_lines: &[&|s| s.starts_with("version =") && s.contains("+SDL")],
+                apply: &|lines| {
+                    let line = &lines[0];
+                    let Some((revision_pos, _)) =
+                        line.char_indices().rev().find(|(_, c)| *c == '+')
+                    else {
+                        unreachable!()
+                    };
+                    format!("{}{revision}\"\n", &line[..=revision_pos])
+                },
+            },
+            LinesPatch {
+                match_lines: &[&|s| s == "[build-dependencies.sdl3-src]", &|s| {
+                    s.starts_with("version =")
+                }],
+                apply: &|lines| format!("{}version = \"{sdl3_src_dep}\"\n", lines[0]),
+            },
+        ],
+    )?;
 
     let mut gen = Gen::new(headers_path.clone(), output_path.to_owned(), revision)?;
 
@@ -225,7 +250,7 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
 
 #[derive(Default)]
 pub struct Gen {
-    revision: Option<String>,
+    revision: String,
     parsed: BTreeMap<String, Items>,
     emitted: RefCell<BTreeMap<String, InnerEmitContext>>,
     skipped: RefCell<HashSet<String>>,
@@ -237,7 +262,7 @@ impl Gen {
     pub fn new(
         headers_path: PathBuf,
         output_path: PathBuf,
-        revision: Option<String>,
+        revision: String,
     ) -> Result<Self, Error> {
         DirBuilder::new().recursive(true).create(&output_path)?;
         Ok(Self {
@@ -289,13 +314,11 @@ impl Gen {
 
             let mut output = String::new();
             let mut ctx = EmitContext::new(module, &mut output, self)?;
-            if let Some(revision) = &self.revision {
-                ctx.preproc_state().borrow_mut().define(
-                    Ident::new_inline("SDL_VENDOR_INFO"),
-                    None,
-                    DefineValue::parse_expr(&format!("{revision:?}"))?,
-                )?;
-            }
+            ctx.preproc_state().borrow_mut().define(
+                Ident::new_inline("SDL_VENDOR_INFO"),
+                None,
+                DefineValue::parse_expr(&format!("{:?}", self.revision))?,
+            )?;
             self.parsed[module].emit(&mut ctx)?;
             let emitted = ctx.into_inner();
 
@@ -400,9 +423,10 @@ impl Write for StringLog {
 
 #[derive(Debug)]
 pub enum Error {
-    IoError(io::Error),
-    ParseError(ParseErr),
-    EmitError(EmitErr),
+    Io(io::Error),
+    Parse(ParseErr),
+    Emit(EmitErr),
+    Other(&'static str),
 }
 
 impl error::Error for Error {}
@@ -410,43 +434,50 @@ impl error::Error for Error {}
 impl Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Error::IoError(e) => Display::fmt(e, f),
-            Error::ParseError(e) => Display::fmt(e, f),
-            Error::EmitError(e) => Display::fmt(e, f),
+            Error::Io(e) => Display::fmt(e, f),
+            Error::Parse(e) => Display::fmt(e, f),
+            Error::Emit(e) => Display::fmt(e, f),
+            Error::Other(e) => f.write_str(e),
         }
     }
 }
 
 impl From<io::Error> for Error {
     fn from(value: io::Error) -> Self {
-        Self::IoError(value)
+        Self::Io(value)
     }
 }
 
 impl From<fmt::Error> for Error {
     fn from(value: fmt::Error) -> Self {
-        Self::EmitError(EmitErr::Fmt(value))
+        Self::Emit(EmitErr::Fmt(value))
     }
 }
 
 impl From<ParseErr> for Error {
     fn from(value: ParseErr) -> Self {
-        Self::ParseError(value)
+        Self::Parse(value)
     }
 }
 
 impl From<EmitErr> for Error {
     fn from(value: EmitErr) -> Self {
-        Self::EmitError(value)
+        Self::Emit(value)
+    }
+}
+
+impl From<&'static str> for Error {
+    fn from(value: &'static str) -> Self {
+        Self::Other(value)
     }
 }
 
 impl From<Error> for EmitErr {
     fn from(value: Error) -> Self {
         match value {
-            Error::IoError(e) => Self::Io(e),
-            Error::EmitError(e) => e,
-            Error::ParseError(_) => unreachable!(),
+            Error::Io(e) => Self::Io(e),
+            Error::Emit(e) => e,
+            Error::Parse(_) | Error::Other(_) => unreachable!(),
         }
     }
 }

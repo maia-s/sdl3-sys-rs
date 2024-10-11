@@ -17,6 +17,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             use std::path::Path;
 
             let mut config = Config::new(sdl3_src::SOURCE_DIR);
+            config.define("SDL_REVISION", sdl3_src::REVISION);
             if cfg!(feature = "link-framework") {
                 config.define("SDL_FRAMEWORK", "ON");
             } else if cfg!(feature = "link-static") {
