@@ -52,9 +52,9 @@ dependencies = [
 
 [[package]]
 name = "rpkg-config"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5e72326b5e7f9fa81a1255b26e18da627c8c4927af27cf1378689107d1cb7b79"
+checksum = "03e8af507d334973239a2cc466ee08c48b38df1c22fab7d2c1fa80c074799df8"
 
 [[package]]
 name = "sdl3-src"

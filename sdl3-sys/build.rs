@@ -23,7 +23,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             } else if cfg!(feature = "link-static") {
                 config.define("SDL_STATIC", "ON");
             }
-            let out_dir = config.build().canonicalize()?;
+            let out_dir = config.build();
 
             if let Ok(cfg) = PkgConfig::open(&out_dir.join("lib/pkgconfig/sdl3.pc")) {
                 let handle = |link| match link {
@@ -37,7 +37,13 @@ fn main() -> Result<(), Box<dyn Error>> {
 
                     Link::Lib(path) => {
                         if path == Path::new("SDL3") {
-                            println!("cargo::rustc-link-lib={link_kind}{}", path.display())
+                            if cfg!(feature = "link-static")
+                                && env::var("CARGO_CFG_TARGET_ENV").unwrap() == "msvc"
+                            {
+                                println!("cargo::rustc-link-lib=static=SDL3-static")
+                            } else {
+                                println!("cargo::rustc-link-lib={link_kind}{}", path.display())
+                            }
                         } else {
                             println!("cargo::rustc-link-lib={}", path.display())
                         }

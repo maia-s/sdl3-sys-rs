@@ -233,11 +233,7 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
             {
                 p.to_string_lossy().to_string()
             } else {
-                display_path
-                    .canonicalize()
-                    .unwrap()
-                    .to_string_lossy()
-                    .to_string()
+                display_path.to_string_lossy().to_string()
             };
             gen.parse(module, display_path, buf)?;
         }
