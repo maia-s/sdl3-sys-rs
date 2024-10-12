@@ -264,3 +264,6 @@ extern "C" {
 pub struct VkAllocationCallbacks {
     _opaque: [::core::primitive::u8; 0],
 }
+
+#[cfg(doc)]
+use crate::everything::*;

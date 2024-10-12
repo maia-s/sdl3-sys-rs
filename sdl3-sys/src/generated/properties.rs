@@ -691,3 +691,6 @@ extern "C" {
     /// - [`SDL_CreateProperties`]
     pub fn SDL_DestroyProperties(props: SDL_PropertiesID);
 }
+
+#[cfg(doc)]
+use crate::everything::*;

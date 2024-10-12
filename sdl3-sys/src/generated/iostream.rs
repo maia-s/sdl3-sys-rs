@@ -1366,3 +1366,6 @@ extern "C" {
 pub struct SDL_IOStream {
     _opaque: [::core::primitive::u8; 0],
 }
+
+#[cfg(doc)]
+use crate::everything::*;

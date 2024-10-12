@@ -1885,3 +1885,6 @@ extern "C" {
         a: ::core::ffi::c_float,
     ) -> ::core::primitive::bool;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

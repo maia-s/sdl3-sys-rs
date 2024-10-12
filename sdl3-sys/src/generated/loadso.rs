@@ -116,3 +116,6 @@ extern "C" {
 pub struct SDL_SharedObject {
     _opaque: [::core::primitive::u8; 0],
 }
+
+#[cfg(doc)]
+use crate::everything::*;

@@ -5303,3 +5303,6 @@ pub struct SDL_GPUTexture {
 pub struct SDL_GPUTransferBuffer {
     _opaque: [::core::primitive::u8; 0],
 }
+
+#[cfg(doc)]
+use crate::everything::*;

@@ -91,3 +91,6 @@ extern "C" {
         percent: *mut ::core::ffi::c_int,
     ) -> SDL_PowerState;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

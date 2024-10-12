@@ -22,3 +22,6 @@ emit! {
     pub const SDL_REVISION: &::core::ffi::CStr = c"SDL-preview-3.1.3-93-ge31c68427";
 
 }
+
+#[cfg(doc)]
+use crate::everything::*;

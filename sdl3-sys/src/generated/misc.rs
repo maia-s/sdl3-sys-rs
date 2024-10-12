@@ -37,3 +37,6 @@ extern "C" {
     /// This function is available since SDL 3.0.0.
     pub fn SDL_OpenURL(url: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

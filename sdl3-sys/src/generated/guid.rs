@@ -65,3 +65,6 @@ extern "C" {
     /// - [`SDL_GUIDToString`]
     pub fn SDL_StringToGUID(pchGUID: *const ::core::ffi::c_char) -> SDL_GUID;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

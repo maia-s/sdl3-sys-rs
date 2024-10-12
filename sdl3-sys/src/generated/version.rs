@@ -159,3 +159,6 @@ extern "C" {
     /// - [`SDL_GetVersion`]
     pub fn SDL_GetRevision() -> *const ::core::ffi::c_char;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

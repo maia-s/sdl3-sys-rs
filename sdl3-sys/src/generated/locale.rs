@@ -71,3 +71,6 @@ extern "C" {
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetPreferredLocales(count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Locale;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

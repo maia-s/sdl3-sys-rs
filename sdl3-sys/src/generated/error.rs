@@ -122,3 +122,6 @@ extern "C" {
 pub unsafe fn SDL_Unsupported() -> ::core::primitive::bool {
     unsafe { SDL_SetError(c"That operation is not supported".as_ptr()) }
 }
+
+#[cfg(doc)]
+use crate::everything::*;

@@ -2234,3 +2234,6 @@ extern "C" {
     /// - [`SDL_WaitEventTimeout`]
     pub fn SDL_GetWindowFromEvent(event: *const SDL_Event) -> *mut SDL_Window;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

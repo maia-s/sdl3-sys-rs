@@ -3968,3 +3968,6 @@ pub struct SDL_GLContextState {
 pub struct SDL_Window {
     _opaque: [::core::primitive::u8; 0],
 }
+
+#[cfg(doc)]
+use crate::everything::*;

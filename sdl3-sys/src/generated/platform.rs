@@ -20,3 +20,6 @@ extern "C" {
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetPlatform() -> *const ::core::ffi::c_char;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

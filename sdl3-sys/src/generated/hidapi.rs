@@ -656,3 +656,6 @@ extern "C" {
 pub struct SDL_hid_device {
     _opaque: [::core::primitive::u8; 0],
 }
+
+#[cfg(doc)]
+use crate::everything::*;

@@ -310,3 +310,6 @@ extern "C" {
     /// - [`SDL_aligned_free`]
     pub fn SDL_GetSIMDAlignment() -> ::core::primitive::usize;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

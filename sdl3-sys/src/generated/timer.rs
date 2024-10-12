@@ -329,3 +329,6 @@ extern "C" {
     /// - [`SDL_AddTimer`]
     pub fn SDL_RemoveTimer(id: SDL_TimerID) -> ::core::primitive::bool;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

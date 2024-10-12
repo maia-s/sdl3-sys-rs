@@ -262,3 +262,6 @@ extern "C" {
         alphaOperation: SDL_BlendOperation,
     ) -> SDL_BlendMode;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

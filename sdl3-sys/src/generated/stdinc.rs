@@ -5133,3 +5133,6 @@ pub struct SDL_Environment {
 pub struct SDL_iconv_data_t {
     _opaque: [::core::primitive::u8; 0],
 }
+
+#[cfg(doc)]
+use crate::everything::*;

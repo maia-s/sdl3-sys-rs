@@ -1031,3 +1031,6 @@ pub const SDL_SCANCODE_ENDCALL: SDL_Scancode = SDL_Scancode::ENDCALL;
 pub const SDL_SCANCODE_RESERVED: SDL_Scancode = SDL_Scancode::RESERVED;
 /// not a key, just marks the number of scancodes for array bounds
 pub const SDL_SCANCODE_COUNT: SDL_Scancode = SDL_Scancode::COUNT;
+
+#[cfg(doc)]
+use crate::everything::*;

@@ -579,3 +579,6 @@ pub const SDL_KMOD_ALT: ::core::primitive::u32 = (256_u32 | 512_u32);
 
 /// Any GUI key is down.
 pub const SDL_KMOD_GUI: ::core::primitive::u32 = (1024_u32 | 2048_u32);
+
+#[cfg(doc)]
+use crate::everything::*;

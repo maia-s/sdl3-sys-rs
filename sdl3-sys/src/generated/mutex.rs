@@ -895,3 +895,6 @@ pub struct SDL_RWLock {
 pub struct SDL_Semaphore {
     _opaque: [::core::primitive::u8; 0],
 }
+
+#[cfg(doc)]
+use crate::everything::*;

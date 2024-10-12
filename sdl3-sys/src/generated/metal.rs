@@ -61,3 +61,6 @@ extern "C" {
     /// This function is available since SDL 3.0.0.
     pub fn SDL_Metal_GetLayer(view: SDL_MetalView) -> *mut ::core::ffi::c_void;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

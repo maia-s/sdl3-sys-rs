@@ -441,3 +441,6 @@ emit! {
     }
 
 }
+
+#[cfg(doc)]
+use crate::everything::*;

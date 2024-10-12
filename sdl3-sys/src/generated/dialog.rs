@@ -262,3 +262,6 @@ extern "C" {
         allow_many: ::core::primitive::bool,
     );
 }
+
+#[cfg(doc)]
+use crate::everything::*;

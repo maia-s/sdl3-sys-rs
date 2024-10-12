@@ -280,3 +280,6 @@ extern "C" {
         num_mime_types: *mut ::core::primitive::usize,
     ) -> *mut *mut ::core::ffi::c_char;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

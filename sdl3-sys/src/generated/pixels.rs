@@ -1732,3 +1732,6 @@ extern "C" {
         a: *mut Uint8,
     );
 }
+
+#[cfg(doc)]
+use crate::everything::*;

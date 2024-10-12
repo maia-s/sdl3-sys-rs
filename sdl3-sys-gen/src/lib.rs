@@ -321,10 +321,13 @@ impl Gen {
             )?;
             self.parsed[module].emit(&mut ctx)?;
             let emitted = ctx.into_inner();
-
-            complete_guard.0 = true;
+            writeln!(output)?;
+            writeln!(output, "#[cfg(doc)]")?;
+            writeln!(output, "use crate::everything::*;")?;
 
             format_and_write(output, &path)?;
+
+            complete_guard.0 = true;
 
             self.emitted
                 .borrow_mut()

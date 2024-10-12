@@ -639,3 +639,6 @@ extern "C" {
     /// - [`SDL_SetAtomicPointer`]
     pub fn SDL_GetAtomicPointer(a: *mut *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

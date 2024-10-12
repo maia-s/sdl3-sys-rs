@@ -285,3 +285,6 @@ extern "C" {
         day: ::core::ffi::c_int,
     ) -> ::core::ffi::c_int;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

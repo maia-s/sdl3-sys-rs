@@ -121,3 +121,6 @@ pub const SDL_PEN_AXIS_SLIDER: SDL_PenAxis = SDL_PenAxis::SLIDER;
 pub const SDL_PEN_AXIS_TANGENTIAL_PRESSURE: SDL_PenAxis = SDL_PenAxis::TANGENTIAL_PRESSURE;
 /// Total known pen axis types in this version of SDL. This number may grow in future releases!
 pub const SDL_PEN_AXIS_COUNT: SDL_PenAxis = SDL_PenAxis::COUNT;
+
+#[cfg(doc)]
+use crate::everything::*;

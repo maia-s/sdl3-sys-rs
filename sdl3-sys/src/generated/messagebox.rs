@@ -236,3 +236,6 @@ extern "C" {
         window: *mut SDL_Window,
     ) -> ::core::primitive::bool;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

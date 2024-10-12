@@ -135,3 +135,6 @@ extern "C" {
         count: *mut ::core::ffi::c_int,
     ) -> *mut *mut SDL_Finger;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

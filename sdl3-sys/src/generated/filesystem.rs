@@ -574,3 +574,6 @@ extern "C" {
         count: *mut ::core::ffi::c_int,
     ) -> *mut *mut ::core::ffi::c_char;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

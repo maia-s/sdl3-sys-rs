@@ -439,3 +439,6 @@ extern "C" {
         name: *const ::core::ffi::c_char,
     ) -> *const ::core::ffi::c_char;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

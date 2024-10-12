@@ -627,3 +627,6 @@ extern "C" {
         userdata: *mut ::core::ffi::c_void,
     );
 }
+
+#[cfg(doc)]
+use crate::everything::*;

@@ -1530,3 +1530,6 @@ extern "C" {
 pub struct SDL_Haptic {
     _opaque: [::core::primitive::u8; 0],
 }
+
+#[cfg(doc)]
+use crate::everything::*;

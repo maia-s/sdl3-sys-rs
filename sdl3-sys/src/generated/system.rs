@@ -792,3 +792,6 @@ emit! {
 pub struct _XEvent {
     _opaque: [::core::primitive::u8; 0],
 }
+
+#[cfg(doc)]
+use crate::everything::*;

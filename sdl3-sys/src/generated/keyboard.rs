@@ -707,3 +707,6 @@ extern "C" {
     /// - [`SDL_HasScreenKeyboardSupport`]
     pub fn SDL_ScreenKeyboardShown(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
+
+#[cfg(doc)]
+use crate::everything::*;

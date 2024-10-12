@@ -687,3 +687,6 @@ extern "C" {
     /// - [`SDL_GetAssertionReport`]
     pub fn SDL_ResetAssertionReport();
 }
+
+#[cfg(doc)]
+use crate::everything::*;

@@ -54,3 +54,6 @@ pub const fn SDL_HasExactlyOneBitSet32(x: Uint32) -> ::core::primitive::bool {
     }
     return false;
 }
+
+#[cfg(doc)]
+use crate::everything::*;
