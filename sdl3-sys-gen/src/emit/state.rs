@@ -291,6 +291,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_FUNCTION_POINTER_IS_VOID_POINTER",
             "SDL_INTERNAL",
             "SDL_MAIN_AVAILABLE",
+            "SDL_MAIN_EXPORTED",
             "SDL_MAIN_NEEDED",
             "SDL_MAIN_NOIMPL",
             "SDL_memcpy",

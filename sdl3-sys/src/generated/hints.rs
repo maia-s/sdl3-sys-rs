@@ -2187,7 +2187,7 @@ pub const SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH: &::core::ffi::CStr = c"SDL_MAC_OPE
 /// This hint needs to be set before [`SDL_Init()`].
 ///
 /// ### Availability
-/// This hint is available since SDL 3.0.0.
+/// This hint is available since SDL 3.1.4.
 pub const SDL_HINT_MAC_SCROLL_MOMENTUM: &::core::ffi::CStr = c"SDL_MAC_SCROLL_MOMENTUM";
 
 /// Request [`SDL_AppIterate()`] be called at a specific rate.
