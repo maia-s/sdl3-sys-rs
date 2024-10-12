@@ -508,10 +508,10 @@ extern "C" {
 /// An abstract interface for filesystem access.
 ///
 /// This is an opaque datatype. One can create this object using standard SDL
-/// functions like SDL_OpenTitleStorage or SDL_OpenUserStorage, etc, or create
-/// an object with a custom implementation using SDL_OpenStorage.
+/// functions like [`SDL_OpenTitleStorage`] or [`SDL_OpenUserStorage`], etc, or create
+/// an object with a custom implementation using [`SDL_OpenStorage`].
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Storage {

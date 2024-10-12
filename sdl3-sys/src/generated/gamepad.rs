@@ -1641,7 +1641,7 @@ extern "C" {
 
 /// The structure used to identify an SDL gamepad
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Gamepad {

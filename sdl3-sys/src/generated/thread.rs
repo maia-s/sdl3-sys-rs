@@ -477,10 +477,10 @@ extern "C" {
 ///
 /// These are opaque data.
 ///
-/// \since This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.0.0.
 ///
-/// \sa SDL_CreateThread
-/// \sa SDL_WaitThread
+/// See also [`SDL_CreateThread`]<br>
+/// See also [`SDL_WaitThread`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Thread {

@@ -1336,9 +1336,7 @@ impl InnerScope {
 
         for sym in syms {
             if let Some(doc) = &sym.doc {
-                for line in doc.to_string().lines() {
-                    writeln!(ctx, "///{}{}", if line.is_empty() { "" } else { " " }, line)?;
-                }
+                doc.emit_rust(ctx, "///")?;
             }
             writeln!(ctx, "#[repr(C)]")?;
             writeln!(ctx, "#[non_exhaustive]")?;

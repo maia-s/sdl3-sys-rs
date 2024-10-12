@@ -1340,11 +1340,11 @@ extern "C" {
 
 /// The haptic structure used to identify an SDL haptic.
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 ///
-/// \sa SDL_OpenHaptic
-/// \sa SDL_OpenHapticFromJoystick
-/// \sa SDL_CloseHaptic
+/// See also [`SDL_OpenHaptic`]<br>
+/// See also [`SDL_OpenHapticFromJoystick`]<br>
+/// See also [`SDL_CloseHaptic`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Haptic {

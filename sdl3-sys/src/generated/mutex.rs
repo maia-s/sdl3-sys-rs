@@ -714,7 +714,7 @@ extern "C" {
 
 /// A means to block multiple threads until a condition is satisfied.
 ///
-/// Condition variables, paired with an SDL_Mutex, let an app halt multiple
+/// Condition variables, paired with an [`SDL_Mutex`], let an app halt multiple
 /// threads until a condition has occurred, at which time the app can release
 /// one or all waiting threads.
 ///
@@ -722,7 +722,7 @@ extern "C" {
 ///
 /// https://en.wikipedia.org/wiki/Condition_variable
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Condition {
@@ -738,7 +738,7 @@ pub struct SDL_Condition {
 ///
 /// https://en.wikipedia.org/wiki/Mutex
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Mutex {
@@ -747,7 +747,7 @@ pub struct SDL_Mutex {
 
 /// A mutex that allows read-only threads to run in parallel.
 ///
-/// A rwlock is roughly the same concept as SDL_Mutex, but allows threads that
+/// A rwlock is roughly the same concept as [`SDL_Mutex`], but allows threads that
 /// request read-only access to all hold the lock at the same time. If a thread
 /// requests write access, it will block until all read-only threads have
 /// released the lock, and no one else can hold the thread (for reading or
@@ -760,7 +760,7 @@ pub struct SDL_Mutex {
 /// about how threads are scheduled and when they can be recursively locked.
 /// These are documented in the other rwlock functions.
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_RWLock {
@@ -778,7 +778,7 @@ pub struct SDL_RWLock {
 ///
 /// https://en.wikipedia.org/wiki/Semaphore_(programming)
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Semaphore {

@@ -3462,9 +3462,9 @@ pub struct SDL_GLContextState {
 
 /// The struct used as an opaque handle to a window.
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 ///
-/// \sa SDL_CreateWindow
+/// See also [`SDL_CreateWindow`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Window {

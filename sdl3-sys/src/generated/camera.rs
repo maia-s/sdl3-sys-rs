@@ -468,7 +468,7 @@ extern "C" {
 
 /// The opaque structure used to identify an opened SDL camera.
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Camera {

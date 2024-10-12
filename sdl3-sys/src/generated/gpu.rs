@@ -4434,22 +4434,22 @@ emit! {
 /// Used for vertices, indices, indirect draw commands, and general compute
 /// data.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_CreateGPUBuffer
-/// \sa SDL_SetGPUBufferName
-/// \sa SDL_UploadToGPUBuffer
-/// \sa SDL_DownloadFromGPUBuffer
-/// \sa SDL_CopyGPUBufferToBuffer
-/// \sa SDL_BindGPUVertexBuffers
-/// \sa SDL_BindGPUIndexBuffer
-/// \sa SDL_BindGPUVertexStorageBuffers
-/// \sa SDL_BindGPUFragmentStorageBuffers
-/// \sa SDL_DrawGPUPrimitivesIndirect
-/// \sa SDL_DrawGPUIndexedPrimitivesIndirect
-/// \sa SDL_BindGPUComputeStorageBuffers
-/// \sa SDL_DispatchGPUComputeIndirect
-/// \sa SDL_ReleaseGPUBuffer
+/// See also [`SDL_CreateGPUBuffer`]<br>
+/// See also [`SDL_SetGPUBufferName`]<br>
+/// See also [`SDL_UploadToGPUBuffer`]<br>
+/// See also [`SDL_DownloadFromGPUBuffer`]<br>
+/// See also [`SDL_CopyGPUBufferToBuffer`]<br>
+/// See also [`SDL_BindGPUVertexBuffers`]<br>
+/// See also [`SDL_BindGPUIndexBuffer`]<br>
+/// See also [`SDL_BindGPUVertexStorageBuffers`]<br>
+/// See also [`SDL_BindGPUFragmentStorageBuffers`]<br>
+/// See also [`SDL_DrawGPUPrimitivesIndirect`]<br>
+/// See also [`SDL_DrawGPUIndexedPrimitivesIndirect`]<br>
+/// See also [`SDL_BindGPUComputeStorageBuffers`]<br>
+/// See also [`SDL_DispatchGPUComputeIndirect`]<br>
+/// See also [`SDL_ReleaseGPUBuffer`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPUBuffer {
@@ -4461,7 +4461,7 @@ pub struct SDL_GPUBuffer {
 /// Most state is managed via command buffers. When setting state using a
 /// command buffer, that state is local to the command buffer.
 ///
-/// Commands only begin execution on the GPU once SDL_SubmitGPUCommandBuffer is
+/// Commands only begin execution on the GPU once [`SDL_SubmitGPUCommandBuffer`] is
 /// called. Once the command buffer is submitted, it is no longer valid to use
 /// it.
 ///
@@ -4472,11 +4472,11 @@ pub struct SDL_GPUBuffer {
 /// In multi-threading scenarios, you should only access a command buffer on
 /// the thread you acquired it from.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_AcquireGPUCommandBuffer
-/// \sa SDL_SubmitGPUCommandBuffer
-/// \sa SDL_SubmitGPUCommandBufferAndAcquireFence
+/// See also [`SDL_AcquireGPUCommandBuffer`]<br>
+/// See also [`SDL_SubmitGPUCommandBuffer`]<br>
+/// See also [`SDL_SubmitGPUCommandBufferAndAcquireFence`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPUCommandBuffer {
@@ -4486,12 +4486,12 @@ pub struct SDL_GPUCommandBuffer {
 /// An opaque handle representing a compute pass.
 ///
 /// This handle is transient and should not be held or referenced after
-/// SDL_EndGPUComputePass is called.
+/// [`SDL_EndGPUComputePass`] is called.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_BeginGPUComputePass
-/// \sa SDL_EndGPUComputePass
+/// See also [`SDL_BeginGPUComputePass`]<br>
+/// See also [`SDL_EndGPUComputePass`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPUComputePass {
@@ -4502,11 +4502,11 @@ pub struct SDL_GPUComputePass {
 ///
 /// Used during compute passes.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_CreateGPUComputePipeline
-/// \sa SDL_BindGPUComputePipeline
-/// \sa SDL_ReleaseGPUComputePipeline
+/// See also [`SDL_CreateGPUComputePipeline`]<br>
+/// See also [`SDL_BindGPUComputePipeline`]<br>
+/// See also [`SDL_ReleaseGPUComputePipeline`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPUComputePipeline {
@@ -4516,21 +4516,21 @@ pub struct SDL_GPUComputePipeline {
 /// An opaque handle representing a copy pass.
 ///
 /// This handle is transient and should not be held or referenced after
-/// SDL_EndGPUCopyPass is called.
+/// [`SDL_EndGPUCopyPass`] is called.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_BeginGPUCopyPass
-/// \sa SDL_EndGPUCopyPass
+/// See also [`SDL_BeginGPUCopyPass`]<br>
+/// See also [`SDL_EndGPUCopyPass`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPUCopyPass {
     _opaque: [::core::primitive::u8; 0],
 }
 
-/// An opaque handle representing the SDL_GPU context.
+/// An opaque handle representing the [`SDL_GPU`] context.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPUDevice {
@@ -4539,12 +4539,12 @@ pub struct SDL_GPUDevice {
 
 /// An opaque handle representing a fence.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_SubmitGPUCommandBufferAndAcquireFence
-/// \sa SDL_QueryGPUFence
-/// \sa SDL_WaitForGPUFences
-/// \sa SDL_ReleaseGPUFence
+/// See also [`SDL_SubmitGPUCommandBufferAndAcquireFence`]<br>
+/// See also [`SDL_QueryGPUFence`]<br>
+/// See also [`SDL_WaitForGPUFences`]<br>
+/// See also [`SDL_ReleaseGPUFence`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPUFence {
@@ -4555,11 +4555,11 @@ pub struct SDL_GPUFence {
 ///
 /// Used during render passes.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_CreateGPUGraphicsPipeline
-/// \sa SDL_BindGPUGraphicsPipeline
-/// \sa SDL_ReleaseGPUGraphicsPipeline
+/// See also [`SDL_CreateGPUGraphicsPipeline`]<br>
+/// See also [`SDL_BindGPUGraphicsPipeline`]<br>
+/// See also [`SDL_ReleaseGPUGraphicsPipeline`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPUGraphicsPipeline {
@@ -4569,12 +4569,12 @@ pub struct SDL_GPUGraphicsPipeline {
 /// An opaque handle representing a render pass.
 ///
 /// This handle is transient and should not be held or referenced after
-/// SDL_EndGPURenderPass is called.
+/// [`SDL_EndGPURenderPass`] is called.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_BeginGPURenderPass
-/// \sa SDL_EndGPURenderPass
+/// See also [`SDL_BeginGPURenderPass`]<br>
+/// See also [`SDL_EndGPURenderPass`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPURenderPass {
@@ -4583,12 +4583,12 @@ pub struct SDL_GPURenderPass {
 
 /// An opaque handle representing a sampler.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_CreateGPUSampler
-/// \sa SDL_BindGPUVertexSamplers
-/// \sa SDL_BindGPUFragmentSamplers
-/// \sa SDL_ReleaseGPUSampler
+/// See also [`SDL_CreateGPUSampler`]<br>
+/// See also [`SDL_BindGPUVertexSamplers`]<br>
+/// See also [`SDL_BindGPUFragmentSamplers`]<br>
+/// See also [`SDL_ReleaseGPUSampler`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPUSampler {
@@ -4597,11 +4597,11 @@ pub struct SDL_GPUSampler {
 
 /// An opaque handle representing a compiled shader object.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_CreateGPUShader
-/// \sa SDL_CreateGPUGraphicsPipeline
-/// \sa SDL_ReleaseGPUShader
+/// See also [`SDL_CreateGPUShader`]<br>
+/// See also [`SDL_CreateGPUGraphicsPipeline`]<br>
+/// See also [`SDL_ReleaseGPUShader`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPUShader {
@@ -4610,21 +4610,21 @@ pub struct SDL_GPUShader {
 
 /// An opaque handle representing a texture.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_CreateGPUTexture
-/// \sa SDL_SetGPUTextureName
-/// \sa SDL_UploadToGPUTexture
-/// \sa SDL_DownloadFromGPUTexture
-/// \sa SDL_CopyGPUTextureToTexture
-/// \sa SDL_BindGPUVertexSamplers
-/// \sa SDL_BindGPUVertexStorageTextures
-/// \sa SDL_BindGPUFragmentSamplers
-/// \sa SDL_BindGPUFragmentStorageTextures
-/// \sa SDL_BindGPUComputeStorageTextures
-/// \sa SDL_GenerateMipmapsForGPUTexture
-/// \sa SDL_BlitGPUTexture
-/// \sa SDL_ReleaseGPUTexture
+/// See also [`SDL_CreateGPUTexture`]<br>
+/// See also [`SDL_SetGPUTextureName`]<br>
+/// See also [`SDL_UploadToGPUTexture`]<br>
+/// See also [`SDL_DownloadFromGPUTexture`]<br>
+/// See also [`SDL_CopyGPUTextureToTexture`]<br>
+/// See also [`SDL_BindGPUVertexSamplers`]<br>
+/// See also [`SDL_BindGPUVertexStorageTextures`]<br>
+/// See also [`SDL_BindGPUFragmentSamplers`]<br>
+/// See also [`SDL_BindGPUFragmentStorageTextures`]<br>
+/// See also [`SDL_BindGPUComputeStorageTextures`]<br>
+/// See also [`SDL_GenerateMipmapsForGPUTexture`]<br>
+/// See also [`SDL_BlitGPUTexture`]<br>
+/// See also [`SDL_ReleaseGPUTexture`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPUTexture {
@@ -4635,16 +4635,16 @@ pub struct SDL_GPUTexture {
 ///
 /// Used for transferring data to and from the device.
 ///
-/// \since This struct is available since SDL 3.0.0
+/// This struct is available since SDL 3.0.0
 ///
-/// \sa SDL_CreateGPUTransferBuffer
-/// \sa SDL_MapGPUTransferBuffer
-/// \sa SDL_UnmapGPUTransferBuffer
-/// \sa SDL_UploadToGPUBuffer
-/// \sa SDL_UploadToGPUTexture
-/// \sa SDL_DownloadFromGPUBuffer
-/// \sa SDL_DownloadFromGPUTexture
-/// \sa SDL_ReleaseGPUTransferBuffer
+/// See also [`SDL_CreateGPUTransferBuffer`]<br>
+/// See also [`SDL_MapGPUTransferBuffer`]<br>
+/// See also [`SDL_UnmapGPUTransferBuffer`]<br>
+/// See also [`SDL_UploadToGPUBuffer`]<br>
+/// See also [`SDL_UploadToGPUTexture`]<br>
+/// See also [`SDL_DownloadFromGPUBuffer`]<br>
+/// See also [`SDL_DownloadFromGPUTexture`]<br>
+/// See also [`SDL_ReleaseGPUTransferBuffer`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_GPUTransferBuffer {

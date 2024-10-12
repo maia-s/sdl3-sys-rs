@@ -4467,15 +4467,15 @@ emit! {
 
 /// A thread-safe set of environment variables
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 ///
-/// \sa SDL_GetEnvironment
-/// \sa SDL_CreateEnvironment
-/// \sa SDL_GetEnvironmentVariable
-/// \sa SDL_GetEnvironmentVariables
-/// \sa SDL_SetEnvironmentVariable
-/// \sa SDL_UnsetEnvironmentVariable
-/// \sa SDL_DestroyEnvironment
+/// See also [`SDL_GetEnvironment`]<br>
+/// See also [`SDL_CreateEnvironment`]<br>
+/// See also [`SDL_GetEnvironmentVariable`]<br>
+/// See also [`SDL_GetEnvironmentVariables`]<br>
+/// See also [`SDL_SetEnvironmentVariable`]<br>
+/// See also [`SDL_UnsetEnvironmentVariable`]<br>
+/// See also [`SDL_DestroyEnvironment`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Environment {

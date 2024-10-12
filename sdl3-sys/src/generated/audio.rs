@@ -2115,7 +2115,7 @@ extern "C" {
 
 /// The opaque handle that represents an audio stream.
 ///
-/// SDL_AudioStream is an audio conversion interface.
+/// [`SDL_AudioStream`] is an audio conversion interface.
 ///
 /// - It can handle resampling data in chunks without generating artifacts,
 ///   when it doesn't have the complete buffer available.
@@ -2132,9 +2132,9 @@ extern "C" {
 /// more of them, bind them to an opened audio device, and feed data to them
 /// (or for recording, consume data from them).
 ///
-/// \since This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.0.0.
 ///
-/// \sa SDL_CreateAudioStream
+/// See also [`SDL_CreateAudioStream`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_AudioStream {

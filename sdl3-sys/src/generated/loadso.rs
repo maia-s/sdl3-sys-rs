@@ -90,11 +90,11 @@ extern "C" {
 
 /// An opaque datatype that represents a loaded shared object.
 ///
-/// \since This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.0.0.
 ///
-/// \sa SDL_LoadObject
-/// \sa SDL_LoadFunction
-/// \sa SDL_UnloadObject
+/// See also [`SDL_LoadObject`]<br>
+/// See also [`SDL_LoadFunction`]<br>
+/// See also [`SDL_UnloadObject`]<br>
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_SharedObject {
