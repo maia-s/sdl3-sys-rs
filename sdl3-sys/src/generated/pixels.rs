@@ -6,37 +6,60 @@ use super::error::*;
 
 /// A fully opaque 8-bit alpha value.
 ///
+/// ### Availability
 /// This macro is available since SDL 3.0.0.
 ///
-/// See also [`SDL_ALPHA_TRANSPARENT`]<br>
+/// ### See also
+/// - [`SDL_ALPHA_TRANSPARENT`]
 pub const SDL_ALPHA_OPAQUE: ::core::primitive::i32 = 255;
 
 /// A fully opaque floating point alpha value.
 ///
+/// ### Availability
 /// This macro is available since SDL 3.0.0.
 ///
-/// See also [`SDL_ALPHA_TRANSPARENT_FLOAT`]<br>
+/// ### See also
+/// - [`SDL_ALPHA_TRANSPARENT_FLOAT`]
 pub const SDL_ALPHA_OPAQUE_FLOAT: ::core::ffi::c_float = 1.0_f32;
 
 /// A fully transparent 8-bit alpha value.
 ///
+/// ### Availability
 /// This macro is available since SDL 3.0.0.
 ///
-/// See also [`SDL_ALPHA_OPAQUE`]<br>
+/// ### See also
+/// - [`SDL_ALPHA_OPAQUE`]
 pub const SDL_ALPHA_TRANSPARENT: ::core::primitive::i32 = 0;
 
 /// A fully transparent floating point alpha value.
 ///
+/// ### Availability
 /// This macro is available since SDL 3.0.0.
 ///
-/// See also [`SDL_ALPHA_OPAQUE_FLOAT`]<br>
+/// ### See also
+/// - [`SDL_ALPHA_OPAQUE_FLOAT`]
 pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 
 /// Pixel type.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PIXELTYPE_UNKNOWN`], [`SDL_PIXELTYPE_INDEX1`], [`SDL_PIXELTYPE_INDEX4`], [`SDL_PIXELTYPE_INDEX8`], [`SDL_PIXELTYPE_PACKED8`], [`SDL_PIXELTYPE_PACKED16`], [`SDL_PIXELTYPE_PACKED32`], [`SDL_PIXELTYPE_ARRAYU8`], [`SDL_PIXELTYPE_ARRAYU16`], [`SDL_PIXELTYPE_ARRAYU32`], [`SDL_PIXELTYPE_ARRAYF16`], [`SDL_PIXELTYPE_ARRAYF32`], [`SDL_PIXELTYPE_INDEX2`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_PIXELTYPE_INDEX1`]
+/// - [`SDL_PIXELTYPE_INDEX4`]
+/// - [`SDL_PIXELTYPE_INDEX8`]
+/// - [`SDL_PIXELTYPE_PACKED8`]
+/// - [`SDL_PIXELTYPE_PACKED16`]
+/// - [`SDL_PIXELTYPE_PACKED32`]
+/// - [`SDL_PIXELTYPE_ARRAYU8`]
+/// - [`SDL_PIXELTYPE_ARRAYU16`]
+/// - [`SDL_PIXELTYPE_ARRAYU32`]
+/// - [`SDL_PIXELTYPE_ARRAYF16`]
+/// - [`SDL_PIXELTYPE_ARRAYF32`]
+/// - [`SDL_PIXELTYPE_INDEX2`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -78,9 +101,14 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 
 /// Bitmap pixel order, high bit -> low bit.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_BITMAPORDER_NONE`], [`SDL_BITMAPORDER_4321`], [`SDL_BITMAPORDER_1234`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_BITMAPORDER_4321`]
+/// - [`SDL_BITMAPORDER_1234`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -102,9 +130,20 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 
 /// Packed component order, high bit -> low bit.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PACKEDORDER_NONE`], [`SDL_PACKEDORDER_XRGB`], [`SDL_PACKEDORDER_RGBX`], [`SDL_PACKEDORDER_ARGB`], [`SDL_PACKEDORDER_RGBA`], [`SDL_PACKEDORDER_XBGR`], [`SDL_PACKEDORDER_BGRX`], [`SDL_PACKEDORDER_ABGR`], [`SDL_PACKEDORDER_BGRA`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_PACKEDORDER_XRGB`]
+/// - [`SDL_PACKEDORDER_RGBX`]
+/// - [`SDL_PACKEDORDER_ARGB`]
+/// - [`SDL_PACKEDORDER_RGBA`]
+/// - [`SDL_PACKEDORDER_XBGR`]
+/// - [`SDL_PACKEDORDER_BGRX`]
+/// - [`SDL_PACKEDORDER_ABGR`]
+/// - [`SDL_PACKEDORDER_BGRA`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -138,9 +177,18 @@ pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 
 /// Array component order, low byte -> high byte.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_ARRAYORDER_NONE`], [`SDL_ARRAYORDER_RGB`], [`SDL_ARRAYORDER_RGBA`], [`SDL_ARRAYORDER_ARGB`], [`SDL_ARRAYORDER_BGR`], [`SDL_ARRAYORDER_BGRA`], [`SDL_ARRAYORDER_ABGR`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_ARRAYORDER_RGB`]
+/// - [`SDL_ARRAYORDER_RGBA`]
+/// - [`SDL_ARRAYORDER_ARGB`]
+/// - [`SDL_ARRAYORDER_BGR`]
+/// - [`SDL_ARRAYORDER_BGRA`]
+/// - [`SDL_ARRAYORDER_ABGR`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -170,9 +218,20 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 
 /// Packed component layout.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PACKEDLAYOUT_NONE`], [`SDL_PACKEDLAYOUT_332`], [`SDL_PACKEDLAYOUT_4444`], [`SDL_PACKEDLAYOUT_1555`], [`SDL_PACKEDLAYOUT_5551`], [`SDL_PACKEDLAYOUT_565`], [`SDL_PACKEDLAYOUT_8888`], [`SDL_PACKEDLAYOUT_2101010`], [`SDL_PACKEDLAYOUT_1010102`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_PACKEDLAYOUT_332`]
+/// - [`SDL_PACKEDLAYOUT_4444`]
+/// - [`SDL_PACKEDLAYOUT_1555`]
+/// - [`SDL_PACKEDLAYOUT_5551`]
+/// - [`SDL_PACKEDLAYOUT_565`]
+/// - [`SDL_PACKEDLAYOUT_8888`]
+/// - [`SDL_PACKEDLAYOUT_2101010`]
+/// - [`SDL_PACKEDLAYOUT_1010102`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -243,9 +302,91 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 /// an alias for ABGR8888 on little-endian CPUs like x86, or an alias for
 /// RGBA8888 on big-endian CPUs.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PIXELFORMAT_UNKNOWN`], [`SDL_PIXELFORMAT_INDEX1LSB`], [`SDL_PIXELFORMAT_INDEX1MSB`], [`SDL_PIXELFORMAT_INDEX2LSB`], [`SDL_PIXELFORMAT_INDEX2MSB`], [`SDL_PIXELFORMAT_INDEX4LSB`], [`SDL_PIXELFORMAT_INDEX4MSB`], [`SDL_PIXELFORMAT_INDEX8`], [`SDL_PIXELFORMAT_RGB332`], [`SDL_PIXELFORMAT_XRGB4444`], [`SDL_PIXELFORMAT_XBGR4444`], [`SDL_PIXELFORMAT_XRGB1555`], [`SDL_PIXELFORMAT_XBGR1555`], [`SDL_PIXELFORMAT_ARGB4444`], [`SDL_PIXELFORMAT_RGBA4444`], [`SDL_PIXELFORMAT_ABGR4444`], [`SDL_PIXELFORMAT_BGRA4444`], [`SDL_PIXELFORMAT_ARGB1555`], [`SDL_PIXELFORMAT_RGBA5551`], [`SDL_PIXELFORMAT_ABGR1555`], [`SDL_PIXELFORMAT_BGRA5551`], [`SDL_PIXELFORMAT_RGB565`], [`SDL_PIXELFORMAT_BGR565`], [`SDL_PIXELFORMAT_RGB24`], [`SDL_PIXELFORMAT_BGR24`], [`SDL_PIXELFORMAT_XRGB8888`], [`SDL_PIXELFORMAT_RGBX8888`], [`SDL_PIXELFORMAT_XBGR8888`], [`SDL_PIXELFORMAT_BGRX8888`], [`SDL_PIXELFORMAT_ARGB8888`], [`SDL_PIXELFORMAT_RGBA8888`], [`SDL_PIXELFORMAT_ABGR8888`], [`SDL_PIXELFORMAT_BGRA8888`], [`SDL_PIXELFORMAT_XRGB2101010`], [`SDL_PIXELFORMAT_XBGR2101010`], [`SDL_PIXELFORMAT_ARGB2101010`], [`SDL_PIXELFORMAT_ABGR2101010`], [`SDL_PIXELFORMAT_RGB48`], [`SDL_PIXELFORMAT_BGR48`], [`SDL_PIXELFORMAT_RGBA64`], [`SDL_PIXELFORMAT_ARGB64`], [`SDL_PIXELFORMAT_BGRA64`], [`SDL_PIXELFORMAT_ABGR64`], [`SDL_PIXELFORMAT_RGB48_FLOAT`], [`SDL_PIXELFORMAT_BGR48_FLOAT`], [`SDL_PIXELFORMAT_RGBA64_FLOAT`], [`SDL_PIXELFORMAT_ARGB64_FLOAT`], [`SDL_PIXELFORMAT_BGRA64_FLOAT`], [`SDL_PIXELFORMAT_ABGR64_FLOAT`], [`SDL_PIXELFORMAT_RGB96_FLOAT`], [`SDL_PIXELFORMAT_BGR96_FLOAT`], [`SDL_PIXELFORMAT_RGBA128_FLOAT`], [`SDL_PIXELFORMAT_ARGB128_FLOAT`], [`SDL_PIXELFORMAT_BGRA128_FLOAT`], [`SDL_PIXELFORMAT_ABGR128_FLOAT`], [`SDL_PIXELFORMAT_YV12`], [`SDL_PIXELFORMAT_IYUV`], [`SDL_PIXELFORMAT_YUY2`], [`SDL_PIXELFORMAT_UYVY`], [`SDL_PIXELFORMAT_YVYU`], [`SDL_PIXELFORMAT_NV12`], [`SDL_PIXELFORMAT_NV21`], [`SDL_PIXELFORMAT_P010`], [`SDL_PIXELFORMAT_EXTERNAL_OES`], [`SDL_PIXELFORMAT_RGBA32`], [`SDL_PIXELFORMAT_ARGB32`], [`SDL_PIXELFORMAT_BGRA32`], [`SDL_PIXELFORMAT_ABGR32`], [`SDL_PIXELFORMAT_RGBX32`], [`SDL_PIXELFORMAT_XRGB32`], [`SDL_PIXELFORMAT_BGRX32`], [`SDL_PIXELFORMAT_XBGR32`], [`SDL_PIXELFORMAT_RGBA32`], [`SDL_PIXELFORMAT_ARGB32`], [`SDL_PIXELFORMAT_BGRA32`], [`SDL_PIXELFORMAT_ABGR32`], [`SDL_PIXELFORMAT_RGBX32`], [`SDL_PIXELFORMAT_XRGB32`], [`SDL_PIXELFORMAT_BGRX32`], [`SDL_PIXELFORMAT_XBGR32`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_PIXELFORMAT_INDEX1LSB`]
+/// - [`SDL_PIXELFORMAT_INDEX1MSB`]
+/// - [`SDL_PIXELFORMAT_INDEX2LSB`]
+/// - [`SDL_PIXELFORMAT_INDEX2MSB`]
+/// - [`SDL_PIXELFORMAT_INDEX4LSB`]
+/// - [`SDL_PIXELFORMAT_INDEX4MSB`]
+/// - [`SDL_PIXELFORMAT_INDEX8`]
+/// - [`SDL_PIXELFORMAT_RGB332`]
+/// - [`SDL_PIXELFORMAT_XRGB4444`]
+/// - [`SDL_PIXELFORMAT_XBGR4444`]
+/// - [`SDL_PIXELFORMAT_XRGB1555`]
+/// - [`SDL_PIXELFORMAT_XBGR1555`]
+/// - [`SDL_PIXELFORMAT_ARGB4444`]
+/// - [`SDL_PIXELFORMAT_RGBA4444`]
+/// - [`SDL_PIXELFORMAT_ABGR4444`]
+/// - [`SDL_PIXELFORMAT_BGRA4444`]
+/// - [`SDL_PIXELFORMAT_ARGB1555`]
+/// - [`SDL_PIXELFORMAT_RGBA5551`]
+/// - [`SDL_PIXELFORMAT_ABGR1555`]
+/// - [`SDL_PIXELFORMAT_BGRA5551`]
+/// - [`SDL_PIXELFORMAT_RGB565`]
+/// - [`SDL_PIXELFORMAT_BGR565`]
+/// - [`SDL_PIXELFORMAT_RGB24`]
+/// - [`SDL_PIXELFORMAT_BGR24`]
+/// - [`SDL_PIXELFORMAT_XRGB8888`]
+/// - [`SDL_PIXELFORMAT_RGBX8888`]
+/// - [`SDL_PIXELFORMAT_XBGR8888`]
+/// - [`SDL_PIXELFORMAT_BGRX8888`]
+/// - [`SDL_PIXELFORMAT_ARGB8888`]
+/// - [`SDL_PIXELFORMAT_RGBA8888`]
+/// - [`SDL_PIXELFORMAT_ABGR8888`]
+/// - [`SDL_PIXELFORMAT_BGRA8888`]
+/// - [`SDL_PIXELFORMAT_XRGB2101010`]
+/// - [`SDL_PIXELFORMAT_XBGR2101010`]
+/// - [`SDL_PIXELFORMAT_ARGB2101010`]
+/// - [`SDL_PIXELFORMAT_ABGR2101010`]
+/// - [`SDL_PIXELFORMAT_RGB48`]
+/// - [`SDL_PIXELFORMAT_BGR48`]
+/// - [`SDL_PIXELFORMAT_RGBA64`]
+/// - [`SDL_PIXELFORMAT_ARGB64`]
+/// - [`SDL_PIXELFORMAT_BGRA64`]
+/// - [`SDL_PIXELFORMAT_ABGR64`]
+/// - [`SDL_PIXELFORMAT_RGB48_FLOAT`]
+/// - [`SDL_PIXELFORMAT_BGR48_FLOAT`]
+/// - [`SDL_PIXELFORMAT_RGBA64_FLOAT`]
+/// - [`SDL_PIXELFORMAT_ARGB64_FLOAT`]
+/// - [`SDL_PIXELFORMAT_BGRA64_FLOAT`]
+/// - [`SDL_PIXELFORMAT_ABGR64_FLOAT`]
+/// - [`SDL_PIXELFORMAT_RGB96_FLOAT`]
+/// - [`SDL_PIXELFORMAT_BGR96_FLOAT`]
+/// - [`SDL_PIXELFORMAT_RGBA128_FLOAT`]
+/// - [`SDL_PIXELFORMAT_ARGB128_FLOAT`]
+/// - [`SDL_PIXELFORMAT_BGRA128_FLOAT`]
+/// - [`SDL_PIXELFORMAT_ABGR128_FLOAT`]
+/// - [`SDL_PIXELFORMAT_YV12`]
+/// - [`SDL_PIXELFORMAT_IYUV`]
+/// - [`SDL_PIXELFORMAT_YUY2`]
+/// - [`SDL_PIXELFORMAT_UYVY`]
+/// - [`SDL_PIXELFORMAT_YVYU`]
+/// - [`SDL_PIXELFORMAT_NV12`]
+/// - [`SDL_PIXELFORMAT_NV21`]
+/// - [`SDL_PIXELFORMAT_P010`]
+/// - [`SDL_PIXELFORMAT_EXTERNAL_OES`]
+/// - [`SDL_PIXELFORMAT_RGBA32`]
+/// - [`SDL_PIXELFORMAT_ARGB32`]
+/// - [`SDL_PIXELFORMAT_BGRA32`]
+/// - [`SDL_PIXELFORMAT_ABGR32`]
+/// - [`SDL_PIXELFORMAT_RGBX32`]
+/// - [`SDL_PIXELFORMAT_XRGB32`]
+/// - [`SDL_PIXELFORMAT_BGRX32`]
+/// - [`SDL_PIXELFORMAT_XBGR32`]
+/// - [`SDL_PIXELFORMAT_RGBA32`]
+/// - [`SDL_PIXELFORMAT_ARGB32`]
+/// - [`SDL_PIXELFORMAT_BGRA32`]
+/// - [`SDL_PIXELFORMAT_ABGR32`]
+/// - [`SDL_PIXELFORMAT_RGBX32`]
+/// - [`SDL_PIXELFORMAT_XRGB32`]
+/// - [`SDL_PIXELFORMAT_BGRX32`]
+/// - [`SDL_PIXELFORMAT_XBGR32`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -585,9 +726,14 @@ pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::i32 {
 
 /// Colorspace color type.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_COLOR_TYPE_UNKNOWN`], [`SDL_COLOR_TYPE_RGB`], [`SDL_COLOR_TYPE_YCBCR`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_COLOR_TYPE_RGB`]
+/// - [`SDL_COLOR_TYPE_YCBCR`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -608,11 +754,16 @@ pub const SDL_COLOR_TYPE_RGB: SDL_ColorType = SDL_ColorType::RGB;
 pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 
 /// Colorspace color range, as described by
-/// https://www.itu.int/rec/R-REC-BT.2100-2-201807-I/en
+/// <https://www.itu.int/rec/R-REC-BT.2100-2-201807-I/en>
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_COLOR_RANGE_UNKNOWN`], [`SDL_COLOR_RANGE_LIMITED`], [`SDL_COLOR_RANGE_FULL`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_COLOR_RANGE_LIMITED`]
+/// - [`SDL_COLOR_RANGE_FULL`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -637,11 +788,27 @@ pub const SDL_COLOR_RANGE_LIMITED: SDL_ColorRange = SDL_ColorRange::LIMITED;
 pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 
 /// Colorspace color primaries, as described by
-/// https://www.itu.int/rec/T-REC-H.273-201612-S/en
+/// <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_COLOR_PRIMARIES_UNKNOWN`], [`SDL_COLOR_PRIMARIES_BT709`], [`SDL_COLOR_PRIMARIES_UNSPECIFIED`], [`SDL_COLOR_PRIMARIES_BT470M`], [`SDL_COLOR_PRIMARIES_BT470BG`], [`SDL_COLOR_PRIMARIES_BT601`], [`SDL_COLOR_PRIMARIES_SMPTE240`], [`SDL_COLOR_PRIMARIES_GENERIC_FILM`], [`SDL_COLOR_PRIMARIES_BT2020`], [`SDL_COLOR_PRIMARIES_XYZ`], [`SDL_COLOR_PRIMARIES_SMPTE431`], [`SDL_COLOR_PRIMARIES_SMPTE432`], [`SDL_COLOR_PRIMARIES_EBU3213`], [`SDL_COLOR_PRIMARIES_CUSTOM`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_COLOR_PRIMARIES_BT709`]
+/// - [`SDL_COLOR_PRIMARIES_UNSPECIFIED`]
+/// - [`SDL_COLOR_PRIMARIES_BT470M`]
+/// - [`SDL_COLOR_PRIMARIES_BT470BG`]
+/// - [`SDL_COLOR_PRIMARIES_BT601`]
+/// - [`SDL_COLOR_PRIMARIES_SMPTE240`]
+/// - [`SDL_COLOR_PRIMARIES_GENERIC_FILM`]
+/// - [`SDL_COLOR_PRIMARIES_BT2020`]
+/// - [`SDL_COLOR_PRIMARIES_XYZ`]
+/// - [`SDL_COLOR_PRIMARIES_SMPTE431`]
+/// - [`SDL_COLOR_PRIMARIES_SMPTE432`]
+/// - [`SDL_COLOR_PRIMARIES_EBU3213`]
+/// - [`SDL_COLOR_PRIMARIES_CUSTOM`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -707,11 +874,32 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 
 /// Colorspace transfer characteristics.
 ///
-/// These are as described by https://www.itu.int/rec/T-REC-H.273-201612-S/en
+/// These are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_TRANSFER_CHARACTERISTICS_UNKNOWN`], [`SDL_TRANSFER_CHARACTERISTICS_BT709`], [`SDL_TRANSFER_CHARACTERISTICS_UNSPECIFIED`], [`SDL_TRANSFER_CHARACTERISTICS_GAMMA22`], [`SDL_TRANSFER_CHARACTERISTICS_GAMMA28`], [`SDL_TRANSFER_CHARACTERISTICS_BT601`], [`SDL_TRANSFER_CHARACTERISTICS_SMPTE240`], [`SDL_TRANSFER_CHARACTERISTICS_LINEAR`], [`SDL_TRANSFER_CHARACTERISTICS_LOG100`], [`SDL_TRANSFER_CHARACTERISTICS_LOG100_SQRT10`], [`SDL_TRANSFER_CHARACTERISTICS_IEC61966`], [`SDL_TRANSFER_CHARACTERISTICS_BT1361`], [`SDL_TRANSFER_CHARACTERISTICS_SRGB`], [`SDL_TRANSFER_CHARACTERISTICS_BT2020_10BIT`], [`SDL_TRANSFER_CHARACTERISTICS_BT2020_12BIT`], [`SDL_TRANSFER_CHARACTERISTICS_PQ`], [`SDL_TRANSFER_CHARACTERISTICS_SMPTE428`], [`SDL_TRANSFER_CHARACTERISTICS_HLG`], [`SDL_TRANSFER_CHARACTERISTICS_CUSTOM`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_TRANSFER_CHARACTERISTICS_BT709`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_UNSPECIFIED`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_GAMMA22`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_GAMMA28`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_BT601`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_SMPTE240`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_LINEAR`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_LOG100`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_LOG100_SQRT10`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_IEC61966`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_BT1361`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_SRGB`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_BT2020_10BIT`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_BT2020_12BIT`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_PQ`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_SMPTE428`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_HLG`]
+/// - [`SDL_TRANSFER_CHARACTERISTICS_CUSTOM`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -810,11 +998,28 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 
 /// Colorspace matrix coefficients.
 ///
-/// These are as described by https://www.itu.int/rec/T-REC-H.273-201612-S/en
+/// These are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_MATRIX_COEFFICIENTS_IDENTITY`], [`SDL_MATRIX_COEFFICIENTS_BT709`], [`SDL_MATRIX_COEFFICIENTS_UNSPECIFIED`], [`SDL_MATRIX_COEFFICIENTS_FCC`], [`SDL_MATRIX_COEFFICIENTS_BT470BG`], [`SDL_MATRIX_COEFFICIENTS_BT601`], [`SDL_MATRIX_COEFFICIENTS_SMPTE240`], [`SDL_MATRIX_COEFFICIENTS_YCGCO`], [`SDL_MATRIX_COEFFICIENTS_BT2020_NCL`], [`SDL_MATRIX_COEFFICIENTS_BT2020_CL`], [`SDL_MATRIX_COEFFICIENTS_SMPTE2085`], [`SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL`], [`SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL`], [`SDL_MATRIX_COEFFICIENTS_ICTCP`], [`SDL_MATRIX_COEFFICIENTS_CUSTOM`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_MATRIX_COEFFICIENTS_BT709`]
+/// - [`SDL_MATRIX_COEFFICIENTS_UNSPECIFIED`]
+/// - [`SDL_MATRIX_COEFFICIENTS_FCC`]
+/// - [`SDL_MATRIX_COEFFICIENTS_BT470BG`]
+/// - [`SDL_MATRIX_COEFFICIENTS_BT601`]
+/// - [`SDL_MATRIX_COEFFICIENTS_SMPTE240`]
+/// - [`SDL_MATRIX_COEFFICIENTS_YCGCO`]
+/// - [`SDL_MATRIX_COEFFICIENTS_BT2020_NCL`]
+/// - [`SDL_MATRIX_COEFFICIENTS_BT2020_CL`]
+/// - [`SDL_MATRIX_COEFFICIENTS_SMPTE2085`]
+/// - [`SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL`]
+/// - [`SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL`]
+/// - [`SDL_MATRIX_COEFFICIENTS_ICTCP`]
+/// - [`SDL_MATRIX_COEFFICIENTS_CUSTOM`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -886,9 +1091,15 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 
 /// Colorspace chroma sample location.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_CHROMA_LOCATION_NONE`], [`SDL_CHROMA_LOCATION_LEFT`], [`SDL_CHROMA_LOCATION_CENTER`], [`SDL_CHROMA_LOCATION_TOPLEFT`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_CHROMA_LOCATION_LEFT`]
+/// - [`SDL_CHROMA_LOCATION_CENTER`]
+/// - [`SDL_CHROMA_LOCATION_TOPLEFT`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -998,15 +1209,31 @@ pub const fn SDL_ISCOLORSPACE_FULL_RANGE(X: ::core::primitive::i32) -> ::core::p
 /// function, etc.), this is not an exhaustive list, but rather a
 /// representative sample of the kinds of colorspaces supported in SDL.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// See also [`SDL_ColorPrimaries`]<br>
-/// See also [`SDL_ColorRange`]<br>
-/// See also [`SDL_ColorType`]<br>
-/// See also [`SDL_MatrixCoefficients`]<br>
-/// See also [`SDL_TransferCharacteristics`]<br>
+/// ### See also
+/// - [`SDL_ColorPrimaries`]
+/// - [`SDL_ColorRange`]
+/// - [`SDL_ColorType`]
+/// - [`SDL_MatrixCoefficients`]
+/// - [`SDL_TransferCharacteristics`]
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_COLORSPACE_UNKNOWN`], [`SDL_COLORSPACE_SRGB`], [`SDL_COLORSPACE_SRGB_LINEAR`], [`SDL_COLORSPACE_HDR10`], [`SDL_COLORSPACE_JPEG`], [`SDL_COLORSPACE_BT601_LIMITED`], [`SDL_COLORSPACE_BT601_FULL`], [`SDL_COLORSPACE_BT709_LIMITED`], [`SDL_COLORSPACE_BT709_FULL`], [`SDL_COLORSPACE_BT2020_LIMITED`], [`SDL_COLORSPACE_BT2020_FULL`], [`SDL_COLORSPACE_RGB_DEFAULT`], [`SDL_COLORSPACE_YUV_DEFAULT`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_COLORSPACE_SRGB`]
+/// - [`SDL_COLORSPACE_SRGB_LINEAR`]
+/// - [`SDL_COLORSPACE_HDR10`]
+/// - [`SDL_COLORSPACE_JPEG`]
+/// - [`SDL_COLORSPACE_BT601_LIMITED`]
+/// - [`SDL_COLORSPACE_BT601_FULL`]
+/// - [`SDL_COLORSPACE_BT709_LIMITED`]
+/// - [`SDL_COLORSPACE_BT709_FULL`]
+/// - [`SDL_COLORSPACE_BT2020_LIMITED`]
+/// - [`SDL_COLORSPACE_BT2020_FULL`]
+/// - [`SDL_COLORSPACE_RGB_DEFAULT`]
+/// - [`SDL_COLORSPACE_YUV_DEFAULT`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1077,6 +1304,7 @@ pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_Colorspace::YUV_DEFAU
 /// ([`SDL_PIXELFORMAT_ABGR8888`] on little-endian systems and
 /// [`SDL_PIXELFORMAT_RGBA8888`] on big-endian systems).
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1091,6 +1319,7 @@ pub struct SDL_Color {
 /// The bits of this structure can be directly reinterpreted as a float-packed
 /// color which uses the [`SDL_PIXELFORMAT_RGBA128_FLOAT`] format
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1104,9 +1333,11 @@ pub struct SDL_FColor {
 
 /// A set of indexed colors representing a palette.
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 ///
-/// See also [`SDL_SetPaletteColors`]<br>
+/// ### See also
+/// - [`SDL_SetPaletteColors`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1123,6 +1354,7 @@ pub struct SDL_Palette {
 
 /// Details about the format of a pixel.
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1149,12 +1381,16 @@ pub struct SDL_PixelFormatDetails {
 extern "C" {
     /// Get the human readable name of a pixel format.
     ///
+    /// ### Arguments
     /// - `format`: the pixel format to query.
-    /// - Returns the human readable name of the specified pixel format or
+    /// ### Return value
+    /// Returns the human readable name of the specified pixel format or
     ///   "SDL_PIXELFORMAT_UNKNOWN" if the format isn't recognized.
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetPixelFormatName(format: SDL_PixelFormat) -> *const ::core::ffi::c_char;
 }
@@ -1162,20 +1398,25 @@ extern "C" {
 extern "C" {
     /// Convert one of the enumerated pixel formats to a bpp value and RGBA masks.
     ///
+    /// ### Arguments
     /// - `format`: one of the [`SDL_PixelFormat`] values.
     /// - `bpp`: a bits per pixel value; usually 15, 16, or 32.
     /// - `Rmask`: a pointer filled in with the red mask for the format.
     /// - `Gmask`: a pointer filled in with the green mask for the format.
     /// - `Bmask`: a pointer filled in with the blue mask for the format.
     /// - `Amask`: a pointer filled in with the alpha mask for the format.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetPixelFormatForMasks`]<br>
+    /// ### See also
+    /// - [`SDL_GetPixelFormatForMasks`]
     pub fn SDL_GetMasksForPixelFormat(
         format: SDL_PixelFormat,
         bpp: *mut ::core::ffi::c_int,
@@ -1192,19 +1433,24 @@ extern "C" {
     /// This will return `SDL_PIXELFORMAT_UNKNOWN` if the conversion wasn't
     /// possible.
     ///
+    /// ### Arguments
     /// - `bpp`: a bits per pixel value; usually 15, 16, or 32.
     /// - `Rmask`: the red mask for the format.
     /// - `Gmask`: the green mask for the format.
     /// - `Bmask`: the blue mask for the format.
     /// - `Amask`: the alpha mask for the format.
-    /// - Returns the [`SDL_PixelFormat`] value corresponding to the format masks, or
+    /// ### Return value
+    /// Returns the [`SDL_PixelFormat`] value corresponding to the format masks, or
     ///   [`SDL_PIXELFORMAT_UNKNOWN`] if there isn't a match.
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetMasksForPixelFormat`]<br>
+    /// ### See also
+    /// - [`SDL_GetMasksForPixelFormat`]
     pub fn SDL_GetPixelFormatForMasks(
         bpp: ::core::ffi::c_int,
         Rmask: Uint32,
@@ -1221,12 +1467,16 @@ extern "C" {
     /// allocated), and hence should not be modified, especially the palette. Weird
     /// errors such as `Blit combination not supported` may occur.
     ///
+    /// ### Arguments
     /// - `format`: one of the [`SDL_PixelFormat`] values.
-    /// - Returns a pointer to a [`SDL_PixelFormatDetails`] structure or NULL on
+    /// ### Return value
+    /// Returns a pointer to a [`SDL_PixelFormatDetails`] structure or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetPixelFormatDetails(format: SDL_PixelFormat) -> *const SDL_PixelFormatDetails;
 }
@@ -1236,34 +1486,43 @@ extern "C" {
     ///
     /// The palette entries are initialized to white.
     ///
+    /// ### Arguments
     /// - `ncolors`: represents the number of color entries in the color palette.
-    /// - Returns a new [`SDL_Palette`] structure on success or NULL on failure (e.g. if
+    /// ### Return value
+    /// Returns a new [`SDL_Palette`] structure on success or NULL on failure (e.g. if
     ///   there wasn't enough memory); call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_DestroyPalette`]<br>
-    /// See also [`SDL_SetPaletteColors`]<br>
-    /// See also [`SDL_SetSurfacePalette`]<br>
+    /// ### See also
+    /// - [`SDL_DestroyPalette`]
+    /// - [`SDL_SetPaletteColors`]
+    /// - [`SDL_SetSurfacePalette`]
     pub fn SDL_CreatePalette(ncolors: ::core::ffi::c_int) -> *mut SDL_Palette;
 }
 
 extern "C" {
     /// Set a range of colors in a palette.
     ///
+    /// ### Arguments
     /// - `palette`: the [`SDL_Palette`] structure to modify.
     /// - `colors`: an array of [`SDL_Color`] structures to copy into the palette.
     /// - `firstcolor`: the index of the first palette entry to modify.
     /// - `ncolors`: the number of entries to modify.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// Thread safety: It is safe to call this function from any thread, as long as
+    /// ### Thread safety
+    /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified or destroyed in another thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_SetPaletteColors(
         palette: *mut SDL_Palette,
@@ -1276,14 +1535,18 @@ extern "C" {
 extern "C" {
     /// Free a palette created with [`SDL_CreatePalette()`].
     ///
+    /// ### Arguments
     /// - `palette`: the [`SDL_Palette`] structure to be freed.
     ///
-    /// Thread safety: It is safe to call this function from any thread, as long as
+    /// ### Thread safety
+    /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified or destroyed in another thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_CreatePalette`]<br>
+    /// ### See also
+    /// - [`SDL_CreatePalette`]
     pub fn SDL_DestroyPalette(palette: *mut SDL_Palette);
 }
 
@@ -1305,23 +1568,28 @@ extern "C" {
     /// format the return value can be assigned to a Uint16, and similarly a Uint8
     /// for an 8-bpp format).
     ///
+    /// ### Arguments
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
     /// - `r`: the red component of the pixel in the range 0-255.
     /// - `g`: the green component of the pixel in the range 0-255.
     /// - `b`: the blue component of the pixel in the range 0-255.
-    /// - Returns a pixel value.
+    /// ### Return value
+    /// Returns a pixel value.
     ///
-    /// Thread safety: It is safe to call this function from any thread, as long as
+    /// ### Thread safety
+    /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetPixelFormatDetails`]<br>
-    /// See also [`SDL_GetRGB`]<br>
-    /// See also [`SDL_MapRGBA`]<br>
-    /// See also [`SDL_MapSurfaceRGB`]<br>
+    /// ### See also
+    /// - [`SDL_GetPixelFormatDetails`]
+    /// - [`SDL_GetRGB`]
+    /// - [`SDL_MapRGBA`]
+    /// - [`SDL_MapSurfaceRGB`]
     pub fn SDL_MapRGB(
         format: *const SDL_PixelFormatDetails,
         palette: *const SDL_Palette,
@@ -1349,6 +1617,7 @@ extern "C" {
     /// format the return value can be assigned to a Uint16, and similarly a Uint8
     /// for an 8-bpp format).
     ///
+    /// ### Arguments
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
@@ -1356,17 +1625,21 @@ extern "C" {
     /// - `g`: the green component of the pixel in the range 0-255.
     /// - `b`: the blue component of the pixel in the range 0-255.
     /// - `a`: the alpha component of the pixel in the range 0-255.
-    /// - Returns a pixel value.
+    /// ### Return value
+    /// Returns a pixel value.
     ///
-    /// Thread safety: It is safe to call this function from any thread, as long as
+    /// ### Thread safety
+    /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetPixelFormatDetails`]<br>
-    /// See also [`SDL_GetRGBA`]<br>
-    /// See also [`SDL_MapRGB`]<br>
-    /// See also [`SDL_MapSurfaceRGBA`]<br>
+    /// ### See also
+    /// - [`SDL_GetPixelFormatDetails`]
+    /// - [`SDL_GetRGBA`]
+    /// - [`SDL_MapRGB`]
+    /// - [`SDL_MapSurfaceRGBA`]
     pub fn SDL_MapRGBA(
         format: *const SDL_PixelFormatDetails,
         palette: *const SDL_Palette,
@@ -1385,6 +1658,7 @@ extern "C" {
     /// (e.g., a completely white pixel in 16-bit RGB565 format would return [0xff,
     /// 0xff, 0xff] not [0xf8, 0xfc, 0xf8]).
     ///
+    /// ### Arguments
     /// - `pixel`: a pixel value.
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
@@ -1393,15 +1667,18 @@ extern "C" {
     /// - `g`: a pointer filled in with the green component, may be NULL.
     /// - `b`: a pointer filled in with the blue component, may be NULL.
     ///
-    /// Thread safety: It is safe to call this function from any thread, as long as
+    /// ### Thread safety
+    /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetPixelFormatDetails`]<br>
-    /// See also [`SDL_GetRGBA`]<br>
-    /// See also [`SDL_MapRGB`]<br>
-    /// See also [`SDL_MapRGBA`]<br>
+    /// ### See also
+    /// - [`SDL_GetPixelFormatDetails`]
+    /// - [`SDL_GetRGBA`]
+    /// - [`SDL_MapRGB`]
+    /// - [`SDL_MapRGBA`]
     pub fn SDL_GetRGB(
         pixel: Uint32,
         format: *const SDL_PixelFormatDetails,
@@ -1423,6 +1700,7 @@ extern "C" {
     /// If the surface has no alpha component, the alpha will be returned as 0xff
     /// (100% opaque).
     ///
+    /// ### Arguments
     /// - `pixel`: a pixel value.
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
@@ -1432,15 +1710,18 @@ extern "C" {
     /// - `b`: a pointer filled in with the blue component, may be NULL.
     /// - `a`: a pointer filled in with the alpha component, may be NULL.
     ///
-    /// Thread safety: It is safe to call this function from any thread, as long as
+    /// ### Thread safety
+    /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetPixelFormatDetails`]<br>
-    /// See also [`SDL_GetRGB`]<br>
-    /// See also [`SDL_MapRGB`]<br>
-    /// See also [`SDL_MapRGBA`]<br>
+    /// ### See also
+    /// - [`SDL_GetPixelFormatDetails`]
+    /// - [`SDL_GetRGB`]
+    /// - [`SDL_MapRGB`]
+    /// - [`SDL_MapRGBA`]
     pub fn SDL_GetRGBA(
         pixel: Uint32,
         format: *const SDL_PixelFormatDetails,

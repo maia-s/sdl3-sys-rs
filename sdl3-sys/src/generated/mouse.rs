@@ -15,14 +15,38 @@ use super::video::*;
 ///
 /// The value 0 is an invalid ID.
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 pub type SDL_MouseID = Uint32;
 
 /// Cursor types for [`SDL_CreateSystemCursor()`].
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_SYSTEM_CURSOR_DEFAULT`], [`SDL_SYSTEM_CURSOR_TEXT`], [`SDL_SYSTEM_CURSOR_WAIT`], [`SDL_SYSTEM_CURSOR_CROSSHAIR`], [`SDL_SYSTEM_CURSOR_PROGRESS`], [`SDL_SYSTEM_CURSOR_NWSE_RESIZE`], [`SDL_SYSTEM_CURSOR_NESW_RESIZE`], [`SDL_SYSTEM_CURSOR_EW_RESIZE`], [`SDL_SYSTEM_CURSOR_NS_RESIZE`], [`SDL_SYSTEM_CURSOR_MOVE`], [`SDL_SYSTEM_CURSOR_NOT_ALLOWED`], [`SDL_SYSTEM_CURSOR_POINTER`], [`SDL_SYSTEM_CURSOR_NW_RESIZE`], [`SDL_SYSTEM_CURSOR_N_RESIZE`], [`SDL_SYSTEM_CURSOR_NE_RESIZE`], [`SDL_SYSTEM_CURSOR_E_RESIZE`], [`SDL_SYSTEM_CURSOR_SE_RESIZE`], [`SDL_SYSTEM_CURSOR_S_RESIZE`], [`SDL_SYSTEM_CURSOR_SW_RESIZE`], [`SDL_SYSTEM_CURSOR_W_RESIZE`], [`SDL_SYSTEM_CURSOR_COUNT`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_SYSTEM_CURSOR_TEXT`]
+/// - [`SDL_SYSTEM_CURSOR_WAIT`]
+/// - [`SDL_SYSTEM_CURSOR_CROSSHAIR`]
+/// - [`SDL_SYSTEM_CURSOR_PROGRESS`]
+/// - [`SDL_SYSTEM_CURSOR_NWSE_RESIZE`]
+/// - [`SDL_SYSTEM_CURSOR_NESW_RESIZE`]
+/// - [`SDL_SYSTEM_CURSOR_EW_RESIZE`]
+/// - [`SDL_SYSTEM_CURSOR_NS_RESIZE`]
+/// - [`SDL_SYSTEM_CURSOR_MOVE`]
+/// - [`SDL_SYSTEM_CURSOR_NOT_ALLOWED`]
+/// - [`SDL_SYSTEM_CURSOR_POINTER`]
+/// - [`SDL_SYSTEM_CURSOR_NW_RESIZE`]
+/// - [`SDL_SYSTEM_CURSOR_N_RESIZE`]
+/// - [`SDL_SYSTEM_CURSOR_NE_RESIZE`]
+/// - [`SDL_SYSTEM_CURSOR_E_RESIZE`]
+/// - [`SDL_SYSTEM_CURSOR_SE_RESIZE`]
+/// - [`SDL_SYSTEM_CURSOR_S_RESIZE`]
+/// - [`SDL_SYSTEM_CURSOR_SW_RESIZE`]
+/// - [`SDL_SYSTEM_CURSOR_W_RESIZE`]
+/// - [`SDL_SYSTEM_CURSOR_COUNT`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -120,9 +144,13 @@ pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 
 /// Scroll direction types for the Scroll event
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_MOUSEWHEEL_NORMAL`], [`SDL_MOUSEWHEEL_FLIPPED`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_MOUSEWHEEL_FLIPPED`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -152,11 +180,13 @@ pub const SDL_MOUSEWHEEL_FLIPPED: SDL_MouseWheelDirection = SDL_MouseWheelDirect
 /// - Button 4: Side mouse button 1
 /// - Button 5: Side mouse button 2
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 ///
-/// See also [`SDL_GetMouseState`]<br>
-/// See also [`SDL_GetGlobalMouseState`]<br>
-/// See also [`SDL_GetRelativeMouseState`]<br>
+/// ### See also
+/// - [`SDL_GetMouseState`]
+/// - [`SDL_GetGlobalMouseState`]
+/// - [`SDL_GetRelativeMouseState`]
 pub type SDL_MouseButtonFlags = Uint32;
 
 pub const SDL_BUTTON_LEFT: ::core::primitive::i32 = 1;
@@ -187,11 +217,14 @@ pub const SDL_BUTTON_X2MASK: SDL_MouseButtonFlags = SDL_BUTTON_MASK(SDL_BUTTON_X
 extern "C" {
     /// Return whether a mouse is currently connected.
     ///
-    /// - Returns true if a mouse is connected, false otherwise.
+    /// ### Return value
+    /// Returns true if a mouse is connected, false otherwise.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetMice`]<br>
+    /// ### See also
+    /// - [`SDL_GetMice`]
     pub fn SDL_HasMouse() -> ::core::primitive::bool;
 }
 
@@ -203,16 +236,20 @@ extern "C" {
     /// You should wait for input from a device before you consider it actively in
     /// use.
     ///
+    /// ### Arguments
     /// - `count`: a pointer filled in with the number of mice returned, may be
     ///   NULL.
-    /// - Returns a 0 terminated array of mouse instance IDs or NULL on failure;
+    /// ### Return value
+    /// Returns a 0 terminated array of mouse instance IDs or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
     ///   with [`SDL_free()`] when it is no longer needed.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetMouseNameForID`]<br>
-    /// See also [`SDL_HasMouse`]<br>
+    /// ### See also
+    /// - [`SDL_GetMouseNameForID`]
+    /// - [`SDL_HasMouse`]
     pub fn SDL_GetMice(count: *mut ::core::ffi::c_int) -> *mut SDL_MouseID;
 }
 
@@ -221,21 +258,27 @@ extern "C" {
     ///
     /// This function returns "" if the mouse doesn't have a name.
     ///
+    /// ### Arguments
     /// - `instance_id`: the mouse instance ID.
-    /// - Returns the name of the selected mouse, or NULL on failure; call
+    /// ### Return value
+    /// Returns the name of the selected mouse, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetMice`]<br>
+    /// ### See also
+    /// - [`SDL_GetMice`]
     pub fn SDL_GetMouseNameForID(instance_id: SDL_MouseID) -> *const ::core::ffi::c_char;
 }
 
 extern "C" {
     /// Get the window which currently has mouse focus.
     ///
-    /// - Returns the window with mouse focus.
+    /// ### Return value
+    /// Returns the window with mouse focus.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetMouseFocus() -> *mut SDL_Window;
 }
@@ -249,16 +292,20 @@ extern "C" {
     /// mouse cursor position relative to the focus window. You can pass NULL for
     /// either `x` or `y`.
     ///
+    /// ### Arguments
     /// - `x`: the x coordinate of the mouse cursor position relative to the
     ///   focus window.
     /// - `y`: the y coordinate of the mouse cursor position relative to the
     ///   focus window.
-    /// - Returns a 32-bit button bitmask of the current button state.
+    /// ### Return value
+    /// Returns a 32-bit button bitmask of the current button state.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetGlobalMouseState`]<br>
-    /// See also [`SDL_GetRelativeMouseState`]<br>
+    /// ### See also
+    /// - [`SDL_GetGlobalMouseState`]
+    /// - [`SDL_GetRelativeMouseState`]
     pub fn SDL_GetMouseState(
         x: *mut ::core::ffi::c_float,
         y: *mut ::core::ffi::c_float,
@@ -281,17 +328,21 @@ extern "C" {
     /// efficient function. Unless you know what you're doing and have a good
     /// reason to use this function, you probably want [`SDL_GetMouseState()`] instead.
     ///
+    /// ### Arguments
     /// - `x`: filled in with the current X coord relative to the desktop; can be
     ///   NULL.
     /// - `y`: filled in with the current Y coord relative to the desktop; can be
     ///   NULL.
-    /// - Returns the current button state as a bitmask which can be tested using
+    /// ### Return value
+    /// Returns the current button state as a bitmask which can be tested using
     ///   the SDL_BUTTON_MASK(X) macros.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_CaptureMouse`]<br>
-    /// See also [`SDL_GetMouseState`]<br>
+    /// ### See also
+    /// - [`SDL_CaptureMouse`]
+    /// - [`SDL_GetMouseState`]
     pub fn SDL_GetGlobalMouseState(
         x: *mut ::core::ffi::c_float,
         y: *mut ::core::ffi::c_float,
@@ -307,13 +358,17 @@ extern "C" {
     /// the mouse deltas since the last call to [`SDL_GetRelativeMouseState()`] or
     /// since event initialization. You can pass NULL for either `x` or `y`.
     ///
+    /// ### Arguments
     /// - `x`: a pointer filled with the last recorded x coordinate of the mouse.
     /// - `y`: a pointer filled with the last recorded y coordinate of the mouse.
-    /// - Returns a 32-bit button bitmask of the relative button state.
+    /// ### Return value
+    /// Returns a 32-bit button bitmask of the relative button state.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetMouseState`]<br>
+    /// ### See also
+    /// - [`SDL_GetMouseState`]
     pub fn SDL_GetRelativeMouseState(
         x: *mut ::core::ffi::c_float,
         y: *mut ::core::ffi::c_float,
@@ -330,14 +385,17 @@ extern "C" {
     /// Note that this function will appear to succeed, but not actually move the
     /// mouse when used over Microsoft Remote Desktop.
     ///
+    /// ### Arguments
     /// - `window`: the window to move the mouse into, or NULL for the current
     ///   mouse focus.
     /// - `x`: the x coordinate within the window.
     /// - `y`: the y coordinate within the window.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_WarpMouseGlobal`]<br>
+    /// ### See also
+    /// - [`SDL_WarpMouseGlobal`]
     pub fn SDL_WarpMouseInWindow(
         window: *mut SDL_Window,
         x: ::core::ffi::c_float,
@@ -356,14 +414,18 @@ extern "C" {
     /// Note that this function will appear to succeed, but not actually move the
     /// mouse when used over Microsoft Remote Desktop.
     ///
+    /// ### Arguments
     /// - `x`: the x coordinate.
     /// - `y`: the y coordinate.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_WarpMouseInWindow`]<br>
+    /// ### See also
+    /// - [`SDL_WarpMouseInWindow`]
     pub fn SDL_WarpMouseGlobal(
         x: ::core::ffi::c_float,
         y: ::core::ffi::c_float,
@@ -380,14 +442,18 @@ extern "C" {
     ///
     /// This function will flush any pending mouse motion for this window.
     ///
+    /// ### Arguments
     /// - `window`: the window to change.
     /// - `enabled`: true to enable relative mode, false to disable.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetWindowRelativeMouseMode`]<br>
+    /// ### See also
+    /// - [`SDL_GetWindowRelativeMouseMode`]
     pub fn SDL_SetWindowRelativeMouseMode(
         window: *mut SDL_Window,
         enabled: ::core::primitive::bool,
@@ -397,12 +463,16 @@ extern "C" {
 extern "C" {
     /// Query whether relative mouse mode is enabled for a window.
     ///
+    /// ### Arguments
     /// - `window`: the window to query.
-    /// - Returns true if relative mode is enabled for a window or false otherwise.
+    /// ### Return value
+    /// Returns true if relative mode is enabled for a window or false otherwise.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_SetWindowRelativeMouseMode`]<br>
+    /// ### See also
+    /// - [`SDL_SetWindowRelativeMouseMode`]
     pub fn SDL_GetWindowRelativeMouseMode(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
@@ -442,13 +512,17 @@ extern "C" {
     /// app, you can disable auto capture by setting the
     /// `SDL_HINT_MOUSE_AUTO_CAPTURE` hint to zero.
     ///
+    /// ### Arguments
     /// - `enabled`: true to enable capturing, false to disable.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetGlobalMouseState`]<br>
+    /// ### See also
+    /// - [`SDL_GetGlobalMouseState`]
     pub fn SDL_CaptureMouse(enabled: ::core::primitive::bool) -> ::core::primitive::bool;
 }
 
@@ -476,6 +550,7 @@ extern "C" {
     /// Also, [`SDL_CreateSystemCursor()`] is available, which provides several
     /// readily-available system cursors to pick from.
     ///
+    /// ### Arguments
     /// - `data`: the color value for each pixel of the cursor.
     /// - `mask`: the mask value for each pixel of the cursor.
     /// - `w`: the width of the cursor.
@@ -484,15 +559,18 @@ extern "C" {
     ///   mouse x position, in the range of 0 to `w` - 1.
     /// - `hot_y`: the y-axis offset from the top of the cursor image to the
     ///   mouse y position, in the range of 0 to `h` - 1.
-    /// - Returns a new cursor with the specified parameters on success or NULL on
+    /// ### Return value
+    /// Returns a new cursor with the specified parameters on success or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_CreateColorCursor`]<br>
-    /// See also [`SDL_CreateSystemCursor`]<br>
-    /// See also [`SDL_DestroyCursor`]<br>
-    /// See also [`SDL_SetCursor`]<br>
+    /// ### See also
+    /// - [`SDL_CreateColorCursor`]
+    /// - [`SDL_CreateSystemCursor`]
+    /// - [`SDL_DestroyCursor`]
+    /// - [`SDL_SetCursor`]
     pub fn SDL_CreateCursor(
         data: *const Uint8,
         mask: *const Uint8,
@@ -516,18 +594,22 @@ extern "C" {
     /// appropriate size and be used instead, if available. Otherwise, the closest
     /// smaller image will be upscaled and be used instead.
     ///
+    /// ### Arguments
     /// - `surface`: an [`SDL_Surface`] structure representing the cursor image.
     /// - `hot_x`: the x position of the cursor hot spot.
     /// - `hot_y`: the y position of the cursor hot spot.
-    /// - Returns the new cursor on success or NULL on failure; call [`SDL_GetError()`]
+    /// ### Return value
+    /// Returns the new cursor on success or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_CreateCursor`]<br>
-    /// See also [`SDL_CreateSystemCursor`]<br>
-    /// See also [`SDL_DestroyCursor`]<br>
-    /// See also [`SDL_SetCursor`]<br>
+    /// ### See also
+    /// - [`SDL_CreateCursor`]
+    /// - [`SDL_CreateSystemCursor`]
+    /// - [`SDL_DestroyCursor`]
+    /// - [`SDL_SetCursor`]
     pub fn SDL_CreateColorCursor(
         surface: *mut SDL_Surface,
         hot_x: ::core::ffi::c_int,
@@ -538,13 +620,17 @@ extern "C" {
 extern "C" {
     /// Create a system cursor.
     ///
+    /// ### Arguments
     /// - `id`: an [`SDL_SystemCursor`] enum value.
-    /// - Returns a cursor on success or NULL on failure; call [`SDL_GetError()`] for
+    /// ### Return value
+    /// Returns a cursor on success or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_DestroyCursor`]<br>
+    /// ### See also
+    /// - [`SDL_DestroyCursor`]
     pub fn SDL_CreateSystemCursor(id: SDL_SystemCursor) -> *mut SDL_Cursor;
 }
 
@@ -556,13 +642,17 @@ extern "C" {
     /// the display. SDL_SetCursor(NULL) can be used to force cursor redraw, if
     /// this is desired for any reason.
     ///
+    /// ### Arguments
     /// - `cursor`: a cursor to make active.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetCursor`]<br>
+    /// ### See also
+    /// - [`SDL_GetCursor`]
     pub fn SDL_SetCursor(cursor: *mut SDL_Cursor) -> ::core::primitive::bool;
 }
 
@@ -572,11 +662,14 @@ extern "C" {
     /// This function returns a pointer to the current cursor which is owned by the
     /// library. It is not necessary to free the cursor with [`SDL_DestroyCursor()`].
     ///
-    /// - Returns the active cursor or NULL if there is no mouse.
+    /// ### Return value
+    /// Returns the active cursor or NULL if there is no mouse.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_SetCursor`]<br>
+    /// ### See also
+    /// - [`SDL_SetCursor`]
     pub fn SDL_GetCursor() -> *mut SDL_Cursor;
 }
 
@@ -586,9 +679,11 @@ extern "C" {
     /// You do not have to call [`SDL_DestroyCursor()`] on the return value, but it is
     /// safe to do so.
     ///
-    /// - Returns the default cursor on success or NULL on failuree; call
+    /// ### Return value
+    /// Returns the default cursor on success or NULL on failuree; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetDefaultCursor() -> *mut SDL_Cursor;
 }
@@ -599,52 +694,64 @@ extern "C" {
     /// Use this function to free cursor resources created with [`SDL_CreateCursor()`],
     /// [`SDL_CreateColorCursor()`] or [`SDL_CreateSystemCursor()`].
     ///
+    /// ### Arguments
     /// - `cursor`: the cursor to free.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_CreateColorCursor`]<br>
-    /// See also [`SDL_CreateCursor`]<br>
-    /// See also [`SDL_CreateSystemCursor`]<br>
+    /// ### See also
+    /// - [`SDL_CreateColorCursor`]
+    /// - [`SDL_CreateCursor`]
+    /// - [`SDL_CreateSystemCursor`]
     pub fn SDL_DestroyCursor(cursor: *mut SDL_Cursor);
 }
 
 extern "C" {
     /// Show the cursor.
     ///
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_CursorVisible`]<br>
-    /// See also [`SDL_HideCursor`]<br>
+    /// ### See also
+    /// - [`SDL_CursorVisible`]
+    /// - [`SDL_HideCursor`]
     pub fn SDL_ShowCursor() -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Hide the cursor.
     ///
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_CursorVisible`]<br>
-    /// See also [`SDL_ShowCursor`]<br>
+    /// ### See also
+    /// - [`SDL_CursorVisible`]
+    /// - [`SDL_ShowCursor`]
     pub fn SDL_HideCursor() -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Return whether the cursor is currently being shown.
     ///
-    /// - Returns `true` if the cursor is being shown, or `false` if the cursor is
+    /// ### Return value
+    /// Returns `true` if the cursor is being shown, or `false` if the cursor is
     ///   hidden.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HideCursor`]<br>
-    /// See also [`SDL_ShowCursor`]<br>
+    /// ### See also
+    /// - [`SDL_HideCursor`]
+    /// - [`SDL_ShowCursor`]
     pub fn SDL_CursorVisible() -> ::core::primitive::bool;
 }
 
@@ -652,6 +759,7 @@ extern "C" {
 ///
 /// This is opaque data.
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]

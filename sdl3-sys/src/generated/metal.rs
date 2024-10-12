@@ -4,6 +4,7 @@ use super::video::*;
 
 /// A handle to a CAMetalLayer-backed NSView (macOS) or UIView (iOS/tvOS).
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 pub type SDL_MetalView = *mut ::core::ffi::c_void;
 
@@ -17,13 +18,17 @@ extern "C" {
     /// The returned handle can be casted directly to a NSView or UIView. To access
     /// the backing CAMetalLayer, call [`SDL_Metal_GetLayer()`].
     ///
+    /// ### Arguments
     /// - `window`: the window.
-    /// - Returns handle NSView or UIView.
+    /// ### Return value
+    /// Returns handle NSView or UIView.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_Metal_DestroyView`]<br>
-    /// See also [`SDL_Metal_GetLayer`]<br>
+    /// ### See also
+    /// - [`SDL_Metal_DestroyView`]
+    /// - [`SDL_Metal_GetLayer`]
     pub fn SDL_Metal_CreateView(window: *mut SDL_Window) -> SDL_MetalView;
 }
 
@@ -33,20 +38,26 @@ extern "C" {
     /// This should be called before [`SDL_DestroyWindow`], if [`SDL_Metal_CreateView`] was
     /// called after [`SDL_CreateWindow`].
     ///
+    /// ### Arguments
     /// - `view`: the [`SDL_MetalView`] object.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_Metal_CreateView`]<br>
+    /// ### See also
+    /// - [`SDL_Metal_CreateView`]
     pub fn SDL_Metal_DestroyView(view: SDL_MetalView);
 }
 
 extern "C" {
     /// Get a pointer to the backing CAMetalLayer for the given view.
     ///
+    /// ### Arguments
     /// - `view`: the [`SDL_MetalView`] object.
-    /// - Returns a pointer.
+    /// ### Return value
+    /// Returns a pointer.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_Metal_GetLayer(view: SDL_MetalView) -> *mut ::core::ffi::c_void;
 }

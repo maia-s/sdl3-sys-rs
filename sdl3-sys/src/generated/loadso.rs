@@ -28,16 +28,21 @@ use super::error::*;
 extern "C" {
     /// Dynamically load a shared object.
     ///
+    /// ### Arguments
     /// - `sofile`: a system-dependent name of the object file.
-    /// - Returns an opaque pointer to the object handle or NULL on failure; call
+    /// ### Return value
+    /// Returns an opaque pointer to the object handle or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_LoadFunction`]<br>
-    /// See also [`SDL_UnloadObject`]<br>
+    /// ### See also
+    /// - [`SDL_LoadFunction`]
+    /// - [`SDL_UnloadObject`]
     pub fn SDL_LoadObject(sofile: *const ::core::ffi::c_char) -> *mut SDL_SharedObject;
 }
 
@@ -56,16 +61,21 @@ extern "C" {
     ///
     /// If the requested function doesn't exist, NULL is returned.
     ///
+    /// ### Arguments
     /// - `handle`: a valid shared object handle returned by [`SDL_LoadObject()`].
     /// - `name`: the name of the function to look up.
-    /// - Returns a pointer to the function or NULL on failure; call [`SDL_GetError()`]
+    /// ### Return value
+    /// Returns a pointer to the function or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_LoadObject`]<br>
+    /// ### See also
+    /// - [`SDL_LoadObject`]
     pub fn SDL_LoadFunction(
         handle: *mut SDL_SharedObject,
         name: *const ::core::ffi::c_char,
@@ -78,23 +88,29 @@ extern "C" {
     /// Note that any pointers from this object looked up through
     /// [`SDL_LoadFunction()`] will no longer be valid.
     ///
+    /// ### Arguments
     /// - `handle`: a valid shared object handle returned by [`SDL_LoadObject()`].
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_LoadObject`]<br>
+    /// ### See also
+    /// - [`SDL_LoadObject`]
     pub fn SDL_UnloadObject(handle: *mut SDL_SharedObject);
 }
 
 /// An opaque datatype that represents a loaded shared object.
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 ///
-/// See also [`SDL_LoadObject`]<br>
-/// See also [`SDL_LoadFunction`]<br>
-/// See also [`SDL_UnloadObject`]<br>
+/// ### See also
+/// - [`SDL_LoadObject`]
+/// - [`SDL_LoadFunction`]
+/// - [`SDL_UnloadObject`]
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_SharedObject {

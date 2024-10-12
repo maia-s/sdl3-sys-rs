@@ -11,6 +11,7 @@ emit! {
     /// clue in debugging forensics and not something the app will parse in any
     /// way.
     ///
+    /// ### Availability
     /// This macro is available since SDL 3.0.0.
     pub const SDL_REVISION: &::core::ffi::CStr = c"Some arbitrary string decided at SDL build time";
 

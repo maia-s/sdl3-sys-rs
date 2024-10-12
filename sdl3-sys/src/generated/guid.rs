@@ -17,6 +17,7 @@ use super::stdinc::*;
 /// GUIDs may be platform-dependent (i.e., the same device may report different
 /// GUIDs on different operating systems).
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -28,13 +29,16 @@ pub struct SDL_GUID {
 extern "C" {
     /// Get an ASCII string representation for a given [`SDL_GUID`].
     ///
+    /// ### Arguments
     /// - `guid`: the [`SDL_GUID`] you wish to convert to string.
     /// - `pszGUID`: buffer in which to write the ASCII string.
     /// - `cbGUID`: the size of pszGUID, should be at least 33 bytes.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_StringToGUID`]<br>
+    /// ### See also
+    /// - [`SDL_StringToGUID`]
     pub fn SDL_GUIDToString(
         guid: SDL_GUID,
         pszGUID: *mut ::core::ffi::c_char,
@@ -49,11 +53,15 @@ extern "C" {
     /// an invalid GUID, the function will silently succeed, but the GUID generated
     /// will not be useful.
     ///
+    /// ### Arguments
     /// - `pchGUID`: string containing an ASCII representation of a GUID.
-    /// - Returns a [`SDL_GUID`] structure.
+    /// ### Return value
+    /// Returns a [`SDL_GUID`] structure.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GUIDToString`]<br>
+    /// ### See also
+    /// - [`SDL_GUIDToString`]
     pub fn SDL_StringToGUID(pchGUID: *const ::core::ffi::c_char) -> SDL_GUID;
 }

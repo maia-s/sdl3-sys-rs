@@ -16,12 +16,14 @@ use super::video::*;
 /// hyphens, underscores and periods. Alternatively, the whole string can be a
 /// single asterisk ("*"), which serves as an "All files" filter.
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 ///
-/// See also [`SDL_DialogFileCallback`]<br>
-/// See also [`SDL_ShowOpenFileDialog`]<br>
-/// See also [`SDL_ShowSaveFileDialog`]<br>
-/// See also [`SDL_ShowOpenFolderDialog`]<br>
+/// ### See also
+/// - [`SDL_DialogFileCallback`]
+/// - [`SDL_ShowOpenFileDialog`]
+/// - [`SDL_ShowSaveFileDialog`]
+/// - [`SDL_ShowOpenFolderDialog`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -50,16 +52,19 @@ pub struct SDL_DialogFileFilter {
 /// no filter was selected or if the platform or method doesn't support
 /// fetching the selected filter.
 ///
+/// ### Arguments
 /// - `userdata`: an app-provided pointer, for the callback's use.
 /// - `filelist`: the file(s) chosen by the user.
 /// - `filter`: index of the selected filter.
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 ///
-/// See also [`SDL_DialogFileFilter`]<br>
-/// See also [`SDL_ShowOpenFileDialog`]<br>
-/// See also [`SDL_ShowSaveFileDialog`]<br>
-/// See also [`SDL_ShowOpenFolderDialog`]<br>
+/// ### See also
+/// - [`SDL_DialogFileFilter`]
+/// - [`SDL_ShowOpenFileDialog`]
+/// - [`SDL_ShowSaveFileDialog`]
+/// - [`SDL_ShowOpenFolderDialog`]
 pub type SDL_DialogFileCallback = ::core::option::Option<
     unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
@@ -90,6 +95,7 @@ extern "C" {
     /// requires an event-handling loop. Apps that do not use SDL to handle events
     /// should add a call to [`SDL_PumpEvents`] in their main loop.
     ///
+    /// ### Arguments
     /// - `callback`: an [`SDL_DialogFileCallback`] to be invoked when the user
     ///   selects a file and accepts, or cancels the dialog, or an
     ///   error occurs. The first argument is a null-terminated list
@@ -116,12 +122,14 @@ extern "C" {
     /// - `allow_many`: if non-zero, the user will be allowed to select multiple
     ///   entries. Not all platforms support this option.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_DialogFileCallback`]<br>
-    /// See also [`SDL_DialogFileFilter`]<br>
-    /// See also [`SDL_ShowSaveFileDialog`]<br>
-    /// See also [`SDL_ShowOpenFolderDialog`]<br>
+    /// ### See also
+    /// - [`SDL_DialogFileCallback`]
+    /// - [`SDL_DialogFileFilter`]
+    /// - [`SDL_ShowSaveFileDialog`]
+    /// - [`SDL_ShowOpenFolderDialog`]
     pub fn SDL_ShowOpenFileDialog(
         callback: SDL_DialogFileCallback,
         userdata: *mut ::core::ffi::c_void,
@@ -155,6 +163,7 @@ extern "C" {
     /// requires an event-handling loop. Apps that do not use SDL to handle events
     /// should add a call to [`SDL_PumpEvents`] in their main loop.
     ///
+    /// ### Arguments
     /// - `callback`: an [`SDL_DialogFileCallback`] to be invoked when the user
     ///   selects a file and accepts, or cancels the dialog, or an
     ///   error occurs. The first argument is a null-terminated list
@@ -179,12 +188,14 @@ extern "C" {
     /// - `default_location`: the default folder or file to start the dialog at,
     ///   may be NULL. Not all platforms support this option.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_DialogFileCallback`]<br>
-    /// See also [`SDL_DialogFileFilter`]<br>
-    /// See also [`SDL_ShowOpenFileDialog`]<br>
-    /// See also [`SDL_ShowOpenFolderDialog`]<br>
+    /// ### See also
+    /// - [`SDL_DialogFileCallback`]
+    /// - [`SDL_DialogFileFilter`]
+    /// - [`SDL_ShowOpenFileDialog`]
+    /// - [`SDL_ShowOpenFolderDialog`]
     pub fn SDL_ShowSaveFileDialog(
         callback: SDL_DialogFileCallback,
         userdata: *mut ::core::ffi::c_void,
@@ -217,6 +228,7 @@ extern "C" {
     /// requires an event-handling loop. Apps that do not use SDL to handle events
     /// should add a call to [`SDL_PumpEvents`] in their main loop.
     ///
+    /// ### Arguments
     /// - `callback`: an [`SDL_DialogFileCallback`] to be invoked when the user
     ///   selects a file and accepts, or cancels the dialog, or an
     ///   error occurs. The first argument is a null-terminated list
@@ -235,11 +247,13 @@ extern "C" {
     /// - `allow_many`: if non-zero, the user will be allowed to select multiple
     ///   entries. Not all platforms support this option.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_DialogFileCallback`]<br>
-    /// See also [`SDL_ShowOpenFileDialog`]<br>
-    /// See also [`SDL_ShowSaveFileDialog`]<br>
+    /// ### See also
+    /// - [`SDL_DialogFileCallback`]
+    /// - [`SDL_ShowOpenFileDialog`]
+    /// - [`SDL_ShowSaveFileDialog`]
     pub fn SDL_ShowOpenFolderDialog(
         callback: SDL_DialogFileCallback,
         userdata: *mut ::core::ffi::c_void,

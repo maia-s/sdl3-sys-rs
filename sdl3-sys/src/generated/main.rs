@@ -13,7 +13,7 @@
 //!
 //! For more information, see:
 //!
-//! https://wiki.libsdl.org/SDL3/README/main-functions
+//! <https://wiki.libsdl.org/SDL3/README/main-functions>
 
 use super::stdinc::*;
 
@@ -54,21 +54,26 @@ extern "C" {
     /// [`SDL_APP_SUCCESS`], SDL calls [`SDL_AppQuit`] and terminates with an exit code
     /// that reports success to the platform.
     ///
+    /// ### Arguments
     /// - `appstate`: a place where the app can optionally store a pointer for
     ///   future use.
     /// - `argc`: the standard ANSI C main's argc; number of elements in `argv`.
     /// - `argv`: the standard ANSI C main's argv; array of command line
     ///   arguments.
-    /// - Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
+    /// ### Return value
+    /// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
     ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
     ///
-    /// Thread safety: This function is not thread safe.
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_AppIterate`]<br>
-    /// See also [`SDL_AppEvent`]<br>
-    /// See also [`SDL_AppQuit`]<br>
+    /// ### See also
+    /// - [`SDL_AppIterate`]
+    /// - [`SDL_AppEvent`]
+    /// - [`SDL_AppQuit`]
     pub fn SDL_AppInit(
         appstate: *mut *mut ::core::ffi::c_void,
         argc: ::core::ffi::c_int,
@@ -111,16 +116,21 @@ extern "C" {
     /// [`SDL_AppQuit`] and terminates with an exit code that reports success to the
     /// platform.
     ///
+    /// ### Arguments
     /// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
-    /// - Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
+    /// ### Return value
+    /// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
     ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
     ///
-    /// Thread safety: This function is not thread safe.
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_AppInit`]<br>
-    /// See also [`SDL_AppEvent`]<br>
+    /// ### See also
+    /// - [`SDL_AppInit`]
+    /// - [`SDL_AppEvent`]
     pub fn SDL_AppIterate(appstate: *mut ::core::ffi::c_void) -> SDL_AppResult;
 }
 
@@ -157,17 +167,22 @@ extern "C" {
     /// [`SDL_AppQuit`] and terminates with an exit code that reports success to the
     /// platform.
     ///
+    /// ### Arguments
     /// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
     /// - `event`: the new event for the app to examine.
-    /// - Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
+    /// ### Return value
+    /// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
     ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
     ///
-    /// Thread safety: This function is not thread safe.
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_AppInit`]<br>
-    /// See also [`SDL_AppIterate`]<br>
+    /// ### See also
+    /// - [`SDL_AppInit`]
+    /// - [`SDL_AppIterate`]
     pub fn SDL_AppEvent(appstate: *mut ::core::ffi::c_void, event: *mut SDL_Event)
         -> SDL_AppResult;
 }
@@ -196,25 +211,32 @@ extern "C" {
     /// function call is the last time this pointer will be provided, so any
     /// resources to it should be cleaned up here.
     ///
+    /// ### Arguments
     /// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
     /// - `result`: the result code that terminated the app (success or failure).
     ///
-    /// Thread safety: This function is not thread safe.
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_AppInit`]<br>
+    /// ### See also
+    /// - [`SDL_AppInit`]
     pub fn SDL_AppQuit(appstate: *mut ::core::ffi::c_void, result: SDL_AppResult);
 }
 
 /// The prototype for the application's main() function
 ///
+/// ### Arguments
 /// - `argc`: an ANSI-C style main function's argc.
 /// - `argv`: an ANSI-C style main function's argv.
-/// - Returns an ANSI-C main return code; generally 0 is considered successful
+/// ### Return value
+/// Returns an ANSI-C main return code; generally 0 is considered successful
 ///   program completion, and small non-zero values are considered
 ///   errors.
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 pub type SDL_main_func = ::core::option::Option<
     unsafe extern "C" fn(
@@ -244,14 +266,18 @@ extern "C" {
     /// docs/README-main-functions.md in the source tree) for a more detailed
     /// explanation.
     ///
+    /// ### Arguments
     /// - `argc`: an ANSI-C style main function's argc.
     /// - `argv`: an ANSI-C style main function's argv.
-    /// - Returns an ANSI-C main return code; generally 0 is considered successful
+    /// ### Return value
+    /// Returns an ANSI-C main return code; generally 0 is considered successful
     ///   program completion, and small non-zero values are considered
     ///   errors.
     ///
-    /// Thread safety: This is the program entry point.
+    /// ### Thread safety
+    /// This is the program entry point.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_main(
         argc: ::core::ffi::c_int,
@@ -268,9 +294,11 @@ extern "C" {
     /// will not be changed it is necessary to define [`SDL_MAIN_HANDLED`] before
     /// including SDL.h.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_Init`]<br>
+    /// ### See also
+    /// - [`SDL_Init`]
     pub fn SDL_SetMainReady();
 }
 
@@ -284,6 +312,7 @@ extern "C" {
     /// using [`SDL_main`] (like when using [`SDL_MAIN_HANDLED`]). When using this, you do
     /// *not* need [`SDL_SetMainReady()`].
     ///
+    /// ### Arguments
     /// - `argc`: the argc parameter from the application's main() function, or 0
     ///   if the platform's main-equivalent has no argc.
     /// - `argv`: the argv parameter from the application's main() function, or
@@ -293,13 +322,16 @@ extern "C" {
     ///   literally have to be `main`.
     /// - `reserved`: should be NULL (reserved for future use, will probably be
     ///   platform-specific then).
-    /// - Returns the return value from mainFunction: 0 on success, otherwise
+    /// ### Return value
+    /// Returns the return value from mainFunction: 0 on success, otherwise
     ///   failure; [`SDL_GetError()`] might have more information on the
     ///   failure.
     ///
-    /// Thread safety: Generally this is called once, near startup, from the
+    /// ### Thread safety
+    /// Generally this is called once, near startup, from the
     ///   process's initial thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_RunApp(
         argc: ::core::ffi::c_int,
@@ -321,17 +353,21 @@ extern "C" {
     /// header-only library, and you should not call this directly unless you
     /// _really_ know what you're doing.
     ///
+    /// ### Arguments
     /// - `argc`: standard Unix main argc.
     /// - `argv`: standard Unix main argv.
     /// - `appinit`: the application's [`SDL_AppInit`] function.
     /// - `appiter`: the application's [`SDL_AppIterate`] function.
     /// - `appevent`: the application's [`SDL_AppEvent`] function.
     /// - `appquit`: the application's [`SDL_AppQuit`] function.
-    /// - Returns standard Unix main return value.
+    /// ### Return value
+    /// Returns standard Unix main return value.
     ///
-    /// Thread safety: It is not safe to call this anywhere except as the only
+    /// ### Thread safety
+    /// It is not safe to call this anywhere except as the only
     ///   function call in [`SDL_main`].
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_EnterAppMainCallbacks(
         argc: ::core::ffi::c_int,
@@ -357,6 +393,7 @@ emit! {
         /// Most applications do not need to, and should not, call this directly; SDL
         /// will call it when initializing the video subsystem.
         ///
+        /// ### Arguments
         /// - `name`: the window class name, in UTF-8 encoding. If NULL, SDL
         ///   currently uses "SDL_app" but this isn't guaranteed.
         /// - `style`: the value to use in WNDCLASSEX::style. If `name` is NULL, SDL
@@ -364,9 +401,11 @@ emit! {
         ///   what is specified here.
         /// - `hInst`: the HINSTANCE to use in WNDCLASSEX::hInstance. If zero, SDL
         ///   will use `GetModuleHandle(NULL)` instead.
-        /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+        /// ### Return value
+        /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
         ///
+        /// ### Availability
         /// This function is available since SDL 3.0.0.
         pub fn SDL_RegisterApp(name: *const ::core::ffi::c_char, style: Uint32, hInst: *mut ::core::ffi::c_void) -> ::core::primitive::bool;
     }
@@ -384,6 +423,7 @@ emit! {
         /// deregistered when the registration counter in [`SDL_RegisterApp`] decrements to
         /// zero through calls to this function.
         ///
+        /// ### Availability
         /// This function is available since SDL 3.0.0.
         pub fn SDL_UnregisterApp();
     }
@@ -395,6 +435,7 @@ emit! {
     extern "C" {
         /// Callback from the application to let the suspend continue.
         ///
+        /// ### Availability
         /// This function is available since SDL 3.0.0.
         pub fn SDL_GDKSuspendComplete();
     }

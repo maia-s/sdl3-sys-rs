@@ -207,47 +207,73 @@ impl Emit for Items {
 
 impl DocComment {
     fn emit_rust(&self, ctx: &mut EmitContext, pfx: &str) -> EmitResult {
-        let lines = self.to_string();
-        let mut lines = lines.lines().peekable();
-
         fn insert_links(line: &str) -> Result<String, EmitErr> {
             let mut patched = String::new();
             let mut i0 = 0;
             let mut quoted = 0;
-            for (i, _) in line.match_indices("SDL_") {
+            for (i, _) in line.match_indices(['h', 'S']) {
+                if i < i0 {
+                    continue;
+                }
                 write!(patched, "{}", &line[i0..i])?;
                 quoted += line[i0..i].chars().filter(|c| *c == '`').count();
-                if (quoted & 1 == 0)
-                    && (i == 0
-                        || line.as_bytes()[i - 1].is_ascii_whitespace()
-                        || matches!(line.as_bytes()[i - 1], b'('))
-                {
-                    let end = i + line[i..]
-                        .find(|c: char| !c.is_ascii_alphanumeric() && c != '_')
-                        .unwrap_or(line.len() - i);
-                    if line.len() == end
-                        || line.as_bytes()[end].is_ascii_whitespace()
-                        || matches!(line.as_bytes()[end], b')' | b',' | b'.')
-                        || (line.as_bytes()[end] == b'('
-                            && line.as_bytes().get(end + 1).copied() == Some(b')'))
+                i0 = i;
+
+                if quoted & 1 == 0 {
+                    if (line[i..].starts_with("https://") || line[i..].starts_with("http://"))
+                        && (i == 0
+                            || line.as_bytes()[i - 1].is_ascii_whitespace()
+                            || (line.as_bytes()[i - 1] == b'('
+                                && line.as_bytes().get(i.saturating_sub(2)).copied() != Some(b']')))
                     {
-                        i0 = end;
-                        if line.as_bytes().get(i0).copied() == Some(b'(')
-                            && line.as_bytes().get(i0 + 1).copied() == Some(b')')
+                        i0 = i + line[i..]
+                            .find(|c: char| {
+                                c.is_ascii_whitespace()
+                                    || c == ','
+                                    || line.as_bytes().get(i - 1).copied() == Some(b'(') && c == ')'
+                            })
+                            .unwrap_or(line.len() - i);
+                        write!(patched, "<{}>", &line[i..i0])?;
+                    } else if line[i..].starts_with("SDL_")
+                        && (i == 0
+                            || line.as_bytes()[i - 1].is_ascii_whitespace()
+                            || line.as_bytes()[i - 1] == b'(')
+                    {
+                        let end = i + line[i..]
+                            .find(|c: char| !c.is_ascii_alphanumeric() && c != '_')
+                            .unwrap_or(line.len() - i);
+                        if line.len() == end
+                            || line.as_bytes()[end].is_ascii_whitespace()
+                            || matches!(line.as_bytes()[end], b')' | b',' | b'.')
+                            || (line.as_bytes()[end] == b'('
+                                && line.as_bytes().get(end + 1).copied() == Some(b')'))
                         {
-                            i0 += 2;
+                            i0 = end;
+                            if line.as_bytes().get(i0).copied() == Some(b'(')
+                                && line.as_bytes().get(i0 + 1).copied() == Some(b')')
+                            {
+                                i0 += 2;
+                            }
+                            write!(patched, "[`{}`]", &line[i..i0])?;
                         }
-                        write!(patched, "[`{}`]", &line[i..i0])?;
-                    } else {
-                        i0 = i;
                     }
-                } else {
-                    i0 = i
-                };
+                }
             }
             write!(patched, "{}", &line[i0..])?;
             Ok(patched)
         }
+
+        let lines = self.to_string();
+        let mut lines = lines.lines().peekable();
+        let mut current_section = "";
+
+        let mut section = |ctx: &mut EmitContext, name| -> EmitResult {
+            if current_section != name {
+                current_section = name;
+                writeln!(ctx, "{pfx} ### {name}")?;
+            }
+            Ok(())
+        };
 
         'lines: while let Some(line) = lines.next() {
             let line = insert_links(line)?;
@@ -271,19 +297,28 @@ impl DocComment {
                 };
                 match cmd {
                     "param" => {
+                        section(ctx, "Arguments")?;
                         let (param, rest) = rest.split_once(char::is_whitespace).unwrap();
                         let rest = rest.trim_start();
                         writeln!(ctx, "{pfx} - `{param}`: {rest}")?;
                         emit_block(ctx, line.len() - rest.len())?;
                     }
                     "returns" => {
-                        writeln!(ctx, "{pfx} - Returns {rest}")?;
+                        section(ctx, "Return value")?;
+                        writeln!(ctx, "{pfx} Returns {rest}")?;
                         emit_block(ctx, line.len() - rest.len())?;
                     }
-                    "sa" => writeln!(ctx, "{pfx} See also {}<br>", rest.trim())?,
-                    "since" => writeln!(ctx, "{pfx} {rest}")?,
+                    "sa" => {
+                        section(ctx, "See also")?;
+                        writeln!(ctx, "{pfx} - {}", rest.trim())?;
+                    }
+                    "since" => {
+                        section(ctx, "Availability")?;
+                        writeln!(ctx, "{pfx} {rest}")?;
+                    }
                     "threadsafety" => {
-                        writeln!(ctx, "{pfx} Thread safety: {rest}")?;
+                        section(ctx, "Thread safety")?;
+                        writeln!(ctx, "{pfx} {rest}")?;
                         emit_block(ctx, line.len() - rest.len())?;
                     }
                     _ => writeln!(ctx, "{pfx} {line}")?,
@@ -1141,7 +1176,6 @@ impl Emit for TypeDef {
                         .unwrap_or_default();
 
                     for variant in &e.variants {
-                        known_values.push(", ".into());
                         known_values.push(format!("[`{}`]", variant.ident.as_str()));
                         prefix = common_ident_prefix(prefix, variant.ident.as_str());
                     }
@@ -1154,11 +1188,12 @@ impl Emit for TypeDef {
                     if self.doc.is_some() {
                         writeln!(ctx, "///")?;
                     }
-                    write!(ctx, "/// sdl3-sys note: This is a `C` enum. Known values: ")?;
+                    writeln!(ctx, "/// ### `sdl3-sys` note")?;
+                    writeln!(ctx, "/// This is a `C` enum. Known values:")?;
                     let mut known_values = known_values.into_iter();
                     known_values.next();
                     for s in known_values {
-                        ctx.write_str(&s)?;
+                        writeln!(ctx, "/// - {s}")?;
                     }
                     writeln!(ctx)?;
                 }

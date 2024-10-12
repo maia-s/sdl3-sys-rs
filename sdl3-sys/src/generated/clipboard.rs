@@ -10,14 +10,18 @@ use super::error::*;
 extern "C" {
     /// Put UTF-8 text into the clipboard.
     ///
+    /// ### Arguments
     /// - `text`: the text to store in the clipboard.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetClipboardText`]<br>
-    /// See also [`SDL_HasClipboardText`]<br>
+    /// ### See also
+    /// - [`SDL_GetClipboardText`]
+    /// - [`SDL_HasClipboardText`]
     pub fn SDL_SetClipboardText(text: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
@@ -27,40 +31,50 @@ extern "C" {
     /// This functions returns empty string if there was not enough memory left for
     /// a copy of the clipboard's content.
     ///
-    /// - Returns the clipboard text on success or an empty string on failure; call
+    /// ### Return value
+    /// Returns the clipboard text on success or an empty string on failure; call
     ///   [`SDL_GetError()`] for more information. This should be freed with
     ///   [`SDL_free()`] when it is no longer needed.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasClipboardText`]<br>
-    /// See also [`SDL_SetClipboardText`]<br>
+    /// ### See also
+    /// - [`SDL_HasClipboardText`]
+    /// - [`SDL_SetClipboardText`]
     pub fn SDL_GetClipboardText() -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
     /// Query whether the clipboard exists and contains a non-empty text string.
     ///
-    /// - Returns true if the clipboard has text, or false if it does not.
+    /// ### Return value
+    /// Returns true if the clipboard has text, or false if it does not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetClipboardText`]<br>
-    /// See also [`SDL_SetClipboardText`]<br>
+    /// ### See also
+    /// - [`SDL_GetClipboardText`]
+    /// - [`SDL_SetClipboardText`]
     pub fn SDL_HasClipboardText() -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Put UTF-8 text into the primary selection.
     ///
+    /// ### Arguments
     /// - `text`: the text to store in the primary selection.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetPrimarySelectionText`]<br>
-    /// See also [`SDL_HasPrimarySelectionText`]<br>
+    /// ### See also
+    /// - [`SDL_GetPrimarySelectionText`]
+    /// - [`SDL_HasPrimarySelectionText`]
     pub fn SDL_SetPrimarySelectionText(text: *const ::core::ffi::c_char)
         -> ::core::primitive::bool;
 }
@@ -71,14 +85,17 @@ extern "C" {
     /// This functions returns empty string if there was not enough memory left for
     /// a copy of the primary selection's content.
     ///
-    /// - Returns the primary selection text on success or an empty string on
+    /// ### Return value
+    /// Returns the primary selection text on success or an empty string on
     ///   failure; call [`SDL_GetError()`] for more information. This should be
     ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasPrimarySelectionText`]<br>
-    /// See also [`SDL_SetPrimarySelectionText`]<br>
+    /// ### See also
+    /// - [`SDL_HasPrimarySelectionText`]
+    /// - [`SDL_SetPrimarySelectionText`]
     pub fn SDL_GetPrimarySelectionText() -> *mut ::core::ffi::c_char;
 }
 
@@ -86,12 +103,15 @@ extern "C" {
     /// Query whether the primary selection exists and contains a non-empty text
     /// string.
     ///
-    /// - Returns true if the primary selection has text, or false if it does not.
+    /// ### Return value
+    /// Returns true if the primary selection has text, or false if it does not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetPrimarySelectionText`]<br>
-    /// See also [`SDL_SetPrimarySelectionText`]<br>
+    /// ### See also
+    /// - [`SDL_GetPrimarySelectionText`]
+    /// - [`SDL_SetPrimarySelectionText`]
     pub fn SDL_HasPrimarySelectionText() -> ::core::primitive::bool;
 }
 
@@ -102,19 +122,23 @@ extern "C" {
 /// clipboard is cleared or new data is set. The clipboard is automatically
 /// cleared in [`SDL_Quit()`].
 ///
+/// ### Arguments
 /// - `userdata`: a pointer to provided user data.
 /// - `mime_type`: the requested mime-type.
 /// - `size`: a pointer filled in with the length of the returned data.
-/// - Returns a pointer to the data for the provided mime-type. Returning NULL
+/// ### Return value
+/// Returns a pointer to the data for the provided mime-type. Returning NULL
 ///   or setting length to 0 will cause no data to be sent to the
 ///   "receiver". It is up to the receiver to handle this. Essentially
 ///   returning no data is more or less undefined behavior and may cause
 ///   breakage in receiving applications. The returned data will not be
 ///   freed so it needs to be retained and dealt with internally.
 ///
+/// ### Availability
 /// This function is available since SDL 3.0.0.
 ///
-/// See also [`SDL_SetClipboardData`]<br>
+/// ### See also
+/// - [`SDL_SetClipboardData`]
 pub type SDL_ClipboardDataCallback = ::core::option::Option<
     unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
@@ -126,11 +150,14 @@ pub type SDL_ClipboardDataCallback = ::core::option::Option<
 /// Callback function that will be called when the clipboard is cleared, or new
 /// data is set.
 ///
+/// ### Arguments
 /// - `userdata`: a pointer to provided user data.
 ///
+/// ### Availability
 /// This function is available since SDL 3.0.0.
 ///
-/// See also [`SDL_SetClipboardData`]<br>
+/// ### See also
+/// - [`SDL_SetClipboardData`]
 pub type SDL_ClipboardCleanupCallback =
     ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
 
@@ -146,6 +173,7 @@ extern "C" {
     /// not need to be null terminated (e.g. you can directly copy a portion of a
     /// document)
     ///
+    /// ### Arguments
     /// - `callback`: a function pointer to the function that provides the
     ///   clipboard data.
     /// - `cleanup`: a function pointer to the function that cleans up the
@@ -153,14 +181,17 @@ extern "C" {
     /// - `userdata`: an opaque pointer that will be forwarded to the callbacks.
     /// - `mime_types`: a list of mime-types that are being offered.
     /// - `num_mime_types`: the number of mime-types in the mime_types list.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_ClearClipboardData`]<br>
-    /// See also [`SDL_GetClipboardData`]<br>
-    /// See also [`SDL_HasClipboardData`]<br>
+    /// ### See also
+    /// - [`SDL_ClearClipboardData`]
+    /// - [`SDL_GetClipboardData`]
+    /// - [`SDL_HasClipboardData`]
     pub fn SDL_SetClipboardData(
         callback: SDL_ClipboardDataCallback,
         cleanup: SDL_ClipboardCleanupCallback,
@@ -173,12 +204,15 @@ extern "C" {
 extern "C" {
     /// Clear the clipboard data.
     ///
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_SetClipboardData`]<br>
+    /// ### See also
+    /// - [`SDL_SetClipboardData`]
     pub fn SDL_ClearClipboardData() -> ::core::primitive::bool;
 }
 
@@ -188,16 +222,20 @@ extern "C" {
     /// The size of text data does not include the terminator, but the text is
     /// guaranteed to be null terminated.
     ///
+    /// ### Arguments
     /// - `mime_type`: the mime type to read from the clipboard.
     /// - `size`: a pointer filled in with the length of the returned data.
-    /// - Returns the retrieved data buffer or NULL on failure; call [`SDL_GetError()`]
+    /// ### Return value
+    /// Returns the retrieved data buffer or NULL on failure; call [`SDL_GetError()`]
     ///   for more information. This should be freed with [`SDL_free()`] when it
     ///   is no longer needed.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasClipboardData`]<br>
-    /// See also [`SDL_SetClipboardData`]<br>
+    /// ### See also
+    /// - [`SDL_HasClipboardData`]
+    /// - [`SDL_SetClipboardData`]
     pub fn SDL_GetClipboardData(
         mime_type: *const ::core::ffi::c_char,
         size: *mut ::core::primitive::usize,
@@ -207,29 +245,37 @@ extern "C" {
 extern "C" {
     /// Query whether there is data in the clipboard for the provided mime type.
     ///
+    /// ### Arguments
     /// - `mime_type`: the mime type to check for data for.
-    /// - Returns true if there exists data in clipboard for the provided mime type,
+    /// ### Return value
+    /// Returns true if there exists data in clipboard for the provided mime type,
     ///   false if it does not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_SetClipboardData`]<br>
-    /// See also [`SDL_GetClipboardData`]<br>
+    /// ### See also
+    /// - [`SDL_SetClipboardData`]
+    /// - [`SDL_GetClipboardData`]
     pub fn SDL_HasClipboardData(mime_type: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Retrieve the list of mime types available in the clipboard.
     ///
+    /// ### Arguments
     /// - `num_mime_types`: a pointer filled with the number of mime types, may
     ///   be NULL.
-    /// - Returns a null terminated array of strings with mime types, or NULL on
+    /// ### Return value
+    /// Returns a null terminated array of strings with mime types, or NULL on
     ///   failure; call [`SDL_GetError()`] for more information. This should be
     ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_SetClipboardData`]<br>
+    /// ### See also
+    /// - [`SDL_SetClipboardData`]
     pub fn SDL_GetClipboardMimeTypes(
         num_mime_types: *mut ::core::primitive::usize,
     ) -> *mut *mut ::core::ffi::c_char;

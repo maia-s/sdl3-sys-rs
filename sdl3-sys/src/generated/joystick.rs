@@ -46,6 +46,7 @@ use super::sensor::*;
 ///
 /// The value 0 is an invalid ID.
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 pub type SDL_JoystickID = Uint32;
 
@@ -58,9 +59,22 @@ pub type SDL_JoystickID = Uint32;
 /// This is by no means a complete list of everything that can be plugged into
 /// a computer.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_JOYSTICK_TYPE_UNKNOWN`], [`SDL_JOYSTICK_TYPE_GAMEPAD`], [`SDL_JOYSTICK_TYPE_WHEEL`], [`SDL_JOYSTICK_TYPE_ARCADE_STICK`], [`SDL_JOYSTICK_TYPE_FLIGHT_STICK`], [`SDL_JOYSTICK_TYPE_DANCE_PAD`], [`SDL_JOYSTICK_TYPE_GUITAR`], [`SDL_JOYSTICK_TYPE_DRUM_KIT`], [`SDL_JOYSTICK_TYPE_ARCADE_PAD`], [`SDL_JOYSTICK_TYPE_THROTTLE`], [`SDL_JOYSTICK_TYPE_COUNT`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_JOYSTICK_TYPE_GAMEPAD`]
+/// - [`SDL_JOYSTICK_TYPE_WHEEL`]
+/// - [`SDL_JOYSTICK_TYPE_ARCADE_STICK`]
+/// - [`SDL_JOYSTICK_TYPE_FLIGHT_STICK`]
+/// - [`SDL_JOYSTICK_TYPE_DANCE_PAD`]
+/// - [`SDL_JOYSTICK_TYPE_GUITAR`]
+/// - [`SDL_JOYSTICK_TYPE_DRUM_KIT`]
+/// - [`SDL_JOYSTICK_TYPE_ARCADE_PAD`]
+/// - [`SDL_JOYSTICK_TYPE_THROTTLE`]
+/// - [`SDL_JOYSTICK_TYPE_COUNT`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -101,9 +115,15 @@ pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 /// This is used by [`SDL_GetJoystickConnectionState`] to report how a device is
 /// connected to the system.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_JOYSTICK_CONNECTION_INVALID`], [`SDL_JOYSTICK_CONNECTION_UNKNOWN`], [`SDL_JOYSTICK_CONNECTION_WIRED`], [`SDL_JOYSTICK_CONNECTION_WIRELESS`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_JOYSTICK_CONNECTION_UNKNOWN`]
+/// - [`SDL_JOYSTICK_CONNECTION_WIRED`]
+/// - [`SDL_JOYSTICK_CONNECTION_WIRELESS`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -131,18 +151,22 @@ pub const SDL_JOYSTICK_CONNECTION_WIRELESS: SDL_JoystickConnectionState =
 
 /// The largest value an SDL_Joystick's axis can report.
 ///
+/// ### Availability
 /// This macro is available since SDL 3.0.0.
 ///
-/// See also [`SDL_JOYSTICK_AXIS_MIN`]<br>
+/// ### See also
+/// - [`SDL_JOYSTICK_AXIS_MIN`]
 pub const SDL_JOYSTICK_AXIS_MAX: ::core::primitive::i32 = 32767;
 
 /// The smallest value an SDL_Joystick's axis can report.
 ///
 /// This is a negative number!
 ///
+/// ### Availability
 /// This macro is available since SDL 3.0.0.
 ///
-/// See also [`SDL_JOYSTICK_AXIS_MAX`]<br>
+/// ### See also
+/// - [`SDL_JOYSTICK_AXIS_MAX`]
 pub const SDL_JOYSTICK_AXIS_MIN: ::core::primitive::i32 = -32768_i32;
 
 extern "C" {
@@ -152,6 +176,7 @@ extern "C" {
     /// joysticks while processing to guarantee that the joystick list won't change
     /// and joystick and gamepad events will not be delivered.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_LockJoysticks();
 }
@@ -159,6 +184,7 @@ extern "C" {
 extern "C" {
     /// Unlocking for atomic access to the joystick API.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_UnlockJoysticks();
 }
@@ -166,27 +192,34 @@ extern "C" {
 extern "C" {
     /// Return whether a joystick is currently connected.
     ///
-    /// - Returns true if a joystick is connected, false otherwise.
+    /// ### Return value
+    /// Returns true if a joystick is connected, false otherwise.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoysticks`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoysticks`]
     pub fn SDL_HasJoystick() -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Get a list of currently connected joysticks.
     ///
+    /// ### Arguments
     /// - `count`: a pointer filled in with the number of joysticks returned, may
     ///   be NULL.
-    /// - Returns a 0 terminated array of joystick instance IDs or NULL on failure;
+    /// ### Return value
+    /// Returns a 0 terminated array of joystick instance IDs or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
     ///   with [`SDL_free()`] when it is no longer needed.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasJoystick`]<br>
-    /// See also [`SDL_OpenJoystick`]<br>
+    /// ### See also
+    /// - [`SDL_HasJoystick`]
+    /// - [`SDL_OpenJoystick`]
     pub fn SDL_GetJoysticks(count: *mut ::core::ffi::c_int) -> *mut SDL_JoystickID;
 }
 
@@ -195,14 +228,18 @@ extern "C" {
     ///
     /// This can be called before any joysticks are opened.
     ///
+    /// ### Arguments
     /// - `instance_id`: the joystick instance ID.
-    /// - Returns the name of the selected joystick. If no name can be found, this
+    /// ### Return value
+    /// Returns the name of the selected joystick. If no name can be found, this
     ///   function returns NULL; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickName`]<br>
-    /// See also [`SDL_GetJoysticks`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickName`]
+    /// - [`SDL_GetJoysticks`]
     pub fn SDL_GetJoystickNameForID(instance_id: SDL_JoystickID) -> *const ::core::ffi::c_char;
 }
 
@@ -211,14 +248,18 @@ extern "C" {
     ///
     /// This can be called before any joysticks are opened.
     ///
+    /// ### Arguments
     /// - `instance_id`: the joystick instance ID.
-    /// - Returns the path of the selected joystick. If no path can be found, this
+    /// ### Return value
+    /// Returns the path of the selected joystick. If no path can be found, this
     ///   function returns NULL; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickPath`]<br>
-    /// See also [`SDL_GetJoysticks`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickPath`]
+    /// - [`SDL_GetJoysticks`]
     pub fn SDL_GetJoystickPathForID(instance_id: SDL_JoystickID) -> *const ::core::ffi::c_char;
 }
 
@@ -227,13 +268,17 @@ extern "C" {
     ///
     /// This can be called before any joysticks are opened.
     ///
+    /// ### Arguments
     /// - `instance_id`: the joystick instance ID.
-    /// - Returns the player index of a joystick, or -1 if it's not available.
+    /// ### Return value
+    /// Returns the player index of a joystick, or -1 if it's not available.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickPlayerIndex`]<br>
-    /// See also [`SDL_GetJoysticks`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickPlayerIndex`]
+    /// - [`SDL_GetJoysticks`]
     pub fn SDL_GetJoystickPlayerIndexForID(instance_id: SDL_JoystickID) -> ::core::ffi::c_int;
 }
 
@@ -242,14 +287,18 @@ extern "C" {
     ///
     /// This can be called before any joysticks are opened.
     ///
+    /// ### Arguments
     /// - `instance_id`: the joystick instance ID.
-    /// - Returns the GUID of the selected joystick. If called with an invalid
+    /// ### Return value
+    /// Returns the GUID of the selected joystick. If called with an invalid
     ///   instance_id, this function returns a zero GUID.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickGUID`]<br>
-    /// See also [`SDL_GUIDToString`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickGUID`]
+    /// - [`SDL_GUIDToString`]
     pub fn SDL_GetJoystickGUIDForID(instance_id: SDL_JoystickID) -> SDL_GUID;
 }
 
@@ -259,14 +308,18 @@ extern "C" {
     /// This can be called before any joysticks are opened. If the vendor ID isn't
     /// available this function returns 0.
     ///
+    /// ### Arguments
     /// - `instance_id`: the joystick instance ID.
-    /// - Returns the USB vendor ID of the selected joystick. If called with an
+    /// ### Return value
+    /// Returns the USB vendor ID of the selected joystick. If called with an
     ///   invalid instance_id, this function returns 0.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickVendor`]<br>
-    /// See also [`SDL_GetJoysticks`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickVendor`]
+    /// - [`SDL_GetJoysticks`]
     pub fn SDL_GetJoystickVendorForID(instance_id: SDL_JoystickID) -> Uint16;
 }
 
@@ -276,14 +329,18 @@ extern "C" {
     /// This can be called before any joysticks are opened. If the product ID isn't
     /// available this function returns 0.
     ///
+    /// ### Arguments
     /// - `instance_id`: the joystick instance ID.
-    /// - Returns the USB product ID of the selected joystick. If called with an
+    /// ### Return value
+    /// Returns the USB product ID of the selected joystick. If called with an
     ///   invalid instance_id, this function returns 0.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickProduct`]<br>
-    /// See also [`SDL_GetJoysticks`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickProduct`]
+    /// - [`SDL_GetJoysticks`]
     pub fn SDL_GetJoystickProductForID(instance_id: SDL_JoystickID) -> Uint16;
 }
 
@@ -293,14 +350,18 @@ extern "C" {
     /// This can be called before any joysticks are opened. If the product version
     /// isn't available this function returns 0.
     ///
+    /// ### Arguments
     /// - `instance_id`: the joystick instance ID.
-    /// - Returns the product version of the selected joystick. If called with an
+    /// ### Return value
+    /// Returns the product version of the selected joystick. If called with an
     ///   invalid instance_id, this function returns 0.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickProductVersion`]<br>
-    /// See also [`SDL_GetJoysticks`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickProductVersion`]
+    /// - [`SDL_GetJoysticks`]
     pub fn SDL_GetJoystickProductVersionForID(instance_id: SDL_JoystickID) -> Uint16;
 }
 
@@ -309,15 +370,19 @@ extern "C" {
     ///
     /// This can be called before any joysticks are opened.
     ///
+    /// ### Arguments
     /// - `instance_id`: the joystick instance ID.
-    /// - Returns the [`SDL_JoystickType`] of the selected joystick. If called with an
+    /// ### Return value
+    /// Returns the [`SDL_JoystickType`] of the selected joystick. If called with an
     ///   invalid instance_id, this function returns
     ///   `SDL_JOYSTICK_TYPE_UNKNOWN`.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickType`]<br>
-    /// See also [`SDL_GetJoysticks`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickType`]
+    /// - [`SDL_GetJoysticks`]
     pub fn SDL_GetJoystickTypeForID(instance_id: SDL_JoystickID) -> SDL_JoystickType;
 }
 
@@ -327,23 +392,30 @@ extern "C" {
     /// The joystick subsystem must be initialized before a joystick can be opened
     /// for use.
     ///
+    /// ### Arguments
     /// - `instance_id`: the joystick instance ID.
-    /// - Returns a joystick identifier or NULL on failure; call [`SDL_GetError()`] for
+    /// ### Return value
+    /// Returns a joystick identifier or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_CloseJoystick`]<br>
+    /// ### See also
+    /// - [`SDL_CloseJoystick`]
     pub fn SDL_OpenJoystick(instance_id: SDL_JoystickID) -> *mut SDL_Joystick;
 }
 
 extern "C" {
     /// Get the [`SDL_Joystick`] associated with an instance ID, if it has been opened.
     ///
+    /// ### Arguments
     /// - `instance_id`: the instance ID to get the [`SDL_Joystick`] for.
-    /// - Returns an [`SDL_Joystick`] on success or NULL on failure or if it hasn't been
+    /// ### Return value
+    /// Returns an [`SDL_Joystick`] on success or NULL on failure or if it hasn't been
     ///   opened yet; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickFromID(instance_id: SDL_JoystickID) -> *mut SDL_Joystick;
 }
@@ -351,22 +423,28 @@ extern "C" {
 extern "C" {
     /// Get the [`SDL_Joystick`] associated with a player index.
     ///
+    /// ### Arguments
     /// - `player_index`: the player index to get the [`SDL_Joystick`] for.
-    /// - Returns an [`SDL_Joystick`] on success or NULL on failure; call [`SDL_GetError()`]
+    /// ### Return value
+    /// Returns an [`SDL_Joystick`] on success or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickPlayerIndex`]<br>
-    /// See also [`SDL_SetJoystickPlayerIndex`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickPlayerIndex`]
+    /// - [`SDL_SetJoystickPlayerIndex`]
     pub fn SDL_GetJoystickFromPlayerIndex(player_index: ::core::ffi::c_int) -> *mut SDL_Joystick;
 }
 
 /// The structure that describes a virtual joystick touchpad.
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 ///
-/// See also [`SDL_VirtualJoystickDesc`]<br>
+/// ### See also
+/// - [`SDL_VirtualJoystickDesc`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -378,9 +456,11 @@ pub struct SDL_VirtualJoystickTouchpadDesc {
 
 /// The structure that describes a virtual joystick sensor.
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 ///
-/// See also [`SDL_VirtualJoystickDesc`]<br>
+/// ### See also
+/// - [`SDL_VirtualJoystickDesc`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -396,12 +476,14 @@ pub struct SDL_VirtualJoystickSensorDesc {
 /// This structure should be initialized using [`SDL_INIT_INTERFACE()`]. All
 /// elements of this structure are optional.
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 ///
-/// See also [`SDL_AttachVirtualJoystick`]<br>
-/// See also [`SDL_INIT_INTERFACE`]<br>
-/// See also [`SDL_VirtualJoystickSensorDesc`]<br>
-/// See also [`SDL_VirtualJoystickTouchpadDesc`]<br>
+/// ### See also
+/// - [`SDL_AttachVirtualJoystick`]
+/// - [`SDL_INIT_INTERFACE`]
+/// - [`SDL_VirtualJoystickSensorDesc`]
+/// - [`SDL_VirtualJoystickTouchpadDesc`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -526,36 +608,47 @@ const _: () = ::core::assert!(
 extern "C" {
     /// Attach a new virtual joystick.
     ///
+    /// ### Arguments
     /// - `desc`: joystick description, initialized using [`SDL_INIT_INTERFACE()`].
-    /// - Returns the joystick instance ID, or 0 on failure; call [`SDL_GetError()`] for
+    /// ### Return value
+    /// Returns the joystick instance ID, or 0 on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_DetachVirtualJoystick`]<br>
+    /// ### See also
+    /// - [`SDL_DetachVirtualJoystick`]
     pub fn SDL_AttachVirtualJoystick(desc: *const SDL_VirtualJoystickDesc) -> SDL_JoystickID;
 }
 
 extern "C" {
     /// Detach a virtual joystick.
     ///
+    /// ### Arguments
     /// - `instance_id`: the joystick instance ID, previously returned from
     ///   [`SDL_AttachVirtualJoystick()`].
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_AttachVirtualJoystick`]<br>
+    /// ### See also
+    /// - [`SDL_AttachVirtualJoystick`]
     pub fn SDL_DetachVirtualJoystick(instance_id: SDL_JoystickID) -> ::core::primitive::bool;
 }
 
 extern "C" {
     /// Query whether or not a joystick is virtual.
     ///
+    /// ### Arguments
     /// - `instance_id`: the joystick instance ID.
-    /// - Returns true if the joystick is virtual, false otherwise.
+    /// ### Return value
+    /// Returns true if the joystick is virtual, false otherwise.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_IsJoystickVirtual(instance_id: SDL_JoystickID) -> ::core::primitive::bool;
 }
@@ -573,12 +666,15 @@ extern "C" {
     /// range of Sint16. For example, a trigger at rest would have the value of
     /// `SDL_JOYSTICK_AXIS_MIN`.
     ///
+    /// ### Arguments
     /// - `joystick`: the virtual joystick on which to set state.
     /// - `axis`: the index of the axis on the virtual joystick to update.
     /// - `value`: the new value for the specified axis.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualAxis(
         joystick: *mut SDL_Joystick,
@@ -596,13 +692,16 @@ extern "C" {
     /// the following: [`SDL_PollEvent`], [`SDL_PumpEvents`], [`SDL_WaitEventTimeout`],
     /// [`SDL_WaitEvent`].
     ///
+    /// ### Arguments
     /// - `joystick`: the virtual joystick on which to set state.
     /// - `ball`: the index of the ball on the virtual joystick to update.
     /// - `xrel`: the relative motion on the X axis.
     /// - `yrel`: the relative motion on the Y axis.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualBall(
         joystick: *mut SDL_Joystick,
@@ -621,12 +720,15 @@ extern "C" {
     /// the following: [`SDL_PollEvent`], [`SDL_PumpEvents`], [`SDL_WaitEventTimeout`],
     /// [`SDL_WaitEvent`].
     ///
+    /// ### Arguments
     /// - `joystick`: the virtual joystick on which to set state.
     /// - `button`: the index of the button on the virtual joystick to update.
     /// - `down`: true if the button is pressed, false otherwise.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualButton(
         joystick: *mut SDL_Joystick,
@@ -644,12 +746,15 @@ extern "C" {
     /// the following: [`SDL_PollEvent`], [`SDL_PumpEvents`], [`SDL_WaitEventTimeout`],
     /// [`SDL_WaitEvent`].
     ///
+    /// ### Arguments
     /// - `joystick`: the virtual joystick on which to set state.
     /// - `hat`: the index of the hat on the virtual joystick to update.
     /// - `value`: the new value for the specified hat.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualHat(
         joystick: *mut SDL_Joystick,
@@ -667,6 +772,7 @@ extern "C" {
     /// the following: [`SDL_PollEvent`], [`SDL_PumpEvents`], [`SDL_WaitEventTimeout`],
     /// [`SDL_WaitEvent`].
     ///
+    /// ### Arguments
     /// - `joystick`: the virtual joystick on which to set state.
     /// - `touchpad`: the index of the touchpad on the virtual joystick to
     ///   update.
@@ -677,9 +783,11 @@ extern "C" {
     /// - `y`: the y coordinate of the finger on the touchpad, normalized 0 to 1,
     ///   with the origin in the upper left.
     /// - `pressure`: the pressure of the finger.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickVirtualTouchpad(
         joystick: *mut SDL_Joystick,
@@ -701,15 +809,18 @@ extern "C" {
     /// the following: [`SDL_PollEvent`], [`SDL_PumpEvents`], [`SDL_WaitEventTimeout`],
     /// [`SDL_WaitEvent`].
     ///
+    /// ### Arguments
     /// - `joystick`: the virtual joystick on which to set state.
     /// - `type`: the type of the sensor on the virtual joystick to update.
     /// - `sensor_timestamp`: a 64-bit timestamp in nanoseconds associated with
     ///   the sensor reading.
     /// - `data`: the data associated with the sensor reading.
     /// - `num_values`: the number of values pointed to by `data`.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_SendJoystickVirtualSensorData(
         joystick: *mut SDL_Joystick,
@@ -736,10 +847,13 @@ extern "C" {
     /// - `SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN`: true if this joystick has
     ///   simple trigger rumble
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] obtained from [`SDL_OpenJoystick()`].
-    /// - Returns a valid property ID on success or 0 on failure; call
+    /// ### Return value
+    /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickProperties(joystick: *mut SDL_Joystick) -> SDL_PropertiesID;
 }
@@ -759,26 +873,34 @@ pub const SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN: &::core::ffi::CStr =
 extern "C" {
     /// Get the implementation dependent name of a joystick.
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] obtained from [`SDL_OpenJoystick()`].
-    /// - Returns the name of the selected joystick. If no name can be found, this
+    /// ### Return value
+    /// Returns the name of the selected joystick. If no name can be found, this
     ///   function returns NULL; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickNameForID`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickNameForID`]
     pub fn SDL_GetJoystickName(joystick: *mut SDL_Joystick) -> *const ::core::ffi::c_char;
 }
 
 extern "C" {
     /// Get the implementation dependent path of a joystick.
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] obtained from [`SDL_OpenJoystick()`].
-    /// - Returns the path of the selected joystick. If no path can be found, this
+    /// ### Return value
+    /// Returns the path of the selected joystick. If no path can be found, this
     ///   function returns NULL; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickPathForID`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickPathForID`]
     pub fn SDL_GetJoystickPath(joystick: *mut SDL_Joystick) -> *const ::core::ffi::c_char;
 }
 
@@ -788,27 +910,35 @@ extern "C" {
     /// For XInput controllers this returns the XInput user index. Many joysticks
     /// will not be able to supply this information.
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] obtained from [`SDL_OpenJoystick()`].
-    /// - Returns the player index, or -1 if it's not available.
+    /// ### Return value
+    /// Returns the player index, or -1 if it's not available.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_SetJoystickPlayerIndex`]<br>
+    /// ### See also
+    /// - [`SDL_SetJoystickPlayerIndex`]
     pub fn SDL_GetJoystickPlayerIndex(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
 }
 
 extern "C" {
     /// Set the player index of an opened joystick.
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] obtained from [`SDL_OpenJoystick()`].
     /// - `player_index`: player index to assign to this joystick, or -1 to clear
     ///   the player index and turn off player LEDs.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickPlayerIndex`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickPlayerIndex`]
     pub fn SDL_SetJoystickPlayerIndex(
         joystick: *mut SDL_Joystick,
         player_index: ::core::ffi::c_int,
@@ -820,15 +950,19 @@ extern "C" {
     ///
     /// This function requires an open joystick.
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] obtained from [`SDL_OpenJoystick()`].
-    /// - Returns the GUID of the given joystick. If called on an invalid index,
+    /// ### Return value
+    /// Returns the GUID of the given joystick. If called on an invalid index,
     ///   this function returns a zero GUID; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickGUIDForID`]<br>
-    /// See also [`SDL_GUIDToString`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickGUIDForID`]
+    /// - [`SDL_GUIDToString`]
     pub fn SDL_GetJoystickGUID(joystick: *mut SDL_Joystick) -> SDL_GUID;
 }
 
@@ -837,12 +971,16 @@ extern "C" {
     ///
     /// If the vendor ID isn't available this function returns 0.
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] obtained from [`SDL_OpenJoystick()`].
-    /// - Returns the USB vendor ID of the selected joystick, or 0 if unavailable.
+    /// ### Return value
+    /// Returns the USB vendor ID of the selected joystick, or 0 if unavailable.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickVendorForID`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickVendorForID`]
     pub fn SDL_GetJoystickVendor(joystick: *mut SDL_Joystick) -> Uint16;
 }
 
@@ -851,12 +989,16 @@ extern "C" {
     ///
     /// If the product ID isn't available this function returns 0.
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] obtained from [`SDL_OpenJoystick()`].
-    /// - Returns the USB product ID of the selected joystick, or 0 if unavailable.
+    /// ### Return value
+    /// Returns the USB product ID of the selected joystick, or 0 if unavailable.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickProductForID`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickProductForID`]
     pub fn SDL_GetJoystickProduct(joystick: *mut SDL_Joystick) -> Uint16;
 }
 
@@ -865,12 +1007,16 @@ extern "C" {
     ///
     /// If the product version isn't available this function returns 0.
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] obtained from [`SDL_OpenJoystick()`].
-    /// - Returns the product version of the selected joystick, or 0 if unavailable.
+    /// ### Return value
+    /// Returns the product version of the selected joystick, or 0 if unavailable.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickProductVersionForID`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickProductVersionForID`]
     pub fn SDL_GetJoystickProductVersion(joystick: *mut SDL_Joystick) -> Uint16;
 }
 
@@ -879,10 +1025,13 @@ extern "C" {
     ///
     /// If the firmware version isn't available this function returns 0.
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] obtained from [`SDL_OpenJoystick()`].
-    /// - Returns the firmware version of the selected joystick, or 0 if
+    /// ### Return value
+    /// Returns the firmware version of the selected joystick, or 0 if
     ///   unavailable.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickFirmwareVersion(joystick: *mut SDL_Joystick) -> Uint16;
 }
@@ -892,10 +1041,13 @@ extern "C" {
     ///
     /// Returns the serial number of the joystick, or NULL if it is not available.
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] obtained from [`SDL_OpenJoystick()`].
-    /// - Returns the serial number of the selected joystick, or NULL if
+    /// ### Return value
+    /// Returns the serial number of the selected joystick, or NULL if
     ///   unavailable.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickSerial(joystick: *mut SDL_Joystick) -> *const ::core::ffi::c_char;
 }
@@ -903,18 +1055,23 @@ extern "C" {
 extern "C" {
     /// Get the type of an opened joystick.
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] obtained from [`SDL_OpenJoystick()`].
-    /// - Returns the [`SDL_JoystickType`] of the selected joystick.
+    /// ### Return value
+    /// Returns the [`SDL_JoystickType`] of the selected joystick.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickTypeForID`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickTypeForID`]
     pub fn SDL_GetJoystickType(joystick: *mut SDL_Joystick) -> SDL_JoystickType;
 }
 
 extern "C" {
     /// Get the device information encoded in a [`SDL_GUID`] structure.
     ///
+    /// ### Arguments
     /// - `guid`: the [`SDL_GUID`] you wish to get info about.
     /// - `vendor`: a pointer filled in with the device VID, or 0 if not
     ///   available.
@@ -925,9 +1082,11 @@ extern "C" {
     /// - `crc16`: a pointer filled in with a CRC used to distinguish different
     ///   products with the same VID/PID, or 0 if not available.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickGUIDForID`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickGUIDForID`]
     pub fn SDL_GetJoystickGUIDInfo(
         guid: SDL_GUID,
         vendor: *mut Uint16,
@@ -940,10 +1099,13 @@ extern "C" {
 extern "C" {
     /// Get the status of a specified joystick.
     ///
+    /// ### Arguments
     /// - `joystick`: the joystick to query.
-    /// - Returns true if the joystick has been opened, false if it has not; call
+    /// ### Return value
+    /// Returns true if the joystick has been opened, false if it has not; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_JoystickConnected(joystick: *mut SDL_Joystick) -> ::core::primitive::bool;
 }
@@ -951,10 +1113,13 @@ extern "C" {
 extern "C" {
     /// Get the instance ID of an opened joystick.
     ///
+    /// ### Arguments
     /// - `joystick`: an [`SDL_Joystick`] structure containing joystick information.
-    /// - Returns the instance ID of the specified joystick on success or 0 on
+    /// ### Return value
+    /// Returns the instance ID of the specified joystick on success or 0 on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickID(joystick: *mut SDL_Joystick) -> SDL_JoystickID;
 }
@@ -966,16 +1131,20 @@ extern "C" {
     /// separate buttons or a POV hat, and not axes, but all of this is up to the
     /// device and platform.
     ///
+    /// ### Arguments
     /// - `joystick`: an [`SDL_Joystick`] structure containing joystick information.
-    /// - Returns the number of axis controls/number of axes on success or -1 on
+    /// ### Return value
+    /// Returns the number of axis controls/number of axes on success or -1 on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickAxis`]<br>
-    /// See also [`SDL_GetNumJoystickBalls`]<br>
-    /// See also [`SDL_GetNumJoystickButtons`]<br>
-    /// See also [`SDL_GetNumJoystickHats`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickAxis`]
+    /// - [`SDL_GetNumJoystickBalls`]
+    /// - [`SDL_GetNumJoystickButtons`]
+    /// - [`SDL_GetNumJoystickHats`]
     pub fn SDL_GetNumJoystickAxes(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
 }
 
@@ -987,48 +1156,60 @@ extern "C" {
     ///
     /// Most joysticks do not have trackballs.
     ///
+    /// ### Arguments
     /// - `joystick`: an [`SDL_Joystick`] structure containing joystick information.
-    /// - Returns the number of trackballs on success or -1 on failure; call
+    /// ### Return value
+    /// Returns the number of trackballs on success or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickBall`]<br>
-    /// See also [`SDL_GetNumJoystickAxes`]<br>
-    /// See also [`SDL_GetNumJoystickButtons`]<br>
-    /// See also [`SDL_GetNumJoystickHats`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickBall`]
+    /// - [`SDL_GetNumJoystickAxes`]
+    /// - [`SDL_GetNumJoystickButtons`]
+    /// - [`SDL_GetNumJoystickHats`]
     pub fn SDL_GetNumJoystickBalls(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
 }
 
 extern "C" {
     /// Get the number of POV hats on a joystick.
     ///
+    /// ### Arguments
     /// - `joystick`: an [`SDL_Joystick`] structure containing joystick information.
-    /// - Returns the number of POV hats on success or -1 on failure; call
+    /// ### Return value
+    /// Returns the number of POV hats on success or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickHat`]<br>
-    /// See also [`SDL_GetNumJoystickAxes`]<br>
-    /// See also [`SDL_GetNumJoystickBalls`]<br>
-    /// See also [`SDL_GetNumJoystickButtons`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickHat`]
+    /// - [`SDL_GetNumJoystickAxes`]
+    /// - [`SDL_GetNumJoystickBalls`]
+    /// - [`SDL_GetNumJoystickButtons`]
     pub fn SDL_GetNumJoystickHats(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
 }
 
 extern "C" {
     /// Get the number of buttons on a joystick.
     ///
+    /// ### Arguments
     /// - `joystick`: an [`SDL_Joystick`] structure containing joystick information.
-    /// - Returns the number of buttons on success or -1 on failure; call
+    /// ### Return value
+    /// Returns the number of buttons on success or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetJoystickButton`]<br>
-    /// See also [`SDL_GetNumJoystickAxes`]<br>
-    /// See also [`SDL_GetNumJoystickBalls`]<br>
-    /// See also [`SDL_GetNumJoystickHats`]<br>
+    /// ### See also
+    /// - [`SDL_GetJoystickButton`]
+    /// - [`SDL_GetNumJoystickAxes`]
+    /// - [`SDL_GetNumJoystickBalls`]
+    /// - [`SDL_GetNumJoystickHats`]
     pub fn SDL_GetNumJoystickButtons(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
 }
 
@@ -1039,12 +1220,15 @@ extern "C" {
     /// yourself and check the state of the joystick when you want joystick
     /// information.
     ///
+    /// ### Arguments
     /// - `enabled`: whether to process joystick events or not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_JoystickEventsEnabled`]<br>
-    /// See also [`SDL_UpdateJoysticks`]<br>
+    /// ### See also
+    /// - [`SDL_JoystickEventsEnabled`]
+    /// - [`SDL_UpdateJoysticks`]
     pub fn SDL_SetJoystickEventsEnabled(enabled: ::core::primitive::bool);
 }
 
@@ -1055,11 +1239,14 @@ extern "C" {
     /// yourself and check the state of the joystick when you want joystick
     /// information.
     ///
-    /// - Returns true if joystick events are being processed, false otherwise.
+    /// ### Return value
+    /// Returns true if joystick events are being processed, false otherwise.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_SetJoystickEventsEnabled`]<br>
+    /// ### See also
+    /// - [`SDL_SetJoystickEventsEnabled`]
     pub fn SDL_JoystickEventsEnabled() -> ::core::primitive::bool;
 }
 
@@ -1069,6 +1256,7 @@ extern "C" {
     /// This is called automatically by the event loop if any joystick events are
     /// enabled.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_UpdateJoysticks();
 }
@@ -1086,14 +1274,18 @@ extern "C" {
     /// 32767) representing the current position of the axis. It may be necessary
     /// to impose certain tolerances on these values to account for jitter.
     ///
+    /// ### Arguments
     /// - `joystick`: an [`SDL_Joystick`] structure containing joystick information.
     /// - `axis`: the axis to query; the axis indices start at index 0.
-    /// - Returns a 16-bit signed integer representing the current position of the
+    /// ### Return value
+    /// Returns a 16-bit signed integer representing the current position of the
     ///   axis or 0 on failure; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetNumJoystickAxes`]<br>
+    /// ### See also
+    /// - [`SDL_GetNumJoystickAxes`]
     pub fn SDL_GetJoystickAxis(joystick: *mut SDL_Joystick, axis: ::core::ffi::c_int) -> Sint16;
 }
 
@@ -1104,11 +1296,14 @@ extern "C" {
     ///
     /// The axis indices start at index 0.
     ///
+    /// ### Arguments
     /// - `joystick`: an [`SDL_Joystick`] structure containing joystick information.
     /// - `axis`: the axis to query; the axis indices start at index 0.
     /// - `state`: upon return, the initial value is supplied here.
-    /// - Returns true if this axis has any initial value, or false if not.
+    /// ### Return value
+    /// Returns true if this axis has any initial value, or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickAxisInitialState(
         joystick: *mut SDL_Joystick,
@@ -1125,16 +1320,20 @@ extern "C" {
     ///
     /// Most joysticks do not have trackballs.
     ///
+    /// ### Arguments
     /// - `joystick`: the [`SDL_Joystick`] to query.
     /// - `ball`: the ball index to query; ball indices start at index 0.
     /// - `dx`: stores the difference in the x axis position since the last poll.
     /// - `dy`: stores the difference in the y axis position since the last poll.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetNumJoystickBalls`]<br>
+    /// ### See also
+    /// - [`SDL_GetNumJoystickBalls`]
     pub fn SDL_GetJoystickBall(
         joystick: *mut SDL_Joystick,
         ball: ::core::ffi::c_int,
@@ -1148,13 +1347,17 @@ extern "C" {
     ///
     /// The returned value will be one of the `SDL_HAT_*` values.
     ///
+    /// ### Arguments
     /// - `joystick`: an [`SDL_Joystick`] structure containing joystick information.
     /// - `hat`: the hat index to get the state from; indices start at index 0.
-    /// - Returns the current hat position.
+    /// ### Return value
+    /// Returns the current hat position.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetNumJoystickHats`]<br>
+    /// ### See also
+    /// - [`SDL_GetNumJoystickHats`]
     pub fn SDL_GetJoystickHat(joystick: *mut SDL_Joystick, hat: ::core::ffi::c_int) -> Uint8;
 }
 
@@ -1183,14 +1386,18 @@ pub const SDL_HAT_LEFTDOWN: ::core::primitive::u8 =
 extern "C" {
     /// Get the current state of a button on a joystick.
     ///
+    /// ### Arguments
     /// - `joystick`: an [`SDL_Joystick`] structure containing joystick information.
     /// - `button`: the button index to get the state from; indices start at
     ///   index 0.
-    /// - Returns true if the button is pressed, false otherwise.
+    /// ### Return value
+    /// Returns true if the button is pressed, false otherwise.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetNumJoystickButtons`]<br>
+    /// ### See also
+    /// - [`SDL_GetNumJoystickButtons`]
     pub fn SDL_GetJoystickButton(
         joystick: *mut SDL_Joystick,
         button: ::core::ffi::c_int,
@@ -1206,14 +1413,17 @@ extern "C" {
     /// This function requires you to process SDL events or call
     /// [`SDL_UpdateJoysticks()`] to update rumble state.
     ///
+    /// ### Arguments
     /// - `joystick`: the joystick to vibrate.
     /// - `low_frequency_rumble`: the intensity of the low frequency (left)
     ///   rumble motor, from 0 to 0xFFFF.
     /// - `high_frequency_rumble`: the intensity of the high frequency (right)
     ///   rumble motor, from 0 to 0xFFFF.
     /// - `duration_ms`: the duration of the rumble effect, in milliseconds.
-    /// - Returns true, or false if rumble isn't supported on this joystick.
+    /// ### Return value
+    /// Returns true, or false if rumble isn't supported on this joystick.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_RumbleJoystick(
         joystick: *mut SDL_Joystick,
@@ -1237,18 +1447,22 @@ extern "C" {
     /// This function requires you to process SDL events or call
     /// [`SDL_UpdateJoysticks()`] to update rumble state.
     ///
+    /// ### Arguments
     /// - `joystick`: the joystick to vibrate.
     /// - `left_rumble`: the intensity of the left trigger rumble motor, from 0
     ///   to 0xFFFF.
     /// - `right_rumble`: the intensity of the right trigger rumble motor, from 0
     ///   to 0xFFFF.
     /// - `duration_ms`: the duration of the rumble effect, in milliseconds.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_RumbleJoystick`]<br>
+    /// ### See also
+    /// - [`SDL_RumbleJoystick`]
     pub fn SDL_RumbleJoystickTriggers(
         joystick: *mut SDL_Joystick,
         left_rumble: Uint16,
@@ -1266,13 +1480,16 @@ extern "C" {
     /// For joysticks with a single color LED, the maximum of the RGB values will
     /// be used as the LED brightness.
     ///
+    /// ### Arguments
     /// - `joystick`: the joystick to update.
     /// - `red`: the intensity of the red LED.
     /// - `green`: the intensity of the green LED.
     /// - `blue`: the intensity of the blue LED.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_SetJoystickLED(
         joystick: *mut SDL_Joystick,
@@ -1285,12 +1502,15 @@ extern "C" {
 extern "C" {
     /// Send a joystick specific effect packet.
     ///
+    /// ### Arguments
     /// - `joystick`: the joystick to affect.
     /// - `data`: the data to send to the joystick.
     /// - `size`: the size of the data to send to the joystick.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_SendJoystickEffect(
         joystick: *mut SDL_Joystick,
@@ -1302,22 +1522,28 @@ extern "C" {
 extern "C" {
     /// Close a joystick previously opened with [`SDL_OpenJoystick()`].
     ///
+    /// ### Arguments
     /// - `joystick`: the joystick device to close.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_OpenJoystick`]<br>
+    /// ### See also
+    /// - [`SDL_OpenJoystick`]
     pub fn SDL_CloseJoystick(joystick: *mut SDL_Joystick);
 }
 
 extern "C" {
     /// Get the connection state of a joystick.
     ///
+    /// ### Arguments
     /// - `joystick`: the joystick to query.
-    /// - Returns the connection state on success or
+    /// ### Return value
+    /// Returns the connection state on success or
     ///   `SDL_JOYSTICK_CONNECTION_INVALID` on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickConnectionState(
         joystick: *mut SDL_Joystick,
@@ -1333,14 +1559,17 @@ extern "C" {
     /// not uncommon for older batteries to lose stored power much faster than it
     /// reports, or completely drain when reporting it has 20 percent left, etc.
     ///
+    /// ### Arguments
     /// - `joystick`: the joystick to query.
     /// - `percent`: a pointer filled in with the percentage of battery life
     ///   left, between 0 and 100, or NULL to ignore. This will be
     ///   filled in with -1 we can't determine a value or there is no
     ///   battery.
-    /// - Returns the current battery state or `SDL_POWERSTATE_ERROR` on failure;
+    /// ### Return value
+    /// Returns the current battery state or `SDL_POWERSTATE_ERROR` on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetJoystickPowerInfo(
         joystick: *mut SDL_Joystick,
@@ -1352,6 +1581,7 @@ extern "C" {
 ///
 /// This is opaque data.
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[non_exhaustive]

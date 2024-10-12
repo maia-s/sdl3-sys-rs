@@ -21,11 +21,13 @@ use super::stdinc::*;
 /// consistent as long as SDL can recognize a tool to be the same pen; but if a
 /// pen physically leaves the area and returns, it might get a new ID.
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 pub type SDL_PenID = Uint32;
 
 /// Pen input flags, as reported by various pen events' `pen_state` field.
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 pub type SDL_PenInputFlags = Uint32;
 
@@ -62,9 +64,19 @@ pub const SDL_PEN_INPUT_ERASER_TIP: ::core::primitive::u32 = 1073741824_u32;
 ///
 /// `SDL_sinf(xtilt * SDL_PI_F / 180.0)`.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_PEN_AXIS_PRESSURE`], [`SDL_PEN_AXIS_XTILT`], [`SDL_PEN_AXIS_YTILT`], [`SDL_PEN_AXIS_DISTANCE`], [`SDL_PEN_AXIS_ROTATION`], [`SDL_PEN_AXIS_SLIDER`], [`SDL_PEN_AXIS_TANGENTIAL_PRESSURE`], [`SDL_PEN_AXIS_COUNT`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_PEN_AXIS_XTILT`]
+/// - [`SDL_PEN_AXIS_YTILT`]
+/// - [`SDL_PEN_AXIS_DISTANCE`]
+/// - [`SDL_PEN_AXIS_ROTATION`]
+/// - [`SDL_PEN_AXIS_SLIDER`]
+/// - [`SDL_PEN_AXIS_TANGENTIAL_PRESSURE`]
+/// - [`SDL_PEN_AXIS_COUNT`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

@@ -10,9 +10,11 @@ use super::stdinc::*;
 ///
 /// Additional values may be obtained from [`SDL_ComposeCustomBlendMode`].
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 ///
-/// See also [`SDL_ComposeCustomBlendMode`]<br>
+/// ### See also
+/// - [`SDL_ComposeCustomBlendMode`]
 pub type SDL_BlendMode = Uint32;
 
 /// no blending: dstRGBA = srcRGBA
@@ -41,9 +43,16 @@ pub const SDL_BLENDMODE_INVALID: ::core::primitive::u32 = 2147483647_u32;
 /// The blend operation used when combining source and destination pixel
 /// components.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_BLENDOPERATION_ADD`], [`SDL_BLENDOPERATION_SUBTRACT`], [`SDL_BLENDOPERATION_REV_SUBTRACT`], [`SDL_BLENDOPERATION_MINIMUM`], [`SDL_BLENDOPERATION_MAXIMUM`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_BLENDOPERATION_SUBTRACT`]
+/// - [`SDL_BLENDOPERATION_REV_SUBTRACT`]
+/// - [`SDL_BLENDOPERATION_MINIMUM`]
+/// - [`SDL_BLENDOPERATION_MAXIMUM`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -84,9 +93,21 @@ pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 /// operation. The comma-separated factors listed above are always applied in
 /// the component order red, green, blue, and alpha.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_BLENDFACTOR_ZERO`], [`SDL_BLENDFACTOR_ONE`], [`SDL_BLENDFACTOR_SRC_COLOR`], [`SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR`], [`SDL_BLENDFACTOR_SRC_ALPHA`], [`SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA`], [`SDL_BLENDFACTOR_DST_COLOR`], [`SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR`], [`SDL_BLENDFACTOR_DST_ALPHA`], [`SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_BLENDFACTOR_ONE`]
+/// - [`SDL_BLENDFACTOR_SRC_COLOR`]
+/// - [`SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR`]
+/// - [`SDL_BLENDFACTOR_SRC_ALPHA`]
+/// - [`SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA`]
+/// - [`SDL_BLENDFACTOR_DST_COLOR`]
+/// - [`SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR`]
+/// - [`SDL_BLENDFACTOR_DST_ALPHA`]
+/// - [`SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -206,6 +227,7 @@ extern "C" {
     /// `SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA` factors do not have an effect in this
     /// case.
     ///
+    /// ### Arguments
     /// - `srcColorFactor`: the [`SDL_BlendFactor`] applied to the red, green, and
     ///   blue components of the source pixels.
     /// - `dstColorFactor`: the [`SDL_BlendFactor`] applied to the red, green, and
@@ -219,15 +241,18 @@ extern "C" {
     ///   the destination pixels.
     /// - `alphaOperation`: the [`SDL_BlendOperation`] used to combine the alpha
     ///   component of the source and destination pixels.
-    /// - Returns an [`SDL_BlendMode`] that represents the chosen factors and
+    /// ### Return value
+    /// Returns an [`SDL_BlendMode`] that represents the chosen factors and
     ///   operations.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_SetRenderDrawBlendMode`]<br>
-    /// See also [`SDL_GetRenderDrawBlendMode`]<br>
-    /// See also [`SDL_SetTextureBlendMode`]<br>
-    /// See also [`SDL_GetTextureBlendMode`]<br>
+    /// ### See also
+    /// - [`SDL_SetRenderDrawBlendMode`]
+    /// - [`SDL_GetRenderDrawBlendMode`]
+    /// - [`SDL_SetTextureBlendMode`]
+    /// - [`SDL_GetTextureBlendMode`]
     pub fn SDL_ComposeCustomBlendMode(
         srcColorFactor: SDL_BlendFactor,
         dstColorFactor: SDL_BlendFactor,

@@ -11,9 +11,11 @@ use super::error::*;
 /// would be "en"), and the country, if not NULL, will be an ISO-3166 country
 /// code (so Canada would be "CA").
 ///
+/// ### Availability
 /// This function is available since SDL 3.0.0.
 ///
-/// See also [`SDL_GetPreferredLocales`]<br>
+/// ### See also
+/// - [`SDL_GetPreferredLocales`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -56,13 +58,16 @@ extern "C" {
     /// if possible, and you can call this function again to get an updated copy of
     /// preferred locales.
     ///
+    /// ### Arguments
     /// - `count`: a pointer filled in with the number of locales returned, may
     ///   be NULL.
-    /// - Returns a NULL terminated array of locale pointers, or NULL on failure;
+    /// ### Return value
+    /// Returns a NULL terminated array of locale pointers, or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This is a single
     ///   allocation that should be freed with [`SDL_free()`] when it is no
     ///   longer needed.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetPreferredLocales(count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Locale;
 }

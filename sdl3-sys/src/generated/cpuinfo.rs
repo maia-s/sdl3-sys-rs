@@ -12,16 +12,19 @@ use super::stdinc::*;
 /// processors have a 128 byte cache line. We use the larger value to be
 /// generally safe.
 ///
+/// ### Availability
 /// This macro is available since SDL 3.0.0.
 pub const SDL_CACHELINE_SIZE: ::core::primitive::i32 = 128;
 
 extern "C" {
     /// Get the number of logical CPU cores available.
     ///
-    /// - Returns the total number of logical CPU cores. On CPUs that include
+    /// ### Return value
+    /// Returns the total number of logical CPU cores. On CPUs that include
     ///   technologies such as hyperthreading, the number of logical cores
     ///   may be more than the number of physical cores.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetNumLogicalCPUCores() -> ::core::ffi::c_int;
 }
@@ -32,8 +35,10 @@ extern "C" {
     /// This is useful for determining multi-threaded structure padding or SIMD
     /// prefetch sizes.
     ///
-    /// - Returns the L1 cache line size of the CPU, in bytes.
+    /// ### Return value
+    /// Returns the L1 cache line size of the CPU, in bytes.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetCPUCacheLineSize() -> ::core::ffi::c_int;
 }
@@ -44,8 +49,10 @@ extern "C" {
     /// This always returns false on CPUs that aren't using PowerPC instruction
     /// sets.
     ///
-    /// - Returns true if the CPU has AltiVec features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has AltiVec features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_HasAltiVec() -> ::core::primitive::bool;
 }
@@ -55,8 +62,10 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// - Returns true if the CPU has MMX features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has MMX features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_HasMMX() -> ::core::primitive::bool;
 }
@@ -66,14 +75,17 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// - Returns true if the CPU has SSE features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has SSE features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasSSE2`]<br>
-    /// See also [`SDL_HasSSE3`]<br>
-    /// See also [`SDL_HasSSE41`]<br>
-    /// See also [`SDL_HasSSE42`]<br>
+    /// ### See also
+    /// - [`SDL_HasSSE2`]
+    /// - [`SDL_HasSSE3`]
+    /// - [`SDL_HasSSE41`]
+    /// - [`SDL_HasSSE42`]
     pub fn SDL_HasSSE() -> ::core::primitive::bool;
 }
 
@@ -82,14 +94,17 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// - Returns true if the CPU has SSE2 features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has SSE2 features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasSSE`]<br>
-    /// See also [`SDL_HasSSE3`]<br>
-    /// See also [`SDL_HasSSE41`]<br>
-    /// See also [`SDL_HasSSE42`]<br>
+    /// ### See also
+    /// - [`SDL_HasSSE`]
+    /// - [`SDL_HasSSE3`]
+    /// - [`SDL_HasSSE41`]
+    /// - [`SDL_HasSSE42`]
     pub fn SDL_HasSSE2() -> ::core::primitive::bool;
 }
 
@@ -98,14 +113,17 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// - Returns true if the CPU has SSE3 features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has SSE3 features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasSSE`]<br>
-    /// See also [`SDL_HasSSE2`]<br>
-    /// See also [`SDL_HasSSE41`]<br>
-    /// See also [`SDL_HasSSE42`]<br>
+    /// ### See also
+    /// - [`SDL_HasSSE`]
+    /// - [`SDL_HasSSE2`]
+    /// - [`SDL_HasSSE41`]
+    /// - [`SDL_HasSSE42`]
     pub fn SDL_HasSSE3() -> ::core::primitive::bool;
 }
 
@@ -114,14 +132,17 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// - Returns true if the CPU has SSE4.1 features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has SSE4.1 features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasSSE`]<br>
-    /// See also [`SDL_HasSSE2`]<br>
-    /// See also [`SDL_HasSSE3`]<br>
-    /// See also [`SDL_HasSSE42`]<br>
+    /// ### See also
+    /// - [`SDL_HasSSE`]
+    /// - [`SDL_HasSSE2`]
+    /// - [`SDL_HasSSE3`]
+    /// - [`SDL_HasSSE42`]
     pub fn SDL_HasSSE41() -> ::core::primitive::bool;
 }
 
@@ -130,14 +151,17 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// - Returns true if the CPU has SSE4.2 features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has SSE4.2 features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasSSE`]<br>
-    /// See also [`SDL_HasSSE2`]<br>
-    /// See also [`SDL_HasSSE3`]<br>
-    /// See also [`SDL_HasSSE41`]<br>
+    /// ### See also
+    /// - [`SDL_HasSSE`]
+    /// - [`SDL_HasSSE2`]
+    /// - [`SDL_HasSSE3`]
+    /// - [`SDL_HasSSE41`]
     pub fn SDL_HasSSE42() -> ::core::primitive::bool;
 }
 
@@ -146,12 +170,15 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// - Returns true if the CPU has AVX features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has AVX features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasAVX2`]<br>
-    /// See also [`SDL_HasAVX512F`]<br>
+    /// ### See also
+    /// - [`SDL_HasAVX2`]
+    /// - [`SDL_HasAVX512F`]
     pub fn SDL_HasAVX() -> ::core::primitive::bool;
 }
 
@@ -160,12 +187,15 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// - Returns true if the CPU has AVX2 features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has AVX2 features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasAVX`]<br>
-    /// See also [`SDL_HasAVX512F`]<br>
+    /// ### See also
+    /// - [`SDL_HasAVX`]
+    /// - [`SDL_HasAVX512F`]
     pub fn SDL_HasAVX2() -> ::core::primitive::bool;
 }
 
@@ -174,12 +204,15 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
     ///
-    /// - Returns true if the CPU has AVX-512F features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has AVX-512F features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasAVX`]<br>
-    /// See also [`SDL_HasAVX2`]<br>
+    /// ### See also
+    /// - [`SDL_HasAVX`]
+    /// - [`SDL_HasAVX2`]
     pub fn SDL_HasAVX512F() -> ::core::primitive::bool;
 }
 
@@ -190,11 +223,14 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using ARM instruction sets.
     ///
-    /// - Returns true if the CPU has ARM SIMD features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has ARM SIMD features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_HasNEON`]<br>
+    /// ### See also
+    /// - [`SDL_HasNEON`]
     pub fn SDL_HasARMSIMD() -> ::core::primitive::bool;
 }
 
@@ -203,8 +239,10 @@ extern "C" {
     ///
     /// This always returns false on CPUs that aren't using ARM instruction sets.
     ///
-    /// - Returns true if the CPU has ARM NEON features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has ARM NEON features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_HasNEON() -> ::core::primitive::bool;
 }
@@ -215,8 +253,10 @@ extern "C" {
     /// This always returns false on CPUs that aren't using LOONGARCH instruction
     /// sets.
     ///
-    /// - Returns true if the CPU has LOONGARCH LSX features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has LOONGARCH LSX features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_HasLSX() -> ::core::primitive::bool;
 }
@@ -227,8 +267,10 @@ extern "C" {
     /// This always returns false on CPUs that aren't using LOONGARCH instruction
     /// sets.
     ///
-    /// - Returns true if the CPU has LOONGARCH LASX features or false if not.
+    /// ### Return value
+    /// Returns true if the CPU has LOONGARCH LASX features or false if not.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_HasLASX() -> ::core::primitive::bool;
 }
@@ -236,8 +278,10 @@ extern "C" {
 extern "C" {
     /// Get the amount of RAM configured in the system.
     ///
-    /// - Returns the amount of RAM configured in the system in MiB.
+    /// ### Return value
+    /// Returns the amount of RAM configured in the system in MiB.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetSystemRAM() -> ::core::ffi::c_int;
 }
@@ -254,12 +298,15 @@ extern "C" {
     /// not 64 for the AVX-512 instructions that exist but SDL doesn't know about.
     /// Plan accordingly.
     ///
-    /// - Returns the alignment in bytes needed for available, known SIMD
+    /// ### Return value
+    /// Returns the alignment in bytes needed for available, known SIMD
     ///   instructions.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_aligned_alloc`]<br>
-    /// See also [`SDL_aligned_free`]<br>
+    /// ### See also
+    /// - [`SDL_aligned_alloc`]
+    /// - [`SDL_aligned_free`]
     pub fn SDL_GetSIMDAlignment() -> ::core::primitive::usize;
 }

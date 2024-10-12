@@ -10,6 +10,7 @@ use super::video::*;
 ///
 /// If supported will display warning icon, etc.
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 pub type SDL_MessageBoxFlags = Uint32;
 
@@ -30,6 +31,7 @@ pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: ::core::primitive::u32 = 256_u32
 
 /// [`SDL_MessageBoxButtonData`] flags.
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 pub type SDL_MessageBoxButtonFlags = Uint32;
 
@@ -41,6 +43,7 @@ pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: ::core::primitive::u32 = 2_u3
 
 /// Individual button data.
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -55,6 +58,7 @@ pub struct SDL_MessageBoxButtonData {
 
 /// RGB value used in a message box color scheme
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -68,7 +72,14 @@ pub struct SDL_MessageBoxColor {
 /// An enumeration of indices inside the colors array of
 /// [`SDL_MessageBoxColorScheme`].
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_MESSAGEBOX_COLOR_BACKGROUND`], [`SDL_MESSAGEBOX_COLOR_TEXT`], [`SDL_MESSAGEBOX_COLOR_BUTTON_BORDER`], [`SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND`], [`SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED`], [`SDL_MESSAGEBOX_COLOR_COUNT`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_MESSAGEBOX_COLOR_TEXT`]
+/// - [`SDL_MESSAGEBOX_COLOR_BUTTON_BORDER`]
+/// - [`SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND`]
+/// - [`SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED`]
+/// - [`SDL_MESSAGEBOX_COLOR_COUNT`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -102,6 +113,7 @@ pub const SDL_MESSAGEBOX_COLOR_COUNT: SDL_MessageBoxColorType = SDL_MessageBoxCo
 
 /// A set of colors to use for message box dialogs
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -112,6 +124,7 @@ pub struct SDL_MessageBoxColorScheme {
 
 /// MessageBox structure containing title, text, window, etc.
 ///
+/// ### Availability
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -153,16 +166,20 @@ extern "C" {
     /// concern, check the return value from this function and fall back to writing
     /// to stderr if you can.
     ///
+    /// ### Arguments
     /// - `messageboxdata`: the [`SDL_MessageBoxData`] structure with title, text and
     ///   other options.
     /// - `buttonid`: the pointer to which user id of hit button should be
     ///   copied.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_ShowSimpleMessageBox`]<br>
+    /// ### See also
+    /// - [`SDL_ShowSimpleMessageBox`]
     pub fn SDL_ShowMessageBox(
         messageboxdata: *const SDL_MessageBoxData,
         buttonid: *mut ::core::ffi::c_int,
@@ -198,16 +215,20 @@ extern "C" {
     /// concern, check the return value from this function and fall back to writing
     /// to stderr if you can.
     ///
+    /// ### Arguments
     /// - `flags`: an [`SDL_MessageBoxFlags`] value.
     /// - `title`: uTF-8 title text.
     /// - `message`: uTF-8 message text.
     /// - `window`: the parent window, or NULL for no parent.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_ShowMessageBox`]<br>
+    /// ### See also
+    /// - [`SDL_ShowMessageBox`]
     pub fn SDL_ShowSimpleMessageBox(
         flags: SDL_MessageBoxFlags,
         title: *const ::core::ffi::c_char,

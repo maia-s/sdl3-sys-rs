@@ -17,10 +17,12 @@ emit! {}
 /// application will operate on, but having a way to uniquely identify a thread
 /// can be useful at times.
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 ///
-/// See also [`SDL_GetThreadID`]<br>
-/// See also [`SDL_GetCurrentThreadID`]<br>
+/// ### See also
+/// - [`SDL_GetThreadID`]
+/// - [`SDL_GetCurrentThreadID`]
 pub type SDL_ThreadID = Uint64;
 
 /// Thread local storage ID.
@@ -28,10 +30,12 @@ pub type SDL_ThreadID = Uint64;
 /// 0 is the invalid ID. An app can create these and then set data for these
 /// IDs that is unique to each thread.
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 ///
-/// See also [`SDL_GetTLS`]<br>
-/// See also [`SDL_SetTLS`]<br>
+/// ### See also
+/// - [`SDL_GetTLS`]
+/// - [`SDL_SetTLS`]
 pub type SDL_TLSID = SDL_AtomicInt;
 
 /// The SDL thread priority.
@@ -42,9 +46,15 @@ pub type SDL_TLSID = SDL_AtomicInt;
 /// state. [`SDL_HINT_THREAD_PRIORITY_POLICY`] can be used to control aspects of
 /// this behavior.
 ///
+/// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// sdl3-sys note: This is a `C` enum. Known values: [`SDL_THREAD_PRIORITY_LOW`], [`SDL_THREAD_PRIORITY_NORMAL`], [`SDL_THREAD_PRIORITY_HIGH`], [`SDL_THREAD_PRIORITY_TIME_CRITICAL`]
+/// ### `sdl3-sys` note
+/// This is a `C` enum. Known values:
+/// - [`SDL_THREAD_PRIORITY_NORMAL`]
+/// - [`SDL_THREAD_PRIORITY_HIGH`]
+/// - [`SDL_THREAD_PRIORITY_TIME_CRITICAL`]
+
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -68,9 +78,12 @@ pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPrio
 
 /// The function passed to [`SDL_CreateThread()`] as the new thread's entry point.
 ///
+/// ### Arguments
 /// - `data`: what was passed as `data` to [`SDL_CreateThread()`].
-/// - Returns a value that can be reported through [`SDL_WaitThread()`].
+/// ### Return value
+/// Returns a value that can be reported through [`SDL_WaitThread()`].
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 pub type SDL_ThreadFunction = ::core::option::Option<
     unsafe extern "C" fn(data: *mut ::core::ffi::c_void) -> ::core::ffi::c_int,
@@ -97,17 +110,21 @@ emit! {
         /// Usually, apps should just call this function the same way on every platform
         /// and let the macros hide the details.
         ///
+        /// ### Arguments
         /// - `fn`: the [`SDL_ThreadFunction`] function to call in the new thread.
         /// - `name`: the name of the thread.
         /// - `data`: a pointer that is passed to `fn`.
-        /// - Returns an opaque pointer to the new thread object on success, NULL if the
+        /// ### Return value
+        /// Returns an opaque pointer to the new thread object on success, NULL if the
         ///   new thread could not be created; call [`SDL_GetError()`] for more
         ///   information.
         ///
+        /// ### Availability
         /// This function is available since SDL 3.0.0.
         ///
-        /// See also [`SDL_CreateThreadWithProperties`]<br>
-        /// See also [`SDL_WaitThread`]<br>
+        /// ### See also
+        /// - [`SDL_CreateThreadWithProperties`]
+        /// - [`SDL_WaitThread`]
         pub fn SDL_CreateThread(r#fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void) -> *mut SDL_Thread;
     }
 
@@ -138,7 +155,7 @@ emit! {
         /// requirements for thread naming conventions, so long as the string is
         /// null-terminated UTF-8, but these guidelines are helpful in choosing a name:
         ///
-        /// https://stackoverflow.com/questions/149932/naming-conventions-for-threads
+        /// <https://stackoverflow.com/questions/149932/naming-conventions-for-threads>
         ///
         /// If a system imposes requirements, SDL will try to munge the string for it
         /// (truncate, etc), but the original string contents will be available from
@@ -165,15 +182,19 @@ emit! {
         /// Usually, apps should just call this function the same way on every platform
         /// and let the macros hide the details.
         ///
+        /// ### Arguments
         /// - `props`: the properties to use.
-        /// - Returns an opaque pointer to the new thread object on success, NULL if the
+        /// ### Return value
+        /// Returns an opaque pointer to the new thread object on success, NULL if the
         ///   new thread could not be created; call [`SDL_GetError()`] for more
         ///   information.
         ///
+        /// ### Availability
         /// This function is available since SDL 3.0.0.
         ///
-        /// See also [`SDL_CreateThread`]<br>
-        /// See also [`SDL_WaitThread`]<br>
+        /// ### See also
+        /// - [`SDL_CreateThread`]
+        /// - [`SDL_WaitThread`]
         pub fn SDL_CreateThreadWithProperties(props: SDL_PropertiesID) -> *mut SDL_Thread;
     }
 
@@ -206,15 +227,18 @@ emit! {
     extern "C" {
         /// The actual entry point for [`SDL_CreateThread`].
         ///
+        /// ### Arguments
         /// - `fn`: the [`SDL_ThreadFunction`] function to call in the new thread
         /// - `name`: the name of the thread
         /// - `data`: a pointer that is passed to `fn`
         /// - `pfnBeginThread`: the C runtime's _beginthreadex (or whatnot). Can be NULL.
         /// - `pfnEndThread`: the C runtime's _endthreadex (or whatnot). Can be NULL.
-        /// - Returns an opaque pointer to the new thread object on success, NULL if the
+        /// ### Return value
+        /// Returns an opaque pointer to the new thread object on success, NULL if the
         ///   new thread could not be created; call [`SDL_GetError()`] for more
         ///   information.
         ///
+        /// ### Availability
         /// This function is available since SDL 3.0.0.
         pub fn SDL_CreateThreadRuntime(r#fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
     }
@@ -222,13 +246,16 @@ emit! {
     extern "C" {
         /// The actual entry point for [`SDL_CreateThreadWithProperties`].
         ///
+        /// ### Arguments
         /// - `props`: the properties to use
         /// - `pfnBeginThread`: the C runtime's _beginthreadex (or whatnot). Can be NULL.
         /// - `pfnEndThread`: the C runtime's _endthreadex (or whatnot). Can be NULL.
-        /// - Returns an opaque pointer to the new thread object on success, NULL if the
+        /// ### Return value
+        /// Returns an opaque pointer to the new thread object on success, NULL if the
         ///   new thread could not be created; call [`SDL_GetError()`] for more
         ///   information.
         ///
+        /// ### Availability
         /// This function is available since SDL 3.0.0.
         pub fn SDL_CreateThreadWithPropertiesRuntime(props: SDL_PropertiesID, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
     }
@@ -272,10 +299,13 @@ emit! {
 extern "C" {
     /// Get the thread name as it was specified in [`SDL_CreateThread()`].
     ///
+    /// ### Arguments
     /// - `thread`: the thread to query.
-    /// - Returns a pointer to a UTF-8 string that names the specified thread, or
+    /// ### Return value
+    /// Returns a pointer to a UTF-8 string that names the specified thread, or
     ///   NULL if it doesn't have a name.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_GetThreadName(thread: *mut SDL_Thread) -> *const ::core::ffi::c_char;
 }
@@ -290,11 +320,14 @@ extern "C" {
     /// This function also returns a valid thread ID when called from the main
     /// thread.
     ///
-    /// - Returns the ID of the current thread.
+    /// ### Return value
+    /// Returns the ID of the current thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetThreadID`]<br>
+    /// ### See also
+    /// - [`SDL_GetThreadID`]
     pub fn SDL_GetCurrentThreadID() -> SDL_ThreadID;
 }
 
@@ -305,13 +338,17 @@ extern "C" {
     /// If SDL is running on a platform that does not support threads the return
     /// value will always be zero.
     ///
+    /// ### Arguments
     /// - `thread`: the thread to query.
-    /// - Returns the ID of the specified thread, or the ID of the current thread if
+    /// ### Return value
+    /// Returns the ID of the specified thread, or the ID of the current thread if
     ///   `thread` is NULL.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetCurrentThreadID`]<br>
+    /// ### See also
+    /// - [`SDL_GetCurrentThreadID`]
     pub fn SDL_GetThreadID(thread: *mut SDL_Thread) -> SDL_ThreadID;
 }
 
@@ -322,10 +359,13 @@ extern "C" {
     /// promote the thread to a higher priority) at all, and some require you to be
     /// an administrator account. Be prepared for this to fail.
     ///
+    /// ### Arguments
     /// - `priority`: the [`SDL_ThreadPriority`] to set.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_SetCurrentThreadPriority(priority: SDL_ThreadPriority) -> ::core::primitive::bool;
 }
@@ -352,16 +392,19 @@ extern "C" {
     /// Note that the thread pointer is freed by this function and is not valid
     /// afterward.
     ///
+    /// ### Arguments
     /// - `thread`: the [`SDL_Thread`] pointer that was returned from the
     ///   [`SDL_CreateThread()`] call that started this thread.
     /// - `status`: pointer to an integer that will receive the value returned
     ///   from the thread function by its 'return', or NULL to not
     ///   receive such value back.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_CreateThread`]<br>
-    /// See also [`SDL_DetachThread`]<br>
+    /// ### See also
+    /// - [`SDL_CreateThread`]
+    /// - [`SDL_DetachThread`]
     pub fn SDL_WaitThread(thread: *mut SDL_Thread, status: *mut ::core::ffi::c_int);
 }
 
@@ -391,28 +434,36 @@ extern "C" {
     ///
     /// It is safe to pass NULL to this function; it is a no-op.
     ///
+    /// ### Arguments
     /// - `thread`: the [`SDL_Thread`] pointer that was returned from the
     ///   [`SDL_CreateThread()`] call that started this thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_CreateThread`]<br>
-    /// See also [`SDL_WaitThread`]<br>
+    /// ### See also
+    /// - [`SDL_CreateThread`]
+    /// - [`SDL_WaitThread`]
     pub fn SDL_DetachThread(thread: *mut SDL_Thread);
 }
 
 extern "C" {
     /// Get the current thread's value associated with a thread local storage ID.
     ///
+    /// ### Arguments
     /// - `id`: a pointer to the thread local storage ID, may not be NULL.
-    /// - Returns the value associated with the ID for the current thread or NULL if
+    /// ### Return value
+    /// Returns the value associated with the ID for the current thread or NULL if
     ///   no value has been set; call [`SDL_GetError()`] for more information.
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_SetTLS`]<br>
+    /// ### See also
+    /// - [`SDL_SetTLS`]
     pub fn SDL_GetTLS(id: *mut SDL_TLSID) -> *mut ::core::ffi::c_void;
 }
 
@@ -420,11 +471,14 @@ extern "C" {
 ///
 /// This is called when a thread exits, to allow an app to free any resources.
 ///
+/// ### Arguments
 /// - `value`: a pointer previously handed to [`SDL_SetTLS`].
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 ///
-/// See also [`SDL_SetTLS`]<br>
+/// ### See also
+/// - [`SDL_SetTLS`]
 pub type SDL_TLSDestructorCallback =
     ::core::option::Option<unsafe extern "C" fn(value: *mut ::core::ffi::c_void)>;
 
@@ -441,18 +495,23 @@ extern "C" {
     /// `destructor` can be NULL; it is assumed that `value` does not need to be
     /// cleaned up if so.
     ///
+    /// ### Arguments
     /// - `id`: a pointer to the thread local storage ID, may not be NULL.
     /// - `value`: the value to associate with the ID for the current thread.
     /// - `destructor`: a function called when the thread exits, to free the
     ///   value, may be NULL.
-    /// - Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     ///
-    /// See also [`SDL_GetTLS`]<br>
+    /// ### See also
+    /// - [`SDL_GetTLS`]
     pub fn SDL_SetTLS(
         id: *mut SDL_TLSID,
         value: *const ::core::ffi::c_void,
@@ -467,8 +526,10 @@ extern "C" {
     /// functions, you should call this function before your thread exits, to
     /// properly clean up SDL memory.
     ///
-    /// Thread safety: It is safe to call this function from any thread.
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
+    /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_CleanupTLS();
 }
@@ -477,10 +538,12 @@ extern "C" {
 ///
 /// These are opaque data.
 ///
+/// ### Availability
 /// This datatype is available since SDL 3.0.0.
 ///
-/// See also [`SDL_CreateThread`]<br>
-/// See also [`SDL_WaitThread`]<br>
+/// ### See also
+/// - [`SDL_CreateThread`]
+/// - [`SDL_WaitThread`]
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Thread {
