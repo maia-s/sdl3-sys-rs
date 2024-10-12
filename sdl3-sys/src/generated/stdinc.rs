@@ -318,7 +318,7 @@ const _: () = ::core::assert!(
     ((!(0 as ::core::ffi::c_int) as ::core::ffi::c_int) == ((-1_i32) as ::core::ffi::c_int))
 );
 
-#[cfg(all(not(any(/* always disabled: SDL_PLATFORM_3DS */)), not(any(/* always disabled: SDL_PLATFORM_VITA */))))]
+#[cfg(all(not(target_os = "horizon"), not(target_os = "vita")))]
 emit! {
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

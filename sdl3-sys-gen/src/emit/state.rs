@@ -238,7 +238,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "ANDROID" = CfgExpr(r#"target_os = "android""#);
             "DEBUG" = CfgExpr("debug_assertions");
             "SDL_BYTEORDER" = CfgExpr(always_true!("byte order")); // this has a non-boolean value
-            "SDL_PLATFORM_3DS" = CfgExpr(always_false!("SDL_PLATFORM_3DS"));
+            "SDL_PLATFORM_3DS" = CfgExpr(r#"target_os = "horizon""#);
             "SDL_PLATFORM_ANDROID" = CfgExpr(r#"target_os = "android""#);
             "SDL_PLATFORM_APPLE" = CfgExpr(r#"target_vendor = "apple""#);
             "SDL_PLATFORM_EMSCRIPTEN" = CfgExpr(r#"target_os = "emscripten""#);
@@ -247,9 +247,9 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_PLATFORM_LINUX" = CfgExpr(r#"target_os = "linux""#);
             "SDL_PLATFORM_NGAGE" = CfgExpr(always_false!("SDL_PLATFORM_NGAGE"));
             "SDL_PLATFORM_PS2" = CfgExpr(always_false!("SDL_PLATFORM_PS2"));
-            "SDL_PLATFORM_PSP" = CfgExpr(always_false!("SDL_PLATFORM_PSP"));
+            "SDL_PLATFORM_PSP" = CfgExpr(r#"target_os = "psp""#);
             "SDL_PLATFORM_TVOS" = CfgExpr(r#"target_os = "tvos""#);
-            "SDL_PLATFORM_VITA" = CfgExpr(always_false!("SDL_PLATFORM_VITA"));
+            "SDL_PLATFORM_VITA" = CfgExpr(r#"target_os = "vita""#);
             "SDL_PLATFORM_WIN32" = CfgExpr("windows");
             "SDL_PLATFORM_WINDOWS" = CfgExpr("windows");
             "SDL_PLATFORM_WINGDK" = CfgExpr(always_false!("SDL_PLATFORM_WINGDK"));
