@@ -74,12 +74,12 @@ pub struct SDL_MessageBoxColor {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_MESSAGEBOX_COLOR_BACKGROUND`]
 /// - [`SDL_MESSAGEBOX_COLOR_TEXT`]
 /// - [`SDL_MESSAGEBOX_COLOR_BUTTON_BORDER`]
 /// - [`SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND`]
 /// - [`SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED`]
 /// - [`SDL_MESSAGEBOX_COLOR_COUNT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

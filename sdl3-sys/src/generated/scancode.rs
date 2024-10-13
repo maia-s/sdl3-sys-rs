@@ -18,6 +18,7 @@ use super::stdinc::*;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_SCANCODE_UNKNOWN`]
 /// - [`SDL_SCANCODE_A`]
 /// - [`SDL_SCANCODE_B`]
 /// - [`SDL_SCANCODE_C`]
@@ -266,7 +267,6 @@ use super::stdinc::*;
 /// - [`SDL_SCANCODE_ENDCALL`]
 /// - [`SDL_SCANCODE_RESERVED`]
 /// - [`SDL_SCANCODE_COUNT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

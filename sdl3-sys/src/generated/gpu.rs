@@ -146,11 +146,11 @@ use super::video::*;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_PRIMITIVETYPE_TRIANGLELIST`]
 /// - [`SDL_GPU_PRIMITIVETYPE_TRIANGLESTRIP`]
 /// - [`SDL_GPU_PRIMITIVETYPE_LINELIST`]
 /// - [`SDL_GPU_PRIMITIVETYPE_LINESTRIP`]
 /// - [`SDL_GPU_PRIMITIVETYPE_POINTLIST`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -197,9 +197,9 @@ pub const SDL_GPU_PRIMITIVETYPE_POINTLIST: SDL_GPUPrimitiveType = SDL_GPUPrimiti
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_LOADOP_LOAD`]
 /// - [`SDL_GPU_LOADOP_CLEAR`]
 /// - [`SDL_GPU_LOADOP_DONT_CARE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -236,10 +236,10 @@ pub const SDL_GPU_LOADOP_DONT_CARE: SDL_GPULoadOp = SDL_GPULoadOp::DONT_CARE;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_STOREOP_STORE`]
 /// - [`SDL_GPU_STOREOP_DONT_CARE`]
 /// - [`SDL_GPU_STOREOP_RESOLVE`]
 /// - [`SDL_GPU_STOREOP_RESOLVE_AND_STORE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -279,8 +279,8 @@ pub const SDL_GPU_STOREOP_RESOLVE_AND_STORE: SDL_GPUStoreOp = SDL_GPUStoreOp::RE
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_INDEXELEMENTSIZE_16BIT`]
 /// - [`SDL_GPU_INDEXELEMENTSIZE_32BIT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -391,6 +391,7 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_TEXTUREFORMAT_INVALID`]
 /// - [`SDL_GPU_TEXTUREFORMAT_A8_UNORM`]
 /// - [`SDL_GPU_TEXTUREFORMAT_R8_UNORM`]
 /// - [`SDL_GPU_TEXTUREFORMAT_R8G8_UNORM`]
@@ -495,7 +496,6 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 /// - [`SDL_GPU_TEXTUREFORMAT_ASTC_10x10_FLOAT`]
 /// - [`SDL_GPU_TEXTUREFORMAT_ASTC_12x10_FLOAT`]
 /// - [`SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -855,11 +855,11 @@ pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: ::core::
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_TEXTURETYPE_2D`]
 /// - [`SDL_GPU_TEXTURETYPE_2D_ARRAY`]
 /// - [`SDL_GPU_TEXTURETYPE_3D`]
 /// - [`SDL_GPU_TEXTURETYPE_CUBE`]
 /// - [`SDL_GPU_TEXTURETYPE_CUBE_ARRAY`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -907,10 +907,10 @@ pub const SDL_GPU_TEXTURETYPE_CUBE_ARRAY: SDL_GPUTextureType = SDL_GPUTextureTyp
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_SAMPLECOUNT_1`]
 /// - [`SDL_GPU_SAMPLECOUNT_2`]
 /// - [`SDL_GPU_SAMPLECOUNT_4`]
 /// - [`SDL_GPU_SAMPLECOUNT_8`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -949,12 +949,12 @@ pub const SDL_GPU_SAMPLECOUNT_8: SDL_GPUSampleCount = SDL_GPUSampleCount::_8;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_CUBEMAPFACE_POSITIVEX`]
 /// - [`SDL_GPU_CUBEMAPFACE_NEGATIVEX`]
 /// - [`SDL_GPU_CUBEMAPFACE_POSITIVEY`]
 /// - [`SDL_GPU_CUBEMAPFACE_NEGATIVEY`]
 /// - [`SDL_GPU_CUBEMAPFACE_POSITIVEZ`]
 /// - [`SDL_GPU_CUBEMAPFACE_NEGATIVEZ`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1026,8 +1026,8 @@ pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE: ::core::primitive::u32 = 32
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD`]
 /// - [`SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1057,8 +1057,8 @@ pub const SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD: SDL_GPUTransferBufferUsage =
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_SHADERSTAGE_VERTEX`]
 /// - [`SDL_GPU_SHADERSTAGE_FRAGMENT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1117,6 +1117,7 @@ pub const SDL_GPU_SHADERFORMAT_METALLIB: ::core::primitive::u32 = 32_u32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_VERTEXELEMENTFORMAT_INVALID`]
 /// - [`SDL_GPU_VERTEXELEMENTFORMAT_INT`]
 /// - [`SDL_GPU_VERTEXELEMENTFORMAT_INT2`]
 /// - [`SDL_GPU_VERTEXELEMENTFORMAT_INT3`]
@@ -1147,7 +1148,6 @@ pub const SDL_GPU_SHADERFORMAT_METALLIB: ::core::primitive::u32 = 32_u32;
 /// - [`SDL_GPU_VERTEXELEMENTFORMAT_USHORT4_NORM`]
 /// - [`SDL_GPU_VERTEXELEMENTFORMAT_HALF2`]
 /// - [`SDL_GPU_VERTEXELEMENTFORMAT_HALF4`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1264,8 +1264,8 @@ pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF4: SDL_GPUVertexElementFormat =
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_VERTEXINPUTRATE_VERTEX`]
 /// - [`SDL_GPU_VERTEXINPUTRATE_INSTANCE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1298,8 +1298,8 @@ pub const SDL_GPU_VERTEXINPUTRATE_INSTANCE: SDL_GPUVertexInputRate =
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_FILLMODE_FILL`]
 /// - [`SDL_GPU_FILLMODE_LINE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1331,9 +1331,9 @@ pub const SDL_GPU_FILLMODE_LINE: SDL_GPUFillMode = SDL_GPUFillMode::LINE;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_CULLMODE_NONE`]
 /// - [`SDL_GPU_CULLMODE_FRONT`]
 /// - [`SDL_GPU_CULLMODE_BACK`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1370,8 +1370,8 @@ pub const SDL_GPU_CULLMODE_BACK: SDL_GPUCullMode = SDL_GPUCullMode::BACK;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE`]
 /// - [`SDL_GPU_FRONTFACE_CLOCKWISE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1404,6 +1404,7 @@ pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOC
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_COMPAREOP_INVALID`]
 /// - [`SDL_GPU_COMPAREOP_NEVER`]
 /// - [`SDL_GPU_COMPAREOP_LESS`]
 /// - [`SDL_GPU_COMPAREOP_EQUAL`]
@@ -1412,7 +1413,6 @@ pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOC
 /// - [`SDL_GPU_COMPAREOP_NOT_EQUAL`]
 /// - [`SDL_GPU_COMPAREOP_GREATER_OR_EQUAL`]
 /// - [`SDL_GPU_COMPAREOP_ALWAYS`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1471,6 +1471,7 @@ pub const SDL_GPU_COMPAREOP_ALWAYS: SDL_GPUCompareOp = SDL_GPUCompareOp::ALWAYS;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_STENCILOP_INVALID`]
 /// - [`SDL_GPU_STENCILOP_KEEP`]
 /// - [`SDL_GPU_STENCILOP_ZERO`]
 /// - [`SDL_GPU_STENCILOP_REPLACE`]
@@ -1479,7 +1480,6 @@ pub const SDL_GPU_COMPAREOP_ALWAYS: SDL_GPUCompareOp = SDL_GPUCompareOp::ALWAYS;
 /// - [`SDL_GPU_STENCILOP_INVERT`]
 /// - [`SDL_GPU_STENCILOP_INCREMENT_AND_WRAP`]
 /// - [`SDL_GPU_STENCILOP_DECREMENT_AND_WRAP`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1545,12 +1545,12 @@ pub const SDL_GPU_STENCILOP_DECREMENT_AND_WRAP: SDL_GPUStencilOp =
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_BLENDOP_INVALID`]
 /// - [`SDL_GPU_BLENDOP_ADD`]
 /// - [`SDL_GPU_BLENDOP_SUBTRACT`]
 /// - [`SDL_GPU_BLENDOP_REVERSE_SUBTRACT`]
 /// - [`SDL_GPU_BLENDOP_MIN`]
 /// - [`SDL_GPU_BLENDOP_MAX`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1600,6 +1600,7 @@ pub const SDL_GPU_BLENDOP_MAX: SDL_GPUBlendOp = SDL_GPUBlendOp::MAX;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_BLENDFACTOR_INVALID`]
 /// - [`SDL_GPU_BLENDFACTOR_ZERO`]
 /// - [`SDL_GPU_BLENDFACTOR_ONE`]
 /// - [`SDL_GPU_BLENDFACTOR_SRC_COLOR`]
@@ -1613,7 +1614,6 @@ pub const SDL_GPU_BLENDOP_MAX: SDL_GPUBlendOp = SDL_GPUBlendOp::MAX;
 /// - [`SDL_GPU_BLENDFACTOR_CONSTANT_COLOR`]
 /// - [`SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR`]
 /// - [`SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1719,8 +1719,8 @@ pub const SDL_GPU_COLORCOMPONENT_A: ::core::primitive::u32 = 8_u32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_FILTER_NEAREST`]
 /// - [`SDL_GPU_FILTER_LINEAR`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1752,8 +1752,8 @@ pub const SDL_GPU_FILTER_LINEAR: SDL_GPUFilter = SDL_GPUFilter::LINEAR;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_SAMPLERMIPMAPMODE_NEAREST`]
 /// - [`SDL_GPU_SAMPLERMIPMAPMODE_LINEAR`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1788,9 +1788,9 @@ pub const SDL_GPU_SAMPLERMIPMAPMODE_LINEAR: SDL_GPUSamplerMipmapMode =
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_SAMPLERADDRESSMODE_REPEAT`]
 /// - [`SDL_GPU_SAMPLERADDRESSMODE_MIRRORED_REPEAT`]
 /// - [`SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1853,9 +1853,9 @@ pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_PRESENTMODE_VSYNC`]
 /// - [`SDL_GPU_PRESENTMODE_IMMEDIATE`]
 /// - [`SDL_GPU_PRESENTMODE_MAILBOX`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1903,10 +1903,10 @@ pub const SDL_GPU_PRESENTMODE_MAILBOX: SDL_GPUPresentMode = SDL_GPUPresentMode::
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GPU_SWAPCHAINCOMPOSITION_SDR`]
 /// - [`SDL_GPU_SWAPCHAINCOMPOSITION_SDR_LINEAR`]
 /// - [`SDL_GPU_SWAPCHAINCOMPOSITION_HDR_EXTENDED_LINEAR`]
 /// - [`SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2048`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

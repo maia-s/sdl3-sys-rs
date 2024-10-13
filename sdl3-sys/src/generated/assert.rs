@@ -142,11 +142,11 @@ pub use SDL_disabled_assert;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_ASSERTION_RETRY`]
 /// - [`SDL_ASSERTION_BREAK`]
 /// - [`SDL_ASSERTION_ABORT`]
 /// - [`SDL_ASSERTION_IGNORE`]
 /// - [`SDL_ASSERTION_ALWAYS_IGNORE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

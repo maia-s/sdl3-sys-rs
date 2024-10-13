@@ -118,10 +118,10 @@ extern "C" {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_PROCESS_STDIO_INHERITED`]
 /// - [`SDL_PROCESS_STDIO_NULL`]
 /// - [`SDL_PROCESS_STDIO_APP`]
 /// - [`SDL_PROCESS_STDIO_REDIRECT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

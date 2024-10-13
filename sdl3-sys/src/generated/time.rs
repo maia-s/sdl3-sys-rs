@@ -43,9 +43,9 @@ pub struct SDL_DateTime {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_DATE_FORMAT_YYYYMMDD`]
 /// - [`SDL_DATE_FORMAT_DDMMYYYY`]
 /// - [`SDL_DATE_FORMAT_MMDDYYYY`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -81,8 +81,8 @@ pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_TIME_FORMAT_24HR`]
 /// - [`SDL_TIME_FORMAT_12HR`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

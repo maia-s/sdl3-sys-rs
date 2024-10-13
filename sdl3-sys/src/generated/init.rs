@@ -87,9 +87,9 @@ pub const SDL_INIT_CAMERA: ::core::primitive::u32 = 65536_u32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_APP_CONTINUE`]
 /// - [`SDL_APP_SUCCESS`]
 /// - [`SDL_APP_FAILURE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

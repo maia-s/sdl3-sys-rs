@@ -47,6 +47,7 @@ pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_PIXELTYPE_UNKNOWN`]
 /// - [`SDL_PIXELTYPE_INDEX1`]
 /// - [`SDL_PIXELTYPE_INDEX4`]
 /// - [`SDL_PIXELTYPE_INDEX8`]
@@ -59,7 +60,6 @@ pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 /// - [`SDL_PIXELTYPE_ARRAYF16`]
 /// - [`SDL_PIXELTYPE_ARRAYF32`]
 /// - [`SDL_PIXELTYPE_INDEX2`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -106,9 +106,9 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_BITMAPORDER_NONE`]
 /// - [`SDL_BITMAPORDER_4321`]
 /// - [`SDL_BITMAPORDER_1234`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -135,6 +135,7 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_PACKEDORDER_NONE`]
 /// - [`SDL_PACKEDORDER_XRGB`]
 /// - [`SDL_PACKEDORDER_RGBX`]
 /// - [`SDL_PACKEDORDER_ARGB`]
@@ -143,7 +144,6 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 /// - [`SDL_PACKEDORDER_BGRX`]
 /// - [`SDL_PACKEDORDER_ABGR`]
 /// - [`SDL_PACKEDORDER_BGRA`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -182,13 +182,13 @@ pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_ARRAYORDER_NONE`]
 /// - [`SDL_ARRAYORDER_RGB`]
 /// - [`SDL_ARRAYORDER_RGBA`]
 /// - [`SDL_ARRAYORDER_ARGB`]
 /// - [`SDL_ARRAYORDER_BGR`]
 /// - [`SDL_ARRAYORDER_BGRA`]
 /// - [`SDL_ARRAYORDER_ABGR`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -223,6 +223,7 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_PACKEDLAYOUT_NONE`]
 /// - [`SDL_PACKEDLAYOUT_332`]
 /// - [`SDL_PACKEDLAYOUT_4444`]
 /// - [`SDL_PACKEDLAYOUT_1555`]
@@ -231,7 +232,6 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 /// - [`SDL_PACKEDLAYOUT_8888`]
 /// - [`SDL_PACKEDLAYOUT_2101010`]
 /// - [`SDL_PACKEDLAYOUT_1010102`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -307,6 +307,7 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_PIXELFORMAT_UNKNOWN`]
 /// - [`SDL_PIXELFORMAT_INDEX1LSB`]
 /// - [`SDL_PIXELFORMAT_INDEX1MSB`]
 /// - [`SDL_PIXELFORMAT_INDEX2LSB`]
@@ -386,7 +387,6 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 /// - [`SDL_PIXELFORMAT_XRGB32`]
 /// - [`SDL_PIXELFORMAT_BGRX32`]
 /// - [`SDL_PIXELFORMAT_XBGR32`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -731,9 +731,9 @@ pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::i32 {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_COLOR_TYPE_UNKNOWN`]
 /// - [`SDL_COLOR_TYPE_RGB`]
 /// - [`SDL_COLOR_TYPE_YCBCR`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -761,9 +761,9 @@ pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_COLOR_RANGE_UNKNOWN`]
 /// - [`SDL_COLOR_RANGE_LIMITED`]
 /// - [`SDL_COLOR_RANGE_FULL`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -795,6 +795,7 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_COLOR_PRIMARIES_UNKNOWN`]
 /// - [`SDL_COLOR_PRIMARIES_BT709`]
 /// - [`SDL_COLOR_PRIMARIES_UNSPECIFIED`]
 /// - [`SDL_COLOR_PRIMARIES_BT470M`]
@@ -808,7 +809,6 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 /// - [`SDL_COLOR_PRIMARIES_SMPTE432`]
 /// - [`SDL_COLOR_PRIMARIES_EBU3213`]
 /// - [`SDL_COLOR_PRIMARIES_CUSTOM`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -881,6 +881,7 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_TRANSFER_CHARACTERISTICS_UNKNOWN`]
 /// - [`SDL_TRANSFER_CHARACTERISTICS_BT709`]
 /// - [`SDL_TRANSFER_CHARACTERISTICS_UNSPECIFIED`]
 /// - [`SDL_TRANSFER_CHARACTERISTICS_GAMMA22`]
@@ -899,7 +900,6 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 /// - [`SDL_TRANSFER_CHARACTERISTICS_SMPTE428`]
 /// - [`SDL_TRANSFER_CHARACTERISTICS_HLG`]
 /// - [`SDL_TRANSFER_CHARACTERISTICS_CUSTOM`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1005,6 +1005,7 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_MATRIX_COEFFICIENTS_IDENTITY`]
 /// - [`SDL_MATRIX_COEFFICIENTS_BT709`]
 /// - [`SDL_MATRIX_COEFFICIENTS_UNSPECIFIED`]
 /// - [`SDL_MATRIX_COEFFICIENTS_FCC`]
@@ -1019,7 +1020,6 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 /// - [`SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL`]
 /// - [`SDL_MATRIX_COEFFICIENTS_ICTCP`]
 /// - [`SDL_MATRIX_COEFFICIENTS_CUSTOM`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1096,10 +1096,10 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_CHROMA_LOCATION_NONE`]
 /// - [`SDL_CHROMA_LOCATION_LEFT`]
 /// - [`SDL_CHROMA_LOCATION_CENTER`]
 /// - [`SDL_CHROMA_LOCATION_TOPLEFT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1221,6 +1221,7 @@ pub const fn SDL_ISCOLORSPACE_FULL_RANGE(X: ::core::primitive::i32) -> ::core::p
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_COLORSPACE_UNKNOWN`]
 /// - [`SDL_COLORSPACE_SRGB`]
 /// - [`SDL_COLORSPACE_SRGB_LINEAR`]
 /// - [`SDL_COLORSPACE_HDR10`]
@@ -1233,7 +1234,6 @@ pub const fn SDL_ISCOLORSPACE_FULL_RANGE(X: ::core::primitive::i32) -> ::core::p
 /// - [`SDL_COLORSPACE_BT2020_FULL`]
 /// - [`SDL_COLORSPACE_RGB_DEFAULT`]
 /// - [`SDL_COLORSPACE_YUV_DEFAULT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

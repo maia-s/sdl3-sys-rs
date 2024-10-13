@@ -51,10 +51,10 @@ pub type SDL_TLSID = SDL_AtomicInt;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_THREAD_PRIORITY_LOW`]
 /// - [`SDL_THREAD_PRIORITY_NORMAL`]
 /// - [`SDL_THREAD_PRIORITY_HIGH`]
 /// - [`SDL_THREAD_PRIORITY_TIME_CRITICAL`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

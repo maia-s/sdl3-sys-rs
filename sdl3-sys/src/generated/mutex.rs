@@ -653,10 +653,10 @@ extern "C" {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_INIT_STATUS_UNINITIALIZED`]
 /// - [`SDL_INIT_STATUS_INITIALIZING`]
 /// - [`SDL_INIT_STATUS_INITIALIZED`]
 /// - [`SDL_INIT_STATUS_UNINITIALIZING`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

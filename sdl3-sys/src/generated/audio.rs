@@ -95,6 +95,7 @@ pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_AUDIO_UNKNOWN`]
 /// - [`SDL_AUDIO_U8`]
 /// - [`SDL_AUDIO_S8`]
 /// - [`SDL_AUDIO_S16LE`]
@@ -109,7 +110,6 @@ pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 /// - [`SDL_AUDIO_S16`]
 /// - [`SDL_AUDIO_S32`]
 /// - [`SDL_AUDIO_F32`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

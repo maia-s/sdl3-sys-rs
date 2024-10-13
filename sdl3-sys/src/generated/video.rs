@@ -73,9 +73,9 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: &::core::ffi::CStr =
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_SYSTEM_THEME_UNKNOWN`]
 /// - [`SDL_SYSTEM_THEME_LIGHT`]
 /// - [`SDL_SYSTEM_THEME_DARK`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -143,11 +143,11 @@ pub struct SDL_DisplayMode {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_ORIENTATION_UNKNOWN`]
 /// - [`SDL_ORIENTATION_LANDSCAPE`]
 /// - [`SDL_ORIENTATION_LANDSCAPE_FLIPPED`]
 /// - [`SDL_ORIENTATION_PORTRAIT`]
 /// - [`SDL_ORIENTATION_PORTRAIT_FLIPPED`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -315,9 +315,9 @@ pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::primitive::u32) -> ::core::prim
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_FLASH_CANCEL`]
 /// - [`SDL_FLASH_BRIEFLY`]
 /// - [`SDL_FLASH_UNTIL_FOCUSED`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -453,6 +453,7 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GL_RED_SIZE`]
 /// - [`SDL_GL_GREEN_SIZE`]
 /// - [`SDL_GL_BLUE_SIZE`]
 /// - [`SDL_GL_ALPHA_SIZE`]
@@ -480,7 +481,6 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 /// - [`SDL_GL_CONTEXT_NO_ERROR`]
 /// - [`SDL_GL_FLOATBUFFERS`]
 /// - [`SDL_GL_EGL_PLATFORM`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -607,9 +607,9 @@ pub const SDL_GL_EGL_PLATFORM: SDL_GLattr = SDL_GLattr::EGL_PLATFORM;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GL_CONTEXT_PROFILE_CORE`]
 /// - [`SDL_GL_CONTEXT_PROFILE_COMPATIBILITY`]
 /// - [`SDL_GL_CONTEXT_PROFILE_ES`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -638,10 +638,10 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLprofile = SDL_GLprofile::ES;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GL_CONTEXT_DEBUG_FLAG`]
 /// - [`SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG`]
 /// - [`SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG`]
 /// - [`SDL_GL_CONTEXT_RESET_ISOLATION_FLAG`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -674,8 +674,8 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLcontextFlag =
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE`]
 /// - [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -702,8 +702,8 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLcontextReleaseFlag =
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_GL_CONTEXT_RESET_NO_NOTIFICATION`]
 /// - [`SDL_GL_CONTEXT_RESET_LOSE_CONTEXT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -3250,6 +3250,7 @@ extern "C" {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_HITTEST_NORMAL`]
 /// - [`SDL_HITTEST_DRAGGABLE`]
 /// - [`SDL_HITTEST_RESIZE_TOPLEFT`]
 /// - [`SDL_HITTEST_RESIZE_TOP`]
@@ -3259,7 +3260,6 @@ extern "C" {
 /// - [`SDL_HITTEST_RESIZE_BOTTOM`]
 /// - [`SDL_HITTEST_RESIZE_BOTTOMLEFT`]
 /// - [`SDL_HITTEST_RESIZE_LEFT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

@@ -13,12 +13,12 @@ use super::error::*;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_POWERSTATE_ERROR`]
 /// - [`SDL_POWERSTATE_UNKNOWN`]
 /// - [`SDL_POWERSTATE_ON_BATTERY`]
 /// - [`SDL_POWERSTATE_NO_BATTERY`]
 /// - [`SDL_POWERSTATE_CHARGING`]
 /// - [`SDL_POWERSTATE_CHARGED`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

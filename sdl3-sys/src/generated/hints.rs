@@ -3877,9 +3877,9 @@ pub const SDL_HINT_ASSERT: &::core::ffi::CStr = c"SDL_ASSERT";
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_HINT_DEFAULT`]
 /// - [`SDL_HINT_NORMAL`]
 /// - [`SDL_HINT_OVERRIDE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

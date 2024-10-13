@@ -87,6 +87,7 @@ pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_SENSOR_INVALID`]
 /// - [`SDL_SENSOR_UNKNOWN`]
 /// - [`SDL_SENSOR_ACCEL`]
 /// - [`SDL_SENSOR_GYRO`]
@@ -94,7 +95,6 @@ pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 /// - [`SDL_SENSOR_GYRO_L`]
 /// - [`SDL_SENSOR_ACCEL_R`]
 /// - [`SDL_SENSOR_GYRO_R`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

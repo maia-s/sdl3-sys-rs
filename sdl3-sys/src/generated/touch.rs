@@ -12,10 +12,10 @@ pub type SDL_FingerID = Uint64;
 
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_TOUCH_DEVICE_INVALID`]
 /// - [`SDL_TOUCH_DEVICE_DIRECT`]
 /// - [`SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE`]
 /// - [`SDL_TOUCH_DEVICE_INDIRECT_RELATIVE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

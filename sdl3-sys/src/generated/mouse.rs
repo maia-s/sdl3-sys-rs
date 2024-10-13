@@ -26,6 +26,7 @@ pub type SDL_MouseID = Uint32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_SYSTEM_CURSOR_DEFAULT`]
 /// - [`SDL_SYSTEM_CURSOR_TEXT`]
 /// - [`SDL_SYSTEM_CURSOR_WAIT`]
 /// - [`SDL_SYSTEM_CURSOR_CROSSHAIR`]
@@ -46,7 +47,6 @@ pub type SDL_MouseID = Uint32;
 /// - [`SDL_SYSTEM_CURSOR_SW_RESIZE`]
 /// - [`SDL_SYSTEM_CURSOR_W_RESIZE`]
 /// - [`SDL_SYSTEM_CURSOR_COUNT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -149,8 +149,8 @@ pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_MOUSEWHEEL_NORMAL`]
 /// - [`SDL_MOUSEWHEEL_FLIPPED`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

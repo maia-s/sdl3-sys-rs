@@ -34,11 +34,11 @@ use super::error::*;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_HID_API_BUS_UNKNOWN`]
 /// - [`SDL_HID_API_BUS_USB`]
 /// - [`SDL_HID_API_BUS_BLUETOOTH`]
 /// - [`SDL_HID_API_BUS_I2C`]
 /// - [`SDL_HID_API_BUS_SPI`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

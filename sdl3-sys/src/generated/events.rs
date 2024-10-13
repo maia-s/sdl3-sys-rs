@@ -37,6 +37,7 @@ use super::video::*;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_EVENT_FIRST`]
 /// - [`SDL_EVENT_QUIT`]
 /// - [`SDL_EVENT_TERMINATING`]
 /// - [`SDL_EVENT_LOW_MEMORY`]
@@ -148,7 +149,6 @@ use super::video::*;
 /// - [`SDL_EVENT_USER`]
 /// - [`SDL_EVENT_LAST`]
 /// - [`SDL_EVENT_ENUM_PADDING`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1656,9 +1656,9 @@ extern "C" {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_ADDEVENT`]
 /// - [`SDL_PEEKEVENT`]
 /// - [`SDL_GETEVENT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

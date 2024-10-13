@@ -1181,6 +1181,9 @@ impl Emit for TypeDef {
                     }
                     prefix
                 } else {
+                    if let Some(variant) = e.variants.first() {
+                        known_values.push(format!("[`{}`]", variant.ident.as_str()));
+                    }
                     ""
                 };
 
@@ -1190,12 +1193,9 @@ impl Emit for TypeDef {
                     }
                     writeln!(ctx, "/// ### `sdl3-sys` note")?;
                     writeln!(ctx, "/// This is a `C` enum. Known values:")?;
-                    let mut known_values = known_values.into_iter();
-                    known_values.next();
                     for s in known_values {
                         writeln!(ctx, "/// - {s}")?;
                     }
-                    writeln!(ctx)?;
                 }
 
                 let enum_base_type = enum_base_type.unwrap_or(Type::primitive(PrimitiveType::Int));

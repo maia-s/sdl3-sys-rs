@@ -46,6 +46,7 @@ use super::stdinc::*;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_LOG_CATEGORY_APPLICATION`]
 /// - [`SDL_LOG_CATEGORY_ERROR`]
 /// - [`SDL_LOG_CATEGORY_ASSERT`]
 /// - [`SDL_LOG_CATEGORY_SYSTEM`]
@@ -65,7 +66,6 @@ use super::stdinc::*;
 /// - [`SDL_LOG_CATEGORY_RESERVED9`]
 /// - [`SDL_LOG_CATEGORY_RESERVED10`]
 /// - [`SDL_LOG_CATEGORY_CUSTOM`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -126,6 +126,7 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_LOG_PRIORITY_INVALID`]
 /// - [`SDL_LOG_PRIORITY_TRACE`]
 /// - [`SDL_LOG_PRIORITY_VERBOSE`]
 /// - [`SDL_LOG_PRIORITY_DEBUG`]
@@ -134,7 +135,6 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 /// - [`SDL_LOG_PRIORITY_ERROR`]
 /// - [`SDL_LOG_PRIORITY_CRITICAL`]
 /// - [`SDL_LOG_PRIORITY_COUNT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

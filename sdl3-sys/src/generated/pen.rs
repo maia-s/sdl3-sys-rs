@@ -69,6 +69,7 @@ pub const SDL_PEN_INPUT_ERASER_TIP: ::core::primitive::u32 = 1073741824_u32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_PEN_AXIS_PRESSURE`]
 /// - [`SDL_PEN_AXIS_XTILT`]
 /// - [`SDL_PEN_AXIS_YTILT`]
 /// - [`SDL_PEN_AXIS_DISTANCE`]
@@ -76,7 +77,6 @@ pub const SDL_PEN_INPUT_ERASER_TIP: ::core::primitive::u32 = 1073741824_u32;
 /// - [`SDL_PEN_AXIS_SLIDER`]
 /// - [`SDL_PEN_AXIS_TANGENTIAL_PRESSURE`]
 /// - [`SDL_PEN_AXIS_COUNT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

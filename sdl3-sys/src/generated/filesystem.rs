@@ -142,6 +142,7 @@ extern "C" {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_FOLDER_HOME`]
 /// - [`SDL_FOLDER_DESKTOP`]
 /// - [`SDL_FOLDER_DOCUMENTS`]
 /// - [`SDL_FOLDER_DOWNLOADS`]
@@ -153,7 +154,6 @@ extern "C" {
 /// - [`SDL_FOLDER_TEMPLATES`]
 /// - [`SDL_FOLDER_VIDEOS`]
 /// - [`SDL_FOLDER_COUNT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -245,10 +245,10 @@ extern "C" {
 
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_PATHTYPE_NONE`]
 /// - [`SDL_PATHTYPE_FILE`]
 /// - [`SDL_PATHTYPE_DIRECTORY`]
 /// - [`SDL_PATHTYPE_OTHER`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -335,9 +335,9 @@ extern "C" {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_ENUM_CONTINUE`]
 /// - [`SDL_ENUM_SUCCESS`]
 /// - [`SDL_ENUM_FAILURE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

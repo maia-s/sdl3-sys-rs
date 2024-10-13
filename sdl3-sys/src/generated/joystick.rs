@@ -64,6 +64,7 @@ pub type SDL_JoystickID = Uint32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_JOYSTICK_TYPE_UNKNOWN`]
 /// - [`SDL_JOYSTICK_TYPE_GAMEPAD`]
 /// - [`SDL_JOYSTICK_TYPE_WHEEL`]
 /// - [`SDL_JOYSTICK_TYPE_ARCADE_STICK`]
@@ -74,7 +75,6 @@ pub type SDL_JoystickID = Uint32;
 /// - [`SDL_JOYSTICK_TYPE_ARCADE_PAD`]
 /// - [`SDL_JOYSTICK_TYPE_THROTTLE`]
 /// - [`SDL_JOYSTICK_TYPE_COUNT`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -120,10 +120,10 @@ pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_JOYSTICK_CONNECTION_INVALID`]
 /// - [`SDL_JOYSTICK_CONNECTION_UNKNOWN`]
 /// - [`SDL_JOYSTICK_CONNECTION_WIRED`]
 /// - [`SDL_JOYSTICK_CONNECTION_WIRELESS`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

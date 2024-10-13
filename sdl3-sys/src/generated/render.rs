@@ -69,9 +69,9 @@ pub struct SDL_Vertex {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_TEXTUREACCESS_STATIC`]
 /// - [`SDL_TEXTUREACCESS_STREAMING`]
 /// - [`SDL_TEXTUREACCESS_TARGET`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -104,11 +104,11 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGE
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_LOGICAL_PRESENTATION_DISABLED`]
 /// - [`SDL_LOGICAL_PRESENTATION_STRETCH`]
 /// - [`SDL_LOGICAL_PRESENTATION_LETTERBOX`]
 /// - [`SDL_LOGICAL_PRESENTATION_OVERSCAN`]
 /// - [`SDL_LOGICAL_PRESENTATION_INTEGER_SCALE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

@@ -37,12 +37,12 @@ pub type SDL_PropertiesID = Uint32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_PROPERTY_TYPE_INVALID`]
 /// - [`SDL_PROPERTY_TYPE_POINTER`]
 /// - [`SDL_PROPERTY_TYPE_STRING`]
 /// - [`SDL_PROPERTY_TYPE_NUMBER`]
 /// - [`SDL_PROPERTY_TYPE_FLOAT`]
 /// - [`SDL_PROPERTY_TYPE_BOOLEAN`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

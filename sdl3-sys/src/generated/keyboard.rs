@@ -387,6 +387,7 @@ extern "C" {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_TEXTINPUT_TYPE_TEXT`]
 /// - [`SDL_TEXTINPUT_TYPE_TEXT_NAME`]
 /// - [`SDL_TEXTINPUT_TYPE_TEXT_EMAIL`]
 /// - [`SDL_TEXTINPUT_TYPE_TEXT_USERNAME`]
@@ -395,7 +396,6 @@ extern "C" {
 /// - [`SDL_TEXTINPUT_TYPE_NUMBER`]
 /// - [`SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN`]
 /// - [`SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -464,10 +464,10 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
+/// - [`SDL_CAPITALIZE_NONE`]
 /// - [`SDL_CAPITALIZE_SENTENCES`]
 /// - [`SDL_CAPITALIZE_WORDS`]
 /// - [`SDL_CAPITALIZE_LETTERS`]
-
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
