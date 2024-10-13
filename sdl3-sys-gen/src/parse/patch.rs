@@ -1,6 +1,5 @@
 use super::{
-    Cast, Define, DefineValue, Enum, Expr, GetSpan, Ident, ParseContext, ParseErr, PrimitiveType,
-    Type,
+    Cast, Define, DefineValue, Enum, Expr, GetSpan, ParseContext, ParseErr, PrimitiveType, Type,
 };
 
 struct Patch<T: ?Sized> {
@@ -131,6 +130,23 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         match_ident: |i| matches!(i, "SDL_JOYSTICK_AXIS_MAX" | "SDL_JOYSTICK_AXIS_MIN"),
         patch: |_ctx, define| {
             define.value = define.value.cast_expr(Type::ident_str("Sint16"));
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("keycode"),
+        match_ident: |i| i == "SDL_SCANCODE_TO_KEYCODE",
+        patch: |_ctx, define| {
+            let args = define.args.as_mut().unwrap();
+            args[0].ty = Type::ident_str("SDL_Scancode");
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("keycode"),
+        match_ident: |i| i.starts_with("SDL_KMOD_"),
+        patch: |_ctx, define| {
+            define.value = define.value.cast_expr(Type::ident_str("SDL_Keymod"));
             Ok(true)
         },
     },

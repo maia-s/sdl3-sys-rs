@@ -1174,6 +1174,27 @@ impl Scope {
         for sym in scope.0.borrow().syms.values() {
             self.register_sym(sym.clone())?;
         }
+        for sym in scope.0.borrow().enum_syms.iter() {
+            if self.lookup_enum(sym).is_none() {
+                self.register_enum_sym(sym.clone())?;
+            }
+        }
+        for (ident, sym) in scope.0.borrow().struct_syms.iter() {
+            if self.lookup_struct(ident).is_none() {
+                self.0
+                    .borrow_mut()
+                    .struct_syms
+                    .insert(ident.clone(), sym.clone());
+            }
+        }
+        for (ident, sym) in scope.0.borrow().union_syms.iter() {
+            if self.lookup_union(ident).is_none() {
+                self.0
+                    .borrow_mut()
+                    .union_syms
+                    .insert(ident.clone(), sym.clone());
+            }
+        }
         Ok(())
     }
 

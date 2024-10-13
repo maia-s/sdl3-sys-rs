@@ -21,8 +21,8 @@ pub type SDL_Keycode = Uint32;
 pub const SDLK_SCANCODE_MASK: ::core::primitive::u32 = 1073741824_u32;
 
 #[inline(always)]
-pub const fn SDL_SCANCODE_TO_KEYCODE(X: ::core::primitive::u32) -> ::core::primitive::u32 {
-    (X | 1073741824_u32)
+pub const fn SDL_SCANCODE_TO_KEYCODE(X: SDL_Scancode) -> ::core::primitive::u32 {
+    ((X.0 as ::core::primitive::u32) | 1073741824_u32)
 }
 
 pub const SDLK_UNKNOWN: ::core::primitive::u32 = 0_u32;
@@ -530,55 +530,59 @@ pub const SDLK_ENDCALL: ::core::primitive::u32 = 1073742114_u32;
 pub type SDL_Keymod = Uint16;
 
 /// no modifier is applicable.
-pub const SDL_KMOD_NONE: ::core::primitive::u32 = 0_u32;
+pub const SDL_KMOD_NONE: SDL_Keymod = (0x0000 as SDL_Keymod);
 
 /// the left Shift key is down.
-pub const SDL_KMOD_LSHIFT: ::core::primitive::u32 = 1_u32;
+pub const SDL_KMOD_LSHIFT: SDL_Keymod = (0x0001 as SDL_Keymod);
 
 /// the right Shift key is down.
-pub const SDL_KMOD_RSHIFT: ::core::primitive::u32 = 2_u32;
+pub const SDL_KMOD_RSHIFT: SDL_Keymod = (0x0002 as SDL_Keymod);
 
 /// the left Ctrl (Control) key is down.
-pub const SDL_KMOD_LCTRL: ::core::primitive::u32 = 64_u32;
+pub const SDL_KMOD_LCTRL: SDL_Keymod = (0x0040 as SDL_Keymod);
 
 /// the right Ctrl (Control) key is down.
-pub const SDL_KMOD_RCTRL: ::core::primitive::u32 = 128_u32;
+pub const SDL_KMOD_RCTRL: SDL_Keymod = (0x0080 as SDL_Keymod);
 
 /// the left Alt key is down.
-pub const SDL_KMOD_LALT: ::core::primitive::u32 = 256_u32;
+pub const SDL_KMOD_LALT: SDL_Keymod = (0x0100 as SDL_Keymod);
 
 /// the right Alt key is down.
-pub const SDL_KMOD_RALT: ::core::primitive::u32 = 512_u32;
+pub const SDL_KMOD_RALT: SDL_Keymod = (0x0200 as SDL_Keymod);
 
 /// the left GUI key (often the Windows key) is down.
-pub const SDL_KMOD_LGUI: ::core::primitive::u32 = 1024_u32;
+pub const SDL_KMOD_LGUI: SDL_Keymod = (0x0400 as SDL_Keymod);
 
 /// the right GUI key (often the Windows key) is down.
-pub const SDL_KMOD_RGUI: ::core::primitive::u32 = 2048_u32;
+pub const SDL_KMOD_RGUI: SDL_Keymod = (0x0800 as SDL_Keymod);
 
 /// the Num Lock key (may be located on an extended keypad) is down.
-pub const SDL_KMOD_NUM: ::core::primitive::u32 = 4096_u32;
+pub const SDL_KMOD_NUM: SDL_Keymod = (0x1000 as SDL_Keymod);
 
 /// the Caps Lock key is down.
-pub const SDL_KMOD_CAPS: ::core::primitive::u32 = 8192_u32;
+pub const SDL_KMOD_CAPS: SDL_Keymod = (0x2000 as SDL_Keymod);
 
 /// the !AltGr key is down.
-pub const SDL_KMOD_MODE: ::core::primitive::u32 = 16384_u32;
+pub const SDL_KMOD_MODE: SDL_Keymod = (0x4000 as SDL_Keymod);
 
 /// the Scroll Lock key is down.
-pub const SDL_KMOD_SCROLL: ::core::primitive::u32 = 32768_u32;
+pub const SDL_KMOD_SCROLL: SDL_Keymod = (0x8000 as SDL_Keymod);
 
 /// Any Ctrl key is down.
-pub const SDL_KMOD_CTRL: ::core::primitive::u32 = (64_u32 | 128_u32);
+pub const SDL_KMOD_CTRL: SDL_Keymod =
+    (((0x0040 as SDL_Keymod) | (0x0080 as SDL_Keymod)) as SDL_Keymod);
 
 /// Any Shift key is down.
-pub const SDL_KMOD_SHIFT: ::core::primitive::u32 = (1_u32 | 2_u32);
+pub const SDL_KMOD_SHIFT: SDL_Keymod =
+    (((0x0001 as SDL_Keymod) | (0x0002 as SDL_Keymod)) as SDL_Keymod);
 
 /// Any Alt key is down.
-pub const SDL_KMOD_ALT: ::core::primitive::u32 = (256_u32 | 512_u32);
+pub const SDL_KMOD_ALT: SDL_Keymod =
+    (((0x0100 as SDL_Keymod) | (0x0200 as SDL_Keymod)) as SDL_Keymod);
 
 /// Any GUI key is down.
-pub const SDL_KMOD_GUI: ::core::primitive::u32 = (1024_u32 | 2048_u32);
+pub const SDL_KMOD_GUI: SDL_Keymod =
+    (((0x0400 as SDL_Keymod) | (0x0800 as SDL_Keymod)) as SDL_Keymod);
 
 #[cfg(doc)]
 use crate::everything::*;
