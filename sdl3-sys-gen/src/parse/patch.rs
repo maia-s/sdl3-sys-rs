@@ -302,6 +302,15 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             Ok(true)
         },
     },
+    DefinePatch {
+        module: Some("timer"),
+        match_ident: |i| i.starts_with("SDL_NS_TO_"),
+        patch: |_ctx, define| {
+            let args = define.args.as_mut().unwrap();
+            args[0].ty = Type::ident_str("Uint64");
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_parsed_enum(ctx: &ParseContext, e: &mut Enum) -> Result<bool, ParseErr> {
