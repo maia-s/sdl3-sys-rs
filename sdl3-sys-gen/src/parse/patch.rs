@@ -294,6 +294,14 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             Ok(true)
         },
     },
+    DefinePatch {
+        module: Some("system"),
+        match_ident: |i| i.starts_with("SDL_ANDROID_EXTERNAL_STORAGE_"),
+        patch: |_ctx, define| {
+            define.value = define.value.cast_expr(Type::ident_str("Uint32"));
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_parsed_enum(ctx: &ParseContext, e: &mut Enum) -> Result<bool, ParseErr> {

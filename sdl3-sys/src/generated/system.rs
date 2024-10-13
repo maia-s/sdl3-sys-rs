@@ -384,9 +384,9 @@ emit! {
     ///
     /// ### Availability
     /// This macro is available since SDL 3.0.0.
-    pub const SDL_ANDROID_EXTERNAL_STORAGE_READ: ::core::primitive::i32 = 1;
+    pub const SDL_ANDROID_EXTERNAL_STORAGE_READ: Uint32 = (0x01 as Uint32);
 
-    pub const SDL_ANDROID_EXTERNAL_STORAGE_WRITE: ::core::primitive::i32 = 2;
+    pub const SDL_ANDROID_EXTERNAL_STORAGE_WRITE: Uint32 = (0x02 as Uint32);
 
     extern "C" {
         /// Get the path used for internal storage for this Android application.
