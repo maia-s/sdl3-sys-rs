@@ -69,14 +69,16 @@ pub const SDL_PEN_INPUT_ERASER_TIP: ::core::primitive::u32 = 1073741824_u32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_PEN_AXIS_PRESSURE`]
-/// - [`SDL_PEN_AXIS_XTILT`]
-/// - [`SDL_PEN_AXIS_YTILT`]
-/// - [`SDL_PEN_AXIS_DISTANCE`]
-/// - [`SDL_PEN_AXIS_ROTATION`]
-/// - [`SDL_PEN_AXIS_SLIDER`]
-/// - [`SDL_PEN_AXIS_TANGENTIAL_PRESSURE`]
-/// - [`SDL_PEN_AXIS_COUNT`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_PenAxis::PRESSURE`] | [`SDL_PEN_AXIS_PRESSURE`] | Pen pressure.  Unidirectional: 0 to 1.0 |
+/// | [`SDL_PenAxis::XTILT`] | [`SDL_PEN_AXIS_XTILT`] | Pen horizontal tilt angle.  Bidirectional: -90.0 to 90.0 (left-to-right). |
+/// | [`SDL_PenAxis::YTILT`] | [`SDL_PEN_AXIS_YTILT`] | Pen vertical tilt angle.  Bidirectional: -90.0 to 90.0 (top-to-down). |
+/// | [`SDL_PenAxis::DISTANCE`] | [`SDL_PEN_AXIS_DISTANCE`] | Pen distance to drawing surface.  Unidirectional: 0.0 to 1.0 |
+/// | [`SDL_PenAxis::ROTATION`] | [`SDL_PEN_AXIS_ROTATION`] | Pen barrel rotation.  Bidirectional: -180 to 179.9 (clockwise, 0 is facing up, -180.0 is facing down). |
+/// | [`SDL_PenAxis::SLIDER`] | [`SDL_PEN_AXIS_SLIDER`] | Pen finger wheel or slider (e.g., Airbrush Pen).  Unidirectional: 0 to 1.0 |
+/// | [`SDL_PenAxis::TANGENTIAL_PRESSURE`] | [`SDL_PEN_AXIS_TANGENTIAL_PRESSURE`] | Pressure from squeezing the pen ("barrel pressure"). |
+/// | [`SDL_PenAxis::COUNT`] | [`SDL_PEN_AXIS_COUNT`] | Total known pen axis types in this version of SDL. This number may grow in future releases! |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

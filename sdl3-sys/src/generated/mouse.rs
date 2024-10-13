@@ -26,27 +26,29 @@ pub type SDL_MouseID = Uint32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_SYSTEM_CURSOR_DEFAULT`]
-/// - [`SDL_SYSTEM_CURSOR_TEXT`]
-/// - [`SDL_SYSTEM_CURSOR_WAIT`]
-/// - [`SDL_SYSTEM_CURSOR_CROSSHAIR`]
-/// - [`SDL_SYSTEM_CURSOR_PROGRESS`]
-/// - [`SDL_SYSTEM_CURSOR_NWSE_RESIZE`]
-/// - [`SDL_SYSTEM_CURSOR_NESW_RESIZE`]
-/// - [`SDL_SYSTEM_CURSOR_EW_RESIZE`]
-/// - [`SDL_SYSTEM_CURSOR_NS_RESIZE`]
-/// - [`SDL_SYSTEM_CURSOR_MOVE`]
-/// - [`SDL_SYSTEM_CURSOR_NOT_ALLOWED`]
-/// - [`SDL_SYSTEM_CURSOR_POINTER`]
-/// - [`SDL_SYSTEM_CURSOR_NW_RESIZE`]
-/// - [`SDL_SYSTEM_CURSOR_N_RESIZE`]
-/// - [`SDL_SYSTEM_CURSOR_NE_RESIZE`]
-/// - [`SDL_SYSTEM_CURSOR_E_RESIZE`]
-/// - [`SDL_SYSTEM_CURSOR_SE_RESIZE`]
-/// - [`SDL_SYSTEM_CURSOR_S_RESIZE`]
-/// - [`SDL_SYSTEM_CURSOR_SW_RESIZE`]
-/// - [`SDL_SYSTEM_CURSOR_W_RESIZE`]
-/// - [`SDL_SYSTEM_CURSOR_COUNT`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_SystemCursor::DEFAULT`] | [`SDL_SYSTEM_CURSOR_DEFAULT`] | Default cursor. Usually an arrow. |
+/// | [`SDL_SystemCursor::TEXT`] | [`SDL_SYSTEM_CURSOR_TEXT`] | Text selection. Usually an I-beam. |
+/// | [`SDL_SystemCursor::WAIT`] | [`SDL_SYSTEM_CURSOR_WAIT`] | Wait. Usually an hourglass or watch or spinning ball. |
+/// | [`SDL_SystemCursor::CROSSHAIR`] | [`SDL_SYSTEM_CURSOR_CROSSHAIR`] | Crosshair. |
+/// | [`SDL_SystemCursor::PROGRESS`] | [`SDL_SYSTEM_CURSOR_PROGRESS`] | Program is busy but still interactive. Usually it's WAIT with an arrow. |
+/// | [`SDL_SystemCursor::NWSE_RESIZE`] | [`SDL_SYSTEM_CURSOR_NWSE_RESIZE`] | Double arrow pointing northwest and southeast. |
+/// | [`SDL_SystemCursor::NESW_RESIZE`] | [`SDL_SYSTEM_CURSOR_NESW_RESIZE`] | Double arrow pointing northeast and southwest. |
+/// | [`SDL_SystemCursor::EW_RESIZE`] | [`SDL_SYSTEM_CURSOR_EW_RESIZE`] | Double arrow pointing west and east. |
+/// | [`SDL_SystemCursor::NS_RESIZE`] | [`SDL_SYSTEM_CURSOR_NS_RESIZE`] | Double arrow pointing north and south. |
+/// | [`SDL_SystemCursor::MOVE`] | [`SDL_SYSTEM_CURSOR_MOVE`] | Four pointed arrow pointing north, south, east, and west. |
+/// | [`SDL_SystemCursor::NOT_ALLOWED`] | [`SDL_SYSTEM_CURSOR_NOT_ALLOWED`] | Not permitted. Usually a slashed circle or crossbones. |
+/// | [`SDL_SystemCursor::POINTER`] | [`SDL_SYSTEM_CURSOR_POINTER`] | Pointer that indicates a link. Usually a pointing hand. |
+/// | [`SDL_SystemCursor::NW_RESIZE`] | [`SDL_SYSTEM_CURSOR_NW_RESIZE`] | Window resize top-left. This may be a single arrow or a double arrow like NWSE_RESIZE. |
+/// | [`SDL_SystemCursor::N_RESIZE`] | [`SDL_SYSTEM_CURSOR_N_RESIZE`] | Window resize top. May be NS_RESIZE. |
+/// | [`SDL_SystemCursor::NE_RESIZE`] | [`SDL_SYSTEM_CURSOR_NE_RESIZE`] | Window resize top-right. May be NESW_RESIZE. |
+/// | [`SDL_SystemCursor::E_RESIZE`] | [`SDL_SYSTEM_CURSOR_E_RESIZE`] | Window resize right. May be EW_RESIZE. |
+/// | [`SDL_SystemCursor::SE_RESIZE`] | [`SDL_SYSTEM_CURSOR_SE_RESIZE`] | Window resize bottom-right. May be NWSE_RESIZE. |
+/// | [`SDL_SystemCursor::S_RESIZE`] | [`SDL_SYSTEM_CURSOR_S_RESIZE`] | Window resize bottom. May be NS_RESIZE. |
+/// | [`SDL_SystemCursor::SW_RESIZE`] | [`SDL_SYSTEM_CURSOR_SW_RESIZE`] | Window resize bottom-left. May be NESW_RESIZE. |
+/// | [`SDL_SystemCursor::W_RESIZE`] | [`SDL_SYSTEM_CURSOR_W_RESIZE`] | Window resize left. May be EW_RESIZE. |
+/// | [`SDL_SystemCursor::COUNT`] | [`SDL_SYSTEM_CURSOR_COUNT`] |  |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -149,8 +151,10 @@ pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_MOUSEWHEEL_NORMAL`]
-/// - [`SDL_MOUSEWHEEL_FLIPPED`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_MouseWheelDirection::NORMAL`] | [`SDL_MOUSEWHEEL_NORMAL`] | The scroll direction is normal |
+/// | [`SDL_MouseWheelDirection::FLIPPED`] | [`SDL_MOUSEWHEEL_FLIPPED`] | The scroll direction is flipped / natural |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

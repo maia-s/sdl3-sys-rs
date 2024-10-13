@@ -69,9 +69,11 @@ pub struct SDL_Vertex {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_TEXTUREACCESS_STATIC`]
-/// - [`SDL_TEXTUREACCESS_STREAMING`]
-/// - [`SDL_TEXTUREACCESS_TARGET`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_TextureAccess::STATIC`] | [`SDL_TEXTUREACCESS_STATIC`] | Changes rarely, not lockable |
+/// | [`SDL_TextureAccess::STREAMING`] | [`SDL_TEXTUREACCESS_STREAMING`] | Changes frequently, lockable |
+/// | [`SDL_TextureAccess::TARGET`] | [`SDL_TEXTUREACCESS_TARGET`] | Texture can be used as a render target |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -104,11 +106,13 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGE
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_LOGICAL_PRESENTATION_DISABLED`]
-/// - [`SDL_LOGICAL_PRESENTATION_STRETCH`]
-/// - [`SDL_LOGICAL_PRESENTATION_LETTERBOX`]
-/// - [`SDL_LOGICAL_PRESENTATION_OVERSCAN`]
-/// - [`SDL_LOGICAL_PRESENTATION_INTEGER_SCALE`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_RendererLogicalPresentation::DISABLED`] | [`SDL_LOGICAL_PRESENTATION_DISABLED`] | There is no logical size in effect |
+/// | [`SDL_RendererLogicalPresentation::STRETCH`] | [`SDL_LOGICAL_PRESENTATION_STRETCH`] | The rendered content is stretched to the output resolution |
+/// | [`SDL_RendererLogicalPresentation::LETTERBOX`] | [`SDL_LOGICAL_PRESENTATION_LETTERBOX`] | The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars |
+/// | [`SDL_RendererLogicalPresentation::OVERSCAN`] | [`SDL_LOGICAL_PRESENTATION_OVERSCAN`] | The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds |
+/// | [`SDL_RendererLogicalPresentation::INTEGER_SCALE`] | [`SDL_LOGICAL_PRESENTATION_INTEGER_SCALE`] | The rendered content is scaled up by integer multiples to fit the output resolution |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

@@ -74,12 +74,14 @@ pub struct SDL_MessageBoxColor {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_MESSAGEBOX_COLOR_BACKGROUND`]
-/// - [`SDL_MESSAGEBOX_COLOR_TEXT`]
-/// - [`SDL_MESSAGEBOX_COLOR_BUTTON_BORDER`]
-/// - [`SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND`]
-/// - [`SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED`]
-/// - [`SDL_MESSAGEBOX_COLOR_COUNT`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_MessageBoxColorType::BACKGROUND`] | [`SDL_MESSAGEBOX_COLOR_BACKGROUND`] |  |
+/// | [`SDL_MessageBoxColorType::TEXT`] | [`SDL_MESSAGEBOX_COLOR_TEXT`] |  |
+/// | [`SDL_MessageBoxColorType::BUTTON_BORDER`] | [`SDL_MESSAGEBOX_COLOR_BUTTON_BORDER`] |  |
+/// | [`SDL_MessageBoxColorType::BUTTON_BACKGROUND`] | [`SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND`] |  |
+/// | [`SDL_MessageBoxColorType::BUTTON_SELECTED`] | [`SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED`] |  |
+/// | [`SDL_MessageBoxColorType::COUNT`] | [`SDL_MESSAGEBOX_COLOR_COUNT`] | Size of the colors array of SDL_MessageBoxColorScheme. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

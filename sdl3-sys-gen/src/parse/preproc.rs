@@ -218,6 +218,10 @@ impl Conditional {
             assert!(self.not.is_empty())
         }
     }
+
+    pub fn is_empty(&self) -> bool {
+        self.not.is_empty() && self.require.is_none()
+    }
 }
 
 #[derive(Clone, Debug)]

@@ -48,11 +48,13 @@ pub const SDL_BLENDMODE_INVALID: ::core::primitive::u32 = 2147483647_u32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_BLENDOPERATION_ADD`]
-/// - [`SDL_BLENDOPERATION_SUBTRACT`]
-/// - [`SDL_BLENDOPERATION_REV_SUBTRACT`]
-/// - [`SDL_BLENDOPERATION_MINIMUM`]
-/// - [`SDL_BLENDOPERATION_MAXIMUM`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_BlendOperation::ADD`] | [`SDL_BLENDOPERATION_ADD`] | dst + src: supported by all renderers |
+/// | [`SDL_BlendOperation::SUBTRACT`] | [`SDL_BLENDOPERATION_SUBTRACT`] | src - dst : supported by D3D, OpenGL, OpenGLES, and Vulkan |
+/// | [`SDL_BlendOperation::REV_SUBTRACT`] | [`SDL_BLENDOPERATION_REV_SUBTRACT`] | dst - src : supported by D3D, OpenGL, OpenGLES, and Vulkan |
+/// | [`SDL_BlendOperation::MINIMUM`] | [`SDL_BLENDOPERATION_MINIMUM`] | min(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan |
+/// | [`SDL_BlendOperation::MAXIMUM`] | [`SDL_BLENDOPERATION_MAXIMUM`] | max(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -98,16 +100,18 @@ pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_BLENDFACTOR_ZERO`]
-/// - [`SDL_BLENDFACTOR_ONE`]
-/// - [`SDL_BLENDFACTOR_SRC_COLOR`]
-/// - [`SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR`]
-/// - [`SDL_BLENDFACTOR_SRC_ALPHA`]
-/// - [`SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA`]
-/// - [`SDL_BLENDFACTOR_DST_COLOR`]
-/// - [`SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR`]
-/// - [`SDL_BLENDFACTOR_DST_ALPHA`]
-/// - [`SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_BlendFactor::ZERO`] | [`SDL_BLENDFACTOR_ZERO`] | 0, 0, 0, 0 |
+/// | [`SDL_BlendFactor::ONE`] | [`SDL_BLENDFACTOR_ONE`] | 1, 1, 1, 1 |
+/// | [`SDL_BlendFactor::SRC_COLOR`] | [`SDL_BLENDFACTOR_SRC_COLOR`] | srcR, srcG, srcB, srcA |
+/// | [`SDL_BlendFactor::ONE_MINUS_SRC_COLOR`] | [`SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR`] | 1-srcR, 1-srcG, 1-srcB, 1-srcA |
+/// | [`SDL_BlendFactor::SRC_ALPHA`] | [`SDL_BLENDFACTOR_SRC_ALPHA`] | srcA, srcA, srcA, srcA |
+/// | [`SDL_BlendFactor::ONE_MINUS_SRC_ALPHA`] | [`SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA`] | 1-srcA, 1-srcA, 1-srcA, 1-srcA |
+/// | [`SDL_BlendFactor::DST_COLOR`] | [`SDL_BLENDFACTOR_DST_COLOR`] | dstR, dstG, dstB, dstA |
+/// | [`SDL_BlendFactor::ONE_MINUS_DST_COLOR`] | [`SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR`] | 1-dstR, 1-dstG, 1-dstB, 1-dstA |
+/// | [`SDL_BlendFactor::DST_ALPHA`] | [`SDL_BLENDFACTOR_DST_ALPHA`] | dstA, dstA, dstA, dstA |
+/// | [`SDL_BlendFactor::ONE_MINUS_DST_ALPHA`] | [`SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA`] | 1-dstA, 1-dstA, 1-dstA, 1-dstA |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

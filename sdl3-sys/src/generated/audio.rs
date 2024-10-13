@@ -95,21 +95,20 @@ pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_AUDIO_UNKNOWN`]
-/// - [`SDL_AUDIO_U8`]
-/// - [`SDL_AUDIO_S8`]
-/// - [`SDL_AUDIO_S16LE`]
-/// - [`SDL_AUDIO_S16BE`]
-/// - [`SDL_AUDIO_S32LE`]
-/// - [`SDL_AUDIO_S32BE`]
-/// - [`SDL_AUDIO_F32LE`]
-/// - [`SDL_AUDIO_F32BE`]
-/// - [`SDL_AUDIO_S16`]
-/// - [`SDL_AUDIO_S32`]
-/// - [`SDL_AUDIO_F32`]
-/// - [`SDL_AUDIO_S16`]
-/// - [`SDL_AUDIO_S32`]
-/// - [`SDL_AUDIO_F32`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_AudioFormat::UNKNOWN`] | [`SDL_AUDIO_UNKNOWN`] | Unspecified audio format |
+/// | [`SDL_AudioFormat::U8`] | [`SDL_AUDIO_U8`] | Unsigned 8-bit samples |
+/// | [`SDL_AudioFormat::S8`] | [`SDL_AUDIO_S8`] | Signed 8-bit samples |
+/// | [`SDL_AudioFormat::S16LE`] | [`SDL_AUDIO_S16LE`] | Signed 16-bit samples |
+/// | [`SDL_AudioFormat::S16BE`] | [`SDL_AUDIO_S16BE`] | As above, but big-endian byte order |
+/// | [`SDL_AudioFormat::S32LE`] | [`SDL_AUDIO_S32LE`] | 32-bit integer samples |
+/// | [`SDL_AudioFormat::S32BE`] | [`SDL_AUDIO_S32BE`] | As above, but big-endian byte order |
+/// | [`SDL_AudioFormat::F32LE`] | [`SDL_AUDIO_F32LE`] | 32-bit floating point samples |
+/// | [`SDL_AudioFormat::F32BE`] | [`SDL_AUDIO_F32BE`] | As above, but big-endian byte order |
+/// | [`SDL_AudioFormat::S16`] | [`SDL_AUDIO_S16`] | (target dependent)  |
+/// | [`SDL_AudioFormat::S32`] | [`SDL_AUDIO_S32`] | (target dependent)  |
+/// | [`SDL_AudioFormat::F32`] | [`SDL_AUDIO_F32`] | (target dependent)  |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

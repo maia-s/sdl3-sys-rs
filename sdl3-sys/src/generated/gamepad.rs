@@ -54,18 +54,20 @@ use super::sensor::*;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_GAMEPAD_TYPE_UNKNOWN`]
-/// - [`SDL_GAMEPAD_TYPE_STANDARD`]
-/// - [`SDL_GAMEPAD_TYPE_XBOX360`]
-/// - [`SDL_GAMEPAD_TYPE_XBOXONE`]
-/// - [`SDL_GAMEPAD_TYPE_PS3`]
-/// - [`SDL_GAMEPAD_TYPE_PS4`]
-/// - [`SDL_GAMEPAD_TYPE_PS5`]
-/// - [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_PRO`]
-/// - [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT`]
-/// - [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT`]
-/// - [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR`]
-/// - [`SDL_GAMEPAD_TYPE_COUNT`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_GamepadType::UNKNOWN`] | [`SDL_GAMEPAD_TYPE_UNKNOWN`] |  |
+/// | [`SDL_GamepadType::STANDARD`] | [`SDL_GAMEPAD_TYPE_STANDARD`] |  |
+/// | [`SDL_GamepadType::XBOX360`] | [`SDL_GAMEPAD_TYPE_XBOX360`] |  |
+/// | [`SDL_GamepadType::XBOXONE`] | [`SDL_GAMEPAD_TYPE_XBOXONE`] |  |
+/// | [`SDL_GamepadType::PS3`] | [`SDL_GAMEPAD_TYPE_PS3`] |  |
+/// | [`SDL_GamepadType::PS4`] | [`SDL_GAMEPAD_TYPE_PS4`] |  |
+/// | [`SDL_GamepadType::PS5`] | [`SDL_GAMEPAD_TYPE_PS5`] |  |
+/// | [`SDL_GamepadType::NINTENDO_SWITCH_PRO`] | [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_PRO`] |  |
+/// | [`SDL_GamepadType::NINTENDO_SWITCH_JOYCON_LEFT`] | [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT`] |  |
+/// | [`SDL_GamepadType::NINTENDO_SWITCH_JOYCON_RIGHT`] | [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT`] |  |
+/// | [`SDL_GamepadType::NINTENDO_SWITCH_JOYCON_PAIR`] | [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR`] |  |
+/// | [`SDL_GamepadType::COUNT`] | [`SDL_GAMEPAD_TYPE_COUNT`] |  |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -132,34 +134,36 @@ pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_GAMEPAD_BUTTON_INVALID`]
-/// - [`SDL_GAMEPAD_BUTTON_SOUTH`]
-/// - [`SDL_GAMEPAD_BUTTON_EAST`]
-/// - [`SDL_GAMEPAD_BUTTON_WEST`]
-/// - [`SDL_GAMEPAD_BUTTON_NORTH`]
-/// - [`SDL_GAMEPAD_BUTTON_BACK`]
-/// - [`SDL_GAMEPAD_BUTTON_GUIDE`]
-/// - [`SDL_GAMEPAD_BUTTON_START`]
-/// - [`SDL_GAMEPAD_BUTTON_LEFT_STICK`]
-/// - [`SDL_GAMEPAD_BUTTON_RIGHT_STICK`]
-/// - [`SDL_GAMEPAD_BUTTON_LEFT_SHOULDER`]
-/// - [`SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER`]
-/// - [`SDL_GAMEPAD_BUTTON_DPAD_UP`]
-/// - [`SDL_GAMEPAD_BUTTON_DPAD_DOWN`]
-/// - [`SDL_GAMEPAD_BUTTON_DPAD_LEFT`]
-/// - [`SDL_GAMEPAD_BUTTON_DPAD_RIGHT`]
-/// - [`SDL_GAMEPAD_BUTTON_MISC1`]
-/// - [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1`]
-/// - [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE1`]
-/// - [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2`]
-/// - [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE2`]
-/// - [`SDL_GAMEPAD_BUTTON_TOUCHPAD`]
-/// - [`SDL_GAMEPAD_BUTTON_MISC2`]
-/// - [`SDL_GAMEPAD_BUTTON_MISC3`]
-/// - [`SDL_GAMEPAD_BUTTON_MISC4`]
-/// - [`SDL_GAMEPAD_BUTTON_MISC5`]
-/// - [`SDL_GAMEPAD_BUTTON_MISC6`]
-/// - [`SDL_GAMEPAD_BUTTON_COUNT`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_GamepadButton::INVALID`] | [`SDL_GAMEPAD_BUTTON_INVALID`] |  |
+/// | [`SDL_GamepadButton::SOUTH`] | [`SDL_GAMEPAD_BUTTON_SOUTH`] |  |
+/// | [`SDL_GamepadButton::EAST`] | [`SDL_GAMEPAD_BUTTON_EAST`] |  |
+/// | [`SDL_GamepadButton::WEST`] | [`SDL_GAMEPAD_BUTTON_WEST`] |  |
+/// | [`SDL_GamepadButton::NORTH`] | [`SDL_GAMEPAD_BUTTON_NORTH`] |  |
+/// | [`SDL_GamepadButton::BACK`] | [`SDL_GAMEPAD_BUTTON_BACK`] |  |
+/// | [`SDL_GamepadButton::GUIDE`] | [`SDL_GAMEPAD_BUTTON_GUIDE`] |  |
+/// | [`SDL_GamepadButton::START`] | [`SDL_GAMEPAD_BUTTON_START`] |  |
+/// | [`SDL_GamepadButton::LEFT_STICK`] | [`SDL_GAMEPAD_BUTTON_LEFT_STICK`] |  |
+/// | [`SDL_GamepadButton::RIGHT_STICK`] | [`SDL_GAMEPAD_BUTTON_RIGHT_STICK`] |  |
+/// | [`SDL_GamepadButton::LEFT_SHOULDER`] | [`SDL_GAMEPAD_BUTTON_LEFT_SHOULDER`] |  |
+/// | [`SDL_GamepadButton::RIGHT_SHOULDER`] | [`SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER`] |  |
+/// | [`SDL_GamepadButton::DPAD_UP`] | [`SDL_GAMEPAD_BUTTON_DPAD_UP`] |  |
+/// | [`SDL_GamepadButton::DPAD_DOWN`] | [`SDL_GAMEPAD_BUTTON_DPAD_DOWN`] |  |
+/// | [`SDL_GamepadButton::DPAD_LEFT`] | [`SDL_GAMEPAD_BUTTON_DPAD_LEFT`] |  |
+/// | [`SDL_GamepadButton::DPAD_RIGHT`] | [`SDL_GAMEPAD_BUTTON_DPAD_RIGHT`] |  |
+/// | [`SDL_GamepadButton::MISC1`] | [`SDL_GAMEPAD_BUTTON_MISC1`] |  |
+/// | [`SDL_GamepadButton::RIGHT_PADDLE1`] | [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1`] |  |
+/// | [`SDL_GamepadButton::LEFT_PADDLE1`] | [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE1`] |  |
+/// | [`SDL_GamepadButton::RIGHT_PADDLE2`] | [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2`] |  |
+/// | [`SDL_GamepadButton::LEFT_PADDLE2`] | [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE2`] |  |
+/// | [`SDL_GamepadButton::TOUCHPAD`] | [`SDL_GAMEPAD_BUTTON_TOUCHPAD`] |  |
+/// | [`SDL_GamepadButton::MISC2`] | [`SDL_GAMEPAD_BUTTON_MISC2`] |  |
+/// | [`SDL_GamepadButton::MISC3`] | [`SDL_GAMEPAD_BUTTON_MISC3`] |  |
+/// | [`SDL_GamepadButton::MISC4`] | [`SDL_GAMEPAD_BUTTON_MISC4`] |  |
+/// | [`SDL_GamepadButton::MISC5`] | [`SDL_GAMEPAD_BUTTON_MISC5`] |  |
+/// | [`SDL_GamepadButton::MISC6`] | [`SDL_GAMEPAD_BUTTON_MISC6`] |  |
+/// | [`SDL_GamepadButton::COUNT`] | [`SDL_GAMEPAD_BUTTON_COUNT`] |  |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -242,15 +246,17 @@ pub const SDL_GAMEPAD_BUTTON_COUNT: SDL_GamepadButton = SDL_GamepadButton::COUNT
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_GAMEPAD_BUTTON_LABEL_UNKNOWN`]
-/// - [`SDL_GAMEPAD_BUTTON_LABEL_A`]
-/// - [`SDL_GAMEPAD_BUTTON_LABEL_B`]
-/// - [`SDL_GAMEPAD_BUTTON_LABEL_X`]
-/// - [`SDL_GAMEPAD_BUTTON_LABEL_Y`]
-/// - [`SDL_GAMEPAD_BUTTON_LABEL_CROSS`]
-/// - [`SDL_GAMEPAD_BUTTON_LABEL_CIRCLE`]
-/// - [`SDL_GAMEPAD_BUTTON_LABEL_SQUARE`]
-/// - [`SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_GamepadButtonLabel::UNKNOWN`] | [`SDL_GAMEPAD_BUTTON_LABEL_UNKNOWN`] |  |
+/// | [`SDL_GamepadButtonLabel::A`] | [`SDL_GAMEPAD_BUTTON_LABEL_A`] |  |
+/// | [`SDL_GamepadButtonLabel::B`] | [`SDL_GAMEPAD_BUTTON_LABEL_B`] |  |
+/// | [`SDL_GamepadButtonLabel::X`] | [`SDL_GAMEPAD_BUTTON_LABEL_X`] |  |
+/// | [`SDL_GamepadButtonLabel::Y`] | [`SDL_GAMEPAD_BUTTON_LABEL_Y`] |  |
+/// | [`SDL_GamepadButtonLabel::CROSS`] | [`SDL_GAMEPAD_BUTTON_LABEL_CROSS`] |  |
+/// | [`SDL_GamepadButtonLabel::CIRCLE`] | [`SDL_GAMEPAD_BUTTON_LABEL_CIRCLE`] |  |
+/// | [`SDL_GamepadButtonLabel::SQUARE`] | [`SDL_GAMEPAD_BUTTON_LABEL_SQUARE`] |  |
+/// | [`SDL_GamepadButtonLabel::TRIANGLE`] | [`SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE`] |  |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -300,14 +306,16 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_GAMEPAD_AXIS_INVALID`]
-/// - [`SDL_GAMEPAD_AXIS_LEFTX`]
-/// - [`SDL_GAMEPAD_AXIS_LEFTY`]
-/// - [`SDL_GAMEPAD_AXIS_RIGHTX`]
-/// - [`SDL_GAMEPAD_AXIS_RIGHTY`]
-/// - [`SDL_GAMEPAD_AXIS_LEFT_TRIGGER`]
-/// - [`SDL_GAMEPAD_AXIS_RIGHT_TRIGGER`]
-/// - [`SDL_GAMEPAD_AXIS_COUNT`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_GamepadAxis::INVALID`] | [`SDL_GAMEPAD_AXIS_INVALID`] |  |
+/// | [`SDL_GamepadAxis::LEFTX`] | [`SDL_GAMEPAD_AXIS_LEFTX`] |  |
+/// | [`SDL_GamepadAxis::LEFTY`] | [`SDL_GAMEPAD_AXIS_LEFTY`] |  |
+/// | [`SDL_GamepadAxis::RIGHTX`] | [`SDL_GAMEPAD_AXIS_RIGHTX`] |  |
+/// | [`SDL_GamepadAxis::RIGHTY`] | [`SDL_GAMEPAD_AXIS_RIGHTY`] |  |
+/// | [`SDL_GamepadAxis::LEFT_TRIGGER`] | [`SDL_GAMEPAD_AXIS_LEFT_TRIGGER`] |  |
+/// | [`SDL_GamepadAxis::RIGHT_TRIGGER`] | [`SDL_GAMEPAD_AXIS_RIGHT_TRIGGER`] |  |
+/// | [`SDL_GamepadAxis::COUNT`] | [`SDL_GAMEPAD_AXIS_COUNT`] |  |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -349,10 +357,12 @@ pub const SDL_GAMEPAD_AXIS_COUNT: SDL_GamepadAxis = SDL_GamepadAxis::COUNT;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_GAMEPAD_BINDTYPE_NONE`]
-/// - [`SDL_GAMEPAD_BINDTYPE_BUTTON`]
-/// - [`SDL_GAMEPAD_BINDTYPE_AXIS`]
-/// - [`SDL_GAMEPAD_BINDTYPE_HAT`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_GamepadBindingType::NONE`] | [`SDL_GAMEPAD_BINDTYPE_NONE`] |  |
+/// | [`SDL_GamepadBindingType::BUTTON`] | [`SDL_GAMEPAD_BINDTYPE_BUTTON`] |  |
+/// | [`SDL_GamepadBindingType::AXIS`] | [`SDL_GAMEPAD_BINDTYPE_AXIS`] |  |
+/// | [`SDL_GamepadBindingType::HAT`] | [`SDL_GAMEPAD_BINDTYPE_HAT`] |  |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

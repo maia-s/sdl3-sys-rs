@@ -142,18 +142,20 @@ extern "C" {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_FOLDER_HOME`]
-/// - [`SDL_FOLDER_DESKTOP`]
-/// - [`SDL_FOLDER_DOCUMENTS`]
-/// - [`SDL_FOLDER_DOWNLOADS`]
-/// - [`SDL_FOLDER_MUSIC`]
-/// - [`SDL_FOLDER_PICTURES`]
-/// - [`SDL_FOLDER_PUBLICSHARE`]
-/// - [`SDL_FOLDER_SAVEDGAMES`]
-/// - [`SDL_FOLDER_SCREENSHOTS`]
-/// - [`SDL_FOLDER_TEMPLATES`]
-/// - [`SDL_FOLDER_VIDEOS`]
-/// - [`SDL_FOLDER_COUNT`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_Folder::HOME`] | [`SDL_FOLDER_HOME`] | The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents. |
+/// | [`SDL_Folder::DESKTOP`] | [`SDL_FOLDER_DESKTOP`] | The folder of files that are displayed on the desktop. Note that the existence of a desktop folder does not guarantee that the system does show icons on its desktop; certain GNU/Linux distros with a graphical environment may not have desktop icons. |
+/// | [`SDL_Folder::DOCUMENTS`] | [`SDL_FOLDER_DOCUMENTS`] | User document files, possibly application-specific. This is a good place to save a user's projects. |
+/// | [`SDL_Folder::DOWNLOADS`] | [`SDL_FOLDER_DOWNLOADS`] | Standard folder for user files downloaded from the internet. |
+/// | [`SDL_Folder::MUSIC`] | [`SDL_FOLDER_MUSIC`] | Music files that can be played using a standard music player (mp3, ogg...). |
+/// | [`SDL_Folder::PICTURES`] | [`SDL_FOLDER_PICTURES`] | Image files that can be displayed using a standard viewer (png, jpg...). |
+/// | [`SDL_Folder::PUBLICSHARE`] | [`SDL_FOLDER_PUBLICSHARE`] | Files that are meant to be shared with other users on the same computer. |
+/// | [`SDL_Folder::SAVEDGAMES`] | [`SDL_FOLDER_SAVEDGAMES`] | Save files for games. |
+/// | [`SDL_Folder::SCREENSHOTS`] | [`SDL_FOLDER_SCREENSHOTS`] | Application screenshots. |
+/// | [`SDL_Folder::TEMPLATES`] | [`SDL_FOLDER_TEMPLATES`] | Template files to be used when the user requests the desktop environment to create a new file in a certain folder, such as "New Text File.txt".  Any file in the Templates folder can be used as a starting point for a new file. |
+/// | [`SDL_Folder::VIDEOS`] | [`SDL_FOLDER_VIDEOS`] | Video files that can be played using a standard video player (mp4, webm...). |
+/// | [`SDL_Folder::COUNT`] | [`SDL_FOLDER_COUNT`] | Total number of types in this enum, not a folder type by itself. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -245,10 +247,12 @@ extern "C" {
 
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_PATHTYPE_NONE`]
-/// - [`SDL_PATHTYPE_FILE`]
-/// - [`SDL_PATHTYPE_DIRECTORY`]
-/// - [`SDL_PATHTYPE_OTHER`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_PathType::NONE`] | [`SDL_PATHTYPE_NONE`] | path does not exist |
+/// | [`SDL_PathType::FILE`] | [`SDL_PATHTYPE_FILE`] | a normal file |
+/// | [`SDL_PathType::DIRECTORY`] | [`SDL_PATHTYPE_DIRECTORY`] | a directory |
+/// | [`SDL_PathType::OTHER`] | [`SDL_PATHTYPE_OTHER`] | something completely different like a device node (not a symlink, those are always followed) |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -335,9 +339,11 @@ extern "C" {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_ENUM_CONTINUE`]
-/// - [`SDL_ENUM_SUCCESS`]
-/// - [`SDL_ENUM_FAILURE`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_EnumerationResult::CONTINUE`] | [`SDL_ENUM_CONTINUE`] | Value that requests that enumeration continue. |
+/// | [`SDL_EnumerationResult::SUCCESS`] | [`SDL_ENUM_SUCCESS`] | Value that requests that enumeration stop, successfully. |
+/// | [`SDL_EnumerationResult::FAILURE`] | [`SDL_ENUM_FAILURE`] | Value that requests that enumeration stop, as a failure. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

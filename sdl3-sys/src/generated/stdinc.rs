@@ -322,7 +322,9 @@ const _: () = ::core::assert!(
 emit! {
     /// ### `sdl3-sys` note
     /// This is a `C` enum. Known values:
-    /// - [`DUMMY_ENUM_VALUE`]
+    /// | Associated constant | Global constant | Description |
+    /// | ------------------- | --------------- | ----------- |
+    /// | [`SDL_DUMMY_ENUM::DUMMY_ENUM_VALUE`] | [`DUMMY_ENUM_VALUE`] |  |
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     #[cfg_attr(feature = "debug-impls", derive(Debug))]

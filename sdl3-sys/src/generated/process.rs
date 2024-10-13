@@ -118,10 +118,12 @@ extern "C" {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_PROCESS_STDIO_INHERITED`]
-/// - [`SDL_PROCESS_STDIO_NULL`]
-/// - [`SDL_PROCESS_STDIO_APP`]
-/// - [`SDL_PROCESS_STDIO_REDIRECT`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_ProcessIO::INHERITED`] | [`SDL_PROCESS_STDIO_INHERITED`] | The I/O stream is inherited from the application. |
+/// | [`SDL_ProcessIO::NULL`] | [`SDL_PROCESS_STDIO_NULL`] | The I/O stream is ignored. |
+/// | [`SDL_ProcessIO::APP`] | [`SDL_PROCESS_STDIO_APP`] | The I/O stream is connected to a new SDL_IOStream that the application can read or write |
+/// | [`SDL_ProcessIO::REDIRECT`] | [`SDL_PROCESS_STDIO_REDIRECT`] | The I/O stream is redirected to an existing SDL_IOStream. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

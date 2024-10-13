@@ -18,12 +18,14 @@ use super::properties::*;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_IO_STATUS_READY`]
-/// - [`SDL_IO_STATUS_ERROR`]
-/// - [`SDL_IO_STATUS_EOF`]
-/// - [`SDL_IO_STATUS_NOT_READY`]
-/// - [`SDL_IO_STATUS_READONLY`]
-/// - [`SDL_IO_STATUS_WRITEONLY`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_IOStatus::READY`] | [`SDL_IO_STATUS_READY`] | Everything is ready (no errors and not EOF). |
+/// | [`SDL_IOStatus::ERROR`] | [`SDL_IO_STATUS_ERROR`] | Read or write I/O error |
+/// | [`SDL_IOStatus::EOF`] | [`SDL_IO_STATUS_EOF`] | End of file |
+/// | [`SDL_IOStatus::NOT_READY`] | [`SDL_IO_STATUS_NOT_READY`] | Non blocking I/O, not ready |
+/// | [`SDL_IOStatus::READONLY`] | [`SDL_IO_STATUS_READONLY`] | Tried to write a read-only buffer |
+/// | [`SDL_IOStatus::WRITEONLY`] | [`SDL_IO_STATUS_WRITEONLY`] | Tried to read a write-only buffer |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -71,9 +73,11 @@ pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_IO_SEEK_SET`]
-/// - [`SDL_IO_SEEK_CUR`]
-/// - [`SDL_IO_SEEK_END`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_IOWhence::SET`] | [`SDL_IO_SEEK_SET`] | Seek from the beginning of data |
+/// | [`SDL_IOWhence::CUR`] | [`SDL_IO_SEEK_CUR`] | Seek relative to current read point |
+/// | [`SDL_IOWhence::END`] | [`SDL_IO_SEEK_END`] | Seek relative to the end of data |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

@@ -18,255 +18,257 @@ use super::stdinc::*;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_SCANCODE_UNKNOWN`]
-/// - [`SDL_SCANCODE_A`]
-/// - [`SDL_SCANCODE_B`]
-/// - [`SDL_SCANCODE_C`]
-/// - [`SDL_SCANCODE_D`]
-/// - [`SDL_SCANCODE_E`]
-/// - [`SDL_SCANCODE_F`]
-/// - [`SDL_SCANCODE_G`]
-/// - [`SDL_SCANCODE_H`]
-/// - [`SDL_SCANCODE_I`]
-/// - [`SDL_SCANCODE_J`]
-/// - [`SDL_SCANCODE_K`]
-/// - [`SDL_SCANCODE_L`]
-/// - [`SDL_SCANCODE_M`]
-/// - [`SDL_SCANCODE_N`]
-/// - [`SDL_SCANCODE_O`]
-/// - [`SDL_SCANCODE_P`]
-/// - [`SDL_SCANCODE_Q`]
-/// - [`SDL_SCANCODE_R`]
-/// - [`SDL_SCANCODE_S`]
-/// - [`SDL_SCANCODE_T`]
-/// - [`SDL_SCANCODE_U`]
-/// - [`SDL_SCANCODE_V`]
-/// - [`SDL_SCANCODE_W`]
-/// - [`SDL_SCANCODE_X`]
-/// - [`SDL_SCANCODE_Y`]
-/// - [`SDL_SCANCODE_Z`]
-/// - [`SDL_SCANCODE_1`]
-/// - [`SDL_SCANCODE_2`]
-/// - [`SDL_SCANCODE_3`]
-/// - [`SDL_SCANCODE_4`]
-/// - [`SDL_SCANCODE_5`]
-/// - [`SDL_SCANCODE_6`]
-/// - [`SDL_SCANCODE_7`]
-/// - [`SDL_SCANCODE_8`]
-/// - [`SDL_SCANCODE_9`]
-/// - [`SDL_SCANCODE_0`]
-/// - [`SDL_SCANCODE_RETURN`]
-/// - [`SDL_SCANCODE_ESCAPE`]
-/// - [`SDL_SCANCODE_BACKSPACE`]
-/// - [`SDL_SCANCODE_TAB`]
-/// - [`SDL_SCANCODE_SPACE`]
-/// - [`SDL_SCANCODE_MINUS`]
-/// - [`SDL_SCANCODE_EQUALS`]
-/// - [`SDL_SCANCODE_LEFTBRACKET`]
-/// - [`SDL_SCANCODE_RIGHTBRACKET`]
-/// - [`SDL_SCANCODE_BACKSLASH`]
-/// - [`SDL_SCANCODE_NONUSHASH`]
-/// - [`SDL_SCANCODE_SEMICOLON`]
-/// - [`SDL_SCANCODE_APOSTROPHE`]
-/// - [`SDL_SCANCODE_GRAVE`]
-/// - [`SDL_SCANCODE_COMMA`]
-/// - [`SDL_SCANCODE_PERIOD`]
-/// - [`SDL_SCANCODE_SLASH`]
-/// - [`SDL_SCANCODE_CAPSLOCK`]
-/// - [`SDL_SCANCODE_F1`]
-/// - [`SDL_SCANCODE_F2`]
-/// - [`SDL_SCANCODE_F3`]
-/// - [`SDL_SCANCODE_F4`]
-/// - [`SDL_SCANCODE_F5`]
-/// - [`SDL_SCANCODE_F6`]
-/// - [`SDL_SCANCODE_F7`]
-/// - [`SDL_SCANCODE_F8`]
-/// - [`SDL_SCANCODE_F9`]
-/// - [`SDL_SCANCODE_F10`]
-/// - [`SDL_SCANCODE_F11`]
-/// - [`SDL_SCANCODE_F12`]
-/// - [`SDL_SCANCODE_PRINTSCREEN`]
-/// - [`SDL_SCANCODE_SCROLLLOCK`]
-/// - [`SDL_SCANCODE_PAUSE`]
-/// - [`SDL_SCANCODE_INSERT`]
-/// - [`SDL_SCANCODE_HOME`]
-/// - [`SDL_SCANCODE_PAGEUP`]
-/// - [`SDL_SCANCODE_DELETE`]
-/// - [`SDL_SCANCODE_END`]
-/// - [`SDL_SCANCODE_PAGEDOWN`]
-/// - [`SDL_SCANCODE_RIGHT`]
-/// - [`SDL_SCANCODE_LEFT`]
-/// - [`SDL_SCANCODE_DOWN`]
-/// - [`SDL_SCANCODE_UP`]
-/// - [`SDL_SCANCODE_NUMLOCKCLEAR`]
-/// - [`SDL_SCANCODE_KP_DIVIDE`]
-/// - [`SDL_SCANCODE_KP_MULTIPLY`]
-/// - [`SDL_SCANCODE_KP_MINUS`]
-/// - [`SDL_SCANCODE_KP_PLUS`]
-/// - [`SDL_SCANCODE_KP_ENTER`]
-/// - [`SDL_SCANCODE_KP_1`]
-/// - [`SDL_SCANCODE_KP_2`]
-/// - [`SDL_SCANCODE_KP_3`]
-/// - [`SDL_SCANCODE_KP_4`]
-/// - [`SDL_SCANCODE_KP_5`]
-/// - [`SDL_SCANCODE_KP_6`]
-/// - [`SDL_SCANCODE_KP_7`]
-/// - [`SDL_SCANCODE_KP_8`]
-/// - [`SDL_SCANCODE_KP_9`]
-/// - [`SDL_SCANCODE_KP_0`]
-/// - [`SDL_SCANCODE_KP_PERIOD`]
-/// - [`SDL_SCANCODE_NONUSBACKSLASH`]
-/// - [`SDL_SCANCODE_APPLICATION`]
-/// - [`SDL_SCANCODE_POWER`]
-/// - [`SDL_SCANCODE_KP_EQUALS`]
-/// - [`SDL_SCANCODE_F13`]
-/// - [`SDL_SCANCODE_F14`]
-/// - [`SDL_SCANCODE_F15`]
-/// - [`SDL_SCANCODE_F16`]
-/// - [`SDL_SCANCODE_F17`]
-/// - [`SDL_SCANCODE_F18`]
-/// - [`SDL_SCANCODE_F19`]
-/// - [`SDL_SCANCODE_F20`]
-/// - [`SDL_SCANCODE_F21`]
-/// - [`SDL_SCANCODE_F22`]
-/// - [`SDL_SCANCODE_F23`]
-/// - [`SDL_SCANCODE_F24`]
-/// - [`SDL_SCANCODE_EXECUTE`]
-/// - [`SDL_SCANCODE_HELP`]
-/// - [`SDL_SCANCODE_MENU`]
-/// - [`SDL_SCANCODE_SELECT`]
-/// - [`SDL_SCANCODE_STOP`]
-/// - [`SDL_SCANCODE_AGAIN`]
-/// - [`SDL_SCANCODE_UNDO`]
-/// - [`SDL_SCANCODE_CUT`]
-/// - [`SDL_SCANCODE_COPY`]
-/// - [`SDL_SCANCODE_PASTE`]
-/// - [`SDL_SCANCODE_FIND`]
-/// - [`SDL_SCANCODE_MUTE`]
-/// - [`SDL_SCANCODE_VOLUMEUP`]
-/// - [`SDL_SCANCODE_VOLUMEDOWN`]
-/// - [`SDL_SCANCODE_KP_COMMA`]
-/// - [`SDL_SCANCODE_KP_EQUALSAS400`]
-/// - [`SDL_SCANCODE_INTERNATIONAL1`]
-/// - [`SDL_SCANCODE_INTERNATIONAL2`]
-/// - [`SDL_SCANCODE_INTERNATIONAL3`]
-/// - [`SDL_SCANCODE_INTERNATIONAL4`]
-/// - [`SDL_SCANCODE_INTERNATIONAL5`]
-/// - [`SDL_SCANCODE_INTERNATIONAL6`]
-/// - [`SDL_SCANCODE_INTERNATIONAL7`]
-/// - [`SDL_SCANCODE_INTERNATIONAL8`]
-/// - [`SDL_SCANCODE_INTERNATIONAL9`]
-/// - [`SDL_SCANCODE_LANG1`]
-/// - [`SDL_SCANCODE_LANG2`]
-/// - [`SDL_SCANCODE_LANG3`]
-/// - [`SDL_SCANCODE_LANG4`]
-/// - [`SDL_SCANCODE_LANG5`]
-/// - [`SDL_SCANCODE_LANG6`]
-/// - [`SDL_SCANCODE_LANG7`]
-/// - [`SDL_SCANCODE_LANG8`]
-/// - [`SDL_SCANCODE_LANG9`]
-/// - [`SDL_SCANCODE_ALTERASE`]
-/// - [`SDL_SCANCODE_SYSREQ`]
-/// - [`SDL_SCANCODE_CANCEL`]
-/// - [`SDL_SCANCODE_CLEAR`]
-/// - [`SDL_SCANCODE_PRIOR`]
-/// - [`SDL_SCANCODE_RETURN2`]
-/// - [`SDL_SCANCODE_SEPARATOR`]
-/// - [`SDL_SCANCODE_OUT`]
-/// - [`SDL_SCANCODE_OPER`]
-/// - [`SDL_SCANCODE_CLEARAGAIN`]
-/// - [`SDL_SCANCODE_CRSEL`]
-/// - [`SDL_SCANCODE_EXSEL`]
-/// - [`SDL_SCANCODE_KP_00`]
-/// - [`SDL_SCANCODE_KP_000`]
-/// - [`SDL_SCANCODE_THOUSANDSSEPARATOR`]
-/// - [`SDL_SCANCODE_DECIMALSEPARATOR`]
-/// - [`SDL_SCANCODE_CURRENCYUNIT`]
-/// - [`SDL_SCANCODE_CURRENCYSUBUNIT`]
-/// - [`SDL_SCANCODE_KP_LEFTPAREN`]
-/// - [`SDL_SCANCODE_KP_RIGHTPAREN`]
-/// - [`SDL_SCANCODE_KP_LEFTBRACE`]
-/// - [`SDL_SCANCODE_KP_RIGHTBRACE`]
-/// - [`SDL_SCANCODE_KP_TAB`]
-/// - [`SDL_SCANCODE_KP_BACKSPACE`]
-/// - [`SDL_SCANCODE_KP_A`]
-/// - [`SDL_SCANCODE_KP_B`]
-/// - [`SDL_SCANCODE_KP_C`]
-/// - [`SDL_SCANCODE_KP_D`]
-/// - [`SDL_SCANCODE_KP_E`]
-/// - [`SDL_SCANCODE_KP_F`]
-/// - [`SDL_SCANCODE_KP_XOR`]
-/// - [`SDL_SCANCODE_KP_POWER`]
-/// - [`SDL_SCANCODE_KP_PERCENT`]
-/// - [`SDL_SCANCODE_KP_LESS`]
-/// - [`SDL_SCANCODE_KP_GREATER`]
-/// - [`SDL_SCANCODE_KP_AMPERSAND`]
-/// - [`SDL_SCANCODE_KP_DBLAMPERSAND`]
-/// - [`SDL_SCANCODE_KP_VERTICALBAR`]
-/// - [`SDL_SCANCODE_KP_DBLVERTICALBAR`]
-/// - [`SDL_SCANCODE_KP_COLON`]
-/// - [`SDL_SCANCODE_KP_HASH`]
-/// - [`SDL_SCANCODE_KP_SPACE`]
-/// - [`SDL_SCANCODE_KP_AT`]
-/// - [`SDL_SCANCODE_KP_EXCLAM`]
-/// - [`SDL_SCANCODE_KP_MEMSTORE`]
-/// - [`SDL_SCANCODE_KP_MEMRECALL`]
-/// - [`SDL_SCANCODE_KP_MEMCLEAR`]
-/// - [`SDL_SCANCODE_KP_MEMADD`]
-/// - [`SDL_SCANCODE_KP_MEMSUBTRACT`]
-/// - [`SDL_SCANCODE_KP_MEMMULTIPLY`]
-/// - [`SDL_SCANCODE_KP_MEMDIVIDE`]
-/// - [`SDL_SCANCODE_KP_PLUSMINUS`]
-/// - [`SDL_SCANCODE_KP_CLEAR`]
-/// - [`SDL_SCANCODE_KP_CLEARENTRY`]
-/// - [`SDL_SCANCODE_KP_BINARY`]
-/// - [`SDL_SCANCODE_KP_OCTAL`]
-/// - [`SDL_SCANCODE_KP_DECIMAL`]
-/// - [`SDL_SCANCODE_KP_HEXADECIMAL`]
-/// - [`SDL_SCANCODE_LCTRL`]
-/// - [`SDL_SCANCODE_LSHIFT`]
-/// - [`SDL_SCANCODE_LALT`]
-/// - [`SDL_SCANCODE_LGUI`]
-/// - [`SDL_SCANCODE_RCTRL`]
-/// - [`SDL_SCANCODE_RSHIFT`]
-/// - [`SDL_SCANCODE_RALT`]
-/// - [`SDL_SCANCODE_RGUI`]
-/// - [`SDL_SCANCODE_MODE`]
-/// - [`SDL_SCANCODE_SLEEP`]
-/// - [`SDL_SCANCODE_WAKE`]
-/// - [`SDL_SCANCODE_CHANNEL_INCREMENT`]
-/// - [`SDL_SCANCODE_CHANNEL_DECREMENT`]
-/// - [`SDL_SCANCODE_MEDIA_PLAY`]
-/// - [`SDL_SCANCODE_MEDIA_PAUSE`]
-/// - [`SDL_SCANCODE_MEDIA_RECORD`]
-/// - [`SDL_SCANCODE_MEDIA_FAST_FORWARD`]
-/// - [`SDL_SCANCODE_MEDIA_REWIND`]
-/// - [`SDL_SCANCODE_MEDIA_NEXT_TRACK`]
-/// - [`SDL_SCANCODE_MEDIA_PREVIOUS_TRACK`]
-/// - [`SDL_SCANCODE_MEDIA_STOP`]
-/// - [`SDL_SCANCODE_MEDIA_EJECT`]
-/// - [`SDL_SCANCODE_MEDIA_PLAY_PAUSE`]
-/// - [`SDL_SCANCODE_MEDIA_SELECT`]
-/// - [`SDL_SCANCODE_AC_NEW`]
-/// - [`SDL_SCANCODE_AC_OPEN`]
-/// - [`SDL_SCANCODE_AC_CLOSE`]
-/// - [`SDL_SCANCODE_AC_EXIT`]
-/// - [`SDL_SCANCODE_AC_SAVE`]
-/// - [`SDL_SCANCODE_AC_PRINT`]
-/// - [`SDL_SCANCODE_AC_PROPERTIES`]
-/// - [`SDL_SCANCODE_AC_SEARCH`]
-/// - [`SDL_SCANCODE_AC_HOME`]
-/// - [`SDL_SCANCODE_AC_BACK`]
-/// - [`SDL_SCANCODE_AC_FORWARD`]
-/// - [`SDL_SCANCODE_AC_STOP`]
-/// - [`SDL_SCANCODE_AC_REFRESH`]
-/// - [`SDL_SCANCODE_AC_BOOKMARKS`]
-/// - [`SDL_SCANCODE_SOFTLEFT`]
-/// - [`SDL_SCANCODE_SOFTRIGHT`]
-/// - [`SDL_SCANCODE_CALL`]
-/// - [`SDL_SCANCODE_ENDCALL`]
-/// - [`SDL_SCANCODE_RESERVED`]
-/// - [`SDL_SCANCODE_COUNT`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_Scancode::UNKNOWN`] | [`SDL_SCANCODE_UNKNOWN`] |  |
+/// | [`SDL_Scancode::A`] | [`SDL_SCANCODE_A`] |  |
+/// | [`SDL_Scancode::B`] | [`SDL_SCANCODE_B`] |  |
+/// | [`SDL_Scancode::C`] | [`SDL_SCANCODE_C`] |  |
+/// | [`SDL_Scancode::D`] | [`SDL_SCANCODE_D`] |  |
+/// | [`SDL_Scancode::E`] | [`SDL_SCANCODE_E`] |  |
+/// | [`SDL_Scancode::F`] | [`SDL_SCANCODE_F`] |  |
+/// | [`SDL_Scancode::G`] | [`SDL_SCANCODE_G`] |  |
+/// | [`SDL_Scancode::H`] | [`SDL_SCANCODE_H`] |  |
+/// | [`SDL_Scancode::I`] | [`SDL_SCANCODE_I`] |  |
+/// | [`SDL_Scancode::J`] | [`SDL_SCANCODE_J`] |  |
+/// | [`SDL_Scancode::K`] | [`SDL_SCANCODE_K`] |  |
+/// | [`SDL_Scancode::L`] | [`SDL_SCANCODE_L`] |  |
+/// | [`SDL_Scancode::M`] | [`SDL_SCANCODE_M`] |  |
+/// | [`SDL_Scancode::N`] | [`SDL_SCANCODE_N`] |  |
+/// | [`SDL_Scancode::O`] | [`SDL_SCANCODE_O`] |  |
+/// | [`SDL_Scancode::P`] | [`SDL_SCANCODE_P`] |  |
+/// | [`SDL_Scancode::Q`] | [`SDL_SCANCODE_Q`] |  |
+/// | [`SDL_Scancode::R`] | [`SDL_SCANCODE_R`] |  |
+/// | [`SDL_Scancode::S`] | [`SDL_SCANCODE_S`] |  |
+/// | [`SDL_Scancode::T`] | [`SDL_SCANCODE_T`] |  |
+/// | [`SDL_Scancode::U`] | [`SDL_SCANCODE_U`] |  |
+/// | [`SDL_Scancode::V`] | [`SDL_SCANCODE_V`] |  |
+/// | [`SDL_Scancode::W`] | [`SDL_SCANCODE_W`] |  |
+/// | [`SDL_Scancode::X`] | [`SDL_SCANCODE_X`] |  |
+/// | [`SDL_Scancode::Y`] | [`SDL_SCANCODE_Y`] |  |
+/// | [`SDL_Scancode::Z`] | [`SDL_SCANCODE_Z`] |  |
+/// | [`SDL_Scancode::_1`] | [`SDL_SCANCODE_1`] |  |
+/// | [`SDL_Scancode::_2`] | [`SDL_SCANCODE_2`] |  |
+/// | [`SDL_Scancode::_3`] | [`SDL_SCANCODE_3`] |  |
+/// | [`SDL_Scancode::_4`] | [`SDL_SCANCODE_4`] |  |
+/// | [`SDL_Scancode::_5`] | [`SDL_SCANCODE_5`] |  |
+/// | [`SDL_Scancode::_6`] | [`SDL_SCANCODE_6`] |  |
+/// | [`SDL_Scancode::_7`] | [`SDL_SCANCODE_7`] |  |
+/// | [`SDL_Scancode::_8`] | [`SDL_SCANCODE_8`] |  |
+/// | [`SDL_Scancode::_9`] | [`SDL_SCANCODE_9`] |  |
+/// | [`SDL_Scancode::_0`] | [`SDL_SCANCODE_0`] |  |
+/// | [`SDL_Scancode::RETURN`] | [`SDL_SCANCODE_RETURN`] |  |
+/// | [`SDL_Scancode::ESCAPE`] | [`SDL_SCANCODE_ESCAPE`] |  |
+/// | [`SDL_Scancode::BACKSPACE`] | [`SDL_SCANCODE_BACKSPACE`] |  |
+/// | [`SDL_Scancode::TAB`] | [`SDL_SCANCODE_TAB`] |  |
+/// | [`SDL_Scancode::SPACE`] | [`SDL_SCANCODE_SPACE`] |  |
+/// | [`SDL_Scancode::MINUS`] | [`SDL_SCANCODE_MINUS`] |  |
+/// | [`SDL_Scancode::EQUALS`] | [`SDL_SCANCODE_EQUALS`] |  |
+/// | [`SDL_Scancode::LEFTBRACKET`] | [`SDL_SCANCODE_LEFTBRACKET`] |  |
+/// | [`SDL_Scancode::RIGHTBRACKET`] | [`SDL_SCANCODE_RIGHTBRACKET`] |  |
+/// | [`SDL_Scancode::BACKSLASH`] | [`SDL_SCANCODE_BACKSLASH`] | Located at the lower left of the return (...) |
+/// | [`SDL_Scancode::NONUSHASH`] | [`SDL_SCANCODE_NONUSHASH`] | ISO USB keyboards actually use this code (...) |
+/// | [`SDL_Scancode::SEMICOLON`] | [`SDL_SCANCODE_SEMICOLON`] |  |
+/// | [`SDL_Scancode::APOSTROPHE`] | [`SDL_SCANCODE_APOSTROPHE`] |  |
+/// | [`SDL_Scancode::GRAVE`] | [`SDL_SCANCODE_GRAVE`] | Located in the top left corner (on both ANSI (...) |
+/// | [`SDL_Scancode::COMMA`] | [`SDL_SCANCODE_COMMA`] |  |
+/// | [`SDL_Scancode::PERIOD`] | [`SDL_SCANCODE_PERIOD`] |  |
+/// | [`SDL_Scancode::SLASH`] | [`SDL_SCANCODE_SLASH`] |  |
+/// | [`SDL_Scancode::CAPSLOCK`] | [`SDL_SCANCODE_CAPSLOCK`] |  |
+/// | [`SDL_Scancode::F1`] | [`SDL_SCANCODE_F1`] |  |
+/// | [`SDL_Scancode::F2`] | [`SDL_SCANCODE_F2`] |  |
+/// | [`SDL_Scancode::F3`] | [`SDL_SCANCODE_F3`] |  |
+/// | [`SDL_Scancode::F4`] | [`SDL_SCANCODE_F4`] |  |
+/// | [`SDL_Scancode::F5`] | [`SDL_SCANCODE_F5`] |  |
+/// | [`SDL_Scancode::F6`] | [`SDL_SCANCODE_F6`] |  |
+/// | [`SDL_Scancode::F7`] | [`SDL_SCANCODE_F7`] |  |
+/// | [`SDL_Scancode::F8`] | [`SDL_SCANCODE_F8`] |  |
+/// | [`SDL_Scancode::F9`] | [`SDL_SCANCODE_F9`] |  |
+/// | [`SDL_Scancode::F10`] | [`SDL_SCANCODE_F10`] |  |
+/// | [`SDL_Scancode::F11`] | [`SDL_SCANCODE_F11`] |  |
+/// | [`SDL_Scancode::F12`] | [`SDL_SCANCODE_F12`] |  |
+/// | [`SDL_Scancode::PRINTSCREEN`] | [`SDL_SCANCODE_PRINTSCREEN`] |  |
+/// | [`SDL_Scancode::SCROLLLOCK`] | [`SDL_SCANCODE_SCROLLLOCK`] |  |
+/// | [`SDL_Scancode::PAUSE`] | [`SDL_SCANCODE_PAUSE`] |  |
+/// | [`SDL_Scancode::INSERT`] | [`SDL_SCANCODE_INSERT`] | insert on PC, help on some Mac keyboards (but (...) |
+/// | [`SDL_Scancode::HOME`] | [`SDL_SCANCODE_HOME`] |  |
+/// | [`SDL_Scancode::PAGEUP`] | [`SDL_SCANCODE_PAGEUP`] |  |
+/// | [`SDL_Scancode::DELETE`] | [`SDL_SCANCODE_DELETE`] |  |
+/// | [`SDL_Scancode::END`] | [`SDL_SCANCODE_END`] |  |
+/// | [`SDL_Scancode::PAGEDOWN`] | [`SDL_SCANCODE_PAGEDOWN`] |  |
+/// | [`SDL_Scancode::RIGHT`] | [`SDL_SCANCODE_RIGHT`] |  |
+/// | [`SDL_Scancode::LEFT`] | [`SDL_SCANCODE_LEFT`] |  |
+/// | [`SDL_Scancode::DOWN`] | [`SDL_SCANCODE_DOWN`] |  |
+/// | [`SDL_Scancode::UP`] | [`SDL_SCANCODE_UP`] |  |
+/// | [`SDL_Scancode::NUMLOCKCLEAR`] | [`SDL_SCANCODE_NUMLOCKCLEAR`] | num lock on PC, clear on Mac keyboards |
+/// | [`SDL_Scancode::KP_DIVIDE`] | [`SDL_SCANCODE_KP_DIVIDE`] |  |
+/// | [`SDL_Scancode::KP_MULTIPLY`] | [`SDL_SCANCODE_KP_MULTIPLY`] |  |
+/// | [`SDL_Scancode::KP_MINUS`] | [`SDL_SCANCODE_KP_MINUS`] |  |
+/// | [`SDL_Scancode::KP_PLUS`] | [`SDL_SCANCODE_KP_PLUS`] |  |
+/// | [`SDL_Scancode::KP_ENTER`] | [`SDL_SCANCODE_KP_ENTER`] |  |
+/// | [`SDL_Scancode::KP_1`] | [`SDL_SCANCODE_KP_1`] |  |
+/// | [`SDL_Scancode::KP_2`] | [`SDL_SCANCODE_KP_2`] |  |
+/// | [`SDL_Scancode::KP_3`] | [`SDL_SCANCODE_KP_3`] |  |
+/// | [`SDL_Scancode::KP_4`] | [`SDL_SCANCODE_KP_4`] |  |
+/// | [`SDL_Scancode::KP_5`] | [`SDL_SCANCODE_KP_5`] |  |
+/// | [`SDL_Scancode::KP_6`] | [`SDL_SCANCODE_KP_6`] |  |
+/// | [`SDL_Scancode::KP_7`] | [`SDL_SCANCODE_KP_7`] |  |
+/// | [`SDL_Scancode::KP_8`] | [`SDL_SCANCODE_KP_8`] |  |
+/// | [`SDL_Scancode::KP_9`] | [`SDL_SCANCODE_KP_9`] |  |
+/// | [`SDL_Scancode::KP_0`] | [`SDL_SCANCODE_KP_0`] |  |
+/// | [`SDL_Scancode::KP_PERIOD`] | [`SDL_SCANCODE_KP_PERIOD`] |  |
+/// | [`SDL_Scancode::NONUSBACKSLASH`] | [`SDL_SCANCODE_NONUSBACKSLASH`] | This is the additional key that ISO (...) |
+/// | [`SDL_Scancode::APPLICATION`] | [`SDL_SCANCODE_APPLICATION`] | windows contextual menu, compose |
+/// | [`SDL_Scancode::POWER`] | [`SDL_SCANCODE_POWER`] | The USB document says this is a status flag, (...) |
+/// | [`SDL_Scancode::KP_EQUALS`] | [`SDL_SCANCODE_KP_EQUALS`] |  |
+/// | [`SDL_Scancode::F13`] | [`SDL_SCANCODE_F13`] |  |
+/// | [`SDL_Scancode::F14`] | [`SDL_SCANCODE_F14`] |  |
+/// | [`SDL_Scancode::F15`] | [`SDL_SCANCODE_F15`] |  |
+/// | [`SDL_Scancode::F16`] | [`SDL_SCANCODE_F16`] |  |
+/// | [`SDL_Scancode::F17`] | [`SDL_SCANCODE_F17`] |  |
+/// | [`SDL_Scancode::F18`] | [`SDL_SCANCODE_F18`] |  |
+/// | [`SDL_Scancode::F19`] | [`SDL_SCANCODE_F19`] |  |
+/// | [`SDL_Scancode::F20`] | [`SDL_SCANCODE_F20`] |  |
+/// | [`SDL_Scancode::F21`] | [`SDL_SCANCODE_F21`] |  |
+/// | [`SDL_Scancode::F22`] | [`SDL_SCANCODE_F22`] |  |
+/// | [`SDL_Scancode::F23`] | [`SDL_SCANCODE_F23`] |  |
+/// | [`SDL_Scancode::F24`] | [`SDL_SCANCODE_F24`] |  |
+/// | [`SDL_Scancode::EXECUTE`] | [`SDL_SCANCODE_EXECUTE`] |  |
+/// | [`SDL_Scancode::HELP`] | [`SDL_SCANCODE_HELP`] | AL Integrated Help Center |
+/// | [`SDL_Scancode::MENU`] | [`SDL_SCANCODE_MENU`] | Menu (show menu) |
+/// | [`SDL_Scancode::SELECT`] | [`SDL_SCANCODE_SELECT`] |  |
+/// | [`SDL_Scancode::STOP`] | [`SDL_SCANCODE_STOP`] | AC Stop |
+/// | [`SDL_Scancode::AGAIN`] | [`SDL_SCANCODE_AGAIN`] | AC Redo/Repeat |
+/// | [`SDL_Scancode::UNDO`] | [`SDL_SCANCODE_UNDO`] | AC Undo |
+/// | [`SDL_Scancode::CUT`] | [`SDL_SCANCODE_CUT`] | AC Cut |
+/// | [`SDL_Scancode::COPY`] | [`SDL_SCANCODE_COPY`] | AC Copy |
+/// | [`SDL_Scancode::PASTE`] | [`SDL_SCANCODE_PASTE`] | AC Paste |
+/// | [`SDL_Scancode::FIND`] | [`SDL_SCANCODE_FIND`] | AC Find |
+/// | [`SDL_Scancode::MUTE`] | [`SDL_SCANCODE_MUTE`] |  |
+/// | [`SDL_Scancode::VOLUMEUP`] | [`SDL_SCANCODE_VOLUMEUP`] |  |
+/// | [`SDL_Scancode::VOLUMEDOWN`] | [`SDL_SCANCODE_VOLUMEDOWN`] |  |
+/// | [`SDL_Scancode::KP_COMMA`] | [`SDL_SCANCODE_KP_COMMA`] |  |
+/// | [`SDL_Scancode::KP_EQUALSAS400`] | [`SDL_SCANCODE_KP_EQUALSAS400`] |  |
+/// | [`SDL_Scancode::INTERNATIONAL1`] | [`SDL_SCANCODE_INTERNATIONAL1`] | used on Asian keyboards, see (...) |
+/// | [`SDL_Scancode::INTERNATIONAL2`] | [`SDL_SCANCODE_INTERNATIONAL2`] |  |
+/// | [`SDL_Scancode::INTERNATIONAL3`] | [`SDL_SCANCODE_INTERNATIONAL3`] | Yen |
+/// | [`SDL_Scancode::INTERNATIONAL4`] | [`SDL_SCANCODE_INTERNATIONAL4`] |  |
+/// | [`SDL_Scancode::INTERNATIONAL5`] | [`SDL_SCANCODE_INTERNATIONAL5`] |  |
+/// | [`SDL_Scancode::INTERNATIONAL6`] | [`SDL_SCANCODE_INTERNATIONAL6`] |  |
+/// | [`SDL_Scancode::INTERNATIONAL7`] | [`SDL_SCANCODE_INTERNATIONAL7`] |  |
+/// | [`SDL_Scancode::INTERNATIONAL8`] | [`SDL_SCANCODE_INTERNATIONAL8`] |  |
+/// | [`SDL_Scancode::INTERNATIONAL9`] | [`SDL_SCANCODE_INTERNATIONAL9`] |  |
+/// | [`SDL_Scancode::LANG1`] | [`SDL_SCANCODE_LANG1`] | Hangul/English toggle |
+/// | [`SDL_Scancode::LANG2`] | [`SDL_SCANCODE_LANG2`] | Hanja conversion |
+/// | [`SDL_Scancode::LANG3`] | [`SDL_SCANCODE_LANG3`] | Katakana |
+/// | [`SDL_Scancode::LANG4`] | [`SDL_SCANCODE_LANG4`] | Hiragana |
+/// | [`SDL_Scancode::LANG5`] | [`SDL_SCANCODE_LANG5`] | Zenkaku/Hankaku |
+/// | [`SDL_Scancode::LANG6`] | [`SDL_SCANCODE_LANG6`] | reserved |
+/// | [`SDL_Scancode::LANG7`] | [`SDL_SCANCODE_LANG7`] | reserved |
+/// | [`SDL_Scancode::LANG8`] | [`SDL_SCANCODE_LANG8`] | reserved |
+/// | [`SDL_Scancode::LANG9`] | [`SDL_SCANCODE_LANG9`] | reserved |
+/// | [`SDL_Scancode::ALTERASE`] | [`SDL_SCANCODE_ALTERASE`] | Erase-Eaze |
+/// | [`SDL_Scancode::SYSREQ`] | [`SDL_SCANCODE_SYSREQ`] |  |
+/// | [`SDL_Scancode::CANCEL`] | [`SDL_SCANCODE_CANCEL`] | AC Cancel |
+/// | [`SDL_Scancode::CLEAR`] | [`SDL_SCANCODE_CLEAR`] |  |
+/// | [`SDL_Scancode::PRIOR`] | [`SDL_SCANCODE_PRIOR`] |  |
+/// | [`SDL_Scancode::RETURN2`] | [`SDL_SCANCODE_RETURN2`] |  |
+/// | [`SDL_Scancode::SEPARATOR`] | [`SDL_SCANCODE_SEPARATOR`] |  |
+/// | [`SDL_Scancode::OUT`] | [`SDL_SCANCODE_OUT`] |  |
+/// | [`SDL_Scancode::OPER`] | [`SDL_SCANCODE_OPER`] |  |
+/// | [`SDL_Scancode::CLEARAGAIN`] | [`SDL_SCANCODE_CLEARAGAIN`] |  |
+/// | [`SDL_Scancode::CRSEL`] | [`SDL_SCANCODE_CRSEL`] |  |
+/// | [`SDL_Scancode::EXSEL`] | [`SDL_SCANCODE_EXSEL`] |  |
+/// | [`SDL_Scancode::KP_00`] | [`SDL_SCANCODE_KP_00`] |  |
+/// | [`SDL_Scancode::KP_000`] | [`SDL_SCANCODE_KP_000`] |  |
+/// | [`SDL_Scancode::THOUSANDSSEPARATOR`] | [`SDL_SCANCODE_THOUSANDSSEPARATOR`] |  |
+/// | [`SDL_Scancode::DECIMALSEPARATOR`] | [`SDL_SCANCODE_DECIMALSEPARATOR`] |  |
+/// | [`SDL_Scancode::CURRENCYUNIT`] | [`SDL_SCANCODE_CURRENCYUNIT`] |  |
+/// | [`SDL_Scancode::CURRENCYSUBUNIT`] | [`SDL_SCANCODE_CURRENCYSUBUNIT`] |  |
+/// | [`SDL_Scancode::KP_LEFTPAREN`] | [`SDL_SCANCODE_KP_LEFTPAREN`] |  |
+/// | [`SDL_Scancode::KP_RIGHTPAREN`] | [`SDL_SCANCODE_KP_RIGHTPAREN`] |  |
+/// | [`SDL_Scancode::KP_LEFTBRACE`] | [`SDL_SCANCODE_KP_LEFTBRACE`] |  |
+/// | [`SDL_Scancode::KP_RIGHTBRACE`] | [`SDL_SCANCODE_KP_RIGHTBRACE`] |  |
+/// | [`SDL_Scancode::KP_TAB`] | [`SDL_SCANCODE_KP_TAB`] |  |
+/// | [`SDL_Scancode::KP_BACKSPACE`] | [`SDL_SCANCODE_KP_BACKSPACE`] |  |
+/// | [`SDL_Scancode::KP_A`] | [`SDL_SCANCODE_KP_A`] |  |
+/// | [`SDL_Scancode::KP_B`] | [`SDL_SCANCODE_KP_B`] |  |
+/// | [`SDL_Scancode::KP_C`] | [`SDL_SCANCODE_KP_C`] |  |
+/// | [`SDL_Scancode::KP_D`] | [`SDL_SCANCODE_KP_D`] |  |
+/// | [`SDL_Scancode::KP_E`] | [`SDL_SCANCODE_KP_E`] |  |
+/// | [`SDL_Scancode::KP_F`] | [`SDL_SCANCODE_KP_F`] |  |
+/// | [`SDL_Scancode::KP_XOR`] | [`SDL_SCANCODE_KP_XOR`] |  |
+/// | [`SDL_Scancode::KP_POWER`] | [`SDL_SCANCODE_KP_POWER`] |  |
+/// | [`SDL_Scancode::KP_PERCENT`] | [`SDL_SCANCODE_KP_PERCENT`] |  |
+/// | [`SDL_Scancode::KP_LESS`] | [`SDL_SCANCODE_KP_LESS`] |  |
+/// | [`SDL_Scancode::KP_GREATER`] | [`SDL_SCANCODE_KP_GREATER`] |  |
+/// | [`SDL_Scancode::KP_AMPERSAND`] | [`SDL_SCANCODE_KP_AMPERSAND`] |  |
+/// | [`SDL_Scancode::KP_DBLAMPERSAND`] | [`SDL_SCANCODE_KP_DBLAMPERSAND`] |  |
+/// | [`SDL_Scancode::KP_VERTICALBAR`] | [`SDL_SCANCODE_KP_VERTICALBAR`] |  |
+/// | [`SDL_Scancode::KP_DBLVERTICALBAR`] | [`SDL_SCANCODE_KP_DBLVERTICALBAR`] |  |
+/// | [`SDL_Scancode::KP_COLON`] | [`SDL_SCANCODE_KP_COLON`] |  |
+/// | [`SDL_Scancode::KP_HASH`] | [`SDL_SCANCODE_KP_HASH`] |  |
+/// | [`SDL_Scancode::KP_SPACE`] | [`SDL_SCANCODE_KP_SPACE`] |  |
+/// | [`SDL_Scancode::KP_AT`] | [`SDL_SCANCODE_KP_AT`] |  |
+/// | [`SDL_Scancode::KP_EXCLAM`] | [`SDL_SCANCODE_KP_EXCLAM`] |  |
+/// | [`SDL_Scancode::KP_MEMSTORE`] | [`SDL_SCANCODE_KP_MEMSTORE`] |  |
+/// | [`SDL_Scancode::KP_MEMRECALL`] | [`SDL_SCANCODE_KP_MEMRECALL`] |  |
+/// | [`SDL_Scancode::KP_MEMCLEAR`] | [`SDL_SCANCODE_KP_MEMCLEAR`] |  |
+/// | [`SDL_Scancode::KP_MEMADD`] | [`SDL_SCANCODE_KP_MEMADD`] |  |
+/// | [`SDL_Scancode::KP_MEMSUBTRACT`] | [`SDL_SCANCODE_KP_MEMSUBTRACT`] |  |
+/// | [`SDL_Scancode::KP_MEMMULTIPLY`] | [`SDL_SCANCODE_KP_MEMMULTIPLY`] |  |
+/// | [`SDL_Scancode::KP_MEMDIVIDE`] | [`SDL_SCANCODE_KP_MEMDIVIDE`] |  |
+/// | [`SDL_Scancode::KP_PLUSMINUS`] | [`SDL_SCANCODE_KP_PLUSMINUS`] |  |
+/// | [`SDL_Scancode::KP_CLEAR`] | [`SDL_SCANCODE_KP_CLEAR`] |  |
+/// | [`SDL_Scancode::KP_CLEARENTRY`] | [`SDL_SCANCODE_KP_CLEARENTRY`] |  |
+/// | [`SDL_Scancode::KP_BINARY`] | [`SDL_SCANCODE_KP_BINARY`] |  |
+/// | [`SDL_Scancode::KP_OCTAL`] | [`SDL_SCANCODE_KP_OCTAL`] |  |
+/// | [`SDL_Scancode::KP_DECIMAL`] | [`SDL_SCANCODE_KP_DECIMAL`] |  |
+/// | [`SDL_Scancode::KP_HEXADECIMAL`] | [`SDL_SCANCODE_KP_HEXADECIMAL`] |  |
+/// | [`SDL_Scancode::LCTRL`] | [`SDL_SCANCODE_LCTRL`] |  |
+/// | [`SDL_Scancode::LSHIFT`] | [`SDL_SCANCODE_LSHIFT`] |  |
+/// | [`SDL_Scancode::LALT`] | [`SDL_SCANCODE_LALT`] | alt, option |
+/// | [`SDL_Scancode::LGUI`] | [`SDL_SCANCODE_LGUI`] | windows, command (apple), meta |
+/// | [`SDL_Scancode::RCTRL`] | [`SDL_SCANCODE_RCTRL`] |  |
+/// | [`SDL_Scancode::RSHIFT`] | [`SDL_SCANCODE_RSHIFT`] |  |
+/// | [`SDL_Scancode::RALT`] | [`SDL_SCANCODE_RALT`] | alt gr, option |
+/// | [`SDL_Scancode::RGUI`] | [`SDL_SCANCODE_RGUI`] | windows, command (apple), meta |
+/// | [`SDL_Scancode::MODE`] | [`SDL_SCANCODE_MODE`] | I'm not sure if this is really not covered (...) |
+/// | [`SDL_Scancode::SLEEP`] | [`SDL_SCANCODE_SLEEP`] | Sleep |
+/// | [`SDL_Scancode::WAKE`] | [`SDL_SCANCODE_WAKE`] | Wake |
+/// | [`SDL_Scancode::CHANNEL_INCREMENT`] | [`SDL_SCANCODE_CHANNEL_INCREMENT`] | Channel Increment |
+/// | [`SDL_Scancode::CHANNEL_DECREMENT`] | [`SDL_SCANCODE_CHANNEL_DECREMENT`] | Channel Decrement |
+/// | [`SDL_Scancode::MEDIA_PLAY`] | [`SDL_SCANCODE_MEDIA_PLAY`] | Play |
+/// | [`SDL_Scancode::MEDIA_PAUSE`] | [`SDL_SCANCODE_MEDIA_PAUSE`] | Pause |
+/// | [`SDL_Scancode::MEDIA_RECORD`] | [`SDL_SCANCODE_MEDIA_RECORD`] | Record |
+/// | [`SDL_Scancode::MEDIA_FAST_FORWARD`] | [`SDL_SCANCODE_MEDIA_FAST_FORWARD`] | Fast Forward |
+/// | [`SDL_Scancode::MEDIA_REWIND`] | [`SDL_SCANCODE_MEDIA_REWIND`] | Rewind |
+/// | [`SDL_Scancode::MEDIA_NEXT_TRACK`] | [`SDL_SCANCODE_MEDIA_NEXT_TRACK`] | Next Track |
+/// | [`SDL_Scancode::MEDIA_PREVIOUS_TRACK`] | [`SDL_SCANCODE_MEDIA_PREVIOUS_TRACK`] | Previous Track |
+/// | [`SDL_Scancode::MEDIA_STOP`] | [`SDL_SCANCODE_MEDIA_STOP`] | Stop |
+/// | [`SDL_Scancode::MEDIA_EJECT`] | [`SDL_SCANCODE_MEDIA_EJECT`] | Eject |
+/// | [`SDL_Scancode::MEDIA_PLAY_PAUSE`] | [`SDL_SCANCODE_MEDIA_PLAY_PAUSE`] | Play / Pause |
+/// | [`SDL_Scancode::MEDIA_SELECT`] | [`SDL_SCANCODE_MEDIA_SELECT`] |  |
+/// | [`SDL_Scancode::AC_NEW`] | [`SDL_SCANCODE_AC_NEW`] | AC New |
+/// | [`SDL_Scancode::AC_OPEN`] | [`SDL_SCANCODE_AC_OPEN`] | AC Open |
+/// | [`SDL_Scancode::AC_CLOSE`] | [`SDL_SCANCODE_AC_CLOSE`] | AC Close |
+/// | [`SDL_Scancode::AC_EXIT`] | [`SDL_SCANCODE_AC_EXIT`] | AC Exit |
+/// | [`SDL_Scancode::AC_SAVE`] | [`SDL_SCANCODE_AC_SAVE`] | AC Save |
+/// | [`SDL_Scancode::AC_PRINT`] | [`SDL_SCANCODE_AC_PRINT`] | AC Print |
+/// | [`SDL_Scancode::AC_PROPERTIES`] | [`SDL_SCANCODE_AC_PROPERTIES`] | AC Properties |
+/// | [`SDL_Scancode::AC_SEARCH`] | [`SDL_SCANCODE_AC_SEARCH`] | AC Search |
+/// | [`SDL_Scancode::AC_HOME`] | [`SDL_SCANCODE_AC_HOME`] | AC Home |
+/// | [`SDL_Scancode::AC_BACK`] | [`SDL_SCANCODE_AC_BACK`] | AC Back |
+/// | [`SDL_Scancode::AC_FORWARD`] | [`SDL_SCANCODE_AC_FORWARD`] | AC Forward |
+/// | [`SDL_Scancode::AC_STOP`] | [`SDL_SCANCODE_AC_STOP`] | AC Stop |
+/// | [`SDL_Scancode::AC_REFRESH`] | [`SDL_SCANCODE_AC_REFRESH`] | AC Refresh |
+/// | [`SDL_Scancode::AC_BOOKMARKS`] | [`SDL_SCANCODE_AC_BOOKMARKS`] | AC Bookmarks |
+/// | [`SDL_Scancode::SOFTLEFT`] | [`SDL_SCANCODE_SOFTLEFT`] | Usually situated below the display on phones and (...) |
+/// | [`SDL_Scancode::SOFTRIGHT`] | [`SDL_SCANCODE_SOFTRIGHT`] | Usually situated below the display on phones and (...) |
+/// | [`SDL_Scancode::CALL`] | [`SDL_SCANCODE_CALL`] | Used for accepting phone calls. |
+/// | [`SDL_Scancode::ENDCALL`] | [`SDL_SCANCODE_ENDCALL`] | Used for rejecting phone calls. |
+/// | [`SDL_Scancode::RESERVED`] | [`SDL_SCANCODE_RESERVED`] | 400-500 reserved for dynamic keycodes |
+/// | [`SDL_Scancode::COUNT`] | [`SDL_SCANCODE_COUNT`] | not a key, just marks the number of scancodes for array bounds |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

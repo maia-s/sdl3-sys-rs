@@ -64,17 +64,19 @@ pub type SDL_JoystickID = Uint32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_JOYSTICK_TYPE_UNKNOWN`]
-/// - [`SDL_JOYSTICK_TYPE_GAMEPAD`]
-/// - [`SDL_JOYSTICK_TYPE_WHEEL`]
-/// - [`SDL_JOYSTICK_TYPE_ARCADE_STICK`]
-/// - [`SDL_JOYSTICK_TYPE_FLIGHT_STICK`]
-/// - [`SDL_JOYSTICK_TYPE_DANCE_PAD`]
-/// - [`SDL_JOYSTICK_TYPE_GUITAR`]
-/// - [`SDL_JOYSTICK_TYPE_DRUM_KIT`]
-/// - [`SDL_JOYSTICK_TYPE_ARCADE_PAD`]
-/// - [`SDL_JOYSTICK_TYPE_THROTTLE`]
-/// - [`SDL_JOYSTICK_TYPE_COUNT`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_JoystickType::UNKNOWN`] | [`SDL_JOYSTICK_TYPE_UNKNOWN`] |  |
+/// | [`SDL_JoystickType::GAMEPAD`] | [`SDL_JOYSTICK_TYPE_GAMEPAD`] |  |
+/// | [`SDL_JoystickType::WHEEL`] | [`SDL_JOYSTICK_TYPE_WHEEL`] |  |
+/// | [`SDL_JoystickType::ARCADE_STICK`] | [`SDL_JOYSTICK_TYPE_ARCADE_STICK`] |  |
+/// | [`SDL_JoystickType::FLIGHT_STICK`] | [`SDL_JOYSTICK_TYPE_FLIGHT_STICK`] |  |
+/// | [`SDL_JoystickType::DANCE_PAD`] | [`SDL_JOYSTICK_TYPE_DANCE_PAD`] |  |
+/// | [`SDL_JoystickType::GUITAR`] | [`SDL_JOYSTICK_TYPE_GUITAR`] |  |
+/// | [`SDL_JoystickType::DRUM_KIT`] | [`SDL_JOYSTICK_TYPE_DRUM_KIT`] |  |
+/// | [`SDL_JoystickType::ARCADE_PAD`] | [`SDL_JOYSTICK_TYPE_ARCADE_PAD`] |  |
+/// | [`SDL_JoystickType::THROTTLE`] | [`SDL_JOYSTICK_TYPE_THROTTLE`] |  |
+/// | [`SDL_JoystickType::COUNT`] | [`SDL_JOYSTICK_TYPE_COUNT`] |  |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -120,10 +122,12 @@ pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_JOYSTICK_CONNECTION_INVALID`]
-/// - [`SDL_JOYSTICK_CONNECTION_UNKNOWN`]
-/// - [`SDL_JOYSTICK_CONNECTION_WIRED`]
-/// - [`SDL_JOYSTICK_CONNECTION_WIRELESS`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_JoystickConnectionState::INVALID`] | [`SDL_JOYSTICK_CONNECTION_INVALID`] |  |
+/// | [`SDL_JoystickConnectionState::UNKNOWN`] | [`SDL_JOYSTICK_CONNECTION_UNKNOWN`] |  |
+/// | [`SDL_JoystickConnectionState::WIRED`] | [`SDL_JOYSTICK_CONNECTION_WIRED`] |  |
+/// | [`SDL_JoystickConnectionState::WIRELESS`] | [`SDL_JOYSTICK_CONNECTION_WIRELESS`] |  |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

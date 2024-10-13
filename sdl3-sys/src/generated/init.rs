@@ -87,9 +87,11 @@ pub const SDL_INIT_CAMERA: ::core::primitive::u32 = 65536_u32;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_APP_CONTINUE`]
-/// - [`SDL_APP_SUCCESS`]
-/// - [`SDL_APP_FAILURE`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_AppResult::CONTINUE`] | [`SDL_APP_CONTINUE`] | Value that requests that the app continue from the main callbacks. |
+/// | [`SDL_AppResult::SUCCESS`] | [`SDL_APP_SUCCESS`] | Value that requests termination with success from the main callbacks. |
+/// | [`SDL_AppResult::FAILURE`] | [`SDL_APP_FAILURE`] | Value that requests termination with error from the main callbacks. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

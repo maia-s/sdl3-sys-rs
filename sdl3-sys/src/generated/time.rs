@@ -43,9 +43,11 @@ pub struct SDL_DateTime {
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_DATE_FORMAT_YYYYMMDD`]
-/// - [`SDL_DATE_FORMAT_DDMMYYYY`]
-/// - [`SDL_DATE_FORMAT_MMDDYYYY`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_DateFormat::YYYYMMDD`] | [`SDL_DATE_FORMAT_YYYYMMDD`] | Year/Month/Day |
+/// | [`SDL_DateFormat::DDMMYYYY`] | [`SDL_DATE_FORMAT_DDMMYYYY`] | Day/Month/Year |
+/// | [`SDL_DateFormat::MMDDYYYY`] | [`SDL_DATE_FORMAT_MMDDYYYY`] | Month/Day/Year |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -81,8 +83,10 @@ pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_TIME_FORMAT_24HR`]
-/// - [`SDL_TIME_FORMAT_12HR`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_TimeFormat::_24HR`] | [`SDL_TIME_FORMAT_24HR`] | 24 hour time |
+/// | [`SDL_TimeFormat::_12HR`] | [`SDL_TIME_FORMAT_12HR`] | 12 hour time |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

@@ -142,11 +142,13 @@ pub use SDL_disabled_assert;
 ///
 /// ### `sdl3-sys` note
 /// This is a `C` enum. Known values:
-/// - [`SDL_ASSERTION_RETRY`]
-/// - [`SDL_ASSERTION_BREAK`]
-/// - [`SDL_ASSERTION_ABORT`]
-/// - [`SDL_ASSERTION_IGNORE`]
-/// - [`SDL_ASSERTION_ALWAYS_IGNORE`]
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SDL_AssertState::RETRY`] | [`SDL_ASSERTION_RETRY`] | Retry the assert immediately. |
+/// | [`SDL_AssertState::BREAK`] | [`SDL_ASSERTION_BREAK`] | Make the debugger trigger a breakpoint. |
+/// | [`SDL_AssertState::ABORT`] | [`SDL_ASSERTION_ABORT`] | Terminate the program. |
+/// | [`SDL_AssertState::IGNORE`] | [`SDL_ASSERTION_IGNORE`] | Ignore the assert. |
+/// | [`SDL_AssertState::ALWAYS_IGNORE`] | [`SDL_ASSERTION_ALWAYS_IGNORE`] | Ignore the assert from now on. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

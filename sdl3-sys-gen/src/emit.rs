@@ -8,6 +8,7 @@ use crate::{
     },
 };
 use std::{
+    collections::HashSet,
     fmt::{self, Display, Write},
     io,
     ops::Deref,
@@ -1165,6 +1166,7 @@ impl Emit for TypeDef {
                 self.doc.emit(ctx)?;
                 assert!(e.doc.is_none());
 
+                let enum_ident = self.ident.as_str();
                 let enum_base_type = e.base_type.clone();
                 let mut known_values = Vec::new();
 
@@ -1176,27 +1178,16 @@ impl Emit for TypeDef {
                         .unwrap_or_default();
 
                     for variant in &e.variants {
-                        known_values.push(format!("[`{}`]", variant.ident.as_str()));
+                        known_values.push(variant.ident.as_str());
                         prefix = common_ident_prefix(prefix, variant.ident.as_str());
                     }
                     prefix
                 } else {
                     if let Some(variant) = e.variants.first() {
-                        known_values.push(format!("[`{}`]", variant.ident.as_str()));
+                        known_values.push(variant.ident.as_str());
                     }
                     ""
                 };
-
-                if !known_values.is_empty() {
-                    if self.doc.is_some() {
-                        writeln!(ctx, "///")?;
-                    }
-                    writeln!(ctx, "/// ### `sdl3-sys` note")?;
-                    writeln!(ctx, "/// This is a `C` enum. Known values:")?;
-                    for s in known_values {
-                        writeln!(ctx, "/// - {s}")?;
-                    }
-                }
 
                 let enum_base_type = enum_base_type.unwrap_or(Type::primitive(PrimitiveType::Int));
 
@@ -1209,40 +1200,31 @@ impl Emit for TypeDef {
                     true,
                 )?;
 
-                let enum_ident = self.ident.as_str();
-                writeln!(ctx, "#[repr(transparent)]")?;
-                writeln!(
-                    ctx,
-                    "#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]"
-                )?;
-                writeln!(
-                    ctx,
-                    r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
-                )?;
-                write!(ctx, "pub struct {enum_ident}(pub ")?;
-                enum_base_type.emit(ctx)?;
-                writeln!(ctx, ");")?;
-
-                write!(ctx, "impl From<{enum_ident}> for ")?;
-                enum_base_type.emit(ctx)?;
-                write!(
-                    ctx,
-                    str_block! {r#"
-                        {{
-                            #[inline(always)]
-                            fn from(value: {}) -> Self {{
-                                value.0
-                            }}
-                        }}
-                    "#},
-                    enum_ident
-                )?;
-
+                let mut doc_consts = String::new();
+                let mut ctx_doc = ctx.with_output(&mut doc_consts);
                 let mut impl_consts = String::new();
                 let mut ctx_impl = ctx.with_output(&mut impl_consts);
                 let mut global_consts = String::new();
                 let mut ctx_global = ctx.with_output(&mut global_consts);
                 let mut next_expr = Some(Expr::Literal(Literal::Integer(IntegerLiteral::zero())));
+
+                if !known_values.is_empty() {
+                    if self.doc.is_some() {
+                        writeln!(ctx_doc, "///")?;
+                    }
+                    writeln!(ctx_doc, "/// ### `sdl3-sys` note")?;
+                    writeln!(ctx_doc, "/// This is a `C` enum. Known values:")?;
+                    writeln!(
+                        ctx_doc,
+                        "/// | Associated constant | Global constant | Description |"
+                    )?;
+                    writeln!(
+                        ctx_doc,
+                        "/// | ------------------- | --------------- | ----------- |"
+                    )?;
+                }
+
+                let mut seen_target_dependent = HashSet::new();
 
                 for variant in &e.variants {
                     ctx.register_sym(
@@ -1290,6 +1272,27 @@ impl Emit for TypeDef {
 
                     next_expr = expr.try_eval_plus_one(ctx)?.map(Expr::Value);
 
+                    if !seen_target_dependent.contains(variant_ident) {
+                        write!(
+                        ctx_doc,
+                        "/// | [`{enum_ident}::{short_variant_ident}`] | [`{variant_ident}`] | ",
+                    )?;
+                        if !variant.cond.is_empty() {
+                            seen_target_dependent.insert(variant_ident);
+                            write!(ctx_doc, "(target dependent) ")?;
+                        } else if let Some(doc) = &variant.doc {
+                            let doc = doc.to_string();
+                            let mut lines = doc.lines();
+                            if let Some(first) = lines.next() {
+                                write!(ctx_doc, "{first}")?;
+                                if lines.next().is_some() {
+                                    write!(ctx_doc, " (...)")?;
+                                }
+                            }
+                        }
+                        writeln!(ctx_doc, " |")?;
+                    }
+
                     variant.cond.emit_cfg(&mut ctx_impl)?;
                     variant.doc.emit(&mut ctx_impl)?;
                     writeln!(ctx_impl, "pub const {short_variant_ident}: Self = {value};")?;
@@ -1299,8 +1302,39 @@ impl Emit for TypeDef {
                     writeln!(ctx_global, "pub const {variant_ident}: {enum_ident} = {enum_ident}::{short_variant_ident};")?;
                 }
 
-                drop(ctx_impl);
                 drop(ctx_global);
+                drop(ctx_impl);
+                drop(ctx_doc);
+
+                ctx.write_str(&doc_consts)?;
+
+                writeln!(ctx, "#[repr(transparent)]")?;
+                writeln!(
+                    ctx,
+                    "#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]"
+                )?;
+                writeln!(
+                    ctx,
+                    r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
+                )?;
+                write!(ctx, "pub struct {enum_ident}(pub ")?;
+                enum_base_type.emit(ctx)?;
+                writeln!(ctx, ");")?;
+
+                write!(ctx, "impl From<{enum_ident}> for ")?;
+                enum_base_type.emit(ctx)?;
+                write!(
+                    ctx,
+                    str_block! {r#"
+                        {{
+                            #[inline(always)]
+                            fn from(value: {}) -> Self {{
+                                value.0
+                            }}
+                        }}
+                    "#},
+                    enum_ident
+                )?;
 
                 writeln!(ctx, "impl {enum_ident} {{")?;
                 ctx.increase_indent();
