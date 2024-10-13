@@ -118,7 +118,11 @@ pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 3;
 #[doc(hidden)]
 #[macro_export]
 macro_rules! SDL_disabled_assert {
-    ($condition:expr) => {};
+    ($condition:expr) => {{
+        if false {
+            let _ = $condition;
+        }
+    }};
 }
 #[doc(inline)]
 pub use SDL_disabled_assert;
