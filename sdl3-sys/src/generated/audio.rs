@@ -78,18 +78,6 @@ pub const SDL_AUDIO_MASK_BIG_ENDIAN: ::core::primitive::u32 = 4096_u32;
 
 pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 
-#[inline(always)]
-pub const fn SDL_DEFINE_AUDIO_FORMAT(
-    signed_: Uint16,
-    bigendian: Uint16,
-    float_: Uint16,
-    size: ::core::primitive::u32,
-) -> ::core::primitive::u32 {
-    (((((((signed_) as Uint16) << 15) | (((bigendian) as Uint16) << 12))
-        | (((float_) as Uint16) << 8)) as ::core::primitive::u32)
-        | (size & 255_u32))
-}
-
 /// Audio format.
 ///
 /// ### Availability
@@ -125,8 +113,8 @@ pub const fn SDL_DEFINE_AUDIO_FORMAT(
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_AudioFormat(pub ::core::ffi::c_int);
-impl From<SDL_AudioFormat> for ::core::ffi::c_int {
+pub struct SDL_AudioFormat(pub ::core::ffi::c_uint);
+impl From<SDL_AudioFormat> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_AudioFormat) -> Self {
         value.0
@@ -195,6 +183,20 @@ pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AudioFormat::S32;
 #[cfg(not(target_endian = "little"))]
 pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 
+#[inline(always)]
+pub const fn SDL_DEFINE_AUDIO_FORMAT(
+    signed_: ::core::primitive::bool,
+    bigendian: ::core::primitive::bool,
+    float_: ::core::primitive::bool,
+    size: ::core::primitive::u8,
+) -> SDL_AudioFormat {
+    SDL_AudioFormat(
+        (((((((signed_) as Uint16) << 15) | (((bigendian) as Uint16) << 12))
+            | (((float_) as Uint16) << 8)) as ::core::primitive::u32)
+            | ((size as ::core::primitive::u32) & 255_u32)),
+    )
+}
+
 /// Retrieve the size, in bits, from an [`SDL_AudioFormat`].
 ///
 /// For example, `SDL_AUDIO_BITSIZE(SDL_AUDIO_S16)` returns 16.
@@ -210,8 +212,8 @@ pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 /// ### Availability
 /// This macro is available since SDL 3.0.0.
 #[inline(always)]
-pub const fn SDL_AUDIO_BITSIZE(x: SDL_AudioFormat) -> ::core::primitive::u32 {
-    ((x.0 as ::core::primitive::u32) & 255_u32)
+pub const fn SDL_AUDIO_BITSIZE(x: SDL_AudioFormat) -> ::core::ffi::c_uint {
+    (x.0 & 255_u32)
 }
 
 /// Retrieve the size, in bytes, from an [`SDL_AudioFormat`].
@@ -229,7 +231,7 @@ pub const fn SDL_AUDIO_BITSIZE(x: SDL_AudioFormat) -> ::core::primitive::u32 {
 /// ### Availability
 /// This macro is available since SDL 3.0.0.
 #[inline(always)]
-pub const fn SDL_AUDIO_BYTESIZE(x: SDL_AudioFormat) -> ::core::primitive::u32 {
+pub const fn SDL_AUDIO_BYTESIZE(x: SDL_AudioFormat) -> ::core::ffi::c_uint {
     (SDL_AUDIO_BITSIZE(x) / 8_u32)
 }
 
@@ -248,8 +250,8 @@ pub const fn SDL_AUDIO_BYTESIZE(x: SDL_AudioFormat) -> ::core::primitive::u32 {
 /// ### Availability
 /// This macro is available since SDL 3.0.0.
 #[inline(always)]
-pub const fn SDL_AUDIO_ISFLOAT(x: ::core::primitive::u32) -> ::core::primitive::u32 {
-    (x & 256_u32)
+pub const fn SDL_AUDIO_ISFLOAT(x: SDL_AudioFormat) -> ::core::primitive::bool {
+    ((x.0 & 256_u32) != 0)
 }
 
 /// Determine if an [`SDL_AudioFormat`] represents bigendian data.
@@ -267,8 +269,8 @@ pub const fn SDL_AUDIO_ISFLOAT(x: ::core::primitive::u32) -> ::core::primitive::
 /// ### Availability
 /// This macro is available since SDL 3.0.0.
 #[inline(always)]
-pub const fn SDL_AUDIO_ISBIGENDIAN(x: ::core::primitive::u32) -> ::core::primitive::u32 {
-    (x & 4096_u32)
+pub const fn SDL_AUDIO_ISBIGENDIAN(x: SDL_AudioFormat) -> ::core::primitive::bool {
+    ((x.0 & 4096_u32) != 0)
 }
 
 /// Determine if an [`SDL_AudioFormat`] represents littleendian data.
@@ -286,8 +288,8 @@ pub const fn SDL_AUDIO_ISBIGENDIAN(x: ::core::primitive::u32) -> ::core::primiti
 /// ### Availability
 /// This macro is available since SDL 3.0.0.
 #[inline(always)]
-pub const fn SDL_AUDIO_ISLITTLEENDIAN(x: ::core::primitive::u32) -> ::core::primitive::bool {
-    !(SDL_AUDIO_ISBIGENDIAN(x) != 0)
+pub const fn SDL_AUDIO_ISLITTLEENDIAN(x: SDL_AudioFormat) -> ::core::primitive::bool {
+    !(SDL_AUDIO_ISBIGENDIAN(x))
 }
 
 /// Determine if an [`SDL_AudioFormat`] represents signed data.
@@ -305,8 +307,8 @@ pub const fn SDL_AUDIO_ISLITTLEENDIAN(x: ::core::primitive::u32) -> ::core::prim
 /// ### Availability
 /// This macro is available since SDL 3.0.0.
 #[inline(always)]
-pub const fn SDL_AUDIO_ISSIGNED(x: ::core::primitive::u32) -> ::core::primitive::u32 {
-    (x & 32768_u32)
+pub const fn SDL_AUDIO_ISSIGNED(x: SDL_AudioFormat) -> ::core::primitive::bool {
+    ((x.0 & 32768_u32) != 0)
 }
 
 /// Determine if an [`SDL_AudioFormat`] represents integer data.
@@ -324,8 +326,8 @@ pub const fn SDL_AUDIO_ISSIGNED(x: ::core::primitive::u32) -> ::core::primitive:
 /// ### Availability
 /// This macro is available since SDL 3.0.0.
 #[inline(always)]
-pub const fn SDL_AUDIO_ISINT(x: ::core::primitive::u32) -> ::core::primitive::bool {
-    !(SDL_AUDIO_ISFLOAT(x) != 0)
+pub const fn SDL_AUDIO_ISINT(x: SDL_AudioFormat) -> ::core::primitive::bool {
+    !(SDL_AUDIO_ISFLOAT(x))
 }
 
 /// Determine if an [`SDL_AudioFormat`] represents unsigned data.
@@ -343,8 +345,8 @@ pub const fn SDL_AUDIO_ISINT(x: ::core::primitive::u32) -> ::core::primitive::bo
 /// ### Availability
 /// This macro is available since SDL 3.0.0.
 #[inline(always)]
-pub const fn SDL_AUDIO_ISUNSIGNED(x: ::core::primitive::u32) -> ::core::primitive::bool {
-    !(SDL_AUDIO_ISSIGNED(x) != 0)
+pub const fn SDL_AUDIO_ISUNSIGNED(x: SDL_AudioFormat) -> ::core::primitive::bool {
+    !(SDL_AUDIO_ISSIGNED(x))
 }
 
 /// SDL Audio Device instance IDs.
@@ -410,8 +412,8 @@ pub struct SDL_AudioSpec {
 /// ### Availability
 /// This macro is available since SDL 3.0.0.
 #[inline(always)]
-pub const fn SDL_AUDIO_FRAMESIZE(x: SDL_AudioSpec) -> ::core::primitive::u32 {
-    (SDL_AUDIO_BYTESIZE(x.format) * (x.channels as ::core::primitive::u32))
+pub const fn SDL_AUDIO_FRAMESIZE(x: SDL_AudioSpec) -> ::core::ffi::c_uint {
+    (SDL_AUDIO_BYTESIZE(x.format) * (x.channels as ::core::ffi::c_uint))
 }
 
 extern "C" {

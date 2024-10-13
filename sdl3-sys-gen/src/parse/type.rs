@@ -143,6 +143,10 @@ impl Type {
         matches!(self.ty, TypeEnum::Primitive(PrimitiveType::Void))
     }
 
+    pub fn is_bool(&self) -> bool {
+        matches!(self.ty, TypeEnum::Primitive(PrimitiveType::Bool))
+    }
+
     pub fn is_uninferred(&self) -> bool {
         if let TypeEnum::Infer(i) = &self.ty {
             i.borrow().is_none()

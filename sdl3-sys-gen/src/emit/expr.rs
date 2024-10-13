@@ -410,6 +410,12 @@ impl Value {
         let mut is_const = false;
         let mut is_unsafe = false;
 
+        if let Ok(ty) = self.ty() {
+            if ty == target {
+                return Ok(Some(self.clone()));
+            }
+        }
+
         match self {
             Value::I32(_)
             | Value::U31(_)
@@ -765,6 +771,9 @@ impl Eval for Cast {
             is_unsafe = expr.is_unsafe();
             if expr.ty()?.is_uninferred() {
                 expr.ty()?.resolve_to(self.ty.clone());
+            }
+            if self.ty.is_bool() {
+                return expr.coerce(ctx, &self.ty);
             }
         }
         let out = if self.ty.is_void() {

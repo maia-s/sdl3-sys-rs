@@ -20,9 +20,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         module: Some("audio"),
         match_ident: |i| i == "SDL_AUDIO_BITSIZE",
         patch: |_ctx, define| {
-            let Some(args) = &mut define.args else {
-                unreachable!()
-            };
+            let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident(Ident::new_inline("SDL_AudioFormat"));
             Ok(true)
         },
@@ -31,10 +29,33 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         module: Some("audio"),
         match_ident: |i| i == "SDL_AUDIO_FRAMESIZE",
         patch: |_ctx, define| {
-            let Some(args) = &mut define.args else {
-                unreachable!()
-            };
+            let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident(Ident::new_inline("SDL_AudioSpec"));
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("audio"),
+        match_ident: |i| i.starts_with("SDL_AUDIO_IS"),
+        patch: |_ctx, define| {
+            let args = define.args.as_mut().unwrap();
+            args[0].ty = Type::ident(Ident::new_inline("SDL_AudioFormat"));
+            define.value = define.value.cast_expr(Type::bool());
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("audio"),
+        match_ident: |i| i == "SDL_DEFINE_AUDIO_FORMAT",
+        patch: |_ctx, define| {
+            let args = define.args.as_mut().unwrap();
+            args[0].ty = Type::bool();
+            args[1].ty = Type::bool();
+            args[2].ty = Type::bool();
+            args[3].ty = Type::primitive(PrimitiveType::Uint8T);
+            define.value = define
+                .value
+                .cast_expr(Type::ident(Ident::new_inline("SDL_AudioFormat")));
             Ok(true)
         },
     },
@@ -80,9 +101,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         module: Some("pixels"),
         match_ident: |i| matches!(i, "SDL_DEFINE_PIXELFORMAT"),
         patch: |_ctx, define| {
-            let Some(args) = &mut define.args else {
-                unreachable!()
-            };
+            let args = define.args.as_mut().unwrap();
             assert!(args[0].ident.as_str() == "type");
             args[0].ty = Type::ident(Ident::new_inline("SDL_PixelType"));
             assert!(args[1].ident.as_str() == "order");
@@ -104,9 +123,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             )
         },
         patch: |_ctx, define| {
-            let Some(args) = &mut define.args else {
-                unreachable!()
-            };
+            let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
             Ok(true)
         },
@@ -115,9 +132,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         module: Some("pixels"),
         match_ident: |i| matches!(i, "SDL_PIXELLAYOUT"),
         patch: |_ctx, define| {
-            let Some(args) = &mut define.args else {
-                unreachable!()
-            };
+            let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
             define.value = define
                 .value
@@ -129,9 +144,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         module: Some("pixels"),
         match_ident: |i| matches!(i, "SDL_PIXELTYPE"),
         patch: |_ctx, define| {
-            let Some(args) = &mut define.args else {
-                unreachable!()
-            };
+            let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
             define.value = define
                 .value
@@ -143,9 +156,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         module: Some("stdinc"),
         match_ident: |i| i == "SDL_iconv_wchar_utf8",
         patch: |_ctx, define| {
-            let Some(args) = &mut define.args else {
-                unreachable!()
-            };
+            let args = define.args.as_mut().unwrap();
             args[0].ty = Type::pointer(Type::primitive(PrimitiveType::WcharT), true);
             Ok(true)
         },
@@ -154,9 +165,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         module: Some("surface"),
         match_ident: |i| i == "SDL_MUSTLOCK",
         patch: |_ctx, define| {
-            let Some(args) = &mut define.args else {
-                unreachable!()
-            };
+            let args = define.args.as_mut().unwrap();
             args[0].ty = Type::pointer(Type::ident(Ident::new_inline("SDL_Surface")), true);
             Ok(true)
         },
@@ -174,14 +183,24 @@ pub fn patch_parsed_enum(ctx: &ParseContext, e: &mut Enum) -> Result<bool, Parse
 
 type EnumPatch = Patch<Enum>;
 
-const ENUM_PATCHES: &[EnumPatch] = &[EnumPatch {
-    module: Some("events"),
-    match_ident: |i| i == "SDL_EventType",
-    patch: |_, e| {
-        e.base_type = Some(Type::ident(Ident::new_inline("Uint32")));
-        Ok(true)
+const ENUM_PATCHES: &[EnumPatch] = &[
+    EnumPatch {
+        module: Some("audio"),
+        match_ident: |i| i == "SDL_AudioFormat",
+        patch: |_, e| {
+            e.base_type = Some(Type::primitive(PrimitiveType::UnsignedInt));
+            Ok(true)
+        },
     },
-}];
+    EnumPatch {
+        module: Some("events"),
+        match_ident: |i| i == "SDL_EventType",
+        patch: |_, e| {
+            e.base_type = Some(Type::ident(Ident::new_inline("Uint32")));
+            Ok(true)
+        },
+    },
+];
 
 pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {
     #[allow(clippy::single_match)]
