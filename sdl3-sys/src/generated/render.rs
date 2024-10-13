@@ -3292,9 +3292,9 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-pub const SDL_RENDERER_VSYNC_DISABLED: ::core::primitive::i32 = 0;
+pub const SDL_RENDERER_VSYNC_DISABLED: ::core::ffi::c_int = (0 as ::core::ffi::c_int);
 
-pub const SDL_RENDERER_VSYNC_ADAPTIVE: ::core::primitive::i32 = -1_i32;
+pub const SDL_RENDERER_VSYNC_ADAPTIVE: ::core::ffi::c_int = ((-1_i32) as ::core::ffi::c_int);
 
 extern "C" {
     /// Get VSync of the given renderer.

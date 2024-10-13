@@ -269,6 +269,14 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         },
     },
     DefinePatch {
+        module: Some("render"),
+        match_ident: |i| i.starts_with("SDL_RENDERER_VSYNC_"),
+        patch: |_ctx, define| {
+            define.value = define.value.cast_expr(Type::primitive(PrimitiveType::Int));
+            Ok(true)
+        },
+    },
+    DefinePatch {
         module: Some("stdinc"),
         match_ident: |i| i == "SDL_iconv_wchar_utf8",
         patch: |_ctx, define| {
