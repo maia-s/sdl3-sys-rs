@@ -122,9 +122,15 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         module: Some("joystick"),
         match_ident: |i| i.starts_with("SDL_HAT_"),
         patch: |_ctx, define| {
-            define.value = define
-                .value
-                .cast_expr(Type::primitive(PrimitiveType::Uint8T));
+            define.value = define.value.cast_expr(Type::ident_str("Uint8"));
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("joystick"),
+        match_ident: |i| matches!(i, "SDL_JOYSTICK_AXIS_MAX" | "SDL_JOYSTICK_AXIS_MIN"),
+        patch: |_ctx, define| {
+            define.value = define.value.cast_expr(Type::ident_str("Sint16"));
             Ok(true)
         },
     },

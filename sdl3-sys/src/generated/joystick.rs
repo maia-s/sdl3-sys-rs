@@ -160,7 +160,7 @@ pub const SDL_JOYSTICK_CONNECTION_WIRELESS: SDL_JoystickConnectionState =
 ///
 /// ### See also
 /// - [`SDL_JOYSTICK_AXIS_MIN`]
-pub const SDL_JOYSTICK_AXIS_MAX: ::core::primitive::i32 = 32767;
+pub const SDL_JOYSTICK_AXIS_MAX: Sint16 = (32767 as Sint16);
 
 /// The smallest value an SDL_Joystick's axis can report.
 ///
@@ -171,7 +171,7 @@ pub const SDL_JOYSTICK_AXIS_MAX: ::core::primitive::i32 = 32767;
 ///
 /// ### See also
 /// - [`SDL_JOYSTICK_AXIS_MAX`]
-pub const SDL_JOYSTICK_AXIS_MIN: ::core::primitive::i32 = -32768_i32;
+pub const SDL_JOYSTICK_AXIS_MIN: Sint16 = (-32768_i32 as Sint16);
 
 extern "C" {
     /// Locking for atomic access to the joystick API.
@@ -1365,27 +1365,23 @@ extern "C" {
     pub fn SDL_GetJoystickHat(joystick: *mut SDL_Joystick, hat: ::core::ffi::c_int) -> Uint8;
 }
 
-pub const SDL_HAT_CENTERED: ::core::primitive::u8 = (0x00 as ::core::primitive::u8);
+pub const SDL_HAT_CENTERED: Uint8 = (0x00 as Uint8);
 
-pub const SDL_HAT_UP: ::core::primitive::u8 = (0x01 as ::core::primitive::u8);
+pub const SDL_HAT_UP: Uint8 = (0x01 as Uint8);
 
-pub const SDL_HAT_RIGHT: ::core::primitive::u8 = (0x02 as ::core::primitive::u8);
+pub const SDL_HAT_RIGHT: Uint8 = (0x02 as Uint8);
 
-pub const SDL_HAT_DOWN: ::core::primitive::u8 = (0x04 as ::core::primitive::u8);
+pub const SDL_HAT_DOWN: Uint8 = (0x04 as Uint8);
 
-pub const SDL_HAT_LEFT: ::core::primitive::u8 = (0x08 as ::core::primitive::u8);
+pub const SDL_HAT_LEFT: Uint8 = (0x08 as Uint8);
 
-pub const SDL_HAT_RIGHTUP: ::core::primitive::u8 =
-    (((0x02 as ::core::primitive::u8) | (0x01 as ::core::primitive::u8)) as ::core::primitive::u8);
+pub const SDL_HAT_RIGHTUP: Uint8 = (((0x02 as Uint8) | (0x01 as Uint8)) as Uint8);
 
-pub const SDL_HAT_RIGHTDOWN: ::core::primitive::u8 =
-    (((0x02 as ::core::primitive::u8) | (0x04 as ::core::primitive::u8)) as ::core::primitive::u8);
+pub const SDL_HAT_RIGHTDOWN: Uint8 = (((0x02 as Uint8) | (0x04 as Uint8)) as Uint8);
 
-pub const SDL_HAT_LEFTUP: ::core::primitive::u8 =
-    (((0x08 as ::core::primitive::u8) | (0x01 as ::core::primitive::u8)) as ::core::primitive::u8);
+pub const SDL_HAT_LEFTUP: Uint8 = (((0x08 as Uint8) | (0x01 as Uint8)) as Uint8);
 
-pub const SDL_HAT_LEFTDOWN: ::core::primitive::u8 =
-    (((0x08 as ::core::primitive::u8) | (0x04 as ::core::primitive::u8)) as ::core::primitive::u8);
+pub const SDL_HAT_LEFTDOWN: Uint8 = (((0x08 as Uint8) | (0x04 as Uint8)) as Uint8);
 
 extern "C" {
     /// Get the current state of a button on a joystick.
