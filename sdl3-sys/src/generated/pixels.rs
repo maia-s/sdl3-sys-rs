@@ -744,8 +744,8 @@ pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::u8 {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_ColorType(pub ::core::ffi::c_int);
-impl From<SDL_ColorType> for ::core::ffi::c_int {
+pub struct SDL_ColorType(pub ::core::ffi::c_uint);
+impl From<SDL_ColorType> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_ColorType) -> Self {
         value.0
@@ -776,8 +776,8 @@ pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_ColorRange(pub ::core::ffi::c_int);
-impl From<SDL_ColorRange> for ::core::ffi::c_int {
+pub struct SDL_ColorRange(pub ::core::ffi::c_uint);
+impl From<SDL_ColorRange> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_ColorRange) -> Self {
         value.0
@@ -823,8 +823,8 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_ColorPrimaries(pub ::core::ffi::c_int);
-impl From<SDL_ColorPrimaries> for ::core::ffi::c_int {
+pub struct SDL_ColorPrimaries(pub ::core::ffi::c_uint);
+impl From<SDL_ColorPrimaries> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_ColorPrimaries) -> Self {
         value.0
@@ -916,8 +916,8 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_TransferCharacteristics(pub ::core::ffi::c_int);
-impl From<SDL_TransferCharacteristics> for ::core::ffi::c_int {
+pub struct SDL_TransferCharacteristics(pub ::core::ffi::c_uint);
+impl From<SDL_TransferCharacteristics> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_TransferCharacteristics) -> Self {
         value.0
@@ -1038,8 +1038,8 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_MatrixCoefficients(pub ::core::ffi::c_int);
-impl From<SDL_MatrixCoefficients> for ::core::ffi::c_int {
+pub struct SDL_MatrixCoefficients(pub ::core::ffi::c_uint);
+impl From<SDL_MatrixCoefficients> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_MatrixCoefficients) -> Self {
         value.0
@@ -1120,8 +1120,8 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_ChromaLocation(pub ::core::ffi::c_int);
-impl From<SDL_ChromaLocation> for ::core::ffi::c_int {
+pub struct SDL_ChromaLocation(pub ::core::ffi::c_uint);
+impl From<SDL_ChromaLocation> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_ChromaLocation) -> Self {
         value.0
@@ -1145,80 +1145,6 @@ pub const SDL_CHROMA_LOCATION_LEFT: SDL_ChromaLocation = SDL_ChromaLocation::LEF
 pub const SDL_CHROMA_LOCATION_CENTER: SDL_ChromaLocation = SDL_ChromaLocation::CENTER;
 /// In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located").
 pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::TOPLEFT;
-
-#[inline(always)]
-pub const fn SDL_DEFINE_COLORSPACE(
-    r#type: Uint32,
-    range: Uint32,
-    primaries: Uint32,
-    transfer: Uint32,
-    matrix: Uint32,
-    chroma: Uint32,
-) -> Uint32 {
-    ((((((((r#type) as Uint32) << 28) | (((range) as Uint32) << 24))
-        | (((chroma) as Uint32) << 20))
-        | (((primaries) as Uint32) << 10))
-        | (((transfer) as Uint32) << 5))
-        | (((matrix) as Uint32) << 0))
-}
-
-#[inline(always)]
-pub const fn SDL_COLORSPACETYPE(X: ::core::primitive::i32) -> SDL_ColorType {
-    SDL_ColorType(((X >> 28) & 15_i32))
-}
-
-#[inline(always)]
-pub const fn SDL_COLORSPACERANGE(X: ::core::primitive::i32) -> SDL_ColorRange {
-    SDL_ColorRange(((X >> 24) & 15_i32))
-}
-
-#[inline(always)]
-pub const fn SDL_COLORSPACECHROMA(X: ::core::primitive::i32) -> SDL_ChromaLocation {
-    SDL_ChromaLocation(((X >> 20) & 15_i32))
-}
-
-#[inline(always)]
-pub const fn SDL_COLORSPACEPRIMARIES(X: ::core::primitive::i32) -> SDL_ColorPrimaries {
-    SDL_ColorPrimaries(((X >> 10) & 31_i32))
-}
-
-#[inline(always)]
-pub const fn SDL_COLORSPACETRANSFER(X: ::core::primitive::i32) -> SDL_TransferCharacteristics {
-    SDL_TransferCharacteristics(((X >> 5) & 31_i32))
-}
-
-#[inline(always)]
-pub const fn SDL_COLORSPACEMATRIX(X: ::core::primitive::i32) -> SDL_MatrixCoefficients {
-    SDL_MatrixCoefficients((X & 31_i32))
-}
-
-#[inline(always)]
-pub const fn SDL_ISCOLORSPACE_MATRIX_BT601(X: ::core::primitive::i32) -> ::core::primitive::bool {
-    ((SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT601.0)
-        || (SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT470BG.0))
-}
-
-#[inline(always)]
-pub const fn SDL_ISCOLORSPACE_MATRIX_BT709(X: ::core::primitive::i32) -> ::core::primitive::bool {
-    (SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT709.0)
-}
-
-#[inline(always)]
-pub const fn SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(
-    X: ::core::primitive::i32,
-) -> ::core::primitive::bool {
-    (SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT2020_NCL.0)
-}
-
-#[inline(always)]
-pub const fn SDL_ISCOLORSPACE_LIMITED_RANGE(X: ::core::primitive::i32) -> ::core::primitive::bool {
-    (SDL_COLORSPACERANGE(X).0 != SDL_COLOR_RANGE_FULL.0)
-}
-
-#[inline(always)]
-pub const fn SDL_ISCOLORSPACE_FULL_RANGE(X: ::core::primitive::i32) -> ::core::primitive::bool {
-    (SDL_COLORSPACERANGE(X).0 == SDL_COLOR_RANGE_FULL.0)
-}
 
 /// Colorspace definitions.
 ///
@@ -1256,8 +1182,8 @@ pub const fn SDL_ISCOLORSPACE_FULL_RANGE(X: ::core::primitive::i32) -> ::core::p
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_Colorspace(pub ::core::ffi::c_int);
-impl From<SDL_Colorspace> for ::core::ffi::c_int {
+pub struct SDL_Colorspace(pub Uint32);
+impl From<SDL_Colorspace> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_Colorspace) -> Self {
         value.0
@@ -1315,6 +1241,80 @@ pub const SDL_COLORSPACE_BT2020_FULL: SDL_Colorspace = SDL_Colorspace::BT2020_FU
 pub const SDL_COLORSPACE_RGB_DEFAULT: SDL_Colorspace = SDL_Colorspace::RGB_DEFAULT;
 /// The default colorspace for YUV surfaces if no colorspace is specified
 pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_Colorspace::YUV_DEFAULT;
+
+#[inline(always)]
+pub const fn SDL_DEFINE_COLORSPACE(
+    r#type: SDL_ColorType,
+    range: SDL_ColorRange,
+    primaries: SDL_ColorPrimaries,
+    transfer: SDL_TransferCharacteristics,
+    matrix: SDL_MatrixCoefficients,
+    chroma: SDL_ChromaLocation,
+) -> SDL_Colorspace {
+    SDL_Colorspace(
+        (((((((r#type.0 as Uint32) << 28) | ((range.0 as Uint32) << 24))
+            | ((chroma.0 as Uint32) << 20))
+            | ((primaries.0 as Uint32) << 10))
+            | ((transfer.0 as Uint32) << 5))
+            | ((matrix.0 as Uint32) << 0)),
+    )
+}
+
+#[inline(always)]
+pub const fn SDL_COLORSPACETYPE(X: SDL_Colorspace) -> SDL_ColorType {
+    SDL_ColorType(((X.0 >> 28) & 15_u32))
+}
+
+#[inline(always)]
+pub const fn SDL_COLORSPACERANGE(X: SDL_Colorspace) -> SDL_ColorRange {
+    SDL_ColorRange(((X.0 >> 24) & 15_u32))
+}
+
+#[inline(always)]
+pub const fn SDL_COLORSPACECHROMA(X: SDL_Colorspace) -> SDL_ChromaLocation {
+    SDL_ChromaLocation(((X.0 >> 20) & 15_u32))
+}
+
+#[inline(always)]
+pub const fn SDL_COLORSPACEPRIMARIES(X: SDL_Colorspace) -> SDL_ColorPrimaries {
+    SDL_ColorPrimaries(((X.0 >> 10) & 31_u32))
+}
+
+#[inline(always)]
+pub const fn SDL_COLORSPACETRANSFER(X: SDL_Colorspace) -> SDL_TransferCharacteristics {
+    SDL_TransferCharacteristics(((X.0 >> 5) & 31_u32))
+}
+
+#[inline(always)]
+pub const fn SDL_COLORSPACEMATRIX(X: SDL_Colorspace) -> SDL_MatrixCoefficients {
+    SDL_MatrixCoefficients((X.0 & 31_u32))
+}
+
+#[inline(always)]
+pub const fn SDL_ISCOLORSPACE_LIMITED_RANGE(X: SDL_Colorspace) -> ::core::primitive::bool {
+    (SDL_COLORSPACERANGE(X).0 != SDL_COLOR_RANGE_FULL.0)
+}
+
+#[inline(always)]
+pub const fn SDL_ISCOLORSPACE_FULL_RANGE(X: SDL_Colorspace) -> ::core::primitive::bool {
+    (SDL_COLORSPACERANGE(X).0 == SDL_COLOR_RANGE_FULL.0)
+}
+
+#[inline(always)]
+pub const fn SDL_ISCOLORSPACE_MATRIX_BT601(X: SDL_Colorspace) -> ::core::primitive::bool {
+    ((SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT601.0)
+        || (SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT470BG.0))
+}
+
+#[inline(always)]
+pub const fn SDL_ISCOLORSPACE_MATRIX_BT709(X: SDL_Colorspace) -> ::core::primitive::bool {
+    (SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT709.0)
+}
+
+#[inline(always)]
+pub const fn SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(X: SDL_Colorspace) -> ::core::primitive::bool {
+    (SDL_COLORSPACEMATRIX(X).0 == SDL_MATRIX_COEFFICIENTS_BT2020_NCL.0)
+}
 
 /// A structure that represents a color as RGBA components.
 ///

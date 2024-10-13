@@ -192,7 +192,7 @@ pub const fn SDL_DEFINE_AUDIO_FORMAT(
     SDL_AudioFormat(
         (((((((signed_) as Uint16) << 15) | (((bigendian) as Uint16) << 12))
             | (((float_) as Uint16) << 8)) as ::core::primitive::u32)
-            | ((size as ::core::primitive::u32) & 255_u32)),
+            | (((size as ::core::ffi::c_int) as ::core::primitive::u32) & 255_u32)),
     )
 }
 

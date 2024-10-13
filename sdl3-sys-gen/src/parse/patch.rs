@@ -188,6 +188,42 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
     },
     DefinePatch {
         module: Some("pixels"),
+        match_ident: |i| matches!(i, "SDL_BITSPERPIXEL" | "SDL_BYTESPERPIXEL"),
+        patch: |_ctx, define| {
+            let args = define.args.as_mut().unwrap();
+            args[0].ty = Type::ident_str("SDL_PixelFormat");
+            define.value = define
+                .value
+                .cast_expr(Type::primitive(PrimitiveType::Uint8T));
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("pixels"),
+        match_ident: |i| i.starts_with("SDL_COLORSPACE"),
+        patch: |_ctx, define| {
+            let args = define.args.as_mut().unwrap();
+            args[0].ty = Type::ident_str("SDL_Colorspace");
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("pixels"),
+        match_ident: |i| matches!(i, "SDL_DEFINE_COLORSPACE"),
+        patch: |_ctx, define| {
+            let args = define.args.as_mut().unwrap();
+            args[0].ty = Type::ident_str("SDL_ColorType");
+            args[1].ty = Type::ident_str("SDL_ColorRange");
+            args[2].ty = Type::ident_str("SDL_ColorPrimaries");
+            args[3].ty = Type::ident_str("SDL_TransferCharacteristics");
+            args[4].ty = Type::ident_str("SDL_MatrixCoefficients");
+            args[5].ty = Type::ident_str("SDL_ChromaLocation");
+            define.value = define.value.cast_expr(Type::ident_str("SDL_Colorspace"));
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("pixels"),
         match_ident: |i| matches!(i, "SDL_DEFINE_PIXELFORMAT"),
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
@@ -200,18 +236,6 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             args[3].ty = Type::primitive(PrimitiveType::Uint8T);
             args[4].ty = Type::primitive(PrimitiveType::Uint8T);
             define.value = define.value.cast_expr(Type::ident_str("SDL_PixelFormat"));
-            Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("pixels"),
-        match_ident: |i| matches!(i, "SDL_BITSPERPIXEL" | "SDL_BYTESPERPIXEL"),
-        patch: |_ctx, define| {
-            let args = define.args.as_mut().unwrap();
-            args[0].ty = Type::ident_str("SDL_PixelFormat");
-            define.value = define
-                .value
-                .cast_expr(Type::primitive(PrimitiveType::Uint8T));
             Ok(true)
         },
     },
@@ -289,6 +313,32 @@ const ENUM_PATCHES: &[EnumPatch] = &[
         match_ident: |i| i == "SDL_EventType",
         patch: |_, e| {
             e.base_type = Some(Type::ident_str("Uint32"));
+            Ok(true)
+        },
+    },
+    EnumPatch {
+        module: Some("pixels"),
+        match_ident: |i| i == "SDL_Colorspace",
+        patch: |_, e| {
+            e.base_type = Some(Type::ident_str("Uint32"));
+            Ok(true)
+        },
+    },
+    EnumPatch {
+        module: Some("pixels"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_ChromaLocation"
+                    | "SDL_ColorPrimaries"
+                    | "SDL_ColorRange"
+                    | "SDL_ColorType"
+                    | "SDL_MatrixCoefficients"
+                    | "SDL_TransferCharacteristics"
+            )
+        },
+        patch: |_, e| {
+            e.base_type = Some(Type::primitive(PrimitiveType::UnsignedInt));
             Ok(true)
         },
     },

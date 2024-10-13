@@ -784,7 +784,7 @@ impl Eval for Cast {
                 return Err(ParseErr::new(self.span(), "cast to unresolved type").into());
             }
         }
-        if let Some(expr) = self.expr.try_eval(ctx)? {
+        let expr_i = if let Some(expr) = self.expr.try_eval(ctx)? {
             is_const = expr.is_const();
             is_unsafe = expr.is_unsafe();
             if expr.ty()?.is_uninferred() {
@@ -793,7 +793,11 @@ impl Eval for Cast {
             if self.ty.is_bool() {
                 return expr.coerce(ctx, &self.ty);
             }
-        }
+            expr.coerce_to_int(ctx)?
+        } else {
+            None
+        };
+
         let out = if self.ty.is_void() {
             ctx.capture_output(|ctx| {
                 write!(ctx, "{{ let _ = ")?;
@@ -811,7 +815,11 @@ impl Eval for Cast {
         } else {
             ctx.capture_output(|ctx| {
                 write!(ctx, "(")?;
-                self.expr.emit(ctx)?;
+                if let Some(expr) = expr_i {
+                    expr.emit(ctx)?;
+                } else {
+                    self.expr.emit(ctx)?;
+                }
                 write!(ctx, " as ")?;
                 self.ty.emit(ctx)?;
                 write!(ctx, ")")?;
