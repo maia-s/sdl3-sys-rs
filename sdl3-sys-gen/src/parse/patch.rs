@@ -60,6 +60,15 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         },
     },
     DefinePatch {
+        module: Some("error"),
+        match_ident: |i| i == "SDL_InvalidParamError",
+        patch: |_ctx, define| {
+            let args = define.args.as_mut().unwrap();
+            args[0].ty = Type::pointer(Type::primitive(PrimitiveType::Char), true);
+            Ok(true)
+        },
+    },
+    DefinePatch {
         module: Some("joystick"),
         match_ident: |i| i.starts_with("SDL_HAT_"),
         patch: |_ctx, define| {

@@ -128,7 +128,6 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                     | "SDL_FILE"
                     | "SDL_FUNCTION"
                     | "SDL_HAS_BUILTIN"
-                    | "SDL_InvalidParamError"
                     | "SDL_LINE"
                     | "SDL_memcpy"
                     | "SDL_memmove"

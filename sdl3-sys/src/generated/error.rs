@@ -123,5 +123,10 @@ pub unsafe fn SDL_Unsupported() -> ::core::primitive::bool {
     unsafe { SDL_SetError(c"That operation is not supported".as_ptr()) }
 }
 
+#[inline(always)]
+pub unsafe fn SDL_InvalidParamError(param: *const ::core::ffi::c_char) -> ::core::primitive::bool {
+    unsafe { SDL_SetError(c"Parameter '%s' is invalid".as_ptr(), (param)) }
+}
+
 #[cfg(doc)]
 use crate::everything::*;
