@@ -180,6 +180,14 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
     },
     DefinePatch {
         module: Some("pixels"),
+        match_ident: |i| matches!(i, "SDL_ALPHA_OPAQUE" | "SDL_ALPHA_TRANSPARENT"),
+        patch: |_ctx, define| {
+            define.value = define.value.cast_expr(Type::ident_str("Uint8"));
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("pixels"),
         match_ident: |i| matches!(i, "SDL_DEFINE_PIXELFORMAT"),
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
@@ -189,18 +197,27 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             //args[1].ty = !!! FIXME
             assert!(args[2].ident.as_str() == "layout");
             args[2].ty = Type::ident_str("SDL_PackedLayout");
+            args[3].ty = Type::primitive(PrimitiveType::Uint8T);
+            args[4].ty = Type::primitive(PrimitiveType::Uint8T);
             define.value = define.value.cast_expr(Type::ident_str("SDL_PixelFormat"));
             Ok(true)
         },
     },
     DefinePatch {
         module: Some("pixels"),
-        match_ident: |i| {
-            matches!(
-                i,
-                "SDL_PIXELFLAG" | "SDL_PIXELORDER" | "SDL_BITSPERPIXEL" | "SDL_BYTESPERPIXEL"
-            )
+        match_ident: |i| matches!(i, "SDL_BITSPERPIXEL" | "SDL_BYTESPERPIXEL"),
+        patch: |_ctx, define| {
+            let args = define.args.as_mut().unwrap();
+            args[0].ty = Type::ident_str("SDL_PixelFormat");
+            define.value = define
+                .value
+                .cast_expr(Type::primitive(PrimitiveType::Uint8T));
+            Ok(true)
         },
+    },
+    DefinePatch {
+        module: Some("pixels"),
+        match_ident: |i| matches!(i, "SDL_PIXELFLAG" | "SDL_PIXELORDER"),
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_PixelFormat");

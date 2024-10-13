@@ -5,7 +5,7 @@ use super::{
 use crate::parse::{
     Alternative, Ambiguous, BinaryOp, Cast, DefineValue, Expr, FloatLiteral, FnCall, GetSpan,
     Ident, IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
-    RustCode, SizeOf, Span, StringLiteral, Type, TypeEnum,
+    RustCode, SizeOf, Span, StringLiteral, Ternary, Type, TypeEnum,
 };
 use core::fmt::{self, Display, Write};
 
@@ -562,6 +562,24 @@ impl Value {
                     rc.is_const,
                     rc.is_unsafe,
                 ))));
+            } else if let Some(ty) = rc.ty.inner_ty() {
+                #[allow(clippy::single_match)]
+                match ty.ty {
+                    TypeEnum::Primitive(
+                        PrimitiveType::Int8T
+                        | PrimitiveType::Int16T
+                        | PrimitiveType::Uint8T
+                        | PrimitiveType::Uint16T,
+                    ) => {
+                        return Ok(Some(Value::RustCode(RustCode::boxed(
+                            format!("({} as ::core::ffi::c_int)", rc.value),
+                            Type::primitive(PrimitiveType::Int),
+                            rc.is_const,
+                            rc.is_unsafe,
+                        ))));
+                    }
+                    _ => (),
+                }
             }
         }
         Ok(None)
@@ -1633,40 +1651,7 @@ impl Eval for Expr {
 
             Expr::PostOp(_) => (),
 
-            Expr::Ternary(top) => {
-                let Some(cond) = top.cond.try_eval(ctx)? else {
-                    return Ok(None);
-                };
-                let cond = cond.coerce(ctx, &Type::bool())?.unwrap_or(cond);
-                let Some(mut on_true) = top.on_true.try_eval(ctx)? else {
-                    return Ok(None);
-                };
-                let Some(mut on_false) = top.on_false.try_eval(ctx)? else {
-                    return Ok(None);
-                };
-                if matches!(
-                    Value::promote(ctx, &mut on_true, &mut on_false)?,
-                    Promoted::None
-                ) {
-                    return Ok(None);
-                }
-                let value = ctx.capture_output(|ctx| {
-                    write!(ctx, "if ")?;
-                    cond.emit(ctx)?;
-                    write!(ctx, "{{ ")?;
-                    on_true.emit(ctx)?;
-                    write!(ctx, " }} else {{ ")?;
-                    on_false.emit(ctx)?;
-                    write!(ctx, " }}")?;
-                    Ok(())
-                })?;
-                return Ok(Some(Value::RustCode(RustCode::boxed(
-                    value,
-                    on_true.ty()?,
-                    cond.is_const() && on_true.is_const() && on_false.is_const(),
-                    cond.is_unsafe() || on_true.is_unsafe() || on_false.is_unsafe(),
-                ))));
-            }
+            Expr::Ternary(top) => return top.try_eval(ctx),
 
             Expr::ArrayIndex { .. } => (),
             Expr::ArrayValues { .. } => (),
@@ -1730,7 +1715,7 @@ impl Emit for Expr {
             }
 
             Expr::PostOp(_) => todo!(),
-            Expr::Ternary(_) => todo!(),
+            Expr::Ternary(ternary) => ternary.emit(ctx),
             Expr::ArrayIndex { .. } => todo!(),
             Expr::ArrayValues { .. } => todo!(),
             Expr::Value(value) => value.emit(ctx),
@@ -1872,5 +1857,50 @@ impl Emit for StringLiteral {
         }
         write!(ctx, "\"")?;
         Ok(())
+    }
+}
+
+impl Emit for Ternary {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        self.try_eval(ctx)?
+            .ok_or_else(|| ParseErr::new(self.span(), "couldn't eval ternary"))?
+            .emit(ctx)
+    }
+}
+
+impl Eval for Ternary {
+    fn try_eval(&self, ctx: &EmitContext) -> Result<Option<Value>, EmitErr> {
+        let Some(cond) = self.cond.try_eval(ctx)? else {
+            return Ok(None);
+        };
+        let cond = cond.coerce(ctx, &Type::bool())?.unwrap_or(cond);
+        let Some(mut on_true) = self.on_true.try_eval(ctx)? else {
+            return Ok(None);
+        };
+        let Some(mut on_false) = self.on_false.try_eval(ctx)? else {
+            return Ok(None);
+        };
+        if matches!(
+            Value::promote(ctx, &mut on_true, &mut on_false)?,
+            Promoted::None
+        ) {
+            return Ok(None);
+        }
+        let value = ctx.capture_output(|ctx| {
+            write!(ctx, "if ")?;
+            cond.emit(ctx)?;
+            write!(ctx, "{{ ")?;
+            on_true.emit(ctx)?;
+            write!(ctx, " }} else {{ ")?;
+            on_false.emit(ctx)?;
+            write!(ctx, " }}")?;
+            Ok(())
+        })?;
+        return Ok(Some(Value::RustCode(RustCode::boxed(
+            value,
+            on_true.ty()?,
+            cond.is_const() && on_true.is_const() && on_false.is_const(),
+            cond.is_unsafe() || on_true.is_unsafe() || on_false.is_unsafe(),
+        ))));
     }
 }

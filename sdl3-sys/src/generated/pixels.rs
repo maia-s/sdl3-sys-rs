@@ -11,7 +11,7 @@ use super::error::*;
 ///
 /// ### See also
 /// - [`SDL_ALPHA_TRANSPARENT`]
-pub const SDL_ALPHA_OPAQUE: ::core::primitive::i32 = 255;
+pub const SDL_ALPHA_OPAQUE: Uint8 = (255 as Uint8);
 
 /// A fully opaque floating point alpha value.
 ///
@@ -29,7 +29,7 @@ pub const SDL_ALPHA_OPAQUE_FLOAT: ::core::ffi::c_float = 1.0_f32;
 ///
 /// ### See also
 /// - [`SDL_ALPHA_OPAQUE`]
-pub const SDL_ALPHA_TRANSPARENT: ::core::primitive::i32 = 0;
+pub const SDL_ALPHA_TRANSPARENT: Uint8 = (0 as Uint8);
 
 /// A fully transparent floating point alpha value.
 ///
@@ -619,12 +619,13 @@ pub const fn SDL_DEFINE_PIXELFORMAT(
     r#type: SDL_PixelType,
     order: ::core::primitive::i32,
     layout: SDL_PackedLayout,
-    bits: ::core::primitive::i32,
-    bytes: ::core::primitive::i32,
+    bits: ::core::primitive::u8,
+    bytes: ::core::primitive::u8,
 ) -> SDL_PixelFormat {
     SDL_PixelFormat(
-        (((((268435456_i32 | (r#type.0 << 24)) | (order << 20)) | (layout.0 << 16)) | (bits << 8))
-            | (bytes << 0)),
+        (((((268435456_i32 | (r#type.0 << 24)) | (order << 20)) | (layout.0 << 16))
+            | ((bits as ::core::ffi::c_int) << 8))
+            | ((bytes as ::core::ffi::c_int) << 0)),
     )
 }
 
@@ -654,12 +655,12 @@ pub const fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormat) -> ::core::primit
 }
 
 #[inline(always)]
-pub const fn SDL_BITSPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::i32 {
-    if SDL_ISPIXELFORMAT_FOURCC(X) {
+pub const fn SDL_BITSPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::u8 {
+    ((if SDL_ISPIXELFORMAT_FOURCC(X) {
         0_i32
     } else {
         ((X.0 >> 8) & 255_i32)
-    }
+    }) as ::core::primitive::u8)
 }
 
 #[inline(always)]
@@ -713,8 +714,8 @@ pub const fn SDL_ISPIXELFORMAT_10BIT(format: SDL_PixelFormat) -> ::core::primiti
 }
 
 #[inline(always)]
-pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::i32 {
-    if SDL_ISPIXELFORMAT_FOURCC(X) {
+pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::u8 {
+    ((if SDL_ISPIXELFORMAT_FOURCC(X) {
         if ((((X.0 == SDL_PIXELFORMAT_YUY2.0) || (X.0 == SDL_PIXELFORMAT_UYVY.0))
             || (X.0 == SDL_PIXELFORMAT_YVYU.0))
             || (X.0 == SDL_PIXELFORMAT_P010.0))
@@ -725,7 +726,7 @@ pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::i32 {
         }
     } else {
         ((X.0 >> 0) & 255_i32)
-    }
+    }) as ::core::primitive::u8)
 }
 
 /// Colorspace color type.
