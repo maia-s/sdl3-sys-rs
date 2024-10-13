@@ -311,6 +311,28 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             Ok(true)
         },
     },
+    DefinePatch {
+        module: Some("video"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_WINDOWPOS_CENTERED_DISPLAY" | "SDL_WINDOWPOS_UNDEFINED_DISPLAY"
+            )
+        },
+        patch: |_ctx, define| {
+            define.value = define.value.cast_expr(Type::primitive(PrimitiveType::Int));
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("video"),
+        match_ident: |i| matches!(i, "SDL_WINDOWPOS_ISCENTERED" | "SDL_WINDOWPOS_ISUNDEFINED"),
+        patch: |_ctx, define| {
+            let args = define.args.as_mut().unwrap();
+            args[0].ty = Type::primitive(PrimitiveType::Int);
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_parsed_enum(ctx: &ParseContext, e: &mut Enum) -> Result<bool, ParseErr> {
