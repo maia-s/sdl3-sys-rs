@@ -21,7 +21,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         match_ident: |i| i == "SDL_AUDIO_BITSIZE",
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
-            args[0].ty = Type::ident(Ident::new_inline("SDL_AudioFormat"));
+            args[0].ty = Type::ident_str("SDL_AudioFormat");
             Ok(true)
         },
     },
@@ -30,7 +30,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         match_ident: |i| i == "SDL_AUDIO_FRAMESIZE",
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
-            args[0].ty = Type::ident(Ident::new_inline("SDL_AudioSpec"));
+            args[0].ty = Type::ident_str("SDL_AudioSpec");
             Ok(true)
         },
     },
@@ -39,7 +39,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         match_ident: |i| i.starts_with("SDL_AUDIO_IS"),
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
-            args[0].ty = Type::ident(Ident::new_inline("SDL_AudioFormat"));
+            args[0].ty = Type::ident_str("SDL_AudioFormat");
             define.value = define.value.cast_expr(Type::bool());
             Ok(true)
         },
@@ -53,9 +53,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             args[1].ty = Type::bool();
             args[2].ty = Type::bool();
             args[3].ty = Type::primitive(PrimitiveType::Uint8T);
-            define.value = define
-                .value
-                .cast_expr(Type::ident(Ident::new_inline("SDL_AudioFormat")));
+            define.value = define.value.cast_expr(Type::ident_str("SDL_AudioFormat"));
             Ok(true)
         },
     },
@@ -72,9 +70,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         module: Some("gpu"),
         match_ident: |i| i == "SDL_GPU_SHADERFORMAT_INVALID",
         patch: |_ctx, define| {
-            define.value = define
-                .value
-                .cast_expr(Type::ident(Ident::new_inline("Uint32")));
+            define.value = define.value.cast_expr(Type::ident_str("Uint32"));
             Ok(true)
         },
     },
@@ -94,7 +90,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         patch: |_ctx, define| {
             define.value = define
                 .value
-                .cast_expr(Type::ident(Ident::new_inline("SDL_MouseButtonFlags")));
+                .cast_expr(Type::ident_str("SDL_MouseButtonFlags"));
             Ok(true)
         },
     },
@@ -122,14 +118,12 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
             assert!(args[0].ident.as_str() == "type");
-            args[0].ty = Type::ident(Ident::new_inline("SDL_PixelType"));
+            args[0].ty = Type::ident_str("SDL_PixelType");
             assert!(args[1].ident.as_str() == "order");
             //args[1].ty = !!! FIXME
             assert!(args[2].ident.as_str() == "layout");
-            args[2].ty = Type::ident(Ident::new_inline("SDL_PackedLayout"));
-            define.value = define
-                .value
-                .cast_expr(Type::ident(Ident::new_inline("SDL_PixelFormat")));
+            args[2].ty = Type::ident_str("SDL_PackedLayout");
+            define.value = define.value.cast_expr(Type::ident_str("SDL_PixelFormat"));
             Ok(true)
         },
     },
@@ -143,7 +137,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         },
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
-            args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
+            args[0].ty = Type::ident_str("SDL_PixelFormat");
             Ok(true)
         },
     },
@@ -152,10 +146,8 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         match_ident: |i| matches!(i, "SDL_PIXELLAYOUT"),
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
-            args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
-            define.value = define
-                .value
-                .cast_expr(Type::ident(Ident::new_inline("SDL_PackedLayout")));
+            args[0].ty = Type::ident_str("SDL_PixelFormat");
+            define.value = define.value.cast_expr(Type::ident_str("SDL_PackedLayout"));
             Ok(true)
         },
     },
@@ -164,10 +156,8 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         match_ident: |i| matches!(i, "SDL_PIXELTYPE"),
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
-            args[0].ty = Type::ident(Ident::new_inline("SDL_PixelFormat"));
-            define.value = define
-                .value
-                .cast_expr(Type::ident(Ident::new_inline("SDL_PixelType")));
+            args[0].ty = Type::ident_str("SDL_PixelFormat");
+            define.value = define.value.cast_expr(Type::ident_str("SDL_PixelType"));
             Ok(true)
         },
     },
@@ -185,7 +175,7 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         match_ident: |i| i == "SDL_MUSTLOCK",
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
-            args[0].ty = Type::pointer(Type::ident(Ident::new_inline("SDL_Surface")), true);
+            args[0].ty = Type::pointer(Type::ident_str("SDL_Surface"), true);
             Ok(true)
         },
     },
@@ -215,7 +205,7 @@ const ENUM_PATCHES: &[EnumPatch] = &[
         module: Some("events"),
         match_ident: |i| i == "SDL_EventType",
         patch: |_, e| {
-            e.base_type = Some(Type::ident(Ident::new_inline("Uint32")));
+            e.base_type = Some(Type::ident_str("Uint32"));
             Ok(true)
         },
     },

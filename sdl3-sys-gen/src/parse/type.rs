@@ -80,6 +80,14 @@ impl Type {
         }
     }
 
+    pub fn ident_str(ident: &'static str) -> Self {
+        Self {
+            span: Span::none(),
+            is_const: false,
+            ty: TypeEnum::Ident(Ident::new_inline(ident)),
+        }
+    }
+
     pub fn rust(rust: impl Into<String>, can_derive_debug: bool) -> Self {
         Self {
             span: Span::none(),
