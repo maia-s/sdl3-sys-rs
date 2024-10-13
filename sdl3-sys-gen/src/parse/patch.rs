@@ -69,6 +69,16 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         },
     },
     DefinePatch {
+        module: Some("gpu"),
+        match_ident: |i| i == "SDL_GPU_SHADERFORMAT_INVALID",
+        patch: |_ctx, define| {
+            define.value = define
+                .value
+                .cast_expr(Type::ident(Ident::new_inline("Uint32")));
+            Ok(true)
+        },
+    },
+    DefinePatch {
         module: Some("joystick"),
         match_ident: |i| i.starts_with("SDL_HAT_"),
         patch: |_ctx, define| {

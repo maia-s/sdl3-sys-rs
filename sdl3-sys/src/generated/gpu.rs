@@ -1107,7 +1107,7 @@ pub const SDL_GPU_SHADERSTAGE_FRAGMENT: SDL_GPUShaderStage = SDL_GPUShaderStage:
 /// - [`SDL_CreateGPUShader`]
 pub type SDL_GPUShaderFormat = Uint32;
 
-pub const SDL_GPU_SHADERFORMAT_INVALID: ::core::primitive::i32 = 0;
+pub const SDL_GPU_SHADERFORMAT_INVALID: Uint32 = (0 as Uint32);
 
 /// Shaders for NDA'd platforms.
 pub const SDL_GPU_SHADERFORMAT_PRIVATE: ::core::primitive::u32 = 1_u32;
