@@ -103,7 +103,7 @@ use super::joystick::*;
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_CONSTANT: ::core::primitive::u32 = 1_u32;
+pub const SDL_HAPTIC_CONSTANT: Uint16 = ((1_u32) as Uint16);
 
 /// Sine wave effect supported.
 ///
@@ -114,7 +114,7 @@ pub const SDL_HAPTIC_CONSTANT: ::core::primitive::u32 = 1_u32;
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_SINE: ::core::primitive::u32 = 2_u32;
+pub const SDL_HAPTIC_SINE: Uint16 = ((2_u32) as Uint16);
 
 /// Square wave effect supported.
 ///
@@ -125,7 +125,7 @@ pub const SDL_HAPTIC_SINE: ::core::primitive::u32 = 2_u32;
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_SQUARE: ::core::primitive::u32 = 4_u32;
+pub const SDL_HAPTIC_SQUARE: Uint16 = ((4_u32) as Uint16);
 
 /// Triangle wave effect supported.
 ///
@@ -136,7 +136,7 @@ pub const SDL_HAPTIC_SQUARE: ::core::primitive::u32 = 4_u32;
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_TRIANGLE: ::core::primitive::u32 = 8_u32;
+pub const SDL_HAPTIC_TRIANGLE: Uint16 = ((8_u32) as Uint16);
 
 /// Sawtoothup wave effect supported.
 ///
@@ -147,7 +147,7 @@ pub const SDL_HAPTIC_TRIANGLE: ::core::primitive::u32 = 8_u32;
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_SAWTOOTHUP: ::core::primitive::u32 = 16_u32;
+pub const SDL_HAPTIC_SAWTOOTHUP: Uint16 = ((16_u32) as Uint16);
 
 /// Sawtoothdown wave effect supported.
 ///
@@ -158,7 +158,7 @@ pub const SDL_HAPTIC_SAWTOOTHUP: ::core::primitive::u32 = 16_u32;
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_SAWTOOTHDOWN: ::core::primitive::u32 = 32_u32;
+pub const SDL_HAPTIC_SAWTOOTHDOWN: Uint16 = ((32_u32) as Uint16);
 
 /// Ramp effect supported.
 ///
@@ -169,7 +169,7 @@ pub const SDL_HAPTIC_SAWTOOTHDOWN: ::core::primitive::u32 = 32_u32;
 ///
 /// ### See also
 /// - [`SDL_HapticRamp`]
-pub const SDL_HAPTIC_RAMP: ::core::primitive::u32 = 64_u32;
+pub const SDL_HAPTIC_RAMP: Uint16 = ((64_u32) as Uint16);
 
 /// Spring effect supported - uses axes position.
 ///
@@ -181,7 +181,7 @@ pub const SDL_HAPTIC_RAMP: ::core::primitive::u32 = 64_u32;
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_SPRING: ::core::primitive::u32 = 128_u32;
+pub const SDL_HAPTIC_SPRING: Uint16 = ((128_u32) as Uint16);
 
 /// Damper effect supported - uses axes velocity.
 ///
@@ -193,7 +193,7 @@ pub const SDL_HAPTIC_SPRING: ::core::primitive::u32 = 128_u32;
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_DAMPER: ::core::primitive::u32 = 256_u32;
+pub const SDL_HAPTIC_DAMPER: Uint16 = ((256_u32) as Uint16);
 
 /// Inertia effect supported - uses axes acceleration.
 ///
@@ -205,7 +205,7 @@ pub const SDL_HAPTIC_DAMPER: ::core::primitive::u32 = 256_u32;
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_INERTIA: ::core::primitive::u32 = 512_u32;
+pub const SDL_HAPTIC_INERTIA: Uint16 = ((512_u32) as Uint16);
 
 /// Friction effect supported - uses axes movement.
 ///
@@ -217,7 +217,7 @@ pub const SDL_HAPTIC_INERTIA: ::core::primitive::u32 = 512_u32;
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_FRICTION: ::core::primitive::u32 = 1024_u32;
+pub const SDL_HAPTIC_FRICTION: Uint16 = ((1024_u32) as Uint16);
 
 /// Left/Right effect supported.
 ///
@@ -228,17 +228,17 @@ pub const SDL_HAPTIC_FRICTION: ::core::primitive::u32 = 1024_u32;
 ///
 /// ### See also
 /// - [`SDL_HapticLeftRight`]
-pub const SDL_HAPTIC_LEFTRIGHT: ::core::primitive::u32 = 2048_u32;
+pub const SDL_HAPTIC_LEFTRIGHT: Uint16 = ((2048_u32) as Uint16);
 
 /// Reserved for future use
 ///
 /// ### Availability
 /// This macro is available since SDL 3.0.0.
-pub const SDL_HAPTIC_RESERVED1: ::core::primitive::u32 = 4096_u32;
+pub const SDL_HAPTIC_RESERVED1: Uint16 = ((4096_u32) as Uint16);
 
-pub const SDL_HAPTIC_RESERVED2: ::core::primitive::u32 = 8192_u32;
+pub const SDL_HAPTIC_RESERVED2: Uint16 = ((8192_u32) as Uint16);
 
-pub const SDL_HAPTIC_RESERVED3: ::core::primitive::u32 = 16384_u32;
+pub const SDL_HAPTIC_RESERVED3: Uint16 = ((16384_u32) as Uint16);
 
 /// Custom effect is supported.
 ///
@@ -246,7 +246,7 @@ pub const SDL_HAPTIC_RESERVED3: ::core::primitive::u32 = 16384_u32;
 ///
 /// ### Availability
 /// This macro is available since SDL 3.0.0.
-pub const SDL_HAPTIC_CUSTOM: ::core::primitive::u32 = 32768_u32;
+pub const SDL_HAPTIC_CUSTOM: Uint16 = ((32768_u32) as Uint16);
 
 /// Device can set global gain.
 ///
@@ -300,7 +300,7 @@ pub const SDL_HAPTIC_PAUSE: ::core::primitive::u32 = 524288_u32;
 ///
 /// ### See also
 /// - [`SDL_HapticDirection`]
-pub const SDL_HAPTIC_POLAR: ::core::primitive::i32 = 0;
+pub const SDL_HAPTIC_POLAR: Uint8 = (0 as Uint8);
 
 /// Uses cartesian coordinates for the direction.
 ///
@@ -309,7 +309,7 @@ pub const SDL_HAPTIC_POLAR: ::core::primitive::i32 = 0;
 ///
 /// ### See also
 /// - [`SDL_HapticDirection`]
-pub const SDL_HAPTIC_CARTESIAN: ::core::primitive::i32 = 1;
+pub const SDL_HAPTIC_CARTESIAN: Uint8 = (1 as Uint8);
 
 /// Uses spherical coordinates for the direction.
 ///
@@ -318,7 +318,7 @@ pub const SDL_HAPTIC_CARTESIAN: ::core::primitive::i32 = 1;
 ///
 /// ### See also
 /// - [`SDL_HapticDirection`]
-pub const SDL_HAPTIC_SPHERICAL: ::core::primitive::i32 = 2;
+pub const SDL_HAPTIC_SPHERICAL: Uint8 = (2 as Uint8);
 
 /// Use this value to play an effect on the steering wheel axis.
 ///
@@ -330,7 +330,7 @@ pub const SDL_HAPTIC_SPHERICAL: ::core::primitive::i32 = 2;
 ///
 /// ### See also
 /// - [`SDL_HapticDirection`]
-pub const SDL_HAPTIC_STEERING_AXIS: ::core::primitive::i32 = 3;
+pub const SDL_HAPTIC_STEERING_AXIS: Uint8 = (3 as Uint8);
 
 /// Used to play a device an infinite number of times.
 ///

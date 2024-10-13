@@ -75,6 +75,50 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         },
     },
     DefinePatch {
+        module: Some("haptic"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_HAPTIC_CARTESIAN"
+                    | "SDL_HAPTIC_POLAR"
+                    | "SDL_HAPTIC_SPHERICAL"
+                    | "SDL_HAPTIC_STEERING_AXIS"
+            )
+        },
+        patch: |_ctx, define| {
+            define.value = define.value.cast_expr(Type::ident_str("Uint8"));
+            Ok(true)
+        },
+    },
+    DefinePatch {
+        module: Some("haptic"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_HAPTIC_CONSTANT"
+                    | "SDL_HAPTIC_CUSTOM"
+                    | "SDL_HAPTIC_DAMPER"
+                    | "SDL_HAPTIC_FRICTION"
+                    | "SDL_HAPTIC_INERTIA"
+                    | "SDL_HAPTIC_LEFTRIGHT"
+                    | "SDL_HAPTIC_RAMP"
+                    | "SDL_HAPTIC_RESERVED1"
+                    | "SDL_HAPTIC_RESERVED2"
+                    | "SDL_HAPTIC_RESERVED3"
+                    | "SDL_HAPTIC_SAWTOOTHDOWN"
+                    | "SDL_HAPTIC_SAWTOOTHUP"
+                    | "SDL_HAPTIC_SINE"
+                    | "SDL_HAPTIC_SPRING"
+                    | "SDL_HAPTIC_SQUARE"
+                    | "SDL_HAPTIC_TRIANGLE"
+            )
+        },
+        patch: |_ctx, define| {
+            define.value = define.value.cast_expr(Type::ident_str("Uint16"));
+            Ok(true)
+        },
+    },
+    DefinePatch {
         module: Some("joystick"),
         match_ident: |i| i.starts_with("SDL_HAT_"),
         patch: |_ctx, define| {
