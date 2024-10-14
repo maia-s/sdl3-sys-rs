@@ -46,6 +46,7 @@ pub struct __VkPhysicalDevice {
 #[cfg(target_pointer_width = "64")]
 pub type VkSurfaceKHR = *mut __VkSurfaceKHR;
 
+#[doc(hidden)]
 #[cfg(target_pointer_width = "64")]
 #[repr(C)]
 #[non_exhaustive]
