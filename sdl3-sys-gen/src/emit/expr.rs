@@ -1904,11 +1904,11 @@ impl Eval for Ternary {
             write!(ctx, " }}")?;
             Ok(())
         })?;
-        return Ok(Some(Value::RustCode(RustCode::boxed(
+        Ok(Some(Value::RustCode(RustCode::boxed(
             value,
             on_true.ty()?,
             cond.is_const() && on_true.is_const() && on_false.is_const(),
             cond.is_unsafe() || on_true.is_unsafe() || on_false.is_unsafe(),
-        ))));
+        ))))
     }
 }
