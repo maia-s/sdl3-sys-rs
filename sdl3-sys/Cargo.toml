@@ -47,7 +47,7 @@ assert-level-paranoid = []
 # Implement the Debug trait for applicable types
 debug-impls = []
 
-# Used to enable core::ffi::VaList
+# Enable nightly features
 nightly = []
 
 [package.metadata.docs.rs]

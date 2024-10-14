@@ -343,6 +343,10 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             ctx.write_str(str_block! {r#"
                 #[inline(always)]
                 pub fn SDL_CPUPauseInstruction() {
+                    #[cfg(all(feature = "nightly", any(target_arch = "aarch64", target_arch = "arm64ec")))]
+                    unsafe { ::core::arch::aarch64::__yield() }
+                    #[cfg(all(feature = "nightly", target_arch = "arm"))]
+                    unsafe { ::core::arch::arm::__yield() }
                     #[cfg(target_arch = "x86")]
                     unsafe { ::core::arch::x86::_mm_pause() }
                     #[cfg(target_arch = "x86_64")]
