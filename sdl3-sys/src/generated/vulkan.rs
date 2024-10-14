@@ -27,6 +27,7 @@ emit! {}
 
 pub type VkInstance = *mut __VkInstance;
 
+#[doc(hidden)]
 #[repr(C)]
 #[non_exhaustive]
 pub struct __VkInstance {
@@ -35,6 +36,7 @@ pub struct __VkInstance {
 
 pub type VkPhysicalDevice = *mut __VkPhysicalDevice;
 
+#[doc(hidden)]
 #[repr(C)]
 #[non_exhaustive]
 pub struct __VkPhysicalDevice {

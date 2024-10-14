@@ -600,6 +600,7 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
             };
             writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
             writeln!(ctx)?;
+            writeln!(ctx, "#[doc(hidden)]")?;
             writeln!(ctx, "#[repr(C)]")?;
             writeln!(ctx, "#[non_exhaustive]")?;
             writeln!(

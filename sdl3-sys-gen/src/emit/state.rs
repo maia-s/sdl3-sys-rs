@@ -1353,7 +1353,11 @@ impl InnerScope {
             .struct_syms
             .values_mut()
             .filter(|s| s.fields.is_none() && s.emit_status != EmitStatus::Emitted)
-            .chain(self.union_syms.values_mut().filter(|s| s.fields.is_none()))
+            .chain(
+                self.union_syms
+                    .values_mut()
+                    .filter(|s| s.fields.is_none() && s.emit_status != EmitStatus::Emitted),
+            )
             .map(|s| {
                 s.emit_status = EmitStatus::Emitted;
                 s.clone()

@@ -787,6 +787,7 @@ emit! {
 
 }
 
+#[doc(hidden)]
 #[repr(C)]
 #[non_exhaustive]
 pub struct _XEvent {

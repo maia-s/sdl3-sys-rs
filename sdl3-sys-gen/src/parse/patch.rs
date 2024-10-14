@@ -411,14 +411,24 @@ pub fn patch_parsed_struct(ctx: &ParseContext, e: &mut StructOrUnion) -> Result<
 
 type StructPatch = Patch<StructOrUnion>;
 
-const STRUCT_PATCHES: &[StructPatch] = &[StructPatch {
-    module: Some("stdinc"),
-    match_ident: |i| i == "SDL_alignment_test",
-    patch: |_, s| {
-        s.hidden = true;
-        Ok(true)
+const STRUCT_PATCHES: &[StructPatch] = &[
+    StructPatch {
+        module: None,
+        match_ident: |i| i.starts_with('_'),
+        patch: |_, s| {
+            s.hidden = true;
+            Ok(true)
+        },
     },
-}];
+    StructPatch {
+        module: Some("stdinc"),
+        match_ident: |i| i == "SDL_alignment_test",
+        patch: |_, s| {
+            s.hidden = true;
+            Ok(true)
+        },
+    },
+];
 
 pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {
     #[allow(clippy::single_match)]
