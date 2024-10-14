@@ -394,6 +394,7 @@ emit! {
 /// - The rest of the struct will be initialized as all zero bytes.
 #[inline(always)]
 pub unsafe fn SDL_INIT_INTERFACE<T>(iface: *mut T) {
+    const { ::core::assert!(::core::mem::size_of::<T>() <= ::core::primitive::u32::MAX as usize) };
     unsafe {
         iface.write_bytes(0, 1);
         iface

@@ -425,6 +425,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             writeln!(ctx, "#[inline(always)]")?;
             writeln!(ctx, "pub unsafe fn SDL_INIT_INTERFACE<T>(iface: *mut T) {{")?;
             ctx.increase_indent();
+            writeln!(ctx, "const {{ ::core::assert!(::core::mem::size_of::<T>() <= ::core::primitive::u32::MAX as usize) }};")?;
             writeln!(ctx, "unsafe {{")?;
             ctx.increase_indent();
             writeln!(ctx, "iface.write_bytes(0, 1);")?;
