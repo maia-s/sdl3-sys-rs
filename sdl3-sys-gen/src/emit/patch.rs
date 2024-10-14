@@ -32,7 +32,7 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
         patch: |_, _| Ok(true),
     },
     EmitFunctionPatch {
-        module: Some("assert"),
+        module: Some("atomic"),
         match_ident: |i| {
             matches!(
                 i,

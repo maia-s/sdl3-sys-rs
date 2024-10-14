@@ -158,6 +158,11 @@ emit! {
 
 }
 
+#[inline(always)]
+pub fn SDL_MemoryBarrierRelease() {
+    ::core::sync::atomic::fence(::core::sync::atomic::Ordering::Release)
+}
+
 extern "C" {
     /// Insert a memory release barrier.
     ///
@@ -187,6 +192,11 @@ extern "C" {
     /// ### Availability
     /// This function is available since SDL 3.0.0.
     pub fn SDL_MemoryBarrierReleaseFunction();
+}
+
+#[inline(always)]
+pub fn SDL_MemoryBarrierAcquire() {
+    ::core::sync::atomic::fence(::core::sync::atomic::Ordering::Acquire)
 }
 
 extern "C" {
