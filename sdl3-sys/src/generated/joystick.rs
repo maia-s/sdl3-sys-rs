@@ -857,17 +857,20 @@ extern "C" {
     pub fn SDL_GetJoystickProperties(joystick: *mut SDL_Joystick) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN: &::core::ffi::CStr = c"SDL.joystick.cap.mono_led";
+pub const SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.joystick.cap.mono_led".as_ptr();
 
-pub const SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN: &::core::ffi::CStr = c"SDL.joystick.cap.rgb_led";
+pub const SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.joystick.cap.rgb_led".as_ptr();
 
-pub const SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.joystick.cap.player_led";
+pub const SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.joystick.cap.player_led".as_ptr();
 
-pub const SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN: &::core::ffi::CStr = c"SDL.joystick.cap.rumble";
+pub const SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.joystick.cap.rumble".as_ptr();
 
-pub const SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.joystick.cap.trigger_rumble";
+pub const SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.joystick.cap.trigger_rumble".as_ptr();
 
 extern "C" {
     /// Get the implementation dependent name of a joystick.

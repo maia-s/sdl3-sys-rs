@@ -9,6 +9,8 @@ use crate::parse::{
 };
 use core::fmt::{self, Display, Write};
 
+pub const STRING_TYPE: &str = "*const ::core::ffi::c_char";
+
 #[derive(Clone, Debug)]
 pub enum Value {
     I32(i32),
@@ -108,7 +110,7 @@ impl Value {
             Value::F32(_) => Ok(Type::primitive(PrimitiveType::Float)),
             Value::F64(_) => Ok(Type::primitive(PrimitiveType::Double)),
             Value::Bool(_) => Ok(Type::bool()),
-            Value::String(_) => Ok(Type::rust("&::core::ffi::CStr", true)),
+            Value::String(_) => Ok(Type::rust(STRING_TYPE, true)),
             Value::RustCode(r) => Ok(r.ty.clone()),
             Value::TargetDependent(_) => todo!(),
             Value::Place(ptr, _) => {
@@ -406,9 +408,8 @@ impl Value {
                 ..
             }
         );
-        let mut is_string = false;
-        let mut is_const = false;
-        let mut is_unsafe = false;
+        let is_const;
+        let is_unsafe;
 
         if let Ok(ty) = self.ty() {
             if ty == target {
@@ -444,7 +445,6 @@ impl Value {
                     rc.ty.resolve_to(target.clone());
                 }
                 let ty = rc.ty.inner_ty().unwrap();
-                is_string = ty == Type::rust("&::core::ffi::CStr", true);
                 is_const = rc.is_const;
                 is_unsafe = rc.is_unsafe;
 
@@ -514,31 +514,7 @@ impl Value {
                 }
             }
 
-            Value::String(_) => {
-                is_string = true;
-                is_const = true
-            }
-
             _ => (),
-        }
-
-        if is_string {
-            if let Some(ptr) = target.get_pointer_type() {
-                if ptr.is_const && ptr.ty == TypeEnum::Primitive(PrimitiveType::Char) {
-                    // pass string literal to `const char*`
-                    let out = ctx.capture_output(|ctx| {
-                        self.emit(ctx)?;
-                        write!(ctx, ".as_ptr()")?;
-                        Ok(())
-                    })?;
-                    return Ok(Some(Value::RustCode(RustCode::boxed(
-                        out,
-                        target.clone(),
-                        is_const,
-                        is_unsafe,
-                    ))));
-                }
-            }
         }
 
         Ok(None)
@@ -1863,7 +1839,7 @@ impl Emit for StringLiteral {
                 _ => write!(ctx, "\\x{:02x}", b)?,
             }
         }
-        write!(ctx, "\"")?;
+        write!(ctx, "\".as_ptr()")?;
         Ok(())
     }
 }

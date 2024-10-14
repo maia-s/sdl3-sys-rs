@@ -63,8 +63,8 @@ pub type SDL_WindowID = Uint32;
 /// uninitialized will either return the user provided value, if one was set
 /// prior to initialization, or NULL. See docs/README-wayland.md for more
 /// information.
-pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: &::core::ffi::CStr =
-    c"SDL.video.wayland.wl_display";
+pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: *const ::core::ffi::c_char =
+    c"SDL.video.wayland.wl_display".as_ptr();
 
 /// System theme.
 ///
@@ -859,10 +859,11 @@ extern "C" {
     pub fn SDL_GetDisplayProperties(displayID: SDL_DisplayID) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN: &::core::ffi::CStr = c"SDL.display.HDR_enabled";
+pub const SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.display.HDR_enabled".as_ptr();
 
-pub const SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: &::core::ffi::CStr =
-    c"SDL.display.KMSDRM.panel_orientation";
+pub const SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.display.KMSDRM.panel_orientation".as_ptr();
 
 extern "C" {
     /// Get the name of a display in UTF-8 encoding.
@@ -1607,92 +1608,107 @@ extern "C" {
     pub fn SDL_CreateWindowWithProperties(props: SDL_PropertiesID) -> *mut SDL_Window;
 }
 
-pub const SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.always_on_top";
+pub const SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.always_on_top".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.borderless";
+pub const SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.borderless".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.focusable";
+pub const SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.focusable".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.external_graphics_context";
+pub const SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.external_graphics_context".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER: &::core::ffi::CStr = c"SDL.window.create.flags";
+pub const SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.create.flags".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.fullscreen";
+pub const SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.fullscreen".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER: &::core::ffi::CStr = c"SDL.window.create.height";
+pub const SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.create.height".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.hidden";
+pub const SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.hidden".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.high_pixel_density";
+pub const SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.high_pixel_density".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.maximized";
+pub const SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.maximized".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.menu";
+pub const SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.menu".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.metal";
+pub const SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.metal".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.minimized";
+pub const SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.minimized".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.modal";
+pub const SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.modal".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.mouse_grabbed";
+pub const SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.mouse_grabbed".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.opengl";
+pub const SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.opengl".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_PARENT_POINTER: &::core::ffi::CStr = c"SDL.window.create.parent";
+pub const SDL_PROP_WINDOW_CREATE_PARENT_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.create.parent".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.resizable";
+pub const SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.resizable".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_TITLE_STRING: &::core::ffi::CStr = c"SDL.window.create.title";
+pub const SDL_PROP_WINDOW_CREATE_TITLE_STRING: *const ::core::ffi::c_char =
+    c"SDL.window.create.title".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.transparent";
+pub const SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.transparent".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.tooltip";
+pub const SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.tooltip".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.utility";
+pub const SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.utility".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN: &::core::ffi::CStr = c"SDL.window.create.vulkan";
+pub const SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.vulkan".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER: &::core::ffi::CStr = c"SDL.window.create.width";
+pub const SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.create.width".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_X_NUMBER: &::core::ffi::CStr = c"SDL.window.create.x";
+pub const SDL_PROP_WINDOW_CREATE_X_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.create.x".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_Y_NUMBER: &::core::ffi::CStr = c"SDL.window.create.y";
+pub const SDL_PROP_WINDOW_CREATE_Y_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.create.y".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER: &::core::ffi::CStr =
-    c"SDL.window.create.cocoa.window";
+pub const SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.create.cocoa.window".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER: &::core::ffi::CStr =
-    c"SDL.window.create.cocoa.view";
+pub const SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.create.cocoa.view".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.wayland.surface_role_custom";
+pub const SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.wayland.surface_role_custom".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.window.create.wayland.create_egl_window";
+pub const SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.wayland.create_egl_window".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER: &::core::ffi::CStr =
-    c"SDL.window.create.wayland.wl_surface";
+pub const SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.create.wayland.wl_surface".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER: &::core::ffi::CStr =
-    c"SDL.window.create.win32.hwnd";
+pub const SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.create.win32.hwnd".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER: &::core::ffi::CStr =
-    c"SDL.window.create.win32.pixel_format_hwnd";
+pub const SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.create.win32.pixel_format_hwnd".as_ptr();
 
-pub const SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER: &::core::ffi::CStr =
-    c"SDL.window.create.x11.window";
+pub const SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.create.x11.window".as_ptr();
 
 extern "C" {
     /// Get the numeric ID of a window.
@@ -1867,89 +1883,103 @@ extern "C" {
     pub fn SDL_GetWindowProperties(window: *mut SDL_Window) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_WINDOW_SHAPE_POINTER: &::core::ffi::CStr = c"SDL.window.shape";
+pub const SDL_PROP_WINDOW_SHAPE_POINTER: *const ::core::ffi::c_char = c"SDL.window.shape".as_ptr();
 
-pub const SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN: &::core::ffi::CStr = c"SDL.window.HDR_enabled";
+pub const SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.HDR_enabled".as_ptr();
 
-pub const SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT: &::core::ffi::CStr = c"SDL.window.SDR_white_level";
+pub const SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.window.SDR_white_level".as_ptr();
 
-pub const SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT: &::core::ffi::CStr = c"SDL.window.HDR_headroom";
+pub const SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.window.HDR_headroom".as_ptr();
 
-pub const SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER: &::core::ffi::CStr = c"SDL.window.android.window";
+pub const SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.android.window".as_ptr();
 
-pub const SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER: &::core::ffi::CStr =
-    c"SDL.window.android.surface";
+pub const SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.android.surface".as_ptr();
 
-pub const SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER: &::core::ffi::CStr = c"SDL.window.uikit.window";
+pub const SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.uikit.window".as_ptr();
 
-pub const SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER: &::core::ffi::CStr =
-    c"SDL.window.uikit.metal_view_tag";
+pub const SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.uikit.metal_view_tag".as_ptr();
 
-pub const SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER: &::core::ffi::CStr =
-    c"SDL.window.uikit.opengl.framebuffer";
+pub const SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.uikit.opengl.framebuffer".as_ptr();
 
-pub const SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER: &::core::ffi::CStr =
-    c"SDL.window.uikit.opengl.renderbuffer";
+pub const SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.uikit.opengl.renderbuffer".as_ptr();
 
-pub const SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER: &::core::ffi::CStr =
-    c"SDL.window.uikit.opengl.resolve_framebuffer";
+pub const SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.uikit.opengl.resolve_framebuffer".as_ptr();
 
-pub const SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER: &::core::ffi::CStr =
-    c"SDL.window.kmsdrm.dev_index";
+pub const SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.kmsdrm.dev_index".as_ptr();
 
-pub const SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER: &::core::ffi::CStr = c"SDL.window.kmsdrm.drm_fd";
+pub const SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.kmsdrm.drm_fd".as_ptr();
 
-pub const SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER: &::core::ffi::CStr =
-    c"SDL.window.kmsdrm.gbm_dev";
+pub const SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.kmsdrm.gbm_dev".as_ptr();
 
-pub const SDL_PROP_WINDOW_COCOA_WINDOW_POINTER: &::core::ffi::CStr = c"SDL.window.cocoa.window";
+pub const SDL_PROP_WINDOW_COCOA_WINDOW_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.cocoa.window".as_ptr();
 
-pub const SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER: &::core::ffi::CStr =
-    c"SDL.window.cocoa.metal_view_tag";
+pub const SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.cocoa.metal_view_tag".as_ptr();
 
-pub const SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER: &::core::ffi::CStr =
-    c"SDL.window.vivante.display";
+pub const SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.vivante.display".as_ptr();
 
-pub const SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER: &::core::ffi::CStr = c"SDL.window.vivante.window";
+pub const SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.vivante.window".as_ptr();
 
-pub const SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER: &::core::ffi::CStr =
-    c"SDL.window.vivante.surface";
+pub const SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.vivante.surface".as_ptr();
 
-pub const SDL_PROP_WINDOW_WIN32_HWND_POINTER: &::core::ffi::CStr = c"SDL.window.win32.hwnd";
+pub const SDL_PROP_WINDOW_WIN32_HWND_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.win32.hwnd".as_ptr();
 
-pub const SDL_PROP_WINDOW_WIN32_HDC_POINTER: &::core::ffi::CStr = c"SDL.window.win32.hdc";
+pub const SDL_PROP_WINDOW_WIN32_HDC_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.win32.hdc".as_ptr();
 
-pub const SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER: &::core::ffi::CStr = c"SDL.window.win32.instance";
+pub const SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.win32.instance".as_ptr();
 
-pub const SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER: &::core::ffi::CStr =
-    c"SDL.window.wayland.display";
+pub const SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.wayland.display".as_ptr();
 
-pub const SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER: &::core::ffi::CStr =
-    c"SDL.window.wayland.surface";
+pub const SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.wayland.surface".as_ptr();
 
-pub const SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER: &::core::ffi::CStr =
-    c"SDL.window.wayland.egl_window";
+pub const SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.wayland.egl_window".as_ptr();
 
-pub const SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER: &::core::ffi::CStr =
-    c"SDL.window.wayland.xdg_surface";
+pub const SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.wayland.xdg_surface".as_ptr();
 
-pub const SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER: &::core::ffi::CStr =
-    c"SDL.window.wayland.xdg_toplevel";
+pub const SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.wayland.xdg_toplevel".as_ptr();
 
-pub const SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING: &::core::ffi::CStr =
-    c"SDL.window.wayland.xdg_toplevel_export_handle";
+pub const SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING: *const ::core::ffi::c_char =
+    c"SDL.window.wayland.xdg_toplevel_export_handle".as_ptr();
 
-pub const SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER: &::core::ffi::CStr =
-    c"SDL.window.wayland.xdg_popup";
+pub const SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.wayland.xdg_popup".as_ptr();
 
-pub const SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER: &::core::ffi::CStr =
-    c"SDL.window.wayland.xdg_positioner";
+pub const SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.wayland.xdg_positioner".as_ptr();
 
-pub const SDL_PROP_WINDOW_X11_DISPLAY_POINTER: &::core::ffi::CStr = c"SDL.window.x11.display";
+pub const SDL_PROP_WINDOW_X11_DISPLAY_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.x11.display".as_ptr();
 
-pub const SDL_PROP_WINDOW_X11_SCREEN_NUMBER: &::core::ffi::CStr = c"SDL.window.x11.screen";
+pub const SDL_PROP_WINDOW_X11_SCREEN_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.x11.screen".as_ptr();
 
-pub const SDL_PROP_WINDOW_X11_WINDOW_NUMBER: &::core::ffi::CStr = c"SDL.window.x11.window";
+pub const SDL_PROP_WINDOW_X11_WINDOW_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.window.x11.window".as_ptr();
 
 extern "C" {
     /// Get the window flags.

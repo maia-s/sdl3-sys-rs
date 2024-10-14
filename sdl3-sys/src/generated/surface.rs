@@ -277,12 +277,14 @@ extern "C" {
     pub fn SDL_GetSurfaceProperties(surface: *mut SDL_Surface) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT: &::core::ffi::CStr =
-    c"SDL.surface.SDR_white_point";
+pub const SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.surface.SDR_white_point".as_ptr();
 
-pub const SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT: &::core::ffi::CStr = c"SDL.surface.HDR_headroom";
+pub const SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.surface.HDR_headroom".as_ptr();
 
-pub const SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING: &::core::ffi::CStr = c"SDL.surface.tonemap";
+pub const SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING: *const ::core::ffi::c_char =
+    c"SDL.surface.tonemap".as_ptr();
 
 extern "C" {
     /// Set the colorspace used by a surface.

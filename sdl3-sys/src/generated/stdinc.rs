@@ -127,7 +127,7 @@ pub const SDL_FLT_EPSILON: ::core::ffi::c_float = ::core::primitive::f32::EPSILO
 
 #[cfg(windows)]
 emit! {
-    pub const SDL_PRIs64: &::core::ffi::CStr = c"I64d";
+    pub const SDL_PRIs64: *const ::core::ffi::c_char = c"I64d".as_ptr();
 
 }
 
@@ -135,13 +135,13 @@ emit! {
 emit! {
     #[cfg(all(not(target_vendor = "apple"), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))]
     emit! {
-        pub const SDL_PRIs64: &::core::ffi::CStr = c"ld";
+        pub const SDL_PRIs64: *const ::core::ffi::c_char = c"ld".as_ptr();
 
     }
 
     #[cfg(not(all(not(target_vendor = "apple"), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
-        pub const SDL_PRIs64: &::core::ffi::CStr = c"lld";
+        pub const SDL_PRIs64: *const ::core::ffi::c_char = c"lld".as_ptr();
 
     }
 
@@ -149,7 +149,7 @@ emit! {
 
 #[cfg(windows)]
 emit! {
-    pub const SDL_PRIu64: &::core::ffi::CStr = c"I64u";
+    pub const SDL_PRIu64: *const ::core::ffi::c_char = c"I64u".as_ptr();
 
 }
 
@@ -157,13 +157,13 @@ emit! {
 emit! {
     #[cfg(all(not(target_vendor = "apple"), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))]
     emit! {
-        pub const SDL_PRIu64: &::core::ffi::CStr = c"lu";
+        pub const SDL_PRIu64: *const ::core::ffi::c_char = c"lu".as_ptr();
 
     }
 
     #[cfg(not(all(not(target_vendor = "apple"), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
-        pub const SDL_PRIu64: &::core::ffi::CStr = c"llu";
+        pub const SDL_PRIu64: *const ::core::ffi::c_char = c"llu".as_ptr();
 
     }
 
@@ -171,7 +171,7 @@ emit! {
 
 #[cfg(windows)]
 emit! {
-    pub const SDL_PRIx64: &::core::ffi::CStr = c"I64x";
+    pub const SDL_PRIx64: *const ::core::ffi::c_char = c"I64x".as_ptr();
 
 }
 
@@ -179,13 +179,13 @@ emit! {
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
-        pub const SDL_PRIx64: &::core::ffi::CStr = c"lx";
+        pub const SDL_PRIx64: *const ::core::ffi::c_char = c"lx".as_ptr();
 
     }
 
     #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
-        pub const SDL_PRIx64: &::core::ffi::CStr = c"llx";
+        pub const SDL_PRIx64: *const ::core::ffi::c_char = c"llx".as_ptr();
 
     }
 
@@ -193,7 +193,7 @@ emit! {
 
 #[cfg(windows)]
 emit! {
-    pub const SDL_PRIX64: &::core::ffi::CStr = c"I64X";
+    pub const SDL_PRIX64: *const ::core::ffi::c_char = c"I64X".as_ptr();
 
 }
 
@@ -201,53 +201,53 @@ emit! {
 emit! {
     #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
     emit! {
-        pub const SDL_PRIX64: &::core::ffi::CStr = c"lX";
+        pub const SDL_PRIX64: *const ::core::ffi::c_char = c"lX".as_ptr();
 
     }
 
     #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
-        pub const SDL_PRIX64: &::core::ffi::CStr = c"llX";
+        pub const SDL_PRIX64: *const ::core::ffi::c_char = c"llX".as_ptr();
 
     }
 
 }
 
-pub const SDL_PRIs32: &::core::ffi::CStr = c"d";
+pub const SDL_PRIs32: *const ::core::ffi::c_char = c"d".as_ptr();
 
-pub const SDL_PRIu32: &::core::ffi::CStr = c"u";
+pub const SDL_PRIu32: *const ::core::ffi::c_char = c"u".as_ptr();
 
-pub const SDL_PRIx32: &::core::ffi::CStr = c"x";
+pub const SDL_PRIx32: *const ::core::ffi::c_char = c"x".as_ptr();
 
-pub const SDL_PRIX32: &::core::ffi::CStr = c"X";
+pub const SDL_PRIX32: *const ::core::ffi::c_char = c"X".as_ptr();
 
 #[cfg(windows)]
 emit! {
     const _: () = ::core::assert!((::core::mem::size_of::<::core::ffi::c_longlong>() == 8_usize));
 
-    pub const SDL_PRILL_PREFIX: &::core::ffi::CStr = c"I64";
+    pub const SDL_PRILL_PREFIX: *const ::core::ffi::c_char = c"I64".as_ptr();
 
-    pub const SDL_PRILLd: &::core::ffi::CStr = c"I64d";
+    pub const SDL_PRILLd: *const ::core::ffi::c_char = c"I64d".as_ptr();
 
-    pub const SDL_PRILLu: &::core::ffi::CStr = c"I64u";
+    pub const SDL_PRILLu: *const ::core::ffi::c_char = c"I64u".as_ptr();
 
-    pub const SDL_PRILLx: &::core::ffi::CStr = c"I64x";
+    pub const SDL_PRILLx: *const ::core::ffi::c_char = c"I64x".as_ptr();
 
-    pub const SDL_PRILLX: &::core::ffi::CStr = c"I64X";
+    pub const SDL_PRILLX: *const ::core::ffi::c_char = c"I64X".as_ptr();
 
 }
 
 #[cfg(not(windows))]
 emit! {
-    pub const SDL_PRILL_PREFIX: &::core::ffi::CStr = c"ll";
+    pub const SDL_PRILL_PREFIX: *const ::core::ffi::c_char = c"ll".as_ptr();
 
-    pub const SDL_PRILLd: &::core::ffi::CStr = c"lld";
+    pub const SDL_PRILLd: *const ::core::ffi::c_char = c"lld".as_ptr();
 
-    pub const SDL_PRILLu: &::core::ffi::CStr = c"llu";
+    pub const SDL_PRILLu: *const ::core::ffi::c_char = c"llu".as_ptr();
 
-    pub const SDL_PRILLx: &::core::ffi::CStr = c"llx";
+    pub const SDL_PRILLx: *const ::core::ffi::c_char = c"llx".as_ptr();
 
-    pub const SDL_PRILLX: &::core::ffi::CStr = c"llX";
+    pub const SDL_PRILLX: *const ::core::ffi::c_char = c"llX".as_ptr();
 
 }
 

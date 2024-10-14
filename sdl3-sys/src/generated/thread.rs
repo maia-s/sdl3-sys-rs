@@ -199,13 +199,13 @@ emit! {
         pub fn SDL_CreateThreadWithProperties(props: SDL_PropertiesID) -> *mut SDL_Thread;
     }
 
-    pub const SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: &::core::ffi::CStr = c"SDL.thread.create.entry_function";
+    pub const SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: *const ::core::ffi::c_char = c"SDL.thread.create.entry_function".as_ptr();
 
-    pub const SDL_PROP_THREAD_CREATE_NAME_STRING: &::core::ffi::CStr = c"SDL.thread.create.name";
+    pub const SDL_PROP_THREAD_CREATE_NAME_STRING: *const ::core::ffi::c_char = c"SDL.thread.create.name".as_ptr();
 
-    pub const SDL_PROP_THREAD_CREATE_USERDATA_POINTER: &::core::ffi::CStr = c"SDL.thread.create.userdata";
+    pub const SDL_PROP_THREAD_CREATE_USERDATA_POINTER: *const ::core::ffi::c_char = c"SDL.thread.create.userdata".as_ptr();
 
-    pub const SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: &::core::ffi::CStr = c"SDL.thread.create.stacksize";
+    pub const SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: *const ::core::ffi::c_char = c"SDL.thread.create.stacksize".as_ptr();
 
 }
 
@@ -287,13 +287,13 @@ emit! {
     }
 
 
-    pub const SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: &::core::ffi::CStr = c"SDL.thread.create.entry_function";
+    pub const SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: *const ::core::ffi::c_char = c"SDL.thread.create.entry_function".as_ptr();
 
-    pub const SDL_PROP_THREAD_CREATE_NAME_STRING: &::core::ffi::CStr = c"SDL.thread.create.name";
+    pub const SDL_PROP_THREAD_CREATE_NAME_STRING: *const ::core::ffi::c_char = c"SDL.thread.create.name".as_ptr();
 
-    pub const SDL_PROP_THREAD_CREATE_USERDATA_POINTER: &::core::ffi::CStr = c"SDL.thread.create.userdata";
+    pub const SDL_PROP_THREAD_CREATE_USERDATA_POINTER: *const ::core::ffi::c_char = c"SDL.thread.create.userdata".as_ptr();
 
-    pub const SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: &::core::ffi::CStr = c"SDL.thread.create.stacksize";
+    pub const SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: *const ::core::ffi::c_char = c"SDL.thread.create.stacksize".as_ptr();
 
 }
 

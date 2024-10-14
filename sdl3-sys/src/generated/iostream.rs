@@ -309,16 +309,17 @@ extern "C" {
     ) -> *mut SDL_IOStream;
 }
 
-pub const SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER: &::core::ffi::CStr =
-    c"SDL.iostream.windows.handle";
+pub const SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.iostream.windows.handle".as_ptr();
 
-pub const SDL_PROP_IOSTREAM_STDIO_FILE_POINTER: &::core::ffi::CStr = c"SDL.iostream.stdio.file";
+pub const SDL_PROP_IOSTREAM_STDIO_FILE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.iostream.stdio.file".as_ptr();
 
-pub const SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER: &::core::ffi::CStr =
-    c"SDL.iostream.file_descriptor";
+pub const SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.iostream.file_descriptor".as_ptr();
 
-pub const SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER: &::core::ffi::CStr =
-    c"SDL.iostream.android.aasset";
+pub const SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER: *const ::core::ffi::c_char =
+    c"SDL.iostream.android.aasset".as_ptr();
 
 extern "C" {
     /// Use this function to prepare a read-write memory buffer for use with
@@ -366,9 +367,11 @@ extern "C" {
     ) -> *mut SDL_IOStream;
 }
 
-pub const SDL_PROP_IOSTREAM_MEMORY_POINTER: &::core::ffi::CStr = c"SDL.iostream.memory.base";
+pub const SDL_PROP_IOSTREAM_MEMORY_POINTER: *const ::core::ffi::c_char =
+    c"SDL.iostream.memory.base".as_ptr();
 
-pub const SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER: &::core::ffi::CStr = c"SDL.iostream.memory.size";
+pub const SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.iostream.memory.size".as_ptr();
 
 extern "C" {
     /// Use this function to prepare a read-only memory buffer for use with
@@ -447,11 +450,11 @@ extern "C" {
     pub fn SDL_IOFromDynamicMem() -> *mut SDL_IOStream;
 }
 
-pub const SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER: &::core::ffi::CStr =
-    c"SDL.iostream.dynamic.memory";
+pub const SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER: *const ::core::ffi::c_char =
+    c"SDL.iostream.dynamic.memory".as_ptr();
 
-pub const SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER: &::core::ffi::CStr =
-    c"SDL.iostream.dynamic.chunksize";
+pub const SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.iostream.dynamic.chunksize".as_ptr();
 
 extern "C" {
     /// Create a custom [`SDL_IOStream`].

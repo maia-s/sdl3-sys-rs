@@ -2470,23 +2470,23 @@ pub struct SDL_GPUTextureCreateInfo {
     pub props: SDL_PropertiesID,
 }
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT: &::core::ffi::CStr =
-    c"SDL.gpu.createtexture.d3d12.clear.r";
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.gpu.createtexture.d3d12.clear.r".as_ptr();
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT: &::core::ffi::CStr =
-    c"SDL.gpu.createtexture.d3d12.clear.g";
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.gpu.createtexture.d3d12.clear.g".as_ptr();
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT: &::core::ffi::CStr =
-    c"SDL.gpu.createtexture.d3d12.clear.b";
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.gpu.createtexture.d3d12.clear.b".as_ptr();
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT: &::core::ffi::CStr =
-    c"SDL.gpu.createtexture.d3d12.clear.a";
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.gpu.createtexture.d3d12.clear.a".as_ptr();
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT: &::core::ffi::CStr =
-    c"SDL.gpu.createtexture.d3d12.clear.depth";
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.gpu.createtexture.d3d12.clear.depth".as_ptr();
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8: &::core::ffi::CStr =
-    c"SDL.gpu.createtexture.d3d12.clear.stencil";
+pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8: *const ::core::ffi::c_char =
+    c"SDL.gpu.createtexture.d3d12.clear.stencil".as_ptr();
 
 /// A structure specifying the parameters of a buffer.
 ///
@@ -3097,35 +3097,35 @@ extern "C" {
     pub fn SDL_CreateGPUDeviceWithProperties(props: SDL_PropertiesID) -> *mut SDL_GPUDevice;
 }
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOL: &::core::ffi::CStr =
-    c"SDL.gpu.device.create.debugmode";
+pub const SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOL: *const ::core::ffi::c_char =
+    c"SDL.gpu.device.create.debugmode".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOL: &::core::ffi::CStr =
-    c"SDL.gpu.device.create.preferlowpower";
+pub const SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOL: *const ::core::ffi::c_char =
+    c"SDL.gpu.device.create.preferlowpower".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING: &::core::ffi::CStr =
-    c"SDL.gpu.device.create.name";
+pub const SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING: *const ::core::ffi::c_char =
+    c"SDL.gpu.device.create.name".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOL: &::core::ffi::CStr =
-    c"SDL.gpu.device.create.shaders.private";
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOL: *const ::core::ffi::c_char =
+    c"SDL.gpu.device.create.shaders.private".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOL: &::core::ffi::CStr =
-    c"SDL.gpu.device.create.shaders.spirv";
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOL: *const ::core::ffi::c_char =
+    c"SDL.gpu.device.create.shaders.spirv".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOL: &::core::ffi::CStr =
-    c"SDL.gpu.device.create.shaders.dxbc";
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOL: *const ::core::ffi::c_char =
+    c"SDL.gpu.device.create.shaders.dxbc".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOL: &::core::ffi::CStr =
-    c"SDL.gpu.device.create.shaders.dxil";
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOL: *const ::core::ffi::c_char =
+    c"SDL.gpu.device.create.shaders.dxil".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOL: &::core::ffi::CStr =
-    c"SDL.gpu.device.create.shaders.msl";
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOL: *const ::core::ffi::c_char =
+    c"SDL.gpu.device.create.shaders.msl".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOL: &::core::ffi::CStr =
-    c"SDL.gpu.device.create.shaders.metallib";
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOL: *const ::core::ffi::c_char =
+    c"SDL.gpu.device.create.shaders.metallib".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: &::core::ffi::CStr =
-    c"SDL.gpu.device.create.d3d12.semantic";
+pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: *const ::core::ffi::c_char =
+    c"SDL.gpu.device.create.d3d12.semantic".as_ptr();
 
 extern "C" {
     /// Destroys a GPU context previously returned by [`SDL_CreateGPUDevice`].

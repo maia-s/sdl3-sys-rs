@@ -395,21 +395,26 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-pub const SDL_PROP_APP_METADATA_NAME_STRING: &::core::ffi::CStr = c"SDL.app.metadata.name";
+pub const SDL_PROP_APP_METADATA_NAME_STRING: *const ::core::ffi::c_char =
+    c"SDL.app.metadata.name".as_ptr();
 
-pub const SDL_PROP_APP_METADATA_VERSION_STRING: &::core::ffi::CStr = c"SDL.app.metadata.version";
+pub const SDL_PROP_APP_METADATA_VERSION_STRING: *const ::core::ffi::c_char =
+    c"SDL.app.metadata.version".as_ptr();
 
-pub const SDL_PROP_APP_METADATA_IDENTIFIER_STRING: &::core::ffi::CStr =
-    c"SDL.app.metadata.identifier";
+pub const SDL_PROP_APP_METADATA_IDENTIFIER_STRING: *const ::core::ffi::c_char =
+    c"SDL.app.metadata.identifier".as_ptr();
 
-pub const SDL_PROP_APP_METADATA_CREATOR_STRING: &::core::ffi::CStr = c"SDL.app.metadata.creator";
+pub const SDL_PROP_APP_METADATA_CREATOR_STRING: *const ::core::ffi::c_char =
+    c"SDL.app.metadata.creator".as_ptr();
 
-pub const SDL_PROP_APP_METADATA_COPYRIGHT_STRING: &::core::ffi::CStr =
-    c"SDL.app.metadata.copyright";
+pub const SDL_PROP_APP_METADATA_COPYRIGHT_STRING: *const ::core::ffi::c_char =
+    c"SDL.app.metadata.copyright".as_ptr();
 
-pub const SDL_PROP_APP_METADATA_URL_STRING: &::core::ffi::CStr = c"SDL.app.metadata.url";
+pub const SDL_PROP_APP_METADATA_URL_STRING: *const ::core::ffi::c_char =
+    c"SDL.app.metadata.url".as_ptr();
 
-pub const SDL_PROP_APP_METADATA_TYPE_STRING: &::core::ffi::CStr = c"SDL.app.metadata.type";
+pub const SDL_PROP_APP_METADATA_TYPE_STRING: *const ::core::ffi::c_char =
+    c"SDL.app.metadata.type".as_ptr();
 
 extern "C" {
     /// Get metadata about your app.

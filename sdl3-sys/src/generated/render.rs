@@ -44,7 +44,7 @@ use super::video::*;
 ///
 /// ### Availability
 /// This macro is available since SDL 3.0.0.
-pub const SDL_SOFTWARE_RENDERER: &::core::ffi::CStr = c"software";
+pub const SDL_SOFTWARE_RENDERER: *const ::core::ffi::c_char = c"software".as_ptr();
 
 /// Vertex structure.
 ///
@@ -358,37 +358,38 @@ extern "C" {
     pub fn SDL_CreateRendererWithProperties(props: SDL_PropertiesID) -> *mut SDL_Renderer;
 }
 
-pub const SDL_PROP_RENDERER_CREATE_NAME_STRING: &::core::ffi::CStr = c"SDL.renderer.create.name";
+pub const SDL_PROP_RENDERER_CREATE_NAME_STRING: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.name".as_ptr();
 
-pub const SDL_PROP_RENDERER_CREATE_WINDOW_POINTER: &::core::ffi::CStr =
-    c"SDL.renderer.create.window";
+pub const SDL_PROP_RENDERER_CREATE_WINDOW_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.window".as_ptr();
 
-pub const SDL_PROP_RENDERER_CREATE_SURFACE_POINTER: &::core::ffi::CStr =
-    c"SDL.renderer.create.surface";
+pub const SDL_PROP_RENDERER_CREATE_SURFACE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.surface".as_ptr();
 
-pub const SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER: &::core::ffi::CStr =
-    c"SDL.renderer.create.output_colorspace";
+pub const SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.output_colorspace".as_ptr();
 
-pub const SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER: &::core::ffi::CStr =
-    c"SDL.renderer.create.present_vsync";
+pub const SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.present_vsync".as_ptr();
 
-pub const SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER: &::core::ffi::CStr =
-    c"SDL.renderer.create.vulkan.instance";
+pub const SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.vulkan.instance".as_ptr();
 
-pub const SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER: &::core::ffi::CStr =
-    c"SDL.renderer.create.vulkan.surface";
+pub const SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.vulkan.surface".as_ptr();
 
-pub const SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER: &::core::ffi::CStr =
-    c"SDL.renderer.create.vulkan.physical_device";
+pub const SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.vulkan.physical_device".as_ptr();
 
-pub const SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER: &::core::ffi::CStr =
-    c"SDL.renderer.create.vulkan.device";
+pub const SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.vulkan.device".as_ptr();
 
-pub const SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr =
-    c"SDL.renderer.create.vulkan.graphics_queue_family_index";
+pub const SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER:
+    *const ::core::ffi::c_char = c"SDL.renderer.create.vulkan.graphics_queue_family_index".as_ptr();
 
-pub const SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr =
-    c"SDL.renderer.create.vulkan.present_queue_family_index";
+pub const SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER:
+    *const ::core::ffi::c_char = c"SDL.renderer.create.vulkan.present_queue_family_index".as_ptr();
 
 extern "C" {
     /// Create a 2D software rendering context for a surface.
@@ -556,65 +557,73 @@ extern "C" {
     pub fn SDL_GetRendererProperties(renderer: *mut SDL_Renderer) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_RENDERER_NAME_STRING: &::core::ffi::CStr = c"SDL.renderer.name";
+pub const SDL_PROP_RENDERER_NAME_STRING: *const ::core::ffi::c_char = c"SDL.renderer.name".as_ptr();
 
-pub const SDL_PROP_RENDERER_WINDOW_POINTER: &::core::ffi::CStr = c"SDL.renderer.window";
+pub const SDL_PROP_RENDERER_WINDOW_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.window".as_ptr();
 
-pub const SDL_PROP_RENDERER_SURFACE_POINTER: &::core::ffi::CStr = c"SDL.renderer.surface";
+pub const SDL_PROP_RENDERER_SURFACE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.surface".as_ptr();
 
-pub const SDL_PROP_RENDERER_VSYNC_NUMBER: &::core::ffi::CStr = c"SDL.renderer.vsync";
+pub const SDL_PROP_RENDERER_VSYNC_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.renderer.vsync".as_ptr();
 
-pub const SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER: &::core::ffi::CStr =
-    c"SDL.renderer.max_texture_size";
+pub const SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.renderer.max_texture_size".as_ptr();
 
-pub const SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER: &::core::ffi::CStr =
-    c"SDL.renderer.texture_formats";
+pub const SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.texture_formats".as_ptr();
 
-pub const SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER: &::core::ffi::CStr =
-    c"SDL.renderer.output_colorspace";
+pub const SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.renderer.output_colorspace".as_ptr();
 
-pub const SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN: &::core::ffi::CStr = c"SDL.renderer.HDR_enabled";
+pub const SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.renderer.HDR_enabled".as_ptr();
 
-pub const SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT: &::core::ffi::CStr =
-    c"SDL.renderer.SDR_white_point";
+pub const SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.renderer.SDR_white_point".as_ptr();
 
-pub const SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT: &::core::ffi::CStr = c"SDL.renderer.HDR_headroom";
+pub const SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.renderer.HDR_headroom".as_ptr();
 
-pub const SDL_PROP_RENDERER_D3D9_DEVICE_POINTER: &::core::ffi::CStr = c"SDL.renderer.d3d9.device";
+pub const SDL_PROP_RENDERER_D3D9_DEVICE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.d3d9.device".as_ptr();
 
-pub const SDL_PROP_RENDERER_D3D11_DEVICE_POINTER: &::core::ffi::CStr = c"SDL.renderer.d3d11.device";
+pub const SDL_PROP_RENDERER_D3D11_DEVICE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.d3d11.device".as_ptr();
 
-pub const SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER: &::core::ffi::CStr =
-    c"SDL.renderer.d3d11.swap_chain";
+pub const SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.d3d11.swap_chain".as_ptr();
 
-pub const SDL_PROP_RENDERER_D3D12_DEVICE_POINTER: &::core::ffi::CStr = c"SDL.renderer.d3d12.device";
+pub const SDL_PROP_RENDERER_D3D12_DEVICE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.d3d12.device".as_ptr();
 
-pub const SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER: &::core::ffi::CStr =
-    c"SDL.renderer.d3d12.swap_chain";
+pub const SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.d3d12.swap_chain".as_ptr();
 
-pub const SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER: &::core::ffi::CStr =
-    c"SDL.renderer.d3d12.command_queue";
+pub const SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.d3d12.command_queue".as_ptr();
 
-pub const SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER: &::core::ffi::CStr =
-    c"SDL.renderer.vulkan.instance";
+pub const SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.vulkan.instance".as_ptr();
 
-pub const SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER: &::core::ffi::CStr =
-    c"SDL.renderer.vulkan.surface";
+pub const SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.renderer.vulkan.surface".as_ptr();
 
-pub const SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER: &::core::ffi::CStr =
-    c"SDL.renderer.vulkan.physical_device";
+pub const SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.vulkan.physical_device".as_ptr();
 
-pub const SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER: &::core::ffi::CStr =
-    c"SDL.renderer.vulkan.device";
+pub const SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.vulkan.device".as_ptr();
 
-pub const SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr =
-    c"SDL.renderer.vulkan.graphics_queue_family_index";
+pub const SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.renderer.vulkan.graphics_queue_family_index".as_ptr();
 
-pub const SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER: &::core::ffi::CStr =
-    c"SDL.renderer.vulkan.present_queue_family_index";
+pub const SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.renderer.vulkan.present_queue_family_index".as_ptr();
 
-pub const SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER: &::core::ffi::CStr =
-    c"SDL.renderer.vulkan.swapchain_image_count";
+pub const SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.renderer.vulkan.swapchain_image_count".as_ptr();
 
 extern "C" {
     /// Get the output size in pixels of a rendering context.
@@ -870,70 +879,74 @@ extern "C" {
     ) -> *mut SDL_Texture;
 }
 
-pub const SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.create.colorspace";
+pub const SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.colorspace".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER: &::core::ffi::CStr = c"SDL.texture.create.format";
+pub const SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.format".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER: &::core::ffi::CStr = c"SDL.texture.create.access";
+pub const SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.access".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER: &::core::ffi::CStr = c"SDL.texture.create.width";
+pub const SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.width".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER: &::core::ffi::CStr = c"SDL.texture.create.height";
+pub const SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.height".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT: &::core::ffi::CStr =
-    c"SDL.texture.create.SDR_white_point";
+pub const SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.texture.create.SDR_white_point".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT: &::core::ffi::CStr =
-    c"SDL.texture.create.HDR_headroom";
+pub const SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.texture.create.HDR_headroom".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER: &::core::ffi::CStr =
-    c"SDL.texture.create.d3d11.texture";
+pub const SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.d3d11.texture".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER: &::core::ffi::CStr =
-    c"SDL.texture.create.d3d11.texture_u";
+pub const SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.d3d11.texture_u".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER: &::core::ffi::CStr =
-    c"SDL.texture.create.d3d11.texture_v";
+pub const SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.d3d11.texture_v".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER: &::core::ffi::CStr =
-    c"SDL.texture.create.d3d12.texture";
+pub const SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.d3d12.texture".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER: &::core::ffi::CStr =
-    c"SDL.texture.create.d3d12.texture_u";
+pub const SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.d3d12.texture_u".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER: &::core::ffi::CStr =
-    c"SDL.texture.create.d3d12.texture_v";
+pub const SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.d3d12.texture_v".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER: &::core::ffi::CStr =
-    c"SDL.texture.create.metal.pixelbuffer";
+pub const SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.metal.pixelbuffer".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.create.opengl.texture";
+pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.opengl.texture".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.create.opengl.texture_uv";
+pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.opengl.texture_uv".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.create.opengl.texture_u";
+pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.opengl.texture_u".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.create.opengl.texture_v";
+pub const SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.opengl.texture_v".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.create.opengles2.texture";
+pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.opengles2.texture".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.create.opengles2.texture_uv";
+pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.opengles2.texture_uv".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.create.opengles2.texture_u";
+pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.opengles2.texture_u".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.create.opengles2.texture_v";
+pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.opengles2.texture_v".as_ptr();
 
-pub const SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.create.vulkan.texture";
+pub const SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.vulkan.texture".as_ptr();
 
 extern "C" {
     /// Get the properties associated with a texture.
@@ -1038,73 +1051,82 @@ extern "C" {
     pub fn SDL_GetTextureProperties(texture: *mut SDL_Texture) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_TEXTURE_COLORSPACE_NUMBER: &::core::ffi::CStr = c"SDL.texture.colorspace";
+pub const SDL_PROP_TEXTURE_COLORSPACE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.colorspace".as_ptr();
 
-pub const SDL_PROP_TEXTURE_FORMAT_NUMBER: &::core::ffi::CStr = c"SDL.texture.format";
+pub const SDL_PROP_TEXTURE_FORMAT_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.format".as_ptr();
 
-pub const SDL_PROP_TEXTURE_ACCESS_NUMBER: &::core::ffi::CStr = c"SDL.texture.access";
+pub const SDL_PROP_TEXTURE_ACCESS_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.access".as_ptr();
 
-pub const SDL_PROP_TEXTURE_WIDTH_NUMBER: &::core::ffi::CStr = c"SDL.texture.width";
+pub const SDL_PROP_TEXTURE_WIDTH_NUMBER: *const ::core::ffi::c_char = c"SDL.texture.width".as_ptr();
 
-pub const SDL_PROP_TEXTURE_HEIGHT_NUMBER: &::core::ffi::CStr = c"SDL.texture.height";
+pub const SDL_PROP_TEXTURE_HEIGHT_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.height".as_ptr();
 
-pub const SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT: &::core::ffi::CStr =
-    c"SDL.texture.SDR_white_point";
+pub const SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.texture.SDR_white_point".as_ptr();
 
-pub const SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT: &::core::ffi::CStr = c"SDL.texture.HDR_headroom";
+pub const SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.texture.HDR_headroom".as_ptr();
 
-pub const SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER: &::core::ffi::CStr = c"SDL.texture.d3d11.texture";
+pub const SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.d3d11.texture".as_ptr();
 
-pub const SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER: &::core::ffi::CStr =
-    c"SDL.texture.d3d11.texture_u";
+pub const SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.d3d11.texture_u".as_ptr();
 
-pub const SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER: &::core::ffi::CStr =
-    c"SDL.texture.d3d11.texture_v";
+pub const SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.d3d11.texture_v".as_ptr();
 
-pub const SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER: &::core::ffi::CStr = c"SDL.texture.d3d12.texture";
+pub const SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.d3d12.texture".as_ptr();
 
-pub const SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER: &::core::ffi::CStr =
-    c"SDL.texture.d3d12.texture_u";
+pub const SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.d3d12.texture_u".as_ptr();
 
-pub const SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER: &::core::ffi::CStr =
-    c"SDL.texture.d3d12.texture_v";
+pub const SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.d3d12.texture_v".as_ptr();
 
-pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.opengl.texture";
+pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.opengl.texture".as_ptr();
 
-pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.opengl.texture_uv";
+pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.opengl.texture_uv".as_ptr();
 
-pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.opengl.texture_u";
+pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.opengl.texture_u".as_ptr();
 
-pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.opengl.texture_v";
+pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.opengl.texture_v".as_ptr();
 
-pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.opengl.target";
+pub const SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.opengl.target".as_ptr();
 
-pub const SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT: &::core::ffi::CStr = c"SDL.texture.opengl.tex_w";
+pub const SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.texture.opengl.tex_w".as_ptr();
 
-pub const SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT: &::core::ffi::CStr = c"SDL.texture.opengl.tex_h";
+pub const SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.texture.opengl.tex_h".as_ptr();
 
-pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.opengles2.texture";
+pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.opengles2.texture".as_ptr();
 
-pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.opengles2.texture_uv";
+pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.opengles2.texture_uv".as_ptr();
 
-pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.opengles2.texture_u";
+pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.opengles2.texture_u".as_ptr();
 
-pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.opengles2.texture_v";
+pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.opengles2.texture_v".as_ptr();
 
-pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.opengles2.target";
+pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.opengles2.target".as_ptr();
 
-pub const SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER: &::core::ffi::CStr =
-    c"SDL.texture.vulkan.texture";
+pub const SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.vulkan.texture".as_ptr();
 
 extern "C" {
     /// Get the renderer that created an [`SDL_Texture`].

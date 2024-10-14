@@ -556,17 +556,20 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-pub const SDL_PROP_TEXTINPUT_TYPE_NUMBER: &::core::ffi::CStr = c"SDL.textinput.type";
+pub const SDL_PROP_TEXTINPUT_TYPE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.textinput.type".as_ptr();
 
-pub const SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER: &::core::ffi::CStr =
-    c"SDL.textinput.capitalization";
+pub const SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.textinput.capitalization".as_ptr();
 
-pub const SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN: &::core::ffi::CStr = c"SDL.textinput.autocorrect";
+pub const SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.textinput.autocorrect".as_ptr();
 
-pub const SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN: &::core::ffi::CStr = c"SDL.textinput.multiline";
+pub const SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.textinput.multiline".as_ptr();
 
-pub const SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: &::core::ffi::CStr =
-    c"SDL.textinput.android.inputtype";
+pub const SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.textinput.android.inputtype".as_ptr();
 
 extern "C" {
     /// Check whether or not Unicode text input events are enabled for a window.

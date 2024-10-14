@@ -219,34 +219,35 @@ extern "C" {
     pub fn SDL_CreateProcessWithProperties(props: SDL_PropertiesID) -> *mut SDL_Process;
 }
 
-pub const SDL_PROP_PROCESS_CREATE_ARGS_POINTER: &::core::ffi::CStr = c"SDL.process.create.args";
+pub const SDL_PROP_PROCESS_CREATE_ARGS_POINTER: *const ::core::ffi::c_char =
+    c"SDL.process.create.args".as_ptr();
 
-pub const SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER: &::core::ffi::CStr =
-    c"SDL.process.create.environment";
+pub const SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER: *const ::core::ffi::c_char =
+    c"SDL.process.create.environment".as_ptr();
 
-pub const SDL_PROP_PROCESS_CREATE_STDIN_NUMBER: &::core::ffi::CStr =
-    c"SDL.process.create.stdin_option";
+pub const SDL_PROP_PROCESS_CREATE_STDIN_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.process.create.stdin_option".as_ptr();
 
-pub const SDL_PROP_PROCESS_CREATE_STDIN_POINTER: &::core::ffi::CStr =
-    c"SDL.process.create.stdin_source";
+pub const SDL_PROP_PROCESS_CREATE_STDIN_POINTER: *const ::core::ffi::c_char =
+    c"SDL.process.create.stdin_source".as_ptr();
 
-pub const SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER: &::core::ffi::CStr =
-    c"SDL.process.create.stdout_option";
+pub const SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.process.create.stdout_option".as_ptr();
 
-pub const SDL_PROP_PROCESS_CREATE_STDOUT_POINTER: &::core::ffi::CStr =
-    c"SDL.process.create.stdout_source";
+pub const SDL_PROP_PROCESS_CREATE_STDOUT_POINTER: *const ::core::ffi::c_char =
+    c"SDL.process.create.stdout_source".as_ptr();
 
-pub const SDL_PROP_PROCESS_CREATE_STDERR_NUMBER: &::core::ffi::CStr =
-    c"SDL.process.create.stderr_option";
+pub const SDL_PROP_PROCESS_CREATE_STDERR_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.process.create.stderr_option".as_ptr();
 
-pub const SDL_PROP_PROCESS_CREATE_STDERR_POINTER: &::core::ffi::CStr =
-    c"SDL.process.create.stderr_source";
+pub const SDL_PROP_PROCESS_CREATE_STDERR_POINTER: *const ::core::ffi::c_char =
+    c"SDL.process.create.stderr_source".as_ptr();
 
-pub const SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.process.create.stderr_to_stdout";
+pub const SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.process.create.stderr_to_stdout".as_ptr();
 
-pub const SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN: &::core::ffi::CStr =
-    c"SDL.process.create.background";
+pub const SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.process.create.background".as_ptr();
 
 extern "C" {
     /// Get the properties associated with a process.
@@ -284,15 +285,19 @@ extern "C" {
     pub fn SDL_GetProcessProperties(process: *mut SDL_Process) -> SDL_PropertiesID;
 }
 
-pub const SDL_PROP_PROCESS_PID_NUMBER: &::core::ffi::CStr = c"SDL.process.pid";
+pub const SDL_PROP_PROCESS_PID_NUMBER: *const ::core::ffi::c_char = c"SDL.process.pid".as_ptr();
 
-pub const SDL_PROP_PROCESS_STDIN_POINTER: &::core::ffi::CStr = c"SDL.process.stdin";
+pub const SDL_PROP_PROCESS_STDIN_POINTER: *const ::core::ffi::c_char =
+    c"SDL.process.stdin".as_ptr();
 
-pub const SDL_PROP_PROCESS_STDOUT_POINTER: &::core::ffi::CStr = c"SDL.process.stdout";
+pub const SDL_PROP_PROCESS_STDOUT_POINTER: *const ::core::ffi::c_char =
+    c"SDL.process.stdout".as_ptr();
 
-pub const SDL_PROP_PROCESS_STDERR_POINTER: &::core::ffi::CStr = c"SDL.process.stderr";
+pub const SDL_PROP_PROCESS_STDERR_POINTER: *const ::core::ffi::c_char =
+    c"SDL.process.stderr".as_ptr();
 
-pub const SDL_PROP_PROCESS_BACKGROUND_BOOLEAN: &::core::ffi::CStr = c"SDL.process.background";
+pub const SDL_PROP_PROCESS_BACKGROUND_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.process.background".as_ptr();
 
 extern "C" {
     /// Read all the output from a process.
