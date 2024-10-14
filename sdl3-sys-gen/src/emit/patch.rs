@@ -406,13 +406,24 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
         patch: |ctx, define| {
             define.doc.emit(ctx)?;
             writeln!(ctx, "///")?;
-            writeln!(ctx, "/// # Safety")?;
-            writeln!(ctx, "/// The type `T` must correctly implement [`crate::Interface`], and it must be valid to write a `T` to the memory pointed to by `iface`")?;
-            writeln!(ctx, "#[inline(always)]")?;
+            writeln!(ctx, "/// ### Safety (`sdl3-sys`)")?;
             writeln!(
                 ctx,
-                "pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {{"
+                "/// - `iface` must point to memory that is valid for writing the type `T`."
             )?;
+            writeln!(ctx, "/// - The type `T` must be a `repr(C)` struct.")?;
+            writeln!(
+                ctx,
+                "/// - The first field of the struct must be of type `u32`. It will be set to"
+            )?;
+            writeln!(ctx, "///   the size of the struct in bytes.")?;
+            writeln!(
+                ctx,
+                "/// - The rest of the struct will be initialized as all zero bytes."
+            )?;
+
+            writeln!(ctx, "#[inline(always)]")?;
+            writeln!(ctx, "pub unsafe fn SDL_INIT_INTERFACE<T>(iface: *mut T) {{")?;
             ctx.increase_indent();
             writeln!(ctx, "unsafe {{")?;
             ctx.increase_indent();

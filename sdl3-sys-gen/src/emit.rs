@@ -943,12 +943,6 @@ impl StructOrUnion {
                 ctx_ool.decrease_indent();
                 writeln!(ctx_ool, "}}")?;
                 writeln!(ctx_ool)?;
-                writeln!(
-                    ctx_ool,
-                    "impl crate::sealed_interface::Sealed for {ident} {{}}"
-                )?;
-                writeln!(ctx_ool, "unsafe impl crate::Interface for {ident} {{}}")?;
-                writeln!(ctx_ool)?;
             }
         }
         if with_ident {

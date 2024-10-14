@@ -384,10 +384,14 @@ emit! {
 /// - [`SDL_StorageInterface`]
 /// - [`SDL_VirtualJoystickDesc`]
 ///
-/// # Safety
-/// The type `T` must correctly implement [`crate::Interface`], and it must be valid to write a `T` to the memory pointed to by `iface`
+/// ### Safety (`sdl3-sys`)
+/// - `iface` must point to memory that is valid for writing the type `T`.
+/// - The type `T` must be a `repr(C)` struct.
+/// - The first field of the struct must be of type `u32`. It will be set to
+///   the size of the struct in bytes.
+/// - The rest of the struct will be initialized as all zero bytes.
 #[inline(always)]
-pub unsafe fn SDL_INIT_INTERFACE<T: crate::Interface>(iface: *mut T) {
+pub unsafe fn SDL_INIT_INTERFACE<T>(iface: *mut T) {
     unsafe {
         iface.write_bytes(0, 1);
         iface

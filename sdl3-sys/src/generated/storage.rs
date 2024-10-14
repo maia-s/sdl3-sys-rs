@@ -115,9 +115,6 @@ impl ::core::default::Default for SDL_StorageInterface {
     }
 }
 
-impl crate::sealed_interface::Sealed for SDL_StorageInterface {}
-unsafe impl crate::Interface for SDL_StorageInterface {}
-
 const _: () = ::core::assert!(
     (((::core::mem::size_of::<*mut ::core::ffi::c_void>() == 4_usize)
         && (::core::mem::size_of::<SDL_StorageInterface>() == 48_usize))
