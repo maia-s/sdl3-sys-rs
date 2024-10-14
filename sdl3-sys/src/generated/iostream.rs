@@ -16,16 +16,15 @@ use super::properties::*;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_IOStatus::READY`] | [`SDL_IO_STATUS_READY`] | Everything is ready (no errors and not EOF). |
-/// | [`SDL_IOStatus::ERROR`] | [`SDL_IO_STATUS_ERROR`] | Read or write I/O error |
-/// | [`SDL_IOStatus::EOF`] | [`SDL_IO_STATUS_EOF`] | End of file |
-/// | [`SDL_IOStatus::NOT_READY`] | [`SDL_IO_STATUS_NOT_READY`] | Non blocking I/O, not ready |
-/// | [`SDL_IOStatus::READONLY`] | [`SDL_IO_STATUS_READONLY`] | Tried to write a read-only buffer |
-/// | [`SDL_IOStatus::WRITEONLY`] | [`SDL_IO_STATUS_WRITEONLY`] | Tried to read a write-only buffer |
+/// | [`READY`](SDL_IOStatus::READY) | [`SDL_IO_STATUS_READY`] | Everything is ready (no errors and not EOF). |
+/// | [`ERROR`](SDL_IOStatus::ERROR) | [`SDL_IO_STATUS_ERROR`] | Read or write I/O error |
+/// | [`EOF`](SDL_IOStatus::EOF) | [`SDL_IO_STATUS_EOF`] | End of file |
+/// | [`NOT_READY`](SDL_IOStatus::NOT_READY) | [`SDL_IO_STATUS_NOT_READY`] | Non blocking I/O, not ready |
+/// | [`READONLY`](SDL_IOStatus::READONLY) | [`SDL_IO_STATUS_READONLY`] | Tried to write a read-only buffer |
+/// | [`WRITEONLY`](SDL_IOStatus::WRITEONLY) | [`SDL_IO_STATUS_WRITEONLY`] | Tried to read a write-only buffer |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -71,13 +70,12 @@ pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_IOWhence::SET`] | [`SDL_IO_SEEK_SET`] | Seek from the beginning of data |
-/// | [`SDL_IOWhence::CUR`] | [`SDL_IO_SEEK_CUR`] | Seek relative to current read point |
-/// | [`SDL_IOWhence::END`] | [`SDL_IO_SEEK_END`] | Seek relative to the end of data |
+/// | [`SET`](SDL_IOWhence::SET) | [`SDL_IO_SEEK_SET`] | Seek from the beginning of data |
+/// | [`CUR`](SDL_IOWhence::CUR) | [`SDL_IO_SEEK_CUR`] | Seek relative to current read point |
+/// | [`END`](SDL_IOWhence::END) | [`SDL_IO_SEEK_END`] | Seek relative to the end of data |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

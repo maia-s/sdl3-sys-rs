@@ -85,18 +85,17 @@ pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 /// ### See also
 /// - [`SDL_GetCurrentDisplayOrientation`]
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_SensorType::INVALID`] | [`SDL_SENSOR_INVALID`] | Returned for an invalid sensor |
-/// | [`SDL_SensorType::UNKNOWN`] | [`SDL_SENSOR_UNKNOWN`] | Unknown sensor type |
-/// | [`SDL_SensorType::ACCEL`] | [`SDL_SENSOR_ACCEL`] | Accelerometer |
-/// | [`SDL_SensorType::GYRO`] | [`SDL_SENSOR_GYRO`] | Gyroscope |
-/// | [`SDL_SensorType::ACCEL_L`] | [`SDL_SENSOR_ACCEL_L`] | Accelerometer for left Joy-Con controller and Wii nunchuk |
-/// | [`SDL_SensorType::GYRO_L`] | [`SDL_SENSOR_GYRO_L`] | Gyroscope for left Joy-Con controller |
-/// | [`SDL_SensorType::ACCEL_R`] | [`SDL_SENSOR_ACCEL_R`] | Accelerometer for right Joy-Con controller |
-/// | [`SDL_SensorType::GYRO_R`] | [`SDL_SENSOR_GYRO_R`] | Gyroscope for right Joy-Con controller |
+/// | [`INVALID`](SDL_SensorType::INVALID) | [`SDL_SENSOR_INVALID`] | Returned for an invalid sensor |
+/// | [`UNKNOWN`](SDL_SensorType::UNKNOWN) | [`SDL_SENSOR_UNKNOWN`] | Unknown sensor type |
+/// | [`ACCEL`](SDL_SensorType::ACCEL) | [`SDL_SENSOR_ACCEL`] | Accelerometer |
+/// | [`GYRO`](SDL_SensorType::GYRO) | [`SDL_SENSOR_GYRO`] | Gyroscope |
+/// | [`ACCEL_L`](SDL_SensorType::ACCEL_L) | [`SDL_SENSOR_ACCEL_L`] | Accelerometer for left Joy-Con controller and Wii nunchuk |
+/// | [`GYRO_L`](SDL_SensorType::GYRO_L) | [`SDL_SENSOR_GYRO_L`] | Gyroscope for left Joy-Con controller |
+/// | [`ACCEL_R`](SDL_SensorType::ACCEL_R) | [`SDL_SENSOR_ACCEL_R`] | Accelerometer for right Joy-Con controller |
+/// | [`GYRO_R`](SDL_SensorType::GYRO_R) | [`SDL_SENSOR_GYRO_R`] | Gyroscope for right Joy-Con controller |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

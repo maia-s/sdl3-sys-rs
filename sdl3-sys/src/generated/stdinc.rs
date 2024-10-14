@@ -320,11 +320,10 @@ const _: () = ::core::assert!(
 
 #[cfg(all(not(target_os = "horizon"), not(target_os = "vita")))]
 emit! {
-    /// ### `sdl3-sys` note
-    /// This is a `C` enum. Known values:
+    /// ### Known values (`sdl3-sys`)
     /// | Associated constant | Global constant | Description |
     /// | ------------------- | --------------- | ----------- |
-    /// | [`SDL_DUMMY_ENUM::DUMMY_ENUM_VALUE`] | [`DUMMY_ENUM_VALUE`] |  |
+    /// | [`DUMMY_ENUM_VALUE`](SDL_DUMMY_ENUM::DUMMY_ENUM_VALUE) | [`DUMMY_ENUM_VALUE`] | |
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     #[cfg_attr(feature = "debug-impls", derive(Debug))]

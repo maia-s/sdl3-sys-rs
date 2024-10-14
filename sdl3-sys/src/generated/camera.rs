@@ -66,13 +66,12 @@ pub struct SDL_CameraSpec {
 /// ### See also
 /// - [`SDL_GetCameraPosition`]
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_CameraPosition::UNKNOWN`] | [`SDL_CAMERA_POSITION_UNKNOWN`] |  |
-/// | [`SDL_CameraPosition::FRONT_FACING`] | [`SDL_CAMERA_POSITION_FRONT_FACING`] |  |
-/// | [`SDL_CameraPosition::BACK_FACING`] | [`SDL_CAMERA_POSITION_BACK_FACING`] |  |
+/// | [`UNKNOWN`](SDL_CameraPosition::UNKNOWN) | [`SDL_CAMERA_POSITION_UNKNOWN`] | |
+/// | [`FRONT_FACING`](SDL_CameraPosition::FRONT_FACING) | [`SDL_CAMERA_POSITION_FRONT_FACING`] | |
+/// | [`BACK_FACING`](SDL_CameraPosition::BACK_FACING) | [`SDL_CAMERA_POSITION_BACK_FACING`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

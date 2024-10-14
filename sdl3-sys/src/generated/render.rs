@@ -67,13 +67,12 @@ pub struct SDL_Vertex {
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_TextureAccess::STATIC`] | [`SDL_TEXTUREACCESS_STATIC`] | Changes rarely, not lockable |
-/// | [`SDL_TextureAccess::STREAMING`] | [`SDL_TEXTUREACCESS_STREAMING`] | Changes frequently, lockable |
-/// | [`SDL_TextureAccess::TARGET`] | [`SDL_TEXTUREACCESS_TARGET`] | Texture can be used as a render target |
+/// | [`STATIC`](SDL_TextureAccess::STATIC) | [`SDL_TEXTUREACCESS_STATIC`] | Changes rarely, not lockable |
+/// | [`STREAMING`](SDL_TextureAccess::STREAMING) | [`SDL_TEXTUREACCESS_STREAMING`] | Changes frequently, lockable |
+/// | [`TARGET`](SDL_TextureAccess::TARGET) | [`SDL_TEXTUREACCESS_TARGET`] | Texture can be used as a render target |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -104,15 +103,14 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGE
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_RendererLogicalPresentation::DISABLED`] | [`SDL_LOGICAL_PRESENTATION_DISABLED`] | There is no logical size in effect |
-/// | [`SDL_RendererLogicalPresentation::STRETCH`] | [`SDL_LOGICAL_PRESENTATION_STRETCH`] | The rendered content is stretched to the output resolution |
-/// | [`SDL_RendererLogicalPresentation::LETTERBOX`] | [`SDL_LOGICAL_PRESENTATION_LETTERBOX`] | The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars |
-/// | [`SDL_RendererLogicalPresentation::OVERSCAN`] | [`SDL_LOGICAL_PRESENTATION_OVERSCAN`] | The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds |
-/// | [`SDL_RendererLogicalPresentation::INTEGER_SCALE`] | [`SDL_LOGICAL_PRESENTATION_INTEGER_SCALE`] | The rendered content is scaled up by integer multiples to fit the output resolution |
+/// | [`DISABLED`](SDL_RendererLogicalPresentation::DISABLED) | [`SDL_LOGICAL_PRESENTATION_DISABLED`] | There is no logical size in effect |
+/// | [`STRETCH`](SDL_RendererLogicalPresentation::STRETCH) | [`SDL_LOGICAL_PRESENTATION_STRETCH`] | The rendered content is stretched to the output resolution |
+/// | [`LETTERBOX`](SDL_RendererLogicalPresentation::LETTERBOX) | [`SDL_LOGICAL_PRESENTATION_LETTERBOX`] | The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars |
+/// | [`OVERSCAN`](SDL_RendererLogicalPresentation::OVERSCAN) | [`SDL_LOGICAL_PRESENTATION_OVERSCAN`] | The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds |
+/// | [`INTEGER_SCALE`](SDL_RendererLogicalPresentation::INTEGER_SCALE) | [`SDL_LOGICAL_PRESENTATION_INTEGER_SCALE`] | The rendered content is scaled up by integer multiples to fit the output resolution |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

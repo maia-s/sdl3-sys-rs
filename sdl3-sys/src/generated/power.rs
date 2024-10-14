@@ -11,16 +11,15 @@ use super::error::*;
 /// ### Availability
 /// This enum is available since SDL 3.0.0
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_PowerState::ERROR`] | [`SDL_POWERSTATE_ERROR`] | error determining power status |
-/// | [`SDL_PowerState::UNKNOWN`] | [`SDL_POWERSTATE_UNKNOWN`] | cannot determine power status |
-/// | [`SDL_PowerState::ON_BATTERY`] | [`SDL_POWERSTATE_ON_BATTERY`] | Not plugged in, running on the battery |
-/// | [`SDL_PowerState::NO_BATTERY`] | [`SDL_POWERSTATE_NO_BATTERY`] | Plugged in, no battery available |
-/// | [`SDL_PowerState::CHARGING`] | [`SDL_POWERSTATE_CHARGING`] | Plugged in, charging battery |
-/// | [`SDL_PowerState::CHARGED`] | [`SDL_POWERSTATE_CHARGED`] | Plugged in, battery charged |
+/// | [`ERROR`](SDL_PowerState::ERROR) | [`SDL_POWERSTATE_ERROR`] | error determining power status |
+/// | [`UNKNOWN`](SDL_PowerState::UNKNOWN) | [`SDL_POWERSTATE_UNKNOWN`] | cannot determine power status |
+/// | [`ON_BATTERY`](SDL_PowerState::ON_BATTERY) | [`SDL_POWERSTATE_ON_BATTERY`] | Not plugged in, running on the battery |
+/// | [`NO_BATTERY`](SDL_PowerState::NO_BATTERY) | [`SDL_POWERSTATE_NO_BATTERY`] | Plugged in, no battery available |
+/// | [`CHARGING`](SDL_PowerState::CHARGING) | [`SDL_POWERSTATE_CHARGING`] | Plugged in, charging battery |
+/// | [`CHARGED`](SDL_PowerState::CHARGED) | [`SDL_POWERSTATE_CHARGED`] | Plugged in, battery charged |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

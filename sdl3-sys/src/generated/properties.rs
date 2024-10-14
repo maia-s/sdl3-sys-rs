@@ -35,16 +35,15 @@ pub type SDL_PropertiesID = Uint32;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_PropertyType::INVALID`] | [`SDL_PROPERTY_TYPE_INVALID`] |  |
-/// | [`SDL_PropertyType::POINTER`] | [`SDL_PROPERTY_TYPE_POINTER`] |  |
-/// | [`SDL_PropertyType::STRING`] | [`SDL_PROPERTY_TYPE_STRING`] |  |
-/// | [`SDL_PropertyType::NUMBER`] | [`SDL_PROPERTY_TYPE_NUMBER`] |  |
-/// | [`SDL_PropertyType::FLOAT`] | [`SDL_PROPERTY_TYPE_FLOAT`] |  |
-/// | [`SDL_PropertyType::BOOLEAN`] | [`SDL_PROPERTY_TYPE_BOOLEAN`] |  |
+/// | [`INVALID`](SDL_PropertyType::INVALID) | [`SDL_PROPERTY_TYPE_INVALID`] | |
+/// | [`POINTER`](SDL_PropertyType::POINTER) | [`SDL_PROPERTY_TYPE_POINTER`] | |
+/// | [`STRING`](SDL_PropertyType::STRING) | [`SDL_PROPERTY_TYPE_STRING`] | |
+/// | [`NUMBER`](SDL_PropertyType::NUMBER) | [`SDL_PROPERTY_TYPE_NUMBER`] | |
+/// | [`FLOAT`](SDL_PropertyType::FLOAT) | [`SDL_PROPERTY_TYPE_FLOAT`] | |
+/// | [`BOOLEAN`](SDL_PropertyType::BOOLEAN) | [`SDL_PROPERTY_TYPE_BOOLEAN`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

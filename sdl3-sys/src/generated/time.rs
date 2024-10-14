@@ -41,13 +41,12 @@ pub struct SDL_DateTime {
 /// ### See also
 /// - [`SDL_GetDateTimeLocalePreferences`]
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_DateFormat::YYYYMMDD`] | [`SDL_DATE_FORMAT_YYYYMMDD`] | Year/Month/Day |
-/// | [`SDL_DateFormat::DDMMYYYY`] | [`SDL_DATE_FORMAT_DDMMYYYY`] | Day/Month/Year |
-/// | [`SDL_DateFormat::MMDDYYYY`] | [`SDL_DATE_FORMAT_MMDDYYYY`] | Month/Day/Year |
+/// | [`YYYYMMDD`](SDL_DateFormat::YYYYMMDD) | [`SDL_DATE_FORMAT_YYYYMMDD`] | Year/Month/Day |
+/// | [`DDMMYYYY`](SDL_DateFormat::DDMMYYYY) | [`SDL_DATE_FORMAT_DDMMYYYY`] | Day/Month/Year |
+/// | [`MMDDYYYY`](SDL_DateFormat::MMDDYYYY) | [`SDL_DATE_FORMAT_MMDDYYYY`] | Month/Day/Year |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -81,12 +80,11 @@ pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 /// ### See also
 /// - [`SDL_GetDateTimeLocalePreferences`]
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_TimeFormat::_24HR`] | [`SDL_TIME_FORMAT_24HR`] | 24 hour time |
-/// | [`SDL_TimeFormat::_12HR`] | [`SDL_TIME_FORMAT_12HR`] | 12 hour time |
+/// | [`_24HR`](SDL_TimeFormat::_24HR) | [`SDL_TIME_FORMAT_24HR`] | 24 hour time |
+/// | [`_12HR`](SDL_TimeFormat::_12HR) | [`SDL_TIME_FORMAT_12HR`] | 12 hour time |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

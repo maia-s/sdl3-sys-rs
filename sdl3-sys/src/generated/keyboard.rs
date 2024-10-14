@@ -385,19 +385,18 @@ extern "C" {
 /// ### See also
 /// - [`SDL_StartTextInputWithProperties`]
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_TextInputType::TEXT`] | [`SDL_TEXTINPUT_TYPE_TEXT`] | The input is text |
-/// | [`SDL_TextInputType::TEXT_NAME`] | [`SDL_TEXTINPUT_TYPE_TEXT_NAME`] | The input is a person's name |
-/// | [`SDL_TextInputType::TEXT_EMAIL`] | [`SDL_TEXTINPUT_TYPE_TEXT_EMAIL`] | The input is an e-mail address |
-/// | [`SDL_TextInputType::TEXT_USERNAME`] | [`SDL_TEXTINPUT_TYPE_TEXT_USERNAME`] | The input is a username |
-/// | [`SDL_TextInputType::TEXT_PASSWORD_HIDDEN`] | [`SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_HIDDEN`] | The input is a secure password that is hidden |
-/// | [`SDL_TextInputType::TEXT_PASSWORD_VISIBLE`] | [`SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_VISIBLE`] | The input is a secure password that is visible |
-/// | [`SDL_TextInputType::NUMBER`] | [`SDL_TEXTINPUT_TYPE_NUMBER`] | The input is a number |
-/// | [`SDL_TextInputType::NUMBER_PASSWORD_HIDDEN`] | [`SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN`] | The input is a secure PIN that is hidden |
-/// | [`SDL_TextInputType::NUMBER_PASSWORD_VISIBLE`] | [`SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE`] | The input is a secure PIN that is visible |
+/// | [`TEXT`](SDL_TextInputType::TEXT) | [`SDL_TEXTINPUT_TYPE_TEXT`] | The input is text |
+/// | [`TEXT_NAME`](SDL_TextInputType::TEXT_NAME) | [`SDL_TEXTINPUT_TYPE_TEXT_NAME`] | The input is a person's name |
+/// | [`TEXT_EMAIL`](SDL_TextInputType::TEXT_EMAIL) | [`SDL_TEXTINPUT_TYPE_TEXT_EMAIL`] | The input is an e-mail address |
+/// | [`TEXT_USERNAME`](SDL_TextInputType::TEXT_USERNAME) | [`SDL_TEXTINPUT_TYPE_TEXT_USERNAME`] | The input is a username |
+/// | [`TEXT_PASSWORD_HIDDEN`](SDL_TextInputType::TEXT_PASSWORD_HIDDEN) | [`SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_HIDDEN`] | The input is a secure password that is hidden |
+/// | [`TEXT_PASSWORD_VISIBLE`](SDL_TextInputType::TEXT_PASSWORD_VISIBLE) | [`SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_VISIBLE`] | The input is a secure password that is visible |
+/// | [`NUMBER`](SDL_TextInputType::NUMBER) | [`SDL_TEXTINPUT_TYPE_NUMBER`] | The input is a number |
+/// | [`NUMBER_PASSWORD_HIDDEN`](SDL_TextInputType::NUMBER_PASSWORD_HIDDEN) | [`SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN`] | The input is a secure PIN that is hidden |
+/// | [`NUMBER_PASSWORD_VISIBLE`](SDL_TextInputType::NUMBER_PASSWORD_VISIBLE) | [`SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE`] | The input is a secure PIN that is visible |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -464,14 +463,13 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
 /// ### See also
 /// - [`SDL_StartTextInputWithProperties`]
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_Capitalization::NONE`] | [`SDL_CAPITALIZE_NONE`] | No auto-capitalization will be done |
-/// | [`SDL_Capitalization::SENTENCES`] | [`SDL_CAPITALIZE_SENTENCES`] | The first letter of sentences will be capitalized |
-/// | [`SDL_Capitalization::WORDS`] | [`SDL_CAPITALIZE_WORDS`] | The first letter of words will be capitalized |
-/// | [`SDL_Capitalization::LETTERS`] | [`SDL_CAPITALIZE_LETTERS`] | All letters will be capitalized |
+/// | [`NONE`](SDL_Capitalization::NONE) | [`SDL_CAPITALIZE_NONE`] | No auto-capitalization will be done |
+/// | [`SENTENCES`](SDL_Capitalization::SENTENCES) | [`SDL_CAPITALIZE_SENTENCES`] | The first letter of sentences will be capitalized |
+/// | [`WORDS`](SDL_Capitalization::WORDS) | [`SDL_CAPITALIZE_WORDS`] | The first letter of words will be capitalized |
+/// | [`LETTERS`](SDL_Capitalization::LETTERS) | [`SDL_CAPITALIZE_LETTERS`] | All letters will be capitalized |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

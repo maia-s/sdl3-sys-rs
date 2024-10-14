@@ -45,23 +45,22 @@ pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_PixelType::UNKNOWN`] | [`SDL_PIXELTYPE_UNKNOWN`] |  |
-/// | [`SDL_PixelType::INDEX1`] | [`SDL_PIXELTYPE_INDEX1`] |  |
-/// | [`SDL_PixelType::INDEX4`] | [`SDL_PIXELTYPE_INDEX4`] |  |
-/// | [`SDL_PixelType::INDEX8`] | [`SDL_PIXELTYPE_INDEX8`] |  |
-/// | [`SDL_PixelType::PACKED8`] | [`SDL_PIXELTYPE_PACKED8`] |  |
-/// | [`SDL_PixelType::PACKED16`] | [`SDL_PIXELTYPE_PACKED16`] |  |
-/// | [`SDL_PixelType::PACKED32`] | [`SDL_PIXELTYPE_PACKED32`] |  |
-/// | [`SDL_PixelType::ARRAYU8`] | [`SDL_PIXELTYPE_ARRAYU8`] |  |
-/// | [`SDL_PixelType::ARRAYU16`] | [`SDL_PIXELTYPE_ARRAYU16`] |  |
-/// | [`SDL_PixelType::ARRAYU32`] | [`SDL_PIXELTYPE_ARRAYU32`] |  |
-/// | [`SDL_PixelType::ARRAYF16`] | [`SDL_PIXELTYPE_ARRAYF16`] |  |
-/// | [`SDL_PixelType::ARRAYF32`] | [`SDL_PIXELTYPE_ARRAYF32`] |  |
-/// | [`SDL_PixelType::INDEX2`] | [`SDL_PIXELTYPE_INDEX2`] |  |
+/// | [`UNKNOWN`](SDL_PixelType::UNKNOWN) | [`SDL_PIXELTYPE_UNKNOWN`] | |
+/// | [`INDEX1`](SDL_PixelType::INDEX1) | [`SDL_PIXELTYPE_INDEX1`] | |
+/// | [`INDEX4`](SDL_PixelType::INDEX4) | [`SDL_PIXELTYPE_INDEX4`] | |
+/// | [`INDEX8`](SDL_PixelType::INDEX8) | [`SDL_PIXELTYPE_INDEX8`] | |
+/// | [`PACKED8`](SDL_PixelType::PACKED8) | [`SDL_PIXELTYPE_PACKED8`] | |
+/// | [`PACKED16`](SDL_PixelType::PACKED16) | [`SDL_PIXELTYPE_PACKED16`] | |
+/// | [`PACKED32`](SDL_PixelType::PACKED32) | [`SDL_PIXELTYPE_PACKED32`] | |
+/// | [`ARRAYU8`](SDL_PixelType::ARRAYU8) | [`SDL_PIXELTYPE_ARRAYU8`] | |
+/// | [`ARRAYU16`](SDL_PixelType::ARRAYU16) | [`SDL_PIXELTYPE_ARRAYU16`] | |
+/// | [`ARRAYU32`](SDL_PixelType::ARRAYU32) | [`SDL_PIXELTYPE_ARRAYU32`] | |
+/// | [`ARRAYF16`](SDL_PixelType::ARRAYF16) | [`SDL_PIXELTYPE_ARRAYF16`] | |
+/// | [`ARRAYF32`](SDL_PixelType::ARRAYF32) | [`SDL_PIXELTYPE_ARRAYF32`] | |
+/// | [`INDEX2`](SDL_PixelType::INDEX2) | [`SDL_PIXELTYPE_INDEX2`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -106,13 +105,12 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_BitmapOrder::NONE`] | [`SDL_BITMAPORDER_NONE`] |  |
-/// | [`SDL_BitmapOrder::_4321`] | [`SDL_BITMAPORDER_4321`] |  |
-/// | [`SDL_BitmapOrder::_1234`] | [`SDL_BITMAPORDER_1234`] |  |
+/// | [`NONE`](SDL_BitmapOrder::NONE) | [`SDL_BITMAPORDER_NONE`] | |
+/// | [`_4321`](SDL_BitmapOrder::_4321) | [`SDL_BITMAPORDER_4321`] | |
+/// | [`_1234`](SDL_BitmapOrder::_1234) | [`SDL_BITMAPORDER_1234`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -137,19 +135,18 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_PackedOrder::NONE`] | [`SDL_PACKEDORDER_NONE`] |  |
-/// | [`SDL_PackedOrder::XRGB`] | [`SDL_PACKEDORDER_XRGB`] |  |
-/// | [`SDL_PackedOrder::RGBX`] | [`SDL_PACKEDORDER_RGBX`] |  |
-/// | [`SDL_PackedOrder::ARGB`] | [`SDL_PACKEDORDER_ARGB`] |  |
-/// | [`SDL_PackedOrder::RGBA`] | [`SDL_PACKEDORDER_RGBA`] |  |
-/// | [`SDL_PackedOrder::XBGR`] | [`SDL_PACKEDORDER_XBGR`] |  |
-/// | [`SDL_PackedOrder::BGRX`] | [`SDL_PACKEDORDER_BGRX`] |  |
-/// | [`SDL_PackedOrder::ABGR`] | [`SDL_PACKEDORDER_ABGR`] |  |
-/// | [`SDL_PackedOrder::BGRA`] | [`SDL_PACKEDORDER_BGRA`] |  |
+/// | [`NONE`](SDL_PackedOrder::NONE) | [`SDL_PACKEDORDER_NONE`] | |
+/// | [`XRGB`](SDL_PackedOrder::XRGB) | [`SDL_PACKEDORDER_XRGB`] | |
+/// | [`RGBX`](SDL_PackedOrder::RGBX) | [`SDL_PACKEDORDER_RGBX`] | |
+/// | [`ARGB`](SDL_PackedOrder::ARGB) | [`SDL_PACKEDORDER_ARGB`] | |
+/// | [`RGBA`](SDL_PackedOrder::RGBA) | [`SDL_PACKEDORDER_RGBA`] | |
+/// | [`XBGR`](SDL_PackedOrder::XBGR) | [`SDL_PACKEDORDER_XBGR`] | |
+/// | [`BGRX`](SDL_PackedOrder::BGRX) | [`SDL_PACKEDORDER_BGRX`] | |
+/// | [`ABGR`](SDL_PackedOrder::ABGR) | [`SDL_PACKEDORDER_ABGR`] | |
+/// | [`BGRA`](SDL_PackedOrder::BGRA) | [`SDL_PACKEDORDER_BGRA`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -186,17 +183,16 @@ pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_ArrayOrder::NONE`] | [`SDL_ARRAYORDER_NONE`] |  |
-/// | [`SDL_ArrayOrder::RGB`] | [`SDL_ARRAYORDER_RGB`] |  |
-/// | [`SDL_ArrayOrder::RGBA`] | [`SDL_ARRAYORDER_RGBA`] |  |
-/// | [`SDL_ArrayOrder::ARGB`] | [`SDL_ARRAYORDER_ARGB`] |  |
-/// | [`SDL_ArrayOrder::BGR`] | [`SDL_ARRAYORDER_BGR`] |  |
-/// | [`SDL_ArrayOrder::BGRA`] | [`SDL_ARRAYORDER_BGRA`] |  |
-/// | [`SDL_ArrayOrder::ABGR`] | [`SDL_ARRAYORDER_ABGR`] |  |
+/// | [`NONE`](SDL_ArrayOrder::NONE) | [`SDL_ARRAYORDER_NONE`] | |
+/// | [`RGB`](SDL_ArrayOrder::RGB) | [`SDL_ARRAYORDER_RGB`] | |
+/// | [`RGBA`](SDL_ArrayOrder::RGBA) | [`SDL_ARRAYORDER_RGBA`] | |
+/// | [`ARGB`](SDL_ArrayOrder::ARGB) | [`SDL_ARRAYORDER_ARGB`] | |
+/// | [`BGR`](SDL_ArrayOrder::BGR) | [`SDL_ARRAYORDER_BGR`] | |
+/// | [`BGRA`](SDL_ArrayOrder::BGRA) | [`SDL_ARRAYORDER_BGRA`] | |
+/// | [`ABGR`](SDL_ArrayOrder::ABGR) | [`SDL_ARRAYORDER_ABGR`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -229,19 +225,18 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_PackedLayout::NONE`] | [`SDL_PACKEDLAYOUT_NONE`] |  |
-/// | [`SDL_PackedLayout::_332`] | [`SDL_PACKEDLAYOUT_332`] |  |
-/// | [`SDL_PackedLayout::_4444`] | [`SDL_PACKEDLAYOUT_4444`] |  |
-/// | [`SDL_PackedLayout::_1555`] | [`SDL_PACKEDLAYOUT_1555`] |  |
-/// | [`SDL_PackedLayout::_5551`] | [`SDL_PACKEDLAYOUT_5551`] |  |
-/// | [`SDL_PackedLayout::_565`] | [`SDL_PACKEDLAYOUT_565`] |  |
-/// | [`SDL_PackedLayout::_8888`] | [`SDL_PACKEDLAYOUT_8888`] |  |
-/// | [`SDL_PackedLayout::_2101010`] | [`SDL_PACKEDLAYOUT_2101010`] |  |
-/// | [`SDL_PackedLayout::_1010102`] | [`SDL_PACKEDLAYOUT_1010102`] |  |
+/// | [`NONE`](SDL_PackedLayout::NONE) | [`SDL_PACKEDLAYOUT_NONE`] | |
+/// | [`_332`](SDL_PackedLayout::_332) | [`SDL_PACKEDLAYOUT_332`] | |
+/// | [`_4444`](SDL_PackedLayout::_4444) | [`SDL_PACKEDLAYOUT_4444`] | |
+/// | [`_1555`](SDL_PackedLayout::_1555) | [`SDL_PACKEDLAYOUT_1555`] | |
+/// | [`_5551`](SDL_PackedLayout::_5551) | [`SDL_PACKEDLAYOUT_5551`] | |
+/// | [`_565`](SDL_PackedLayout::_565) | [`SDL_PACKEDLAYOUT_565`] | |
+/// | [`_8888`](SDL_PackedLayout::_8888) | [`SDL_PACKEDLAYOUT_8888`] | |
+/// | [`_2101010`](SDL_PackedLayout::_2101010) | [`SDL_PACKEDLAYOUT_2101010`] | |
+/// | [`_1010102`](SDL_PackedLayout::_1010102) | [`SDL_PACKEDLAYOUT_1010102`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -315,82 +310,81 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_PixelFormat::UNKNOWN`] | [`SDL_PIXELFORMAT_UNKNOWN`] |  |
-/// | [`SDL_PixelFormat::INDEX1LSB`] | [`SDL_PIXELFORMAT_INDEX1LSB`] |  |
-/// | [`SDL_PixelFormat::INDEX1MSB`] | [`SDL_PIXELFORMAT_INDEX1MSB`] |  |
-/// | [`SDL_PixelFormat::INDEX2LSB`] | [`SDL_PIXELFORMAT_INDEX2LSB`] |  |
-/// | [`SDL_PixelFormat::INDEX2MSB`] | [`SDL_PIXELFORMAT_INDEX2MSB`] |  |
-/// | [`SDL_PixelFormat::INDEX4LSB`] | [`SDL_PIXELFORMAT_INDEX4LSB`] |  |
-/// | [`SDL_PixelFormat::INDEX4MSB`] | [`SDL_PIXELFORMAT_INDEX4MSB`] |  |
-/// | [`SDL_PixelFormat::INDEX8`] | [`SDL_PIXELFORMAT_INDEX8`] |  |
-/// | [`SDL_PixelFormat::RGB332`] | [`SDL_PIXELFORMAT_RGB332`] |  |
-/// | [`SDL_PixelFormat::XRGB4444`] | [`SDL_PIXELFORMAT_XRGB4444`] |  |
-/// | [`SDL_PixelFormat::XBGR4444`] | [`SDL_PIXELFORMAT_XBGR4444`] |  |
-/// | [`SDL_PixelFormat::XRGB1555`] | [`SDL_PIXELFORMAT_XRGB1555`] |  |
-/// | [`SDL_PixelFormat::XBGR1555`] | [`SDL_PIXELFORMAT_XBGR1555`] |  |
-/// | [`SDL_PixelFormat::ARGB4444`] | [`SDL_PIXELFORMAT_ARGB4444`] |  |
-/// | [`SDL_PixelFormat::RGBA4444`] | [`SDL_PIXELFORMAT_RGBA4444`] |  |
-/// | [`SDL_PixelFormat::ABGR4444`] | [`SDL_PIXELFORMAT_ABGR4444`] |  |
-/// | [`SDL_PixelFormat::BGRA4444`] | [`SDL_PIXELFORMAT_BGRA4444`] |  |
-/// | [`SDL_PixelFormat::ARGB1555`] | [`SDL_PIXELFORMAT_ARGB1555`] |  |
-/// | [`SDL_PixelFormat::RGBA5551`] | [`SDL_PIXELFORMAT_RGBA5551`] |  |
-/// | [`SDL_PixelFormat::ABGR1555`] | [`SDL_PIXELFORMAT_ABGR1555`] |  |
-/// | [`SDL_PixelFormat::BGRA5551`] | [`SDL_PIXELFORMAT_BGRA5551`] |  |
-/// | [`SDL_PixelFormat::RGB565`] | [`SDL_PIXELFORMAT_RGB565`] |  |
-/// | [`SDL_PixelFormat::BGR565`] | [`SDL_PIXELFORMAT_BGR565`] |  |
-/// | [`SDL_PixelFormat::RGB24`] | [`SDL_PIXELFORMAT_RGB24`] |  |
-/// | [`SDL_PixelFormat::BGR24`] | [`SDL_PIXELFORMAT_BGR24`] |  |
-/// | [`SDL_PixelFormat::XRGB8888`] | [`SDL_PIXELFORMAT_XRGB8888`] |  |
-/// | [`SDL_PixelFormat::RGBX8888`] | [`SDL_PIXELFORMAT_RGBX8888`] |  |
-/// | [`SDL_PixelFormat::XBGR8888`] | [`SDL_PIXELFORMAT_XBGR8888`] |  |
-/// | [`SDL_PixelFormat::BGRX8888`] | [`SDL_PIXELFORMAT_BGRX8888`] |  |
-/// | [`SDL_PixelFormat::ARGB8888`] | [`SDL_PIXELFORMAT_ARGB8888`] |  |
-/// | [`SDL_PixelFormat::RGBA8888`] | [`SDL_PIXELFORMAT_RGBA8888`] |  |
-/// | [`SDL_PixelFormat::ABGR8888`] | [`SDL_PIXELFORMAT_ABGR8888`] |  |
-/// | [`SDL_PixelFormat::BGRA8888`] | [`SDL_PIXELFORMAT_BGRA8888`] |  |
-/// | [`SDL_PixelFormat::XRGB2101010`] | [`SDL_PIXELFORMAT_XRGB2101010`] |  |
-/// | [`SDL_PixelFormat::XBGR2101010`] | [`SDL_PIXELFORMAT_XBGR2101010`] |  |
-/// | [`SDL_PixelFormat::ARGB2101010`] | [`SDL_PIXELFORMAT_ARGB2101010`] |  |
-/// | [`SDL_PixelFormat::ABGR2101010`] | [`SDL_PIXELFORMAT_ABGR2101010`] |  |
-/// | [`SDL_PixelFormat::RGB48`] | [`SDL_PIXELFORMAT_RGB48`] |  |
-/// | [`SDL_PixelFormat::BGR48`] | [`SDL_PIXELFORMAT_BGR48`] |  |
-/// | [`SDL_PixelFormat::RGBA64`] | [`SDL_PIXELFORMAT_RGBA64`] |  |
-/// | [`SDL_PixelFormat::ARGB64`] | [`SDL_PIXELFORMAT_ARGB64`] |  |
-/// | [`SDL_PixelFormat::BGRA64`] | [`SDL_PIXELFORMAT_BGRA64`] |  |
-/// | [`SDL_PixelFormat::ABGR64`] | [`SDL_PIXELFORMAT_ABGR64`] |  |
-/// | [`SDL_PixelFormat::RGB48_FLOAT`] | [`SDL_PIXELFORMAT_RGB48_FLOAT`] |  |
-/// | [`SDL_PixelFormat::BGR48_FLOAT`] | [`SDL_PIXELFORMAT_BGR48_FLOAT`] |  |
-/// | [`SDL_PixelFormat::RGBA64_FLOAT`] | [`SDL_PIXELFORMAT_RGBA64_FLOAT`] |  |
-/// | [`SDL_PixelFormat::ARGB64_FLOAT`] | [`SDL_PIXELFORMAT_ARGB64_FLOAT`] |  |
-/// | [`SDL_PixelFormat::BGRA64_FLOAT`] | [`SDL_PIXELFORMAT_BGRA64_FLOAT`] |  |
-/// | [`SDL_PixelFormat::ABGR64_FLOAT`] | [`SDL_PIXELFORMAT_ABGR64_FLOAT`] |  |
-/// | [`SDL_PixelFormat::RGB96_FLOAT`] | [`SDL_PIXELFORMAT_RGB96_FLOAT`] |  |
-/// | [`SDL_PixelFormat::BGR96_FLOAT`] | [`SDL_PIXELFORMAT_BGR96_FLOAT`] |  |
-/// | [`SDL_PixelFormat::RGBA128_FLOAT`] | [`SDL_PIXELFORMAT_RGBA128_FLOAT`] |  |
-/// | [`SDL_PixelFormat::ARGB128_FLOAT`] | [`SDL_PIXELFORMAT_ARGB128_FLOAT`] |  |
-/// | [`SDL_PixelFormat::BGRA128_FLOAT`] | [`SDL_PIXELFORMAT_BGRA128_FLOAT`] |  |
-/// | [`SDL_PixelFormat::ABGR128_FLOAT`] | [`SDL_PIXELFORMAT_ABGR128_FLOAT`] |  |
-/// | [`SDL_PixelFormat::YV12`] | [`SDL_PIXELFORMAT_YV12`] | Planar mode: Y + V + U  (3 planes) |
-/// | [`SDL_PixelFormat::IYUV`] | [`SDL_PIXELFORMAT_IYUV`] | Planar mode: Y + U + V  (3 planes) |
-/// | [`SDL_PixelFormat::YUY2`] | [`SDL_PIXELFORMAT_YUY2`] | Packed mode: Y0+U0+Y1+V0 (1 plane) |
-/// | [`SDL_PixelFormat::UYVY`] | [`SDL_PIXELFORMAT_UYVY`] | Packed mode: U0+Y0+V0+Y1 (1 plane) |
-/// | [`SDL_PixelFormat::YVYU`] | [`SDL_PIXELFORMAT_YVYU`] | Packed mode: Y0+V0+Y1+U0 (1 plane) |
-/// | [`SDL_PixelFormat::NV12`] | [`SDL_PIXELFORMAT_NV12`] | Planar mode: Y + U/V interleaved  (2 planes) |
-/// | [`SDL_PixelFormat::NV21`] | [`SDL_PIXELFORMAT_NV21`] | Planar mode: Y + V/U interleaved  (2 planes) |
-/// | [`SDL_PixelFormat::P010`] | [`SDL_PIXELFORMAT_P010`] | Planar mode: Y + U/V interleaved  (2 planes) |
-/// | [`SDL_PixelFormat::EXTERNAL_OES`] | [`SDL_PIXELFORMAT_EXTERNAL_OES`] | Android video texture format |
-/// | [`SDL_PixelFormat::RGBA32`] | [`SDL_PIXELFORMAT_RGBA32`] | (target dependent)  |
-/// | [`SDL_PixelFormat::ARGB32`] | [`SDL_PIXELFORMAT_ARGB32`] | (target dependent)  |
-/// | [`SDL_PixelFormat::BGRA32`] | [`SDL_PIXELFORMAT_BGRA32`] | (target dependent)  |
-/// | [`SDL_PixelFormat::ABGR32`] | [`SDL_PIXELFORMAT_ABGR32`] | (target dependent)  |
-/// | [`SDL_PixelFormat::RGBX32`] | [`SDL_PIXELFORMAT_RGBX32`] | (target dependent)  |
-/// | [`SDL_PixelFormat::XRGB32`] | [`SDL_PIXELFORMAT_XRGB32`] | (target dependent)  |
-/// | [`SDL_PixelFormat::BGRX32`] | [`SDL_PIXELFORMAT_BGRX32`] | (target dependent)  |
-/// | [`SDL_PixelFormat::XBGR32`] | [`SDL_PIXELFORMAT_XBGR32`] | (target dependent)  |
+/// | [`UNKNOWN`](SDL_PixelFormat::UNKNOWN) | [`SDL_PIXELFORMAT_UNKNOWN`] | |
+/// | [`INDEX1LSB`](SDL_PixelFormat::INDEX1LSB) | [`SDL_PIXELFORMAT_INDEX1LSB`] | |
+/// | [`INDEX1MSB`](SDL_PixelFormat::INDEX1MSB) | [`SDL_PIXELFORMAT_INDEX1MSB`] | |
+/// | [`INDEX2LSB`](SDL_PixelFormat::INDEX2LSB) | [`SDL_PIXELFORMAT_INDEX2LSB`] | |
+/// | [`INDEX2MSB`](SDL_PixelFormat::INDEX2MSB) | [`SDL_PIXELFORMAT_INDEX2MSB`] | |
+/// | [`INDEX4LSB`](SDL_PixelFormat::INDEX4LSB) | [`SDL_PIXELFORMAT_INDEX4LSB`] | |
+/// | [`INDEX4MSB`](SDL_PixelFormat::INDEX4MSB) | [`SDL_PIXELFORMAT_INDEX4MSB`] | |
+/// | [`INDEX8`](SDL_PixelFormat::INDEX8) | [`SDL_PIXELFORMAT_INDEX8`] | |
+/// | [`RGB332`](SDL_PixelFormat::RGB332) | [`SDL_PIXELFORMAT_RGB332`] | |
+/// | [`XRGB4444`](SDL_PixelFormat::XRGB4444) | [`SDL_PIXELFORMAT_XRGB4444`] | |
+/// | [`XBGR4444`](SDL_PixelFormat::XBGR4444) | [`SDL_PIXELFORMAT_XBGR4444`] | |
+/// | [`XRGB1555`](SDL_PixelFormat::XRGB1555) | [`SDL_PIXELFORMAT_XRGB1555`] | |
+/// | [`XBGR1555`](SDL_PixelFormat::XBGR1555) | [`SDL_PIXELFORMAT_XBGR1555`] | |
+/// | [`ARGB4444`](SDL_PixelFormat::ARGB4444) | [`SDL_PIXELFORMAT_ARGB4444`] | |
+/// | [`RGBA4444`](SDL_PixelFormat::RGBA4444) | [`SDL_PIXELFORMAT_RGBA4444`] | |
+/// | [`ABGR4444`](SDL_PixelFormat::ABGR4444) | [`SDL_PIXELFORMAT_ABGR4444`] | |
+/// | [`BGRA4444`](SDL_PixelFormat::BGRA4444) | [`SDL_PIXELFORMAT_BGRA4444`] | |
+/// | [`ARGB1555`](SDL_PixelFormat::ARGB1555) | [`SDL_PIXELFORMAT_ARGB1555`] | |
+/// | [`RGBA5551`](SDL_PixelFormat::RGBA5551) | [`SDL_PIXELFORMAT_RGBA5551`] | |
+/// | [`ABGR1555`](SDL_PixelFormat::ABGR1555) | [`SDL_PIXELFORMAT_ABGR1555`] | |
+/// | [`BGRA5551`](SDL_PixelFormat::BGRA5551) | [`SDL_PIXELFORMAT_BGRA5551`] | |
+/// | [`RGB565`](SDL_PixelFormat::RGB565) | [`SDL_PIXELFORMAT_RGB565`] | |
+/// | [`BGR565`](SDL_PixelFormat::BGR565) | [`SDL_PIXELFORMAT_BGR565`] | |
+/// | [`RGB24`](SDL_PixelFormat::RGB24) | [`SDL_PIXELFORMAT_RGB24`] | |
+/// | [`BGR24`](SDL_PixelFormat::BGR24) | [`SDL_PIXELFORMAT_BGR24`] | |
+/// | [`XRGB8888`](SDL_PixelFormat::XRGB8888) | [`SDL_PIXELFORMAT_XRGB8888`] | |
+/// | [`RGBX8888`](SDL_PixelFormat::RGBX8888) | [`SDL_PIXELFORMAT_RGBX8888`] | |
+/// | [`XBGR8888`](SDL_PixelFormat::XBGR8888) | [`SDL_PIXELFORMAT_XBGR8888`] | |
+/// | [`BGRX8888`](SDL_PixelFormat::BGRX8888) | [`SDL_PIXELFORMAT_BGRX8888`] | |
+/// | [`ARGB8888`](SDL_PixelFormat::ARGB8888) | [`SDL_PIXELFORMAT_ARGB8888`] | |
+/// | [`RGBA8888`](SDL_PixelFormat::RGBA8888) | [`SDL_PIXELFORMAT_RGBA8888`] | |
+/// | [`ABGR8888`](SDL_PixelFormat::ABGR8888) | [`SDL_PIXELFORMAT_ABGR8888`] | |
+/// | [`BGRA8888`](SDL_PixelFormat::BGRA8888) | [`SDL_PIXELFORMAT_BGRA8888`] | |
+/// | [`XRGB2101010`](SDL_PixelFormat::XRGB2101010) | [`SDL_PIXELFORMAT_XRGB2101010`] | |
+/// | [`XBGR2101010`](SDL_PixelFormat::XBGR2101010) | [`SDL_PIXELFORMAT_XBGR2101010`] | |
+/// | [`ARGB2101010`](SDL_PixelFormat::ARGB2101010) | [`SDL_PIXELFORMAT_ARGB2101010`] | |
+/// | [`ABGR2101010`](SDL_PixelFormat::ABGR2101010) | [`SDL_PIXELFORMAT_ABGR2101010`] | |
+/// | [`RGB48`](SDL_PixelFormat::RGB48) | [`SDL_PIXELFORMAT_RGB48`] | |
+/// | [`BGR48`](SDL_PixelFormat::BGR48) | [`SDL_PIXELFORMAT_BGR48`] | |
+/// | [`RGBA64`](SDL_PixelFormat::RGBA64) | [`SDL_PIXELFORMAT_RGBA64`] | |
+/// | [`ARGB64`](SDL_PixelFormat::ARGB64) | [`SDL_PIXELFORMAT_ARGB64`] | |
+/// | [`BGRA64`](SDL_PixelFormat::BGRA64) | [`SDL_PIXELFORMAT_BGRA64`] | |
+/// | [`ABGR64`](SDL_PixelFormat::ABGR64) | [`SDL_PIXELFORMAT_ABGR64`] | |
+/// | [`RGB48_FLOAT`](SDL_PixelFormat::RGB48_FLOAT) | [`SDL_PIXELFORMAT_RGB48_FLOAT`] | |
+/// | [`BGR48_FLOAT`](SDL_PixelFormat::BGR48_FLOAT) | [`SDL_PIXELFORMAT_BGR48_FLOAT`] | |
+/// | [`RGBA64_FLOAT`](SDL_PixelFormat::RGBA64_FLOAT) | [`SDL_PIXELFORMAT_RGBA64_FLOAT`] | |
+/// | [`ARGB64_FLOAT`](SDL_PixelFormat::ARGB64_FLOAT) | [`SDL_PIXELFORMAT_ARGB64_FLOAT`] | |
+/// | [`BGRA64_FLOAT`](SDL_PixelFormat::BGRA64_FLOAT) | [`SDL_PIXELFORMAT_BGRA64_FLOAT`] | |
+/// | [`ABGR64_FLOAT`](SDL_PixelFormat::ABGR64_FLOAT) | [`SDL_PIXELFORMAT_ABGR64_FLOAT`] | |
+/// | [`RGB96_FLOAT`](SDL_PixelFormat::RGB96_FLOAT) | [`SDL_PIXELFORMAT_RGB96_FLOAT`] | |
+/// | [`BGR96_FLOAT`](SDL_PixelFormat::BGR96_FLOAT) | [`SDL_PIXELFORMAT_BGR96_FLOAT`] | |
+/// | [`RGBA128_FLOAT`](SDL_PixelFormat::RGBA128_FLOAT) | [`SDL_PIXELFORMAT_RGBA128_FLOAT`] | |
+/// | [`ARGB128_FLOAT`](SDL_PixelFormat::ARGB128_FLOAT) | [`SDL_PIXELFORMAT_ARGB128_FLOAT`] | |
+/// | [`BGRA128_FLOAT`](SDL_PixelFormat::BGRA128_FLOAT) | [`SDL_PIXELFORMAT_BGRA128_FLOAT`] | |
+/// | [`ABGR128_FLOAT`](SDL_PixelFormat::ABGR128_FLOAT) | [`SDL_PIXELFORMAT_ABGR128_FLOAT`] | |
+/// | [`YV12`](SDL_PixelFormat::YV12) | [`SDL_PIXELFORMAT_YV12`] | Planar mode: Y + V + U  (3 planes) |
+/// | [`IYUV`](SDL_PixelFormat::IYUV) | [`SDL_PIXELFORMAT_IYUV`] | Planar mode: Y + U + V  (3 planes) |
+/// | [`YUY2`](SDL_PixelFormat::YUY2) | [`SDL_PIXELFORMAT_YUY2`] | Packed mode: Y0+U0+Y1+V0 (1 plane) |
+/// | [`UYVY`](SDL_PixelFormat::UYVY) | [`SDL_PIXELFORMAT_UYVY`] | Packed mode: U0+Y0+V0+Y1 (1 plane) |
+/// | [`YVYU`](SDL_PixelFormat::YVYU) | [`SDL_PIXELFORMAT_YVYU`] | Packed mode: Y0+V0+Y1+U0 (1 plane) |
+/// | [`NV12`](SDL_PixelFormat::NV12) | [`SDL_PIXELFORMAT_NV12`] | Planar mode: Y + U/V interleaved  (2 planes) |
+/// | [`NV21`](SDL_PixelFormat::NV21) | [`SDL_PIXELFORMAT_NV21`] | Planar mode: Y + V/U interleaved  (2 planes) |
+/// | [`P010`](SDL_PixelFormat::P010) | [`SDL_PIXELFORMAT_P010`] | Planar mode: Y + U/V interleaved  (2 planes) |
+/// | [`EXTERNAL_OES`](SDL_PixelFormat::EXTERNAL_OES) | [`SDL_PIXELFORMAT_EXTERNAL_OES`] | Android video texture format |
+/// | [`RGBA32`](SDL_PixelFormat::RGBA32) | [`SDL_PIXELFORMAT_RGBA32`] | (target dependent) |
+/// | [`ARGB32`](SDL_PixelFormat::ARGB32) | [`SDL_PIXELFORMAT_ARGB32`] | (target dependent) |
+/// | [`BGRA32`](SDL_PixelFormat::BGRA32) | [`SDL_PIXELFORMAT_BGRA32`] | (target dependent) |
+/// | [`ABGR32`](SDL_PixelFormat::ABGR32) | [`SDL_PIXELFORMAT_ABGR32`] | (target dependent) |
+/// | [`RGBX32`](SDL_PixelFormat::RGBX32) | [`SDL_PIXELFORMAT_RGBX32`] | (target dependent) |
+/// | [`XRGB32`](SDL_PixelFormat::XRGB32) | [`SDL_PIXELFORMAT_XRGB32`] | (target dependent) |
+/// | [`BGRX32`](SDL_PixelFormat::BGRX32) | [`SDL_PIXELFORMAT_BGRX32`] | (target dependent) |
+/// | [`XBGR32`](SDL_PixelFormat::XBGR32) | [`SDL_PIXELFORMAT_XBGR32`] | (target dependent) |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -734,13 +728,12 @@ pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::u8 {
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_ColorType::UNKNOWN`] | [`SDL_COLOR_TYPE_UNKNOWN`] |  |
-/// | [`SDL_ColorType::RGB`] | [`SDL_COLOR_TYPE_RGB`] |  |
-/// | [`SDL_ColorType::YCBCR`] | [`SDL_COLOR_TYPE_YCBCR`] |  |
+/// | [`UNKNOWN`](SDL_ColorType::UNKNOWN) | [`SDL_COLOR_TYPE_UNKNOWN`] | |
+/// | [`RGB`](SDL_ColorType::RGB) | [`SDL_COLOR_TYPE_RGB`] | |
+/// | [`YCBCR`](SDL_ColorType::YCBCR) | [`SDL_COLOR_TYPE_YCBCR`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -766,13 +759,12 @@ pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_ColorRange::UNKNOWN`] | [`SDL_COLOR_RANGE_UNKNOWN`] |  |
-/// | [`SDL_ColorRange::LIMITED`] | [`SDL_COLOR_RANGE_LIMITED`] | Narrow range, e.g. 16-235 for 8-bit RGB and luma, and 16-240 for 8-bit chroma |
-/// | [`SDL_ColorRange::FULL`] | [`SDL_COLOR_RANGE_FULL`] | Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma |
+/// | [`UNKNOWN`](SDL_ColorRange::UNKNOWN) | [`SDL_COLOR_RANGE_UNKNOWN`] | |
+/// | [`LIMITED`](SDL_ColorRange::LIMITED) | [`SDL_COLOR_RANGE_LIMITED`] | Narrow range, e.g. 16-235 for 8-bit RGB and luma, and 16-240 for 8-bit chroma |
+/// | [`FULL`](SDL_ColorRange::FULL) | [`SDL_COLOR_RANGE_FULL`] | Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -802,24 +794,23 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_ColorPrimaries::UNKNOWN`] | [`SDL_COLOR_PRIMARIES_UNKNOWN`] |  |
-/// | [`SDL_ColorPrimaries::BT709`] | [`SDL_COLOR_PRIMARIES_BT709`] | ITU-R BT.709-6 |
-/// | [`SDL_ColorPrimaries::UNSPECIFIED`] | [`SDL_COLOR_PRIMARIES_UNSPECIFIED`] |  |
-/// | [`SDL_ColorPrimaries::BT470M`] | [`SDL_COLOR_PRIMARIES_BT470M`] | ITU-R BT.470-6 System M |
-/// | [`SDL_ColorPrimaries::BT470BG`] | [`SDL_COLOR_PRIMARIES_BT470BG`] | ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625 |
-/// | [`SDL_ColorPrimaries::BT601`] | [`SDL_COLOR_PRIMARIES_BT601`] | ITU-R BT.601-7 525, SMPTE 170M |
-/// | [`SDL_ColorPrimaries::SMPTE240`] | [`SDL_COLOR_PRIMARIES_SMPTE240`] | SMPTE 240M, functionally the same as SDL_COLOR_PRIMARIES_BT601 |
-/// | [`SDL_ColorPrimaries::GENERIC_FILM`] | [`SDL_COLOR_PRIMARIES_GENERIC_FILM`] | Generic film (color filters using Illuminant C) |
-/// | [`SDL_ColorPrimaries::BT2020`] | [`SDL_COLOR_PRIMARIES_BT2020`] | ITU-R BT.2020-2 / ITU-R BT.2100-0 |
-/// | [`SDL_ColorPrimaries::XYZ`] | [`SDL_COLOR_PRIMARIES_XYZ`] | SMPTE ST 428-1 |
-/// | [`SDL_ColorPrimaries::SMPTE431`] | [`SDL_COLOR_PRIMARIES_SMPTE431`] | SMPTE RP 431-2 |
-/// | [`SDL_ColorPrimaries::SMPTE432`] | [`SDL_COLOR_PRIMARIES_SMPTE432`] | SMPTE EG 432-1 / DCI P3 |
-/// | [`SDL_ColorPrimaries::EBU3213`] | [`SDL_COLOR_PRIMARIES_EBU3213`] | EBU Tech. 3213-E |
-/// | [`SDL_ColorPrimaries::CUSTOM`] | [`SDL_COLOR_PRIMARIES_CUSTOM`] |  |
+/// | [`UNKNOWN`](SDL_ColorPrimaries::UNKNOWN) | [`SDL_COLOR_PRIMARIES_UNKNOWN`] | |
+/// | [`BT709`](SDL_ColorPrimaries::BT709) | [`SDL_COLOR_PRIMARIES_BT709`] | ITU-R BT.709-6 |
+/// | [`UNSPECIFIED`](SDL_ColorPrimaries::UNSPECIFIED) | [`SDL_COLOR_PRIMARIES_UNSPECIFIED`] | |
+/// | [`BT470M`](SDL_ColorPrimaries::BT470M) | [`SDL_COLOR_PRIMARIES_BT470M`] | ITU-R BT.470-6 System M |
+/// | [`BT470BG`](SDL_ColorPrimaries::BT470BG) | [`SDL_COLOR_PRIMARIES_BT470BG`] | ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625 |
+/// | [`BT601`](SDL_ColorPrimaries::BT601) | [`SDL_COLOR_PRIMARIES_BT601`] | ITU-R BT.601-7 525, SMPTE 170M |
+/// | [`SMPTE240`](SDL_ColorPrimaries::SMPTE240) | [`SDL_COLOR_PRIMARIES_SMPTE240`] | SMPTE 240M, functionally the same as [`SDL_COLOR_PRIMARIES_BT601`] |
+/// | [`GENERIC_FILM`](SDL_ColorPrimaries::GENERIC_FILM) | [`SDL_COLOR_PRIMARIES_GENERIC_FILM`] | Generic film (color filters using Illuminant C) |
+/// | [`BT2020`](SDL_ColorPrimaries::BT2020) | [`SDL_COLOR_PRIMARIES_BT2020`] | ITU-R BT.2020-2 / ITU-R BT.2100-0 |
+/// | [`XYZ`](SDL_ColorPrimaries::XYZ) | [`SDL_COLOR_PRIMARIES_XYZ`] | SMPTE ST 428-1 |
+/// | [`SMPTE431`](SDL_ColorPrimaries::SMPTE431) | [`SDL_COLOR_PRIMARIES_SMPTE431`] | SMPTE RP 431-2 |
+/// | [`SMPTE432`](SDL_ColorPrimaries::SMPTE432) | [`SDL_COLOR_PRIMARIES_SMPTE432`] | SMPTE EG 432-1 / DCI P3 |
+/// | [`EBU3213`](SDL_ColorPrimaries::EBU3213) | [`SDL_COLOR_PRIMARIES_EBU3213`] | EBU Tech. 3213-E |
+/// | [`CUSTOM`](SDL_ColorPrimaries::CUSTOM) | [`SDL_COLOR_PRIMARIES_CUSTOM`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -890,29 +881,28 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_TransferCharacteristics::UNKNOWN`] | [`SDL_TRANSFER_CHARACTERISTICS_UNKNOWN`] |  |
-/// | [`SDL_TransferCharacteristics::BT709`] | [`SDL_TRANSFER_CHARACTERISTICS_BT709`] | Rec. ITU-R BT.709-6 / ITU-R BT1361 |
-/// | [`SDL_TransferCharacteristics::UNSPECIFIED`] | [`SDL_TRANSFER_CHARACTERISTICS_UNSPECIFIED`] |  |
-/// | [`SDL_TransferCharacteristics::GAMMA22`] | [`SDL_TRANSFER_CHARACTERISTICS_GAMMA22`] | ITU-R BT.470-6 System M / ITU-R BT1700 625 PAL & SECAM |
-/// | [`SDL_TransferCharacteristics::GAMMA28`] | [`SDL_TRANSFER_CHARACTERISTICS_GAMMA28`] | ITU-R BT.470-6 System B, G |
-/// | [`SDL_TransferCharacteristics::BT601`] | [`SDL_TRANSFER_CHARACTERISTICS_BT601`] | SMPTE ST 170M / ITU-R BT.601-7 525 or 625 |
-/// | [`SDL_TransferCharacteristics::SMPTE240`] | [`SDL_TRANSFER_CHARACTERISTICS_SMPTE240`] | SMPTE ST 240M |
-/// | [`SDL_TransferCharacteristics::LINEAR`] | [`SDL_TRANSFER_CHARACTERISTICS_LINEAR`] |  |
-/// | [`SDL_TransferCharacteristics::LOG100`] | [`SDL_TRANSFER_CHARACTERISTICS_LOG100`] |  |
-/// | [`SDL_TransferCharacteristics::LOG100_SQRT10`] | [`SDL_TRANSFER_CHARACTERISTICS_LOG100_SQRT10`] |  |
-/// | [`SDL_TransferCharacteristics::IEC61966`] | [`SDL_TRANSFER_CHARACTERISTICS_IEC61966`] | IEC 61966-2-4 |
-/// | [`SDL_TransferCharacteristics::BT1361`] | [`SDL_TRANSFER_CHARACTERISTICS_BT1361`] | ITU-R BT1361 Extended Colour Gamut |
-/// | [`SDL_TransferCharacteristics::SRGB`] | [`SDL_TRANSFER_CHARACTERISTICS_SRGB`] | IEC 61966-2-1 (sRGB or sYCC) |
-/// | [`SDL_TransferCharacteristics::BT2020_10BIT`] | [`SDL_TRANSFER_CHARACTERISTICS_BT2020_10BIT`] | ITU-R BT2020 for 10-bit system |
-/// | [`SDL_TransferCharacteristics::BT2020_12BIT`] | [`SDL_TRANSFER_CHARACTERISTICS_BT2020_12BIT`] | ITU-R BT2020 for 12-bit system |
-/// | [`SDL_TransferCharacteristics::PQ`] | [`SDL_TRANSFER_CHARACTERISTICS_PQ`] | SMPTE ST 2084 for 10-, 12-, 14- and 16-bit systems |
-/// | [`SDL_TransferCharacteristics::SMPTE428`] | [`SDL_TRANSFER_CHARACTERISTICS_SMPTE428`] | SMPTE ST 428-1 |
-/// | [`SDL_TransferCharacteristics::HLG`] | [`SDL_TRANSFER_CHARACTERISTICS_HLG`] | ARIB STD-B67, known as "hybrid log-gamma" (HLG) |
-/// | [`SDL_TransferCharacteristics::CUSTOM`] | [`SDL_TRANSFER_CHARACTERISTICS_CUSTOM`] |  |
+/// | [`UNKNOWN`](SDL_TransferCharacteristics::UNKNOWN) | [`SDL_TRANSFER_CHARACTERISTICS_UNKNOWN`] | |
+/// | [`BT709`](SDL_TransferCharacteristics::BT709) | [`SDL_TRANSFER_CHARACTERISTICS_BT709`] | Rec. ITU-R BT.709-6 / ITU-R BT1361 |
+/// | [`UNSPECIFIED`](SDL_TransferCharacteristics::UNSPECIFIED) | [`SDL_TRANSFER_CHARACTERISTICS_UNSPECIFIED`] | |
+/// | [`GAMMA22`](SDL_TransferCharacteristics::GAMMA22) | [`SDL_TRANSFER_CHARACTERISTICS_GAMMA22`] | ITU-R BT.470-6 System M / ITU-R BT1700 625 PAL & SECAM |
+/// | [`GAMMA28`](SDL_TransferCharacteristics::GAMMA28) | [`SDL_TRANSFER_CHARACTERISTICS_GAMMA28`] | ITU-R BT.470-6 System B, G |
+/// | [`BT601`](SDL_TransferCharacteristics::BT601) | [`SDL_TRANSFER_CHARACTERISTICS_BT601`] | SMPTE ST 170M / ITU-R BT.601-7 525 or 625 |
+/// | [`SMPTE240`](SDL_TransferCharacteristics::SMPTE240) | [`SDL_TRANSFER_CHARACTERISTICS_SMPTE240`] | SMPTE ST 240M |
+/// | [`LINEAR`](SDL_TransferCharacteristics::LINEAR) | [`SDL_TRANSFER_CHARACTERISTICS_LINEAR`] | |
+/// | [`LOG100`](SDL_TransferCharacteristics::LOG100) | [`SDL_TRANSFER_CHARACTERISTICS_LOG100`] | |
+/// | [`LOG100_SQRT10`](SDL_TransferCharacteristics::LOG100_SQRT10) | [`SDL_TRANSFER_CHARACTERISTICS_LOG100_SQRT10`] | |
+/// | [`IEC61966`](SDL_TransferCharacteristics::IEC61966) | [`SDL_TRANSFER_CHARACTERISTICS_IEC61966`] | IEC 61966-2-4 |
+/// | [`BT1361`](SDL_TransferCharacteristics::BT1361) | [`SDL_TRANSFER_CHARACTERISTICS_BT1361`] | ITU-R BT1361 Extended Colour Gamut |
+/// | [`SRGB`](SDL_TransferCharacteristics::SRGB) | [`SDL_TRANSFER_CHARACTERISTICS_SRGB`] | IEC 61966-2-1 (sRGB or sYCC) |
+/// | [`BT2020_10BIT`](SDL_TransferCharacteristics::BT2020_10BIT) | [`SDL_TRANSFER_CHARACTERISTICS_BT2020_10BIT`] | ITU-R BT2020 for 10-bit system |
+/// | [`BT2020_12BIT`](SDL_TransferCharacteristics::BT2020_12BIT) | [`SDL_TRANSFER_CHARACTERISTICS_BT2020_12BIT`] | ITU-R BT2020 for 12-bit system |
+/// | [`PQ`](SDL_TransferCharacteristics::PQ) | [`SDL_TRANSFER_CHARACTERISTICS_PQ`] | SMPTE ST 2084 for 10-, 12-, 14- and 16-bit systems |
+/// | [`SMPTE428`](SDL_TransferCharacteristics::SMPTE428) | [`SDL_TRANSFER_CHARACTERISTICS_SMPTE428`] | SMPTE ST 428-1 |
+/// | [`HLG`](SDL_TransferCharacteristics::HLG) | [`SDL_TRANSFER_CHARACTERISTICS_HLG`] | ARIB STD-B67, known as "hybrid log-gamma" (HLG) |
+/// | [`CUSTOM`](SDL_TransferCharacteristics::CUSTOM) | [`SDL_TRANSFER_CHARACTERISTICS_CUSTOM`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1016,25 +1006,24 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_MatrixCoefficients::IDENTITY`] | [`SDL_MATRIX_COEFFICIENTS_IDENTITY`] |  |
-/// | [`SDL_MatrixCoefficients::BT709`] | [`SDL_MATRIX_COEFFICIENTS_BT709`] | ITU-R BT.709-6 |
-/// | [`SDL_MatrixCoefficients::UNSPECIFIED`] | [`SDL_MATRIX_COEFFICIENTS_UNSPECIFIED`] |  |
-/// | [`SDL_MatrixCoefficients::FCC`] | [`SDL_MATRIX_COEFFICIENTS_FCC`] | US FCC Title 47 |
-/// | [`SDL_MatrixCoefficients::BT470BG`] | [`SDL_MATRIX_COEFFICIENTS_BT470BG`] | ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as SDL_MATRIX_COEFFICIENTS_BT601 |
-/// | [`SDL_MatrixCoefficients::BT601`] | [`SDL_MATRIX_COEFFICIENTS_BT601`] | ITU-R BT.601-7 525 |
-/// | [`SDL_MatrixCoefficients::SMPTE240`] | [`SDL_MATRIX_COEFFICIENTS_SMPTE240`] | SMPTE 240M |
-/// | [`SDL_MatrixCoefficients::YCGCO`] | [`SDL_MATRIX_COEFFICIENTS_YCGCO`] |  |
-/// | [`SDL_MatrixCoefficients::BT2020_NCL`] | [`SDL_MATRIX_COEFFICIENTS_BT2020_NCL`] | ITU-R BT.2020-2 non-constant luminance |
-/// | [`SDL_MatrixCoefficients::BT2020_CL`] | [`SDL_MATRIX_COEFFICIENTS_BT2020_CL`] | ITU-R BT.2020-2 constant luminance |
-/// | [`SDL_MatrixCoefficients::SMPTE2085`] | [`SDL_MATRIX_COEFFICIENTS_SMPTE2085`] | SMPTE ST 2085 |
-/// | [`SDL_MatrixCoefficients::CHROMA_DERIVED_NCL`] | [`SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL`] |  |
-/// | [`SDL_MatrixCoefficients::CHROMA_DERIVED_CL`] | [`SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL`] |  |
-/// | [`SDL_MatrixCoefficients::ICTCP`] | [`SDL_MATRIX_COEFFICIENTS_ICTCP`] | ITU-R BT.2100-0 ICTCP |
-/// | [`SDL_MatrixCoefficients::CUSTOM`] | [`SDL_MATRIX_COEFFICIENTS_CUSTOM`] |  |
+/// | [`IDENTITY`](SDL_MatrixCoefficients::IDENTITY) | [`SDL_MATRIX_COEFFICIENTS_IDENTITY`] | |
+/// | [`BT709`](SDL_MatrixCoefficients::BT709) | [`SDL_MATRIX_COEFFICIENTS_BT709`] | ITU-R BT.709-6 |
+/// | [`UNSPECIFIED`](SDL_MatrixCoefficients::UNSPECIFIED) | [`SDL_MATRIX_COEFFICIENTS_UNSPECIFIED`] | |
+/// | [`FCC`](SDL_MatrixCoefficients::FCC) | [`SDL_MATRIX_COEFFICIENTS_FCC`] | US FCC Title 47 |
+/// | [`BT470BG`](SDL_MatrixCoefficients::BT470BG) | [`SDL_MATRIX_COEFFICIENTS_BT470BG`] | ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as [`SDL_MATRIX_COEFFICIENTS_BT601`] |
+/// | [`BT601`](SDL_MatrixCoefficients::BT601) | [`SDL_MATRIX_COEFFICIENTS_BT601`] | ITU-R BT.601-7 525 |
+/// | [`SMPTE240`](SDL_MatrixCoefficients::SMPTE240) | [`SDL_MATRIX_COEFFICIENTS_SMPTE240`] | SMPTE 240M |
+/// | [`YCGCO`](SDL_MatrixCoefficients::YCGCO) | [`SDL_MATRIX_COEFFICIENTS_YCGCO`] | |
+/// | [`BT2020_NCL`](SDL_MatrixCoefficients::BT2020_NCL) | [`SDL_MATRIX_COEFFICIENTS_BT2020_NCL`] | ITU-R BT.2020-2 non-constant luminance |
+/// | [`BT2020_CL`](SDL_MatrixCoefficients::BT2020_CL) | [`SDL_MATRIX_COEFFICIENTS_BT2020_CL`] | ITU-R BT.2020-2 constant luminance |
+/// | [`SMPTE2085`](SDL_MatrixCoefficients::SMPTE2085) | [`SDL_MATRIX_COEFFICIENTS_SMPTE2085`] | SMPTE ST 2085 |
+/// | [`CHROMA_DERIVED_NCL`](SDL_MatrixCoefficients::CHROMA_DERIVED_NCL) | [`SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL`] | |
+/// | [`CHROMA_DERIVED_CL`](SDL_MatrixCoefficients::CHROMA_DERIVED_CL) | [`SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL`] | |
+/// | [`ICTCP`](SDL_MatrixCoefficients::ICTCP) | [`SDL_MATRIX_COEFFICIENTS_ICTCP`] | ITU-R BT.2100-0 ICTCP |
+/// | [`CUSTOM`](SDL_MatrixCoefficients::CUSTOM) | [`SDL_MATRIX_COEFFICIENTS_CUSTOM`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1109,14 +1098,13 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_ChromaLocation::NONE`] | [`SDL_CHROMA_LOCATION_NONE`] | RGB, no chroma sampling |
-/// | [`SDL_ChromaLocation::LEFT`] | [`SDL_CHROMA_LOCATION_LEFT`] | In MPEG-2, MPEG-4, and AVC, Cb and Cr are taken on midpoint of the left-edge of the 2x2 square. In other words, they have the same horizontal location as the top-left pixel, but is shifted one-half pixel down vertically. |
-/// | [`SDL_ChromaLocation::CENTER`] | [`SDL_CHROMA_LOCATION_CENTER`] | In JPEG/JFIF, H.261, and MPEG-1, Cb and Cr are taken at the center of the 2x2 square. In other words, they are offset one-half pixel to the right and one-half pixel down compared to the top-left pixel. |
-/// | [`SDL_ChromaLocation::TOPLEFT`] | [`SDL_CHROMA_LOCATION_TOPLEFT`] | In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located"). |
+/// | [`NONE`](SDL_ChromaLocation::NONE) | [`SDL_CHROMA_LOCATION_NONE`] | RGB, no chroma sampling |
+/// | [`LEFT`](SDL_ChromaLocation::LEFT) | [`SDL_CHROMA_LOCATION_LEFT`] | In MPEG-2, MPEG-4, and AVC, Cb and Cr are taken on midpoint of the left-edge of the 2x2 square. In other words, they have the same horizontal location as the top-left pixel, but is shifted one-half pixel down vertically. |
+/// | [`CENTER`](SDL_ChromaLocation::CENTER) | [`SDL_CHROMA_LOCATION_CENTER`] | In JPEG/JFIF, H.261, and MPEG-1, Cb and Cr are taken at the center of the 2x2 square. In other words, they are offset one-half pixel to the right and one-half pixel down compared to the top-left pixel. |
+/// | [`TOPLEFT`](SDL_ChromaLocation::TOPLEFT) | [`SDL_CHROMA_LOCATION_TOPLEFT`] | In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located"). |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1162,23 +1150,22 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 /// - [`SDL_MatrixCoefficients`]
 /// - [`SDL_TransferCharacteristics`]
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_Colorspace::UNKNOWN`] | [`SDL_COLORSPACE_UNKNOWN`] |  |
-/// | [`SDL_Colorspace::SRGB`] | [`SDL_COLORSPACE_SRGB`] | Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709 |
-/// | [`SDL_Colorspace::SRGB_LINEAR`] | [`SDL_COLORSPACE_SRGB_LINEAR`] | Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709 |
-/// | [`SDL_Colorspace::HDR10`] | [`SDL_COLORSPACE_HDR10`] | Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020 |
-/// | [`SDL_Colorspace::JPEG`] | [`SDL_COLORSPACE_JPEG`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_NONE_P709_X601 |
-/// | [`SDL_Colorspace::BT601_LIMITED`] | [`SDL_COLORSPACE_BT601_LIMITED`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601 |
-/// | [`SDL_Colorspace::BT601_FULL`] | [`SDL_COLORSPACE_BT601_FULL`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601 |
-/// | [`SDL_Colorspace::BT709_LIMITED`] | [`SDL_COLORSPACE_BT709_LIMITED`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709 |
-/// | [`SDL_Colorspace::BT709_FULL`] | [`SDL_COLORSPACE_BT709_FULL`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709 |
-/// | [`SDL_Colorspace::BT2020_LIMITED`] | [`SDL_COLORSPACE_BT2020_LIMITED`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P2020 |
-/// | [`SDL_Colorspace::BT2020_FULL`] | [`SDL_COLORSPACE_BT2020_FULL`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P2020 |
-/// | [`SDL_Colorspace::RGB_DEFAULT`] | [`SDL_COLORSPACE_RGB_DEFAULT`] | The default colorspace for RGB surfaces if no colorspace is specified |
-/// | [`SDL_Colorspace::YUV_DEFAULT`] | [`SDL_COLORSPACE_YUV_DEFAULT`] | The default colorspace for YUV surfaces if no colorspace is specified |
+/// | [`UNKNOWN`](SDL_Colorspace::UNKNOWN) | [`SDL_COLORSPACE_UNKNOWN`] | |
+/// | [`SRGB`](SDL_Colorspace::SRGB) | [`SDL_COLORSPACE_SRGB`] | Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709 |
+/// | [`SRGB_LINEAR`](SDL_Colorspace::SRGB_LINEAR) | [`SDL_COLORSPACE_SRGB_LINEAR`] | Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709 |
+/// | [`HDR10`](SDL_Colorspace::HDR10) | [`SDL_COLORSPACE_HDR10`] | Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020 |
+/// | [`JPEG`](SDL_Colorspace::JPEG) | [`SDL_COLORSPACE_JPEG`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_NONE_P709_X601 |
+/// | [`BT601_LIMITED`](SDL_Colorspace::BT601_LIMITED) | [`SDL_COLORSPACE_BT601_LIMITED`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601 |
+/// | [`BT601_FULL`](SDL_Colorspace::BT601_FULL) | [`SDL_COLORSPACE_BT601_FULL`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601 |
+/// | [`BT709_LIMITED`](SDL_Colorspace::BT709_LIMITED) | [`SDL_COLORSPACE_BT709_LIMITED`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709 |
+/// | [`BT709_FULL`](SDL_Colorspace::BT709_FULL) | [`SDL_COLORSPACE_BT709_FULL`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709 |
+/// | [`BT2020_LIMITED`](SDL_Colorspace::BT2020_LIMITED) | [`SDL_COLORSPACE_BT2020_LIMITED`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P2020 |
+/// | [`BT2020_FULL`](SDL_Colorspace::BT2020_FULL) | [`SDL_COLORSPACE_BT2020_FULL`] | Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P2020 |
+/// | [`RGB_DEFAULT`](SDL_Colorspace::RGB_DEFAULT) | [`SDL_COLORSPACE_RGB_DEFAULT`] | The default colorspace for RGB surfaces if no colorspace is specified |
+/// | [`YUV_DEFAULT`](SDL_Colorspace::YUV_DEFAULT) | [`SDL_COLORSPACE_YUV_DEFAULT`] | The default colorspace for YUV surfaces if no colorspace is specified |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

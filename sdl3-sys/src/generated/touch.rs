@@ -10,14 +10,13 @@ pub type SDL_TouchID = Uint64;
 
 pub type SDL_FingerID = Uint64;
 
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_TouchDeviceType::INVALID`] | [`SDL_TOUCH_DEVICE_INVALID`] |  |
-/// | [`SDL_TouchDeviceType::DIRECT`] | [`SDL_TOUCH_DEVICE_DIRECT`] |  |
-/// | [`SDL_TouchDeviceType::INDIRECT_ABSOLUTE`] | [`SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE`] |  |
-/// | [`SDL_TouchDeviceType::INDIRECT_RELATIVE`] | [`SDL_TOUCH_DEVICE_INDIRECT_RELATIVE`] |  |
+/// | [`INVALID`](SDL_TouchDeviceType::INVALID) | [`SDL_TOUCH_DEVICE_INVALID`] | |
+/// | [`DIRECT`](SDL_TouchDeviceType::DIRECT) | [`SDL_TOUCH_DEVICE_DIRECT`] | |
+/// | [`INDIRECT_ABSOLUTE`](SDL_TouchDeviceType::INDIRECT_ABSOLUTE) | [`SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE`] | |
+/// | [`INDIRECT_RELATIVE`](SDL_TouchDeviceType::INDIRECT_RELATIVE) | [`SDL_TOUCH_DEVICE_INDIRECT_RELATIVE`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

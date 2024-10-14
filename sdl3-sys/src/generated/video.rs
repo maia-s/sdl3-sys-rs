@@ -71,13 +71,12 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: &::core::ffi::CStr =
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_SystemTheme::UNKNOWN`] | [`SDL_SYSTEM_THEME_UNKNOWN`] | Unknown system theme |
-/// | [`SDL_SystemTheme::LIGHT`] | [`SDL_SYSTEM_THEME_LIGHT`] | Light colored system theme |
-/// | [`SDL_SystemTheme::DARK`] | [`SDL_SYSTEM_THEME_DARK`] | Dark colored system theme |
+/// | [`UNKNOWN`](SDL_SystemTheme::UNKNOWN) | [`SDL_SYSTEM_THEME_UNKNOWN`] | Unknown system theme |
+/// | [`LIGHT`](SDL_SystemTheme::LIGHT) | [`SDL_SYSTEM_THEME_LIGHT`] | Light colored system theme |
+/// | [`DARK`](SDL_SystemTheme::DARK) | [`SDL_SYSTEM_THEME_DARK`] | Dark colored system theme |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -143,15 +142,14 @@ pub struct SDL_DisplayMode {
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_DisplayOrientation::UNKNOWN`] | [`SDL_ORIENTATION_UNKNOWN`] | The display orientation can't be determined |
-/// | [`SDL_DisplayOrientation::LANDSCAPE`] | [`SDL_ORIENTATION_LANDSCAPE`] | The display is in landscape mode, with the right side up, relative to portrait mode |
-/// | [`SDL_DisplayOrientation::LANDSCAPE_FLIPPED`] | [`SDL_ORIENTATION_LANDSCAPE_FLIPPED`] | The display is in landscape mode, with the left side up, relative to portrait mode |
-/// | [`SDL_DisplayOrientation::PORTRAIT`] | [`SDL_ORIENTATION_PORTRAIT`] | The display is in portrait mode |
-/// | [`SDL_DisplayOrientation::PORTRAIT_FLIPPED`] | [`SDL_ORIENTATION_PORTRAIT_FLIPPED`] | The display is in portrait mode, upside down |
+/// | [`UNKNOWN`](SDL_DisplayOrientation::UNKNOWN) | [`SDL_ORIENTATION_UNKNOWN`] | The display orientation can't be determined |
+/// | [`LANDSCAPE`](SDL_DisplayOrientation::LANDSCAPE) | [`SDL_ORIENTATION_LANDSCAPE`] | The display is in landscape mode, with the right side up, relative to portrait mode |
+/// | [`LANDSCAPE_FLIPPED`](SDL_DisplayOrientation::LANDSCAPE_FLIPPED) | [`SDL_ORIENTATION_LANDSCAPE_FLIPPED`] | The display is in landscape mode, with the left side up, relative to portrait mode |
+/// | [`PORTRAIT`](SDL_DisplayOrientation::PORTRAIT) | [`SDL_ORIENTATION_PORTRAIT`] | The display is in portrait mode |
+/// | [`PORTRAIT_FLIPPED`](SDL_DisplayOrientation::PORTRAIT_FLIPPED) | [`SDL_ORIENTATION_PORTRAIT_FLIPPED`] | The display is in portrait mode, upside down |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -317,13 +315,12 @@ pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitiv
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_FlashOperation::CANCEL`] | [`SDL_FLASH_CANCEL`] | Cancel any window flash state |
-/// | [`SDL_FlashOperation::BRIEFLY`] | [`SDL_FLASH_BRIEFLY`] | Flash the window briefly to get attention |
-/// | [`SDL_FlashOperation::UNTIL_FOCUSED`] | [`SDL_FLASH_UNTIL_FOCUSED`] | Flash the window until it gets focus |
+/// | [`CANCEL`](SDL_FlashOperation::CANCEL) | [`SDL_FLASH_CANCEL`] | Cancel any window flash state |
+/// | [`BRIEFLY`](SDL_FlashOperation::BRIEFLY) | [`SDL_FLASH_BRIEFLY`] | Flash the window briefly to get attention |
+/// | [`UNTIL_FOCUSED`](SDL_FlashOperation::UNTIL_FOCUSED) | [`SDL_FLASH_UNTIL_FOCUSED`] | Flash the window until it gets focus |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -457,38 +454,37 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_GLattr::RED_SIZE`] | [`SDL_GL_RED_SIZE`] | the minimum number of bits for the red channel of the color buffer; defaults to 3. |
-/// | [`SDL_GLattr::GREEN_SIZE`] | [`SDL_GL_GREEN_SIZE`] | the minimum number of bits for the green channel of the color buffer; defaults to 3. |
-/// | [`SDL_GLattr::BLUE_SIZE`] | [`SDL_GL_BLUE_SIZE`] | the minimum number of bits for the blue channel of the color buffer; defaults to 2. |
-/// | [`SDL_GLattr::ALPHA_SIZE`] | [`SDL_GL_ALPHA_SIZE`] | the minimum number of bits for the alpha channel of the color buffer; defaults to 0. |
-/// | [`SDL_GLattr::BUFFER_SIZE`] | [`SDL_GL_BUFFER_SIZE`] | the minimum number of bits for frame buffer size; defaults to 0. |
-/// | [`SDL_GLattr::DOUBLEBUFFER`] | [`SDL_GL_DOUBLEBUFFER`] | whether the output is single or double buffered; defaults to double buffering on. |
-/// | [`SDL_GLattr::DEPTH_SIZE`] | [`SDL_GL_DEPTH_SIZE`] | the minimum number of bits in the depth buffer; defaults to 16. |
-/// | [`SDL_GLattr::STENCIL_SIZE`] | [`SDL_GL_STENCIL_SIZE`] | the minimum number of bits in the stencil buffer; defaults to 0. |
-/// | [`SDL_GLattr::ACCUM_RED_SIZE`] | [`SDL_GL_ACCUM_RED_SIZE`] | the minimum number of bits for the red channel of the accumulation buffer; defaults to 0. |
-/// | [`SDL_GLattr::ACCUM_GREEN_SIZE`] | [`SDL_GL_ACCUM_GREEN_SIZE`] | the minimum number of bits for the green channel of the accumulation buffer; defaults to 0. |
-/// | [`SDL_GLattr::ACCUM_BLUE_SIZE`] | [`SDL_GL_ACCUM_BLUE_SIZE`] | the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0. |
-/// | [`SDL_GLattr::ACCUM_ALPHA_SIZE`] | [`SDL_GL_ACCUM_ALPHA_SIZE`] | the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0. |
-/// | [`SDL_GLattr::STEREO`] | [`SDL_GL_STEREO`] | whether the output is stereo 3D; defaults to off. |
-/// | [`SDL_GLattr::MULTISAMPLEBUFFERS`] | [`SDL_GL_MULTISAMPLEBUFFERS`] | the number of buffers used for multisample anti-aliasing; defaults to 0. |
-/// | [`SDL_GLattr::MULTISAMPLESAMPLES`] | [`SDL_GL_MULTISAMPLESAMPLES`] | the number of samples used around the current pixel used for multisample anti-aliasing. |
-/// | [`SDL_GLattr::ACCELERATED_VISUAL`] | [`SDL_GL_ACCELERATED_VISUAL`] | set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either. |
-/// | [`SDL_GLattr::RETAINED_BACKING`] | [`SDL_GL_RETAINED_BACKING`] | not used (deprecated). |
-/// | [`SDL_GLattr::CONTEXT_MAJOR_VERSION`] | [`SDL_GL_CONTEXT_MAJOR_VERSION`] | OpenGL context major version. |
-/// | [`SDL_GLattr::CONTEXT_MINOR_VERSION`] | [`SDL_GL_CONTEXT_MINOR_VERSION`] | OpenGL context minor version. |
-/// | [`SDL_GLattr::CONTEXT_FLAGS`] | [`SDL_GL_CONTEXT_FLAGS`] | some combination of 0 or more of elements of the SDL_GLcontextFlag enumeration; defaults to 0. |
-/// | [`SDL_GLattr::CONTEXT_PROFILE_MASK`] | [`SDL_GL_CONTEXT_PROFILE_MASK`] | type of GL context (Core, Compatibility, ES). See SDL_GLprofile; default value depends on platform. |
-/// | [`SDL_GLattr::SHARE_WITH_CURRENT_CONTEXT`] | [`SDL_GL_SHARE_WITH_CURRENT_CONTEXT`] | OpenGL context sharing; defaults to 0. |
-/// | [`SDL_GLattr::FRAMEBUFFER_SRGB_CAPABLE`] | [`SDL_GL_FRAMEBUFFER_SRGB_CAPABLE`] | requests sRGB capable visual; defaults to 0. |
-/// | [`SDL_GLattr::CONTEXT_RELEASE_BEHAVIOR`] | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`] | sets context the release behavior. See SDL_GLcontextReleaseFlag; defaults to FLUSH. |
-/// | [`SDL_GLattr::CONTEXT_RESET_NOTIFICATION`] | [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] | set context reset notification. See SDL_GLContextResetNotification; defaults to NO_NOTIFICATION. |
-/// | [`SDL_GLattr::CONTEXT_NO_ERROR`] | [`SDL_GL_CONTEXT_NO_ERROR`] |  |
-/// | [`SDL_GLattr::FLOATBUFFERS`] | [`SDL_GL_FLOATBUFFERS`] |  |
-/// | [`SDL_GLattr::EGL_PLATFORM`] | [`SDL_GL_EGL_PLATFORM`] |  |
+/// | [`RED_SIZE`](SDL_GLattr::RED_SIZE) | [`SDL_GL_RED_SIZE`] | the minimum number of bits for the red channel of the color buffer; defaults to 3. |
+/// | [`GREEN_SIZE`](SDL_GLattr::GREEN_SIZE) | [`SDL_GL_GREEN_SIZE`] | the minimum number of bits for the green channel of the color buffer; defaults to 3. |
+/// | [`BLUE_SIZE`](SDL_GLattr::BLUE_SIZE) | [`SDL_GL_BLUE_SIZE`] | the minimum number of bits for the blue channel of the color buffer; defaults to 2. |
+/// | [`ALPHA_SIZE`](SDL_GLattr::ALPHA_SIZE) | [`SDL_GL_ALPHA_SIZE`] | the minimum number of bits for the alpha channel of the color buffer; defaults to 0. |
+/// | [`BUFFER_SIZE`](SDL_GLattr::BUFFER_SIZE) | [`SDL_GL_BUFFER_SIZE`] | the minimum number of bits for frame buffer size; defaults to 0. |
+/// | [`DOUBLEBUFFER`](SDL_GLattr::DOUBLEBUFFER) | [`SDL_GL_DOUBLEBUFFER`] | whether the output is single or double buffered; defaults to double buffering on. |
+/// | [`DEPTH_SIZE`](SDL_GLattr::DEPTH_SIZE) | [`SDL_GL_DEPTH_SIZE`] | the minimum number of bits in the depth buffer; defaults to 16. |
+/// | [`STENCIL_SIZE`](SDL_GLattr::STENCIL_SIZE) | [`SDL_GL_STENCIL_SIZE`] | the minimum number of bits in the stencil buffer; defaults to 0. |
+/// | [`ACCUM_RED_SIZE`](SDL_GLattr::ACCUM_RED_SIZE) | [`SDL_GL_ACCUM_RED_SIZE`] | the minimum number of bits for the red channel of the accumulation buffer; defaults to 0. |
+/// | [`ACCUM_GREEN_SIZE`](SDL_GLattr::ACCUM_GREEN_SIZE) | [`SDL_GL_ACCUM_GREEN_SIZE`] | the minimum number of bits for the green channel of the accumulation buffer; defaults to 0. |
+/// | [`ACCUM_BLUE_SIZE`](SDL_GLattr::ACCUM_BLUE_SIZE) | [`SDL_GL_ACCUM_BLUE_SIZE`] | the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0. |
+/// | [`ACCUM_ALPHA_SIZE`](SDL_GLattr::ACCUM_ALPHA_SIZE) | [`SDL_GL_ACCUM_ALPHA_SIZE`] | the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0. |
+/// | [`STEREO`](SDL_GLattr::STEREO) | [`SDL_GL_STEREO`] | whether the output is stereo 3D; defaults to off. |
+/// | [`MULTISAMPLEBUFFERS`](SDL_GLattr::MULTISAMPLEBUFFERS) | [`SDL_GL_MULTISAMPLEBUFFERS`] | the number of buffers used for multisample anti-aliasing; defaults to 0. |
+/// | [`MULTISAMPLESAMPLES`](SDL_GLattr::MULTISAMPLESAMPLES) | [`SDL_GL_MULTISAMPLESAMPLES`] | the number of samples used around the current pixel used for multisample anti-aliasing. |
+/// | [`ACCELERATED_VISUAL`](SDL_GLattr::ACCELERATED_VISUAL) | [`SDL_GL_ACCELERATED_VISUAL`] | set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either. |
+/// | [`RETAINED_BACKING`](SDL_GLattr::RETAINED_BACKING) | [`SDL_GL_RETAINED_BACKING`] | not used (deprecated). |
+/// | [`CONTEXT_MAJOR_VERSION`](SDL_GLattr::CONTEXT_MAJOR_VERSION) | [`SDL_GL_CONTEXT_MAJOR_VERSION`] | OpenGL context major version. |
+/// | [`CONTEXT_MINOR_VERSION`](SDL_GLattr::CONTEXT_MINOR_VERSION) | [`SDL_GL_CONTEXT_MINOR_VERSION`] | OpenGL context minor version. |
+/// | [`CONTEXT_FLAGS`](SDL_GLattr::CONTEXT_FLAGS) | [`SDL_GL_CONTEXT_FLAGS`] | some combination of 0 or more of elements of the [`SDL_GLcontextFlag`] enumeration; defaults to 0. |
+/// | [`CONTEXT_PROFILE_MASK`](SDL_GLattr::CONTEXT_PROFILE_MASK) | [`SDL_GL_CONTEXT_PROFILE_MASK`] | type of GL context (Core, Compatibility, ES). See SDL_GLprofile; default value depends on platform. |
+/// | [`SHARE_WITH_CURRENT_CONTEXT`](SDL_GLattr::SHARE_WITH_CURRENT_CONTEXT) | [`SDL_GL_SHARE_WITH_CURRENT_CONTEXT`] | OpenGL context sharing; defaults to 0. |
+/// | [`FRAMEBUFFER_SRGB_CAPABLE`](SDL_GLattr::FRAMEBUFFER_SRGB_CAPABLE) | [`SDL_GL_FRAMEBUFFER_SRGB_CAPABLE`] | requests sRGB capable visual; defaults to 0. |
+/// | [`CONTEXT_RELEASE_BEHAVIOR`](SDL_GLattr::CONTEXT_RELEASE_BEHAVIOR) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`] | sets context the release behavior. See SDL_GLcontextReleaseFlag; defaults to FLUSH. |
+/// | [`CONTEXT_RESET_NOTIFICATION`](SDL_GLattr::CONTEXT_RESET_NOTIFICATION) | [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] | set context reset notification. See SDL_GLContextResetNotification; defaults to NO_NOTIFICATION. |
+/// | [`CONTEXT_NO_ERROR`](SDL_GLattr::CONTEXT_NO_ERROR) | [`SDL_GL_CONTEXT_NO_ERROR`] | |
+/// | [`FLOATBUFFERS`](SDL_GLattr::FLOATBUFFERS) | [`SDL_GL_FLOATBUFFERS`] | |
+/// | [`EGL_PLATFORM`](SDL_GLattr::EGL_PLATFORM) | [`SDL_GL_EGL_PLATFORM`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -613,13 +609,12 @@ pub const SDL_GL_EGL_PLATFORM: SDL_GLattr = SDL_GLattr::EGL_PLATFORM;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_GLprofile::CORE`] | [`SDL_GL_CONTEXT_PROFILE_CORE`] |  |
-/// | [`SDL_GLprofile::COMPATIBILITY`] | [`SDL_GL_CONTEXT_PROFILE_COMPATIBILITY`] |  |
-/// | [`SDL_GLprofile::ES`] | [`SDL_GL_CONTEXT_PROFILE_ES`] | GLX_CONTEXT_ES2_PROFILE_BIT_EXT |
+/// | [`CORE`](SDL_GLprofile::CORE) | [`SDL_GL_CONTEXT_PROFILE_CORE`] | |
+/// | [`COMPATIBILITY`](SDL_GLprofile::COMPATIBILITY) | [`SDL_GL_CONTEXT_PROFILE_COMPATIBILITY`] | |
+/// | [`ES`](SDL_GLprofile::ES) | [`SDL_GL_CONTEXT_PROFILE_ES`] | GLX_CONTEXT_ES2_PROFILE_BIT_EXT |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -646,14 +641,13 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLprofile = SDL_GLprofile::ES;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_GLcontextFlag::DEBUG_FLAG`] | [`SDL_GL_CONTEXT_DEBUG_FLAG`] |  |
-/// | [`SDL_GLcontextFlag::FORWARD_COMPATIBLE_FLAG`] | [`SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG`] |  |
-/// | [`SDL_GLcontextFlag::ROBUST_ACCESS_FLAG`] | [`SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG`] |  |
-/// | [`SDL_GLcontextFlag::RESET_ISOLATION_FLAG`] | [`SDL_GL_CONTEXT_RESET_ISOLATION_FLAG`] |  |
+/// | [`DEBUG_FLAG`](SDL_GLcontextFlag::DEBUG_FLAG) | [`SDL_GL_CONTEXT_DEBUG_FLAG`] | |
+/// | [`FORWARD_COMPATIBLE_FLAG`](SDL_GLcontextFlag::FORWARD_COMPATIBLE_FLAG) | [`SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG`] | |
+/// | [`ROBUST_ACCESS_FLAG`](SDL_GLcontextFlag::ROBUST_ACCESS_FLAG) | [`SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG`] | |
+/// | [`RESET_ISOLATION_FLAG`](SDL_GLcontextFlag::RESET_ISOLATION_FLAG) | [`SDL_GL_CONTEXT_RESET_ISOLATION_FLAG`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -684,12 +678,11 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLcontextFlag =
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_GLcontextReleaseFlag::NONE`] | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE`] |  |
-/// | [`SDL_GLcontextReleaseFlag::FLUSH`] | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH`] |  |
+/// | [`NONE`](SDL_GLcontextReleaseFlag::NONE) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE`] | |
+/// | [`FLUSH`](SDL_GLcontextReleaseFlag::FLUSH) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -714,12 +707,11 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLcontextReleaseFlag =
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_GLContextResetNotification::NO_NOTIFICATION`] | [`SDL_GL_CONTEXT_RESET_NO_NOTIFICATION`] |  |
-/// | [`SDL_GLContextResetNotification::LOSE_CONTEXT`] | [`SDL_GL_CONTEXT_RESET_LOSE_CONTEXT`] |  |
+/// | [`NO_NOTIFICATION`](SDL_GLContextResetNotification::NO_NOTIFICATION) | [`SDL_GL_CONTEXT_RESET_NO_NOTIFICATION`] | |
+/// | [`LOSE_CONTEXT`](SDL_GLContextResetNotification::LOSE_CONTEXT) | [`SDL_GL_CONTEXT_RESET_LOSE_CONTEXT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -3264,20 +3256,19 @@ extern "C" {
 /// ### See also
 /// - [`SDL_HitTest`]
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_HitTestResult::NORMAL`] | [`SDL_HITTEST_NORMAL`] | Region is normal. No special properties. |
-/// | [`SDL_HitTestResult::DRAGGABLE`] | [`SDL_HITTEST_DRAGGABLE`] | Region can drag entire window. |
-/// | [`SDL_HitTestResult::RESIZE_TOPLEFT`] | [`SDL_HITTEST_RESIZE_TOPLEFT`] | Region is the resizable top-left corner border. |
-/// | [`SDL_HitTestResult::RESIZE_TOP`] | [`SDL_HITTEST_RESIZE_TOP`] | Region is the resizable top border. |
-/// | [`SDL_HitTestResult::RESIZE_TOPRIGHT`] | [`SDL_HITTEST_RESIZE_TOPRIGHT`] | Region is the resizable top-right corner border. |
-/// | [`SDL_HitTestResult::RESIZE_RIGHT`] | [`SDL_HITTEST_RESIZE_RIGHT`] | Region is the resizable right border. |
-/// | [`SDL_HitTestResult::RESIZE_BOTTOMRIGHT`] | [`SDL_HITTEST_RESIZE_BOTTOMRIGHT`] | Region is the resizable bottom-right corner border. |
-/// | [`SDL_HitTestResult::RESIZE_BOTTOM`] | [`SDL_HITTEST_RESIZE_BOTTOM`] | Region is the resizable bottom border. |
-/// | [`SDL_HitTestResult::RESIZE_BOTTOMLEFT`] | [`SDL_HITTEST_RESIZE_BOTTOMLEFT`] | Region is the resizable bottom-left corner border. |
-/// | [`SDL_HitTestResult::RESIZE_LEFT`] | [`SDL_HITTEST_RESIZE_LEFT`] | Region is the resizable left border. |
+/// | [`NORMAL`](SDL_HitTestResult::NORMAL) | [`SDL_HITTEST_NORMAL`] | Region is normal. No special properties. |
+/// | [`DRAGGABLE`](SDL_HitTestResult::DRAGGABLE) | [`SDL_HITTEST_DRAGGABLE`] | Region can drag entire window. |
+/// | [`RESIZE_TOPLEFT`](SDL_HitTestResult::RESIZE_TOPLEFT) | [`SDL_HITTEST_RESIZE_TOPLEFT`] | Region is the resizable top-left corner border. |
+/// | [`RESIZE_TOP`](SDL_HitTestResult::RESIZE_TOP) | [`SDL_HITTEST_RESIZE_TOP`] | Region is the resizable top border. |
+/// | [`RESIZE_TOPRIGHT`](SDL_HitTestResult::RESIZE_TOPRIGHT) | [`SDL_HITTEST_RESIZE_TOPRIGHT`] | Region is the resizable top-right corner border. |
+/// | [`RESIZE_RIGHT`](SDL_HitTestResult::RESIZE_RIGHT) | [`SDL_HITTEST_RESIZE_RIGHT`] | Region is the resizable right border. |
+/// | [`RESIZE_BOTTOMRIGHT`](SDL_HitTestResult::RESIZE_BOTTOMRIGHT) | [`SDL_HITTEST_RESIZE_BOTTOMRIGHT`] | Region is the resizable bottom-right corner border. |
+/// | [`RESIZE_BOTTOM`](SDL_HitTestResult::RESIZE_BOTTOM) | [`SDL_HITTEST_RESIZE_BOTTOM`] | Region is the resizable bottom border. |
+/// | [`RESIZE_BOTTOMLEFT`](SDL_HitTestResult::RESIZE_BOTTOMLEFT) | [`SDL_HITTEST_RESIZE_BOTTOMLEFT`] | Region is the resizable bottom-left corner border. |
+/// | [`RESIZE_LEFT`](SDL_HitTestResult::RESIZE_LEFT) | [`SDL_HITTEST_RESIZE_LEFT`] | Region is the resizable left border. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

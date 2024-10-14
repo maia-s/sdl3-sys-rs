@@ -116,14 +116,13 @@ extern "C" {
 /// - [`SDL_GetProcessInput`]
 /// - [`SDL_GetProcessOutput`]
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_ProcessIO::INHERITED`] | [`SDL_PROCESS_STDIO_INHERITED`] | The I/O stream is inherited from the application. |
-/// | [`SDL_ProcessIO::NULL`] | [`SDL_PROCESS_STDIO_NULL`] | The I/O stream is ignored. |
-/// | [`SDL_ProcessIO::APP`] | [`SDL_PROCESS_STDIO_APP`] | The I/O stream is connected to a new SDL_IOStream that the application can read or write |
-/// | [`SDL_ProcessIO::REDIRECT`] | [`SDL_PROCESS_STDIO_REDIRECT`] | The I/O stream is redirected to an existing SDL_IOStream. |
+/// | [`INHERITED`](SDL_ProcessIO::INHERITED) | [`SDL_PROCESS_STDIO_INHERITED`] | The I/O stream is inherited from the application. |
+/// | [`NULL`](SDL_ProcessIO::NULL) | [`SDL_PROCESS_STDIO_NULL`] | The I/O stream is ignored. |
+/// | [`APP`](SDL_ProcessIO::APP) | [`SDL_PROCESS_STDIO_APP`] | The I/O stream is connected to a new [`SDL_IOStream`] that the application can read or write |
+/// | [`REDIRECT`](SDL_ProcessIO::REDIRECT) | [`SDL_PROCESS_STDIO_REDIRECT`] | The I/O stream is redirected to an existing [`SDL_IOStream`]. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

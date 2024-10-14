@@ -207,63 +207,63 @@ impl Emit for Items {
 }
 
 impl DocComment {
-    fn emit_rust(&self, ctx: &mut EmitContext, pfx: &str) -> EmitResult {
-        fn insert_links(line: &str) -> Result<String, EmitErr> {
-            let mut patched = String::new();
-            let mut i0 = 0;
-            let mut quoted = 0;
-            for (i, _) in line.match_indices(['h', 'S']) {
-                if i < i0 {
-                    continue;
-                }
-                write!(patched, "{}", &line[i0..i])?;
-                quoted += line[i0..i].chars().filter(|c| *c == '`').count();
-                i0 = i;
+    fn insert_links(line: &str) -> Result<String, EmitErr> {
+        let mut patched = String::new();
+        let mut i0 = 0;
+        let mut quoted = 0;
+        for (i, _) in line.match_indices(['h', 'S']) {
+            if i < i0 {
+                continue;
+            }
+            write!(patched, "{}", &line[i0..i])?;
+            quoted += line[i0..i].chars().filter(|c| *c == '`').count();
+            i0 = i;
 
-                if quoted & 1 == 0 {
-                    if (line[i..].starts_with("https://") || line[i..].starts_with("http://"))
-                        && (i == 0
-                            || line.as_bytes()[i - 1].is_ascii_whitespace()
-                            || (line.as_bytes()[i - 1] == b'('
-                                && line.as_bytes().get(i.saturating_sub(2)).copied() != Some(b']')))
+            if quoted & 1 == 0 {
+                if (line[i..].starts_with("https://") || line[i..].starts_with("http://"))
+                    && (i == 0
+                        || line.as_bytes()[i - 1].is_ascii_whitespace()
+                        || (line.as_bytes()[i - 1] == b'('
+                            && line.as_bytes().get(i.saturating_sub(2)).copied() != Some(b']')))
+                {
+                    i0 = i + line[i..]
+                        .find(|c: char| {
+                            c.is_ascii_whitespace()
+                                || c == ','
+                                || line.as_bytes().get(i - 1).copied() == Some(b'(') && c == ')'
+                        })
+                        .unwrap_or(line.len() - i);
+                    write!(patched, "<{}>", &line[i..i0])?;
+                } else if line[i..].starts_with("SDL_")
+                    && (i == 0
+                        || line.as_bytes()[i - 1].is_ascii_whitespace()
+                        || line.as_bytes()[i - 1] == b'(')
+                {
+                    let end = i + line[i..]
+                        .find(|c: char| !c.is_ascii_alphanumeric() && c != '_')
+                        .unwrap_or(line.len() - i);
+                    if line.len() == end
+                        || line.as_bytes()[end].is_ascii_whitespace()
+                        || matches!(line.as_bytes()[end], b')' | b',' | b'.')
+                        || (line.as_bytes()[end] == b'('
+                            && line.as_bytes().get(end + 1).copied() == Some(b')'))
                     {
-                        i0 = i + line[i..]
-                            .find(|c: char| {
-                                c.is_ascii_whitespace()
-                                    || c == ','
-                                    || line.as_bytes().get(i - 1).copied() == Some(b'(') && c == ')'
-                            })
-                            .unwrap_or(line.len() - i);
-                        write!(patched, "<{}>", &line[i..i0])?;
-                    } else if line[i..].starts_with("SDL_")
-                        && (i == 0
-                            || line.as_bytes()[i - 1].is_ascii_whitespace()
-                            || line.as_bytes()[i - 1] == b'(')
-                    {
-                        let end = i + line[i..]
-                            .find(|c: char| !c.is_ascii_alphanumeric() && c != '_')
-                            .unwrap_or(line.len() - i);
-                        if line.len() == end
-                            || line.as_bytes()[end].is_ascii_whitespace()
-                            || matches!(line.as_bytes()[end], b')' | b',' | b'.')
-                            || (line.as_bytes()[end] == b'('
-                                && line.as_bytes().get(end + 1).copied() == Some(b')'))
+                        i0 = end;
+                        if line.as_bytes().get(i0).copied() == Some(b'(')
+                            && line.as_bytes().get(i0 + 1).copied() == Some(b')')
                         {
-                            i0 = end;
-                            if line.as_bytes().get(i0).copied() == Some(b'(')
-                                && line.as_bytes().get(i0 + 1).copied() == Some(b')')
-                            {
-                                i0 += 2;
-                            }
-                            write!(patched, "[`{}`]", &line[i..i0])?;
+                            i0 += 2;
                         }
+                        write!(patched, "[`{}`]", &line[i..i0])?;
                     }
                 }
             }
-            write!(patched, "{}", &line[i0..])?;
-            Ok(patched)
         }
+        write!(patched, "{}", &line[i0..])?;
+        Ok(patched)
+    }
 
+    fn emit_rust(&self, ctx: &mut EmitContext, pfx: &str) -> EmitResult {
         let lines = self.to_string();
         let mut lines = lines.lines().peekable();
         let mut current_section = "";
@@ -277,7 +277,7 @@ impl DocComment {
         };
 
         'lines: while let Some(line) = lines.next() {
-            let line = insert_links(line)?;
+            let line = Self::insert_links(line)?;
 
             if line.is_empty() {
                 writeln!(ctx, "{pfx}")?;
@@ -291,7 +291,7 @@ impl DocComment {
                 let mut emit_block = |ctx: &mut EmitContext, plen| -> EmitResult {
                     let bpfx = " ".repeat(plen);
                     while let Some(line) = lines.peek().and_then(|s| s.strip_prefix(&bpfx)) {
-                        writeln!(ctx, "{pfx}   {}", insert_links(line)?)?;
+                        writeln!(ctx, "{pfx}   {}", Self::insert_links(line)?)?;
                         lines.next();
                     }
                     Ok(())
@@ -1206,8 +1206,7 @@ impl Emit for TypeDef {
                     if self.doc.is_some() {
                         writeln!(ctx_doc, "///")?;
                     }
-                    writeln!(ctx_doc, "/// ### `sdl3-sys` note")?;
-                    writeln!(ctx_doc, "/// This is a `C` enum. Known values:")?;
+                    writeln!(ctx_doc, "/// ### Known values (`sdl3-sys`)")?;
                     writeln!(
                         ctx_doc,
                         "/// | Associated constant | Global constant | Description |"
@@ -1268,20 +1267,17 @@ impl Emit for TypeDef {
 
                     if !seen_target_dependent.contains(variant_ident) {
                         write!(
-                        ctx_doc,
-                        "/// | [`{enum_ident}::{short_variant_ident}`] | [`{variant_ident}`] | ",
-                    )?;
+                            ctx_doc,
+                            "/// | [`{short_variant_ident}`]({enum_ident}::{short_variant_ident}) | [`{variant_ident}`] |",
+                        )?;
                         if !variant.cond.is_empty() {
                             seen_target_dependent.insert(variant_ident);
-                            write!(ctx_doc, "(target dependent) ")?;
-                        } else if let Some(doc) = &variant.doc {
+                            write!(ctx_doc, " (target dependent)")?;
+                        }
+                        if let Some(doc) = &variant.doc {
                             let doc = doc.to_string();
-                            let mut lines = doc.lines();
-                            if let Some(first) = lines.next() {
-                                write!(ctx_doc, "{first}")?;
-                                if lines.next().is_some() {
-                                    write!(ctx_doc, " (...)")?;
-                                }
+                            for line in doc.lines() {
+                                write!(ctx_doc, " {}", DocComment::insert_links(line)?)?;
                             }
                         }
                         writeln!(ctx_doc, " |")?;

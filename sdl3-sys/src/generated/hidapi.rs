@@ -32,15 +32,14 @@ use super::error::*;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_hid_bus_type::UNKNOWN`] | [`SDL_HID_API_BUS_UNKNOWN`] | Unknown bus type |
-/// | [`SDL_hid_bus_type::USB`] | [`SDL_HID_API_BUS_USB`] |  USB bus (...) |
-/// | [`SDL_hid_bus_type::BLUETOOTH`] | [`SDL_HID_API_BUS_BLUETOOTH`] |  Bluetooth or Bluetooth LE bus (...) |
-/// | [`SDL_hid_bus_type::I2C`] | [`SDL_HID_API_BUS_I2C`] |  I2C bus (...) |
-/// | [`SDL_hid_bus_type::SPI`] | [`SDL_HID_API_BUS_SPI`] |  SPI bus (...) |
+/// | [`UNKNOWN`](SDL_hid_bus_type::UNKNOWN) | [`SDL_HID_API_BUS_UNKNOWN`] | Unknown bus type |
+/// | [`USB`](SDL_hid_bus_type::USB) | [`SDL_HID_API_BUS_USB`] |  USB bus Specifications: <https://usb.org/hid> |
+/// | [`BLUETOOTH`](SDL_hid_bus_type::BLUETOOTH) | [`SDL_HID_API_BUS_BLUETOOTH`] |  Bluetooth or Bluetooth LE bus Specifications: <https://www.bluetooth.com/specifications/specs/human-interface-device-profile-1-1-1/> <https://www.bluetooth.com/specifications/specs/hid-service-1-0/> <https://www.bluetooth.com/specifications/specs/hid-over-gatt-profile-1-0/> |
+/// | [`I2C`](SDL_hid_bus_type::I2C) | [`SDL_HID_API_BUS_I2C`] |  I2C bus Specifications: <https://docs.microsoft.com/previous-versions/windows/hardware/design/dn642101(v=vs.85)> |
+/// | [`SPI`](SDL_hid_bus_type::SPI) | [`SDL_HID_API_BUS_SPI`] |  SPI bus Specifications: <https://www.microsoft.com/download/details.aspx?id=103325> |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

@@ -49,14 +49,13 @@ pub type SDL_TLSID = SDL_AtomicInt;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_ThreadPriority::LOW`] | [`SDL_THREAD_PRIORITY_LOW`] |  |
-/// | [`SDL_ThreadPriority::NORMAL`] | [`SDL_THREAD_PRIORITY_NORMAL`] |  |
-/// | [`SDL_ThreadPriority::HIGH`] | [`SDL_THREAD_PRIORITY_HIGH`] |  |
-/// | [`SDL_ThreadPriority::TIME_CRITICAL`] | [`SDL_THREAD_PRIORITY_TIME_CRITICAL`] |  |
+/// | [`LOW`](SDL_ThreadPriority::LOW) | [`SDL_THREAD_PRIORITY_LOW`] | |
+/// | [`NORMAL`](SDL_ThreadPriority::NORMAL) | [`SDL_THREAD_PRIORITY_NORMAL`] | |
+/// | [`HIGH`](SDL_ThreadPriority::HIGH) | [`SDL_THREAD_PRIORITY_HIGH`] | |
+/// | [`TIME_CRITICAL`](SDL_ThreadPriority::TIME_CRITICAL) | [`SDL_THREAD_PRIORITY_TIME_CRITICAL`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

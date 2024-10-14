@@ -51,12 +51,11 @@ pub const SDL_SURFACE_SIMD_ALIGNED: ::core::primitive::u32 = 8_u32;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_ScaleMode::NEAREST`] | [`SDL_SCALEMODE_NEAREST`] | nearest pixel sampling |
-/// | [`SDL_ScaleMode::LINEAR`] | [`SDL_SCALEMODE_LINEAR`] | linear filtering |
+/// | [`NEAREST`](SDL_ScaleMode::NEAREST) | [`SDL_SCALEMODE_NEAREST`] | nearest pixel sampling |
+/// | [`LINEAR`](SDL_ScaleMode::LINEAR) | [`SDL_SCALEMODE_LINEAR`] | linear filtering |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -83,13 +82,12 @@ pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_FlipMode::NONE`] | [`SDL_FLIP_NONE`] | Do not flip |
-/// | [`SDL_FlipMode::HORIZONTAL`] | [`SDL_FLIP_HORIZONTAL`] | flip horizontally |
-/// | [`SDL_FlipMode::VERTICAL`] | [`SDL_FLIP_VERTICAL`] | flip vertically |
+/// | [`NONE`](SDL_FlipMode::NONE) | [`SDL_FLIP_NONE`] | Do not flip |
+/// | [`HORIZONTAL`](SDL_FlipMode::HORIZONTAL) | [`SDL_FLIP_HORIZONTAL`] | flip horizontally |
+/// | [`VERTICAL`](SDL_FlipMode::VERTICAL) | [`SDL_FLIP_VERTICAL`] | flip vertically |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

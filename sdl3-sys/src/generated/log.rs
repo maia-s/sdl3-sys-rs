@@ -44,30 +44,29 @@ use super::stdinc::*;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_LogCategory::APPLICATION`] | [`SDL_LOG_CATEGORY_APPLICATION`] |  |
-/// | [`SDL_LogCategory::ERROR`] | [`SDL_LOG_CATEGORY_ERROR`] |  |
-/// | [`SDL_LogCategory::ASSERT`] | [`SDL_LOG_CATEGORY_ASSERT`] |  |
-/// | [`SDL_LogCategory::SYSTEM`] | [`SDL_LOG_CATEGORY_SYSTEM`] |  |
-/// | [`SDL_LogCategory::AUDIO`] | [`SDL_LOG_CATEGORY_AUDIO`] |  |
-/// | [`SDL_LogCategory::VIDEO`] | [`SDL_LOG_CATEGORY_VIDEO`] |  |
-/// | [`SDL_LogCategory::RENDER`] | [`SDL_LOG_CATEGORY_RENDER`] |  |
-/// | [`SDL_LogCategory::INPUT`] | [`SDL_LOG_CATEGORY_INPUT`] |  |
-/// | [`SDL_LogCategory::TEST`] | [`SDL_LOG_CATEGORY_TEST`] |  |
-/// | [`SDL_LogCategory::GPU`] | [`SDL_LOG_CATEGORY_GPU`] |  |
-/// | [`SDL_LogCategory::RESERVED2`] | [`SDL_LOG_CATEGORY_RESERVED2`] |  |
-/// | [`SDL_LogCategory::RESERVED3`] | [`SDL_LOG_CATEGORY_RESERVED3`] |  |
-/// | [`SDL_LogCategory::RESERVED4`] | [`SDL_LOG_CATEGORY_RESERVED4`] |  |
-/// | [`SDL_LogCategory::RESERVED5`] | [`SDL_LOG_CATEGORY_RESERVED5`] |  |
-/// | [`SDL_LogCategory::RESERVED6`] | [`SDL_LOG_CATEGORY_RESERVED6`] |  |
-/// | [`SDL_LogCategory::RESERVED7`] | [`SDL_LOG_CATEGORY_RESERVED7`] |  |
-/// | [`SDL_LogCategory::RESERVED8`] | [`SDL_LOG_CATEGORY_RESERVED8`] |  |
-/// | [`SDL_LogCategory::RESERVED9`] | [`SDL_LOG_CATEGORY_RESERVED9`] |  |
-/// | [`SDL_LogCategory::RESERVED10`] | [`SDL_LOG_CATEGORY_RESERVED10`] |  |
-/// | [`SDL_LogCategory::CUSTOM`] | [`SDL_LOG_CATEGORY_CUSTOM`] |  |
+/// | [`APPLICATION`](SDL_LogCategory::APPLICATION) | [`SDL_LOG_CATEGORY_APPLICATION`] | |
+/// | [`ERROR`](SDL_LogCategory::ERROR) | [`SDL_LOG_CATEGORY_ERROR`] | |
+/// | [`ASSERT`](SDL_LogCategory::ASSERT) | [`SDL_LOG_CATEGORY_ASSERT`] | |
+/// | [`SYSTEM`](SDL_LogCategory::SYSTEM) | [`SDL_LOG_CATEGORY_SYSTEM`] | |
+/// | [`AUDIO`](SDL_LogCategory::AUDIO) | [`SDL_LOG_CATEGORY_AUDIO`] | |
+/// | [`VIDEO`](SDL_LogCategory::VIDEO) | [`SDL_LOG_CATEGORY_VIDEO`] | |
+/// | [`RENDER`](SDL_LogCategory::RENDER) | [`SDL_LOG_CATEGORY_RENDER`] | |
+/// | [`INPUT`](SDL_LogCategory::INPUT) | [`SDL_LOG_CATEGORY_INPUT`] | |
+/// | [`TEST`](SDL_LogCategory::TEST) | [`SDL_LOG_CATEGORY_TEST`] | |
+/// | [`GPU`](SDL_LogCategory::GPU) | [`SDL_LOG_CATEGORY_GPU`] | |
+/// | [`RESERVED2`](SDL_LogCategory::RESERVED2) | [`SDL_LOG_CATEGORY_RESERVED2`] | |
+/// | [`RESERVED3`](SDL_LogCategory::RESERVED3) | [`SDL_LOG_CATEGORY_RESERVED3`] | |
+/// | [`RESERVED4`](SDL_LogCategory::RESERVED4) | [`SDL_LOG_CATEGORY_RESERVED4`] | |
+/// | [`RESERVED5`](SDL_LogCategory::RESERVED5) | [`SDL_LOG_CATEGORY_RESERVED5`] | |
+/// | [`RESERVED6`](SDL_LogCategory::RESERVED6) | [`SDL_LOG_CATEGORY_RESERVED6`] | |
+/// | [`RESERVED7`](SDL_LogCategory::RESERVED7) | [`SDL_LOG_CATEGORY_RESERVED7`] | |
+/// | [`RESERVED8`](SDL_LogCategory::RESERVED8) | [`SDL_LOG_CATEGORY_RESERVED8`] | |
+/// | [`RESERVED9`](SDL_LogCategory::RESERVED9) | [`SDL_LOG_CATEGORY_RESERVED9`] | |
+/// | [`RESERVED10`](SDL_LogCategory::RESERVED10) | [`SDL_LOG_CATEGORY_RESERVED10`] | |
+/// | [`CUSTOM`](SDL_LogCategory::CUSTOM) | [`SDL_LOG_CATEGORY_CUSTOM`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -126,19 +125,18 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_LogPriority::INVALID`] | [`SDL_LOG_PRIORITY_INVALID`] |  |
-/// | [`SDL_LogPriority::TRACE`] | [`SDL_LOG_PRIORITY_TRACE`] |  |
-/// | [`SDL_LogPriority::VERBOSE`] | [`SDL_LOG_PRIORITY_VERBOSE`] |  |
-/// | [`SDL_LogPriority::DEBUG`] | [`SDL_LOG_PRIORITY_DEBUG`] |  |
-/// | [`SDL_LogPriority::INFO`] | [`SDL_LOG_PRIORITY_INFO`] |  |
-/// | [`SDL_LogPriority::WARN`] | [`SDL_LOG_PRIORITY_WARN`] |  |
-/// | [`SDL_LogPriority::ERROR`] | [`SDL_LOG_PRIORITY_ERROR`] |  |
-/// | [`SDL_LogPriority::CRITICAL`] | [`SDL_LOG_PRIORITY_CRITICAL`] |  |
-/// | [`SDL_LogPriority::COUNT`] | [`SDL_LOG_PRIORITY_COUNT`] |  |
+/// | [`INVALID`](SDL_LogPriority::INVALID) | [`SDL_LOG_PRIORITY_INVALID`] | |
+/// | [`TRACE`](SDL_LogPriority::TRACE) | [`SDL_LOG_PRIORITY_TRACE`] | |
+/// | [`VERBOSE`](SDL_LogPriority::VERBOSE) | [`SDL_LOG_PRIORITY_VERBOSE`] | |
+/// | [`DEBUG`](SDL_LogPriority::DEBUG) | [`SDL_LOG_PRIORITY_DEBUG`] | |
+/// | [`INFO`](SDL_LogPriority::INFO) | [`SDL_LOG_PRIORITY_INFO`] | |
+/// | [`WARN`](SDL_LogPriority::WARN) | [`SDL_LOG_PRIORITY_WARN`] | |
+/// | [`ERROR`](SDL_LogPriority::ERROR) | [`SDL_LOG_PRIORITY_ERROR`] | |
+/// | [`CRITICAL`](SDL_LogPriority::CRITICAL) | [`SDL_LOG_PRIORITY_CRITICAL`] | |
+/// | [`COUNT`](SDL_LogPriority::COUNT) | [`SDL_LOG_PRIORITY_COUNT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

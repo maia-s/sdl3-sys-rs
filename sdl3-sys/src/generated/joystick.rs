@@ -62,21 +62,20 @@ pub type SDL_JoystickID = Uint32;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_JoystickType::UNKNOWN`] | [`SDL_JOYSTICK_TYPE_UNKNOWN`] |  |
-/// | [`SDL_JoystickType::GAMEPAD`] | [`SDL_JOYSTICK_TYPE_GAMEPAD`] |  |
-/// | [`SDL_JoystickType::WHEEL`] | [`SDL_JOYSTICK_TYPE_WHEEL`] |  |
-/// | [`SDL_JoystickType::ARCADE_STICK`] | [`SDL_JOYSTICK_TYPE_ARCADE_STICK`] |  |
-/// | [`SDL_JoystickType::FLIGHT_STICK`] | [`SDL_JOYSTICK_TYPE_FLIGHT_STICK`] |  |
-/// | [`SDL_JoystickType::DANCE_PAD`] | [`SDL_JOYSTICK_TYPE_DANCE_PAD`] |  |
-/// | [`SDL_JoystickType::GUITAR`] | [`SDL_JOYSTICK_TYPE_GUITAR`] |  |
-/// | [`SDL_JoystickType::DRUM_KIT`] | [`SDL_JOYSTICK_TYPE_DRUM_KIT`] |  |
-/// | [`SDL_JoystickType::ARCADE_PAD`] | [`SDL_JOYSTICK_TYPE_ARCADE_PAD`] |  |
-/// | [`SDL_JoystickType::THROTTLE`] | [`SDL_JOYSTICK_TYPE_THROTTLE`] |  |
-/// | [`SDL_JoystickType::COUNT`] | [`SDL_JOYSTICK_TYPE_COUNT`] |  |
+/// | [`UNKNOWN`](SDL_JoystickType::UNKNOWN) | [`SDL_JOYSTICK_TYPE_UNKNOWN`] | |
+/// | [`GAMEPAD`](SDL_JoystickType::GAMEPAD) | [`SDL_JOYSTICK_TYPE_GAMEPAD`] | |
+/// | [`WHEEL`](SDL_JoystickType::WHEEL) | [`SDL_JOYSTICK_TYPE_WHEEL`] | |
+/// | [`ARCADE_STICK`](SDL_JoystickType::ARCADE_STICK) | [`SDL_JOYSTICK_TYPE_ARCADE_STICK`] | |
+/// | [`FLIGHT_STICK`](SDL_JoystickType::FLIGHT_STICK) | [`SDL_JOYSTICK_TYPE_FLIGHT_STICK`] | |
+/// | [`DANCE_PAD`](SDL_JoystickType::DANCE_PAD) | [`SDL_JOYSTICK_TYPE_DANCE_PAD`] | |
+/// | [`GUITAR`](SDL_JoystickType::GUITAR) | [`SDL_JOYSTICK_TYPE_GUITAR`] | |
+/// | [`DRUM_KIT`](SDL_JoystickType::DRUM_KIT) | [`SDL_JOYSTICK_TYPE_DRUM_KIT`] | |
+/// | [`ARCADE_PAD`](SDL_JoystickType::ARCADE_PAD) | [`SDL_JOYSTICK_TYPE_ARCADE_PAD`] | |
+/// | [`THROTTLE`](SDL_JoystickType::THROTTLE) | [`SDL_JOYSTICK_TYPE_THROTTLE`] | |
+/// | [`COUNT`](SDL_JoystickType::COUNT) | [`SDL_JOYSTICK_TYPE_COUNT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -120,14 +119,13 @@ pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 /// ### Availability
 /// This enum is available since SDL 3.0.0.
 ///
-/// ### `sdl3-sys` note
-/// This is a `C` enum. Known values:
+/// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`SDL_JoystickConnectionState::INVALID`] | [`SDL_JOYSTICK_CONNECTION_INVALID`] |  |
-/// | [`SDL_JoystickConnectionState::UNKNOWN`] | [`SDL_JOYSTICK_CONNECTION_UNKNOWN`] |  |
-/// | [`SDL_JoystickConnectionState::WIRED`] | [`SDL_JOYSTICK_CONNECTION_WIRED`] |  |
-/// | [`SDL_JoystickConnectionState::WIRELESS`] | [`SDL_JOYSTICK_CONNECTION_WIRELESS`] |  |
+/// | [`INVALID`](SDL_JoystickConnectionState::INVALID) | [`SDL_JOYSTICK_CONNECTION_INVALID`] | |
+/// | [`UNKNOWN`](SDL_JoystickConnectionState::UNKNOWN) | [`SDL_JOYSTICK_CONNECTION_UNKNOWN`] | |
+/// | [`WIRED`](SDL_JoystickConnectionState::WIRED) | [`SDL_JOYSTICK_CONNECTION_WIRED`] | |
+/// | [`WIRELESS`](SDL_JoystickConnectionState::WIRELESS) | [`SDL_JOYSTICK_CONNECTION_WIRELESS`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
