@@ -18,4 +18,13 @@ Known issues:
   corresponding SDL features
 - Some external types are generated as opaque structs; these could use a
   feature to use a definition from another crate (e.g. vulkan types)
-- Documentation could be formatted better
+
+<div class="warning">
+
+Most of the docs are generated directly from the C headers and document how
+SDL works in C. Using it from Rust might work differently in some cases.
+For example, macros in C are usually translated to constants or constant
+functions in Rust. Documentation specific to these Rust bindings are tagged
+with `sdl3-sys`.
+
+</div>
