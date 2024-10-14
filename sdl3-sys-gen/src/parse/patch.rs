@@ -389,6 +389,14 @@ const ENUM_PATCHES: &[EnumPatch] = &[
             Ok(true)
         },
     },
+    EnumPatch {
+        module: Some("stdinc"),
+        match_ident: |i| i == "SDL_DUMMY_ENUM",
+        patch: |_, e| {
+            e.hidden = true;
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {

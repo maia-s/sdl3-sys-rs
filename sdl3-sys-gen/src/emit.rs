@@ -1157,6 +1157,9 @@ impl Emit for TypeDef {
                     ctx.scope_mut().register_enum_sym(ident.clone())?;
                 }
 
+                if e.hidden {
+                    writeln!(ctx, "#[doc(hidden)]")?;
+                }
                 self.doc.emit(ctx)?;
                 assert!(e.doc.is_none());
 
@@ -1287,6 +1290,9 @@ impl Emit for TypeDef {
                     variant.doc.emit(&mut ctx_impl)?;
                     writeln!(ctx_impl, "pub const {short_variant_ident}: Self = {value};")?;
 
+                    if e.hidden {
+                        writeln!(ctx_global, "#[doc(hidden)]")?;
+                    }
                     variant.cond.emit_cfg(&mut ctx_global)?;
                     variant.doc.emit(&mut ctx_global)?;
                     writeln!(ctx_global, "pub const {variant_ident}: {enum_ident} = {enum_ident}::{short_variant_ident};")?;

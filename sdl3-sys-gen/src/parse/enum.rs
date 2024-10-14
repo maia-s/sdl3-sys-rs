@@ -11,6 +11,7 @@ pub struct Enum {
     pub ident: Option<Ident>,
     pub variants: Vec<EnumVariant>,
     pub base_type: Option<Type>,
+    pub hidden: bool,
 }
 
 impl Parse for Enum {
@@ -79,6 +80,7 @@ impl Parse for Enum {
                 ident,
                 variants,
                 base_type: None,
+                hidden: false,
             };
             patch_parsed_enum(ctx, &mut e)?;
             Ok((rest, Some(e)))

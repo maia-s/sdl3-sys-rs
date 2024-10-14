@@ -320,6 +320,7 @@ const _: () = ::core::assert!(
 
 #[cfg(all(not(target_os = "horizon"), not(target_os = "vita")))]
 emit! {
+    #[doc(hidden)]
     /// ### Known values (`sdl3-sys`)
     /// | Associated constant | Global constant | Description |
     /// | ------------------- | --------------- | ----------- |
@@ -337,6 +338,7 @@ emit! {
     impl SDL_DUMMY_ENUM {
         pub const DUMMY_ENUM_VALUE: Self = Self(0);
     }
+    #[doc(hidden)]
     pub const DUMMY_ENUM_VALUE: SDL_DUMMY_ENUM = SDL_DUMMY_ENUM::DUMMY_ENUM_VALUE;
 
     const _: () = ::core::assert!((::core::mem::size_of::<SDL_DUMMY_ENUM>() == ::core::mem::size_of::<::core::ffi::c_int>()));
