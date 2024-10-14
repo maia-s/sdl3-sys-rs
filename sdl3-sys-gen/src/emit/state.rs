@@ -1123,6 +1123,7 @@ pub struct StructSym {
     pub doc: Option<DocComment>,
     pub fields: Option<StructFields>,
     pub emit_status: EmitStatus,
+    pub hidden: bool,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -1224,6 +1225,9 @@ impl Scope {
         };
         if let Some(mut regd) = regd {
             let mut changed = false;
+            if regd.hidden != sym.hidden {
+                return Err(ParseErr::new(sym.ident.span(), "inconsistent visibility").into());
+            }
             if regd.doc.is_some() {
                 if let Some(doc) = sym.doc {
                     return Err(
@@ -1357,6 +1361,9 @@ impl InnerScope {
             .collect();
 
         for sym in syms {
+            if sym.hidden {
+                writeln!(ctx, "#[doc(hidden)]")?;
+            }
             if let Some(doc) = &sym.doc {
                 doc.emit_rust(ctx, "///")?;
             }

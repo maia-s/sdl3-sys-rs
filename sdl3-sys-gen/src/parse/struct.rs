@@ -1,6 +1,6 @@
 use super::{
-    Delimited, DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op, Parse, ParseContext, ParseErr,
-    ParseRawRes, Span, Spanned, Type, TypeWithReqIdent, WsAndComments,
+    patch_parsed_struct, Delimited, DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op, Parse,
+    ParseContext, ParseErr, ParseRawRes, Span, Spanned, Type, TypeWithReqIdent, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -18,6 +18,7 @@ pub struct StructOrUnion {
     pub ident: Option<Ident>,
     pub generated_ident: Ident,
     pub fields: Option<StructFields>,
+    pub hidden: bool,
 }
 
 impl StructOrUnion {
@@ -88,17 +89,17 @@ impl Parse for StructOrUnion {
         } else {
             StructKind::Union
         };
-        Ok((
-            rest,
-            Some(Self {
-                span,
-                doc,
-                kind,
-                ident,
-                generated_ident,
-                fields,
-            }),
-        ))
+        let mut this = Self {
+            span,
+            doc,
+            kind,
+            ident,
+            generated_ident,
+            fields,
+            hidden: false,
+        };
+        patch_parsed_struct(ctx, &mut this)?;
+        Ok((rest, Some(this)))
     }
 }
 

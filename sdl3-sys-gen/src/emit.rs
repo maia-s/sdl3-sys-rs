@@ -176,6 +176,7 @@ impl Emit for Item {
                         ident: ident.clone(),
                         fields: s.fields.clone(),
                         emit_status: EmitStatus::NotEmitted,
+                        hidden: s.hidden,
                     })?;
                     Ok(())
                 } else {
@@ -845,6 +846,7 @@ impl StructOrUnion {
             fields: self.fields.clone(),
             doc: doc.clone(),
             emit_status: EmitStatus::Requested,
+            hidden: self.hidden,
         })?;
 
         if let (true, Some(fields)) = (sym.emit_status != EmitStatus::Emitted, &sym.fields) {
@@ -854,6 +856,7 @@ impl StructOrUnion {
                 fields: None,
                 doc: None,
                 emit_status: EmitStatus::Emitted,
+                hidden: self.hidden,
             })?;
 
             let is_interface = if sym
@@ -873,6 +876,9 @@ impl StructOrUnion {
             };
 
             let ctx_ool = &mut { ctx.with_ool_output() };
+            if self.hidden {
+                writeln!(ctx_ool, "#[doc(hidden)]")?;
+            }
             sym.doc.emit(ctx_ool)?;
             writeln!(ctx_ool, "#[repr(C)]")?;
             writeln!(ctx_ool, "#[derive(Clone, Copy)]")?;

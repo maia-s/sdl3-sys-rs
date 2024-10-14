@@ -301,6 +301,7 @@ pub const fn SDL_FOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> Uint32 {
         | ((((D) as Uint8) as Uint32) << 24))
 }
 
+#[doc(hidden)]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

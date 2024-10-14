@@ -1,5 +1,6 @@
 use super::{
-    Cast, Define, DefineValue, Enum, Expr, GetSpan, ParseContext, ParseErr, PrimitiveType, Type,
+    Cast, Define, DefineValue, Enum, Expr, GetSpan, ParseContext, ParseErr, PrimitiveType,
+    StructOrUnion, Type,
 };
 
 struct Patch<T: ?Sized> {
@@ -398,6 +399,26 @@ const ENUM_PATCHES: &[EnumPatch] = &[
         },
     },
 ];
+
+pub fn patch_parsed_struct(ctx: &ParseContext, e: &mut StructOrUnion) -> Result<bool, ParseErr> {
+    patch(
+        ctx,
+        e,
+        |e| e.ident.as_ref().map(|i| i.as_str()).unwrap_or(""),
+        STRUCT_PATCHES,
+    )
+}
+
+type StructPatch = Patch<StructOrUnion>;
+
+const STRUCT_PATCHES: &[StructPatch] = &[StructPatch {
+    module: Some("stdinc"),
+    match_ident: |i| i == "SDL_alignment_test",
+    patch: |_, s| {
+        s.hidden = true;
+        Ok(true)
+    },
+}];
 
 pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {
     #[allow(clippy::single_match)]
