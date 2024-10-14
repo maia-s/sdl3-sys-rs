@@ -48,14 +48,23 @@ macro_rules! __const_c_str {
 mod generated;
 pub use generated::*;
 
+/// Extra ffi types for `sdl3-sys`
 pub mod ffi {
-    #[cfg(windows)]
+    #[cfg(doc)]
+    /// Equivalent to C's `wchar_t` type. Varies depending on platform.
+    pub type c_wchar_t = u32;
+    #[cfg(all(not(doc), windows))]
     pub type c_wchar_t = u16;
-    #[cfg(not(windows))]
+    #[cfg(all(not(doc), not(windows)))]
     pub type c_wchar_t = u32;
 
-    #[cfg(feature = "nightly")]
+    #[cfg(doc)]
+    /// Equivalent to C's `va_list` type. Enable the `nightly` feature and compile with
+    /// the nightly compiler to make this an alias of [`core::ffi::VaList`]. Otherwise,
+    /// this type can't be instantiated.
+    pub enum VaList {}
+    #[cfg(all(not(doc), feature = "nightly"))]
     pub use core::ffi::VaList;
-    #[cfg(not(feature = "nightly"))]
+    #[cfg(all(not(doc), not(feature = "nightly")))]
     pub enum VaList {}
 }
