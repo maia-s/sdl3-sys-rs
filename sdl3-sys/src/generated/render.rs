@@ -3319,6 +3319,67 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
+/// The size, in pixels, of a single [`SDL_RenderDebugText()`] character.
+///
+/// The font is monospaced and square, so this applies to all characters.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.5.
+///
+/// ### See also
+/// - [`SDL_RenderDebugText`]
+pub const SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE: ::core::primitive::i32 = 8;
+
+extern "C" {
+    /// Draw debug text to an [`SDL_Renderer`].
+    ///
+    /// This function will render a string of text to an [`SDL_Renderer`]. Note that
+    /// this is a convenience function for debugging, with severe limitations, and
+    /// not intended to be used for production apps and games.
+    ///
+    /// Among these limitations:
+    ///
+    /// - It accepts UTF-8 strings, but will only renders ASCII characters.
+    /// - It has a single, tiny size (8x8 pixels). One can use logical presentation
+    ///   or scaling to adjust it, but it will be blurry.
+    /// - It uses a simple, hardcoded bitmap font. It does not allow different font
+    ///   selections and it does not support truetype, for proper scaling.
+    /// - It does no word-wrapping and does not treat newline characters as a line
+    ///   break. If the text goes out of the window, it's gone.
+    ///
+    /// For serious text rendering, there are several good options, such as
+    /// [`SDL_ttf`], stb_truetype, or other external libraries.
+    ///
+    /// On first use, this will create an internal texture for rendering glyphs.
+    /// This texture will live until the renderer is destroyed.
+    ///
+    /// The text is drawn in the color specified by [`SDL_SetRenderDrawColor()`].
+    ///
+    /// ### Arguments
+    /// - `renderer`: the renderer which should draw a line of text.
+    /// - `x`: the x coordinate where the top-left corner of the text will draw.
+    /// - `y`: the y coordinate where the top-left corner of the text will draw.
+    /// - `str`: the string to render.
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.4.
+    ///
+    /// ### See also
+    /// - [`SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE`]
+    pub fn SDL_RenderDebugText(
+        renderer: *mut SDL_Renderer,
+        x: ::core::ffi::c_float,
+        y: ::core::ffi::c_float,
+        str: *const ::core::ffi::c_char,
+    ) -> ::core::primitive::bool;
+}
+
 /// A structure representing rendering state
 ///
 /// ### Availability

@@ -587,6 +587,24 @@ pub type SDL_LogOutputFunction = ::core::option::Option<
 >;
 
 extern "C" {
+    /// Get the default log output function.
+    ///
+    /// ### Return value
+    /// Returns the default log output callback.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.4.
+    ///
+    /// ### See also
+    /// - [`SDL_SetLogOutputFunction`]
+    /// - [`SDL_GetLogOutputFunction`]
+    pub fn SDL_GetDefaultLogOutputFunction() -> SDL_LogOutputFunction;
+}
+
+extern "C" {
     /// Get the current log output function.
     ///
     /// ### Arguments
@@ -602,6 +620,7 @@ extern "C" {
     /// This function is available since SDL 3.0.0.
     ///
     /// ### See also
+    /// - [`SDL_GetDefaultLogOutputFunction`]
     /// - [`SDL_SetLogOutputFunction`]
     pub fn SDL_GetLogOutputFunction(
         callback: *mut SDL_LogOutputFunction,
@@ -623,6 +642,7 @@ extern "C" {
     /// This function is available since SDL 3.0.0.
     ///
     /// ### See also
+    /// - [`SDL_GetDefaultLogOutputFunction`]
     /// - [`SDL_GetLogOutputFunction`]
     pub fn SDL_SetLogOutputFunction(
         callback: SDL_LogOutputFunction,

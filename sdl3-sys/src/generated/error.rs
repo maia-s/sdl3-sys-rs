@@ -49,7 +49,32 @@ extern "C" {
     /// ### See also
     /// - [`SDL_ClearError`]
     /// - [`SDL_GetError`]
+    /// - [`SDL_SetErrorV`]
     pub fn SDL_SetError(fmt: *const ::core::ffi::c_char, ...) -> ::core::primitive::bool;
+}
+
+extern "C" {
+    /// Set the SDL error message for the current thread.
+    ///
+    /// Calling this function will replace any previous error message that was set.
+    ///
+    /// ### Arguments
+    /// - `fmt`: a printf()-style message format string.
+    /// - `ap`: a variable argument list.
+    /// ### Return value
+    /// Returns false.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.4.
+    ///
+    /// ### See also
+    /// - [`SDL_ClearError`]
+    /// - [`SDL_GetError`]
+    /// - [`SDL_SetError`]
+    pub fn SDL_SetErrorV(
+        fmt: *const ::core::ffi::c_char,
+        ap: crate::ffi::VaList,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

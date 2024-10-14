@@ -8,7 +8,7 @@ pub const SOURCE_DIR: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/SDL");
 pub const SOURCE_DIR: &str = concat!(env!("CARGO_MANIFEST_DIR"), "\\SDL");
 
 /// Revision
-pub const REVISION: &str = "SDL-preview-3.1.3-110-gfec006a4f";
+pub const REVISION: &str = "SDL-preview-3.1.3-136-g46835650d";
 
 /// Version part of the revision
 pub const VERSION: &str = "3.1.3";
@@ -20,7 +20,7 @@ pub const REVISION_TAG: &str = "preview-3.1.3";
 pub const REVISION_TAG_BASE: &str = "preview";
 
 /// Offset from tag part of the revision
-pub const REVISION_OFFSET: &str = "110";
+pub const REVISION_OFFSET: &str = "136";
 
 /// Hash part of the revision
-pub const REVISION_HASH: &str = "gfec006a4f";
+pub const REVISION_HASH: &str = "g46835650d";

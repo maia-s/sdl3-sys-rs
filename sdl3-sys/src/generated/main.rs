@@ -54,6 +54,8 @@ extern "C" {
     /// [`SDL_APP_SUCCESS`], SDL calls [`SDL_AppQuit`] and terminates with an exit code
     /// that reports success to the platform.
     ///
+    /// This function is called by SDL on the main thread.
+    ///
     /// ### Arguments
     /// - `appstate`: a place where the app can optionally store a pointer for
     ///   future use.
@@ -63,9 +65,6 @@ extern "C" {
     /// ### Return value
     /// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
     ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
-    ///
-    /// ### Thread safety
-    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.0.0.
@@ -116,6 +115,8 @@ extern "C" {
     /// [`SDL_AppQuit`] and terminates with an exit code that reports success to the
     /// platform.
     ///
+    /// This function is called by SDL on the main thread.
+    ///
     /// ### Arguments
     /// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
     /// ### Return value
@@ -123,7 +124,8 @@ extern "C" {
     ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
     ///
     /// ### Thread safety
-    /// This function is not thread safe.
+    /// This function may get called concurrently with [`SDL_AppEvent()`]
+    ///   for events not pushed on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.0.0.
@@ -148,7 +150,7 @@ extern "C" {
     /// function. SDL is responsible for pumping the event queue between each call
     /// to [`SDL_AppIterate`], so in normal operation one should only get events in a
     /// serial fashion, but be careful if you have a thread that explicitly calls
-    /// [`SDL_PushEvent`].
+    /// [`SDL_PushEvent`]. SDL itself will push events to the queue on the main thread.
     ///
     /// Events sent to this function are not owned by the app; if you need to save
     /// the data, you should copy it.
@@ -175,7 +177,9 @@ extern "C" {
     ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
     ///
     /// ### Thread safety
-    /// This function is not thread safe.
+    /// This function may get called concurrently with
+    ///   [`SDL_AppIterate()`] or [`SDL_AppQuit()`] for events not pushed from
+    ///   the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.0.0.
@@ -211,12 +215,15 @@ extern "C" {
     /// function call is the last time this pointer will be provided, so any
     /// resources to it should be cleaned up here.
     ///
+    /// This function is called by SDL on the main thread.
+    ///
     /// ### Arguments
     /// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
     /// - `result`: the result code that terminated the app (success or failure).
     ///
     /// ### Thread safety
-    /// This function is not thread safe.
+    /// [`SDL_AppEvent()`] may get called concurrently with this function
+    ///   if other threads that push events are still active.
     ///
     /// ### Availability
     /// This function is available since SDL 3.0.0.
