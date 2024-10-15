@@ -487,7 +487,6 @@ pub struct SDL_VirtualJoystickSensorDesc {
 /// - [`SDL_VirtualJoystickSensorDesc`]
 /// - [`SDL_VirtualJoystickTouchpadDesc`]
 #[repr(C)]
-#[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_VirtualJoystickDesc {
     /// the version of this interface

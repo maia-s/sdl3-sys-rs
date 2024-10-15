@@ -25,7 +25,6 @@ use super::properties::*;
 /// ### See also
 /// - [`SDL_INIT_INTERFACE`]
 #[repr(C)]
-#[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_StorageInterface {
     pub version: Uint32,

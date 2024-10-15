@@ -116,7 +116,6 @@ pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
 /// ### See also
 /// - [`SDL_INIT_INTERFACE`]
 #[repr(C)]
-#[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_IOStreamInterface {
     pub version: Uint32,

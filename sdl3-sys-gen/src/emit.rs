@@ -881,7 +881,9 @@ impl StructOrUnion {
             }
             sym.doc.emit(ctx_ool)?;
             writeln!(ctx_ool, "#[repr(C)]")?;
-            writeln!(ctx_ool, "#[derive(Clone, Copy)]")?;
+            if !is_interface {
+                writeln!(ctx_ool, "#[derive(Clone, Copy)]")?;
+            }
             if self.can_derive_debug(ctx_ool) {
                 writeln!(
                     ctx_ool,
