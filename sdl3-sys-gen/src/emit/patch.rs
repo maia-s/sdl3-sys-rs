@@ -220,6 +220,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 None,
                 SymKind::Other,
                 false,
+                false,
             )?;
             writeln!(ctx, "#[inline(never)]")?;
             writeln!(ctx, "pub const unsafe fn SDL_AssertBreakpoint() {{}}")?;
@@ -537,8 +538,16 @@ fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
     let etf = Ident::new_inline("SDL_EndThreadFunction");
     let ty = Type::ident_str("SDL_FunctionPointer");
 
-    ctx.register_sym(btf, None, Some(ty.clone()), None, SymKind::Other, true)?;
-    ctx.register_sym(etf, None, Some(ty), None, SymKind::Other, true)?;
+    ctx.register_sym(
+        btf,
+        None,
+        Some(ty.clone()),
+        None,
+        SymKind::Other,
+        false,
+        true,
+    )?;
+    ctx.register_sym(etf, None, Some(ty), None, SymKind::Other, false, true)?;
 
     let cfg_default = "#[cfg(not(windows))]";
     let cfg_win = "#[cfg(windows)]";

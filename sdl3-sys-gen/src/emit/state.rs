@@ -1,7 +1,7 @@
 use super::{Emit, EmitErr, EmitResult, Eval, Value};
 use crate::{
     parse::{
-        DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident, IdentOrKw, ParseErr,
+        CanCopy, DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident, IdentOrKw, ParseErr,
         PrimitiveType, RustCode, Span, StructFields, StructKind, Type, TypeEnum,
     },
     Gen,
@@ -674,6 +674,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         value_ty: Option<Type>,
         enum_base_ty: Option<Type>,
         kind: SymKind,
+        can_derive_copy: bool,
         can_derive_debug: bool,
     ) -> EmitResult {
         let module = self.inner().module.clone();
@@ -684,6 +685,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             value_ty,
             enum_base_ty,
             kind,
+            can_derive_copy,
             can_derive_debug,
         })?;
         self.emit_pending()?;
@@ -1088,6 +1090,7 @@ pub struct Sym {
     pub value_ty: Option<Type>,
     pub enum_base_ty: Option<Type>,
     pub kind: SymKind,
+    pub can_derive_copy: bool,
     pub can_derive_debug: bool,
 }
 
@@ -1124,6 +1127,7 @@ pub struct StructSym {
     pub fields: Option<StructFields>,
     pub emit_status: EmitStatus,
     pub hidden: bool,
+    pub can_copy: CanCopy,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -1237,6 +1241,13 @@ impl Scope {
             } else if let Some(doc) = sym.doc {
                 changed = true;
                 regd.doc = Some(doc);
+            }
+            if sym.can_copy != CanCopy::Default && regd.can_copy != sym.can_copy {
+                if regd.can_copy != CanCopy::Default {
+                    return Err(ParseErr::new(sym.ident.span(), "conflicting can_copy").into());
+                }
+                changed = true;
+                regd.can_copy = sym.can_copy;
             }
             if regd.fields.is_some() {
                 if sym.fields.is_some() {
@@ -1389,6 +1400,7 @@ impl InnerScope {
                     StructKind::Struct => SymKind::StructAlias,
                     StructKind::Union => SymKind::UnionAlias,
                 }(sym.ident.clone()),
+                can_derive_copy: false,
                 can_derive_debug: false,
             })?;
         }

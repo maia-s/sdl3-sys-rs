@@ -735,7 +735,6 @@ pub const SDL_INIT_STATUS_UNINITIALIZING: SDL_InitStatus = SDL_InitStatus::UNINI
 /// ### Availability
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_InitState {
     pub status: SDL_AtomicInt,

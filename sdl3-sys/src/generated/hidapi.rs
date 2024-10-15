@@ -98,7 +98,6 @@ pub const SDL_HID_API_BUS_SPI: SDL_hid_bus_type = SDL_hid_bus_type::SPI;
 /// ### Availability
 /// This struct is available since SDL 3.0.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_hid_device_info {
     /// Platform-specific device path

@@ -5,7 +5,7 @@ use super::{
 use crate::parse::{
     Alternative, Ambiguous, BinaryOp, Cast, DefineValue, Expr, FloatLiteral, FnCall, GetSpan,
     Ident, IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
-    RustCode, SizeOf, Span, StringLiteral, Ternary, Type, TypeEnum,
+    RustCode, RustType, SizeOf, Span, StringLiteral, Ternary, Type, TypeEnum,
 };
 use core::fmt::{self, Display, Write};
 
@@ -110,7 +110,11 @@ impl Value {
             Value::F32(_) => Ok(Type::primitive(PrimitiveType::Float)),
             Value::F64(_) => Ok(Type::primitive(PrimitiveType::Double)),
             Value::Bool(_) => Ok(Type::bool()),
-            Value::String(_) => Ok(Type::rust(STRING_TYPE, true)),
+            Value::String(_) => Ok(Type::rust(RustType {
+                string: STRING_TYPE.into(),
+                can_derive_copy: true,
+                can_derive_debug: true,
+            })),
             Value::RustCode(r) => Ok(r.ty.clone()),
             Value::TargetDependent(_) => todo!(),
             Value::Place(ptr, _) => {
@@ -894,7 +898,7 @@ impl Eval for SizeOf {
                 TypeEnum::Array(_, _) => todo!(),
                 TypeEnum::FnPointer(_) => todo!(),
                 TypeEnum::DotDotDot => todo!(),
-                TypeEnum::Rust(_, _) => todo!(),
+                TypeEnum::Rust(_) => todo!(),
                 TypeEnum::Function(_) => todo!(),
             },
 

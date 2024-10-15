@@ -1,10 +1,10 @@
 use crate::{
     common_ident_prefix,
     parse::{
-        ArgDecl, Conditional, ConditionalExpr, Define, DocComment, DocCommentFile, Expr, FnAbi,
-        FnDeclArgs, FnPointer, Function, GetSpan, Ident, IdentOrKwT, Include, IntegerLiteral, Item,
-        Items, Literal, ParseErr, PreProcBlock, PrimitiveType, StructKind, StructOrUnion, Type,
-        TypeDef, TypeEnum,
+        ArgDecl, CanCopy, Conditional, ConditionalExpr, Define, DocComment, DocCommentFile, Expr,
+        FnAbi, FnDeclArgs, FnPointer, Function, GetSpan, Ident, IdentOrKwT, Include,
+        IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock, PrimitiveType, StructFields,
+        StructKind, StructOrUnion, Type, TypeDef, TypeEnum,
     },
 };
 use std::{
@@ -177,6 +177,7 @@ impl Emit for Item {
                         fields: s.fields.clone(),
                         emit_status: EmitStatus::NotEmitted,
                         hidden: s.hidden,
+                        can_copy: s.can_copy,
                     })?;
                     Ok(())
                 } else {
@@ -553,6 +554,7 @@ impl Emit for Define {
                         Some(arg.ty.clone()),
                         None,
                         SymKind::Other,
+                        false,
                         arg.ty.can_derive_debug(ctx),
                     )?;
                 }
@@ -609,6 +611,7 @@ impl Emit for Define {
                     None,
                     SymKind::Other,
                     false,
+                    false,
                 )?;
                 writeln!(ctx, "{f}")?;
                 return Ok(());
@@ -633,6 +636,7 @@ impl Emit for Define {
                     Some(ty.clone()),
                     None,
                     SymKind::Other,
+                    true,
                     ty.can_derive_debug(ctx),
                 )?;
                 self.doc.emit(ctx)?;
@@ -695,6 +699,7 @@ impl Emit for Function {
                 None,
                 SymKind::Other,
                 false,
+                false,
             )?;
             emit_extern_start(ctx, &self.abi, false)?;
             self.doc.emit(ctx)?;
@@ -724,6 +729,7 @@ impl Emit for Function {
                         Some(arg.ty.clone()),
                         None,
                         SymKind::Other,
+                        false,
                         arg.ty.can_derive_debug(&ctx_body),
                     )?;
                 }
@@ -748,6 +754,7 @@ impl Emit for Function {
                 )),
                 None,
                 SymKind::Other,
+                false,
                 false,
             )?;
 
@@ -817,6 +824,28 @@ impl Emit for ArgDecl {
 }
 
 impl StructOrUnion {
+    pub fn can_derive_copy(
+        &self,
+        ctx: &EmitContext,
+        fields_override: Option<&StructFields>,
+    ) -> bool {
+        match self.can_copy {
+            CanCopy::Always => return true,
+            CanCopy::Never => return false,
+            CanCopy::Default => (),
+        }
+        if let Some(fields) = fields_override.or(self.fields.as_ref()) {
+            for field in fields.fields.iter() {
+                if !field.ty.can_derive_copy(ctx) {
+                    return false;
+                }
+            }
+            true
+        } else {
+            false
+        }
+    }
+
     pub fn can_derive_debug(&self, ctx: &EmitContext) -> bool {
         if matches!(self.kind, StructKind::Union) {
             return false;
@@ -847,6 +876,7 @@ impl StructOrUnion {
             doc: doc.clone(),
             emit_status: EmitStatus::Requested,
             hidden: self.hidden,
+            can_copy: self.can_copy,
         })?;
 
         if let (true, Some(fields)) = (sym.emit_status != EmitStatus::Emitted, &sym.fields) {
@@ -857,6 +887,7 @@ impl StructOrUnion {
                 doc: None,
                 emit_status: EmitStatus::Emitted,
                 hidden: self.hidden,
+                can_copy: self.can_copy,
             })?;
 
             let is_interface = if sym
@@ -875,13 +906,17 @@ impl StructOrUnion {
                 false
             };
 
+            let can_derive_copy = !is_interface
+                && (sym.can_copy == CanCopy::Always
+                    || (sym.can_copy != CanCopy::Never && self.can_derive_copy(ctx, Some(fields))));
+
             let ctx_ool = &mut { ctx.with_ool_output() };
             if self.hidden {
                 writeln!(ctx_ool, "#[doc(hidden)]")?;
             }
             sym.doc.emit(ctx_ool)?;
             writeln!(ctx_ool, "#[repr(C)]")?;
-            if !is_interface {
+            if can_derive_copy {
                 writeln!(ctx_ool, "#[derive(Clone, Copy)]")?;
             }
             if self.can_derive_debug(ctx_ool) {
@@ -1100,7 +1135,7 @@ impl Emit for Type {
 
             TypeEnum::DotDotDot => write!(ctx, "...")?,
 
-            TypeEnum::Rust(r, _) => write!(ctx, "{r}")?,
+            TypeEnum::Rust(r) => write!(ctx, "{}", r.string)?,
 
             TypeEnum::Function(_) => todo!(),
 
@@ -1127,6 +1162,7 @@ impl Emit for TypeDef {
                     None,
                     SymKind::Other,
                     true,
+                    true,
                 )?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type ")?;
@@ -1148,6 +1184,7 @@ impl Emit for TypeDef {
                     None,
                     sym.enum_base_ty,
                     sym.kind,
+                    sym.can_derive_copy,
                     sym.can_derive_debug,
                 )?;
                 self.doc.emit(ctx)?;
@@ -1203,6 +1240,7 @@ impl Emit for TypeDef {
                     Some(enum_base_type.clone()),
                     SymKind::Other,
                     true,
+                    true,
                 )?;
 
                 let mut doc_consts = String::new();
@@ -1237,6 +1275,7 @@ impl Emit for TypeDef {
                         Some(Type::ident(self.ident.clone())),
                         None,
                         SymKind::Other,
+                        true,
                         true,
                     )?;
 
@@ -1364,6 +1403,7 @@ impl Emit for TypeDef {
                     } else {
                         SymKind::UnionAlias
                     }(s.ident.clone().unwrap()),
+                    s.can_derive_copy(ctx, None),
                     s.can_derive_debug(ctx),
                 )?;
 
@@ -1390,6 +1430,7 @@ impl Emit for TypeDef {
                     None,
                     None,
                     SymKind::Other,
+                    false,
                     true,
                 )?;
                 self.doc.emit(ctx)?;
@@ -1400,14 +1441,15 @@ impl Emit for TypeDef {
                 Ok(())
             }
 
-            TypeEnum::Array(_, _) => {
+            TypeEnum::Array(ty, _) => {
                 ctx.register_sym(
                     self.ident.clone(),
                     Some(self.ty.clone()),
                     None,
                     None,
                     SymKind::Other,
-                    true,
+                    ty.can_derive_copy(ctx),
+                    ty.can_derive_debug(ctx),
                 )?;
                 self.doc.emit(ctx)?;
                 todo!()
@@ -1420,6 +1462,7 @@ impl Emit for TypeDef {
                     None,
                     None,
                     SymKind::Other,
+                    false,
                     true,
                 )?;
                 self.doc.emit(ctx)?;
@@ -1443,16 +1486,17 @@ impl Emit for TypeDef {
 
             TypeEnum::DotDotDot => todo!(),
 
-            TypeEnum::Rust(r, can_derive_debug) => {
+            TypeEnum::Rust(r) => {
                 ctx.register_sym(
                     self.ident.clone(),
                     Some(self.ty.clone()),
                     None,
                     None,
                     SymKind::Other,
-                    *can_derive_debug,
+                    r.can_derive_copy,
+                    r.can_derive_debug,
                 )?;
-                writeln!(ctx, "pub type {} = {r};", self.ident.as_str())?;
+                writeln!(ctx, "pub type {} = {};", self.ident.as_str(), r.string)?;
                 Ok(())
             }
 

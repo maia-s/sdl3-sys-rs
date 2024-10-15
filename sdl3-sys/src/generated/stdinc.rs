@@ -303,7 +303,6 @@ pub const fn SDL_FOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> Uint32 {
 
 #[doc(hidden)]
 #[repr(C)]
-#[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_alignment_test {
     pub a: Uint8,

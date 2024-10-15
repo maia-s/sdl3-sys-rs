@@ -1,6 +1,7 @@
 use super::{
-    patch_parsed_struct, Delimited, DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op, Parse,
-    ParseContext, ParseErr, ParseRawRes, Span, Spanned, Type, TypeWithReqIdent, WsAndComments,
+    patch_parsed_struct, CanCopy, Delimited, DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op,
+    Parse, ParseContext, ParseErr, ParseRawRes, Span, Spanned, Type, TypeWithReqIdent,
+    WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -19,6 +20,7 @@ pub struct StructOrUnion {
     pub generated_ident: Ident,
     pub fields: Option<StructFields>,
     pub hidden: bool,
+    pub can_copy: CanCopy,
 }
 
 impl StructOrUnion {
@@ -75,8 +77,15 @@ impl Parse for StructOrUnion {
         };
         let _guard = ctx.with_parent_struct_guard(Some(generated_ident.clone()));
         let fields = StructFields::try_parse(ctx, &mut rest2)?;
-        if fields.is_some() {
+        let mut has_refcount = false;
+        if let Some(fields) = &fields {
             rest = rest2;
+            for field in fields.fields.iter() {
+                if field.ident.as_str() == "refcount" {
+                    has_refcount = true;
+                    break;
+                }
+            }
         }
         let span = kw_struct
             .as_ref()
@@ -97,6 +106,11 @@ impl Parse for StructOrUnion {
             generated_ident,
             fields,
             hidden: false,
+            can_copy: if has_refcount {
+                CanCopy::Never
+            } else {
+                CanCopy::Default
+            },
         };
         patch_parsed_struct(ctx, &mut this)?;
         Ok((rest, Some(this)))

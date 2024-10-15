@@ -1,9 +1,10 @@
+#![allow(clippy::too_many_arguments)]
 #![allow(clippy::type_complexity)]
 
 #[allow(unused_macros)]
 macro_rules! log_debug {
     ($ctx:expr, $($tt:tt)*) => {
-        $ctx.log_debug(format_args!($($tt)*))?;
+        $ctx.log_debug(format_args!($($tt)*)).unwrap();
     };
 }
 

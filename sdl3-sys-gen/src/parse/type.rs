@@ -7,6 +7,13 @@ use crate::emit::EmitContext;
 use core::cell::RefCell;
 use std::{borrow::Cow, rc::Rc};
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum CanCopy {
+    Default,
+    Always,
+    Never,
+}
+
 #[derive(Clone, Debug)]
 pub struct Type {
     pub span: Span,
@@ -88,11 +95,11 @@ impl Type {
         }
     }
 
-    pub fn rust(rust: impl Into<String>, can_derive_debug: bool) -> Self {
+    pub fn rust(t: RustType) -> Self {
         Self {
             span: Span::none(),
             is_const: false,
-            ty: TypeEnum::Rust(rust.into(), can_derive_debug),
+            ty: TypeEnum::Rust(t),
         }
     }
 
@@ -174,6 +181,29 @@ impl Type {
         assert_eq!(*self, ty, "type already resolved to different type")
     }
 
+    pub fn can_derive_copy(&self, ctx: &EmitContext) -> bool {
+        match &self.ty {
+            TypeEnum::Primitive(_) => true,
+            TypeEnum::Ident(ident) => ctx
+                .lookup_sym(ident)
+                .map(|s| s.can_derive_copy)
+                .unwrap_or(false),
+            TypeEnum::Enum(_) => true,
+            TypeEnum::Struct(s) => s.can_derive_copy(ctx, None),
+            TypeEnum::Pointer(p) => p.is_const,
+            TypeEnum::Array(ty, _) => ty.can_derive_copy(ctx),
+            TypeEnum::FnPointer(_) => true,
+            TypeEnum::DotDotDot => false,
+            TypeEnum::Rust(r) => r.can_derive_copy,
+            TypeEnum::Function(_) => false,
+            TypeEnum::Infer(i) => i
+                .borrow()
+                .as_ref()
+                .map(|i| i.can_derive_copy(ctx))
+                .unwrap_or(false),
+        }
+    }
+
     pub fn can_derive_debug(&self, ctx: &EmitContext) -> bool {
         match &self.ty {
             TypeEnum::Primitive(_) => true,
@@ -187,7 +217,7 @@ impl Type {
             TypeEnum::Array(ty, _) => ty.can_derive_debug(ctx),
             TypeEnum::FnPointer(_) => true,
             TypeEnum::DotDotDot => false,
-            TypeEnum::Rust(_, can_derive_debug) => *can_derive_debug,
+            TypeEnum::Rust(r) => r.can_derive_debug,
             TypeEnum::Function(_) => false,
             TypeEnum::Infer(i) => i
                 .borrow()
@@ -222,7 +252,7 @@ pub enum TypeEnum {
     Array(Box<Type>, Expr),
     FnPointer(Box<FnPointer>),
     DotDotDot,
-    Rust(String, bool),
+    Rust(RustType),
     Function(Box<FnType>),
     Infer(Rc<RefCell<Option<Type>>>),
 }
@@ -242,10 +272,17 @@ impl PartialEq for TypeEnum {
             (Self::Primitive(s), Self::Primitive(o)) => s == o,
             (Self::Ident(s), Self::Ident(o)) => s.as_str() == o.as_str(),
             (Self::Pointer(s), Self::Pointer(o)) => s == o,
-            (Self::Rust(s, _), Self::Rust(o, _)) => s.as_str() == o.as_str(),
+            (Self::Rust(s), Self::Rust(o)) => s.string == o.string,
             _ => false,
         }
     }
+}
+
+#[derive(Clone, Debug)]
+pub struct RustType {
+    pub string: String,
+    pub can_derive_copy: bool,
+    pub can_derive_debug: bool,
 }
 
 #[derive(Clone, Debug)]

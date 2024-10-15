@@ -1345,7 +1345,6 @@ pub struct SDL_FColor {
 /// ### See also
 /// - [`SDL_SetPaletteColors`]
 #[repr(C)]
-#[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Palette {
     /// number of elements in `colors`.

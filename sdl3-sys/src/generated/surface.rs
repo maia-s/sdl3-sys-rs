@@ -134,7 +134,6 @@ pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
 /// - [`SDL_CreateSurface`]
 /// - [`SDL_DestroySurface`]
 #[repr(C)]
-#[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Surface {
     /// The flags of the surface, read-only

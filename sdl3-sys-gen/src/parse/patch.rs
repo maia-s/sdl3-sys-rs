@@ -1,5 +1,5 @@
 use super::{
-    Cast, Define, DefineValue, Enum, Expr, GetSpan, ParseContext, ParseErr, PrimitiveType,
+    CanCopy, Cast, Define, DefineValue, Enum, Expr, GetSpan, ParseContext, ParseErr, PrimitiveType,
     StructOrUnion, Type,
 };
 
@@ -417,6 +417,60 @@ const STRUCT_PATCHES: &[StructPatch] = &[
         match_ident: |i| i.starts_with('_'),
         patch: |_, s| {
             s.hidden = true;
+            Ok(true)
+        },
+    },
+    StructPatch {
+        module: Some("atomic"),
+        match_ident: |i| matches!(i, "SDL_AtomicInt" | "SDL_AtomicU32"),
+        patch: |_, s| {
+            // atomic
+            s.can_copy = CanCopy::Never;
+            Ok(true)
+        },
+    },
+    StructPatch {
+        module: Some("events"),
+        match_ident: |i| matches!(i, "SDL_ClipboardEvent" | "SDL_UserEvent"),
+        patch: |_, s| {
+            // part of union
+            s.can_copy = CanCopy::Always;
+            Ok(true)
+        },
+    },
+    StructPatch {
+        module: Some("gpu"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_GPUBlitRegion"
+                    | "SDL_GPUBufferBinding"
+                    | "SDL_GPUBufferLocation"
+                    | "SDL_GPUBufferRegion"
+                    | "SDL_GPUColorTargetInfo"
+                    | "SDL_GPUDepthStencilTargetInfo"
+                    | "SDL_GPUGraphicsPipelineCreateInfo"
+                    | "SDL_GPUStorageBufferReadWriteBinding"
+                    | "SDL_GPUStorageTextureReadWriteBinding"
+                    | "SDL_GPUTextureLocation"
+                    | "SDL_GPUTextureRegion"
+                    | "SDL_GPUTextureSamplerBinding"
+                    | "SDL_GPUTextureTransferInfo"
+                    | "SDL_GPUTransferBufferLocation"
+            )
+        },
+        patch: |_, s| {
+            // pointers aren't uniquely owned
+            s.can_copy = CanCopy::Always;
+            Ok(true)
+        },
+    },
+    StructPatch {
+        module: Some("haptic"),
+        match_ident: |i| i == "SDL_HapticCustom",
+        patch: |_, s| {
+            // this must be copy because it's part of a union
+            s.can_copy = CanCopy::Always;
             Ok(true)
         },
     },

@@ -114,7 +114,6 @@ pub const SDL_SYSTEM_THEME_DARK: SDL_SystemTheme = SDL_SystemTheme::DARK;
 /// - [`SDL_SetWindowFullscreenMode`]
 /// - [`SDL_GetWindowFullscreenMode`]
 #[repr(C)]
-#[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DisplayMode {
     /// the display this mode is associated with

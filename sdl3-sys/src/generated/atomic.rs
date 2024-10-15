@@ -325,7 +325,6 @@ emit! {
 /// - [`SDL_SetAtomicInt`]
 /// - [`SDL_AddAtomicInt`]
 #[repr(C)]
-#[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AtomicInt {
     pub value: ::core::ffi::c_int,
@@ -500,7 +499,6 @@ pub unsafe fn SDL_AtomicDecRef(a: *mut SDL_AtomicInt) -> ::core::primitive::bool
 /// - [`SDL_SetAtomicU32`]
 /// - [`SDL_AddAtomicU32`]
 #[repr(C)]
-#[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AtomicU32 {
     pub value: Uint32,
