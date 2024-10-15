@@ -21,6 +21,7 @@ pub struct StructOrUnion {
     pub fields: Option<StructFields>,
     pub hidden: bool,
     pub can_copy: CanCopy,
+    pub can_construct: bool,
 }
 
 impl StructOrUnion {
@@ -111,6 +112,7 @@ impl Parse for StructOrUnion {
             } else {
                 CanCopy::Default
             },
+            can_construct: !has_refcount,
         };
         patch_parsed_struct(ctx, &mut this)?;
         Ok((rest, Some(this)))

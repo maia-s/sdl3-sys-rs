@@ -160,6 +160,7 @@ pub const SDL_LOGICAL_PRESENTATION_INTEGER_SCALE: SDL_RendererLogicalPresentatio
 /// - [`SDL_CreateTextureWithProperties`]
 /// - [`SDL_DestroyTexture`]
 #[repr(C)]
+#[non_exhaustive]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Texture {
     /// The format of the texture, read-only

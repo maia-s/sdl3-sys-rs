@@ -1128,6 +1128,7 @@ pub struct StructSym {
     pub emit_status: EmitStatus,
     pub hidden: bool,
     pub can_copy: CanCopy,
+    pub can_construct: bool,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -1248,6 +1249,10 @@ impl Scope {
                 }
                 changed = true;
                 regd.can_copy = sym.can_copy;
+            }
+            if sym.can_construct != regd.can_construct && !sym.can_construct {
+                changed = true;
+                regd.can_construct = sym.can_construct;
             }
             if regd.fields.is_some() {
                 if sym.fields.is_some() {

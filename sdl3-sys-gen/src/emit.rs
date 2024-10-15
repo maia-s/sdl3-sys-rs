@@ -178,6 +178,7 @@ impl Emit for Item {
                         emit_status: EmitStatus::NotEmitted,
                         hidden: s.hidden,
                         can_copy: s.can_copy,
+                        can_construct: s.can_construct,
                     })?;
                     Ok(())
                 } else {
@@ -877,6 +878,7 @@ impl StructOrUnion {
             emit_status: EmitStatus::Requested,
             hidden: self.hidden,
             can_copy: self.can_copy,
+            can_construct: self.can_construct,
         })?;
 
         if let (true, Some(fields)) = (sym.emit_status != EmitStatus::Emitted, &sym.fields) {
@@ -888,6 +890,7 @@ impl StructOrUnion {
                 emit_status: EmitStatus::Emitted,
                 hidden: self.hidden,
                 can_copy: self.can_copy,
+                can_construct: self.can_construct,
             })?;
 
             let is_interface = if sym
@@ -916,6 +919,9 @@ impl StructOrUnion {
             }
             sym.doc.emit(ctx_ool)?;
             writeln!(ctx_ool, "#[repr(C)]")?;
+            if !sym.can_construct {
+                writeln!(ctx_ool, "#[non_exhaustive]")?;
+            }
             if can_derive_copy {
                 writeln!(ctx_ool, "#[derive(Clone, Copy)]")?;
             }
