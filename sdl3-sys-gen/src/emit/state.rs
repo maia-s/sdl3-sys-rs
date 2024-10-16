@@ -213,12 +213,12 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__aarch64__" = CfgExpr(r#"target_arch = "aarch64""#);
             "__arm__" = CfgExpr(r#"target_arch = "arm""#);
             "__ARM_ARCH_7__" = CfgExpr(r#"all(target_arch = "arm", target_feature = "v7")"#);
-            "__ARM_ARCH_7A__" = CfgExpr(always_false!("__ARM_ARCH_7A__")); // ?
-            "__ARM_ARCH_7EM__" = CfgExpr(always_false!("__ARM_ARCH_7EM__")); // ?
-            "__ARM_ARCH_7R__" = CfgExpr(always_false!("__ARM_ARCH_7R__")); // ?
-            "__ARM_ARCH_7M__" = CfgExpr(always_false!("__ARM_ARCH_7M__")); // ?
-            "__ARM_ARCH_7S__" = CfgExpr(always_false!("__ARM_ARCH_7S__")); // ?
-            "__ARM_ARCH_8A__" = CfgExpr(always_false!("__ARM_ARCH_8A__")); // ?
+            "__ARM_ARCH_7A__" = CfgExpr(r#"target_feature = "armv7-a""#);
+            "__ARM_ARCH_7EM__" = CfgExpr(r#"target feature = "armv7e-m""#);
+            "__ARM_ARCH_7R__" = CfgExpr(r#"target_feature = "armv7-r""#);
+            "__ARM_ARCH_7M__" = CfgExpr(r#"target_feature = "armv7-m""#);
+            "__ARM_ARCH_7S__" = CfgExpr(r#"target_feature = "armv7s""#);
+            "__ARM_ARCH_8A__" = CfgExpr(r#"target_feature = "armv8-a""#);
             "__clang__" = CfgExpr(always_false!("__clang__"));
             "__EMSCRIPTEN__" = CfgExpr(r#"target_os = "emscripten""#);
             "__GNUC__" = CfgExpr(always_false!("__GNUC__"));
