@@ -3,6 +3,12 @@
 version = 3
 
 [[package]]
+name = "ash"
+version = "0.38.0+1.3.281"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0bb44936d800fea8f016d7f2311c6a4f97aebd5dc86f09906139ec848cf3a46f"
+
+[[package]]
 name = "cc"
 version = "1.1.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -92,6 +98,7 @@ version = "3.1.3-preview-197-g2654d5d48"
 name = "sdl3-sys"
 version = "0.0.11-dev+SDL-preview-3.1.3-197-g2654d5d48"
 dependencies = [
+ "ash",
  "cmake",
  "jni-sys",
  "pkg-config",

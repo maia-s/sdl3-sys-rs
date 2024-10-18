@@ -51,10 +51,16 @@ debug-impls = []
 nightly = []
 
 # Optional integrations
+use-ash = ["dep:ash"]
 use-jni-sys = ["dep:jni-sys"]
 
 [package.metadata.docs.rs]
 all-features = true
+
+[dependencies.ash]
+version = "0.38"
+default-features = false
+optional = true
 
 [dependencies.jni-sys]
 version = "0.4"

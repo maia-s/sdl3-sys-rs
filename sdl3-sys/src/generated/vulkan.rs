@@ -25,8 +25,15 @@ emit! {}
 #[cfg(not(any(any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64", target_arch = "x86_64")))]
 emit! {}
 
+#[cfg(feature = "use-ash")]
+/// (`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::Instance` from the `ash` crate. Otherwise it's a pointer to an opaque struct.
+pub type VkInstance = ::ash::vk::Instance;
+
+#[cfg(not(feature = "use-ash"))]
+/// (`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::Instance` from the `ash` crate. Otherwise it's a pointer to an opaque struct.
 pub type VkInstance = *mut __VkInstance;
 
+#[cfg(not(feature = "use-ash"))]
 #[doc(hidden)]
 #[repr(C)]
 #[non_exhaustive]
@@ -34,8 +41,15 @@ pub struct __VkInstance {
     _opaque: [::core::primitive::u8; 0],
 }
 
+#[cfg(feature = "use-ash")]
+/// (`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::PhysicalDevice` from the `ash` crate. Otherwise it's a pointer to an opaque struct.
+pub type VkPhysicalDevice = ::ash::vk::PhysicalDevice;
+
+#[cfg(not(feature = "use-ash"))]
+/// (`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::PhysicalDevice` from the `ash` crate. Otherwise it's a pointer to an opaque struct.
 pub type VkPhysicalDevice = *mut __VkPhysicalDevice;
 
+#[cfg(not(feature = "use-ash"))]
 #[doc(hidden)]
 #[repr(C)]
 #[non_exhaustive]
@@ -43,18 +57,12 @@ pub struct __VkPhysicalDevice {
     _opaque: [::core::primitive::u8; 0],
 }
 
-#[cfg(target_pointer_width = "64")]
-pub type VkSurfaceKHR = *mut __VkSurfaceKHR;
+#[cfg(feature = "use-ash")]
+/// (`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::SurfaceKHR` from the `ash` crate. Otherwise it's an alias of `u64`.
+pub type VkSurfaceKHR = ::ash::vk::SurfaceKHR;
 
-#[doc(hidden)]
-#[cfg(target_pointer_width = "64")]
-#[repr(C)]
-#[non_exhaustive]
-pub struct __VkSurfaceKHR {
-    _opaque: [::core::primitive::u8; 0],
-}
-
-#[cfg(not(target_pointer_width = "64"))]
+#[cfg(not(feature = "use-ash"))]
+/// (`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::SurfaceKHR` from the `ash` crate. Otherwise it's an alias of `u64`.
 pub type VkSurfaceKHR = ::core::primitive::u64;
 
 extern "C" {

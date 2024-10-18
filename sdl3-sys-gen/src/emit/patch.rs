@@ -609,10 +609,19 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
         match_ident: |i| i == "VK_DEFINE_HANDLE",
         patch: |ctx, call| {
             let Expr::Ident(arg) = &call.args[0] else {
-                panic!()
+                unreachable!()
             };
+            let name = arg.as_str().strip_prefix("Vk").unwrap();
+            let doc = format!("(`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::{name}` from the `ash` crate. Otherwise it's a pointer to an opaque struct.");
+            writeln!(ctx, r#"#[cfg(feature = "use-ash")]"#)?;
+            writeln!(ctx, "/// {doc}")?;
+            writeln!(ctx, "pub type {arg} = ::ash::vk::{name};")?;
+            writeln!(ctx)?;
+            writeln!(ctx, r#"#[cfg(not(feature = "use-ash"))]"#)?;
+            writeln!(ctx, "/// {doc}")?;
             writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
             writeln!(ctx)?;
+            writeln!(ctx, r#"#[cfg(not(feature = "use-ash"))]"#)?;
             writeln!(ctx, "#[doc(hidden)]")?;
             writeln!(ctx, "#[repr(C)]")?;
             writeln!(ctx, "#[non_exhaustive]")?;
@@ -631,19 +640,14 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
             let Expr::Ident(arg) = &call.args[0] else {
                 panic!()
             };
-            writeln!(ctx, r#"#[cfg(target_pointer_width = "64")]"#)?;
-            writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
+            let name = arg.as_str().strip_prefix("Vk").unwrap();
+            let doc = format!("(`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::{name}` from the `ash` crate. Otherwise it's an alias of `u64`.");
+            writeln!(ctx, r#"#[cfg(feature = "use-ash")]"#)?;
+            writeln!(ctx, "/// {doc}")?;
+            writeln!(ctx, "pub type {arg} = ::ash::vk::{name};")?;
             writeln!(ctx)?;
-            writeln!(ctx, "#[doc(hidden)]")?;
-            writeln!(ctx, r#"#[cfg(target_pointer_width = "64")]"#)?;
-            writeln!(ctx, "#[repr(C)]")?;
-            writeln!(ctx, "#[non_exhaustive]")?;
-            writeln!(
-                ctx,
-                "pub struct __{arg} {{ _opaque: [::core::primitive::u8; 0] }}",
-            )?;
-            writeln!(ctx)?;
-            writeln!(ctx, r#"#[cfg(not(target_pointer_width = "64"))]"#)?;
+            writeln!(ctx, r#"#[cfg(not(feature = "use-ash"))]"#)?;
+            writeln!(ctx, "/// {doc}")?;
             writeln!(ctx, "pub type {arg} = ::core::primitive::u64;")?;
             writeln!(ctx)?;
             Ok(true)
@@ -767,6 +771,7 @@ const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[EmitTypeDefPatch {
         let doc = "(`sdl3-sys`) Enable the `use-jni-sys` feature to alias this to `JNIEnv` from the `jni-sys` crate. Otherwise it's a pointer to an opaque struct.";
         writeln!(ctx, r#"#[cfg(feature = "use-jni-sys")]"#)?;
         writeln!(ctx, "/// {doc}")?;
+        writeln!(ctx)?;
         writeln!(ctx, "pub use ::jni_sys::JNIEnv;")?;
         writeln!(ctx, r#"#[cfg(not(feature = "use-jni-sys"))]"#)?;
         writeln!(ctx, "/// {doc}")?;
