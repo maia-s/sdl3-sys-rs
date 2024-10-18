@@ -251,6 +251,8 @@ emit! {
 
 }
 
+pub type JNIEnv = *const JNINativeInterface;
+
 #[cfg(target_os = "android")]
 emit! {
     extern "C" {
@@ -276,7 +278,7 @@ emit! {
         ///
         /// ### See also
         /// - [`SDL_GetAndroidActivity`]
-        pub fn SDL_GetAndroidJNIEnv() -> *mut ::core::ffi::c_void;
+        pub fn SDL_GetAndroidJNIEnv() -> *mut JNIEnv;
     }
 
     extern "C" {
@@ -597,6 +599,54 @@ extern "C" {
     pub fn SDL_IsTV() -> ::core::primitive::bool;
 }
 
+/// Application sandbox environment.
+///
+/// ### Availability
+/// This enum is available since SDL 3.1.6.
+///
+/// ### Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`NONE`](SDL_Sandbox::NONE) | [`SDL_SANDBOX_NONE`] | |
+/// | [`UNKNOWN`](SDL_Sandbox::UNKNOWN) | [`SDL_SANDBOX_UNKNOWN`] | |
+/// | [`FLATPAK`](SDL_Sandbox::FLATPAK) | [`SDL_SANDBOX_FLATPAK`] | |
+/// | [`SNAP`](SDL_Sandbox::SNAP) | [`SDL_SANDBOX_SNAP`] | |
+/// | [`MACOS`](SDL_Sandbox::MACOS) | [`SDL_SANDBOX_MACOS`] | |
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_Sandbox(pub ::core::ffi::c_int);
+impl From<SDL_Sandbox> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_Sandbox) -> Self {
+        value.0
+    }
+}
+impl SDL_Sandbox {
+    pub const NONE: Self = Self(0);
+    pub const UNKNOWN: Self = Self(1);
+    pub const FLATPAK: Self = Self(2);
+    pub const SNAP: Self = Self(3);
+    pub const MACOS: Self = Self(4);
+}
+pub const SDL_SANDBOX_NONE: SDL_Sandbox = SDL_Sandbox::NONE;
+pub const SDL_SANDBOX_UNKNOWN: SDL_Sandbox = SDL_Sandbox::UNKNOWN;
+pub const SDL_SANDBOX_FLATPAK: SDL_Sandbox = SDL_Sandbox::FLATPAK;
+pub const SDL_SANDBOX_SNAP: SDL_Sandbox = SDL_Sandbox::SNAP;
+pub const SDL_SANDBOX_MACOS: SDL_Sandbox = SDL_Sandbox::MACOS;
+
+extern "C" {
+    /// Get the application sandbox environment, if any.
+    ///
+    /// ### Return value
+    /// Returns the application sandbox environment or [`SDL_SANDBOX_NONE`] if the
+    ///   application is not running in a sandbox environment.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.4.
+    pub fn SDL_GetSandbox() -> SDL_Sandbox;
+}
+
 extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationWillTerminate.
@@ -785,6 +835,12 @@ emit! {
     #[non_exhaustive]
     pub struct XUser { _opaque: [::core::primitive::u8; 0] }
 
+}
+
+#[repr(C)]
+#[non_exhaustive]
+pub struct JNINativeInterface {
+    _opaque: [::core::primitive::u8; 0],
 }
 
 #[doc(hidden)]

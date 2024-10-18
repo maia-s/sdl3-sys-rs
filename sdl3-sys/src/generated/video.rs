@@ -1823,6 +1823,11 @@ extern "C" {
     /// - `SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER`: the NSInteger tag
     ///   assocated with metal views on the window
     ///
+    /// On OpenVR:
+    ///
+    /// - `SDL_PROP_WINDOW_OPENVR_OVERLAY_ID`: the OpenVR Overlay Handle ID for the
+    ///   associated overlay window.
+    ///
     /// On Vivante:
     ///
     /// - `SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER`: the EGLNativeDisplayType
@@ -1928,6 +1933,9 @@ pub const SDL_PROP_WINDOW_COCOA_WINDOW_POINTER: *const ::core::ffi::c_char =
 
 pub const SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER: *const ::core::ffi::c_char =
     c"SDL.window.cocoa.metal_view_tag".as_ptr();
+
+pub const SDL_PROP_WINDOW_OPENVR_OVERLAY_ID: *const ::core::ffi::c_char =
+    c"SDL.window.openvr.overlay_id".as_ptr();
 
 pub const SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER: *const ::core::ffi::c_char =
     c"SDL.window.vivante.display".as_ptr();

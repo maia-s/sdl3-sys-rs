@@ -146,6 +146,10 @@ use super::video::*;
 /// | [`CAMERA_DEVICE_DENIED`](SDL_EventType::CAMERA_DEVICE_DENIED) | [`SDL_EVENT_CAMERA_DEVICE_DENIED`] | A camera device has been denied for use by the user. |
 /// | [`RENDER_TARGETS_RESET`](SDL_EventType::RENDER_TARGETS_RESET) | [`SDL_EVENT_RENDER_TARGETS_RESET`] | The render targets have been reset and their contents need to be updated |
 /// | [`RENDER_DEVICE_RESET`](SDL_EventType::RENDER_DEVICE_RESET) | [`SDL_EVENT_RENDER_DEVICE_RESET`] | The device has been reset and all textures need to be recreated |
+/// | [`PRIVATE0`](SDL_EventType::PRIVATE0) | [`SDL_EVENT_PRIVATE0`] | |
+/// | [`PRIVATE1`](SDL_EventType::PRIVATE1) | [`SDL_EVENT_PRIVATE1`] | |
+/// | [`PRIVATE2`](SDL_EventType::PRIVATE2) | [`SDL_EVENT_PRIVATE2`] | |
+/// | [`PRIVATE3`](SDL_EventType::PRIVATE3) | [`SDL_EVENT_PRIVATE3`] | |
 /// | [`POLL_SENTINEL`](SDL_EventType::POLL_SENTINEL) | [`SDL_EVENT_POLL_SENTINEL`] | Signals the end of an event poll cycle |
 /// | [`USER`](SDL_EventType::USER) | [`SDL_EVENT_USER`] |  Events [`SDL_EVENT_USER`] through [`SDL_EVENT_LAST`] are for your use, and should be allocated with [`SDL_RegisterEvents()`] |
 /// | [`LAST`](SDL_EventType::LAST) | [`SDL_EVENT_LAST`] | *  This last event is only for bounding internal arrays |
@@ -386,6 +390,10 @@ impl SDL_EventType {
     pub const RENDER_TARGETS_RESET: Self = Self(0x2000);
     /// The device has been reset and all textures need to be recreated
     pub const RENDER_DEVICE_RESET: Self = Self(8193);
+    pub const PRIVATE0: Self = Self(0x4000);
+    pub const PRIVATE1: Self = Self(16385);
+    pub const PRIVATE2: Self = Self(16386);
+    pub const PRIVATE3: Self = Self(16387);
     /// Signals the end of an event poll cycle
     pub const POLL_SENTINEL: Self = Self(0x7f00);
     ///  Events [`SDL_EVENT_USER`] through [`SDL_EVENT_LAST`] are for your use,
@@ -632,6 +640,10 @@ pub const SDL_EVENT_CAMERA_DEVICE_DENIED: SDL_EventType = SDL_EventType::CAMERA_
 pub const SDL_EVENT_RENDER_TARGETS_RESET: SDL_EventType = SDL_EventType::RENDER_TARGETS_RESET;
 /// The device has been reset and all textures need to be recreated
 pub const SDL_EVENT_RENDER_DEVICE_RESET: SDL_EventType = SDL_EventType::RENDER_DEVICE_RESET;
+pub const SDL_EVENT_PRIVATE0: SDL_EventType = SDL_EventType::PRIVATE0;
+pub const SDL_EVENT_PRIVATE1: SDL_EventType = SDL_EventType::PRIVATE1;
+pub const SDL_EVENT_PRIVATE2: SDL_EventType = SDL_EventType::PRIVATE2;
+pub const SDL_EVENT_PRIVATE3: SDL_EventType = SDL_EventType::PRIVATE3;
 /// Signals the end of an event poll cycle
 pub const SDL_EVENT_POLL_SENTINEL: SDL_EventType = SDL_EventType::POLL_SENTINEL;
 ///  Events [`SDL_EVENT_USER`] through [`SDL_EVENT_LAST`] are for your use,

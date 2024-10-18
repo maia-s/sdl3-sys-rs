@@ -102,10 +102,9 @@
 //! explaining this situation.
 //!
 //! It is optimal for apps to pre-compile the shader formats they might use,
-//! but for ease of use SDL provides a
-//! [satellite single-header library](https://github.com/libsdl-org/SDL_gpu_shadercross
-//! )
-//! for performing runtime shader cross-compilation.
+//! but for ease of use SDL provides a separate project,
+//! [SDL_gpu_shadercross](https://github.com/libsdl-org/SDL_gpu_shadercross)
+//! , for performing runtime shader cross-compilation.
 //!
 //! This is an extremely quick overview that leaves out several important
 //! details. Already, though, one can see that GPU programming can be quite
@@ -3053,26 +3052,26 @@ extern "C" {
     ///
     /// These are the supported properties:
     ///
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOL`: enable debug mode properties
-    ///   and validations, defaults to true.
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOL`: enable to prefer energy
-    ///   efficiency over maximum GPU performance, defaults to false.
+    /// - `SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN`: enable debug mode
+    ///   properties and validations, defaults to true.
+    /// - `SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN`: enable to prefer
+    ///   energy efficiency over maximum GPU performance, defaults to false.
     /// - `SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING`: the name of the GPU driver to
     ///   use, if a specific one is desired.
     ///
     /// These are the current shader format properties:
     ///
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOL`: The app is able to
+    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN`: The app is able to
     ///   provide shaders for an NDA platform.
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOL`: The app is able to
+    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN`: The app is able to
     ///   provide SPIR-V shaders if applicable.
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOL`: The app is able to
+    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN`: The app is able to
     ///   provide DXBC shaders if applicable
-    ///   `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOL`: The app is able to
+    ///   `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN`: The app is able to
     ///   provide DXIL shaders if applicable.
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOL`: The app is able to provide
-    ///   MSL shaders if applicable.
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOL`: The app is able to
+    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN`: The app is able to
+    ///   provide MSL shaders if applicable.
+    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN`: The app is able to
     ///   provide Metal shader libraries if applicable.
     ///
     /// With the D3D12 renderer:
@@ -3097,31 +3096,31 @@ extern "C" {
     pub fn SDL_CreateGPUDeviceWithProperties(props: SDL_PropertiesID) -> *mut SDL_GPUDevice;
 }
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOL: *const ::core::ffi::c_char =
+pub const SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.gpu.device.create.debugmode".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOL: *const ::core::ffi::c_char =
+pub const SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.gpu.device.create.preferlowpower".as_ptr();
 
 pub const SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING: *const ::core::ffi::c_char =
     c"SDL.gpu.device.create.name".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOL: *const ::core::ffi::c_char =
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.gpu.device.create.shaders.private".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOL: *const ::core::ffi::c_char =
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.gpu.device.create.shaders.spirv".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOL: *const ::core::ffi::c_char =
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.gpu.device.create.shaders.dxbc".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOL: *const ::core::ffi::c_char =
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.gpu.device.create.shaders.dxil".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOL: *const ::core::ffi::c_char =
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.gpu.device.create.shaders.msl".as_ptr();
 
-pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOL: *const ::core::ffi::c_char =
+pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.gpu.device.create.shaders.metallib".as_ptr();
 
 pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: *const ::core::ffi::c_char =

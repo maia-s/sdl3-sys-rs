@@ -2571,6 +2571,14 @@ pub const SDL_HINT_OPENGL_LIBRARY: *const ::core::ffi::c_char = c"SDL_OPENGL_LIB
 /// This hint is available since SDL 3.0.0.
 pub const SDL_HINT_OPENGL_ES_DRIVER: *const ::core::ffi::c_char = c"SDL_OPENGL_ES_DRIVER".as_ptr();
 
+/// Mechanism to specify openvr_api library location
+///
+/// By default, when using the OpenVR driver, it will search for the API
+/// library in the current folder. But, if you wish to use a system API you can
+/// specify that by using this hint. This should be the full or relative path
+/// to a .dll on Windows or .so on Linux.
+pub const SDL_HINT_OPENVR_LIBRARY: *const ::core::ffi::c_char = c"SDL_OPENVR_LIBRARY".as_ptr();
+
 /// A variable controlling which orientations are allowed on iOS/Android.
 ///
 /// In some circumstances it is necessary to be able to explicitly control
@@ -3065,6 +3073,29 @@ pub const SDL_HINT_TV_REMOTE_AS_JOYSTICK: *const ::core::ffi::c_char =
 /// This hint is available since SDL 3.0.0.
 pub const SDL_HINT_VIDEO_ALLOW_SCREENSAVER: *const ::core::ffi::c_char =
     c"SDL_VIDEO_ALLOW_SCREENSAVER".as_ptr();
+
+/// A comma separated list containing the names of the displays that SDL should
+/// sort to the front of the display list.
+///
+/// When this hint is set, displays with matching name strings will be
+/// prioritized in the list of displays, as exposed by calling
+/// [`SDL_GetDisplays()`], with the first listed becoming the primary display. The
+/// naming convention can vary depending on the environment, but it is usually
+/// a connector name (e.g. 'DP-1', 'DP-2', 'HDMI-1', etc...).
+///
+/// On X11 and Wayland desktops, the connector names associated with displays
+/// can typically be found by using the `xrandr` utility.
+///
+/// This hint is currently supported on the following drivers:
+///
+/// - Wayland (wayland)
+///
+/// This hint should be set before SDL is initialized.
+///
+/// ### Availability
+/// This hint is available since SDL 3.1.5.
+pub const SDL_HINT_VIDEO_DISPLAY_PRIORITY: *const ::core::ffi::c_char =
+    c"SDL_VIDEO_DISPLAY_PRIORITY".as_ptr();
 
 /// Tell the video driver that we only want a double buffer.
 ///
