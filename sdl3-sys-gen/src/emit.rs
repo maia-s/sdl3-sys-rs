@@ -20,7 +20,7 @@ mod expr;
 pub use expr::Value;
 mod item;
 mod patch;
-use patch::{patch_emit_define, patch_emit_function, patch_emit_macro_call};
+use patch::{patch_emit_define, patch_emit_function, patch_emit_macro_call, patch_emit_type_def};
 mod state;
 pub use state::{DefineState, EmitContext, InnerEmitContext, Sym, SymKind};
 use state::{EmitStatus, PreProcState, StructSym};
@@ -1159,6 +1159,9 @@ impl Emit for Type {
 
 impl Emit for TypeDef {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        if patch_emit_type_def(ctx, self.ident.as_str(), self)? {
+            return Ok(());
+        }
         match &self.ty.ty {
             TypeEnum::Primitive(_) => {
                 ctx.register_sym(

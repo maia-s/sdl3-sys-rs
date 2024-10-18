@@ -50,15 +50,22 @@ debug-impls = []
 # Enable nightly features
 nightly = []
 
+# Optional integrations
+use-jni-sys = ["dep:jni-sys"]
+
 [package.metadata.docs.rs]
 all-features = true
 
+[dependencies.jni-sys]
+version = "0.4"
+optional = true
+
 [build-dependencies.cmake]
-version = "0.1.0"
+version = "0.1"
 optional = true
 
 [build-dependencies.pkg-config]
-version = "0.3.0"
+version = "0.3"
 optional = true
 
 [build-dependencies.rpkg-config]
@@ -71,5 +78,5 @@ path = "../sdl3-src"
 optional = true
 
 [build-dependencies.vcpkg]
-version = "0.2.0"
+version = "0.2"
 optional = true

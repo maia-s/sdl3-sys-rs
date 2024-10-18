@@ -1,7 +1,7 @@
 use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, SymKind, Value};
 use crate::parse::{
     Block, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident, IdentOrKw, Item, Items,
-    Kw_static, ParseErr, RustCode, Span, StringLiteral, Type,
+    Kw_static, ParseErr, RustCode, Span, StringLiteral, Type, TypeDef,
 };
 use core::fmt::Write;
 use std::ffi::CString;
@@ -757,6 +757,31 @@ const EVAL_MACRO_CALL_PATCHES: &[EvalMacroCallPatch] = &[
         },
     },
 ];
+
+type EmitTypeDefPatch = EmitPatch<TypeDef>;
+
+const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[EmitTypeDefPatch {
+    module: Some("system"),
+    match_ident: |i| i == "JNIEnv",
+    patch: |ctx, td| {
+        let doc = "(`sdl3-sys`) Enable the `use-jni-sys` feature to alias this to `JNIEnv` from the `jni-sys` crate. Otherwise it's a pointer to an opaque struct.";
+        writeln!(ctx, r#"#[cfg(feature = "use-jni-sys")]"#)?;
+        writeln!(ctx, "/// {doc}")?;
+        writeln!(ctx, "pub use ::jni_sys::JNIEnv;")?;
+        writeln!(ctx, r#"#[cfg(not(feature = "use-jni-sys"))]"#)?;
+        writeln!(ctx, "/// {doc}")?;
+        td.emit(ctx)?;
+        Ok(true)
+    },
+}];
+
+pub fn patch_emit_type_def(
+    ctx: &mut EmitContext,
+    ident: &str,
+    typedef: &TypeDef,
+) -> Result<bool, EmitErr> {
+    patch_emit(ctx, typedef, ident, EMIT_TYPEDEF_PATCHES)
+}
 
 fn patch_emit<T: ?Sized>(
     ctx: &mut EmitContext,

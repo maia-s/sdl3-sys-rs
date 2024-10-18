@@ -251,6 +251,11 @@ emit! {
 
 }
 
+#[cfg(feature = "use-jni-sys")]
+/// (`sdl3-sys`) Enable the `use-jni-sys` feature to alias this to `JNIEnv` from the `jni-sys` crate. Otherwise it's a pointer to an opaque struct.
+pub use ::jni_sys::JNIEnv;
+#[cfg(not(feature = "use-jni-sys"))]
+/// (`sdl3-sys`) Enable the `use-jni-sys` feature to alias this to `JNIEnv` from the `jni-sys` crate. Otherwise it's a pointer to an opaque struct.
 pub type JNIEnv = *const JNINativeInterface;
 
 #[cfg(target_os = "android")]
@@ -837,6 +842,7 @@ emit! {
 
 }
 
+#[doc(hidden)]
 #[repr(C)]
 #[non_exhaustive]
 pub struct JNINativeInterface {
