@@ -641,12 +641,33 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
                 panic!()
             };
             let name = arg.as_str().strip_prefix("Vk").unwrap();
-            let doc = format!("(`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::{name}` from the `ash` crate. Otherwise it's an alias of `u64`.");
+            let doc = format!("(`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::{name}` from the `ash` crate. Otherwise it's a target dependent opaque type.");
             writeln!(ctx, r#"#[cfg(feature = "use-ash")]"#)?;
             writeln!(ctx, "/// {doc}")?;
             writeln!(ctx, "pub type {arg} = ::ash::vk::{name};")?;
             writeln!(ctx)?;
-            writeln!(ctx, r#"#[cfg(not(feature = "use-ash"))]"#)?;
+            writeln!(
+                ctx,
+                r#"#[cfg(all(not(feature = "use-ash"), target_pointer_width = "64"))]"#
+            )?;
+            writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
+            writeln!(ctx)?;
+            writeln!(
+                ctx,
+                r#"#[cfg(all(not(feature = "use-ash"), target_pointer_width = "64"))]"#
+            )?;
+            writeln!(ctx, "#[doc(hidden)]")?;
+            writeln!(ctx, "#[repr(C)]")?;
+            writeln!(ctx, "#[non_exhaustive]")?;
+            writeln!(
+                ctx,
+                "pub struct __{arg} {{ _opaque: [::core::primitive::u8; 0] }}",
+            )?;
+            writeln!(ctx)?;
+            writeln!(
+                ctx,
+                r#"#[cfg(all(not(feature = "use-ash"), not(target_pointer_width = "64")))]"#
+            )?;
             writeln!(ctx, "/// {doc}")?;
             writeln!(ctx, "pub type {arg} = ::core::primitive::u64;")?;
             writeln!(ctx)?;

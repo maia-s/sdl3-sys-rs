@@ -58,11 +58,22 @@ pub struct __VkPhysicalDevice {
 }
 
 #[cfg(feature = "use-ash")]
-/// (`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::SurfaceKHR` from the `ash` crate. Otherwise it's an alias of `u64`.
+/// (`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::SurfaceKHR` from the `ash` crate. Otherwise it's a target dependent opaque type.
 pub type VkSurfaceKHR = ::ash::vk::SurfaceKHR;
 
-#[cfg(not(feature = "use-ash"))]
-/// (`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::SurfaceKHR` from the `ash` crate. Otherwise it's an alias of `u64`.
+#[cfg(all(not(feature = "use-ash"), target_pointer_width = "64"))]
+pub type VkSurfaceKHR = *mut __VkSurfaceKHR;
+
+#[cfg(all(not(feature = "use-ash"), target_pointer_width = "64"))]
+#[doc(hidden)]
+#[repr(C)]
+#[non_exhaustive]
+pub struct __VkSurfaceKHR {
+    _opaque: [::core::primitive::u8; 0],
+}
+
+#[cfg(all(not(feature = "use-ash"), not(target_pointer_width = "64")))]
+/// (`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::SurfaceKHR` from the `ash` crate. Otherwise it's a target dependent opaque type.
 pub type VkSurfaceKHR = ::core::primitive::u64;
 
 extern "C" {
