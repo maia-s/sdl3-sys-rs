@@ -281,6 +281,12 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
+#[cfg(feature = "use-ash")]
+/// (`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::AllocationCallbacks::<'static>` from the `ash` crate. Otherwise it's an opaque type. <div class="warning">The `'static` lifetime is too long. `ash` requires a lifetime for this, but as it's a C ffi type there's no way for `sdl3-sys` to set the correct lifetime.</div>
+pub type VkAllocationCallbacks = ::ash::vk::AllocationCallbacks<'static>;
+
+#[cfg(not(feature = "use-ash"))]
+/// (`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::AllocationCallbacks::<'static>` from the `ash` crate. Otherwise it's an opaque type. <div class="warning">The `'static` lifetime is too long. `ash` requires a lifetime for this, but as it's a C ffi type there's no way for `sdl3-sys` to set the correct lifetime.</div>
 #[repr(C)]
 #[non_exhaustive]
 pub struct VkAllocationCallbacks {

@@ -1,4 +1,4 @@
-use super::{Emit, EmitErr, EmitResult, Eval, Value};
+use super::{patch::patch_emit_opaque_struct, Emit, EmitErr, EmitResult, Eval, Value};
 use crate::{
     parse::{
         CanCopy, DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident, IdentOrKw, ParseErr,
@@ -1381,6 +1381,9 @@ impl InnerScope {
             .collect();
 
         for sym in syms {
+            if patch_emit_opaque_struct(ctx, sym.ident.as_str(), &sym)? {
+                continue;
+            }
             if sym.hidden {
                 writeln!(ctx, "#[doc(hidden)]")?;
             }

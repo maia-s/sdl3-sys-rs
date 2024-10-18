@@ -1,4 +1,6 @@
-use super::{DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, SymKind, Value};
+use super::{
+    state::StructSym, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, SymKind, Value,
+};
 use crate::parse::{
     Block, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident, IdentOrKw, Item, Items,
     Kw_static, ParseErr, RustCode, Span, StringLiteral, Type, TypeDef,
@@ -782,6 +784,40 @@ const EVAL_MACRO_CALL_PATCHES: &[EvalMacroCallPatch] = &[
         },
     },
 ];
+
+type EmitOpaqueStructPatch = EmitPatch<StructSym>;
+
+const EMIT_OPAQUE_STRUCT_PATCHES: &[EmitOpaqueStructPatch] = &[EmitOpaqueStructPatch {
+    module: Some("vulkan"),
+    match_ident: |i| i == "VkAllocationCallbacks",
+    patch: |ctx, s| {
+        let name = s.ident.as_str().strip_prefix("Vk").unwrap();
+        let doc = format!("(`sdl3-sys`) Enable the `use-ash` feature to alias this to `vk::{name}::<'static>` from the `ash` crate. Otherwise it's an opaque type. {}",
+            "<div class=\"warning\">The `'static` lifetime is too long. `ash` requires a lifetime for this, but as it's a C ffi type there's no way for `sdl3-sys` to set the correct lifetime.</div>");
+        writeln!(ctx, r#"#[cfg(feature = "use-ash")]"#)?;
+        writeln!(ctx, "/// {doc}")?;
+        writeln!(ctx, "pub type Vk{name} = ::ash::vk::{name}::<'static>;")?;
+        writeln!(ctx)?;
+        writeln!(ctx, r#"#[cfg(not(feature = "use-ash"))]"#)?;
+        writeln!(ctx, "/// {doc}")?;
+        writeln!(ctx, "#[repr(C)]")?;
+        writeln!(ctx, "#[non_exhaustive]")?;
+        writeln!(
+            ctx,
+            "pub struct Vk{name} {{ _opaque: [::core::primitive::u8; 0] }}"
+        )?;
+        writeln!(ctx)?;
+        Ok(true)
+    },
+}];
+
+pub fn patch_emit_opaque_struct(
+    ctx: &mut EmitContext,
+    ident: &str,
+    s: &StructSym,
+) -> Result<bool, EmitErr> {
+    patch_emit(ctx, s, ident, EMIT_OPAQUE_STRUCT_PATCHES)
+}
 
 type EmitTypeDefPatch = EmitPatch<TypeDef>;
 
