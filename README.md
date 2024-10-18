@@ -1,10 +1,13 @@
 # sdl3-sys
 
-This is a work in progress of the "new" sdl3-sys for Rust! The bindings themselves are in sdl3-sys,
-and the generator that generates them is in sdl3-sys-gen.
+See the [`sdl3-sys`](sdl3-sys) dir for the SDL 3 Rust bindings.
+
+- [`sdl3-sys`](sdl3-sys): Rust bindings for SDL 3
+- [`sdl3-src`](sdl3-src): Source code crate for SDL 3, used by `sdl3-sys` when building from source.
+  This contains the official SDL repository as a subrepository.
+- [`sdl3-sys-gen`](sdl3-sys-gen): Parser and generator that generates `sdl3-sys` from the official SDL 3 headers.
 
 ### Why not use bindgen?
 
-Because we can do better, and the strict syntax of SDL's headers means we don't have to support all of
-C to do so. `sdl3-sys-gen` makes platform independent bindings with full documentation from the original
-headers and collects the output into modules. The generator is standalone.
+Because we can do better. `sdl3-sys-gen` makes platform independent bindings with full documentation
+from the original headers and collects the output into modules. The generator is standalone.

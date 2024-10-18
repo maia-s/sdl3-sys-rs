@@ -28,3 +28,41 @@ functions in Rust. Documentation specific to these Rust bindings are tagged
 with `sdl3-sys`.
 
 </div>
+
+### Usage
+
+`sdl3-sys` requires SDL version `3.1.3-preview` or later. `3.1.3-preview` is
+the first ABI stable version of SDL 3.
+
+By default, `sdl3-sys` will attempt to link to a dynamic/shared library named
+`SDL3` in the default library search path, using the usual platform specific naming
+convention for libraries. If your environment is set up so that this will succeed,
+you don't have to do anything more than including `sdl3-sys` as a dependency of
+your project.
+
+If the SDL 3 library can be found using either `pkg-config` or `vcpkg`, you can
+enable the corresponding feature to use these tools to find and get link flags
+for SDL. Enable the `use-pkg-config` feature to use `pkg-config`, or the
+`use-vcpkg` feature to use `vcpkg`. (Currently the `sdl3` vcpkg package hasn't
+been published yet.)
+
+You can also choose to build the SDL 3 library from source by enabling the
+`build-from-source` feature. This brings in the SDL source code crate as a
+dependency of `sdl3-sys` and builds it from source. You'll have to install
+any dependencies SDL needs to build on your platform first for this to succeed.
+Currently this may fail to run when building a shared library on some platforms
+because Rust can't find the library at runtime. This will be fixed in a future
+version, but in the meantime you can do a static build instead by enabling the
+`link-static` feature along with `build-from-source`. The `build-from-source-static`
+feature is a shortcut to enable both.
+
+On Apple platforms, you can enable the `link-framework` feature to link to the
+SDL 3 framework instead of a dylib. For the `SDL3.xcframework` that SDL provides,
+`sdl3-sys` currently requires this to be located in `/Library/Frameworks`.
+This will link, but you have to put your executable along with the frameworks it
+needs in a signed app bundle for it to be able to run.
+
+You can enable static linking with the `link-static` feature, but SDL doesn't
+recommend doing this except on platforms where it's required. On platforms that
+only support static libraries, such as emscripten, `link-static` will effectively
+be enabled by default, so you don't have to explicitly enable it for those.
