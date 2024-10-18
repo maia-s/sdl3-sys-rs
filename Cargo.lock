@@ -113,6 +113,7 @@ dependencies = [
  "ash",
  "cmake",
  "jni-sys",
+ "libc",
  "pkg-config",
  "rpkg-config",
  "sdl3-src",

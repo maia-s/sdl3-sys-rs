@@ -52,11 +52,14 @@ pub use generated::*;
 /// Extra ffi types for `sdl3-sys`
 pub mod ffi {
     #[cfg(doc)]
-    /// Equivalent to C's `wchar_t` type. Varies depending on platform.
+    /// Equivalent to C's `wchar_t` type. This is `u16` on Windows and `u32` otherwise.
+    /// Enable the `use-libc` feature to make this an alias of `libc::wchar_t`.
     pub type c_wchar_t = u32;
-    #[cfg(all(not(doc), windows))]
+    #[cfg(all(not(doc), feature = "use-libc"))]
+    pub type c_wchar_t = ::libc::wchar_t;
+    #[cfg(all(not(any(doc, feature = "use-libc")), windows))]
     pub type c_wchar_t = u16;
-    #[cfg(all(not(doc), not(windows)))]
+    #[cfg(all(not(any(doc, feature = "use-libc")), not(windows)))]
     pub type c_wchar_t = u32;
 
     #[cfg(doc)]
