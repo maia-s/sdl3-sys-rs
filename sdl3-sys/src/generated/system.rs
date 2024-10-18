@@ -105,6 +105,16 @@ emit! {
 
 }
 
+#[cfg(feature = "use-x11")]
+/// (`sdl3-sys`) Enable either the `use-x11` or `use-x11-dl` features to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
+pub use ::x11::xlib::XEvent;
+
+#[cfg(all(not(feature = "use-x11"), feature = "use-x11-dl"))]
+/// (`sdl3-sys`) Enable either the `use-x11` or `use-x11-dl` features to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
+pub use ::x11_dl::xlib::XEvent;
+
+#[cfg(not(any(feature = "use-x11", feature = "use-x11-dl")))]
+/// (`sdl3-sys`) Enable either the `use-x11` or `use-x11-dl` features to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
 pub type XEvent = _XEvent;
 
 pub type SDL_X11EventHook = ::core::option::Option<
@@ -254,6 +264,7 @@ emit! {
 #[cfg(feature = "use-jni-sys")]
 /// (`sdl3-sys`) Enable the `use-jni-sys` feature to alias this to `JNIEnv` from the `jni-sys` crate. Otherwise it's a pointer to an opaque struct.
 pub use ::jni_sys::JNIEnv;
+
 #[cfg(not(feature = "use-jni-sys"))]
 /// (`sdl3-sys`) Enable the `use-jni-sys` feature to alias this to `JNIEnv` from the `jni-sys` crate. Otherwise it's a pointer to an opaque struct.
 pub type JNIEnv = *const JNINativeInterface;

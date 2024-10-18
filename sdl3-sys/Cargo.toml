@@ -53,6 +53,8 @@ nightly = []
 # Optional integrations
 use-ash = ["dep:ash"]
 use-jni-sys = ["dep:jni-sys"]
+use-x11 = ["dep:x11"]
+use-x11-dl = ["dep:x11-dl"]
 
 [package.metadata.docs.rs]
 all-features = true
@@ -64,6 +66,14 @@ optional = true
 
 [dependencies.jni-sys]
 version = "0.4"
+optional = true
+
+[dependencies.x11]
+version = "2.21"
+optional = true
+
+[dependencies.x11-dl]
+version = "2.21"
 optional = true
 
 [build-dependencies.cmake]

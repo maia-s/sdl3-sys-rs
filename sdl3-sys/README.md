@@ -16,8 +16,6 @@ Known issues:
   original headers
 - Some less common targets are missing detection or features to enable
   corresponding SDL features
-- Some external types are generated as opaque structs; these could use a
-  feature to use a definition from another crate (e.g. vulkan types)
 
 <div class="warning">
 
