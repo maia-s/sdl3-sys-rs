@@ -29,7 +29,9 @@ with `sdl3-sys`.
 
 </div>
 
-### Usage
+[Browse the API at docs.rs!](https://docs.rs/sdl3-sys)
+
+## Usage
 
 `sdl3-sys` requires SDL version `3.1.3-preview` or later. `3.1.3-preview` is
 the first ABI stable version of SDL 3.
