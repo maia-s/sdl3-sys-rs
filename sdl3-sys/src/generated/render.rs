@@ -264,10 +264,10 @@ extern "C" {
     /// Create a 2D rendering context for a window.
     ///
     /// If you want a specific renderer, you can specify its name here. A list of
-    /// available renderers can be obtained by calling [`SDL_GetRenderDriver`] multiple
-    /// times, with indices from 0 to [`SDL_GetNumRenderDrivers()`]-1. If you don't
-    /// need a specific renderer, specify NULL and SDL will attempt to choose the
-    /// best option for you, based on what is available on the user's system.
+    /// available renderers can be obtained by calling [`SDL_GetRenderDriver()`]
+    /// multiple times, with indices from 0 to [`SDL_GetNumRenderDrivers()`]-1. If you
+    /// don't need a specific renderer, specify NULL and SDL will attempt to choose
+    /// the best option for you, based on what is available on the user's system.
     ///
     /// By default the rendering size matches the window size in pixels, but you
     /// can call [`SDL_SetRenderLogicalPresentation()`] to change the content size and
@@ -275,8 +275,8 @@ extern "C" {
     ///
     /// ### Arguments
     /// - `window`: the window where rendering is displayed.
-    /// - `name`: the name of the rendering driver to initialize, or NULL to
-    ///   initialize the first one supporting the requested flags.
+    /// - `name`: the name of the rendering driver to initialize, or NULL to let
+    ///   SDL choose one.
     /// ### Return value
     /// Returns a valid rendering context or NULL if there was an error; call
     ///   [`SDL_GetError()`] for more information.

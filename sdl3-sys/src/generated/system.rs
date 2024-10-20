@@ -261,8 +261,6 @@ emit! {
 
 }
 
-pub type JNIEnv = *const JNINativeInterface;
-
 #[cfg(target_os = "android")]
 emit! {
     extern "C" {
@@ -288,7 +286,7 @@ emit! {
         ///
         /// ### See also
         /// - [`SDL_GetAndroidActivity`]
-        pub fn SDL_GetAndroidJNIEnv() -> *mut JNIEnv;
+        pub fn SDL_GetAndroidJNIEnv() -> *mut ::core::ffi::c_void;
     }
 
     extern "C" {
@@ -512,6 +510,10 @@ emit! {
         /// like memory running out. Normally there will be a yes or no to the request
         /// through the callback.
         ///
+        /// For the `permission` parameter, choose a value from here:
+        ///
+        /// <https://developer.android.com/reference/android/Manifest.permission>
+        ///
         /// ### Arguments
         /// - `permission`: the permission to request.
         /// - `cb`: the callback to trigger when the request has a response.
@@ -618,7 +620,7 @@ extern "C" {
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_Sandbox::NONE) | [`SDL_SANDBOX_NONE`] | |
-/// | [`UNKNOWN`](SDL_Sandbox::UNKNOWN) | [`SDL_SANDBOX_UNKNOWN`] | |
+/// | [`UNKNOWN_CONTAINER`](SDL_Sandbox::UNKNOWN_CONTAINER) | [`SDL_SANDBOX_UNKNOWN_CONTAINER`] | |
 /// | [`FLATPAK`](SDL_Sandbox::FLATPAK) | [`SDL_SANDBOX_FLATPAK`] | |
 /// | [`SNAP`](SDL_Sandbox::SNAP) | [`SDL_SANDBOX_SNAP`] | |
 /// | [`MACOS`](SDL_Sandbox::MACOS) | [`SDL_SANDBOX_MACOS`] | |
@@ -634,13 +636,13 @@ impl From<SDL_Sandbox> for ::core::ffi::c_int {
 }
 impl SDL_Sandbox {
     pub const NONE: Self = Self(0);
-    pub const UNKNOWN: Self = Self(1);
+    pub const UNKNOWN_CONTAINER: Self = Self(1);
     pub const FLATPAK: Self = Self(2);
     pub const SNAP: Self = Self(3);
     pub const MACOS: Self = Self(4);
 }
 pub const SDL_SANDBOX_NONE: SDL_Sandbox = SDL_Sandbox::NONE;
-pub const SDL_SANDBOX_UNKNOWN: SDL_Sandbox = SDL_Sandbox::UNKNOWN;
+pub const SDL_SANDBOX_UNKNOWN_CONTAINER: SDL_Sandbox = SDL_Sandbox::UNKNOWN_CONTAINER;
 pub const SDL_SANDBOX_FLATPAK: SDL_Sandbox = SDL_Sandbox::FLATPAK;
 pub const SDL_SANDBOX_SNAP: SDL_Sandbox = SDL_Sandbox::SNAP;
 pub const SDL_SANDBOX_MACOS: SDL_Sandbox = SDL_Sandbox::MACOS;
@@ -845,12 +847,6 @@ emit! {
     #[non_exhaustive]
     pub struct XUser { _opaque: [::core::primitive::u8; 0] }
 
-}
-
-#[repr(C)]
-#[non_exhaustive]
-pub struct JNINativeInterface {
-    _opaque: [::core::primitive::u8; 0],
 }
 
 #[doc(hidden)]

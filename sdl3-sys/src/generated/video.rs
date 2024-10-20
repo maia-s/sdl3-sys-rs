@@ -1033,7 +1033,7 @@ extern "C" {
     /// refresh rate default to the desktop mode if they are set to 0. The modes
     /// are scanned with size being first priority, format being second priority,
     /// and finally checking the refresh rate. If all the available modes are too
-    /// small, then NULL is returned.
+    /// small, then false is returned.
     ///
     /// ### Arguments
     /// - `displayID`: the instance ID of the display to query.

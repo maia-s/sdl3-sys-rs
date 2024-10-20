@@ -217,8 +217,8 @@ extern "C" {
     ///
     /// ### Arguments
     /// - `flags`: an [`SDL_MessageBoxFlags`] value.
-    /// - `title`: uTF-8 title text.
-    /// - `message`: uTF-8 message text.
+    /// - `title`: UTF-8 title text.
+    /// - `message`: UTF-8 message text.
     /// - `window`: the parent window, or NULL for no parent.
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
