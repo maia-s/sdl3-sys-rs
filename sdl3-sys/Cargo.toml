@@ -52,7 +52,6 @@ nightly = []
 
 # Optional integrations
 use-ash = ["dep:ash"]
-use-jni-sys = ["dep:jni-sys"]
 use-libc = ["dep:libc"]
 use-x11 = ["dep:x11"]
 use-x11-dl = ["dep:x11-dl"]
@@ -63,10 +62,6 @@ all-features = true
 [dependencies.ash]
 version = "0.38"
 default-features = false
-optional = true
-
-[dependencies.jni-sys]
-version = "0.4"
 optional = true
 
 [dependencies.libc]

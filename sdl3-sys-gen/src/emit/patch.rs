@@ -821,48 +821,31 @@ pub fn patch_emit_opaque_struct(
 
 type EmitTypeDefPatch = EmitPatch<TypeDef>;
 
-const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[
-    EmitTypeDefPatch {
-        module: Some("system"),
-        match_ident: |i| i == "JNIEnv",
-        patch: |ctx, td| {
-            let doc = "(`sdl3-sys`) Enable the `use-jni-sys` feature to alias this to `JNIEnv` from the `jni-sys` crate. Otherwise it's a pointer to an opaque struct.";
-            writeln!(ctx, r#"#[cfg(feature = "use-jni-sys")]"#)?;
-            writeln!(ctx, "/// {doc}")?;
-            writeln!(ctx, "pub use ::jni_sys::JNIEnv;")?;
-            writeln!(ctx)?;
-            writeln!(ctx, r#"#[cfg(not(feature = "use-jni-sys"))]"#)?;
-            writeln!(ctx, "/// {doc}")?;
-            td.emit(ctx)?;
-            Ok(true)
-        },
+const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[EmitTypeDefPatch {
+    module: Some("system"),
+    match_ident: |i| i == "XEvent",
+    patch: |ctx, td| {
+        let doc = "(`sdl3-sys`) Enable either the `use-x11` or `use-x11-dl` features to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.";
+        writeln!(ctx, r#"#[cfg(feature = "use-x11")]"#)?;
+        writeln!(ctx, "/// {doc}")?;
+        writeln!(ctx, "pub use ::x11::xlib::XEvent;")?;
+        writeln!(ctx)?;
+        writeln!(
+            ctx,
+            r#"#[cfg(all(not(feature = "use-x11"), feature = "use-x11-dl"))]"#
+        )?;
+        writeln!(ctx, "/// {doc}")?;
+        writeln!(ctx, "pub use ::x11_dl::xlib::XEvent;")?;
+        writeln!(ctx)?;
+        writeln!(
+            ctx,
+            r#"#[cfg(not(any(feature = "use-x11", feature = "use-x11-dl")))]"#
+        )?;
+        writeln!(ctx, "/// {doc}")?;
+        td.emit(ctx)?;
+        Ok(true)
     },
-    EmitTypeDefPatch {
-        module: Some("system"),
-        match_ident: |i| i == "XEvent",
-        patch: |ctx, td| {
-            let doc = "(`sdl3-sys`) Enable either the `use-x11` or `use-x11-dl` features to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.";
-            writeln!(ctx, r#"#[cfg(feature = "use-x11")]"#)?;
-            writeln!(ctx, "/// {doc}")?;
-            writeln!(ctx, "pub use ::x11::xlib::XEvent;")?;
-            writeln!(ctx)?;
-            writeln!(
-                ctx,
-                r#"#[cfg(all(not(feature = "use-x11"), feature = "use-x11-dl"))]"#
-            )?;
-            writeln!(ctx, "/// {doc}")?;
-            writeln!(ctx, "pub use ::x11_dl::xlib::XEvent;")?;
-            writeln!(ctx)?;
-            writeln!(
-                ctx,
-                r#"#[cfg(not(any(feature = "use-x11", feature = "use-x11-dl")))]"#
-            )?;
-            writeln!(ctx, "/// {doc}")?;
-            td.emit(ctx)?;
-            Ok(true)
-        },
-    },
-];
+}];
 
 pub fn patch_emit_type_def(
     ctx: &mut EmitContext,

@@ -33,25 +33,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f2cb6b2bb0b3b03d18eb4feb1b0fe49df04ece2e656bbfdd77ea62ca111a1ba9"
 
 [[package]]
-name = "jni-sys"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c30a312d782b8d56a1e0897d45c1af33f31f9b4a4d13d31207a8675e0223b818"
-dependencies = [
- "jni-sys-macros",
-]
-
-[[package]]
-name = "jni-sys-macros"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e6c199962dfd5610ced8eca382606e349f7940a4ac7d867b58a046123411cbb4"
-dependencies = [
- "quote",
- "syn",
-]
-
-[[package]]
 name = "libc"
 version = "0.2.161"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -88,15 +69,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "quote"
-version = "1.0.37"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b5b9d34b8991d19d98081b46eacdd8eb58c6f2b201139f7c5f643cc155a633af"
-dependencies = [
- "proc-macro2",
-]
-
-[[package]]
 name = "rpkg-config"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -112,7 +84,6 @@ version = "0.0.11-dev+SDL-preview-3.1.3-197-g2654d5d48"
 dependencies = [
  "ash",
  "cmake",
- "jni-sys",
  "libc",
  "pkg-config",
  "rpkg-config",
@@ -143,17 +114,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c3bb3fc49213697b591fcd23e128104937a793cded7229926bbb879df8ccc4ca"
 dependencies = [
  "proclet",
-]
-
-[[package]]
-name = "syn"
-version = "1.0.109"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "72b64191b275b66ffe2469e8af2c1cfe3bafa67b529ead792a6d0160888b4237"
-dependencies = [
- "proc-macro2",
- "quote",
- "unicode-ident",
 ]
 
 [[package]]

@@ -482,14 +482,6 @@ const STRUCT_PATCHES: &[StructPatch] = &[
             Ok(true)
         },
     },
-    StructPatch {
-        module: Some("system"),
-        match_ident: |i| i == "JNINativeInterface",
-        patch: |_, s| {
-            s.hidden = true;
-            Ok(true)
-        },
-    },
 ];
 
 pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {
