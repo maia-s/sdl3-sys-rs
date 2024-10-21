@@ -8,7 +8,7 @@ use super::properties::*;
 
 use super::atomic::*;
 
-#[cfg(windows)]
+#[cfg(any(doc, windows))]
 emit! {}
 
 /// A unique numeric ID that identifies a thread.
@@ -211,7 +211,7 @@ emit! {
 
 #[cfg(not(doc))]
 emit! {
-    #[cfg(windows)]
+    #[cfg(any(doc, windows))]
     emit! {
     }
 

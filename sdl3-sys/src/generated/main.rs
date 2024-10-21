@@ -386,7 +386,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-#[cfg(windows)]
+#[cfg(any(doc, windows))]
 emit! {
     extern "C" {
         /// Register a win32 window class for SDL's use.

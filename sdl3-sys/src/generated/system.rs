@@ -8,7 +8,7 @@ use super::keyboard::*;
 
 use super::video::*;
 
-#[cfg(windows)]
+#[cfg(any(doc, windows))]
 emit! {
     pub type MSG = tagMSG;
 
@@ -64,7 +64,7 @@ emit! {
 
 }
 
-#[cfg(any(windows, any(/* always disabled: SDL_PLATFORM_WINGDK */)))]
+#[cfg(any(any(doc, windows), any(/* always disabled: SDL_PLATFORM_WINGDK */)))]
 emit! {
     extern "C" {
         /// Get the D3D9 adapter index that matches the specified display.
@@ -139,7 +139,7 @@ extern "C" {
     pub fn SDL_SetX11EventHook(callback: SDL_X11EventHook, userdata: *mut ::core::ffi::c_void);
 }
 
-#[cfg(target_os = "linux")]
+#[cfg(any(doc, target_os = "linux"))]
 emit! {
     extern "C" {
         /// Sets the UNIX nice value for a thread.
@@ -179,7 +179,7 @@ emit! {
 
 }
 
-#[cfg(any(target_os = "ios", target_os = "tvos", target_os = "watchos"))]
+#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "watchos"))]
 emit! {
     /// The prototype for an Apple iOS animation callback.
     ///
@@ -261,7 +261,7 @@ emit! {
 
 }
 
-#[cfg(target_os = "android")]
+#[cfg(any(doc, target_os = "android"))]
 emit! {
     extern "C" {
         /// Get the Android Java Native Interface Environment of the current thread.
@@ -773,7 +773,7 @@ extern "C" {
     pub fn SDL_OnApplicationDidEnterForeground();
 }
 
-#[cfg(any(target_os = "ios", target_os = "tvos", target_os = "watchos"))]
+#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "watchos"))]
 emit! {
     extern "C" {
         /// Let iOS apps with external event handling report

@@ -238,20 +238,20 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "ANDROID" = CfgExpr(r#"target_os = "android""#);
             "DEBUG" = CfgExpr("debug_assertions");
             "SDL_BYTEORDER" = CfgExpr(always_true!("byte order")); // this has a non-boolean value
-            "SDL_PLATFORM_3DS" = CfgExpr(r#"target_os = "horizon""#);
-            "SDL_PLATFORM_ANDROID" = CfgExpr(r#"target_os = "android""#);
-            "SDL_PLATFORM_APPLE" = CfgExpr(r#"target_vendor = "apple""#);
-            "SDL_PLATFORM_EMSCRIPTEN" = CfgExpr(r#"target_os = "emscripten""#);
+            "SDL_PLATFORM_3DS" = CfgExpr(r#"any(doc, target_os = "horizon")"#);
+            "SDL_PLATFORM_ANDROID" = CfgExpr(r#"any(doc, target_os = "android")"#);
+            "SDL_PLATFORM_APPLE" = CfgExpr(r#"any(doc, target_vendor = "apple")"#);
+            "SDL_PLATFORM_EMSCRIPTEN" = CfgExpr(r#"any(doc, target_os = "emscripten")"#);
             "SDL_PLATFORM_GDK" = CfgExpr(always_false!("SDL_PLATFORM_GDK")); // change WIN32 if this is changed
-            "SDL_PLATFORM_IOS" = CfgExpr(r#"any(target_os = "ios", target_os = "tvos", target_os = "watchos")"#);
-            "SDL_PLATFORM_LINUX" = CfgExpr(r#"target_os = "linux""#);
+            "SDL_PLATFORM_IOS" = CfgExpr(r#"any(doc, target_os = "ios", target_os = "tvos", target_os = "watchos")"#);
+            "SDL_PLATFORM_LINUX" = CfgExpr(r#"any(doc, target_os = "linux")"#);
             "SDL_PLATFORM_NGAGE" = CfgExpr(always_false!("SDL_PLATFORM_NGAGE"));
             "SDL_PLATFORM_PS2" = CfgExpr(always_false!("SDL_PLATFORM_PS2"));
-            "SDL_PLATFORM_PSP" = CfgExpr(r#"target_os = "psp""#);
-            "SDL_PLATFORM_TVOS" = CfgExpr(r#"target_os = "tvos""#);
-            "SDL_PLATFORM_VITA" = CfgExpr(r#"target_os = "vita""#);
-            "SDL_PLATFORM_WIN32" = CfgExpr("windows");
-            "SDL_PLATFORM_WINDOWS" = CfgExpr("windows");
+            "SDL_PLATFORM_PSP" = CfgExpr(r#"any(doc, target_os = "psp")"#);
+            "SDL_PLATFORM_TVOS" = CfgExpr(r#"any(doc, target_os = "tvos")"#);
+            "SDL_PLATFORM_VITA" = CfgExpr(r#"any(doc, target_os = "vita")"#);
+            "SDL_PLATFORM_WIN32" = CfgExpr("any(doc, windows)");
+            "SDL_PLATFORM_WINDOWS" = CfgExpr("any(doc, windows)");
             "SDL_PLATFORM_WINGDK" = CfgExpr(always_false!("SDL_PLATFORM_WINGDK"));
             "SDL_WIKI_DOCUMENTATION_SECTION" = CfgExpr("doc");
         }

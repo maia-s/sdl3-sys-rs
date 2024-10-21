@@ -125,21 +125,21 @@ pub const SDL_MIN_TIME: ::core::primitive::i64 = -9223372036854775808_i64;
 
 pub const SDL_FLT_EPSILON: ::core::ffi::c_float = ::core::primitive::f32::EPSILON;
 
-#[cfg(windows)]
+#[cfg(any(doc, windows))]
 emit! {
     pub const SDL_PRIs64: *const ::core::ffi::c_char = c"I64d".as_ptr();
 
 }
 
-#[cfg(not(windows))]
+#[cfg(not(any(doc, windows)))]
 emit! {
-    #[cfg(all(not(target_vendor = "apple"), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))]
+    #[cfg(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))]
     emit! {
         pub const SDL_PRIs64: *const ::core::ffi::c_char = c"ld".as_ptr();
 
     }
 
-    #[cfg(not(all(not(target_vendor = "apple"), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))]
+    #[cfg(not(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
         pub const SDL_PRIs64: *const ::core::ffi::c_char = c"lld".as_ptr();
 
@@ -147,21 +147,21 @@ emit! {
 
 }
 
-#[cfg(windows)]
+#[cfg(any(doc, windows))]
 emit! {
     pub const SDL_PRIu64: *const ::core::ffi::c_char = c"I64u".as_ptr();
 
 }
 
-#[cfg(not(windows))]
+#[cfg(not(any(doc, windows)))]
 emit! {
-    #[cfg(all(not(target_vendor = "apple"), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))]
+    #[cfg(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))]
     emit! {
         pub const SDL_PRIu64: *const ::core::ffi::c_char = c"lu".as_ptr();
 
     }
 
-    #[cfg(not(all(not(target_vendor = "apple"), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))]
+    #[cfg(not(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))]
     emit! {
         pub const SDL_PRIu64: *const ::core::ffi::c_char = c"llu".as_ptr();
 
@@ -169,21 +169,21 @@ emit! {
 
 }
 
-#[cfg(windows)]
+#[cfg(any(doc, windows))]
 emit! {
     pub const SDL_PRIx64: *const ::core::ffi::c_char = c"I64x".as_ptr();
 
 }
 
-#[cfg(not(windows))]
+#[cfg(not(any(doc, windows)))]
 emit! {
-    #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
+    #[cfg(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64")))]
     emit! {
         pub const SDL_PRIx64: *const ::core::ffi::c_char = c"lx".as_ptr();
 
     }
 
-    #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
+    #[cfg(not(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64"))))]
     emit! {
         pub const SDL_PRIx64: *const ::core::ffi::c_char = c"llx".as_ptr();
 
@@ -191,21 +191,21 @@ emit! {
 
 }
 
-#[cfg(windows)]
+#[cfg(any(doc, windows))]
 emit! {
     pub const SDL_PRIX64: *const ::core::ffi::c_char = c"I64X".as_ptr();
 
 }
 
-#[cfg(not(windows))]
+#[cfg(not(any(doc, windows)))]
 emit! {
-    #[cfg(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64")))]
+    #[cfg(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64")))]
     emit! {
         pub const SDL_PRIX64: *const ::core::ffi::c_char = c"lX".as_ptr();
 
     }
 
-    #[cfg(not(all(not(target_vendor = "apple"), all(not(windows), target_pointer_width = "64"))))]
+    #[cfg(not(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64"))))]
     emit! {
         pub const SDL_PRIX64: *const ::core::ffi::c_char = c"llX".as_ptr();
 
@@ -221,7 +221,7 @@ pub const SDL_PRIx32: *const ::core::ffi::c_char = c"x".as_ptr();
 
 pub const SDL_PRIX32: *const ::core::ffi::c_char = c"X".as_ptr();
 
-#[cfg(windows)]
+#[cfg(any(doc, windows))]
 emit! {
     const _: () = ::core::assert!((::core::mem::size_of::<::core::ffi::c_longlong>() == 8_usize));
 
@@ -237,7 +237,7 @@ emit! {
 
 }
 
-#[cfg(not(windows))]
+#[cfg(not(any(doc, windows)))]
 emit! {
     pub const SDL_PRILL_PREFIX: *const ::core::ffi::c_char = c"ll".as_ptr();
 
@@ -318,7 +318,10 @@ const _: () = ::core::assert!(
     ((!(0 as ::core::ffi::c_int) as ::core::ffi::c_int) == ((-1_i32) as ::core::ffi::c_int))
 );
 
-#[cfg(all(not(target_os = "horizon"), not(target_os = "vita")))]
+#[cfg(all(
+    not(any(doc, target_os = "horizon")),
+    not(any(doc, target_os = "vita"))
+))]
 emit! {
     #[doc(hidden)]
     /// ### Known values (`sdl3-sys`)

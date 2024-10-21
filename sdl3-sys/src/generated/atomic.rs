@@ -138,7 +138,7 @@ emit! {
 
     #[cfg(not(all(not(any(/* always disabled: __clang__ */)), all(windows, target_env = "msvc"))))]
     emit! {
-        #[cfg(not(target_os = "emscripten"))]
+        #[cfg(not(any(doc, target_os = "emscripten")))]
         emit! {
             #[inline(always)]
             pub fn SDL_CompilerBarrier() {
@@ -146,7 +146,7 @@ emit! {
             }
         }
 
-        #[cfg(target_os = "emscripten")]
+        #[cfg(any(doc, target_os = "emscripten"))]
         emit! {
             #[inline(always)]
             pub fn SDL_CompilerBarrier() {
