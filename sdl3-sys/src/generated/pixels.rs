@@ -7,7 +7,7 @@ use super::error::*;
 /// A fully opaque 8-bit alpha value.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_ALPHA_TRANSPARENT`]
@@ -16,7 +16,7 @@ pub const SDL_ALPHA_OPAQUE: Uint8 = (255 as Uint8);
 /// A fully opaque floating point alpha value.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_ALPHA_TRANSPARENT_FLOAT`]
@@ -25,7 +25,7 @@ pub const SDL_ALPHA_OPAQUE_FLOAT: ::core::ffi::c_float = 1.0_f32;
 /// A fully transparent 8-bit alpha value.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_ALPHA_OPAQUE`]
@@ -34,7 +34,7 @@ pub const SDL_ALPHA_TRANSPARENT: Uint8 = (0 as Uint8);
 /// A fully transparent floating point alpha value.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_ALPHA_OPAQUE_FLOAT`]
@@ -43,7 +43,7 @@ pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 /// Pixel type.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -103,7 +103,7 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 /// Bitmap pixel order, high bit -> low bit.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -133,7 +133,7 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 /// Packed component order, high bit -> low bit.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -181,7 +181,7 @@ pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 /// Array component order, low byte -> high byte.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -223,7 +223,7 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 /// Packed component layout.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -308,7 +308,7 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 /// RGBA8888 on big-endian CPUs.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -726,7 +726,7 @@ pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::u8 {
 /// Colorspace color type.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -757,7 +757,7 @@ pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 /// <https://www.itu.int/rec/R-REC-BT.2100-2-201807-I/en>
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -792,7 +792,7 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 /// <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -879,7 +879,7 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 /// These are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -1004,7 +1004,7 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 /// These are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -1096,7 +1096,7 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 /// Colorspace chroma sample location.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -1141,7 +1141,7 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 /// representative sample of the kinds of colorspaces supported in SDL.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_ColorPrimaries`]
@@ -1311,7 +1311,7 @@ pub const fn SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(X: SDL_Colorspace) -> ::core::pr
 /// [`SDL_PIXELFORMAT_RGBA8888`] on big-endian systems).
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1326,7 +1326,7 @@ pub struct SDL_Color {
 /// color which uses the [`SDL_PIXELFORMAT_RGBA128_FLOAT`] format
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1340,7 +1340,7 @@ pub struct SDL_FColor {
 /// A set of indexed colors representing a palette.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_SetPaletteColors`]
@@ -1361,7 +1361,7 @@ pub struct SDL_Palette {
 /// Details about the format of a pixel.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1397,7 +1397,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetPixelFormatName(format: SDL_PixelFormat) -> *const ::core::ffi::c_char;
 }
 
@@ -1419,7 +1419,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetPixelFormatForMasks`]
@@ -1453,7 +1453,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetMasksForPixelFormat`]
@@ -1483,7 +1483,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetPixelFormatDetails(format: SDL_PixelFormat) -> *const SDL_PixelFormatDetails;
 }
 
@@ -1503,7 +1503,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_DestroyPalette`]
@@ -1529,7 +1529,7 @@ extern "C" {
     ///   the palette is not modified or destroyed in another thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_SetPaletteColors(
         palette: *mut SDL_Palette,
         colors: *const SDL_Color,
@@ -1549,7 +1549,7 @@ extern "C" {
     ///   the palette is not modified or destroyed in another thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreatePalette`]
@@ -1589,7 +1589,7 @@ extern "C" {
     ///   the palette is not modified.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetPixelFormatDetails`]
@@ -1639,7 +1639,7 @@ extern "C" {
     ///   the palette is not modified.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetPixelFormatDetails`]
@@ -1678,7 +1678,7 @@ extern "C" {
     ///   the palette is not modified.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetPixelFormatDetails`]
@@ -1721,7 +1721,7 @@ extern "C" {
     ///   the palette is not modified.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetPixelFormatDetails`]

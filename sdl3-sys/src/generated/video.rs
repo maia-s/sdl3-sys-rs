@@ -41,7 +41,7 @@ use super::surface::*;
 /// The value 0 is an invalid ID.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_DisplayID = Uint32;
 
 /// This is a unique ID for a window.
@@ -49,7 +49,7 @@ pub type SDL_DisplayID = Uint32;
 /// The value 0 is an invalid ID.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_WindowID = Uint32;
 
 /// The pointer to the global `wl_display` object used by the Wayland video
@@ -69,7 +69,7 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: *const ::core::ffi::
 /// System theme.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -105,7 +105,7 @@ pub const SDL_SYSTEM_THEME_DARK: SDL_SystemTheme = SDL_SystemTheme::DARK;
 /// The structure that defines a display mode.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_GetFullscreenDisplayModes`]
@@ -139,7 +139,7 @@ pub struct SDL_DisplayMode {
 /// Display orientation values; the way a display is rotated.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -192,7 +192,7 @@ pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
 /// the user or system outside of the app's control.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_GetWindowFlags`]
@@ -276,7 +276,7 @@ pub const SDL_WINDOW_NOT_FOCUSABLE: ::core::primitive::u64 = 2147483648_u64;
 /// Used to indicate that you don't care what the window position is.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376_u32;
 
 #[inline(always)]
@@ -294,7 +294,7 @@ pub const fn SDL_WINDOWPOS_ISUNDEFINED(X: ::core::ffi::c_int) -> ::core::primiti
 /// Used to indicate that the window position should be centered.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 
 #[inline(always)]
@@ -312,7 +312,7 @@ pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitiv
 /// Window flash operation.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -348,7 +348,7 @@ pub const SDL_FLASH_UNTIL_FOCUSED: SDL_FlashOperation = SDL_FlashOperation::UNTI
 /// An opaque handle to an OpenGL context.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_GL_CreateContext`]
@@ -357,7 +357,7 @@ pub type SDL_GLContext = *mut SDL_GLContextState;
 /// Opaque EGL types.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_EGLDisplay = *mut ::core::ffi::c_void;
 
 pub type SDL_EGLConfig = *mut ::core::ffi::c_void;
@@ -389,7 +389,7 @@ pub type SDL_EGLint = ::core::ffi::c_int;
 /// Returns a newly-allocated array of attributes, terminated with `EGL_NONE`.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_EGL_SetAttributeCallbacks`]
@@ -424,7 +424,7 @@ pub type SDL_EGLAttribArrayCallback = ::core::option::Option<
 /// Returns a newly-allocated array of attributes, terminated with `EGL_NONE`.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_EGL_SetAttributeCallbacks`]
@@ -451,50 +451,50 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 /// you should check to see exactly what you got.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`RED_SIZE`](SDL_GLattr::RED_SIZE) | [`SDL_GL_RED_SIZE`] | the minimum number of bits for the red channel of the color buffer; defaults to 3. |
-/// | [`GREEN_SIZE`](SDL_GLattr::GREEN_SIZE) | [`SDL_GL_GREEN_SIZE`] | the minimum number of bits for the green channel of the color buffer; defaults to 3. |
-/// | [`BLUE_SIZE`](SDL_GLattr::BLUE_SIZE) | [`SDL_GL_BLUE_SIZE`] | the minimum number of bits for the blue channel of the color buffer; defaults to 2. |
-/// | [`ALPHA_SIZE`](SDL_GLattr::ALPHA_SIZE) | [`SDL_GL_ALPHA_SIZE`] | the minimum number of bits for the alpha channel of the color buffer; defaults to 0. |
-/// | [`BUFFER_SIZE`](SDL_GLattr::BUFFER_SIZE) | [`SDL_GL_BUFFER_SIZE`] | the minimum number of bits for frame buffer size; defaults to 0. |
-/// | [`DOUBLEBUFFER`](SDL_GLattr::DOUBLEBUFFER) | [`SDL_GL_DOUBLEBUFFER`] | whether the output is single or double buffered; defaults to double buffering on. |
-/// | [`DEPTH_SIZE`](SDL_GLattr::DEPTH_SIZE) | [`SDL_GL_DEPTH_SIZE`] | the minimum number of bits in the depth buffer; defaults to 16. |
-/// | [`STENCIL_SIZE`](SDL_GLattr::STENCIL_SIZE) | [`SDL_GL_STENCIL_SIZE`] | the minimum number of bits in the stencil buffer; defaults to 0. |
-/// | [`ACCUM_RED_SIZE`](SDL_GLattr::ACCUM_RED_SIZE) | [`SDL_GL_ACCUM_RED_SIZE`] | the minimum number of bits for the red channel of the accumulation buffer; defaults to 0. |
-/// | [`ACCUM_GREEN_SIZE`](SDL_GLattr::ACCUM_GREEN_SIZE) | [`SDL_GL_ACCUM_GREEN_SIZE`] | the minimum number of bits for the green channel of the accumulation buffer; defaults to 0. |
-/// | [`ACCUM_BLUE_SIZE`](SDL_GLattr::ACCUM_BLUE_SIZE) | [`SDL_GL_ACCUM_BLUE_SIZE`] | the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0. |
-/// | [`ACCUM_ALPHA_SIZE`](SDL_GLattr::ACCUM_ALPHA_SIZE) | [`SDL_GL_ACCUM_ALPHA_SIZE`] | the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0. |
-/// | [`STEREO`](SDL_GLattr::STEREO) | [`SDL_GL_STEREO`] | whether the output is stereo 3D; defaults to off. |
-/// | [`MULTISAMPLEBUFFERS`](SDL_GLattr::MULTISAMPLEBUFFERS) | [`SDL_GL_MULTISAMPLEBUFFERS`] | the number of buffers used for multisample anti-aliasing; defaults to 0. |
-/// | [`MULTISAMPLESAMPLES`](SDL_GLattr::MULTISAMPLESAMPLES) | [`SDL_GL_MULTISAMPLESAMPLES`] | the number of samples used around the current pixel used for multisample anti-aliasing. |
-/// | [`ACCELERATED_VISUAL`](SDL_GLattr::ACCELERATED_VISUAL) | [`SDL_GL_ACCELERATED_VISUAL`] | set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either. |
-/// | [`RETAINED_BACKING`](SDL_GLattr::RETAINED_BACKING) | [`SDL_GL_RETAINED_BACKING`] | not used (deprecated). |
-/// | [`CONTEXT_MAJOR_VERSION`](SDL_GLattr::CONTEXT_MAJOR_VERSION) | [`SDL_GL_CONTEXT_MAJOR_VERSION`] | OpenGL context major version. |
-/// | [`CONTEXT_MINOR_VERSION`](SDL_GLattr::CONTEXT_MINOR_VERSION) | [`SDL_GL_CONTEXT_MINOR_VERSION`] | OpenGL context minor version. |
-/// | [`CONTEXT_FLAGS`](SDL_GLattr::CONTEXT_FLAGS) | [`SDL_GL_CONTEXT_FLAGS`] | some combination of 0 or more of elements of the [`SDL_GLcontextFlag`] enumeration; defaults to 0. |
-/// | [`CONTEXT_PROFILE_MASK`](SDL_GLattr::CONTEXT_PROFILE_MASK) | [`SDL_GL_CONTEXT_PROFILE_MASK`] | type of GL context (Core, Compatibility, ES). See SDL_GLprofile; default value depends on platform. |
-/// | [`SHARE_WITH_CURRENT_CONTEXT`](SDL_GLattr::SHARE_WITH_CURRENT_CONTEXT) | [`SDL_GL_SHARE_WITH_CURRENT_CONTEXT`] | OpenGL context sharing; defaults to 0. |
-/// | [`FRAMEBUFFER_SRGB_CAPABLE`](SDL_GLattr::FRAMEBUFFER_SRGB_CAPABLE) | [`SDL_GL_FRAMEBUFFER_SRGB_CAPABLE`] | requests sRGB capable visual; defaults to 0. |
-/// | [`CONTEXT_RELEASE_BEHAVIOR`](SDL_GLattr::CONTEXT_RELEASE_BEHAVIOR) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`] | sets context the release behavior. See SDL_GLcontextReleaseFlag; defaults to FLUSH. |
-/// | [`CONTEXT_RESET_NOTIFICATION`](SDL_GLattr::CONTEXT_RESET_NOTIFICATION) | [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] | set context reset notification. See SDL_GLContextResetNotification; defaults to NO_NOTIFICATION. |
-/// | [`CONTEXT_NO_ERROR`](SDL_GLattr::CONTEXT_NO_ERROR) | [`SDL_GL_CONTEXT_NO_ERROR`] | |
-/// | [`FLOATBUFFERS`](SDL_GLattr::FLOATBUFFERS) | [`SDL_GL_FLOATBUFFERS`] | |
-/// | [`EGL_PLATFORM`](SDL_GLattr::EGL_PLATFORM) | [`SDL_GL_EGL_PLATFORM`] | |
+/// | [`RED_SIZE`](SDL_GLAttr::RED_SIZE) | [`SDL_GL_RED_SIZE`] | the minimum number of bits for the red channel of the color buffer; defaults to 3. |
+/// | [`GREEN_SIZE`](SDL_GLAttr::GREEN_SIZE) | [`SDL_GL_GREEN_SIZE`] | the minimum number of bits for the green channel of the color buffer; defaults to 3. |
+/// | [`BLUE_SIZE`](SDL_GLAttr::BLUE_SIZE) | [`SDL_GL_BLUE_SIZE`] | the minimum number of bits for the blue channel of the color buffer; defaults to 2. |
+/// | [`ALPHA_SIZE`](SDL_GLAttr::ALPHA_SIZE) | [`SDL_GL_ALPHA_SIZE`] | the minimum number of bits for the alpha channel of the color buffer; defaults to 0. |
+/// | [`BUFFER_SIZE`](SDL_GLAttr::BUFFER_SIZE) | [`SDL_GL_BUFFER_SIZE`] | the minimum number of bits for frame buffer size; defaults to 0. |
+/// | [`DOUBLEBUFFER`](SDL_GLAttr::DOUBLEBUFFER) | [`SDL_GL_DOUBLEBUFFER`] | whether the output is single or double buffered; defaults to double buffering on. |
+/// | [`DEPTH_SIZE`](SDL_GLAttr::DEPTH_SIZE) | [`SDL_GL_DEPTH_SIZE`] | the minimum number of bits in the depth buffer; defaults to 16. |
+/// | [`STENCIL_SIZE`](SDL_GLAttr::STENCIL_SIZE) | [`SDL_GL_STENCIL_SIZE`] | the minimum number of bits in the stencil buffer; defaults to 0. |
+/// | [`ACCUM_RED_SIZE`](SDL_GLAttr::ACCUM_RED_SIZE) | [`SDL_GL_ACCUM_RED_SIZE`] | the minimum number of bits for the red channel of the accumulation buffer; defaults to 0. |
+/// | [`ACCUM_GREEN_SIZE`](SDL_GLAttr::ACCUM_GREEN_SIZE) | [`SDL_GL_ACCUM_GREEN_SIZE`] | the minimum number of bits for the green channel of the accumulation buffer; defaults to 0. |
+/// | [`ACCUM_BLUE_SIZE`](SDL_GLAttr::ACCUM_BLUE_SIZE) | [`SDL_GL_ACCUM_BLUE_SIZE`] | the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0. |
+/// | [`ACCUM_ALPHA_SIZE`](SDL_GLAttr::ACCUM_ALPHA_SIZE) | [`SDL_GL_ACCUM_ALPHA_SIZE`] | the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0. |
+/// | [`STEREO`](SDL_GLAttr::STEREO) | [`SDL_GL_STEREO`] | whether the output is stereo 3D; defaults to off. |
+/// | [`MULTISAMPLEBUFFERS`](SDL_GLAttr::MULTISAMPLEBUFFERS) | [`SDL_GL_MULTISAMPLEBUFFERS`] | the number of buffers used for multisample anti-aliasing; defaults to 0. |
+/// | [`MULTISAMPLESAMPLES`](SDL_GLAttr::MULTISAMPLESAMPLES) | [`SDL_GL_MULTISAMPLESAMPLES`] | the number of samples used around the current pixel used for multisample anti-aliasing. |
+/// | [`ACCELERATED_VISUAL`](SDL_GLAttr::ACCELERATED_VISUAL) | [`SDL_GL_ACCELERATED_VISUAL`] | set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either. |
+/// | [`RETAINED_BACKING`](SDL_GLAttr::RETAINED_BACKING) | [`SDL_GL_RETAINED_BACKING`] | not used (deprecated). |
+/// | [`CONTEXT_MAJOR_VERSION`](SDL_GLAttr::CONTEXT_MAJOR_VERSION) | [`SDL_GL_CONTEXT_MAJOR_VERSION`] | OpenGL context major version. |
+/// | [`CONTEXT_MINOR_VERSION`](SDL_GLAttr::CONTEXT_MINOR_VERSION) | [`SDL_GL_CONTEXT_MINOR_VERSION`] | OpenGL context minor version. |
+/// | [`CONTEXT_FLAGS`](SDL_GLAttr::CONTEXT_FLAGS) | [`SDL_GL_CONTEXT_FLAGS`] | some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0. |
+/// | [`CONTEXT_PROFILE_MASK`](SDL_GLAttr::CONTEXT_PROFILE_MASK) | [`SDL_GL_CONTEXT_PROFILE_MASK`] | type of GL context (Core, Compatibility, ES). See SDL_GLProfile; default value depends on platform. |
+/// | [`SHARE_WITH_CURRENT_CONTEXT`](SDL_GLAttr::SHARE_WITH_CURRENT_CONTEXT) | [`SDL_GL_SHARE_WITH_CURRENT_CONTEXT`] | OpenGL context sharing; defaults to 0. |
+/// | [`FRAMEBUFFER_SRGB_CAPABLE`](SDL_GLAttr::FRAMEBUFFER_SRGB_CAPABLE) | [`SDL_GL_FRAMEBUFFER_SRGB_CAPABLE`] | requests sRGB capable visual; defaults to 0. |
+/// | [`CONTEXT_RELEASE_BEHAVIOR`](SDL_GLAttr::CONTEXT_RELEASE_BEHAVIOR) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`] | sets context the release behavior. See SDL_GLContextReleaseFlag; defaults to FLUSH. |
+/// | [`CONTEXT_RESET_NOTIFICATION`](SDL_GLAttr::CONTEXT_RESET_NOTIFICATION) | [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] | set context reset notification. See SDL_GLContextResetNotification; defaults to NO_NOTIFICATION. |
+/// | [`CONTEXT_NO_ERROR`](SDL_GLAttr::CONTEXT_NO_ERROR) | [`SDL_GL_CONTEXT_NO_ERROR`] | |
+/// | [`FLOATBUFFERS`](SDL_GLAttr::FLOATBUFFERS) | [`SDL_GL_FLOATBUFFERS`] | |
+/// | [`EGL_PLATFORM`](SDL_GLAttr::EGL_PLATFORM) | [`SDL_GL_EGL_PLATFORM`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GLattr(pub ::core::ffi::c_int);
-impl From<SDL_GLattr> for ::core::ffi::c_int {
+pub struct SDL_GLAttr(pub ::core::ffi::c_int);
+impl From<SDL_GLAttr> for ::core::ffi::c_int {
     #[inline(always)]
-    fn from(value: SDL_GLattr) -> Self {
+    fn from(value: SDL_GLAttr) -> Self {
         value.0
     }
 }
-impl SDL_GLattr {
+impl SDL_GLAttr {
     /// the minimum number of bits for the red channel of the color buffer; defaults to 3.
     pub const RED_SIZE: Self = Self(0);
     /// the minimum number of bits for the green channel of the color buffer; defaults to 3.
@@ -533,15 +533,15 @@ impl SDL_GLattr {
     pub const CONTEXT_MAJOR_VERSION: Self = Self(17);
     /// OpenGL context minor version.
     pub const CONTEXT_MINOR_VERSION: Self = Self(18);
-    /// some combination of 0 or more of elements of the [`SDL_GLcontextFlag`] enumeration; defaults to 0.
+    /// some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0.
     pub const CONTEXT_FLAGS: Self = Self(19);
-    /// type of GL context (Core, Compatibility, ES). See SDL_GLprofile; default value depends on platform.
+    /// type of GL context (Core, Compatibility, ES). See SDL_GLProfile; default value depends on platform.
     pub const CONTEXT_PROFILE_MASK: Self = Self(20);
     /// OpenGL context sharing; defaults to 0.
     pub const SHARE_WITH_CURRENT_CONTEXT: Self = Self(21);
     /// requests sRGB capable visual; defaults to 0.
     pub const FRAMEBUFFER_SRGB_CAPABLE: Self = Self(22);
-    /// sets context the release behavior. See SDL_GLcontextReleaseFlag; defaults to FLUSH.
+    /// sets context the release behavior. See SDL_GLContextReleaseFlag; defaults to FLUSH.
     pub const CONTEXT_RELEASE_BEHAVIOR: Self = Self(23);
     /// set context reset notification. See SDL_GLContextResetNotification; defaults to NO_NOTIFICATION.
     pub const CONTEXT_RESET_NOTIFICATION: Self = Self(24);
@@ -550,185 +550,108 @@ impl SDL_GLattr {
     pub const EGL_PLATFORM: Self = Self(27);
 }
 /// the minimum number of bits for the red channel of the color buffer; defaults to 3.
-pub const SDL_GL_RED_SIZE: SDL_GLattr = SDL_GLattr::RED_SIZE;
+pub const SDL_GL_RED_SIZE: SDL_GLAttr = SDL_GLAttr::RED_SIZE;
 /// the minimum number of bits for the green channel of the color buffer; defaults to 3.
-pub const SDL_GL_GREEN_SIZE: SDL_GLattr = SDL_GLattr::GREEN_SIZE;
+pub const SDL_GL_GREEN_SIZE: SDL_GLAttr = SDL_GLAttr::GREEN_SIZE;
 /// the minimum number of bits for the blue channel of the color buffer; defaults to 2.
-pub const SDL_GL_BLUE_SIZE: SDL_GLattr = SDL_GLattr::BLUE_SIZE;
+pub const SDL_GL_BLUE_SIZE: SDL_GLAttr = SDL_GLAttr::BLUE_SIZE;
 /// the minimum number of bits for the alpha channel of the color buffer; defaults to 0.
-pub const SDL_GL_ALPHA_SIZE: SDL_GLattr = SDL_GLattr::ALPHA_SIZE;
+pub const SDL_GL_ALPHA_SIZE: SDL_GLAttr = SDL_GLAttr::ALPHA_SIZE;
 /// the minimum number of bits for frame buffer size; defaults to 0.
-pub const SDL_GL_BUFFER_SIZE: SDL_GLattr = SDL_GLattr::BUFFER_SIZE;
+pub const SDL_GL_BUFFER_SIZE: SDL_GLAttr = SDL_GLAttr::BUFFER_SIZE;
 /// whether the output is single or double buffered; defaults to double buffering on.
-pub const SDL_GL_DOUBLEBUFFER: SDL_GLattr = SDL_GLattr::DOUBLEBUFFER;
+pub const SDL_GL_DOUBLEBUFFER: SDL_GLAttr = SDL_GLAttr::DOUBLEBUFFER;
 /// the minimum number of bits in the depth buffer; defaults to 16.
-pub const SDL_GL_DEPTH_SIZE: SDL_GLattr = SDL_GLattr::DEPTH_SIZE;
+pub const SDL_GL_DEPTH_SIZE: SDL_GLAttr = SDL_GLAttr::DEPTH_SIZE;
 /// the minimum number of bits in the stencil buffer; defaults to 0.
-pub const SDL_GL_STENCIL_SIZE: SDL_GLattr = SDL_GLattr::STENCIL_SIZE;
+pub const SDL_GL_STENCIL_SIZE: SDL_GLAttr = SDL_GLAttr::STENCIL_SIZE;
 /// the minimum number of bits for the red channel of the accumulation buffer; defaults to 0.
-pub const SDL_GL_ACCUM_RED_SIZE: SDL_GLattr = SDL_GLattr::ACCUM_RED_SIZE;
+pub const SDL_GL_ACCUM_RED_SIZE: SDL_GLAttr = SDL_GLAttr::ACCUM_RED_SIZE;
 /// the minimum number of bits for the green channel of the accumulation buffer; defaults to 0.
-pub const SDL_GL_ACCUM_GREEN_SIZE: SDL_GLattr = SDL_GLattr::ACCUM_GREEN_SIZE;
+pub const SDL_GL_ACCUM_GREEN_SIZE: SDL_GLAttr = SDL_GLAttr::ACCUM_GREEN_SIZE;
 /// the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0.
-pub const SDL_GL_ACCUM_BLUE_SIZE: SDL_GLattr = SDL_GLattr::ACCUM_BLUE_SIZE;
+pub const SDL_GL_ACCUM_BLUE_SIZE: SDL_GLAttr = SDL_GLAttr::ACCUM_BLUE_SIZE;
 /// the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0.
-pub const SDL_GL_ACCUM_ALPHA_SIZE: SDL_GLattr = SDL_GLattr::ACCUM_ALPHA_SIZE;
+pub const SDL_GL_ACCUM_ALPHA_SIZE: SDL_GLAttr = SDL_GLAttr::ACCUM_ALPHA_SIZE;
 /// whether the output is stereo 3D; defaults to off.
-pub const SDL_GL_STEREO: SDL_GLattr = SDL_GLattr::STEREO;
+pub const SDL_GL_STEREO: SDL_GLAttr = SDL_GLAttr::STEREO;
 /// the number of buffers used for multisample anti-aliasing; defaults to 0.
-pub const SDL_GL_MULTISAMPLEBUFFERS: SDL_GLattr = SDL_GLattr::MULTISAMPLEBUFFERS;
+pub const SDL_GL_MULTISAMPLEBUFFERS: SDL_GLAttr = SDL_GLAttr::MULTISAMPLEBUFFERS;
 /// the number of samples used around the current pixel used for multisample anti-aliasing.
-pub const SDL_GL_MULTISAMPLESAMPLES: SDL_GLattr = SDL_GLattr::MULTISAMPLESAMPLES;
+pub const SDL_GL_MULTISAMPLESAMPLES: SDL_GLAttr = SDL_GLAttr::MULTISAMPLESAMPLES;
 /// set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either.
-pub const SDL_GL_ACCELERATED_VISUAL: SDL_GLattr = SDL_GLattr::ACCELERATED_VISUAL;
+pub const SDL_GL_ACCELERATED_VISUAL: SDL_GLAttr = SDL_GLAttr::ACCELERATED_VISUAL;
 /// not used (deprecated).
-pub const SDL_GL_RETAINED_BACKING: SDL_GLattr = SDL_GLattr::RETAINED_BACKING;
+pub const SDL_GL_RETAINED_BACKING: SDL_GLAttr = SDL_GLAttr::RETAINED_BACKING;
 /// OpenGL context major version.
-pub const SDL_GL_CONTEXT_MAJOR_VERSION: SDL_GLattr = SDL_GLattr::CONTEXT_MAJOR_VERSION;
+pub const SDL_GL_CONTEXT_MAJOR_VERSION: SDL_GLAttr = SDL_GLAttr::CONTEXT_MAJOR_VERSION;
 /// OpenGL context minor version.
-pub const SDL_GL_CONTEXT_MINOR_VERSION: SDL_GLattr = SDL_GLattr::CONTEXT_MINOR_VERSION;
-/// some combination of 0 or more of elements of the [`SDL_GLcontextFlag`] enumeration; defaults to 0.
-pub const SDL_GL_CONTEXT_FLAGS: SDL_GLattr = SDL_GLattr::CONTEXT_FLAGS;
-/// type of GL context (Core, Compatibility, ES). See SDL_GLprofile; default value depends on platform.
-pub const SDL_GL_CONTEXT_PROFILE_MASK: SDL_GLattr = SDL_GLattr::CONTEXT_PROFILE_MASK;
+pub const SDL_GL_CONTEXT_MINOR_VERSION: SDL_GLAttr = SDL_GLAttr::CONTEXT_MINOR_VERSION;
+/// some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0.
+pub const SDL_GL_CONTEXT_FLAGS: SDL_GLAttr = SDL_GLAttr::CONTEXT_FLAGS;
+/// type of GL context (Core, Compatibility, ES). See SDL_GLProfile; default value depends on platform.
+pub const SDL_GL_CONTEXT_PROFILE_MASK: SDL_GLAttr = SDL_GLAttr::CONTEXT_PROFILE_MASK;
 /// OpenGL context sharing; defaults to 0.
-pub const SDL_GL_SHARE_WITH_CURRENT_CONTEXT: SDL_GLattr = SDL_GLattr::SHARE_WITH_CURRENT_CONTEXT;
+pub const SDL_GL_SHARE_WITH_CURRENT_CONTEXT: SDL_GLAttr = SDL_GLAttr::SHARE_WITH_CURRENT_CONTEXT;
 /// requests sRGB capable visual; defaults to 0.
-pub const SDL_GL_FRAMEBUFFER_SRGB_CAPABLE: SDL_GLattr = SDL_GLattr::FRAMEBUFFER_SRGB_CAPABLE;
-/// sets context the release behavior. See SDL_GLcontextReleaseFlag; defaults to FLUSH.
-pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR: SDL_GLattr = SDL_GLattr::CONTEXT_RELEASE_BEHAVIOR;
+pub const SDL_GL_FRAMEBUFFER_SRGB_CAPABLE: SDL_GLAttr = SDL_GLAttr::FRAMEBUFFER_SRGB_CAPABLE;
+/// sets context the release behavior. See SDL_GLContextReleaseFlag; defaults to FLUSH.
+pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR: SDL_GLAttr = SDL_GLAttr::CONTEXT_RELEASE_BEHAVIOR;
 /// set context reset notification. See SDL_GLContextResetNotification; defaults to NO_NOTIFICATION.
-pub const SDL_GL_CONTEXT_RESET_NOTIFICATION: SDL_GLattr = SDL_GLattr::CONTEXT_RESET_NOTIFICATION;
-pub const SDL_GL_CONTEXT_NO_ERROR: SDL_GLattr = SDL_GLattr::CONTEXT_NO_ERROR;
-pub const SDL_GL_FLOATBUFFERS: SDL_GLattr = SDL_GLattr::FLOATBUFFERS;
-pub const SDL_GL_EGL_PLATFORM: SDL_GLattr = SDL_GLattr::EGL_PLATFORM;
+pub const SDL_GL_CONTEXT_RESET_NOTIFICATION: SDL_GLAttr = SDL_GLAttr::CONTEXT_RESET_NOTIFICATION;
+pub const SDL_GL_CONTEXT_NO_ERROR: SDL_GLAttr = SDL_GLAttr::CONTEXT_NO_ERROR;
+pub const SDL_GL_FLOATBUFFERS: SDL_GLAttr = SDL_GLAttr::FLOATBUFFERS;
+pub const SDL_GL_EGL_PLATFORM: SDL_GLAttr = SDL_GLAttr::EGL_PLATFORM;
 
 /// Possible values to be set for the [`SDL_GL_CONTEXT_PROFILE_MASK`] attribute.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
-///
-/// ### Known values (`sdl3-sys`)
-/// | Associated constant | Global constant | Description |
-/// | ------------------- | --------------- | ----------- |
-/// | [`CORE`](SDL_GLprofile::CORE) | [`SDL_GL_CONTEXT_PROFILE_CORE`] | |
-/// | [`COMPATIBILITY`](SDL_GLprofile::COMPATIBILITY) | [`SDL_GL_CONTEXT_PROFILE_COMPATIBILITY`] | |
-/// | [`ES`](SDL_GLprofile::ES) | [`SDL_GL_CONTEXT_PROFILE_ES`] | GLX_CONTEXT_ES2_PROFILE_BIT_EXT |
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GLprofile(pub ::core::ffi::c_int);
-impl From<SDL_GLprofile> for ::core::ffi::c_int {
-    #[inline(always)]
-    fn from(value: SDL_GLprofile) -> Self {
-        value.0
-    }
-}
-impl SDL_GLprofile {
-    pub const CORE: Self = Self(0x0001);
-    pub const COMPATIBILITY: Self = Self(0x0002);
-    /// GLX_CONTEXT_ES2_PROFILE_BIT_EXT
-    pub const ES: Self = Self(0x0004);
-}
-pub const SDL_GL_CONTEXT_PROFILE_CORE: SDL_GLprofile = SDL_GLprofile::CORE;
-pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLprofile = SDL_GLprofile::COMPATIBILITY;
-/// GLX_CONTEXT_ES2_PROFILE_BIT_EXT
-pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLprofile = SDL_GLprofile::ES;
+/// This datatype is available since SDL 3.1.3.
+pub type SDL_GLProfile = Uint32;
 
-/// Possible values to be set for the [`SDL_GL_CONTEXT_FLAGS`] attribute.
+/// OpenGL Core Profile context
+pub const SDL_GL_CONTEXT_PROFILE_CORE: ::core::primitive::i32 = 1;
+
+/// OpenGL Compatibility Profile context
+pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: ::core::primitive::i32 = 2;
+
+/// GLX_CONTEXT_ES2_PROFILE_BIT_EXT
+pub const SDL_GL_CONTEXT_PROFILE_ES: ::core::primitive::i32 = 4;
+
+/// Possible flags to be set for the [`SDL_GL_CONTEXT_FLAGS`] attribute.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
-///
-/// ### Known values (`sdl3-sys`)
-/// | Associated constant | Global constant | Description |
-/// | ------------------- | --------------- | ----------- |
-/// | [`DEBUG_FLAG`](SDL_GLcontextFlag::DEBUG_FLAG) | [`SDL_GL_CONTEXT_DEBUG_FLAG`] | |
-/// | [`FORWARD_COMPATIBLE_FLAG`](SDL_GLcontextFlag::FORWARD_COMPATIBLE_FLAG) | [`SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG`] | |
-/// | [`ROBUST_ACCESS_FLAG`](SDL_GLcontextFlag::ROBUST_ACCESS_FLAG) | [`SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG`] | |
-/// | [`RESET_ISOLATION_FLAG`](SDL_GLcontextFlag::RESET_ISOLATION_FLAG) | [`SDL_GL_CONTEXT_RESET_ISOLATION_FLAG`] | |
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GLcontextFlag(pub ::core::ffi::c_int);
-impl From<SDL_GLcontextFlag> for ::core::ffi::c_int {
-    #[inline(always)]
-    fn from(value: SDL_GLcontextFlag) -> Self {
-        value.0
-    }
-}
-impl SDL_GLcontextFlag {
-    pub const DEBUG_FLAG: Self = Self(0x0001);
-    pub const FORWARD_COMPATIBLE_FLAG: Self = Self(0x0002);
-    pub const ROBUST_ACCESS_FLAG: Self = Self(0x0004);
-    pub const RESET_ISOLATION_FLAG: Self = Self(0x0008);
-}
-pub const SDL_GL_CONTEXT_DEBUG_FLAG: SDL_GLcontextFlag = SDL_GLcontextFlag::DEBUG_FLAG;
-pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: SDL_GLcontextFlag =
-    SDL_GLcontextFlag::FORWARD_COMPATIBLE_FLAG;
-pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: SDL_GLcontextFlag =
-    SDL_GLcontextFlag::ROBUST_ACCESS_FLAG;
-pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLcontextFlag =
-    SDL_GLcontextFlag::RESET_ISOLATION_FLAG;
+/// This datatype is available since SDL 3.1.3.
+pub type SDL_GLContextFlag = Uint32;
+
+pub const SDL_GL_CONTEXT_DEBUG_FLAG: ::core::primitive::i32 = 1;
+
+pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: ::core::primitive::i32 = 2;
+
+pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: ::core::primitive::i32 = 4;
+
+pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: ::core::primitive::i32 = 8;
 
 /// Possible values to be set for the [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`]
 /// attribute.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
-///
-/// ### Known values (`sdl3-sys`)
-/// | Associated constant | Global constant | Description |
-/// | ------------------- | --------------- | ----------- |
-/// | [`NONE`](SDL_GLcontextReleaseFlag::NONE) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE`] | |
-/// | [`FLUSH`](SDL_GLcontextReleaseFlag::FLUSH) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH`] | |
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GLcontextReleaseFlag(pub ::core::ffi::c_int);
-impl From<SDL_GLcontextReleaseFlag> for ::core::ffi::c_int {
-    #[inline(always)]
-    fn from(value: SDL_GLcontextReleaseFlag) -> Self {
-        value.0
-    }
-}
-impl SDL_GLcontextReleaseFlag {
-    pub const NONE: Self = Self(0x0000);
-    pub const FLUSH: Self = Self(0x0001);
-}
-pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: SDL_GLcontextReleaseFlag =
-    SDL_GLcontextReleaseFlag::NONE;
-pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLcontextReleaseFlag =
-    SDL_GLcontextReleaseFlag::FLUSH;
+/// This datatype is available since SDL 3.1.3.
+pub type SDL_GLContextReleaseFlag = Uint32;
+
+pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: ::core::primitive::i32 = 0;
+
+pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: ::core::primitive::i32 = 1;
 
 /// Possible values to be set [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] attribute.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
-///
-/// ### Known values (`sdl3-sys`)
-/// | Associated constant | Global constant | Description |
-/// | ------------------- | --------------- | ----------- |
-/// | [`NO_NOTIFICATION`](SDL_GLContextResetNotification::NO_NOTIFICATION) | [`SDL_GL_CONTEXT_RESET_NO_NOTIFICATION`] | |
-/// | [`LOSE_CONTEXT`](SDL_GLContextResetNotification::LOSE_CONTEXT) | [`SDL_GL_CONTEXT_RESET_LOSE_CONTEXT`] | |
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
-pub struct SDL_GLContextResetNotification(pub ::core::ffi::c_int);
-impl From<SDL_GLContextResetNotification> for ::core::ffi::c_int {
-    #[inline(always)]
-    fn from(value: SDL_GLContextResetNotification) -> Self {
-        value.0
-    }
-}
-impl SDL_GLContextResetNotification {
-    pub const NO_NOTIFICATION: Self = Self(0x0000);
-    pub const LOSE_CONTEXT: Self = Self(0x0001);
-}
-pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification =
-    SDL_GLContextResetNotification::NO_NOTIFICATION;
-pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification =
-    SDL_GLContextResetNotification::LOSE_CONTEXT;
+/// This datatype is available since SDL 3.1.3.
+pub type SDL_GLContextResetNotification = Uint32;
+
+pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: ::core::primitive::i32 = 0;
+
+pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: ::core::primitive::i32 = 1;
 
 extern "C" {
     /// Get the number of video drivers compiled into SDL.
@@ -737,7 +660,7 @@ extern "C" {
     /// Returns the number of built in video drivers.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetVideoDriver`]
@@ -760,7 +683,7 @@ extern "C" {
     /// Returns the name of the video driver with the given **index**.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetNumVideoDrivers`]
@@ -779,7 +702,7 @@ extern "C" {
     ///   initialized.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetNumVideoDrivers`]
@@ -794,7 +717,7 @@ extern "C" {
     /// Returns the current system theme, light, dark, or unknown.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSystemTheme() -> SDL_SystemTheme;
 }
 
@@ -810,7 +733,7 @@ extern "C" {
     ///   with [`SDL_free()`] when it is no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetDisplays(count: *mut ::core::ffi::c_int) -> *mut SDL_DisplayID;
 }
 
@@ -822,7 +745,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -854,7 +777,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetDisplayProperties(displayID: SDL_DisplayID) -> SDL_PropertiesID;
 }
 
@@ -874,7 +797,7 @@ extern "C" {
     ///   more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -894,7 +817,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDisplayUsableBounds`]
@@ -925,7 +848,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDisplayBounds`]
@@ -946,7 +869,7 @@ extern "C" {
     ///   `SDL_ORIENTATION_UNKNOWN` if it isn't available.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -963,7 +886,7 @@ extern "C" {
     ///   `SDL_ORIENTATION_UNKNOWN` if it isn't available.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -985,7 +908,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -1015,7 +938,7 @@ extern "C" {
     ///   no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -1050,7 +973,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -1080,7 +1003,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetCurrentDisplayMode`]
@@ -1103,7 +1026,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDesktopDisplayMode`]
@@ -1121,7 +1044,7 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDisplayBounds`]
@@ -1140,7 +1063,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDisplayBounds`]
@@ -1159,7 +1082,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetDisplayBounds`]
@@ -1181,7 +1104,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowDisplayScale`]
@@ -1209,7 +1132,7 @@ extern "C" {
     ///   more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetWindowDisplayScale(window: *mut SDL_Window) -> ::core::ffi::c_float;
 }
 
@@ -1241,7 +1164,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowFullscreenMode`]
@@ -1263,7 +1186,7 @@ extern "C" {
     ///   borderless fullscreen desktop mode.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowFullscreenMode`]
@@ -1283,7 +1206,7 @@ extern "C" {
     ///   [`SDL_free()`] when it is no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetWindowICCProfile(
         window: *mut SDL_Window,
         size: *mut ::core::primitive::usize,
@@ -1301,7 +1224,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetWindowPixelFormat(window: *mut SDL_Window) -> SDL_PixelFormat;
 }
 
@@ -1318,7 +1241,7 @@ extern "C" {
     ///   longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetWindows(count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Window;
 }
 
@@ -1400,7 +1323,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateWindowAndRenderer`]
@@ -1469,7 +1392,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateWindow`]
@@ -1598,7 +1521,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateProperties`]
@@ -1722,7 +1645,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowFromID`]
@@ -1742,7 +1665,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowID`]
@@ -1759,7 +1682,7 @@ extern "C" {
     ///   parent.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreatePopupWindow`]
@@ -1883,7 +1806,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetWindowProperties(window: *mut SDL_Window) -> SDL_PropertiesID;
 }
 
@@ -1997,7 +1920,7 @@ extern "C" {
     /// Returns a mask of the [`SDL_WindowFlags`] associated with `window`.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateWindow`]
@@ -2023,7 +1946,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowTitle`]
@@ -2043,7 +1966,7 @@ extern "C" {
     ///   title.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowTitle`]
@@ -2071,7 +1994,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_SetWindowIcon(
         window: *mut SDL_Window,
         icon: *mut SDL_Surface,
@@ -2114,7 +2037,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowPosition`]
@@ -2146,7 +2069,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowPosition`]
@@ -2188,7 +2111,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSize`]
@@ -2217,7 +2140,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderOutputSize`]
@@ -2249,7 +2172,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetWindowSafeArea(
         window: *mut SDL_Window,
         rect: *mut SDL_Rect,
@@ -2291,7 +2214,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowAspectRatio`]
@@ -2317,7 +2240,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowAspectRatio`]
@@ -2360,7 +2283,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSize`]
@@ -2387,7 +2310,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateWindow`]
@@ -2411,7 +2334,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMinimumSize`]
@@ -2437,7 +2360,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMaximumSize`]
@@ -2461,7 +2384,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMaximumSize`]
@@ -2487,7 +2410,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMinimumSize`]
@@ -2516,7 +2439,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowFlags`]
@@ -2543,7 +2466,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowFlags`]
@@ -2567,7 +2490,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowFlags`]
@@ -2587,7 +2510,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_HideWindow`]
@@ -2605,7 +2528,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ShowWindow`]
@@ -2629,7 +2552,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_RaiseWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
@@ -2660,7 +2583,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_MinimizeWindow`]
@@ -2688,7 +2611,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_MaximizeWindow`]
@@ -2717,7 +2640,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_MaximizeWindow`]
@@ -2750,7 +2673,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowFullscreenMode`]
@@ -2782,7 +2705,7 @@ extern "C" {
     ///   window was in the requested state.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowSize`]
@@ -2805,7 +2728,7 @@ extern "C" {
     ///   otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSurface`]
@@ -2833,7 +2756,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_DestroyWindowSurface`]
@@ -2864,7 +2787,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSurfaceVSync`]
@@ -2890,7 +2813,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowSurfaceVSync`]
@@ -2915,7 +2838,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSurface`]
@@ -2946,7 +2869,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSurface`]
@@ -2968,7 +2891,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSurface`]
@@ -3003,7 +2926,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowKeyboardGrab`]
@@ -3027,7 +2950,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMouseGrab`]
@@ -3047,7 +2970,7 @@ extern "C" {
     /// Returns true if keyboard is grabbed, and false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowKeyboardGrab`]
@@ -3063,7 +2986,7 @@ extern "C" {
     /// Returns true if mouse is grabbed, and false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowKeyboardGrab`]
@@ -3077,7 +3000,7 @@ extern "C" {
     /// Returns the window if input is grabbed or NULL otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowMouseGrab`]
@@ -3100,7 +3023,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMouseRect`]
@@ -3121,7 +3044,7 @@ extern "C" {
     ///   if there isn't one.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowMouseRect`]
@@ -3144,7 +3067,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowOpacity`]
@@ -3167,7 +3090,7 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowOpacity`]
@@ -3203,7 +3126,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowModal`]
@@ -3227,7 +3150,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowParent`]
@@ -3248,7 +3171,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_SetWindowFocusable(
         window: *mut SDL_Window,
         focusable: ::core::primitive::bool,
@@ -3277,7 +3200,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ShowWindowSystemMenu(
         window: *mut SDL_Window,
         x: ::core::ffi::c_int,
@@ -3288,7 +3211,7 @@ extern "C" {
 /// Possible return values from the [`SDL_HitTest`] callback.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_HitTest`]
@@ -3419,7 +3342,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_SetWindowHitTest(
         window: *mut SDL_Window,
         callback: SDL_HitTest,
@@ -3452,7 +3375,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_SetWindowShape(
         window: *mut SDL_Window,
         shape: *mut SDL_Surface,
@@ -3470,7 +3393,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_FlashWindow(
         window: *mut SDL_Window,
         operation: SDL_FlashOperation,
@@ -3487,7 +3410,7 @@ extern "C" {
     /// - `window`: the window to destroy.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreatePopupWindow`]
@@ -3507,7 +3430,7 @@ extern "C" {
     /// Returns true if the screensaver is enabled, false if it is disabled.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_DisableScreenSaver`]
@@ -3523,7 +3446,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_DisableScreenSaver`]
@@ -3545,7 +3468,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_EnableScreenSaver`]
@@ -3571,7 +3494,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GL_GetProcAddress`]
@@ -3627,7 +3550,7 @@ extern "C" {
     ///   should be cast to the appropriate function signature.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GL_ExtensionSupported`]
@@ -3650,7 +3573,7 @@ extern "C" {
     ///   be cast to the appropriate function signature.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_EGL_GetCurrentDisplay`]
@@ -3661,7 +3584,7 @@ extern "C" {
     /// Unload the OpenGL library previously loaded by [`SDL_GL_LoadLibrary()`].
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GL_LoadLibrary`]
@@ -3688,7 +3611,7 @@ extern "C" {
     /// Returns true if the extension is supported, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GL_ExtensionSupported(
         extension: *const ::core::ffi::c_char,
     ) -> ::core::primitive::bool;
@@ -3698,7 +3621,7 @@ extern "C" {
     /// Reset all previously set OpenGL context attributes to their default values.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GL_GetAttribute`]
@@ -3715,7 +3638,7 @@ extern "C" {
     /// context, since the values obtained can differ from the requested ones.
     ///
     /// ### Arguments
-    /// - `attr`: an [`SDL_GLattr`] enum value specifying the OpenGL attribute to
+    /// - `attr`: an [`SDL_GLAttr`] enum value specifying the OpenGL attribute to
     ///   set.
     /// - `value`: the desired value for the attribute.
     /// ### Return value
@@ -3723,13 +3646,13 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GL_GetAttribute`]
     /// - [`SDL_GL_ResetAttributes`]
     pub fn SDL_GL_SetAttribute(
-        attr: SDL_GLattr,
+        attr: SDL_GLAttr,
         value: ::core::ffi::c_int,
     ) -> ::core::primitive::bool;
 }
@@ -3738,7 +3661,7 @@ extern "C" {
     /// Get the actual value for an attribute from the current context.
     ///
     /// ### Arguments
-    /// - `attr`: an [`SDL_GLattr`] enum value specifying the OpenGL attribute to
+    /// - `attr`: an [`SDL_GLAttr`] enum value specifying the OpenGL attribute to
     ///   get.
     /// - `value`: a pointer filled in with the current value of `attr`.
     /// ### Return value
@@ -3746,13 +3669,13 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GL_ResetAttributes`]
     /// - [`SDL_GL_SetAttribute`]
     pub fn SDL_GL_GetAttribute(
-        attr: SDL_GLattr,
+        attr: SDL_GLAttr,
         value: *mut ::core::ffi::c_int,
     ) -> ::core::primitive::bool;
 }
@@ -3775,7 +3698,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GL_DestroyContext`]
@@ -3796,7 +3719,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GL_CreateContext`]
@@ -3814,7 +3737,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GL_GetCurrentWindow() -> *mut SDL_Window;
 }
 
@@ -3826,7 +3749,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GL_MakeCurrent`]
@@ -3841,7 +3764,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_EGL_GetCurrentDisplay() -> SDL_EGLDisplay;
 }
 
@@ -3853,7 +3776,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_EGL_GetCurrentConfig() -> SDL_EGLConfig;
 }
 
@@ -3867,7 +3790,7 @@ extern "C" {
     ///   failure.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_EGL_GetWindowSurface(window: *mut SDL_Window) -> SDL_EGLSurface;
 }
 
@@ -3889,7 +3812,7 @@ extern "C" {
     /// - `userdata`: a pointer that is passed to the callbacks.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_EGL_SetAttributeCallbacks(
         platformAttribCallback: SDL_EGLAttribArrayCallback,
         surfaceAttribCallback: SDL_EGLIntArrayCallback,
@@ -3924,7 +3847,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GL_GetSwapInterval`]
@@ -3947,7 +3870,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GL_SetSwapInterval`]
@@ -3971,7 +3894,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GL_SwapWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
@@ -3985,7 +3908,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GL_CreateContext`]
@@ -4007,7 +3930,7 @@ pub struct SDL_GLContextState {
 /// The struct used as an opaque handle to a window.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_CreateWindow`]

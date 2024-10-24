@@ -17,7 +17,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetClipboardText`]
@@ -28,8 +28,8 @@ extern "C" {
 extern "C" {
     /// Get UTF-8 text from the clipboard.
     ///
-    /// This functions returns empty string if there was not enough memory left for
-    /// a copy of the clipboard's content.
+    /// This functions returns an empty string if there was not enough memory left
+    /// for a copy of the clipboard's content.
     ///
     /// ### Return value
     /// Returns the clipboard text on success or an empty string on failure; call
@@ -37,7 +37,7 @@ extern "C" {
     ///   [`SDL_free()`] when it is no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_HasClipboardText`]
@@ -52,7 +52,7 @@ extern "C" {
     /// Returns true if the clipboard has text, or false if it does not.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetClipboardText`]
@@ -70,7 +70,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetPrimarySelectionText`]
@@ -82,8 +82,8 @@ extern "C" {
 extern "C" {
     /// Get UTF-8 text from the primary selection.
     ///
-    /// This functions returns empty string if there was not enough memory left for
-    /// a copy of the primary selection's content.
+    /// This functions returns an empty string if there was not enough memory left
+    /// for a copy of the primary selection's content.
     ///
     /// ### Return value
     /// Returns the primary selection text on success or an empty string on
@@ -91,7 +91,7 @@ extern "C" {
     ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_HasPrimarySelectionText`]
@@ -107,7 +107,7 @@ extern "C" {
     /// Returns true if the primary selection has text, or false if it does not.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetPrimarySelectionText`]
@@ -135,7 +135,7 @@ extern "C" {
 ///   freed so it needs to be retained and dealt with internally.
 ///
 /// ### Availability
-/// This function is available since SDL 3.0.0.
+/// This function is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_SetClipboardData`]
@@ -154,7 +154,7 @@ pub type SDL_ClipboardDataCallback = ::core::option::Option<
 /// - `userdata`: a pointer to provided user data.
 ///
 /// ### Availability
-/// This function is available since SDL 3.0.0.
+/// This function is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_SetClipboardData`]
@@ -186,7 +186,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ClearClipboardData`]
@@ -209,7 +209,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetClipboardData`]
@@ -231,7 +231,7 @@ extern "C" {
     ///   is no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_HasClipboardData`]
@@ -252,7 +252,7 @@ extern "C" {
     ///   false if it does not.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetClipboardData`]
@@ -272,7 +272,7 @@ extern "C" {
     ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetClipboardData`]

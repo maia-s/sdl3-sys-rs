@@ -8,7 +8,7 @@ use super::stdinc::*;
 /// components.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -36,7 +36,7 @@ pub struct SDL_DateTime {
 /// The preferred date format of the current system locale.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_GetDateTimeLocalePreferences`]
@@ -75,7 +75,7 @@ pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 /// The preferred time format of the current system locale.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_GetDateTimeLocalePreferences`]
@@ -124,7 +124,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetDateTimeLocalePreferences(
         dateFormat: *mut SDL_DateFormat,
         timeFormat: *mut SDL_TimeFormat,
@@ -142,7 +142,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetCurrentTime(ticks: *mut SDL_Time) -> ::core::primitive::bool;
 }
 
@@ -161,7 +161,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_TimeToDateTime(
         ticks: SDL_Time,
         dt: *mut SDL_DateTime,
@@ -183,7 +183,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_DateTimeToTime(
         dt: *const SDL_DateTime,
         ticks: *mut SDL_Time,
@@ -204,7 +204,7 @@ extern "C" {
     ///   Windows FILETIME value.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_TimeToWindows(
         ticks: SDL_Time,
         dwLowDateTime: *mut Uint32,
@@ -226,7 +226,7 @@ extern "C" {
     /// Returns the converted SDL time.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_TimeFromWindows(dwLowDateTime: Uint32, dwHighDateTime: Uint32) -> SDL_Time;
 }
 
@@ -241,7 +241,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetDaysInMonth(
         year: ::core::ffi::c_int,
         month: ::core::ffi::c_int,
@@ -260,7 +260,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetDayOfYear(
         year: ::core::ffi::c_int,
         month: ::core::ffi::c_int,
@@ -280,7 +280,7 @@ extern "C" {
     ///   -1 on failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetDayOfWeek(
         year: ::core::ffi::c_int,
         month: ::core::ffi::c_int,

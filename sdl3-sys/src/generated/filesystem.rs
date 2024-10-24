@@ -41,7 +41,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetPrefPath`]
@@ -100,7 +100,7 @@ extern "C" {
     ///   needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetBasePath`]
@@ -135,7 +135,7 @@ extern "C" {
 /// Note that on macOS/iOS, the Videos folder is called "Movies".
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_GetUserFolder`]
@@ -240,7 +240,7 @@ extern "C" {
     ///   folder, or NULL if an error happened.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetUserFolder(folder: SDL_Folder) -> *const ::core::ffi::c_char;
 }
 
@@ -299,7 +299,7 @@ pub struct SDL_PathInfo {
 /// Flags for path matching
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_GlobDirectory`]
@@ -323,14 +323,14 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_CreateDirectory(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
 /// Possible results from an enumeration callback.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_EnumerateDirectoryCallback`]
@@ -385,7 +385,7 @@ pub const SDL_ENUM_FAILURE: SDL_EnumerationResult = SDL_EnumerationResult::FAILU
 /// Returns how the enumeration should proceed.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_EnumerateDirectory`]
@@ -417,7 +417,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_EnumerateDirectory(
         path: *const ::core::ffi::c_char,
         callback: SDL_EnumerateDirectoryCallback,
@@ -438,7 +438,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_RemovePath(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
@@ -464,7 +464,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_RenamePath(
         oldpath: *const ::core::ffi::c_char,
         newpath: *const ::core::ffi::c_char,
@@ -485,7 +485,7 @@ extern "C" {
     /// Note that this is not an atomic operation! If something tries to read from
     /// `newpath` while the copy is in progress, it will see an incomplete copy of
     /// the data, and if the calling thread terminates (or the power goes out)
-    /// during the copy, `oldpath`'s previous contents will be gone, replaced with
+    /// during the copy, `newpath`'s previous contents will be gone, replaced with
     /// an incomplete copy of the data. To avoid this risk, it is recommended that
     /// the app copy to a temporary file in the same directory as `newpath`, and if
     /// the copy is successful, use [`SDL_RenamePath()`] to replace `newpath` with the
@@ -510,7 +510,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_CopyFile(
         oldpath: *const ::core::ffi::c_char,
         newpath: *const ::core::ffi::c_char,
@@ -529,7 +529,7 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetPathInfo(
         path: *const ::core::ffi::c_char,
         info: *mut SDL_PathInfo,
@@ -569,7 +569,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GlobDirectory(
         path: *const ::core::ffi::c_char,
         pattern: *const ::core::ffi::c_char,

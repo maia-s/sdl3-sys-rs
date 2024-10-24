@@ -18,7 +18,7 @@ use super::stdinc::*;
 /// GUIDs on different operating systems).
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -35,7 +35,7 @@ extern "C" {
     /// - `cbGUID`: the size of pszGUID, should be at least 33 bytes.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_StringToGUID`]
@@ -59,7 +59,7 @@ extern "C" {
     /// Returns a [`SDL_GUID`] structure.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GUIDToString`]

@@ -22,13 +22,13 @@ use super::stdinc::*;
 /// pen physically leaves the area and returns, it might get a new ID.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_PenID = Uint32;
 
 /// Pen input flags, as reported by various pen events' `pen_state` field.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_PenInputFlags = Uint32;
 
 /// pen is pressed down
@@ -65,7 +65,7 @@ pub const SDL_PEN_INPUT_ERASER_TIP: ::core::primitive::u32 = 1073741824_u32;
 /// `SDL_sinf(xtilt * SDL_PI_F / 180.0)`.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0
+/// This enum is available since SDL 3.1.3
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |

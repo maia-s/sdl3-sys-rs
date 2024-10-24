@@ -12,14 +12,14 @@ emit! {
     /// way.
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.0.0.
+    /// This macro is available since SDL 3.1.3.
     pub const SDL_REVISION: *const ::core::ffi::c_char = c"Some arbitrary string decided at SDL build time".as_ptr();
 
 }
 
 #[cfg(not(doc))]
 emit! {
-    pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL-preview-3.1.3-220-g679dd4b18".as_ptr();
+    pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL-preview-3.1.3-281-gdb4e2ccba".as_ptr();
 
 }
 

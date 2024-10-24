@@ -33,7 +33,7 @@ use super::events::*;
 /// the subsystems which you will be using in your application.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_Init`]
@@ -83,7 +83,7 @@ pub const SDL_INIT_CAMERA: ::core::primitive::u32 = 65536_u32;
 /// for complete details.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -188,7 +188,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAppMetadata`]
@@ -212,7 +212,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_Init`]
@@ -231,7 +231,7 @@ extern "C" {
     /// - `flags`: any of the flags used by [`SDL_Init()`]; see [`SDL_Init`] for details.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_InitSubSystem`]
@@ -249,7 +249,7 @@ extern "C" {
     ///   returns the initialization status of the specified subsystems.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_Init`]
@@ -269,7 +269,7 @@ extern "C" {
     /// other dynamically loaded code.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_Init`]
@@ -313,7 +313,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAppMetadataProperty`]
@@ -384,7 +384,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAppMetadataProperty`]
@@ -436,7 +436,7 @@ extern "C" {
     ///   property from another thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAppMetadata`]

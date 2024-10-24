@@ -51,8 +51,11 @@ extern "C" {
     /// Returns an unsigned 64-bit value representing the number of milliseconds
     ///   since the SDL library initialized.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetTicks() -> Uint64;
 }
 
@@ -63,8 +66,11 @@ extern "C" {
     /// Returns an unsigned 64-bit value representing the number of nanoseconds
     ///   since the SDL library initialized.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetTicksNS() -> Uint64;
 }
 
@@ -80,8 +86,11 @@ extern "C" {
     /// ### Return value
     /// Returns the current counter value.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetPerformanceFrequency`]
@@ -94,8 +103,11 @@ extern "C" {
     /// ### Return value
     /// Returns a platform-specific count per second.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetPerformanceCounter`]
@@ -112,8 +124,11 @@ extern "C" {
     /// ### Arguments
     /// - `ms`: the number of milliseconds to delay.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_Delay(ms: Uint32);
 }
 
@@ -127,8 +142,11 @@ extern "C" {
     /// ### Arguments
     /// - `ns`: the number of nanoseconds to delay.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_DelayNS(ns: Uint64);
 }
 
@@ -142,15 +160,18 @@ extern "C" {
     /// ### Arguments
     /// - `ns`: the number of nanoseconds to delay.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.1.4.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_DelayPrecise(ns: Uint64);
 }
 
 /// Definition of the timer ID type.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_TimerID = Uint32;
 
 /// Function prototype for the millisecond timer callback function.
@@ -176,7 +197,7 @@ pub type SDL_TimerID = Uint32;
 ///   the callback touches that need to be protected.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_AddTimer`]
@@ -221,7 +242,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_AddTimerNS`]
@@ -256,7 +277,7 @@ extern "C" {
 ///   the callback touches that need to be protected.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_AddTimerNS`]
@@ -301,7 +322,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_AddTimer`]
@@ -322,8 +343,11 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_AddTimer`]

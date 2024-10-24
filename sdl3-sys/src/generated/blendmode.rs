@@ -11,7 +11,7 @@ use super::stdinc::*;
 /// Additional values may be obtained from [`SDL_ComposeCustomBlendMode`].
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_ComposeCustomBlendMode`]
@@ -44,7 +44,7 @@ pub const SDL_BLENDMODE_INVALID: ::core::primitive::u32 = 2147483647_u32;
 /// components.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -95,7 +95,7 @@ pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 /// the component order red, green, blue, and alpha.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -248,7 +248,7 @@ extern "C" {
     ///   operations.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetRenderDrawBlendMode`]

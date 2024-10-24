@@ -38,7 +38,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_LoadFunction`]
@@ -72,7 +72,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_LoadObject`]
@@ -95,7 +95,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_LoadObject`]
@@ -105,7 +105,7 @@ extern "C" {
 /// An opaque datatype that represents a loaded shared object.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_LoadObject`]

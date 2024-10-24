@@ -43,13 +43,13 @@ use super::video::*;
 /// The name of the software renderer.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 pub const SDL_SOFTWARE_RENDERER: *const ::core::ffi::c_char = c"software".as_ptr();
 
 /// Vertex structure.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -65,7 +65,7 @@ pub struct SDL_Vertex {
 /// The access pattern allowed for a texture.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -101,7 +101,7 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGE
 /// How the logical size is mapped to the output.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -152,7 +152,7 @@ pub const SDL_LOGICAL_PRESENTATION_INTEGER_SCALE: SDL_RendererLogicalPresentatio
 /// An efficient driver-specific representation of pixel data
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_CreateTexture`]
@@ -189,7 +189,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateRenderer`]
@@ -219,7 +219,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetNumRenderDrivers`]
@@ -245,7 +245,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateRenderer`]
@@ -285,7 +285,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateRendererWithProperties`]
@@ -347,7 +347,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateProperties`]
@@ -410,7 +410,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_DestroyRenderer`]
@@ -430,7 +430,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetRenderer(window: *mut SDL_Window) -> *mut SDL_Renderer;
 }
 
@@ -447,7 +447,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetRenderWindow(renderer: *mut SDL_Renderer) -> *mut SDL_Window;
 }
 
@@ -464,7 +464,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateRenderer`]
@@ -553,7 +553,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetRendererProperties(renderer: *mut SDL_Renderer) -> SDL_PropertiesID;
 }
 
@@ -643,7 +643,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetCurrentRenderOutputSize`]
@@ -674,7 +674,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderOutputSize`]
@@ -705,7 +705,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateTextureFromSurface`]
@@ -746,7 +746,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateTexture`]
@@ -864,7 +864,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateProperties`]
@@ -1047,7 +1047,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetTextureProperties(texture: *mut SDL_Texture) -> SDL_PropertiesID;
 }
 
@@ -1141,7 +1141,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetRendererFromTexture(texture: *mut SDL_Texture) -> *mut SDL_Renderer;
 }
 
@@ -1162,7 +1162,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetTextureSize(
         texture: *mut SDL_Texture,
         w: *mut ::core::ffi::c_float,
@@ -1195,7 +1195,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetTextureColorMod`]
@@ -1234,7 +1234,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetTextureColorModFloat`]
@@ -1264,7 +1264,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetTextureAlphaMod`]
@@ -1294,7 +1294,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetTextureAlphaModFloat`]
@@ -1330,7 +1330,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetTextureAlphaMod`]
@@ -1364,7 +1364,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetTextureAlphaModFloat`]
@@ -1390,7 +1390,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetTextureAlphaModFloat`]
@@ -1416,7 +1416,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetTextureAlphaMod`]
@@ -1445,7 +1445,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetTextureBlendMode`]
@@ -1469,7 +1469,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetTextureBlendMode`]
@@ -1497,7 +1497,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetTextureScaleMode`]
@@ -1521,7 +1521,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetTextureScaleMode`]
@@ -1560,7 +1560,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_LockTexture`]
@@ -1604,7 +1604,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_UpdateNVTexture`]
@@ -1646,7 +1646,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_UpdateTexture`]
@@ -1690,7 +1690,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_LockTextureToSurface`]
@@ -1736,7 +1736,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_LockTexture`]
@@ -1766,7 +1766,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_LockTexture`]
@@ -1793,7 +1793,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderTarget`]
@@ -1818,7 +1818,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetRenderTarget`]
@@ -1862,7 +1862,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ConvertEventToRenderCoordinates`]
@@ -1895,7 +1895,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetRenderLogicalPresentation`]
@@ -1927,7 +1927,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetRenderLogicalPresentation`]
@@ -1961,7 +1961,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetRenderLogicalPresentation`]
@@ -2001,7 +2001,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetRenderLogicalPresentation`]
@@ -2042,7 +2042,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderCoordinatesFromWindow`]
@@ -2073,7 +2073,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderViewport`]
@@ -2098,7 +2098,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderViewportSet`]
@@ -2126,7 +2126,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderViewport`]
@@ -2156,7 +2156,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetRenderSafeArea(
         renderer: *mut SDL_Renderer,
         rect: *mut SDL_Rect,
@@ -2178,7 +2178,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderClipRect`]
@@ -2204,7 +2204,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderClipEnabled`]
@@ -2228,7 +2228,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderClipRect`]
@@ -2259,7 +2259,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderScale`]
@@ -2285,7 +2285,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetRenderScale`]
@@ -2318,7 +2318,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderDrawColor`]
@@ -2354,7 +2354,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderDrawColorFloat`]
@@ -2389,7 +2389,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderDrawColorFloat`]
@@ -2424,7 +2424,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetRenderDrawColorFloat`]
@@ -2460,7 +2460,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderColorScale`]
@@ -2484,7 +2484,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetRenderColorScale`]
@@ -2510,7 +2510,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderDrawBlendMode`]
@@ -2534,7 +2534,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetRenderDrawBlendMode`]
@@ -2562,7 +2562,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetRenderDrawColor`]
@@ -2584,7 +2584,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderPoints`]
@@ -2610,7 +2610,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderPoint`]
@@ -2638,7 +2638,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderLines`]
@@ -2667,7 +2667,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderLine`]
@@ -2693,7 +2693,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderRects`]
@@ -2719,7 +2719,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderRect`]
@@ -2746,7 +2746,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderFillRects`]
@@ -2772,7 +2772,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderFillRect`]
@@ -2802,7 +2802,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderTextureRotated`]
@@ -2841,7 +2841,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderTexture`]
@@ -2881,7 +2881,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderTexture`]
@@ -2926,7 +2926,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderTexture`]
@@ -2965,7 +2965,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderGeometryRaw`]
@@ -3006,7 +3006,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RenderGeometry`]
@@ -3047,7 +3047,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_RenderReadPixels(
         renderer: *mut SDL_Renderer,
         rect: *const SDL_Rect,
@@ -3091,7 +3091,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateRenderer`]
@@ -3122,7 +3122,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateTexture`]
@@ -3143,7 +3143,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateRenderer`]
@@ -3183,7 +3183,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_FlushRenderer(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
@@ -3203,7 +3203,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderMetalCommandEncoder`]
@@ -3231,7 +3231,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderMetalLayer`]
@@ -3270,7 +3270,7 @@ extern "C" {
     ///   once.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_AddVulkanRenderSemaphores(
         renderer: *mut SDL_Renderer,
         wait_stage_mask: Uint32,
@@ -3286,10 +3286,10 @@ extern "C" {
     ///
     /// The `vsync` parameter can be 1 to synchronize present with every vertical
     /// refresh, 2 to synchronize present with every second vertical refresh, etc.,
-    /// [`SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE`] for late swap tearing (adaptive vsync),
-    /// or [`SDL_WINDOW_SURFACE_VSYNC_DISABLED`] to disable. Not every value is
-    /// supported by every driver, so you should check the return value to see
-    /// whether the requested setting is supported.
+    /// [`SDL_RENDERER_VSYNC_ADAPTIVE`] for late swap tearing (adaptive vsync), or
+    /// [`SDL_RENDERER_VSYNC_DISABLED`] to disable. Not every value is supported by
+    /// every driver, so you should check the return value to see whether the
+    /// requested setting is supported.
     ///
     /// ### Arguments
     /// - `renderer`: the renderer to toggle.
@@ -3302,7 +3302,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetRenderVSync`]
@@ -3331,7 +3331,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetRenderVSync`]
@@ -3346,7 +3346,7 @@ extern "C" {
 /// The font is monospaced and square, so this applies to all characters.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.5.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_RenderDebugText`]
@@ -3390,7 +3390,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.4.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE`]
@@ -3405,7 +3405,7 @@ extern "C" {
 /// A structure representing rendering state
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_Renderer {

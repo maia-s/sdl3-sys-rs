@@ -30,7 +30,7 @@ use super::error::*;
 /// HID underlying bus types.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -96,7 +96,7 @@ pub const SDL_HID_API_BUS_SPI: SDL_hid_bus_type = SDL_hid_bus_type::SPI;
 /// Information about a connected HID device
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_hid_device_info {
@@ -154,7 +154,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_hid_exit`]
@@ -172,7 +172,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_hid_init`]
@@ -196,7 +196,7 @@ extern "C" {
     ///   change, or 0 if device change detection isn't available.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_hid_enumerate`]
@@ -228,7 +228,7 @@ extern "C" {
     ///   [`SDL_hid_free_enumeration()`].
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_hid_device_change_count`]
@@ -248,7 +248,7 @@ extern "C" {
     ///   [`SDL_hid_enumerate()`].
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_free_enumeration(devs: *mut SDL_hid_device_info);
 }
 
@@ -269,7 +269,7 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_open(
         vendor_id: ::core::ffi::c_ushort,
         product_id: ::core::ffi::c_ushort,
@@ -290,7 +290,7 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_open_path(path: *const ::core::ffi::c_char) -> *mut SDL_hid_device;
 }
 
@@ -320,7 +320,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_write(
         dev: *mut SDL_hid_device,
         data: *const ::core::ffi::c_uchar,
@@ -348,7 +348,7 @@ extern "C" {
     ///   be read within the timeout period, this function returns 0.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_read_timeout(
         dev: *mut SDL_hid_device,
         data: *mut ::core::ffi::c_uchar,
@@ -377,7 +377,7 @@ extern "C" {
     ///   returns 0.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_read(
         dev: *mut SDL_hid_device,
         data: *mut ::core::ffi::c_uchar,
@@ -403,7 +403,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_set_nonblocking(
         dev: *mut SDL_hid_device,
         nonblock: ::core::ffi::c_int,
@@ -434,7 +434,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_send_feature_report(
         dev: *mut SDL_hid_device,
         data: *const ::core::ffi::c_uchar,
@@ -464,7 +464,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_get_feature_report(
         dev: *mut SDL_hid_device,
         data: *mut ::core::ffi::c_uchar,
@@ -494,7 +494,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_get_input_report(
         dev: *mut SDL_hid_device,
         data: *mut ::core::ffi::c_uchar,
@@ -512,7 +512,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_close(dev: *mut SDL_hid_device) -> ::core::ffi::c_int;
 }
 
@@ -528,7 +528,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_get_manufacturer_string(
         dev: *mut SDL_hid_device,
         string: *mut crate::ffi::c_wchar_t,
@@ -548,7 +548,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_get_product_string(
         dev: *mut SDL_hid_device,
         string: *mut crate::ffi::c_wchar_t,
@@ -568,7 +568,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_get_serial_number_string(
         dev: *mut SDL_hid_device,
         string: *mut crate::ffi::c_wchar_t,
@@ -589,7 +589,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_get_indexed_string(
         dev: *mut SDL_hid_device,
         string_index: ::core::ffi::c_int,
@@ -609,7 +609,7 @@ extern "C" {
     ///   is valid until the device is closed with [`SDL_hid_close()`].
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_get_device_info(dev: *mut SDL_hid_device) -> *mut SDL_hid_device_info;
 }
 
@@ -628,7 +628,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_get_report_descriptor(
         dev: *mut SDL_hid_device,
         buf: *mut ::core::ffi::c_uchar,
@@ -643,14 +643,14 @@ extern "C" {
     /// - `active`: true to start the scan, false to stop the scan.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_hid_ble_scan(active: ::core::primitive::bool);
 }
 
 /// An opaque handle representing an open HID device.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_hid_device {

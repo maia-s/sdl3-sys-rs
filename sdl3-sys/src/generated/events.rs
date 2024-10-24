@@ -33,7 +33,7 @@ use super::video::*;
 /// The types of events that can be delivered.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -146,6 +146,7 @@ use super::video::*;
 /// | [`CAMERA_DEVICE_DENIED`](SDL_EventType::CAMERA_DEVICE_DENIED) | [`SDL_EVENT_CAMERA_DEVICE_DENIED`] | A camera device has been denied for use by the user. |
 /// | [`RENDER_TARGETS_RESET`](SDL_EventType::RENDER_TARGETS_RESET) | [`SDL_EVENT_RENDER_TARGETS_RESET`] | The render targets have been reset and their contents need to be updated |
 /// | [`RENDER_DEVICE_RESET`](SDL_EventType::RENDER_DEVICE_RESET) | [`SDL_EVENT_RENDER_DEVICE_RESET`] | The device has been reset and all textures need to be recreated |
+/// | [`RENDER_DEVICE_LOST`](SDL_EventType::RENDER_DEVICE_LOST) | [`SDL_EVENT_RENDER_DEVICE_LOST`] | The device has been lost and can't be recovered. |
 /// | [`PRIVATE0`](SDL_EventType::PRIVATE0) | [`SDL_EVENT_PRIVATE0`] | |
 /// | [`PRIVATE1`](SDL_EventType::PRIVATE1) | [`SDL_EVENT_PRIVATE1`] | |
 /// | [`PRIVATE2`](SDL_EventType::PRIVATE2) | [`SDL_EVENT_PRIVATE2`] | |
@@ -390,6 +391,8 @@ impl SDL_EventType {
     pub const RENDER_TARGETS_RESET: Self = Self(0x2000);
     /// The device has been reset and all textures need to be recreated
     pub const RENDER_DEVICE_RESET: Self = Self(8193);
+    /// The device has been lost and can't be recovered.
+    pub const RENDER_DEVICE_LOST: Self = Self(8194);
     pub const PRIVATE0: Self = Self(0x4000);
     pub const PRIVATE1: Self = Self(16385);
     pub const PRIVATE2: Self = Self(16386);
@@ -640,6 +643,8 @@ pub const SDL_EVENT_CAMERA_DEVICE_DENIED: SDL_EventType = SDL_EventType::CAMERA_
 pub const SDL_EVENT_RENDER_TARGETS_RESET: SDL_EventType = SDL_EventType::RENDER_TARGETS_RESET;
 /// The device has been reset and all textures need to be recreated
 pub const SDL_EVENT_RENDER_DEVICE_RESET: SDL_EventType = SDL_EventType::RENDER_DEVICE_RESET;
+/// The device has been lost and can't be recovered.
+pub const SDL_EVENT_RENDER_DEVICE_LOST: SDL_EventType = SDL_EventType::RENDER_DEVICE_LOST;
 pub const SDL_EVENT_PRIVATE0: SDL_EventType = SDL_EventType::PRIVATE0;
 pub const SDL_EVENT_PRIVATE1: SDL_EventType = SDL_EventType::PRIVATE1;
 pub const SDL_EVENT_PRIVATE2: SDL_EventType = SDL_EventType::PRIVATE2;
@@ -656,7 +661,7 @@ pub const SDL_EVENT_ENUM_PADDING: SDL_EventType = SDL_EventType::ENUM_PADDING;
 /// Fields shared by every event
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -671,7 +676,7 @@ pub struct SDL_CommonEvent {
 /// Display state change event data (event.display.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -692,7 +697,7 @@ pub struct SDL_DisplayEvent {
 /// Window state change event data (event.window.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -713,7 +718,7 @@ pub struct SDL_WindowEvent {
 /// Keyboard device event structure (event.kdevice.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -736,7 +741,7 @@ pub struct SDL_KeyboardDeviceEvent {
 /// [`SDL_HINT_KEYCODE_OPTIONS`], by calling [`SDL_GetKeyFromScancode()`].
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_GetKeyFromScancode`]
@@ -775,7 +780,7 @@ pub struct SDL_KeyboardEvent {
 /// characters that will be replaced by new typing.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -798,7 +803,7 @@ pub struct SDL_TextEditingEvent {
 /// Keyboard IME candidates event structure (event.edit_candidates.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -829,7 +834,7 @@ pub struct SDL_TextEditingCandidatesEvent {
 /// [`SDL_StartTextInput()`]. Text input is disabled by default!
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_StartTextInput`]
@@ -852,7 +857,7 @@ pub struct SDL_TextInputEvent {
 /// Mouse device event structure (event.mdevice.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -869,7 +874,7 @@ pub struct SDL_MouseDeviceEvent {
 /// Mouse motion event structure (event.motion.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -898,7 +903,7 @@ pub struct SDL_MouseMotionEvent {
 /// Mouse button event structure (event.button.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -928,7 +933,7 @@ pub struct SDL_MouseButtonEvent {
 /// Mouse wheel event structure (event.wheel.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -957,7 +962,7 @@ pub struct SDL_MouseWheelEvent {
 /// Joystick axis motion event structure (event.jaxis.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -982,7 +987,7 @@ pub struct SDL_JoyAxisEvent {
 /// Joystick trackball motion event structure (event.jball.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1008,7 +1013,7 @@ pub struct SDL_JoyBallEvent {
 /// Joystick hat position change event structure (event.jhat.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1037,7 +1042,7 @@ pub struct SDL_JoyHatEvent {
 /// Joystick button event structure (event.jbutton.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1059,8 +1064,14 @@ pub struct SDL_JoyButtonEvent {
 
 /// Joystick device event structure (event.jdevice.*)
 ///
+/// SDL will send JOYSTICK_ADDED events for devices that are already plugged in
+/// during [`SDL_Init`].
+///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
+///
+/// ### See also
+/// - [`SDL_GamepadDeviceEvent`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1077,7 +1088,7 @@ pub struct SDL_JoyDeviceEvent {
 /// Joystick battery level change event structure (event.jbattery.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1098,7 +1109,7 @@ pub struct SDL_JoyBatteryEvent {
 /// Gamepad axis motion event structure (event.gaxis.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1123,7 +1134,7 @@ pub struct SDL_GamepadAxisEvent {
 /// Gamepad button event structure (event.gbutton.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1145,8 +1156,18 @@ pub struct SDL_GamepadButtonEvent {
 
 /// Gamepad device event structure (event.gdevice.*)
 ///
+/// Joysticks that are supported gamepads receive both an [`SDL_JoyDeviceEvent`]
+/// and an [`SDL_GamepadDeviceEvent`].
+///
+/// SDL will send GAMEPAD_ADDED events for joysticks that are already plugged
+/// in during [`SDL_Init()`] and are recognized as gamepads. It will also send
+/// events for joysticks that get gamepad mappings at runtime.
+///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
+///
+/// ### See also
+/// - [`SDL_JoyDeviceEvent`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1163,7 +1184,7 @@ pub struct SDL_GamepadDeviceEvent {
 /// Gamepad touchpad event structure (event.gtouchpad.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1190,7 +1211,7 @@ pub struct SDL_GamepadTouchpadEvent {
 /// Gamepad sensor event structure (event.gsensor.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1213,7 +1234,7 @@ pub struct SDL_GamepadSensorEvent {
 /// Audio device event structure (event.adevice.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1235,7 +1256,7 @@ pub struct SDL_AudioDeviceEvent {
 /// Camera device event structure (event.cdevice.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1251,8 +1272,22 @@ pub struct SDL_CameraDeviceEvent {
 
 /// Touch finger event structure (event.tfinger.*)
 ///
+/// Coordinates in this event are normalized. `x` and `y` are normalized to a
+/// range between 0.0f and 1.0f, relative to the window, so (0,0) is the top
+/// left and (1,1) is the bottom right. Delta coordinates `dx` and `dy` are
+/// normalized in the ranges of -1.0f (traversed all the way from the bottom or
+/// right to all the way up or left) to 1.0f (traversed all the way from the
+/// top or left to all the way down or right).
+///
+/// Note that while the coordinates are _normalized_, they are not _clamped_,
+/// which means in some circumstances you can get a value outside of this
+/// range. For example, a renderer using logical presentation might give a
+/// negative value when the touch is in the letterboxing. Some platforms might
+/// report a touch outside of the window, which will also be outside of the
+/// range.
+///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1292,7 +1327,7 @@ pub struct SDL_TouchFingerEvent {
 /// leaving the area are handled by [`SDL_EVENT_PEN_DOWN`] and [`SDL_EVENT_PEN_UP`].
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1317,7 +1352,7 @@ pub struct SDL_PenProximityEvent {
 /// dealing with pen motion.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1345,7 +1380,7 @@ pub struct SDL_PenMotionEvent {
 /// off from one.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1377,7 +1412,7 @@ pub struct SDL_PenTouchEvent {
 /// itself pressing down to draw triggers a [`SDL_EVENT_PEN_DOWN`] event instead.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1409,7 +1444,7 @@ pub struct SDL_PenButtonEvent {
 /// tablet.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1439,7 +1474,7 @@ pub struct SDL_PenAxisEvent {
 /// (event.drop.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1465,7 +1500,7 @@ pub struct SDL_DropEvent {
 /// (event.clipboard.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1486,7 +1521,7 @@ pub struct SDL_ClipboardEvent {
 /// Sensor event structure (event.sensor.*)
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1507,7 +1542,7 @@ pub struct SDL_SensorEvent {
 /// The "quit requested" event
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1528,7 +1563,7 @@ pub struct SDL_QuitEvent {
 /// from [`SDL_RegisterEvents()`].
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1551,7 +1586,7 @@ pub struct SDL_UserEvent {
 /// The structure for all events in SDL.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub union SDL_Event {
@@ -1654,7 +1689,7 @@ extern "C" {
     /// call [`SDL_PumpEvents()`] to force an event queue update.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PollEvent`]
@@ -1665,7 +1700,7 @@ extern "C" {
 /// The type of action to request from [`SDL_PeepEvents()`].
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -1737,7 +1772,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PollEvent`]
@@ -1765,7 +1800,7 @@ extern "C" {
     ///   matching `type` are not present.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_HasEvents`]
@@ -1787,7 +1822,7 @@ extern "C" {
     ///   present, or false if not.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_HasEvents`]
@@ -1816,7 +1851,7 @@ extern "C" {
     /// - `type`: the type of event to be cleared; see [`SDL_EventType`] for details.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_FlushEvents`]
@@ -1844,7 +1879,7 @@ extern "C" {
     ///   [`SDL_EventType`] for details.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_FlushEvent`]
@@ -1890,7 +1925,7 @@ extern "C" {
     /// Returns true if this got an event or false if there are none available.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PushEvent`]
@@ -1916,7 +1951,7 @@ extern "C" {
     ///   events; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PollEvent`]
@@ -1948,7 +1983,7 @@ extern "C" {
     ///   any events available.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PollEvent`]
@@ -1989,7 +2024,7 @@ extern "C" {
     ///   error is the event queue being full.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PeepEvents`]
@@ -2015,7 +2050,7 @@ extern "C" {
 ///   touches that need to be protected.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_SetEventFilter`]
@@ -2068,7 +2103,7 @@ extern "C" {
     ///   callback touches that need to be protected.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_AddEventWatch`]
@@ -2093,7 +2128,7 @@ extern "C" {
     /// Returns true on success or false if there is no event filter set.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetEventFilter`]
@@ -2132,7 +2167,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_RemoveEventWatch`]
@@ -2154,7 +2189,7 @@ extern "C" {
     /// - `userdata`: the pointer originally passed to [`SDL_AddEventWatch()`].
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_AddEventWatch`]
@@ -2174,7 +2209,7 @@ extern "C" {
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetEventFilter`]
@@ -2190,7 +2225,7 @@ extern "C" {
     /// - `enabled`: whether to process the event or not.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_EventEnabled`]
@@ -2206,7 +2241,7 @@ extern "C" {
     /// Returns true if the event is being processed, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetEventEnabled`]
@@ -2224,7 +2259,7 @@ extern "C" {
     ///   there are not enough user-defined events left.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PushEvent`]
@@ -2240,7 +2275,7 @@ extern "C" {
     /// Returns the associated window on success or NULL if there is none.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PollEvent`]

@@ -50,7 +50,7 @@ emit! {
     ///   [`SDL_assert_paranoid`].
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.0.0.
+    /// This macro is available since SDL 3.1.3.
     pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 1;
 
 }
@@ -138,7 +138,7 @@ pub use SDL_disabled_assert;
 /// problem).
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -188,7 +188,7 @@ pub const SDL_ASSERTION_ALWAYS_IGNORE: SDL_AssertState = SDL_AssertState::ALWAYS
 /// returned as a linked list from [`SDL_GetAssertionReport()`].
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -223,7 +223,7 @@ extern "C" {
     /// Returns assert state.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReportAssertion(
         data: *mut SDL_AssertData,
         func: *const ::core::ffi::c_char,
@@ -312,7 +312,7 @@ emit! {
     /// - `condition`: boolean value to test.
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.0.0.
+    /// This macro is available since SDL 3.1.3.
     #[doc(hidden)]
     #[macro_export]
     macro_rules! SDL_assert {
@@ -349,7 +349,7 @@ emit! {
     /// - `condition`: boolean value to test.
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.0.0.
+    /// This macro is available since SDL 3.1.3.
     #[doc(hidden)]
     #[macro_export]
     macro_rules! SDL_assert_release {
@@ -382,7 +382,7 @@ emit! {
     /// - `condition`: boolean value to test.
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.0.0.
+    /// This macro is available since SDL 3.1.3.
     #[doc(hidden)]
     #[macro_export]
     macro_rules! SDL_assert_paranoid {
@@ -539,7 +539,7 @@ emit! {
 /// - `condition`: boolean value to test.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 #[doc(hidden)]
 #[macro_export]
 macro_rules! SDL_assert_always {
@@ -560,7 +560,7 @@ pub use SDL_assert_always;
 /// Returns an [`SDL_AssertState`] value indicating how to handle the failure.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_AssertionHandler = ::core::option::Option<
     unsafe extern "C" fn(
         data: *const SDL_AssertData,
@@ -587,7 +587,7 @@ extern "C" {
     /// - `userdata`: a pointer that is passed to `handler`.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAssertionHandler`]
@@ -610,7 +610,7 @@ extern "C" {
     ///   triggers.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAssertionHandler`]
@@ -637,7 +637,7 @@ extern "C" {
     /// Returns the [`SDL_AssertionHandler`] that is called when an assert triggers.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAssertionHandler`]
@@ -670,7 +670,7 @@ extern "C" {
     ///   memory should not be modified or freed by the application.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ResetAssertionReport`]
@@ -686,7 +686,7 @@ extern "C" {
     /// a trigger_count of zero, and their always_ignore state will be false.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAssertionReport`]

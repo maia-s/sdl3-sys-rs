@@ -9,7 +9,7 @@ use super::error::*;
 /// These are results returned by [`SDL_GetPowerInfo()`].
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0
+/// This enum is available since SDL 3.1.3
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -86,7 +86,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetPowerInfo(
         seconds: *mut ::core::ffi::c_int,
         percent: *mut ::core::ffi::c_int,

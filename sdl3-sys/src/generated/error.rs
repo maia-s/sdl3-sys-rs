@@ -43,8 +43,11 @@ extern "C" {
     /// ### Return value
     /// Returns false.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ClearError`]
@@ -64,8 +67,11 @@ extern "C" {
     /// ### Return value
     /// Returns false.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.1.4.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_ClearError`]
@@ -85,8 +91,11 @@ extern "C" {
     /// ### Return value
     /// Returns false.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_OutOfMemory() -> ::core::primitive::bool;
 }
 
@@ -119,8 +128,11 @@ extern "C" {
     ///   or an empty string if there hasn't been an error message set since
     ///   the last call to [`SDL_ClearError()`].
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ClearError`]
@@ -134,8 +146,11 @@ extern "C" {
     /// ### Return value
     /// Returns true.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetError`]

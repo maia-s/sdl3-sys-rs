@@ -16,7 +16,7 @@ use super::properties::*;
 /// The value 0 is an invalid ID.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_SensorID = Uint32;
 
 /// A constant to represent standard gravity for accelerometer sensors.
@@ -27,7 +27,7 @@ pub type SDL_SensorID = Uint32;
 /// earth, which is a positive Y value.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 
 /// The different sensors defined by SDL.
@@ -80,7 +80,7 @@ pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 /// The gyroscope axis data is not changed when the device is rotated.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_GetCurrentDisplayOrientation`]
@@ -153,7 +153,7 @@ extern "C" {
     ///   with [`SDL_free()`] when it is no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSensors(count: *mut ::core::ffi::c_int) -> *mut SDL_SensorID;
 }
 
@@ -168,7 +168,7 @@ extern "C" {
     /// Returns the sensor name, or NULL if `instance_id` is not valid.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSensorNameForID(instance_id: SDL_SensorID) -> *const ::core::ffi::c_char;
 }
 
@@ -184,7 +184,7 @@ extern "C" {
     ///   not valid.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSensorTypeForID(instance_id: SDL_SensorID) -> SDL_SensorType;
 }
 
@@ -200,7 +200,7 @@ extern "C" {
     ///   valid.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSensorNonPortableTypeForID(instance_id: SDL_SensorID) -> ::core::ffi::c_int;
 }
 
@@ -214,7 +214,7 @@ extern "C" {
     ///   more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_OpenSensor(instance_id: SDL_SensorID) -> *mut SDL_Sensor;
 }
 
@@ -228,7 +228,7 @@ extern "C" {
     ///   more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSensorFromID(instance_id: SDL_SensorID) -> *mut SDL_Sensor;
 }
 
@@ -242,7 +242,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSensorProperties(sensor: *mut SDL_Sensor) -> SDL_PropertiesID;
 }
 
@@ -256,7 +256,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSensorName(sensor: *mut SDL_Sensor) -> *const ::core::ffi::c_char;
 }
 
@@ -270,7 +270,7 @@ extern "C" {
     ///   NULL.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSensorType(sensor: *mut SDL_Sensor) -> SDL_SensorType;
 }
 
@@ -283,7 +283,7 @@ extern "C" {
     /// Returns the sensor platform dependent type, or -1 if `sensor` is NULL.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSensorNonPortableType(sensor: *mut SDL_Sensor) -> ::core::ffi::c_int;
 }
 
@@ -297,7 +297,7 @@ extern "C" {
     ///   more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSensorID(sensor: *mut SDL_Sensor) -> SDL_SensorID;
 }
 
@@ -315,7 +315,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSensorData(
         sensor: *mut SDL_Sensor,
         data: *mut ::core::ffi::c_float,
@@ -330,7 +330,7 @@ extern "C" {
     /// - `sensor`: the [`SDL_Sensor`] object to close.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_CloseSensor(sensor: *mut SDL_Sensor);
 }
 
@@ -344,7 +344,7 @@ extern "C" {
     /// subsystem.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_UpdateSensors();
 }
 

@@ -11,7 +11,7 @@ use super::video::*;
 /// If supported will display warning icon, etc.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_MessageBoxFlags = Uint32;
 
 /// error dialog
@@ -32,7 +32,7 @@ pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: ::core::primitive::u32 = 256_u32
 /// [`SDL_MessageBoxButtonData`] flags.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_MessageBoxButtonFlags = Uint32;
 
 /// Marks the default button when return is hit
@@ -44,7 +44,7 @@ pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: ::core::primitive::u32 = 2_u3
 /// Individual button data.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -59,7 +59,7 @@ pub struct SDL_MessageBoxButtonData {
 /// RGB value used in a message box color scheme
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -115,7 +115,7 @@ pub const SDL_MESSAGEBOX_COLOR_COUNT: SDL_MessageBoxColorType = SDL_MessageBoxCo
 /// A set of colors to use for message box dialogs
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -126,7 +126,7 @@ pub struct SDL_MessageBoxColorScheme {
 /// MessageBox structure containing title, text, window, etc.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MessageBoxData {
@@ -176,7 +176,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ShowSimpleMessageBox`]
@@ -225,7 +225,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ShowMessageBox`]

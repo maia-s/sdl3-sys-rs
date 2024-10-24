@@ -32,7 +32,7 @@ emit! {
     ///   Windows event loop.
     ///
     /// ### Availability
-    /// This datatype is available since SDL 3.0.0.
+    /// This datatype is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowsMessageHook`]
@@ -50,7 +50,7 @@ emit! {
         /// - `userdata`: a pointer to pass to every iteration of `callback`.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         ///
         /// ### See also
         /// - [`SDL_WindowsMessageHook`]
@@ -79,7 +79,7 @@ emit! {
         ///   [`SDL_GetError()`] for more information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_GetDirect3D9AdapterIndex(displayID: SDL_DisplayID) -> ::core::ffi::c_int;
     }
 
@@ -99,7 +99,7 @@ emit! {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_GetDXGIOutputInfo(displayID: SDL_DisplayID, adapterIndex: *mut ::core::ffi::c_int, outputIndex: *mut ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
@@ -135,7 +135,7 @@ extern "C" {
     /// - `userdata`: a pointer to pass to every iteration of `callback`.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_SetX11EventHook(callback: SDL_X11EventHook, userdata: *mut ::core::ffi::c_void);
 }
 
@@ -154,7 +154,7 @@ emit! {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_SetLinuxThreadPriority(threadID: Sint64, priority: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
@@ -173,7 +173,7 @@ emit! {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_SetLinuxThreadPriorityAndPolicy(threadID: Sint64, sdlPriority: ::core::ffi::c_int, schedPolicy: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
@@ -194,7 +194,7 @@ emit! {
     ///   [`SDL_SetiOSAnimationCallback`] as `callbackParam`.
     ///
     /// ### Availability
-    /// This datatype is available since SDL 3.0.0.
+    /// This datatype is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetiOSAnimationCallback`]
@@ -236,7 +236,7 @@ emit! {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         ///
         /// ### See also
         /// - [`SDL_SetiOSEventPump`]
@@ -252,7 +252,7 @@ emit! {
         /// - `enabled`: true to enable the event pump, false to disable it.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         ///
         /// ### See also
         /// - [`SDL_SetiOSAnimationCallback`]
@@ -282,7 +282,7 @@ emit! {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         ///
         /// ### See also
         /// - [`SDL_GetAndroidActivity`]
@@ -311,7 +311,7 @@ emit! {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         ///
         /// ### See also
         /// - [`SDL_GetAndroidJNIEnv`]
@@ -352,7 +352,7 @@ emit! {
         /// Returns the Android API level.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_GetAndroidSDKVersion() -> ::core::ffi::c_int;
     }
 
@@ -363,7 +363,7 @@ emit! {
         /// Returns true if this is a Chromebook, false otherwise.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_IsChromebook() -> ::core::primitive::bool;
     }
 
@@ -374,7 +374,7 @@ emit! {
         /// Returns true if this is a DeX docking station, false otherwise.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_IsDeXMode() -> ::core::primitive::bool;
     }
 
@@ -385,7 +385,7 @@ emit! {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_SendAndroidBackButton();
     }
 
@@ -393,7 +393,7 @@ emit! {
     /// <http://developer.android.com/guide/topics/data/data-storage.html>
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.0.0.
+    /// This macro is available since SDL 3.1.3.
     pub const SDL_ANDROID_EXTERNAL_STORAGE_READ: Uint32 = (0x01 as Uint32);
 
     pub const SDL_ANDROID_EXTERNAL_STORAGE_WRITE: Uint32 = (0x02 as Uint32);
@@ -416,10 +416,11 @@ emit! {
         ///   [`SDL_GetError()`] for more information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         ///
         /// ### See also
-        /// - [`SDL_GetAndroidExternalStorageState`]
+        /// - [`SDL_GetAndroidExternalStoragePath`]
+        /// - [`SDL_GetAndroidCachePath`]
         pub fn SDL_GetAndroidInternalStoragePath() -> *const ::core::ffi::c_char;
     }
 
@@ -436,7 +437,7 @@ emit! {
         ///   currently unavailable.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         ///
         /// ### See also
         /// - [`SDL_GetAndroidExternalStoragePath`]
@@ -461,10 +462,12 @@ emit! {
         ///   or NULL on failure; call [`SDL_GetError()`] for more information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         ///
         /// ### See also
         /// - [`SDL_GetAndroidExternalStorageState`]
+        /// - [`SDL_GetAndroidInternalStoragePath`]
+        /// - [`SDL_GetAndroidCachePath`]
         pub fn SDL_GetAndroidExternalStoragePath() -> *const ::core::ffi::c_char;
     }
 
@@ -485,7 +488,11 @@ emit! {
         ///   on failure; call [`SDL_GetError()`] for more information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
+        ///
+        /// ### See also
+        /// - [`SDL_GetAndroidInternalStoragePath`]
+        /// - [`SDL_GetAndroidExternalStoragePath`]
         pub fn SDL_GetAndroidCachePath() -> *const ::core::ffi::c_char;
     }
 
@@ -527,7 +534,7 @@ emit! {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_RequestAndroidPermission(permission: *const ::core::ffi::c_char, cb: SDL_RequestAndroidPermissionCallback, userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool;
     }
 
@@ -559,7 +566,7 @@ emit! {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_ShowAndroidToast(message: *const ::core::ffi::c_char, duration: ::core::ffi::c_int, gravity: ::core::ffi::c_int, xoffset: ::core::ffi::c_int, yoffset: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
@@ -579,7 +586,7 @@ emit! {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_SendAndroidMessage(command: Uint32, param: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
@@ -594,7 +601,7 @@ extern "C" {
     /// Returns true if the device is a tablet, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_IsTablet() -> ::core::primitive::bool;
 }
 
@@ -607,14 +614,14 @@ extern "C" {
     /// Returns true if the device is a TV, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_IsTV() -> ::core::primitive::bool;
 }
 
 /// Application sandbox environment.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.6.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -655,7 +662,7 @@ extern "C" {
     ///   application is not running in a sandbox environment.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.4.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetSandbox() -> SDL_Sandbox;
 }
 
@@ -674,7 +681,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_OnApplicationWillTerminate();
 }
 
@@ -693,7 +700,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_OnApplicationDidReceiveMemoryWarning();
 }
 
@@ -712,7 +719,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_OnApplicationWillEnterBackground();
 }
 
@@ -731,7 +738,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_OnApplicationDidEnterBackground();
 }
 
@@ -750,7 +757,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_OnApplicationWillEnterForeground();
 }
 
@@ -769,7 +776,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_OnApplicationDidEnterForeground();
 }
 
@@ -790,7 +797,7 @@ emit! {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_OnApplicationDidChangeStatusBarOrientation();
     }
 
@@ -817,7 +824,7 @@ emit! {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_GetGDKTaskQueue(outTaskQueue: *mut XTaskQueueHandle) -> ::core::primitive::bool;
     }
 
@@ -835,7 +842,7 @@ emit! {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.0.0.
+        /// This function is available since SDL 3.1.3.
         pub fn SDL_GetGDKDefaultUser(outUserHandle: *mut XUserHandle) -> ::core::primitive::bool;
     }
 

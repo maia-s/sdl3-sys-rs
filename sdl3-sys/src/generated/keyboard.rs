@@ -22,7 +22,7 @@ use super::video::*;
 /// The value 0 is an invalid ID.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_KeyboardID = Uint32;
 
 extern "C" {
@@ -32,7 +32,7 @@ extern "C" {
     /// Returns true if a keyboard is connected, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetKeyboards`]
@@ -56,7 +56,7 @@ extern "C" {
     ///   with [`SDL_free()`] when it is no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetKeyboardNameForID`]
@@ -76,7 +76,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetKeyboards`]
@@ -90,7 +90,7 @@ extern "C" {
     /// Returns the window with keyboard focus.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetKeyboardFocus() -> *mut SDL_Window;
 }
 
@@ -121,7 +121,7 @@ extern "C" {
     /// Returns a pointer to an array of key states.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PumpEvents`]
@@ -136,7 +136,7 @@ extern "C" {
     /// This function will generate key up events for all pressed keys.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetKeyboardState`]
@@ -151,7 +151,7 @@ extern "C" {
     ///   [`SDL_Keymod`] for details.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetKeyboardState`]
@@ -174,7 +174,7 @@ extern "C" {
     /// - `modstate`: the desired [`SDL_Keymod`] for the keyboard.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetModState`]
@@ -199,7 +199,7 @@ extern "C" {
     /// Returns the [`SDL_Keycode`] that corresponds to the given [`SDL_Scancode`].
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetKeyName`]
@@ -226,7 +226,7 @@ extern "C" {
     /// Returns the [`SDL_Scancode`] that corresponds to the given [`SDL_Keycode`].
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetKeyFromScancode`]
@@ -247,7 +247,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetScancodeName`]
@@ -276,7 +276,7 @@ extern "C" {
     ///   have a name this function returns an empty string ("").
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetScancodeFromKey`]
@@ -295,7 +295,7 @@ extern "C" {
     ///   recognized; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetKeyFromName`]
@@ -315,7 +315,7 @@ extern "C" {
     /// Returns a UTF-8 encoded string of the key name.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetKeyFromName`]
@@ -334,7 +334,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetKeyFromScancode`]
@@ -363,7 +363,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetTextInputArea`]
@@ -380,7 +380,7 @@ extern "C" {
 /// reasonable fallback will be used.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_StartTextInputWithProperties`]
@@ -458,7 +458,7 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
 /// will be used.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_StartTextInputWithProperties`]
@@ -543,7 +543,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetTextInputArea`]
@@ -580,7 +580,7 @@ extern "C" {
     /// Returns true if text input events are enabled else false.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_StartTextInput`]
@@ -600,7 +600,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_StartTextInput`]
@@ -617,7 +617,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_StartTextInput`]
@@ -642,7 +642,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetTextInputArea`]
@@ -670,7 +670,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetTextInputArea`]
@@ -689,7 +689,7 @@ extern "C" {
     ///   not.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_StartTextInput`]
@@ -706,7 +706,7 @@ extern "C" {
     /// Returns true if screen keyboard is shown or false if not.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_HasScreenKeyboardSupport`]

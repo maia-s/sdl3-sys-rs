@@ -115,7 +115,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_Vulkan_GetVkGetInstanceProcAddr`]
@@ -142,7 +142,7 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_Vulkan_GetVkGetInstanceProcAddr() -> SDL_FunctionPointer;
 }
 
@@ -150,7 +150,7 @@ extern "C" {
     /// Unload the Vulkan library previously loaded by [`SDL_Vulkan_LoadLibrary()`].
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_Vulkan_LoadLibrary`]
@@ -178,7 +178,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_Vulkan_CreateSurface`]
@@ -209,7 +209,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_Vulkan_GetInstanceExtensions`]
@@ -242,7 +242,7 @@ extern "C" {
     ///   allocator that destroys the surface. Can be NULL.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_Vulkan_GetInstanceExtensions`]
@@ -270,7 +270,7 @@ extern "C" {
     /// Returns true if supported, false if unsupported or an error occurred.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_Vulkan_GetInstanceExtensions`]

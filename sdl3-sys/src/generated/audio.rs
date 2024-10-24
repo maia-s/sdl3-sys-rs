@@ -19,6 +19,29 @@
 //! if you aren't reading from a file) as a basic means to load sound data into
 //! your program.
 //!
+//! ## Logical audio devices
+//!
+//! In SDL3, opening a physical device (like a SoundBlaster 16 Pro) gives you a
+//! logical device ID that you can bind audio streams to. In almost all cases,
+//! logical devices can be used anywhere in the API that a physical device is
+//! normally used. However, since each device opening generates a new logical
+//! device, different parts of the program (say, a VoIP library, or
+//! text-to-speech framework, or maybe some other sort of mixer on top of SDL)
+//! can have their own device opens that do not interfere with each other; each
+//! logical device will mix its separate audio down to a single buffer, fed to
+//! the physical device, behind the scenes. As many logical devices as you like
+//! can come and go; SDL will only have to open the physical device at the OS
+//! level once, and will manage all the logical devices on top of it
+//! internally.
+//!
+//! One other benefit of logical devices: if you don't open a specific physical
+//! device, instead opting for the default, SDL can automatically migrate those
+//! logical devices to different hardware as circumstances change: a user
+//! plugged in headphones? The system default changed? SDL can transparently
+//! migrate the logical devices to the correct physical device seamlessly and
+//! keep playing; the app doesn't even have to know it happened if it doesn't
+//! want to.
+//!
 //! ## Channel layouts
 //!
 //! Audio data passing through SDL is uncompressed PCM data, interleaved. One
@@ -49,7 +72,7 @@
 //! - 4 channels (quad) layout: FL, FR, BL, BR
 //! - 5 channels (4.1) layout: FL, FR, LFE, BL, BR
 //! - 6 channels (5.1) layout: FL, FR, FC, LFE, BL, BR (last two can also be
-//!   BL, BR)
+//!   SL, SR)
 //! - 7 channels (6.1) layout: FL, FR, FC, LFE, BC, SL, SR
 //! - 8 channels (7.1) layout: FL, FR, FC, LFE, BL, BR, SL, SR
 //!
@@ -81,7 +104,7 @@ pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 /// Audio format.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_AUDIO_BITSIZE`]
@@ -208,7 +231,7 @@ pub const fn SDL_DEFINE_AUDIO_FORMAT(
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_AUDIO_BITSIZE(x: SDL_AudioFormat) -> ::core::ffi::c_uint {
     (x.0 & 255_u32)
@@ -227,7 +250,7 @@ pub const fn SDL_AUDIO_BITSIZE(x: SDL_AudioFormat) -> ::core::ffi::c_uint {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_AUDIO_BYTESIZE(x: SDL_AudioFormat) -> ::core::ffi::c_uint {
     (SDL_AUDIO_BITSIZE(x) / 8_u32)
@@ -246,7 +269,7 @@ pub const fn SDL_AUDIO_BYTESIZE(x: SDL_AudioFormat) -> ::core::ffi::c_uint {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_AUDIO_ISFLOAT(x: SDL_AudioFormat) -> ::core::primitive::bool {
     ((x.0 & 256_u32) != 0)
@@ -265,7 +288,7 @@ pub const fn SDL_AUDIO_ISFLOAT(x: SDL_AudioFormat) -> ::core::primitive::bool {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_AUDIO_ISBIGENDIAN(x: SDL_AudioFormat) -> ::core::primitive::bool {
     ((x.0 & 4096_u32) != 0)
@@ -284,7 +307,7 @@ pub const fn SDL_AUDIO_ISBIGENDIAN(x: SDL_AudioFormat) -> ::core::primitive::boo
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_AUDIO_ISLITTLEENDIAN(x: SDL_AudioFormat) -> ::core::primitive::bool {
     !(SDL_AUDIO_ISBIGENDIAN(x))
@@ -303,7 +326,7 @@ pub const fn SDL_AUDIO_ISLITTLEENDIAN(x: SDL_AudioFormat) -> ::core::primitive::
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_AUDIO_ISSIGNED(x: SDL_AudioFormat) -> ::core::primitive::bool {
     ((x.0 & 32768_u32) != 0)
@@ -322,7 +345,7 @@ pub const fn SDL_AUDIO_ISSIGNED(x: SDL_AudioFormat) -> ::core::primitive::bool {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_AUDIO_ISINT(x: SDL_AudioFormat) -> ::core::primitive::bool {
     !(SDL_AUDIO_ISFLOAT(x))
@@ -341,7 +364,7 @@ pub const fn SDL_AUDIO_ISINT(x: SDL_AudioFormat) -> ::core::primitive::bool {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_AUDIO_ISUNSIGNED(x: SDL_AudioFormat) -> ::core::primitive::bool {
     !(SDL_AUDIO_ISSIGNED(x))
@@ -352,7 +375,7 @@ pub const fn SDL_AUDIO_ISUNSIGNED(x: SDL_AudioFormat) -> ::core::primitive::bool
 /// Zero is used to signify an invalid/null device.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_AudioDeviceID = Uint32;
 
 /// A value used to request a default playback audio device.
@@ -362,7 +385,7 @@ pub type SDL_AudioDeviceID = Uint32;
 /// of the app providing a specific one.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID = (0xffffffff as SDL_AudioDeviceID);
 
 /// A value used to request a default recording audio device.
@@ -372,13 +395,13 @@ pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID = (0xffffffff as 
 /// of the app providing a specific one.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID = (0xfffffffe as SDL_AudioDeviceID);
 
 /// Format specifier for audio data.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_AudioFormat`]
@@ -408,7 +431,7 @@ pub struct SDL_AudioSpec {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_AUDIO_FRAMESIZE(x: SDL_AudioSpec) -> ::core::ffi::c_uint {
     (SDL_AUDIO_BYTESIZE(x.format) * (x.channels as ::core::ffi::c_uint))
@@ -434,7 +457,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAudioDriver`]
@@ -463,7 +486,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetNumAudioDrivers`]
@@ -485,7 +508,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetCurrentAudioDriver() -> *const ::core::ffi::c_char;
 }
 
@@ -515,7 +538,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_OpenAudioDevice`]
@@ -549,7 +572,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_OpenAudioDevice`]
@@ -570,7 +593,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAudioPlaybackDevices`]
@@ -614,7 +637,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetAudioDeviceFormat(
         devid: SDL_AudioDeviceID,
         spec: *mut SDL_AudioSpec,
@@ -643,7 +666,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAudioStreamInputChannelMap`]
@@ -726,7 +749,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CloseAudioDevice`]
@@ -765,7 +788,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ResumeAudioDevice`]
@@ -798,7 +821,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_AudioDevicePaused`]
@@ -825,7 +848,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PauseAudioDevice`]
@@ -854,7 +877,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAudioDeviceGain`]
@@ -894,7 +917,7 @@ extern "C" {
     ///   a stream-specific mutex while running.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAudioDeviceGain`]
@@ -922,7 +945,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_OpenAudioDevice`]
@@ -962,7 +985,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_BindAudioStreams`]
@@ -992,7 +1015,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_BindAudioStreams`]
@@ -1021,7 +1044,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_BindAudioStreams`]
@@ -1044,7 +1067,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_BindAudioStream`]
@@ -1068,7 +1091,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_BindAudioStream`]
@@ -1090,7 +1113,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PutAudioStreamData`]
@@ -1116,7 +1139,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetAudioStreamProperties(stream: *mut SDL_AudioStream) -> SDL_PropertiesID;
 }
 
@@ -1136,7 +1159,7 @@ extern "C" {
     ///   a stream-specific mutex while running.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAudioStreamFormat`]
@@ -1175,7 +1198,7 @@ extern "C" {
     ///   a stream-specific mutex while running.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAudioStreamFormat`]
@@ -1201,7 +1224,7 @@ extern "C" {
     ///   a stream-specific mutex while running.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAudioStreamFrequencyRatio`]
@@ -1233,7 +1256,7 @@ extern "C" {
     ///   a stream-specific mutex while running.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAudioStreamFrequencyRatio`]
@@ -1263,7 +1286,7 @@ extern "C" {
     ///   a stream-specific mutex while running.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAudioStreamGain`]
@@ -1293,7 +1316,7 @@ extern "C" {
     ///   a stream-specific mutex while running.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAudioStreamGain`]
@@ -1325,7 +1348,7 @@ extern "C" {
     ///   a stream-specific mutex while running.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAudioStreamInputChannelMap`]
@@ -1357,7 +1380,7 @@ extern "C" {
     ///   a stream-specific mutex while running.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAudioStreamInputChannelMap`]
@@ -1416,7 +1439,7 @@ extern "C" {
     ///   a different thread at the same time, though!
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAudioStreamInputChannelMap`]
@@ -1472,7 +1495,7 @@ extern "C" {
     ///   a different thread at the same time, though!
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAudioStreamInputChannelMap`]
@@ -1508,7 +1531,7 @@ extern "C" {
     ///   extra locking.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ClearAudioStream`]
@@ -1548,7 +1571,7 @@ extern "C" {
     ///   extra locking.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ClearAudioStream`]
@@ -1584,7 +1607,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAudioStreamData`]
@@ -1627,7 +1650,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PutAudioStreamData`]
@@ -1653,7 +1676,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PutAudioStreamData`]
@@ -1676,7 +1699,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAudioStreamAvailable`]
@@ -1708,7 +1731,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ResumeAudioStreamDevice`]
@@ -1733,7 +1756,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_PauseAudioStreamDevice`]
@@ -1766,7 +1789,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_UnlockAudioStream`]
@@ -1789,7 +1812,7 @@ extern "C" {
     ///   previously called [`SDL_LockAudioStream`].
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_LockAudioStream`]
@@ -1833,7 +1856,7 @@ extern "C" {
 ///   explicitly.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_SetAudioStreamGetCallback`]
@@ -1891,7 +1914,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAudioStreamPutCallback`]
@@ -1949,7 +1972,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetAudioStreamGetCallback`]
@@ -1978,7 +2001,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateAudioStream`]
@@ -2044,7 +2067,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetAudioStreamDevice`]
@@ -2090,7 +2113,7 @@ extern "C" {
 ///   touches that need to be protected.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_SetAudioPostmixCallback`]
@@ -2157,7 +2180,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_SetAudioPostmixCallback(
         devid: SDL_AudioDeviceID,
         callback: SDL_AudioPostmixCallback,
@@ -2206,7 +2229,7 @@ extern "C" {
     /// Example:
     ///
     /// ```c
-    /// SDL_LoadWAV_IO(SDL_IOFromFile("sample.wav", "rb"), 1, &spec, &buf, &len);
+    /// SDL_LoadWAV_IO(SDL_IOFromFile("sample.wav", "rb"), true, &spec, &buf, &len);
     /// ```
     ///
     /// Note that the [`SDL_LoadWAV`] function does this same thing for you, but in a
@@ -2243,7 +2266,7 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_free`]
@@ -2291,7 +2314,7 @@ extern "C" {
     /// \threadsafety It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_free`]
@@ -2340,7 +2363,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_MixAudio(
         dst: *mut Uint8,
         src: *const Uint8,
@@ -2380,7 +2403,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ConvertAudioSamples(
         src_spec: *const SDL_AudioSpec,
         src_data: *const Uint8,
@@ -2404,7 +2427,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetAudioFormatName(format: SDL_AudioFormat) -> *const ::core::ffi::c_char;
 }
 
@@ -2424,7 +2447,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetSilenceValueForFormat(format: SDL_AudioFormat) -> ::core::ffi::c_int;
 }
 
@@ -2448,7 +2471,7 @@ extern "C" {
 /// (or for recording, consume data from them).
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_CreateAudioStream`]

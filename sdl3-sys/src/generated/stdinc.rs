@@ -21,7 +21,7 @@ emit! {}
 /// A signed 8-bit integer type.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 pub type Sint8 = ::core::primitive::i8;
 
 pub const SDL_MAX_SINT8: Sint8 = (0x7f as Sint8);
@@ -31,7 +31,7 @@ pub const SDL_MIN_SINT8: Sint8 = ((-128_i32) as Sint8);
 /// An unsigned 8-bit integer type.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 pub type Uint8 = ::core::primitive::u8;
 
 pub const SDL_MAX_UINT8: Uint8 = (0xff as Uint8);
@@ -41,7 +41,7 @@ pub const SDL_MIN_UINT8: Uint8 = (0x00 as Uint8);
 /// A signed 16-bit integer type.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 pub type Sint16 = ::core::primitive::i16;
 
 pub const SDL_MAX_SINT16: Sint16 = (0x7fff as Sint16);
@@ -51,7 +51,7 @@ pub const SDL_MIN_SINT16: Sint16 = ((-32768_i32) as Sint16);
 /// An unsigned 16-bit integer type.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 pub type Uint16 = ::core::primitive::u16;
 
 pub const SDL_MAX_UINT16: Uint16 = (0xffff as Uint16);
@@ -61,7 +61,7 @@ pub const SDL_MIN_UINT16: Uint16 = (0x0000 as Uint16);
 /// A signed 32-bit integer type.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 pub type Sint32 = ::core::primitive::i32;
 
 pub const SDL_MAX_SINT32: Sint32 = (0x7fffffff as Sint32);
@@ -71,7 +71,7 @@ pub const SDL_MIN_SINT32: Sint32 = ((-2147483648_i32) as Sint32);
 /// An unsigned 32-bit integer type.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 pub type Uint32 = ::core::primitive::u32;
 
 pub const SDL_MAX_UINT32: Uint32 = (0xffffffff as Uint32);
@@ -81,7 +81,7 @@ pub const SDL_MIN_UINT32: Uint32 = (0x00000000 as Uint32);
 /// A signed 64-bit integer type.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_SINT64_C`]
@@ -94,7 +94,7 @@ pub const SDL_MIN_SINT64: ::core::primitive::i64 = -9223372036854775808_i64;
 /// An unsigned 64-bit integer type.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_UINT64_C`]
@@ -112,7 +112,7 @@ pub const SDL_MIN_UINT64: ::core::primitive::u64 = 0_u64;
 /// [`SDL_TimeToWindows()`] and [`SDL_TimeFromWindows()`].
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_MAX_SINT64`]
@@ -293,7 +293,7 @@ const _: () = ::core::assert!(
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_FOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> Uint32 {
     (((((((A) as Uint8) as Uint32) << 0) | ((((B) as Uint8) as Uint32) << 8))
@@ -381,7 +381,7 @@ emit! {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_IOStreamInterface`]
@@ -425,7 +425,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_free`]
@@ -452,7 +452,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_free`]
@@ -495,7 +495,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_free`]
@@ -522,7 +522,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_malloc`]
@@ -544,7 +544,7 @@ extern "C" {
 /// It should be safe to call this callback from any thread.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_malloc`]
@@ -570,7 +570,7 @@ pub type SDL_malloc_func = ::core::option::Option<
 /// It should be safe to call this callback from any thread.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_calloc`]
@@ -599,7 +599,7 @@ pub type SDL_calloc_func = ::core::option::Option<
 /// It should be safe to call this callback from any thread.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_realloc`]
@@ -624,7 +624,7 @@ pub type SDL_realloc_func = ::core::option::Option<
 /// It should be safe to call this callback from any thread.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_free`]
@@ -652,7 +652,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetOriginalMemoryFunctions(
         malloc_func: *mut SDL_malloc_func,
         calloc_func: *mut SDL_calloc_func,
@@ -676,7 +676,7 @@ extern "C" {
     ///   [`SDL_SetMemoryFunctions`] simultaneously.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetMemoryFunctions`]
@@ -714,7 +714,7 @@ extern "C" {
     ///   are made!
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetMemoryFunctions`]
@@ -749,7 +749,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_aligned_free`]
@@ -774,7 +774,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_aligned_alloc`]
@@ -791,7 +791,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetNumAllocations() -> ::core::ffi::c_int;
 }
 
@@ -812,7 +812,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetEnvironmentVariable`]
@@ -838,7 +838,7 @@ extern "C" {
     ///   calling setenv() or unsetenv()
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetEnvironmentVariable`]
@@ -863,7 +863,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetEnvironment`]
@@ -892,7 +892,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetEnvironment`]
@@ -921,7 +921,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetEnvironment`]
@@ -951,7 +951,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetEnvironment`]
@@ -977,7 +977,7 @@ extern "C" {
     ///   the environment is no longer in use.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CreateEnvironment`]
@@ -999,7 +999,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_getenv(name: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
 }
 
@@ -1020,7 +1020,7 @@ extern "C" {
     ///   instead.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_getenv`]
@@ -1043,7 +1043,7 @@ extern "C" {
     ///   [`SDL_SetEnvironmentVariable()`] instead.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetEnvironmentVariable`]
@@ -1067,7 +1067,7 @@ extern "C" {
     ///   [`SDL_UnsetEnvironmentVariable()`] instead.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_UnsetEnvironmentVariable`]
@@ -1085,7 +1085,7 @@ extern "C" {
 ///   order in the sorted array is undefined.
 ///
 /// ### Availability
-/// This callback is available since SDL 3.0.0.
+/// This callback is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_bsearch`]
@@ -1135,8 +1135,11 @@ extern "C" {
     /// - `size`: the size of the elements in the array.
     /// - `compare`: a function used to compare elements in the array.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_bsearch`]
@@ -1192,8 +1195,11 @@ extern "C" {
     /// Returns a pointer to the matching element in the array, or NULL if not
     ///   found.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_bsearch_r`]
@@ -1219,7 +1225,7 @@ extern "C" {
 ///   order in the sorted array is undefined.
 ///
 /// ### Availability
-/// This callback is available since SDL 3.0.0.
+/// This callback is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_qsort_r`]
@@ -1254,9 +1260,9 @@ extern "C" {
     ///     const data *A = (const data *)a;
     ///     const data *B = (const data *)b;
     ///
-    ///     if (A->n < B->n) {
+    ///     if (A->key < B->key) {
     ///         return (method == sort_increasing) ? -1 : 1;
-    ///     } else if (B->n < A->n) {
+    ///     } else if (B->key < A->key) {
     ///         return (method == sort_increasing) ? 1 : -1;
     ///     } else {
     ///         return 0;
@@ -1277,8 +1283,11 @@ extern "C" {
     /// - `compare`: a function used to compare elements in the array.
     /// - `userdata`: a pointer to pass to the compare function.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_bsearch_r`]
@@ -1315,9 +1324,9 @@ extern "C" {
     ///     const data *A = (const data *)a;
     ///     const data *B = (const data *)b;
     ///
-    ///     if (A->n < B->n) {
+    ///     if (A->key < B->key) {
     ///         return (method == sort_increasing) ? -1 : 1;
-    ///     } else if (B->n < A->n) {
+    ///     } else if (B->key < A->key) {
     ///         return (method == sort_increasing) ? 1 : -1;
     ///     } else {
     ///         return 0;
@@ -1343,8 +1352,11 @@ extern "C" {
     /// Returns a pointer to the matching element in the array, or NULL if not
     ///   found.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_bsearch`]
@@ -1407,7 +1419,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_isalpha(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1426,7 +1438,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_isalnum(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1445,7 +1457,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_isblank(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1464,7 +1476,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_iscntrl(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1483,7 +1495,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_isdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1502,7 +1514,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_isxdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1521,7 +1533,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_isgraph`]
@@ -1551,7 +1563,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_isspace(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1570,7 +1582,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_isupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1589,7 +1601,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_islower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1612,7 +1624,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_isprint(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1635,7 +1647,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_isprint`]
@@ -1660,7 +1672,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_toupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1682,7 +1694,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_tolower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1727,7 +1739,7 @@ extern "C" {
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.0.0.
+/// This function is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_memmove`]
@@ -1774,7 +1786,7 @@ pub unsafe fn SDL_copyp<Dst: Sized, Src: Sized>(dst: *mut Dst, src: *const Src) 
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.0.0.
+/// This function is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_memcpy`]
@@ -1857,7 +1869,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_wcslcat`]
@@ -1895,7 +1907,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_wcslcpy`]
@@ -1944,7 +1956,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_wcscmp(
         str1: *const crate::ffi::c_wchar_t,
         str2: *const crate::ffi::c_wchar_t,
@@ -1982,7 +1994,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_wcsncmp(
         str1: *const crate::ffi::c_wchar_t,
         str2: *const crate::ffi::c_wchar_t,
@@ -2020,7 +2032,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_wcscasecmp(
         str1: *const crate::ffi::c_wchar_t,
         str2: *const crate::ffi::c_wchar_t,
@@ -2069,7 +2081,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_wcsncasecmp(
         str1: *const crate::ffi::c_wchar_t,
         str2: *const crate::ffi::c_wchar_t,
@@ -2102,7 +2114,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_strtol`]
@@ -2150,7 +2162,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_strlcat`]
@@ -2188,7 +2200,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_strlcpy`]
@@ -2225,7 +2237,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_strlcpy`]
@@ -2270,7 +2282,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_strlwr`]
@@ -2296,7 +2308,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_strupr`]
@@ -2421,7 +2433,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_atof`]
@@ -2449,7 +2461,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_atoi`]
@@ -2486,7 +2498,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_atoi`]
@@ -2529,7 +2541,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_atoi`]
@@ -2571,7 +2583,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_atoi`]
@@ -2614,7 +2626,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_atoi`]
@@ -2653,7 +2665,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_atoi`]
@@ -2688,7 +2700,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strcmp(
         str1: *const ::core::ffi::c_char,
         str2: *const ::core::ffi::c_char,
@@ -2725,7 +2737,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strncmp(
         str1: *const ::core::ffi::c_char,
         str2: *const ::core::ffi::c_char,
@@ -2761,7 +2773,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strcasecmp(
         str1: *const ::core::ffi::c_char,
         str2: *const ::core::ffi::c_char,
@@ -2807,7 +2819,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strncasecmp(
         str1: *const ::core::ffi::c_char,
         str2: *const ::core::ffi::c_char,
@@ -2833,7 +2845,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strpbrk(
         str: *const ::core::ffi::c_char,
         breakset: *const ::core::ffi::c_char,
@@ -2848,7 +2860,7 @@ extern "C" {
 /// This tends to render as something like a question mark in most places.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.0.0.
+/// This macro is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_StepBackUTF8`]
@@ -2900,7 +2912,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_StepUTF8(
         pstr: *mut *const ::core::ffi::c_char,
         pslen: *mut ::core::primitive::usize,
@@ -2938,7 +2950,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.4.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_StepBackUTF8(
         start: *const ::core::ffi::c_char,
         pstr: *mut *const ::core::ffi::c_char,
@@ -2974,7 +2986,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_UCS4ToUTF8(
         codepoint: Uint32,
         dst: *mut ::core::ffi::c_char,
@@ -3064,7 +3076,7 @@ extern "C" {
     ///   SDL_rand*()
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_rand`]
@@ -3104,7 +3116,7 @@ extern "C" {
     /// All calls should be made from a single thread
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_srand`]
@@ -3131,7 +3143,7 @@ extern "C" {
     /// All calls should be made from a single thread
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_srand`]
@@ -3157,7 +3169,7 @@ extern "C" {
     /// All calls should be made from a single thread
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_rand`]
@@ -3197,7 +3209,7 @@ extern "C" {
     ///   isn't shared between threads.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_rand`]
@@ -3229,7 +3241,7 @@ extern "C" {
     ///   isn't shared between threads.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_rand_bits_r`]
@@ -3260,7 +3272,7 @@ extern "C" {
     ///   isn't shared between threads.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_rand_r`]
@@ -3300,7 +3312,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_acosf`]
@@ -3335,7 +3347,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_acos`]
@@ -3370,7 +3382,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_asinf`]
@@ -3405,7 +3417,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_asin`]
@@ -3442,7 +3454,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_atanf`]
@@ -3479,7 +3491,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_atan`]
@@ -3520,7 +3532,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_atan2f`]
@@ -3561,7 +3573,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_atan2f`]
@@ -3592,7 +3604,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ceilf`]
@@ -3625,7 +3637,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ceil`]
@@ -3659,7 +3671,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_copysignf`]
@@ -3693,7 +3705,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_copysignf`]
@@ -3725,7 +3737,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_cosf`]
@@ -3758,7 +3770,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_cos`]
@@ -3796,7 +3808,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_expf`]
@@ -3833,7 +3845,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_exp`]
@@ -3860,7 +3872,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_fabsf`]
@@ -3886,7 +3898,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_fabs`]
@@ -3915,7 +3927,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_floorf`]
@@ -3948,7 +3960,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_floor`]
@@ -3981,7 +3993,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_truncf`]
@@ -4015,7 +4027,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_trunc`]
@@ -4049,7 +4061,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_fmodf`]
@@ -4084,7 +4096,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_fmod`]
@@ -4109,7 +4121,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_isinff`]
@@ -4128,7 +4140,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_isinf`]
@@ -4147,7 +4159,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_isnanf`]
@@ -4166,7 +4178,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_isnan`]
@@ -4199,7 +4211,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_logf`]
@@ -4234,7 +4246,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_log`]
@@ -4268,7 +4280,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_log10f`]
@@ -4303,7 +4315,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_log10`]
@@ -4328,7 +4340,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_modff`]
@@ -4356,7 +4368,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_modf`]
@@ -4394,7 +4406,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_powf`]
@@ -4431,7 +4443,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_pow`]
@@ -4463,7 +4475,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_roundf`]
@@ -4497,7 +4509,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_round`]
@@ -4531,7 +4543,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_lroundf`]
@@ -4565,7 +4577,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_lround`]
@@ -4598,7 +4610,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_scalbnf`]
@@ -4628,7 +4640,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_scalbn`]
@@ -4660,7 +4672,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_sinf`]
@@ -4693,7 +4705,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_sin`]
@@ -4726,7 +4738,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_sqrtf`]
@@ -4757,7 +4769,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_sqrt`]
@@ -4788,7 +4800,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_tanf`]
@@ -4823,7 +4835,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_tan`]
@@ -4856,7 +4868,7 @@ extern "C" {
     ///   [`SDL_ICONV_ERROR`] on failure.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_iconv`]
@@ -4877,7 +4889,7 @@ extern "C" {
     /// Returns 0 on success, or -1 on failure.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_iconv`]
@@ -4919,7 +4931,7 @@ extern "C" {
     ///        will be set to the number of bytes left in the output buffer.
     /// ```
     ///
-    /// \since This function is available since SDL 3.0.0.
+    /// \since This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_iconv_open`]
@@ -4956,7 +4968,7 @@ extern "C" {
     /// Returns a new string, converted to the new encoding, or NULL on error.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_iconv_open`]
@@ -5037,7 +5049,7 @@ pub unsafe fn SDL_iconv_wchar_utf8(S: *const crate::ffi::c_wchar_t) -> *mut ::co
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.0.0.
+/// This function is available since SDL 3.1.3.
 #[inline(always)]
 pub unsafe fn SDL_size_mul_check_overflow(
     a: ::core::primitive::usize,
@@ -5076,7 +5088,7 @@ emit! {}
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.0.0.
+/// This function is available since SDL 3.1.3.
 #[inline(always)]
 pub unsafe fn SDL_size_add_check_overflow(
     a: ::core::primitive::usize,
@@ -5112,7 +5124,7 @@ emit! {
     /// `SDL_FUNCTION_POINTER_IS_VOID_POINTER` before including any SDL headers.
     ///
     /// ### Availability
-    /// This datatype is available since SDL 3.0.0.
+    /// This datatype is available since SDL 3.1.3.
     pub type SDL_FunctionPointer = ::core::option::Option<unsafe extern "C" fn()>;
 
 }
@@ -5126,7 +5138,7 @@ emit! {
 /// A thread-safe set of environment variables
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_GetEnvironment`]

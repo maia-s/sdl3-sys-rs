@@ -14,7 +14,7 @@ use super::properties::*;
 /// [`SDL_IOStream`] status, set by a read or write operation.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -68,7 +68,7 @@ pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 /// standard C runtime.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.0.0.
+/// This enum is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -111,7 +111,7 @@ pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
 /// This structure should be initialized using [`SDL_INIT_INTERFACE()`]
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_INIT_INTERFACE`]
@@ -293,7 +293,7 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CloseIO`]
@@ -350,7 +350,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_IOFromConstMem`]
@@ -404,7 +404,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_IOFromMem`]
@@ -438,7 +438,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CloseIO`]
@@ -475,7 +475,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_CloseIO`]
@@ -516,7 +516,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_OpenIO`]
@@ -533,7 +533,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetIOProperties(context: *mut SDL_IOStream) -> SDL_PropertiesID;
 }
 
@@ -558,7 +558,7 @@ extern "C" {
     ///   another thread is operating on the same [`SDL_IOStream`].
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetIOStatus(context: *mut SDL_IOStream) -> SDL_IOStatus;
 }
 
@@ -573,7 +573,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_GetIOSize(context: *mut SDL_IOStream) -> Sint64;
 }
 
@@ -601,7 +601,7 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_TellIO`]
@@ -623,7 +623,7 @@ extern "C" {
     ///   be determined.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SeekIO`]
@@ -648,7 +648,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_WriteIO`]
@@ -683,7 +683,7 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_IOprintf`]
@@ -713,7 +713,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_IOvprintf`]
@@ -739,7 +739,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_IOprintf`]
@@ -765,7 +765,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_OpenIO`]
@@ -793,7 +793,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_LoadFile`]
@@ -821,7 +821,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_LoadFile_IO`]
@@ -842,7 +842,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU8(src: *mut SDL_IOStream, value: *mut Uint8) -> ::core::primitive::bool;
 }
 
@@ -857,7 +857,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadS8(src: *mut SDL_IOStream, value: *mut Sint8) -> ::core::primitive::bool;
 }
 
@@ -876,7 +876,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU16LE(src: *mut SDL_IOStream, value: *mut Uint16) -> ::core::primitive::bool;
 }
 
@@ -895,7 +895,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadS16LE(src: *mut SDL_IOStream, value: *mut Sint16) -> ::core::primitive::bool;
 }
 
@@ -914,7 +914,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU16BE(src: *mut SDL_IOStream, value: *mut Uint16) -> ::core::primitive::bool;
 }
 
@@ -933,7 +933,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadS16BE(src: *mut SDL_IOStream, value: *mut Sint16) -> ::core::primitive::bool;
 }
 
@@ -952,7 +952,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU32LE(src: *mut SDL_IOStream, value: *mut Uint32) -> ::core::primitive::bool;
 }
 
@@ -971,7 +971,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadS32LE(src: *mut SDL_IOStream, value: *mut Sint32) -> ::core::primitive::bool;
 }
 
@@ -990,7 +990,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU32BE(src: *mut SDL_IOStream, value: *mut Uint32) -> ::core::primitive::bool;
 }
 
@@ -1009,7 +1009,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadS32BE(src: *mut SDL_IOStream, value: *mut Sint32) -> ::core::primitive::bool;
 }
 
@@ -1028,7 +1028,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU64LE(src: *mut SDL_IOStream, value: *mut Uint64) -> ::core::primitive::bool;
 }
 
@@ -1047,7 +1047,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadS64LE(src: *mut SDL_IOStream, value: *mut Sint64) -> ::core::primitive::bool;
 }
 
@@ -1066,7 +1066,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU64BE(src: *mut SDL_IOStream, value: *mut Uint64) -> ::core::primitive::bool;
 }
 
@@ -1085,7 +1085,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadS64BE(src: *mut SDL_IOStream, value: *mut Sint64) -> ::core::primitive::bool;
 }
 
@@ -1100,7 +1100,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU8(dst: *mut SDL_IOStream, value: Uint8) -> ::core::primitive::bool;
 }
 
@@ -1115,7 +1115,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteS8(dst: *mut SDL_IOStream, value: Sint8) -> ::core::primitive::bool;
 }
 
@@ -1135,7 +1135,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU16LE(dst: *mut SDL_IOStream, value: Uint16) -> ::core::primitive::bool;
 }
 
@@ -1155,7 +1155,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteS16LE(dst: *mut SDL_IOStream, value: Sint16) -> ::core::primitive::bool;
 }
 
@@ -1174,7 +1174,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU16BE(dst: *mut SDL_IOStream, value: Uint16) -> ::core::primitive::bool;
 }
 
@@ -1193,7 +1193,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteS16BE(dst: *mut SDL_IOStream, value: Sint16) -> ::core::primitive::bool;
 }
 
@@ -1213,7 +1213,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU32LE(dst: *mut SDL_IOStream, value: Uint32) -> ::core::primitive::bool;
 }
 
@@ -1233,7 +1233,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteS32LE(dst: *mut SDL_IOStream, value: Sint32) -> ::core::primitive::bool;
 }
 
@@ -1252,7 +1252,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU32BE(dst: *mut SDL_IOStream, value: Uint32) -> ::core::primitive::bool;
 }
 
@@ -1271,7 +1271,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteS32BE(dst: *mut SDL_IOStream, value: Sint32) -> ::core::primitive::bool;
 }
 
@@ -1291,7 +1291,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU64LE(dst: *mut SDL_IOStream, value: Uint64) -> ::core::primitive::bool;
 }
 
@@ -1311,7 +1311,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteS64LE(dst: *mut SDL_IOStream, value: Sint64) -> ::core::primitive::bool;
 }
 
@@ -1330,7 +1330,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU64BE(dst: *mut SDL_IOStream, value: Uint64) -> ::core::primitive::bool;
 }
 
@@ -1349,7 +1349,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteS64BE(dst: *mut SDL_IOStream, value: Sint64) -> ::core::primitive::bool;
 }
 
@@ -1361,7 +1361,7 @@ extern "C" {
 /// struct's abstract interface.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 #[non_exhaustive]
 pub struct SDL_IOStream {

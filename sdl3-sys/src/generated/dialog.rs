@@ -17,7 +17,7 @@ use super::video::*;
 /// single asterisk ("*"), which serves as an "All files" filter.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.0.0.
+/// This struct is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_DialogFileCallback`]
@@ -58,7 +58,7 @@ pub struct SDL_DialogFileFilter {
 /// - `filter`: index of the selected filter.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.0.0.
+/// This datatype is available since SDL 3.1.3.
 ///
 /// ### See also
 /// - [`SDL_DialogFileFilter`]
@@ -123,7 +123,7 @@ extern "C" {
     ///   entries. Not all platforms support this option.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_DialogFileCallback`]
@@ -189,7 +189,7 @@ extern "C" {
     ///   may be NULL. Not all platforms support this option.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_DialogFileCallback`]
@@ -248,7 +248,7 @@ extern "C" {
     ///   entries. Not all platforms support this option.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.0.0.
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_DialogFileCallback`]

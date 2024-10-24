@@ -21,7 +21,7 @@ use super::stdinc::*;
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.0.0.
+/// This function is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_MostSignificantBitIndex32(x: Uint32) -> ::core::ffi::c_int {
     31 - (x.leading_zeros() as ::core::ffi::c_int)
@@ -46,7 +46,7 @@ pub const fn SDL_MostSignificantBitIndex32(x: Uint32) -> ::core::ffi::c_int {
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.0.0.
+/// This function is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_HasExactlyOneBitSet32(x: Uint32) -> ::core::primitive::bool {
     if ((x != 0) && !((x & (x - 1_u32)) != 0)) {
