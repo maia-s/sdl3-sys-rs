@@ -4,7 +4,7 @@ use crate::{
         CanCopy, DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident, IdentOrKw, ParseErr,
         PrimitiveType, RustCode, Span, StructFields, StructKind, Type, TypeEnum,
     },
-    Gen,
+    Defer, Gen,
 };
 use core::{fmt::Display, mem};
 use std::{
@@ -439,18 +439,10 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
     #[must_use]
     pub fn set_debug_log_guard(&self, enable: bool) -> impl Drop {
-        pub struct Guard(Rc<RefCell<InnerEmitContext>>, bool);
-
-        impl Drop for Guard {
-            fn drop(&mut self) {
-                self.0.borrow_mut().log_debug_enabled = self.1;
-            }
-        }
-
+        let inner = Rc::clone(&self.inner);
         let was_enabled = self.inner().log_debug_enabled;
         self.inner_mut().log_debug_enabled = enable;
-
-        Guard(Rc::clone(&self.inner), was_enabled)
+        Defer::new(move || inner.borrow_mut().log_debug_enabled = was_enabled)
     }
 
     pub fn into_inner(self) -> InnerEmitContext {
@@ -498,19 +490,14 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     pub fn with_target_dependent_preproc_state_guard(
         &mut self,
     ) -> (Rc<RefCell<PreProcState>>, impl Drop) {
-        pub struct Guard(Rc<RefCell<InnerEmitContext>>, Rc<RefCell<PreProcState>>);
-
-        impl Drop for Guard {
-            fn drop(&mut self) {
-                self.0.borrow_mut().preproc_state = Rc::clone(&self.1);
-            }
-        }
-
         let parent = Rc::clone(&self.inner().preproc_state);
         let pps = Rc::new(RefCell::new(PreProcState::with_parent(Rc::clone(&parent))));
         self.inner_mut().preproc_state = Rc::clone(&pps);
-
-        (pps, Guard(Rc::clone(&self.inner), parent))
+        let inner = Rc::clone(&self.inner);
+        (
+            pps,
+            Defer::new(move || inner.borrow_mut().preproc_state = Rc::clone(&parent)),
+        )
     }
 
     pub fn merge_target_dependent_preproc_state(&mut self, pps: PreProcState) {
@@ -550,17 +537,9 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
     #[must_use]
     pub fn subscope_guard(&self) -> impl Drop {
-        pub struct Guard(Rc<RefCell<InnerEmitContext>>);
-
-        impl Drop for Guard {
-            fn drop(&mut self) {
-                self.0.borrow_mut().scope.pop();
-            }
-        }
-
         self.scope_mut().push();
-
-        Guard(Rc::clone(&self.inner))
+        let inner = Rc::clone(&self.inner);
+        Defer::new(move || inner.borrow_mut().scope.pop())
     }
 
     pub fn new_top_level(&mut self) -> EmitContext<'_, 'b> {
@@ -648,17 +627,9 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
     #[must_use]
     pub fn preproc_eval_mode_guard(&mut self) -> impl Drop {
-        pub struct Guard(Rc<RefCell<InnerEmitContext>>);
-
-        impl Drop for Guard {
-            fn drop(&mut self) {
-                self.0.borrow_mut().preproc_eval_mode -= 1;
-            }
-        }
-
         self.inner_mut().preproc_eval_mode += 1;
-
-        Guard(Rc::clone(&self.inner))
+        let inner = Rc::clone(&self.inner);
+        Defer::new(move || inner.borrow_mut().preproc_eval_mode -= 1)
     }
 
     pub fn emitted_file_doc(&self) -> bool {
@@ -806,35 +777,21 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
     #[must_use]
     pub fn disable_patch_guard(&mut self) -> impl Drop {
-        pub struct Guard(Rc<RefCell<InnerEmitContext>>, bool);
-
-        impl Drop for Guard {
-            fn drop(&mut self) {
-                self.0.borrow_mut().patch_enabled = self.1;
-            }
-        }
-
         let patch_enabled = mem::replace(&mut self.inner_mut().patch_enabled, false);
-
-        Guard(Rc::clone(&self.inner), patch_enabled)
+        let inner = Rc::clone(&self.inner);
+        Defer::new(move || inner.borrow_mut().patch_enabled = patch_enabled)
     }
 
     #[must_use]
     pub fn expect_unresolved_sym_dependency_guard(&mut self) -> impl Drop {
-        pub struct Guard(Rc<RefCell<InnerEmitContext>>);
-
-        impl Drop for Guard {
-            fn drop(&mut self) {
-                self.0.borrow_mut().sym_dependencies = None;
-            }
-        }
-
         if self.inner().sym_dependencies.is_some() {
             panic!("type dependencies already expected by something else")
         }
 
         self.inner_mut().sym_dependencies = Some(Vec::new());
-        Guard(Rc::clone(&self.inner))
+
+        let inner = Rc::clone(&self.inner);
+        Defer::new(move || inner.borrow_mut().sym_dependencies = None)
     }
 
     pub fn emit_after_unresolved_sym_dependencies<T: Emit + 'static>(&self, emittable: T) -> bool {

@@ -1,3 +1,4 @@
+use crate::Defer;
 use core::{
     borrow::Borrow,
     cell::{Cell, RefCell},
@@ -97,35 +98,18 @@ impl ParseContext {
     }
 
     pub fn with_parent_struct_guard(&self, ident: Option<Ident>) -> impl Drop + '_ {
-        struct Guard<'a>(&'a ParseContext, Option<Ident>, usize);
-
-        impl Drop for Guard<'_> {
-            fn drop(&mut self) {
-                *self.0.parent_struct_ident.borrow_mut() = self.1.take();
-                *self.0.sibling_struct_index.borrow_mut() = *self.2.borrow();
-            }
-        }
-
-        Guard(
-            self,
-            self.parent_struct_ident.replace(ident),
-            self.sibling_struct_index.replace(Self::FIRST_SIBLING),
-        )
+        let mut psi = self.parent_struct_ident.replace(ident);
+        let ssi = self.sibling_struct_index.replace(Self::FIRST_SIBLING);
+        Defer::new(move || {
+            *self.parent_struct_ident.borrow_mut() = psi.take();
+            *self.sibling_struct_index.borrow_mut() = *ssi.borrow();
+        })
     }
 
     #[must_use]
     pub fn set_debug_log_guard(&self, enable: bool) -> impl Drop + '_ {
-        pub struct Guard<'a>(&'a ParseContext, bool);
-
-        impl Drop for Guard<'_> {
-            fn drop(&mut self) {
-                self.0.log_debug_enabled.set(self.1);
-            }
-        }
-
         let was_enabled = self.log_debug_enabled.replace(enable);
-
-        Guard(self, was_enabled)
+        Defer::new(move || self.log_debug_enabled.set(was_enabled))
     }
 
     pub fn log_debug(&self, what: impl Display) -> Result<(), ParseErr> {
@@ -137,17 +121,10 @@ impl ParseContext {
 
     #[must_use]
     pub fn patch_idents_state_guard(&self) -> impl Drop + '_ {
-        pub struct Guard<'a>(&'a ParseContext, Option<HashMap<IdentOrKw, IdentOrKw>>);
-
-        impl Drop for Guard<'_> {
-            fn drop(&mut self) {
-                self.0.patch_idents.replace(self.1.take().unwrap());
-            }
-        }
-
         let prev = self.patch_idents.replace_with(|prev| prev.clone());
-
-        Guard(self, Some(prev))
+        Defer::new(move || {
+            self.patch_idents.replace(prev);
+        })
     }
 
     pub fn add_patch_ident(&self, src: IdentOrKw, dst: IdentOrKw) {
