@@ -643,7 +643,7 @@ pub const SDL_GL_EGL_PLATFORM: SDL_GLAttr = SDL_GLAttr::EGL_PLATFORM;
 /// | [`SDL_GL_CONTEXT_PROFILE_CORE`] | OpenGL Core Profile context |
 /// | [`SDL_GL_CONTEXT_PROFILE_COMPATIBILITY`] | OpenGL Compatibility Profile context |
 /// | [`SDL_GL_CONTEXT_PROFILE_ES`] | GLX_CONTEXT_ES2_PROFILE_BIT_EXT |
-pub type SDL_GLProfile = Uint32;
+pub type SDL_GLProfile = Sint32;
 
 /// OpenGL Core Profile context
 pub const SDL_GL_CONTEXT_PROFILE_CORE: SDL_GLProfile = (0x0001 as SDL_GLProfile);
@@ -666,7 +666,7 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = (0x0004 as SDL_GLProfile);
 /// | [`SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG`] | |
 /// | [`SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG`] | |
 /// | [`SDL_GL_CONTEXT_RESET_ISOLATION_FLAG`] | |
-pub type SDL_GLContextFlag = Uint32;
+pub type SDL_GLContextFlag = Sint32;
 
 pub const SDL_GL_CONTEXT_DEBUG_FLAG: SDL_GLContextFlag = (0x0001 as SDL_GLContextFlag);
 
@@ -687,7 +687,7 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag = (0x0008 as SD
 /// | -------- | ----------- |
 /// | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE`] | |
 /// | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH`] | |
-pub type SDL_GLContextReleaseFlag = Uint32;
+pub type SDL_GLContextReleaseFlag = Sint32;
 
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: SDL_GLContextReleaseFlag =
     (0x0000 as SDL_GLContextReleaseFlag);
@@ -705,7 +705,7 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLContextReleaseFlag =
 /// | -------- | ----------- |
 /// | [`SDL_GL_CONTEXT_RESET_NO_NOTIFICATION`] | |
 /// | [`SDL_GL_CONTEXT_RESET_LOSE_CONTEXT`] | |
-pub type SDL_GLContextResetNotification = Uint32;
+pub type SDL_GLContextResetNotification = Sint32;
 
 pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification =
     (0x0000 as SDL_GLContextResetNotification);

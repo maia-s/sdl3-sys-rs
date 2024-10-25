@@ -507,6 +507,22 @@ const TYPEDEF_PATCHES: &[TypeDefPatch] = &[
             Ok(true)
         },
     },
+    TypeDefPatch {
+        module: Some("video"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_GLContextFlag"
+                    | "SDL_GLContextReleaseFlag"
+                    | "SDL_GLContextResetNotification"
+                    | "SDL_GLProfile"
+            )
+        },
+        patch: |_, td| {
+            td.ty = Type::ident_str("Sint32");
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {
