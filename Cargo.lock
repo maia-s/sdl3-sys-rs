@@ -76,11 +76,11 @@ checksum = "03e8af507d334973239a2cc466ee08c48b38df1c22fab7d2c1fa80c074799df8"
 
 [[package]]
 name = "sdl3-src"
-version = "3.1.3-preview-281-gdb4e2ccba"
+version = "3.1.3-preview-290-g8bf1a8420"
 
 [[package]]
 name = "sdl3-sys"
-version = "0.0.11-dev+SDL-preview-3.1.3-281-gdb4e2ccba"
+version = "0.0.11-dev+SDL-preview-3.1.3-290-g8bf1a8420"
 dependencies = [
  "ash",
  "cmake",

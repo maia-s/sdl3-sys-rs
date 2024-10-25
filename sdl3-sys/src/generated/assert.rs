@@ -222,6 +222,9 @@ extern "C" {
     /// ### Return value
     /// Returns assert state.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_ReportAssertion(
@@ -311,6 +314,9 @@ emit! {
     /// ### Arguments
     /// - `condition`: boolean value to test.
     ///
+    /// ### Thread safety
+    /// It is safe to call this macro from any thread.
+    ///
     /// ### Availability
     /// This macro is available since SDL 3.1.3.
     #[doc(hidden)]
@@ -348,6 +354,9 @@ emit! {
     /// ### Arguments
     /// - `condition`: boolean value to test.
     ///
+    /// ### Thread safety
+    /// It is safe to call this macro from any thread.
+    ///
     /// ### Availability
     /// This macro is available since SDL 3.1.3.
     #[doc(hidden)]
@@ -380,6 +389,9 @@ emit! {
     ///
     /// ### Arguments
     /// - `condition`: boolean value to test.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this macro from any thread.
     ///
     /// ### Availability
     /// This macro is available since SDL 3.1.3.
@@ -521,7 +533,7 @@ emit! {
 
 }
 
-/// An assertion test that always performed.
+/// An assertion test that is always performed.
 ///
 /// This macro is always enabled no matter what [`SDL_ASSERT_LEVEL`] is set to. You
 /// almost never want to use this, as it could trigger on an end-user's system,
@@ -537,6 +549,9 @@ emit! {
 ///
 /// ### Arguments
 /// - `condition`: boolean value to test.
+///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
 ///
 /// ### Availability
 /// This macro is available since SDL 3.1.3.
@@ -558,6 +573,10 @@ pub use SDL_assert_always;
 /// - `userdata`: what was passed as `userdata` to [`SDL_SetAssertionHandler()`].
 /// ### Return value
 /// Returns an [`SDL_AssertState`] value indicating how to handle the failure.
+///
+/// ### Thread safety
+/// This callback may be called from any thread that triggers an
+///   assert at any time.
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
@@ -586,6 +605,9 @@ extern "C" {
     ///   fails or NULL for the default handler.
     /// - `userdata`: a pointer that is passed to `handler`.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -608,6 +630,9 @@ extern "C" {
     /// ### Return value
     /// Returns the default [`SDL_AssertionHandler`] that is called when an assert
     ///   triggers.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -635,6 +660,9 @@ extern "C" {
     ///   was passed to [`SDL_SetAssertionHandler()`].
     /// ### Return value
     /// Returns the [`SDL_AssertionHandler`] that is called when an assert triggers.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -667,7 +695,14 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns a list of all failed assertions or NULL if the list is empty. This
-    ///   memory should not be modified or freed by the application.
+    ///   memory should not be modified or freed by the application. This
+    ///   pointer remains valid until the next call to [`SDL_Quit()`] or
+    ///   [`SDL_ResetAssertionReport()`].
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe. Other threads calling
+    ///   [`SDL_ResetAssertionReport()`] simultaneously, may render the
+    ///   returned pointer invalid.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -684,6 +719,11 @@ extern "C" {
     /// point. Immediately following this call, [`SDL_GetAssertionReport`] will return
     /// no items. In addition, any previously-triggered assertions will be reset to
     /// a trigger_count of zero, and their always_ignore state will be false.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe. Other threads triggering an
+    ///   assertion, or simultaneously calling this function may cause
+    ///   memory leaks or crashes.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.

@@ -1676,10 +1676,6 @@ extern "C" {
     ///
     /// This function updates the event queue and internal input device state.
     ///
-    /// **WARNING**: This should only be run in the thread that initialized the
-    /// video subsystem, and for extra safety, you should consider only doing those
-    /// things on the main thread in any case.
-    ///
     /// [`SDL_PumpEvents()`] gathers all the pending input information from devices and
     /// places it in the event queue. Without calls to [`SDL_PumpEvents()`] no events
     /// would ever be placed on the queue. Often the need for calls to
@@ -1687,6 +1683,11 @@ extern "C" {
     /// [`SDL_WaitEvent()`] implicitly call [`SDL_PumpEvents()`]. However, if you are not
     /// polling or waiting for events (e.g. you are filtering them), then you must
     /// call [`SDL_PumpEvents()`] to force an event queue update.
+    ///
+    /// ### Thread safety
+    /// This should only be run in the thread that initialized the
+    ///   video subsystem, and for extra safety, you should consider
+    ///   only doing those things on the main thread in any case.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1753,8 +1754,6 @@ extern "C" {
     /// Otherwise, the events may not be ready to be filtered when you call
     /// [`SDL_PeepEvents()`].
     ///
-    /// This function is thread-safe.
-    ///
     /// ### Arguments
     /// - `events`: destination buffer for the retrieved events, may be NULL to
     ///   leave the events in the queue and return the number of events
@@ -1770,6 +1769,9 @@ extern "C" {
     /// ### Return value
     /// Returns the number of events actually stored or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1799,6 +1801,9 @@ extern "C" {
     /// Returns true if events matching `type` are present, or false if events
     ///   matching `type` are not present.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1820,6 +1825,9 @@ extern "C" {
     /// ### Return value
     /// Returns true if events with type >= `minType` and <= `maxType` are
     ///   present, or false if not.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1850,6 +1858,9 @@ extern "C" {
     /// ### Arguments
     /// - `type`: the type of event to be cleared; see [`SDL_EventType`] for details.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1877,6 +1888,9 @@ extern "C" {
     ///   [`SDL_EventType`] for details.
     /// - `maxType`: the high end of event type to be cleared, inclusive; see
     ///   [`SDL_EventType`] for details.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1924,6 +1938,11 @@ extern "C" {
     /// ### Return value
     /// Returns true if this got an event or false if there are none available.
     ///
+    /// ### Thread safety
+    /// This should only be run in the thread that initialized the
+    ///   video subsystem, and for extra safety, you should consider
+    ///   only doing those things on the main thread in any case.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1949,6 +1968,11 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false if there was an error while waiting for
     ///   events; call [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This should only be run in the thread that initialized the
+    ///   video subsystem, and for extra safety, you should consider
+    ///   only doing those things on the main thread in any case.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1982,6 +2006,11 @@ extern "C" {
     /// Returns true if this got an event or false if the timeout elapsed without
     ///   any events available.
     ///
+    /// ### Thread safety
+    /// This should only be run in the thread that initialized the
+    ///   video subsystem, and for extra safety, you should consider
+    ///   only doing those things on the main thread in any case.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2007,8 +2036,6 @@ extern "C" {
     /// Note: Pushing device input events onto the queue doesn't modify the state
     /// of the device within SDL.
     ///
-    /// This function is thread-safe, and can be called from other threads safely.
-    ///
     /// Note: Events pushed onto the queue with [`SDL_PushEvent()`] get passed through
     /// the event filter but events added with [`SDL_PeepEvents()`] do not.
     ///
@@ -2022,6 +2049,9 @@ extern "C" {
     /// Returns true on success, false if the event was filtered or on failure;
     ///   call [`SDL_GetError()`] for more information. A common reason for
     ///   error is the event queue being full.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2098,9 +2128,7 @@ extern "C" {
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
     /// ### Thread safety
-    /// SDL may call the filter callback at any time from any thread;
-    ///   the application is responsible for locking resources the
-    ///   callback touches that need to be protected.
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2126,6 +2154,9 @@ extern "C" {
     ///   be stored here.
     /// ### Return value
     /// Returns true on success or false if there is no event filter set.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2188,6 +2219,9 @@ extern "C" {
     /// - `filter`: the function originally passed to [`SDL_AddEventWatch()`].
     /// - `userdata`: the pointer originally passed to [`SDL_AddEventWatch()`].
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2208,6 +2242,9 @@ extern "C" {
     /// - `filter`: the [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2224,6 +2261,9 @@ extern "C" {
     /// - `type`: the type of event; see [`SDL_EventType`] for details.
     /// - `enabled`: whether to process the event or not.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2239,6 +2279,9 @@ extern "C" {
     /// - `type`: the type of event; see [`SDL_EventType`] for details.
     /// ### Return value
     /// Returns true if the event is being processed, false otherwise.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2258,6 +2301,9 @@ extern "C" {
     /// Returns the beginning event number, or 0 if numevents is invalid or if
     ///   there are not enough user-defined events left.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2273,6 +2319,9 @@ extern "C" {
     /// - `event`: an event containing a `windowID`.
     /// ### Return value
     /// Returns the associated window on success or NULL if there is none.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.

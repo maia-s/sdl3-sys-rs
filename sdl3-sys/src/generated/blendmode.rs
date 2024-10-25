@@ -259,6 +259,9 @@ extern "C" {
     /// Returns an [`SDL_BlendMode`] that represents the chosen factors and
     ///   operations.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///

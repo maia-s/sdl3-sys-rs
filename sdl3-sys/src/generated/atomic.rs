@@ -54,6 +54,9 @@ extern "C" {
     /// ### Return value
     /// Returns true if the lock succeeded, false if the lock is already held.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -71,6 +74,9 @@ extern "C" {
     ///
     /// ### Arguments
     /// - `lock`: a pointer to a lock variable.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -91,6 +97,9 @@ extern "C" {
     ///
     /// ### Arguments
     /// - `lock`: a pointer to a lock variable.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -441,6 +450,9 @@ extern "C" {
 /// ### Return value
 /// Returns the previous value of the atomic variable.
 ///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
+///
 /// ### Availability
 /// This macro is available since SDL 3.1.3.
 ///
@@ -460,6 +472,9 @@ pub unsafe fn SDL_AtomicIncRef(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int {
 /// ### Return value
 /// Returns true if the variable reached zero after decrementing, false
 ///   otherwise.
+///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
 ///
 /// ### Availability
 /// This macro is available since SDL 3.1.3.

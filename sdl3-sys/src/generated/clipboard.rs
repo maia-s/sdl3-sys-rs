@@ -16,6 +16,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -36,6 +39,9 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information. This should be freed with
     ///   [`SDL_free()`] when it is no longer needed.
     ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -50,6 +56,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns true if the clipboard has text, or false if it does not.
+    ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -68,6 +77,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -90,6 +102,9 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information. This should be
     ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -105,6 +120,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns true if the primary selection has text, or false if it does not.
+    ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -185,6 +203,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -208,6 +229,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -230,6 +254,9 @@ extern "C" {
     ///   for more information. This should be freed with [`SDL_free()`] when it
     ///   is no longer needed.
     ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -251,6 +278,9 @@ extern "C" {
     /// Returns true if there exists data in clipboard for the provided mime type,
     ///   false if it does not.
     ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -270,6 +300,9 @@ extern "C" {
     /// Returns a null terminated array of strings with mime types, or NULL on
     ///   failure; call [`SDL_GetError()`] for more information. This should be
     ///   freed with [`SDL_free()`] when it is no longer needed.
+    ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
