@@ -1372,13 +1372,13 @@ pub const SDL_HAT_DOWN: Uint8 = (0x04 as Uint8);
 
 pub const SDL_HAT_LEFT: Uint8 = (0x08 as Uint8);
 
-pub const SDL_HAT_RIGHTUP: Uint8 = ((0x02 as Uint8) | (0x01 as Uint8));
+pub const SDL_HAT_RIGHTUP: Uint8 = (SDL_HAT_RIGHT | SDL_HAT_UP);
 
-pub const SDL_HAT_RIGHTDOWN: Uint8 = ((0x02 as Uint8) | (0x04 as Uint8));
+pub const SDL_HAT_RIGHTDOWN: Uint8 = (SDL_HAT_RIGHT | SDL_HAT_DOWN);
 
-pub const SDL_HAT_LEFTUP: Uint8 = ((0x08 as Uint8) | (0x01 as Uint8));
+pub const SDL_HAT_LEFTUP: Uint8 = (SDL_HAT_LEFT | SDL_HAT_UP);
 
-pub const SDL_HAT_LEFTDOWN: Uint8 = ((0x08 as Uint8) | (0x04 as Uint8));
+pub const SDL_HAT_LEFTDOWN: Uint8 = (SDL_HAT_LEFT | SDL_HAT_DOWN);
 
 extern "C" {
     /// Get the current state of a button on a joystick.

@@ -173,9 +173,9 @@ pub const SDL_MIN_UINT64: Uint64 = (0_u64 as Uint64);
 /// | [`SDL_MIN_TIME`] | |
 pub type SDL_Time = Sint64;
 
-pub const SDL_MAX_TIME: SDL_Time = ((9223372036854775807_i64 as Sint64) as SDL_Time);
+pub const SDL_MAX_TIME: SDL_Time = (SDL_MAX_SINT64 as SDL_Time);
 
-pub const SDL_MIN_TIME: SDL_Time = ((-9223372036854775808_i64 as Sint64) as SDL_Time);
+pub const SDL_MIN_TIME: SDL_Time = (SDL_MIN_SINT64 as SDL_Time);
 
 pub const SDL_FLT_EPSILON: ::core::ffi::c_float = ::core::primitive::f32::EPSILON;
 
@@ -5107,7 +5107,7 @@ pub unsafe fn SDL_size_mul_check_overflow(
     b: ::core::primitive::usize,
     ret: *mut ::core::primitive::usize,
 ) -> ::core::primitive::bool {
-    if ((a != 0_usize) && (b > (::core::primitive::usize::MAX / a))) {
+    if ((a != 0_usize) && (b > (SDL_SIZE_MAX / a))) {
         return false;
     }
     unsafe {
@@ -5146,7 +5146,7 @@ pub unsafe fn SDL_size_add_check_overflow(
     b: ::core::primitive::usize,
     ret: *mut ::core::primitive::usize,
 ) -> ::core::primitive::bool {
-    if (b > (::core::primitive::usize::MAX - a)) {
+    if (b > (SDL_SIZE_MAX - a)) {
         return false;
     }
     unsafe {

@@ -96,7 +96,8 @@ pub const fn SDL_VERSIONNUM_MICRO(version: ::core::primitive::i32) -> ::core::pr
 ///
 /// ### See also
 /// - [`SDL_GetVersion`]
-pub const SDL_VERSION: ::core::primitive::i32 = SDL_VERSIONNUM(3, 1, 5);
+pub const SDL_VERSION: ::core::primitive::i32 =
+    SDL_VERSIONNUM(SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
 
 /// This macro will evaluate to true if compiled with SDL at least X.Y.Z.
 ///
@@ -108,7 +109,7 @@ pub const fn SDL_VERSION_ATLEAST(
     Y: ::core::primitive::i32,
     Z: ::core::primitive::i32,
 ) -> ::core::primitive::bool {
-    (SDL_VERSIONNUM(3, 1, 5) >= SDL_VERSIONNUM(X, Y, Z))
+    (SDL_VERSION >= SDL_VERSIONNUM(X, Y, Z))
 }
 
 extern "C" {

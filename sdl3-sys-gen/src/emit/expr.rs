@@ -1022,7 +1022,19 @@ impl Eval for Expr {
 
             Expr::Ident(ident) => {
                 if let Ok(i) = ident.clone().try_into() {
-                    if let Ok(Some((args, value))) = ctx.preproc_state().borrow().lookup(&i) {
+                    return if let Some(sym) = ctx.lookup_sym(&i) {
+                        if let Some(ty) = sym.value_ty {
+                            Ok(Some(Value::RustCode(RustCode::boxed(
+                                i.to_string(),
+                                ty,
+                                true,
+                                false,
+                            ))))
+                        } else {
+                            Err(ParseErr::new(ident.span(), "symbol isn't a value").into())
+                        }
+                    } else if let Ok(Some((args, value))) = ctx.preproc_state().borrow().lookup(&i)
+                    {
                         if args.is_some() {
                             return Err(ParseErr::new(
                                 self.span(),
@@ -1030,24 +1042,13 @@ impl Eval for Expr {
                             )
                             .into());
                         }
-                        return value.try_eval(ctx);
-                    } else if let Some(sym) = ctx.lookup_sym(&i) {
-                        if let Some(ty) = sym.value_ty {
-                            return Ok(Some(Value::RustCode(RustCode::boxed(
-                                i.to_string(),
-                                ty,
-                                true,
-                                false,
-                            ))));
-                        } else {
-                            return Err(ParseErr::new(ident.span(), "symbol isn't a value").into());
-                        }
-                    } else if ctx.is_preproc_eval_mode() {
-                        return Ok(None);
-                    } else {
+                        value.try_eval(ctx)
+                    } else if !ctx.is_preproc_eval_mode() {
                         ctx.add_unresolved_sym_dependency(i)?;
-                        return Err(ParseErr::new(ident.span(), "unresolved symbol").into());
-                    }
+                        Err(ParseErr::new(ident.span(), "unresolved symbol").into())
+                    } else {
+                        Ok(None)
+                    };
                 }
 
                 match ident.as_str() {

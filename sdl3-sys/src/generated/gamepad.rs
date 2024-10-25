@@ -1042,19 +1042,19 @@ extern "C" {
 }
 
 pub const SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN: *const ::core::ffi::c_char =
-    c"SDL.joystick.cap.mono_led".as_ptr();
+    SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN;
 
 pub const SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN: *const ::core::ffi::c_char =
-    c"SDL.joystick.cap.rgb_led".as_ptr();
+    SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN;
 
 pub const SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN: *const ::core::ffi::c_char =
-    c"SDL.joystick.cap.player_led".as_ptr();
+    SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN;
 
 pub const SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN: *const ::core::ffi::c_char =
-    c"SDL.joystick.cap.rumble".as_ptr();
+    SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN;
 
 pub const SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN: *const ::core::ffi::c_char =
-    c"SDL.joystick.cap.trigger_rumble".as_ptr();
+    SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN;
 
 extern "C" {
     /// Get the instance ID of an opened gamepad.

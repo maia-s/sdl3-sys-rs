@@ -276,7 +276,7 @@ pub const SDLK_SCANCODE_MASK: SDL_Keycode = ((1073741824_u32) as SDL_Keycode);
 
 #[inline(always)]
 pub const fn SDL_SCANCODE_TO_KEYCODE(X: SDL_Scancode) -> SDL_Keycode {
-    ((X.0 as SDL_Keycode) | ((1073741824_u32) as SDL_Keycode))
+    ((X.0 as SDL_Keycode) | SDLK_SCANCODE_MASK)
 }
 
 /// 0
@@ -1093,16 +1093,16 @@ pub const SDL_KMOD_MODE: SDL_Keymod = (0x4000 as SDL_Keymod);
 pub const SDL_KMOD_SCROLL: SDL_Keymod = (0x8000 as SDL_Keymod);
 
 /// Any Ctrl key is down.
-pub const SDL_KMOD_CTRL: SDL_Keymod = ((0x0040 as SDL_Keymod) | (0x0080 as SDL_Keymod));
+pub const SDL_KMOD_CTRL: SDL_Keymod = (SDL_KMOD_LCTRL | SDL_KMOD_RCTRL);
 
 /// Any Shift key is down.
-pub const SDL_KMOD_SHIFT: SDL_Keymod = ((0x0001 as SDL_Keymod) | (0x0002 as SDL_Keymod));
+pub const SDL_KMOD_SHIFT: SDL_Keymod = (SDL_KMOD_LSHIFT | SDL_KMOD_RSHIFT);
 
 /// Any Alt key is down.
-pub const SDL_KMOD_ALT: SDL_Keymod = ((0x0100 as SDL_Keymod) | (0x0200 as SDL_Keymod));
+pub const SDL_KMOD_ALT: SDL_Keymod = (SDL_KMOD_LALT | SDL_KMOD_RALT);
 
 /// Any GUI key is down.
-pub const SDL_KMOD_GUI: SDL_Keymod = ((0x0400 as SDL_Keymod) | (0x0800 as SDL_Keymod));
+pub const SDL_KMOD_GUI: SDL_Keymod = (SDL_KMOD_LGUI | SDL_KMOD_RGUI);
 
 #[cfg(doc)]
 use crate::everything::*;
