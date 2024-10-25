@@ -8,6 +8,26 @@ macro_rules! log_debug {
     };
 }
 
+pub struct Defer<F: FnOnce()>(Option<F>);
+
+impl<F: FnOnce()> Defer<F> {
+    pub const fn new(f: F) -> Self {
+        Self(Some(f))
+    }
+
+    pub fn disable(&mut self) {
+        self.0.take();
+    }
+}
+
+impl<F: FnOnce()> Drop for Defer<F> {
+    fn drop(&mut self) {
+        if let Some(f) = self.0.take() {
+            f()
+        }
+    }
+}
+
 mod emit;
 mod parse;
 

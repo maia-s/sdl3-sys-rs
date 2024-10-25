@@ -24,9 +24,9 @@ emit! {}
 /// This macro is available since SDL 3.1.3.
 pub type Sint8 = ::core::primitive::i8;
 
-pub const SDL_MAX_SINT8: Sint8 = (0x7f as Sint8);
+pub const SDL_MAX_SINT8: Sint8 = ((0x7f as Sint8) as Sint8);
 
-pub const SDL_MIN_SINT8: Sint8 = ((-128_i32) as Sint8);
+pub const SDL_MIN_SINT8: Sint8 = (((-128_i32) as Sint8) as Sint8);
 
 /// An unsigned 8-bit integer type.
 ///
@@ -34,9 +34,9 @@ pub const SDL_MIN_SINT8: Sint8 = ((-128_i32) as Sint8);
 /// This macro is available since SDL 3.1.3.
 pub type Uint8 = ::core::primitive::u8;
 
-pub const SDL_MAX_UINT8: Uint8 = (0xff as Uint8);
+pub const SDL_MAX_UINT8: Uint8 = ((0xff as Uint8) as Uint8);
 
-pub const SDL_MIN_UINT8: Uint8 = (0x00 as Uint8);
+pub const SDL_MIN_UINT8: Uint8 = ((0x00 as Uint8) as Uint8);
 
 /// A signed 16-bit integer type.
 ///
@@ -44,9 +44,9 @@ pub const SDL_MIN_UINT8: Uint8 = (0x00 as Uint8);
 /// This macro is available since SDL 3.1.3.
 pub type Sint16 = ::core::primitive::i16;
 
-pub const SDL_MAX_SINT16: Sint16 = (0x7fff as Sint16);
+pub const SDL_MAX_SINT16: Sint16 = ((0x7fff as Sint16) as Sint16);
 
-pub const SDL_MIN_SINT16: Sint16 = ((-32768_i32) as Sint16);
+pub const SDL_MIN_SINT16: Sint16 = (((-32768_i32) as Sint16) as Sint16);
 
 /// An unsigned 16-bit integer type.
 ///
@@ -54,9 +54,9 @@ pub const SDL_MIN_SINT16: Sint16 = ((-32768_i32) as Sint16);
 /// This macro is available since SDL 3.1.3.
 pub type Uint16 = ::core::primitive::u16;
 
-pub const SDL_MAX_UINT16: Uint16 = (0xffff as Uint16);
+pub const SDL_MAX_UINT16: Uint16 = ((0xffff as Uint16) as Uint16);
 
-pub const SDL_MIN_UINT16: Uint16 = (0x0000 as Uint16);
+pub const SDL_MIN_UINT16: Uint16 = ((0x0000 as Uint16) as Uint16);
 
 /// A signed 32-bit integer type.
 ///
@@ -64,9 +64,9 @@ pub const SDL_MIN_UINT16: Uint16 = (0x0000 as Uint16);
 /// This macro is available since SDL 3.1.3.
 pub type Sint32 = ::core::primitive::i32;
 
-pub const SDL_MAX_SINT32: Sint32 = (0x7fffffff as Sint32);
+pub const SDL_MAX_SINT32: Sint32 = ((0x7fffffff as Sint32) as Sint32);
 
-pub const SDL_MIN_SINT32: Sint32 = ((-2147483648_i32) as Sint32);
+pub const SDL_MIN_SINT32: Sint32 = (((-2147483648_i32) as Sint32) as Sint32);
 
 /// An unsigned 32-bit integer type.
 ///
@@ -74,9 +74,9 @@ pub const SDL_MIN_SINT32: Sint32 = ((-2147483648_i32) as Sint32);
 /// This macro is available since SDL 3.1.3.
 pub type Uint32 = ::core::primitive::u32;
 
-pub const SDL_MAX_UINT32: Uint32 = (0xffffffff as Uint32);
+pub const SDL_MAX_UINT32: Uint32 = ((0xffffffff as Uint32) as Uint32);
 
-pub const SDL_MIN_UINT32: Uint32 = (0x00000000 as Uint32);
+pub const SDL_MIN_UINT32: Uint32 = ((0x00000000 as Uint32) as Uint32);
 
 /// A signed 64-bit integer type.
 ///
@@ -87,9 +87,9 @@ pub const SDL_MIN_UINT32: Uint32 = (0x00000000 as Uint32);
 /// - [`SDL_SINT64_C`]
 pub type Sint64 = ::core::primitive::i64;
 
-pub const SDL_MAX_SINT64: ::core::primitive::i64 = 9223372036854775807_i64;
+pub const SDL_MAX_SINT64: Sint64 = (9223372036854775807_i64 as Sint64);
 
-pub const SDL_MIN_SINT64: ::core::primitive::i64 = -9223372036854775808_i64;
+pub const SDL_MIN_SINT64: Sint64 = (-9223372036854775808_i64 as Sint64);
 
 /// An unsigned 64-bit integer type.
 ///
@@ -100,9 +100,9 @@ pub const SDL_MIN_SINT64: ::core::primitive::i64 = -9223372036854775808_i64;
 /// - [`SDL_UINT64_C`]
 pub type Uint64 = ::core::primitive::u64;
 
-pub const SDL_MAX_UINT64: ::core::primitive::u64 = 18446744073709551615_u64;
+pub const SDL_MAX_UINT64: Uint64 = (18446744073709551615_u64 as Uint64);
 
-pub const SDL_MIN_UINT64: ::core::primitive::u64 = 0_u64;
+pub const SDL_MIN_UINT64: Uint64 = (0_u64 as Uint64);
 
 /// SDL times are signed, 64-bit integers representing nanoseconds since the
 /// Unix epoch (Jan 1, 1970).
@@ -119,9 +119,9 @@ pub const SDL_MIN_UINT64: ::core::primitive::u64 = 0_u64;
 /// - [`SDL_MIN_SINT64`]
 pub type SDL_Time = Sint64;
 
-pub const SDL_MAX_TIME: ::core::primitive::i64 = 9223372036854775807_i64;
+pub const SDL_MAX_TIME: SDL_Time = ((9223372036854775807_i64 as Sint64) as SDL_Time);
 
-pub const SDL_MIN_TIME: ::core::primitive::i64 = -9223372036854775808_i64;
+pub const SDL_MIN_TIME: SDL_Time = ((-9223372036854775808_i64 as Sint64) as SDL_Time);
 
 pub const SDL_FLT_EPSILON: ::core::ffi::c_float = ::core::primitive::f32::EPSILON;
 

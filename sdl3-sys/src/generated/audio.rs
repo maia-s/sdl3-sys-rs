@@ -386,7 +386,8 @@ pub type SDL_AudioDeviceID = Uint32;
 ///
 /// ### Availability
 /// This macro is available since SDL 3.1.3.
-pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID = (0xffffffff as SDL_AudioDeviceID);
+pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID =
+    ((0xffffffff as SDL_AudioDeviceID) as SDL_AudioDeviceID);
 
 /// A value used to request a default recording audio device.
 ///
@@ -396,7 +397,8 @@ pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID = (0xffffffff as 
 ///
 /// ### Availability
 /// This macro is available since SDL 3.1.3.
-pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID = (0xfffffffe as SDL_AudioDeviceID);
+pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID =
+    ((0xfffffffe as SDL_AudioDeviceID) as SDL_AudioDeviceID);
 
 /// Format specifier for audio data.
 ///

@@ -18,759 +18,759 @@ use super::scancode::*;
 /// This datatype is available since SDL 3.1.3.
 pub type SDL_Keycode = Uint32;
 
-pub const SDLK_SCANCODE_MASK: ::core::primitive::u32 = 1073741824_u32;
+pub const SDLK_SCANCODE_MASK: SDL_Keycode = ((1073741824_u32) as SDL_Keycode);
 
 #[inline(always)]
-pub const fn SDL_SCANCODE_TO_KEYCODE(X: SDL_Scancode) -> ::core::primitive::u32 {
-    ((X.0 as ::core::primitive::u32) | 1073741824_u32)
+pub const fn SDL_SCANCODE_TO_KEYCODE(X: SDL_Scancode) -> SDL_Keycode {
+    ((X.0 as SDL_Keycode) | ((1073741824_u32) as SDL_Keycode))
 }
 
 /// 0
-pub const SDLK_UNKNOWN: ::core::primitive::u32 = 0_u32;
+pub const SDLK_UNKNOWN: SDL_Keycode = (0x00000000 as SDL_Keycode);
 
 /// '\r'
-pub const SDLK_RETURN: ::core::primitive::u32 = 13_u32;
+pub const SDLK_RETURN: SDL_Keycode = (0x0000000d as SDL_Keycode);
 
 /// '\x1B'
-pub const SDLK_ESCAPE: ::core::primitive::u32 = 27_u32;
+pub const SDLK_ESCAPE: SDL_Keycode = (0x0000001b as SDL_Keycode);
 
 /// '\b'
-pub const SDLK_BACKSPACE: ::core::primitive::u32 = 8_u32;
+pub const SDLK_BACKSPACE: SDL_Keycode = (0x00000008 as SDL_Keycode);
 
 /// '\t'
-pub const SDLK_TAB: ::core::primitive::u32 = 9_u32;
+pub const SDLK_TAB: SDL_Keycode = (0x00000009 as SDL_Keycode);
 
 /// ' '
-pub const SDLK_SPACE: ::core::primitive::u32 = 32_u32;
+pub const SDLK_SPACE: SDL_Keycode = (0x00000020 as SDL_Keycode);
 
 /// '!'
-pub const SDLK_EXCLAIM: ::core::primitive::u32 = 33_u32;
+pub const SDLK_EXCLAIM: SDL_Keycode = (0x00000021 as SDL_Keycode);
 
 /// '"'
-pub const SDLK_DBLAPOSTROPHE: ::core::primitive::u32 = 34_u32;
+pub const SDLK_DBLAPOSTROPHE: SDL_Keycode = (0x00000022 as SDL_Keycode);
 
 /// '#'
-pub const SDLK_HASH: ::core::primitive::u32 = 35_u32;
+pub const SDLK_HASH: SDL_Keycode = (0x00000023 as SDL_Keycode);
 
 /// '$'
-pub const SDLK_DOLLAR: ::core::primitive::u32 = 36_u32;
+pub const SDLK_DOLLAR: SDL_Keycode = (0x00000024 as SDL_Keycode);
 
 /// '%'
-pub const SDLK_PERCENT: ::core::primitive::u32 = 37_u32;
+pub const SDLK_PERCENT: SDL_Keycode = (0x00000025 as SDL_Keycode);
 
 /// '&'
-pub const SDLK_AMPERSAND: ::core::primitive::u32 = 38_u32;
+pub const SDLK_AMPERSAND: SDL_Keycode = (0x00000026 as SDL_Keycode);
 
 /// '\''
-pub const SDLK_APOSTROPHE: ::core::primitive::u32 = 39_u32;
+pub const SDLK_APOSTROPHE: SDL_Keycode = (0x00000027 as SDL_Keycode);
 
 /// '('
-pub const SDLK_LEFTPAREN: ::core::primitive::u32 = 40_u32;
+pub const SDLK_LEFTPAREN: SDL_Keycode = (0x00000028 as SDL_Keycode);
 
 /// ')'
-pub const SDLK_RIGHTPAREN: ::core::primitive::u32 = 41_u32;
+pub const SDLK_RIGHTPAREN: SDL_Keycode = (0x00000029 as SDL_Keycode);
 
 /// '*'
-pub const SDLK_ASTERISK: ::core::primitive::u32 = 42_u32;
+pub const SDLK_ASTERISK: SDL_Keycode = (0x0000002a as SDL_Keycode);
 
 /// '+'
-pub const SDLK_PLUS: ::core::primitive::u32 = 43_u32;
+pub const SDLK_PLUS: SDL_Keycode = (0x0000002b as SDL_Keycode);
 
 /// ','
-pub const SDLK_COMMA: ::core::primitive::u32 = 44_u32;
+pub const SDLK_COMMA: SDL_Keycode = (0x0000002c as SDL_Keycode);
 
 /// '-'
-pub const SDLK_MINUS: ::core::primitive::u32 = 45_u32;
+pub const SDLK_MINUS: SDL_Keycode = (0x0000002d as SDL_Keycode);
 
 /// '.'
-pub const SDLK_PERIOD: ::core::primitive::u32 = 46_u32;
+pub const SDLK_PERIOD: SDL_Keycode = (0x0000002e as SDL_Keycode);
 
 /// '/'
-pub const SDLK_SLASH: ::core::primitive::u32 = 47_u32;
+pub const SDLK_SLASH: SDL_Keycode = (0x0000002f as SDL_Keycode);
 
 /// '0'
-pub const SDLK_0: ::core::primitive::u32 = 48_u32;
+pub const SDLK_0: SDL_Keycode = (0x00000030 as SDL_Keycode);
 
 /// '1'
-pub const SDLK_1: ::core::primitive::u32 = 49_u32;
+pub const SDLK_1: SDL_Keycode = (0x00000031 as SDL_Keycode);
 
 /// '2'
-pub const SDLK_2: ::core::primitive::u32 = 50_u32;
+pub const SDLK_2: SDL_Keycode = (0x00000032 as SDL_Keycode);
 
 /// '3'
-pub const SDLK_3: ::core::primitive::u32 = 51_u32;
+pub const SDLK_3: SDL_Keycode = (0x00000033 as SDL_Keycode);
 
 /// '4'
-pub const SDLK_4: ::core::primitive::u32 = 52_u32;
+pub const SDLK_4: SDL_Keycode = (0x00000034 as SDL_Keycode);
 
 /// '5'
-pub const SDLK_5: ::core::primitive::u32 = 53_u32;
+pub const SDLK_5: SDL_Keycode = (0x00000035 as SDL_Keycode);
 
 /// '6'
-pub const SDLK_6: ::core::primitive::u32 = 54_u32;
+pub const SDLK_6: SDL_Keycode = (0x00000036 as SDL_Keycode);
 
 /// '7'
-pub const SDLK_7: ::core::primitive::u32 = 55_u32;
+pub const SDLK_7: SDL_Keycode = (0x00000037 as SDL_Keycode);
 
 /// '8'
-pub const SDLK_8: ::core::primitive::u32 = 56_u32;
+pub const SDLK_8: SDL_Keycode = (0x00000038 as SDL_Keycode);
 
 /// '9'
-pub const SDLK_9: ::core::primitive::u32 = 57_u32;
+pub const SDLK_9: SDL_Keycode = (0x00000039 as SDL_Keycode);
 
 /// ':'
-pub const SDLK_COLON: ::core::primitive::u32 = 58_u32;
+pub const SDLK_COLON: SDL_Keycode = (0x0000003a as SDL_Keycode);
 
 /// ';'
-pub const SDLK_SEMICOLON: ::core::primitive::u32 = 59_u32;
+pub const SDLK_SEMICOLON: SDL_Keycode = (0x0000003b as SDL_Keycode);
 
 /// '<'
-pub const SDLK_LESS: ::core::primitive::u32 = 60_u32;
+pub const SDLK_LESS: SDL_Keycode = (0x0000003c as SDL_Keycode);
 
 /// '='
-pub const SDLK_EQUALS: ::core::primitive::u32 = 61_u32;
+pub const SDLK_EQUALS: SDL_Keycode = (0x0000003d as SDL_Keycode);
 
 /// '>'
-pub const SDLK_GREATER: ::core::primitive::u32 = 62_u32;
+pub const SDLK_GREATER: SDL_Keycode = (0x0000003e as SDL_Keycode);
 
 /// '?'
-pub const SDLK_QUESTION: ::core::primitive::u32 = 63_u32;
+pub const SDLK_QUESTION: SDL_Keycode = (0x0000003f as SDL_Keycode);
 
 /// '@'
-pub const SDLK_AT: ::core::primitive::u32 = 64_u32;
+pub const SDLK_AT: SDL_Keycode = (0x00000040 as SDL_Keycode);
 
 /// '['
-pub const SDLK_LEFTBRACKET: ::core::primitive::u32 = 91_u32;
+pub const SDLK_LEFTBRACKET: SDL_Keycode = (0x0000005b as SDL_Keycode);
 
 /// '\\'
-pub const SDLK_BACKSLASH: ::core::primitive::u32 = 92_u32;
+pub const SDLK_BACKSLASH: SDL_Keycode = (0x0000005c as SDL_Keycode);
 
 /// ']'
-pub const SDLK_RIGHTBRACKET: ::core::primitive::u32 = 93_u32;
+pub const SDLK_RIGHTBRACKET: SDL_Keycode = (0x0000005d as SDL_Keycode);
 
 /// '^'
-pub const SDLK_CARET: ::core::primitive::u32 = 94_u32;
+pub const SDLK_CARET: SDL_Keycode = (0x0000005e as SDL_Keycode);
 
 /// '_'
-pub const SDLK_UNDERSCORE: ::core::primitive::u32 = 95_u32;
+pub const SDLK_UNDERSCORE: SDL_Keycode = (0x0000005f as SDL_Keycode);
 
 /// '`'
-pub const SDLK_GRAVE: ::core::primitive::u32 = 96_u32;
+pub const SDLK_GRAVE: SDL_Keycode = (0x00000060 as SDL_Keycode);
 
 /// 'a'
-pub const SDLK_A: ::core::primitive::u32 = 97_u32;
+pub const SDLK_A: SDL_Keycode = (0x00000061 as SDL_Keycode);
 
 /// 'b'
-pub const SDLK_B: ::core::primitive::u32 = 98_u32;
+pub const SDLK_B: SDL_Keycode = (0x00000062 as SDL_Keycode);
 
 /// 'c'
-pub const SDLK_C: ::core::primitive::u32 = 99_u32;
+pub const SDLK_C: SDL_Keycode = (0x00000063 as SDL_Keycode);
 
 /// 'd'
-pub const SDLK_D: ::core::primitive::u32 = 100_u32;
+pub const SDLK_D: SDL_Keycode = (0x00000064 as SDL_Keycode);
 
 /// 'e'
-pub const SDLK_E: ::core::primitive::u32 = 101_u32;
+pub const SDLK_E: SDL_Keycode = (0x00000065 as SDL_Keycode);
 
 /// 'f'
-pub const SDLK_F: ::core::primitive::u32 = 102_u32;
+pub const SDLK_F: SDL_Keycode = (0x00000066 as SDL_Keycode);
 
 /// 'g'
-pub const SDLK_G: ::core::primitive::u32 = 103_u32;
+pub const SDLK_G: SDL_Keycode = (0x00000067 as SDL_Keycode);
 
 /// 'h'
-pub const SDLK_H: ::core::primitive::u32 = 104_u32;
+pub const SDLK_H: SDL_Keycode = (0x00000068 as SDL_Keycode);
 
 /// 'i'
-pub const SDLK_I: ::core::primitive::u32 = 105_u32;
+pub const SDLK_I: SDL_Keycode = (0x00000069 as SDL_Keycode);
 
 /// 'j'
-pub const SDLK_J: ::core::primitive::u32 = 106_u32;
+pub const SDLK_J: SDL_Keycode = (0x0000006a as SDL_Keycode);
 
 /// 'k'
-pub const SDLK_K: ::core::primitive::u32 = 107_u32;
+pub const SDLK_K: SDL_Keycode = (0x0000006b as SDL_Keycode);
 
 /// 'l'
-pub const SDLK_L: ::core::primitive::u32 = 108_u32;
+pub const SDLK_L: SDL_Keycode = (0x0000006c as SDL_Keycode);
 
 /// 'm'
-pub const SDLK_M: ::core::primitive::u32 = 109_u32;
+pub const SDLK_M: SDL_Keycode = (0x0000006d as SDL_Keycode);
 
 /// 'n'
-pub const SDLK_N: ::core::primitive::u32 = 110_u32;
+pub const SDLK_N: SDL_Keycode = (0x0000006e as SDL_Keycode);
 
 /// 'o'
-pub const SDLK_O: ::core::primitive::u32 = 111_u32;
+pub const SDLK_O: SDL_Keycode = (0x0000006f as SDL_Keycode);
 
 /// 'p'
-pub const SDLK_P: ::core::primitive::u32 = 112_u32;
+pub const SDLK_P: SDL_Keycode = (0x00000070 as SDL_Keycode);
 
 /// 'q'
-pub const SDLK_Q: ::core::primitive::u32 = 113_u32;
+pub const SDLK_Q: SDL_Keycode = (0x00000071 as SDL_Keycode);
 
 /// 'r'
-pub const SDLK_R: ::core::primitive::u32 = 114_u32;
+pub const SDLK_R: SDL_Keycode = (0x00000072 as SDL_Keycode);
 
 /// 's'
-pub const SDLK_S: ::core::primitive::u32 = 115_u32;
+pub const SDLK_S: SDL_Keycode = (0x00000073 as SDL_Keycode);
 
 /// 't'
-pub const SDLK_T: ::core::primitive::u32 = 116_u32;
+pub const SDLK_T: SDL_Keycode = (0x00000074 as SDL_Keycode);
 
 /// 'u'
-pub const SDLK_U: ::core::primitive::u32 = 117_u32;
+pub const SDLK_U: SDL_Keycode = (0x00000075 as SDL_Keycode);
 
 /// 'v'
-pub const SDLK_V: ::core::primitive::u32 = 118_u32;
+pub const SDLK_V: SDL_Keycode = (0x00000076 as SDL_Keycode);
 
 /// 'w'
-pub const SDLK_W: ::core::primitive::u32 = 119_u32;
+pub const SDLK_W: SDL_Keycode = (0x00000077 as SDL_Keycode);
 
 /// 'x'
-pub const SDLK_X: ::core::primitive::u32 = 120_u32;
+pub const SDLK_X: SDL_Keycode = (0x00000078 as SDL_Keycode);
 
 /// 'y'
-pub const SDLK_Y: ::core::primitive::u32 = 121_u32;
+pub const SDLK_Y: SDL_Keycode = (0x00000079 as SDL_Keycode);
 
 /// 'z'
-pub const SDLK_Z: ::core::primitive::u32 = 122_u32;
+pub const SDLK_Z: SDL_Keycode = (0x0000007a as SDL_Keycode);
 
 /// '{'
-pub const SDLK_LEFTBRACE: ::core::primitive::u32 = 123_u32;
+pub const SDLK_LEFTBRACE: SDL_Keycode = (0x0000007b as SDL_Keycode);
 
 /// '|'
-pub const SDLK_PIPE: ::core::primitive::u32 = 124_u32;
+pub const SDLK_PIPE: SDL_Keycode = (0x0000007c as SDL_Keycode);
 
 /// '}'
-pub const SDLK_RIGHTBRACE: ::core::primitive::u32 = 125_u32;
+pub const SDLK_RIGHTBRACE: SDL_Keycode = (0x0000007d as SDL_Keycode);
 
 /// '~'
-pub const SDLK_TILDE: ::core::primitive::u32 = 126_u32;
+pub const SDLK_TILDE: SDL_Keycode = (0x0000007e as SDL_Keycode);
 
 /// '\x7F'
-pub const SDLK_DELETE: ::core::primitive::u32 = 127_u32;
+pub const SDLK_DELETE: SDL_Keycode = (0x0000007f as SDL_Keycode);
 
 /// '\xB1'
-pub const SDLK_PLUSMINUS: ::core::primitive::u32 = 177_u32;
+pub const SDLK_PLUSMINUS: SDL_Keycode = (0x000000b1 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CAPSLOCK`])
-pub const SDLK_CAPSLOCK: ::core::primitive::u32 = 1073741881_u32;
+pub const SDLK_CAPSLOCK: SDL_Keycode = (0x40000039 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F1`])
-pub const SDLK_F1: ::core::primitive::u32 = 1073741882_u32;
+pub const SDLK_F1: SDL_Keycode = (0x4000003a as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F2`])
-pub const SDLK_F2: ::core::primitive::u32 = 1073741883_u32;
+pub const SDLK_F2: SDL_Keycode = (0x4000003b as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F3`])
-pub const SDLK_F3: ::core::primitive::u32 = 1073741884_u32;
+pub const SDLK_F3: SDL_Keycode = (0x4000003c as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F4`])
-pub const SDLK_F4: ::core::primitive::u32 = 1073741885_u32;
+pub const SDLK_F4: SDL_Keycode = (0x4000003d as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F5`])
-pub const SDLK_F5: ::core::primitive::u32 = 1073741886_u32;
+pub const SDLK_F5: SDL_Keycode = (0x4000003e as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F6`])
-pub const SDLK_F6: ::core::primitive::u32 = 1073741887_u32;
+pub const SDLK_F6: SDL_Keycode = (0x4000003f as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F7`])
-pub const SDLK_F7: ::core::primitive::u32 = 1073741888_u32;
+pub const SDLK_F7: SDL_Keycode = (0x40000040 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F8`])
-pub const SDLK_F8: ::core::primitive::u32 = 1073741889_u32;
+pub const SDLK_F8: SDL_Keycode = (0x40000041 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F9`])
-pub const SDLK_F9: ::core::primitive::u32 = 1073741890_u32;
+pub const SDLK_F9: SDL_Keycode = (0x40000042 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F10`])
-pub const SDLK_F10: ::core::primitive::u32 = 1073741891_u32;
+pub const SDLK_F10: SDL_Keycode = (0x40000043 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F11`])
-pub const SDLK_F11: ::core::primitive::u32 = 1073741892_u32;
+pub const SDLK_F11: SDL_Keycode = (0x40000044 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F12`])
-pub const SDLK_F12: ::core::primitive::u32 = 1073741893_u32;
+pub const SDLK_F12: SDL_Keycode = (0x40000045 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_PRINTSCREEN`])
-pub const SDLK_PRINTSCREEN: ::core::primitive::u32 = 1073741894_u32;
+pub const SDLK_PRINTSCREEN: SDL_Keycode = (0x40000046 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SCROLLLOCK`])
-pub const SDLK_SCROLLLOCK: ::core::primitive::u32 = 1073741895_u32;
+pub const SDLK_SCROLLLOCK: SDL_Keycode = (0x40000047 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_PAUSE`])
-pub const SDLK_PAUSE: ::core::primitive::u32 = 1073741896_u32;
+pub const SDLK_PAUSE: SDL_Keycode = (0x40000048 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_INSERT`])
-pub const SDLK_INSERT: ::core::primitive::u32 = 1073741897_u32;
+pub const SDLK_INSERT: SDL_Keycode = (0x40000049 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_HOME`])
-pub const SDLK_HOME: ::core::primitive::u32 = 1073741898_u32;
+pub const SDLK_HOME: SDL_Keycode = (0x4000004a as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_PAGEUP`])
-pub const SDLK_PAGEUP: ::core::primitive::u32 = 1073741899_u32;
+pub const SDLK_PAGEUP: SDL_Keycode = (0x4000004b as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_END`])
-pub const SDLK_END: ::core::primitive::u32 = 1073741901_u32;
+pub const SDLK_END: SDL_Keycode = (0x4000004d as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_PAGEDOWN`])
-pub const SDLK_PAGEDOWN: ::core::primitive::u32 = 1073741902_u32;
+pub const SDLK_PAGEDOWN: SDL_Keycode = (0x4000004e as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_RIGHT`])
-pub const SDLK_RIGHT: ::core::primitive::u32 = 1073741903_u32;
+pub const SDLK_RIGHT: SDL_Keycode = (0x4000004f as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_LEFT`])
-pub const SDLK_LEFT: ::core::primitive::u32 = 1073741904_u32;
+pub const SDLK_LEFT: SDL_Keycode = (0x40000050 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_DOWN`])
-pub const SDLK_DOWN: ::core::primitive::u32 = 1073741905_u32;
+pub const SDLK_DOWN: SDL_Keycode = (0x40000051 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_UP`])
-pub const SDLK_UP: ::core::primitive::u32 = 1073741906_u32;
+pub const SDLK_UP: SDL_Keycode = (0x40000052 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_NUMLOCKCLEAR`])
-pub const SDLK_NUMLOCKCLEAR: ::core::primitive::u32 = 1073741907_u32;
+pub const SDLK_NUMLOCKCLEAR: SDL_Keycode = (0x40000053 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_DIVIDE`])
-pub const SDLK_KP_DIVIDE: ::core::primitive::u32 = 1073741908_u32;
+pub const SDLK_KP_DIVIDE: SDL_Keycode = (0x40000054 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MULTIPLY`])
-pub const SDLK_KP_MULTIPLY: ::core::primitive::u32 = 1073741909_u32;
+pub const SDLK_KP_MULTIPLY: SDL_Keycode = (0x40000055 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MINUS`])
-pub const SDLK_KP_MINUS: ::core::primitive::u32 = 1073741910_u32;
+pub const SDLK_KP_MINUS: SDL_Keycode = (0x40000056 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_PLUS`])
-pub const SDLK_KP_PLUS: ::core::primitive::u32 = 1073741911_u32;
+pub const SDLK_KP_PLUS: SDL_Keycode = (0x40000057 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_ENTER`])
-pub const SDLK_KP_ENTER: ::core::primitive::u32 = 1073741912_u32;
+pub const SDLK_KP_ENTER: SDL_Keycode = (0x40000058 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_1`])
-pub const SDLK_KP_1: ::core::primitive::u32 = 1073741913_u32;
+pub const SDLK_KP_1: SDL_Keycode = (0x40000059 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_2`])
-pub const SDLK_KP_2: ::core::primitive::u32 = 1073741914_u32;
+pub const SDLK_KP_2: SDL_Keycode = (0x4000005a as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_3`])
-pub const SDLK_KP_3: ::core::primitive::u32 = 1073741915_u32;
+pub const SDLK_KP_3: SDL_Keycode = (0x4000005b as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_4`])
-pub const SDLK_KP_4: ::core::primitive::u32 = 1073741916_u32;
+pub const SDLK_KP_4: SDL_Keycode = (0x4000005c as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_5`])
-pub const SDLK_KP_5: ::core::primitive::u32 = 1073741917_u32;
+pub const SDLK_KP_5: SDL_Keycode = (0x4000005d as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_6`])
-pub const SDLK_KP_6: ::core::primitive::u32 = 1073741918_u32;
+pub const SDLK_KP_6: SDL_Keycode = (0x4000005e as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_7`])
-pub const SDLK_KP_7: ::core::primitive::u32 = 1073741919_u32;
+pub const SDLK_KP_7: SDL_Keycode = (0x4000005f as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_8`])
-pub const SDLK_KP_8: ::core::primitive::u32 = 1073741920_u32;
+pub const SDLK_KP_8: SDL_Keycode = (0x40000060 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_9`])
-pub const SDLK_KP_9: ::core::primitive::u32 = 1073741921_u32;
+pub const SDLK_KP_9: SDL_Keycode = (0x40000061 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_0`])
-pub const SDLK_KP_0: ::core::primitive::u32 = 1073741922_u32;
+pub const SDLK_KP_0: SDL_Keycode = (0x40000062 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_PERIOD`])
-pub const SDLK_KP_PERIOD: ::core::primitive::u32 = 1073741923_u32;
+pub const SDLK_KP_PERIOD: SDL_Keycode = (0x40000063 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_APPLICATION`])
-pub const SDLK_APPLICATION: ::core::primitive::u32 = 1073741925_u32;
+pub const SDLK_APPLICATION: SDL_Keycode = (0x40000065 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_POWER`])
-pub const SDLK_POWER: ::core::primitive::u32 = 1073741926_u32;
+pub const SDLK_POWER: SDL_Keycode = (0x40000066 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_EQUALS`])
-pub const SDLK_KP_EQUALS: ::core::primitive::u32 = 1073741927_u32;
+pub const SDLK_KP_EQUALS: SDL_Keycode = (0x40000067 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F13`])
-pub const SDLK_F13: ::core::primitive::u32 = 1073741928_u32;
+pub const SDLK_F13: SDL_Keycode = (0x40000068 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F14`])
-pub const SDLK_F14: ::core::primitive::u32 = 1073741929_u32;
+pub const SDLK_F14: SDL_Keycode = (0x40000069 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F15`])
-pub const SDLK_F15: ::core::primitive::u32 = 1073741930_u32;
+pub const SDLK_F15: SDL_Keycode = (0x4000006a as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F16`])
-pub const SDLK_F16: ::core::primitive::u32 = 1073741931_u32;
+pub const SDLK_F16: SDL_Keycode = (0x4000006b as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F17`])
-pub const SDLK_F17: ::core::primitive::u32 = 1073741932_u32;
+pub const SDLK_F17: SDL_Keycode = (0x4000006c as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F18`])
-pub const SDLK_F18: ::core::primitive::u32 = 1073741933_u32;
+pub const SDLK_F18: SDL_Keycode = (0x4000006d as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F19`])
-pub const SDLK_F19: ::core::primitive::u32 = 1073741934_u32;
+pub const SDLK_F19: SDL_Keycode = (0x4000006e as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F20`])
-pub const SDLK_F20: ::core::primitive::u32 = 1073741935_u32;
+pub const SDLK_F20: SDL_Keycode = (0x4000006f as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F21`])
-pub const SDLK_F21: ::core::primitive::u32 = 1073741936_u32;
+pub const SDLK_F21: SDL_Keycode = (0x40000070 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F22`])
-pub const SDLK_F22: ::core::primitive::u32 = 1073741937_u32;
+pub const SDLK_F22: SDL_Keycode = (0x40000071 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F23`])
-pub const SDLK_F23: ::core::primitive::u32 = 1073741938_u32;
+pub const SDLK_F23: SDL_Keycode = (0x40000072 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F24`])
-pub const SDLK_F24: ::core::primitive::u32 = 1073741939_u32;
+pub const SDLK_F24: SDL_Keycode = (0x40000073 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_EXECUTE`])
-pub const SDLK_EXECUTE: ::core::primitive::u32 = 1073741940_u32;
+pub const SDLK_EXECUTE: SDL_Keycode = (0x40000074 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_HELP`])
-pub const SDLK_HELP: ::core::primitive::u32 = 1073741941_u32;
+pub const SDLK_HELP: SDL_Keycode = (0x40000075 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MENU`])
-pub const SDLK_MENU: ::core::primitive::u32 = 1073741942_u32;
+pub const SDLK_MENU: SDL_Keycode = (0x40000076 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SELECT`])
-pub const SDLK_SELECT: ::core::primitive::u32 = 1073741943_u32;
+pub const SDLK_SELECT: SDL_Keycode = (0x40000077 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_STOP`])
-pub const SDLK_STOP: ::core::primitive::u32 = 1073741944_u32;
+pub const SDLK_STOP: SDL_Keycode = (0x40000078 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AGAIN`])
-pub const SDLK_AGAIN: ::core::primitive::u32 = 1073741945_u32;
+pub const SDLK_AGAIN: SDL_Keycode = (0x40000079 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_UNDO`])
-pub const SDLK_UNDO: ::core::primitive::u32 = 1073741946_u32;
+pub const SDLK_UNDO: SDL_Keycode = (0x4000007a as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CUT`])
-pub const SDLK_CUT: ::core::primitive::u32 = 1073741947_u32;
+pub const SDLK_CUT: SDL_Keycode = (0x4000007b as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_COPY`])
-pub const SDLK_COPY: ::core::primitive::u32 = 1073741948_u32;
+pub const SDLK_COPY: SDL_Keycode = (0x4000007c as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_PASTE`])
-pub const SDLK_PASTE: ::core::primitive::u32 = 1073741949_u32;
+pub const SDLK_PASTE: SDL_Keycode = (0x4000007d as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_FIND`])
-pub const SDLK_FIND: ::core::primitive::u32 = 1073741950_u32;
+pub const SDLK_FIND: SDL_Keycode = (0x4000007e as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MUTE`])
-pub const SDLK_MUTE: ::core::primitive::u32 = 1073741951_u32;
+pub const SDLK_MUTE: SDL_Keycode = (0x4000007f as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_VOLUMEUP`])
-pub const SDLK_VOLUMEUP: ::core::primitive::u32 = 1073741952_u32;
+pub const SDLK_VOLUMEUP: SDL_Keycode = (0x40000080 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_VOLUMEDOWN`])
-pub const SDLK_VOLUMEDOWN: ::core::primitive::u32 = 1073741953_u32;
+pub const SDLK_VOLUMEDOWN: SDL_Keycode = (0x40000081 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_COMMA`])
-pub const SDLK_KP_COMMA: ::core::primitive::u32 = 1073741957_u32;
+pub const SDLK_KP_COMMA: SDL_Keycode = (0x40000085 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_EQUALSAS400`])
-pub const SDLK_KP_EQUALSAS400: ::core::primitive::u32 = 1073741958_u32;
+pub const SDLK_KP_EQUALSAS400: SDL_Keycode = (0x40000086 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_ALTERASE`])
-pub const SDLK_ALTERASE: ::core::primitive::u32 = 1073741977_u32;
+pub const SDLK_ALTERASE: SDL_Keycode = (0x40000099 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SYSREQ`])
-pub const SDLK_SYSREQ: ::core::primitive::u32 = 1073741978_u32;
+pub const SDLK_SYSREQ: SDL_Keycode = (0x4000009a as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CANCEL`])
-pub const SDLK_CANCEL: ::core::primitive::u32 = 1073741979_u32;
+pub const SDLK_CANCEL: SDL_Keycode = (0x4000009b as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CLEAR`])
-pub const SDLK_CLEAR: ::core::primitive::u32 = 1073741980_u32;
+pub const SDLK_CLEAR: SDL_Keycode = (0x4000009c as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_PRIOR`])
-pub const SDLK_PRIOR: ::core::primitive::u32 = 1073741981_u32;
+pub const SDLK_PRIOR: SDL_Keycode = (0x4000009d as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_RETURN2`])
-pub const SDLK_RETURN2: ::core::primitive::u32 = 1073741982_u32;
+pub const SDLK_RETURN2: SDL_Keycode = (0x4000009e as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SEPARATOR`])
-pub const SDLK_SEPARATOR: ::core::primitive::u32 = 1073741983_u32;
+pub const SDLK_SEPARATOR: SDL_Keycode = (0x4000009f as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_OUT`])
-pub const SDLK_OUT: ::core::primitive::u32 = 1073741984_u32;
+pub const SDLK_OUT: SDL_Keycode = (0x400000a0 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_OPER`])
-pub const SDLK_OPER: ::core::primitive::u32 = 1073741985_u32;
+pub const SDLK_OPER: SDL_Keycode = (0x400000a1 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CLEARAGAIN`])
-pub const SDLK_CLEARAGAIN: ::core::primitive::u32 = 1073741986_u32;
+pub const SDLK_CLEARAGAIN: SDL_Keycode = (0x400000a2 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CRSEL`])
-pub const SDLK_CRSEL: ::core::primitive::u32 = 1073741987_u32;
+pub const SDLK_CRSEL: SDL_Keycode = (0x400000a3 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_EXSEL`])
-pub const SDLK_EXSEL: ::core::primitive::u32 = 1073741988_u32;
+pub const SDLK_EXSEL: SDL_Keycode = (0x400000a4 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_00`])
-pub const SDLK_KP_00: ::core::primitive::u32 = 1073742000_u32;
+pub const SDLK_KP_00: SDL_Keycode = (0x400000b0 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_000`])
-pub const SDLK_KP_000: ::core::primitive::u32 = 1073742001_u32;
+pub const SDLK_KP_000: SDL_Keycode = (0x400000b1 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_THOUSANDSSEPARATOR`])
-pub const SDLK_THOUSANDSSEPARATOR: ::core::primitive::u32 = 1073742002_u32;
+pub const SDLK_THOUSANDSSEPARATOR: SDL_Keycode = (0x400000b2 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_DECIMALSEPARATOR`])
-pub const SDLK_DECIMALSEPARATOR: ::core::primitive::u32 = 1073742003_u32;
+pub const SDLK_DECIMALSEPARATOR: SDL_Keycode = (0x400000b3 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CURRENCYUNIT`])
-pub const SDLK_CURRENCYUNIT: ::core::primitive::u32 = 1073742004_u32;
+pub const SDLK_CURRENCYUNIT: SDL_Keycode = (0x400000b4 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CURRENCYSUBUNIT`])
-pub const SDLK_CURRENCYSUBUNIT: ::core::primitive::u32 = 1073742005_u32;
+pub const SDLK_CURRENCYSUBUNIT: SDL_Keycode = (0x400000b5 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_LEFTPAREN`])
-pub const SDLK_KP_LEFTPAREN: ::core::primitive::u32 = 1073742006_u32;
+pub const SDLK_KP_LEFTPAREN: SDL_Keycode = (0x400000b6 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_RIGHTPAREN`])
-pub const SDLK_KP_RIGHTPAREN: ::core::primitive::u32 = 1073742007_u32;
+pub const SDLK_KP_RIGHTPAREN: SDL_Keycode = (0x400000b7 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_LEFTBRACE`])
-pub const SDLK_KP_LEFTBRACE: ::core::primitive::u32 = 1073742008_u32;
+pub const SDLK_KP_LEFTBRACE: SDL_Keycode = (0x400000b8 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_RIGHTBRACE`])
-pub const SDLK_KP_RIGHTBRACE: ::core::primitive::u32 = 1073742009_u32;
+pub const SDLK_KP_RIGHTBRACE: SDL_Keycode = (0x400000b9 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_TAB`])
-pub const SDLK_KP_TAB: ::core::primitive::u32 = 1073742010_u32;
+pub const SDLK_KP_TAB: SDL_Keycode = (0x400000ba as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_BACKSPACE`])
-pub const SDLK_KP_BACKSPACE: ::core::primitive::u32 = 1073742011_u32;
+pub const SDLK_KP_BACKSPACE: SDL_Keycode = (0x400000bb as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_A`])
-pub const SDLK_KP_A: ::core::primitive::u32 = 1073742012_u32;
+pub const SDLK_KP_A: SDL_Keycode = (0x400000bc as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_B`])
-pub const SDLK_KP_B: ::core::primitive::u32 = 1073742013_u32;
+pub const SDLK_KP_B: SDL_Keycode = (0x400000bd as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_C`])
-pub const SDLK_KP_C: ::core::primitive::u32 = 1073742014_u32;
+pub const SDLK_KP_C: SDL_Keycode = (0x400000be as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_D`])
-pub const SDLK_KP_D: ::core::primitive::u32 = 1073742015_u32;
+pub const SDLK_KP_D: SDL_Keycode = (0x400000bf as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_E`])
-pub const SDLK_KP_E: ::core::primitive::u32 = 1073742016_u32;
+pub const SDLK_KP_E: SDL_Keycode = (0x400000c0 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_F`])
-pub const SDLK_KP_F: ::core::primitive::u32 = 1073742017_u32;
+pub const SDLK_KP_F: SDL_Keycode = (0x400000c1 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_XOR`])
-pub const SDLK_KP_XOR: ::core::primitive::u32 = 1073742018_u32;
+pub const SDLK_KP_XOR: SDL_Keycode = (0x400000c2 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_POWER`])
-pub const SDLK_KP_POWER: ::core::primitive::u32 = 1073742019_u32;
+pub const SDLK_KP_POWER: SDL_Keycode = (0x400000c3 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_PERCENT`])
-pub const SDLK_KP_PERCENT: ::core::primitive::u32 = 1073742020_u32;
+pub const SDLK_KP_PERCENT: SDL_Keycode = (0x400000c4 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_LESS`])
-pub const SDLK_KP_LESS: ::core::primitive::u32 = 1073742021_u32;
+pub const SDLK_KP_LESS: SDL_Keycode = (0x400000c5 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_GREATER`])
-pub const SDLK_KP_GREATER: ::core::primitive::u32 = 1073742022_u32;
+pub const SDLK_KP_GREATER: SDL_Keycode = (0x400000c6 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_AMPERSAND`])
-pub const SDLK_KP_AMPERSAND: ::core::primitive::u32 = 1073742023_u32;
+pub const SDLK_KP_AMPERSAND: SDL_Keycode = (0x400000c7 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_DBLAMPERSAND`])
-pub const SDLK_KP_DBLAMPERSAND: ::core::primitive::u32 = 1073742024_u32;
+pub const SDLK_KP_DBLAMPERSAND: SDL_Keycode = (0x400000c8 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_VERTICALBAR`])
-pub const SDLK_KP_VERTICALBAR: ::core::primitive::u32 = 1073742025_u32;
+pub const SDLK_KP_VERTICALBAR: SDL_Keycode = (0x400000c9 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_DBLVERTICALBAR`])
-pub const SDLK_KP_DBLVERTICALBAR: ::core::primitive::u32 = 1073742026_u32;
+pub const SDLK_KP_DBLVERTICALBAR: SDL_Keycode = (0x400000ca as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_COLON`])
-pub const SDLK_KP_COLON: ::core::primitive::u32 = 1073742027_u32;
+pub const SDLK_KP_COLON: SDL_Keycode = (0x400000cb as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_HASH`])
-pub const SDLK_KP_HASH: ::core::primitive::u32 = 1073742028_u32;
+pub const SDLK_KP_HASH: SDL_Keycode = (0x400000cc as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_SPACE`])
-pub const SDLK_KP_SPACE: ::core::primitive::u32 = 1073742029_u32;
+pub const SDLK_KP_SPACE: SDL_Keycode = (0x400000cd as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_AT`])
-pub const SDLK_KP_AT: ::core::primitive::u32 = 1073742030_u32;
+pub const SDLK_KP_AT: SDL_Keycode = (0x400000ce as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_EXCLAM`])
-pub const SDLK_KP_EXCLAM: ::core::primitive::u32 = 1073742031_u32;
+pub const SDLK_KP_EXCLAM: SDL_Keycode = (0x400000cf as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMSTORE`])
-pub const SDLK_KP_MEMSTORE: ::core::primitive::u32 = 1073742032_u32;
+pub const SDLK_KP_MEMSTORE: SDL_Keycode = (0x400000d0 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMRECALL`])
-pub const SDLK_KP_MEMRECALL: ::core::primitive::u32 = 1073742033_u32;
+pub const SDLK_KP_MEMRECALL: SDL_Keycode = (0x400000d1 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMCLEAR`])
-pub const SDLK_KP_MEMCLEAR: ::core::primitive::u32 = 1073742034_u32;
+pub const SDLK_KP_MEMCLEAR: SDL_Keycode = (0x400000d2 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMADD`])
-pub const SDLK_KP_MEMADD: ::core::primitive::u32 = 1073742035_u32;
+pub const SDLK_KP_MEMADD: SDL_Keycode = (0x400000d3 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMSUBTRACT`])
-pub const SDLK_KP_MEMSUBTRACT: ::core::primitive::u32 = 1073742036_u32;
+pub const SDLK_KP_MEMSUBTRACT: SDL_Keycode = (0x400000d4 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMMULTIPLY`])
-pub const SDLK_KP_MEMMULTIPLY: ::core::primitive::u32 = 1073742037_u32;
+pub const SDLK_KP_MEMMULTIPLY: SDL_Keycode = (0x400000d5 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMDIVIDE`])
-pub const SDLK_KP_MEMDIVIDE: ::core::primitive::u32 = 1073742038_u32;
+pub const SDLK_KP_MEMDIVIDE: SDL_Keycode = (0x400000d6 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_PLUSMINUS`])
-pub const SDLK_KP_PLUSMINUS: ::core::primitive::u32 = 1073742039_u32;
+pub const SDLK_KP_PLUSMINUS: SDL_Keycode = (0x400000d7 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_CLEAR`])
-pub const SDLK_KP_CLEAR: ::core::primitive::u32 = 1073742040_u32;
+pub const SDLK_KP_CLEAR: SDL_Keycode = (0x400000d8 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_CLEARENTRY`])
-pub const SDLK_KP_CLEARENTRY: ::core::primitive::u32 = 1073742041_u32;
+pub const SDLK_KP_CLEARENTRY: SDL_Keycode = (0x400000d9 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_BINARY`])
-pub const SDLK_KP_BINARY: ::core::primitive::u32 = 1073742042_u32;
+pub const SDLK_KP_BINARY: SDL_Keycode = (0x400000da as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_OCTAL`])
-pub const SDLK_KP_OCTAL: ::core::primitive::u32 = 1073742043_u32;
+pub const SDLK_KP_OCTAL: SDL_Keycode = (0x400000db as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_DECIMAL`])
-pub const SDLK_KP_DECIMAL: ::core::primitive::u32 = 1073742044_u32;
+pub const SDLK_KP_DECIMAL: SDL_Keycode = (0x400000dc as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_HEXADECIMAL`])
-pub const SDLK_KP_HEXADECIMAL: ::core::primitive::u32 = 1073742045_u32;
+pub const SDLK_KP_HEXADECIMAL: SDL_Keycode = (0x400000dd as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_LCTRL`])
-pub const SDLK_LCTRL: ::core::primitive::u32 = 1073742048_u32;
+pub const SDLK_LCTRL: SDL_Keycode = (0x400000e0 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_LSHIFT`])
-pub const SDLK_LSHIFT: ::core::primitive::u32 = 1073742049_u32;
+pub const SDLK_LSHIFT: SDL_Keycode = (0x400000e1 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_LALT`])
-pub const SDLK_LALT: ::core::primitive::u32 = 1073742050_u32;
+pub const SDLK_LALT: SDL_Keycode = (0x400000e2 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_LGUI`])
-pub const SDLK_LGUI: ::core::primitive::u32 = 1073742051_u32;
+pub const SDLK_LGUI: SDL_Keycode = (0x400000e3 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_RCTRL`])
-pub const SDLK_RCTRL: ::core::primitive::u32 = 1073742052_u32;
+pub const SDLK_RCTRL: SDL_Keycode = (0x400000e4 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_RSHIFT`])
-pub const SDLK_RSHIFT: ::core::primitive::u32 = 1073742053_u32;
+pub const SDLK_RSHIFT: SDL_Keycode = (0x400000e5 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_RALT`])
-pub const SDLK_RALT: ::core::primitive::u32 = 1073742054_u32;
+pub const SDLK_RALT: SDL_Keycode = (0x400000e6 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_RGUI`])
-pub const SDLK_RGUI: ::core::primitive::u32 = 1073742055_u32;
+pub const SDLK_RGUI: SDL_Keycode = (0x400000e7 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MODE`])
-pub const SDLK_MODE: ::core::primitive::u32 = 1073742081_u32;
+pub const SDLK_MODE: SDL_Keycode = (0x40000101 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SLEEP`])
-pub const SDLK_SLEEP: ::core::primitive::u32 = 1073742082_u32;
+pub const SDLK_SLEEP: SDL_Keycode = (0x40000102 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_WAKE`])
-pub const SDLK_WAKE: ::core::primitive::u32 = 1073742083_u32;
+pub const SDLK_WAKE: SDL_Keycode = (0x40000103 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CHANNEL_INCREMENT`])
-pub const SDLK_CHANNEL_INCREMENT: ::core::primitive::u32 = 1073742084_u32;
+pub const SDLK_CHANNEL_INCREMENT: SDL_Keycode = (0x40000104 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CHANNEL_DECREMENT`])
-pub const SDLK_CHANNEL_DECREMENT: ::core::primitive::u32 = 1073742085_u32;
+pub const SDLK_CHANNEL_DECREMENT: SDL_Keycode = (0x40000105 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_PLAY`])
-pub const SDLK_MEDIA_PLAY: ::core::primitive::u32 = 1073742086_u32;
+pub const SDLK_MEDIA_PLAY: SDL_Keycode = (0x40000106 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_PAUSE`])
-pub const SDLK_MEDIA_PAUSE: ::core::primitive::u32 = 1073742087_u32;
+pub const SDLK_MEDIA_PAUSE: SDL_Keycode = (0x40000107 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_RECORD`])
-pub const SDLK_MEDIA_RECORD: ::core::primitive::u32 = 1073742088_u32;
+pub const SDLK_MEDIA_RECORD: SDL_Keycode = (0x40000108 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_FAST_FORWARD`])
-pub const SDLK_MEDIA_FAST_FORWARD: ::core::primitive::u32 = 1073742089_u32;
+pub const SDLK_MEDIA_FAST_FORWARD: SDL_Keycode = (0x40000109 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_REWIND`])
-pub const SDLK_MEDIA_REWIND: ::core::primitive::u32 = 1073742090_u32;
+pub const SDLK_MEDIA_REWIND: SDL_Keycode = (0x4000010a as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_NEXT_TRACK`])
-pub const SDLK_MEDIA_NEXT_TRACK: ::core::primitive::u32 = 1073742091_u32;
+pub const SDLK_MEDIA_NEXT_TRACK: SDL_Keycode = (0x4000010b as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_PREVIOUS_TRACK`])
-pub const SDLK_MEDIA_PREVIOUS_TRACK: ::core::primitive::u32 = 1073742092_u32;
+pub const SDLK_MEDIA_PREVIOUS_TRACK: SDL_Keycode = (0x4000010c as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_STOP`])
-pub const SDLK_MEDIA_STOP: ::core::primitive::u32 = 1073742093_u32;
+pub const SDLK_MEDIA_STOP: SDL_Keycode = (0x4000010d as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_EJECT`])
-pub const SDLK_MEDIA_EJECT: ::core::primitive::u32 = 1073742094_u32;
+pub const SDLK_MEDIA_EJECT: SDL_Keycode = (0x4000010e as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_PLAY_PAUSE`])
-pub const SDLK_MEDIA_PLAY_PAUSE: ::core::primitive::u32 = 1073742095_u32;
+pub const SDLK_MEDIA_PLAY_PAUSE: SDL_Keycode = (0x4000010f as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_SELECT`])
-pub const SDLK_MEDIA_SELECT: ::core::primitive::u32 = 1073742096_u32;
+pub const SDLK_MEDIA_SELECT: SDL_Keycode = (0x40000110 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_NEW`])
-pub const SDLK_AC_NEW: ::core::primitive::u32 = 1073742097_u32;
+pub const SDLK_AC_NEW: SDL_Keycode = (0x40000111 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_OPEN`])
-pub const SDLK_AC_OPEN: ::core::primitive::u32 = 1073742098_u32;
+pub const SDLK_AC_OPEN: SDL_Keycode = (0x40000112 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_CLOSE`])
-pub const SDLK_AC_CLOSE: ::core::primitive::u32 = 1073742099_u32;
+pub const SDLK_AC_CLOSE: SDL_Keycode = (0x40000113 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_EXIT`])
-pub const SDLK_AC_EXIT: ::core::primitive::u32 = 1073742100_u32;
+pub const SDLK_AC_EXIT: SDL_Keycode = (0x40000114 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_SAVE`])
-pub const SDLK_AC_SAVE: ::core::primitive::u32 = 1073742101_u32;
+pub const SDLK_AC_SAVE: SDL_Keycode = (0x40000115 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_PRINT`])
-pub const SDLK_AC_PRINT: ::core::primitive::u32 = 1073742102_u32;
+pub const SDLK_AC_PRINT: SDL_Keycode = (0x40000116 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_PROPERTIES`])
-pub const SDLK_AC_PROPERTIES: ::core::primitive::u32 = 1073742103_u32;
+pub const SDLK_AC_PROPERTIES: SDL_Keycode = (0x40000117 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_SEARCH`])
-pub const SDLK_AC_SEARCH: ::core::primitive::u32 = 1073742104_u32;
+pub const SDLK_AC_SEARCH: SDL_Keycode = (0x40000118 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_HOME`])
-pub const SDLK_AC_HOME: ::core::primitive::u32 = 1073742105_u32;
+pub const SDLK_AC_HOME: SDL_Keycode = (0x40000119 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_BACK`])
-pub const SDLK_AC_BACK: ::core::primitive::u32 = 1073742106_u32;
+pub const SDLK_AC_BACK: SDL_Keycode = (0x4000011a as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_FORWARD`])
-pub const SDLK_AC_FORWARD: ::core::primitive::u32 = 1073742107_u32;
+pub const SDLK_AC_FORWARD: SDL_Keycode = (0x4000011b as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_STOP`])
-pub const SDLK_AC_STOP: ::core::primitive::u32 = 1073742108_u32;
+pub const SDLK_AC_STOP: SDL_Keycode = (0x4000011c as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_REFRESH`])
-pub const SDLK_AC_REFRESH: ::core::primitive::u32 = 1073742109_u32;
+pub const SDLK_AC_REFRESH: SDL_Keycode = (0x4000011d as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_BOOKMARKS`])
-pub const SDLK_AC_BOOKMARKS: ::core::primitive::u32 = 1073742110_u32;
+pub const SDLK_AC_BOOKMARKS: SDL_Keycode = (0x4000011e as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SOFTLEFT`])
-pub const SDLK_SOFTLEFT: ::core::primitive::u32 = 1073742111_u32;
+pub const SDLK_SOFTLEFT: SDL_Keycode = (0x4000011f as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SOFTRIGHT`])
-pub const SDLK_SOFTRIGHT: ::core::primitive::u32 = 1073742112_u32;
+pub const SDLK_SOFTRIGHT: SDL_Keycode = (0x40000120 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CALL`])
-pub const SDLK_CALL: ::core::primitive::u32 = 1073742113_u32;
+pub const SDLK_CALL: SDL_Keycode = (0x40000121 as SDL_Keycode);
 
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_ENDCALL`])
-pub const SDLK_ENDCALL: ::core::primitive::u32 = 1073742114_u32;
+pub const SDLK_ENDCALL: SDL_Keycode = (0x40000122 as SDL_Keycode);
 
 /// Valid key modifiers (possibly OR'd together).
 ///

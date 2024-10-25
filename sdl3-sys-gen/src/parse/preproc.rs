@@ -475,7 +475,16 @@ impl Parse for PreProcLine {
                         let mut value_span = i.trim_wsc_start()?;
                         let doc =
                             DocComment::try_parse_rev_combine_postfix(ctx, &mut value_span, doc)?;
-                        let value = DefineValue::parse_all(ctx, value_span.trim_wsc_end()?)?;
+                        let mut value = DefineValue::parse_all(ctx, value_span.trim_wsc_end()?)?;
+                        if let Some(td) = &*ctx.active_typedef.borrow() {
+                            if let Some(prefix) = td.use_for_defines {
+                                if ident.as_str().starts_with(prefix) {
+                                    value = value.cast_expr(Type::ident(td.ident.clone()))
+                                }
+                            } else {
+                                value = value.cast_expr(Type::ident(td.ident.clone()))
+                            }
+                        }
                         let mut define = Define {
                             span: span.clone(),
                             doc,

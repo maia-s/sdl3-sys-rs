@@ -199,79 +199,79 @@ pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
 pub type SDL_WindowFlags = Uint64;
 
 /// window is in fullscreen mode
-pub const SDL_WINDOW_FULLSCREEN: ::core::primitive::u64 = 1_u64;
+pub const SDL_WINDOW_FULLSCREEN: SDL_WindowFlags = (1_u64 as SDL_WindowFlags);
 
 /// window usable with OpenGL context
-pub const SDL_WINDOW_OPENGL: ::core::primitive::u64 = 2_u64;
+pub const SDL_WINDOW_OPENGL: SDL_WindowFlags = (2_u64 as SDL_WindowFlags);
 
 /// window is occluded
-pub const SDL_WINDOW_OCCLUDED: ::core::primitive::u64 = 4_u64;
+pub const SDL_WINDOW_OCCLUDED: SDL_WindowFlags = (4_u64 as SDL_WindowFlags);
 
 /// window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible
-pub const SDL_WINDOW_HIDDEN: ::core::primitive::u64 = 8_u64;
+pub const SDL_WINDOW_HIDDEN: SDL_WindowFlags = (8_u64 as SDL_WindowFlags);
 
 /// no window decoration
-pub const SDL_WINDOW_BORDERLESS: ::core::primitive::u64 = 16_u64;
+pub const SDL_WINDOW_BORDERLESS: SDL_WindowFlags = (16_u64 as SDL_WindowFlags);
 
 /// window can be resized
-pub const SDL_WINDOW_RESIZABLE: ::core::primitive::u64 = 32_u64;
+pub const SDL_WINDOW_RESIZABLE: SDL_WindowFlags = (32_u64 as SDL_WindowFlags);
 
 /// window is minimized
-pub const SDL_WINDOW_MINIMIZED: ::core::primitive::u64 = 64_u64;
+pub const SDL_WINDOW_MINIMIZED: SDL_WindowFlags = (64_u64 as SDL_WindowFlags);
 
 /// window is maximized
-pub const SDL_WINDOW_MAXIMIZED: ::core::primitive::u64 = 128_u64;
+pub const SDL_WINDOW_MAXIMIZED: SDL_WindowFlags = (128_u64 as SDL_WindowFlags);
 
 /// window has grabbed mouse input
-pub const SDL_WINDOW_MOUSE_GRABBED: ::core::primitive::u64 = 256_u64;
+pub const SDL_WINDOW_MOUSE_GRABBED: SDL_WindowFlags = (256_u64 as SDL_WindowFlags);
 
 /// window has input focus
-pub const SDL_WINDOW_INPUT_FOCUS: ::core::primitive::u64 = 512_u64;
+pub const SDL_WINDOW_INPUT_FOCUS: SDL_WindowFlags = (512_u64 as SDL_WindowFlags);
 
 /// window has mouse focus
-pub const SDL_WINDOW_MOUSE_FOCUS: ::core::primitive::u64 = 1024_u64;
+pub const SDL_WINDOW_MOUSE_FOCUS: SDL_WindowFlags = (1024_u64 as SDL_WindowFlags);
 
 /// window not created by SDL
-pub const SDL_WINDOW_EXTERNAL: ::core::primitive::u64 = 2048_u64;
+pub const SDL_WINDOW_EXTERNAL: SDL_WindowFlags = (2048_u64 as SDL_WindowFlags);
 
 /// window is modal
-pub const SDL_WINDOW_MODAL: ::core::primitive::u64 = 4096_u64;
+pub const SDL_WINDOW_MODAL: SDL_WindowFlags = (4096_u64 as SDL_WindowFlags);
 
 /// window uses high pixel density back buffer if possible
-pub const SDL_WINDOW_HIGH_PIXEL_DENSITY: ::core::primitive::u64 = 8192_u64;
+pub const SDL_WINDOW_HIGH_PIXEL_DENSITY: SDL_WindowFlags = (8192_u64 as SDL_WindowFlags);
 
 /// window has mouse captured (unrelated to MOUSE_GRABBED)
-pub const SDL_WINDOW_MOUSE_CAPTURE: ::core::primitive::u64 = 16384_u64;
+pub const SDL_WINDOW_MOUSE_CAPTURE: SDL_WindowFlags = (16384_u64 as SDL_WindowFlags);
 
 /// window has relative mode enabled
-pub const SDL_WINDOW_MOUSE_RELATIVE_MODE: ::core::primitive::u64 = 32768_u64;
+pub const SDL_WINDOW_MOUSE_RELATIVE_MODE: SDL_WindowFlags = (32768_u64 as SDL_WindowFlags);
 
 /// window should always be above others
-pub const SDL_WINDOW_ALWAYS_ON_TOP: ::core::primitive::u64 = 65536_u64;
+pub const SDL_WINDOW_ALWAYS_ON_TOP: SDL_WindowFlags = (65536_u64 as SDL_WindowFlags);
 
 /// window should be treated as a utility window, not showing in the task bar and window list
-pub const SDL_WINDOW_UTILITY: ::core::primitive::u64 = 131072_u64;
+pub const SDL_WINDOW_UTILITY: SDL_WindowFlags = (131072_u64 as SDL_WindowFlags);
 
 /// window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window
-pub const SDL_WINDOW_TOOLTIP: ::core::primitive::u64 = 262144_u64;
+pub const SDL_WINDOW_TOOLTIP: SDL_WindowFlags = (262144_u64 as SDL_WindowFlags);
 
 /// window should be treated as a popup menu, requires a parent window
-pub const SDL_WINDOW_POPUP_MENU: ::core::primitive::u64 = 524288_u64;
+pub const SDL_WINDOW_POPUP_MENU: SDL_WindowFlags = (524288_u64 as SDL_WindowFlags);
 
 /// window has grabbed keyboard input
-pub const SDL_WINDOW_KEYBOARD_GRABBED: ::core::primitive::u64 = 1048576_u64;
+pub const SDL_WINDOW_KEYBOARD_GRABBED: SDL_WindowFlags = (1048576_u64 as SDL_WindowFlags);
 
 /// window usable for Vulkan surface
-pub const SDL_WINDOW_VULKAN: ::core::primitive::u64 = 268435456_u64;
+pub const SDL_WINDOW_VULKAN: SDL_WindowFlags = (268435456_u64 as SDL_WindowFlags);
 
 /// window usable for Metal view
-pub const SDL_WINDOW_METAL: ::core::primitive::u64 = 536870912_u64;
+pub const SDL_WINDOW_METAL: SDL_WindowFlags = (536870912_u64 as SDL_WindowFlags);
 
 /// window with transparent buffer
-pub const SDL_WINDOW_TRANSPARENT: ::core::primitive::u64 = 1073741824_u64;
+pub const SDL_WINDOW_TRANSPARENT: SDL_WindowFlags = (1073741824_u64 as SDL_WindowFlags);
 
 /// window should not be focusable
-pub const SDL_WINDOW_NOT_FOCUSABLE: ::core::primitive::u64 = 2147483648_u64;
+pub const SDL_WINDOW_NOT_FOCUSABLE: SDL_WindowFlags = (2147483648_u64 as SDL_WindowFlags);
 
 /// Used to indicate that you don't care what the window position is.
 ///
@@ -610,13 +610,13 @@ pub const SDL_GL_EGL_PLATFORM: SDL_GLAttr = SDL_GLAttr::EGL_PLATFORM;
 pub type SDL_GLProfile = Uint32;
 
 /// OpenGL Core Profile context
-pub const SDL_GL_CONTEXT_PROFILE_CORE: ::core::primitive::i32 = 1;
+pub const SDL_GL_CONTEXT_PROFILE_CORE: SDL_GLProfile = (0x0001 as SDL_GLProfile);
 
 /// OpenGL Compatibility Profile context
-pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: ::core::primitive::i32 = 2;
+pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLProfile = (0x0002 as SDL_GLProfile);
 
 /// GLX_CONTEXT_ES2_PROFILE_BIT_EXT
-pub const SDL_GL_CONTEXT_PROFILE_ES: ::core::primitive::i32 = 4;
+pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = (0x0004 as SDL_GLProfile);
 
 /// Possible flags to be set for the [`SDL_GL_CONTEXT_FLAGS`] attribute.
 ///
@@ -624,13 +624,13 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: ::core::primitive::i32 = 4;
 /// This datatype is available since SDL 3.1.3.
 pub type SDL_GLContextFlag = Uint32;
 
-pub const SDL_GL_CONTEXT_DEBUG_FLAG: ::core::primitive::i32 = 1;
+pub const SDL_GL_CONTEXT_DEBUG_FLAG: SDL_GLContextFlag = (0x0001 as SDL_GLContextFlag);
 
-pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: ::core::primitive::i32 = 2;
+pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: SDL_GLContextFlag = (0x0002 as SDL_GLContextFlag);
 
-pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: ::core::primitive::i32 = 4;
+pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: SDL_GLContextFlag = (0x0004 as SDL_GLContextFlag);
 
-pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: ::core::primitive::i32 = 8;
+pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag = (0x0008 as SDL_GLContextFlag);
 
 /// Possible values to be set for the [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`]
 /// attribute.
@@ -639,9 +639,11 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: ::core::primitive::i32 = 8;
 /// This datatype is available since SDL 3.1.3.
 pub type SDL_GLContextReleaseFlag = Uint32;
 
-pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: ::core::primitive::i32 = 0;
+pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: SDL_GLContextReleaseFlag =
+    (0x0000 as SDL_GLContextReleaseFlag);
 
-pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: ::core::primitive::i32 = 1;
+pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLContextReleaseFlag =
+    (0x0001 as SDL_GLContextReleaseFlag);
 
 /// Possible values to be set [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] attribute.
 ///
@@ -649,9 +651,11 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: ::core::primitive::i32 = 1;
 /// This datatype is available since SDL 3.1.3.
 pub type SDL_GLContextResetNotification = Uint32;
 
-pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: ::core::primitive::i32 = 0;
+pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification =
+    (0x0000 as SDL_GLContextResetNotification);
 
-pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: ::core::primitive::i32 = 1;
+pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification =
+    (0x0001 as SDL_GLContextResetNotification);
 
 extern "C" {
     /// Get the number of video drivers compiled into SDL.

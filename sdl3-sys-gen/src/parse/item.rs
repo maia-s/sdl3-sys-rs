@@ -4,7 +4,10 @@ use super::{
     Parse, ParseContext, ParseErr, ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind,
     Punctuated, Span, StructOrUnion, Terminated, Type, TypeDef, TypeWithReqIdent, WsAndComments,
 };
-use crate::parse::{Kw_else, Kw_while};
+use crate::{
+    parse::{Kw_else, Kw_while},
+    Defer,
+};
 use core::iter::FusedIterator;
 use std::borrow::Cow;
 
@@ -62,10 +65,14 @@ impl Parse for Item {
     }
 
     fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        let mut clear_td = Defer::new(|| {
+            ctx.active_typedef.take();
+        });
         let input = &input.trim_wsc_start()?;
         if let (rest, Some(block)) = Block::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Self::Block(block))))
         } else if let (rest, Some(pp)) = PreProcLine::try_parse_raw(ctx, input)? {
+            clear_td.disable();
             Ok((
                 rest,
                 Some(match pp.kind {
@@ -104,6 +111,10 @@ impl Parse for Item {
         } else if let (rest, Some(f)) = Function::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::Function(f))))
         } else if let (rest, Some(t)) = TypeDef::try_parse_raw(ctx, input)? {
+            if t.use_for_defines.is_some() {
+                clear_td.disable();
+                *ctx.active_typedef.borrow_mut() = Some(t.clone());
+            }
             Ok((rest, Some(Item::TypeDef(t))))
         } else if let (mut rest, Some(e)) = Enum::try_parse_raw(ctx, input)? {
             WsAndComments::try_parse(ctx, &mut rest)?;
@@ -151,6 +162,8 @@ impl Parse for Items {
     }
 
     fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        let active_typedef = ctx.active_typedef.take();
+        let _restore = Defer::new(|| *ctx.active_typedef.borrow_mut() = active_typedef);
         let (rest, parsed) = Vec::try_parse_raw(ctx, input)?;
         Ok((rest, parsed.map(Items)))
     }

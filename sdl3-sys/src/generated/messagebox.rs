@@ -15,19 +15,21 @@ use super::video::*;
 pub type SDL_MessageBoxFlags = Uint32;
 
 /// error dialog
-pub const SDL_MESSAGEBOX_ERROR: ::core::primitive::u32 = 16_u32;
+pub const SDL_MESSAGEBOX_ERROR: SDL_MessageBoxFlags = (0x00000010 as SDL_MessageBoxFlags);
 
 /// warning dialog
-pub const SDL_MESSAGEBOX_WARNING: ::core::primitive::u32 = 32_u32;
+pub const SDL_MESSAGEBOX_WARNING: SDL_MessageBoxFlags = (0x00000020 as SDL_MessageBoxFlags);
 
 /// informational dialog
-pub const SDL_MESSAGEBOX_INFORMATION: ::core::primitive::u32 = 64_u32;
+pub const SDL_MESSAGEBOX_INFORMATION: SDL_MessageBoxFlags = (0x00000040 as SDL_MessageBoxFlags);
 
 /// buttons placed left to right
-pub const SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT: ::core::primitive::u32 = 128_u32;
+pub const SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT: SDL_MessageBoxFlags =
+    (0x00000080 as SDL_MessageBoxFlags);
 
 /// buttons placed right to left
-pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: ::core::primitive::u32 = 256_u32;
+pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: SDL_MessageBoxFlags =
+    (0x00000100 as SDL_MessageBoxFlags);
 
 /// [`SDL_MessageBoxButtonData`] flags.
 ///
@@ -36,10 +38,12 @@ pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: ::core::primitive::u32 = 256_u32
 pub type SDL_MessageBoxButtonFlags = Uint32;
 
 /// Marks the default button when return is hit
-pub const SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT: ::core::primitive::u32 = 1_u32;
+pub const SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT: SDL_MessageBoxButtonFlags =
+    (0x00000001 as SDL_MessageBoxButtonFlags);
 
 /// Marks the default button when escape is hit
-pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: ::core::primitive::u32 = 2_u32;
+pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: SDL_MessageBoxButtonFlags =
+    (0x00000002 as SDL_MessageBoxButtonFlags);
 
 /// Individual button data.
 ///

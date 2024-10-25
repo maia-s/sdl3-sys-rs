@@ -306,7 +306,7 @@ pub struct SDL_PathInfo {
 /// - [`SDL_GlobStorageDirectory`]
 pub type SDL_GlobFlags = Uint32;
 
-pub const SDL_GLOB_CASEINSENSITIVE: ::core::primitive::u32 = 1_u32;
+pub const SDL_GLOB_CASEINSENSITIVE: SDL_GlobFlags = ((1_u32) as SDL_GlobFlags);
 
 extern "C" {
     /// Create a directory, and any missing parent directories.

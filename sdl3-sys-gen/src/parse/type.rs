@@ -1,7 +1,7 @@
 use super::{
-    DocComment, Enum, Expr, FnAbi, FnDeclArgs, GetSpan, Ident, Kw_const, Kw_struct, Kw_typedef, Op,
-    Parse, ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion,
-    WsAndComments,
+    patch_parsed_typedef, DocComment, Enum, Expr, FnAbi, FnDeclArgs, GetSpan, Ident, Kw_const,
+    Kw_struct, Kw_typedef, Op, Parse, ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse,
+    Span, StructOrUnion, WsAndComments,
 };
 use crate::emit::EmitContext;
 use core::cell::RefCell;
@@ -505,6 +505,7 @@ pub struct TypeDef {
     pub doc: Option<DocComment>,
     pub ident: Ident,
     pub ty: Type,
+    pub use_for_defines: Option<&'static str>,
 }
 
 impl Parse for TypeDef {
@@ -522,15 +523,16 @@ impl Parse for TypeDef {
             let semi = <Op![;]>::parse(ctx, &mut rest)?;
             let span = typedef_kw.span.join(&semi.span);
             let doc = DocComment::try_parse_combine_postfix(ctx, &mut rest, doc)?;
-            Ok((
-                rest,
-                Some(TypeDef {
-                    span,
-                    doc,
-                    ident: ident.unwrap(),
-                    ty,
-                }),
-            ))
+            let use_for_defines = matches!(ty.ty, TypeEnum::Ident(_) | TypeEnum::Primitive(_));
+            let mut this = TypeDef {
+                span,
+                doc,
+                ident: ident.unwrap(),
+                ty,
+                use_for_defines: use_for_defines.then_some(""),
+            };
+            patch_parsed_typedef(ctx, &mut this)?;
+            Ok((rest, Some(this)))
         } else {
             Ok((input.clone(), None))
         }

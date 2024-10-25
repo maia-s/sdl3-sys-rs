@@ -1,6 +1,6 @@
 use super::{
     CanCopy, Cast, Define, DefineValue, Enum, Expr, GetSpan, ParseContext, ParseErr, PrimitiveType,
-    StructOrUnion, Type,
+    StructOrUnion, Type, TypeDef,
 };
 
 struct Patch<T: ?Sized> {
@@ -63,14 +63,6 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::pointer(Type::primitive(PrimitiveType::Char), true);
-            Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("gpu"),
-        match_ident: |i| i == "SDL_GPU_SHADERFORMAT_INVALID",
-        patch: |_ctx, define| {
-            define.value = define.value.cast_expr(Type::ident_str("Uint32"));
             Ok(true)
         },
     },
@@ -140,14 +132,6 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_Scancode");
-            Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("keycode"),
-        match_ident: |i| i.starts_with("SDL_KMOD_"),
-        patch: |_ctx, define| {
-            define.value = define.value.cast_expr(Type::ident_str("SDL_Keymod"));
             Ok(true)
         },
     },
@@ -479,6 +463,47 @@ const STRUCT_PATCHES: &[StructPatch] = &[
         match_ident: |i| i == "SDL_alignment_test",
         patch: |_, s| {
             s.hidden = true;
+            Ok(true)
+        },
+    },
+];
+
+pub fn patch_parsed_typedef(ctx: &ParseContext, e: &mut TypeDef) -> Result<bool, ParseErr> {
+    patch(ctx, e, |e| e.ident.as_str(), TYPEDEF_PATCHES)
+}
+
+type TypeDefPatch = Patch<TypeDef>;
+
+const TYPEDEF_PATCHES: &[TypeDefPatch] = &[
+    TypeDefPatch {
+        module: Some("mouse"),
+        match_ident: |i| i == "SDL_MouseButtonFlags",
+        patch: |_, td| {
+            td.use_for_defines = None;
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
+        module: Some("sensor"),
+        match_ident: |i| i == "SDL_SensorID",
+        patch: |_, td| {
+            td.use_for_defines = None;
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
+        module: Some("video"),
+        match_ident: |i| i == "SDL_WindowID",
+        patch: |_, td| {
+            td.use_for_defines = None;
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
+        module: Some("video"),
+        match_ident: |i| i == "SDL_WindowFlags",
+        patch: |_, td| {
+            td.use_for_defines = Some("SDL_WINDOW_");
             Ok(true)
         },
     },

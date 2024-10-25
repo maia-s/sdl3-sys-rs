@@ -75,6 +75,7 @@ pub struct ParseContext {
     pub sibling_struct_index: RefCell<usize>,
     pub log_debug_enabled: Cell<bool>,
     patch_idents: RefCell<HashMap<IdentOrKw, IdentOrKw>>,
+    pub active_typedef: RefCell<Option<TypeDef>>,
 }
 
 impl ParseContext {
@@ -87,6 +88,7 @@ impl ParseContext {
             sibling_struct_index: RefCell::new(Self::FIRST_SIBLING),
             log_debug_enabled: Cell::new(false),
             patch_idents: RefCell::new(HashMap::new()),
+            active_typedef: RefCell::new(None),
         }
     }
 

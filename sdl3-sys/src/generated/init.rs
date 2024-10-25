@@ -44,26 +44,26 @@ use super::events::*;
 pub type SDL_InitFlags = Uint32;
 
 /// `SDL_INIT_AUDIO` implies `SDL_INIT_EVENTS`
-pub const SDL_INIT_AUDIO: ::core::primitive::u32 = 16_u32;
+pub const SDL_INIT_AUDIO: SDL_InitFlags = (0x00000010 as SDL_InitFlags);
 
 /// `SDL_INIT_VIDEO` implies `SDL_INIT_EVENTS`
-pub const SDL_INIT_VIDEO: ::core::primitive::u32 = 32_u32;
+pub const SDL_INIT_VIDEO: SDL_InitFlags = (0x00000020 as SDL_InitFlags);
 
 /// `SDL_INIT_JOYSTICK` implies `SDL_INIT_EVENTS`, should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`]
-pub const SDL_INIT_JOYSTICK: ::core::primitive::u32 = 512_u32;
+pub const SDL_INIT_JOYSTICK: SDL_InitFlags = (0x00000200 as SDL_InitFlags);
 
-pub const SDL_INIT_HAPTIC: ::core::primitive::u32 = 4096_u32;
+pub const SDL_INIT_HAPTIC: SDL_InitFlags = (0x00001000 as SDL_InitFlags);
 
 /// `SDL_INIT_GAMEPAD` implies `SDL_INIT_JOYSTICK`
-pub const SDL_INIT_GAMEPAD: ::core::primitive::u32 = 8192_u32;
+pub const SDL_INIT_GAMEPAD: SDL_InitFlags = (0x00002000 as SDL_InitFlags);
 
-pub const SDL_INIT_EVENTS: ::core::primitive::u32 = 16384_u32;
+pub const SDL_INIT_EVENTS: SDL_InitFlags = (0x00004000 as SDL_InitFlags);
 
 /// `SDL_INIT_SENSOR` implies `SDL_INIT_EVENTS`
-pub const SDL_INIT_SENSOR: ::core::primitive::u32 = 32768_u32;
+pub const SDL_INIT_SENSOR: SDL_InitFlags = (0x00008000 as SDL_InitFlags);
 
 /// `SDL_INIT_CAMERA` implies `SDL_INIT_EVENTS`
-pub const SDL_INIT_CAMERA: ::core::primitive::u32 = 65536_u32;
+pub const SDL_INIT_CAMERA: SDL_InitFlags = (0x00010000 as SDL_InitFlags);
 
 /// Return values for optional main callbacks.
 ///

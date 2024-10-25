@@ -32,25 +32,25 @@ pub type SDL_PenID = Uint32;
 pub type SDL_PenInputFlags = Uint32;
 
 /// pen is pressed down
-pub const SDL_PEN_INPUT_DOWN: ::core::primitive::u32 = 1_u32;
+pub const SDL_PEN_INPUT_DOWN: SDL_PenInputFlags = ((1_u32) as SDL_PenInputFlags);
 
 /// button 1 is pressed
-pub const SDL_PEN_INPUT_BUTTON_1: ::core::primitive::u32 = 2_u32;
+pub const SDL_PEN_INPUT_BUTTON_1: SDL_PenInputFlags = ((2_u32) as SDL_PenInputFlags);
 
 /// button 2 is pressed
-pub const SDL_PEN_INPUT_BUTTON_2: ::core::primitive::u32 = 4_u32;
+pub const SDL_PEN_INPUT_BUTTON_2: SDL_PenInputFlags = ((4_u32) as SDL_PenInputFlags);
 
 /// button 3 is pressed
-pub const SDL_PEN_INPUT_BUTTON_3: ::core::primitive::u32 = 8_u32;
+pub const SDL_PEN_INPUT_BUTTON_3: SDL_PenInputFlags = ((8_u32) as SDL_PenInputFlags);
 
 /// button 4 is pressed
-pub const SDL_PEN_INPUT_BUTTON_4: ::core::primitive::u32 = 16_u32;
+pub const SDL_PEN_INPUT_BUTTON_4: SDL_PenInputFlags = ((16_u32) as SDL_PenInputFlags);
 
 /// button 5 is pressed
-pub const SDL_PEN_INPUT_BUTTON_5: ::core::primitive::u32 = 32_u32;
+pub const SDL_PEN_INPUT_BUTTON_5: SDL_PenInputFlags = ((32_u32) as SDL_PenInputFlags);
 
 /// eraser tip is used
-pub const SDL_PEN_INPUT_ERASER_TIP: ::core::primitive::u32 = 1073741824_u32;
+pub const SDL_PEN_INPUT_ERASER_TIP: SDL_PenInputFlags = ((1073741824_u32) as SDL_PenInputFlags);
 
 /// Pen axis indices.
 ///

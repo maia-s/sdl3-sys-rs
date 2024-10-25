@@ -828,26 +828,32 @@ pub const SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT: SDL_GPUTextureFormat =
 pub type SDL_GPUTextureUsageFlags = Uint32;
 
 /// Texture supports sampling.
-pub const SDL_GPU_TEXTUREUSAGE_SAMPLER: ::core::primitive::u32 = 1_u32;
+pub const SDL_GPU_TEXTUREUSAGE_SAMPLER: SDL_GPUTextureUsageFlags =
+    ((1_u32) as SDL_GPUTextureUsageFlags);
 
 /// Texture is a color render target.
-pub const SDL_GPU_TEXTUREUSAGE_COLOR_TARGET: ::core::primitive::u32 = 2_u32;
+pub const SDL_GPU_TEXTUREUSAGE_COLOR_TARGET: SDL_GPUTextureUsageFlags =
+    ((2_u32) as SDL_GPUTextureUsageFlags);
 
 /// Texture is a depth stencil target.
-pub const SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET: ::core::primitive::u32 = 4_u32;
+pub const SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET: SDL_GPUTextureUsageFlags =
+    ((4_u32) as SDL_GPUTextureUsageFlags);
 
 /// Texture supports storage reads in graphics stages.
-pub const SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ: ::core::primitive::u32 = 8_u32;
+pub const SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ: SDL_GPUTextureUsageFlags =
+    ((8_u32) as SDL_GPUTextureUsageFlags);
 
 /// Texture supports storage reads in the compute stage.
-pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ: ::core::primitive::u32 = 16_u32;
+pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ: SDL_GPUTextureUsageFlags =
+    ((16_u32) as SDL_GPUTextureUsageFlags);
 
 /// Texture supports storage writes in the compute stage.
-pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE: ::core::primitive::u32 = 32_u32;
+pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE: SDL_GPUTextureUsageFlags =
+    ((32_u32) as SDL_GPUTextureUsageFlags);
 
 /// Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE.
-pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: ::core::primitive::u32 =
-    64_u32;
+pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: SDL_GPUTextureUsageFlags =
+    ((64_u32) as SDL_GPUTextureUsageFlags);
 
 /// Specifies the type of a texture.
 ///
@@ -1003,22 +1009,27 @@ pub const SDL_GPU_CUBEMAPFACE_NEGATIVEZ: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace
 pub type SDL_GPUBufferUsageFlags = Uint32;
 
 /// Buffer is a vertex buffer.
-pub const SDL_GPU_BUFFERUSAGE_VERTEX: ::core::primitive::u32 = 1_u32;
+pub const SDL_GPU_BUFFERUSAGE_VERTEX: SDL_GPUBufferUsageFlags =
+    ((1_u32) as SDL_GPUBufferUsageFlags);
 
 /// Buffer is an index buffer.
-pub const SDL_GPU_BUFFERUSAGE_INDEX: ::core::primitive::u32 = 2_u32;
+pub const SDL_GPU_BUFFERUSAGE_INDEX: SDL_GPUBufferUsageFlags = ((2_u32) as SDL_GPUBufferUsageFlags);
 
 /// Buffer is an indirect buffer.
-pub const SDL_GPU_BUFFERUSAGE_INDIRECT: ::core::primitive::u32 = 4_u32;
+pub const SDL_GPU_BUFFERUSAGE_INDIRECT: SDL_GPUBufferUsageFlags =
+    ((4_u32) as SDL_GPUBufferUsageFlags);
 
 /// Buffer supports storage reads in graphics stages.
-pub const SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ: ::core::primitive::u32 = 8_u32;
+pub const SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ: SDL_GPUBufferUsageFlags =
+    ((8_u32) as SDL_GPUBufferUsageFlags);
 
 /// Buffer supports storage reads in the compute stage.
-pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ: ::core::primitive::u32 = 16_u32;
+pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ: SDL_GPUBufferUsageFlags =
+    ((16_u32) as SDL_GPUBufferUsageFlags);
 
 /// Buffer supports storage writes in the compute stage.
-pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE: ::core::primitive::u32 = 32_u32;
+pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE: SDL_GPUBufferUsageFlags =
+    ((32_u32) as SDL_GPUBufferUsageFlags);
 
 /// Specifies how a transfer buffer is intended to be used by the client.
 ///
@@ -1096,25 +1107,25 @@ pub const SDL_GPU_SHADERSTAGE_FRAGMENT: SDL_GPUShaderStage = SDL_GPUShaderStage:
 /// - [`SDL_CreateGPUShader`]
 pub type SDL_GPUShaderFormat = Uint32;
 
-pub const SDL_GPU_SHADERFORMAT_INVALID: Uint32 = (0 as Uint32);
+pub const SDL_GPU_SHADERFORMAT_INVALID: SDL_GPUShaderFormat = (0 as SDL_GPUShaderFormat);
 
 /// Shaders for NDA'd platforms.
-pub const SDL_GPU_SHADERFORMAT_PRIVATE: ::core::primitive::u32 = 1_u32;
+pub const SDL_GPU_SHADERFORMAT_PRIVATE: SDL_GPUShaderFormat = ((1_u32) as SDL_GPUShaderFormat);
 
 /// SPIR-V shaders for Vulkan.
-pub const SDL_GPU_SHADERFORMAT_SPIRV: ::core::primitive::u32 = 2_u32;
+pub const SDL_GPU_SHADERFORMAT_SPIRV: SDL_GPUShaderFormat = ((2_u32) as SDL_GPUShaderFormat);
 
 /// DXBC SM5_0 shaders for D3D11.
-pub const SDL_GPU_SHADERFORMAT_DXBC: ::core::primitive::u32 = 4_u32;
+pub const SDL_GPU_SHADERFORMAT_DXBC: SDL_GPUShaderFormat = ((4_u32) as SDL_GPUShaderFormat);
 
 /// DXIL shaders for D3D12.
-pub const SDL_GPU_SHADERFORMAT_DXIL: ::core::primitive::u32 = 8_u32;
+pub const SDL_GPU_SHADERFORMAT_DXIL: SDL_GPUShaderFormat = ((8_u32) as SDL_GPUShaderFormat);
 
 /// MSL shaders for Metal.
-pub const SDL_GPU_SHADERFORMAT_MSL: ::core::primitive::u32 = 16_u32;
+pub const SDL_GPU_SHADERFORMAT_MSL: SDL_GPUShaderFormat = ((16_u32) as SDL_GPUShaderFormat);
 
 /// Precompiled metallib shaders for Metal.
-pub const SDL_GPU_SHADERFORMAT_METALLIB: ::core::primitive::u32 = 32_u32;
+pub const SDL_GPU_SHADERFORMAT_METALLIB: SDL_GPUShaderFormat = ((32_u32) as SDL_GPUShaderFormat);
 
 /// Specifies the format of a vertex attribute.
 ///
@@ -1716,16 +1727,20 @@ pub const SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE: SDL_GPUBlendFactor =
 pub type SDL_GPUColorComponentFlags = Uint8;
 
 /// the red component
-pub const SDL_GPU_COLORCOMPONENT_R: ::core::primitive::u32 = 1_u32;
+pub const SDL_GPU_COLORCOMPONENT_R: SDL_GPUColorComponentFlags =
+    ((1_u32) as SDL_GPUColorComponentFlags);
 
 /// the green component
-pub const SDL_GPU_COLORCOMPONENT_G: ::core::primitive::u32 = 2_u32;
+pub const SDL_GPU_COLORCOMPONENT_G: SDL_GPUColorComponentFlags =
+    ((2_u32) as SDL_GPUColorComponentFlags);
 
 /// the blue component
-pub const SDL_GPU_COLORCOMPONENT_B: ::core::primitive::u32 = 4_u32;
+pub const SDL_GPU_COLORCOMPONENT_B: SDL_GPUColorComponentFlags =
+    ((4_u32) as SDL_GPUColorComponentFlags);
 
 /// the alpha component
-pub const SDL_GPU_COLORCOMPONENT_A: ::core::primitive::u32 = 8_u32;
+pub const SDL_GPU_COLORCOMPONENT_A: SDL_GPUColorComponentFlags =
+    ((8_u32) as SDL_GPUColorComponentFlags);
 
 /// Specifies a filter operation used by a sampler.
 ///

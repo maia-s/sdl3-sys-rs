@@ -35,16 +35,16 @@ use super::iostream::*;
 pub type SDL_SurfaceFlags = Uint32;
 
 /// Surface uses preallocated pixel memory
-pub const SDL_SURFACE_PREALLOCATED: ::core::primitive::u32 = 1_u32;
+pub const SDL_SURFACE_PREALLOCATED: SDL_SurfaceFlags = (0x00000001 as SDL_SurfaceFlags);
 
 /// Surface needs to be locked to access pixels
-pub const SDL_SURFACE_LOCK_NEEDED: ::core::primitive::u32 = 2_u32;
+pub const SDL_SURFACE_LOCK_NEEDED: SDL_SurfaceFlags = (0x00000002 as SDL_SurfaceFlags);
 
 /// Surface is currently locked
-pub const SDL_SURFACE_LOCKED: ::core::primitive::u32 = 4_u32;
+pub const SDL_SURFACE_LOCKED: SDL_SurfaceFlags = (0x00000004 as SDL_SurfaceFlags);
 
 /// Surface uses pixel memory allocated with [`SDL_aligned_alloc()`]
-pub const SDL_SURFACE_SIMD_ALIGNED: ::core::primitive::u32 = 8_u32;
+pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = (0x00000008 as SDL_SurfaceFlags);
 
 /// The scaling mode.
 ///
@@ -161,7 +161,8 @@ pub struct SDL_Surface {
 /// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const unsafe fn SDL_MUSTLOCK(S: *const SDL_Surface) -> ::core::primitive::bool {
-    ((unsafe { ::core::ptr::addr_of!((*S).flags).read() } & 2_u32) == 2_u32)
+    ((unsafe { ::core::ptr::addr_of!((*S).flags).read() } & (0x00000002 as SDL_SurfaceFlags))
+        == (0x00000002 as SDL_SurfaceFlags))
 }
 
 extern "C" {
