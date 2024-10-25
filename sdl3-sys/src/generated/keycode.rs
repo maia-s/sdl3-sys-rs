@@ -1093,20 +1093,16 @@ pub const SDL_KMOD_MODE: SDL_Keymod = (0x4000 as SDL_Keymod);
 pub const SDL_KMOD_SCROLL: SDL_Keymod = (0x8000 as SDL_Keymod);
 
 /// Any Ctrl key is down.
-pub const SDL_KMOD_CTRL: SDL_Keymod =
-    (((0x0040 as SDL_Keymod) | (0x0080 as SDL_Keymod)) as SDL_Keymod);
+pub const SDL_KMOD_CTRL: SDL_Keymod = ((0x0040 as SDL_Keymod) | (0x0080 as SDL_Keymod));
 
 /// Any Shift key is down.
-pub const SDL_KMOD_SHIFT: SDL_Keymod =
-    (((0x0001 as SDL_Keymod) | (0x0002 as SDL_Keymod)) as SDL_Keymod);
+pub const SDL_KMOD_SHIFT: SDL_Keymod = ((0x0001 as SDL_Keymod) | (0x0002 as SDL_Keymod));
 
 /// Any Alt key is down.
-pub const SDL_KMOD_ALT: SDL_Keymod =
-    (((0x0100 as SDL_Keymod) | (0x0200 as SDL_Keymod)) as SDL_Keymod);
+pub const SDL_KMOD_ALT: SDL_Keymod = ((0x0100 as SDL_Keymod) | (0x0200 as SDL_Keymod));
 
 /// Any GUI key is down.
-pub const SDL_KMOD_GUI: SDL_Keymod =
-    (((0x0400 as SDL_Keymod) | (0x0800 as SDL_Keymod)) as SDL_Keymod);
+pub const SDL_KMOD_GUI: SDL_Keymod = ((0x0400 as SDL_Keymod) | (0x0800 as SDL_Keymod));
 
 #[cfg(doc)]
 use crate::everything::*;

@@ -277,13 +277,13 @@ emit! {
 
     #[inline(always)]
     pub unsafe fn SDL_CreateThread(r#fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void, ) -> *mut SDL_Thread {
-        unsafe { SDL_CreateThreadRuntime((r#fn), (name), (data), ((SDL_BeginThreadFunction) as SDL_FunctionPointer), ((SDL_EndThreadFunction) as SDL_FunctionPointer)) }
+        unsafe { SDL_CreateThreadRuntime((r#fn), (name), (data), SDL_BeginThreadFunction, SDL_EndThreadFunction) }
     }
 
 
     #[inline(always)]
     pub unsafe fn SDL_CreateThreadWithProperties(props: SDL_PropertiesID, ) -> *mut SDL_Thread {
-        unsafe { SDL_CreateThreadWithPropertiesRuntime((props), ((SDL_BeginThreadFunction) as SDL_FunctionPointer), ((SDL_EndThreadFunction) as SDL_FunctionPointer)) }
+        unsafe { SDL_CreateThreadWithPropertiesRuntime((props), SDL_BeginThreadFunction, SDL_EndThreadFunction) }
     }
 
 

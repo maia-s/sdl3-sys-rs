@@ -30,9 +30,9 @@ emit! {}
 /// | [`SDL_MIN_SINT8`] | |
 pub type Sint8 = ::core::primitive::i8;
 
-pub const SDL_MAX_SINT8: Sint8 = ((0x7f as Sint8) as Sint8);
+pub const SDL_MAX_SINT8: Sint8 = (0x7f as Sint8);
 
-pub const SDL_MIN_SINT8: Sint8 = (((-128_i32) as Sint8) as Sint8);
+pub const SDL_MIN_SINT8: Sint8 = ((-128_i32) as Sint8);
 
 /// An unsigned 8-bit integer type.
 ///
@@ -46,9 +46,9 @@ pub const SDL_MIN_SINT8: Sint8 = (((-128_i32) as Sint8) as Sint8);
 /// | [`SDL_MIN_UINT8`] | |
 pub type Uint8 = ::core::primitive::u8;
 
-pub const SDL_MAX_UINT8: Uint8 = ((0xff as Uint8) as Uint8);
+pub const SDL_MAX_UINT8: Uint8 = (0xff as Uint8);
 
-pub const SDL_MIN_UINT8: Uint8 = ((0x00 as Uint8) as Uint8);
+pub const SDL_MIN_UINT8: Uint8 = (0x00 as Uint8);
 
 /// A signed 16-bit integer type.
 ///
@@ -62,9 +62,9 @@ pub const SDL_MIN_UINT8: Uint8 = ((0x00 as Uint8) as Uint8);
 /// | [`SDL_MIN_SINT16`] | |
 pub type Sint16 = ::core::primitive::i16;
 
-pub const SDL_MAX_SINT16: Sint16 = ((0x7fff as Sint16) as Sint16);
+pub const SDL_MAX_SINT16: Sint16 = (0x7fff as Sint16);
 
-pub const SDL_MIN_SINT16: Sint16 = (((-32768_i32) as Sint16) as Sint16);
+pub const SDL_MIN_SINT16: Sint16 = ((-32768_i32) as Sint16);
 
 /// An unsigned 16-bit integer type.
 ///
@@ -78,9 +78,9 @@ pub const SDL_MIN_SINT16: Sint16 = (((-32768_i32) as Sint16) as Sint16);
 /// | [`SDL_MIN_UINT16`] | |
 pub type Uint16 = ::core::primitive::u16;
 
-pub const SDL_MAX_UINT16: Uint16 = ((0xffff as Uint16) as Uint16);
+pub const SDL_MAX_UINT16: Uint16 = (0xffff as Uint16);
 
-pub const SDL_MIN_UINT16: Uint16 = ((0x0000 as Uint16) as Uint16);
+pub const SDL_MIN_UINT16: Uint16 = (0x0000 as Uint16);
 
 /// A signed 32-bit integer type.
 ///
@@ -94,9 +94,9 @@ pub const SDL_MIN_UINT16: Uint16 = ((0x0000 as Uint16) as Uint16);
 /// | [`SDL_MIN_SINT32`] | |
 pub type Sint32 = ::core::primitive::i32;
 
-pub const SDL_MAX_SINT32: Sint32 = ((0x7fffffff as Sint32) as Sint32);
+pub const SDL_MAX_SINT32: Sint32 = (0x7fffffff as Sint32);
 
-pub const SDL_MIN_SINT32: Sint32 = (((-2147483648_i32) as Sint32) as Sint32);
+pub const SDL_MIN_SINT32: Sint32 = ((-2147483648_i32) as Sint32);
 
 /// An unsigned 32-bit integer type.
 ///
@@ -110,9 +110,9 @@ pub const SDL_MIN_SINT32: Sint32 = (((-2147483648_i32) as Sint32) as Sint32);
 /// | [`SDL_MIN_UINT32`] | |
 pub type Uint32 = ::core::primitive::u32;
 
-pub const SDL_MAX_UINT32: Uint32 = ((0xffffffff as Uint32) as Uint32);
+pub const SDL_MAX_UINT32: Uint32 = (0xffffffff as Uint32);
 
-pub const SDL_MIN_UINT32: Uint32 = ((0x00000000 as Uint32) as Uint32);
+pub const SDL_MIN_UINT32: Uint32 = (0x00000000 as Uint32);
 
 /// A signed 64-bit integer type.
 ///
@@ -350,9 +350,8 @@ const _: () = ::core::assert!(
 /// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_FOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> Uint32 {
-    (((((((A) as Uint8) as Uint32) << 0) | ((((B) as Uint8) as Uint32) << 8))
-        | ((((C) as Uint8) as Uint32) << 16))
-        | ((((D) as Uint8) as Uint32) << 24))
+    (((((A as Uint32) << 0) | ((B as Uint32) << 8)) | ((C as Uint32) << 16))
+        | ((D as Uint32) << 24))
 }
 
 #[doc(hidden)]
@@ -368,9 +367,7 @@ const _: () = ::core::assert!(
         == (2 * ::core::mem::size_of::<*mut ::core::ffi::c_void>()))
 );
 
-const _: () = ::core::assert!(
-    ((!(0 as ::core::ffi::c_int) as ::core::ffi::c_int) == ((-1_i32) as ::core::ffi::c_int))
-);
+const _: () = ::core::assert!((!(0 as ::core::ffi::c_int) == ((-1_i32) as ::core::ffi::c_int)));
 
 #[cfg(all(
     not(any(doc, target_os = "horizon")),

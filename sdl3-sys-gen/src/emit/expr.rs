@@ -770,6 +770,9 @@ impl Eval for Cast {
             if expr.ty()?.is_uninferred() {
                 expr.ty()?.resolve_to(self.ty.clone());
             }
+            if expr.ty()?.inner_ty() == self.ty.inner_ty() {
+                return Ok(Some(expr));
+            }
             if self.ty.is_bool() {
                 return expr.coerce(ctx, &self.ty);
             }
