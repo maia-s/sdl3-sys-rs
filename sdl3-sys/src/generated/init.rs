@@ -41,6 +41,18 @@ use super::events::*;
 /// - [`SDL_InitSubSystem`]
 /// - [`SDL_QuitSubSystem`]
 /// - [`SDL_WasInit`]
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_INIT_AUDIO`] | `SDL_INIT_AUDIO` implies `SDL_INIT_EVENTS` |
+/// | [`SDL_INIT_VIDEO`] | `SDL_INIT_VIDEO` implies `SDL_INIT_EVENTS` |
+/// | [`SDL_INIT_JOYSTICK`] | `SDL_INIT_JOYSTICK` implies `SDL_INIT_EVENTS`, should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`] |
+/// | [`SDL_INIT_HAPTIC`] | |
+/// | [`SDL_INIT_GAMEPAD`] | `SDL_INIT_GAMEPAD` implies `SDL_INIT_JOYSTICK` |
+/// | [`SDL_INIT_EVENTS`] | |
+/// | [`SDL_INIT_SENSOR`] | `SDL_INIT_SENSOR` implies `SDL_INIT_EVENTS` |
+/// | [`SDL_INIT_CAMERA`] | `SDL_INIT_CAMERA` implies `SDL_INIT_EVENTS` |
 pub type SDL_InitFlags = Uint32;
 
 /// `SDL_INIT_AUDIO` implies `SDL_INIT_EVENTS`

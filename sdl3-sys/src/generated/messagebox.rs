@@ -12,6 +12,15 @@ use super::video::*;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_MESSAGEBOX_ERROR`] | error dialog |
+/// | [`SDL_MESSAGEBOX_WARNING`] | warning dialog |
+/// | [`SDL_MESSAGEBOX_INFORMATION`] | informational dialog |
+/// | [`SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT`] | buttons placed left to right |
+/// | [`SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT`] | buttons placed right to left |
 pub type SDL_MessageBoxFlags = Uint32;
 
 /// error dialog
@@ -35,6 +44,12 @@ pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: SDL_MessageBoxFlags =
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT`] | Marks the default button when return is hit |
+/// | [`SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT`] | Marks the default button when escape is hit |
 pub type SDL_MessageBoxButtonFlags = Uint32;
 
 /// Marks the default button when return is hit

@@ -1162,6 +1162,29 @@ impl Emit for TypeDef {
         if patch_emit_type_def(ctx, self.ident.as_str(), self)? {
             return Ok(());
         }
+
+        let mut assoc_doc = String::new();
+        let mut ctx_assoc_doc = ctx.with_output(&mut assoc_doc);
+        if !self.associated_defines.borrow().is_empty() {
+            if self.doc.is_some() {
+                writeln!(ctx_assoc_doc, "///")?;
+            }
+            writeln!(ctx_assoc_doc, "/// ### Known values (`sdl3-sys`)")?;
+            writeln!(ctx_assoc_doc, "/// | Constant | Description |")?;
+            writeln!(ctx_assoc_doc, "/// | -------- | ----------- |")?;
+            for (ident, doc) in self.associated_defines.borrow().iter() {
+                write!(ctx_assoc_doc, "/// | [`{ident}`] |")?;
+                if let Some(doc) = doc {
+                    let doc = doc.to_string();
+                    for line in doc.lines() {
+                        write!(ctx_assoc_doc, " {}", DocComment::insert_links(line)?)?;
+                    }
+                }
+                writeln!(ctx_assoc_doc, " |")?;
+            }
+        }
+        drop(ctx_assoc_doc);
+
         match &self.ty.ty {
             TypeEnum::Primitive(_) => {
                 ctx.register_sym(
@@ -1174,6 +1197,7 @@ impl Emit for TypeDef {
                     true,
                 )?;
                 self.doc.emit(ctx)?;
+                write!(ctx, "{assoc_doc}")?;
                 write!(ctx, "pub type ")?;
                 self.ident.emit(ctx)?;
                 write!(ctx, " = ")?;
@@ -1197,6 +1221,7 @@ impl Emit for TypeDef {
                     sym.can_derive_debug,
                 )?;
                 self.doc.emit(ctx)?;
+                write!(ctx, "{assoc_doc}")?;
                 write!(ctx, "pub type ")?;
                 self.ident.emit(ctx)?;
                 write!(ctx, " = ")?;

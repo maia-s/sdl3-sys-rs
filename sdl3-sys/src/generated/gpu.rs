@@ -825,6 +825,17 @@ pub const SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT: SDL_GPUTextureFormat =
 ///
 /// ### See also
 /// - [`SDL_CreateGPUTexture`]
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_GPU_TEXTUREUSAGE_SAMPLER`] | Texture supports sampling. |
+/// | [`SDL_GPU_TEXTUREUSAGE_COLOR_TARGET`] | Texture is a color render target. |
+/// | [`SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET`] | Texture is a depth stencil target. |
+/// | [`SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ`] | Texture supports storage reads in graphics stages. |
+/// | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ`] | Texture supports storage reads in the compute stage. |
+/// | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE`] | Texture supports storage writes in the compute stage. |
+/// | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE`] | Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE. |
 pub type SDL_GPUTextureUsageFlags = Uint32;
 
 /// Texture supports sampling.
@@ -1006,6 +1017,16 @@ pub const SDL_GPU_CUBEMAPFACE_NEGATIVEZ: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace
 ///
 /// ### See also
 /// - [`SDL_CreateGPUBuffer`]
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_GPU_BUFFERUSAGE_VERTEX`] | Buffer is a vertex buffer. |
+/// | [`SDL_GPU_BUFFERUSAGE_INDEX`] | Buffer is an index buffer. |
+/// | [`SDL_GPU_BUFFERUSAGE_INDIRECT`] | Buffer is an indirect buffer. |
+/// | [`SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ`] | Buffer supports storage reads in graphics stages. |
+/// | [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ`] | Buffer supports storage reads in the compute stage. |
+/// | [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE`] | Buffer supports storage writes in the compute stage. |
 pub type SDL_GPUBufferUsageFlags = Uint32;
 
 /// Buffer is a vertex buffer.
@@ -1105,6 +1126,17 @@ pub const SDL_GPU_SHADERSTAGE_FRAGMENT: SDL_GPUShaderStage = SDL_GPUShaderStage:
 ///
 /// ### See also
 /// - [`SDL_CreateGPUShader`]
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_GPU_SHADERFORMAT_INVALID`] | |
+/// | [`SDL_GPU_SHADERFORMAT_PRIVATE`] | Shaders for NDA'd platforms. |
+/// | [`SDL_GPU_SHADERFORMAT_SPIRV`] | SPIR-V shaders for Vulkan. |
+/// | [`SDL_GPU_SHADERFORMAT_DXBC`] | DXBC SM5_0 shaders for D3D11. |
+/// | [`SDL_GPU_SHADERFORMAT_DXIL`] | DXIL shaders for D3D12. |
+/// | [`SDL_GPU_SHADERFORMAT_MSL`] | MSL shaders for Metal. |
+/// | [`SDL_GPU_SHADERFORMAT_METALLIB`] | Precompiled metallib shaders for Metal. |
 pub type SDL_GPUShaderFormat = Uint32;
 
 pub const SDL_GPU_SHADERFORMAT_INVALID: SDL_GPUShaderFormat = (0 as SDL_GPUShaderFormat);
@@ -1724,6 +1756,14 @@ pub const SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE: SDL_GPUBlendFactor =
 ///
 /// ### See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_GPU_COLORCOMPONENT_R`] | the red component |
+/// | [`SDL_GPU_COLORCOMPONENT_G`] | the green component |
+/// | [`SDL_GPU_COLORCOMPONENT_B`] | the blue component |
+/// | [`SDL_GPU_COLORCOMPONENT_A`] | the alpha component |
 pub type SDL_GPUColorComponentFlags = Uint8;
 
 /// the red component

@@ -196,6 +196,35 @@ pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
 ///
 /// ### See also
 /// - [`SDL_GetWindowFlags`]
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_WINDOW_FULLSCREEN`] | window is in fullscreen mode |
+/// | [`SDL_WINDOW_OPENGL`] | window usable with OpenGL context |
+/// | [`SDL_WINDOW_OCCLUDED`] | window is occluded |
+/// | [`SDL_WINDOW_HIDDEN`] | window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible |
+/// | [`SDL_WINDOW_BORDERLESS`] | no window decoration |
+/// | [`SDL_WINDOW_RESIZABLE`] | window can be resized |
+/// | [`SDL_WINDOW_MINIMIZED`] | window is minimized |
+/// | [`SDL_WINDOW_MAXIMIZED`] | window is maximized |
+/// | [`SDL_WINDOW_MOUSE_GRABBED`] | window has grabbed mouse input |
+/// | [`SDL_WINDOW_INPUT_FOCUS`] | window has input focus |
+/// | [`SDL_WINDOW_MOUSE_FOCUS`] | window has mouse focus |
+/// | [`SDL_WINDOW_EXTERNAL`] | window not created by SDL |
+/// | [`SDL_WINDOW_MODAL`] | window is modal |
+/// | [`SDL_WINDOW_HIGH_PIXEL_DENSITY`] | window uses high pixel density back buffer if possible |
+/// | [`SDL_WINDOW_MOUSE_CAPTURE`] | window has mouse captured (unrelated to MOUSE_GRABBED) |
+/// | [`SDL_WINDOW_MOUSE_RELATIVE_MODE`] | window has relative mode enabled |
+/// | [`SDL_WINDOW_ALWAYS_ON_TOP`] | window should always be above others |
+/// | [`SDL_WINDOW_UTILITY`] | window should be treated as a utility window, not showing in the task bar and window list |
+/// | [`SDL_WINDOW_TOOLTIP`] | window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window |
+/// | [`SDL_WINDOW_POPUP_MENU`] | window should be treated as a popup menu, requires a parent window |
+/// | [`SDL_WINDOW_KEYBOARD_GRABBED`] | window has grabbed keyboard input |
+/// | [`SDL_WINDOW_VULKAN`] | window usable for Vulkan surface |
+/// | [`SDL_WINDOW_METAL`] | window usable for Metal view |
+/// | [`SDL_WINDOW_TRANSPARENT`] | window with transparent buffer |
+/// | [`SDL_WINDOW_NOT_FOCUSABLE`] | window should not be focusable |
 pub type SDL_WindowFlags = Uint64;
 
 /// window is in fullscreen mode
@@ -607,6 +636,13 @@ pub const SDL_GL_EGL_PLATFORM: SDL_GLAttr = SDL_GLAttr::EGL_PLATFORM;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_GL_CONTEXT_PROFILE_CORE`] | OpenGL Core Profile context |
+/// | [`SDL_GL_CONTEXT_PROFILE_COMPATIBILITY`] | OpenGL Compatibility Profile context |
+/// | [`SDL_GL_CONTEXT_PROFILE_ES`] | GLX_CONTEXT_ES2_PROFILE_BIT_EXT |
 pub type SDL_GLProfile = Uint32;
 
 /// OpenGL Core Profile context
@@ -622,6 +658,14 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = (0x0004 as SDL_GLProfile);
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_GL_CONTEXT_DEBUG_FLAG`] | |
+/// | [`SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG`] | |
+/// | [`SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG`] | |
+/// | [`SDL_GL_CONTEXT_RESET_ISOLATION_FLAG`] | |
 pub type SDL_GLContextFlag = Uint32;
 
 pub const SDL_GL_CONTEXT_DEBUG_FLAG: SDL_GLContextFlag = (0x0001 as SDL_GLContextFlag);
@@ -637,6 +681,12 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag = (0x0008 as SD
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE`] | |
+/// | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH`] | |
 pub type SDL_GLContextReleaseFlag = Uint32;
 
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: SDL_GLContextReleaseFlag =
@@ -649,6 +699,12 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLContextReleaseFlag =
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_GL_CONTEXT_RESET_NO_NOTIFICATION`] | |
+/// | [`SDL_GL_CONTEXT_RESET_LOSE_CONTEXT`] | |
 pub type SDL_GLContextResetNotification = Uint32;
 
 pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification =

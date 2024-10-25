@@ -32,6 +32,14 @@ use super::iostream::*;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_SURFACE_PREALLOCATED`] | Surface uses preallocated pixel memory |
+/// | [`SDL_SURFACE_LOCK_NEEDED`] | Surface needs to be locked to access pixels |
+/// | [`SDL_SURFACE_LOCKED`] | Surface is currently locked |
+/// | [`SDL_SURFACE_SIMD_ALIGNED`] | Surface uses pixel memory allocated with [`SDL_aligned_alloc()`] |
 pub type SDL_SurfaceFlags = Uint32;
 
 /// Surface uses preallocated pixel memory

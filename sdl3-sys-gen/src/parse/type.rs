@@ -506,6 +506,7 @@ pub struct TypeDef {
     pub ident: Ident,
     pub ty: Type,
     pub use_for_defines: Option<&'static str>,
+    pub associated_defines: Rc<RefCell<Vec<(Ident, Option<DocComment>)>>>,
 }
 
 impl Parse for TypeDef {
@@ -530,6 +531,7 @@ impl Parse for TypeDef {
                 ident: ident.unwrap(),
                 ty,
                 use_for_defines: use_for_defines.then_some(""),
+                associated_defines: Rc::new(RefCell::new(Vec::new())),
             };
             patch_parsed_typedef(ctx, &mut this)?;
             Ok((rest, Some(this)))

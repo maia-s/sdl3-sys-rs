@@ -376,6 +376,12 @@ pub const fn SDL_AUDIO_ISUNSIGNED(x: SDL_AudioFormat) -> ::core::primitive::bool
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK`] | A value used to request a default playback audio device.  Several functions that require an [`SDL_AudioDeviceID`] will accept this value to signify the app just wants the system to choose a default device instead of the app providing a specific one.  \since This macro is available since SDL 3.1.3. |
+/// | [`SDL_AUDIO_DEVICE_DEFAULT_RECORDING`] | A value used to request a default recording audio device.  Several functions that require an [`SDL_AudioDeviceID`] will accept this value to signify the app just wants the system to choose a default device instead of the app providing a specific one.  \since This macro is available since SDL 3.1.3. |
 pub type SDL_AudioDeviceID = Uint32;
 
 /// A value used to request a default playback audio device.

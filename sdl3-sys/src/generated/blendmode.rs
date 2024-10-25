@@ -15,6 +15,18 @@ use super::stdinc::*;
 ///
 /// ### See also
 /// - [`SDL_ComposeCustomBlendMode`]
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_BLENDMODE_NONE`] | no blending: dstRGBA = srcRGBA |
+/// | [`SDL_BLENDMODE_BLEND`] | alpha blending: dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)), dstA = srcA + (dstA * (1-srcA)) |
+/// | [`SDL_BLENDMODE_BLEND_PREMULTIPLIED`] | pre-multiplied alpha blending: dstRGBA = srcRGBA + (dstRGBA * (1-srcA)) |
+/// | [`SDL_BLENDMODE_ADD`] | additive blending: dstRGB = (srcRGB * srcA) + dstRGB, dstA = dstA |
+/// | [`SDL_BLENDMODE_ADD_PREMULTIPLIED`] | pre-multiplied additive blending: dstRGB = srcRGB + dstRGB, dstA = dstA |
+/// | [`SDL_BLENDMODE_MOD`] | color modulate: dstRGB = srcRGB * dstRGB, dstA = dstA |
+/// | [`SDL_BLENDMODE_MUL`] | color multiply: dstRGB = (srcRGB * dstRGB) + (dstRGB * (1-srcA)), dstA = dstA |
+/// | [`SDL_BLENDMODE_INVALID`] | |
 pub type SDL_BlendMode = Uint32;
 
 /// no blending: dstRGBA = srcRGBA

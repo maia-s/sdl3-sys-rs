@@ -29,6 +29,17 @@ pub type SDL_PenID = Uint32;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
+///
+/// ### Known values (`sdl3-sys`)
+/// | Constant | Description |
+/// | -------- | ----------- |
+/// | [`SDL_PEN_INPUT_DOWN`] | pen is pressed down |
+/// | [`SDL_PEN_INPUT_BUTTON_1`] | button 1 is pressed |
+/// | [`SDL_PEN_INPUT_BUTTON_2`] | button 2 is pressed |
+/// | [`SDL_PEN_INPUT_BUTTON_3`] | button 3 is pressed |
+/// | [`SDL_PEN_INPUT_BUTTON_4`] | button 4 is pressed |
+/// | [`SDL_PEN_INPUT_BUTTON_5`] | button 5 is pressed |
+/// | [`SDL_PEN_INPUT_ERASER_TIP`] | eraser tip is used |
 pub type SDL_PenInputFlags = Uint32;
 
 /// pen is pressed down
