@@ -505,11 +505,11 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 /// | [`CONTEXT_MAJOR_VERSION`](SDL_GLAttr::CONTEXT_MAJOR_VERSION) | [`SDL_GL_CONTEXT_MAJOR_VERSION`] | OpenGL context major version. |
 /// | [`CONTEXT_MINOR_VERSION`](SDL_GLAttr::CONTEXT_MINOR_VERSION) | [`SDL_GL_CONTEXT_MINOR_VERSION`] | OpenGL context minor version. |
 /// | [`CONTEXT_FLAGS`](SDL_GLAttr::CONTEXT_FLAGS) | [`SDL_GL_CONTEXT_FLAGS`] | some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0. |
-/// | [`CONTEXT_PROFILE_MASK`](SDL_GLAttr::CONTEXT_PROFILE_MASK) | [`SDL_GL_CONTEXT_PROFILE_MASK`] | type of GL context (Core, Compatibility, ES). See SDL_GLProfile; default value depends on platform. |
+/// | [`CONTEXT_PROFILE_MASK`](SDL_GLAttr::CONTEXT_PROFILE_MASK) | [`SDL_GL_CONTEXT_PROFILE_MASK`] | type of GL context (Core, Compatibility, ES). See [`SDL_GLProfile`]; default value depends on platform. |
 /// | [`SHARE_WITH_CURRENT_CONTEXT`](SDL_GLAttr::SHARE_WITH_CURRENT_CONTEXT) | [`SDL_GL_SHARE_WITH_CURRENT_CONTEXT`] | OpenGL context sharing; defaults to 0. |
 /// | [`FRAMEBUFFER_SRGB_CAPABLE`](SDL_GLAttr::FRAMEBUFFER_SRGB_CAPABLE) | [`SDL_GL_FRAMEBUFFER_SRGB_CAPABLE`] | requests sRGB capable visual; defaults to 0. |
-/// | [`CONTEXT_RELEASE_BEHAVIOR`](SDL_GLAttr::CONTEXT_RELEASE_BEHAVIOR) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`] | sets context the release behavior. See SDL_GLContextReleaseFlag; defaults to FLUSH. |
-/// | [`CONTEXT_RESET_NOTIFICATION`](SDL_GLAttr::CONTEXT_RESET_NOTIFICATION) | [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] | set context reset notification. See SDL_GLContextResetNotification; defaults to NO_NOTIFICATION. |
+/// | [`CONTEXT_RELEASE_BEHAVIOR`](SDL_GLAttr::CONTEXT_RELEASE_BEHAVIOR) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`] | sets context the release behavior. See [`SDL_GLContextReleaseFlag`]; defaults to FLUSH. |
+/// | [`CONTEXT_RESET_NOTIFICATION`](SDL_GLAttr::CONTEXT_RESET_NOTIFICATION) | [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] | set context reset notification. See [`SDL_GLContextResetNotification`]; defaults to NO_NOTIFICATION. |
 /// | [`CONTEXT_NO_ERROR`](SDL_GLAttr::CONTEXT_NO_ERROR) | [`SDL_GL_CONTEXT_NO_ERROR`] | |
 /// | [`FLOATBUFFERS`](SDL_GLAttr::FLOATBUFFERS) | [`SDL_GL_FLOATBUFFERS`] | |
 /// | [`EGL_PLATFORM`](SDL_GLAttr::EGL_PLATFORM) | [`SDL_GL_EGL_PLATFORM`] | |
@@ -564,15 +564,15 @@ impl SDL_GLAttr {
     pub const CONTEXT_MINOR_VERSION: Self = Self(18);
     /// some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0.
     pub const CONTEXT_FLAGS: Self = Self(19);
-    /// type of GL context (Core, Compatibility, ES). See SDL_GLProfile; default value depends on platform.
+    /// type of GL context (Core, Compatibility, ES). See [`SDL_GLProfile`]; default value depends on platform.
     pub const CONTEXT_PROFILE_MASK: Self = Self(20);
     /// OpenGL context sharing; defaults to 0.
     pub const SHARE_WITH_CURRENT_CONTEXT: Self = Self(21);
     /// requests sRGB capable visual; defaults to 0.
     pub const FRAMEBUFFER_SRGB_CAPABLE: Self = Self(22);
-    /// sets context the release behavior. See SDL_GLContextReleaseFlag; defaults to FLUSH.
+    /// sets context the release behavior. See [`SDL_GLContextReleaseFlag`]; defaults to FLUSH.
     pub const CONTEXT_RELEASE_BEHAVIOR: Self = Self(23);
-    /// set context reset notification. See SDL_GLContextResetNotification; defaults to NO_NOTIFICATION.
+    /// set context reset notification. See [`SDL_GLContextResetNotification`]; defaults to NO_NOTIFICATION.
     pub const CONTEXT_RESET_NOTIFICATION: Self = Self(24);
     pub const CONTEXT_NO_ERROR: Self = Self(25);
     pub const FLOATBUFFERS: Self = Self(26);
@@ -618,15 +618,15 @@ pub const SDL_GL_CONTEXT_MAJOR_VERSION: SDL_GLAttr = SDL_GLAttr::CONTEXT_MAJOR_V
 pub const SDL_GL_CONTEXT_MINOR_VERSION: SDL_GLAttr = SDL_GLAttr::CONTEXT_MINOR_VERSION;
 /// some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0.
 pub const SDL_GL_CONTEXT_FLAGS: SDL_GLAttr = SDL_GLAttr::CONTEXT_FLAGS;
-/// type of GL context (Core, Compatibility, ES). See SDL_GLProfile; default value depends on platform.
+/// type of GL context (Core, Compatibility, ES). See [`SDL_GLProfile`]; default value depends on platform.
 pub const SDL_GL_CONTEXT_PROFILE_MASK: SDL_GLAttr = SDL_GLAttr::CONTEXT_PROFILE_MASK;
 /// OpenGL context sharing; defaults to 0.
 pub const SDL_GL_SHARE_WITH_CURRENT_CONTEXT: SDL_GLAttr = SDL_GLAttr::SHARE_WITH_CURRENT_CONTEXT;
 /// requests sRGB capable visual; defaults to 0.
 pub const SDL_GL_FRAMEBUFFER_SRGB_CAPABLE: SDL_GLAttr = SDL_GLAttr::FRAMEBUFFER_SRGB_CAPABLE;
-/// sets context the release behavior. See SDL_GLContextReleaseFlag; defaults to FLUSH.
+/// sets context the release behavior. See [`SDL_GLContextReleaseFlag`]; defaults to FLUSH.
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR: SDL_GLAttr = SDL_GLAttr::CONTEXT_RELEASE_BEHAVIOR;
-/// set context reset notification. See SDL_GLContextResetNotification; defaults to NO_NOTIFICATION.
+/// set context reset notification. See [`SDL_GLContextResetNotification`]; defaults to NO_NOTIFICATION.
 pub const SDL_GL_CONTEXT_RESET_NOTIFICATION: SDL_GLAttr = SDL_GLAttr::CONTEXT_RESET_NOTIFICATION;
 pub const SDL_GL_CONTEXT_NO_ERROR: SDL_GLAttr = SDL_GLAttr::CONTEXT_NO_ERROR;
 pub const SDL_GL_FLOATBUFFERS: SDL_GLAttr = SDL_GLAttr::FLOATBUFFERS;

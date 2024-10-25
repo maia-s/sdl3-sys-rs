@@ -247,7 +247,7 @@ impl DocComment {
                         .unwrap_or(line.len() - i);
                     if line.len() == end
                         || line.as_bytes()[end].is_ascii_whitespace()
-                        || matches!(line.as_bytes()[end], b')' | b',' | b'.')
+                        || matches!(line.as_bytes()[end], b')' | b',' | b'.' | b';')
                         || (line.as_bytes()[end] == b'('
                             && line.as_bytes().get(end + 1).copied() == Some(b')'))
                     {

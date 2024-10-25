@@ -327,7 +327,7 @@ extern "C" {
     /// This function sets up an [`SDL_IOStream`] struct based on a memory area of a
     /// certain size, for both read and write access.
     ///
-    /// This memory buffer is not copied by the SDL_IOStream; the pointer you
+    /// This memory buffer is not copied by the [`SDL_IOStream`]; the pointer you
     /// provide must remain valid until you close the stream. Closing the stream
     /// will not free the original buffer.
     ///
@@ -382,7 +382,7 @@ extern "C" {
     /// Attempting to write to this [`SDL_IOStream`] stream will report an error
     /// without writing to the memory buffer.
     ///
-    /// This memory buffer is not copied by the SDL_IOStream; the pointer you
+    /// This memory buffer is not copied by the [`SDL_IOStream`]; the pointer you
     /// provide must remain valid until you close the stream. Closing the stream
     /// will not free the original buffer.
     ///

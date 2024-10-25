@@ -1844,7 +1844,7 @@ extern "C" {
     /// presentation while drawing text.
     ///
     /// Letterboxing will only happen if logical presentation is enabled during
-    /// SDL_RenderPresent; be sure to reenable it first if you were using it.
+    /// [`SDL_RenderPresent`]; be sure to reenable it first if you were using it.
     ///
     /// You can convert coordinates in an event into rendering coordinates using
     /// [`SDL_ConvertEventToRenderCoordinates()`].
