@@ -282,11 +282,8 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                             // - SDL uses a mutex to protect access to SDL_AssertData
                             // - The static mut can only be accessed through the pointer that's passed to SDL
                             let assert_data = {
-                                #[repr(transparent)]
-                                struct SyncAssertData($crate::assert::SDL_AssertData);
-                                unsafe impl ::core::marker::Sync for SyncAssertData {}
                                 $crate::__const_c_str!(CONDITION = ::core::stringify!($condition));
-                                static mut SDL_ASSERT_DATA: SyncAssertData = SyncAssertData($crate::assert::SDL_AssertData {
+                                static mut SDL_ASSERT_DATA: $crate::assert::SDL_AssertData = $crate::assert::SDL_AssertData {
                                     always_ignore: false,
                                     trigger_count: 0,
                                     condition: CONDITION.as_ptr(),
@@ -294,8 +291,8 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                                     linenum: 0,
                                     function: ::core::ptr::null(),
                                     next: ::core::ptr::null(),
-                                });
-                                unsafe { ::core::ptr::addr_of_mut!(SDL_ASSERT_DATA.0) }
+                                };
+                                ::core::ptr::addr_of_mut!(SDL_ASSERT_DATA)
                             };
                             const LOCATION: &::core::panic::Location = ::core::panic::Location::caller();
                             $crate::__const_c_str!(FILENAME = LOCATION.file());
