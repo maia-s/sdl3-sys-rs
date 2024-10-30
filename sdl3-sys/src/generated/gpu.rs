@@ -1911,13 +1911,13 @@ pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
 ///   this present mode, AcquireGPUSwapchainTexture will block if too many
 ///   frames are in flight.
 /// - IMMEDIATE: Immediately presents. Lowest latency option, but tearing may
-///   occur. When using this mode, AcquireGPUSwapchainTexture will return NULL
-///   if too many frames are in flight.
+///   occur. When using this mode, AcquireGPUSwapchainTexture will fill the
+///   swapchain texture pointer with NULL if too many frames are in flight.
 /// - MAILBOX: Waits for vblank before presenting. No tearing is possible. If
 ///   there is a pending image to present, the pending image is replaced by the
 ///   new image. Similar to VSYNC, but with reduced visual latency. When using
-///   this mode, AcquireGPUSwapchainTexture will return NULL if too many frames
-///   are in flight.
+///   this mode, AcquireGPUSwapchainTexture will fill the swapchain texture
+///   pointer with NULL if too many frames are in flight.
 ///
 /// ### Availability
 /// This enum is available since SDL 3.1.3
@@ -4852,6 +4852,12 @@ extern "C" {
     /// freed by the user. You MUST NOT call this function from any thread other
     /// than the one that created the window.
     ///
+    /// When using [`SDL_GPU_PRESENTMODE_VSYNC`], this function will block if too many
+    /// frames are in flight. Otherwise, this function will fill the swapchain
+    /// texture handle with NULL if too many frames are in flight. The best
+    /// practice is to call [`SDL_CancelGPUCommandBuffer`] if the swapchain texture
+    /// handle is NULL to avoid enqueuing needless work on the GPU.
+    ///
     /// ### Arguments
     /// - `command_buffer`: a command buffer.
     /// - `window`: a window that has been claimed.
@@ -4869,9 +4875,11 @@ extern "C" {
     /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
+    /// - [`SDL_GPUPresentMode`]
     /// - [`SDL_ClaimWindowForGPUDevice`]
     /// - [`SDL_SubmitGPUCommandBuffer`]
     /// - [`SDL_SubmitGPUCommandBufferAndAcquireFence`]
+    /// - [`SDL_CancelGPUCommandBuffer`]
     /// - [`SDL_GetWindowSizeInPixels`]
     pub fn SDL_AcquireGPUSwapchainTexture(
         command_buffer: *mut SDL_GPUCommandBuffer,
@@ -4939,6 +4947,34 @@ extern "C" {
     pub fn SDL_SubmitGPUCommandBufferAndAcquireFence(
         command_buffer: *mut SDL_GPUCommandBuffer,
     ) -> *mut SDL_GPUFence;
+}
+
+extern "C" {
+    /// Cancels a command buffer.
+    ///
+    /// None of the enqueued commands are executed.
+    ///
+    /// This must be called from the thread the command buffer was acquired on.
+    ///
+    /// You must not reference the command buffer after calling this function. It
+    /// is an error to call this function after a swapchain texture has been
+    /// acquired.
+    ///
+    /// ### Arguments
+    /// - `command_buffer`: a command buffer.
+    /// ### Return value
+    /// Returns true on success, false on error; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.2.0.
+    ///
+    /// ### See also
+    /// - [`SDL_AcquireGPUCommandBuffer`]
+    /// - [`SDL_AcquireGPUSwapchainTexture`]
+    pub fn SDL_CancelGPUCommandBuffer(
+        command_buffer: *mut SDL_GPUCommandBuffer,
+    ) -> ::core::primitive::bool;
 }
 
 extern "C" {

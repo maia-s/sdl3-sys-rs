@@ -156,7 +156,7 @@ impl Emit for Item {
             Item::Block(_) => todo!(),
             Item::Skipped(_) => todo!(),
             Item::Define(d) => d.emit(ctx),
-            Item::Undef(_) => todo!(),
+            Item::Undef(_) => Ok(()),
             Item::Include(i) => i.emit(ctx),
             Item::Pragma(p) => {
                 writeln!(ctx, "// pragma `{}`", p.as_str())?;
