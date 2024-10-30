@@ -25,7 +25,9 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
             let out_dir = config.build();
 
-            if let Ok(cfg) = PkgConfig::open(&out_dir.join("lib/pkgconfig/sdl3.pc")) {
+            if let Ok(cfg) = PkgConfig::open(&out_dir.join("lib/pkgconfig/sdl3.pc"))
+                .or_else(|_| PkgConfig::open(&out_dir.join("lib64/pkgconfig/sdl3.pc")))
+            {
                 let handle = |link| match link {
                     Link::SearchLib(path) => {
                         println!("cargo::rustc-link-search=native={}", path.display())
@@ -76,6 +78,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             } else {
                 println!("cargo::rustc-link-search={}", out_dir.display());
                 println!("cargo::rustc-link-search={}/lib", out_dir.display());
+                println!("cargo::rustc-link-search={}/lib64", out_dir.display());
                 println!("cargo::rustc-link-lib={link_kind}SDL3");
             }
         }
