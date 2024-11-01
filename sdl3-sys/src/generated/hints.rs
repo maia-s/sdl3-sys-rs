@@ -2452,9 +2452,10 @@ pub const SDL_HINT_MOUSE_RELATIVE_WARP_MOTION: *const ::core::ffi::c_char =
 /// A variable controlling whether the hardware cursor stays visible when
 /// relative mode is active.
 ///
-/// This variable can be set to the following values: "0" - The cursor will be
-/// hidden while relative mode is active (default) "1" - The cursor will remain
-/// visible while relative mode is active
+/// This variable can be set to the following values:
+///
+/// - "0": The cursor will be hidden while relative mode is active (default)
+/// - "1": The cursor will remain visible while relative mode is active
 ///
 /// Note that for systems without raw hardware inputs, relative mode is
 /// implemented using warping, so the hardware cursor will visibly warp between
