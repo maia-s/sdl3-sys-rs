@@ -163,9 +163,9 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
 
     // match what SDL's cmake script does
     let revision = if revision_offset == "0" {
-        format!("SDL-{revision_tag}")
+        format!("SDL3-{revision_tag}")
     } else {
-        format!("SDL-{revision_tag}-{revision_offset}-{revision_hash}")
+        format!("SDL3-{revision_tag}-{revision_offset}-{revision_hash}")
     };
 
     patch_file(
