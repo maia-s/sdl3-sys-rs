@@ -36,33 +36,51 @@ the first ABI stable version of SDL 3.
 
 By default, `sdl3-sys` will attempt to link to a dynamic/shared library named
 `SDL3` in the default library search path, using the usual platform specific naming
-convention for libraries. If your environment is set up so that this will succeed,
-you don't have to do anything more than including `sdl3-sys` as a dependency of
-your project.
+convention for libraries. You can change this behaviour with the following feature flags.
 
-If the SDL 3 library can be found using either `pkg-config` or `vcpkg`, you can
-enable the corresponding feature to use these tools to find and get link flags
-for SDL. Enable the `use-pkg-config` feature to use `pkg-config`, or the
-`use-vcpkg` feature to use `vcpkg`. (Currently the `sdl3` vcpkg package hasn't
-been published yet.)
+| Feature | Description |
+| ------- | ----------- |
+| `use-pkg-config` | Use `pkg-config` to find and get link flags for the SDL 3 library. |
+| `use-vcpkg` | Use `vcpkg` to find and get link flags for the SDL 3 library. |
+| `build-from-source` | Build and link SDL 3 from source. You have to install any dependencies SDL needs to build on your platform first. |
+| `build-from-source-static` | Shortcut for enabling both the `build-from-source` and `link-static` features. |
+| `link-framework` | Link to a framework on Apple platforms. This currently requires `SDL3.xcframework` to be located at `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
+| `link-static` | Link SDL statically. SDL doesn't recommend doing this. On platforms that only support static linking, such as emscripten, you don't have to enable this feature. |
 
-You can also choose to build the SDL 3 library from source by enabling the
-`build-from-source` feature. This brings in the SDL source code crate as a
-dependency of `sdl3-sys` and builds it from source. You'll have to install
-any dependencies SDL needs to build on your platform first for this to succeed.
-Currently this may fail to run when building a shared library on some platforms
-because Rust can't find the library at runtime. This will be fixed in a future
-version, but in the meantime you can do a static build instead by enabling the
-`link-static` feature along with `build-from-source`. The `build-from-source-static`
-feature is a shortcut to enable both.
+## Optional integrations
 
-On Apple platforms, you can enable the `link-framework` feature to link to the
-SDL 3 framework instead of a dylib. For the `SDL3.xcframework` that SDL provides,
-`sdl3-sys` currently requires this to be located in `/Library/Frameworks`.
-This will link, but you have to put your executable along with the frameworks it
-needs in a signed app bundle for it to be able to run.
+`sdl3-sys` can use definitions from other crates for some foreign types that it needs,
+e.g. for Vulkan types. By default it'll use opaque structs for these types unless
+otherwise specified.
 
-You can enable static linking with the `link-static` feature, but SDL doesn't
-recommend doing this except on platforms where it's required. On platforms that
-only support static libraries, such as emscripten, `link-static` will effectively
-be enabled by default, so you don't have to explicitly enable it for those.
+| Feature | Description |
+| ------- | ----------- |
+| `use-ash-v0-38` | Use Vulkan types from the `ash` crate (v0.38). |
+| `use-libc-v0-2` | Use `wchar_t` type from the `libc` crate (v0.2). By default `sdl3-sys` will alias `wchar_t` to `u16` on Windows and `u32` otherwise. |
+| `use-x11-v2` | Use X11 types from the `x11` crate (v2). |
+| `use-x11-dl-v2` | Use X11 types from the `x11-dl` crate (v2). |
+
+## Assert level
+
+You can set the default assertion level for SDL using the `assert-level-*` features.
+This affects the assert macros in the `assert` module and the value of the `SDL_ASSERT_LEVEL`
+constant.
+
+If no `assert-level-*` features are enabled, `assert-level-debug` will be enabled by default
+for debug builds, and `assert-level-release` otherwise.
+
+These features are mutually exclusive. Features higher in this list override later ones.
+
+| Feature | Description |
+| ------- | ----------- |
+| `assert-level-disabled` | 0: All SDL assertion macros are disabled. |
+| `assert-level-release` | 1: Release settings: `SDL_assert` disabled, `SDL_assert_release` enabled. |
+| `assert-level-debug` | 2: Debug settings: `SDL_assert` and `SDL_assert_release` enabled. |
+| `assert-level-paranoid` | 3: Paranoid settings: All SDL assertion macros enabled, including `SDL_assert_paranoid`. |
+
+## Other features
+
+| Feature | Description |
+| ------- | ----------- |
+| `debug-impls` | Implement the `Debug` trait for most SDL types. |
+| `nightly` | Enable features that need the nightly compiler. This enables the `VaList` type that is only available in nightly, as well as enabling some intrinsics. |
