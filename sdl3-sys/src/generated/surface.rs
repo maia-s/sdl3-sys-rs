@@ -66,7 +66,6 @@ pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = (0x00000008 as SDL_Surfac
 /// | [`LINEAR`](SDL_ScaleMode::LINEAR) | [`SDL_SCALEMODE_LINEAR`] | linear filtering |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ScaleMode(pub ::core::ffi::c_int);
 impl From<SDL_ScaleMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -74,12 +73,27 @@ impl From<SDL_ScaleMode> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_ScaleMode {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NEAREST => "SDL_SCALEMODE_NEAREST",
+            Self::LINEAR => "SDL_SCALEMODE_LINEAR",
+
+            _ => return write!(f, "SDL_ScaleMode({})", self.0),
+        })
+    }
+}
+
 impl SDL_ScaleMode {
     /// nearest pixel sampling
     pub const NEAREST: Self = Self(0);
     /// linear filtering
     pub const LINEAR: Self = Self(1);
 }
+
 /// nearest pixel sampling
 pub const SDL_SCALEMODE_NEAREST: SDL_ScaleMode = SDL_ScaleMode::NEAREST;
 /// linear filtering
@@ -98,7 +112,6 @@ pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
 /// | [`VERTICAL`](SDL_FlipMode::VERTICAL) | [`SDL_FLIP_VERTICAL`] | flip vertically |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_FlipMode(pub ::core::ffi::c_int);
 impl From<SDL_FlipMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -106,6 +119,21 @@ impl From<SDL_FlipMode> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_FlipMode {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_FLIP_NONE",
+            Self::HORIZONTAL => "SDL_FLIP_HORIZONTAL",
+            Self::VERTICAL => "SDL_FLIP_VERTICAL",
+
+            _ => return write!(f, "SDL_FlipMode({})", self.0),
+        })
+    }
+}
+
 impl SDL_FlipMode {
     /// Do not flip
     pub const NONE: Self = Self(0);
@@ -114,6 +142,7 @@ impl SDL_FlipMode {
     /// flip vertically
     pub const VERTICAL: Self = Self(2);
 }
+
 /// Do not flip
 pub const SDL_FLIP_NONE: SDL_FlipMode = SDL_FlipMode::NONE;
 /// flip horizontally

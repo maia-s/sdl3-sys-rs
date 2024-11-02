@@ -49,7 +49,6 @@ pub struct SDL_DateTime {
 /// | [`MMDDYYYY`](SDL_DateFormat::MMDDYYYY) | [`SDL_DATE_FORMAT_MMDDYYYY`] | Month/Day/Year |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DateFormat(pub ::core::ffi::c_int);
 impl From<SDL_DateFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -57,6 +56,21 @@ impl From<SDL_DateFormat> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_DateFormat {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::YYYYMMDD => "SDL_DATE_FORMAT_YYYYMMDD",
+            Self::DDMMYYYY => "SDL_DATE_FORMAT_DDMMYYYY",
+            Self::MMDDYYYY => "SDL_DATE_FORMAT_MMDDYYYY",
+
+            _ => return write!(f, "SDL_DateFormat({})", self.0),
+        })
+    }
+}
+
 impl SDL_DateFormat {
     /// Year/Month/Day
     pub const YYYYMMDD: Self = Self(0);
@@ -65,6 +79,7 @@ impl SDL_DateFormat {
     /// Month/Day/Year
     pub const MMDDYYYY: Self = Self(2);
 }
+
 /// Year/Month/Day
 pub const SDL_DATE_FORMAT_YYYYMMDD: SDL_DateFormat = SDL_DateFormat::YYYYMMDD;
 /// Day/Month/Year
@@ -87,7 +102,6 @@ pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 /// | [`_12HR`](SDL_TimeFormat::_12HR) | [`SDL_TIME_FORMAT_12HR`] | 12 hour time |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TimeFormat(pub ::core::ffi::c_int);
 impl From<SDL_TimeFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -95,12 +109,27 @@ impl From<SDL_TimeFormat> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_TimeFormat {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::_24HR => "SDL_TIME_FORMAT_24HR",
+            Self::_12HR => "SDL_TIME_FORMAT_12HR",
+
+            _ => return write!(f, "SDL_TimeFormat({})", self.0),
+        })
+    }
+}
+
 impl SDL_TimeFormat {
     /// 24 hour time
     pub const _24HR: Self = Self(0);
     /// 12 hour time
     pub const _12HR: Self = Self(1);
 }
+
 /// 24 hour time
 pub const SDL_TIME_FORMAT_24HR: SDL_TimeFormat = SDL_TimeFormat::_24HR;
 /// 12 hour time

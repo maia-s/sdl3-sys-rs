@@ -633,7 +633,6 @@ extern "C" {
 /// | [`MACOS`](SDL_Sandbox::MACOS) | [`SDL_SANDBOX_MACOS`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Sandbox(pub ::core::ffi::c_int);
 impl From<SDL_Sandbox> for ::core::ffi::c_int {
     #[inline(always)]
@@ -641,6 +640,23 @@ impl From<SDL_Sandbox> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_Sandbox {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_SANDBOX_NONE",
+            Self::UNKNOWN_CONTAINER => "SDL_SANDBOX_UNKNOWN_CONTAINER",
+            Self::FLATPAK => "SDL_SANDBOX_FLATPAK",
+            Self::SNAP => "SDL_SANDBOX_SNAP",
+            Self::MACOS => "SDL_SANDBOX_MACOS",
+
+            _ => return write!(f, "SDL_Sandbox({})", self.0),
+        })
+    }
+}
+
 impl SDL_Sandbox {
     pub const NONE: Self = Self(0);
     pub const UNKNOWN_CONTAINER: Self = Self(1);
@@ -648,6 +664,7 @@ impl SDL_Sandbox {
     pub const SNAP: Self = Self(3);
     pub const MACOS: Self = Self(4);
 }
+
 pub const SDL_SANDBOX_NONE: SDL_Sandbox = SDL_Sandbox::NONE;
 pub const SDL_SANDBOX_UNKNOWN_CONTAINER: SDL_Sandbox = SDL_Sandbox::UNKNOWN_CONTAINER;
 pub const SDL_SANDBOX_FLATPAK: SDL_Sandbox = SDL_Sandbox::FLATPAK;

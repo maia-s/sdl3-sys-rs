@@ -74,7 +74,6 @@ pub struct SDL_CameraSpec {
 /// | [`BACK_FACING`](SDL_CameraPosition::BACK_FACING) | [`SDL_CAMERA_POSITION_BACK_FACING`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_CameraPosition(pub ::core::ffi::c_int);
 impl From<SDL_CameraPosition> for ::core::ffi::c_int {
     #[inline(always)]
@@ -82,11 +81,27 @@ impl From<SDL_CameraPosition> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_CameraPosition {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_CAMERA_POSITION_UNKNOWN",
+            Self::FRONT_FACING => "SDL_CAMERA_POSITION_FRONT_FACING",
+            Self::BACK_FACING => "SDL_CAMERA_POSITION_BACK_FACING",
+
+            _ => return write!(f, "SDL_CameraPosition({})", self.0),
+        })
+    }
+}
+
 impl SDL_CameraPosition {
     pub const UNKNOWN: Self = Self(0);
     pub const FRONT_FACING: Self = Self(1);
     pub const BACK_FACING: Self = Self(2);
 }
+
 pub const SDL_CAMERA_POSITION_UNKNOWN: SDL_CameraPosition = SDL_CameraPosition::UNKNOWN;
 pub const SDL_CAMERA_POSITION_FRONT_FACING: SDL_CameraPosition = SDL_CameraPosition::FRONT_FACING;
 pub const SDL_CAMERA_POSITION_BACK_FACING: SDL_CameraPosition = SDL_CameraPosition::BACK_FACING;

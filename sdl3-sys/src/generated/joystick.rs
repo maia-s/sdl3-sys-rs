@@ -78,7 +78,6 @@ pub type SDL_JoystickID = Uint32;
 /// | [`COUNT`](SDL_JoystickType::COUNT) | [`SDL_JOYSTICK_TYPE_COUNT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoystickType(pub ::core::ffi::c_int);
 impl From<SDL_JoystickType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -86,6 +85,29 @@ impl From<SDL_JoystickType> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_JoystickType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_JOYSTICK_TYPE_UNKNOWN",
+            Self::GAMEPAD => "SDL_JOYSTICK_TYPE_GAMEPAD",
+            Self::WHEEL => "SDL_JOYSTICK_TYPE_WHEEL",
+            Self::ARCADE_STICK => "SDL_JOYSTICK_TYPE_ARCADE_STICK",
+            Self::FLIGHT_STICK => "SDL_JOYSTICK_TYPE_FLIGHT_STICK",
+            Self::DANCE_PAD => "SDL_JOYSTICK_TYPE_DANCE_PAD",
+            Self::GUITAR => "SDL_JOYSTICK_TYPE_GUITAR",
+            Self::DRUM_KIT => "SDL_JOYSTICK_TYPE_DRUM_KIT",
+            Self::ARCADE_PAD => "SDL_JOYSTICK_TYPE_ARCADE_PAD",
+            Self::THROTTLE => "SDL_JOYSTICK_TYPE_THROTTLE",
+            Self::COUNT => "SDL_JOYSTICK_TYPE_COUNT",
+
+            _ => return write!(f, "SDL_JoystickType({})", self.0),
+        })
+    }
+}
+
 impl SDL_JoystickType {
     pub const UNKNOWN: Self = Self(0);
     pub const GAMEPAD: Self = Self(1);
@@ -99,6 +121,7 @@ impl SDL_JoystickType {
     pub const THROTTLE: Self = Self(9);
     pub const COUNT: Self = Self(10);
 }
+
 pub const SDL_JOYSTICK_TYPE_UNKNOWN: SDL_JoystickType = SDL_JoystickType::UNKNOWN;
 pub const SDL_JOYSTICK_TYPE_GAMEPAD: SDL_JoystickType = SDL_JoystickType::GAMEPAD;
 pub const SDL_JOYSTICK_TYPE_WHEEL: SDL_JoystickType = SDL_JoystickType::WHEEL;
@@ -128,7 +151,6 @@ pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 /// | [`WIRELESS`](SDL_JoystickConnectionState::WIRELESS) | [`SDL_JOYSTICK_CONNECTION_WIRELESS`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoystickConnectionState(pub ::core::ffi::c_int);
 impl From<SDL_JoystickConnectionState> for ::core::ffi::c_int {
     #[inline(always)]
@@ -136,12 +158,29 @@ impl From<SDL_JoystickConnectionState> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_JoystickConnectionState {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_JOYSTICK_CONNECTION_INVALID",
+            Self::UNKNOWN => "SDL_JOYSTICK_CONNECTION_UNKNOWN",
+            Self::WIRED => "SDL_JOYSTICK_CONNECTION_WIRED",
+            Self::WIRELESS => "SDL_JOYSTICK_CONNECTION_WIRELESS",
+
+            _ => return write!(f, "SDL_JoystickConnectionState({})", self.0),
+        })
+    }
+}
+
 impl SDL_JoystickConnectionState {
     pub const INVALID: Self = Self(-1_i32);
     pub const UNKNOWN: Self = Self(0_i32);
     pub const WIRED: Self = Self(1_i32);
     pub const WIRELESS: Self = Self(2_i32);
 }
+
 pub const SDL_JOYSTICK_CONNECTION_INVALID: SDL_JoystickConnectionState =
     SDL_JoystickConnectionState::INVALID;
 pub const SDL_JOYSTICK_CONNECTION_UNKNOWN: SDL_JoystickConnectionState =

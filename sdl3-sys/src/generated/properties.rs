@@ -46,7 +46,6 @@ pub type SDL_PropertiesID = Uint32;
 /// | [`BOOLEAN`](SDL_PropertyType::BOOLEAN) | [`SDL_PROPERTY_TYPE_BOOLEAN`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PropertyType(pub ::core::ffi::c_int);
 impl From<SDL_PropertyType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -54,6 +53,24 @@ impl From<SDL_PropertyType> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_PropertyType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_PROPERTY_TYPE_INVALID",
+            Self::POINTER => "SDL_PROPERTY_TYPE_POINTER",
+            Self::STRING => "SDL_PROPERTY_TYPE_STRING",
+            Self::NUMBER => "SDL_PROPERTY_TYPE_NUMBER",
+            Self::FLOAT => "SDL_PROPERTY_TYPE_FLOAT",
+            Self::BOOLEAN => "SDL_PROPERTY_TYPE_BOOLEAN",
+
+            _ => return write!(f, "SDL_PropertyType({})", self.0),
+        })
+    }
+}
+
 impl SDL_PropertyType {
     pub const INVALID: Self = Self(0);
     pub const POINTER: Self = Self(1);
@@ -62,6 +79,7 @@ impl SDL_PropertyType {
     pub const FLOAT: Self = Self(4);
     pub const BOOLEAN: Self = Self(5);
 }
+
 pub const SDL_PROPERTY_TYPE_INVALID: SDL_PropertyType = SDL_PropertyType::INVALID;
 pub const SDL_PROPERTY_TYPE_POINTER: SDL_PropertyType = SDL_PropertyType::POINTER;
 pub const SDL_PROPERTY_TYPE_STRING: SDL_PropertyType = SDL_PropertyType::STRING;

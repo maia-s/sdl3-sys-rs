@@ -150,7 +150,6 @@ pub use SDL_disabled_assert;
 /// | [`ALWAYS_IGNORE`](SDL_AssertState::ALWAYS_IGNORE) | [`SDL_ASSERTION_ALWAYS_IGNORE`] | Ignore the assert from now on. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AssertState(pub ::core::ffi::c_int);
 impl From<SDL_AssertState> for ::core::ffi::c_int {
     #[inline(always)]
@@ -158,6 +157,23 @@ impl From<SDL_AssertState> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_AssertState {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::RETRY => "SDL_ASSERTION_RETRY",
+            Self::BREAK => "SDL_ASSERTION_BREAK",
+            Self::ABORT => "SDL_ASSERTION_ABORT",
+            Self::IGNORE => "SDL_ASSERTION_IGNORE",
+            Self::ALWAYS_IGNORE => "SDL_ASSERTION_ALWAYS_IGNORE",
+
+            _ => return write!(f, "SDL_AssertState({})", self.0),
+        })
+    }
+}
+
 impl SDL_AssertState {
     /// Retry the assert immediately.
     pub const RETRY: Self = Self(0);
@@ -170,6 +186,7 @@ impl SDL_AssertState {
     /// Ignore the assert from now on.
     pub const ALWAYS_IGNORE: Self = Self(4);
 }
+
 /// Retry the assert immediately.
 pub const SDL_ASSERTION_RETRY: SDL_AssertState = SDL_AssertState::RETRY;
 /// Make the debugger trigger a breakpoint.

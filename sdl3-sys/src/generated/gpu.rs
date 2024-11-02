@@ -153,7 +153,6 @@ use super::video::*;
 /// | [`POINTLIST`](SDL_GPUPrimitiveType::POINTLIST) | [`SDL_GPU_PRIMITIVETYPE_POINTLIST`] | A series of separate points. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUPrimitiveType(pub ::core::ffi::c_int);
 impl From<SDL_GPUPrimitiveType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -161,6 +160,23 @@ impl From<SDL_GPUPrimitiveType> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUPrimitiveType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::TRIANGLELIST => "SDL_GPU_PRIMITIVETYPE_TRIANGLELIST",
+            Self::TRIANGLESTRIP => "SDL_GPU_PRIMITIVETYPE_TRIANGLESTRIP",
+            Self::LINELIST => "SDL_GPU_PRIMITIVETYPE_LINELIST",
+            Self::LINESTRIP => "SDL_GPU_PRIMITIVETYPE_LINESTRIP",
+            Self::POINTLIST => "SDL_GPU_PRIMITIVETYPE_POINTLIST",
+
+            _ => return write!(f, "SDL_GPUPrimitiveType({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUPrimitiveType {
     /// A series of separate triangles.
     pub const TRIANGLELIST: Self = Self(0);
@@ -173,6 +189,7 @@ impl SDL_GPUPrimitiveType {
     /// A series of separate points.
     pub const POINTLIST: Self = Self(4);
 }
+
 /// A series of separate triangles.
 pub const SDL_GPU_PRIMITIVETYPE_TRIANGLELIST: SDL_GPUPrimitiveType =
     SDL_GPUPrimitiveType::TRIANGLELIST;
@@ -203,7 +220,6 @@ pub const SDL_GPU_PRIMITIVETYPE_POINTLIST: SDL_GPUPrimitiveType = SDL_GPUPrimiti
 /// | [`DONT_CARE`](SDL_GPULoadOp::DONT_CARE) | [`SDL_GPU_LOADOP_DONT_CARE`] | The previous contents of the texture need not be preserved. The contents will be undefined. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPULoadOp(pub ::core::ffi::c_int);
 impl From<SDL_GPULoadOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -211,6 +227,21 @@ impl From<SDL_GPULoadOp> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPULoadOp {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::LOAD => "SDL_GPU_LOADOP_LOAD",
+            Self::CLEAR => "SDL_GPU_LOADOP_CLEAR",
+            Self::DONT_CARE => "SDL_GPU_LOADOP_DONT_CARE",
+
+            _ => return write!(f, "SDL_GPULoadOp({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPULoadOp {
     /// The previous contents of the texture will be preserved.
     pub const LOAD: Self = Self(0);
@@ -219,6 +250,7 @@ impl SDL_GPULoadOp {
     /// The previous contents of the texture need not be preserved. The contents will be undefined.
     pub const DONT_CARE: Self = Self(2);
 }
+
 /// The previous contents of the texture will be preserved.
 pub const SDL_GPU_LOADOP_LOAD: SDL_GPULoadOp = SDL_GPULoadOp::LOAD;
 /// The contents of the texture will be cleared to a color.
@@ -244,7 +276,6 @@ pub const SDL_GPU_LOADOP_DONT_CARE: SDL_GPULoadOp = SDL_GPULoadOp::DONT_CARE;
 /// | [`RESOLVE_AND_STORE`](SDL_GPUStoreOp::RESOLVE_AND_STORE) | [`SDL_GPU_STOREOP_RESOLVE_AND_STORE`] | The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture will be written to memory. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUStoreOp(pub ::core::ffi::c_int);
 impl From<SDL_GPUStoreOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -252,6 +283,22 @@ impl From<SDL_GPUStoreOp> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUStoreOp {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::STORE => "SDL_GPU_STOREOP_STORE",
+            Self::DONT_CARE => "SDL_GPU_STOREOP_DONT_CARE",
+            Self::RESOLVE => "SDL_GPU_STOREOP_RESOLVE",
+            Self::RESOLVE_AND_STORE => "SDL_GPU_STOREOP_RESOLVE_AND_STORE",
+
+            _ => return write!(f, "SDL_GPUStoreOp({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUStoreOp {
     /// The contents generated during the render pass will be written to memory.
     pub const STORE: Self = Self(0);
@@ -262,6 +309,7 @@ impl SDL_GPUStoreOp {
     /// The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture will be written to memory.
     pub const RESOLVE_AND_STORE: Self = Self(3);
 }
+
 /// The contents generated during the render pass will be written to memory.
 pub const SDL_GPU_STOREOP_STORE: SDL_GPUStoreOp = SDL_GPUStoreOp::STORE;
 /// The contents generated during the render pass are not needed and may be discarded. The contents will be undefined.
@@ -286,7 +334,6 @@ pub const SDL_GPU_STOREOP_RESOLVE_AND_STORE: SDL_GPUStoreOp = SDL_GPUStoreOp::RE
 /// | [`_32BIT`](SDL_GPUIndexElementSize::_32BIT) | [`SDL_GPU_INDEXELEMENTSIZE_32BIT`] | The index elements are 32-bit. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUIndexElementSize(pub ::core::ffi::c_int);
 impl From<SDL_GPUIndexElementSize> for ::core::ffi::c_int {
     #[inline(always)]
@@ -294,12 +341,27 @@ impl From<SDL_GPUIndexElementSize> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUIndexElementSize {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::_16BIT => "SDL_GPU_INDEXELEMENTSIZE_16BIT",
+            Self::_32BIT => "SDL_GPU_INDEXELEMENTSIZE_32BIT",
+
+            _ => return write!(f, "SDL_GPUIndexElementSize({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUIndexElementSize {
     /// The index elements are 16-bit.
     pub const _16BIT: Self = Self(0);
     /// The index elements are 32-bit.
     pub const _32BIT: Self = Self(1);
 }
+
 /// The index elements are 16-bit.
 pub const SDL_GPU_INDEXELEMENTSIZE_16BIT: SDL_GPUIndexElementSize = SDL_GPUIndexElementSize::_16BIT;
 /// The index elements are 32-bit.
@@ -502,7 +564,6 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 /// | [`ASTC_12x12_FLOAT`](SDL_GPUTextureFormat::ASTC_12x12_FLOAT) | [`SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureFormat(pub ::core::ffi::c_int);
 impl From<SDL_GPUTextureFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -510,6 +571,123 @@ impl From<SDL_GPUTextureFormat> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUTextureFormat {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_GPU_TEXTUREFORMAT_INVALID",
+            Self::A8_UNORM => "SDL_GPU_TEXTUREFORMAT_A8_UNORM",
+            Self::R8_UNORM => "SDL_GPU_TEXTUREFORMAT_R8_UNORM",
+            Self::R8G8_UNORM => "SDL_GPU_TEXTUREFORMAT_R8G8_UNORM",
+            Self::R8G8B8A8_UNORM => "SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM",
+            Self::R16_UNORM => "SDL_GPU_TEXTUREFORMAT_R16_UNORM",
+            Self::R16G16_UNORM => "SDL_GPU_TEXTUREFORMAT_R16G16_UNORM",
+            Self::R16G16B16A16_UNORM => "SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UNORM",
+            Self::R10G10B10A2_UNORM => "SDL_GPU_TEXTUREFORMAT_R10G10B10A2_UNORM",
+            Self::B5G6R5_UNORM => "SDL_GPU_TEXTUREFORMAT_B5G6R5_UNORM",
+            Self::B5G5R5A1_UNORM => "SDL_GPU_TEXTUREFORMAT_B5G5R5A1_UNORM",
+            Self::B4G4R4A4_UNORM => "SDL_GPU_TEXTUREFORMAT_B4G4R4A4_UNORM",
+            Self::B8G8R8A8_UNORM => "SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM",
+            Self::BC1_RGBA_UNORM => "SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM",
+            Self::BC2_RGBA_UNORM => "SDL_GPU_TEXTUREFORMAT_BC2_RGBA_UNORM",
+            Self::BC3_RGBA_UNORM => "SDL_GPU_TEXTUREFORMAT_BC3_RGBA_UNORM",
+            Self::BC4_R_UNORM => "SDL_GPU_TEXTUREFORMAT_BC4_R_UNORM",
+            Self::BC5_RG_UNORM => "SDL_GPU_TEXTUREFORMAT_BC5_RG_UNORM",
+            Self::BC7_RGBA_UNORM => "SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM",
+            Self::BC6H_RGB_FLOAT => "SDL_GPU_TEXTUREFORMAT_BC6H_RGB_FLOAT",
+            Self::BC6H_RGB_UFLOAT => "SDL_GPU_TEXTUREFORMAT_BC6H_RGB_UFLOAT",
+            Self::R8_SNORM => "SDL_GPU_TEXTUREFORMAT_R8_SNORM",
+            Self::R8G8_SNORM => "SDL_GPU_TEXTUREFORMAT_R8G8_SNORM",
+            Self::R8G8B8A8_SNORM => "SDL_GPU_TEXTUREFORMAT_R8G8B8A8_SNORM",
+            Self::R16_SNORM => "SDL_GPU_TEXTUREFORMAT_R16_SNORM",
+            Self::R16G16_SNORM => "SDL_GPU_TEXTUREFORMAT_R16G16_SNORM",
+            Self::R16G16B16A16_SNORM => "SDL_GPU_TEXTUREFORMAT_R16G16B16A16_SNORM",
+            Self::R16_FLOAT => "SDL_GPU_TEXTUREFORMAT_R16_FLOAT",
+            Self::R16G16_FLOAT => "SDL_GPU_TEXTUREFORMAT_R16G16_FLOAT",
+            Self::R16G16B16A16_FLOAT => "SDL_GPU_TEXTUREFORMAT_R16G16B16A16_FLOAT",
+            Self::R32_FLOAT => "SDL_GPU_TEXTUREFORMAT_R32_FLOAT",
+            Self::R32G32_FLOAT => "SDL_GPU_TEXTUREFORMAT_R32G32_FLOAT",
+            Self::R32G32B32A32_FLOAT => "SDL_GPU_TEXTUREFORMAT_R32G32B32A32_FLOAT",
+            Self::R11G11B10_UFLOAT => "SDL_GPU_TEXTUREFORMAT_R11G11B10_UFLOAT",
+            Self::R8_UINT => "SDL_GPU_TEXTUREFORMAT_R8_UINT",
+            Self::R8G8_UINT => "SDL_GPU_TEXTUREFORMAT_R8G8_UINT",
+            Self::R8G8B8A8_UINT => "SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UINT",
+            Self::R16_UINT => "SDL_GPU_TEXTUREFORMAT_R16_UINT",
+            Self::R16G16_UINT => "SDL_GPU_TEXTUREFORMAT_R16G16_UINT",
+            Self::R16G16B16A16_UINT => "SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UINT",
+            Self::R32_UINT => "SDL_GPU_TEXTUREFORMAT_R32_UINT",
+            Self::R32G32_UINT => "SDL_GPU_TEXTUREFORMAT_R32G32_UINT",
+            Self::R32G32B32A32_UINT => "SDL_GPU_TEXTUREFORMAT_R32G32B32A32_UINT",
+            Self::R8_INT => "SDL_GPU_TEXTUREFORMAT_R8_INT",
+            Self::R8G8_INT => "SDL_GPU_TEXTUREFORMAT_R8G8_INT",
+            Self::R8G8B8A8_INT => "SDL_GPU_TEXTUREFORMAT_R8G8B8A8_INT",
+            Self::R16_INT => "SDL_GPU_TEXTUREFORMAT_R16_INT",
+            Self::R16G16_INT => "SDL_GPU_TEXTUREFORMAT_R16G16_INT",
+            Self::R16G16B16A16_INT => "SDL_GPU_TEXTUREFORMAT_R16G16B16A16_INT",
+            Self::R32_INT => "SDL_GPU_TEXTUREFORMAT_R32_INT",
+            Self::R32G32_INT => "SDL_GPU_TEXTUREFORMAT_R32G32_INT",
+            Self::R32G32B32A32_INT => "SDL_GPU_TEXTUREFORMAT_R32G32B32A32_INT",
+            Self::R8G8B8A8_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM_SRGB",
+            Self::B8G8R8A8_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM_SRGB",
+            Self::BC1_RGBA_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM_SRGB",
+            Self::BC2_RGBA_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_BC2_RGBA_UNORM_SRGB",
+            Self::BC3_RGBA_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_BC3_RGBA_UNORM_SRGB",
+            Self::BC7_RGBA_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM_SRGB",
+            Self::D16_UNORM => "SDL_GPU_TEXTUREFORMAT_D16_UNORM",
+            Self::D24_UNORM => "SDL_GPU_TEXTUREFORMAT_D24_UNORM",
+            Self::D32_FLOAT => "SDL_GPU_TEXTUREFORMAT_D32_FLOAT",
+            Self::D24_UNORM_S8_UINT => "SDL_GPU_TEXTUREFORMAT_D24_UNORM_S8_UINT",
+            Self::D32_FLOAT_S8_UINT => "SDL_GPU_TEXTUREFORMAT_D32_FLOAT_S8_UINT",
+            Self::ASTC_4x4_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM",
+            Self::ASTC_5x4_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_5x4_UNORM",
+            Self::ASTC_5x5_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_5x5_UNORM",
+            Self::ASTC_6x5_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_6x5_UNORM",
+            Self::ASTC_6x6_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_6x6_UNORM",
+            Self::ASTC_8x5_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_8x5_UNORM",
+            Self::ASTC_8x6_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_8x6_UNORM",
+            Self::ASTC_8x8_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_8x8_UNORM",
+            Self::ASTC_10x5_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_10x5_UNORM",
+            Self::ASTC_10x6_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_10x6_UNORM",
+            Self::ASTC_10x8_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_10x8_UNORM",
+            Self::ASTC_10x10_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_10x10_UNORM",
+            Self::ASTC_12x10_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_12x10_UNORM",
+            Self::ASTC_12x12_UNORM => "SDL_GPU_TEXTUREFORMAT_ASTC_12x12_UNORM",
+            Self::ASTC_4x4_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM_SRGB",
+            Self::ASTC_5x4_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_5x4_UNORM_SRGB",
+            Self::ASTC_5x5_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_5x5_UNORM_SRGB",
+            Self::ASTC_6x5_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_6x5_UNORM_SRGB",
+            Self::ASTC_6x6_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_6x6_UNORM_SRGB",
+            Self::ASTC_8x5_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_8x5_UNORM_SRGB",
+            Self::ASTC_8x6_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_8x6_UNORM_SRGB",
+            Self::ASTC_8x8_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_8x8_UNORM_SRGB",
+            Self::ASTC_10x5_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_10x5_UNORM_SRGB",
+            Self::ASTC_10x6_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_10x6_UNORM_SRGB",
+            Self::ASTC_10x8_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_10x8_UNORM_SRGB",
+            Self::ASTC_10x10_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_10x10_UNORM_SRGB",
+            Self::ASTC_12x10_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_12x10_UNORM_SRGB",
+            Self::ASTC_12x12_UNORM_SRGB => "SDL_GPU_TEXTUREFORMAT_ASTC_12x12_UNORM_SRGB",
+            Self::ASTC_4x4_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_4x4_FLOAT",
+            Self::ASTC_5x4_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_5x4_FLOAT",
+            Self::ASTC_5x5_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_5x5_FLOAT",
+            Self::ASTC_6x5_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_6x5_FLOAT",
+            Self::ASTC_6x6_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_6x6_FLOAT",
+            Self::ASTC_8x5_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_8x5_FLOAT",
+            Self::ASTC_8x6_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_8x6_FLOAT",
+            Self::ASTC_8x8_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_8x8_FLOAT",
+            Self::ASTC_10x5_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_10x5_FLOAT",
+            Self::ASTC_10x6_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_10x6_FLOAT",
+            Self::ASTC_10x8_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_10x8_FLOAT",
+            Self::ASTC_10x10_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_10x10_FLOAT",
+            Self::ASTC_12x10_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_12x10_FLOAT",
+            Self::ASTC_12x12_FLOAT => "SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT",
+
+            _ => return write!(f, "SDL_GPUTextureFormat({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUTextureFormat {
     pub const INVALID: Self = Self(0);
     pub const A8_UNORM: Self = Self(1);
@@ -617,6 +795,7 @@ impl SDL_GPUTextureFormat {
     pub const ASTC_12x10_FLOAT: Self = Self(103);
     pub const ASTC_12x12_FLOAT: Self = Self(104);
 }
+
 pub const SDL_GPU_TEXTUREFORMAT_INVALID: SDL_GPUTextureFormat = SDL_GPUTextureFormat::INVALID;
 pub const SDL_GPU_TEXTUREFORMAT_A8_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::A8_UNORM;
 pub const SDL_GPU_TEXTUREFORMAT_R8_UNORM: SDL_GPUTextureFormat = SDL_GPUTextureFormat::R8_UNORM;
@@ -884,7 +1063,6 @@ pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: SDL_GPUT
 /// | [`CUBE_ARRAY`](SDL_GPUTextureType::CUBE_ARRAY) | [`SDL_GPU_TEXTURETYPE_CUBE_ARRAY`] | The texture is a cube array image. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTextureType(pub ::core::ffi::c_int);
 impl From<SDL_GPUTextureType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -892,6 +1070,23 @@ impl From<SDL_GPUTextureType> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUTextureType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::_2D => "SDL_GPU_TEXTURETYPE_2D",
+            Self::_2D_ARRAY => "SDL_GPU_TEXTURETYPE_2D_ARRAY",
+            Self::_3D => "SDL_GPU_TEXTURETYPE_3D",
+            Self::CUBE => "SDL_GPU_TEXTURETYPE_CUBE",
+            Self::CUBE_ARRAY => "SDL_GPU_TEXTURETYPE_CUBE_ARRAY",
+
+            _ => return write!(f, "SDL_GPUTextureType({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUTextureType {
     /// The texture is a 2-dimensional image.
     pub const _2D: Self = Self(0);
@@ -904,6 +1099,7 @@ impl SDL_GPUTextureType {
     /// The texture is a cube array image.
     pub const CUBE_ARRAY: Self = Self(4);
 }
+
 /// The texture is a 2-dimensional image.
 pub const SDL_GPU_TEXTURETYPE_2D: SDL_GPUTextureType = SDL_GPUTextureType::_2D;
 /// The texture is a 2-dimensional array image.
@@ -936,7 +1132,6 @@ pub const SDL_GPU_TEXTURETYPE_CUBE_ARRAY: SDL_GPUTextureType = SDL_GPUTextureTyp
 /// | [`_8`](SDL_GPUSampleCount::_8) | [`SDL_GPU_SAMPLECOUNT_8`] | MSAA 8x |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUSampleCount(pub ::core::ffi::c_int);
 impl From<SDL_GPUSampleCount> for ::core::ffi::c_int {
     #[inline(always)]
@@ -944,6 +1139,22 @@ impl From<SDL_GPUSampleCount> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUSampleCount {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::_1 => "SDL_GPU_SAMPLECOUNT_1",
+            Self::_2 => "SDL_GPU_SAMPLECOUNT_2",
+            Self::_4 => "SDL_GPU_SAMPLECOUNT_4",
+            Self::_8 => "SDL_GPU_SAMPLECOUNT_8",
+
+            _ => return write!(f, "SDL_GPUSampleCount({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUSampleCount {
     /// No multisampling.
     pub const _1: Self = Self(0);
@@ -954,6 +1165,7 @@ impl SDL_GPUSampleCount {
     /// MSAA 8x
     pub const _8: Self = Self(3);
 }
+
 /// No multisampling.
 pub const SDL_GPU_SAMPLECOUNT_1: SDL_GPUSampleCount = SDL_GPUSampleCount::_1;
 /// MSAA 2x
@@ -981,7 +1193,6 @@ pub const SDL_GPU_SAMPLECOUNT_8: SDL_GPUSampleCount = SDL_GPUSampleCount::_8;
 /// | [`NEGATIVEZ`](SDL_GPUCubeMapFace::NEGATIVEZ) | [`SDL_GPU_CUBEMAPFACE_NEGATIVEZ`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUCubeMapFace(pub ::core::ffi::c_int);
 impl From<SDL_GPUCubeMapFace> for ::core::ffi::c_int {
     #[inline(always)]
@@ -989,6 +1200,24 @@ impl From<SDL_GPUCubeMapFace> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUCubeMapFace {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::POSITIVEX => "SDL_GPU_CUBEMAPFACE_POSITIVEX",
+            Self::NEGATIVEX => "SDL_GPU_CUBEMAPFACE_NEGATIVEX",
+            Self::POSITIVEY => "SDL_GPU_CUBEMAPFACE_POSITIVEY",
+            Self::NEGATIVEY => "SDL_GPU_CUBEMAPFACE_NEGATIVEY",
+            Self::POSITIVEZ => "SDL_GPU_CUBEMAPFACE_POSITIVEZ",
+            Self::NEGATIVEZ => "SDL_GPU_CUBEMAPFACE_NEGATIVEZ",
+
+            _ => return write!(f, "SDL_GPUCubeMapFace({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUCubeMapFace {
     pub const POSITIVEX: Self = Self(0);
     pub const NEGATIVEX: Self = Self(1);
@@ -997,6 +1226,7 @@ impl SDL_GPUCubeMapFace {
     pub const POSITIVEZ: Self = Self(4);
     pub const NEGATIVEZ: Self = Self(5);
 }
+
 pub const SDL_GPU_CUBEMAPFACE_POSITIVEX: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace::POSITIVEX;
 pub const SDL_GPU_CUBEMAPFACE_NEGATIVEX: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace::NEGATIVEX;
 pub const SDL_GPU_CUBEMAPFACE_POSITIVEY: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace::POSITIVEY;
@@ -1070,7 +1300,6 @@ pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE: SDL_GPUBufferUsageFlags =
 /// | [`DOWNLOAD`](SDL_GPUTransferBufferUsage::DOWNLOAD) | [`SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUTransferBufferUsage(pub ::core::ffi::c_int);
 impl From<SDL_GPUTransferBufferUsage> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1078,10 +1307,25 @@ impl From<SDL_GPUTransferBufferUsage> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUTransferBufferUsage {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UPLOAD => "SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD",
+            Self::DOWNLOAD => "SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD",
+
+            _ => return write!(f, "SDL_GPUTransferBufferUsage({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUTransferBufferUsage {
     pub const UPLOAD: Self = Self(0);
     pub const DOWNLOAD: Self = Self(1);
 }
+
 pub const SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD: SDL_GPUTransferBufferUsage =
     SDL_GPUTransferBufferUsage::UPLOAD;
 pub const SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD: SDL_GPUTransferBufferUsage =
@@ -1102,7 +1346,6 @@ pub const SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD: SDL_GPUTransferBufferUsage =
 /// | [`FRAGMENT`](SDL_GPUShaderStage::FRAGMENT) | [`SDL_GPU_SHADERSTAGE_FRAGMENT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUShaderStage(pub ::core::ffi::c_int);
 impl From<SDL_GPUShaderStage> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1110,10 +1353,25 @@ impl From<SDL_GPUShaderStage> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUShaderStage {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::VERTEX => "SDL_GPU_SHADERSTAGE_VERTEX",
+            Self::FRAGMENT => "SDL_GPU_SHADERSTAGE_FRAGMENT",
+
+            _ => return write!(f, "SDL_GPUShaderStage({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUShaderStage {
     pub const VERTEX: Self = Self(0);
     pub const FRAGMENT: Self = Self(1);
 }
+
 pub const SDL_GPU_SHADERSTAGE_VERTEX: SDL_GPUShaderStage = SDL_GPUShaderStage::VERTEX;
 pub const SDL_GPU_SHADERSTAGE_FRAGMENT: SDL_GPUShaderStage = SDL_GPUShaderStage::FRAGMENT;
 
@@ -1203,7 +1461,6 @@ pub const SDL_GPU_SHADERFORMAT_METALLIB: SDL_GPUShaderFormat = ((32_u32) as SDL_
 /// | [`HALF4`](SDL_GPUVertexElementFormat::HALF4) | [`SDL_GPU_VERTEXELEMENTFORMAT_HALF4`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUVertexElementFormat(pub ::core::ffi::c_int);
 impl From<SDL_GPUVertexElementFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1211,6 +1468,49 @@ impl From<SDL_GPUVertexElementFormat> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUVertexElementFormat {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_GPU_VERTEXELEMENTFORMAT_INVALID",
+            Self::INT => "SDL_GPU_VERTEXELEMENTFORMAT_INT",
+            Self::INT2 => "SDL_GPU_VERTEXELEMENTFORMAT_INT2",
+            Self::INT3 => "SDL_GPU_VERTEXELEMENTFORMAT_INT3",
+            Self::INT4 => "SDL_GPU_VERTEXELEMENTFORMAT_INT4",
+            Self::UINT => "SDL_GPU_VERTEXELEMENTFORMAT_UINT",
+            Self::UINT2 => "SDL_GPU_VERTEXELEMENTFORMAT_UINT2",
+            Self::UINT3 => "SDL_GPU_VERTEXELEMENTFORMAT_UINT3",
+            Self::UINT4 => "SDL_GPU_VERTEXELEMENTFORMAT_UINT4",
+            Self::FLOAT => "SDL_GPU_VERTEXELEMENTFORMAT_FLOAT",
+            Self::FLOAT2 => "SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2",
+            Self::FLOAT3 => "SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3",
+            Self::FLOAT4 => "SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4",
+            Self::BYTE2 => "SDL_GPU_VERTEXELEMENTFORMAT_BYTE2",
+            Self::BYTE4 => "SDL_GPU_VERTEXELEMENTFORMAT_BYTE4",
+            Self::UBYTE2 => "SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2",
+            Self::UBYTE4 => "SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4",
+            Self::BYTE2_NORM => "SDL_GPU_VERTEXELEMENTFORMAT_BYTE2_NORM",
+            Self::BYTE4_NORM => "SDL_GPU_VERTEXELEMENTFORMAT_BYTE4_NORM",
+            Self::UBYTE2_NORM => "SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2_NORM",
+            Self::UBYTE4_NORM => "SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4_NORM",
+            Self::SHORT2 => "SDL_GPU_VERTEXELEMENTFORMAT_SHORT2",
+            Self::SHORT4 => "SDL_GPU_VERTEXELEMENTFORMAT_SHORT4",
+            Self::USHORT2 => "SDL_GPU_VERTEXELEMENTFORMAT_USHORT2",
+            Self::USHORT4 => "SDL_GPU_VERTEXELEMENTFORMAT_USHORT4",
+            Self::SHORT2_NORM => "SDL_GPU_VERTEXELEMENTFORMAT_SHORT2_NORM",
+            Self::SHORT4_NORM => "SDL_GPU_VERTEXELEMENTFORMAT_SHORT4_NORM",
+            Self::USHORT2_NORM => "SDL_GPU_VERTEXELEMENTFORMAT_USHORT2_NORM",
+            Self::USHORT4_NORM => "SDL_GPU_VERTEXELEMENTFORMAT_USHORT4_NORM",
+            Self::HALF2 => "SDL_GPU_VERTEXELEMENTFORMAT_HALF2",
+            Self::HALF4 => "SDL_GPU_VERTEXELEMENTFORMAT_HALF4",
+
+            _ => return write!(f, "SDL_GPUVertexElementFormat({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUVertexElementFormat {
     pub const INVALID: Self = Self(0);
     pub const INT: Self = Self(1);
@@ -1244,6 +1544,7 @@ impl SDL_GPUVertexElementFormat {
     pub const HALF2: Self = Self(29);
     pub const HALF4: Self = Self(30);
 }
+
 pub const SDL_GPU_VERTEXELEMENTFORMAT_INVALID: SDL_GPUVertexElementFormat =
     SDL_GPUVertexElementFormat::INVALID;
 pub const SDL_GPU_VERTEXELEMENTFORMAT_INT: SDL_GPUVertexElementFormat =
@@ -1322,7 +1623,6 @@ pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF4: SDL_GPUVertexElementFormat =
 /// | [`INSTANCE`](SDL_GPUVertexInputRate::INSTANCE) | [`SDL_GPU_VERTEXINPUTRATE_INSTANCE`] | Attribute addressing is a function of the instance index. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUVertexInputRate(pub ::core::ffi::c_int);
 impl From<SDL_GPUVertexInputRate> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1330,12 +1630,27 @@ impl From<SDL_GPUVertexInputRate> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUVertexInputRate {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::VERTEX => "SDL_GPU_VERTEXINPUTRATE_VERTEX",
+            Self::INSTANCE => "SDL_GPU_VERTEXINPUTRATE_INSTANCE",
+
+            _ => return write!(f, "SDL_GPUVertexInputRate({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUVertexInputRate {
     /// Attribute addressing is a function of the vertex index.
     pub const VERTEX: Self = Self(0);
     /// Attribute addressing is a function of the instance index.
     pub const INSTANCE: Self = Self(1);
 }
+
 /// Attribute addressing is a function of the vertex index.
 pub const SDL_GPU_VERTEXINPUTRATE_VERTEX: SDL_GPUVertexInputRate = SDL_GPUVertexInputRate::VERTEX;
 /// Attribute addressing is a function of the instance index.
@@ -1357,7 +1672,6 @@ pub const SDL_GPU_VERTEXINPUTRATE_INSTANCE: SDL_GPUVertexInputRate =
 /// | [`LINE`](SDL_GPUFillMode::LINE) | [`SDL_GPU_FILLMODE_LINE`] | Polygon edges will be drawn as line segments. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUFillMode(pub ::core::ffi::c_int);
 impl From<SDL_GPUFillMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1365,12 +1679,27 @@ impl From<SDL_GPUFillMode> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUFillMode {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::FILL => "SDL_GPU_FILLMODE_FILL",
+            Self::LINE => "SDL_GPU_FILLMODE_LINE",
+
+            _ => return write!(f, "SDL_GPUFillMode({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUFillMode {
     /// Polygons will be rendered via rasterization.
     pub const FILL: Self = Self(0);
     /// Polygon edges will be drawn as line segments.
     pub const LINE: Self = Self(1);
 }
+
 /// Polygons will be rendered via rasterization.
 pub const SDL_GPU_FILLMODE_FILL: SDL_GPUFillMode = SDL_GPUFillMode::FILL;
 /// Polygon edges will be drawn as line segments.
@@ -1392,7 +1721,6 @@ pub const SDL_GPU_FILLMODE_LINE: SDL_GPUFillMode = SDL_GPUFillMode::LINE;
 /// | [`BACK`](SDL_GPUCullMode::BACK) | [`SDL_GPU_CULLMODE_BACK`] | Back-facing triangles are culled. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUCullMode(pub ::core::ffi::c_int);
 impl From<SDL_GPUCullMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1400,6 +1728,21 @@ impl From<SDL_GPUCullMode> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUCullMode {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_GPU_CULLMODE_NONE",
+            Self::FRONT => "SDL_GPU_CULLMODE_FRONT",
+            Self::BACK => "SDL_GPU_CULLMODE_BACK",
+
+            _ => return write!(f, "SDL_GPUCullMode({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUCullMode {
     /// No triangles are culled.
     pub const NONE: Self = Self(0);
@@ -1408,6 +1751,7 @@ impl SDL_GPUCullMode {
     /// Back-facing triangles are culled.
     pub const BACK: Self = Self(2);
 }
+
 /// No triangles are culled.
 pub const SDL_GPU_CULLMODE_NONE: SDL_GPUCullMode = SDL_GPUCullMode::NONE;
 /// Front-facing triangles are culled.
@@ -1431,7 +1775,6 @@ pub const SDL_GPU_CULLMODE_BACK: SDL_GPUCullMode = SDL_GPUCullMode::BACK;
 /// | [`CLOCKWISE`](SDL_GPUFrontFace::CLOCKWISE) | [`SDL_GPU_FRONTFACE_CLOCKWISE`] | A triangle with clockwise vertex winding will be considered front-facing. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUFrontFace(pub ::core::ffi::c_int);
 impl From<SDL_GPUFrontFace> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1439,12 +1782,27 @@ impl From<SDL_GPUFrontFace> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUFrontFace {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::COUNTER_CLOCKWISE => "SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE",
+            Self::CLOCKWISE => "SDL_GPU_FRONTFACE_CLOCKWISE",
+
+            _ => return write!(f, "SDL_GPUFrontFace({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUFrontFace {
     /// A triangle with counter-clockwise vertex winding will be considered front-facing.
     pub const COUNTER_CLOCKWISE: Self = Self(0);
     /// A triangle with clockwise vertex winding will be considered front-facing.
     pub const CLOCKWISE: Self = Self(1);
 }
+
 /// A triangle with counter-clockwise vertex winding will be considered front-facing.
 pub const SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE: SDL_GPUFrontFace =
     SDL_GPUFrontFace::COUNTER_CLOCKWISE;
@@ -1473,7 +1831,6 @@ pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOC
 /// | [`ALWAYS`](SDL_GPUCompareOp::ALWAYS) | [`SDL_GPU_COMPAREOP_ALWAYS`] | The comparison always evaluates true. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUCompareOp(pub ::core::ffi::c_int);
 impl From<SDL_GPUCompareOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1481,6 +1838,27 @@ impl From<SDL_GPUCompareOp> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUCompareOp {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_GPU_COMPAREOP_INVALID",
+            Self::NEVER => "SDL_GPU_COMPAREOP_NEVER",
+            Self::LESS => "SDL_GPU_COMPAREOP_LESS",
+            Self::EQUAL => "SDL_GPU_COMPAREOP_EQUAL",
+            Self::LESS_OR_EQUAL => "SDL_GPU_COMPAREOP_LESS_OR_EQUAL",
+            Self::GREATER => "SDL_GPU_COMPAREOP_GREATER",
+            Self::NOT_EQUAL => "SDL_GPU_COMPAREOP_NOT_EQUAL",
+            Self::GREATER_OR_EQUAL => "SDL_GPU_COMPAREOP_GREATER_OR_EQUAL",
+            Self::ALWAYS => "SDL_GPU_COMPAREOP_ALWAYS",
+
+            _ => return write!(f, "SDL_GPUCompareOp({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUCompareOp {
     pub const INVALID: Self = Self(0);
     /// The comparison always evaluates false.
@@ -1500,6 +1878,7 @@ impl SDL_GPUCompareOp {
     /// The comparison always evaluates true.
     pub const ALWAYS: Self = Self(8);
 }
+
 pub const SDL_GPU_COMPAREOP_INVALID: SDL_GPUCompareOp = SDL_GPUCompareOp::INVALID;
 /// The comparison always evaluates false.
 pub const SDL_GPU_COMPAREOP_NEVER: SDL_GPUCompareOp = SDL_GPUCompareOp::NEVER;
@@ -1541,7 +1920,6 @@ pub const SDL_GPU_COMPAREOP_ALWAYS: SDL_GPUCompareOp = SDL_GPUCompareOp::ALWAYS;
 /// | [`DECREMENT_AND_WRAP`](SDL_GPUStencilOp::DECREMENT_AND_WRAP) | [`SDL_GPU_STENCILOP_DECREMENT_AND_WRAP`] | Decrements the current value and wraps to the maximum value. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUStencilOp(pub ::core::ffi::c_int);
 impl From<SDL_GPUStencilOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1549,6 +1927,27 @@ impl From<SDL_GPUStencilOp> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUStencilOp {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_GPU_STENCILOP_INVALID",
+            Self::KEEP => "SDL_GPU_STENCILOP_KEEP",
+            Self::ZERO => "SDL_GPU_STENCILOP_ZERO",
+            Self::REPLACE => "SDL_GPU_STENCILOP_REPLACE",
+            Self::INCREMENT_AND_CLAMP => "SDL_GPU_STENCILOP_INCREMENT_AND_CLAMP",
+            Self::DECREMENT_AND_CLAMP => "SDL_GPU_STENCILOP_DECREMENT_AND_CLAMP",
+            Self::INVERT => "SDL_GPU_STENCILOP_INVERT",
+            Self::INCREMENT_AND_WRAP => "SDL_GPU_STENCILOP_INCREMENT_AND_WRAP",
+            Self::DECREMENT_AND_WRAP => "SDL_GPU_STENCILOP_DECREMENT_AND_WRAP",
+
+            _ => return write!(f, "SDL_GPUStencilOp({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUStencilOp {
     pub const INVALID: Self = Self(0);
     /// Keeps the current value.
@@ -1568,6 +1967,7 @@ impl SDL_GPUStencilOp {
     /// Decrements the current value and wraps to the maximum value.
     pub const DECREMENT_AND_WRAP: Self = Self(8);
 }
+
 pub const SDL_GPU_STENCILOP_INVALID: SDL_GPUStencilOp = SDL_GPUStencilOp::INVALID;
 /// Keeps the current value.
 pub const SDL_GPU_STENCILOP_KEEP: SDL_GPUStencilOp = SDL_GPUStencilOp::KEEP;
@@ -1613,7 +2013,6 @@ pub const SDL_GPU_STENCILOP_DECREMENT_AND_WRAP: SDL_GPUStencilOp =
 /// | [`MAX`](SDL_GPUBlendOp::MAX) | [`SDL_GPU_BLENDOP_MAX`] | max(source, destination) |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUBlendOp(pub ::core::ffi::c_int);
 impl From<SDL_GPUBlendOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1621,6 +2020,24 @@ impl From<SDL_GPUBlendOp> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUBlendOp {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_GPU_BLENDOP_INVALID",
+            Self::ADD => "SDL_GPU_BLENDOP_ADD",
+            Self::SUBTRACT => "SDL_GPU_BLENDOP_SUBTRACT",
+            Self::REVERSE_SUBTRACT => "SDL_GPU_BLENDOP_REVERSE_SUBTRACT",
+            Self::MIN => "SDL_GPU_BLENDOP_MIN",
+            Self::MAX => "SDL_GPU_BLENDOP_MAX",
+
+            _ => return write!(f, "SDL_GPUBlendOp({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUBlendOp {
     pub const INVALID: Self = Self(0);
     /// (source * source_factor) + (destination * destination_factor)
@@ -1634,6 +2051,7 @@ impl SDL_GPUBlendOp {
     /// max(source, destination)
     pub const MAX: Self = Self(5);
 }
+
 pub const SDL_GPU_BLENDOP_INVALID: SDL_GPUBlendOp = SDL_GPUBlendOp::INVALID;
 /// (source * source_factor) + (destination * destination_factor)
 pub const SDL_GPU_BLENDOP_ADD: SDL_GPUBlendOp = SDL_GPUBlendOp::ADD;
@@ -1677,7 +2095,6 @@ pub const SDL_GPU_BLENDOP_MAX: SDL_GPUBlendOp = SDL_GPUBlendOp::MAX;
 /// | [`SRC_ALPHA_SATURATE`](SDL_GPUBlendFactor::SRC_ALPHA_SATURATE) | [`SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE`] | min(source alpha, 1 - destination alpha) |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUBlendFactor(pub ::core::ffi::c_int);
 impl From<SDL_GPUBlendFactor> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1685,6 +2102,32 @@ impl From<SDL_GPUBlendFactor> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUBlendFactor {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_GPU_BLENDFACTOR_INVALID",
+            Self::ZERO => "SDL_GPU_BLENDFACTOR_ZERO",
+            Self::ONE => "SDL_GPU_BLENDFACTOR_ONE",
+            Self::SRC_COLOR => "SDL_GPU_BLENDFACTOR_SRC_COLOR",
+            Self::ONE_MINUS_SRC_COLOR => "SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_COLOR",
+            Self::DST_COLOR => "SDL_GPU_BLENDFACTOR_DST_COLOR",
+            Self::ONE_MINUS_DST_COLOR => "SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_COLOR",
+            Self::SRC_ALPHA => "SDL_GPU_BLENDFACTOR_SRC_ALPHA",
+            Self::ONE_MINUS_SRC_ALPHA => "SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_ALPHA",
+            Self::DST_ALPHA => "SDL_GPU_BLENDFACTOR_DST_ALPHA",
+            Self::ONE_MINUS_DST_ALPHA => "SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_ALPHA",
+            Self::CONSTANT_COLOR => "SDL_GPU_BLENDFACTOR_CONSTANT_COLOR",
+            Self::ONE_MINUS_CONSTANT_COLOR => "SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR",
+            Self::SRC_ALPHA_SATURATE => "SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE",
+
+            _ => return write!(f, "SDL_GPUBlendFactor({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUBlendFactor {
     pub const INVALID: Self = Self(0);
     /// 0
@@ -1714,6 +2157,7 @@ impl SDL_GPUBlendFactor {
     /// min(source alpha, 1 - destination alpha)
     pub const SRC_ALPHA_SATURATE: Self = Self(13);
 }
+
 pub const SDL_GPU_BLENDFACTOR_INVALID: SDL_GPUBlendFactor = SDL_GPUBlendFactor::INVALID;
 /// 0
 pub const SDL_GPU_BLENDFACTOR_ZERO: SDL_GPUBlendFactor = SDL_GPUBlendFactor::ZERO;
@@ -1797,7 +2241,6 @@ pub const SDL_GPU_COLORCOMPONENT_A: SDL_GPUColorComponentFlags =
 /// | [`LINEAR`](SDL_GPUFilter::LINEAR) | [`SDL_GPU_FILTER_LINEAR`] | Linear filtering. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUFilter(pub ::core::ffi::c_int);
 impl From<SDL_GPUFilter> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1805,12 +2248,27 @@ impl From<SDL_GPUFilter> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUFilter {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NEAREST => "SDL_GPU_FILTER_NEAREST",
+            Self::LINEAR => "SDL_GPU_FILTER_LINEAR",
+
+            _ => return write!(f, "SDL_GPUFilter({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUFilter {
     /// Point filtering.
     pub const NEAREST: Self = Self(0);
     /// Linear filtering.
     pub const LINEAR: Self = Self(1);
 }
+
 /// Point filtering.
 pub const SDL_GPU_FILTER_NEAREST: SDL_GPUFilter = SDL_GPUFilter::NEAREST;
 /// Linear filtering.
@@ -1831,7 +2289,6 @@ pub const SDL_GPU_FILTER_LINEAR: SDL_GPUFilter = SDL_GPUFilter::LINEAR;
 /// | [`LINEAR`](SDL_GPUSamplerMipmapMode::LINEAR) | [`SDL_GPU_SAMPLERMIPMAPMODE_LINEAR`] | Linear filtering. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUSamplerMipmapMode(pub ::core::ffi::c_int);
 impl From<SDL_GPUSamplerMipmapMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1839,12 +2296,27 @@ impl From<SDL_GPUSamplerMipmapMode> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUSamplerMipmapMode {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NEAREST => "SDL_GPU_SAMPLERMIPMAPMODE_NEAREST",
+            Self::LINEAR => "SDL_GPU_SAMPLERMIPMAPMODE_LINEAR",
+
+            _ => return write!(f, "SDL_GPUSamplerMipmapMode({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUSamplerMipmapMode {
     /// Point filtering.
     pub const NEAREST: Self = Self(0);
     /// Linear filtering.
     pub const LINEAR: Self = Self(1);
 }
+
 /// Point filtering.
 pub const SDL_GPU_SAMPLERMIPMAPMODE_NEAREST: SDL_GPUSamplerMipmapMode =
     SDL_GPUSamplerMipmapMode::NEAREST;
@@ -1869,7 +2341,6 @@ pub const SDL_GPU_SAMPLERMIPMAPMODE_LINEAR: SDL_GPUSamplerMipmapMode =
 /// | [`CLAMP_TO_EDGE`](SDL_GPUSamplerAddressMode::CLAMP_TO_EDGE) | [`SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE`] | Specifies that the coordinates will clamp to the 0-1 range. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUSamplerAddressMode(pub ::core::ffi::c_int);
 impl From<SDL_GPUSamplerAddressMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1877,6 +2348,21 @@ impl From<SDL_GPUSamplerAddressMode> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUSamplerAddressMode {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::REPEAT => "SDL_GPU_SAMPLERADDRESSMODE_REPEAT",
+            Self::MIRRORED_REPEAT => "SDL_GPU_SAMPLERADDRESSMODE_MIRRORED_REPEAT",
+            Self::CLAMP_TO_EDGE => "SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE",
+
+            _ => return write!(f, "SDL_GPUSamplerAddressMode({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUSamplerAddressMode {
     /// Specifies that the coordinates will wrap around.
     pub const REPEAT: Self = Self(0);
@@ -1885,6 +2371,7 @@ impl SDL_GPUSamplerAddressMode {
     /// Specifies that the coordinates will clamp to the 0-1 range.
     pub const CLAMP_TO_EDGE: Self = Self(2);
 }
+
 /// Specifies that the coordinates will wrap around.
 pub const SDL_GPU_SAMPLERADDRESSMODE_REPEAT: SDL_GPUSamplerAddressMode =
     SDL_GPUSamplerAddressMode::REPEAT;
@@ -1935,7 +2422,6 @@ pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
 /// | [`MAILBOX`](SDL_GPUPresentMode::MAILBOX) | [`SDL_GPU_PRESENTMODE_MAILBOX`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUPresentMode(pub ::core::ffi::c_int);
 impl From<SDL_GPUPresentMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1943,11 +2429,27 @@ impl From<SDL_GPUPresentMode> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUPresentMode {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::VSYNC => "SDL_GPU_PRESENTMODE_VSYNC",
+            Self::IMMEDIATE => "SDL_GPU_PRESENTMODE_IMMEDIATE",
+            Self::MAILBOX => "SDL_GPU_PRESENTMODE_MAILBOX",
+
+            _ => return write!(f, "SDL_GPUPresentMode({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUPresentMode {
     pub const VSYNC: Self = Self(0);
     pub const IMMEDIATE: Self = Self(1);
     pub const MAILBOX: Self = Self(2);
 }
+
 pub const SDL_GPU_PRESENTMODE_VSYNC: SDL_GPUPresentMode = SDL_GPUPresentMode::VSYNC;
 pub const SDL_GPU_PRESENTMODE_IMMEDIATE: SDL_GPUPresentMode = SDL_GPUPresentMode::IMMEDIATE;
 pub const SDL_GPU_PRESENTMODE_MAILBOX: SDL_GPUPresentMode = SDL_GPUPresentMode::MAILBOX;
@@ -1987,7 +2489,6 @@ pub const SDL_GPU_PRESENTMODE_MAILBOX: SDL_GPUPresentMode = SDL_GPUPresentMode::
 /// | [`HDR10_ST2048`](SDL_GPUSwapchainComposition::HDR10_ST2048) | [`SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2048`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GPUSwapchainComposition(pub ::core::ffi::c_int);
 impl From<SDL_GPUSwapchainComposition> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1995,12 +2496,29 @@ impl From<SDL_GPUSwapchainComposition> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUSwapchainComposition {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::SDR => "SDL_GPU_SWAPCHAINCOMPOSITION_SDR",
+            Self::SDR_LINEAR => "SDL_GPU_SWAPCHAINCOMPOSITION_SDR_LINEAR",
+            Self::HDR_EXTENDED_LINEAR => "SDL_GPU_SWAPCHAINCOMPOSITION_HDR_EXTENDED_LINEAR",
+            Self::HDR10_ST2048 => "SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2048",
+
+            _ => return write!(f, "SDL_GPUSwapchainComposition({})", self.0),
+        })
+    }
+}
+
 impl SDL_GPUSwapchainComposition {
     pub const SDR: Self = Self(0);
     pub const SDR_LINEAR: Self = Self(1);
     pub const HDR_EXTENDED_LINEAR: Self = Self(2);
     pub const HDR10_ST2048: Self = Self(3);
 }
+
 pub const SDL_GPU_SWAPCHAINCOMPOSITION_SDR: SDL_GPUSwapchainComposition =
     SDL_GPUSwapchainComposition::SDR;
 pub const SDL_GPU_SWAPCHAINCOMPOSITION_SDR_LINEAR: SDL_GPUSwapchainComposition =

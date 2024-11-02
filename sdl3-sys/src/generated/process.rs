@@ -125,7 +125,6 @@ extern "C" {
 /// | [`REDIRECT`](SDL_ProcessIO::REDIRECT) | [`SDL_PROCESS_STDIO_REDIRECT`] | The I/O stream is redirected to an existing [`SDL_IOStream`]. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ProcessIO(pub ::core::ffi::c_int);
 impl From<SDL_ProcessIO> for ::core::ffi::c_int {
     #[inline(always)]
@@ -133,6 +132,22 @@ impl From<SDL_ProcessIO> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_ProcessIO {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INHERITED => "SDL_PROCESS_STDIO_INHERITED",
+            Self::NULL => "SDL_PROCESS_STDIO_NULL",
+            Self::APP => "SDL_PROCESS_STDIO_APP",
+            Self::REDIRECT => "SDL_PROCESS_STDIO_REDIRECT",
+
+            _ => return write!(f, "SDL_ProcessIO({})", self.0),
+        })
+    }
+}
+
 impl SDL_ProcessIO {
     /// The I/O stream is inherited from the application.
     pub const INHERITED: Self = Self(0);
@@ -143,6 +158,7 @@ impl SDL_ProcessIO {
     /// The I/O stream is redirected to an existing [`SDL_IOStream`].
     pub const REDIRECT: Self = Self(3);
 }
+
 /// The I/O stream is inherited from the application.
 pub const SDL_PROCESS_STDIO_INHERITED: SDL_ProcessIO = SDL_ProcessIO::INHERITED;
 /// The I/O stream is ignored.

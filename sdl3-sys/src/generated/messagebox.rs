@@ -102,7 +102,6 @@ pub struct SDL_MessageBoxColor {
 /// | [`COUNT`](SDL_MessageBoxColorType::COUNT) | [`SDL_MESSAGEBOX_COLOR_COUNT`] | Size of the colors array of [`SDL_MessageBoxColorScheme`]. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MessageBoxColorType(pub ::core::ffi::c_int);
 impl From<SDL_MessageBoxColorType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -110,6 +109,24 @@ impl From<SDL_MessageBoxColorType> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_MessageBoxColorType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::BACKGROUND => "SDL_MESSAGEBOX_COLOR_BACKGROUND",
+            Self::TEXT => "SDL_MESSAGEBOX_COLOR_TEXT",
+            Self::BUTTON_BORDER => "SDL_MESSAGEBOX_COLOR_BUTTON_BORDER",
+            Self::BUTTON_BACKGROUND => "SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND",
+            Self::BUTTON_SELECTED => "SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED",
+            Self::COUNT => "SDL_MESSAGEBOX_COLOR_COUNT",
+
+            _ => return write!(f, "SDL_MessageBoxColorType({})", self.0),
+        })
+    }
+}
+
 impl SDL_MessageBoxColorType {
     pub const BACKGROUND: Self = Self(0);
     pub const TEXT: Self = Self(1);
@@ -119,6 +136,7 @@ impl SDL_MessageBoxColorType {
     /// Size of the colors array of [`SDL_MessageBoxColorScheme`].
     pub const COUNT: Self = Self(5);
 }
+
 pub const SDL_MESSAGEBOX_COLOR_BACKGROUND: SDL_MessageBoxColorType =
     SDL_MessageBoxColorType::BACKGROUND;
 pub const SDL_MESSAGEBOX_COLOR_TEXT: SDL_MessageBoxColorType = SDL_MessageBoxColorType::TEXT;

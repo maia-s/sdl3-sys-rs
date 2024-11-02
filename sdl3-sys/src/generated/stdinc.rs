@@ -381,7 +381,6 @@ emit! {
     /// | [`DUMMY_ENUM_VALUE`](SDL_DUMMY_ENUM::DUMMY_ENUM_VALUE) | [`DUMMY_ENUM_VALUE`] | |
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    #[cfg_attr(feature = "debug-impls", derive(Debug))]
     pub struct SDL_DUMMY_ENUM(pub ::core::ffi::c_int);
     impl From<SDL_DUMMY_ENUM> for ::core::ffi::c_int{
         #[inline(always)]
@@ -389,9 +388,23 @@ emit! {
             value.0
         }
     }
+
+    #[cfg(feature = "debug-impls")]
+    impl ::core::fmt::Debug for SDL_DUMMY_ENUM {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+            #[allow(unreachable_patterns)]
+            f.write_str(match *self {
+                Self::DUMMY_ENUM_VALUE => "DUMMY_ENUM_VALUE",
+
+                _ => return write!(f, "SDL_DUMMY_ENUM({})", self.0),
+            })
+        }
+    }
+
     impl SDL_DUMMY_ENUM {
         pub const DUMMY_ENUM_VALUE: Self = Self(0);
     }
+
     #[doc(hidden)]
     pub const DUMMY_ENUM_VALUE: SDL_DUMMY_ENUM = SDL_DUMMY_ENUM::DUMMY_ENUM_VALUE;
 

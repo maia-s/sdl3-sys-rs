@@ -50,7 +50,6 @@ pub type SDL_MouseID = Uint32;
 /// | [`COUNT`](SDL_SystemCursor::COUNT) | [`SDL_SYSTEM_CURSOR_COUNT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_SystemCursor(pub ::core::ffi::c_int);
 impl From<SDL_SystemCursor> for ::core::ffi::c_int {
     #[inline(always)]
@@ -58,6 +57,39 @@ impl From<SDL_SystemCursor> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_SystemCursor {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::DEFAULT => "SDL_SYSTEM_CURSOR_DEFAULT",
+            Self::TEXT => "SDL_SYSTEM_CURSOR_TEXT",
+            Self::WAIT => "SDL_SYSTEM_CURSOR_WAIT",
+            Self::CROSSHAIR => "SDL_SYSTEM_CURSOR_CROSSHAIR",
+            Self::PROGRESS => "SDL_SYSTEM_CURSOR_PROGRESS",
+            Self::NWSE_RESIZE => "SDL_SYSTEM_CURSOR_NWSE_RESIZE",
+            Self::NESW_RESIZE => "SDL_SYSTEM_CURSOR_NESW_RESIZE",
+            Self::EW_RESIZE => "SDL_SYSTEM_CURSOR_EW_RESIZE",
+            Self::NS_RESIZE => "SDL_SYSTEM_CURSOR_NS_RESIZE",
+            Self::MOVE => "SDL_SYSTEM_CURSOR_MOVE",
+            Self::NOT_ALLOWED => "SDL_SYSTEM_CURSOR_NOT_ALLOWED",
+            Self::POINTER => "SDL_SYSTEM_CURSOR_POINTER",
+            Self::NW_RESIZE => "SDL_SYSTEM_CURSOR_NW_RESIZE",
+            Self::N_RESIZE => "SDL_SYSTEM_CURSOR_N_RESIZE",
+            Self::NE_RESIZE => "SDL_SYSTEM_CURSOR_NE_RESIZE",
+            Self::E_RESIZE => "SDL_SYSTEM_CURSOR_E_RESIZE",
+            Self::SE_RESIZE => "SDL_SYSTEM_CURSOR_SE_RESIZE",
+            Self::S_RESIZE => "SDL_SYSTEM_CURSOR_S_RESIZE",
+            Self::SW_RESIZE => "SDL_SYSTEM_CURSOR_SW_RESIZE",
+            Self::W_RESIZE => "SDL_SYSTEM_CURSOR_W_RESIZE",
+            Self::COUNT => "SDL_SYSTEM_CURSOR_COUNT",
+
+            _ => return write!(f, "SDL_SystemCursor({})", self.0),
+        })
+    }
+}
+
 impl SDL_SystemCursor {
     /// Default cursor. Usually an arrow.
     pub const DEFAULT: Self = Self(0);
@@ -101,6 +133,7 @@ impl SDL_SystemCursor {
     pub const W_RESIZE: Self = Self(19);
     pub const COUNT: Self = Self(20);
 }
+
 /// Default cursor. Usually an arrow.
 pub const SDL_SYSTEM_CURSOR_DEFAULT: SDL_SystemCursor = SDL_SystemCursor::DEFAULT;
 /// Text selection. Usually an I-beam.
@@ -155,7 +188,6 @@ pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 /// | [`FLIPPED`](SDL_MouseWheelDirection::FLIPPED) | [`SDL_MOUSEWHEEL_FLIPPED`] | The scroll direction is flipped / natural |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MouseWheelDirection(pub ::core::ffi::c_int);
 impl From<SDL_MouseWheelDirection> for ::core::ffi::c_int {
     #[inline(always)]
@@ -163,12 +195,27 @@ impl From<SDL_MouseWheelDirection> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_MouseWheelDirection {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NORMAL => "SDL_MOUSEWHEEL_NORMAL",
+            Self::FLIPPED => "SDL_MOUSEWHEEL_FLIPPED",
+
+            _ => return write!(f, "SDL_MouseWheelDirection({})", self.0),
+        })
+    }
+}
+
 impl SDL_MouseWheelDirection {
     /// The scroll direction is normal
     pub const NORMAL: Self = Self(0);
     /// The scroll direction is flipped / natural
     pub const FLIPPED: Self = Self(1);
 }
+
 /// The scroll direction is normal
 pub const SDL_MOUSEWHEEL_NORMAL: SDL_MouseWheelDirection = SDL_MouseWheelDirection::NORMAL;
 /// The scroll direction is flipped / natural

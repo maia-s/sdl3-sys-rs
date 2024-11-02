@@ -19,7 +19,6 @@ pub type SDL_FingerID = Uint64;
 /// | [`INDIRECT_RELATIVE`](SDL_TouchDeviceType::INDIRECT_RELATIVE) | [`SDL_TOUCH_DEVICE_INDIRECT_RELATIVE`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TouchDeviceType(pub ::core::ffi::c_int);
 impl From<SDL_TouchDeviceType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -27,12 +26,29 @@ impl From<SDL_TouchDeviceType> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_TouchDeviceType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_TOUCH_DEVICE_INVALID",
+            Self::DIRECT => "SDL_TOUCH_DEVICE_DIRECT",
+            Self::INDIRECT_ABSOLUTE => "SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE",
+            Self::INDIRECT_RELATIVE => "SDL_TOUCH_DEVICE_INDIRECT_RELATIVE",
+
+            _ => return write!(f, "SDL_TouchDeviceType({})", self.0),
+        })
+    }
+}
+
 impl SDL_TouchDeviceType {
     pub const INVALID: Self = Self(-1_i32);
     pub const DIRECT: Self = Self(0_i32);
     pub const INDIRECT_ABSOLUTE: Self = Self(1_i32);
     pub const INDIRECT_RELATIVE: Self = Self(2_i32);
 }
+
 pub const SDL_TOUCH_DEVICE_INVALID: SDL_TouchDeviceType = SDL_TouchDeviceType::INVALID;
 pub const SDL_TOUCH_DEVICE_DIRECT: SDL_TouchDeviceType = SDL_TouchDeviceType::DIRECT;
 pub const SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE: SDL_TouchDeviceType =

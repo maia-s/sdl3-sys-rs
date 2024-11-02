@@ -63,7 +63,6 @@ pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 /// | [`INDEX2`](SDL_PixelType::INDEX2) | [`SDL_PIXELTYPE_INDEX2`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PixelType(pub ::core::ffi::c_int);
 impl From<SDL_PixelType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -71,6 +70,31 @@ impl From<SDL_PixelType> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_PixelType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_PIXELTYPE_UNKNOWN",
+            Self::INDEX1 => "SDL_PIXELTYPE_INDEX1",
+            Self::INDEX4 => "SDL_PIXELTYPE_INDEX4",
+            Self::INDEX8 => "SDL_PIXELTYPE_INDEX8",
+            Self::PACKED8 => "SDL_PIXELTYPE_PACKED8",
+            Self::PACKED16 => "SDL_PIXELTYPE_PACKED16",
+            Self::PACKED32 => "SDL_PIXELTYPE_PACKED32",
+            Self::ARRAYU8 => "SDL_PIXELTYPE_ARRAYU8",
+            Self::ARRAYU16 => "SDL_PIXELTYPE_ARRAYU16",
+            Self::ARRAYU32 => "SDL_PIXELTYPE_ARRAYU32",
+            Self::ARRAYF16 => "SDL_PIXELTYPE_ARRAYF16",
+            Self::ARRAYF32 => "SDL_PIXELTYPE_ARRAYF32",
+            Self::INDEX2 => "SDL_PIXELTYPE_INDEX2",
+
+            _ => return write!(f, "SDL_PixelType({})", self.0),
+        })
+    }
+}
+
 impl SDL_PixelType {
     pub const UNKNOWN: Self = Self(0);
     pub const INDEX1: Self = Self(1);
@@ -86,6 +110,7 @@ impl SDL_PixelType {
     pub const ARRAYF32: Self = Self(11);
     pub const INDEX2: Self = Self(12);
 }
+
 pub const SDL_PIXELTYPE_UNKNOWN: SDL_PixelType = SDL_PixelType::UNKNOWN;
 pub const SDL_PIXELTYPE_INDEX1: SDL_PixelType = SDL_PixelType::INDEX1;
 pub const SDL_PIXELTYPE_INDEX4: SDL_PixelType = SDL_PixelType::INDEX4;
@@ -113,7 +138,6 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 /// | [`_1234`](SDL_BitmapOrder::_1234) | [`SDL_BITMAPORDER_1234`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_BitmapOrder(pub ::core::ffi::c_int);
 impl From<SDL_BitmapOrder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -121,11 +145,27 @@ impl From<SDL_BitmapOrder> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_BitmapOrder {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_BITMAPORDER_NONE",
+            Self::_4321 => "SDL_BITMAPORDER_4321",
+            Self::_1234 => "SDL_BITMAPORDER_1234",
+
+            _ => return write!(f, "SDL_BitmapOrder({})", self.0),
+        })
+    }
+}
+
 impl SDL_BitmapOrder {
     pub const NONE: Self = Self(0);
     pub const _4321: Self = Self(1);
     pub const _1234: Self = Self(2);
 }
+
 pub const SDL_BITMAPORDER_NONE: SDL_BitmapOrder = SDL_BitmapOrder::NONE;
 pub const SDL_BITMAPORDER_4321: SDL_BitmapOrder = SDL_BitmapOrder::_4321;
 pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
@@ -149,7 +189,6 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 /// | [`BGRA`](SDL_PackedOrder::BGRA) | [`SDL_PACKEDORDER_BGRA`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PackedOrder(pub ::core::ffi::c_int);
 impl From<SDL_PackedOrder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -157,6 +196,27 @@ impl From<SDL_PackedOrder> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_PackedOrder {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_PACKEDORDER_NONE",
+            Self::XRGB => "SDL_PACKEDORDER_XRGB",
+            Self::RGBX => "SDL_PACKEDORDER_RGBX",
+            Self::ARGB => "SDL_PACKEDORDER_ARGB",
+            Self::RGBA => "SDL_PACKEDORDER_RGBA",
+            Self::XBGR => "SDL_PACKEDORDER_XBGR",
+            Self::BGRX => "SDL_PACKEDORDER_BGRX",
+            Self::ABGR => "SDL_PACKEDORDER_ABGR",
+            Self::BGRA => "SDL_PACKEDORDER_BGRA",
+
+            _ => return write!(f, "SDL_PackedOrder({})", self.0),
+        })
+    }
+}
+
 impl SDL_PackedOrder {
     pub const NONE: Self = Self(0);
     pub const XRGB: Self = Self(1);
@@ -168,6 +228,7 @@ impl SDL_PackedOrder {
     pub const ABGR: Self = Self(7);
     pub const BGRA: Self = Self(8);
 }
+
 pub const SDL_PACKEDORDER_NONE: SDL_PackedOrder = SDL_PackedOrder::NONE;
 pub const SDL_PACKEDORDER_XRGB: SDL_PackedOrder = SDL_PackedOrder::XRGB;
 pub const SDL_PACKEDORDER_RGBX: SDL_PackedOrder = SDL_PackedOrder::RGBX;
@@ -195,7 +256,6 @@ pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 /// | [`ABGR`](SDL_ArrayOrder::ABGR) | [`SDL_ARRAYORDER_ABGR`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ArrayOrder(pub ::core::ffi::c_int);
 impl From<SDL_ArrayOrder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -203,6 +263,25 @@ impl From<SDL_ArrayOrder> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_ArrayOrder {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_ARRAYORDER_NONE",
+            Self::RGB => "SDL_ARRAYORDER_RGB",
+            Self::RGBA => "SDL_ARRAYORDER_RGBA",
+            Self::ARGB => "SDL_ARRAYORDER_ARGB",
+            Self::BGR => "SDL_ARRAYORDER_BGR",
+            Self::BGRA => "SDL_ARRAYORDER_BGRA",
+            Self::ABGR => "SDL_ARRAYORDER_ABGR",
+
+            _ => return write!(f, "SDL_ArrayOrder({})", self.0),
+        })
+    }
+}
+
 impl SDL_ArrayOrder {
     pub const NONE: Self = Self(0);
     pub const RGB: Self = Self(1);
@@ -212,6 +291,7 @@ impl SDL_ArrayOrder {
     pub const BGRA: Self = Self(5);
     pub const ABGR: Self = Self(6);
 }
+
 pub const SDL_ARRAYORDER_NONE: SDL_ArrayOrder = SDL_ArrayOrder::NONE;
 pub const SDL_ARRAYORDER_RGB: SDL_ArrayOrder = SDL_ArrayOrder::RGB;
 pub const SDL_ARRAYORDER_RGBA: SDL_ArrayOrder = SDL_ArrayOrder::RGBA;
@@ -239,7 +319,6 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 /// | [`_1010102`](SDL_PackedLayout::_1010102) | [`SDL_PACKEDLAYOUT_1010102`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PackedLayout(pub ::core::ffi::c_int);
 impl From<SDL_PackedLayout> for ::core::ffi::c_int {
     #[inline(always)]
@@ -247,6 +326,27 @@ impl From<SDL_PackedLayout> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_PackedLayout {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_PACKEDLAYOUT_NONE",
+            Self::_332 => "SDL_PACKEDLAYOUT_332",
+            Self::_4444 => "SDL_PACKEDLAYOUT_4444",
+            Self::_1555 => "SDL_PACKEDLAYOUT_1555",
+            Self::_5551 => "SDL_PACKEDLAYOUT_5551",
+            Self::_565 => "SDL_PACKEDLAYOUT_565",
+            Self::_8888 => "SDL_PACKEDLAYOUT_8888",
+            Self::_2101010 => "SDL_PACKEDLAYOUT_2101010",
+            Self::_1010102 => "SDL_PACKEDLAYOUT_1010102",
+
+            _ => return write!(f, "SDL_PackedLayout({})", self.0),
+        })
+    }
+}
+
 impl SDL_PackedLayout {
     pub const NONE: Self = Self(0);
     pub const _332: Self = Self(1);
@@ -258,6 +358,7 @@ impl SDL_PackedLayout {
     pub const _2101010: Self = Self(7);
     pub const _1010102: Self = Self(8);
 }
+
 pub const SDL_PACKEDLAYOUT_NONE: SDL_PackedLayout = SDL_PackedLayout::NONE;
 pub const SDL_PACKEDLAYOUT_332: SDL_PackedLayout = SDL_PackedLayout::_332;
 pub const SDL_PACKEDLAYOUT_4444: SDL_PackedLayout = SDL_PackedLayout::_4444;
@@ -387,7 +488,6 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 /// | [`XBGR32`](SDL_PixelFormat::XBGR32) | [`SDL_PIXELFORMAT_XBGR32`] | (target dependent) |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PixelFormat(pub ::core::ffi::c_int);
 impl From<SDL_PixelFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -395,6 +495,98 @@ impl From<SDL_PixelFormat> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_PixelFormat {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_PIXELFORMAT_UNKNOWN",
+            Self::INDEX1LSB => "SDL_PIXELFORMAT_INDEX1LSB",
+            Self::INDEX1MSB => "SDL_PIXELFORMAT_INDEX1MSB",
+            Self::INDEX2LSB => "SDL_PIXELFORMAT_INDEX2LSB",
+            Self::INDEX2MSB => "SDL_PIXELFORMAT_INDEX2MSB",
+            Self::INDEX4LSB => "SDL_PIXELFORMAT_INDEX4LSB",
+            Self::INDEX4MSB => "SDL_PIXELFORMAT_INDEX4MSB",
+            Self::INDEX8 => "SDL_PIXELFORMAT_INDEX8",
+            Self::RGB332 => "SDL_PIXELFORMAT_RGB332",
+            Self::XRGB4444 => "SDL_PIXELFORMAT_XRGB4444",
+            Self::XBGR4444 => "SDL_PIXELFORMAT_XBGR4444",
+            Self::XRGB1555 => "SDL_PIXELFORMAT_XRGB1555",
+            Self::XBGR1555 => "SDL_PIXELFORMAT_XBGR1555",
+            Self::ARGB4444 => "SDL_PIXELFORMAT_ARGB4444",
+            Self::RGBA4444 => "SDL_PIXELFORMAT_RGBA4444",
+            Self::ABGR4444 => "SDL_PIXELFORMAT_ABGR4444",
+            Self::BGRA4444 => "SDL_PIXELFORMAT_BGRA4444",
+            Self::ARGB1555 => "SDL_PIXELFORMAT_ARGB1555",
+            Self::RGBA5551 => "SDL_PIXELFORMAT_RGBA5551",
+            Self::ABGR1555 => "SDL_PIXELFORMAT_ABGR1555",
+            Self::BGRA5551 => "SDL_PIXELFORMAT_BGRA5551",
+            Self::RGB565 => "SDL_PIXELFORMAT_RGB565",
+            Self::BGR565 => "SDL_PIXELFORMAT_BGR565",
+            Self::RGB24 => "SDL_PIXELFORMAT_RGB24",
+            Self::BGR24 => "SDL_PIXELFORMAT_BGR24",
+            Self::XRGB8888 => "SDL_PIXELFORMAT_XRGB8888",
+            Self::RGBX8888 => "SDL_PIXELFORMAT_RGBX8888",
+            Self::XBGR8888 => "SDL_PIXELFORMAT_XBGR8888",
+            Self::BGRX8888 => "SDL_PIXELFORMAT_BGRX8888",
+            Self::ARGB8888 => "SDL_PIXELFORMAT_ARGB8888",
+            Self::RGBA8888 => "SDL_PIXELFORMAT_RGBA8888",
+            Self::ABGR8888 => "SDL_PIXELFORMAT_ABGR8888",
+            Self::BGRA8888 => "SDL_PIXELFORMAT_BGRA8888",
+            Self::XRGB2101010 => "SDL_PIXELFORMAT_XRGB2101010",
+            Self::XBGR2101010 => "SDL_PIXELFORMAT_XBGR2101010",
+            Self::ARGB2101010 => "SDL_PIXELFORMAT_ARGB2101010",
+            Self::ABGR2101010 => "SDL_PIXELFORMAT_ABGR2101010",
+            Self::RGB48 => "SDL_PIXELFORMAT_RGB48",
+            Self::BGR48 => "SDL_PIXELFORMAT_BGR48",
+            Self::RGBA64 => "SDL_PIXELFORMAT_RGBA64",
+            Self::ARGB64 => "SDL_PIXELFORMAT_ARGB64",
+            Self::BGRA64 => "SDL_PIXELFORMAT_BGRA64",
+            Self::ABGR64 => "SDL_PIXELFORMAT_ABGR64",
+            Self::RGB48_FLOAT => "SDL_PIXELFORMAT_RGB48_FLOAT",
+            Self::BGR48_FLOAT => "SDL_PIXELFORMAT_BGR48_FLOAT",
+            Self::RGBA64_FLOAT => "SDL_PIXELFORMAT_RGBA64_FLOAT",
+            Self::ARGB64_FLOAT => "SDL_PIXELFORMAT_ARGB64_FLOAT",
+            Self::BGRA64_FLOAT => "SDL_PIXELFORMAT_BGRA64_FLOAT",
+            Self::ABGR64_FLOAT => "SDL_PIXELFORMAT_ABGR64_FLOAT",
+            Self::RGB96_FLOAT => "SDL_PIXELFORMAT_RGB96_FLOAT",
+            Self::BGR96_FLOAT => "SDL_PIXELFORMAT_BGR96_FLOAT",
+            Self::RGBA128_FLOAT => "SDL_PIXELFORMAT_RGBA128_FLOAT",
+            Self::ARGB128_FLOAT => "SDL_PIXELFORMAT_ARGB128_FLOAT",
+            Self::BGRA128_FLOAT => "SDL_PIXELFORMAT_BGRA128_FLOAT",
+            Self::ABGR128_FLOAT => "SDL_PIXELFORMAT_ABGR128_FLOAT",
+            Self::YV12 => "SDL_PIXELFORMAT_YV12",
+            Self::IYUV => "SDL_PIXELFORMAT_IYUV",
+            Self::YUY2 => "SDL_PIXELFORMAT_YUY2",
+            Self::UYVY => "SDL_PIXELFORMAT_UYVY",
+            Self::YVYU => "SDL_PIXELFORMAT_YVYU",
+            Self::NV12 => "SDL_PIXELFORMAT_NV12",
+            Self::NV21 => "SDL_PIXELFORMAT_NV21",
+            Self::P010 => "SDL_PIXELFORMAT_P010",
+            Self::EXTERNAL_OES => "SDL_PIXELFORMAT_EXTERNAL_OES",
+            Self::RGBA32 => "SDL_PIXELFORMAT_RGBA32",
+            Self::ARGB32 => "SDL_PIXELFORMAT_ARGB32",
+            Self::BGRA32 => "SDL_PIXELFORMAT_BGRA32",
+            Self::ABGR32 => "SDL_PIXELFORMAT_ABGR32",
+            Self::RGBX32 => "SDL_PIXELFORMAT_RGBX32",
+            Self::XRGB32 => "SDL_PIXELFORMAT_XRGB32",
+            Self::BGRX32 => "SDL_PIXELFORMAT_BGRX32",
+            Self::XBGR32 => "SDL_PIXELFORMAT_XBGR32",
+            Self::RGBA32 => "SDL_PIXELFORMAT_RGBA32",
+            Self::ARGB32 => "SDL_PIXELFORMAT_ARGB32",
+            Self::BGRA32 => "SDL_PIXELFORMAT_BGRA32",
+            Self::ABGR32 => "SDL_PIXELFORMAT_ABGR32",
+            Self::RGBX32 => "SDL_PIXELFORMAT_RGBX32",
+            Self::XRGB32 => "SDL_PIXELFORMAT_XRGB32",
+            Self::BGRX32 => "SDL_PIXELFORMAT_BGRX32",
+            Self::XBGR32 => "SDL_PIXELFORMAT_XBGR32",
+
+            _ => return write!(f, "SDL_PixelFormat({})", self.0),
+        })
+    }
+}
+
 impl SDL_PixelFormat {
     pub const UNKNOWN: Self = Self(0);
     pub const INDEX1LSB: Self = Self(0x11100100);
@@ -502,6 +694,7 @@ impl SDL_PixelFormat {
     #[cfg(not(target_endian = "big"))]
     pub const XBGR32: Self = SDL_PIXELFORMAT_RGBX8888;
 }
+
 pub const SDL_PIXELFORMAT_UNKNOWN: SDL_PixelFormat = SDL_PixelFormat::UNKNOWN;
 pub const SDL_PIXELFORMAT_INDEX1LSB: SDL_PixelFormat = SDL_PixelFormat::INDEX1LSB;
 pub const SDL_PIXELFORMAT_INDEX1MSB: SDL_PixelFormat = SDL_PixelFormat::INDEX1MSB;
@@ -736,7 +929,6 @@ pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::u8 {
 /// | [`YCBCR`](SDL_ColorType::YCBCR) | [`SDL_COLOR_TYPE_YCBCR`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ColorType(pub ::core::ffi::c_uint);
 impl From<SDL_ColorType> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -744,11 +936,27 @@ impl From<SDL_ColorType> for ::core::ffi::c_uint {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_ColorType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_COLOR_TYPE_UNKNOWN",
+            Self::RGB => "SDL_COLOR_TYPE_RGB",
+            Self::YCBCR => "SDL_COLOR_TYPE_YCBCR",
+
+            _ => return write!(f, "SDL_ColorType({})", self.0),
+        })
+    }
+}
+
 impl SDL_ColorType {
     pub const UNKNOWN: Self = Self(0);
     pub const RGB: Self = Self(1);
     pub const YCBCR: Self = Self(2);
 }
+
 pub const SDL_COLOR_TYPE_UNKNOWN: SDL_ColorType = SDL_ColorType::UNKNOWN;
 pub const SDL_COLOR_TYPE_RGB: SDL_ColorType = SDL_ColorType::RGB;
 pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
@@ -767,7 +975,6 @@ pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 /// | [`FULL`](SDL_ColorRange::FULL) | [`SDL_COLOR_RANGE_FULL`] | Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ColorRange(pub ::core::ffi::c_uint);
 impl From<SDL_ColorRange> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -775,6 +982,21 @@ impl From<SDL_ColorRange> for ::core::ffi::c_uint {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_ColorRange {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_COLOR_RANGE_UNKNOWN",
+            Self::LIMITED => "SDL_COLOR_RANGE_LIMITED",
+            Self::FULL => "SDL_COLOR_RANGE_FULL",
+
+            _ => return write!(f, "SDL_ColorRange({})", self.0),
+        })
+    }
+}
+
 impl SDL_ColorRange {
     pub const UNKNOWN: Self = Self(0);
     /// Narrow range, e.g. 16-235 for 8-bit RGB and luma, and 16-240 for 8-bit chroma
@@ -782,6 +1004,7 @@ impl SDL_ColorRange {
     /// Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma
     pub const FULL: Self = Self(2);
 }
+
 pub const SDL_COLOR_RANGE_UNKNOWN: SDL_ColorRange = SDL_ColorRange::UNKNOWN;
 /// Narrow range, e.g. 16-235 for 8-bit RGB and luma, and 16-240 for 8-bit chroma
 pub const SDL_COLOR_RANGE_LIMITED: SDL_ColorRange = SDL_ColorRange::LIMITED;
@@ -813,7 +1036,6 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 /// | [`CUSTOM`](SDL_ColorPrimaries::CUSTOM) | [`SDL_COLOR_PRIMARIES_CUSTOM`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ColorPrimaries(pub ::core::ffi::c_uint);
 impl From<SDL_ColorPrimaries> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -821,6 +1043,32 @@ impl From<SDL_ColorPrimaries> for ::core::ffi::c_uint {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_ColorPrimaries {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_COLOR_PRIMARIES_UNKNOWN",
+            Self::BT709 => "SDL_COLOR_PRIMARIES_BT709",
+            Self::UNSPECIFIED => "SDL_COLOR_PRIMARIES_UNSPECIFIED",
+            Self::BT470M => "SDL_COLOR_PRIMARIES_BT470M",
+            Self::BT470BG => "SDL_COLOR_PRIMARIES_BT470BG",
+            Self::BT601 => "SDL_COLOR_PRIMARIES_BT601",
+            Self::SMPTE240 => "SDL_COLOR_PRIMARIES_SMPTE240",
+            Self::GENERIC_FILM => "SDL_COLOR_PRIMARIES_GENERIC_FILM",
+            Self::BT2020 => "SDL_COLOR_PRIMARIES_BT2020",
+            Self::XYZ => "SDL_COLOR_PRIMARIES_XYZ",
+            Self::SMPTE431 => "SDL_COLOR_PRIMARIES_SMPTE431",
+            Self::SMPTE432 => "SDL_COLOR_PRIMARIES_SMPTE432",
+            Self::EBU3213 => "SDL_COLOR_PRIMARIES_EBU3213",
+            Self::CUSTOM => "SDL_COLOR_PRIMARIES_CUSTOM",
+
+            _ => return write!(f, "SDL_ColorPrimaries({})", self.0),
+        })
+    }
+}
+
 impl SDL_ColorPrimaries {
     pub const UNKNOWN: Self = Self(0);
     /// ITU-R BT.709-6
@@ -848,6 +1096,7 @@ impl SDL_ColorPrimaries {
     pub const EBU3213: Self = Self(22);
     pub const CUSTOM: Self = Self(31);
 }
+
 pub const SDL_COLOR_PRIMARIES_UNKNOWN: SDL_ColorPrimaries = SDL_ColorPrimaries::UNKNOWN;
 /// ITU-R BT.709-6
 pub const SDL_COLOR_PRIMARIES_BT709: SDL_ColorPrimaries = SDL_ColorPrimaries::BT709;
@@ -905,7 +1154,6 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 /// | [`CUSTOM`](SDL_TransferCharacteristics::CUSTOM) | [`SDL_TRANSFER_CHARACTERISTICS_CUSTOM`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TransferCharacteristics(pub ::core::ffi::c_uint);
 impl From<SDL_TransferCharacteristics> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -913,6 +1161,37 @@ impl From<SDL_TransferCharacteristics> for ::core::ffi::c_uint {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_TransferCharacteristics {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_TRANSFER_CHARACTERISTICS_UNKNOWN",
+            Self::BT709 => "SDL_TRANSFER_CHARACTERISTICS_BT709",
+            Self::UNSPECIFIED => "SDL_TRANSFER_CHARACTERISTICS_UNSPECIFIED",
+            Self::GAMMA22 => "SDL_TRANSFER_CHARACTERISTICS_GAMMA22",
+            Self::GAMMA28 => "SDL_TRANSFER_CHARACTERISTICS_GAMMA28",
+            Self::BT601 => "SDL_TRANSFER_CHARACTERISTICS_BT601",
+            Self::SMPTE240 => "SDL_TRANSFER_CHARACTERISTICS_SMPTE240",
+            Self::LINEAR => "SDL_TRANSFER_CHARACTERISTICS_LINEAR",
+            Self::LOG100 => "SDL_TRANSFER_CHARACTERISTICS_LOG100",
+            Self::LOG100_SQRT10 => "SDL_TRANSFER_CHARACTERISTICS_LOG100_SQRT10",
+            Self::IEC61966 => "SDL_TRANSFER_CHARACTERISTICS_IEC61966",
+            Self::BT1361 => "SDL_TRANSFER_CHARACTERISTICS_BT1361",
+            Self::SRGB => "SDL_TRANSFER_CHARACTERISTICS_SRGB",
+            Self::BT2020_10BIT => "SDL_TRANSFER_CHARACTERISTICS_BT2020_10BIT",
+            Self::BT2020_12BIT => "SDL_TRANSFER_CHARACTERISTICS_BT2020_12BIT",
+            Self::PQ => "SDL_TRANSFER_CHARACTERISTICS_PQ",
+            Self::SMPTE428 => "SDL_TRANSFER_CHARACTERISTICS_SMPTE428",
+            Self::HLG => "SDL_TRANSFER_CHARACTERISTICS_HLG",
+            Self::CUSTOM => "SDL_TRANSFER_CHARACTERISTICS_CUSTOM",
+
+            _ => return write!(f, "SDL_TransferCharacteristics({})", self.0),
+        })
+    }
+}
+
 impl SDL_TransferCharacteristics {
     pub const UNKNOWN: Self = Self(0);
     /// Rec. ITU-R BT.709-6 / ITU-R BT1361
@@ -947,6 +1226,7 @@ impl SDL_TransferCharacteristics {
     pub const HLG: Self = Self(18);
     pub const CUSTOM: Self = Self(31);
 }
+
 pub const SDL_TRANSFER_CHARACTERISTICS_UNKNOWN: SDL_TransferCharacteristics =
     SDL_TransferCharacteristics::UNKNOWN;
 /// Rec. ITU-R BT.709-6 / ITU-R BT1361
@@ -1026,7 +1306,6 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 /// | [`CUSTOM`](SDL_MatrixCoefficients::CUSTOM) | [`SDL_MATRIX_COEFFICIENTS_CUSTOM`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MatrixCoefficients(pub ::core::ffi::c_uint);
 impl From<SDL_MatrixCoefficients> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1034,6 +1313,33 @@ impl From<SDL_MatrixCoefficients> for ::core::ffi::c_uint {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_MatrixCoefficients {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::IDENTITY => "SDL_MATRIX_COEFFICIENTS_IDENTITY",
+            Self::BT709 => "SDL_MATRIX_COEFFICIENTS_BT709",
+            Self::UNSPECIFIED => "SDL_MATRIX_COEFFICIENTS_UNSPECIFIED",
+            Self::FCC => "SDL_MATRIX_COEFFICIENTS_FCC",
+            Self::BT470BG => "SDL_MATRIX_COEFFICIENTS_BT470BG",
+            Self::BT601 => "SDL_MATRIX_COEFFICIENTS_BT601",
+            Self::SMPTE240 => "SDL_MATRIX_COEFFICIENTS_SMPTE240",
+            Self::YCGCO => "SDL_MATRIX_COEFFICIENTS_YCGCO",
+            Self::BT2020_NCL => "SDL_MATRIX_COEFFICIENTS_BT2020_NCL",
+            Self::BT2020_CL => "SDL_MATRIX_COEFFICIENTS_BT2020_CL",
+            Self::SMPTE2085 => "SDL_MATRIX_COEFFICIENTS_SMPTE2085",
+            Self::CHROMA_DERIVED_NCL => "SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL",
+            Self::CHROMA_DERIVED_CL => "SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL",
+            Self::ICTCP => "SDL_MATRIX_COEFFICIENTS_ICTCP",
+            Self::CUSTOM => "SDL_MATRIX_COEFFICIENTS_CUSTOM",
+
+            _ => return write!(f, "SDL_MatrixCoefficients({})", self.0),
+        })
+    }
+}
+
 impl SDL_MatrixCoefficients {
     pub const IDENTITY: Self = Self(0);
     /// ITU-R BT.709-6
@@ -1060,6 +1366,7 @@ impl SDL_MatrixCoefficients {
     pub const ICTCP: Self = Self(14);
     pub const CUSTOM: Self = Self(31);
 }
+
 pub const SDL_MATRIX_COEFFICIENTS_IDENTITY: SDL_MatrixCoefficients =
     SDL_MatrixCoefficients::IDENTITY;
 /// ITU-R BT.709-6
@@ -1107,7 +1414,6 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 /// | [`TOPLEFT`](SDL_ChromaLocation::TOPLEFT) | [`SDL_CHROMA_LOCATION_TOPLEFT`] | In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located"). |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ChromaLocation(pub ::core::ffi::c_uint);
 impl From<SDL_ChromaLocation> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1115,6 +1421,22 @@ impl From<SDL_ChromaLocation> for ::core::ffi::c_uint {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_ChromaLocation {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_CHROMA_LOCATION_NONE",
+            Self::LEFT => "SDL_CHROMA_LOCATION_LEFT",
+            Self::CENTER => "SDL_CHROMA_LOCATION_CENTER",
+            Self::TOPLEFT => "SDL_CHROMA_LOCATION_TOPLEFT",
+
+            _ => return write!(f, "SDL_ChromaLocation({})", self.0),
+        })
+    }
+}
+
 impl SDL_ChromaLocation {
     /// RGB, no chroma sampling
     pub const NONE: Self = Self(0);
@@ -1125,6 +1447,7 @@ impl SDL_ChromaLocation {
     /// In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located").
     pub const TOPLEFT: Self = Self(3);
 }
+
 /// RGB, no chroma sampling
 pub const SDL_CHROMA_LOCATION_NONE: SDL_ChromaLocation = SDL_ChromaLocation::NONE;
 /// In MPEG-2, MPEG-4, and AVC, Cb and Cr are taken on midpoint of the left-edge of the 2x2 square. In other words, they have the same horizontal location as the top-left pixel, but is shifted one-half pixel down vertically.
@@ -1168,7 +1491,6 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 /// | [`YUV_DEFAULT`](SDL_Colorspace::YUV_DEFAULT) | [`SDL_COLORSPACE_YUV_DEFAULT`] | The default colorspace for YUV surfaces if no colorspace is specified |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Colorspace(pub Uint32);
 impl From<SDL_Colorspace> for Uint32 {
     #[inline(always)]
@@ -1176,6 +1498,31 @@ impl From<SDL_Colorspace> for Uint32 {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_Colorspace {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_COLORSPACE_UNKNOWN",
+            Self::SRGB => "SDL_COLORSPACE_SRGB",
+            Self::SRGB_LINEAR => "SDL_COLORSPACE_SRGB_LINEAR",
+            Self::HDR10 => "SDL_COLORSPACE_HDR10",
+            Self::JPEG => "SDL_COLORSPACE_JPEG",
+            Self::BT601_LIMITED => "SDL_COLORSPACE_BT601_LIMITED",
+            Self::BT601_FULL => "SDL_COLORSPACE_BT601_FULL",
+            Self::BT709_LIMITED => "SDL_COLORSPACE_BT709_LIMITED",
+            Self::BT709_FULL => "SDL_COLORSPACE_BT709_FULL",
+            Self::BT2020_LIMITED => "SDL_COLORSPACE_BT2020_LIMITED",
+            Self::BT2020_FULL => "SDL_COLORSPACE_BT2020_FULL",
+            Self::RGB_DEFAULT => "SDL_COLORSPACE_RGB_DEFAULT",
+            Self::YUV_DEFAULT => "SDL_COLORSPACE_YUV_DEFAULT",
+
+            _ => return write!(f, "SDL_Colorspace({})", self.0),
+        })
+    }
+}
+
 impl SDL_Colorspace {
     pub const UNKNOWN: Self = Self(0);
     /// Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709
@@ -1203,6 +1550,7 @@ impl SDL_Colorspace {
     /// The default colorspace for YUV surfaces if no colorspace is specified
     pub const YUV_DEFAULT: Self = SDL_COLORSPACE_JPEG;
 }
+
 pub const SDL_COLORSPACE_UNKNOWN: SDL_Colorspace = SDL_Colorspace::UNKNOWN;
 /// Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709
 pub const SDL_COLORSPACE_SRGB: SDL_Colorspace = SDL_Colorspace::SRGB;

@@ -105,7 +105,6 @@ pub const SDL_INIT_CAMERA: SDL_InitFlags = (0x00010000 as SDL_InitFlags);
 /// | [`FAILURE`](SDL_AppResult::FAILURE) | [`SDL_APP_FAILURE`] | Value that requests termination with error from the main callbacks. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AppResult(pub ::core::ffi::c_int);
 impl From<SDL_AppResult> for ::core::ffi::c_int {
     #[inline(always)]
@@ -113,6 +112,21 @@ impl From<SDL_AppResult> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_AppResult {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::CONTINUE => "SDL_APP_CONTINUE",
+            Self::SUCCESS => "SDL_APP_SUCCESS",
+            Self::FAILURE => "SDL_APP_FAILURE",
+
+            _ => return write!(f, "SDL_AppResult({})", self.0),
+        })
+    }
+}
+
 impl SDL_AppResult {
     /// Value that requests that the app continue from the main callbacks.
     pub const CONTINUE: Self = Self(0);
@@ -121,6 +135,7 @@ impl SDL_AppResult {
     /// Value that requests termination with error from the main callbacks.
     pub const FAILURE: Self = Self(2);
 }
+
 /// Value that requests that the app continue from the main callbacks.
 pub const SDL_APP_CONTINUE: SDL_AppResult = SDL_AppResult::CONTINUE;
 /// Value that requests termination with success from the main callbacks.

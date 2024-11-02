@@ -69,7 +69,6 @@ use super::stdinc::*;
 /// | [`CUSTOM`](SDL_LogCategory::CUSTOM) | [`SDL_LOG_CATEGORY_CUSTOM`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_LogCategory(pub ::core::ffi::c_int);
 impl From<SDL_LogCategory> for ::core::ffi::c_int {
     #[inline(always)]
@@ -77,6 +76,38 @@ impl From<SDL_LogCategory> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_LogCategory {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::APPLICATION => "SDL_LOG_CATEGORY_APPLICATION",
+            Self::ERROR => "SDL_LOG_CATEGORY_ERROR",
+            Self::ASSERT => "SDL_LOG_CATEGORY_ASSERT",
+            Self::SYSTEM => "SDL_LOG_CATEGORY_SYSTEM",
+            Self::AUDIO => "SDL_LOG_CATEGORY_AUDIO",
+            Self::VIDEO => "SDL_LOG_CATEGORY_VIDEO",
+            Self::RENDER => "SDL_LOG_CATEGORY_RENDER",
+            Self::INPUT => "SDL_LOG_CATEGORY_INPUT",
+            Self::TEST => "SDL_LOG_CATEGORY_TEST",
+            Self::GPU => "SDL_LOG_CATEGORY_GPU",
+            Self::RESERVED2 => "SDL_LOG_CATEGORY_RESERVED2",
+            Self::RESERVED3 => "SDL_LOG_CATEGORY_RESERVED3",
+            Self::RESERVED4 => "SDL_LOG_CATEGORY_RESERVED4",
+            Self::RESERVED5 => "SDL_LOG_CATEGORY_RESERVED5",
+            Self::RESERVED6 => "SDL_LOG_CATEGORY_RESERVED6",
+            Self::RESERVED7 => "SDL_LOG_CATEGORY_RESERVED7",
+            Self::RESERVED8 => "SDL_LOG_CATEGORY_RESERVED8",
+            Self::RESERVED9 => "SDL_LOG_CATEGORY_RESERVED9",
+            Self::RESERVED10 => "SDL_LOG_CATEGORY_RESERVED10",
+            Self::CUSTOM => "SDL_LOG_CATEGORY_CUSTOM",
+
+            _ => return write!(f, "SDL_LogCategory({})", self.0),
+        })
+    }
+}
+
 impl SDL_LogCategory {
     pub const APPLICATION: Self = Self(0);
     pub const ERROR: Self = Self(1);
@@ -99,6 +130,7 @@ impl SDL_LogCategory {
     pub const RESERVED10: Self = Self(18);
     pub const CUSTOM: Self = Self(19);
 }
+
 pub const SDL_LOG_CATEGORY_APPLICATION: SDL_LogCategory = SDL_LogCategory::APPLICATION;
 pub const SDL_LOG_CATEGORY_ERROR: SDL_LogCategory = SDL_LogCategory::ERROR;
 pub const SDL_LOG_CATEGORY_ASSERT: SDL_LogCategory = SDL_LogCategory::ASSERT;
@@ -139,7 +171,6 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 /// | [`COUNT`](SDL_LogPriority::COUNT) | [`SDL_LOG_PRIORITY_COUNT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_LogPriority(pub ::core::ffi::c_int);
 impl From<SDL_LogPriority> for ::core::ffi::c_int {
     #[inline(always)]
@@ -147,6 +178,27 @@ impl From<SDL_LogPriority> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_LogPriority {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_LOG_PRIORITY_INVALID",
+            Self::TRACE => "SDL_LOG_PRIORITY_TRACE",
+            Self::VERBOSE => "SDL_LOG_PRIORITY_VERBOSE",
+            Self::DEBUG => "SDL_LOG_PRIORITY_DEBUG",
+            Self::INFO => "SDL_LOG_PRIORITY_INFO",
+            Self::WARN => "SDL_LOG_PRIORITY_WARN",
+            Self::ERROR => "SDL_LOG_PRIORITY_ERROR",
+            Self::CRITICAL => "SDL_LOG_PRIORITY_CRITICAL",
+            Self::COUNT => "SDL_LOG_PRIORITY_COUNT",
+
+            _ => return write!(f, "SDL_LogPriority({})", self.0),
+        })
+    }
+}
+
 impl SDL_LogPriority {
     pub const INVALID: Self = Self(0);
     pub const TRACE: Self = Self(1);
@@ -158,6 +210,7 @@ impl SDL_LogPriority {
     pub const CRITICAL: Self = Self(7);
     pub const COUNT: Self = Self(8);
 }
+
 pub const SDL_LOG_PRIORITY_INVALID: SDL_LogPriority = SDL_LogPriority::INVALID;
 pub const SDL_LOG_PRIORITY_TRACE: SDL_LogPriority = SDL_LogPriority::TRACE;
 pub const SDL_LOG_PRIORITY_VERBOSE: SDL_LogPriority = SDL_LogPriority::VERBOSE;

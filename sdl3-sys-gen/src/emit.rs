@@ -1283,6 +1283,8 @@ impl Emit for TypeDef {
                 let mut ctx_impl = ctx.with_output(&mut impl_consts);
                 let mut global_consts = String::new();
                 let mut ctx_global = ctx.with_output(&mut global_consts);
+                let mut debug_consts = String::new();
+                let mut ctx_debug = ctx.with_output(&mut debug_consts);
                 let mut next_expr = Some(Expr::Literal(Literal::Integer(IntegerLiteral::zero())));
 
                 if !known_values.is_empty() {
@@ -1377,8 +1379,14 @@ impl Emit for TypeDef {
                     variant.cond.emit_cfg(&mut ctx_global)?;
                     variant.doc.emit(&mut ctx_global)?;
                     writeln!(ctx_global, "pub const {variant_ident}: {enum_ident} = {enum_ident}::{short_variant_ident};")?;
+
+                    writeln!(
+                        ctx_debug,
+                        "Self::{short_variant_ident} => {variant_ident:?},"
+                    )?;
                 }
 
+                drop(ctx_debug);
                 drop(ctx_global);
                 drop(ctx_impl);
                 drop(ctx_doc);
@@ -1390,17 +1398,13 @@ impl Emit for TypeDef {
                     ctx,
                     "#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]"
                 )?;
-                writeln!(
-                    ctx,
-                    r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
-                )?;
                 write!(ctx, "pub struct {enum_ident}(pub ")?;
                 enum_base_type.emit(ctx)?;
                 writeln!(ctx, ");")?;
 
                 write!(ctx, "impl From<{enum_ident}> for ")?;
                 enum_base_type.emit(ctx)?;
-                write!(
+                writeln!(
                     ctx,
                     str_block! {r#"
                         {{
@@ -1413,11 +1417,31 @@ impl Emit for TypeDef {
                     enum_ident
                 )?;
 
+                writeln!(
+                    ctx,
+                    str_block! {"
+                        #[cfg(feature = \"debug-impls\")]
+                        impl ::core::fmt::Debug for {} {{
+                            fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {{
+                                #[allow(unreachable_patterns)]
+                                f.write_str(match *self {{
+                                    {}
+                                    _ => return write!(f, {}, self.0),
+                                }})
+                            }}
+                        }}
+                    "},
+                    enum_ident,
+                    debug_consts,
+                    format!("\"{}({{}})\"", enum_ident)
+                )?;
+
                 writeln!(ctx, "impl {enum_ident} {{")?;
                 ctx.increase_indent();
                 ctx.write_str(&impl_consts)?;
                 ctx.decrease_indent();
                 writeln!(ctx, "}}")?;
+                writeln!(ctx)?;
                 ctx.write_str(&global_consts)?;
                 writeln!(ctx)?;
                 ctx.flush_ool_output()?;

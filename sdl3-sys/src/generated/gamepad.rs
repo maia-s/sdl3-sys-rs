@@ -69,7 +69,6 @@ use super::sensor::*;
 /// | [`COUNT`](SDL_GamepadType::COUNT) | [`SDL_GAMEPAD_TYPE_COUNT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GamepadType(pub ::core::ffi::c_int);
 impl From<SDL_GamepadType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -77,6 +76,30 @@ impl From<SDL_GamepadType> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GamepadType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_GAMEPAD_TYPE_UNKNOWN",
+            Self::STANDARD => "SDL_GAMEPAD_TYPE_STANDARD",
+            Self::XBOX360 => "SDL_GAMEPAD_TYPE_XBOX360",
+            Self::XBOXONE => "SDL_GAMEPAD_TYPE_XBOXONE",
+            Self::PS3 => "SDL_GAMEPAD_TYPE_PS3",
+            Self::PS4 => "SDL_GAMEPAD_TYPE_PS4",
+            Self::PS5 => "SDL_GAMEPAD_TYPE_PS5",
+            Self::NINTENDO_SWITCH_PRO => "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_PRO",
+            Self::NINTENDO_SWITCH_JOYCON_LEFT => "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT",
+            Self::NINTENDO_SWITCH_JOYCON_RIGHT => "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT",
+            Self::NINTENDO_SWITCH_JOYCON_PAIR => "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR",
+            Self::COUNT => "SDL_GAMEPAD_TYPE_COUNT",
+
+            _ => return write!(f, "SDL_GamepadType({})", self.0),
+        })
+    }
+}
+
 impl SDL_GamepadType {
     pub const UNKNOWN: Self = Self(0);
     pub const STANDARD: Self = Self(1);
@@ -91,6 +114,7 @@ impl SDL_GamepadType {
     pub const NINTENDO_SWITCH_JOYCON_PAIR: Self = Self(10);
     pub const COUNT: Self = Self(11);
 }
+
 pub const SDL_GAMEPAD_TYPE_UNKNOWN: SDL_GamepadType = SDL_GamepadType::UNKNOWN;
 pub const SDL_GAMEPAD_TYPE_STANDARD: SDL_GamepadType = SDL_GamepadType::STANDARD;
 pub const SDL_GAMEPAD_TYPE_XBOX360: SDL_GamepadType = SDL_GamepadType::XBOX360;
@@ -164,7 +188,6 @@ pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 /// | [`COUNT`](SDL_GamepadButton::COUNT) | [`SDL_GAMEPAD_BUTTON_COUNT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GamepadButton(pub ::core::ffi::c_int);
 impl From<SDL_GamepadButton> for ::core::ffi::c_int {
     #[inline(always)]
@@ -172,6 +195,46 @@ impl From<SDL_GamepadButton> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GamepadButton {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_GAMEPAD_BUTTON_INVALID",
+            Self::SOUTH => "SDL_GAMEPAD_BUTTON_SOUTH",
+            Self::EAST => "SDL_GAMEPAD_BUTTON_EAST",
+            Self::WEST => "SDL_GAMEPAD_BUTTON_WEST",
+            Self::NORTH => "SDL_GAMEPAD_BUTTON_NORTH",
+            Self::BACK => "SDL_GAMEPAD_BUTTON_BACK",
+            Self::GUIDE => "SDL_GAMEPAD_BUTTON_GUIDE",
+            Self::START => "SDL_GAMEPAD_BUTTON_START",
+            Self::LEFT_STICK => "SDL_GAMEPAD_BUTTON_LEFT_STICK",
+            Self::RIGHT_STICK => "SDL_GAMEPAD_BUTTON_RIGHT_STICK",
+            Self::LEFT_SHOULDER => "SDL_GAMEPAD_BUTTON_LEFT_SHOULDER",
+            Self::RIGHT_SHOULDER => "SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER",
+            Self::DPAD_UP => "SDL_GAMEPAD_BUTTON_DPAD_UP",
+            Self::DPAD_DOWN => "SDL_GAMEPAD_BUTTON_DPAD_DOWN",
+            Self::DPAD_LEFT => "SDL_GAMEPAD_BUTTON_DPAD_LEFT",
+            Self::DPAD_RIGHT => "SDL_GAMEPAD_BUTTON_DPAD_RIGHT",
+            Self::MISC1 => "SDL_GAMEPAD_BUTTON_MISC1",
+            Self::RIGHT_PADDLE1 => "SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1",
+            Self::LEFT_PADDLE1 => "SDL_GAMEPAD_BUTTON_LEFT_PADDLE1",
+            Self::RIGHT_PADDLE2 => "SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2",
+            Self::LEFT_PADDLE2 => "SDL_GAMEPAD_BUTTON_LEFT_PADDLE2",
+            Self::TOUCHPAD => "SDL_GAMEPAD_BUTTON_TOUCHPAD",
+            Self::MISC2 => "SDL_GAMEPAD_BUTTON_MISC2",
+            Self::MISC3 => "SDL_GAMEPAD_BUTTON_MISC3",
+            Self::MISC4 => "SDL_GAMEPAD_BUTTON_MISC4",
+            Self::MISC5 => "SDL_GAMEPAD_BUTTON_MISC5",
+            Self::MISC6 => "SDL_GAMEPAD_BUTTON_MISC6",
+            Self::COUNT => "SDL_GAMEPAD_BUTTON_COUNT",
+
+            _ => return write!(f, "SDL_GamepadButton({})", self.0),
+        })
+    }
+}
+
 impl SDL_GamepadButton {
     pub const INVALID: Self = Self(-1_i32);
     /// Bottom face button (e.g. Xbox A button)
@@ -217,6 +280,7 @@ impl SDL_GamepadButton {
     pub const MISC6: Self = Self(25_i32);
     pub const COUNT: Self = Self(26_i32);
 }
+
 pub const SDL_GAMEPAD_BUTTON_INVALID: SDL_GamepadButton = SDL_GamepadButton::INVALID;
 /// Bottom face button (e.g. Xbox A button)
 pub const SDL_GAMEPAD_BUTTON_SOUTH: SDL_GamepadButton = SDL_GamepadButton::SOUTH;
@@ -286,7 +350,6 @@ pub const SDL_GAMEPAD_BUTTON_COUNT: SDL_GamepadButton = SDL_GamepadButton::COUNT
 /// | [`TRIANGLE`](SDL_GamepadButtonLabel::TRIANGLE) | [`SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GamepadButtonLabel(pub ::core::ffi::c_int);
 impl From<SDL_GamepadButtonLabel> for ::core::ffi::c_int {
     #[inline(always)]
@@ -294,6 +357,27 @@ impl From<SDL_GamepadButtonLabel> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GamepadButtonLabel {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_GAMEPAD_BUTTON_LABEL_UNKNOWN",
+            Self::A => "SDL_GAMEPAD_BUTTON_LABEL_A",
+            Self::B => "SDL_GAMEPAD_BUTTON_LABEL_B",
+            Self::X => "SDL_GAMEPAD_BUTTON_LABEL_X",
+            Self::Y => "SDL_GAMEPAD_BUTTON_LABEL_Y",
+            Self::CROSS => "SDL_GAMEPAD_BUTTON_LABEL_CROSS",
+            Self::CIRCLE => "SDL_GAMEPAD_BUTTON_LABEL_CIRCLE",
+            Self::SQUARE => "SDL_GAMEPAD_BUTTON_LABEL_SQUARE",
+            Self::TRIANGLE => "SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE",
+
+            _ => return write!(f, "SDL_GamepadButtonLabel({})", self.0),
+        })
+    }
+}
+
 impl SDL_GamepadButtonLabel {
     pub const UNKNOWN: Self = Self(0);
     pub const A: Self = Self(1);
@@ -305,6 +389,7 @@ impl SDL_GamepadButtonLabel {
     pub const SQUARE: Self = Self(7);
     pub const TRIANGLE: Self = Self(8);
 }
+
 pub const SDL_GAMEPAD_BUTTON_LABEL_UNKNOWN: SDL_GamepadButtonLabel =
     SDL_GamepadButtonLabel::UNKNOWN;
 pub const SDL_GAMEPAD_BUTTON_LABEL_A: SDL_GamepadButtonLabel = SDL_GamepadButtonLabel::A;
@@ -344,7 +429,6 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
 /// | [`COUNT`](SDL_GamepadAxis::COUNT) | [`SDL_GAMEPAD_AXIS_COUNT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GamepadAxis(pub ::core::ffi::c_int);
 impl From<SDL_GamepadAxis> for ::core::ffi::c_int {
     #[inline(always)]
@@ -352,6 +436,26 @@ impl From<SDL_GamepadAxis> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GamepadAxis {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_GAMEPAD_AXIS_INVALID",
+            Self::LEFTX => "SDL_GAMEPAD_AXIS_LEFTX",
+            Self::LEFTY => "SDL_GAMEPAD_AXIS_LEFTY",
+            Self::RIGHTX => "SDL_GAMEPAD_AXIS_RIGHTX",
+            Self::RIGHTY => "SDL_GAMEPAD_AXIS_RIGHTY",
+            Self::LEFT_TRIGGER => "SDL_GAMEPAD_AXIS_LEFT_TRIGGER",
+            Self::RIGHT_TRIGGER => "SDL_GAMEPAD_AXIS_RIGHT_TRIGGER",
+            Self::COUNT => "SDL_GAMEPAD_AXIS_COUNT",
+
+            _ => return write!(f, "SDL_GamepadAxis({})", self.0),
+        })
+    }
+}
+
 impl SDL_GamepadAxis {
     pub const INVALID: Self = Self(-1_i32);
     pub const LEFTX: Self = Self(0_i32);
@@ -362,6 +466,7 @@ impl SDL_GamepadAxis {
     pub const RIGHT_TRIGGER: Self = Self(5_i32);
     pub const COUNT: Self = Self(6_i32);
 }
+
 pub const SDL_GAMEPAD_AXIS_INVALID: SDL_GamepadAxis = SDL_GamepadAxis::INVALID;
 pub const SDL_GAMEPAD_AXIS_LEFTX: SDL_GamepadAxis = SDL_GamepadAxis::LEFTX;
 pub const SDL_GAMEPAD_AXIS_LEFTY: SDL_GamepadAxis = SDL_GamepadAxis::LEFTY;
@@ -390,7 +495,6 @@ pub const SDL_GAMEPAD_AXIS_COUNT: SDL_GamepadAxis = SDL_GamepadAxis::COUNT;
 /// | [`HAT`](SDL_GamepadBindingType::HAT) | [`SDL_GAMEPAD_BINDTYPE_HAT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GamepadBindingType(pub ::core::ffi::c_int);
 impl From<SDL_GamepadBindingType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -398,12 +502,29 @@ impl From<SDL_GamepadBindingType> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GamepadBindingType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_GAMEPAD_BINDTYPE_NONE",
+            Self::BUTTON => "SDL_GAMEPAD_BINDTYPE_BUTTON",
+            Self::AXIS => "SDL_GAMEPAD_BINDTYPE_AXIS",
+            Self::HAT => "SDL_GAMEPAD_BINDTYPE_HAT",
+
+            _ => return write!(f, "SDL_GamepadBindingType({})", self.0),
+        })
+    }
+}
+
 impl SDL_GamepadBindingType {
     pub const NONE: Self = Self(0);
     pub const BUTTON: Self = Self(1);
     pub const AXIS: Self = Self(2);
     pub const HAT: Self = Self(3);
 }
+
 pub const SDL_GAMEPAD_BINDTYPE_NONE: SDL_GamepadBindingType = SDL_GamepadBindingType::NONE;
 pub const SDL_GAMEPAD_BINDTYPE_BUTTON: SDL_GamepadBindingType = SDL_GamepadBindingType::BUTTON;
 pub const SDL_GAMEPAD_BINDTYPE_AXIS: SDL_GamepadBindingType = SDL_GamepadBindingType::AXIS;

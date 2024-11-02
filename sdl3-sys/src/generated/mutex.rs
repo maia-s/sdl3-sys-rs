@@ -660,7 +660,6 @@ extern "C" {
 /// | [`UNINITIALIZING`](SDL_InitStatus::UNINITIALIZING) | [`SDL_INIT_STATUS_UNINITIALIZING`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_InitStatus(pub ::core::ffi::c_int);
 impl From<SDL_InitStatus> for ::core::ffi::c_int {
     #[inline(always)]
@@ -668,12 +667,29 @@ impl From<SDL_InitStatus> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_InitStatus {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNINITIALIZED => "SDL_INIT_STATUS_UNINITIALIZED",
+            Self::INITIALIZING => "SDL_INIT_STATUS_INITIALIZING",
+            Self::INITIALIZED => "SDL_INIT_STATUS_INITIALIZED",
+            Self::UNINITIALIZING => "SDL_INIT_STATUS_UNINITIALIZING",
+
+            _ => return write!(f, "SDL_InitStatus({})", self.0),
+        })
+    }
+}
+
 impl SDL_InitStatus {
     pub const UNINITIALIZED: Self = Self(0);
     pub const INITIALIZING: Self = Self(1);
     pub const INITIALIZED: Self = Self(2);
     pub const UNINITIALIZING: Self = Self(3);
 }
+
 pub const SDL_INIT_STATUS_UNINITIALIZED: SDL_InitStatus = SDL_InitStatus::UNINITIALIZED;
 pub const SDL_INIT_STATUS_INITIALIZING: SDL_InitStatus = SDL_InitStatus::INITIALIZING;
 pub const SDL_INIT_STATUS_INITIALIZED: SDL_InitStatus = SDL_InitStatus::INITIALIZED;

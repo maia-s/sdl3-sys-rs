@@ -133,7 +133,6 @@ pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 /// | [`F32`](SDL_AudioFormat::F32) | [`SDL_AUDIO_F32`] | (target dependent) |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AudioFormat(pub ::core::ffi::c_uint);
 impl From<SDL_AudioFormat> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -141,6 +140,33 @@ impl From<SDL_AudioFormat> for ::core::ffi::c_uint {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_AudioFormat {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_AUDIO_UNKNOWN",
+            Self::U8 => "SDL_AUDIO_U8",
+            Self::S8 => "SDL_AUDIO_S8",
+            Self::S16LE => "SDL_AUDIO_S16LE",
+            Self::S16BE => "SDL_AUDIO_S16BE",
+            Self::S32LE => "SDL_AUDIO_S32LE",
+            Self::S32BE => "SDL_AUDIO_S32BE",
+            Self::F32LE => "SDL_AUDIO_F32LE",
+            Self::F32BE => "SDL_AUDIO_F32BE",
+            Self::S16 => "SDL_AUDIO_S16",
+            Self::S32 => "SDL_AUDIO_S32",
+            Self::F32 => "SDL_AUDIO_F32",
+            Self::S16 => "SDL_AUDIO_S16",
+            Self::S32 => "SDL_AUDIO_S32",
+            Self::F32 => "SDL_AUDIO_F32",
+
+            _ => return write!(f, "SDL_AudioFormat({})", self.0),
+        })
+    }
+}
+
 impl SDL_AudioFormat {
     /// Unspecified audio format
     pub const UNKNOWN: Self = Self(0x0000);
@@ -173,6 +199,7 @@ impl SDL_AudioFormat {
     #[cfg(not(target_endian = "little"))]
     pub const F32: Self = SDL_AUDIO_F32BE;
 }
+
 /// Unspecified audio format
 pub const SDL_AUDIO_UNKNOWN: SDL_AudioFormat = SDL_AudioFormat::UNKNOWN;
 /// Unsigned 8-bit samples

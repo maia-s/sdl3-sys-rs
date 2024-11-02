@@ -22,7 +22,6 @@ use super::error::*;
 /// | [`CHARGED`](SDL_PowerState::CHARGED) | [`SDL_POWERSTATE_CHARGED`] | Plugged in, battery charged |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PowerState(pub ::core::ffi::c_int);
 impl From<SDL_PowerState> for ::core::ffi::c_int {
     #[inline(always)]
@@ -30,6 +29,24 @@ impl From<SDL_PowerState> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_PowerState {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::ERROR => "SDL_POWERSTATE_ERROR",
+            Self::UNKNOWN => "SDL_POWERSTATE_UNKNOWN",
+            Self::ON_BATTERY => "SDL_POWERSTATE_ON_BATTERY",
+            Self::NO_BATTERY => "SDL_POWERSTATE_NO_BATTERY",
+            Self::CHARGING => "SDL_POWERSTATE_CHARGING",
+            Self::CHARGED => "SDL_POWERSTATE_CHARGED",
+
+            _ => return write!(f, "SDL_PowerState({})", self.0),
+        })
+    }
+}
+
 impl SDL_PowerState {
     /// error determining power status
     pub const ERROR: Self = Self(-1_i32);
@@ -44,6 +61,7 @@ impl SDL_PowerState {
     /// Plugged in, battery charged
     pub const CHARGED: Self = Self(4_i32);
 }
+
 /// error determining power status
 pub const SDL_POWERSTATE_ERROR: SDL_PowerState = SDL_PowerState::ERROR;
 /// cannot determine power status

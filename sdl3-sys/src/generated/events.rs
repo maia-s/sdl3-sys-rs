@@ -157,7 +157,6 @@ use super::video::*;
 /// | [`ENUM_PADDING`](SDL_EventType::ENUM_PADDING) | [`SDL_EVENT_ENUM_PADDING`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_EventType(pub Uint32);
 impl From<SDL_EventType> for Uint32 {
     #[inline(always)]
@@ -165,6 +164,135 @@ impl From<SDL_EventType> for Uint32 {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_EventType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::FIRST => "SDL_EVENT_FIRST",
+            Self::QUIT => "SDL_EVENT_QUIT",
+            Self::TERMINATING => "SDL_EVENT_TERMINATING",
+            Self::LOW_MEMORY => "SDL_EVENT_LOW_MEMORY",
+            Self::WILL_ENTER_BACKGROUND => "SDL_EVENT_WILL_ENTER_BACKGROUND",
+            Self::DID_ENTER_BACKGROUND => "SDL_EVENT_DID_ENTER_BACKGROUND",
+            Self::WILL_ENTER_FOREGROUND => "SDL_EVENT_WILL_ENTER_FOREGROUND",
+            Self::DID_ENTER_FOREGROUND => "SDL_EVENT_DID_ENTER_FOREGROUND",
+            Self::LOCALE_CHANGED => "SDL_EVENT_LOCALE_CHANGED",
+            Self::SYSTEM_THEME_CHANGED => "SDL_EVENT_SYSTEM_THEME_CHANGED",
+            Self::DISPLAY_ORIENTATION => "SDL_EVENT_DISPLAY_ORIENTATION",
+            Self::DISPLAY_ADDED => "SDL_EVENT_DISPLAY_ADDED",
+            Self::DISPLAY_REMOVED => "SDL_EVENT_DISPLAY_REMOVED",
+            Self::DISPLAY_MOVED => "SDL_EVENT_DISPLAY_MOVED",
+            Self::DISPLAY_DESKTOP_MODE_CHANGED => "SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED",
+            Self::DISPLAY_CURRENT_MODE_CHANGED => "SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED",
+            Self::DISPLAY_CONTENT_SCALE_CHANGED => "SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED",
+            Self::DISPLAY_FIRST => "SDL_EVENT_DISPLAY_FIRST",
+            Self::DISPLAY_LAST => "SDL_EVENT_DISPLAY_LAST",
+            Self::WINDOW_SHOWN => "SDL_EVENT_WINDOW_SHOWN",
+            Self::WINDOW_HIDDEN => "SDL_EVENT_WINDOW_HIDDEN",
+            Self::WINDOW_EXPOSED => "SDL_EVENT_WINDOW_EXPOSED",
+            Self::WINDOW_MOVED => "SDL_EVENT_WINDOW_MOVED",
+            Self::WINDOW_RESIZED => "SDL_EVENT_WINDOW_RESIZED",
+            Self::WINDOW_PIXEL_SIZE_CHANGED => "SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED",
+            Self::WINDOW_METAL_VIEW_RESIZED => "SDL_EVENT_WINDOW_METAL_VIEW_RESIZED",
+            Self::WINDOW_MINIMIZED => "SDL_EVENT_WINDOW_MINIMIZED",
+            Self::WINDOW_MAXIMIZED => "SDL_EVENT_WINDOW_MAXIMIZED",
+            Self::WINDOW_RESTORED => "SDL_EVENT_WINDOW_RESTORED",
+            Self::WINDOW_MOUSE_ENTER => "SDL_EVENT_WINDOW_MOUSE_ENTER",
+            Self::WINDOW_MOUSE_LEAVE => "SDL_EVENT_WINDOW_MOUSE_LEAVE",
+            Self::WINDOW_FOCUS_GAINED => "SDL_EVENT_WINDOW_FOCUS_GAINED",
+            Self::WINDOW_FOCUS_LOST => "SDL_EVENT_WINDOW_FOCUS_LOST",
+            Self::WINDOW_CLOSE_REQUESTED => "SDL_EVENT_WINDOW_CLOSE_REQUESTED",
+            Self::WINDOW_HIT_TEST => "SDL_EVENT_WINDOW_HIT_TEST",
+            Self::WINDOW_ICCPROF_CHANGED => "SDL_EVENT_WINDOW_ICCPROF_CHANGED",
+            Self::WINDOW_DISPLAY_CHANGED => "SDL_EVENT_WINDOW_DISPLAY_CHANGED",
+            Self::WINDOW_DISPLAY_SCALE_CHANGED => "SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED",
+            Self::WINDOW_SAFE_AREA_CHANGED => "SDL_EVENT_WINDOW_SAFE_AREA_CHANGED",
+            Self::WINDOW_OCCLUDED => "SDL_EVENT_WINDOW_OCCLUDED",
+            Self::WINDOW_ENTER_FULLSCREEN => "SDL_EVENT_WINDOW_ENTER_FULLSCREEN",
+            Self::WINDOW_LEAVE_FULLSCREEN => "SDL_EVENT_WINDOW_LEAVE_FULLSCREEN",
+            Self::WINDOW_DESTROYED => "SDL_EVENT_WINDOW_DESTROYED",
+            Self::WINDOW_HDR_STATE_CHANGED => "SDL_EVENT_WINDOW_HDR_STATE_CHANGED",
+            Self::WINDOW_FIRST => "SDL_EVENT_WINDOW_FIRST",
+            Self::WINDOW_LAST => "SDL_EVENT_WINDOW_LAST",
+            Self::KEY_DOWN => "SDL_EVENT_KEY_DOWN",
+            Self::KEY_UP => "SDL_EVENT_KEY_UP",
+            Self::TEXT_EDITING => "SDL_EVENT_TEXT_EDITING",
+            Self::TEXT_INPUT => "SDL_EVENT_TEXT_INPUT",
+            Self::KEYMAP_CHANGED => "SDL_EVENT_KEYMAP_CHANGED",
+            Self::KEYBOARD_ADDED => "SDL_EVENT_KEYBOARD_ADDED",
+            Self::KEYBOARD_REMOVED => "SDL_EVENT_KEYBOARD_REMOVED",
+            Self::TEXT_EDITING_CANDIDATES => "SDL_EVENT_TEXT_EDITING_CANDIDATES",
+            Self::MOUSE_MOTION => "SDL_EVENT_MOUSE_MOTION",
+            Self::MOUSE_BUTTON_DOWN => "SDL_EVENT_MOUSE_BUTTON_DOWN",
+            Self::MOUSE_BUTTON_UP => "SDL_EVENT_MOUSE_BUTTON_UP",
+            Self::MOUSE_WHEEL => "SDL_EVENT_MOUSE_WHEEL",
+            Self::MOUSE_ADDED => "SDL_EVENT_MOUSE_ADDED",
+            Self::MOUSE_REMOVED => "SDL_EVENT_MOUSE_REMOVED",
+            Self::JOYSTICK_AXIS_MOTION => "SDL_EVENT_JOYSTICK_AXIS_MOTION",
+            Self::JOYSTICK_BALL_MOTION => "SDL_EVENT_JOYSTICK_BALL_MOTION",
+            Self::JOYSTICK_HAT_MOTION => "SDL_EVENT_JOYSTICK_HAT_MOTION",
+            Self::JOYSTICK_BUTTON_DOWN => "SDL_EVENT_JOYSTICK_BUTTON_DOWN",
+            Self::JOYSTICK_BUTTON_UP => "SDL_EVENT_JOYSTICK_BUTTON_UP",
+            Self::JOYSTICK_ADDED => "SDL_EVENT_JOYSTICK_ADDED",
+            Self::JOYSTICK_REMOVED => "SDL_EVENT_JOYSTICK_REMOVED",
+            Self::JOYSTICK_BATTERY_UPDATED => "SDL_EVENT_JOYSTICK_BATTERY_UPDATED",
+            Self::JOYSTICK_UPDATE_COMPLETE => "SDL_EVENT_JOYSTICK_UPDATE_COMPLETE",
+            Self::GAMEPAD_AXIS_MOTION => "SDL_EVENT_GAMEPAD_AXIS_MOTION",
+            Self::GAMEPAD_BUTTON_DOWN => "SDL_EVENT_GAMEPAD_BUTTON_DOWN",
+            Self::GAMEPAD_BUTTON_UP => "SDL_EVENT_GAMEPAD_BUTTON_UP",
+            Self::GAMEPAD_ADDED => "SDL_EVENT_GAMEPAD_ADDED",
+            Self::GAMEPAD_REMOVED => "SDL_EVENT_GAMEPAD_REMOVED",
+            Self::GAMEPAD_REMAPPED => "SDL_EVENT_GAMEPAD_REMAPPED",
+            Self::GAMEPAD_TOUCHPAD_DOWN => "SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN",
+            Self::GAMEPAD_TOUCHPAD_MOTION => "SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION",
+            Self::GAMEPAD_TOUCHPAD_UP => "SDL_EVENT_GAMEPAD_TOUCHPAD_UP",
+            Self::GAMEPAD_SENSOR_UPDATE => "SDL_EVENT_GAMEPAD_SENSOR_UPDATE",
+            Self::GAMEPAD_UPDATE_COMPLETE => "SDL_EVENT_GAMEPAD_UPDATE_COMPLETE",
+            Self::GAMEPAD_STEAM_HANDLE_UPDATED => "SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED",
+            Self::FINGER_DOWN => "SDL_EVENT_FINGER_DOWN",
+            Self::FINGER_UP => "SDL_EVENT_FINGER_UP",
+            Self::FINGER_MOTION => "SDL_EVENT_FINGER_MOTION",
+            Self::CLIPBOARD_UPDATE => "SDL_EVENT_CLIPBOARD_UPDATE",
+            Self::DROP_FILE => "SDL_EVENT_DROP_FILE",
+            Self::DROP_TEXT => "SDL_EVENT_DROP_TEXT",
+            Self::DROP_BEGIN => "SDL_EVENT_DROP_BEGIN",
+            Self::DROP_COMPLETE => "SDL_EVENT_DROP_COMPLETE",
+            Self::DROP_POSITION => "SDL_EVENT_DROP_POSITION",
+            Self::AUDIO_DEVICE_ADDED => "SDL_EVENT_AUDIO_DEVICE_ADDED",
+            Self::AUDIO_DEVICE_REMOVED => "SDL_EVENT_AUDIO_DEVICE_REMOVED",
+            Self::AUDIO_DEVICE_FORMAT_CHANGED => "SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED",
+            Self::SENSOR_UPDATE => "SDL_EVENT_SENSOR_UPDATE",
+            Self::PEN_PROXIMITY_IN => "SDL_EVENT_PEN_PROXIMITY_IN",
+            Self::PEN_PROXIMITY_OUT => "SDL_EVENT_PEN_PROXIMITY_OUT",
+            Self::PEN_DOWN => "SDL_EVENT_PEN_DOWN",
+            Self::PEN_UP => "SDL_EVENT_PEN_UP",
+            Self::PEN_BUTTON_DOWN => "SDL_EVENT_PEN_BUTTON_DOWN",
+            Self::PEN_BUTTON_UP => "SDL_EVENT_PEN_BUTTON_UP",
+            Self::PEN_MOTION => "SDL_EVENT_PEN_MOTION",
+            Self::PEN_AXIS => "SDL_EVENT_PEN_AXIS",
+            Self::CAMERA_DEVICE_ADDED => "SDL_EVENT_CAMERA_DEVICE_ADDED",
+            Self::CAMERA_DEVICE_REMOVED => "SDL_EVENT_CAMERA_DEVICE_REMOVED",
+            Self::CAMERA_DEVICE_APPROVED => "SDL_EVENT_CAMERA_DEVICE_APPROVED",
+            Self::CAMERA_DEVICE_DENIED => "SDL_EVENT_CAMERA_DEVICE_DENIED",
+            Self::RENDER_TARGETS_RESET => "SDL_EVENT_RENDER_TARGETS_RESET",
+            Self::RENDER_DEVICE_RESET => "SDL_EVENT_RENDER_DEVICE_RESET",
+            Self::RENDER_DEVICE_LOST => "SDL_EVENT_RENDER_DEVICE_LOST",
+            Self::PRIVATE0 => "SDL_EVENT_PRIVATE0",
+            Self::PRIVATE1 => "SDL_EVENT_PRIVATE1",
+            Self::PRIVATE2 => "SDL_EVENT_PRIVATE2",
+            Self::PRIVATE3 => "SDL_EVENT_PRIVATE3",
+            Self::POLL_SENTINEL => "SDL_EVENT_POLL_SENTINEL",
+            Self::USER => "SDL_EVENT_USER",
+            Self::LAST => "SDL_EVENT_LAST",
+            Self::ENUM_PADDING => "SDL_EVENT_ENUM_PADDING",
+
+            _ => return write!(f, "SDL_EventType({})", self.0),
+        })
+    }
+}
+
 impl SDL_EventType {
     /// Unused (do not remove)
     pub const FIRST: Self = Self(0);
@@ -406,6 +534,7 @@ impl SDL_EventType {
     pub const LAST: Self = Self(0xffff);
     pub const ENUM_PADDING: Self = Self(0x7fffffff);
 }
+
 /// Unused (do not remove)
 pub const SDL_EVENT_FIRST: SDL_EventType = SDL_EventType::FIRST;
 /// User-requested quit
@@ -1714,7 +1843,6 @@ extern "C" {
 /// | [`GETEVENT`](SDL_EventAction::GETEVENT) | [`SDL_GETEVENT`] | Retrieve/remove events from the front of the queue. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_EventAction(pub ::core::ffi::c_int);
 impl From<SDL_EventAction> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1722,6 +1850,21 @@ impl From<SDL_EventAction> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_EventAction {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::ADDEVENT => "SDL_ADDEVENT",
+            Self::PEEKEVENT => "SDL_PEEKEVENT",
+            Self::GETEVENT => "SDL_GETEVENT",
+
+            _ => return write!(f, "SDL_EventAction({})", self.0),
+        })
+    }
+}
+
 impl SDL_EventAction {
     /// Add events to the back of the queue.
     pub const ADDEVENT: Self = Self(0);
@@ -1730,6 +1873,7 @@ impl SDL_EventAction {
     /// Retrieve/remove events from the front of the queue.
     pub const GETEVENT: Self = Self(2);
 }
+
 /// Add events to the back of the queue.
 pub const SDL_ADDEVENT: SDL_EventAction = SDL_EventAction::ADDEVENT;
 /// Check but don't remove events from the queue front.

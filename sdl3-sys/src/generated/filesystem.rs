@@ -157,7 +157,6 @@ extern "C" {
 /// | [`COUNT`](SDL_Folder::COUNT) | [`SDL_FOLDER_COUNT`] | Total number of types in this enum, not a folder type by itself. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Folder(pub ::core::ffi::c_int);
 impl From<SDL_Folder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -165,6 +164,30 @@ impl From<SDL_Folder> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_Folder {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::HOME => "SDL_FOLDER_HOME",
+            Self::DESKTOP => "SDL_FOLDER_DESKTOP",
+            Self::DOCUMENTS => "SDL_FOLDER_DOCUMENTS",
+            Self::DOWNLOADS => "SDL_FOLDER_DOWNLOADS",
+            Self::MUSIC => "SDL_FOLDER_MUSIC",
+            Self::PICTURES => "SDL_FOLDER_PICTURES",
+            Self::PUBLICSHARE => "SDL_FOLDER_PUBLICSHARE",
+            Self::SAVEDGAMES => "SDL_FOLDER_SAVEDGAMES",
+            Self::SCREENSHOTS => "SDL_FOLDER_SCREENSHOTS",
+            Self::TEMPLATES => "SDL_FOLDER_TEMPLATES",
+            Self::VIDEOS => "SDL_FOLDER_VIDEOS",
+            Self::COUNT => "SDL_FOLDER_COUNT",
+
+            _ => return write!(f, "SDL_Folder({})", self.0),
+        })
+    }
+}
+
 impl SDL_Folder {
     /// The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents.
     pub const HOME: Self = Self(0);
@@ -191,6 +214,7 @@ impl SDL_Folder {
     /// Total number of types in this enum, not a folder type by itself.
     pub const COUNT: Self = Self(11);
 }
+
 /// The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents.
 pub const SDL_FOLDER_HOME: SDL_Folder = SDL_Folder::HOME;
 /// The folder of files that are displayed on the desktop. Note that the existence of a desktop folder does not guarantee that the system does show icons on its desktop; certain GNU/Linux distros with a graphical environment may not have desktop icons.
@@ -253,7 +277,6 @@ extern "C" {
 /// | [`OTHER`](SDL_PathType::OTHER) | [`SDL_PATHTYPE_OTHER`] | something completely different like a device node (not a symlink, those are always followed) |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PathType(pub ::core::ffi::c_int);
 impl From<SDL_PathType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -261,6 +284,22 @@ impl From<SDL_PathType> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_PathType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_PATHTYPE_NONE",
+            Self::FILE => "SDL_PATHTYPE_FILE",
+            Self::DIRECTORY => "SDL_PATHTYPE_DIRECTORY",
+            Self::OTHER => "SDL_PATHTYPE_OTHER",
+
+            _ => return write!(f, "SDL_PathType({})", self.0),
+        })
+    }
+}
+
 impl SDL_PathType {
     /// path does not exist
     pub const NONE: Self = Self(0);
@@ -271,6 +310,7 @@ impl SDL_PathType {
     /// something completely different like a device node (not a symlink, those are always followed)
     pub const OTHER: Self = Self(3);
 }
+
 /// path does not exist
 pub const SDL_PATHTYPE_NONE: SDL_PathType = SDL_PathType::NONE;
 /// a normal file
@@ -348,7 +388,6 @@ extern "C" {
 /// | [`FAILURE`](SDL_EnumerationResult::FAILURE) | [`SDL_ENUM_FAILURE`] | Value that requests that enumeration stop, as a failure. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_EnumerationResult(pub ::core::ffi::c_int);
 impl From<SDL_EnumerationResult> for ::core::ffi::c_int {
     #[inline(always)]
@@ -356,6 +395,21 @@ impl From<SDL_EnumerationResult> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_EnumerationResult {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::CONTINUE => "SDL_ENUM_CONTINUE",
+            Self::SUCCESS => "SDL_ENUM_SUCCESS",
+            Self::FAILURE => "SDL_ENUM_FAILURE",
+
+            _ => return write!(f, "SDL_EnumerationResult({})", self.0),
+        })
+    }
+}
+
 impl SDL_EnumerationResult {
     /// Value that requests that enumeration continue.
     pub const CONTINUE: Self = Self(0);
@@ -364,6 +418,7 @@ impl SDL_EnumerationResult {
     /// Value that requests that enumeration stop, as a failure.
     pub const FAILURE: Self = Self(2);
 }
+
 /// Value that requests that enumeration continue.
 pub const SDL_ENUM_CONTINUE: SDL_EnumerationResult = SDL_EnumerationResult::CONTINUE;
 /// Value that requests that enumeration stop, successfully.

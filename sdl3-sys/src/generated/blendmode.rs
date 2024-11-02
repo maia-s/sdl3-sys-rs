@@ -68,7 +68,6 @@ pub const SDL_BLENDMODE_INVALID: SDL_BlendMode = (0x7fffffff as SDL_BlendMode);
 /// | [`MAXIMUM`](SDL_BlendOperation::MAXIMUM) | [`SDL_BLENDOPERATION_MAXIMUM`] | max(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_BlendOperation(pub ::core::ffi::c_int);
 impl From<SDL_BlendOperation> for ::core::ffi::c_int {
     #[inline(always)]
@@ -76,6 +75,23 @@ impl From<SDL_BlendOperation> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_BlendOperation {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::ADD => "SDL_BLENDOPERATION_ADD",
+            Self::SUBTRACT => "SDL_BLENDOPERATION_SUBTRACT",
+            Self::REV_SUBTRACT => "SDL_BLENDOPERATION_REV_SUBTRACT",
+            Self::MINIMUM => "SDL_BLENDOPERATION_MINIMUM",
+            Self::MAXIMUM => "SDL_BLENDOPERATION_MAXIMUM",
+
+            _ => return write!(f, "SDL_BlendOperation({})", self.0),
+        })
+    }
+}
+
 impl SDL_BlendOperation {
     /// dst + src: supported by all renderers
     pub const ADD: Self = Self(0x1);
@@ -88,6 +104,7 @@ impl SDL_BlendOperation {
     /// max(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan
     pub const MAXIMUM: Self = Self(0x5);
 }
+
 /// dst + src: supported by all renderers
 pub const SDL_BLENDOPERATION_ADD: SDL_BlendOperation = SDL_BlendOperation::ADD;
 /// src - dst : supported by D3D, OpenGL, OpenGLES, and Vulkan
@@ -124,7 +141,6 @@ pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 /// | [`ONE_MINUS_DST_ALPHA`](SDL_BlendFactor::ONE_MINUS_DST_ALPHA) | [`SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA`] | 1-dstA, 1-dstA, 1-dstA, 1-dstA |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_BlendFactor(pub ::core::ffi::c_int);
 impl From<SDL_BlendFactor> for ::core::ffi::c_int {
     #[inline(always)]
@@ -132,6 +148,28 @@ impl From<SDL_BlendFactor> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_BlendFactor {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::ZERO => "SDL_BLENDFACTOR_ZERO",
+            Self::ONE => "SDL_BLENDFACTOR_ONE",
+            Self::SRC_COLOR => "SDL_BLENDFACTOR_SRC_COLOR",
+            Self::ONE_MINUS_SRC_COLOR => "SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR",
+            Self::SRC_ALPHA => "SDL_BLENDFACTOR_SRC_ALPHA",
+            Self::ONE_MINUS_SRC_ALPHA => "SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA",
+            Self::DST_COLOR => "SDL_BLENDFACTOR_DST_COLOR",
+            Self::ONE_MINUS_DST_COLOR => "SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR",
+            Self::DST_ALPHA => "SDL_BLENDFACTOR_DST_ALPHA",
+            Self::ONE_MINUS_DST_ALPHA => "SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA",
+
+            _ => return write!(f, "SDL_BlendFactor({})", self.0),
+        })
+    }
+}
+
 impl SDL_BlendFactor {
     /// 0, 0, 0, 0
     pub const ZERO: Self = Self(0x1);
@@ -154,6 +192,7 @@ impl SDL_BlendFactor {
     /// 1-dstA, 1-dstA, 1-dstA, 1-dstA
     pub const ONE_MINUS_DST_ALPHA: Self = Self(0xa);
 }
+
 /// 0, 0, 0, 0
 pub const SDL_BLENDFACTOR_ZERO: SDL_BlendFactor = SDL_BlendFactor::ZERO;
 /// 1, 1, 1, 1

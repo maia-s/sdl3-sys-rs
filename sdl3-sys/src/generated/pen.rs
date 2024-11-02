@@ -91,7 +91,6 @@ pub const SDL_PEN_INPUT_ERASER_TIP: SDL_PenInputFlags = ((1073741824_u32) as SDL
 /// | [`COUNT`](SDL_PenAxis::COUNT) | [`SDL_PEN_AXIS_COUNT`] | Total known pen axis types in this version of SDL. This number may grow in future releases! |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PenAxis(pub ::core::ffi::c_int);
 impl From<SDL_PenAxis> for ::core::ffi::c_int {
     #[inline(always)]
@@ -99,6 +98,26 @@ impl From<SDL_PenAxis> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_PenAxis {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::PRESSURE => "SDL_PEN_AXIS_PRESSURE",
+            Self::XTILT => "SDL_PEN_AXIS_XTILT",
+            Self::YTILT => "SDL_PEN_AXIS_YTILT",
+            Self::DISTANCE => "SDL_PEN_AXIS_DISTANCE",
+            Self::ROTATION => "SDL_PEN_AXIS_ROTATION",
+            Self::SLIDER => "SDL_PEN_AXIS_SLIDER",
+            Self::TANGENTIAL_PRESSURE => "SDL_PEN_AXIS_TANGENTIAL_PRESSURE",
+            Self::COUNT => "SDL_PEN_AXIS_COUNT",
+
+            _ => return write!(f, "SDL_PenAxis({})", self.0),
+        })
+    }
+}
+
 impl SDL_PenAxis {
     /// Pen pressure.  Unidirectional: 0 to 1.0
     pub const PRESSURE: Self = Self(0);
@@ -117,6 +136,7 @@ impl SDL_PenAxis {
     /// Total known pen axis types in this version of SDL. This number may grow in future releases!
     pub const COUNT: Self = Self(7);
 }
+
 /// Pen pressure.  Unidirectional: 0 to 1.0
 pub const SDL_PEN_AXIS_PRESSURE: SDL_PenAxis = SDL_PenAxis::PRESSURE;
 /// Pen horizontal tilt angle.  Bidirectional: -90.0 to 90.0 (left-to-right).

@@ -75,7 +75,6 @@ pub struct SDL_Vertex {
 /// | [`TARGET`](SDL_TextureAccess::TARGET) | [`SDL_TEXTUREACCESS_TARGET`] | Texture can be used as a render target |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TextureAccess(pub ::core::ffi::c_int);
 impl From<SDL_TextureAccess> for ::core::ffi::c_int {
     #[inline(always)]
@@ -83,6 +82,21 @@ impl From<SDL_TextureAccess> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_TextureAccess {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::STATIC => "SDL_TEXTUREACCESS_STATIC",
+            Self::STREAMING => "SDL_TEXTUREACCESS_STREAMING",
+            Self::TARGET => "SDL_TEXTUREACCESS_TARGET",
+
+            _ => return write!(f, "SDL_TextureAccess({})", self.0),
+        })
+    }
+}
+
 impl SDL_TextureAccess {
     /// Changes rarely, not lockable
     pub const STATIC: Self = Self(0);
@@ -91,6 +105,7 @@ impl SDL_TextureAccess {
     /// Texture can be used as a render target
     pub const TARGET: Self = Self(2);
 }
+
 /// Changes rarely, not lockable
 pub const SDL_TEXTUREACCESS_STATIC: SDL_TextureAccess = SDL_TextureAccess::STATIC;
 /// Changes frequently, lockable
@@ -113,7 +128,6 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGE
 /// | [`INTEGER_SCALE`](SDL_RendererLogicalPresentation::INTEGER_SCALE) | [`SDL_LOGICAL_PRESENTATION_INTEGER_SCALE`] | The rendered content is scaled up by integer multiples to fit the output resolution |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_RendererLogicalPresentation(pub ::core::ffi::c_int);
 impl From<SDL_RendererLogicalPresentation> for ::core::ffi::c_int {
     #[inline(always)]
@@ -121,6 +135,23 @@ impl From<SDL_RendererLogicalPresentation> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_RendererLogicalPresentation {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::DISABLED => "SDL_LOGICAL_PRESENTATION_DISABLED",
+            Self::STRETCH => "SDL_LOGICAL_PRESENTATION_STRETCH",
+            Self::LETTERBOX => "SDL_LOGICAL_PRESENTATION_LETTERBOX",
+            Self::OVERSCAN => "SDL_LOGICAL_PRESENTATION_OVERSCAN",
+            Self::INTEGER_SCALE => "SDL_LOGICAL_PRESENTATION_INTEGER_SCALE",
+
+            _ => return write!(f, "SDL_RendererLogicalPresentation({})", self.0),
+        })
+    }
+}
+
 impl SDL_RendererLogicalPresentation {
     /// There is no logical size in effect
     pub const DISABLED: Self = Self(0);
@@ -133,6 +164,7 @@ impl SDL_RendererLogicalPresentation {
     /// The rendered content is scaled up by integer multiples to fit the output resolution
     pub const INTEGER_SCALE: Self = Self(4);
 }
+
 /// There is no logical size in effect
 pub const SDL_LOGICAL_PRESENTATION_DISABLED: SDL_RendererLogicalPresentation =
     SDL_RendererLogicalPresentation::DISABLED;

@@ -79,7 +79,6 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: *const ::core::ffi::
 /// | [`DARK`](SDL_SystemTheme::DARK) | [`SDL_SYSTEM_THEME_DARK`] | Dark colored system theme |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_SystemTheme(pub ::core::ffi::c_int);
 impl From<SDL_SystemTheme> for ::core::ffi::c_int {
     #[inline(always)]
@@ -87,6 +86,21 @@ impl From<SDL_SystemTheme> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_SystemTheme {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_SYSTEM_THEME_UNKNOWN",
+            Self::LIGHT => "SDL_SYSTEM_THEME_LIGHT",
+            Self::DARK => "SDL_SYSTEM_THEME_DARK",
+
+            _ => return write!(f, "SDL_SystemTheme({})", self.0),
+        })
+    }
+}
+
 impl SDL_SystemTheme {
     /// Unknown system theme
     pub const UNKNOWN: Self = Self(0);
@@ -95,6 +109,7 @@ impl SDL_SystemTheme {
     /// Dark colored system theme
     pub const DARK: Self = Self(2);
 }
+
 /// Unknown system theme
 pub const SDL_SYSTEM_THEME_UNKNOWN: SDL_SystemTheme = SDL_SystemTheme::UNKNOWN;
 /// Light colored system theme
@@ -151,7 +166,6 @@ pub struct SDL_DisplayMode {
 /// | [`PORTRAIT_FLIPPED`](SDL_DisplayOrientation::PORTRAIT_FLIPPED) | [`SDL_ORIENTATION_PORTRAIT_FLIPPED`] | The display is in portrait mode, upside down |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DisplayOrientation(pub ::core::ffi::c_int);
 impl From<SDL_DisplayOrientation> for ::core::ffi::c_int {
     #[inline(always)]
@@ -159,6 +173,23 @@ impl From<SDL_DisplayOrientation> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_DisplayOrientation {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_ORIENTATION_UNKNOWN",
+            Self::LANDSCAPE => "SDL_ORIENTATION_LANDSCAPE",
+            Self::LANDSCAPE_FLIPPED => "SDL_ORIENTATION_LANDSCAPE_FLIPPED",
+            Self::PORTRAIT => "SDL_ORIENTATION_PORTRAIT",
+            Self::PORTRAIT_FLIPPED => "SDL_ORIENTATION_PORTRAIT_FLIPPED",
+
+            _ => return write!(f, "SDL_DisplayOrientation({})", self.0),
+        })
+    }
+}
+
 impl SDL_DisplayOrientation {
     /// The display orientation can't be determined
     pub const UNKNOWN: Self = Self(0);
@@ -171,6 +202,7 @@ impl SDL_DisplayOrientation {
     /// The display is in portrait mode, upside down
     pub const PORTRAIT_FLIPPED: Self = Self(4);
 }
+
 /// The display orientation can't be determined
 pub const SDL_ORIENTATION_UNKNOWN: SDL_DisplayOrientation = SDL_DisplayOrientation::UNKNOWN;
 /// The display is in landscape mode, with the right side up, relative to portrait mode
@@ -351,7 +383,6 @@ pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitiv
 /// | [`UNTIL_FOCUSED`](SDL_FlashOperation::UNTIL_FOCUSED) | [`SDL_FLASH_UNTIL_FOCUSED`] | Flash the window until it gets focus |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_FlashOperation(pub ::core::ffi::c_int);
 impl From<SDL_FlashOperation> for ::core::ffi::c_int {
     #[inline(always)]
@@ -359,6 +390,21 @@ impl From<SDL_FlashOperation> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_FlashOperation {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::CANCEL => "SDL_FLASH_CANCEL",
+            Self::BRIEFLY => "SDL_FLASH_BRIEFLY",
+            Self::UNTIL_FOCUSED => "SDL_FLASH_UNTIL_FOCUSED",
+
+            _ => return write!(f, "SDL_FlashOperation({})", self.0),
+        })
+    }
+}
+
 impl SDL_FlashOperation {
     /// Cancel any window flash state
     pub const CANCEL: Self = Self(0);
@@ -367,6 +413,7 @@ impl SDL_FlashOperation {
     /// Flash the window until it gets focus
     pub const UNTIL_FOCUSED: Self = Self(2);
 }
+
 /// Cancel any window flash state
 pub const SDL_FLASH_CANCEL: SDL_FlashOperation = SDL_FlashOperation::CANCEL;
 /// Flash the window briefly to get attention
@@ -515,7 +562,6 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 /// | [`EGL_PLATFORM`](SDL_GLAttr::EGL_PLATFORM) | [`SDL_GL_EGL_PLATFORM`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_GLAttr(pub ::core::ffi::c_int);
 impl From<SDL_GLAttr> for ::core::ffi::c_int {
     #[inline(always)]
@@ -523,6 +569,46 @@ impl From<SDL_GLAttr> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GLAttr {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::RED_SIZE => "SDL_GL_RED_SIZE",
+            Self::GREEN_SIZE => "SDL_GL_GREEN_SIZE",
+            Self::BLUE_SIZE => "SDL_GL_BLUE_SIZE",
+            Self::ALPHA_SIZE => "SDL_GL_ALPHA_SIZE",
+            Self::BUFFER_SIZE => "SDL_GL_BUFFER_SIZE",
+            Self::DOUBLEBUFFER => "SDL_GL_DOUBLEBUFFER",
+            Self::DEPTH_SIZE => "SDL_GL_DEPTH_SIZE",
+            Self::STENCIL_SIZE => "SDL_GL_STENCIL_SIZE",
+            Self::ACCUM_RED_SIZE => "SDL_GL_ACCUM_RED_SIZE",
+            Self::ACCUM_GREEN_SIZE => "SDL_GL_ACCUM_GREEN_SIZE",
+            Self::ACCUM_BLUE_SIZE => "SDL_GL_ACCUM_BLUE_SIZE",
+            Self::ACCUM_ALPHA_SIZE => "SDL_GL_ACCUM_ALPHA_SIZE",
+            Self::STEREO => "SDL_GL_STEREO",
+            Self::MULTISAMPLEBUFFERS => "SDL_GL_MULTISAMPLEBUFFERS",
+            Self::MULTISAMPLESAMPLES => "SDL_GL_MULTISAMPLESAMPLES",
+            Self::ACCELERATED_VISUAL => "SDL_GL_ACCELERATED_VISUAL",
+            Self::RETAINED_BACKING => "SDL_GL_RETAINED_BACKING",
+            Self::CONTEXT_MAJOR_VERSION => "SDL_GL_CONTEXT_MAJOR_VERSION",
+            Self::CONTEXT_MINOR_VERSION => "SDL_GL_CONTEXT_MINOR_VERSION",
+            Self::CONTEXT_FLAGS => "SDL_GL_CONTEXT_FLAGS",
+            Self::CONTEXT_PROFILE_MASK => "SDL_GL_CONTEXT_PROFILE_MASK",
+            Self::SHARE_WITH_CURRENT_CONTEXT => "SDL_GL_SHARE_WITH_CURRENT_CONTEXT",
+            Self::FRAMEBUFFER_SRGB_CAPABLE => "SDL_GL_FRAMEBUFFER_SRGB_CAPABLE",
+            Self::CONTEXT_RELEASE_BEHAVIOR => "SDL_GL_CONTEXT_RELEASE_BEHAVIOR",
+            Self::CONTEXT_RESET_NOTIFICATION => "SDL_GL_CONTEXT_RESET_NOTIFICATION",
+            Self::CONTEXT_NO_ERROR => "SDL_GL_CONTEXT_NO_ERROR",
+            Self::FLOATBUFFERS => "SDL_GL_FLOATBUFFERS",
+            Self::EGL_PLATFORM => "SDL_GL_EGL_PLATFORM",
+
+            _ => return write!(f, "SDL_GLAttr({})", self.0),
+        })
+    }
+}
+
 impl SDL_GLAttr {
     /// the minimum number of bits for the red channel of the color buffer; defaults to 3.
     pub const RED_SIZE: Self = Self(0);
@@ -578,6 +664,7 @@ impl SDL_GLAttr {
     pub const FLOATBUFFERS: Self = Self(26);
     pub const EGL_PLATFORM: Self = Self(27);
 }
+
 /// the minimum number of bits for the red channel of the color buffer; defaults to 3.
 pub const SDL_GL_RED_SIZE: SDL_GLAttr = SDL_GLAttr::RED_SIZE;
 /// the minimum number of bits for the green channel of the color buffer; defaults to 3.
@@ -3291,7 +3378,6 @@ extern "C" {
 /// | [`RESIZE_LEFT`](SDL_HitTestResult::RESIZE_LEFT) | [`SDL_HITTEST_RESIZE_LEFT`] | Region is the resizable left border. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HitTestResult(pub ::core::ffi::c_int);
 impl From<SDL_HitTestResult> for ::core::ffi::c_int {
     #[inline(always)]
@@ -3299,6 +3385,28 @@ impl From<SDL_HitTestResult> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_HitTestResult {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NORMAL => "SDL_HITTEST_NORMAL",
+            Self::DRAGGABLE => "SDL_HITTEST_DRAGGABLE",
+            Self::RESIZE_TOPLEFT => "SDL_HITTEST_RESIZE_TOPLEFT",
+            Self::RESIZE_TOP => "SDL_HITTEST_RESIZE_TOP",
+            Self::RESIZE_TOPRIGHT => "SDL_HITTEST_RESIZE_TOPRIGHT",
+            Self::RESIZE_RIGHT => "SDL_HITTEST_RESIZE_RIGHT",
+            Self::RESIZE_BOTTOMRIGHT => "SDL_HITTEST_RESIZE_BOTTOMRIGHT",
+            Self::RESIZE_BOTTOM => "SDL_HITTEST_RESIZE_BOTTOM",
+            Self::RESIZE_BOTTOMLEFT => "SDL_HITTEST_RESIZE_BOTTOMLEFT",
+            Self::RESIZE_LEFT => "SDL_HITTEST_RESIZE_LEFT",
+
+            _ => return write!(f, "SDL_HitTestResult({})", self.0),
+        })
+    }
+}
+
 impl SDL_HitTestResult {
     /// Region is normal. No special properties.
     pub const NORMAL: Self = Self(0);
@@ -3321,6 +3429,7 @@ impl SDL_HitTestResult {
     /// Region is the resizable left border.
     pub const RESIZE_LEFT: Self = Self(9);
 }
+
 /// Region is normal. No special properties.
 pub const SDL_HITTEST_NORMAL: SDL_HitTestResult = SDL_HitTestResult::NORMAL;
 /// Region can drag entire window.

@@ -58,7 +58,6 @@ pub type SDL_TLSID = SDL_AtomicInt;
 /// | [`TIME_CRITICAL`](SDL_ThreadPriority::TIME_CRITICAL) | [`SDL_THREAD_PRIORITY_TIME_CRITICAL`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ThreadPriority(pub ::core::ffi::c_int);
 impl From<SDL_ThreadPriority> for ::core::ffi::c_int {
     #[inline(always)]
@@ -66,12 +65,29 @@ impl From<SDL_ThreadPriority> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_ThreadPriority {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::LOW => "SDL_THREAD_PRIORITY_LOW",
+            Self::NORMAL => "SDL_THREAD_PRIORITY_NORMAL",
+            Self::HIGH => "SDL_THREAD_PRIORITY_HIGH",
+            Self::TIME_CRITICAL => "SDL_THREAD_PRIORITY_TIME_CRITICAL",
+
+            _ => return write!(f, "SDL_ThreadPriority({})", self.0),
+        })
+    }
+}
+
 impl SDL_ThreadPriority {
     pub const LOW: Self = Self(0);
     pub const NORMAL: Self = Self(1);
     pub const HIGH: Self = Self(2);
     pub const TIME_CRITICAL: Self = Self(3);
 }
+
 pub const SDL_THREAD_PRIORITY_LOW: SDL_ThreadPriority = SDL_ThreadPriority::LOW;
 pub const SDL_THREAD_PRIORITY_NORMAL: SDL_ThreadPriority = SDL_ThreadPriority::NORMAL;
 pub const SDL_THREAD_PRIORITY_HIGH: SDL_ThreadPriority = SDL_ThreadPriority::HIGH;

@@ -42,7 +42,6 @@ use super::error::*;
 /// | [`SPI`](SDL_hid_bus_type::SPI) | [`SDL_HID_API_BUS_SPI`] |  SPI bus Specifications: <https://www.microsoft.com/download/details.aspx?id=103325> |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_hid_bus_type(pub ::core::ffi::c_int);
 impl From<SDL_hid_bus_type> for ::core::ffi::c_int {
     #[inline(always)]
@@ -50,6 +49,23 @@ impl From<SDL_hid_bus_type> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_hid_bus_type {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_HID_API_BUS_UNKNOWN",
+            Self::USB => "SDL_HID_API_BUS_USB",
+            Self::BLUETOOTH => "SDL_HID_API_BUS_BLUETOOTH",
+            Self::I2C => "SDL_HID_API_BUS_I2C",
+            Self::SPI => "SDL_HID_API_BUS_SPI",
+
+            _ => return write!(f, "SDL_hid_bus_type({})", self.0),
+        })
+    }
+}
+
 impl SDL_hid_bus_type {
     /// Unknown bus type
     pub const UNKNOWN: Self = Self(0x00);
@@ -72,6 +88,7 @@ impl SDL_hid_bus_type {
     /// <https://www.microsoft.com/download/details.aspx?id=103325>
     pub const SPI: Self = Self(0x04);
 }
+
 /// Unknown bus type
 pub const SDL_HID_API_BUS_UNKNOWN: SDL_hid_bus_type = SDL_hid_bus_type::UNKNOWN;
 ///  USB bus

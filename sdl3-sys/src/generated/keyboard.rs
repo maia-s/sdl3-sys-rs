@@ -399,7 +399,6 @@ extern "C" {
 /// | [`NUMBER_PASSWORD_VISIBLE`](SDL_TextInputType::NUMBER_PASSWORD_VISIBLE) | [`SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE`] | The input is a secure PIN that is visible |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TextInputType(pub ::core::ffi::c_int);
 impl From<SDL_TextInputType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -407,6 +406,27 @@ impl From<SDL_TextInputType> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_TextInputType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::TEXT => "SDL_TEXTINPUT_TYPE_TEXT",
+            Self::TEXT_NAME => "SDL_TEXTINPUT_TYPE_TEXT_NAME",
+            Self::TEXT_EMAIL => "SDL_TEXTINPUT_TYPE_TEXT_EMAIL",
+            Self::TEXT_USERNAME => "SDL_TEXTINPUT_TYPE_TEXT_USERNAME",
+            Self::TEXT_PASSWORD_HIDDEN => "SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_HIDDEN",
+            Self::TEXT_PASSWORD_VISIBLE => "SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_VISIBLE",
+            Self::NUMBER => "SDL_TEXTINPUT_TYPE_NUMBER",
+            Self::NUMBER_PASSWORD_HIDDEN => "SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN",
+            Self::NUMBER_PASSWORD_VISIBLE => "SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE",
+
+            _ => return write!(f, "SDL_TextInputType({})", self.0),
+        })
+    }
+}
+
 impl SDL_TextInputType {
     /// The input is text
     pub const TEXT: Self = Self(0);
@@ -427,6 +447,7 @@ impl SDL_TextInputType {
     /// The input is a secure PIN that is visible
     pub const NUMBER_PASSWORD_VISIBLE: Self = Self(8);
 }
+
 /// The input is text
 pub const SDL_TEXTINPUT_TYPE_TEXT: SDL_TextInputType = SDL_TextInputType::TEXT;
 /// The input is a person's name
@@ -472,7 +493,6 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
 /// | [`LETTERS`](SDL_Capitalization::LETTERS) | [`SDL_CAPITALIZE_LETTERS`] | All letters will be capitalized |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Capitalization(pub ::core::ffi::c_int);
 impl From<SDL_Capitalization> for ::core::ffi::c_int {
     #[inline(always)]
@@ -480,6 +500,22 @@ impl From<SDL_Capitalization> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_Capitalization {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_CAPITALIZE_NONE",
+            Self::SENTENCES => "SDL_CAPITALIZE_SENTENCES",
+            Self::WORDS => "SDL_CAPITALIZE_WORDS",
+            Self::LETTERS => "SDL_CAPITALIZE_LETTERS",
+
+            _ => return write!(f, "SDL_Capitalization({})", self.0),
+        })
+    }
+}
+
 impl SDL_Capitalization {
     /// No auto-capitalization will be done
     pub const NONE: Self = Self(0);
@@ -490,6 +526,7 @@ impl SDL_Capitalization {
     /// All letters will be capitalized
     pub const LETTERS: Self = Self(3);
 }
+
 /// No auto-capitalization will be done
 pub const SDL_CAPITALIZE_NONE: SDL_Capitalization = SDL_Capitalization::NONE;
 /// The first letter of sentences will be capitalized

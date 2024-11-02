@@ -98,7 +98,6 @@ pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 /// | [`GYRO_R`](SDL_SensorType::GYRO_R) | [`SDL_SENSOR_GYRO_R`] | Gyroscope for right Joy-Con controller |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_SensorType(pub ::core::ffi::c_int);
 impl From<SDL_SensorType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -106,6 +105,26 @@ impl From<SDL_SensorType> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_SensorType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_SENSOR_INVALID",
+            Self::UNKNOWN => "SDL_SENSOR_UNKNOWN",
+            Self::ACCEL => "SDL_SENSOR_ACCEL",
+            Self::GYRO => "SDL_SENSOR_GYRO",
+            Self::ACCEL_L => "SDL_SENSOR_ACCEL_L",
+            Self::GYRO_L => "SDL_SENSOR_GYRO_L",
+            Self::ACCEL_R => "SDL_SENSOR_ACCEL_R",
+            Self::GYRO_R => "SDL_SENSOR_GYRO_R",
+
+            _ => return write!(f, "SDL_SensorType({})", self.0),
+        })
+    }
+}
+
 impl SDL_SensorType {
     /// Returned for an invalid sensor
     pub const INVALID: Self = Self(-1_i32);
@@ -124,6 +143,7 @@ impl SDL_SensorType {
     /// Gyroscope for right Joy-Con controller
     pub const GYRO_R: Self = Self(6_i32);
 }
+
 /// Returned for an invalid sensor
 pub const SDL_SENSOR_INVALID: SDL_SensorType = SDL_SensorType::INVALID;
 /// Unknown sensor type

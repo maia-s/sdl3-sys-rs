@@ -4028,7 +4028,6 @@ pub const SDL_HINT_ASSERT: *const ::core::ffi::c_char = c"SDL_ASSERT".as_ptr();
 /// | [`OVERRIDE`](SDL_HintPriority::OVERRIDE) | [`SDL_HINT_OVERRIDE`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HintPriority(pub ::core::ffi::c_int);
 impl From<SDL_HintPriority> for ::core::ffi::c_int {
     #[inline(always)]
@@ -4036,11 +4035,27 @@ impl From<SDL_HintPriority> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_HintPriority {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::DEFAULT => "SDL_HINT_DEFAULT",
+            Self::NORMAL => "SDL_HINT_NORMAL",
+            Self::OVERRIDE => "SDL_HINT_OVERRIDE",
+
+            _ => return write!(f, "SDL_HintPriority({})", self.0),
+        })
+    }
+}
+
 impl SDL_HintPriority {
     pub const DEFAULT: Self = Self(0);
     pub const NORMAL: Self = Self(1);
     pub const OVERRIDE: Self = Self(2);
 }
+
 pub const SDL_HINT_DEFAULT: SDL_HintPriority = SDL_HintPriority::DEFAULT;
 pub const SDL_HINT_NORMAL: SDL_HintPriority = SDL_HintPriority::NORMAL;
 pub const SDL_HINT_OVERRIDE: SDL_HintPriority = SDL_HintPriority::OVERRIDE;

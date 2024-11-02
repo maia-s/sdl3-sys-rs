@@ -27,7 +27,6 @@ use super::properties::*;
 /// | [`WRITEONLY`](SDL_IOStatus::WRITEONLY) | [`SDL_IO_STATUS_WRITEONLY`] | Tried to read a write-only buffer |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_IOStatus(pub ::core::ffi::c_int);
 impl From<SDL_IOStatus> for ::core::ffi::c_int {
     #[inline(always)]
@@ -35,6 +34,24 @@ impl From<SDL_IOStatus> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_IOStatus {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::READY => "SDL_IO_STATUS_READY",
+            Self::ERROR => "SDL_IO_STATUS_ERROR",
+            Self::EOF => "SDL_IO_STATUS_EOF",
+            Self::NOT_READY => "SDL_IO_STATUS_NOT_READY",
+            Self::READONLY => "SDL_IO_STATUS_READONLY",
+            Self::WRITEONLY => "SDL_IO_STATUS_WRITEONLY",
+
+            _ => return write!(f, "SDL_IOStatus({})", self.0),
+        })
+    }
+}
+
 impl SDL_IOStatus {
     /// Everything is ready (no errors and not EOF).
     pub const READY: Self = Self(0);
@@ -49,6 +66,7 @@ impl SDL_IOStatus {
     /// Tried to read a write-only buffer
     pub const WRITEONLY: Self = Self(5);
 }
+
 /// Everything is ready (no errors and not EOF).
 pub const SDL_IO_STATUS_READY: SDL_IOStatus = SDL_IOStatus::READY;
 /// Read or write I/O error
@@ -78,7 +96,6 @@ pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 /// | [`END`](SDL_IOWhence::END) | [`SDL_IO_SEEK_END`] | Seek relative to the end of data |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_IOWhence(pub ::core::ffi::c_int);
 impl From<SDL_IOWhence> for ::core::ffi::c_int {
     #[inline(always)]
@@ -86,6 +103,21 @@ impl From<SDL_IOWhence> for ::core::ffi::c_int {
         value.0
     }
 }
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_IOWhence {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::SET => "SDL_IO_SEEK_SET",
+            Self::CUR => "SDL_IO_SEEK_CUR",
+            Self::END => "SDL_IO_SEEK_END",
+
+            _ => return write!(f, "SDL_IOWhence({})", self.0),
+        })
+    }
+}
+
 impl SDL_IOWhence {
     /// Seek from the beginning of data
     pub const SET: Self = Self(0);
@@ -94,6 +126,7 @@ impl SDL_IOWhence {
     /// Seek relative to the end of data
     pub const END: Self = Self(2);
 }
+
 /// Seek from the beginning of data
 pub const SDL_IO_SEEK_SET: SDL_IOWhence = SDL_IOWhence::SET;
 /// Seek relative to current read point
