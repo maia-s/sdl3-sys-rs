@@ -51,29 +51,33 @@ debug-impls = []
 nightly = []
 
 # Optional integrations
-use-ash = ["dep:ash"]
-use-libc = ["dep:libc"]
-use-x11 = ["dep:x11"]
-use-x11-dl = ["dep:x11-dl"]
+use-ash-v0-38 = ["dep:ash-v0-38"]
+use-libc-v0-2 = ["dep:libc-v0-2"]
+use-x11-v2 = ["dep:x11-v2"]
+use-x11-dl-v2 = ["dep:x11-dl-v2"]
 
 [package.metadata.docs.rs]
 all-features = true
 
-[dependencies.ash]
+[dependencies.ash-v0-38]
+package = "ash"
 version = "0.38"
 default-features = false
 optional = true
 
-[dependencies.libc]
+[dependencies.libc-v0-2]
+package = "libc"
 version = "0.2"
 default-features = false
 optional = true
 
-[dependencies.x11]
+[dependencies.x11-v2]
+package = "x11"
 version = "2.21"
 optional = true
 
-[dependencies.x11-dl]
+[dependencies.x11-dl-v2]
+package = "x11-dl"
 version = "2.21"
 optional = true
 

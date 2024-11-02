@@ -105,16 +105,16 @@ emit! {
 
 }
 
-#[cfg(feature = "use-x11")]
-/// (`sdl3-sys`) Enable either the `use-x11` or `use-x11-dl` features to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
-pub use ::x11::xlib::XEvent;
+#[cfg(feature = "use-x11-v2")]
+/// (`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
+pub use ::x11_v2::xlib::XEvent;
 
-#[cfg(all(not(feature = "use-x11"), feature = "use-x11-dl"))]
-/// (`sdl3-sys`) Enable either the `use-x11` or `use-x11-dl` features to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
-pub use ::x11_dl::xlib::XEvent;
+#[cfg(all(not(feature = "use-x11-v2"), feature = "use-x11-dl-v2"))]
+/// (`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
+pub use ::x11_dl_v2::xlib::XEvent;
 
-#[cfg(not(any(feature = "use-x11", feature = "use-x11-dl")))]
-/// (`sdl3-sys`) Enable either the `use-x11` or `use-x11-dl` features to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
+#[cfg(not(any(feature = "use-x11-v2", feature = "use-x11-dl-v2")))]
+/// (`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
 pub type XEvent = _XEvent;
 
 pub type SDL_X11EventHook = ::core::option::Option<

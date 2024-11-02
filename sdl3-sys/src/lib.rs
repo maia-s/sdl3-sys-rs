@@ -53,13 +53,13 @@ pub use generated::*;
 pub mod ffi {
     #[cfg(doc)]
     /// Equivalent to C's `wchar_t` type. This is `u16` on Windows and `u32` otherwise.
-    /// Enable the `use-libc` feature to make this an alias of `libc::wchar_t`.
+    /// Enable a `use-libc-*` feature to make this an alias of `libc::wchar_t`.
     pub type c_wchar_t = u32;
-    #[cfg(all(not(doc), feature = "use-libc"))]
-    pub type c_wchar_t = ::libc::wchar_t;
-    #[cfg(all(not(any(doc, feature = "use-libc")), windows))]
+    #[cfg(all(not(doc), feature = "use-libc-v0-2"))]
+    pub type c_wchar_t = ::libc_v0_2::wchar_t;
+    #[cfg(all(not(any(doc, feature = "use-libc-v0-2")), windows))]
     pub type c_wchar_t = u16;
-    #[cfg(all(not(any(doc, feature = "use-libc")), not(windows)))]
+    #[cfg(all(not(any(doc, feature = "use-libc-v0-2")), not(windows)))]
     pub type c_wchar_t = u32;
 
     #[cfg(doc)]
