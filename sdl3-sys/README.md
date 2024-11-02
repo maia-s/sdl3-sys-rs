@@ -4,9 +4,7 @@ This is a preview release of the `sdl3-sys` SDL 3 bindings for Rust!
 
 SDL 3 is now ABI stable as of the 3.1.3 preview release, but `sdl3-sys` itself
 is still considered unstable. The generator that parses and generates these
-bindings is new and may have bugs. In particular, functions and constants
-generated from C defines with inferred types may need to have their types
-changed.
+bindings is new and may have bugs.
 
 Please submit an issue at github if you have any issues or comments!
 
