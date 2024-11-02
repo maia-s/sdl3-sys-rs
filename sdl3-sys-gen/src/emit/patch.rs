@@ -821,31 +821,63 @@ pub fn patch_emit_opaque_struct(
 
 type EmitTypeDefPatch = EmitPatch<TypeDef>;
 
-const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[EmitTypeDefPatch {
-    module: Some("system"),
-    match_ident: |i| i == "XEvent",
-    patch: |ctx, td| {
-        let doc = "(`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.";
-        writeln!(ctx, r#"#[cfg(feature = "use-x11-v2")]"#)?;
-        writeln!(ctx, "/// {doc}")?;
-        writeln!(ctx, "pub use ::x11_v2::xlib::XEvent;")?;
-        writeln!(ctx)?;
-        writeln!(
-            ctx,
-            r#"#[cfg(all(not(feature = "use-x11-v2"), feature = "use-x11-dl-v2"))]"#
-        )?;
-        writeln!(ctx, "/// {doc}")?;
-        writeln!(ctx, "pub use ::x11_dl_v2::xlib::XEvent;")?;
-        writeln!(ctx)?;
-        writeln!(
-            ctx,
-            r#"#[cfg(not(any(feature = "use-x11-v2", feature = "use-x11-dl-v2")))]"#
-        )?;
-        writeln!(ctx, "/// {doc}")?;
-        td.emit(ctx)?;
-        Ok(true)
+const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[
+    EmitTypeDefPatch {
+        module: Some("gamepad"),
+        match_ident: |i| i == "SDL_GamepadBinding",
+        patch: |ctx, _td| {
+            ctx.write_str(str_block! {r#"
+                #[cfg(feature = "debug-impls")]
+                impl ::core::fmt::Debug for SDL_GamepadBinding {
+                    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+                        let mut s = f.debug_struct("SDL_GamepadBinding");
+                        s.field("input_type", &self.input_type);
+                        match self.input_type {
+                            SDL_GamepadBindingType::BUTTON => { s.field("input.button", unsafe { &self.input.button }); },
+                            SDL_GamepadBindingType::AXIS => { s.field("input.axis", unsafe { &self.input.axis }); },
+                            SDL_GamepadBindingType::HAT => { s.field("input.hat", unsafe { &self.input.hat }); },
+                            _ => (),
+                        }
+                        s.field("output_type", &self.output_type);
+                        match self.output_type {
+                            SDL_GamepadBindingType::BUTTON => { s.field("output.button", unsafe { &self.output.button }); },
+                            SDL_GamepadBindingType::AXIS => { s.field("output.axis", unsafe { &self.output.axis }); },
+                            _ => (),
+                        }
+                        s.finish()
+                    }
+                }
+
+            "#})?;
+            Ok(false)
+        },
     },
-}];
+    EmitTypeDefPatch {
+        module: Some("system"),
+        match_ident: |i| i == "XEvent",
+        patch: |ctx, td| {
+            let doc = "(`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.";
+            writeln!(ctx, r#"#[cfg(feature = "use-x11-v2")]"#)?;
+            writeln!(ctx, "/// {doc}")?;
+            writeln!(ctx, "pub use ::x11_v2::xlib::XEvent;")?;
+            writeln!(ctx)?;
+            writeln!(
+                ctx,
+                r#"#[cfg(all(not(feature = "use-x11-v2"), feature = "use-x11-dl-v2"))]"#
+            )?;
+            writeln!(ctx, "/// {doc}")?;
+            writeln!(ctx, "pub use ::x11_dl_v2::xlib::XEvent;")?;
+            writeln!(ctx)?;
+            writeln!(
+                ctx,
+                r#"#[cfg(not(any(feature = "use-x11-v2", feature = "use-x11-dl-v2")))]"#
+            )?;
+            writeln!(ctx, "/// {doc}")?;
+            td.emit(ctx)?;
+            Ok(true)
+        },
+    },
+];
 
 pub fn patch_emit_type_def(
     ctx: &mut EmitContext,

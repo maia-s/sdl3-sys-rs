@@ -530,6 +530,36 @@ pub const SDL_GAMEPAD_BINDTYPE_BUTTON: SDL_GamepadBindingType = SDL_GamepadBindi
 pub const SDL_GAMEPAD_BINDTYPE_AXIS: SDL_GamepadBindingType = SDL_GamepadBindingType::AXIS;
 pub const SDL_GAMEPAD_BINDTYPE_HAT: SDL_GamepadBindingType = SDL_GamepadBindingType::HAT;
 
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GamepadBinding {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut s = f.debug_struct("SDL_GamepadBinding");
+        s.field("input_type", &self.input_type);
+        match self.input_type {
+            SDL_GamepadBindingType::BUTTON => {
+                s.field("input.button", unsafe { &self.input.button });
+            }
+            SDL_GamepadBindingType::AXIS => {
+                s.field("input.axis", unsafe { &self.input.axis });
+            }
+            SDL_GamepadBindingType::HAT => {
+                s.field("input.hat", unsafe { &self.input.hat });
+            }
+            _ => (),
+        }
+        s.field("output_type", &self.output_type);
+        match self.output_type {
+            SDL_GamepadBindingType::BUTTON => {
+                s.field("output.button", unsafe { &self.output.button });
+            }
+            SDL_GamepadBindingType::AXIS => {
+                s.field("output.axis", unsafe { &self.output.axis });
+            }
+            _ => (),
+        }
+        s.finish()
+    }
+}
 /// A mapping between one joystick input to a gamepad control.
 ///
 /// A gamepad has a collection of several bindings, to say, for example, when
