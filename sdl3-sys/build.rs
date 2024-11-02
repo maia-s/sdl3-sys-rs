@@ -1,5 +1,26 @@
 use std::{env, error::Error};
 
+#[cfg(all(windows, feature = "build-from-source", not(feature = "link-static")))]
+// based on find_cargo_target_dir from sdl2-sys
+fn top_level_cargo_target_dir() -> std::path::PathBuf {
+    use std::path::PathBuf;
+    let pkg_name = env::var("CARGO_PKG_NAME").unwrap();
+    let out_dir = env::var_os("OUT_DIR").unwrap();
+    let mut target = PathBuf::from(&out_dir);
+    let pop = |target: &mut PathBuf| assert!(target.pop(), "malformed OUT_DIR: {:?}", out_dir);
+    while !target
+        .file_name()
+        .unwrap()
+        .to_string_lossy()
+        .contains(&pkg_name)
+    {
+        pop(&mut target);
+    }
+    pop(&mut target);
+    pop(&mut target);
+    target
+}
+
 fn main() -> Result<(), Box<dyn Error>> {
     if env::var("DOCS_RS").is_ok() {
         // don't build/link SDL on docs.rs
@@ -80,6 +101,15 @@ fn main() -> Result<(), Box<dyn Error>> {
                 println!("cargo::rustc-link-search={}/lib", out_dir.display());
                 println!("cargo::rustc-link-search={}/lib64", out_dir.display());
                 println!("cargo::rustc-link-lib={link_kind}SDL3");
+            }
+
+            #[cfg(all(windows, not(feature = "link-static")))]
+            {
+                // Windows can't find the built dll when run, so copy it to the target dir
+                std::fs::copy(
+                    out_dir.join("bin").join("SDL3.dll"),
+                    top_level_cargo_target_dir().join("SDL3.dll"),
+                )?;
             }
         }
 
