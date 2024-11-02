@@ -224,9 +224,18 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 false,
                 false,
             )?;
-            writeln!(ctx, "#[inline(never)]")?;
-            writeln!(ctx, "pub const unsafe fn SDL_AssertBreakpoint() {{}}")?;
-            writeln!(ctx)?;
+            ctx.write_str(str_block! {r#"
+                #[inline(always)]
+                pub unsafe fn SDL_AssertBreakpoint() {
+                    unsafe { SDL_TriggerBreakpoint() }
+                }
+
+                #[inline(always)]
+                pub unsafe fn SDL_TriggerBreakpoint() {
+                    crate::breakpoint()
+                }
+
+            "#})?;
             Ok(true)
         },
     },

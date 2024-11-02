@@ -49,6 +49,11 @@ macro_rules! __const_c_str {
 mod generated;
 pub use generated::*;
 
+/// You can set a breakpoint on this function to break into the debugger when asserts
+/// want to trigger a breakpoint.
+#[inline(never)]
+pub fn breakpoint() {}
+
 /// Extra ffi types for `sdl3-sys`
 pub mod ffi {
     #[cfg(doc)]

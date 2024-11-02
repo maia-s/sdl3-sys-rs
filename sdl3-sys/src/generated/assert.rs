@@ -252,8 +252,15 @@ extern "C" {
     ) -> SDL_AssertState;
 }
 
-#[inline(never)]
-pub const unsafe fn SDL_AssertBreakpoint() {}
+#[inline(always)]
+pub unsafe fn SDL_AssertBreakpoint() {
+    unsafe { SDL_TriggerBreakpoint() }
+}
+
+#[inline(always)]
+pub unsafe fn SDL_TriggerBreakpoint() {
+    crate::breakpoint()
+}
 
 #[doc(hidden)]
 #[macro_export]
