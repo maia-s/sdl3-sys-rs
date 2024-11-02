@@ -212,11 +212,8 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
         match_ident: |i| matches!(i, "SDL_DEFINE_PIXELFORMAT"),
         patch: |_ctx, define| {
             let args = define.args.as_mut().unwrap();
-            assert!(args[0].ident.as_str() == "type");
             args[0].ty = Type::ident_str("SDL_PixelType");
-            assert!(args[1].ident.as_str() == "order");
-            //args[1].ty = !!! FIXME
-            assert!(args[2].ident.as_str() == "layout");
+            args[1].ty = Type::primitive(PrimitiveType::Int); // inner type of order enums
             args[2].ty = Type::ident_str("SDL_PackedLayout");
             args[3].ty = Type::primitive(PrimitiveType::Uint8T);
             args[4].ty = Type::primitive(PrimitiveType::Uint8T);

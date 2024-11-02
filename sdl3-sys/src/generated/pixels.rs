@@ -611,7 +611,7 @@ pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PixelFormat::XBGR32;
 #[inline(always)]
 pub const fn SDL_DEFINE_PIXELFORMAT(
     r#type: SDL_PixelType,
-    order: ::core::primitive::i32,
+    order: ::core::ffi::c_int,
     layout: SDL_PackedLayout,
     bits: ::core::primitive::u8,
     bytes: ::core::primitive::u8,
