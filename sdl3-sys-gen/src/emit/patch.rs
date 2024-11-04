@@ -482,8 +482,24 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
     },
     EmitDefinePatch {
         module: Some("stdinc"),
+        match_ident: |i| i.starts_with("SDL_PRI") && i.ends_with("64"),
+        patch: |ctx, define| {
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+            )?;
+            define.emit(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitDefinePatch {
+        module: Some("stdinc"),
         match_ident: |i| i == "SDL_PRILL_PREFIX",
         patch: |ctx, define| {
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+            )?;
             define.emit(ctx)?;
             let Some(Value::String(StringLiteral { str, .. })) = define.value.try_eval(ctx)? else {
                 unreachable!()
@@ -493,6 +509,10 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             bytes.push(0);
             for ch in [b'd', b'u', b'x', b'X'] {
                 bytes[edit] = ch;
+                writeln!(
+                    ctx,
+                    r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                )?;
                 Define {
                     span: Span::none(),
                     doc: None,
@@ -622,14 +642,26 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
             let name = arg.as_str().strip_prefix("Vk").unwrap();
             let doc = format!("(`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::{name}` from the `ash` crate. Otherwise it's a pointer to an opaque struct.");
             writeln!(ctx, r#"#[cfg(feature = "use-ash-v0-38")]"#)?;
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+            )?;
             writeln!(ctx, "/// {doc}")?;
             writeln!(ctx, "pub type {arg} = ::ash_v0_38::vk::{name};")?;
             writeln!(ctx)?;
             writeln!(ctx, r#"#[cfg(not(feature = "use-ash-v0-38"))]"#)?;
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+            )?;
             writeln!(ctx, "/// {doc}")?;
             writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
             writeln!(ctx)?;
             writeln!(ctx, r#"#[cfg(not(feature = "use-ash-v0-38"))]"#)?;
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+            )?;
             writeln!(ctx, "#[doc(hidden)]")?;
             writeln!(ctx, "#[repr(C)]")?;
             writeln!(ctx, "#[non_exhaustive]")?;
@@ -651,6 +683,10 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
             let name = arg.as_str().strip_prefix("Vk").unwrap();
             let doc = format!("(`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::{name}` from the `ash` crate. Otherwise it's a target dependent opaque type.");
             writeln!(ctx, r#"#[cfg(feature = "use-ash-v0-38")]"#)?;
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+            )?;
             writeln!(ctx, "/// {doc}")?;
             writeln!(ctx, "pub type {arg} = ::ash_v0_38::vk::{name};")?;
             writeln!(ctx)?;
@@ -658,11 +694,19 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
                 ctx,
                 r#"#[cfg(all(not(feature = "use-ash-v0-38"), target_pointer_width = "64"))]"#
             )?;
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+            )?;
             writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
             writeln!(ctx)?;
             writeln!(
                 ctx,
                 r#"#[cfg(all(not(feature = "use-ash-v0-38"), target_pointer_width = "64"))]"#
+            )?;
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
             )?;
             writeln!(ctx, "#[doc(hidden)]")?;
             writeln!(ctx, "#[repr(C)]")?;
@@ -675,6 +719,10 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
             writeln!(
                 ctx,
                 r#"#[cfg(all(not(feature = "use-ash-v0-38"), not(target_pointer_width = "64")))]"#
+            )?;
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
             )?;
             writeln!(ctx, "/// {doc}")?;
             writeln!(ctx, "pub type {arg} = ::core::primitive::u64;")?;
@@ -801,6 +849,10 @@ const EMIT_OPAQUE_STRUCT_PATCHES: &[EmitOpaqueStructPatch] = &[EmitOpaqueStructP
         let doc = format!("(`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::{name}::<'static>` from the `ash` crate. Otherwise it's an opaque type. {}",
             "<div class=\"warning\">The `'static` lifetime is too long. `ash` requires a lifetime for this, but as it's a C ffi type there's no way for `sdl3-sys` to set the correct lifetime.</div>");
         writeln!(ctx, r#"#[cfg(feature = "use-ash-v0-38")]"#)?;
+        writeln!(
+            ctx,
+            r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+        )?;
         writeln!(ctx, "/// {doc}")?;
         writeln!(
             ctx,
@@ -808,6 +860,10 @@ const EMIT_OPAQUE_STRUCT_PATCHES: &[EmitOpaqueStructPatch] = &[EmitOpaqueStructP
         )?;
         writeln!(ctx)?;
         writeln!(ctx, r#"#[cfg(not(feature = "use-ash-v0-38"))]"#)?;
+        writeln!(
+            ctx,
+            r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+        )?;
         writeln!(ctx, "/// {doc}")?;
         writeln!(ctx, "#[repr(C)]")?;
         writeln!(ctx, "#[non_exhaustive]")?;
@@ -867,6 +923,10 @@ const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[
         patch: |ctx, td| {
             let doc = "(`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.";
             writeln!(ctx, r#"#[cfg(feature = "use-x11-v2")]"#)?;
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+            )?;
             writeln!(ctx, "/// {doc}")?;
             writeln!(ctx, "pub use ::x11_v2::xlib::XEvent;")?;
             writeln!(ctx)?;
@@ -874,12 +934,20 @@ const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[
                 ctx,
                 r#"#[cfg(all(not(feature = "use-x11-v2"), feature = "use-x11-dl-v2"))]"#
             )?;
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+            )?;
             writeln!(ctx, "/// {doc}")?;
             writeln!(ctx, "pub use ::x11_dl_v2::xlib::XEvent;")?;
             writeln!(ctx)?;
             writeln!(
                 ctx,
                 r#"#[cfg(not(any(feature = "use-x11-v2", feature = "use-x11-dl-v2")))]"#
+            )?;
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
             )?;
             writeln!(ctx, "/// {doc}")?;
             td.emit(ctx)?;

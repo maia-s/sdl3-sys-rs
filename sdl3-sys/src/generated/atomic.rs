@@ -110,8 +110,7 @@ extern "C" {
     pub fn SDL_UnlockSpinlock(lock: *mut SDL_SpinLock);
 }
 
-#[cfg(doc)]
-emit! {
+apply_cfg!(#[cfg(doc)] => {
     /// Mark a compiler barrier.
     ///
     /// A compiler barrier prevents the compiler from reordering reads and writes
@@ -132,40 +131,35 @@ emit! {
     pub fn SDL_CompilerBarrier() {
         ::core::sync::atomic::compiler_fence(::core::sync::atomic::Ordering::SeqCst)
     }
-}
+});
 
-#[cfg(not(doc))]
-emit! {
-    #[cfg(all(not(any(/* always disabled: __clang__ */)), all(windows, target_env = "msvc")))]
-    emit! {
+apply_cfg!(#[cfg(not(doc))] => {
+    apply_cfg!(#[cfg(all(not(any(/* always disabled: __clang__ */)), all(windows, target_env = "msvc")))] => {
         // pragma `intrinsic(_ReadWriteBarrier)`
         #[inline(always)]
         pub fn SDL_CompilerBarrier() {
             ::core::sync::atomic::compiler_fence(::core::sync::atomic::Ordering::SeqCst)
         }
-    }
+    });
 
-    #[cfg(not(all(not(any(/* always disabled: __clang__ */)), all(windows, target_env = "msvc"))))]
-    emit! {
-        #[cfg(not(any(doc, target_os = "emscripten")))]
-        emit! {
+    apply_cfg!(#[cfg(not(all(not(any(/* always disabled: __clang__ */)), all(windows, target_env = "msvc"))))] => {
+        apply_cfg!(#[cfg(not(any(doc, target_os = "emscripten")))] => {
             #[inline(always)]
             pub fn SDL_CompilerBarrier() {
                 ::core::sync::atomic::compiler_fence(::core::sync::atomic::Ordering::SeqCst)
             }
-        }
+        });
 
-        #[cfg(any(doc, target_os = "emscripten"))]
-        emit! {
+        apply_cfg!(#[cfg(any(doc, target_os = "emscripten"))] => {
             #[inline(always)]
             pub fn SDL_CompilerBarrier() {
                 ::core::sync::atomic::compiler_fence(::core::sync::atomic::Ordering::SeqCst)
             }
-        }
+        });
 
-    }
+    });
 
-}
+});
 
 #[inline(always)]
 pub fn SDL_MemoryBarrierRelease() {
@@ -226,23 +220,19 @@ extern "C" {
     pub fn SDL_MemoryBarrierAcquireFunction();
 }
 
-#[cfg(all(any(any(target_arch = "powerpc", target_arch = "powerpc64"), any(target_arch = "powerpc", target_arch = "powerpc64")), any(/* always disabled: __GNUC__ */)))]
-emit! {}
+apply_cfg!(#[cfg(all(any(any(target_arch = "powerpc", target_arch = "powerpc64"), any(target_arch = "powerpc", target_arch = "powerpc64")), any(/* always disabled: __GNUC__ */)))] => {
+});
 
-#[cfg(not(all(any(any(target_arch = "powerpc", target_arch = "powerpc64"), any(target_arch = "powerpc", target_arch = "powerpc64")), any(/* always disabled: __GNUC__ */))))]
-emit! {
-    #[cfg(all(any(/* always disabled: __GNUC__ */), target_arch = "aarch64"))]
-    emit! {
-    }
+apply_cfg!(#[cfg(not(all(any(any(target_arch = "powerpc", target_arch = "powerpc64"), any(target_arch = "powerpc", target_arch = "powerpc64")), any(/* always disabled: __GNUC__ */))))] => {
+    apply_cfg!(#[cfg(all(any(/* always disabled: __GNUC__ */), target_arch = "aarch64"))] => {
+    });
 
-    #[cfg(not(all(any(/* always disabled: __GNUC__ */), target_arch = "aarch64")))]
-    emit! {
-    }
+    apply_cfg!(#[cfg(not(all(any(/* always disabled: __GNUC__ */), target_arch = "aarch64")))] => {
+    });
 
-}
+});
 
-#[cfg(doc)]
-emit! {
+apply_cfg!(#[cfg(doc)] => {
     /// A macro to insert a CPU-specific "pause" instruction into the program.
     ///
     /// This can be useful in busy-wait loops, as it serves as a hint to the CPU as
@@ -270,12 +260,10 @@ emit! {
         #[cfg(target_arch = "x86_64")]
         unsafe { ::core::arch::x86_64::_mm_pause() }
     }
-}
+});
 
-#[cfg(not(doc))]
-emit! {
-    #[cfg(all(any(any(/* always disabled: __GNUC__ */), any(/* always disabled: __clang__ */)), any(target_arch = "x86", target_arch = "x86_64")))]
-    emit! {
+apply_cfg!(#[cfg(not(doc))] => {
+    apply_cfg!(#[cfg(all(any(any(/* always disabled: __GNUC__ */), any(/* always disabled: __clang__ */)), any(target_arch = "x86", target_arch = "x86_64")))] => {
         #[inline(always)]
         pub fn SDL_CPUPauseInstruction() {
             #[cfg(all(feature = "nightly", any(target_arch = "aarch64", target_arch = "arm64ec")))]
@@ -287,10 +275,9 @@ emit! {
             #[cfg(target_arch = "x86_64")]
             unsafe { ::core::arch::x86_64::_mm_pause() }
         }
-    }
+    });
 
-    #[cfg(not(all(any(any(/* always disabled: __GNUC__ */), any(/* always disabled: __clang__ */)), any(target_arch = "x86", target_arch = "x86_64"))))]
-    emit! {
+    apply_cfg!(#[cfg(not(all(any(any(/* always disabled: __GNUC__ */), any(/* always disabled: __clang__ */)), any(target_arch = "x86", target_arch = "x86_64"))))] => {
         #[inline(always)]
         pub fn SDL_CPUPauseInstruction() {
             #[cfg(all(feature = "nightly", any(target_arch = "aarch64", target_arch = "arm64ec")))]
@@ -302,9 +289,9 @@ emit! {
             #[cfg(target_arch = "x86_64")]
             unsafe { ::core::arch::x86_64::_mm_pause() }
         }
-    }
+    });
 
-}
+});
 
 /// A type representing an atomic integer value.
 ///

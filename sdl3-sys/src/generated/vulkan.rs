@@ -19,21 +19,24 @@ use super::error::*;
 
 use super::video::*;
 
-#[cfg(any(any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64", target_arch = "x86_64"))]
-emit! {}
+apply_cfg!(#[cfg(any(any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64", target_arch = "x86_64"))] => {
+});
 
-#[cfg(not(any(any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64", target_arch = "x86_64")))]
-emit! {}
+apply_cfg!(#[cfg(not(any(any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64", target_arch = "x86_64")))] => {
+});
 
 #[cfg(feature = "use-ash-v0-38")]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 /// (`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::Instance` from the `ash` crate. Otherwise it's a pointer to an opaque struct.
 pub type VkInstance = ::ash_v0_38::vk::Instance;
 
 #[cfg(not(feature = "use-ash-v0-38"))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 /// (`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::Instance` from the `ash` crate. Otherwise it's a pointer to an opaque struct.
 pub type VkInstance = *mut __VkInstance;
 
 #[cfg(not(feature = "use-ash-v0-38"))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 #[doc(hidden)]
 #[repr(C)]
 #[non_exhaustive]
@@ -42,14 +45,17 @@ pub struct __VkInstance {
 }
 
 #[cfg(feature = "use-ash-v0-38")]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 /// (`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::PhysicalDevice` from the `ash` crate. Otherwise it's a pointer to an opaque struct.
 pub type VkPhysicalDevice = ::ash_v0_38::vk::PhysicalDevice;
 
 #[cfg(not(feature = "use-ash-v0-38"))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 /// (`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::PhysicalDevice` from the `ash` crate. Otherwise it's a pointer to an opaque struct.
 pub type VkPhysicalDevice = *mut __VkPhysicalDevice;
 
 #[cfg(not(feature = "use-ash-v0-38"))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 #[doc(hidden)]
 #[repr(C)]
 #[non_exhaustive]
@@ -58,13 +64,16 @@ pub struct __VkPhysicalDevice {
 }
 
 #[cfg(feature = "use-ash-v0-38")]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 /// (`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::SurfaceKHR` from the `ash` crate. Otherwise it's a target dependent opaque type.
 pub type VkSurfaceKHR = ::ash_v0_38::vk::SurfaceKHR;
 
 #[cfg(all(not(feature = "use-ash-v0-38"), target_pointer_width = "64"))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub type VkSurfaceKHR = *mut __VkSurfaceKHR;
 
 #[cfg(all(not(feature = "use-ash-v0-38"), target_pointer_width = "64"))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 #[doc(hidden)]
 #[repr(C)]
 #[non_exhaustive]
@@ -73,6 +82,7 @@ pub struct __VkSurfaceKHR {
 }
 
 #[cfg(all(not(feature = "use-ash-v0-38"), not(target_pointer_width = "64")))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 /// (`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::SurfaceKHR` from the `ash` crate. Otherwise it's a target dependent opaque type.
 pub type VkSurfaceKHR = ::core::primitive::u64;
 
@@ -282,10 +292,12 @@ extern "C" {
 }
 
 #[cfg(feature = "use-ash-v0-38")]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 /// (`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::AllocationCallbacks::<'static>` from the `ash` crate. Otherwise it's an opaque type. <div class="warning">The `'static` lifetime is too long. `ash` requires a lifetime for this, but as it's a C ffi type there's no way for `sdl3-sys` to set the correct lifetime.</div>
 pub type VkAllocationCallbacks = ::ash_v0_38::vk::AllocationCallbacks<'static>;
 
 #[cfg(not(feature = "use-ash-v0-38"))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 /// (`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::AllocationCallbacks::<'static>` from the `ash` crate. Otherwise it's an opaque type. <div class="warning">The `'static` lifetime is too long. `ash` requires a lifetime for this, but as it's a C ffi type there's no way for `sdl3-sys` to set the correct lifetime.</div>
 #[repr(C)]
 #[non_exhaustive]

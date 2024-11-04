@@ -8,8 +8,7 @@ use super::keyboard::*;
 
 use super::video::*;
 
-#[cfg(any(doc, windows))]
-emit! {
+apply_cfg!(#[cfg(any(doc, windows))] => {
     pub type MSG = tagMSG;
 
     /// A callback to be used with [`SDL_SetWindowsMessageHook`].
@@ -62,10 +61,9 @@ emit! {
     #[non_exhaustive]
     pub struct tagMSG { _opaque: [::core::primitive::u8; 0] }
 
-}
+});
 
-#[cfg(any(any(doc, windows), any(/* always disabled: SDL_PLATFORM_WINGDK */)))]
-emit! {
+apply_cfg!(#[cfg(any(any(doc, windows), any(/* always disabled: SDL_PLATFORM_WINGDK */)))] => {
     extern "C" {
         /// Get the D3D9 adapter index that matches the specified display.
         ///
@@ -103,17 +101,20 @@ emit! {
         pub fn SDL_GetDXGIOutputInfo(displayID: SDL_DisplayID, adapterIndex: *mut ::core::ffi::c_int, outputIndex: *mut ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
-}
+});
 
 #[cfg(feature = "use-x11-v2")]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 /// (`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
 pub use ::x11_v2::xlib::XEvent;
 
 #[cfg(all(not(feature = "use-x11-v2"), feature = "use-x11-dl-v2"))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 /// (`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
 pub use ::x11_dl_v2::xlib::XEvent;
 
 #[cfg(not(any(feature = "use-x11-v2", feature = "use-x11-dl-v2")))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 /// (`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
 pub type XEvent = _XEvent;
 
@@ -139,8 +140,7 @@ extern "C" {
     pub fn SDL_SetX11EventHook(callback: SDL_X11EventHook, userdata: *mut ::core::ffi::c_void);
 }
 
-#[cfg(any(doc, target_os = "linux"))]
-emit! {
+apply_cfg!(#[cfg(any(doc, target_os = "linux"))] => {
     extern "C" {
         /// Sets the UNIX nice value for a thread.
         ///
@@ -177,10 +177,9 @@ emit! {
         pub fn SDL_SetLinuxThreadPriorityAndPolicy(threadID: Sint64, sdlPriority: ::core::ffi::c_int, schedPolicy: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
-}
+});
 
-#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "watchos"))]
-emit! {
+apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "watchos"))] => {
     /// The prototype for an Apple iOS animation callback.
     ///
     /// This datatype is only useful on Apple iOS.
@@ -259,10 +258,9 @@ emit! {
         pub fn SDL_SetiOSEventPump(enabled: ::core::primitive::bool);
     }
 
-}
+});
 
-#[cfg(any(doc, target_os = "android"))]
-emit! {
+apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
     extern "C" {
         /// Get the Android Java Native Interface Environment of the current thread.
         ///
@@ -590,7 +588,7 @@ emit! {
         pub fn SDL_SendAndroidMessage(command: Uint32, param: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
-}
+});
 
 extern "C" {
     /// Query if the current device is a tablet.
@@ -797,8 +795,7 @@ extern "C" {
     pub fn SDL_OnApplicationDidEnterForeground();
 }
 
-#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "watchos"))]
-emit! {
+apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "watchos"))] => {
     extern "C" {
         /// Let iOS apps with external event handling report
         /// onApplicationDidChangeStatusBarOrientation.
@@ -818,10 +815,9 @@ emit! {
         pub fn SDL_OnApplicationDidChangeStatusBarOrientation();
     }
 
-}
+});
 
-#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))]
-emit! {
+apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
     pub type XTaskQueueHandle = *mut XTaskQueueObject;
 
     pub type XUserHandle = *mut XUser;
@@ -871,7 +867,7 @@ emit! {
     #[non_exhaustive]
     pub struct XUser { _opaque: [::core::primitive::u8; 0] }
 
-}
+});
 
 #[doc(hidden)]
 #[repr(C)]

@@ -33,8 +33,7 @@
 
 use super::stdinc::*;
 
-#[cfg(doc)]
-emit! {
+apply_cfg!(#[cfg(doc)] => {
     /// The level of assertion aggressiveness.
     ///
     /// This value changes depending on compiler options and other preprocessor
@@ -53,40 +52,34 @@ emit! {
     /// This macro is available since SDL 3.1.3.
     pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 1;
 
-}
+});
 
-#[cfg(not(doc))]
-emit! {
-    #[cfg(any(all(not(not(debug_assertions)), any(/* always disabled: __GNUC__ */)), debug_assertions, debug_assertions))]
-    emit! {
-    }
+apply_cfg!(#[cfg(not(doc))] => {
+    apply_cfg!(#[cfg(any(all(not(not(debug_assertions)), any(/* always disabled: __GNUC__ */)), debug_assertions, debug_assertions))] => {
+    });
 
-    #[cfg(not(any(all(not(not(debug_assertions)), any(/* always disabled: __GNUC__ */)), debug_assertions, debug_assertions)))]
-    emit! {
-    }
+    apply_cfg!(#[cfg(not(any(all(not(not(debug_assertions)), any(/* always disabled: __GNUC__ */)), debug_assertions, debug_assertions)))] => {
+    });
 
-}
+});
 
-#[cfg(doc)]
-emit! {}
+apply_cfg!(#[cfg(doc)] => {
+});
 
-#[cfg(not(doc))]
-emit! {
-    #[cfg(all(windows, target_env = "msvc"))]
-    emit! {
-    }
+apply_cfg!(#[cfg(not(doc))] => {
+    apply_cfg!(#[cfg(all(windows, target_env = "msvc"))] => {
+    });
 
-    #[cfg(not(all(windows, target_env = "msvc")))]
-    emit! {
-    }
+    apply_cfg!(#[cfg(not(all(windows, target_env = "msvc")))] => {
+    });
 
-}
+});
 
-#[cfg(all(windows, target_env = "msvc"))]
-emit! {}
+apply_cfg!(#[cfg(all(windows, target_env = "msvc"))] => {
+});
 
-#[cfg(not(all(windows, target_env = "msvc")))]
-emit! {}
+apply_cfg!(#[cfg(not(all(windows, target_env = "msvc")))] => {
+});
 
 #[cfg(all(not(doc), feature = "assert-level-disabled"))]
 pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 0;
@@ -307,8 +300,7 @@ macro_rules! SDL_enabled_assert {
 #[doc(inline)]
 pub use SDL_enabled_assert;
 
-#[cfg(doc)]
-emit! {
+apply_cfg!(#[cfg(doc)] => {
     /// An assertion test that is normally performed only in debug builds.
     ///
     /// This macro is enabled when the [`SDL_ASSERT_LEVEL`] is >= 2, otherwise it is
@@ -423,12 +415,10 @@ emit! {
     }
     #[doc(inline)]
     pub use SDL_assert_paranoid;
-}
+});
 
-#[cfg(not(doc))]
-emit! {
-    #[cfg(feature = "assert-level-disabled")]
-    emit! {
+apply_cfg!(#[cfg(not(doc))] => {
+    apply_cfg!(#[cfg(feature = "assert-level-disabled")] => {
         #[doc(hidden)]
         #[macro_export]
         macro_rules! SDL_assert {
@@ -452,12 +442,10 @@ emit! {
         }
         #[doc(inline)]
         pub use SDL_assert_paranoid;
-    }
+    });
 
-    #[cfg(not(feature = "assert-level-disabled"))]
-    emit! {
-        #[cfg(feature = "assert-level-release")]
-        emit! {
+    apply_cfg!(#[cfg(not(feature = "assert-level-disabled"))] => {
+        apply_cfg!(#[cfg(feature = "assert-level-release")] => {
             #[doc(hidden)]
             #[macro_export]
             macro_rules! SDL_assert {
@@ -481,12 +469,10 @@ emit! {
             }
             #[doc(inline)]
             pub use SDL_assert_paranoid;
-        }
+        });
 
-        #[cfg(not(feature = "assert-level-release"))]
-        emit! {
-            #[cfg(feature = "assert-level-debug")]
-            emit! {
+        apply_cfg!(#[cfg(not(feature = "assert-level-release"))] => {
+            apply_cfg!(#[cfg(feature = "assert-level-debug")] => {
                 #[doc(hidden)]
                 #[macro_export]
                 macro_rules! SDL_assert {
@@ -510,12 +496,10 @@ emit! {
                 }
                 #[doc(inline)]
                 pub use SDL_assert_paranoid;
-            }
+            });
 
-            #[cfg(not(feature = "assert-level-debug"))]
-            emit! {
-                #[cfg(feature = "assert-level-paranoid")]
-                emit! {
+            apply_cfg!(#[cfg(not(feature = "assert-level-debug"))] => {
+                apply_cfg!(#[cfg(feature = "assert-level-paranoid")] => {
                     #[doc(hidden)]
                     #[macro_export]
                     macro_rules! SDL_assert {
@@ -539,20 +523,19 @@ emit! {
                     }
                     #[doc(inline)]
                     pub use SDL_assert_paranoid;
-                }
+                });
 
-                #[cfg(not(feature = "assert-level-paranoid"))]
-                emit! {
+                apply_cfg!(#[cfg(not(feature = "assert-level-paranoid"))] => {
                     ::core::compile_error!("Unknown assertion level.");
-                }
+                });
 
-            }
+            });
 
-        }
+        });
 
-    }
+    });
 
-}
+});
 
 /// An assertion test that is always performed.
 ///

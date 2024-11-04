@@ -8,8 +8,8 @@ use super::properties::*;
 
 use super::atomic::*;
 
-#[cfg(any(doc, windows))]
-emit! {}
+apply_cfg!(#[cfg(any(doc, windows))] => {
+});
 
 /// A unique numeric ID that identifies a thread.
 ///
@@ -106,8 +106,7 @@ pub type SDL_ThreadFunction = ::core::option::Option<
     unsafe extern "C" fn(data: *mut ::core::ffi::c_void) -> ::core::ffi::c_int,
 >;
 
-#[cfg(doc)]
-emit! {
+apply_cfg!(#[cfg(doc)] => {
     extern "C" {
         /// Create a new thread with a default stack size.
         ///
@@ -223,24 +222,21 @@ emit! {
 
     pub const SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: *const ::core::ffi::c_char = c"SDL.thread.create.stacksize".as_ptr();
 
-}
+});
 
-#[cfg(not(doc))]
-emit! {
-    #[cfg(any(doc, windows))]
-    emit! {
-    }
+apply_cfg!(#[cfg(not(doc))] => {
+    apply_cfg!(#[cfg(any(doc, windows))] => {
+    });
 
-}
+});
 
-#[cfg(not(doc))]
-emit! {}
+apply_cfg!(#[cfg(not(doc))] => {
+});
 
-#[cfg(not(doc))]
-emit! {}
+apply_cfg!(#[cfg(not(doc))] => {
+});
 
-#[cfg(not(doc))]
-emit! {
+apply_cfg!(#[cfg(not(doc))] => {
     extern "C" {
         /// The actual entry point for [`SDL_CreateThread`].
         ///
@@ -311,7 +307,7 @@ emit! {
 
     pub const SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: *const ::core::ffi::c_char = c"SDL.thread.create.stacksize".as_ptr();
 
-}
+});
 
 extern "C" {
     /// Get the thread name as it was specified in [`SDL_CreateThread()`].

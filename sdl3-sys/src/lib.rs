@@ -1,6 +1,8 @@
 #![no_std]
 #![allow(non_camel_case_types)]
 #![cfg_attr(feature = "nightly", feature(c_variadic))] // https://github.com/rust-lang/rust/issues/44930
+#![cfg_attr(all(feature = "nightly", doc), feature(doc_auto_cfg))] // https://github.com/rust-lang/rust/issues/43781
+#![cfg_attr(all(feature = "nightly", doc), feature(doc_cfg))] // https://github.com/rust-lang/rust/issues/43781
 #![cfg_attr(
     all(
         feature = "nightly",
@@ -12,10 +14,10 @@
 
 use core::mem::size_of;
 
-// This macro is used to apply cfg attributes to a group of items. Wrap the items
-// in a call to this macro and apply the attributes to the macro call
-macro_rules! emit {
-    ($($tt:tt)*) => { $($tt)* };
+// This macro is used to apply a cfg attribute to multiple items
+// e.g. `apply_cfg!(#[cfg(feature = "nightly")] => { type VaList = ::core::ffi::VaList; })`
+macro_rules! apply_cfg {
+    (#[cfg $cfg:tt] => { $($item:item)* }) => { $( #[cfg $cfg] $item )* };
 }
 
 // Get the size of a field of a struct or union
@@ -27,6 +29,7 @@ macro_rules! size_of_field {
         })
     };
 }
+
 pub(crate) use size_of_field;
 
 #[allow(unused)] // incorrectly detected as unused

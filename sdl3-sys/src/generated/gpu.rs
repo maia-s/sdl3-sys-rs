@@ -5652,8 +5652,7 @@ extern "C" {
     ) -> Uint32;
 }
 
-#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))]
-emit! {
+apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
     extern "C" {
         /// Call this to suspend GPU operation on Xbox when you receive the
         /// [`SDL_EVENT_DID_ENTER_BACKGROUND`] event.
@@ -5690,7 +5689,7 @@ emit! {
         pub fn SDL_GDKResumeGPU(device: *mut SDL_GPUDevice);
     }
 
-}
+});
 
 /// An opaque handle representing a buffer.
 ///

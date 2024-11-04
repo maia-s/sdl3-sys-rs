@@ -101,8 +101,9 @@ pub trait Emit: core::fmt::Debug {
     ) -> Result<PreProcState, EmitErr> {
         let pps = {
             let (pps, _pps_guard) = ctx.with_target_dependent_preproc_state_guard();
+            write!(ctx, "apply_cfg!(")?;
             ctx.emit_define_state_cfg(define_state)?;
-            writeln!(ctx, "emit! {{")?;
+            writeln!(ctx, " => {{")?;
             ctx.increase_indent();
             if define_state
                 == &DefineState::defined(Ident::new_inline("SDL_WIKI_DOCUMENTATION_SECTION")).not()
@@ -112,7 +113,7 @@ pub trait Emit: core::fmt::Debug {
                 self.emit(&mut { ctx.new_top_level() })?;
             }
             ctx.decrease_indent();
-            writeln!(ctx, "}}")?;
+            writeln!(ctx, "}});")?;
             writeln!(ctx)?;
             pps
         };
@@ -1371,6 +1372,12 @@ impl Emit for TypeDef {
 
                     variant.cond.emit_cfg(&mut ctx_impl)?;
                     variant.doc.emit(&mut ctx_impl)?;
+                    if !variant.cond.is_empty() {
+                        writeln!(
+                            ctx_impl,
+                            r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                        )?;
+                    }
                     writeln!(ctx_impl, "pub const {short_variant_ident}: Self = {value};")?;
 
                     if e.hidden {
@@ -1378,6 +1385,12 @@ impl Emit for TypeDef {
                     }
                     variant.cond.emit_cfg(&mut ctx_global)?;
                     variant.doc.emit(&mut ctx_global)?;
+                    if !variant.cond.is_empty() {
+                        writeln!(
+                            ctx_global,
+                            r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                        )?;
+                    }
                     writeln!(ctx_global, "pub const {variant_ident}: {enum_ident} = {enum_ident}::{short_variant_ident};")?;
 
                     writeln!(

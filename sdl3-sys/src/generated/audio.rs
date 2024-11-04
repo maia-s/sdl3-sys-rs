@@ -187,16 +187,22 @@ impl SDL_AudioFormat {
     /// As above, but big-endian byte order
     pub const F32BE: Self = Self(0x9120);
     #[cfg(target_endian = "little")]
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const S16: Self = SDL_AUDIO_S16LE;
     #[cfg(target_endian = "little")]
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const S32: Self = SDL_AUDIO_S32LE;
     #[cfg(target_endian = "little")]
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const F32: Self = SDL_AUDIO_F32LE;
     #[cfg(not(target_endian = "little"))]
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const S16: Self = SDL_AUDIO_S16BE;
     #[cfg(not(target_endian = "little"))]
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const S32: Self = SDL_AUDIO_S32BE;
     #[cfg(not(target_endian = "little"))]
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const F32: Self = SDL_AUDIO_F32BE;
 }
 
@@ -219,16 +225,22 @@ pub const SDL_AUDIO_F32LE: SDL_AudioFormat = SDL_AudioFormat::F32LE;
 /// As above, but big-endian byte order
 pub const SDL_AUDIO_F32BE: SDL_AudioFormat = SDL_AudioFormat::F32BE;
 #[cfg(target_endian = "little")]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_AUDIO_S16: SDL_AudioFormat = SDL_AudioFormat::S16;
 #[cfg(target_endian = "little")]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AudioFormat::S32;
 #[cfg(target_endian = "little")]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 #[cfg(not(target_endian = "little"))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_AUDIO_S16: SDL_AudioFormat = SDL_AudioFormat::S16;
 #[cfg(not(target_endian = "little"))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AudioFormat::S32;
 #[cfg(not(target_endian = "little"))]
+#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 
 #[inline(always)]

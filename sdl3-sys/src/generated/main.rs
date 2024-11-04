@@ -21,8 +21,8 @@ use super::error::*;
 
 use super::events::*;
 
-#[cfg(doc)]
-emit! {}
+apply_cfg!(#[cfg(doc)] => {
+});
 
 use super::init::*;
 
@@ -386,8 +386,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-#[cfg(any(doc, windows))]
-emit! {
+apply_cfg!(#[cfg(any(doc, windows))] => {
     extern "C" {
         /// Register a win32 window class for SDL's use.
         ///
@@ -435,10 +434,9 @@ emit! {
         pub fn SDL_UnregisterApp();
     }
 
-}
+});
 
-#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))]
-emit! {
+apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
     extern "C" {
         /// Callback from the application to let the suspend continue.
         ///
@@ -447,7 +445,7 @@ emit! {
         pub fn SDL_GDKSuspendComplete();
     }
 
-}
+});
 
 #[cfg(doc)]
 use crate::everything::*;

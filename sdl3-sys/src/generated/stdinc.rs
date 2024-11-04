@@ -6,17 +6,17 @@
 
 pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
 
-#[cfg(doc)]
-emit! {}
+apply_cfg!(#[cfg(doc)] => {
+});
 
-#[cfg(not(doc))]
-emit! {}
+apply_cfg!(#[cfg(not(doc))] => {
+});
 
-#[cfg(doc)]
-emit! {}
+apply_cfg!(#[cfg(doc)] => {
+});
 
-#[cfg(not(doc))]
-emit! {}
+apply_cfg!(#[cfg(not(doc))] => {
+});
 
 /// A signed 8-bit integer type.
 ///
@@ -179,93 +179,89 @@ pub const SDL_MIN_TIME: SDL_Time = (SDL_MIN_SINT64 as SDL_Time);
 
 pub const SDL_FLT_EPSILON: ::core::ffi::c_float = ::core::primitive::f32::EPSILON;
 
-#[cfg(any(doc, windows))]
-emit! {
+apply_cfg!(#[cfg(any(doc, windows))] => {
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRIs64: *const ::core::ffi::c_char = c"I64d".as_ptr();
 
-}
+});
 
-#[cfg(not(any(doc, windows)))]
-emit! {
-    #[cfg(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))]
-    emit! {
+apply_cfg!(#[cfg(not(any(doc, windows)))] => {
+    apply_cfg!(#[cfg(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))] => {
+        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
         pub const SDL_PRIs64: *const ::core::ffi::c_char = c"ld".as_ptr();
 
-    }
+    });
 
-    #[cfg(not(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))]
-    emit! {
+    apply_cfg!(#[cfg(not(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))] => {
+        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
         pub const SDL_PRIs64: *const ::core::ffi::c_char = c"lld".as_ptr();
 
-    }
+    });
 
-}
+});
 
-#[cfg(any(doc, windows))]
-emit! {
+apply_cfg!(#[cfg(any(doc, windows))] => {
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRIu64: *const ::core::ffi::c_char = c"I64u".as_ptr();
 
-}
+});
 
-#[cfg(not(any(doc, windows)))]
-emit! {
-    #[cfg(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))]
-    emit! {
+apply_cfg!(#[cfg(not(any(doc, windows)))] => {
+    apply_cfg!(#[cfg(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))] => {
+        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
         pub const SDL_PRIu64: *const ::core::ffi::c_char = c"lu".as_ptr();
 
-    }
+    });
 
-    #[cfg(not(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))]
-    emit! {
+    apply_cfg!(#[cfg(not(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))] => {
+        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
         pub const SDL_PRIu64: *const ::core::ffi::c_char = c"llu".as_ptr();
 
-    }
+    });
 
-}
+});
 
-#[cfg(any(doc, windows))]
-emit! {
+apply_cfg!(#[cfg(any(doc, windows))] => {
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRIx64: *const ::core::ffi::c_char = c"I64x".as_ptr();
 
-}
+});
 
-#[cfg(not(any(doc, windows)))]
-emit! {
-    #[cfg(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64")))]
-    emit! {
+apply_cfg!(#[cfg(not(any(doc, windows)))] => {
+    apply_cfg!(#[cfg(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64")))] => {
+        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
         pub const SDL_PRIx64: *const ::core::ffi::c_char = c"lx".as_ptr();
 
-    }
+    });
 
-    #[cfg(not(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64"))))]
-    emit! {
+    apply_cfg!(#[cfg(not(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64"))))] => {
+        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
         pub const SDL_PRIx64: *const ::core::ffi::c_char = c"llx".as_ptr();
 
-    }
+    });
 
-}
+});
 
-#[cfg(any(doc, windows))]
-emit! {
+apply_cfg!(#[cfg(any(doc, windows))] => {
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRIX64: *const ::core::ffi::c_char = c"I64X".as_ptr();
 
-}
+});
 
-#[cfg(not(any(doc, windows)))]
-emit! {
-    #[cfg(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64")))]
-    emit! {
+apply_cfg!(#[cfg(not(any(doc, windows)))] => {
+    apply_cfg!(#[cfg(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64")))] => {
+        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
         pub const SDL_PRIX64: *const ::core::ffi::c_char = c"lX".as_ptr();
 
-    }
+    });
 
-    #[cfg(not(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64"))))]
-    emit! {
+    apply_cfg!(#[cfg(not(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64"))))] => {
+        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
         pub const SDL_PRIX64: *const ::core::ffi::c_char = c"llX".as_ptr();
 
-    }
+    });
 
-}
+});
 
 pub const SDL_PRIs32: *const ::core::ffi::c_char = c"d".as_ptr();
 
@@ -275,35 +271,43 @@ pub const SDL_PRIx32: *const ::core::ffi::c_char = c"x".as_ptr();
 
 pub const SDL_PRIX32: *const ::core::ffi::c_char = c"X".as_ptr();
 
-#[cfg(any(doc, windows))]
-emit! {
+apply_cfg!(#[cfg(any(doc, windows))] => {
     const _: () = ::core::assert!((::core::mem::size_of::<::core::ffi::c_longlong>() == 8_usize));
 
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRILL_PREFIX: *const ::core::ffi::c_char = c"I64".as_ptr();
 
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRILLd: *const ::core::ffi::c_char = c"I64d".as_ptr();
 
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRILLu: *const ::core::ffi::c_char = c"I64u".as_ptr();
 
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRILLx: *const ::core::ffi::c_char = c"I64x".as_ptr();
 
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRILLX: *const ::core::ffi::c_char = c"I64X".as_ptr();
 
-}
+});
 
-#[cfg(not(any(doc, windows)))]
-emit! {
+apply_cfg!(#[cfg(not(any(doc, windows)))] => {
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRILL_PREFIX: *const ::core::ffi::c_char = c"ll".as_ptr();
 
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRILLd: *const ::core::ffi::c_char = c"lld".as_ptr();
 
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRILLu: *const ::core::ffi::c_char = c"llu".as_ptr();
 
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRILLx: *const ::core::ffi::c_char = c"llx".as_ptr();
 
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRILLX: *const ::core::ffi::c_char = c"llX".as_ptr();
 
-}
+});
 
 const _: () = ::core::assert!((::core::mem::size_of::<::core::primitive::bool>() == 1_usize));
 
@@ -369,11 +373,7 @@ const _: () = ::core::assert!(
 
 const _: () = ::core::assert!((!(0 as ::core::ffi::c_int) == ((-1_i32) as ::core::ffi::c_int)));
 
-#[cfg(all(
-    not(any(doc, target_os = "horizon")),
-    not(any(doc, target_os = "vita"))
-))]
-emit! {
+apply_cfg!(#[cfg(all(not(any(doc, target_os = "horizon")), not(any(doc, target_os = "vita"))))] => {
     #[doc(hidden)]
     /// ### Known values (`sdl3-sys`)
     /// | Associated constant | Global constant | Description |
@@ -410,7 +410,7 @@ emit! {
 
     const _: () = ::core::assert!((::core::mem::size_of::<SDL_DUMMY_ENUM>() == ::core::mem::size_of::<::core::ffi::c_int>()));
 
-}
+});
 
 /// A macro to initialize an SDL interface.
 ///
@@ -5131,8 +5131,8 @@ pub unsafe fn SDL_size_mul_check_overflow(
     return true;
 }
 
-#[cfg(not(doc))]
-emit! {}
+apply_cfg!(#[cfg(not(doc))] => {
+});
 
 /// Add two integers, checking for overflow.
 ///
@@ -5170,11 +5170,10 @@ pub unsafe fn SDL_size_add_check_overflow(
     return true;
 }
 
-#[cfg(not(doc))]
-emit! {}
+apply_cfg!(#[cfg(not(doc))] => {
+});
 
-#[cfg(doc)]
-emit! {
+apply_cfg!(#[cfg(doc)] => {
     /// A generic function pointer.
     ///
     /// In theory, generic function pointers should use this, instead of `void *`,
@@ -5191,13 +5190,12 @@ emit! {
     /// This datatype is available since SDL 3.1.3.
     pub type SDL_FunctionPointer = ::core::option::Option<unsafe extern "C" fn()>;
 
-}
+});
 
-#[cfg(not(doc))]
-emit! {
+apply_cfg!(#[cfg(not(doc))] => {
     pub type SDL_FunctionPointer = ::core::option::Option<unsafe extern "C" fn()>;
 
-}
+});
 
 /// A thread-safe set of environment variables
 ///

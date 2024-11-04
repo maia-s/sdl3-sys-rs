@@ -1,5 +1,4 @@
-#[cfg(doc)]
-emit! {
+apply_cfg!(#[cfg(doc)] => {
     /// This macro is a string describing the source at a particular point in
     /// development.
     ///
@@ -15,13 +14,12 @@ emit! {
     /// This macro is available since SDL 3.1.3.
     pub const SDL_REVISION: *const ::core::ffi::c_char = c"Some arbitrary string decided at SDL build time".as_ptr();
 
-}
+});
 
-#[cfg(not(doc))]
-emit! {
+apply_cfg!(#[cfg(not(doc))] => {
     pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL3-preview-3.1.6".as_ptr();
 
-}
+});
 
 #[cfg(doc)]
 use crate::everything::*;

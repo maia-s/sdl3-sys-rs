@@ -753,7 +753,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         if let Some(coll) = &define_state.state {
             write!(self, "#[cfg(")?;
             emit_cfg_r(self, coll)?;
-            writeln!(self, ")]")?;
+            write!(self, ")]")?;
         }
         Ok(())
     }
