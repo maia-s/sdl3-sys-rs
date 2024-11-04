@@ -128,6 +128,7 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
     let source_cargo_toml_path = source_crate_path.join("Cargo.toml");
     let source_lib_rs_path = source_crate_path.join("src/lib.rs");
     let target_cargo_toml_path = target_crate_path.join("Cargo.toml");
+    let target_readme_path = target_crate_path.join("README.md");
     let output_path = target_crate_path.join("src/generated");
 
     let Some(revision) = ({
@@ -228,6 +229,19 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
                 apply: &|lines| format!("{}version = \"{sdl3_src_dep}\"\n", lines[0]),
             },
         ],
+    )?;
+
+    patch_file(
+        &target_readme_path,
+        &[LinesPatch {
+            match_lines: &[&|s| s.contains("bindings for SDL version ")],
+            apply: &|lines| {
+                let match_ = "bindings for SDL version ";
+                let line = &lines[0];
+                let pfx = &line[..line.find(match_).unwrap() + match_.len()];
+                format!("{pfx}`{sdl3_src_ver}` and earlier.\n")
+            },
+        }],
     )?;
 
     let mut gen = Gen::new(headers_path.clone(), output_path.to_owned(), revision)?;

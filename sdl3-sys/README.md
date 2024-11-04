@@ -1,12 +1,10 @@
-# sdl3-sys (preview release)
+# sdl3-sys: Low level Rust bindings for SDL 3
 
-This is a preview release of the `sdl3-sys` SDL 3 bindings for Rust!
+This version of `sdl3-sys` has bindings for SDL version `3.1.6-preview-0` and earlier.
 
-SDL 3 is now ABI stable as of the 3.1.3 preview release, but `sdl3-sys` itself
-is still considered unstable. The generator that parses and generates these
-bindings is new and may have bugs.
-
-Please submit an issue at github if you have any issues or comments!
+SDL 3 is ABI stable as of the 3.1.3 preview release, but `sdl3-sys` is new
+and may have bugs. Please submit an issue at github if you have any issues
+or comments!
 
 Known issues:
 - Satellite libraries (mixer, image, ttf) aren't available yet
@@ -27,10 +25,15 @@ with `sdl3-sys`.
 
 [Browse the API at docs.rs!](https://docs.rs/sdl3-sys)
 
+If you're looking for more idiomatic or higher level bindings, check out the
+[sdl3](https://crates.io/crates/sdl3) crate.
+
 ## Usage
 
-`sdl3-sys` requires SDL version `3.1.3-preview` or later. `3.1.3-preview` is
-the first ABI stable version of SDL 3.
+`sdl3-sys` requires SDL version `3.1.3-preview` or later. Some APIs may require
+a later version. You can check availability in the documentation. Starting with
+version `3.1.3-preview`, all later releases of SDL 3 are ABI compatible with
+earlier ones.
 
 By default, `sdl3-sys` will attempt to link to a dynamic/shared library named
 `SDL3` in the default library search path, using the usual platform specific naming
@@ -38,18 +41,18 @@ convention for libraries. You can change this behaviour with the following featu
 
 | Feature | Description |
 | ------- | ----------- |
-| `use-pkg-config` | Use `pkg-config` to find and get link flags for the SDL 3 library. |
-| `use-vcpkg` | Use `vcpkg` to find and get link flags for the SDL 3 library. |
-| `build-from-source` | Build and link SDL 3 from source. You have to install any dependencies SDL needs to build on your platform first. |
-| `build-from-source-static` | Shortcut for enabling both the `build-from-source` and `link-static` features. |
-| `link-framework` | Link to a framework on Apple platforms. This currently requires `SDL3.xcframework` to be located at `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
-| `link-static` | Link SDL statically. SDL doesn't recommend doing this. On platforms that only support static linking, such as emscripten, you don't have to enable this feature. |
+| `use-pkg-config` | Use `pkg-config` to find and link the SDL 3 library. |
+| `use-vcpkg` | Use `vcpkg` to find and link the SDL 3 library. |
+| `build-from-source` | Build and link SDL 3 from source. You have to install any dependencies SDL needs to build for your target first. |
+| `build-from-source-static` | Shortcut for enabling both the `build-from-source` and `link-static` features. This should no longer be necessary. |
+| `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3.xcframework` to be located at `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
+| `link-static` | Link SDL statically. SDL doesn't recommend doing this. On targets that only support static linking, such as emscripten, you don't have to enable this feature. On Apple targets, this currently requires frameworks that should be optional. |
 
 ## Optional integrations
 
 `sdl3-sys` can use definitions from other crates for some foreign types that it needs,
-e.g. for Vulkan types. By default it'll use opaque structs for these types unless
-otherwise specified.
+e.g. for Vulkan types. By default it'll use opaque structs or pointers to opaque structs
+for these types unless otherwise specified.
 
 | Feature | Description |
 | ------- | ----------- |
