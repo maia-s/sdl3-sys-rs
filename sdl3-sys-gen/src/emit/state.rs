@@ -243,7 +243,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_PLATFORM_APPLE" = CfgExpr(r#"any(doc, target_vendor = "apple")"#);
             "SDL_PLATFORM_EMSCRIPTEN" = CfgExpr(r#"any(doc, target_os = "emscripten")"#);
             "SDL_PLATFORM_GDK" = CfgExpr(always_false!("SDL_PLATFORM_GDK")); // change WIN32 if this is changed
-            "SDL_PLATFORM_IOS" = CfgExpr(r#"any(doc, target_os = "ios", target_os = "tvos", target_os = "watchos")"#);
+            "SDL_PLATFORM_IOS" = CfgExpr(r#"any(doc, target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos")"#);
             "SDL_PLATFORM_LINUX" = CfgExpr(r#"any(doc, target_os = "linux")"#);
             "SDL_PLATFORM_NGAGE" = CfgExpr(always_false!("SDL_PLATFORM_NGAGE"));
             "SDL_PLATFORM_PS2" = CfgExpr(always_false!("SDL_PLATFORM_PS2"));

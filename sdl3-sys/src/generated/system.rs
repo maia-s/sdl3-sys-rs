@@ -179,7 +179,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "linux"))] => {
 
 });
 
-apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "watchos"))] => {
+apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos"))] => {
     /// The prototype for an Apple iOS animation callback.
     ///
     /// This datatype is only useful on Apple iOS.
@@ -795,7 +795,7 @@ extern "C" {
     pub fn SDL_OnApplicationDidEnterForeground();
 }
 
-apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "watchos"))] => {
+apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos"))] => {
     extern "C" {
         /// Let iOS apps with external event handling report
         /// onApplicationDidChangeStatusBarOrientation.
