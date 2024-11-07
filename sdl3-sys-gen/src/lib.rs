@@ -145,19 +145,20 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
     let (revision_tag, revision_offset) = rest.rsplit_once('-').unwrap();
     let (revision_tag_base, version) = revision_tag.rsplit_once('-').unwrap();
 
-    let (sdl3_src_ver, sdl3_src_dep) = match revision_tag_base {
+    let (sdl3_src_ver, sdl3_src_ver_display) = match revision_tag_base {
         "release" => {
             assert_eq!(revision_offset, "0", "off tag stable release");
             (version.to_string(), version.to_string())
         }
         "preview" => {
-            let ver = format!("{version}-{revision_tag_base}-{revision_offset}");
-            let ver = if revision_offset == "0" {
-                ver
+            if revision_offset == "0" {
+                let ver = format!("{version}-{revision_tag_base}");
+                (format!("{ver}-{revision_offset}"), ver)
             } else {
-                format!("{ver}-{revision_hash}")
-            };
-            (ver.clone(), ver)
+                let ver =
+                    format!("{version}-{revision_tag_base}-{revision_offset}-{revision_hash}");
+                (ver.clone(), ver)
+            }
         }
         _ => return Err("unrecognized SDL tag".into()),
     };
@@ -226,7 +227,7 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
                 match_lines: &[&|s| s == "[build-dependencies.sdl3-src]", &|s| {
                     s.starts_with("version =")
                 }],
-                apply: &|lines| format!("{}version = \"{sdl3_src_dep}\"\n", lines[0]),
+                apply: &|lines| format!("{}version = \"{sdl3_src_ver}\"\n", lines[0]),
             },
         ],
     )?;
@@ -239,7 +240,7 @@ pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<()
                 let match_ = "bindings for SDL version ";
                 let line = &lines[0];
                 let pfx = &line[..line.find(match_).unwrap() + match_.len()];
-                format!("{pfx}`{sdl3_src_ver}` and earlier.\n")
+                format!("{pfx}`{sdl3_src_ver_display}` and earlier.\n")
             },
         }],
     )?;
