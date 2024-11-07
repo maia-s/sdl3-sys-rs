@@ -39,7 +39,6 @@ pub type VkInstance = *mut __VkInstance;
 #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 #[doc(hidden)]
 #[repr(C)]
-#[non_exhaustive]
 pub struct __VkInstance {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -58,7 +57,6 @@ pub type VkPhysicalDevice = *mut __VkPhysicalDevice;
 #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 #[doc(hidden)]
 #[repr(C)]
-#[non_exhaustive]
 pub struct __VkPhysicalDevice {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -76,7 +74,6 @@ pub type VkSurfaceKHR = *mut __VkSurfaceKHR;
 #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 #[doc(hidden)]
 #[repr(C)]
-#[non_exhaustive]
 pub struct __VkSurfaceKHR {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -300,7 +297,6 @@ pub type VkAllocationCallbacks = ::ash_v0_38::vk::AllocationCallbacks<'static>;
 #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 /// (`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::AllocationCallbacks::<'static>` from the `ash` crate. Otherwise it's an opaque type. <div class="warning">The `'static` lifetime is too long. `ash` requires a lifetime for this, but as it's a C ffi type there's no way for `sdl3-sys` to set the correct lifetime.</div>
 #[repr(C)]
-#[non_exhaustive]
 pub struct VkAllocationCallbacks {
     _opaque: [::core::primitive::u8; 0],
 }

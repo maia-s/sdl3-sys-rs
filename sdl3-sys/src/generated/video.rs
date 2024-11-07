@@ -4085,13 +4085,11 @@ extern "C" {
 }
 
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_DisplayModeData {
     _opaque: [::core::primitive::u8; 0],
 }
 
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GLContextState {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -4104,7 +4102,6 @@ pub struct SDL_GLContextState {
 /// ### See also
 /// - [`SDL_CreateWindow`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_Window {
     _opaque: [::core::primitive::u8; 0],
 }

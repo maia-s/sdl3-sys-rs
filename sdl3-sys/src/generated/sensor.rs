@@ -369,7 +369,6 @@ extern "C" {
 }
 
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_Sensor {
     _opaque: [::core::primitive::u8; 0],
 }

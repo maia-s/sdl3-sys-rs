@@ -171,7 +171,7 @@ pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
 /// - [`SDL_CreateSurface`]
 /// - [`SDL_DestroySurface`]
 #[repr(C)]
-#[non_exhaustive]
+// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Surface {
     /// The flags of the surface, read-only

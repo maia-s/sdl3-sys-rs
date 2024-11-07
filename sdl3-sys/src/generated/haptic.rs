@@ -1526,7 +1526,6 @@ extern "C" {
 /// - [`SDL_OpenHapticFromJoystick`]
 /// - [`SDL_CloseHaptic`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_Haptic {
     _opaque: [::core::primitive::u8; 0],
 }

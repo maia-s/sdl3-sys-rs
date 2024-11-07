@@ -112,7 +112,6 @@ extern "C" {
 /// - [`SDL_LoadFunction`]
 /// - [`SDL_UnloadObject`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_SharedObject {
     _opaque: [::core::primitive::u8; 0],
 }

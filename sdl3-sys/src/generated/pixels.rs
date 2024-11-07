@@ -1725,7 +1725,7 @@ pub struct SDL_FColor {
 /// ### See also
 /// - [`SDL_SetPaletteColors`]
 #[repr(C)]
-#[non_exhaustive]
+// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Palette {
     /// number of elements in `colors`.

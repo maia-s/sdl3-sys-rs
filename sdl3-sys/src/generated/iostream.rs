@@ -1396,7 +1396,6 @@ extern "C" {
 /// ### Availability
 /// This struct is available since SDL 3.1.3.
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_IOStream {
     _opaque: [::core::primitive::u8; 0],
 }

@@ -664,7 +664,6 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
             )?;
             writeln!(ctx, "#[doc(hidden)]")?;
             writeln!(ctx, "#[repr(C)]")?;
-            writeln!(ctx, "#[non_exhaustive]")?;
             writeln!(
                 ctx,
                 "pub struct __{arg} {{ _opaque: [::core::primitive::u8; 0] }}",
@@ -710,7 +709,6 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
             )?;
             writeln!(ctx, "#[doc(hidden)]")?;
             writeln!(ctx, "#[repr(C)]")?;
-            writeln!(ctx, "#[non_exhaustive]")?;
             writeln!(
                 ctx,
                 "pub struct __{arg} {{ _opaque: [::core::primitive::u8; 0] }}",
@@ -866,7 +864,6 @@ const EMIT_OPAQUE_STRUCT_PATCHES: &[EmitOpaqueStructPatch] = &[EmitOpaqueStructP
         )?;
         writeln!(ctx, "/// {doc}")?;
         writeln!(ctx, "#[repr(C)]")?;
-        writeln!(ctx, "#[non_exhaustive]")?;
         writeln!(
             ctx,
             "pub struct Vk{name} {{ _opaque: [::core::primitive::u8; 0] }}"

@@ -192,7 +192,7 @@ pub const SDL_LOGICAL_PRESENTATION_INTEGER_SCALE: SDL_RendererLogicalPresentatio
 /// - [`SDL_CreateTextureWithProperties`]
 /// - [`SDL_DestroyTexture`]
 #[repr(C)]
-#[non_exhaustive]
+// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Texture {
     /// The format of the texture, read-only
@@ -3439,7 +3439,6 @@ extern "C" {
 /// ### Availability
 /// This struct is available since SDL 3.1.3.
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_Renderer {
     _opaque: [::core::primitive::u8; 0],
 }

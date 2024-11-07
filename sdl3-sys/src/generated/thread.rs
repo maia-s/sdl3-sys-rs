@@ -558,7 +558,6 @@ extern "C" {
 /// - [`SDL_CreateThread`]
 /// - [`SDL_WaitThread`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_Thread {
     _opaque: [::core::primitive::u8; 0],
 }

@@ -5211,13 +5211,11 @@ apply_cfg!(#[cfg(not(doc))] => {
 /// - [`SDL_UnsetEnvironmentVariable`]
 /// - [`SDL_DestroyEnvironment`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_Environment {
     _opaque: [::core::primitive::u8; 0],
 }
 
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_iconv_data_t {
     _opaque: [::core::primitive::u8; 0],
 }

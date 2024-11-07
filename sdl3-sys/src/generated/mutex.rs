@@ -848,7 +848,6 @@ extern "C" {
 /// ### Availability
 /// This struct is available since SDL 3.1.3.
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_Condition {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -865,7 +864,6 @@ pub struct SDL_Condition {
 /// ### Availability
 /// This struct is available since SDL 3.1.3.
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_Mutex {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -888,7 +886,6 @@ pub struct SDL_Mutex {
 /// ### Availability
 /// This struct is available since SDL 3.1.3.
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_RWLock {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -907,7 +904,6 @@ pub struct SDL_RWLock {
 /// ### Availability
 /// This struct is available since SDL 3.1.3.
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_Semaphore {
     _opaque: [::core::primitive::u8; 0],
 }

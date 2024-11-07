@@ -921,7 +921,8 @@ impl StructOrUnion {
             sym.doc.emit(ctx_ool)?;
             writeln!(ctx_ool, "#[repr(C)]")?;
             if !sym.can_construct {
-                writeln!(ctx_ool, "#[non_exhaustive]")?;
+                // !!!FIXME
+                writeln!(ctx_ool, "// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699")?;
             }
             if can_derive_copy {
                 writeln!(ctx_ool, "#[derive(Clone, Copy)]")?;

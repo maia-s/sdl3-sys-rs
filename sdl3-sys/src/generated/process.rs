@@ -506,7 +506,6 @@ extern "C" {
 }
 
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_Process {
     _opaque: [::core::primitive::u8; 0],
 }

@@ -2524,7 +2524,6 @@ extern "C" {
 /// ### See also
 /// - [`SDL_CreateAudioStream`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_AudioStream {
     _opaque: [::core::primitive::u8; 0],
 }

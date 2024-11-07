@@ -5715,7 +5715,6 @@ apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
 /// - [`SDL_DispatchGPUComputeIndirect`]
 /// - [`SDL_ReleaseGPUBuffer`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPUBuffer {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -5744,7 +5743,6 @@ pub struct SDL_GPUBuffer {
 /// - [`SDL_SubmitGPUCommandBuffer`]
 /// - [`SDL_SubmitGPUCommandBufferAndAcquireFence`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPUCommandBuffer {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -5761,7 +5759,6 @@ pub struct SDL_GPUCommandBuffer {
 /// - [`SDL_BeginGPUComputePass`]
 /// - [`SDL_EndGPUComputePass`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPUComputePass {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -5778,7 +5775,6 @@ pub struct SDL_GPUComputePass {
 /// - [`SDL_BindGPUComputePipeline`]
 /// - [`SDL_ReleaseGPUComputePipeline`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPUComputePipeline {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -5795,7 +5791,6 @@ pub struct SDL_GPUComputePipeline {
 /// - [`SDL_BeginGPUCopyPass`]
 /// - [`SDL_EndGPUCopyPass`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPUCopyPass {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -5805,7 +5800,6 @@ pub struct SDL_GPUCopyPass {
 /// ### Availability
 /// This struct is available since SDL 3.1.3
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPUDevice {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -5821,7 +5815,6 @@ pub struct SDL_GPUDevice {
 /// - [`SDL_WaitForGPUFences`]
 /// - [`SDL_ReleaseGPUFence`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPUFence {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -5838,7 +5831,6 @@ pub struct SDL_GPUFence {
 /// - [`SDL_BindGPUGraphicsPipeline`]
 /// - [`SDL_ReleaseGPUGraphicsPipeline`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPUGraphicsPipeline {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -5855,7 +5847,6 @@ pub struct SDL_GPUGraphicsPipeline {
 /// - [`SDL_BeginGPURenderPass`]
 /// - [`SDL_EndGPURenderPass`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPURenderPass {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -5871,7 +5862,6 @@ pub struct SDL_GPURenderPass {
 /// - [`SDL_BindGPUFragmentSamplers`]
 /// - [`SDL_ReleaseGPUSampler`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPUSampler {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -5886,7 +5876,6 @@ pub struct SDL_GPUSampler {
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 /// - [`SDL_ReleaseGPUShader`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPUShader {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -5911,7 +5900,6 @@ pub struct SDL_GPUShader {
 /// - [`SDL_BlitGPUTexture`]
 /// - [`SDL_ReleaseGPUTexture`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPUTexture {
     _opaque: [::core::primitive::u8; 0],
 }
@@ -5933,7 +5921,6 @@ pub struct SDL_GPUTexture {
 /// - [`SDL_DownloadFromGPUTexture`]
 /// - [`SDL_ReleaseGPUTransferBuffer`]
 #[repr(C)]
-#[non_exhaustive]
 pub struct SDL_GPUTransferBuffer {
     _opaque: [::core::primitive::u8; 0],
 }

@@ -58,7 +58,6 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
     }
 
     #[repr(C)]
-    #[non_exhaustive]
     pub struct tagMSG { _opaque: [::core::primitive::u8; 0] }
 
 });
@@ -860,18 +859,15 @@ apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
     }
 
     #[repr(C)]
-    #[non_exhaustive]
     pub struct XTaskQueueObject { _opaque: [::core::primitive::u8; 0] }
 
     #[repr(C)]
-    #[non_exhaustive]
     pub struct XUser { _opaque: [::core::primitive::u8; 0] }
 
 });
 
 #[doc(hidden)]
 #[repr(C)]
-#[non_exhaustive]
 pub struct _XEvent {
     _opaque: [::core::primitive::u8; 0],
 }

@@ -1350,7 +1350,6 @@ impl InnerScope {
                 doc.emit_rust(ctx, "///")?;
             }
             writeln!(ctx, "#[repr(C)]")?;
-            writeln!(ctx, "#[non_exhaustive]")?;
             writeln!(
                 ctx,
                 "pub struct {} {{ _opaque: [::core::primitive::u8; 0] }}",
