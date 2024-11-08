@@ -269,6 +269,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__WATCOMC__",
             "assert",
             "PRId32",
+            "PRId64",
             "PRIs64",
             "PRIu32",
             "PRIu64",
