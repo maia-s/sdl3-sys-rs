@@ -18,12 +18,14 @@ use std::{
 #[derive(Clone, Copy, Debug)]
 pub struct CfgExpr(&'static str);
 
+pub type DefineState = Cfg<Ident>;
+
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
-pub struct DefineState {
-    state: Option<Coll<Ident>>,
+pub struct Cfg<T> {
+    state: Option<Coll<T>>,
 }
 
-impl DefineState {
+impl<T: Clone + Ord> Cfg<T> {
     pub fn none() -> Self {
         Self { state: None }
     }
@@ -38,9 +40,9 @@ impl DefineState {
         self.state.is_none()
     }
 
-    pub fn defined(ident: Ident) -> Self {
+    pub fn one(item: T) -> Self {
         Self {
-            state: Some(Coll::One(ident)),
+            state: Some(Coll::One(item)),
         }
     }
 
@@ -392,9 +394,9 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         rhs: &Expr,
     ) -> Option<Value> {
         let target_dependent_value = |define| {
-            Some(Value::TargetDependent(DefineState::defined(
-                Ident::new_inline(define),
-            )))
+            Some(Value::TargetDependent(DefineState::one(Ident::new_inline(
+                define,
+            ))))
         };
         match op {
             "==" => {
@@ -710,7 +712,33 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     pub fn emit_define_state_cfg(&mut self, define_state: &DefineState) -> EmitResult {
-        fn emit_cfg_r(ctx: &mut EmitContext, coll: &Coll<Ident>) -> EmitResult {
+        self.emit_cfg(define_state, |ctx, target_define| {
+            Ok(ctx.write_str(
+                ctx.preproc_state()
+                    .borrow()
+                    .get_target_define(target_define)
+                    .ok_or_else(|| ParseErr::new(target_define.span(), "undefined target define"))?
+                    .0,
+            )?)
+        })
+    }
+
+    pub fn emit_feature_cfg(&mut self, cfg: &Cfg<String>) -> EmitResult {
+        self.emit_cfg(cfg, |ctx, feature| {
+            Ok(write!(ctx, "feature = \"{feature}\"")?)
+        })
+    }
+
+    pub fn emit_cfg<T>(
+        &mut self,
+        cfg: &Cfg<T>,
+        emit_cfg: impl Fn(&mut EmitContext, &T) -> EmitResult,
+    ) -> EmitResult {
+        fn emit_cfg_r<T>(
+            ctx: &mut EmitContext,
+            emit_cfg: &impl Fn(&mut EmitContext, &T) -> EmitResult,
+            coll: &Coll<T>,
+        ) -> EmitResult {
             match coll {
                 Coll::All(c) => {
                     write!(ctx, "all(")?;
@@ -720,7 +748,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                             write!(ctx, ", ")?;
                         }
                         first = false;
-                        emit_cfg_r(ctx, cfg)?;
+                        emit_cfg_r(ctx, emit_cfg, cfg)?;
                     }
                     write!(ctx, ")")?;
                     Ok(())
@@ -734,7 +762,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                             write!(ctx, ", ")?;
                         }
                         first = false;
-                        emit_cfg_r(ctx, cfg)?;
+                        emit_cfg_r(ctx, emit_cfg, cfg)?;
                     }
                     write!(ctx, ")")?;
                     Ok(())
@@ -742,33 +770,20 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
                 Coll::Not(c) => {
                     write!(ctx, "not(")?;
-                    emit_cfg_r(ctx, c)?;
+                    emit_cfg_r(ctx, emit_cfg, c)?;
                     write!(ctx, ")")?;
                     Ok(())
                 }
 
-                Coll::One(c) => ctx.emit_cfg_from_target_define(c),
+                Coll::One(c) => emit_cfg(ctx, c),
             }
         }
 
-        if let Some(coll) = &define_state.state {
+        if let Some(coll) = &cfg.state {
             write!(self, "#[cfg(")?;
-            emit_cfg_r(self, coll)?;
+            emit_cfg_r(self, &emit_cfg, coll)?;
             write!(self, ")]")?;
         }
-        Ok(())
-    }
-
-    fn emit_cfg_from_target_define(&mut self, target_define: &Ident) -> EmitResult {
-        write!(
-            self,
-            "{}",
-            self.preproc_state()
-                .borrow()
-                .get_target_define(target_define)
-                .ok_or_else(|| ParseErr::new(target_define.span(), "undefined target define"))?
-                .0
-        )?;
         Ok(())
     }
 

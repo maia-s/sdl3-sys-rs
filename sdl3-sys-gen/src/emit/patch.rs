@@ -1,5 +1,5 @@
 use super::{
-    state::StructSym, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, SymKind, Value,
+    Cfg, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, StructSym, SymKind, Value,
 };
 use crate::parse::{
     Block, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident, IdentOrKw, Item, Items,
@@ -8,6 +8,49 @@ use crate::parse::{
 use core::fmt::Write;
 use std::ffi::CString;
 use str_block::str_block;
+
+const VULKAN_CRATE_VERSIONS: &[(&str, &[&str])] = &[("ash", &["0.38"])];
+const WINDOWS_CRATE_VERSIONS: &[(&str, &[&str])] = &[("windows-sys", &["0.59"])];
+const X11_CRATE_VERSIONS: &[(&str, &[&str])] = &[("x11", &["2"]), ("x11-dl", &["2"])];
+
+fn integrate(
+    ctx: &mut EmitContext,
+    crates: &[(&str, &[&str])],
+    f: impl Fn(&mut EmitContext, &str) -> EmitResult,
+    f_else: impl FnOnce(&mut EmitContext) -> EmitResult,
+) -> EmitResult {
+    let mut not_cfg = Cfg::none();
+    for (krate, ver_it) in crates {
+        for ver in ver_it.iter() {
+            let (vmaj, vmin) = ver.split_once('.').unwrap_or((ver, ""));
+            let mut feature = format!("use-{krate}-v{vmaj}");
+            let mut krate = format!("{krate}_v{vmaj}").replace('-', "_");
+            if !vmin.is_empty() {
+                feature = format!("{feature}-{vmin}");
+                krate = format!("{krate}_{vmin}");
+            }
+            let feature = Cfg::one(feature);
+            write!(ctx, "apply_cfg!(")?;
+            ctx.emit_feature_cfg(&not_cfg.clone().not().all(feature.clone()))?;
+            writeln!(ctx, " => {{")?;
+            ctx.increase_indent();
+            f(ctx, &krate)?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}});")?;
+            writeln!(ctx)?;
+            not_cfg = not_cfg.any(feature);
+        }
+    }
+    write!(ctx, "apply_cfg!(")?;
+    ctx.emit_feature_cfg(&not_cfg.not())?;
+    writeln!(ctx, " => {{")?;
+    ctx.increase_indent();
+    f_else(ctx)?;
+    ctx.decrease_indent();
+    writeln!(ctx, "}});")?;
+    writeln!(ctx)?;
+    Ok(())
+}
 
 struct EmitPatch<T: ?Sized> {
     module: Option<&'static str>,
@@ -641,34 +684,39 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
             };
             let name = arg.as_str().strip_prefix("Vk").unwrap();
             let doc = format!("(`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::{name}` from the `ash` crate. Otherwise it's a pointer to an opaque struct.");
-            writeln!(ctx, r#"#[cfg(feature = "use-ash-v0-38")]"#)?;
-            writeln!(
+            integrate(
                 ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                VULKAN_CRATE_VERSIONS,
+                |ctx, krate| {
+                    writeln!(
+                        ctx,
+                        r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                    )?;
+                    writeln!(ctx, "/// {doc}")?;
+                    writeln!(ctx, "pub type {arg} = ::{krate}::vk::{name};")?;
+                    Ok(())
+                },
+                |ctx| {
+                    writeln!(
+                        ctx,
+                        r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                    )?;
+                    writeln!(ctx, "/// {doc}")?;
+                    writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
+                    writeln!(ctx)?;
+                    writeln!(
+                        ctx,
+                        r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                    )?;
+                    writeln!(ctx, "#[doc(hidden)]")?;
+                    writeln!(ctx, "#[repr(C)]")?;
+                    writeln!(
+                        ctx,
+                        "pub struct __{arg} {{ _opaque: [::core::primitive::u8; 0] }}",
+                    )?;
+                    Ok(())
+                },
             )?;
-            writeln!(ctx, "/// {doc}")?;
-            writeln!(ctx, "pub type {arg} = ::ash_v0_38::vk::{name};")?;
-            writeln!(ctx)?;
-            writeln!(ctx, r#"#[cfg(not(feature = "use-ash-v0-38"))]"#)?;
-            writeln!(
-                ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-            )?;
-            writeln!(ctx, "/// {doc}")?;
-            writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
-            writeln!(ctx)?;
-            writeln!(ctx, r#"#[cfg(not(feature = "use-ash-v0-38"))]"#)?;
-            writeln!(
-                ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-            )?;
-            writeln!(ctx, "#[doc(hidden)]")?;
-            writeln!(ctx, "#[repr(C)]")?;
-            writeln!(
-                ctx,
-                "pub struct __{arg} {{ _opaque: [::core::primitive::u8; 0] }}",
-            )?;
-            writeln!(ctx)?;
             Ok(true)
         },
     },
@@ -681,50 +729,51 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
             };
             let name = arg.as_str().strip_prefix("Vk").unwrap();
             let doc = format!("(`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::{name}` from the `ash` crate. Otherwise it's a target dependent opaque type.");
-            writeln!(ctx, r#"#[cfg(feature = "use-ash-v0-38")]"#)?;
-            writeln!(
+            integrate(
                 ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                VULKAN_CRATE_VERSIONS,
+                |ctx, krate| {
+                    writeln!(
+                        ctx,
+                        r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                    )?;
+                    writeln!(ctx, "/// {doc}")?;
+                    writeln!(ctx, "pub type {arg} = ::{krate}::vk::{name};")?;
+                    Ok(())
+                },
+                |ctx| {
+                    writeln!(
+                        ctx,
+                        r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                    )?;
+                    writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
+                    writeln!(ctx)?;
+
+                    writeln!(ctx, r#"#[cfg(target_pointer_width = "64")]"#)?;
+                    writeln!(
+                        ctx,
+                        r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                    )?;
+                    writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
+                    writeln!(ctx)?;
+                    writeln!(ctx, r#"#[cfg(target_pointer_width = "64")]"#)?;
+                    writeln!(ctx, "#[doc(hidden)]")?;
+                    writeln!(ctx, "#[repr(C)]")?;
+                    writeln!(
+                        ctx,
+                        "pub struct __{arg} {{ _opaque: [::core::primitive::u8; 0] }}",
+                    )?;
+                    writeln!(ctx)?;
+                    writeln!(ctx, r#"#[cfg(not(target_pointer_width = "64"))]"#)?;
+                    writeln!(
+                        ctx,
+                        r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                    )?;
+                    writeln!(ctx, "/// {doc}")?;
+                    writeln!(ctx, "pub type {arg} = ::core::primitive::u64;")?;
+                    Ok(())
+                },
             )?;
-            writeln!(ctx, "/// {doc}")?;
-            writeln!(ctx, "pub type {arg} = ::ash_v0_38::vk::{name};")?;
-            writeln!(ctx)?;
-            writeln!(
-                ctx,
-                r#"#[cfg(all(not(feature = "use-ash-v0-38"), target_pointer_width = "64"))]"#
-            )?;
-            writeln!(
-                ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-            )?;
-            writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
-            writeln!(ctx)?;
-            writeln!(
-                ctx,
-                r#"#[cfg(all(not(feature = "use-ash-v0-38"), target_pointer_width = "64"))]"#
-            )?;
-            writeln!(
-                ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-            )?;
-            writeln!(ctx, "#[doc(hidden)]")?;
-            writeln!(ctx, "#[repr(C)]")?;
-            writeln!(
-                ctx,
-                "pub struct __{arg} {{ _opaque: [::core::primitive::u8; 0] }}",
-            )?;
-            writeln!(ctx)?;
-            writeln!(
-                ctx,
-                r#"#[cfg(all(not(feature = "use-ash-v0-38"), not(target_pointer_width = "64")))]"#
-            )?;
-            writeln!(
-                ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-            )?;
-            writeln!(ctx, "/// {doc}")?;
-            writeln!(ctx, "pub type {arg} = ::core::primitive::u64;")?;
-            writeln!(ctx)?;
             Ok(true)
         },
     },
@@ -760,7 +809,7 @@ const EVAL_MACRO_CALL_PATCHES: &[EvalMacroCallPatch] = &[
             };
             let define = define.clone().try_into()?;
             if ctx.preproc_state().borrow().is_target_define(&define) {
-                Ok(Some(Value::TargetDependent(DefineState::defined(define))))
+                Ok(Some(Value::TargetDependent(DefineState::one(define))))
             } else if ctx.preproc_state().borrow().is_defined(&define)? {
                 Ok(Some(Value::Bool(true)))
             } else {
@@ -846,29 +895,32 @@ const EMIT_OPAQUE_STRUCT_PATCHES: &[EmitOpaqueStructPatch] = &[EmitOpaqueStructP
         let name = s.ident.as_str().strip_prefix("Vk").unwrap();
         let doc = format!("(`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::{name}::<'static>` from the `ash` crate. Otherwise it's an opaque type. {}",
             "<div class=\"warning\">The `'static` lifetime is too long. `ash` requires a lifetime for this, but as it's a C ffi type there's no way for `sdl3-sys` to set the correct lifetime.</div>");
-        writeln!(ctx, r#"#[cfg(feature = "use-ash-v0-38")]"#)?;
-        writeln!(
+        integrate(
             ctx,
-            r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+            VULKAN_CRATE_VERSIONS,
+            |ctx, krate| {
+                writeln!(
+                    ctx,
+                    r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                )?;
+                writeln!(ctx, "/// {doc}")?;
+                writeln!(ctx, "pub type Vk{name} = ::{krate}::vk::{name}::<'static>;")?;
+                Ok(())
+            },
+            |ctx| {
+                writeln!(
+                    ctx,
+                    r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                )?;
+                writeln!(ctx, "/// {doc}")?;
+                writeln!(ctx, "#[repr(C)]")?;
+                writeln!(
+                    ctx,
+                    "pub struct Vk{name} {{ _opaque: [::core::primitive::u8; 0] }}"
+                )?;
+                Ok(())
+            },
         )?;
-        writeln!(ctx, "/// {doc}")?;
-        writeln!(
-            ctx,
-            "pub type Vk{name} = ::ash_v0_38::vk::{name}::<'static>;"
-        )?;
-        writeln!(ctx)?;
-        writeln!(ctx, r#"#[cfg(not(feature = "use-ash-v0-38"))]"#)?;
-        writeln!(
-            ctx,
-            r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-        )?;
-        writeln!(ctx, "/// {doc}")?;
-        writeln!(ctx, "#[repr(C)]")?;
-        writeln!(
-            ctx,
-            "pub struct Vk{name} {{ _opaque: [::core::primitive::u8; 0] }}"
-        )?;
-        writeln!(ctx)?;
         Ok(true)
     },
 }];
@@ -919,24 +971,31 @@ const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[
         match_ident: |i| i == "MSG",
         patch: |ctx, td| {
             let doc = "(`sdl3-sys`) Enable a `use-windows-sys-*` feature to alias this to `MSG` from the `windows-sys` crate. Otherwise it's an opaque struct.";
-            writeln!(ctx, r#"#[cfg(feature = "use-windows-sys-v0-59")]"#)?;
-            writeln!(
+            integrate(
                 ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]"#
+                WINDOWS_CRATE_VERSIONS,
+                |ctx, krate| {
+                    writeln!(
+                        ctx,
+                        r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]"#
+                    )?;
+                    writeln!(ctx, "/// {doc}")?;
+                    writeln!(
+                        ctx,
+                        "pub type MSG = ::{krate}::Win32::UI::WindowsAndMessaging::MSG;"
+                    )?;
+                    Ok(())
+                },
+                |ctx| {
+                    writeln!(
+                        ctx,
+                        r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]"#
+                    )?;
+                    writeln!(ctx, "/// {doc}")?;
+                    td.emit(ctx)?;
+                    Ok(())
+                },
             )?;
-            writeln!(ctx, "/// {doc}")?;
-            writeln!(
-                ctx,
-                "pub type MSG = ::windows_sys_v0_59::Win32::UI::WindowsAndMessaging::MSG;"
-            )?;
-            writeln!(ctx)?;
-            writeln!(ctx, r#"#[cfg(not(feature = "use-windows-sys-v0-59"))]"#)?;
-            writeln!(
-                ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]"#
-            )?;
-            writeln!(ctx, "/// {doc}")?;
-            td.emit(ctx)?;
             Ok(true)
         },
     },
@@ -945,35 +1004,28 @@ const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[
         match_ident: |i| i == "XEvent",
         patch: |ctx, td| {
             let doc = "(`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.";
-            writeln!(ctx, r#"#[cfg(feature = "use-x11-v2")]"#)?;
-            writeln!(
+            integrate(
                 ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                X11_CRATE_VERSIONS,
+                |ctx, krate| {
+                    writeln!(
+                        ctx,
+                        r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                    )?;
+                    writeln!(ctx, "/// {doc}")?;
+                    writeln!(ctx, "pub type XEvent = ::{krate}::xlib::XEvent;")?;
+                    Ok(())
+                },
+                |ctx| {
+                    writeln!(
+                        ctx,
+                        r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                    )?;
+                    writeln!(ctx, "/// {doc}")?;
+                    td.emit(ctx)?;
+                    Ok(())
+                },
             )?;
-            writeln!(ctx, "/// {doc}")?;
-            writeln!(ctx, "pub type XEvent = ::x11_v2::xlib::XEvent;")?;
-            writeln!(ctx)?;
-            writeln!(
-                ctx,
-                r#"#[cfg(all(not(feature = "use-x11-v2"), feature = "use-x11-dl-v2"))]"#
-            )?;
-            writeln!(
-                ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-            )?;
-            writeln!(ctx, "/// {doc}")?;
-            writeln!(ctx, "pub type XEvent = ::x11_dl_v2::xlib::XEvent;")?;
-            writeln!(ctx)?;
-            writeln!(
-                ctx,
-                r#"#[cfg(not(any(feature = "use-x11-v2", feature = "use-x11-dl-v2")))]"#
-            )?;
-            writeln!(
-                ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-            )?;
-            writeln!(ctx, "/// {doc}")?;
-            td.emit(ctx)?;
             Ok(true)
         },
     },

@@ -9,15 +9,18 @@ use super::keyboard::*;
 use super::video::*;
 
 apply_cfg!(#[cfg(any(doc, windows))] => {
-    #[cfg(feature = "use-windows-sys-v0-59")]
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]
-    /// (`sdl3-sys`) Enable a `use-windows-sys-*` feature to alias this to `MSG` from the `windows-sys` crate. Otherwise it's an opaque struct.
-    pub type MSG = ::windows_sys_v0_59::Win32::UI::WindowsAndMessaging::MSG;
+    apply_cfg!(#[cfg(feature = "use-windows-sys-v0-59")] => {
+        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]
+        /// (`sdl3-sys`) Enable a `use-windows-sys-*` feature to alias this to `MSG` from the `windows-sys` crate. Otherwise it's an opaque struct.
+        pub type MSG = ::windows_sys_v0_59::Win32::UI::WindowsAndMessaging::MSG;
+    });
 
-    #[cfg(not(feature = "use-windows-sys-v0-59"))]
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]
-    /// (`sdl3-sys`) Enable a `use-windows-sys-*` feature to alias this to `MSG` from the `windows-sys` crate. Otherwise it's an opaque struct.
-    pub type MSG = tagMSG;
+    apply_cfg!(#[cfg(not(feature = "use-windows-sys-v0-59"))] => {
+        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]
+        /// (`sdl3-sys`) Enable a `use-windows-sys-*` feature to alias this to `MSG` from the `windows-sys` crate. Otherwise it's an opaque struct.
+        pub type MSG = tagMSG;
+
+    });
 
     /// A callback to be used with [`SDL_SetWindowsMessageHook`].
     ///
@@ -111,20 +114,24 @@ apply_cfg!(#[cfg(any(any(doc, windows), any(/* always disabled: SDL_PLATFORM_WIN
 
 });
 
-#[cfg(feature = "use-x11-v2")]
-#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
-/// (`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
-pub type XEvent = ::x11_v2::xlib::XEvent;
+apply_cfg!(#[cfg(feature = "use-x11-v2")] => {
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    /// (`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
+    pub type XEvent = ::x11_v2::xlib::XEvent;
+});
 
-#[cfg(all(not(feature = "use-x11-v2"), feature = "use-x11-dl-v2"))]
-#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
-/// (`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
-pub type XEvent = ::x11_dl_v2::xlib::XEvent;
+apply_cfg!(#[cfg(all(not(feature = "use-x11-v2"), feature = "use-x11-dl-v2"))] => {
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    /// (`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
+    pub type XEvent = ::x11_dl_v2::xlib::XEvent;
+});
 
-#[cfg(not(any(feature = "use-x11-v2", feature = "use-x11-dl-v2")))]
-#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
-/// (`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
-pub type XEvent = _XEvent;
+apply_cfg!(#[cfg(not(any(feature = "use-x11-dl-v2", feature = "use-x11-v2")))] => {
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    /// (`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.
+    pub type XEvent = _XEvent;
+
+});
 
 pub type SDL_X11EventHook = ::core::option::Option<
     unsafe extern "C" fn(

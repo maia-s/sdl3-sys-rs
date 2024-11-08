@@ -22,7 +22,7 @@ mod item;
 mod patch;
 use patch::{patch_emit_define, patch_emit_function, patch_emit_macro_call, patch_emit_type_def};
 mod state;
-pub use state::{DefineState, EmitContext, InnerEmitContext, Sym, SymKind};
+pub use state::{Cfg, DefineState, EmitContext, InnerEmitContext, Sym, SymKind};
 use state::{EmitStatus, PreProcState, StructSym};
 
 pub const fn is_valid_ident(s: &str) -> bool {
@@ -106,7 +106,7 @@ pub trait Emit: core::fmt::Debug {
             writeln!(ctx, " => {{")?;
             ctx.increase_indent();
             if define_state
-                == &DefineState::defined(Ident::new_inline("SDL_WIKI_DOCUMENTATION_SECTION")).not()
+                == &DefineState::one(Ident::new_inline("SDL_WIKI_DOCUMENTATION_SECTION")).not()
             {
                 self.emit(ctx)?;
             } else {
@@ -492,7 +492,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
 
             Some(ConditionalExpr::IfDef(ident)) => {
                 if ctx.preproc_state().borrow().is_target_define(ident) {
-                    let define_state = DefineState::defined(ident.clone());
+                    let define_state = DefineState::one(ident.clone());
                     let pps1 = self.block.emit_with_define_state(ctx, &define_state)?;
                     if let Some(else_block) = &self.else_block {
                         let pps2 = else_block.emit_with_define_state(ctx, &define_state.not())?;
@@ -509,7 +509,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
 
             Some(ConditionalExpr::IfNDef(ident)) => {
                 if ctx.preproc_state().borrow().is_target_define(ident) {
-                    let define_state = DefineState::defined(ident.clone());
+                    let define_state = DefineState::one(ident.clone());
                     let pps1 = self
                         .block
                         .emit_with_define_state(ctx, &define_state.clone().not())?;
