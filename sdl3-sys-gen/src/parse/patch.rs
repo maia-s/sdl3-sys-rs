@@ -463,6 +463,14 @@ const STRUCT_PATCHES: &[StructPatch] = &[
             Ok(true)
         },
     },
+    StructPatch {
+        module: Some("system"),
+        match_ident: |i| i == "tagMSG",
+        patch: |_, s| {
+            s.hidden = true;
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_parsed_typedef(ctx: &ParseContext, e: &mut TypeDef) -> Result<bool, ParseErr> {

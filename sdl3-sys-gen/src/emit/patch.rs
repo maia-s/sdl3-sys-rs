@@ -916,6 +916,32 @@ const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[
     },
     EmitTypeDefPatch {
         module: Some("system"),
+        match_ident: |i| i == "MSG",
+        patch: |ctx, td| {
+            let doc = "(`sdl3-sys`) Enable a `use-windows-sys-*` feature to alias this to `MSG` from the `windows-sys` crate. Otherwise it's an opaque struct.";
+            writeln!(ctx, r#"#[cfg(feature = "use-windows-sys-v0-59")]"#)?;
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]"#
+            )?;
+            writeln!(ctx, "/// {doc}")?;
+            writeln!(
+                ctx,
+                "pub type MSG = ::windows_sys_v0_59::Win32::UI::WindowsAndMessaging::MSG;"
+            )?;
+            writeln!(ctx)?;
+            writeln!(ctx, r#"#[cfg(not(feature = "use-windows-sys-v0-59"))]"#)?;
+            writeln!(
+                ctx,
+                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]"#
+            )?;
+            writeln!(ctx, "/// {doc}")?;
+            td.emit(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitTypeDefPatch {
+        module: Some("system"),
         match_ident: |i| i == "XEvent",
         patch: |ctx, td| {
             let doc = "(`sdl3-sys`) Enable either a `use-x11-*` or a `use-x11-dl-*` feature to alias this to `XEvent` from the `x11` or `x11-dl` crates, respectively. Otherwise it's an opaque struct.";
