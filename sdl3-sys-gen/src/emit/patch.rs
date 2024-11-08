@@ -951,7 +951,7 @@ const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[
                 r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
             )?;
             writeln!(ctx, "/// {doc}")?;
-            writeln!(ctx, "pub use ::x11_v2::xlib::XEvent;")?;
+            writeln!(ctx, "pub type XEvent = ::x11_v2::xlib::XEvent;")?;
             writeln!(ctx)?;
             writeln!(
                 ctx,
@@ -962,7 +962,7 @@ const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[
                 r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
             )?;
             writeln!(ctx, "/// {doc}")?;
-            writeln!(ctx, "pub use ::x11_dl_v2::xlib::XEvent;")?;
+            writeln!(ctx, "pub type XEvent = ::x11_dl_v2::xlib::XEvent;")?;
             writeln!(ctx)?;
             writeln!(
                 ctx,
