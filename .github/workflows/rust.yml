@@ -1,0 +1,17 @@
+name: Generate and check
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+        submodules: recursive
+    - name: Install Rust 1.79 and nightly
+      run: rustup update 1.79.0 nightly
+    - name: Generate and check
+      run: ./generate-and-check.sh --require-clean
