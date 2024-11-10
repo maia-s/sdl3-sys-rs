@@ -742,13 +742,6 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
                     Ok(())
                 },
                 |ctx| {
-                    writeln!(
-                        ctx,
-                        r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-                    )?;
-                    writeln!(ctx, "pub type {arg} = *mut __{arg};")?;
-                    writeln!(ctx)?;
-
                     writeln!(ctx, r#"#[cfg(target_pointer_width = "64")]"#)?;
                     writeln!(
                         ctx,

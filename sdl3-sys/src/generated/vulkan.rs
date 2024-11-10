@@ -66,9 +66,6 @@ apply_cfg!(#[cfg(feature = "use-ash-v0-38")] => {
 });
 
 apply_cfg!(#[cfg(not(feature = "use-ash-v0-38"))] => {
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
-    pub type VkSurfaceKHR = *mut __VkSurfaceKHR;
-
     #[cfg(target_pointer_width = "64")]
     #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub type VkSurfaceKHR = *mut __VkSurfaceKHR;
