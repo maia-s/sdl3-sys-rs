@@ -231,9 +231,9 @@ extern "C" {
     ///
     /// `flags` may be any of the following:
     ///
-    /// - `SDL_MESSAGEBOX_ERROR`: error dialog
-    /// - `SDL_MESSAGEBOX_WARNING`: warning dialog
-    /// - `SDL_MESSAGEBOX_INFORMATION`: informational dialog
+    /// - [`SDL_MESSAGEBOX_ERROR`]: error dialog
+    /// - [`SDL_MESSAGEBOX_WARNING`]: warning dialog
+    /// - [`SDL_MESSAGEBOX_INFORMATION`]: informational dialog
     ///
     /// This function should be called on the thread that created the parent
     /// window, or on the main thread if the messagebox has no parent. It will

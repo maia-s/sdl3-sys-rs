@@ -597,10 +597,10 @@ pub struct SDL_HapticPeriodic {
 ///
 /// The struct handles the following effects:
 ///
-/// - SDL_HAPTIC_SPRING: Effect based on axes position.
-/// - SDL_HAPTIC_DAMPER: Effect based on axes velocity.
-/// - SDL_HAPTIC_INERTIA: Effect based on axes acceleration.
-/// - SDL_HAPTIC_FRICTION: Effect based on axes movement.
+/// - [`SDL_HAPTIC_SPRING`]: Effect based on axes position.
+/// - [`SDL_HAPTIC_DAMPER`]: Effect based on axes velocity.
+/// - [`SDL_HAPTIC_INERTIA`]: Effect based on axes acceleration.
+/// - [`SDL_HAPTIC_FRICTION`]: Effect based on axes movement.
 ///
 /// Direction is handled by condition internals instead of a direction member.
 /// The condition effect specific members have three parameters. The first
@@ -1234,16 +1234,16 @@ extern "C" {
     /// Run the haptic effect on its associated haptic device.
     ///
     /// To repeat the effect over and over indefinitely, set `iterations` to
-    /// `SDL_HAPTIC_INFINITY`. (Repeats the envelope - attack and fade.) To make
+    /// [`SDL_HAPTIC_INFINITY`]. (Repeats the envelope - attack and fade.) To make
     /// one instance of the effect last indefinitely (so the effect does not fade),
-    /// set the effect's `length` in its structure/union to `SDL_HAPTIC_INFINITY`
+    /// set the effect's `length` in its structure/union to [`SDL_HAPTIC_INFINITY`]
     /// instead.
     ///
     /// ### Arguments
     /// - `haptic`: the [`SDL_Haptic`] device to run the effect on.
     /// - `effect`: the ID of the haptic effect to run.
     /// - `iterations`: the number of iterations to run the effect; use
-    ///   `SDL_HAPTIC_INFINITY` to repeat forever.
+    ///   [`SDL_HAPTIC_INFINITY`] to repeat forever.
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1331,8 +1331,8 @@ extern "C" {
     /// Device must support the [`SDL_HAPTIC_GAIN`] feature.
     ///
     /// The user may specify the maximum gain by setting the environment variable
-    /// `SDL_HAPTIC_GAIN_MAX` which should be between 0 and 100. All calls to
-    /// [`SDL_SetHapticGain()`] will scale linearly using `SDL_HAPTIC_GAIN_MAX` as the
+    /// [`SDL_HAPTIC_GAIN_MAX`] which should be between 0 and 100. All calls to
+    /// [`SDL_SetHapticGain()`] will scale linearly using [`SDL_HAPTIC_GAIN_MAX`] as the
     /// maximum.
     ///
     /// ### Arguments
@@ -1383,7 +1383,7 @@ extern "C" {
 extern "C" {
     /// Pause a haptic device.
     ///
-    /// Device must support the `SDL_HAPTIC_PAUSE` feature. Call [`SDL_ResumeHaptic()`]
+    /// Device must support the [`SDL_HAPTIC_PAUSE`] feature. Call [`SDL_ResumeHaptic()`]
     /// to resume playback.
     ///
     /// Do not modify the effects nor add new ones while the device is paused. That

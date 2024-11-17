@@ -5184,7 +5184,7 @@ apply_cfg!(#[cfg(doc)] => {
     ///
     /// If for some reason you need to force this typedef to be an actual `void *`,
     /// perhaps to work around a compiler or existing code, you can define
-    /// `SDL_FUNCTION_POINTER_IS_VOID_POINTER` before including any SDL headers.
+    /// [`SDL_FUNCTION_POINTER_IS_VOID_POINTER`] before including any SDL headers.
     ///
     /// ### Availability
     /// This datatype is available since SDL 3.1.3.

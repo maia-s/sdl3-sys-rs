@@ -1816,7 +1816,7 @@ extern "C" {
 extern "C" {
     /// Convert a bpp value and RGBA masks to an enumerated pixel format.
     ///
-    /// This will return `SDL_PIXELFORMAT_UNKNOWN` if the conversion wasn't
+    /// This will return [`SDL_PIXELFORMAT_UNKNOWN`] if the conversion wasn't
     /// possible.
     ///
     /// ### Arguments

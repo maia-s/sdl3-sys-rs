@@ -3625,31 +3625,31 @@ extern "C" {
     ///
     /// These are the supported properties:
     ///
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN`: enable debug mode
+    /// - [`SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN`]: enable debug mode
     ///   properties and validations, defaults to true.
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN`: enable to prefer
+    /// - [`SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN`]: enable to prefer
     ///   energy efficiency over maximum GPU performance, defaults to false.
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING`: the name of the GPU driver to
+    /// - [`SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING`]: the name of the GPU driver to
     ///   use, if a specific one is desired.
     ///
     /// These are the current shader format properties:
     ///
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN`: The app is able to
+    /// - [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN`]: The app is able to
     ///   provide shaders for an NDA platform.
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN`: The app is able to
+    /// - [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN`]: The app is able to
     ///   provide SPIR-V shaders if applicable.
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN`: The app is able to
+    /// - [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN`]: The app is able to
     ///   provide DXBC shaders if applicable
-    ///   `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN`: The app is able to
+    ///   [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN`]: The app is able to
     ///   provide DXIL shaders if applicable.
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN`: The app is able to
+    /// - [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN`]: The app is able to
     ///   provide MSL shaders if applicable.
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN`: The app is able to
+    /// - [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN`]: The app is able to
     ///   provide Metal shader libraries if applicable.
     ///
     /// With the D3D12 renderer:
     ///
-    /// - `SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING`: the prefix to
+    /// - [`SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING`]: the prefix to
     ///   use for all vertex semantics, default is "TEXCOORD".
     ///
     /// ### Arguments

@@ -441,7 +441,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         /// Get the current state of external storage for this Android application.
         ///
         /// The current state of external storage, a bitmask of these values:
-        /// `SDL_ANDROID_EXTERNAL_STORAGE_READ`, `SDL_ANDROID_EXTERNAL_STORAGE_WRITE`.
+        /// [`SDL_ANDROID_EXTERNAL_STORAGE_READ`], [`SDL_ANDROID_EXTERNAL_STORAGE_WRITE`].
         ///
         /// If external storage is currently unavailable, this will return 0.
         ///

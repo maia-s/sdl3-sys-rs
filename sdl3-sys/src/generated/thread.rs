@@ -113,9 +113,9 @@ apply_cfg!(#[cfg(doc)] => {
         /// This is a convenience function, equivalent to calling
         /// [`SDL_CreateThreadWithProperties`] with the following properties set:
         ///
-        /// - `SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER`: `fn`
-        /// - `SDL_PROP_THREAD_CREATE_NAME_STRING`: `name`
-        /// - `SDL_PROP_THREAD_CREATE_USERDATA_POINTER`: `data`
+        /// - [`SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER`]: `fn`
+        /// - [`SDL_PROP_THREAD_CREATE_NAME_STRING`]: `name`
+        /// - [`SDL_PROP_THREAD_CREATE_USERDATA_POINTER`]: `data`
         ///
         /// Note that this "function" is actually a macro that calls an internal
         /// function with two extra parameters not listed here; they are hidden through
@@ -149,18 +149,18 @@ apply_cfg!(#[cfg(doc)] => {
         ///
         /// These are the supported properties:
         ///
-        /// - `SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER`: an [`SDL_ThreadFunction`]
+        /// - [`SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER`]: an [`SDL_ThreadFunction`]
         ///   value that will be called at the start of the new thread's life.
         ///   Required.
-        /// - `SDL_PROP_THREAD_CREATE_NAME_STRING`: the name of the new thread, which
+        /// - [`SDL_PROP_THREAD_CREATE_NAME_STRING`]: the name of the new thread, which
         ///   might be available to debuggers. Optional, defaults to NULL.
-        /// - `SDL_PROP_THREAD_CREATE_USERDATA_POINTER`: an arbitrary app-defined
+        /// - [`SDL_PROP_THREAD_CREATE_USERDATA_POINTER`]: an arbitrary app-defined
         ///   pointer, which is passed to the entry function on the new thread, as its
         ///   only parameter. Optional, defaults to NULL.
-        /// - `SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER`: the size, in bytes, of the new
+        /// - [`SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER`]: the size, in bytes, of the new
         ///   thread's stack. Optional, defaults to 0 (system-defined default).
         ///
-        /// SDL makes an attempt to report `SDL_PROP_THREAD_CREATE_NAME_STRING` to the
+        /// SDL makes an attempt to report [`SDL_PROP_THREAD_CREATE_NAME_STRING`] to the
         /// system, so that debuggers can display it. Not all platforms support this.
         ///
         /// Thread naming is a little complicated: Most systems have very small limits
@@ -178,7 +178,7 @@ apply_cfg!(#[cfg(doc)] => {
         /// [`SDL_GetThreadName()`].
         ///
         /// The size (in bytes) of the new stack can be specified with
-        /// `SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER`. Zero means "use the system
+        /// [`SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER`]. Zero means "use the system
         /// default" which might be wildly different between platforms. x86 Linux
         /// generally defaults to eight megabytes, an embedded device might be a few
         /// kilobytes instead. You generally need to specify a stack that is a multiple
@@ -191,7 +191,7 @@ apply_cfg!(#[cfg(doc)] => {
         /// point of the function call. Language bindings that aren't using the C
         /// headers will need to deal with this.
         ///
-        /// The actual symbol in SDL is `SDL_CreateThreadWithPropertiesRuntime`, so
+        /// The actual symbol in SDL is [`SDL_CreateThreadWithPropertiesRuntime`], so
         /// there is no symbol clash, but trying to load an SDL shared library and look
         /// for "SDL_CreateThreadWithProperties" will fail.
         ///

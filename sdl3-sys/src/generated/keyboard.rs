@@ -261,11 +261,11 @@ extern "C" {
     /// Get a human-readable name for a scancode.
     ///
     /// **Warning**: The returned name is by design not stable across platforms,
-    /// e.g. the name for `SDL_SCANCODE_LGUI` is "Left GUI" under Linux but "Left
+    /// e.g. the name for [`SDL_SCANCODE_LGUI`] is "Left GUI" under Linux but "Left
     /// Windows" under Microsoft Windows, and some scancodes like
-    /// `SDL_SCANCODE_NONUSBACKSLASH` don't have any name at all. There are even
-    /// scancodes that share names, e.g. `SDL_SCANCODE_RETURN` and
-    /// `SDL_SCANCODE_RETURN2` (both called "Return"). This function is therefore
+    /// [`SDL_SCANCODE_NONUSBACKSLASH`] don't have any name at all. There are even
+    /// scancodes that share names, e.g. [`SDL_SCANCODE_RETURN`] and
+    /// [`SDL_SCANCODE_RETURN2`] (both called "Return"). This function is therefore
     /// unsuitable for creating a stable cross-platform two-way mapping between
     /// strings and scancodes.
     ///
@@ -291,7 +291,7 @@ extern "C" {
     /// ### Arguments
     /// - `name`: the human-readable scancode name.
     /// ### Return value
-    /// Returns the [`SDL_Scancode`], or `SDL_SCANCODE_UNKNOWN` if the name wasn't
+    /// Returns the [`SDL_Scancode`], or [`SDL_SCANCODE_UNKNOWN`] if the name wasn't
     ///   recognized; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
@@ -552,23 +552,23 @@ extern "C" {
     ///
     /// These are the supported properties:
     ///
-    /// - `SDL_PROP_TEXTINPUT_TYPE_NUMBER` - an [`SDL_TextInputType`] value that
+    /// - [`SDL_PROP_TEXTINPUT_TYPE_NUMBER`] - an [`SDL_TextInputType`] value that
     ///   describes text being input, defaults to [`SDL_TEXTINPUT_TYPE_TEXT`].
-    /// - `SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER` - an [`SDL_Capitalization`] value
+    /// - [`SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER`] - an [`SDL_Capitalization`] value
     ///   that describes how text should be capitalized, defaults to
     ///   [`SDL_CAPITALIZE_SENTENCES`] for normal text entry, [`SDL_CAPITALIZE_WORDS`] for
     ///   [`SDL_TEXTINPUT_TYPE_TEXT_NAME`], and [`SDL_CAPITALIZE_NONE`] for e-mail
     ///   addresses, usernames, and passwords.
-    /// - `SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN` - true to enable auto completion
+    /// - [`SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN`] - true to enable auto completion
     ///   and auto correction, defaults to true.
-    /// - `SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN` - true if multiple lines of text
+    /// - [`SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN`] - true if multiple lines of text
     ///   are allowed. This defaults to true if [`SDL_HINT_RETURN_KEY_HIDES_IME`] is
     ///   "0" or is not set, and defaults to false if [`SDL_HINT_RETURN_KEY_HIDES_IME`]
     ///   is "1".
     ///
     /// On Android you can directly specify the input type:
     ///
-    /// - `SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER` - the text input type to
+    /// - [`SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER`] - the text input type to
     ///   use, overriding other properties. This is documented at
     ///   <https://developer.android.com/reference/android/text/InputType>
     ///

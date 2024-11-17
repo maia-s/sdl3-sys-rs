@@ -762,7 +762,7 @@ extern "C" {
     /// Return whether initialization should be done.
     ///
     /// This function checks the passed in state and if initialization should be
-    /// done, sets the status to `SDL_INIT_STATUS_INITIALIZING` and returns true.
+    /// done, sets the status to [`SDL_INIT_STATUS_INITIALIZING`] and returns true.
     /// If another thread is already modifying this state, it will wait until
     /// that's done before returning.
     ///
@@ -790,7 +790,7 @@ extern "C" {
     /// Return whether cleanup should be done.
     ///
     /// This function checks the passed in state and if cleanup should be done,
-    /// sets the status to `SDL_INIT_STATUS_UNINITIALIZING` and returns true.
+    /// sets the status to [`SDL_INIT_STATUS_UNINITIALIZING`] and returns true.
     ///
     /// If this function returns true, the calling code must call
     /// [`SDL_SetInitialized()`] to complete the cleanup.
@@ -816,7 +816,7 @@ extern "C" {
     /// Finish an initialization state transition.
     ///
     /// This function sets the status of the passed in state to
-    /// `SDL_INIT_STATUS_INITIALIZED` or `SDL_INIT_STATUS_UNINITIALIZED` and allows
+    /// [`SDL_INIT_STATUS_INITIALIZED`] or [`SDL_INIT_STATUS_UNINITIALIZED`] and allows
     /// any threads waiting for the status to proceed.
     ///
     /// ### Arguments

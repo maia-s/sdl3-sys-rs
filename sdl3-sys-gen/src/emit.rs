@@ -29,6 +29,10 @@ pub const fn is_valid_ident(s: &str) -> bool {
     matches!(s.as_bytes()[0], b'a'..=b'z' | b'A'..=b'Z' | b'_')
 }
 
+pub fn skip_doc_link_sym(s: &str) -> bool {
+    matches!(s, "SDL_image" | "SDL_MAIN_USE_CALLBACKS")
+}
+
 fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
     if let Some(abi) = &abi {
         match abi.ident.as_str() {
@@ -219,17 +223,19 @@ impl DocComment {
             if i < i0 {
                 continue;
             }
-            write!(patched, "{}", &line[i0..i])?;
             quoted += line[i0..i].chars().filter(|c| *c == '`').count();
-            i0 = i;
 
-            if quoted & 1 == 0 {
+            if (quoted & 1 == 0)
+                || (line.as_bytes().get(i.wrapping_sub(1)).copied() == Some(b'`')
+                    && line.as_bytes().get(i.wrapping_sub(2)).copied() != Some(b'['))
+            {
                 if (line[i..].starts_with("https://") || line[i..].starts_with("http://"))
                     && (i == 0
                         || line.as_bytes()[i - 1].is_ascii_whitespace()
                         || (line.as_bytes()[i - 1] == b'('
                             && line.as_bytes().get(i.saturating_sub(2)).copied() != Some(b']')))
                 {
+                    write!(patched, "{}", &line[i0..i])?;
                     i0 = i + line[i..]
                         .find(|c: char| {
                             c.is_ascii_whitespace()
@@ -241,26 +247,51 @@ impl DocComment {
                 } else if line[i..].starts_with("SDL_")
                     && (i == 0
                         || line.as_bytes()[i - 1].is_ascii_whitespace()
-                        || line.as_bytes()[i - 1] == b'(')
+                        || line.as_bytes()[i - 1] == b'('
+                        || (line.as_bytes()[i - 1] == b'`'
+                            && line.as_bytes().get(i.wrapping_sub(2)).copied() != Some(b'[')))
                 {
-                    let end = i + line[i..]
+                    let mut end = i + line[i..]
                         .find(|c: char| !c.is_ascii_alphanumeric() && c != '_')
                         .unwrap_or(line.len() - i);
-                    if line.len() == end
-                        || line.as_bytes()[end].is_ascii_whitespace()
-                        || matches!(line.as_bytes()[end], b')' | b',' | b'.' | b';')
-                        || (line.as_bytes()[end] == b'('
-                            && line.as_bytes().get(end + 1).copied() == Some(b')'))
+                    if end > i + 4
+                        && !skip_doc_link_sym(&line[i..end])
+                        && (line.len() == end
+                            || line.as_bytes()[end].is_ascii_whitespace()
+                            || matches!(
+                                line.as_bytes()[end],
+                                b')' | b',' | b'.' | b';' | b':' | b'`'
+                            )
+                            || (line.as_bytes()[end] == b'('
+                                && line.as_bytes().get(end + 1).copied() == Some(b')')))
+                        && (quoted & 1 == 0 || line.as_bytes()[end] == b'`')
                     {
-                        i0 = end;
-                        if line.as_bytes().get(i0).copied() == Some(b'(')
-                            && line.as_bytes().get(i0 + 1).copied() == Some(b')')
+                        if line.as_bytes().get(end).copied() == Some(b'(')
+                            && line.as_bytes().get(end + 1).copied() == Some(b')')
                         {
-                            i0 += 2;
+                            end += 2;
                         }
-                        write!(patched, "[`{}`]", &line[i..i0])?;
+                        if quoted & 1 == 0 {
+                            write!(patched, "{}", &line[i0..i])?;
+                            write!(patched, "[`{}`]", &line[i..end])?;
+                            i0 = end;
+                        } else {
+                            write!(patched, "{}", &line[i0..i - 1])?;
+                            write!(patched, "[{}]", &line[i - 1..end + 1])?;
+                            i0 = end + 1;
+                            quoted += 1;
+                        }
+                    } else {
+                        write!(patched, "{}", &line[i0..i])?;
+                        i0 = i;
                     }
+                } else {
+                    write!(patched, "{}", &line[i0..i])?;
+                    i0 = i;
                 }
+            } else {
+                write!(patched, "{}", &line[i0..i])?;
+                i0 = i;
             }
         }
         write!(patched, "{}", &line[i0..])?;

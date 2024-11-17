@@ -200,7 +200,7 @@ extern "C" {
     /// ### Arguments
     /// - `instance_id`: the sensor instance ID.
     /// ### Return value
-    /// Returns the [`SDL_SensorType`], or `SDL_SENSOR_INVALID` if `instance_id` is
+    /// Returns the [`SDL_SensorType`], or [`SDL_SENSOR_INVALID`] if `instance_id` is
     ///   not valid.
     ///
     /// ### Availability
@@ -286,7 +286,7 @@ extern "C" {
     /// ### Arguments
     /// - `sensor`: the [`SDL_Sensor`] object to inspect.
     /// ### Return value
-    /// Returns the [`SDL_SensorType`] type, or `SDL_SENSOR_INVALID` if `sensor` is
+    /// Returns the [`SDL_SensorType`] type, or [`SDL_SENSOR_INVALID`] if `sensor` is
     ///   NULL.
     ///
     /// ### Availability

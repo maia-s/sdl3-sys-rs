@@ -100,7 +100,7 @@ extern "C" {
     ///   filled in with -1 we can't determine a value or there is no
     ///   battery.
     /// ### Return value
-    /// Returns the current battery state or `SDL_POWERSTATE_ERROR` on failure;
+    /// Returns the current battery state or [`SDL_POWERSTATE_ERROR`] on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability

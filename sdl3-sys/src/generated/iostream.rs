@@ -299,20 +299,20 @@ extern "C" {
     ///
     /// The following properties may be set at creation time by SDL:
     ///
-    /// - `SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER`: a pointer, that can be cast
+    /// - [`SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER`]: a pointer, that can be cast
     ///   to a win32 `HANDLE`, that this [`SDL_IOStream`] is using to access the
     ///   filesystem. If the program isn't running on Windows, or SDL used some
     ///   other method to access the filesystem, this property will not be set.
-    /// - `SDL_PROP_IOSTREAM_STDIO_FILE_POINTER`: a pointer, that can be cast to a
+    /// - [`SDL_PROP_IOSTREAM_STDIO_FILE_POINTER`]: a pointer, that can be cast to a
     ///   stdio `FILE *`, that this [`SDL_IOStream`] is using to access the filesystem.
     ///   If SDL used some other method to access the filesystem, this property
     ///   will not be set. PLEASE NOTE that if SDL is using a different C runtime
     ///   than your app, trying to use this pointer will almost certainly result in
     ///   a crash! This is mostly a problem on Windows; make sure you build SDL and
     ///   your app with the same compiler and settings to avoid it.
-    /// - `SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER`: a file descriptor that this
+    /// - [`SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER`]: a file descriptor that this
     ///   [`SDL_IOStream`] is using to access the filesystem.
-    /// - `SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER`: a pointer, that can be cast
+    /// - [`SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER`]: a pointer, that can be cast
     ///   to an Android NDK `AAsset *`, that this [`SDL_IOStream`] is using to access
     ///   the filesystem. If SDL used some other method to access the filesystem,
     ///   this property will not be set.
@@ -370,9 +370,9 @@ extern "C" {
     ///
     /// The following properties will be set at creation time by SDL:
     ///
-    /// - `SDL_PROP_IOSTREAM_MEMORY_POINTER`: this will be the `mem` parameter that
+    /// - [`SDL_PROP_IOSTREAM_MEMORY_POINTER`]: this will be the `mem` parameter that
     ///   was passed to this function.
-    /// - `SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER`: this will be the `size` parameter
+    /// - [`SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER`]: this will be the `size` parameter
     ///   that was passed to this function.
     ///
     /// ### Arguments
@@ -424,9 +424,9 @@ extern "C" {
     ///
     /// The following properties will be set at creation time by SDL:
     ///
-    /// - `SDL_PROP_IOSTREAM_MEMORY_POINTER`: this will be the `mem` parameter that
+    /// - [`SDL_PROP_IOSTREAM_MEMORY_POINTER`]: this will be the `mem` parameter that
     ///   was passed to this function.
-    /// - `SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER`: this will be the `size` parameter
+    /// - [`SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER`]: this will be the `size` parameter
     ///   that was passed to this function.
     ///
     /// ### Arguments
@@ -458,12 +458,12 @@ extern "C" {
     /// This supports the following properties to provide access to the memory and
     /// control over allocations:
     ///
-    /// - `SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER`: a pointer to the internal
+    /// - [`SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER`]: a pointer to the internal
     ///   memory of the stream. This can be set to NULL to transfer ownership of
     ///   the memory to the application, which should free the memory with
     ///   [`SDL_free()`]. If this is done, the next operation on the stream must be
     ///   [`SDL_CloseIO()`].
-    /// - `SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER`: memory will be allocated in
+    /// - [`SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER`]: memory will be allocated in
     ///   multiples of this size, defaulting to 1024.
     ///
     /// ### Return value
@@ -617,9 +617,9 @@ extern "C" {
     ///
     /// `whence` may be any of the following values:
     ///
-    /// - `SDL_IO_SEEK_SET`: seek from the beginning of data
-    /// - `SDL_IO_SEEK_CUR`: seek relative to current read point
-    /// - `SDL_IO_SEEK_END`: seek relative to the end of data
+    /// - [`SDL_IO_SEEK_SET`]: seek from the beginning of data
+    /// - [`SDL_IO_SEEK_CUR`]: seek relative to current read point
+    /// - [`SDL_IO_SEEK_END`]: seek relative to the end of data
     ///
     /// If this stream can not seek, it will return -1.
     ///
@@ -627,8 +627,8 @@ extern "C" {
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `offset`: an offset in bytes, relative to `whence` location; can be
     ///   negative.
-    /// - `whence`: any of `SDL_IO_SEEK_SET`, `SDL_IO_SEEK_CUR`,
-    ///   `SDL_IO_SEEK_END`.
+    /// - `whence`: any of [`SDL_IO_SEEK_SET`], [`SDL_IO_SEEK_CUR`],
+    ///   [`SDL_IO_SEEK_END`].
     /// ### Return value
     /// Returns the final offset in the data stream after the seek or -1 on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -645,7 +645,7 @@ extern "C" {
     /// Determine the current read/write offset in an [`SDL_IOStream`] data stream.
     ///
     /// [`SDL_TellIO`] is actually a wrapper function that calls the SDL_IOStream's
-    /// `seek` method, with an offset of 0 bytes from `SDL_IO_SEEK_CUR`, to
+    /// `seek` method, with an offset of 0 bytes from [`SDL_IO_SEEK_CUR`], to
     /// simplify application development.
     ///
     /// ### Arguments

@@ -337,36 +337,36 @@ extern "C" {
     ///
     /// These are the supported properties:
     ///
-    /// - `SDL_PROP_RENDERER_CREATE_NAME_STRING`: the name of the rendering driver
+    /// - [`SDL_PROP_RENDERER_CREATE_NAME_STRING`]: the name of the rendering driver
     ///   to use, if a specific one is desired
-    /// - `SDL_PROP_RENDERER_CREATE_WINDOW_POINTER`: the window where rendering is
+    /// - [`SDL_PROP_RENDERER_CREATE_WINDOW_POINTER`]: the window where rendering is
     ///   displayed, required if this isn't a software renderer using a surface
-    /// - `SDL_PROP_RENDERER_CREATE_SURFACE_POINTER`: the surface where rendering
+    /// - [`SDL_PROP_RENDERER_CREATE_SURFACE_POINTER`]: the surface where rendering
     ///   is displayed, if you want a software renderer without a window
-    /// - `SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER`: an [`SDL_ColorSpace`]
+    /// - [`SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER`]: an [`SDL_ColorSpace`]
     ///   value describing the colorspace for output to the display, defaults to
     ///   [`SDL_COLORSPACE_SRGB`]. The direct3d11, direct3d12, and metal renderers
     ///   support [`SDL_COLORSPACE_SRGB_LINEAR`], which is a linear color space and
     ///   supports HDR output. If you select [`SDL_COLORSPACE_SRGB_LINEAR`], drawing
     ///   still uses the sRGB colorspace, but values can go beyond 1.0 and float
     ///   (linear) format textures can be used for HDR content.
-    /// - `SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER`: non-zero if you want
+    /// - [`SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER`]: non-zero if you want
     ///   present synchronized with the refresh rate. This property can take any
     ///   value that is supported by [`SDL_SetRenderVSync()`] for the renderer.
     ///
     /// With the vulkan renderer:
     ///
-    /// - `SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER`: the VkInstance to use
+    /// - [`SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER`]: the VkInstance to use
     ///   with the renderer, optional.
-    /// - `SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER`: the VkSurfaceKHR to use
+    /// - [`SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER`]: the VkSurfaceKHR to use
     ///   with the renderer, optional.
-    /// - `SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER`: the
+    /// - [`SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER`]: the
     ///   VkPhysicalDevice to use with the renderer, optional.
-    /// - `SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER`: the VkDevice to use
+    /// - [`SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER`]: the VkDevice to use
     ///   with the renderer, optional.
-    /// - `SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER`: the
+    /// - [`SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER`]: the
     ///   queue family index used for rendering.
-    /// - `SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER`: the
+    /// - [`SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER`]: the
     ///   queue family index used for presentation.
     ///
     /// ### Arguments
@@ -426,7 +426,7 @@ pub const SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER:
 extern "C" {
     /// Create a 2D software rendering context for a surface.
     ///
-    /// Two other API which can be used to create SDL_Renderer:
+    /// Two other API which can be used to create [`SDL_Renderer`]:
     /// [`SDL_CreateRenderer()`] and [`SDL_CreateWindowAndRenderer()`]. These can _also_
     /// create a software renderer, but they are intended to be used with an
     /// [`SDL_Window`] as the final destination and not an [`SDL_Surface`].
@@ -509,69 +509,69 @@ extern "C" {
     ///
     /// The following read-only properties are provided by SDL:
     ///
-    /// - `SDL_PROP_RENDERER_NAME_STRING`: the name of the rendering driver
-    /// - `SDL_PROP_RENDERER_WINDOW_POINTER`: the window where rendering is
+    /// - [`SDL_PROP_RENDERER_NAME_STRING`]: the name of the rendering driver
+    /// - [`SDL_PROP_RENDERER_WINDOW_POINTER`]: the window where rendering is
     ///   displayed, if any
-    /// - `SDL_PROP_RENDERER_SURFACE_POINTER`: the surface where rendering is
+    /// - [`SDL_PROP_RENDERER_SURFACE_POINTER`]: the surface where rendering is
     ///   displayed, if this is a software renderer without a window
-    /// - `SDL_PROP_RENDERER_VSYNC_NUMBER`: the current vsync setting
-    /// - `SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER`: the maximum texture width
+    /// - [`SDL_PROP_RENDERER_VSYNC_NUMBER`]: the current vsync setting
+    /// - [`SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER`]: the maximum texture width
     ///   and height
-    /// - `SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER`: a (const [`SDL_PixelFormat`] *)
+    /// - [`SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER`]: a (const [`SDL_PixelFormat`] *)
     ///   array of pixel formats, terminated with [`SDL_PIXELFORMAT_UNKNOWN`],
     ///   representing the available texture formats for this renderer.
-    /// - `SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER`: an [`SDL_ColorSpace`] value
+    /// - [`SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER`]: an [`SDL_ColorSpace`] value
     ///   describing the colorspace for output to the display, defaults to
     ///   [`SDL_COLORSPACE_SRGB`].
-    /// - `SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN`: true if the output colorspace is
+    /// - [`SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN`]: true if the output colorspace is
     ///   [`SDL_COLORSPACE_SRGB_LINEAR`] and the renderer is showing on a display with
     ///   HDR enabled. This property can change dynamically when
     ///   [`SDL_EVENT_DISPLAY_HDR_STATE_CHANGED`] is sent.
-    /// - `SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT`: the value of SDR white in the
+    /// - [`SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT`]: the value of SDR white in the
     ///   [`SDL_COLORSPACE_SRGB_LINEAR`] colorspace. When HDR is enabled, this value is
     ///   automatically multiplied into the color scale. This property can change
     ///   dynamically when [`SDL_EVENT_DISPLAY_HDR_STATE_CHANGED`] is sent.
-    /// - `SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT`: the additional high dynamic range
+    /// - [`SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT`]: the additional high dynamic range
     ///   that can be displayed, in terms of the SDR white point. When HDR is not
     ///   enabled, this will be 1.0. This property can change dynamically when
     ///   [`SDL_EVENT_DISPLAY_HDR_STATE_CHANGED`] is sent.
     ///
     /// With the direct3d renderer:
     ///
-    /// - `SDL_PROP_RENDERER_D3D9_DEVICE_POINTER`: the IDirect3DDevice9 associated
+    /// - [`SDL_PROP_RENDERER_D3D9_DEVICE_POINTER`]: the IDirect3DDevice9 associated
     ///   with the renderer
     ///
     /// With the direct3d11 renderer:
     ///
-    /// - `SDL_PROP_RENDERER_D3D11_DEVICE_POINTER`: the ID3D11Device associated
+    /// - [`SDL_PROP_RENDERER_D3D11_DEVICE_POINTER`]: the ID3D11Device associated
     ///   with the renderer
-    /// - `SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER`: the IDXGISwapChain1
+    /// - [`SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER`]: the IDXGISwapChain1
     ///   associated with the renderer. This may change when the window is resized.
     ///
     /// With the direct3d12 renderer:
     ///
-    /// - `SDL_PROP_RENDERER_D3D12_DEVICE_POINTER`: the ID3D12Device associated
+    /// - [`SDL_PROP_RENDERER_D3D12_DEVICE_POINTER`]: the ID3D12Device associated
     ///   with the renderer
-    /// - `SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER`: the IDXGISwapChain4
+    /// - [`SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER`]: the IDXGISwapChain4
     ///   associated with the renderer.
-    /// - `SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER`: the ID3D12CommandQueue
+    /// - [`SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER`]: the ID3D12CommandQueue
     ///   associated with the renderer
     ///
     /// With the vulkan renderer:
     ///
-    /// - `SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER`: the VkInstance associated
+    /// - [`SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER`]: the VkInstance associated
     ///   with the renderer
-    /// - `SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER`: the VkSurfaceKHR associated
+    /// - [`SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER`]: the VkSurfaceKHR associated
     ///   with the renderer
-    /// - `SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER`: the VkPhysicalDevice
+    /// - [`SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER`]: the VkPhysicalDevice
     ///   associated with the renderer
-    /// - `SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER`: the VkDevice associated with
+    /// - [`SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER`]: the VkDevice associated with
     ///   the renderer
-    /// - `SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER`: the queue
+    /// - [`SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER`]: the queue
     ///   family index used for rendering
-    /// - `SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER`: the queue
+    /// - [`SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER`]: the queue
     ///   family index used for presentation
-    /// - `SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER`: the number of
+    /// - [`SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER`]: the number of
     ///   swapchain images, or potential frames in flight, used by the Vulkan
     ///   renderer
     ///
@@ -760,7 +760,7 @@ extern "C" {
     /// The surface is not modified or freed by this function.
     ///
     /// The [`SDL_TextureAccess`] hint for the created texture is
-    /// `SDL_TEXTUREACCESS_STATIC`.
+    /// [`SDL_TEXTUREACCESS_STATIC`].
     ///
     /// The pixel format of the created texture may be different from the pixel
     /// format of the surface, and can be queried using the
@@ -795,24 +795,24 @@ extern "C" {
     ///
     /// These are the supported properties:
     ///
-    /// - `SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER`: an [`SDL_ColorSpace`] value
+    /// - [`SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER`]: an [`SDL_ColorSpace`] value
     ///   describing the texture colorspace, defaults to [`SDL_COLORSPACE_SRGB_LINEAR`]
     ///   for floating point textures, [`SDL_COLORSPACE_HDR10`] for 10-bit textures,
     ///   [`SDL_COLORSPACE_SRGB`] for other RGB textures and [`SDL_COLORSPACE_JPEG`] for
     ///   YUV textures.
-    /// - `SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER`: one of the enumerated values in
+    /// - [`SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER`]: one of the enumerated values in
     ///   [`SDL_PixelFormat`], defaults to the best RGBA format for the renderer
-    /// - `SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER`: one of the enumerated values in
+    /// - [`SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER`]: one of the enumerated values in
     ///   [`SDL_TextureAccess`], defaults to [`SDL_TEXTUREACCESS_STATIC`]
-    /// - `SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER`: the width of the texture in
+    /// - [`SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER`]: the width of the texture in
     ///   pixels, required
-    /// - `SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER`: the height of the texture in
+    /// - [`SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER`]: the height of the texture in
     ///   pixels, required
-    /// - `SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT`: for HDR10 and floating
+    /// - [`SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT`]: for HDR10 and floating
     ///   point textures, this defines the value of 100% diffuse white, with higher
     ///   values being displayed in the High Dynamic Range headroom. This defaults
     ///   to 100 for HDR10 textures and 1.0 for floating point textures.
-    /// - `SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT`: for HDR10 and floating
+    /// - [`SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT`]: for HDR10 and floating
     ///   point textures, this defines the maximum dynamic range used by the
     ///   content, in terms of the SDR white point. This would be equivalent to
     ///   maxCLL / [`SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT`] for HDR10 content.
@@ -822,65 +822,65 @@ extern "C" {
     ///
     /// With the direct3d11 renderer:
     ///
-    /// - `SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER`: the ID3D11Texture2D
+    /// - [`SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER`]: the ID3D11Texture2D
     ///   associated with the texture, if you want to wrap an existing texture.
-    /// - `SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER`: the ID3D11Texture2D
+    /// - [`SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER`]: the ID3D11Texture2D
     ///   associated with the U plane of a YUV texture, if you want to wrap an
     ///   existing texture.
-    /// - `SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER`: the ID3D11Texture2D
+    /// - [`SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER`]: the ID3D11Texture2D
     ///   associated with the V plane of a YUV texture, if you want to wrap an
     ///   existing texture.
     ///
     /// With the direct3d12 renderer:
     ///
-    /// - `SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER`: the ID3D12Resource
+    /// - [`SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER`]: the ID3D12Resource
     ///   associated with the texture, if you want to wrap an existing texture.
-    /// - `SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER`: the ID3D12Resource
+    /// - [`SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER`]: the ID3D12Resource
     ///   associated with the U plane of a YUV texture, if you want to wrap an
     ///   existing texture.
-    /// - `SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER`: the ID3D12Resource
+    /// - [`SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER`]: the ID3D12Resource
     ///   associated with the V plane of a YUV texture, if you want to wrap an
     ///   existing texture.
     ///
     /// With the metal renderer:
     ///
-    /// - `SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER`: the CVPixelBufferRef
+    /// - [`SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER`]: the CVPixelBufferRef
     ///   associated with the texture, if you want to create a texture from an
     ///   existing pixel buffer.
     ///
     /// With the opengl renderer:
     ///
-    /// - `SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER`]: the GLuint texture
     ///   associated with the texture, if you want to wrap an existing texture.
-    /// - `SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER`]: the GLuint texture
     ///   associated with the UV plane of an NV12 texture, if you want to wrap an
     ///   existing texture.
-    /// - `SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER`]: the GLuint texture
     ///   associated with the U plane of a YUV texture, if you want to wrap an
     ///   existing texture.
-    /// - `SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER`]: the GLuint texture
     ///   associated with the V plane of a YUV texture, if you want to wrap an
     ///   existing texture.
     ///
     /// With the opengles2 renderer:
     ///
-    /// - `SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER`]: the GLuint texture
     ///   associated with the texture, if you want to wrap an existing texture.
-    /// - `SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER`]: the GLuint texture
     ///   associated with the texture, if you want to wrap an existing texture.
-    /// - `SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER`]: the GLuint texture
     ///   associated with the UV plane of an NV12 texture, if you want to wrap an
     ///   existing texture.
-    /// - `SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER`]: the GLuint texture
     ///   associated with the U plane of a YUV texture, if you want to wrap an
     ///   existing texture.
-    /// - `SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER`]: the GLuint texture
     ///   associated with the V plane of a YUV texture, if you want to wrap an
     ///   existing texture.
     ///
     /// With the vulkan renderer:
     ///
-    /// - `SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER`: the VkImage with layout
+    /// - [`SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER`]: the VkImage with layout
     ///   VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL associated with the texture, if
     ///   you want to wrap an existing texture.
     ///
@@ -985,19 +985,19 @@ extern "C" {
     ///
     /// The following read-only properties are provided by SDL:
     ///
-    /// - `SDL_PROP_TEXTURE_COLORSPACE_NUMBER`: an [`SDL_ColorSpace`] value describing
+    /// - [`SDL_PROP_TEXTURE_COLORSPACE_NUMBER`]: an [`SDL_ColorSpace`] value describing
     ///   the texture colorspace.
-    /// - `SDL_PROP_TEXTURE_FORMAT_NUMBER`: one of the enumerated values in
+    /// - [`SDL_PROP_TEXTURE_FORMAT_NUMBER`]: one of the enumerated values in
     ///   [`SDL_PixelFormat`].
-    /// - `SDL_PROP_TEXTURE_ACCESS_NUMBER`: one of the enumerated values in
+    /// - [`SDL_PROP_TEXTURE_ACCESS_NUMBER`]: one of the enumerated values in
     ///   [`SDL_TextureAccess`].
-    /// - `SDL_PROP_TEXTURE_WIDTH_NUMBER`: the width of the texture in pixels.
-    /// - `SDL_PROP_TEXTURE_HEIGHT_NUMBER`: the height of the texture in pixels.
-    /// - `SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT`: for HDR10 and floating point
+    /// - [`SDL_PROP_TEXTURE_WIDTH_NUMBER`]: the width of the texture in pixels.
+    /// - [`SDL_PROP_TEXTURE_HEIGHT_NUMBER`]: the height of the texture in pixels.
+    /// - [`SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT`]: for HDR10 and floating point
     ///   textures, this defines the value of 100% diffuse white, with higher
     ///   values being displayed in the High Dynamic Range headroom. This defaults
     ///   to 100 for HDR10 textures and 1.0 for other textures.
-    /// - `SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT`: for HDR10 and floating point
+    /// - [`SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT`]: for HDR10 and floating point
     ///   textures, this defines the maximum dynamic range used by the content, in
     ///   terms of the SDR white point. If this is defined, any values outside the
     ///   range supported by the display will be scaled into the available HDR
@@ -1007,66 +1007,66 @@ extern "C" {
     ///
     /// With the direct3d11 renderer:
     ///
-    /// - `SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER`: the ID3D11Texture2D associated
+    /// - [`SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER`]: the ID3D11Texture2D associated
     ///   with the texture
-    /// - `SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER`: the ID3D11Texture2D
+    /// - [`SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER`]: the ID3D11Texture2D
     ///   associated with the U plane of a YUV texture
-    /// - `SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER`: the ID3D11Texture2D
+    /// - [`SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER`]: the ID3D11Texture2D
     ///   associated with the V plane of a YUV texture
     ///
     /// With the direct3d12 renderer:
     ///
-    /// - `SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER`: the ID3D12Resource associated
+    /// - [`SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER`]: the ID3D12Resource associated
     ///   with the texture
-    /// - `SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER`: the ID3D12Resource associated
+    /// - [`SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER`]: the ID3D12Resource associated
     ///   with the U plane of a YUV texture
-    /// - `SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER`: the ID3D12Resource associated
+    /// - [`SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER`]: the ID3D12Resource associated
     ///   with the V plane of a YUV texture
     ///
     /// With the vulkan renderer:
     ///
-    /// - `SDL_PROP_TEXTURE_VULKAN_TEXTURE_POINTER`: the VkImage associated with
+    /// - [`SDL_PROP_TEXTURE_VULKAN_TEXTURE_POINTER`]: the VkImage associated with
     ///   the texture
-    /// - `SDL_PROP_TEXTURE_VULKAN_TEXTURE_U_POINTER`: the VkImage associated with
+    /// - [`SDL_PROP_TEXTURE_VULKAN_TEXTURE_U_POINTER`]: the VkImage associated with
     ///   the U plane of a YUV texture
-    /// - `SDL_PROP_TEXTURE_VULKAN_TEXTURE_V_POINTER`: the VkImage associated with
+    /// - [`SDL_PROP_TEXTURE_VULKAN_TEXTURE_V_POINTER`]: the VkImage associated with
     ///   the V plane of a YUV texture
-    /// - `SDL_PROP_TEXTURE_VULKAN_TEXTURE_UV_POINTER`: the VkImage associated with
+    /// - [`SDL_PROP_TEXTURE_VULKAN_TEXTURE_UV_POINTER`]: the VkImage associated with
     ///   the UV plane of a NV12/NV21 texture
     ///
     /// With the opengl renderer:
     ///
-    /// - `SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER`: the GLuint texture associated
+    /// - [`SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER`]: the GLuint texture associated
     ///   with the texture
-    /// - `SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER`]: the GLuint texture
     ///   associated with the UV plane of an NV12 texture
-    /// - `SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER`: the GLuint texture associated
+    /// - [`SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER`]: the GLuint texture associated
     ///   with the U plane of a YUV texture
-    /// - `SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER`: the GLuint texture associated
+    /// - [`SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER`]: the GLuint texture associated
     ///   with the V plane of a YUV texture
-    /// - `SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER`: the GLenum for the
+    /// - [`SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER`]: the GLenum for the
     ///   texture target (`GL_TEXTURE_2D`, `GL_TEXTURE_RECTANGLE_ARB`, etc)
-    /// - `SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT`: the texture coordinate width of
+    /// - [`SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT`]: the texture coordinate width of
     ///   the texture (0.0 - 1.0)
-    /// - `SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT`: the texture coordinate height of
+    /// - [`SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT`]: the texture coordinate height of
     ///   the texture (0.0 - 1.0)
     ///
     /// With the opengles2 renderer:
     ///
-    /// - `SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER`]: the GLuint texture
     ///   associated with the texture
-    /// - `SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER`]: the GLuint texture
     ///   associated with the UV plane of an NV12 texture
-    /// - `SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER`]: the GLuint texture
     ///   associated with the U plane of a YUV texture
-    /// - `SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER`: the GLuint texture
+    /// - [`SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER`]: the GLuint texture
     ///   associated with the V plane of a YUV texture
-    /// - `SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER`: the GLenum for the
+    /// - [`SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER`]: the GLenum for the
     ///   texture target (`GL_TEXTURE_2D`, `GL_TEXTURE_EXTERNAL_OES`, etc)
     ///
     /// With the vulkan renderer:
     ///
-    /// - `SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER`: the VkImage associated with the
+    /// - [`SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER`]: the VkImage associated with the
     ///   texture
     ///
     /// ### Arguments
@@ -1706,7 +1706,7 @@ extern "C" {
     ///
     /// ### Arguments
     /// - `texture`: the texture to lock for access, which was created with
-    ///   `SDL_TEXTUREACCESS_STREAMING`.
+    ///   [`SDL_TEXTUREACCESS_STREAMING`].
     /// - `rect`: an [`SDL_Rect`] structure representing the area to lock for access;
     ///   NULL to lock the entire texture.
     /// - `pixels`: this is filled in with a pointer to the locked pixels,
@@ -1715,7 +1715,7 @@ extern "C" {
     ///   pitch is the length of one row in bytes.
     /// ### Return value
     /// Returns true on success or false if the texture is not valid or was not
-    ///   created with `SDL_TEXTUREACCESS_STREAMING`; call [`SDL_GetError()`]
+    ///   created with [`SDL_TEXTUREACCESS_STREAMING`]; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ### Thread safety
@@ -1755,7 +1755,7 @@ extern "C" {
     ///
     /// ### Arguments
     /// - `texture`: the texture to lock for access, which must be created with
-    ///   `SDL_TEXTUREACCESS_STREAMING`.
+    ///   [`SDL_TEXTUREACCESS_STREAMING`].
     /// - `rect`: a pointer to the rectangle to lock for access. If the rect is
     ///   NULL, the entire texture will be locked.
     /// - `surface`: this is filled in with an SDL surface representing the
@@ -1815,7 +1815,7 @@ extern "C" {
     /// ### Arguments
     /// - `renderer`: the rendering context.
     /// - `texture`: the targeted texture, which must be created with the
-    ///   `SDL_TEXTUREACCESS_TARGET` flag, or NULL to render to the
+    ///   [`SDL_TEXTUREACCESS_TARGET`] flag, or NULL to render to the
     ///   window instead of a texture.
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
@@ -2340,7 +2340,7 @@ extern "C" {
     /// - `g`: the green value used to draw on the rendering target.
     /// - `b`: the blue value used to draw on the rendering target.
     /// - `a`: the alpha value used to draw on the rendering target; usually
-    ///   `SDL_ALPHA_OPAQUE` (255). Use [`SDL_SetRenderDrawBlendMode`] to
+    ///   [`SDL_ALPHA_OPAQUE`] (255). Use [`SDL_SetRenderDrawBlendMode`] to
     ///   specify how the alpha channel is used.
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
@@ -2412,7 +2412,7 @@ extern "C" {
     /// - `b`: a pointer filled in with the blue value used to draw on the
     ///   rendering target.
     /// - `a`: a pointer filled in with the alpha value used to draw on the
-    ///   rendering target; usually `SDL_ALPHA_OPAQUE` (255).
+    ///   rendering target; usually [`SDL_ALPHA_OPAQUE`] (255).
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3106,7 +3106,7 @@ extern "C" {
     /// pixel.
     ///
     /// Please note, that in case of rendering to a texture - there is **no need**
-    /// to call `SDL_RenderPresent` after drawing needed objects to a texture, and
+    /// to call [`SDL_RenderPresent`] after drawing needed objects to a texture, and
     /// should not be done; you are only required to change back the rendering
     /// target to default via `SDL_SetRenderTarget(renderer, NULL)` afterwards, as
     /// textures by themselves do not have a concept of backbuffers. Calling

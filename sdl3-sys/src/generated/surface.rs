@@ -236,7 +236,7 @@ extern "C" {
     /// you must free the surface before you free the pixel data.
     ///
     /// Pitch is the offset in bytes from one row of pixels to the next, e.g.
-    /// `width*4` for `SDL_PIXELFORMAT_RGBA8888`.
+    /// `width*4` for [`SDL_PIXELFORMAT_RGBA8888`].
     ///
     /// You may pass NULL for pixels and 0 for pitch to create a surface that you
     /// will fill in with valid values later.
@@ -289,15 +289,15 @@ extern "C" {
     ///
     /// The following properties are understood by SDL:
     ///
-    /// - `SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT`: for HDR10 and floating point
+    /// - [`SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT`]: for HDR10 and floating point
     ///   surfaces, this defines the value of 100% diffuse white, with higher
     ///   values being displayed in the High Dynamic Range headroom. This defaults
     ///   to 203 for HDR10 surfaces and 1.0 for floating point surfaces.
-    /// - `SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT`: for HDR10 and floating point
+    /// - [`SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT`]: for HDR10 and floating point
     ///   surfaces, this defines the maximum dynamic range used by the content, in
     ///   terms of the SDR white point. This defaults to 0.0, which disables tone
     ///   mapping.
-    /// - `SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING`: the tone mapping operator
+    /// - [`SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING`]: the tone mapping operator
     ///   used when compressing from a surface with high dynamic range to another
     ///   with lower dynamic range. Currently this supports "chrome", which uses
     ///   the same tone mapping that Chrome uses for HDR content, the form "*=N",
@@ -927,7 +927,7 @@ extern "C" {
     ///
     /// To copy a surface to another surface (or texture) without blending with the
     /// existing data, the blendmode of the SOURCE surface should be set to
-    /// `SDL_BLENDMODE_NONE`.
+    /// [`SDL_BLENDMODE_NONE`].
     ///
     /// ### Arguments
     /// - `surface`: the [`SDL_Surface`] structure to update.

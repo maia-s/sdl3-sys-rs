@@ -904,14 +904,14 @@ extern "C" {
     ///
     /// The following read-only properties are provided by SDL:
     ///
-    /// - `SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN`: true if the display has HDR
+    /// - [`SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN`]: true if the display has HDR
     ///   headroom above the SDR white point. This is for informational and
     ///   diagnostic purposes only, as not all platforms provide this information
     ///   at the display level.
     ///
     /// On KMS/DRM:
     ///
-    /// - `SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER`: the "panel
+    /// - [`SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER`]: the "panel
     ///   orientation" property for the display in degrees of clockwise rotation.
     ///   Note that this is provided only as a hint, and the application is
     ///   responsible for any coordinate transformations needed to conform to the
@@ -1013,7 +1013,7 @@ extern "C" {
     /// - `displayID`: the instance ID of the display to query.
     /// ### Return value
     /// Returns the [`SDL_DisplayOrientation`] enum value of the display, or
-    ///   `SDL_ORIENTATION_UNKNOWN` if it isn't available.
+    ///   [`SDL_ORIENTATION_UNKNOWN`] if it isn't available.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1030,7 +1030,7 @@ extern "C" {
     /// - `displayID`: the instance ID of the display to query.
     /// ### Return value
     /// Returns the [`SDL_DisplayOrientation`] enum value of the display, or
-    ///   `SDL_ORIENTATION_UNKNOWN` if it isn't available.
+    ///   [`SDL_ORIENTATION_UNKNOWN`] if it isn't available.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1397,36 +1397,36 @@ extern "C" {
     ///
     /// `flags` may be any of the following OR'd together:
     ///
-    /// - `SDL_WINDOW_FULLSCREEN`: fullscreen window at desktop resolution
-    /// - `SDL_WINDOW_OPENGL`: window usable with an OpenGL context
-    /// - `SDL_WINDOW_OCCLUDED`: window partially or completely obscured by another
+    /// - [`SDL_WINDOW_FULLSCREEN`]: fullscreen window at desktop resolution
+    /// - [`SDL_WINDOW_OPENGL`]: window usable with an OpenGL context
+    /// - [`SDL_WINDOW_OCCLUDED`]: window partially or completely obscured by another
     ///   window
-    /// - `SDL_WINDOW_HIDDEN`: window is not visible
-    /// - `SDL_WINDOW_BORDERLESS`: no window decoration
-    /// - `SDL_WINDOW_RESIZABLE`: window can be resized
-    /// - `SDL_WINDOW_MINIMIZED`: window is minimized
-    /// - `SDL_WINDOW_MAXIMIZED`: window is maximized
-    /// - `SDL_WINDOW_MOUSE_GRABBED`: window has grabbed mouse focus
-    /// - `SDL_WINDOW_INPUT_FOCUS`: window has input focus
-    /// - `SDL_WINDOW_MOUSE_FOCUS`: window has mouse focus
-    /// - `SDL_WINDOW_EXTERNAL`: window not created by SDL
-    /// - `SDL_WINDOW_MODAL`: window is modal
-    /// - `SDL_WINDOW_HIGH_PIXEL_DENSITY`: window uses high pixel density back
+    /// - [`SDL_WINDOW_HIDDEN`]: window is not visible
+    /// - [`SDL_WINDOW_BORDERLESS`]: no window decoration
+    /// - [`SDL_WINDOW_RESIZABLE`]: window can be resized
+    /// - [`SDL_WINDOW_MINIMIZED`]: window is minimized
+    /// - [`SDL_WINDOW_MAXIMIZED`]: window is maximized
+    /// - [`SDL_WINDOW_MOUSE_GRABBED`]: window has grabbed mouse focus
+    /// - [`SDL_WINDOW_INPUT_FOCUS`]: window has input focus
+    /// - [`SDL_WINDOW_MOUSE_FOCUS`]: window has mouse focus
+    /// - [`SDL_WINDOW_EXTERNAL`]: window not created by SDL
+    /// - [`SDL_WINDOW_MODAL`]: window is modal
+    /// - [`SDL_WINDOW_HIGH_PIXEL_DENSITY`]: window uses high pixel density back
     ///   buffer if possible
-    /// - `SDL_WINDOW_MOUSE_CAPTURE`: window has mouse captured (unrelated to
+    /// - [`SDL_WINDOW_MOUSE_CAPTURE`]: window has mouse captured (unrelated to
     ///   MOUSE_GRABBED)
-    /// - `SDL_WINDOW_ALWAYS_ON_TOP`: window should always be above others
-    /// - `SDL_WINDOW_UTILITY`: window should be treated as a utility window, not
+    /// - [`SDL_WINDOW_ALWAYS_ON_TOP`]: window should always be above others
+    /// - [`SDL_WINDOW_UTILITY`]: window should be treated as a utility window, not
     ///   showing in the task bar and window list
-    /// - `SDL_WINDOW_TOOLTIP`: window should be treated as a tooltip and does not
+    /// - [`SDL_WINDOW_TOOLTIP`]: window should be treated as a tooltip and does not
     ///   get mouse or keyboard focus, requires a parent window
-    /// - `SDL_WINDOW_POPUP_MENU`: window should be treated as a popup menu,
+    /// - [`SDL_WINDOW_POPUP_MENU`]: window should be treated as a popup menu,
     ///   requires a parent window
-    /// - `SDL_WINDOW_KEYBOARD_GRABBED`: window has grabbed keyboard input
-    /// - `SDL_WINDOW_VULKAN`: window usable with a Vulkan instance
-    /// - `SDL_WINDOW_METAL`: window usable with a Metal instance
-    /// - `SDL_WINDOW_TRANSPARENT`: window with transparent buffer
-    /// - `SDL_WINDOW_NOT_FOCUSABLE`: window should not be focusable
+    /// - [`SDL_WINDOW_KEYBOARD_GRABBED`]: window has grabbed keyboard input
+    /// - [`SDL_WINDOW_VULKAN`]: window usable with a Vulkan instance
+    /// - [`SDL_WINDOW_METAL`]: window usable with a Metal instance
+    /// - [`SDL_WINDOW_TRANSPARENT`]: window with transparent buffer
+    /// - [`SDL_WINDOW_NOT_FOCUSABLE`]: window should not be focusable
     ///
     /// The [`SDL_Window`] is implicitly shown if [`SDL_WINDOW_HIDDEN`] is not set.
     ///
@@ -1490,24 +1490,24 @@ extern "C" {
     ///
     /// The flags parameter **must** contain at least one of the following:
     ///
-    /// - `SDL_WINDOW_TOOLTIP`: The popup window is a tooltip and will not pass any
+    /// - [`SDL_WINDOW_TOOLTIP`]: The popup window is a tooltip and will not pass any
     ///   input events.
-    /// - `SDL_WINDOW_POPUP_MENU`: The popup window is a popup menu. The topmost
+    /// - [`SDL_WINDOW_POPUP_MENU`]: The popup window is a popup menu. The topmost
     ///   popup menu will implicitly gain the keyboard focus.
     ///
     /// The following flags are not relevant to popup window creation and will be
     /// ignored:
     ///
-    /// - `SDL_WINDOW_MINIMIZED`
-    /// - `SDL_WINDOW_MAXIMIZED`
-    /// - `SDL_WINDOW_FULLSCREEN`
-    /// - `SDL_WINDOW_BORDERLESS`
+    /// - [`SDL_WINDOW_MINIMIZED`]
+    /// - [`SDL_WINDOW_MAXIMIZED`]
+    /// - [`SDL_WINDOW_FULLSCREEN`]
+    /// - [`SDL_WINDOW_BORDERLESS`]
     ///
     /// The following flags are incompatible with popup window creation and will
     /// cause it to fail:
     ///
-    /// - `SDL_WINDOW_UTILITY`
-    /// - `SDL_WINDOW_MODAL`
+    /// - [`SDL_WINDOW_UTILITY`]
+    /// - [`SDL_WINDOW_MODAL`]
     ///
     /// The parent parameter **must** be non-null and a valid window. The parent of
     /// a popup window can be either a regular, toplevel window, or another popup
@@ -1561,89 +1561,89 @@ extern "C" {
     ///
     /// These are the supported properties:
     ///
-    /// - `SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN`: true if the window should
+    /// - [`SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN`]: true if the window should
     ///   be always on top
-    /// - `SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN`: true if the window has no
+    /// - [`SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN`]: true if the window has no
     ///   window decoration
-    /// - `SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN`: true if the
+    /// - [`SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN`]: true if the
     ///   window will be used with an externally managed graphics context.
-    /// - `SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN`: true if the window should
+    /// - [`SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN`]: true if the window should
     ///   accept keyboard input (defaults true)
-    /// - `SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN`: true if the window should
+    /// - [`SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN`]: true if the window should
     ///   start in fullscreen mode at desktop resolution
-    /// - `SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER`: the height of the window
-    /// - `SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN`: true if the window should start
+    /// - [`SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER`]: the height of the window
+    /// - [`SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN`]: true if the window should start
     ///   hidden
-    /// - `SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN`: true if the window
+    /// - [`SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN`]: true if the window
     ///   uses a high pixel density buffer if possible
-    /// - `SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN`: true if the window should
+    /// - [`SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN`]: true if the window should
     ///   start maximized
-    /// - `SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN`: true if the window is a popup menu
-    /// - `SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN`: true if the window will be used
+    /// - [`SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN`]: true if the window is a popup menu
+    /// - [`SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN`]: true if the window will be used
     ///   with Metal rendering
-    /// - `SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN`: true if the window should
+    /// - [`SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN`]: true if the window should
     ///   start minimized
-    /// - `SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN`: true if the window is modal to
+    /// - [`SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN`]: true if the window is modal to
     ///   its parent
-    /// - `SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN`: true if the window starts
+    /// - [`SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN`]: true if the window starts
     ///   with grabbed mouse focus
-    /// - `SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN`: true if the window will be used
+    /// - [`SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN`]: true if the window will be used
     ///   with OpenGL rendering
-    /// - `SDL_PROP_WINDOW_CREATE_PARENT_POINTER`: an [`SDL_Window`] that will be the
+    /// - [`SDL_PROP_WINDOW_CREATE_PARENT_POINTER`]: an [`SDL_Window`] that will be the
     ///   parent of this window, required for windows with the "tooltip", "menu",
     ///   and "modal" properties
-    /// - `SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN`: true if the window should be
+    /// - [`SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN`]: true if the window should be
     ///   resizable
-    /// - `SDL_PROP_WINDOW_CREATE_TITLE_STRING`: the title of the window, in UTF-8
+    /// - [`SDL_PROP_WINDOW_CREATE_TITLE_STRING`]: the title of the window, in UTF-8
     ///   encoding
-    /// - `SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN`: true if the window show
+    /// - [`SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN`]: true if the window show
     ///   transparent in the areas with alpha of 0
-    /// - `SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN`: true if the window is a tooltip
-    /// - `SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN`: true if the window is a utility
+    /// - [`SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN`]: true if the window is a tooltip
+    /// - [`SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN`]: true if the window is a utility
     ///   window, not showing in the task bar and window list
-    /// - `SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN`: true if the window will be used
+    /// - [`SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN`]: true if the window will be used
     ///   with Vulkan rendering
-    /// - `SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER`: the width of the window
-    /// - `SDL_PROP_WINDOW_CREATE_X_NUMBER`: the x position of the window, or
-    ///   `SDL_WINDOWPOS_CENTERED`, defaults to `SDL_WINDOWPOS_UNDEFINED`. This is
+    /// - [`SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER`]: the width of the window
+    /// - [`SDL_PROP_WINDOW_CREATE_X_NUMBER`]: the x position of the window, or
+    ///   [`SDL_WINDOWPOS_CENTERED`], defaults to [`SDL_WINDOWPOS_UNDEFINED`]. This is
     ///   relative to the parent for windows with the "parent" property set.
-    /// - `SDL_PROP_WINDOW_CREATE_Y_NUMBER`: the y position of the window, or
-    ///   `SDL_WINDOWPOS_CENTERED`, defaults to `SDL_WINDOWPOS_UNDEFINED`. This is
+    /// - [`SDL_PROP_WINDOW_CREATE_Y_NUMBER`]: the y position of the window, or
+    ///   [`SDL_WINDOWPOS_CENTERED`], defaults to [`SDL_WINDOWPOS_UNDEFINED`]. This is
     ///   relative to the parent for windows with the "parent" property set.
     ///
     /// These are additional supported properties on macOS:
     ///
-    /// - `SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER`: the
+    /// - [`SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER`]: the
     ///   `(__unsafe_unretained)` NSWindow associated with the window, if you want
     ///   to wrap an existing window.
-    /// - `SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER`: the `(__unsafe_unretained)`
+    /// - [`SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER`]: the `(__unsafe_unretained)`
     ///   NSView associated with the window, defaults to `[window contentView]`
     ///
     /// These are additional supported properties on Wayland:
     ///
-    /// - `SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN` - true if
+    /// - [`SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN`] - true if
     ///   the application wants to use the Wayland surface for a custom role and
     ///   does not want it attached to an XDG toplevel window. See
     ///   [README/wayland](README/wayland) for more information on using custom
     ///   surfaces.
-    /// - `SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN` - true if the
+    /// - [`SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN`] - true if the
     ///   application wants an associated `wl_egl_window` object to be created and
     ///   attached to the window, even if the window does not have the OpenGL
-    ///   property or `SDL_WINDOW_OPENGL` flag set.
-    /// - `SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER` - the wl_surface
+    ///   property or [`SDL_WINDOW_OPENGL`] flag set.
+    /// - [`SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER`] - the wl_surface
     ///   associated with the window, if you want to wrap an existing window. See
     ///   [README/wayland](README/wayland) for more information.
     ///
     /// These are additional supported properties on Windows:
     ///
-    /// - `SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER`: the HWND associated with the
+    /// - [`SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER`]: the HWND associated with the
     ///   window, if you want to wrap an existing window.
-    /// - `SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER`: optional,
+    /// - [`SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER`]: optional,
     ///   another window to share pixel format with, useful for OpenGL windows
     ///
     /// These are additional supported properties with X11:
     ///
-    /// - `SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER`: the X11 Window associated
+    /// - [`SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER`]: the X11 Window associated
     ///   with the window, if you want to wrap an existing window.
     ///
     /// The window is implicitly shown if the "hidden" property is not set.
@@ -1653,11 +1653,11 @@ extern "C" {
     ///
     /// If this window is being created to be used with an [`SDL_Renderer`], you should
     /// not add a graphics API specific property
-    /// (`SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN`, etc), as SDL will handle that
+    /// ([`SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN`], etc), as SDL will handle that
     /// internally when it chooses a renderer. However, SDL might need to recreate
     /// your window at that point, which may cause the window to appear briefly,
     /// and then flicker as it is recreated. The correct approach to this is to
-    /// create the window with the `SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN` property
+    /// create the window with the [`SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN`] property
     /// set to true, then create the renderer, then show the window with
     /// [`SDL_ShowWindow()`].
     ///
@@ -1841,77 +1841,77 @@ extern "C" {
     ///
     /// The following read-only properties are provided by SDL:
     ///
-    /// - `SDL_PROP_WINDOW_SHAPE_POINTER`: the surface associated with a shaped
+    /// - [`SDL_PROP_WINDOW_SHAPE_POINTER`]: the surface associated with a shaped
     ///   window
-    /// - `SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN`: true if the window has HDR
+    /// - [`SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN`]: true if the window has HDR
     ///   headroom above the SDR white point. This property can change dynamically
     ///   when [`SDL_EVENT_WINDOW_HDR_STATE_CHANGED`] is sent.
-    /// - `SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT`: the value of SDR white in the
+    /// - [`SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT`]: the value of SDR white in the
     ///   [`SDL_COLORSPACE_SRGB_LINEAR`] colorspace. On Windows this corresponds to the
     ///   SDR white level in scRGB colorspace, and on Apple platforms this is
     ///   always 1.0 for EDR content. This property can change dynamically when
     ///   [`SDL_EVENT_WINDOW_HDR_STATE_CHANGED`] is sent.
-    /// - `SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT`: the additional high dynamic range
+    /// - [`SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT`]: the additional high dynamic range
     ///   that can be displayed, in terms of the SDR white point. When HDR is not
     ///   enabled, this will be 1.0. This property can change dynamically when
     ///   [`SDL_EVENT_WINDOW_HDR_STATE_CHANGED`] is sent.
     ///
     /// On Android:
     ///
-    /// - `SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER`: the ANativeWindow associated
+    /// - [`SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER`]: the ANativeWindow associated
     ///   with the window
-    /// - `SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER`: the EGLSurface associated with
+    /// - [`SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER`]: the EGLSurface associated with
     ///   the window
     ///
     /// On iOS:
     ///
-    /// - `SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER`: the `(__unsafe_unretained)`
+    /// - [`SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER`]: the `(__unsafe_unretained)`
     ///   UIWindow associated with the window
-    /// - `SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER`: the NSInteger tag
+    /// - [`SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER`]: the NSInteger tag
     ///   associated with metal views on the window
-    /// - `SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER`: the OpenGL view's
+    /// - [`SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER`]: the OpenGL view's
     ///   framebuffer object. It must be bound when rendering to the screen using
     ///   OpenGL.
-    /// - `SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER`: the OpenGL view's
+    /// - [`SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER`]: the OpenGL view's
     ///   renderbuffer object. It must be bound when [`SDL_GL_SwapWindow`] is called.
-    /// - `SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER`: the OpenGL
+    /// - [`SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER`]: the OpenGL
     ///   view's resolve framebuffer, when MSAA is used.
     ///
     /// On KMS/DRM:
     ///
-    /// - `SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER`: the device index associated
+    /// - [`SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER`]: the device index associated
     ///   with the window (e.g. the X in /dev/dri/cardX)
-    /// - `SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER`: the DRM FD associated with the
+    /// - [`SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER`]: the DRM FD associated with the
     ///   window
-    /// - `SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER`: the GBM device associated
+    /// - [`SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER`]: the GBM device associated
     ///   with the window
     ///
     /// On macOS:
     ///
-    /// - `SDL_PROP_WINDOW_COCOA_WINDOW_POINTER`: the `(__unsafe_unretained)`
+    /// - [`SDL_PROP_WINDOW_COCOA_WINDOW_POINTER`]: the `(__unsafe_unretained)`
     ///   NSWindow associated with the window
-    /// - `SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER`: the NSInteger tag
+    /// - [`SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER`]: the NSInteger tag
     ///   assocated with metal views on the window
     ///
     /// On OpenVR:
     ///
-    /// - `SDL_PROP_WINDOW_OPENVR_OVERLAY_ID`: the OpenVR Overlay Handle ID for the
+    /// - [`SDL_PROP_WINDOW_OPENVR_OVERLAY_ID`]: the OpenVR Overlay Handle ID for the
     ///   associated overlay window.
     ///
     /// On Vivante:
     ///
-    /// - `SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER`: the EGLNativeDisplayType
+    /// - [`SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER`]: the EGLNativeDisplayType
     ///   associated with the window
-    /// - `SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER`: the EGLNativeWindowType
+    /// - [`SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER`]: the EGLNativeWindowType
     ///   associated with the window
-    /// - `SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER`: the EGLSurface associated with
+    /// - [`SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER`]: the EGLSurface associated with
     ///   the window
     ///
     /// On Windows:
     ///
-    /// - `SDL_PROP_WINDOW_WIN32_HWND_POINTER`: the HWND associated with the window
-    /// - `SDL_PROP_WINDOW_WIN32_HDC_POINTER`: the HDC associated with the window
-    /// - `SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER`: the HINSTANCE associated with
+    /// - [`SDL_PROP_WINDOW_WIN32_HWND_POINTER`]: the HWND associated with the window
+    /// - [`SDL_PROP_WINDOW_WIN32_HDC_POINTER`]: the HDC associated with the window
+    /// - [`SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER`]: the HINSTANCE associated with
     ///   the window
     ///
     /// On Wayland:
@@ -1920,30 +1920,30 @@ extern "C" {
     /// show/hide calls. They will be null if the window is hidden and must be
     /// queried each time it is shown.
     ///
-    /// - `SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER`: the wl_display associated with
+    /// - [`SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER`]: the wl_display associated with
     ///   the window
-    /// - `SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER`: the wl_surface associated with
+    /// - [`SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER`]: the wl_surface associated with
     ///   the window
-    /// - `SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER`: the wl_egl_window
+    /// - [`SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER`]: the wl_egl_window
     ///   associated with the window
-    /// - `SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER`: the xdg_surface associated
+    /// - [`SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER`]: the xdg_surface associated
     ///   with the window
-    /// - `SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER`: the xdg_toplevel role
+    /// - [`SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER`]: the xdg_toplevel role
     ///   associated with the window
     /// - 'SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING': the export
     ///   handle associated with the window
-    /// - `SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER`: the xdg_popup role
+    /// - [`SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER`]: the xdg_popup role
     ///   associated with the window
-    /// - `SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER`: the xdg_positioner
+    /// - [`SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER`]: the xdg_positioner
     ///   associated with the window, in popup mode
     ///
     /// On X11:
     ///
-    /// - `SDL_PROP_WINDOW_X11_DISPLAY_POINTER`: the X11 Display associated with
+    /// - [`SDL_PROP_WINDOW_X11_DISPLAY_POINTER`]: the X11 Display associated with
     ///   the window
-    /// - `SDL_PROP_WINDOW_X11_SCREEN_NUMBER`: the screen number associated with
+    /// - [`SDL_PROP_WINDOW_X11_SCREEN_NUMBER`]: the screen number associated with
     ///   the window
-    /// - `SDL_PROP_WINDOW_X11_WINDOW_NUMBER`: the X11 Window associated with the
+    /// - [`SDL_PROP_WINDOW_X11_WINDOW_NUMBER`]: the X11 Window associated with the
     ///   window
     ///
     /// ### Arguments
@@ -2175,10 +2175,10 @@ extern "C" {
     ///
     /// ### Arguments
     /// - `window`: the window to reposition.
-    /// - `x`: the x coordinate of the window, or `SDL_WINDOWPOS_CENTERED` or
-    ///   `SDL_WINDOWPOS_UNDEFINED`.
-    /// - `y`: the y coordinate of the window, or `SDL_WINDOWPOS_CENTERED` or
-    ///   `SDL_WINDOWPOS_UNDEFINED`.
+    /// - `x`: the x coordinate of the window, or [`SDL_WINDOWPOS_CENTERED`] or
+    ///   [`SDL_WINDOWPOS_UNDEFINED`].
+    /// - `y`: the y coordinate of the window, or [`SDL_WINDOWPOS_CENTERED`] or
+    ///   [`SDL_WINDOWPOS_UNDEFINED`].
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2572,7 +2572,7 @@ extern "C" {
 extern "C" {
     /// Set the border state of a window.
     ///
-    /// This will add or remove the window's `SDL_WINDOW_BORDERLESS` flag and add
+    /// This will add or remove the window's [`SDL_WINDOW_BORDERLESS`] flag and add
     /// or remove the border from the actual window. This is a no-op if the
     /// window's border already matches the requested state.
     ///
@@ -2599,7 +2599,7 @@ extern "C" {
 extern "C" {
     /// Set the user-resizable state of a window.
     ///
-    /// This will add or remove the window's `SDL_WINDOW_RESIZABLE` flag and
+    /// This will add or remove the window's [`SDL_WINDOW_RESIZABLE`] flag and
     /// allow/disallow user resizing of the window. This is a no-op if the window's
     /// resizable state already matches the requested state.
     ///
@@ -2626,7 +2626,7 @@ extern "C" {
 extern "C" {
     /// Set the window to always be above the others.
     ///
-    /// This will add or remove the window's `SDL_WINDOW_ALWAYS_ON_TOP` flag. This
+    /// This will add or remove the window's [`SDL_WINDOW_ALWAYS_ON_TOP`] flag. This
     /// will bring the window to the front and keep the window above the rest.
     ///
     /// ### Arguments
@@ -2894,7 +2894,7 @@ extern "C" {
     ///
     /// You may not combine this with 3D or the rendering API on this window.
     ///
-    /// This function is affected by `SDL_HINT_FRAMEBUFFER_ACCELERATION`.
+    /// This function is affected by [`SDL_HINT_FRAMEBUFFER_ACCELERATION`].
     ///
     /// ### Arguments
     /// - `window`: the window to query.
@@ -3060,7 +3060,7 @@ extern "C" {
     /// window is full-screen to ensure the user is not trapped in your
     /// application. If you have a custom keyboard shortcut to exit fullscreen
     /// mode, you may suppress this behavior with
-    /// `SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED`.
+    /// [`SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED`].
     ///
     /// If the caller enables a grab while another window is currently grabbed, the
     /// other window loses its grab in favor of the caller's window.
@@ -3593,7 +3593,7 @@ extern "C" {
     ///
     /// The screensaver is disabled by default.
     ///
-    /// The default can also be changed using `SDL_HINT_VIDEO_ALLOW_SCREENSAVER`.
+    /// The default can also be changed using [`SDL_HINT_VIDEO_ALLOW_SCREENSAVER`].
     ///
     /// ### Return value
     /// Returns true if the screensaver is enabled, false if it is disabled.

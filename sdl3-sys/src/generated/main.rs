@@ -27,9 +27,9 @@ apply_cfg!(#[cfg(doc)] => {
 use super::init::*;
 
 extern "C" {
-    /// App-implemented initial entry point for [`SDL_MAIN_USE_CALLBACKS`] apps.
+    /// App-implemented initial entry point for SDL_MAIN_USE_CALLBACKS apps.
     ///
-    /// Apps implement this function when using [`SDL_MAIN_USE_CALLBACKS`]. If using a
+    /// Apps implement this function when using SDL_MAIN_USE_CALLBACKS. If using a
     /// standard "main" function, you should not supply this.
     ///
     /// This function is called by SDL once, at startup. The function should
@@ -81,9 +81,9 @@ extern "C" {
 }
 
 extern "C" {
-    /// App-implemented iteration entry point for [`SDL_MAIN_USE_CALLBACKS`] apps.
+    /// App-implemented iteration entry point for SDL_MAIN_USE_CALLBACKS apps.
     ///
-    /// Apps implement this function when using [`SDL_MAIN_USE_CALLBACKS`]. If using a
+    /// Apps implement this function when using SDL_MAIN_USE_CALLBACKS. If using a
     /// standard "main" function, you should not supply this.
     ///
     /// This function is called repeatedly by SDL after [`SDL_AppInit`] returns 0. The
@@ -137,9 +137,9 @@ extern "C" {
 }
 
 extern "C" {
-    /// App-implemented event entry point for [`SDL_MAIN_USE_CALLBACKS`] apps.
+    /// App-implemented event entry point for SDL_MAIN_USE_CALLBACKS apps.
     ///
-    /// Apps implement this function when using [`SDL_MAIN_USE_CALLBACKS`]. If using a
+    /// Apps implement this function when using SDL_MAIN_USE_CALLBACKS. If using a
     /// standard "main" function, you should not supply this.
     ///
     /// This function is called as needed by SDL after [`SDL_AppInit`] returns
@@ -192,9 +192,9 @@ extern "C" {
 }
 
 extern "C" {
-    /// App-implemented deinit entry point for [`SDL_MAIN_USE_CALLBACKS`] apps.
+    /// App-implemented deinit entry point for SDL_MAIN_USE_CALLBACKS apps.
     ///
-    /// Apps implement this function when using [`SDL_MAIN_USE_CALLBACKS`]. If using a
+    /// Apps implement this function when using SDL_MAIN_USE_CALLBACKS. If using a
     /// standard "main" function, you should not supply this.
     ///
     /// This function is called once by SDL before terminating the program.
@@ -259,14 +259,14 @@ extern "C" {
     /// ANSI-C `main` function instead. If SDL needs to insert some startup code
     /// before `main` runs, or the platform doesn't actually _use_ a function
     /// called "main", SDL will do some macro magic to redefine `main` to
-    /// `SDL_main` and provide its own `main`.
+    /// [`SDL_main`] and provide its own `main`.
     ///
     /// Apps should include `SDL_main.h` in the same file as their `main` function,
     /// and they should not use that symbol for anything else in that file, as it
     /// might get redefined.
     ///
     /// This function is only provided by the app if it isn't using
-    /// [`SDL_MAIN_USE_CALLBACKS`].
+    /// SDL_MAIN_USE_CALLBACKS.
     ///
     /// Program startup is a surprisingly complex topic. Please see
     /// [README/main-functions](README/main-functions), (or
@@ -349,7 +349,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// An entry point for SDL's use in [`SDL_MAIN_USE_CALLBACKS`].
+    /// An entry point for SDL's use in SDL_MAIN_USE_CALLBACKS.
     ///
     /// Generally, you should not call this function directly. This only exists to
     /// hand off work into SDL as soon as possible, where it has a lot more control

@@ -264,20 +264,20 @@ extern "C" {
     /// enumeration.
     ///
     /// - **direct3d**: Supports all operations with all factors. However, some
-    ///   factors produce unexpected results with `SDL_BLENDOPERATION_MINIMUM` and
-    ///   `SDL_BLENDOPERATION_MAXIMUM`.
+    ///   factors produce unexpected results with [`SDL_BLENDOPERATION_MINIMUM`] and
+    ///   [`SDL_BLENDOPERATION_MAXIMUM`].
     /// - **direct3d11**: Same as Direct3D 9.
-    /// - **opengl**: Supports the `SDL_BLENDOPERATION_ADD` operation with all
+    /// - **opengl**: Supports the [`SDL_BLENDOPERATION_ADD`] operation with all
     ///   factors. OpenGL versions 1.1, 1.2, and 1.3 do not work correctly here.
-    /// - **opengles2**: Supports the `SDL_BLENDOPERATION_ADD`,
-    ///   `SDL_BLENDOPERATION_SUBTRACT`, `SDL_BLENDOPERATION_REV_SUBTRACT`
+    /// - **opengles2**: Supports the [`SDL_BLENDOPERATION_ADD`],
+    ///   [`SDL_BLENDOPERATION_SUBTRACT`], [`SDL_BLENDOPERATION_REV_SUBTRACT`]
     ///   operations with all factors.
     /// - **psp**: No custom blend mode support.
     /// - **software**: No custom blend mode support.
     ///
     /// Some renderers do not provide an alpha component for the default render
-    /// target. The `SDL_BLENDFACTOR_DST_ALPHA` and
-    /// `SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA` factors do not have an effect in this
+    /// target. The [`SDL_BLENDFACTOR_DST_ALPHA`] and
+    /// [`SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA`] factors do not have an effect in this
     /// case.
     ///
     /// ### Arguments

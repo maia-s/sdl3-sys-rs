@@ -416,7 +416,7 @@ extern "C" {
     /// ### Return value
     /// Returns the [`SDL_JoystickType`] of the selected joystick. If called with an
     ///   invalid instance_id, this function returns
-    ///   `SDL_JOYSTICK_TYPE_UNKNOWN`.
+    ///   [`SDL_JOYSTICK_TYPE_UNKNOWN`].
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -530,7 +530,7 @@ pub struct SDL_VirtualJoystickSensorDesc {
 pub struct SDL_VirtualJoystickDesc {
     /// the version of this interface
     pub version: Uint32,
-    /// `SDL_JoystickType`
+    /// [`SDL_JoystickType`]
     pub r#type: Uint16,
     /// unused
     pub padding: Uint16,
@@ -701,7 +701,7 @@ extern "C" {
     ///
     /// Note that when sending trigger axes, you should scale the value to the full
     /// range of Sint16. For example, a trigger at rest would have the value of
-    /// `SDL_JOYSTICK_AXIS_MIN`.
+    /// [`SDL_JOYSTICK_AXIS_MIN`].
     ///
     /// ### Arguments
     /// - `joystick`: the virtual joystick on which to set state.
@@ -873,15 +873,15 @@ extern "C" {
     ///
     /// The following read-only properties are provided by SDL:
     ///
-    /// - `SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN`: true if this joystick has an
+    /// - [`SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN`]: true if this joystick has an
     ///   LED that has adjustable brightness
-    /// - `SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN`: true if this joystick has an LED
+    /// - [`SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN`]: true if this joystick has an LED
     ///   that has adjustable color
-    /// - `SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN`: true if this joystick has a
+    /// - [`SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN`]: true if this joystick has a
     ///   player LED
-    /// - `SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN`: true if this joystick has
+    /// - [`SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN`]: true if this joystick has
     ///   left/right rumble
-    /// - `SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN`: true if this joystick has
+    /// - [`SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN`]: true if this joystick has
     ///   simple trigger rumble
     ///
     /// ### Arguments
@@ -1576,7 +1576,7 @@ extern "C" {
     /// - `joystick`: the joystick to query.
     /// ### Return value
     /// Returns the connection state on success or
-    ///   `SDL_JOYSTICK_CONNECTION_INVALID` on failure; call [`SDL_GetError()`]
+    ///   [`SDL_JOYSTICK_CONNECTION_INVALID`] on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ### Availability
@@ -1602,7 +1602,7 @@ extern "C" {
     ///   filled in with -1 we can't determine a value or there is no
     ///   battery.
     /// ### Return value
-    /// Returns the current battery state or `SDL_POWERSTATE_ERROR` on failure;
+    /// Returns the current battery state or [`SDL_POWERSTATE_ERROR`] on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability

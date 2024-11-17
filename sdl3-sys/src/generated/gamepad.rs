@@ -1169,15 +1169,15 @@ extern "C" {
     ///
     /// The following read-only properties are provided by SDL:
     ///
-    /// - `SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN`: true if this gamepad has an LED
+    /// - [`SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN`]: true if this gamepad has an LED
     ///   that has adjustable brightness
-    /// - `SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN`: true if this gamepad has an LED
+    /// - [`SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN`]: true if this gamepad has an LED
     ///   that has adjustable color
-    /// - `SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN`: true if this gamepad has a
+    /// - [`SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN`]: true if this gamepad has a
     ///   player LED
-    /// - `SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN`: true if this gamepad has
+    /// - [`SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN`]: true if this gamepad has
     ///   left/right rumble
-    /// - `SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN`: true if this gamepad has
+    /// - [`SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN`]: true if this gamepad has
     ///   simple trigger rumble
     ///
     /// ### Arguments
@@ -1439,7 +1439,7 @@ extern "C" {
     /// - `gamepad`: the gamepad object to query.
     /// ### Return value
     /// Returns the connection state on success or
-    ///   `SDL_JOYSTICK_CONNECTION_INVALID` on failure; call [`SDL_GetError()`]
+    ///   [`SDL_JOYSTICK_CONNECTION_INVALID`] on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ### Availability
@@ -1590,7 +1590,7 @@ extern "C" {
     /// - `str`: string representing a [`SDL_GamepadType`] type.
     /// ### Return value
     /// Returns the [`SDL_GamepadType`] enum corresponding to the input string, or
-    ///   `SDL_GAMEPAD_TYPE_UNKNOWN` if no match was found.
+    ///   [`SDL_GAMEPAD_TYPE_UNKNOWN`] if no match was found.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1627,14 +1627,14 @@ extern "C" {
     /// [`SDL_Gamepad`] mappings in your own code.
     ///
     /// Note specially that "righttrigger" and "lefttrigger" map to
-    /// `SDL_GAMEPAD_AXIS_RIGHT_TRIGGER` and `SDL_GAMEPAD_AXIS_LEFT_TRIGGER`,
+    /// [`SDL_GAMEPAD_AXIS_RIGHT_TRIGGER`] and [`SDL_GAMEPAD_AXIS_LEFT_TRIGGER`],
     /// respectively.
     ///
     /// ### Arguments
     /// - `str`: string representing a [`SDL_Gamepad`] axis.
     /// ### Return value
     /// Returns the [`SDL_GamepadAxis`] enum corresponding to the input string, or
-    ///   `SDL_GAMEPAD_AXIS_INVALID` if no match was found.
+    ///   [`SDL_GAMEPAD_AXIS_INVALID`] if no match was found.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1726,7 +1726,7 @@ extern "C" {
     /// - `str`: string representing a [`SDL_Gamepad`] axis.
     /// ### Return value
     /// Returns the [`SDL_GamepadButton`] enum corresponding to the input string, or
-    ///   `SDL_GAMEPAD_BUTTON_INVALID` if no match was found.
+    ///   [`SDL_GAMEPAD_BUTTON_INVALID`] if no match was found.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.

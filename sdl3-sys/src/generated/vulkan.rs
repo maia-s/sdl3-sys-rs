@@ -132,7 +132,7 @@ extern "C" {
     /// Get the address of the `vkGetInstanceProcAddr` function.
     ///
     /// This should be called after either calling [`SDL_Vulkan_LoadLibrary()`] or
-    /// creating an [`SDL_Window`] with the `SDL_WINDOW_VULKAN` flag.
+    /// creating an [`SDL_Window`] with the [`SDL_WINDOW_VULKAN`] flag.
     ///
     /// The actual type of the returned function pointer is
     /// PFN_vkGetInstanceProcAddr, but that isn't available because the Vulkan
@@ -166,7 +166,7 @@ extern "C" {
     /// Get the Vulkan instance extensions needed for vkCreateInstance.
     ///
     /// This should be called after either calling [`SDL_Vulkan_LoadLibrary()`] or
-    /// creating an [`SDL_Window`] with the `SDL_WINDOW_VULKAN` flag.
+    /// creating an [`SDL_Window`] with the [`SDL_WINDOW_VULKAN`] flag.
     ///
     /// On return, the variable pointed to by `count` will be set to the number of
     /// elements returned, suitable for using with
@@ -195,7 +195,7 @@ extern "C" {
 extern "C" {
     /// Create a Vulkan rendering surface for a window.
     ///
-    /// The `window` must have been created with the `SDL_WINDOW_VULKAN` flag and
+    /// The `window` must have been created with the [`SDL_WINDOW_VULKAN`] flag and
     /// `instance` must have been created with extensions returned by
     /// [`SDL_Vulkan_GetInstanceExtensions()`] enabled.
     ///

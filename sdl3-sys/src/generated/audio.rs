@@ -737,8 +737,8 @@ extern "C" {
     /// function).
     ///
     /// If you don't care about opening a specific device, pass a `devid` of either
-    /// `SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK` or
-    /// `SDL_AUDIO_DEVICE_DEFAULT_RECORDING`. In this case, SDL will try to pick
+    /// [`SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK`] or
+    /// [`SDL_AUDIO_DEVICE_DEFAULT_RECORDING`]. In this case, SDL will try to pick
     /// the most reasonable default, and may also switch between physical devices
     /// seamlessly later, if the most reasonable default changes during the
     /// lifetime of this opened device (user changed the default in the OS's system
@@ -2261,8 +2261,8 @@ extern "C" {
     /// problematic files in the wild that cause issues with strict decoders. To
     /// provide compatibility with these files, this decoder is lenient in regards
     /// to the truncation of the file, the fact chunk, and the size of the RIFF
-    /// chunk. The hints `SDL_HINT_WAVE_RIFF_CHUNK_SIZE`,
-    /// `SDL_HINT_WAVE_TRUNCATION`, and `SDL_HINT_WAVE_FACT_CHUNK` can be used to
+    /// chunk. The hints [`SDL_HINT_WAVE_RIFF_CHUNK_SIZE`],
+    /// [`SDL_HINT_WAVE_TRUNCATION`], and [`SDL_HINT_WAVE_FACT_CHUNK`] can be used to
     /// tune the behavior of the loading process.
     ///
     /// Any file that is invalid (due to truncation, corruption, or wrong values in
