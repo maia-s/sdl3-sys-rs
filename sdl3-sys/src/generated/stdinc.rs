@@ -3174,7 +3174,7 @@ extern "C" {
     /// ### Arguments
     /// - `n`: the number of possible outcomes. n must be positive.
     /// ### Return value
-    /// Returns a random value in the range of [0 .. n-1].
+    /// Returns a random value in the range of \[0 .. n-1\].
     ///
     /// ### Thread safety
     /// All calls should be made from a single thread
@@ -3227,7 +3227,7 @@ extern "C" {
     /// of those to meet any serious needs.
     ///
     /// ### Return value
-    /// Returns a random value in the range of [0-SDL_MAX_UINT32].
+    /// Returns a random value in the range of \[0-SDL_MAX_UINT32\].
     ///
     /// ### Thread safety
     /// All calls should be made from a single thread
@@ -3266,7 +3266,7 @@ extern "C" {
     ///   NULL.
     /// - `n`: the number of possible outcomes. n must be positive.
     /// ### Return value
-    /// Returns a random value in the range of [0 .. n-1].
+    /// Returns a random value in the range of \[0 .. n-1\].
     ///
     /// ### Thread safety
     /// This function is thread-safe, as long as the state pointer
@@ -3329,7 +3329,7 @@ extern "C" {
     /// - `state`: a pointer to the current random number state, this may not be
     ///   NULL.
     /// ### Return value
-    /// Returns a random value in the range of [0-SDL_MAX_UINT32].
+    /// Returns a random value in the range of \[0-SDL_MAX_UINT32\].
     ///
     /// ### Thread safety
     /// This function is thread-safe, as long as the state pointer

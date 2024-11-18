@@ -660,7 +660,7 @@ pub const SDL_HINT_ENABLE_SCREEN_KEYBOARD: *const ::core::ffi::c_char =
 ///
 /// The list of devices is in the form:
 ///
-/// deviceclass:path[,deviceclass:path[,...]]
+/// deviceclass:path\[,deviceclass:path\[,...\]\]
 ///
 /// where device class is an integer representing the [`SDL_UDEV_deviceclass`] and
 /// path is the full path to the event device.

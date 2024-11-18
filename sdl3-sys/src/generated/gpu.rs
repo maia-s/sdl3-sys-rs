@@ -3800,17 +3800,17 @@ extern "C" {
     ///
     /// For DXIL shaders, use the following register order:
     ///
-    /// - (t[n], space0): Sampled textures, followed by read-only storage textures,
+    /// - (t\[n\], space0): Sampled textures, followed by read-only storage textures,
     ///   followed by read-only storage buffers
-    /// - (u[n], space1): Write-only storage textures, followed by write-only
+    /// - (u\[n\], space1): Write-only storage textures, followed by write-only
     ///   storage buffers
-    /// - (b[n], space2): Uniform buffers
+    /// - (b\[n\], space2): Uniform buffers
     ///
     /// For MSL/metallib, use the following order:
     ///
-    /// - [[buffer]]: Uniform buffers, followed by write-only storage buffers,
+    /// - \[\[buffer\]\]: Uniform buffers, followed by write-only storage buffers,
     ///   followed by write-only storage buffers
-    /// - [[texture]]: Sampled textures, followed by read-only storage textures,
+    /// - \[\[texture\]\]: Sampled textures, followed by read-only storage textures,
     ///   followed by write-only storage textures
     ///
     /// ### Arguments
@@ -3912,28 +3912,28 @@ extern "C" {
     ///
     /// For vertex shaders:
     ///
-    /// - (t[n], space0): Sampled textures, followed by storage textures, followed
+    /// - (t\[n\], space0): Sampled textures, followed by storage textures, followed
     ///   by storage buffers
-    /// - (s[n], space0): Samplers with indices corresponding to the sampled
+    /// - (s\[n\], space0): Samplers with indices corresponding to the sampled
     ///   textures
-    /// - (b[n], space1): Uniform buffers
+    /// - (b\[n\], space1): Uniform buffers
     ///
     /// For pixel shaders:
     ///
-    /// - (t[n], space2): Sampled textures, followed by storage textures, followed
+    /// - (t\[n\], space2): Sampled textures, followed by storage textures, followed
     ///   by storage buffers
-    /// - (s[n], space2): Samplers with indices corresponding to the sampled
+    /// - (s\[n\], space2): Samplers with indices corresponding to the sampled
     ///   textures
-    /// - (b[n], space3): Uniform buffers
+    /// - (b\[n\], space3): Uniform buffers
     ///
     /// For MSL/metallib, use the following order:
     ///
-    /// - [[texture]]: Sampled textures, followed by storage textures
-    /// - [[sampler]]: Samplers with indices corresponding to the sampled textures
-    /// - [[buffer]]: Uniform buffers, followed by storage buffers. Vertex buffer 0
-    ///   is bound at [[buffer(14)]], vertex buffer 1 at [[buffer(15)]], and so on.
+    /// - \[\[texture\]\]: Sampled textures, followed by storage textures
+    /// - \[\[sampler\]\]: Samplers with indices corresponding to the sampled textures
+    /// - \[\[buffer\]\]: Uniform buffers, followed by storage buffers. Vertex buffer 0
+    ///   is bound at \[\[buffer(14)\]\], vertex buffer 1 at \[\[buffer(15)\]\], and so on.
     ///   Rather than manually authoring vertex buffer indices, use the
-    ///   [[stage_in]] attribute which will automatically use the vertex input
+    ///   \[\[stage_in\]\] attribute which will automatically use the vertex input
     ///   information from the [`SDL_GPUPipeline`].
     ///
     /// ### Arguments

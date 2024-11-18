@@ -26,7 +26,7 @@ use super::properties::*;
 extern "C" {
     /// Create a new process.
     ///
-    /// The path to the executable is supplied in args[0]. args[1..N] are
+    /// The path to the executable is supplied in args\[0\]. args\[1..N\] are
     /// additional arguments passed on the command line of the new process, and the
     /// argument list should be terminated with a NULL, e.g.:
     ///
@@ -175,7 +175,7 @@ extern "C" {
     ///
     /// - [`SDL_PROP_PROCESS_CREATE_ARGS_POINTER`]: an array of strings containing
     ///   the program to run, any arguments, and a NULL pointer, e.g. const char
-    ///   *args[] = { "myprogram", "argument", NULL }. This is a required property.
+    ///   *args\[\] = { "myprogram", "argument", NULL }. This is a required property.
     /// - [`SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER`]: an [`SDL_Environment`]
     ///   pointer. If this property is set, it will be the entire environment for
     ///   the process, otherwise the current environment is used.

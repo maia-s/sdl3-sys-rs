@@ -221,7 +221,7 @@ impl DocComment {
         let mut patched = String::new();
         let mut i0 = 0;
         let mut quoted = 0;
-        for (i, _) in line.match_indices(['h', 'S']) {
+        for (i, _) in line.match_indices(['h', 'S', '[', ']']) {
             if i < i0 {
                 continue;
             }
@@ -290,6 +290,34 @@ impl DocComment {
                 } else {
                     write!(patched, "{}", &line[i0..i])?;
                     i0 = i;
+
+                    if quoted & 1 == 0 {
+                        // escape `[` and `]` that aren't markdown links
+                        match line.as_bytes()[i] {
+                            b'[' => {
+                                if let Some(e) = line[i + 1..].find(['[', ']']).map(|e| e + i + 1) {
+                                    if (line.as_bytes()[e] == b'['
+                                        && line.as_bytes().get(e + 1).copied() != Some(b'\''))
+                                        || !matches!(
+                                            line.as_bytes().get(e + 1).copied(),
+                                            Some(b'(') | Some(b'\''),
+                                        )
+                                    {
+                                        patched.write_char('\\')?;
+                                    }
+                                }
+                            }
+                            b']' => {
+                                if !matches!(
+                                    line.as_bytes().get(i + 1).copied(),
+                                    Some(b'(') | Some(b'\''),
+                                ) {
+                                    patched.write_char('\\')?;
+                                }
+                            }
+                            _ => (),
+                        }
+                    }
                 }
             } else {
                 write!(patched, "{}", &line[i0..i])?;

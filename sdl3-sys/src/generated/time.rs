@@ -15,19 +15,19 @@ use super::stdinc::*;
 pub struct SDL_DateTime {
     /// Year
     pub year: ::core::ffi::c_int,
-    /// Month [01-12]
+    /// Month \[01-12\]
     pub month: ::core::ffi::c_int,
-    /// Day of the month [01-31]
+    /// Day of the month \[01-31\]
     pub day: ::core::ffi::c_int,
-    /// Hour [0-23]
+    /// Hour \[0-23\]
     pub hour: ::core::ffi::c_int,
-    /// Minute [0-59]
+    /// Minute \[0-59\]
     pub minute: ::core::ffi::c_int,
-    /// Seconds [0-60]
+    /// Seconds \[0-60\]
     pub second: ::core::ffi::c_int,
-    /// Nanoseconds [0-999999999]
+    /// Nanoseconds \[0-999999999\]
     pub nanosecond: ::core::ffi::c_int,
-    /// Day of the week [0-6] (0 being Sunday)
+    /// Day of the week \[0-6\] (0 being Sunday)
     pub day_of_week: ::core::ffi::c_int,
     /// Seconds east of UTC
     pub utc_offset: ::core::ffi::c_int,
@@ -264,7 +264,7 @@ extern "C" {
     ///
     /// ### Arguments
     /// - `year`: the year.
-    /// - `month`: the month [1-12].
+    /// - `month`: the month \[1-12\].
     /// ### Return value
     /// Returns the number of days in the requested month or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -285,7 +285,7 @@ extern "C" {
     /// - `month`: the month component of the date.
     /// - `day`: the day component of the date.
     /// ### Return value
-    /// Returns the day of year [0-365] if the date is valid or -1 on failure;
+    /// Returns the day of year \[0-365\] if the date is valid or -1 on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability

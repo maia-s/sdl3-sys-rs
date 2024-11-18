@@ -2039,10 +2039,10 @@ extern "C" {
 extern "C" {
     /// Get RGB values from a pixel in the specified format.
     ///
-    /// This function uses the entire 8-bit [0..255] range when converting color
+    /// This function uses the entire 8-bit \[0..255\] range when converting color
     /// components from pixel formats with less than 8-bits per RGB component
     /// (e.g., a completely white pixel in 16-bit RGB565 format would return [0xff,
-    /// 0xff, 0xff] not [0xf8, 0xfc, 0xf8]).
+    /// 0xff, 0xff\] not \[0xf8, 0xfc, 0xf8\]).
     ///
     /// ### Arguments
     /// - `pixel`: a pixel value.
@@ -2078,10 +2078,10 @@ extern "C" {
 extern "C" {
     /// Get RGBA values from a pixel in the specified format.
     ///
-    /// This function uses the entire 8-bit [0..255] range when converting color
+    /// This function uses the entire 8-bit \[0..255\] range when converting color
     /// components from pixel formats with less than 8-bits per RGB component
     /// (e.g., a completely white pixel in 16-bit RGB565 format would return [0xff,
-    /// 0xff, 0xff] not [0xf8, 0xfc, 0xf8]).
+    /// 0xff, 0xff\] not \[0xf8, 0xfc, 0xf8\]).
     ///
     /// If the surface has no alpha component, the alpha will be returned as 0xff
     /// (100% opaque).

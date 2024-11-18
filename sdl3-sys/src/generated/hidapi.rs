@@ -465,7 +465,7 @@ extern "C" {
     /// Set the first byte of `data` to the Report ID of the report to be read.
     /// Make sure to allow space for this extra byte in `data`. Upon return, the
     /// first byte will still contain the Report ID, and the report data will start
-    /// in data[1].
+    /// in data\[1\].
     ///
     /// ### Arguments
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
@@ -495,7 +495,7 @@ extern "C" {
     /// Set the first byte of `data` to the Report ID of the report to be read.
     /// Make sure to allow space for this extra byte in `data`. Upon return, the
     /// first byte will still contain the Report ID, and the report data will start
-    /// in data[1].
+    /// in data\[1\].
     ///
     /// ### Arguments
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
