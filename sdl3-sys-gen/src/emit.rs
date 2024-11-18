@@ -30,7 +30,9 @@ pub const fn is_valid_ident(s: &str) -> bool {
 }
 
 pub fn skip_doc_link_sym(s: &str) -> bool {
-    matches!(s, "SDL_image" | "SDL_MAIN_USE_CALLBACKS")
+    matches!(s, "SDL_image" | "SDL_MAIN_USE_CALLBACKS") ||
+    // FIXME: work around for rustdoc bug: https://github.com/rust-lang/rust/issues/133150
+    matches!(s, "SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER" | "SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER")
 }
 
 fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {

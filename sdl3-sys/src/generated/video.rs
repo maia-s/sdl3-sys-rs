@@ -1613,7 +1613,7 @@ extern "C" {
     ///
     /// These are additional supported properties on macOS:
     ///
-    /// - [`SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER`]: the
+    /// - `SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER`: the
     ///   `(__unsafe_unretained)` NSWindow associated with the window, if you want
     ///   to wrap an existing window.
     /// - [`SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER`]: the `(__unsafe_unretained)`
