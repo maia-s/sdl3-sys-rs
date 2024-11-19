@@ -1371,7 +1371,7 @@ extern "C" {
     ///
     /// ### Arguments
     /// - `dst`: the [`SDL_Surface`] structure that is the drawing target.
-    /// - `rects`: an array of [`SDL_Rects`] representing the rectangles to fill.
+    /// - `rects`: an array of [`SDL_Rect`]s representing the rectangles to fill.
     /// - `count`: the number of rectangles in the array.
     /// - `color`: the color to fill with.
     /// ### Return value

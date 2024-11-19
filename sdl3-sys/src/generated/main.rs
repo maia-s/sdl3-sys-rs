@@ -296,9 +296,9 @@ extern "C" {
     /// Circumvent failure of [`SDL_Init()`] when not using [`SDL_main()`] as an entry
     /// point.
     ///
-    /// This function is defined in [`SDL_main`].h, along with the preprocessor rule to
+    /// This function is defined in SDL_main.h, along with the preprocessor rule to
     /// redefine main() as [`SDL_main()`]. Thus to ensure that your main() function
-    /// will not be changed it is necessary to define [`SDL_MAIN_HANDLED`] before
+    /// will not be changed it is necessary to define SDL_MAIN_HANDLED before
     /// including SDL.h.
     ///
     /// ### Availability
@@ -316,7 +316,7 @@ extern "C" {
     /// mainFunction.
     ///
     /// You can use this if you want to use your own main() implementation without
-    /// using [`SDL_main`] (like when using [`SDL_MAIN_HANDLED`]). When using this, you do
+    /// using [`SDL_main`] (like when using SDL_MAIN_HANDLED). When using this, you do
     /// *not* need [`SDL_SetMainReady()`].
     ///
     /// ### Arguments
@@ -353,7 +353,7 @@ extern "C" {
     ///
     /// Generally, you should not call this function directly. This only exists to
     /// hand off work into SDL as soon as possible, where it has a lot more control
-    /// and functionality available, and make the inline code in [`SDL_main`].h as
+    /// and functionality available, and make the inline code in SDL_main.h as
     /// small as possible.
     ///
     /// Not all platforms use this, it's actual use is hidden in a magic

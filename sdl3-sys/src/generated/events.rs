@@ -1354,7 +1354,7 @@ pub struct SDL_GamepadSensorEvent {
     pub which: SDL_JoystickID,
     /// The type of the sensor, one of the values of [`SDL_SensorType`]
     pub sensor: Sint32,
-    /// Up to 3 values from the sensor, as defined in [`SDL_sensor`].h
+    /// Up to 3 values from the sensor, as defined in SDL_sensor.h
     pub data: [::core::ffi::c_float; 3],
     /// The timestamp of the sensor reading in nanoseconds, not necessarily synchronized with the system clock
     pub sensor_timestamp: Uint64,

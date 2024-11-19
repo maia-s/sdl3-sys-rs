@@ -2976,7 +2976,7 @@ extern "C" {
     /// This is the function you use to reflect any changes to the surface on the
     /// screen.
     ///
-    /// This function is equivalent to the SDL 1.2 API [`SDL_Flip()`].
+    /// This function is equivalent to the SDL 1.2 API SDL_Flip().
     ///
     /// ### Arguments
     /// - `window`: the window to update.
@@ -2999,7 +2999,7 @@ extern "C" {
     /// This is the function you use to reflect changes to portions of the surface
     /// on the screen.
     ///
-    /// This function is equivalent to the SDL 1.2 API [`SDL_UpdateRects()`].
+    /// This function is equivalent to the SDL 1.2 API SDL_UpdateRects().
     ///
     /// Note that this function will update _at least_ the rectangles specified,
     /// but this is only intended as an optimization; in practice, this might

@@ -1997,7 +1997,7 @@ extern "C" {
     /// Get the current state of a gamepad sensor.
     ///
     /// The number of values and interpretation of the data is sensor dependent.
-    /// See [`SDL_sensor`].h for the details for each type of sensor.
+    /// See SDL_sensor.h for the details for each type of sensor.
     ///
     /// ### Arguments
     /// - `gamepad`: the gamepad to query.

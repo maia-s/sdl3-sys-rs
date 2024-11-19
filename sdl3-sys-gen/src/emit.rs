@@ -29,10 +29,37 @@ pub const fn is_valid_ident(s: &str) -> bool {
     matches!(s.as_bytes()[0], b'a'..=b'z' | b'A'..=b'Z' | b'_')
 }
 
-pub fn skip_doc_link_sym(s: &str) -> bool {
-    matches!(s, "SDL_image" | "SDL_MAIN_USE_CALLBACKS") ||
-    // FIXME: work around for rustdoc bug: https://github.com/rust-lang/rust/issues/133150
-    matches!(s, "SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER" | "SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER")
+pub fn doc_link_sym(s: &str) -> Option<(&str, &str)> {
+    match s {
+        // libraries
+        "SDL_image"
+        | "SDL_ttf"
+        // unused preprocessor syms, environment variables, etc
+        | "SDL_FILESYSTEM_BASE_DIR_TYPE"
+        | "SDL_FUNCTION_POINTER_IS_VOID_POINTER"
+        | "SDL_GDK_TEXTINPUT"
+        | "SDL_HAPTIC_GAIN_MAX"
+        | "SDL_HIDAPI_DISABLED"
+        | "SDL_MAIN_HANDLED"
+        | "SDL_MAIN_USE_CALLBACKS"
+        | "SDL_SINT64_C"
+        | "SDL_UDEV_deviceclass"
+        | "SDL_UINT64_C"
+        // SDL 1.2 syms
+        | "SDL_Flip()"
+        | "SDL_UpdateRects()"
+        // text
+        | "SDL_GPU"
+        | "SDL_HINT_X"
+        // FIXME: work around for rustdoc bug: https://github.com/rust-lang/rust/issues/133150
+        | "SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER"
+        | "SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER"
+            => None,
+
+        "SDL_Rects" => Some(("SDL_Rect", "s")),
+
+        _ => Some((s, "")),
+    }
 }
 
 fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
@@ -257,13 +284,11 @@ impl DocComment {
                         .find(|c: char| !c.is_ascii_alphanumeric() && c != '_')
                         .unwrap_or(line.len() - i);
                     if end > i + 4
-                        && !skip_doc_link_sym(&line[i..end])
                         && (line.len() == end
                             || line.as_bytes()[end].is_ascii_whitespace()
-                            || matches!(
-                                line.as_bytes()[end],
-                                b')' | b',' | b'.' | b';' | b':' | b'`'
-                            )
+                            || matches!(line.as_bytes()[end], b')' | b',' | b';' | b':' | b'`')
+                            || (line.as_bytes()[end] == b'.'
+                                && line.as_bytes().get(end + 1).copied() != Some(b'h'))
                             || (line.as_bytes()[end] == b'('
                                 && line.as_bytes().get(end + 1).copied() == Some(b')')))
                         && (quoted & 1 == 0 || line.as_bytes()[end] == b'`')
@@ -273,13 +298,18 @@ impl DocComment {
                         {
                             end += 2;
                         }
+                        let Some((sym, post)) = doc_link_sym(&line[i..end]) else {
+                            write!(patched, "{}", &line[i0..i])?;
+                            i0 = i;
+                            continue;
+                        };
                         if quoted & 1 == 0 {
                             write!(patched, "{}", &line[i0..i])?;
-                            write!(patched, "[`{}`]", &line[i..end])?;
+                            write!(patched, "[`{sym}`]{post}")?;
                             i0 = end;
                         } else {
                             write!(patched, "{}", &line[i0..i - 1])?;
-                            write!(patched, "[{}]", &line[i - 1..end + 1])?;
+                            write!(patched, "[`{sym}`]{post}")?;
                             i0 = end + 1;
                             quoted += 1;
                         }

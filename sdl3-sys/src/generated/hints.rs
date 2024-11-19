@@ -1,7 +1,7 @@
 //! This file contains functions to set and get configuration hints, as well as
 //! listing each of them alphabetically.
 //!
-//! The convention for naming hints is [`SDL_HINT_X`], where "SDL_X" is the
+//! The convention for naming hints is SDL_HINT_X, where "SDL_X" is the
 //! environment variable that can be used to override the default.
 //!
 //! In general these hints are just that - they may or may not be supported or
@@ -662,7 +662,7 @@ pub const SDL_HINT_ENABLE_SCREEN_KEYBOARD: *const ::core::ffi::c_char =
 ///
 /// deviceclass:path\[,deviceclass:path\[,...\]\]
 ///
-/// where device class is an integer representing the [`SDL_UDEV_deviceclass`] and
+/// where device class is an integer representing the SDL_UDEV_deviceclass and
 /// path is the full path to the event device.
 ///
 /// This hint should be set before SDL is initialized.
@@ -738,7 +738,7 @@ pub const SDL_HINT_FRAMEBUFFER_ACCELERATION: *const ::core::ffi::c_char =
 /// A variable that lets you manually hint extra gamecontroller db entries.
 ///
 /// The variable should be newline delimited rows of gamecontroller config
-/// data, see [`SDL_gamepad`].h
+/// data, see SDL_gamepad.h
 ///
 /// You can update mappings after SDL is initialized with
 /// [`SDL_GetGamepadMappingForGUID()`] and [`SDL_AddGamepadMapping()`]
@@ -754,7 +754,7 @@ pub const SDL_HINT_GAMECONTROLLERCONFIG: *const ::core::ffi::c_char =
 /// entries.
 ///
 /// The file should contain lines of gamecontroller config data, see
-/// [`SDL_gamepad`].h
+/// SDL_gamepad.h
 ///
 /// You can update mappings after SDL is initialized with
 /// [`SDL_GetGamepadMappingForGUID()`] and [`SDL_AddGamepadMapping()`]
@@ -852,7 +852,7 @@ pub const SDL_HINT_GAMECONTROLLER_SENSOR_FUSION: *const ::core::ffi::c_char =
 /// This variable sets the default text of the TextInput window on GDK
 /// platforms.
 ///
-/// This hint is available only if [`SDL_GDK_TEXTINPUT`] defined.
+/// This hint is available only if SDL_GDK_TEXTINPUT defined.
 ///
 /// This hint should be set before calling [`SDL_StartTextInput()`]
 ///
@@ -864,7 +864,7 @@ pub const SDL_HINT_GDK_TEXTINPUT_DEFAULT_TEXT: *const ::core::ffi::c_char =
 /// This variable sets the description of the TextInput window on GDK
 /// platforms.
 ///
-/// This hint is available only if [`SDL_GDK_TEXTINPUT`] defined.
+/// This hint is available only if SDL_GDK_TEXTINPUT defined.
 ///
 /// This hint should be set before calling [`SDL_StartTextInput()`]
 ///
@@ -879,7 +879,7 @@ pub const SDL_HINT_GDK_TEXTINPUT_DESCRIPTION: *const ::core::ffi::c_char =
 /// The value must be a stringified integer, for example "10" to allow for up
 /// to 10 characters of text input.
 ///
-/// This hint is available only if [`SDL_GDK_TEXTINPUT`] defined.
+/// This hint is available only if SDL_GDK_TEXTINPUT defined.
 ///
 /// This hint should be set before calling [`SDL_StartTextInput()`]
 ///
@@ -895,7 +895,7 @@ pub const SDL_HINT_GDK_TEXTINPUT_MAX_LENGTH: *const ::core::ffi::c_char =
 /// passed to the window creation function. The value must be a stringified
 /// integer, for example "0" for XGameUiTextEntryInputScope::Default.
 ///
-/// This hint is available only if [`SDL_GDK_TEXTINPUT`] defined.
+/// This hint is available only if SDL_GDK_TEXTINPUT defined.
 ///
 /// This hint should be set before calling [`SDL_StartTextInput()`]
 ///
@@ -906,7 +906,7 @@ pub const SDL_HINT_GDK_TEXTINPUT_SCOPE: *const ::core::ffi::c_char =
 
 /// This variable sets the title of the TextInput window on GDK platforms.
 ///
-/// This hint is available only if [`SDL_GDK_TEXTINPUT`] defined.
+/// This hint is available only if SDL_GDK_TEXTINPUT defined.
 ///
 /// This hint should be set before calling [`SDL_StartTextInput()`]
 ///

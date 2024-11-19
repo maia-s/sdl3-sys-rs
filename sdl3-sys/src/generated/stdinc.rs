@@ -120,7 +120,7 @@ pub const SDL_MIN_UINT32: Uint32 = (0x00000000 as Uint32);
 /// This macro is available since SDL 3.1.3.
 ///
 /// ### See also
-/// - [`SDL_SINT64_C`]
+/// - SDL_SINT64_C
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Constant | Description |
@@ -139,7 +139,7 @@ pub const SDL_MIN_SINT64: Sint64 = (-9223372036854775808_i64 as Sint64);
 /// This macro is available since SDL 3.1.3.
 ///
 /// ### See also
-/// - [`SDL_UINT64_C`]
+/// - SDL_UINT64_C
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Constant | Description |
@@ -5184,7 +5184,7 @@ apply_cfg!(#[cfg(doc)] => {
     ///
     /// If for some reason you need to force this typedef to be an actual `void *`,
     /// perhaps to work around a compiler or existing code, you can define
-    /// [`SDL_FUNCTION_POINTER_IS_VOID_POINTER`] before including any SDL headers.
+    /// `SDL_FUNCTION_POINTER_IS_VOID_POINTER` before including any SDL headers.
     ///
     /// ### Availability
     /// This datatype is available since SDL 3.1.3.

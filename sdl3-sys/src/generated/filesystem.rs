@@ -14,10 +14,10 @@ extern "C" {
     /// bundle, this function returns the Resource directory (e.g.
     /// MyApp.app/Contents/Resources/). This behaviour can be overridden by adding
     /// a property to the Info.plist file. Adding a string key with the name
-    /// [`SDL_FILESYSTEM_BASE_DIR_TYPE`] with a supported value will change the
+    /// SDL_FILESYSTEM_BASE_DIR_TYPE with a supported value will change the
     /// behaviour.
     ///
-    /// Supported values for the [`SDL_FILESYSTEM_BASE_DIR_TYPE`] property (Given an
+    /// Supported values for the SDL_FILESYSTEM_BASE_DIR_TYPE property (Given an
     /// application in /Applications/SDLApp/MyApp.app):
     ///
     /// - `resource`: bundle resource directory (the default). For example:

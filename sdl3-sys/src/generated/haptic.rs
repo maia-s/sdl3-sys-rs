@@ -1331,8 +1331,8 @@ extern "C" {
     /// Device must support the [`SDL_HAPTIC_GAIN`] feature.
     ///
     /// The user may specify the maximum gain by setting the environment variable
-    /// [`SDL_HAPTIC_GAIN_MAX`] which should be between 0 and 100. All calls to
-    /// [`SDL_SetHapticGain()`] will scale linearly using [`SDL_HAPTIC_GAIN_MAX`] as the
+    /// `SDL_HAPTIC_GAIN_MAX` which should be between 0 and 100. All calls to
+    /// [`SDL_SetHapticGain()`] will scale linearly using `SDL_HAPTIC_GAIN_MAX` as the
     /// maximum.
     ///
     /// ### Arguments

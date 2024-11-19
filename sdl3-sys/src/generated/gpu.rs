@@ -5657,7 +5657,7 @@ apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
         /// Call this to suspend GPU operation on Xbox when you receive the
         /// [`SDL_EVENT_DID_ENTER_BACKGROUND`] event.
         ///
-        /// Do NOT call any [`SDL_GPU`] functions after calling this function! This must
+        /// Do NOT call any SDL_GPU functions after calling this function! This must
         /// also be called before calling [`SDL_GDKSuspendComplete`].
         ///
         /// ### Arguments
@@ -5676,7 +5676,7 @@ apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
         /// [`SDL_EVENT_WILL_ENTER_FOREGROUND`] event.
         ///
         /// When resuming, this function MUST be called before calling any other
-        /// [`SDL_GPU`] functions.
+        /// SDL_GPU functions.
         ///
         /// ### Arguments
         /// - `device`: a GPU context.
@@ -5795,7 +5795,7 @@ pub struct SDL_GPUCopyPass {
     _opaque: [::core::primitive::u8; 0],
 }
 
-/// An opaque handle representing the [`SDL_GPU`] context.
+/// An opaque handle representing the SDL_GPU context.
 ///
 /// ### Availability
 /// This struct is available since SDL 3.1.3
