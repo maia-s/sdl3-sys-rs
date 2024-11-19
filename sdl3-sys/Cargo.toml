@@ -27,6 +27,10 @@ link-static = []
 # Link SDL as a mac framework. The link-static feature has no effect if this is enabled.
 link-framework = []
 
+# When building from source, use the `SDL_UNIX_CONSOLE_BUILD` flag to disable the X11 dependency
+# and build a console-only version of SDL. This has no effect when not building from source.
+console-build = []
+
 # Use pkg-config to get link flags for SDL. Only used when not building from source.
 # This has no effect if the link-framework feature is enabled.
 use-pkg-config = ["dep:pkg-config"]
