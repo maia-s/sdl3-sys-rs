@@ -43,10 +43,19 @@ convention for libraries. You can change this behaviour with the following featu
 | ------- | ----------- |
 | `use-pkg-config` | Use `pkg-config` to find and link the SDL 3 library. |
 | `use-vcpkg` | Use `vcpkg` to find and link the SDL 3 library. |
-| `build-from-source` | Build and link SDL 3 from source. You have to install any dependencies SDL needs to build for your target first. |
+| `build-from-source` | Build and link SDL 3 from source. You have to install any dependencies SDL needs to build for your target first. See below for build related features. |
 | `build-from-source-static` | Shortcut for enabling both the `build-from-source` and `link-static` features. This should no longer be necessary. |
 | `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3.xcframework` to be located at `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
 | `link-static` | Link SDL statically. SDL doesn't recommend doing this. <ul><li>On targets that only support static linking, such as emscripten, you don't have to enable this feature.</li><li>On Apple targets, this currently requires frameworks that should be optional.</li></ul> |
+
+### Building from source
+
+When building from source with the `build-from-source` feature flag, you can enable these
+additional features to modify the build. These have no effect when not building from source.
+
+| Feature | Description |
+| ------- | ----------- |
+| `sdl-unix-console-build` | Allow building SDL without X11 or Wayland support on Linux and other targets that usually use X11/Wayland. By default, SDL requires either X11 or Wayland on these targets as a sanity check. |
 
 ## Optional integrations
 
