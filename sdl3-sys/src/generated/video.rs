@@ -336,37 +336,89 @@ pub const SDL_WINDOW_TRANSPARENT: SDL_WindowFlags = (1073741824_u64 as SDL_Windo
 /// window should not be focusable
 pub const SDL_WINDOW_NOT_FOCUSABLE: SDL_WindowFlags = (2147483648_u64 as SDL_WindowFlags);
 
-/// Used to indicate that you don't care what the window position is.
+/// A magic value used with [`SDL_WINDOWPOS_UNDEFINED`].
+///
+/// Generally this macro isn't used directly, but rather through
+/// [`SDL_WINDOWPOS_UNDEFINED`] or [`SDL_WINDOWPOS_UNDEFINED_DISPLAY`].
 ///
 /// ### Availability
 /// This macro is available since SDL 3.1.3.
 pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376_u32;
 
+/// Used to indicate that you don't care what the window position is.
+///
+/// If you _really_ don't care, [`SDL_WINDOWPOS_UNDEFINED`] is the same, but always
+/// uses the primary display instead of specifying one.
+///
+/// ### Parameters
+/// - `X`: the [`SDL_DisplayID`] of the display to use.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c_int {
     ((SDL_WINDOWPOS_UNDEFINED_MASK | X) as ::core::ffi::c_int)
 }
 
+/// Used to indicate that you don't care what the window position/display is.
+///
+/// This always uses the primary display.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_WINDOWPOS_UNDEFINED: ::core::ffi::c_int = SDL_WINDOWPOS_UNDEFINED_DISPLAY(0);
 
+/// A macro to test if the window position is marked as "undefined."
+///
+/// ### Parameters
+/// - `X`: the window position value.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_ISUNDEFINED(X: ::core::ffi::c_int) -> ::core::primitive::bool {
     (((X as ::core::primitive::u32) & 4294901760_u32) == SDL_WINDOWPOS_UNDEFINED_MASK)
 }
 
-/// Used to indicate that the window position should be centered.
+/// A magic value used with [`SDL_WINDOWPOS_CENTERED`].
+///
+/// Generally this macro isn't used directly, but rather through
+/// [`SDL_WINDOWPOS_CENTERED`] or [`SDL_WINDOWPOS_CENTERED_DISPLAY`].
 ///
 /// ### Availability
 /// This macro is available since SDL 3.1.3.
 pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 
+/// Used to indicate that the window position should be centered.
+///
+/// [`SDL_WINDOWPOS_CENTERED`] is the same, but always uses the primary display
+/// instead of specifying one.
+///
+/// ### Parameters
+/// - `X`: the [`SDL_DisplayID`] of the display to use.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c_int {
     ((SDL_WINDOWPOS_CENTERED_MASK | X) as ::core::ffi::c_int)
 }
 
+/// Used to indicate that the window position should be centered.
+///
+/// This always uses the primary display.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_WINDOWPOS_CENTERED: ::core::ffi::c_int = SDL_WINDOWPOS_CENTERED_DISPLAY(0);
 
+/// A macro to test if the window position is marked as "centered."
+///
+/// ### Parameters
+/// - `X`: the window position value.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitive::bool {
     (((X as ::core::primitive::u32) & 4294901760_u32) == SDL_WINDOWPOS_CENTERED_MASK)
@@ -433,18 +485,34 @@ pub const SDL_FLASH_UNTIL_FOCUSED: SDL_FlashOperation = SDL_FlashOperation::UNTI
 /// - [`SDL_GL_CreateContext`]
 pub type SDL_GLContext = *mut SDL_GLContextState;
 
-/// Opaque EGL types.
+/// Opaque type for an EGL display.
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
 pub type SDL_EGLDisplay = *mut ::core::ffi::c_void;
 
+/// Opaque type for an EGL config.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_EGLConfig = *mut ::core::ffi::c_void;
 
+/// Opaque type for an EGL surface.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_EGLSurface = *mut ::core::ffi::c_void;
 
+/// An EGL attribute, used when creating an EGL context.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_EGLAttrib = ::core::primitive::isize;
 
+/// An EGL integer attribute, used when creating an EGL surface.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_EGLint = ::core::ffi::c_int;
 
 /// EGL platform attribute initialization callback.
@@ -812,6 +880,9 @@ extern "C" {
     /// ### Return value
     /// Returns the number of built in video drivers.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -836,6 +907,9 @@ extern "C" {
     /// ### Return value
     /// Returns the name of the video driver with the given **index**.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -855,6 +929,9 @@ extern "C" {
     /// Returns the name of the current video driver or NULL if no driver has been
     ///   initialized.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -869,6 +946,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns the current system theme, light, dark, or unknown.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -887,6 +967,9 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information. This should be freed
     ///   with [`SDL_free()`] when it is no longer needed.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_GetDisplays(count: *mut ::core::ffi::c_int) -> *mut SDL_DisplayID;
@@ -898,6 +981,9 @@ extern "C" {
     /// ### Return value
     /// Returns the instance ID of the primary display on success or 0 on failure;
     ///   call [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -932,6 +1018,9 @@ extern "C" {
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_GetDisplayProperties(displayID: SDL_DisplayID) -> SDL_PropertiesID;
@@ -953,6 +1042,9 @@ extern "C" {
     /// Returns the name of a display or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -973,6 +1065,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1006,6 +1101,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1028,6 +1126,9 @@ extern "C" {
     /// Returns the [`SDL_DisplayOrientation`] enum value of the display, or
     ///   [`SDL_ORIENTATION_UNKNOWN`] if it isn't available.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1045,6 +1146,9 @@ extern "C" {
     /// ### Return value
     /// Returns the [`SDL_DisplayOrientation`] enum value of the display, or
     ///   [`SDL_ORIENTATION_UNKNOWN`] if it isn't available.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1068,6 +1172,9 @@ extern "C" {
     /// ### Return value
     /// Returns the content scale of the display, or 0.0f on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1100,6 +1207,9 @@ extern "C" {
     ///   single allocation that should be freed with [`SDL_free()`] when it is
     ///   no longer needed.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1129,12 +1239,15 @@ extern "C" {
     ///   for the desktop refresh rate.
     /// - `include_high_density_modes`: boolean to include high density modes in
     ///   the search.
-    /// - `mode`: a pointer filled in with the closest display mode equal to or
-    ///   larger than the desired mode.
+    /// - `closest`: a pointer filled in with the closest display mode equal to
+    ///   or larger than the desired mode.
     ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1148,7 +1261,7 @@ extern "C" {
         h: ::core::ffi::c_int,
         refresh_rate: ::core::ffi::c_float,
         include_high_density_modes: ::core::primitive::bool,
-        mode: *mut SDL_DisplayMode,
+        closest: *mut SDL_DisplayMode,
     ) -> ::core::primitive::bool;
 }
 
@@ -1166,6 +1279,9 @@ extern "C" {
     /// ### Return value
     /// Returns a pointer to the desktop display mode or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1191,6 +1307,9 @@ extern "C" {
     /// Returns a pointer to the desktop display mode or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1209,6 +1328,9 @@ extern "C" {
     /// ### Return value
     /// Returns the instance ID of the display containing the point or 0 on
     ///   failure; call [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1230,6 +1352,9 @@ extern "C" {
     ///   closest to the center of the rect on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1249,6 +1374,9 @@ extern "C" {
     /// Returns the instance ID of the display containing the center of the window
     ///   on success or 0 on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1272,6 +1400,9 @@ extern "C" {
     /// ### Return value
     /// Returns the pixel density or 0.0f on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1301,6 +1432,9 @@ extern "C" {
     /// ### Return value
     /// Returns the display scale, or 0.0f on failure; call [`SDL_GetError()`] for
     ///   more information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1335,6 +1469,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1358,6 +1495,9 @@ extern "C" {
     /// Returns a pointer to the exclusive fullscreen mode to use or NULL for
     ///   borderless fullscreen desktop mode.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1379,6 +1519,9 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information. This should be freed with
     ///   [`SDL_free()`] when it is no longer needed.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_GetWindowICCProfile(
@@ -1398,6 +1541,9 @@ extern "C" {
     ///   [`SDL_PIXELFORMAT_UNKNOWN`] on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_GetWindowPixelFormat(window: *mut SDL_Window) -> SDL_PixelFormat;
@@ -1415,6 +1561,9 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information. This is a single
     ///   allocation that should be freed with [`SDL_free()`] when it is no
     ///   longer needed.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1499,6 +1648,9 @@ extern "C" {
     /// Returns the window that was created or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1568,6 +1720,9 @@ extern "C" {
     /// ### Return value
     /// Returns the window that was created or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1699,6 +1854,9 @@ extern "C" {
     /// Returns the window that was created or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1824,6 +1982,9 @@ extern "C" {
     /// Returns the ID of the window on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1845,6 +2006,9 @@ extern "C" {
     /// Returns the window associated with `id` or NULL if it doesn't exist; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -1862,6 +2026,9 @@ extern "C" {
     /// ### Return value
     /// Returns the parent of the window on success or NULL if the window has no
     ///   parent.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1959,6 +2126,8 @@ extern "C" {
     ///   the window
     /// - [`SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER`]: the wl_surface associated with
     ///   the window
+    /// - [`SDL_PROP_WINDOW_WAYLAND_VIEWPORT_POINTER`]: the wp_viewport associated
+    ///   with the window
     /// - [`SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER`]: the wl_egl_window
     ///   associated with the window
     /// - [`SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER`]: the xdg_surface associated
@@ -1987,6 +2156,9 @@ extern "C" {
     /// ### Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2067,6 +2239,9 @@ pub const SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER: *const ::core::ffi::c_char =
 pub const SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER: *const ::core::ffi::c_char =
     c"SDL.window.wayland.surface".as_ptr();
 
+pub const SDL_PROP_WINDOW_WAYLAND_VIEWPORT_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.wayland.viewport".as_ptr();
+
 pub const SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER: *const ::core::ffi::c_char =
     c"SDL.window.wayland.egl_window".as_ptr();
 
@@ -2103,6 +2278,9 @@ extern "C" {
     /// ### Return value
     /// Returns a mask of the [`SDL_WindowFlags`] associated with `window`.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2130,6 +2308,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2150,6 +2331,9 @@ extern "C" {
     /// ### Return value
     /// Returns the title of the window in UTF-8 format or "" if there is no
     ///   title.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2180,6 +2364,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_SetWindowIcon(
@@ -2191,13 +2378,12 @@ extern "C" {
 extern "C" {
     /// Request that the window's position be set.
     ///
-    /// If, at the time of this request, the window is in a fixed-size state such
-    /// as maximized, this request may be deferred until the window returns to a
-    /// resizable state.
+    /// If the window is in an exclusive fullscreen or maximized state, this
+    /// request has no effect.
     ///
     /// This can be used to reposition fullscreen-desktop windows onto a different
-    /// display, however, exclusive fullscreen windows are locked to a specific
-    /// display and can only be repositioned programmatically via
+    /// display, however, as exclusive fullscreen windows are locked to a specific
+    /// display, they can only be repositioned programmatically via
     /// [`SDL_SetWindowFullscreenMode()`].
     ///
     /// On some windowing systems this request is asynchronous and the new
@@ -2223,6 +2409,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2257,6 +2446,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2272,12 +2464,11 @@ extern "C" {
 extern "C" {
     /// Request that the size of a window's client area be set.
     ///
-    /// If, at the time of this request, the window in a fixed-size state, such as
-    /// maximized or fullscreen, the request will be deferred until the window
-    /// exits this state and becomes resizable again.
+    /// If the window is in a fullscreen or maximized state, this request has no
+    /// effect.
     ///
-    /// To change the fullscreen mode of a window, use
-    /// [`SDL_SetWindowFullscreenMode()`]
+    /// To change the exclusive fullscreen mode of a window, use
+    /// [`SDL_SetWindowFullscreenMode()`].
     ///
     /// On some windowing systems, this request is asynchronous and the new window
     /// size may not have have been applied immediately upon the return of this
@@ -2299,6 +2490,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2329,6 +2523,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2362,6 +2559,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2406,6 +2606,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2432,6 +2635,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2477,6 +2683,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2505,6 +2714,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2529,6 +2741,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2557,6 +2772,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2581,6 +2799,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2608,6 +2829,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2639,6 +2863,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2667,6 +2894,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2692,6 +2922,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2713,6 +2946,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2732,11 +2968,15 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_ShowWindow`]
+    /// - [`SDL_WINDOW_HIDDEN`]
     pub fn SDL_HideWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
@@ -2756,6 +2996,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2789,6 +3032,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2801,6 +3047,9 @@ extern "C" {
 
 extern "C" {
     /// Request that the window be minimized to an iconic representation.
+    ///
+    /// If the window is in a fullscreen state, this request has no direct effect.
+    /// It may alter the state the window is returned to when leaving fullscreen.
     ///
     /// On some windowing systems this request is asynchronous and the new window
     /// state may not have been applied immediately upon the return of this
@@ -2818,6 +3067,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2831,6 +3083,9 @@ extern "C" {
 extern "C" {
     /// Request that the size and position of a minimized or maximized window be
     /// restored.
+    ///
+    /// If the window is in a fullscreen state, this request has no direct effect.
+    /// It may alter the state the window is returned to when leaving fullscreen.
     ///
     /// On some windowing systems this request is asynchronous and the new window
     /// state may not have have been applied immediately upon the return of this
@@ -2847,6 +3102,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2882,6 +3140,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2889,6 +3150,7 @@ extern "C" {
     /// - [`SDL_GetWindowFullscreenMode`]
     /// - [`SDL_SetWindowFullscreenMode`]
     /// - [`SDL_SyncWindow`]
+    /// - [`SDL_WINDOW_FULLSCREEN`]
     pub fn SDL_SetWindowFullscreen(
         window: *mut SDL_Window,
         fullscreen: ::core::primitive::bool,
@@ -2915,6 +3177,9 @@ extern "C" {
     /// Returns true on success or false if the operation timed out before the
     ///   window was in the requested state.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -2938,6 +3203,9 @@ extern "C" {
     /// ### Return value
     /// Returns true if there is a surface associated with the window, or false
     ///   otherwise.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2967,6 +3235,9 @@ extern "C" {
     /// ### Return value
     /// Returns the surface associated with the window, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3000,6 +3271,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -3027,6 +3301,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -3052,6 +3329,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3085,6 +3365,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -3107,6 +3390,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3144,6 +3430,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -3169,11 +3458,16 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
-    /// - [`SDL_GetWindowMouseGrab`]
+    /// - [`SDL_GetWindowMouseRect`]
+    /// - [`SDL_SetWindowMouseRect`]
+    /// - [`SDL_SetWindowMouseGrab`]
     /// - [`SDL_SetWindowKeyboardGrab`]
     pub fn SDL_SetWindowMouseGrab(
         window: *mut SDL_Window,
@@ -3189,6 +3483,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns true if keyboard is grabbed, and false otherwise.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3207,10 +3504,16 @@ extern "C" {
     /// ### Return value
     /// Returns true if mouse is grabbed, and false otherwise.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
+    /// - [`SDL_GetWindowMouseRect`]
+    /// - [`SDL_SetWindowMouseRect`]
+    /// - [`SDL_SetWindowMouseGrab`]
     /// - [`SDL_SetWindowKeyboardGrab`]
     pub fn SDL_GetWindowMouseGrab(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
@@ -3220,6 +3523,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns the window if input is grabbed or NULL otherwise.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3245,11 +3551,15 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMouseRect`]
+    /// - [`SDL_GetWindowMouseGrab`]
     /// - [`SDL_SetWindowMouseGrab`]
     pub fn SDL_SetWindowMouseRect(
         window: *mut SDL_Window,
@@ -3267,11 +3577,16 @@ extern "C" {
     /// Returns a pointer to the mouse confinement rectangle of a window, or NULL
     ///   if there isn't one.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowMouseRect`]
+    /// - [`SDL_GetWindowMouseGrab`]
+    /// - [`SDL_SetWindowMouseGrab`]
     pub fn SDL_GetWindowMouseRect(window: *mut SDL_Window) -> *const SDL_Rect;
 }
 
@@ -3290,6 +3605,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3314,6 +3632,9 @@ extern "C" {
     /// ### Return value
     /// Returns the opacity, (0.0f - transparent, 1.0f - opaque), or -1.0f on
     ///   failure; call [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3352,6 +3673,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -3377,11 +3701,15 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_SetWindowParent`]
+    /// - [`SDL_WINDOW_MODAL`]
     pub fn SDL_SetWindowModal(
         window: *mut SDL_Window,
         modal: ::core::primitive::bool,
@@ -3398,6 +3726,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3429,6 +3760,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_ShowWindowSystemMenu(
@@ -3439,6 +3773,9 @@ extern "C" {
 }
 
 /// Possible return values from the [`SDL_HitTest`] callback.
+///
+/// ### Thread safety
+/// This function should only be called on the main thread.
 ///
 /// ### Availability
 /// This enum is available since SDL 3.1.3.
@@ -3596,6 +3933,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_SetWindowHitTest(
@@ -3630,6 +3970,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_SetWindowShape(
@@ -3649,6 +3992,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_FlashWindow(
@@ -3665,6 +4011,9 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `window`: the window to destroy.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3686,6 +4035,9 @@ extern "C" {
     /// ### Return value
     /// Returns true if the screensaver is enabled, false if it is disabled.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -3701,6 +4053,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3723,6 +4078,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3750,6 +4108,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3808,6 +4169,9 @@ extern "C" {
     /// Returns a pointer to the named OpenGL function. The returned pointer
     ///   should be cast to the appropriate function signature.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -3832,6 +4196,9 @@ extern "C" {
     /// Returns a pointer to the named EGL function. The returned pointer should
     ///   be cast to the appropriate function signature.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -3842,6 +4209,9 @@ extern "C" {
 
 extern "C" {
     /// Unload the OpenGL library previously loaded by [`SDL_GL_LoadLibrary()`].
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3871,6 +4241,9 @@ extern "C" {
     /// ### Return value
     /// Returns true if the extension is supported, false otherwise.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_GL_ExtensionSupported(
@@ -3880,6 +4253,9 @@ extern "C" {
 
 extern "C" {
     /// Reset all previously set OpenGL context attributes to their default values.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3907,6 +4283,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -3930,6 +4309,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3961,6 +4343,9 @@ extern "C" {
     /// Returns the OpenGL context associated with `window` or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -3983,6 +4368,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -4001,6 +4389,9 @@ extern "C" {
     /// Returns the currently active OpenGL window on success or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_GL_GetCurrentWindow() -> *mut SDL_Window;
@@ -4012,6 +4403,9 @@ extern "C" {
     /// ### Return value
     /// Returns the currently active OpenGL context or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -4028,6 +4422,9 @@ extern "C" {
     /// Returns the currently active EGL display or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_EGL_GetCurrentDisplay() -> SDL_EGLDisplay;
@@ -4039,6 +4436,9 @@ extern "C" {
     /// ### Return value
     /// Returns the currently active EGL config or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -4054,6 +4454,9 @@ extern "C" {
     /// ### Return value
     /// Returns the EGLSurface pointer associated with the window, or NULL on
     ///   failure.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -4076,6 +4479,9 @@ extern "C" {
     /// - `contextAttribCallback`: callback for attributes to pass to
     ///   eglCreateContext. May be NULL.
     /// - `userdata`: a pointer that is passed to the callbacks.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -4113,6 +4519,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -4136,6 +4545,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -4162,6 +4574,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_GL_SwapWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
@@ -4177,6 +4592,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -4185,6 +4603,15 @@ extern "C" {
     pub fn SDL_GL_DestroyContext(context: SDL_GLContext) -> ::core::primitive::bool;
 }
 
+/// Internal display mode data.
+///
+/// This lives as a field in [`SDL_DisplayMode`], as opaque data.
+///
+/// ### Availability
+/// This struct is available since SDL 3.1.3.
+///
+/// ### See also
+/// - [`SDL_DisplayMode`]
 #[repr(C)]
 pub struct SDL_DisplayModeData {
     _opaque: [::core::primitive::u8; 0],

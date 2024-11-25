@@ -1,4 +1,9 @@
 //! SDL keyboard management.
+//!
+//! Please refer to the Best Keyboard Practices document for details on how
+//! best to accept keyboard input in various types of programs:
+//!
+//! <https://wiki.libsdl.org/SDL3/BestKeyboardPractices>
 
 use super::stdinc::*;
 
@@ -31,6 +36,9 @@ extern "C" {
     /// ### Return value
     /// Returns true if a keyboard is connected, false otherwise.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -56,6 +64,9 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information. This should be freed
     ///   with [`SDL_free()`] when it is no longer needed.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -77,6 +88,9 @@ extern "C" {
     /// Returns the name of the selected keyboard or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -90,6 +104,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns the window with keyboard focus.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -123,6 +140,9 @@ extern "C" {
     /// ### Return value
     /// Returns a pointer to an array of key states.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -138,6 +158,9 @@ extern "C" {
     ///
     /// This function will generate key up events for all pressed keys.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -152,6 +175,9 @@ extern "C" {
     /// ### Return value
     /// Returns an OR'd combination of the modifier keys for the keyboard. See
     ///   [`SDL_Keymod`] for details.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -175,6 +201,9 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `modstate`: the desired [`SDL_Keymod`] for the keyboard.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -201,6 +230,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns the [`SDL_Keycode`] that corresponds to the given [`SDL_Scancode`].
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -230,6 +262,9 @@ extern "C" {
     /// ### Return value
     /// Returns the [`SDL_Scancode`] that corresponds to the given [`SDL_Keycode`].
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -251,6 +286,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -282,6 +320,9 @@ extern "C" {
     /// Returns a pointer to the name for the scancode. If the scancode doesn't
     ///   have a name this function returns an empty string ("").
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -301,6 +342,9 @@ extern "C" {
     /// ### Return value
     /// Returns the [`SDL_Scancode`], or [`SDL_SCANCODE_UNKNOWN`] if the name wasn't
     ///   recognized; call [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -323,6 +367,9 @@ extern "C" {
     /// ### Return value
     /// Returns a UTF-8 encoded string of the key name.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -342,6 +389,9 @@ extern "C" {
     /// ### Return value
     /// Returns key code, or `SDLK_UNKNOWN` if the name wasn't recognized; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -372,6 +422,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -485,10 +538,9 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
 
 /// Auto capitalization type.
 ///
-/// These are the valid values for
-/// [`SDL_PROP_TEXTINPUT_AUTOCAPITALIZATION_NUMBER`]. Not every value is valid on
-/// every platform, but where a value isn't supported, a reasonable fallback
-/// will be used.
+/// These are the valid values for [`SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER`].
+/// Not every value is valid on every platform, but where a value isn't
+/// supported, a reasonable fallback will be used.
 ///
 /// ### Availability
 /// This enum is available since SDL 3.1.3.
@@ -593,6 +645,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -631,6 +686,9 @@ extern "C" {
     /// ### Return value
     /// Returns true if text input events are enabled else false.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -652,6 +710,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -669,6 +730,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -695,6 +759,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -725,6 +792,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -744,6 +814,9 @@ extern "C" {
     /// Returns true if the platform has some screen keyboard support or false if
     ///   not.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -761,6 +834,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns true if screen keyboard is shown or false if not.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.

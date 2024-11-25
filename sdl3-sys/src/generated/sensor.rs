@@ -381,6 +381,10 @@ extern "C" {
     pub fn SDL_UpdateSensors();
 }
 
+/// The opaque structure used to identify an opened SDL sensor.
+///
+/// ### Availability
+/// This struct is available since SDL 3.1.3.
 #[repr(C)]
 pub struct SDL_Sensor {
     _opaque: [::core::primitive::u8; 0],

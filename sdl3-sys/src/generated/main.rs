@@ -4,12 +4,19 @@
 //! should look like this:
 //!
 //! ```c
-//!  int main(int argc, char *argv[])
-//!  {
-//!  }
+//! int main(int argc, char *argv[])
+//! {
+//! }
 //! ```
 //!
 //! SDL will take care of platform specific details on how it gets called.
+//!
+//! This is also where an app can be configured to use the main callbacks, via
+//! the SDL_MAIN_USE_CALLBACKS macro.
+//!
+//! This is a "single-header library," which is to say that including this
+//! header inserts code into your program, and you should only include it once
+//! in most cases. SDL.h does not include this header automatically.
 //!
 //! For more information, see:
 //!
@@ -22,6 +29,27 @@ use super::error::*;
 use super::events::*;
 
 apply_cfg!(#[cfg(doc)] => {
+    /// Inform SDL that the app is providing an entry point instead of SDL.
+    ///
+    /// SDL does not define this macro, but will check if it is defined when
+    /// including `SDL_main.h`. If defined, SDL will expect the app to provide the
+    /// proper entry point for the platform, and all the other magic details
+    /// needed, like manually calling [`SDL_SetMainReady`].
+    ///
+    /// Please see [README/main-functions](README/main-functions), (or
+    /// docs/README-main-functions.md in the source tree) for a more detailed
+    /// explanation.
+    ///
+    /// ### Availability
+    /// This macro is used by the headers since SDL 3.1.3.
+    pub const SDL_MAIN_HANDLED: ::core::primitive::i32 = 1;
+
+});
+
+apply_cfg!(#[cfg(doc)] => {
+});
+
+apply_cfg!(#[cfg(not(doc))] => {
 });
 
 use super::init::*;
@@ -444,16 +472,16 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 
 });
 
-apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
-    extern "C" {
-        /// Callback from the application to let the suspend continue.
-        ///
-        /// ### Availability
-        /// This function is available since SDL 3.1.3.
-        pub fn SDL_GDKSuspendComplete();
-    }
-
-});
+extern "C" {
+    /// Callback from the application to let the suspend continue.
+    ///
+    /// This function is only needed for Xbox GDK support; all other platforms will
+    /// do nothing and set an "unsupported" error message.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    pub fn SDL_GDKSuspendComplete();
+}
 
 #[cfg(doc)]
 use crate::everything::*;

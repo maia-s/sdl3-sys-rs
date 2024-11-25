@@ -6,17 +6,42 @@ use super::error::*;
 
 use super::mouse::*;
 
+/// A unique ID for a touch device.
+///
+/// This ID is valid for the time the device is connected to the system, and is
+/// never reused for the lifetime of the application.
+///
+/// The value 0 is an invalid ID.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_TouchID = Uint64;
 
+/// A unique ID for a single finger on a touch device.
+///
+/// This ID is valid for the time the finger (stylus, etc) is touching and will
+/// be unique for all fingers currently in contact, so this ID tracks the
+/// lifetime of a single continuous touch. This value may represent an index, a
+/// pointer, or some other unique ID, depending on the platform.
+///
+/// The value 0 is an invalid ID.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_FingerID = Uint64;
 
+/// An enum that describes the type of a touch device.
+///
+/// ### Availability
+/// This enum is available since SDL 3.1.3.
+///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](SDL_TouchDeviceType::INVALID) | [`SDL_TOUCH_DEVICE_INVALID`] | |
-/// | [`DIRECT`](SDL_TouchDeviceType::DIRECT) | [`SDL_TOUCH_DEVICE_DIRECT`] | |
-/// | [`INDIRECT_ABSOLUTE`](SDL_TouchDeviceType::INDIRECT_ABSOLUTE) | [`SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE`] | |
-/// | [`INDIRECT_RELATIVE`](SDL_TouchDeviceType::INDIRECT_RELATIVE) | [`SDL_TOUCH_DEVICE_INDIRECT_RELATIVE`] | |
+/// | [`DIRECT`](SDL_TouchDeviceType::DIRECT) | [`SDL_TOUCH_DEVICE_DIRECT`] | touch screen with window-relative coordinates |
+/// | [`INDIRECT_ABSOLUTE`](SDL_TouchDeviceType::INDIRECT_ABSOLUTE) | [`SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE`] | trackpad with absolute device coordinates |
+/// | [`INDIRECT_RELATIVE`](SDL_TouchDeviceType::INDIRECT_RELATIVE) | [`SDL_TOUCH_DEVICE_INDIRECT_RELATIVE`] | trackpad with screen cursor-relative coordinates |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TouchDeviceType(pub ::core::ffi::c_int);
@@ -45,21 +70,27 @@ impl ::core::fmt::Debug for SDL_TouchDeviceType {
 
 impl SDL_TouchDeviceType {
     pub const INVALID: Self = Self(-1_i32);
+    /// touch screen with window-relative coordinates
     pub const DIRECT: Self = Self(0_i32);
+    /// trackpad with absolute device coordinates
     pub const INDIRECT_ABSOLUTE: Self = Self(1_i32);
+    /// trackpad with screen cursor-relative coordinates
     pub const INDIRECT_RELATIVE: Self = Self(2_i32);
 }
 
 pub const SDL_TOUCH_DEVICE_INVALID: SDL_TouchDeviceType = SDL_TouchDeviceType::INVALID;
+/// touch screen with window-relative coordinates
 pub const SDL_TOUCH_DEVICE_DIRECT: SDL_TouchDeviceType = SDL_TouchDeviceType::DIRECT;
+/// trackpad with absolute device coordinates
 pub const SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE: SDL_TouchDeviceType =
     SDL_TouchDeviceType::INDIRECT_ABSOLUTE;
+/// trackpad with screen cursor-relative coordinates
 pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType =
     SDL_TouchDeviceType::INDIRECT_RELATIVE;
 
 /// Data about a single finger in a multitouch event.
 ///
-/// Each touch even is a collection of fingers that are simultaneously in
+/// Each touch event is a collection of fingers that are simultaneously in
 /// contact with the touch device (so a "touch" can be a "multitouch," in
 /// reality), and this struct reports details of the specific fingers.
 ///
@@ -82,8 +113,16 @@ pub struct SDL_Finger {
     pub pressure: ::core::ffi::c_float,
 }
 
+/// The [`SDL_MouseID`] for mouse events simulated with touch input.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_TOUCH_MOUSEID: SDL_MouseID = (-1_i32 as SDL_MouseID);
 
+/// The [`SDL_TouchID`] for touch events simulated with mouse input.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_MOUSE_TOUCHID: SDL_TouchID = (-1_i32 as SDL_TouchID);
 
 extern "C" {

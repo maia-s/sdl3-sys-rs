@@ -19,6 +19,7 @@
 )]
 
 pub mod assert;
+pub mod asyncio;
 pub mod atomic;
 pub mod audio;
 pub mod bits;
@@ -69,6 +70,7 @@ pub mod thread;
 pub mod time;
 pub mod timer;
 pub mod touch;
+pub mod tray;
 pub mod version;
 pub mod video;
 pub mod vulkan;
@@ -77,6 +79,8 @@ pub mod vulkan;
 pub mod everything {
     #[doc(no_inline)]
     pub use super::assert::*;
+    #[doc(no_inline)]
+    pub use super::asyncio::*;
     #[doc(no_inline)]
     pub use super::atomic::*;
     #[doc(no_inline)]
@@ -177,6 +181,8 @@ pub mod everything {
     pub use super::timer::*;
     #[doc(no_inline)]
     pub use super::touch::*;
+    #[doc(no_inline)]
+    pub use super::tray::*;
     #[doc(no_inline)]
     pub use super::version::*;
     #[doc(no_inline)]

@@ -7,7 +7,7 @@
 //!
 //! There is also a simple .bmp loader, [`SDL_LoadBMP()`]. SDL itself does not
 //! provide loaders for various other file formats, but there are several
-//! excellent external libraries that do, including it's own satellite library,
+//! excellent external libraries that do, including its own satellite library,
 //! SDL_image:
 //!
 //! <https://github.com/libsdl-org/SDL_image>
@@ -166,6 +166,11 @@ pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
 /// remaining bytes to reach the pitch are used as padding to reach a desired
 /// alignment, and have undefined contents.
 ///
+/// When a surface holds YUV format data, the planes are assumed to be
+/// contiguous without padding between them, e.g. a 32x32 surface in NV12
+/// format with a pitch of 32 would consist of 32x32 bytes of Y plane followed
+/// by 32x16 bytes of UV plane.
+///
 /// ### Availability
 /// This struct is available since SDL 3.1.3.
 ///
@@ -282,7 +287,6 @@ extern "C" {
     /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
-    /// - [`SDL_CreateStackSurface`]
     /// - [`SDL_CreateSurface`]
     /// - [`SDL_CreateSurfaceFrom`]
     pub fn SDL_DestroySurface(surface: *mut SDL_Surface);
@@ -337,7 +341,7 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `surface`: the [`SDL_Surface`] structure to update.
-    /// - `colorspace`: an [`SDL_ColorSpace`] value describing the surface
+    /// - `colorspace`: an [`SDL_Colorspace`] value describing the surface
     ///   colorspace.
     ///
     /// ### Return value
@@ -493,7 +497,7 @@ extern "C" {
     /// - `surface`: the [`SDL_Surface`] structure to query.
     ///
     /// ### Return value
-    /// Returns true if alternate versions are available or true otherwise.
+    /// Returns true if alternate versions are available or false otherwise.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1185,7 +1189,6 @@ extern "C" {
     ///
     /// ### See also
     /// - [`SDL_ConvertSurface`]
-    /// - [`SDL_ConvertSurface`]
     /// - [`SDL_DestroySurface`]
     pub fn SDL_ConvertSurfaceAndColorspace(
         surface: *mut SDL_Surface,
@@ -1210,7 +1213,7 @@ extern "C" {
     /// - `dst_pitch`: the pitch of the destination pixels, in bytes.
     ///
     /// ### Return value
-    /// Returns false on success or false on failure; call [`SDL_GetError()`] for more
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// ### Availability
@@ -1238,14 +1241,14 @@ extern "C" {
     /// - `width`: the width of the block to copy, in pixels.
     /// - `height`: the height of the block to copy, in pixels.
     /// - `src_format`: an [`SDL_PixelFormat`] value of the `src` pixels format.
-    /// - `src_colorspace`: an [`SDL_ColorSpace`] value describing the colorspace of
+    /// - `src_colorspace`: an [`SDL_Colorspace`] value describing the colorspace of
     ///   the `src` pixels.
     /// - `src_properties`: an [`SDL_PropertiesID`] with additional source color
     ///   properties, or 0.
     /// - `src`: a pointer to the source pixels.
     /// - `src_pitch`: the pitch of the source pixels, in bytes.
     /// - `dst_format`: an [`SDL_PixelFormat`] value of the `dst` pixels format.
-    /// - `dst_colorspace`: an [`SDL_ColorSpace`] value describing the colorspace of
+    /// - `dst_colorspace`: an [`SDL_Colorspace`] value describing the colorspace of
     ///   the `dst` pixels.
     /// - `dst_properties`: an [`SDL_PropertiesID`] with additional destination color
     ///   properties, or 0.
@@ -1253,7 +1256,7 @@ extern "C" {
     /// - `dst_pitch`: the pitch of the destination pixels, in bytes.
     ///
     /// ### Return value
-    /// Returns false on success or false on failure; call [`SDL_GetError()`] for more
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// ### Availability

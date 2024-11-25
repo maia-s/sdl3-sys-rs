@@ -271,6 +271,9 @@ extern "C" {
     /// ### Return value
     /// Returns true if a mouse is connected, false otherwise.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -296,6 +299,9 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information. This should be freed
     ///   with [`SDL_free()`] when it is no longer needed.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -317,6 +323,9 @@ extern "C" {
     /// Returns the name of the selected mouse, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -331,28 +340,43 @@ extern "C" {
     /// ### Return value
     /// Returns the window with mouse focus.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_GetMouseFocus() -> *mut SDL_Window;
 }
 
 extern "C" {
-    /// Retrieve the current state of the mouse.
+    /// Query SDL's cache for the synchronous mouse button state and the
+    /// window-relative SDL-cursor position.
     ///
-    /// The current button state is returned as a button bitmask, which can be
-    /// tested using the SDL_BUTTON_MASK(X) macro (where `X` is generally 1 for the
-    /// left, 2 for middle, 3 for the right button), and `x` and `y` are set to the
-    /// mouse cursor position relative to the focus window. You can pass NULL for
-    /// either `x` or `y`.
+    /// This function returns the cached synchronous state as SDL understands it
+    /// from the last pump of the event queue.
+    ///
+    /// To query the platform for immediate asynchronous state, use
+    /// [`SDL_GetGlobalMouseState`].
+    ///
+    /// Passing non-NULL pointers to `x` or `y` will write the destination with
+    /// respective x or y coordinates relative to the focused window.
+    ///
+    /// In Relative Mode, the SDL-cursor's position usually contradicts the
+    /// platform-cursor's position as manually calculated from
+    /// [`SDL_GetGlobalMouseState()`] and [`SDL_GetWindowPosition`].
     ///
     /// ### Parameters
-    /// - `x`: the x coordinate of the mouse cursor position relative to the
-    ///   focus window.
-    /// - `y`: the y coordinate of the mouse cursor position relative to the
-    ///   focus window.
+    /// - `x`: a pointer to receive the SDL-cursor's x-position from the focused
+    ///   window's top left corner, can be NULL if unused.
+    /// - `y`: a pointer to receive the SDL-cursor's y-position from the focused
+    ///   window's top left corner, can be NULL if unused.
     ///
     /// ### Return value
-    /// Returns a 32-bit button bitmask of the current button state.
+    /// Returns a 32-bit bitmask of the button state that can be bitwise-compared
+    ///   against the SDL_BUTTON_MASK(X) macro.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -367,30 +391,37 @@ extern "C" {
 }
 
 extern "C" {
-    /// Get the current state of the mouse in relation to the desktop.
+    /// Query the platform for the asynchronous mouse button state and the
+    /// desktop-relative platform-cursor position.
     ///
-    /// This works similarly to [`SDL_GetMouseState()`], but the coordinates will be
-    /// reported relative to the top-left of the desktop. This can be useful if you
-    /// need to track the mouse outside of a specific window and [`SDL_CaptureMouse()`]
-    /// doesn't fit your needs. For example, it could be useful if you need to
-    /// track the mouse while dragging a window, where coordinates relative to a
-    /// window might not be in sync at all times.
+    /// This function immediately queries the platform for the most recent
+    /// asynchronous state, more costly than retrieving SDL's cached state in
+    /// [`SDL_GetMouseState()`].
     ///
-    /// Note: [`SDL_GetMouseState()`] returns the mouse position as SDL understands it
-    /// from the last pump of the event queue. This function, however, queries the
-    /// OS for the current mouse position, and as such, might be a slightly less
-    /// efficient function. Unless you know what you're doing and have a good
-    /// reason to use this function, you probably want [`SDL_GetMouseState()`] instead.
+    /// Passing non-NULL pointers to `x` or `y` will write the destination with
+    /// respective x or y coordinates relative to the desktop.
+    ///
+    /// In Relative Mode, the platform-cursor's position usually contradicts the
+    /// SDL-cursor's position as manually calculated from [`SDL_GetMouseState()`] and
+    /// [`SDL_GetWindowPosition`].
+    ///
+    /// This function can be useful if you need to track the mouse outside of a
+    /// specific window and [`SDL_CaptureMouse()`] doesn't fit your needs. For example,
+    /// it could be useful if you need to track the mouse while dragging a window,
+    /// where coordinates relative to a window might not be in sync at all times.
     ///
     /// ### Parameters
-    /// - `x`: filled in with the current X coord relative to the desktop; can be
-    ///   NULL.
-    /// - `y`: filled in with the current Y coord relative to the desktop; can be
-    ///   NULL.
+    /// - `x`: a pointer to receive the platform-cursor's x-position from the
+    ///   desktop's top left corner, can be NULL if unused.
+    /// - `y`: a pointer to receive the platform-cursor's y-position from the
+    ///   desktop's top left corner, can be NULL if unused.
     ///
     /// ### Return value
-    /// Returns the current button state as a bitmask which can be tested using
-    ///   the SDL_BUTTON_MASK(X) macros.
+    /// Returns a 32-bit bitmask of the button state that can be bitwise-compared
+    ///   against the SDL_BUTTON_MASK(X) macro.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -398,6 +429,7 @@ extern "C" {
     /// ### See also
     /// - [`SDL_CaptureMouse`]
     /// - [`SDL_GetMouseState`]
+    /// - [`SDL_GetGlobalMouseState`]
     pub fn SDL_GetGlobalMouseState(
         x: *mut ::core::ffi::c_float,
         y: *mut ::core::ffi::c_float,
@@ -405,26 +437,43 @@ extern "C" {
 }
 
 extern "C" {
-    /// Retrieve the relative state of the mouse.
+    /// Query SDL's cache for the synchronous mouse button state and accumulated
+    /// mouse delta since last call.
     ///
-    /// The current button state is returned as a button bitmask, which can be
-    /// tested using the `SDL_BUTTON_MASK(X)` macros (where `X` is generally 1 for
-    /// the left, 2 for middle, 3 for the right button), and `x` and `y` are set to
-    /// the mouse deltas since the last call to [`SDL_GetRelativeMouseState()`] or
-    /// since event initialization. You can pass NULL for either `x` or `y`.
+    /// This function returns the cached synchronous state as SDL understands it
+    /// from the last pump of the event queue.
+    ///
+    /// To query the platform for immediate asynchronous state, use
+    /// [`SDL_GetGlobalMouseState`].
+    ///
+    /// Passing non-NULL pointers to `x` or `y` will write the destination with
+    /// respective x or y deltas accumulated since the last call to this function
+    /// (or since event initialization).
+    ///
+    /// This function is useful for reducing overhead by processing relative mouse
+    /// inputs in one go per-frame instead of individually per-event, at the
+    /// expense of losing the order between events within the frame (e.g. quickly
+    /// pressing and releasing a button within the same frame).
     ///
     /// ### Parameters
-    /// - `x`: a pointer filled with the last recorded x coordinate of the mouse.
-    /// - `y`: a pointer filled with the last recorded y coordinate of the mouse.
+    /// - `x`: a pointer to receive the x mouse delta accumulated since last
+    ///   call, can be NULL if unused.
+    /// - `y`: a pointer to receive the y mouse delta accumulated since last
+    ///   call, can be NULL if unused.
     ///
     /// ### Return value
-    /// Returns a 32-bit button bitmask of the relative button state.
+    /// Returns a 32-bit bitmask of the button state that can be bitwise-compared
+    ///   against the SDL_BUTTON_MASK(X) macro.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_GetMouseState`]
+    /// - [`SDL_GetGlobalMouseState`]
     pub fn SDL_GetRelativeMouseState(
         x: *mut ::core::ffi::c_float,
         y: *mut ::core::ffi::c_float,
@@ -446,6 +495,9 @@ extern "C" {
     ///   mouse focus.
     /// - `x`: the x coordinate within the window.
     /// - `y`: the y coordinate within the window.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -478,6 +530,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -507,6 +562,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -526,6 +584,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns true if relative mode is enabled for a window or false otherwise.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -578,6 +639,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -624,6 +688,9 @@ extern "C" {
     /// Returns a new cursor with the specified parameters on success or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -664,6 +731,9 @@ extern "C" {
     /// Returns the new cursor on success or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -689,6 +759,9 @@ extern "C" {
     /// Returns a cursor on success or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -712,6 +785,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -728,6 +804,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns the active cursor or NULL if there is no mouse.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -747,6 +826,9 @@ extern "C" {
     /// Returns the default cursor on success or NULL on failuree; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_GetDefaultCursor() -> *mut SDL_Cursor;
@@ -760,6 +842,9 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `cursor`: the cursor to free.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -778,6 +863,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -794,6 +882,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -809,6 +900,9 @@ extern "C" {
     /// ### Return value
     /// Returns `true` if the cursor is being shown, or `false` if the cursor is
     ///   hidden.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.

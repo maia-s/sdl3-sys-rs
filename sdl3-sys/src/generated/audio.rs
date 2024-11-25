@@ -9,8 +9,9 @@
 //! even if the data format changes on either side halfway through.
 //!
 //! An app opens an audio device and binds any number of audio streams to it,
-//! feeding more data to it as available. When the devices needs more data, it
-//! will pull it from all bound streams and mix them together for playback.
+//! feeding more data to the streams as available. When the device needs more
+//! data, it will pull it from all bound streams and mix them together for
+//! playback.
 //!
 //! Audio streams can also use an app-provided callback to supply data
 //! on-demand, which maps pretty closely to the SDL2 audio model.
@@ -41,6 +42,22 @@
 //! migrate the logical devices to the correct physical device seamlessly and
 //! keep playing; the app doesn't even have to know it happened if it doesn't
 //! want to.
+//!
+//! ## Simplified audio
+//!
+//! As a simplified model for when a single source of audio is all that's
+//! needed, an app can use [`SDL_OpenAudioDeviceStream`], which is a single
+//! function to open an audio device, create an audio stream, bind that stream
+//! to the newly-opened device, and (optionally) provide a callback for
+//! obtaining audio data. When using this function, the primary interface is
+//! the [`SDL_AudioStream`] and the device handle is mostly hidden away; destroying
+//! a stream created through this function will also close the device, stream
+//! bindings cannot be changed, etc. One other quirk of this is that the device
+//! is started in a _paused_ state and must be explicitly resumed; this is
+//! partially to offer a clean migration for SDL2 apps and partially because
+//! the app might have to do more setup before playback begins; in the
+//! non-simplified form, nothing will play until a stream is bound to a device,
+//! so they start _unpaused_.
 //!
 //! ## Channel layouts
 //!
@@ -93,12 +110,37 @@ use super::properties::*;
 
 use super::iostream::*;
 
+/// Mask of bits in an [`SDL_AudioFormat`] that contains the format bit size.
+///
+/// Generally one should use [`SDL_AUDIO_BITSIZE`] instead of this macro directly.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_AUDIO_MASK_BITSIZE: ::core::primitive::u32 = 255_u32;
 
+/// Mask of bits in an [`SDL_AudioFormat`] that contain the floating point flag.
+///
+/// Generally one should use [`SDL_AUDIO_ISFLOAT`] instead of this macro directly.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_AUDIO_MASK_FLOAT: ::core::primitive::u32 = 256_u32;
 
+/// Mask of bits in an [`SDL_AudioFormat`] that contain the bigendian flag.
+///
+/// Generally one should use [`SDL_AUDIO_ISBIGENDIAN`] or [`SDL_AUDIO_ISLITTLEENDIAN`]
+/// instead of this macro directly.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_AUDIO_MASK_BIG_ENDIAN: ::core::primitive::u32 = 4096_u32;
 
+/// Mask of bits in an [`SDL_AudioFormat`] that contain the signed data flag.
+///
+/// Generally one should use [`SDL_AUDIO_ISSIGNED`] instead of this macro directly.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 
 /// Audio format.
@@ -244,16 +286,42 @@ pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AudioFormat::S32;
 #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 
+/// Define an [`SDL_AudioFormat`] value.
+///
+/// SDL does not support custom audio formats, so this macro is not of much use
+/// externally, but it can be illustrative as to what the various bits of an
+/// [`SDL_AudioFormat`] mean.
+///
+/// For example, [`SDL_AUDIO_S32LE`] looks like this:
+///
+/// ```c
+/// SDL_DEFINE_AUDIO_FORMAT(1, 0, 0, 32)
+/// ```
+///
+/// ### Parameters
+/// - `signed`: 1 for signed data, 0 for unsigned data.
+/// - `bigendian`: 1 for bigendian data, 0 for littleendian data.
+/// - `flt`: 1 for floating point data, 0 for integer data.
+/// - `size`: number of bits per sample.
+///
+/// ### Return value
+/// Returns a format value in the style of [`SDL_AudioFormat`].
+///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_DEFINE_AUDIO_FORMAT(
     signed_: ::core::primitive::bool,
     bigendian: ::core::primitive::bool,
-    float_: ::core::primitive::bool,
+    flt: ::core::primitive::bool,
     size: ::core::primitive::u8,
 ) -> SDL_AudioFormat {
     SDL_AudioFormat(
         (((((((signed_) as Uint16) << 15) | (((bigendian) as Uint16) << 12))
-            | (((float_) as Uint16) << 8)) as ::core::primitive::u32)
+            | (((flt) as Uint16) << 8)) as ::core::primitive::u32)
             | (((size as ::core::ffi::c_int) as ::core::primitive::u32) & SDL_AUDIO_MASK_BITSIZE)),
     )
 }
@@ -657,7 +725,6 @@ extern "C" {
     /// ### See also
     /// - [`SDL_GetAudioPlaybackDevices`]
     /// - [`SDL_GetAudioRecordingDevices`]
-    /// - [`SDL_GetDefaultAudioInfo`]
     pub fn SDL_GetAudioDeviceName(devid: SDL_AudioDeviceID) -> *const ::core::ffi::c_char;
 }
 
@@ -820,6 +887,55 @@ extern "C" {
         devid: SDL_AudioDeviceID,
         spec: *const SDL_AudioSpec,
     ) -> SDL_AudioDeviceID;
+}
+
+extern "C" {
+    /// Determine if an audio device is physical (instead of logical).
+    ///
+    /// An [`SDL_AudioDeviceID`] that represents physical hardware is a physical
+    /// device; there is one for each piece of hardware that SDL can see. Logical
+    /// devices are created by calling [`SDL_OpenAudioDevice`] or
+    /// [`SDL_OpenAudioDeviceStream`], and while each is associated with a physical
+    /// device, there can be any number of logical devices on one physical device.
+    ///
+    /// For the most part, logical and physical IDs are interchangeable--if you try
+    /// to open a logical device, SDL understands to assign that effort to the
+    /// underlying physical device, etc. However, it might be useful to know if an
+    /// arbitrary device ID is physical or logical. This function reports which.
+    ///
+    /// This function may return either true or false for invalid device IDs.
+    ///
+    /// ### Parameters
+    /// - `devid`: the device ID to query.
+    ///
+    /// ### Return value
+    /// Returns true if devid is a physical device, false if it is logical.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.2.0.
+    pub fn SDL_IsAudioDevicePhysical(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
+}
+
+extern "C" {
+    /// Determine if an audio device is a playback device (instead of recording).
+    ///
+    /// This function may return either true or false for invalid device IDs.
+    ///
+    /// ### Parameters
+    /// - `devid`: the device ID to query.
+    ///
+    /// ### Return value
+    /// Returns true if devid is a playback device, false if it is recording.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.2.0.
+    pub fn SDL_IsAudioDevicePlayback(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1061,7 +1177,7 @@ extern "C" {
     /// - [`SDL_GetAudioStreamDevice`]
     pub fn SDL_BindAudioStreams(
         devid: SDL_AudioDeviceID,
-        streams: *mut *mut SDL_AudioStream,
+        streams: *const *mut SDL_AudioStream,
         num_streams: ::core::ffi::c_int,
     ) -> ::core::primitive::bool;
 }
@@ -1106,7 +1222,8 @@ extern "C" {
     /// Unbinding a stream that isn't bound to a device is a legal no-op.
     ///
     /// ### Parameters
-    /// - `streams`: an array of audio streams to unbind.
+    /// - `streams`: an array of audio streams to unbind. Can be NULL or contain
+    ///   NULL.
     /// - `num_streams`: number streams listed in the `streams` array.
     ///
     /// ### Thread safety
@@ -1118,7 +1235,7 @@ extern "C" {
     /// ### See also
     /// - [`SDL_BindAudioStreams`]
     pub fn SDL_UnbindAudioStreams(
-        streams: *mut *mut SDL_AudioStream,
+        streams: *const *mut SDL_AudioStream,
         num_streams: ::core::ffi::c_int,
     );
 }
@@ -1130,7 +1247,7 @@ extern "C" {
     /// `SDL_UnbindAudioStreams(&stream, 1)`.
     ///
     /// ### Parameters
-    /// - `stream`: an audio stream to unbind from a device.
+    /// - `stream`: an audio stream to unbind from a device. Can be NULL.
     ///
     /// ### Thread safety
     /// It is safe to call this function from any thread.
@@ -1487,8 +1604,12 @@ extern "C" {
     /// channel that it should be remapped to. To reverse a stereo signal's left
     /// and right values, you'd have an array of `{ 1, 0 }`. It is legal to remap
     /// multiple channels to the same thing, so `{ 1, 1 }` would duplicate the
-    /// right channel to both channels of a stereo signal. You cannot change the
-    /// number of channels through a channel map, just reorder them.
+    /// right channel to both channels of a stereo signal. An element in the
+    /// channel map set to -1 instead of a valid channel will mute that channel,
+    /// setting it to a silence value.
+    ///
+    /// You cannot change the number of channels through a channel map, just
+    /// reorder/mute them.
     ///
     /// Data that was previously queued in the stream will still be operated on in
     /// the order that was current when it was added, which is to say you can put
@@ -1503,8 +1624,8 @@ extern "C" {
     /// after this call.
     ///
     /// If `count` is not equal to the current number of channels in the audio
-    /// stream's format, this will fail. This is a safety measure to make sure a a
-    /// race condition hasn't changed the format while you this call is setting the
+    /// stream's format, this will fail. This is a safety measure to make sure a
+    /// race condition hasn't changed the format while this call is setting the
     /// channel map.
     ///
     /// ### Parameters
@@ -1543,12 +1664,16 @@ extern "C" {
     /// The output channel map reorders data that leaving a stream via
     /// [`SDL_GetAudioStreamData`].
     ///
-    /// Each item in the array represents an output channel, and its value is the
+    /// Each item in the array represents an input channel, and its value is the
     /// channel that it should be remapped to. To reverse a stereo signal's left
     /// and right values, you'd have an array of `{ 1, 0 }`. It is legal to remap
     /// multiple channels to the same thing, so `{ 1, 1 }` would duplicate the
-    /// right channel to both channels of a stereo signal. You cannot change the
-    /// number of channels through a channel map, just reorder them.
+    /// right channel to both channels of a stereo signal. An element in the
+    /// channel map set to -1 instead of a valid channel will mute that channel,
+    /// setting it to a silence value.
+    ///
+    /// You cannot change the number of channels through a channel map, just
+    /// reorder/mute them.
     ///
     /// The output channel map can be changed at any time, as output remapping is
     /// applied during [`SDL_GetAudioStreamData`].
@@ -1560,8 +1685,8 @@ extern "C" {
     /// after this call.
     ///
     /// If `count` is not equal to the current number of channels in the audio
-    /// stream's format, this will fail. This is a safety measure to make sure a a
-    /// race condition hasn't changed the format while you this call is setting the
+    /// stream's format, this will fail. This is a safety measure to make sure a
+    /// race condition hasn't changed the format while this call is setting the
     /// channel map.
     ///
     /// ### Parameters

@@ -653,7 +653,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.6.
     ///
     /// ### See also
     /// - [`SDL_SetLogOutputFunction`]

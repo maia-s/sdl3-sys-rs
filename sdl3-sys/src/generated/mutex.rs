@@ -8,6 +8,12 @@ use super::error::*;
 
 use super::thread::*;
 
+apply_cfg!(#[cfg(doc)] => {
+});
+
+apply_cfg!(#[cfg(not(doc))] => {
+});
+
 extern "C" {
     /// Create a new mutex.
     ///

@@ -271,6 +271,18 @@ extern "C" {
     pub fn SDL_GetUserFolder(folder: SDL_Folder) -> *const ::core::ffi::c_char;
 }
 
+/// Types of filesystem entries.
+///
+/// Note that there may be other sorts of items on a filesystem: devices,
+/// symlinks, named pipes, etc. They are currently reported as
+/// [`SDL_PATHTYPE_OTHER`].
+///
+/// ### Availability
+/// This enum is available since SDL 3.1.3.
+///
+/// ### See also
+/// - [`SDL_PathInfo`]
+///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
@@ -324,6 +336,14 @@ pub const SDL_PATHTYPE_DIRECTORY: SDL_PathType = SDL_PathType::DIRECTORY;
 /// something completely different like a device node (not a symlink, those are always followed)
 pub const SDL_PATHTYPE_OTHER: SDL_PathType = SDL_PathType::OTHER;
 
+/// Information about a path on the filesystem.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
+///
+/// ### See also
+/// - [`SDL_GetPathInfo`]
+/// - [`SDL_GetStoragePathInfo`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -340,7 +360,7 @@ pub struct SDL_PathInfo {
     pub access_time: SDL_Time,
 }
 
-/// Flags for path matching
+/// Flags for path matching.
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
@@ -651,6 +671,26 @@ extern "C" {
         flags: SDL_GlobFlags,
         count: *mut ::core::ffi::c_int,
     ) -> *mut *mut ::core::ffi::c_char;
+}
+
+extern "C" {
+    /// Get what the system believes is the "current working directory."
+    ///
+    /// For systems without a concept of a current working directory, this will
+    /// still attempt to provide something reasonable.
+    ///
+    /// SDL does not provide a means to _change_ the current working directory; for
+    /// platforms without this concept, this would cause surprises with file access
+    /// outside of SDL.
+    ///
+    /// ### Return value
+    /// Returns a UTF-8 string of the current working directory in
+    ///   platform-dependent notation. NULL if there's a problem. This
+    ///   should be freed with [`SDL_free()`] when it is no longer needed.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.2.0.
+    pub fn SDL_GetCurrentDirectory() -> *mut ::core::ffi::c_char;
 }
 
 #[cfg(doc)]

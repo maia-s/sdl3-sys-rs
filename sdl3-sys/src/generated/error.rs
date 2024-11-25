@@ -73,7 +73,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.6.
     ///
     /// ### See also
     /// - [`SDL_ClearError`]
@@ -160,11 +160,43 @@ extern "C" {
     pub fn SDL_ClearError() -> ::core::primitive::bool;
 }
 
+/// A macro to standardize error reporting on unsupported operations.
+///
+/// This simply calls [`SDL_SetError()`] with a standardized error string, for
+/// convenience, consistency, and clarity.
+///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub unsafe fn SDL_Unsupported() -> ::core::primitive::bool {
     unsafe { SDL_SetError(c"That operation is not supported".as_ptr()) }
 }
 
+/// A macro to standardize error reporting on unsupported operations.
+///
+/// This simply calls [`SDL_SetError()`] with a standardized error string, for
+/// convenience, consistency, and clarity.
+///
+/// A common usage pattern inside SDL is this:
+///
+/// ```c
+/// bool MyFunction(const char *str) {
+///     if (!str) {
+///         return SDL_InvalidParamError("str");  // returns false.
+///     }
+///     DoSomething(str);
+///     return true;
+/// }
+/// ```
+///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub unsafe fn SDL_InvalidParamError(param: *const ::core::ffi::c_char) -> ::core::primitive::bool {
     unsafe { SDL_SetError(c"Parameter '%s' is invalid".as_ptr(), (param)) }

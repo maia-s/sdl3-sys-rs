@@ -136,6 +136,30 @@ apply_cfg!(#[cfg(not(any(feature = "use-x11-dl-v2", feature = "use-x11-v2")))] =
 
 });
 
+/// A callback to be used with [`SDL_SetX11EventHook`].
+///
+/// This callback may modify the event, and should return true if the event
+/// should continue to be processed, or false to prevent further processing.
+///
+/// As this is processing an event directly from the X11 event loop, this
+/// callback should do the minimum required work and return quickly.
+///
+/// ### Parameters
+/// - `userdata`: the app-defined pointer provided to [`SDL_SetX11EventHook`].
+/// - `xevent`: a pointer to an Xlib XEvent union to process.
+///
+/// ### Return value
+/// Returns true to let event continue on, false to drop it.
+///
+/// ### Thread safety
+/// This may only be called (by SDL) from the thread handling the
+///   X11 event loop.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
+///
+/// ### See also
+/// - [`SDL_SetX11EventHook`]
 pub type SDL_X11EventHook = ::core::option::Option<
     unsafe extern "C" fn(
         userdata: *mut ::core::ffi::c_void,
@@ -415,6 +439,11 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
     /// This macro is available since SDL 3.1.3.
     pub const SDL_ANDROID_EXTERNAL_STORAGE_READ: Uint32 = (0x01 as Uint32);
 
+    /// See the official Android developer guide for more information:
+    /// <http://developer.android.com/guide/topics/data/data-storage.html>
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
     pub const SDL_ANDROID_EXTERNAL_STORAGE_WRITE: Uint32 = (0x02 as Uint32);
 
     extern "C" {
@@ -515,6 +544,18 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         pub fn SDL_GetAndroidCachePath() -> *const ::core::ffi::c_char;
     }
 
+    /// Callback that presents a response from a [`SDL_RequestAndroidPermission`] call.
+    ///
+    /// ### Parameters
+    /// - `userdata`: an app-controlled pointer that is passed to the callback.
+    /// - `permission`: the Android-specific permission name that was requested.
+    /// - `granted`: true if permission is granted, false if denied.
+    ///
+    /// ### Availability
+    /// This datatype is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_RequestAndroidPermission`]
     pub type SDL_RequestAndroidPermissionCallback = ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void, permission: *const ::core::ffi::c_char, granted: ::core::primitive::bool)>;
 
     extern "C" {
@@ -702,7 +743,7 @@ extern "C" {
     ///   application is not running in a sandbox environment.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.6.
     pub fn SDL_GetSandbox() -> SDL_Sandbox;
 }
 

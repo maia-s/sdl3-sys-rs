@@ -278,7 +278,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -319,7 +319,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -348,7 +348,7 @@ extern "C" {
     ///   displayed, required if this isn't a software renderer using a surface
     /// - [`SDL_PROP_RENDERER_CREATE_SURFACE_POINTER`]: the surface where rendering
     ///   is displayed, if you want a software renderer without a window
-    /// - [`SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER`]: an [`SDL_ColorSpace`]
+    /// - [`SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER`]: an [`SDL_Colorspace`]
     ///   value describing the colorspace for output to the display, defaults to
     ///   [`SDL_COLORSPACE_SRGB`]. The direct3d11, direct3d12, and metal renderers
     ///   support [`SDL_COLORSPACE_SRGB_LINEAR`], which is a linear color space and
@@ -382,7 +382,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -446,7 +446,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -530,21 +530,21 @@ extern "C" {
     /// - `SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER`: a (const [`SDL_PixelFormat`] *)
     ///   array of pixel formats, terminated with [`SDL_PIXELFORMAT_UNKNOWN`],
     ///   representing the available texture formats for this renderer.
-    /// - [`SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER`]: an [`SDL_ColorSpace`] value
+    /// - [`SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER`]: an [`SDL_Colorspace`] value
     ///   describing the colorspace for output to the display, defaults to
     ///   [`SDL_COLORSPACE_SRGB`].
     /// - [`SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN`]: true if the output colorspace is
     ///   [`SDL_COLORSPACE_SRGB_LINEAR`] and the renderer is showing on a display with
     ///   HDR enabled. This property can change dynamically when
-    ///   [`SDL_EVENT_DISPLAY_HDR_STATE_CHANGED`] is sent.
+    ///   [`SDL_EVENT_WINDOW_HDR_STATE_CHANGED`] is sent.
     /// - [`SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT`]: the value of SDR white in the
     ///   [`SDL_COLORSPACE_SRGB_LINEAR`] colorspace. When HDR is enabled, this value is
     ///   automatically multiplied into the color scale. This property can change
-    ///   dynamically when [`SDL_EVENT_DISPLAY_HDR_STATE_CHANGED`] is sent.
+    ///   dynamically when [`SDL_EVENT_WINDOW_HDR_STATE_CHANGED`] is sent.
     /// - [`SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT`]: the additional high dynamic range
     ///   that can be displayed, in terms of the SDR white point. When HDR is not
     ///   enabled, this will be 1.0. This property can change dynamically when
-    ///   [`SDL_EVENT_DISPLAY_HDR_STATE_CHANGED`] is sent.
+    ///   [`SDL_EVENT_WINDOW_HDR_STATE_CHANGED`] is sent.
     ///
     /// With the direct3d renderer:
     ///
@@ -584,6 +584,11 @@ extern "C" {
     /// - [`SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER`]: the number of
     ///   swapchain images, or potential frames in flight, used by the Vulkan
     ///   renderer
+    ///
+    /// With the gpu renderer:
+    ///
+    /// - [`SDL_PROP_RENDERER_GPU_DEVICE_POINTER`]: the [`SDL_GPUDevice`] associated with
+    ///   the renderer
     ///
     /// ### Parameters
     /// - `renderer`: the rendering context.
@@ -668,6 +673,9 @@ pub const SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER: *const ::c
 pub const SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER: *const ::core::ffi::c_char =
     c"SDL.renderer.vulkan.swapchain_image_count".as_ptr();
 
+pub const SDL_PROP_RENDERER_GPU_DEVICE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.gpu.device".as_ptr();
+
 extern "C" {
     /// Get the output size in pixels of a rendering context.
     ///
@@ -684,7 +692,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -716,7 +724,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -743,12 +751,11 @@ extern "C" {
     /// - `h`: the height of the texture in pixels.
     ///
     /// ### Return value
-    /// Returns a pointer to the created texture or NULL if no rendering context
-    ///   was active, the format was unsupported, or the width or height
-    ///   were out of range; call [`SDL_GetError()`] for more information.
+    /// Returns the created texture or NULL on failure; call [`SDL_GetError()`] for
+    ///   more information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -790,7 +797,7 @@ extern "C" {
     ///   more information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -810,7 +817,7 @@ extern "C" {
     ///
     /// These are the supported properties:
     ///
-    /// - [`SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER`]: an [`SDL_ColorSpace`] value
+    /// - [`SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER`]: an [`SDL_Colorspace`] value
     ///   describing the texture colorspace, defaults to [`SDL_COLORSPACE_SRGB_LINEAR`]
     ///   for floating point textures, [`SDL_COLORSPACE_HDR10`] for 10-bit textures,
     ///   [`SDL_COLORSPACE_SRGB`] for other RGB textures and [`SDL_COLORSPACE_JPEG`] for
@@ -904,12 +911,11 @@ extern "C" {
     /// - `props`: the properties to use.
     ///
     /// ### Return value
-    /// Returns a pointer to the created texture or NULL if no rendering context
-    ///   was active, the format was unsupported, or the width or height
-    ///   were out of range; call [`SDL_GetError()`] for more information.
+    /// Returns the created texture or NULL on failure; call [`SDL_GetError()`] for
+    ///   more information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1001,7 +1007,7 @@ extern "C" {
     ///
     /// The following read-only properties are provided by SDL:
     ///
-    /// - [`SDL_PROP_TEXTURE_COLORSPACE_NUMBER`]: an [`SDL_ColorSpace`] value describing
+    /// - [`SDL_PROP_TEXTURE_COLORSPACE_NUMBER`]: an [`SDL_Colorspace`] value describing
     ///   the texture colorspace.
     /// - [`SDL_PROP_TEXTURE_FORMAT_NUMBER`]: one of the enumerated values in
     ///   [`SDL_PixelFormat`].
@@ -1041,14 +1047,8 @@ extern "C" {
     ///
     /// With the vulkan renderer:
     ///
-    /// - [`SDL_PROP_TEXTURE_VULKAN_TEXTURE_POINTER`]: the VkImage associated with
-    ///   the texture
-    /// - [`SDL_PROP_TEXTURE_VULKAN_TEXTURE_U_POINTER`]: the VkImage associated with
-    ///   the U plane of a YUV texture
-    /// - [`SDL_PROP_TEXTURE_VULKAN_TEXTURE_V_POINTER`]: the VkImage associated with
-    ///   the V plane of a YUV texture
-    /// - [`SDL_PROP_TEXTURE_VULKAN_TEXTURE_UV_POINTER`]: the VkImage associated with
-    ///   the UV plane of a NV12/NV21 texture
+    /// - [`SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER`]: the VkImage associated with the
+    ///   texture
     ///
     /// With the opengl renderer:
     ///
@@ -1079,11 +1079,6 @@ extern "C" {
     ///   associated with the V plane of a YUV texture
     /// - [`SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER`]: the GLenum for the
     ///   texture target (`GL_TEXTURE_2D`, `GL_TEXTURE_EXTERNAL_OES`, etc)
-    ///
-    /// With the vulkan renderer:
-    ///
-    /// - [`SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER`]: the VkImage associated with the
-    ///   texture
     ///
     /// ### Parameters
     /// - `texture`: the texture to query.
@@ -1210,7 +1205,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1244,7 +1239,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1284,7 +1279,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1315,7 +1310,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1346,7 +1341,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1383,7 +1378,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1418,7 +1413,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1445,7 +1440,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1472,7 +1467,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1502,7 +1497,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1527,7 +1522,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1556,7 +1551,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1581,7 +1576,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1621,7 +1616,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1666,7 +1661,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1709,7 +1704,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1754,7 +1749,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1801,7 +1796,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1831,7 +1826,7 @@ extern "C" {
     /// - `texture`: a texture locked by [`SDL_LockTexture()`].
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1859,7 +1854,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1885,7 +1880,7 @@ extern "C" {
     /// Returns the current render target or NULL for the default render target.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1930,7 +1925,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1964,7 +1959,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1997,7 +1992,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2032,7 +2027,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2073,7 +2068,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2115,7 +2110,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2147,7 +2142,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2173,7 +2168,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2202,7 +2197,7 @@ extern "C" {
     ///   it was set to NULL (the entire target).
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2233,7 +2228,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2256,7 +2251,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2283,7 +2278,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2308,7 +2303,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2340,7 +2335,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2367,7 +2362,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2401,7 +2396,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2438,7 +2433,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2474,7 +2469,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2510,7 +2505,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2547,7 +2542,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2572,7 +2567,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2599,7 +2594,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2624,7 +2619,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2653,7 +2648,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2676,7 +2671,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2703,7 +2698,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2732,7 +2727,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2762,7 +2757,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2789,7 +2784,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2816,7 +2811,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2844,7 +2839,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2871,7 +2866,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2902,7 +2897,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2942,7 +2937,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2957,6 +2952,47 @@ extern "C" {
         angle: ::core::ffi::c_double,
         center: *const SDL_FPoint,
         flip: SDL_FlipMode,
+    ) -> ::core::primitive::bool;
+}
+
+extern "C" {
+    /// Copy a portion of the source texture to the current rendering target, with
+    /// affine transform, at subpixel precision.
+    ///
+    /// ### Parameters
+    /// - `renderer`: the renderer which should copy parts of a texture.
+    /// - `texture`: the source texture.
+    /// - `srcrect`: a pointer to the source rectangle, or NULL for the entire
+    ///   texture.
+    /// - `origin`: a pointer to a point indicating where the top-left corner of
+    ///   srcrect should be mapped to, or NULL for the rendering
+    ///   target's origin.
+    /// - `right`: a pointer to a point indicating where the top-right corner of
+    ///   srcrect should be mapped to, or NULL for the rendering
+    ///   target's top-right corner.
+    /// - `down`: a pointer to a point indicating where the bottom-left corner of
+    ///   srcrect should be mapped to, or NULL for the rendering target's
+    ///   bottom-left corner.
+    ///
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ### Thread safety
+    /// You may only call this function from the main thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.2.0.
+    ///
+    /// ### See also
+    /// - [`SDL_RenderTexture`]
+    pub fn SDL_RenderTextureAffine(
+        renderer: *mut SDL_Renderer,
+        texture: *mut SDL_Texture,
+        srcrect: *const SDL_FRect,
+        origin: *const SDL_FPoint,
+        right: *const SDL_FPoint,
+        down: *const SDL_FPoint,
     ) -> ::core::primitive::bool;
 }
 
@@ -2983,7 +3019,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3029,7 +3065,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3069,7 +3105,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3111,7 +3147,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3153,7 +3189,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3198,7 +3234,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3229,7 +3265,7 @@ extern "C" {
     /// - `texture`: the texture to destroy.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3250,7 +3286,7 @@ extern "C" {
     /// - `renderer`: the rendering context.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3291,7 +3327,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3312,7 +3348,7 @@ extern "C" {
     ///   Metal renderer.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3341,7 +3377,7 @@ extern "C" {
     ///   renderer isn't a Metal renderer or there was an error.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3414,7 +3450,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3444,7 +3480,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -3504,18 +3540,59 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// You may only call this function from the main thread.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.6.
     ///
     /// ### See also
+    /// - [`SDL_RenderDebugTextFormat`]
     /// - [`SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE`]
     pub fn SDL_RenderDebugText(
         renderer: *mut SDL_Renderer,
         x: ::core::ffi::c_float,
         y: ::core::ffi::c_float,
         str: *const ::core::ffi::c_char,
+    ) -> ::core::primitive::bool;
+}
+
+extern "C" {
+    /// Draw debug text to an [`SDL_Renderer`].
+    ///
+    /// This function will render a printf()-style format string to a renderer.
+    /// Note that this is a convinence function for debugging, with severe
+    /// limitations, and is not intended to be used for production apps and games.
+    ///
+    /// For the full list of limitations and other useful information, see
+    /// [`SDL_RenderDebugText`].
+    ///
+    /// ### Parameters
+    /// - `renderer`: the renderer which should draw the text.
+    /// - `x`: the x coordinate where the top-left corner of the text will draw.
+    /// - `y`: the y coordinate where the top-left corner of the text will draw.
+    /// - `fmt`: the format string to draw.
+    /// - `...`: additional parameters matching % tokens in the `fmt` string, if
+    ///   any.
+    ///
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ### Thread safety
+    /// This function should only be called on the main thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.2.0.
+    ///
+    /// ### See also
+    /// - [`SDL_RenderDebugText`]
+    /// - [`SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE`]
+    pub fn SDL_RenderDebugTextFormat(
+        renderer: *mut SDL_Renderer,
+        x: ::core::ffi::c_float,
+        y: ::core::ffi::c_float,
+        fmt: *const ::core::ffi::c_char,
+        ...
     ) -> ::core::primitive::bool;
 }
 

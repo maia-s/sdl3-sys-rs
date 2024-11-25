@@ -94,6 +94,69 @@ pub const SDL_THREAD_PRIORITY_NORMAL: SDL_ThreadPriority = SDL_ThreadPriority::N
 pub const SDL_THREAD_PRIORITY_HIGH: SDL_ThreadPriority = SDL_ThreadPriority::HIGH;
 pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPriority::TIME_CRITICAL;
 
+/// The SDL thread state.
+///
+/// The current state of a thread can be checked by calling [`SDL_GetThreadState`].
+///
+/// ### Availability
+/// This enum is available since SDL 3.1.3.
+///
+/// ### See also
+/// - [`SDL_GetThreadState`]
+///
+/// ### Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`UNKNOWN`](SDL_ThreadState::UNKNOWN) | [`SDL_THREAD_UNKNOWN`] | The thread is not valid |
+/// | [`ALIVE`](SDL_ThreadState::ALIVE) | [`SDL_THREAD_ALIVE`] | The thread is currently running |
+/// | [`DETACHED`](SDL_ThreadState::DETACHED) | [`SDL_THREAD_DETACHED`] | The thread is detached and can't be waited on |
+/// | [`COMPLETE`](SDL_ThreadState::COMPLETE) | [`SDL_THREAD_COMPLETE`] | The thread has finished and should be cleaned up with [`SDL_WaitThread()`] |
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SDL_ThreadState(pub ::core::ffi::c_int);
+
+impl From<SDL_ThreadState> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_ThreadState) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_ThreadState {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::UNKNOWN => "SDL_THREAD_UNKNOWN",
+            Self::ALIVE => "SDL_THREAD_ALIVE",
+            Self::DETACHED => "SDL_THREAD_DETACHED",
+            Self::COMPLETE => "SDL_THREAD_COMPLETE",
+
+            _ => return write!(f, "SDL_ThreadState({})", self.0),
+        })
+    }
+}
+
+impl SDL_ThreadState {
+    /// The thread is not valid
+    pub const UNKNOWN: Self = Self(0);
+    /// The thread is currently running
+    pub const ALIVE: Self = Self(1);
+    /// The thread is detached and can't be waited on
+    pub const DETACHED: Self = Self(2);
+    /// The thread has finished and should be cleaned up with [`SDL_WaitThread()`]
+    pub const COMPLETE: Self = Self(3);
+}
+
+/// The thread is not valid
+pub const SDL_THREAD_UNKNOWN: SDL_ThreadState = SDL_ThreadState::UNKNOWN;
+/// The thread is currently running
+pub const SDL_THREAD_ALIVE: SDL_ThreadState = SDL_ThreadState::ALIVE;
+/// The thread is detached and can't be waited on
+pub const SDL_THREAD_DETACHED: SDL_ThreadState = SDL_ThreadState::DETACHED;
+/// The thread has finished and should be cleaned up with [`SDL_WaitThread()`]
+pub const SDL_THREAD_COMPLETE: SDL_ThreadState = SDL_ThreadState::COMPLETE;
+
 /// The function passed to [`SDL_CreateThread()`] as the new thread's entry point.
 ///
 /// ### Parameters
@@ -395,15 +458,15 @@ extern "C" {
 extern "C" {
     /// Wait for a thread to finish.
     ///
-    /// Threads that haven't been detached will remain (as a "zombie") until this
-    /// function cleans them up. Not doing so is a resource leak.
+    /// Threads that haven't been detached will remain until this function cleans
+    /// them up. Not doing so is a resource leak.
     ///
     /// Once a thread has been cleaned up through this function, the [`SDL_Thread`]
     /// that references it becomes invalid and should not be referenced again. As
     /// such, only one thread may call [`SDL_WaitThread()`] on another.
     ///
-    /// The return code for the thread function is placed in the area pointed to by
-    /// `status`, if `status` is not NULL.
+    /// The return code from the thread function is placed in the area pointed to
+    /// by `status`, if `status` is not NULL.
     ///
     /// You may not wait on a thread that has been used in a call to
     /// [`SDL_DetachThread()`]. Use either that function or this one, but not both, or
@@ -417,9 +480,9 @@ extern "C" {
     /// ### Parameters
     /// - `thread`: the [`SDL_Thread`] pointer that was returned from the
     ///   [`SDL_CreateThread()`] call that started this thread.
-    /// - `status`: pointer to an integer that will receive the value returned
-    ///   from the thread function by its 'return', or NULL to not
-    ///   receive such value back.
+    /// - `status`: a pointer filled in with the value returned from the thread
+    ///   function by its 'return', or -1 if the thread has been
+    ///   detached or isn't valid, may be NULL.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -428,6 +491,24 @@ extern "C" {
     /// - [`SDL_CreateThread`]
     /// - [`SDL_DetachThread`]
     pub fn SDL_WaitThread(thread: *mut SDL_Thread, status: *mut ::core::ffi::c_int);
+}
+
+extern "C" {
+    /// Get the current state of a thread.
+    ///
+    /// ### Parameters
+    /// - `thread`: the thread to query.
+    ///
+    /// ### Return value
+    /// Returns the current state of a thread, or [`SDL_THREAD_UNKNOWN`] if the thread
+    ///   isn't valid.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.2.0.
+    ///
+    /// ### See also
+    /// - [`SDL_ThreadState`]
+    pub fn SDL_GetThreadState(thread: *mut SDL_Thread) -> SDL_ThreadState;
 }
 
 extern "C" {

@@ -67,6 +67,23 @@ pub const SDL_HINT_ANDROID_ALLOW_RECREATE_ACTIVITY: *const ::core::ffi::c_char =
 pub const SDL_HINT_ANDROID_BLOCK_ON_PAUSE: *const ::core::ffi::c_char =
     c"SDL_ANDROID_BLOCK_ON_PAUSE".as_ptr();
 
+/// A variable to control whether low latency audio should be enabled.
+///
+/// Some devices have poor quality output when this is enabled, but this is
+/// usually an improvement in audio latency.
+///
+/// The variable can be set to the following values:
+///
+/// - "0": Low latency audio is not enabled.
+/// - "1": Low latency audio is enabled. (default)
+///
+/// This hint should be set before SDL audio is initialized.
+///
+/// ### Availability
+/// This hint is available since SDL 3.1.8.
+pub const SDL_HINT_ANDROID_LOW_LATENCY_AUDIO: *const ::core::ffi::c_char =
+    c"SDL_ANDROID_LOW_LATENCY_AUDIO".as_ptr();
+
 /// A variable to control whether we trap the Android back button to handle it
 /// manually.
 ///
@@ -163,16 +180,61 @@ pub const SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION: *const ::core::ffi::c_char =
 /// Specify the default ALSA audio device name.
 ///
 /// This variable is a specific audio device to open when the "default" audio
-/// device is used. By default if 4 channel audio is requested, the
-/// "plug:surround40" device will be opened and if 6 channel audio is requested
-/// the "plug:surround51" device will be opened.
+/// device is used.
+///
+/// This hint will be ignored when opening the default playback device if
+/// [`SDL_HINT_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE`] is set, or when opening the
+/// default recording device if [`SDL_HINT_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE`] is
+/// set.
 ///
 /// This hint should be set before an audio device is opened.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
+///
+/// ### See also
+/// - [`SDL_HINT_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE`]
+/// - [`SDL_HINT_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE`]
 pub const SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE: *const ::core::ffi::c_char =
     c"SDL_AUDIO_ALSA_DEFAULT_DEVICE".as_ptr();
+
+/// Specify the default ALSA audio playback device name.
+///
+/// This variable is a specific audio device to open for playback, when the
+/// "default" audio device is used.
+///
+/// If this hint isn't set, SDL will check [`SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE`]
+/// before choosing a reasonable default.
+///
+/// This hint should be set before an audio device is opened.
+///
+/// ### Availability
+/// This hint is available since SDL 3.1.7.
+///
+/// ### See also
+/// - [`SDL_HINT_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE`]
+/// - [`SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE`]
+pub const SDL_HINT_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE: *const ::core::ffi::c_char =
+    c"SDL_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE".as_ptr();
+
+/// Specify the default ALSA audio recording device name.
+///
+/// This variable is a specific audio device to open for recording, when the
+/// "default" audio device is used.
+///
+/// If this hint isn't set, SDL will check [`SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE`]
+/// before choosing a reasonable default.
+///
+/// This hint should be set before an audio device is opened.
+///
+/// ### Availability
+/// This hint is available since SDL 3.1.7.
+///
+/// ### See also
+/// - [`SDL_HINT_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE`]
+/// - [`SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE`]
+pub const SDL_HINT_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE: *const ::core::ffi::c_char =
+    c"SDL_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE".as_ptr();
 
 /// A variable controlling the audio category on iOS and macOS.
 ///
@@ -970,7 +1032,7 @@ pub const SDL_HINT_HIDAPI_UDEV: *const ::core::ffi::c_char = c"SDL_HIDAPI_UDEV".
 /// force a specific target, such as "direct3d11" if, say, your hardware
 /// supports D3D12 but want to try using D3D11 instead.
 ///
-/// This hint should be set before [`SDL_GPUSelectBackend()`] is called.
+/// This hint should be set before any GPU functions are called.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1261,7 +1323,7 @@ pub const SDL_HINT_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED: *const ::core::ffi::c_cha
 /// This variable is the default for all drivers, but can be overridden by the
 /// hints for specific drivers below.
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1277,7 +1339,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI: *const ::core::ffi::c_char = c"SDL_JOYSTICK_
 /// - "1": Left and right Joy-Con controllers will be combined into a single
 ///   controller. (default)
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1294,7 +1356,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS: *const ::core::ffi::c_char 
 ///
 /// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1332,7 +1394,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE: *const ::core::ffi::c_
 ///
 /// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1368,7 +1430,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_JOYCON_HOME_LED: *const ::core::ffi::c_char =
 ///
 /// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1385,7 +1447,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_LUNA: *const ::core::ffi::c_char =
 ///
 /// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1407,7 +1469,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_NINTENDO_CLASSIC: *const ::core::ffi::c_char 
 /// [`SDL_HINT_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER`]. See
 /// <https://github.com/ViGEm/DsHidMini> for an alternative driver on Windows.
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1424,7 +1486,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_PS3: *const ::core::ffi::c_char =
 ///
 /// The default value is 0.
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1441,7 +1503,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER: *const ::core::ffi::c_cha
 ///
 /// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1499,7 +1561,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE: *const ::core::ffi::c_char =
 ///
 /// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1554,7 +1616,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE: *const ::core::ffi::c_char =
 ///
 /// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1586,12 +1648,31 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_STADIA: *const ::core::ffi::c_char =
 ///   Bluetooth access and may prompt the user for permission on iOS and
 ///   Android.
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
 pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM: *const ::core::ffi::c_char =
     c"SDL_JOYSTICK_HIDAPI_STEAM".as_ptr();
+
+/// A variable controlling whether the Steam button LED should be turned on
+/// when a Steam controller is opened.
+///
+/// The variable can be set to the following values:
+///
+/// - "0": Steam button LED is turned off.
+/// - "1": Steam button LED is turned on.
+///
+/// By default the Steam button LED state is not changed. This hint can also be
+/// set to a floating point value between 0.0 and 1.0 which controls the
+/// brightness of the Steam button LED.
+///
+/// This hint can be set anytime.
+///
+/// ### Availability
+/// This hint is available since SDL 3.1.8.
+pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM_HOME_LED: *const ::core::ffi::c_char =
+    c"SDL_JOYSTICK_HIDAPI_STEAM_HOME_LED".as_ptr();
 
 /// A variable controlling whether the HIDAPI driver for the Steam Deck builtin
 /// controller should be used.
@@ -1603,7 +1684,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM: *const ::core::ffi::c_char =
 ///
 /// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1630,7 +1711,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI: *const ::core::ffi::c_char =
 ///
 /// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1698,7 +1779,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS: *const ::core::ffi::c_char
 /// This driver doesn't work with the dolphinbar, so the default is false for
 /// now.
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1731,7 +1812,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED: *const ::core::ffi::c_char =
 /// The default is "0" on Windows, otherwise the value of
 /// [`SDL_HINT_JOYSTICK_HIDAPI`]
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1748,7 +1829,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX: *const ::core::ffi::c_char =
 ///
 /// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI_XBOX`]
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1780,7 +1861,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED: *const ::core::ffi::c_ch
 ///
 /// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI_XBOX_360`]
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -1797,7 +1878,7 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS: *const ::core::ffi::c_char
 ///
 /// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI_XBOX`].
 ///
-/// This hint should be set before enumerating controllers.
+/// This hint should be set before initializing joysticks and gamepads.
 ///
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
@@ -2309,6 +2390,18 @@ pub const SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS: *const ::core::ffi::c_char =
 pub const SDL_HINT_MOUSE_DOUBLE_CLICK_TIME: *const ::core::ffi::c_char =
     c"SDL_MOUSE_DOUBLE_CLICK_TIME".as_ptr();
 
+/// A variable setting which system cursor to use as the default cursor.
+///
+/// This should be an integer corresponding to the [`SDL_SystemCursor`] enum. The
+/// default value is zero ([`SDL_SYSTEM_CURSOR_DEFAULT`]).
+///
+/// This hint needs to be set before [`SDL_Init()`].
+///
+/// ### Availability
+/// This hint is available since SDL 3.1.3.
+pub const SDL_HINT_MOUSE_DEFAULT_SYSTEM_CURSOR: *const ::core::ffi::c_char =
+    c"SDL_MOUSE_DEFAULT_SYSTEM_CURSOR".as_ptr();
+
 /// A variable controlling whether warping a hidden mouse cursor will activate
 /// relative mouse mode.
 ///
@@ -2386,21 +2479,6 @@ pub const SDL_HINT_MOUSE_NORMAL_SPEED_SCALE: *const ::core::ffi::c_char =
 pub const SDL_HINT_MOUSE_RELATIVE_MODE_CENTER: *const ::core::ffi::c_char =
     c"SDL_MOUSE_RELATIVE_MODE_CENTER".as_ptr();
 
-/// A variable controlling whether relative mouse mode is implemented using
-/// mouse warping.
-///
-/// The variable can be set to the following values:
-///
-/// - "0": Relative mouse mode uses raw input. (default)
-/// - "1": Relative mouse mode uses mouse warping.
-///
-/// This hint can be set anytime relative mode is not currently enabled.
-///
-/// ### Availability
-/// This hint is available since SDL 3.1.3.
-pub const SDL_HINT_MOUSE_RELATIVE_MODE_WARP: *const ::core::ffi::c_char =
-    c"SDL_MOUSE_RELATIVE_MODE_WARP".as_ptr();
-
 /// A variable setting the scale for mouse motion, in floating point, when the
 /// mouse is in relative mode.
 ///
@@ -2467,23 +2545,6 @@ pub const SDL_HINT_MOUSE_RELATIVE_WARP_MOTION: *const ::core::ffi::c_char =
 /// This hint is available since SDL 3.1.3.
 pub const SDL_HINT_MOUSE_RELATIVE_CURSOR_VISIBLE: *const ::core::ffi::c_char =
     c"SDL_MOUSE_RELATIVE_CURSOR_VISIBLE".as_ptr();
-
-/// Controls how often SDL issues cursor confinement commands to the operating
-/// system while relative mode is active, in case the desired confinement state
-/// became out-of-sync due to interference from other running programs.
-///
-/// The variable can be integers representing milliseconds between each
-/// refresh. A value of zero means SDL will not automatically refresh the
-/// confinement. The default value varies depending on the operating system,
-/// this variable might not have any effects on inapplicable platforms such as
-/// those without a cursor.
-///
-/// This hint can be set anytime.
-///
-/// ### Availability
-/// This hint is available since SDL 3.1.3.
-pub const SDL_HINT_MOUSE_RELATIVE_CLIP_INTERVAL: *const ::core::ffi::c_char =
-    c"SDL_MOUSE_RELATIVE_CLIP_INTERVAL".as_ptr();
 
 /// A variable controlling whether mouse events should generate synthetic touch
 /// events.
@@ -2655,6 +2716,10 @@ pub const SDL_HINT_PREFERRED_LOCALES: *const ::core::ffi::c_char =
 /// - "1": SDL will send a quit event when the last window is requesting to
 ///   close. (default)
 ///
+/// If there is at least one active system tray icon, [`SDL_EVENT_QUIT`] will
+/// instead be sent when both the last window will be closed and the last tray
+/// icon will be destroyed.
+///
 /// This hint can be set anytime.
 ///
 /// ### Availability
@@ -2751,6 +2816,7 @@ pub const SDL_HINT_RENDER_GPU_LOW_POWER: *const ::core::ffi::c_char =
 /// - "opengles"
 /// - "metal"
 /// - "vulkan"
+/// - "gpu"
 /// - "software"
 ///
 /// The default varies by platform, but it's the first one in the list that is
@@ -3885,6 +3951,13 @@ pub const SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL: *const ::core::ffi::c_char =
 pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON: *const ::core::ffi::c_char =
     c"SDL_WINDOWS_INTRESOURCE_ICON".as_ptr();
 
+/// A variable to specify custom icon resource id from RC file on Windows
+/// platform.
+///
+/// This hint should be set before SDL is initialized.
+///
+/// ### Availability
+/// This hint is available since SDL 3.1.3.
 pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL: *const ::core::ffi::c_char =
     c"SDL_WINDOWS_INTRESOURCE_ICON_SMALL".as_ptr();
 

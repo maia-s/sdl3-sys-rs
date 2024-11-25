@@ -27,9 +27,14 @@
 //! - It provides statistics and data on all failed assertions to the app.
 //! - It allows the default assertion handler to be controlled with environment
 //!   variables, in case an automated script needs to control it.
+//! - It can be used as an aid to Clang's static analysis; it will treat SDL
+//!   assertions as universally true (under the assumption that you are serious
+//!   about the asserted claims and that your debug builds will detect when
+//!   these claims were wrong). This can help the analyzer avoid false
+//!   positives.
 //!
-//! To use it: do a debug build and just sprinkle around tests to check your
-//! code!
+//! To use it: compile a debug build and just sprinkle around tests to check
+//! your code!
 
 use super::stdinc::*;
 
@@ -106,10 +111,22 @@ apply_cfg!(#[cfg(not(doc))] => {
 
 });
 
-apply_cfg!(#[cfg(all(windows, target_env = "msvc"))] => {
+apply_cfg!(#[cfg(doc)] => {
 });
 
-apply_cfg!(#[cfg(not(all(windows, target_env = "msvc")))] => {
+apply_cfg!(#[cfg(not(doc))] => {
+});
+
+apply_cfg!(#[cfg(doc)] => {
+});
+
+apply_cfg!(#[cfg(not(doc))] => {
+    apply_cfg!(#[cfg(all(windows, target_env = "msvc"))] => {
+    });
+
+    apply_cfg!(#[cfg(not(all(windows, target_env = "msvc")))] => {
+    });
+
 });
 
 #[cfg(all(not(doc), feature = "assert-level-disabled"))]
@@ -139,6 +156,20 @@ pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 2;
 ))]
 pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 3;
 
+/// The macro used when an assertion is disabled.
+///
+/// This isn't for direct use by apps, but this is the code that is inserted
+/// when an [`SDL_assert`] is disabled (perhaps in a release build).
+///
+/// The code does nothing, but wraps `condition` in a sizeof operator, which
+/// generates no code and has no side effects, but avoid compiler warnings
+/// about unused variables.
+///
+/// ### Parameters
+/// - `condition`: the condition to assert (but not actually run here).
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[doc(hidden)]
 #[macro_export]
 macro_rules! SDL_disabled_assert {
@@ -254,7 +285,7 @@ pub struct SDL_AssertData {
 extern "C" {
     /// Never call this directly.
     ///
-    /// Use the SDL_assert* macros instead.
+    /// Use the [`SDL_assert`] macros instead.
     ///
     /// ### Parameters
     /// - `data`: assert data structure.
@@ -278,11 +309,49 @@ extern "C" {
     ) -> SDL_AssertState;
 }
 
-#[inline(always)]
-pub unsafe fn SDL_AssertBreakpoint() {
-    unsafe { SDL_TriggerBreakpoint() }
-}
+apply_cfg!(#[cfg(doc)] => {
+    /// The macro used when an assertion triggers a breakpoint.
+    ///
+    /// This isn't for direct use by apps; use [`SDL_assert`] or [`SDL_TriggerBreakpoint`]
+    /// instead.
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
+    #[inline(always)]
+    pub unsafe fn SDL_AssertBreakpoint() {
+        unsafe { SDL_TriggerBreakpoint() }
+    }
+});
 
+apply_cfg!(#[cfg(not(doc))] => {
+    #[inline(always)]
+    pub unsafe fn SDL_AssertBreakpoint() {
+        unsafe { SDL_TriggerBreakpoint() }
+    }
+
+});
+
+/// The macro used when an assertion is enabled.
+///
+/// This isn't for direct use by apps, but this is the code that is inserted
+/// when an [`SDL_assert`] is enabled.
+///
+/// The `do {} while(0)` avoids dangling else problems:
+///
+/// ```c
+/// if (x) SDL_assert(y); else blah();
+/// ```
+///
+/// ... without the do/while, the "else" could attach to this macro's "if". We
+/// try to handle just the minimum we need here in a macro...the loop, the
+/// static vars, and break points. The heavy lifting is handled in
+/// [`SDL_ReportAssertion()`].
+///
+/// ### Parameters
+/// - `condition`: the condition to assert.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[doc(hidden)]
 #[macro_export]
 macro_rules! SDL_enabled_assert {

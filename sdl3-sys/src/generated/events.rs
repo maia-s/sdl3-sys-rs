@@ -1,4 +1,28 @@
 //! Event queue management.
+//!
+//! It's extremely common--often required--that an app deal with SDL's event
+//! queue. Almost all useful information about interactions with the real world
+//! flow through here: the user interacting with the computer and app, hardware
+//! coming and going, the system changing in some way, etc.
+//!
+//! An app generally takes a moment, perhaps at the start of a new frame, to
+//! examine any events that have occured since the last time and process or
+//! ignore them. This is generally done by calling [`SDL_PollEvent()`] in a loop
+//! until it returns false (or, if using the main callbacks, events are
+//! provided one at a time in calls to [`SDL_AppEvent()`] before the next call to
+//! [`SDL_AppIterate()`]; in this scenario, the app does not call [`SDL_PollEvent()`]
+//! at all).
+//!
+//! There is other forms of control, too: [`SDL_PeepEvents()`] has more
+//! functionality at the cost of more complexity, and [`SDL_WaitEvents()`] can
+//! block the process until something interesting happens, which might be
+//! beneficial for certain types of programs on low-power hardware. One may
+//! also call [`SDL_AddEventWatch()`] to set a callback when new events arrive.
+//!
+//! The app is free to generate their own events, too: [`SDL_PushEvent`] allows the
+//! app to put events onto the queue for later retrieval; [`SDL_RegisterEvents`]
+//! can guarantee that these events have a type that isn't in use by other
+//! parts of the system.
 
 use super::stdinc::*;
 
@@ -1016,7 +1040,7 @@ pub struct SDL_MouseMotionEvent {
     pub timestamp: Uint64,
     /// The window with mouse focus, if any
     pub windowID: SDL_WindowID,
-    /// The mouse instance id or [`SDL_TOUCH_MOUSEID`]
+    /// The mouse instance id in relative mode, [`SDL_TOUCH_MOUSEID`] for touch events, or 0
     pub which: SDL_MouseID,
     /// The current button state
     pub state: SDL_MouseButtonFlags,
@@ -1045,7 +1069,7 @@ pub struct SDL_MouseButtonEvent {
     pub timestamp: Uint64,
     /// The window with mouse focus, if any
     pub windowID: SDL_WindowID,
-    /// The mouse instance id, [`SDL_TOUCH_MOUSEID`]
+    /// The mouse instance id in relative mode, [`SDL_TOUCH_MOUSEID`] for touch events, or 0
     pub which: SDL_MouseID,
     /// The mouse button index
     pub button: Uint8,
@@ -1075,7 +1099,7 @@ pub struct SDL_MouseWheelEvent {
     pub timestamp: Uint64,
     /// The window with mouse focus, if any
     pub windowID: SDL_WindowID,
-    /// The mouse instance id, [`SDL_TOUCH_MOUSEID`]
+    /// The mouse instance id in relative mode or 0
     pub which: SDL_MouseID,
     /// The amount scrolled horizontally, positive to the right and negative to the left
     pub x: ::core::ffi::c_float,
@@ -1400,6 +1424,23 @@ pub struct SDL_CameraDeviceEvent {
     pub which: SDL_CameraID,
 }
 
+/// Renderer event structure (event.render.*)
+///
+/// ### Availability
+/// This struct is available since SDL 3.1.7.
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_RenderEvent {
+    /// [`SDL_EVENT_RENDER_TARGETS_RESET`], [`SDL_EVENT_RENDER_DEVICE_RESET`], [`SDL_EVENT_RENDER_DEVICE_LOST`]
+    pub r#type: SDL_EventType,
+    pub reserved: Uint32,
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
+    pub timestamp: Uint64,
+    /// The window containing the renderer in question.
+    pub windowID: SDL_WindowID,
+}
+
 /// Touch finger event structure (event.tfinger.*)
 ///
 /// Coordinates in this event are normalized. `x` and `y` are normalized to a
@@ -1467,7 +1508,7 @@ pub struct SDL_PenProximityEvent {
     pub reserved: Uint32,
     /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
-    /// The window with mouse focus, if any
+    /// The window with pen focus, if any
     pub windowID: SDL_WindowID,
     /// The pen instance id
     pub which: SDL_PenID,
@@ -1492,7 +1533,7 @@ pub struct SDL_PenMotionEvent {
     pub reserved: Uint32,
     /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
-    /// The window with mouse focus, if any
+    /// The window with pen focus, if any
     pub windowID: SDL_WindowID,
     /// The pen instance id
     pub which: SDL_PenID,
@@ -1793,6 +1834,8 @@ pub union SDL_Event {
     pub pbutton: SDL_PenButtonEvent,
     /// Pen axis event data
     pub paxis: SDL_PenAxisEvent,
+    /// Render event data
+    pub render: SDL_RenderEvent,
     /// Drag and drop event data
     pub drop: SDL_DropEvent,
     /// Clipboard event data
@@ -1818,9 +1861,7 @@ extern "C" {
     /// call [`SDL_PumpEvents()`] to force an event queue update.
     ///
     /// ### Thread safety
-    /// This should only be run in the thread that initialized the
-    ///   video subsystem, and for extra safety, you should consider
-    ///   only doing those things on the main thread in any case.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2092,9 +2133,7 @@ extern "C" {
     /// Returns true if this got an event or false if there are none available.
     ///
     /// ### Thread safety
-    /// This should only be run in the thread that initialized the
-    ///   video subsystem, and for extra safety, you should consider
-    ///   only doing those things on the main thread in any case.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2124,9 +2163,7 @@ extern "C" {
     ///   events; call [`SDL_GetError()`] for more information.
     ///
     /// ### Thread safety
-    /// This should only be run in the thread that initialized the
-    ///   video subsystem, and for extra safety, you should consider
-    ///   only doing those things on the main thread in any case.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -2162,9 +2199,7 @@ extern "C" {
     ///   any events available.
     ///
     /// ### Thread safety
-    /// This should only be run in the thread that initialized the
-    ///   video subsystem, and for extra safety, you should consider
-    ///   only doing those things on the main thread in any case.
+    /// This function should only be called on the main thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.

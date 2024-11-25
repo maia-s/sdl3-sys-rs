@@ -4,41 +4,164 @@ use super::stdinc::*;
 
 use super::error::*;
 
+/// Number of milliseconds in a second.
+///
+/// This is always 1000.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_MS_PER_SECOND: ::core::primitive::i32 = 1000;
 
+/// Number of microseconds in a second.
+///
+/// This is always 1000000.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_US_PER_SECOND: ::core::primitive::i32 = 1000000;
 
+/// Number of nanoseconds in a second.
+///
+/// This is always 1000000000.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_NS_PER_SECOND: ::core::primitive::i64 = 1000000000_i64;
 
+/// Number of nanoseconds in a millisecond.
+///
+/// This is always 1000000.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_NS_PER_MS: ::core::primitive::i32 = 1000000;
 
+/// Number of nanoseconds in a microsecond.
+///
+/// This is always 1000.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_NS_PER_US: ::core::primitive::i32 = 1000;
 
+/// Convert seconds to nanoseconds.
+///
+/// This only converts whole numbers, not fractional seconds.
+///
+/// ### Parameters
+/// - `S`: the number of seconds to convert.
+///
+/// ### Return value
+/// Returns S, expressed in nanoseconds.
+///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_SECONDS_TO_NS(S: Uint64) -> Uint64 {
     (S * (SDL_NS_PER_SECOND as Uint64))
 }
 
+/// Convert nanoseconds to seconds.
+///
+/// This performs a division, so the results can be dramatically different if
+/// `NS` is an integer or floating point value.
+///
+/// ### Parameters
+/// - `NS`: the number of nanoseconds to convert.
+///
+/// ### Return value
+/// Returns NS, expressed in seconds.
+///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_NS_TO_SECONDS(NS: Uint64) -> Uint64 {
     (NS / (SDL_NS_PER_SECOND as Uint64))
 }
 
+/// Convert milliseconds to nanoseconds.
+///
+/// This only converts whole numbers, not fractional milliseconds.
+///
+/// ### Parameters
+/// - `MS`: the number of milliseconds to convert.
+///
+/// ### Return value
+/// Returns MS, expressed in nanoseconds.
+///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_MS_TO_NS(MS: Uint64) -> Uint64 {
     (MS * (SDL_NS_PER_MS as Uint64))
 }
 
+/// Convert nanoseconds to milliseconds.
+///
+/// This performs a division, so the results can be dramatically different if
+/// `NS` is an integer or floating point value.
+///
+/// ### Parameters
+/// - `NS`: the number of nanoseconds to convert.
+///
+/// ### Return value
+/// Returns NS, expressed in milliseconds.
+///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_NS_TO_MS(NS: Uint64) -> Uint64 {
     (NS / (SDL_NS_PER_MS as Uint64))
 }
 
+/// Convert microseconds to nanoseconds.
+///
+/// This only converts whole numbers, not fractional microseconds.
+///
+/// ### Parameters
+/// - `US`: the number of microseconds to convert.
+///
+/// ### Return value
+/// Returns US, expressed in nanoseconds.
+///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_US_TO_NS(US: Uint64) -> Uint64 {
     (US * (SDL_NS_PER_US as Uint64))
 }
 
+/// Convert nanoseconds to microseconds.
+///
+/// This performs a division, so the results can be dramatically different if
+/// `NS` is an integer or floating point value.
+///
+/// ### Parameters
+/// - `NS`: the number of nanoseconds to convert.
+///
+/// ### Return value
+/// Returns NS, expressed in microseconds.
+///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub const fn SDL_NS_TO_US(NS: Uint64) -> Uint64 {
     (NS / (SDL_NS_PER_US as Uint64))
@@ -164,7 +287,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.6.
     pub fn SDL_DelayPrecise(ns: Uint64);
 }
 

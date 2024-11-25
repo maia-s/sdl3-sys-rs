@@ -230,14 +230,22 @@ pub const SDL_HAPTIC_FRICTION: Uint16 = ((1024_u32) as Uint16);
 /// - [`SDL_HapticLeftRight`]
 pub const SDL_HAPTIC_LEFTRIGHT: Uint16 = ((2048_u32) as Uint16);
 
-/// Reserved for future use
+/// Reserved for future use.
 ///
 /// ### Availability
 /// This macro is available since SDL 3.1.3.
 pub const SDL_HAPTIC_RESERVED1: Uint16 = ((4096_u32) as Uint16);
 
+/// Reserved for future use.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_HAPTIC_RESERVED2: Uint16 = ((8192_u32) as Uint16);
 
+/// Reserved for future use.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 pub const SDL_HAPTIC_RESERVED3: Uint16 = ((16384_u32) as Uint16);
 
 /// Custom effect is supported.

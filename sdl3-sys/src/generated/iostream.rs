@@ -680,10 +680,12 @@ extern "C" {
     /// Read from a data source.
     ///
     /// This function reads up `size` bytes from the data source to the area
-    /// pointed at by `ptr`. This function may read less bytes than requested. It
-    /// will return zero when the data stream is completely read, and
-    /// [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`], or on error, and
-    /// [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_ERROR`].
+    /// pointed at by `ptr`. This function may read less bytes than requested.
+    ///
+    /// This function will return zero when the data stream is completely read, and
+    /// [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If zero is returned and
+    /// the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different error
+    /// value and [`SDL_GetError()`] will offer a human-readable message.
     ///
     /// ### Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
@@ -849,6 +851,7 @@ extern "C" {
     ///
     /// ### See also
     /// - [`SDL_LoadFile`]
+    /// - [`SDL_SaveFile_IO`]
     pub fn SDL_LoadFile_IO(
         src: *mut SDL_IOStream,
         datasize: *mut ::core::primitive::usize,
@@ -878,6 +881,7 @@ extern "C" {
     ///
     /// ### See also
     /// - [`SDL_LoadFile_IO`]
+    /// - [`SDL_SaveFile`]
     pub fn SDL_LoadFile(
         file: *const ::core::ffi::c_char,
         datasize: *mut ::core::primitive::usize,
@@ -885,15 +889,75 @@ extern "C" {
 }
 
 extern "C" {
+    /// Save all the data into an SDL data stream.
+    ///
+    /// ### Parameters
+    /// - `src`: the [`SDL_IOStream`] to write all data to.
+    /// - `data`: the data to be written. If datasize is 0, may be NULL or a
+    ///   invalid pointer.
+    /// - `datasize`: the number of bytes to be written.
+    /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `src` before returning, even
+    ///   in the case of an error.
+    ///
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.2.0.
+    ///
+    /// ### See also
+    /// - [`SDL_SaveFile`]
+    /// - [`SDL_LoadFile_IO`]
+    pub fn SDL_SaveFile_IO(
+        src: *mut SDL_IOStream,
+        data: *const ::core::ffi::c_void,
+        datasize: ::core::primitive::usize,
+        closeio: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
+}
+
+extern "C" {
+    /// Save all the data into a file path.
+    ///
+    /// ### Parameters
+    /// - `file`: the path to read all available data from.
+    /// - `data`: the data to be written. If datasize is 0, may be NULL or a
+    ///   invalid pointer.
+    /// - `datasize`: the number of bytes to be written.
+    ///
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.2.0.
+    ///
+    /// ### See also
+    /// - [`SDL_SaveFile_IO`]
+    /// - [`SDL_LoadFile`]
+    pub fn SDL_SaveFile(
+        file: *const ::core::ffi::c_char,
+        data: *const ::core::ffi::c_void,
+        datasize: ::core::primitive::usize,
+    ) -> ::core::primitive::bool;
+}
+
+extern "C" {
     /// Use this function to read a byte from an [`SDL_IOStream`].
+    ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
     /// ### Parameters
     /// - `src`: the [`SDL_IOStream`] to read from.
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ### Return value
-    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
-    ///   information.
+    /// Returns true on success or false on failure or EOF; call [`SDL_GetError()`]
+    ///   for more information.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -902,6 +966,11 @@ extern "C" {
 
 extern "C" {
     /// Use this function to read a signed byte from an [`SDL_IOStream`].
+    ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
     /// ### Parameters
     /// - `src`: the [`SDL_IOStream`] to read from.
@@ -923,6 +992,11 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
+    ///
     /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
@@ -942,6 +1016,11 @@ extern "C" {
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
+    ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
     /// ### Parameters
     /// - `src`: the stream from which to read data.
@@ -963,6 +1042,11 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
+    ///
     /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
@@ -982,6 +1066,11 @@ extern "C" {
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
+    ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
     /// ### Parameters
     /// - `src`: the stream from which to read data.
@@ -1003,6 +1092,11 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
+    ///
     /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
@@ -1022,6 +1116,11 @@ extern "C" {
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
+    ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
     /// ### Parameters
     /// - `src`: the stream from which to read data.
@@ -1043,6 +1142,11 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
+    ///
     /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
@@ -1062,6 +1166,11 @@ extern "C" {
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
+    ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
     /// ### Parameters
     /// - `src`: the stream from which to read data.
@@ -1083,6 +1192,11 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
+    ///
     /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
@@ -1102,6 +1216,11 @@ extern "C" {
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
+    ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
     /// ### Parameters
     /// - `src`: the stream from which to read data.
@@ -1123,6 +1242,11 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
+    ///
     /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
@@ -1142,6 +1266,11 @@ extern "C" {
     ///
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
+    ///
+    /// This function will return false when the data stream is completely read,
+    /// and [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`]. If false is returned
+    /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
+    /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
     /// ### Parameters
     /// - `src`: the stream from which to read data.

@@ -46,7 +46,7 @@ use super::events::*;
 /// | Constant | Description |
 /// | -------- | ----------- |
 /// | [`SDL_INIT_AUDIO`] | [`SDL_INIT_AUDIO`] implies [`SDL_INIT_EVENTS`] |
-/// | [`SDL_INIT_VIDEO`] | [`SDL_INIT_VIDEO`] implies [`SDL_INIT_EVENTS`] |
+/// | [`SDL_INIT_VIDEO`] | [`SDL_INIT_VIDEO`] implies [`SDL_INIT_EVENTS`], should be initialized on the main thread |
 /// | [`SDL_INIT_JOYSTICK`] | [`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`], should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`] |
 /// | [`SDL_INIT_HAPTIC`] | |
 /// | [`SDL_INIT_GAMEPAD`] | [`SDL_INIT_GAMEPAD`] implies [`SDL_INIT_JOYSTICK`] |
@@ -58,7 +58,7 @@ pub type SDL_InitFlags = Uint32;
 /// [`SDL_INIT_AUDIO`] implies [`SDL_INIT_EVENTS`]
 pub const SDL_INIT_AUDIO: SDL_InitFlags = (0x00000010 as SDL_InitFlags);
 
-/// [`SDL_INIT_VIDEO`] implies [`SDL_INIT_EVENTS`]
+/// [`SDL_INIT_VIDEO`] implies [`SDL_INIT_EVENTS`], should be initialized on the main thread
 pub const SDL_INIT_VIDEO: SDL_InitFlags = (0x00000020 as SDL_InitFlags);
 
 /// [`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`], should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`]
@@ -144,6 +144,25 @@ pub const SDL_APP_SUCCESS: SDL_AppResult = SDL_AppResult::SUCCESS;
 /// Value that requests termination with error from the main callbacks.
 pub const SDL_APP_FAILURE: SDL_AppResult = SDL_AppResult::FAILURE;
 
+/// Function pointer typedef for [`SDL_AppInit`].
+///
+/// These are used by [`SDL_EnterAppMainCallbacks`]. This mechanism operates behind
+/// the scenes for apps using the optional main callbacks. Apps that want to
+/// use this should just implement [`SDL_AppInit`] directly.
+///
+/// ### Parameters
+/// - `appstate`: a place where the app can optionally store a pointer for
+///   future use.
+/// - `argc`: the standard ANSI C main's argc; number of elements in `argv`.
+/// - `argv`: the standard ANSI C main's argv; array of command line
+///   arguments.
+///
+/// ### Return value
+/// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
+///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_AppInit_func = ::core::option::Option<
     unsafe extern "C" fn(
         appstate: *mut *mut ::core::ffi::c_void,
@@ -152,10 +171,41 @@ pub type SDL_AppInit_func = ::core::option::Option<
     ) -> SDL_AppResult,
 >;
 
+/// Function pointer typedef for [`SDL_AppIterate`].
+///
+/// These are used by [`SDL_EnterAppMainCallbacks`]. This mechanism operates behind
+/// the scenes for apps using the optional main callbacks. Apps that want to
+/// use this should just implement [`SDL_AppIterate`] directly.
+///
+/// ### Parameters
+/// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
+///
+/// ### Return value
+/// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
+///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_AppIterate_func = ::core::option::Option<
     unsafe extern "C" fn(appstate: *mut ::core::ffi::c_void) -> SDL_AppResult,
 >;
 
+/// Function pointer typedef for [`SDL_AppEvent`].
+///
+/// These are used by [`SDL_EnterAppMainCallbacks`]. This mechanism operates behind
+/// the scenes for apps using the optional main callbacks. Apps that want to
+/// use this should just implement [`SDL_AppEvent`] directly.
+///
+/// ### Parameters
+/// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
+/// - `event`: the new event for the app to examine.
+///
+/// ### Return value
+/// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
+///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_AppEvent_func = ::core::option::Option<
     unsafe extern "C" fn(
         appstate: *mut ::core::ffi::c_void,
@@ -163,6 +213,18 @@ pub type SDL_AppEvent_func = ::core::option::Option<
     ) -> SDL_AppResult,
 >;
 
+/// Function pointer typedef for [`SDL_AppQuit`].
+///
+/// These are used by [`SDL_EnterAppMainCallbacks`]. This mechanism operates behind
+/// the scenes for apps using the optional main callbacks. Apps that want to
+/// use this should just implement [`SDL_AppEvent`] directly.
+///
+/// ### Parameters
+/// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
+/// - `result`: the result code that terminated the app (success or failure).
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
 pub type SDL_AppQuit_func = ::core::option::Option<
     unsafe extern "C" fn(appstate: *mut ::core::ffi::c_void, result: SDL_AppResult),
 >;
@@ -188,7 +250,7 @@ extern "C" {
     /// - [`SDL_INIT_AUDIO`]: audio subsystem; automatically initializes the events
     ///   subsystem
     /// - [`SDL_INIT_VIDEO`]: video subsystem; automatically initializes the events
-    ///   subsystem
+    ///   subsystem, should be initialized on the main thread.
     /// - [`SDL_INIT_JOYSTICK`]: joystick subsystem; automatically initializes the
     ///   events subsystem
     /// - [`SDL_INIT_HAPTIC`]: haptic (force feedback) subsystem
@@ -309,6 +371,79 @@ extern "C" {
 }
 
 extern "C" {
+    /// Return whether this is the main thread.
+    ///
+    /// On Apple platforms, the main thread is the thread that runs your program's
+    /// main() entry point. On other platforms, the main thread is the one that
+    /// calls SDL_Init([`SDL_INIT_VIDEO`]), which should usually be the one that runs
+    /// your program's main() entry point. If you are using the main callbacks,
+    /// [`SDL_AppInit()`], [`SDL_AppIterate()`], and [`SDL_AppQuit()`] are all called on the
+    /// main thread.
+    ///
+    /// ### Return value
+    /// Returns true if this thread is the main thread, or false otherwise.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.2.0.
+    ///
+    /// ### See also
+    /// - [`SDL_RunOnMainThread`]
+    pub fn SDL_IsMainThread() -> ::core::primitive::bool;
+}
+
+/// Callback run on the main thread.
+///
+/// ### Parameters
+/// - `userdata`: an app-controlled pointer that is passed to the callback.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.8.
+///
+/// ### See also
+/// - [`SDL_RunOnMainThread`]
+pub type SDL_MainThreadCallback =
+    ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
+
+extern "C" {
+    /// Call a function on the main thread during event processing.
+    ///
+    /// If this is called on the main thread, the callback is executed immediately.
+    /// If this is called on another thread, this callback is queued for execution
+    /// on the main thread during event processing.
+    ///
+    /// Be careful of deadlocks when using this functionality. You should not have
+    /// the main thread wait for the current thread while this function is being
+    /// called with `wait_complete` true.
+    ///
+    /// ### Parameters
+    /// - `callback`: the callback to call on the main thread.
+    /// - `userdata`: a pointer that is passed to `callback`.
+    /// - `wait_complete`: true to wait for the callback to complete, false to
+    ///   return immediately.
+    ///
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.2.0.
+    ///
+    /// ### See also
+    /// - [`SDL_IsMainThread`]
+    pub fn SDL_RunOnMainThread(
+        callback: SDL_MainThreadCallback,
+        userdata: *mut ::core::ffi::c_void,
+        wait_complete: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
+}
+
+extern "C" {
     /// Specify basic metadata about your app.
     ///
     /// You can optionally provide metadata about your app to SDL. This is not
@@ -371,7 +506,7 @@ extern "C" {
     /// Multiple calls to this function are allowed, but various state might not
     /// change once it has been set up with a previous call to this function.
     ///
-    /// Once set, this metadata can be read using [`SDL_GetMetadataProperty()`].
+    /// Once set, this metadata can be read using [`SDL_GetAppMetadataProperty()`].
     ///
     /// These are the supported properties:
     ///

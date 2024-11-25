@@ -1,6 +1,6 @@
 # sdl3-sys: Low level Rust bindings for SDL 3
 
-This version of `sdl3-sys` has bindings for SDL version `3.1.6-preview` and earlier.
+This version of `sdl3-sys` has bindings for SDL version `3.1.6-preview-491-g1a466b554` and earlier.
 
 SDL 3 is ABI stable as of the 3.1.3 preview release, but `sdl3-sys` is new
 and may have bugs. Please submit an issue at github if you have any issues

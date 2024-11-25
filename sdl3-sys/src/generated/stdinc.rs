@@ -4,7 +4,34 @@
 //! but they may differ in how or whether they handle certain edge cases. When
 //! in doubt, consult the documentation for details.
 
-pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
+apply_cfg!(#[cfg(doc)] => {
+    /// The largest value that a `size_t` can hold for the target platform.
+    ///
+    /// `size_t` is generally the same size as a pointer in modern times, but this
+    /// can get weird on very old and very esoteric machines. For example, on a
+    /// 16-bit Intel 286, you might have a 32-bit "far" pointer (16-bit segment
+    /// plus 16-bit offset), but `size_t` is 16 bits, because it can only deal with
+    /// the offset into an individual segment.
+    ///
+    /// In modern times, it's generally expected to cover an entire linear address
+    /// space. But be careful!
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
+    pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
+
+});
+
+apply_cfg!(#[cfg(not(doc))] => {
+    pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
+
+});
+
+apply_cfg!(#[cfg(doc)] => {
+});
+
+apply_cfg!(#[cfg(not(doc))] => {
+});
 
 apply_cfg!(#[cfg(doc)] => {
 });
@@ -179,6 +206,137 @@ pub const SDL_MIN_TIME: SDL_Time = (SDL_MIN_SINT64 as SDL_Time);
 
 pub const SDL_FLT_EPSILON: ::core::ffi::c_float = ::core::primitive::f32::EPSILON;
 
+apply_cfg!(#[cfg(doc)] => {
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    /// A printf-formatting string for an Sint64 value.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRIs64 " bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
+    pub const SDL_PRIs64: *const ::core::ffi::c_char = c"lld".as_ptr();
+
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    /// A printf-formatting string for a Uint64 value.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRIu64 " bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
+    pub const SDL_PRIu64: *const ::core::ffi::c_char = c"llu".as_ptr();
+
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    /// A printf-formatting string for a Uint64 value as lower-case hexadecimal.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRIx64 " bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
+    pub const SDL_PRIx64: *const ::core::ffi::c_char = c"llx".as_ptr();
+
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    /// A printf-formatting string for a Uint64 value as upper-case hexadecimal.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRIX64 " bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
+    pub const SDL_PRIX64: *const ::core::ffi::c_char = c"llX".as_ptr();
+
+    /// A printf-formatting string for an Sint32 value.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRIs32 " bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
+    pub const SDL_PRIs32: *const ::core::ffi::c_char = c"d".as_ptr();
+
+    /// A printf-formatting string for a Uint32 value.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRIu32 " bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
+    pub const SDL_PRIu32: *const ::core::ffi::c_char = c"u".as_ptr();
+
+    /// A printf-formatting string for a Uint32 value as lower-case hexadecimal.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRIx32 " bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
+    pub const SDL_PRIx32: *const ::core::ffi::c_char = c"x".as_ptr();
+
+    /// A printf-formatting string for a Uint32 value as upper-case hexadecimal.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRIX32 " bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
+    pub const SDL_PRIX32: *const ::core::ffi::c_char = c"X".as_ptr();
+
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    /// A printf-formatting string prefix for a `long long` value.
+    ///
+    /// This is just the prefix! You probably actually want [`SDL_PRILLd`], [`SDL_PRILLu`],
+    /// [`SDL_PRILLx`], or [`SDL_PRILLX`] instead.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRILL_PREFIX "d bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
+    pub const SDL_PRILL_PREFIX: *const ::core::ffi::c_char = c"ll".as_ptr();
+
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    pub const SDL_PRILLd: *const ::core::ffi::c_char = c"lld".as_ptr();
+
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    pub const SDL_PRILLu: *const ::core::ffi::c_char = c"llu".as_ptr();
+
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    pub const SDL_PRILLx: *const ::core::ffi::c_char = c"llx".as_ptr();
+
+    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    pub const SDL_PRILLX: *const ::core::ffi::c_char = c"llX".as_ptr();
+
+});
+
 apply_cfg!(#[cfg(any(doc, windows))] => {
     #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRIs64: *const ::core::ffi::c_char = c"I64d".as_ptr();
@@ -307,6 +465,12 @@ apply_cfg!(#[cfg(not(any(doc, windows)))] => {
     #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const SDL_PRILLX: *const ::core::ffi::c_char = c"llX".as_ptr();
 
+});
+
+apply_cfg!(#[cfg(doc)] => {
+});
+
+apply_cfg!(#[cfg(not(doc))] => {
 });
 
 const _: () = ::core::assert!((::core::mem::size_of::<::core::primitive::bool>() == 1_usize));
@@ -470,6 +634,12 @@ pub unsafe fn SDL_INIT_INTERFACE<T>(iface: *mut T) {
             .write(::core::mem::size_of::<T>() as Uint32);
     }
 }
+
+apply_cfg!(#[cfg(doc)] => {
+});
+
+apply_cfg!(#[cfg(not(doc))] => {
+});
 
 extern "C" {
     /// Allocate uninitialized memory.
@@ -859,7 +1029,8 @@ extern "C" {
     /// Get the number of outstanding (unfreed) allocations.
     ///
     /// ### Return value
-    /// Returns the number of allocations.
+    /// Returns the number of allocations or -1 if allocation counting is
+    ///   disabled.
     ///
     /// ### Thread safety
     /// It is safe to call this function from any thread.
@@ -1459,6 +1630,19 @@ extern "C" {
 }
 
 extern "C" {
+    /// Compute the absolute value of `x`.
+    ///
+    /// ### Parameters
+    /// - `x`: an integer value.
+    ///
+    /// ### Return value
+    /// Returns the absolute value of x.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_abs(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
@@ -1800,6 +1984,28 @@ extern "C" {
 }
 
 extern "C" {
+    /// Calculate a CRC-16 value.
+    ///
+    /// <https://en.wikipedia.org/wiki/Cyclic_redundancy_check>
+    ///
+    /// This function can be called multiple times, to stream data to be
+    /// checksummed in blocks. Each call must provide the previous CRC-16 return
+    /// value to be updated with the next block. The first call to this function
+    /// for a set of blocks should pass in a zero CRC value.
+    ///
+    /// ### Parameters
+    /// - `crc`: the current checksum for this data set, or 0 for a new data set.
+    /// - `data`: a new block of data to add to the checksum.
+    /// - `len`: the size, in bytes, of the new block of data.
+    ///
+    /// ### Return value
+    /// Returns a CRC-16 checksum value of all blocks in the data set.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_crc16(
         crc: Uint16,
         data: *const ::core::ffi::c_void,
@@ -1808,6 +2014,28 @@ extern "C" {
 }
 
 extern "C" {
+    /// Calculate a CRC-32 value.
+    ///
+    /// <https://en.wikipedia.org/wiki/Cyclic_redundancy_check>
+    ///
+    /// This function can be called multiple times, to stream data to be
+    /// checksummed in blocks. Each call must provide the previous CRC-32 return
+    /// value to be updated with the next block. The first call to this function
+    /// for a set of blocks should pass in a zero CRC value.
+    ///
+    /// ### Parameters
+    /// - `crc`: the current checksum for this data set, or 0 for a new data set.
+    /// - `data`: a new block of data to add to the checksum.
+    /// - `len`: the size, in bytes, of the new block of data.
+    ///
+    /// ### Return value
+    /// Returns a CRC-32 checksum value of all blocks in the data set.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_crc32(
         crc: Uint32,
         data: *const ::core::ffi::c_void,
@@ -1816,6 +2044,33 @@ extern "C" {
 }
 
 extern "C" {
+    /// Calculate a 32-bit MurmurHash3 value for a block of data.
+    ///
+    /// <https://en.wikipedia.org/wiki/MurmurHash>
+    ///
+    /// A seed may be specified, which changes the final results consistently, but
+    /// this does not work like [`SDL_crc16`] and [`SDL_crc32`]: you can't feed a previous
+    /// result from this function back into itself as the next seed value to
+    /// calculate a hash in chunks; it won't produce the same hash as it would if
+    /// the same data was provided in a single call.
+    ///
+    /// If you aren't sure what to provide for a seed, zero is fine. Murmur3 is not
+    /// cryptographically secure, so it shouldn't be used for hashing top-secret
+    /// data.
+    ///
+    /// ### Parameters
+    /// - `data`: the data to be hashed.
+    /// - `len`: the size of data, in bytes.
+    /// - `seed`: a value that alters the final hash value.
+    ///
+    /// ### Return value
+    /// Returns a Murmur3 32-bit hash value.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_murmur3_32(
         data: *const ::core::ffi::c_void,
         len: ::core::primitive::usize,
@@ -1855,6 +2110,31 @@ pub unsafe fn SDL_memcpy(
     return dst;
 }
 
+/// A macro to copy memory between objects, with basic type checking.
+///
+/// [`SDL_memcpy`] and [`SDL_memmove`] do not care where you copy memory to and from,
+/// which can lead to bugs. This macro aims to avoid most of those bugs by
+/// making sure that the source and destination are both pointers to objects
+/// that are the same size. It does not check that the objects are the same
+/// _type_, just that the copy will not overflow either object.
+///
+/// The size check happens at compile time, and the compiler will throw an
+/// error if the objects are different sizes.
+///
+/// Generally this is intended to copy a single object, not an array.
+///
+/// This macro looks like it double-evaluates its parameters, but the extras
+/// them are in `sizeof` sections, which generate no code nor side-effects.
+///
+/// ### Parameters
+/// - `dst`: a pointer to the destination object. Must not be NULL.
+/// - `src`: a pointer to the source object. Must not be NULL.
+///
+/// ### Thread safety
+/// It is safe to call this function from any thread.
+///
+/// ### Availability
+/// This function is available since SDL 3.1.3.
 ///
 /// # Safety
 /// It must be valid to write the memory pointed to by `src` to the memory pointed to by `dst`,
@@ -1872,7 +2152,7 @@ pub unsafe fn SDL_copyp<Dst: Sized, Src: Sized>(dst: *mut Dst, src: *const Src) 
     dst
 }
 
-/// Copy memory.
+/// Copy memory ranges that might overlap.
 ///
 /// It is okay for the memory regions to overlap. If you are confident that the
 /// regions never overlap, using [`SDL_memcpy()`] may improve performance.
@@ -1904,6 +2184,27 @@ pub unsafe fn SDL_memmove(
 }
 
 extern "C" {
+    /// Initialize all bytes of buffer of memory to a specific value.
+    ///
+    /// This function will set `len` bytes, pointed to by `dst`, to the value
+    /// specified in `c`.
+    ///
+    /// Despite `c` being an `int` instead of a `char`, this only operates on
+    /// bytes; `c` must be a value between 0 and 255, inclusive.
+    ///
+    /// ### Parameters
+    /// - `dst`: the destination memory region. Must not be NULL.
+    /// - `c`: the byte value to set.
+    /// - `len`: the length, in bytes, to set in `dst`.
+    ///
+    /// ### Return value
+    /// Returns `dst`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_memset(
         dst: *mut ::core::ffi::c_void,
         c: ::core::ffi::c_int,
@@ -1912,6 +2213,27 @@ extern "C" {
 }
 
 extern "C" {
+    /// Initialize all 32-bit words of buffer of memory to a specific value.
+    ///
+    /// This function will set a buffer of `dwords` Uint32 values, pointed to by
+    /// `dst`, to the value specified in `val`.
+    ///
+    /// Unlike [`SDL_memset`], this sets 32-bit values, not bytes, so it's not limited
+    /// to a range of 0-255.
+    ///
+    /// ### Parameters
+    /// - `dst`: the destination memory region. Must not be NULL.
+    /// - `val`: the Uint32 value to set.
+    /// - `dwords`: the number of Uint32 values to set in `dst`.
+    ///
+    /// ### Return value
+    /// Returns `dst`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_memset4(
         dst: *mut ::core::ffi::c_void,
         val: Uint32,
@@ -1919,6 +2241,25 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
+/// Clear an object's memory to zero, using a pointer.
+///
+/// This is wrapper over [`SDL_memset`] that handles calculating the object size,
+/// so there's no chance of copy/paste errors, and the code is cleaner.
+///
+/// This requires a pointer to an object, not an object itself, nor an array.
+///
+/// ### Parameters
+/// - `x`: a pointer to the object to clear.
+///
+/// ### Thread safety
+/// It is safe to call this macro from any thread.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
+///
+/// ### See also
+/// - [`SDL_zero`]
+/// - [`SDL_zeroa`]
 ///
 /// # Safety
 /// It must be valid to zero all bytes of `T`, and it must be valid to write a `T` to the memory pointed to by `x`
@@ -1929,6 +2270,23 @@ pub unsafe fn SDL_zerop<T>(x: *mut T) -> *mut T {
 }
 
 extern "C" {
+    /// Compare two buffers of memory.
+    ///
+    /// ### Parameters
+    /// - `s1`: the first buffer to compare. NULL is not permitted!
+    /// - `s2`: the second buffer to compare. NULL is not permitted!
+    /// - `len`: the number of bytes to compare between the buffers.
+    ///
+    /// ### Return value
+    /// Returns less than zero if s1 is "less than" s2, greater than zero if s1 is
+    ///   "greater than" s2, and zero if the buffers match exactly for `len`
+    ///   bytes.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_memcmp(
         s1: *const ::core::ffi::c_void,
         s2: *const ::core::ffi::c_void,
@@ -1937,10 +2295,72 @@ extern "C" {
 }
 
 extern "C" {
+    /// This works exactly like wcslen() but doesn't require access to a C runtime.
+    ///
+    /// Counts the number of wchar_t values in `wstr`, excluding the null
+    /// terminator.
+    ///
+    /// Like [`SDL_strlen`] only counts bytes and not codepoints in a UTF-8 string,
+    /// this counts wchar_t values in a string, even if the string's encoding is of
+    /// variable width, like UTF-16.
+    ///
+    /// Also be aware that wchar_t is different sizes on different platforms (4
+    /// bytes on Linux, 2 on Windows, etc).
+    ///
+    /// ### Parameters
+    /// - `wstr`: The null-terminated wide string to read. Must not be NULL.
+    ///
+    /// ### Return value
+    /// Returns the length (in wchar_t values, excluding the null terminator) of
+    ///   `wstr`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_wcsnlen`]
+    /// - [`SDL_utf8strlen`]
+    /// - [`SDL_utf8strnlen`]
     pub fn SDL_wcslen(wstr: *const crate::ffi::c_wchar_t) -> ::core::primitive::usize;
 }
 
 extern "C" {
+    /// This works exactly like wcsnlen() but doesn't require access to a C
+    /// runtime.
+    ///
+    /// Counts up to a maximum of `maxlen` wchar_t values in `wstr`, excluding the
+    /// null terminator.
+    ///
+    /// Like [`SDL_strnlen`] only counts bytes and not codepoints in a UTF-8 string,
+    /// this counts wchar_t values in a string, even if the string's encoding is of
+    /// variable width, like UTF-16.
+    ///
+    /// Also be aware that wchar_t is different sizes on different platforms (4
+    /// bytes on Linux, 2 on Windows, etc).
+    ///
+    /// Also, `maxlen` is a count of wide characters, not bytes!
+    ///
+    /// ### Parameters
+    /// - `wstr`: The null-terminated wide string to read. Must not be NULL.
+    /// - `maxlen`: The maximum amount of wide characters to count.
+    ///
+    /// ### Return value
+    /// Returns the length (in wide characters, excluding the null terminator) of
+    ///   `wstr` but never more than `maxlen`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_wcslen`]
+    /// - [`SDL_utf8strlen`]
+    /// - [`SDL_utf8strnlen`]
     pub fn SDL_wcsnlen(
         wstr: *const crate::ffi::c_wchar_t,
         maxlen: ::core::primitive::usize,
@@ -1966,7 +2386,7 @@ extern "C" {
     /// - `maxlen`: The length (in wide characters) of the destination buffer.
     ///
     /// ### Return value
-    /// Returns The length (in wide characters, excluding the null terminator) of
+    /// Returns the length (in wide characters, excluding the null terminator) of
     ///   `src`.
     ///
     /// ### Thread safety
@@ -2005,7 +2425,7 @@ extern "C" {
     /// - `maxlen`: The length (in wide characters) of the destination buffer.
     ///
     /// ### Return value
-    /// Returns The length (in wide characters, excluding the null terminator) of
+    /// Returns the length (in wide characters, excluding the null terminator) of
     ///   the string in `dst` plus the length of `src`.
     ///
     /// ### Thread safety
@@ -2024,10 +2444,50 @@ extern "C" {
 }
 
 extern "C" {
+    /// Allocate a copy of a wide string.
+    ///
+    /// This allocates enough space for a null-terminated copy of `wstr`, using
+    /// [`SDL_malloc`], and then makes a copy of the string into this space.
+    ///
+    /// The returned string is owned by the caller, and should be passed to
+    /// [`SDL_free`] when no longer needed.
+    ///
+    /// ### Parameters
+    /// - `wstr`: the string to copy.
+    ///
+    /// ### Return value
+    /// Returns a pointer to the newly-allocated wide string.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_wcsdup(wstr: *const crate::ffi::c_wchar_t) -> *mut crate::ffi::c_wchar_t;
 }
 
 extern "C" {
+    /// Search a wide string for the first instance of a specific substring.
+    ///
+    /// The search ends once it finds the requested substring, or a null terminator
+    /// byte to end the string.
+    ///
+    /// Note that this looks for strings of _wide characters_, not _codepoints_, so
+    /// it's legal to search for malformed and incomplete UTF-16 sequences.
+    ///
+    /// ### Parameters
+    /// - `haystack`: the wide string to search. Must not be NULL.
+    /// - `needle`: the wide string to search for. Must not be NULL.
+    ///
+    /// ### Return value
+    /// Returns a pointer to the first instance of `needle` in the string, or NULL
+    ///   if not found.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_wcsstr(
         haystack: *const crate::ffi::c_wchar_t,
         needle: *const crate::ffi::c_wchar_t,
@@ -2035,6 +2495,32 @@ extern "C" {
 }
 
 extern "C" {
+    /// Search a wide string, up to n wide chars, for the first instance of a
+    /// specific substring.
+    ///
+    /// The search ends once it finds the requested substring, or a null terminator
+    /// value to end the string, or `maxlen` wide character have been examined. It
+    /// is possible to use this function on a wide string without a null
+    /// terminator.
+    ///
+    /// Note that this looks for strings of _wide characters_, not _codepoints_, so
+    /// it's legal to search for malformed and incomplete UTF-16 sequences.
+    ///
+    /// ### Parameters
+    /// - `haystack`: the wide string to search. Must not be NULL.
+    /// - `needle`: the wide string to search for. Must not be NULL.
+    /// - `maxlen`: the maximum number of wide characters to search in
+    ///   `haystack`.
+    ///
+    /// ### Return value
+    /// Returns a pointer to the first instance of `needle` in the string, or NULL
+    ///   if not found.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_wcsnstr(
         haystack: *const crate::ffi::c_wchar_t,
         needle: *const crate::ffi::c_wchar_t,
@@ -2218,7 +2704,7 @@ extern "C" {
     ///   otherwise).
     ///
     /// ### Return value
-    /// Returns The parsed `long`, or 0 if no number could be parsed.
+    /// Returns the parsed `long`, or 0 if no number could be parsed.
     ///
     /// ### Thread safety
     /// It is safe to call this function from any thread.
@@ -2236,10 +2722,58 @@ extern "C" {
 }
 
 extern "C" {
+    /// This works exactly like strlen() but doesn't require access to a C runtime.
+    ///
+    /// Counts the bytes in `str`, excluding the null terminator.
+    ///
+    /// If you need the length of a UTF-8 string, consider using [`SDL_utf8strlen()`].
+    ///
+    /// ### Parameters
+    /// - `str`: The null-terminated string to read. Must not be NULL.
+    ///
+    /// ### Return value
+    /// Returns the length (in bytes, excluding the null terminator) of `src`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_strnlen`]
+    /// - [`SDL_utf8strlen`]
+    /// - [`SDL_utf8strnlen`]
     pub fn SDL_strlen(str: *const ::core::ffi::c_char) -> ::core::primitive::usize;
 }
 
 extern "C" {
+    /// This works exactly like strnlen() but doesn't require access to a C
+    /// runtime.
+    ///
+    /// Counts up to a maximum of `maxlen` bytes in `str`, excluding the null
+    /// terminator.
+    ///
+    /// If you need the length of a UTF-8 string, consider using [`SDL_utf8strnlen()`].
+    ///
+    /// ### Parameters
+    /// - `str`: The null-terminated string to read. Must not be NULL.
+    /// - `maxlen`: The maximum amount of bytes to count.
+    ///
+    /// ### Return value
+    /// Returns the length (in bytes, excluding the null terminator) of `src` but
+    ///   never more than `maxlen`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_strlen`]
+    /// - [`SDL_utf8strlen`]
+    /// - [`SDL_utf8strnlen`]
     pub fn SDL_strnlen(
         str: *const ::core::ffi::c_char,
         maxlen: ::core::primitive::usize,
@@ -2266,7 +2800,7 @@ extern "C" {
     /// - `maxlen`: The length (in characters) of the destination buffer.
     ///
     /// ### Return value
-    /// Returns The length (in characters, excluding the null terminator) of
+    /// Returns the length (in characters, excluding the null terminator) of
     ///   `src`.
     ///
     /// ### Thread safety
@@ -2306,7 +2840,7 @@ extern "C" {
     ///   be 0.
     ///
     /// ### Return value
-    /// Returns The number of bytes written, excluding the null terminator.
+    /// Returns the number of bytes written, excluding the null terminator.
     ///
     /// ### Thread safety
     /// It is safe to call this function from any thread.
@@ -2343,7 +2877,7 @@ extern "C" {
     /// - `maxlen`: The length (in characters) of the destination buffer.
     ///
     /// ### Return value
-    /// Returns The length (in characters, excluding the null terminator) of the
+    /// Returns the length (in characters, excluding the null terminator) of the
     ///   string in `dst` plus the length of `src`.
     ///
     /// ### Thread safety
@@ -2362,10 +2896,55 @@ extern "C" {
 }
 
 extern "C" {
+    /// Allocate a copy of a string.
+    ///
+    /// This allocates enough space for a null-terminated copy of `str`, using
+    /// [`SDL_malloc`], and then makes a copy of the string into this space.
+    ///
+    /// The returned string is owned by the caller, and should be passed to
+    /// [`SDL_free`] when no longer needed.
+    ///
+    /// ### Parameters
+    /// - `str`: the string to copy.
+    ///
+    /// ### Return value
+    /// Returns a pointer to the newly-allocated string.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strdup(str: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
+    /// Allocate a copy of a string, up to n characters.
+    ///
+    /// This allocates enough space for a null-terminated copy of `str`, up to
+    /// `maxlen` bytes, using [`SDL_malloc`], and then makes a copy of the string into
+    /// this space.
+    ///
+    /// If the string is longer than `maxlen` bytes, the returned string will be
+    /// `maxlen` bytes long, plus a null-terminator character that isn't included
+    /// in the count.
+    ///
+    /// The returned string is owned by the caller, and should be passed to
+    /// [`SDL_free`] when no longer needed.
+    ///
+    /// ### Parameters
+    /// - `str`: the string to copy.
+    /// - `maxlen`: the maximum length of the copied string, not counting the
+    ///   null-terminator character.
+    ///
+    /// ### Return value
+    /// Returns a pointer to the newly-allocated string.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strndup(
         str: *const ::core::ffi::c_char,
         maxlen: ::core::primitive::usize,
@@ -2373,6 +2952,28 @@ extern "C" {
 }
 
 extern "C" {
+    /// Reverse a string's contents.
+    ///
+    /// This reverses a null-terminated string in-place. Only the content of the
+    /// string is reversed; the null-terminator character remains at the end of the
+    /// reversed string.
+    ///
+    /// **WARNING**: This function reverses the _bytes_ of the string, not the
+    /// codepoints. If `str` is a UTF-8 string with Unicode codepoints > 127, this
+    /// will ruin the string data. You should only use this function on strings
+    /// that are completely comprised of low ASCII characters.
+    ///
+    /// ### Parameters
+    /// - `str`: the string to reverse.
+    ///
+    /// ### Return value
+    /// Returns `str`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strrev(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
 }
 
@@ -2431,6 +3032,27 @@ extern "C" {
 }
 
 extern "C" {
+    /// Search a string for the first instance of a specific byte.
+    ///
+    /// The search ends once it finds the requested byte value, or a null
+    /// terminator byte to end the string.
+    ///
+    /// Note that this looks for _bytes_, not _characters_, so you cannot match
+    /// against a Unicode codepoint > 255, regardless of character encoding.
+    ///
+    /// ### Parameters
+    /// - `str`: the string to search. Must not be NULL.
+    /// - `c`: the byte value to search for.
+    ///
+    /// ### Return value
+    /// Returns a pointer to the first instance of `c` in the string, or NULL if
+    ///   not found.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strchr(
         str: *const ::core::ffi::c_char,
         c: ::core::ffi::c_int,
@@ -2438,6 +3060,26 @@ extern "C" {
 }
 
 extern "C" {
+    /// Search a string for the last instance of a specific byte.
+    ///
+    /// The search must go until it finds a null terminator byte to end the string.
+    ///
+    /// Note that this looks for _bytes_, not _characters_, so you cannot match
+    /// against a Unicode codepoint > 255, regardless of character encoding.
+    ///
+    /// ### Parameters
+    /// - `str`: the string to search. Must not be NULL.
+    /// - `c`: the byte value to search for.
+    ///
+    /// ### Return value
+    /// Returns a pointer to the last instance of `c` in the string, or NULL if
+    ///   not found.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strrchr(
         str: *const ::core::ffi::c_char,
         c: ::core::ffi::c_int,
@@ -2445,6 +3087,27 @@ extern "C" {
 }
 
 extern "C" {
+    /// Search a string for the first instance of a specific substring.
+    ///
+    /// The search ends once it finds the requested substring, or a null terminator
+    /// byte to end the string.
+    ///
+    /// Note that this looks for strings of _bytes_, not _characters_, so it's
+    /// legal to search for malformed and incomplete UTF-8 sequences.
+    ///
+    /// ### Parameters
+    /// - `haystack`: the string to search. Must not be NULL.
+    /// - `needle`: the string to search for. Must not be NULL.
+    ///
+    /// ### Return value
+    /// Returns a pointer to the first instance of `needle` in the string, or NULL
+    ///   if not found.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strstr(
         haystack: *const ::core::ffi::c_char,
         needle: *const ::core::ffi::c_char,
@@ -2452,6 +3115,30 @@ extern "C" {
 }
 
 extern "C" {
+    /// Search a string, up to n bytes, for the first instance of a specific
+    /// substring.
+    ///
+    /// The search ends once it finds the requested substring, or a null terminator
+    /// byte to end the string, or `maxlen` bytes have been examined. It is
+    /// possible to use this function on a string without a null terminator.
+    ///
+    /// Note that this looks for strings of _bytes_, not _characters_, so it's
+    /// legal to search for malformed and incomplete UTF-8 sequences.
+    ///
+    /// ### Parameters
+    /// - `haystack`: the string to search. Must not be NULL.
+    /// - `needle`: the string to search for. Must not be NULL.
+    /// - `maxlen`: the maximum number of bytes to search in `haystack`.
+    ///
+    /// ### Return value
+    /// Returns a pointer to the first instance of `needle` in the string, or NULL
+    ///   if not found.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strnstr(
         haystack: *const ::core::ffi::c_char,
         needle: *const ::core::ffi::c_char,
@@ -2460,6 +3147,35 @@ extern "C" {
 }
 
 extern "C" {
+    /// Search a UTF-8 string for the first instance of a specific substring,
+    /// case-insensitively.
+    ///
+    /// This will work with Unicode strings, using a technique called
+    /// "case-folding" to handle the vast majority of case-sensitive human
+    /// languages regardless of system locale. It can deal with expanding values: a
+    /// German Eszett character can compare against two ASCII 's' chars and be
+    /// considered a match, for example. A notable exception: it does not handle
+    /// the Turkish 'i' character; human language is complicated!
+    ///
+    /// Since this handles Unicode, it expects the strings to be well-formed UTF-8
+    /// and not a null-terminated string of arbitrary bytes. Bytes that are not
+    /// valid UTF-8 are treated as Unicode character U+FFFD (REPLACEMENT
+    /// CHARACTER), which is to say two strings of random bits may turn out to
+    /// match if they convert to the same amount of replacement characters.
+    ///
+    /// ### Parameters
+    /// - `haystack`: the string to search. Must not be NULL.
+    /// - `needle`: the string to search for. Must not be NULL.
+    ///
+    /// ### Return value
+    /// Returns a pointer to the first instance of `needle` in the string, or NULL
+    ///   if not found.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strcasestr(
         haystack: *const ::core::ffi::c_char,
         needle: *const ::core::ffi::c_char,
@@ -2467,18 +3183,113 @@ extern "C" {
 }
 
 extern "C" {
+    /// This works exactly like strtok_r() but doesn't require access to a C
+    /// runtime.
+    ///
+    /// Break a string up into a series of tokens.
+    ///
+    /// To start tokenizing a new string, `str` should be the non-NULL address of
+    /// the string to start tokenizing. Future calls to get the next token from the
+    /// same string should specify a NULL.
+    ///
+    /// Note that this function will overwrite pieces of `str` with null chars to
+    /// split it into tokens. This function cannot be used with const/read-only
+    /// strings!
+    ///
+    /// `saveptr` just needs to point to a `char *` that can be overwritten; SDL
+    /// will use this to save tokenizing state between calls. It is initialized if
+    /// `str` is non-NULL, and used to resume tokenizing when `str` is NULL.
+    ///
+    /// ### Parameters
+    /// - `str`: the string to tokenize, or NULL to continue tokenizing.
+    /// - `delim`: the delimiter string that separates tokens.
+    /// - `saveptr`: pointer to a char *, used for ongoing state.
+    ///
+    /// ### Return value
+    /// Returns A pointer to the next token, or NULL if no tokens remain.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_strtok_r(
-        s1: *mut ::core::ffi::c_char,
-        s2: *const ::core::ffi::c_char,
+        str: *mut ::core::ffi::c_char,
+        delim: *const ::core::ffi::c_char,
         saveptr: *mut *mut ::core::ffi::c_char,
     ) -> *mut ::core::ffi::c_char;
 }
 
 extern "C" {
+    /// Count the number of codepoints in a UTF-8 string.
+    ///
+    /// Counts the _codepoints_, not _bytes_, in `str`, excluding the null
+    /// terminator.
+    ///
+    /// If you need to count the bytes in a string instead, consider using
+    /// [`SDL_strlen()`].
+    ///
+    /// Since this handles Unicode, it expects the strings to be well-formed UTF-8
+    /// and not a null-terminated string of arbitrary bytes. Bytes that are not
+    /// valid UTF-8 are treated as Unicode character U+FFFD (REPLACEMENT
+    /// CHARACTER), so a malformed or incomplete UTF-8 sequence might increase the
+    /// count by several replacement characters.
+    ///
+    /// ### Parameters
+    /// - `str`: The null-terminated UTF-8 string to read. Must not be NULL.
+    ///
+    /// ### Return value
+    /// Returns The length (in codepoints, excluding the null terminator) of
+    ///   `src`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_utf8strnlen`]
+    /// - [`SDL_strlen`]
     pub fn SDL_utf8strlen(str: *const ::core::ffi::c_char) -> ::core::primitive::usize;
 }
 
 extern "C" {
+    /// Count the number of codepoints in a UTF-8 string, up to n bytes.
+    ///
+    /// Counts the _codepoints_, not _bytes_, in `str`, excluding the null
+    /// terminator.
+    ///
+    /// If you need to count the bytes in a string instead, consider using
+    /// [`SDL_strnlen()`].
+    ///
+    /// The counting stops at `bytes` bytes (not codepoints!). This seems
+    /// counterintuitive, but makes it easy to express the total size of the
+    /// string's buffer.
+    ///
+    /// Since this handles Unicode, it expects the strings to be well-formed UTF-8
+    /// and not a null-terminated string of arbitrary bytes. Bytes that are not
+    /// valid UTF-8 are treated as Unicode character U+FFFD (REPLACEMENT
+    /// CHARACTER), so a malformed or incomplete UTF-8 sequence might increase the
+    /// count by several replacement characters.
+    ///
+    /// ### Parameters
+    /// - `str`: The null-terminated UTF-8 string to read. Must not be NULL.
+    /// - `bytes`: The maximum amount of bytes to count.
+    ///
+    /// ### Return value
+    /// Returns The length (in codepoints, excluding the null terminator) of `src`
+    ///   but never more than `maxlen`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_utf8strlen`]
+    /// - [`SDL_strnlen`]
     pub fn SDL_utf8strnlen(
         str: *const ::core::ffi::c_char,
         bytes: ::core::primitive::usize,
@@ -2486,6 +3297,36 @@ extern "C" {
 }
 
 extern "C" {
+    /// Convert an integer into a string.
+    ///
+    /// This requires a radix to specified for string format. Specifying 10
+    /// produces a decimal number, 16 hexidecimal, etc. Must be in the range of 2
+    /// to 36.
+    ///
+    /// Note that this function will overflow a buffer if `str` is not large enough
+    /// to hold the output! It may be safer to use [`SDL_snprintf`] to clamp output, or
+    /// [`SDL_asprintf`] to allocate a buffer. Otherwise, it doesn't hurt to allocate
+    /// much more space than you expect to use (and don't forget possible negative
+    /// signs, null terminator bytes, etc).
+    ///
+    /// ### Parameters
+    /// - `value`: the integer to convert.
+    /// - `str`: the buffer to write the string into.
+    /// - `radix`: the radix to use for string generation.
+    ///
+    /// ### Return value
+    /// Returns `str`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_uitoa`]
+    /// - [`SDL_ltoa`]
+    /// - [`SDL_lltoa`]
     pub fn SDL_itoa(
         value: ::core::ffi::c_int,
         str: *mut ::core::ffi::c_char,
@@ -2494,6 +3335,36 @@ extern "C" {
 }
 
 extern "C" {
+    /// Convert an unsigned integer into a string.
+    ///
+    /// This requires a radix to specified for string format. Specifying 10
+    /// produces a decimal number, 16 hexidecimal, etc. Must be in the range of 2
+    /// to 36.
+    ///
+    /// Note that this function will overflow a buffer if `str` is not large enough
+    /// to hold the output! It may be safer to use [`SDL_snprintf`] to clamp output, or
+    /// [`SDL_asprintf`] to allocate a buffer. Otherwise, it doesn't hurt to allocate
+    /// much more space than you expect to use (and don't forget null terminator
+    /// bytes, etc).
+    ///
+    /// ### Parameters
+    /// - `value`: the unsigned integer to convert.
+    /// - `str`: the buffer to write the string into.
+    /// - `radix`: the radix to use for string generation.
+    ///
+    /// ### Return value
+    /// Returns `str`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_itoa`]
+    /// - [`SDL_ultoa`]
+    /// - [`SDL_ulltoa`]
     pub fn SDL_uitoa(
         value: ::core::ffi::c_uint,
         str: *mut ::core::ffi::c_char,
@@ -2502,6 +3373,36 @@ extern "C" {
 }
 
 extern "C" {
+    /// Convert a long integer into a string.
+    ///
+    /// This requires a radix to specified for string format. Specifying 10
+    /// produces a decimal number, 16 hexidecimal, etc. Must be in the range of 2
+    /// to 36.
+    ///
+    /// Note that this function will overflow a buffer if `str` is not large enough
+    /// to hold the output! It may be safer to use [`SDL_snprintf`] to clamp output, or
+    /// [`SDL_asprintf`] to allocate a buffer. Otherwise, it doesn't hurt to allocate
+    /// much more space than you expect to use (and don't forget possible negative
+    /// signs, null terminator bytes, etc).
+    ///
+    /// ### Parameters
+    /// - `value`: the long integer to convert.
+    /// - `str`: the buffer to write the string into.
+    /// - `radix`: the radix to use for string generation.
+    ///
+    /// ### Return value
+    /// Returns `str`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_ultoa`]
+    /// - [`SDL_itoa`]
+    /// - [`SDL_lltoa`]
     pub fn SDL_ltoa(
         value: ::core::ffi::c_long,
         str: *mut ::core::ffi::c_char,
@@ -2510,6 +3411,36 @@ extern "C" {
 }
 
 extern "C" {
+    /// Convert an unsigned long integer into a string.
+    ///
+    /// This requires a radix to specified for string format. Specifying 10
+    /// produces a decimal number, 16 hexidecimal, etc. Must be in the range of 2
+    /// to 36.
+    ///
+    /// Note that this function will overflow a buffer if `str` is not large enough
+    /// to hold the output! It may be safer to use [`SDL_snprintf`] to clamp output, or
+    /// [`SDL_asprintf`] to allocate a buffer. Otherwise, it doesn't hurt to allocate
+    /// much more space than you expect to use (and don't forget null terminator
+    /// bytes, etc).
+    ///
+    /// ### Parameters
+    /// - `value`: the unsigned long integer to convert.
+    /// - `str`: the buffer to write the string into.
+    /// - `radix`: the radix to use for string generation.
+    ///
+    /// ### Return value
+    /// Returns `str`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_ltoa`]
+    /// - [`SDL_uitoa`]
+    /// - [`SDL_ulltoa`]
     pub fn SDL_ultoa(
         value: ::core::ffi::c_ulong,
         str: *mut ::core::ffi::c_char,
@@ -2518,6 +3449,36 @@ extern "C" {
 }
 
 extern "C" {
+    /// Convert a long long integer into a string.
+    ///
+    /// This requires a radix to specified for string format. Specifying 10
+    /// produces a decimal number, 16 hexidecimal, etc. Must be in the range of 2
+    /// to 36.
+    ///
+    /// Note that this function will overflow a buffer if `str` is not large enough
+    /// to hold the output! It may be safer to use [`SDL_snprintf`] to clamp output, or
+    /// [`SDL_asprintf`] to allocate a buffer. Otherwise, it doesn't hurt to allocate
+    /// much more space than you expect to use (and don't forget possible negative
+    /// signs, null terminator bytes, etc).
+    ///
+    /// ### Parameters
+    /// - `value`: the long long integer to convert.
+    /// - `str`: the buffer to write the string into.
+    /// - `radix`: the radix to use for string generation.
+    ///
+    /// ### Return value
+    /// Returns `str`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_ulltoa`]
+    /// - [`SDL_itoa`]
+    /// - [`SDL_ltoa`]
     pub fn SDL_lltoa(
         value: ::core::ffi::c_longlong,
         str: *mut ::core::ffi::c_char,
@@ -2526,6 +3487,36 @@ extern "C" {
 }
 
 extern "C" {
+    /// Convert an unsigned long long integer into a string.
+    ///
+    /// This requires a radix to specified for string format. Specifying 10
+    /// produces a decimal number, 16 hexidecimal, etc. Must be in the range of 2
+    /// to 36.
+    ///
+    /// Note that this function will overflow a buffer if `str` is not large enough
+    /// to hold the output! It may be safer to use [`SDL_snprintf`] to clamp output, or
+    /// [`SDL_asprintf`] to allocate a buffer. Otherwise, it doesn't hurt to allocate
+    /// much more space than you expect to use (and don't forget null terminator
+    /// bytes, etc).
+    ///
+    /// ### Parameters
+    /// - `value`: the unsigned long long integer to convert.
+    /// - `str`: the buffer to write the string into.
+    /// - `radix`: the radix to use for string generation.
+    ///
+    /// ### Return value
+    /// Returns `str`.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_lltoa`]
+    /// - [`SDL_uitoa`]
+    /// - [`SDL_ultoa`]
     pub fn SDL_ulltoa(
         value: ::core::ffi::c_ulonglong,
         str: *mut ::core::ffi::c_char,
@@ -2543,7 +3534,7 @@ extern "C" {
     /// - `str`: The null-terminated string to read. Must not be NULL.
     ///
     /// ### Return value
-    /// Returns The parsed `int`.
+    /// Returns the parsed `int`.
     ///
     /// ### Thread safety
     /// It is safe to call this function from any thread.
@@ -2572,7 +3563,7 @@ extern "C" {
     /// - `str`: The null-terminated string to read. Must not be NULL.
     ///
     /// ### Return value
-    /// Returns The parsed `double`.
+    /// Returns the parsed `double`.
     ///
     /// ### Thread safety
     /// It is safe to call this function from any thread.
@@ -2610,7 +3601,7 @@ extern "C" {
     ///   otherwise).
     ///
     /// ### Return value
-    /// Returns The parsed `long`, or 0 if no number could be parsed.
+    /// Returns the parsed `long`, or 0 if no number could be parsed.
     ///
     /// ### Thread safety
     /// It is safe to call this function from any thread.
@@ -2654,7 +3645,7 @@ extern "C" {
     ///   otherwise).
     ///
     /// ### Return value
-    /// Returns The parsed `unsigned long`, or 0 if no number could be parsed.
+    /// Returns the parsed `unsigned long`, or 0 if no number could be parsed.
     ///
     /// ### Thread safety
     /// It is safe to call this function from any thread.
@@ -2697,7 +3688,7 @@ extern "C" {
     ///   otherwise).
     ///
     /// ### Return value
-    /// Returns The parsed `long long`, or 0 if no number could be parsed.
+    /// Returns the parsed `long long`, or 0 if no number could be parsed.
     ///
     /// ### Thread safety
     /// It is safe to call this function from any thread.
@@ -2740,7 +3731,7 @@ extern "C" {
     ///   otherwise).
     ///
     /// ### Return value
-    /// Returns The parsed `unsigned long long`, or 0 if no number could be
+    /// Returns the parsed `unsigned long long`, or 0 if no number could be
     ///   parsed.
     ///
     /// ### Thread safety
@@ -2775,13 +3766,13 @@ extern "C" {
     /// - The precision of the result is unspecified.
     ///
     /// ### Parameters
-    /// - `str`: The null-terminated string to read. Must not be NULL.
-    /// - `endp`: If not NULL, the address of the first invalid character (i.e.
+    /// - `str`: the null-terminated string to read. Must not be NULL.
+    /// - `endp`: if not NULL, the address of the first invalid character (i.e.
     ///   the next character after the parsed number) will be written to
     ///   this pointer.
     ///
     /// ### Return value
-    /// Returns The parsed `double`, or 0 if no number could be parsed.
+    /// Returns the parsed `double`, or 0 if no number could be parsed.
     ///
     /// ### Thread safety
     /// It is safe to call this function from any thread.
@@ -3079,7 +4070,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.6.
     pub fn SDL_StepBackUTF8(
         start: *const ::core::ffi::c_char,
         pstr: *mut *const ::core::ffi::c_char,
@@ -3124,6 +4115,24 @@ extern "C" {
 }
 
 extern "C" {
+    /// This works exactly like sscanf() but doesn't require access to a C runtime.
+    ///
+    /// Scan a string, matching a format string, converting each '%' item and
+    /// storing it to pointers provided through variable arguments.
+    ///
+    /// ### Parameters
+    /// - `text`: the string to scan. Must not be NULL.
+    /// - `fmt`: a printf-style format string. Must not be NULL.
+    /// - `...`: a list of pointers to values to be filled in with scanned items.
+    ///
+    /// ### Return value
+    /// Returns the number of items that matched the format string.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_sscanf(
         text: *const ::core::ffi::c_char,
         fmt: *const ::core::ffi::c_char,
@@ -3132,6 +4141,26 @@ extern "C" {
 }
 
 extern "C" {
+    /// This works exactly like vsscanf() but doesn't require access to a C
+    /// runtime.
+    ///
+    /// Functions identically to [`SDL_sscanf()`], except it takes a `va_list` instead
+    /// of using `...` variable arguments.
+    ///
+    /// ### Parameters
+    /// - `text`: the string to scan. Must not be NULL.
+    /// - `fmt`: a printf-style format string. Must not be NULL.
+    /// - `ap`: a `va_list` of pointers to values to be filled in with scanned
+    ///   items.
+    ///
+    /// ### Return value
+    /// Returns the number of items that matched the format string.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_vsscanf(
         text: *const ::core::ffi::c_char,
         fmt: *const ::core::ffi::c_char,
@@ -3140,6 +4169,40 @@ extern "C" {
 }
 
 extern "C" {
+    /// This works exactly like snprintf() but doesn't require access to a C
+    /// runtime.
+    ///
+    /// Format a string of up to `maxlen`-1 bytes, converting each '%' item with
+    /// values provided through variable arguments.
+    ///
+    /// While some C runtimes differ on how to deal with too-large strings, this
+    /// function null-terminates the output, by treating the null-terminator as
+    /// part of the `maxlen` count. Note that if `maxlen` is zero, however, no
+    /// bytes will be written at all.
+    ///
+    /// This function returns the number of _bytes_ (not _characters_) that should
+    /// be written, excluding the null-terminator character. If this returns a
+    /// number >= `maxlen`, it means the output string was truncated. A negative
+    /// return value means an error occurred.
+    ///
+    /// Referencing the output string's pointer with a format item is undefined
+    /// behavior.
+    ///
+    /// ### Parameters
+    /// - `text`: the buffer to write the string into. Must not be NULL.
+    /// - `maxlen`: the maximum bytes to write, including the null-terminator.
+    /// - `fmt`: a printf-style format string. Must not be NULL.
+    /// - `...`: a list of values to be used with the format string.
+    ///
+    /// ### Return value
+    /// Returns the number of bytes that should be written, not counting the
+    ///   null-terminator char, or a negative value on error.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_snprintf(
         text: *mut ::core::ffi::c_char,
         maxlen: ::core::primitive::usize,
@@ -3149,6 +4212,41 @@ extern "C" {
 }
 
 extern "C" {
+    /// This works exactly like swprintf() but doesn't require access to a C
+    /// runtime.
+    ///
+    /// Format a wide string of up to `maxlen`-1 wchar_t values, converting each
+    /// '%' item with values provided through variable arguments.
+    ///
+    /// While some C runtimes differ on how to deal with too-large strings, this
+    /// function null-terminates the output, by treating the null-terminator as
+    /// part of the `maxlen` count. Note that if `maxlen` is zero, however, no wide
+    /// characters will be written at all.
+    ///
+    /// This function returns the number of _wide characters_ (not _codepoints_)
+    /// that should be written, excluding the null-terminator character. If this
+    /// returns a number >= `maxlen`, it means the output string was truncated. A
+    /// negative return value means an error occurred.
+    ///
+    /// Referencing the output string's pointer with a format item is undefined
+    /// behavior.
+    ///
+    /// ### Parameters
+    /// - `text`: the buffer to write the wide string into. Must not be NULL.
+    /// - `maxlen`: the maximum wchar_t values to write, including the
+    ///   null-terminator.
+    /// - `fmt`: a printf-style format string. Must not be NULL.
+    /// - `...`: a list of values to be used with the format string.
+    ///
+    /// ### Return value
+    /// Returns the number of wide characters that should be written, not counting
+    ///   the null-terminator char, or a negative value on error.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_swprintf(
         text: *mut crate::ffi::c_wchar_t,
         maxlen: ::core::primitive::usize,
@@ -3158,6 +4256,27 @@ extern "C" {
 }
 
 extern "C" {
+    /// This works exactly like vsnprintf() but doesn't require access to a C
+    /// runtime.
+    ///
+    /// Functions identically to [`SDL_snprintf()`], except it takes a `va_list`
+    /// instead of using `...` variable arguments.
+    ///
+    /// ### Parameters
+    /// - `text`: the buffer to write the string into. Must not be NULL.
+    /// - `maxlen`: the maximum bytes to write, including the null-terminator.
+    /// - `fmt`: a printf-style format string. Must not be NULL.
+    /// - `ap`: a `va_list` values to be used with the format string.
+    ///
+    /// ### Return value
+    /// Returns the number of bytes that should be written, not counting the
+    ///   null-terminator char, or a negative value on error.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_vsnprintf(
         text: *mut ::core::ffi::c_char,
         maxlen: ::core::primitive::usize,
@@ -3167,6 +4286,28 @@ extern "C" {
 }
 
 extern "C" {
+    /// This works exactly like vswprintf() but doesn't require access to a C
+    /// runtime.
+    ///
+    /// Functions identically to [`SDL_swprintf()`], except it takes a `va_list`
+    /// instead of using `...` variable arguments.
+    ///
+    /// ### Parameters
+    /// - `text`: the buffer to write the string into. Must not be NULL.
+    /// - `maxlen`: the maximum wide characters to write, including the
+    ///   null-terminator.
+    /// - `fmt`: a printf-style format wide string. Must not be NULL.
+    /// - `ap`: a `va_list` values to be used with the format string.
+    ///
+    /// ### Return value
+    /// Returns the number of wide characters that should be written, not counting
+    ///   the null-terminator char, or a negative value on error.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_vswprintf(
         text: *mut crate::ffi::c_wchar_t,
         maxlen: ::core::primitive::usize,
@@ -3176,6 +4317,36 @@ extern "C" {
 }
 
 extern "C" {
+    /// This works exactly like asprintf() but doesn't require access to a C
+    /// runtime.
+    ///
+    /// Functions identically to [`SDL_snprintf()`], except it allocates a buffer large
+    /// enough to hold the output string on behalf of the caller.
+    ///
+    /// On success, this function returns the number of bytes (not characters)
+    /// comprising the output string, not counting the null-terminator character,
+    /// and sets `*strp` to the newly-allocated string.
+    ///
+    /// On error, this function returns a negative number, and the value of `*strp`
+    /// is undefined.
+    ///
+    /// The returned string is owned by the caller, and should be passed to
+    /// [`SDL_free`] when no longer needed.
+    ///
+    /// ### Parameters
+    /// - `strp`: on output, is set to the new string. Must not be NULL.
+    /// - `fmt`: a printf-style format string. Must not be NULL.
+    /// - `...`: a list of values to be used with the format string.
+    ///
+    /// ### Return value
+    /// Returns the number of bytes in the newly-allocated string, not counting
+    ///   the null-terminator char, or a negative value on error.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_asprintf(
         strp: *mut *mut ::core::ffi::c_char,
         fmt: *const ::core::ffi::c_char,
@@ -3184,6 +4355,26 @@ extern "C" {
 }
 
 extern "C" {
+    /// This works exactly like vasprintf() but doesn't require access to a C
+    /// runtime.
+    ///
+    /// Functions identically to [`SDL_asprintf()`], except it takes a `va_list`
+    /// instead of using `...` variable arguments.
+    ///
+    /// ### Parameters
+    /// - `strp`: on output, is set to the new string. Must not be NULL.
+    /// - `fmt`: a printf-style format string. Must not be NULL.
+    /// - `ap`: a `va_list` values to be used with the format string.
+    ///
+    /// ### Return value
+    /// Returns the number of bytes in the newly-allocated string, not counting
+    ///   the null-terminator char, or a negative value on error.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     pub fn SDL_vasprintf(
         strp: *mut *mut ::core::ffi::c_char,
         fmt: *const ::core::ffi::c_char,
@@ -3414,10 +4605,22 @@ extern "C" {
     pub fn SDL_rand_bits_r(state: *mut Uint64) -> Uint32;
 }
 
-/// pi (double)
+/// The value of Pi, as a double-precision floating point literal.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
+///
+/// ### See also
+/// - [`SDL_PI_F`]
 pub const SDL_PI_D: ::core::ffi::c_double = 3.141592653589793_f64;
 
-/// pi (float)
+/// The value of Pi, as a single-precision floating point literal.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
+///
+/// ### See also
+/// - [`SDL_PI_D`]
 pub const SDL_PI_F: ::core::ffi::c_float = 3.1415927_f32;
 
 extern "C" {
@@ -4866,7 +6069,7 @@ extern "C" {
     /// Range: `-1 <= y <= 1`
     ///
     /// This function operates on single-precision floating point values, use
-    /// [`SDL_sinf`] for double-precision floats.
+    /// [`SDL_sin`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -5028,14 +6231,13 @@ extern "C" {
     pub fn SDL_tanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-pub const SDL_ICONV_ERROR: ::core::primitive::usize = (-1_i32 as ::core::primitive::usize);
-
-pub const SDL_ICONV_E2BIG: ::core::primitive::usize = (-2_i32 as ::core::primitive::usize);
-
-pub const SDL_ICONV_EILSEQ: ::core::primitive::usize = (-3_i32 as ::core::primitive::usize);
-
-pub const SDL_ICONV_EINVAL: ::core::primitive::usize = (-4_i32 as ::core::primitive::usize);
-
+/// An opaque handle representing string encoding conversion state.
+///
+/// ### Availability
+/// This datatype is available since SDL 3.1.3.
+///
+/// ### See also
+/// - [`SDL_iconv_open`]
 pub type SDL_iconv_t = *mut SDL_iconv_data_t;
 
 extern "C" {
@@ -5086,7 +6288,22 @@ extern "C" {
     /// This function converts text between encodings, reading from and writing to
     /// a buffer.
     ///
-    /// It returns the number of succesful conversions.
+    /// It returns the number of succesful conversions on success. On error,
+    /// [`SDL_ICONV_E2BIG`] is returned when the output buffer is too small, or
+    /// [`SDL_ICONV_EILSEQ`] is returned when an invalid input sequence is encountered,
+    /// or [`SDL_ICONV_EINVAL`] is returned when an incomplete input sequence is
+    /// encountered.
+    ///
+    /// On exit:
+    ///
+    /// - inbuf will point to the beginning of the next multibyte sequence. On
+    ///   error, this is the location of the problematic input sequence. On
+    ///   success, this is the end of the input sequence.
+    /// - inbytesleft will be set to the number of bytes left to convert, which
+    ///   will be 0 on success.
+    /// - outbuf will point to the location where to store the next output byte.
+    /// - outbytesleft will be set to the number of bytes left in the output
+    ///   buffer.
     ///
     /// ### Parameters
     /// - `cd`: The character set conversion context, created in
@@ -5098,25 +6315,10 @@ extern "C" {
     /// - `outbytesleft`: The number of bytes in the output buffer.
     ///
     /// ### Return value
-    /// Returns the number of conversions on success, else [`SDL_ICONV_E2BIG`] is
-    ///   returned when the output buffer is too small, or [`SDL_ICONV_EILSEQ`]
-    ///   is returned when an invalid input sequence is encountered, or
-    ///   [`SDL_ICONV_EINVAL`] is returned when an incomplete input sequence is
-    ///   encountered.
+    /// Returns the number of conversions on success, or a negative error code.
     ///
-    /// ```text
-    ///      On exit:
-    ///
-    ///      - inbuf will point to the beginning of the next multibyte
-    ///        sequence. On error, this is the location of the problematic
-    ///        input sequence. On success, this is the end of the input
-    ///        sequence. - inbytesleft will be set to the number of bytes left
-    ///        to convert, which will be 0 on success. - outbuf will point to
-    ///        the location where to store the next output byte. - outbytesleft
-    ///        will be set to the number of bytes left in the output buffer.
-    /// ```
-    ///
-    /// \since This function is available since SDL 3.1.3.
+    /// ### Availability
+    /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
     /// - [`SDL_iconv_open`]
@@ -5130,6 +6332,18 @@ extern "C" {
         outbytesleft: *mut ::core::primitive::usize,
     ) -> ::core::primitive::usize;
 }
+
+/// Generic error. Check [`SDL_GetError()`]?
+pub const SDL_ICONV_ERROR: ::core::primitive::usize = (-1_i32 as ::core::primitive::usize);
+
+/// Output buffer was too small.
+pub const SDL_ICONV_E2BIG: ::core::primitive::usize = (-2_i32 as ::core::primitive::usize);
+
+/// Invalid input sequence was encountered.
+pub const SDL_ICONV_EILSEQ: ::core::primitive::usize = (-3_i32 as ::core::primitive::usize);
+
+/// Incomplete input sequence was encountered.
+pub const SDL_ICONV_EINVAL: ::core::primitive::usize = (-4_i32 as ::core::primitive::usize);
 
 extern "C" {
     /// Helper function to convert a string's encoding in one call.
@@ -5168,6 +6382,20 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
+/// Convert a UTF-8 string to the current locale's character encoding.
+///
+/// This is a helper macro that might be more clear than calling
+/// [`SDL_iconv_string`] directly. However, it double-evaluates its parameter, so
+/// do not use an expression with side-effects here.
+///
+/// ### Parameters
+/// - `S`: the string to convert.
+///
+/// ### Return value
+/// Returns a new string, converted to the new encoding, or NULL on error.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub unsafe fn SDL_iconv_utf8_locale(S: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char {
     unsafe {
@@ -5180,6 +6408,20 @@ pub unsafe fn SDL_iconv_utf8_locale(S: *const ::core::ffi::c_char) -> *mut ::cor
     }
 }
 
+/// Convert a UTF-8 string to UCS-2.
+///
+/// This is a helper macro that might be more clear than calling
+/// [`SDL_iconv_string`] directly. However, it double-evaluates its parameter, so
+/// do not use an expression with side-effects here.
+///
+/// ### Parameters
+/// - `S`: the string to convert.
+///
+/// ### Return value
+/// Returns a new string, converted to the new encoding, or NULL on error.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub unsafe fn SDL_iconv_utf8_ucs2(S: *const ::core::ffi::c_char) -> *mut Uint16 {
     (unsafe {
@@ -5192,6 +6434,20 @@ pub unsafe fn SDL_iconv_utf8_ucs2(S: *const ::core::ffi::c_char) -> *mut Uint16 
     } as *mut Uint16)
 }
 
+/// Convert a UTF-8 string to UCS-4.
+///
+/// This is a helper macro that might be more clear than calling
+/// [`SDL_iconv_string`] directly. However, it double-evaluates its parameter, so
+/// do not use an expression with side-effects here.
+///
+/// ### Parameters
+/// - `S`: the string to convert.
+///
+/// ### Return value
+/// Returns a new string, converted to the new encoding, or NULL on error.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub unsafe fn SDL_iconv_utf8_ucs4(S: *const ::core::ffi::c_char) -> *mut Uint32 {
     (unsafe {
@@ -5204,6 +6460,20 @@ pub unsafe fn SDL_iconv_utf8_ucs4(S: *const ::core::ffi::c_char) -> *mut Uint32 
     } as *mut Uint32)
 }
 
+/// Convert a wchar_t string to UTF-8.
+///
+/// This is a helper macro that might be more clear than calling
+/// [`SDL_iconv_string`] directly. However, it double-evaluates its parameter, so
+/// do not use an expression with side-effects here.
+///
+/// ### Parameters
+/// - `S`: the string to convert.
+///
+/// ### Return value
+/// Returns a new string, converted to the new encoding, or NULL on error.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
 #[inline(always)]
 pub unsafe fn SDL_iconv_wchar_utf8(S: *const crate::ffi::c_wchar_t) -> *mut ::core::ffi::c_char {
     unsafe {
@@ -5259,9 +6529,9 @@ apply_cfg!(#[cfg(not(doc))] => {
 
 /// Add two integers, checking for overflow.
 ///
-/// If `a + b` would overflow, return -1.
+/// If `a + b` would overflow, return false.
 ///
-/// Otherwise store `a + b` via ret and return 0.
+/// Otherwise store `a + b` via ret and return true.
 ///
 /// ### Parameters
 /// - `a`: the first addend.
