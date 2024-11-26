@@ -190,10 +190,12 @@ fn try_parse_kw(input: &mut &[TokenTree], kw: &str) -> Option<Ident> {
     None
 }
 
+/*
 fn parse_kw(input: &mut &[TokenTree], kw: &str) -> Result<Ident, Error> {
     try_parse_kw(input, kw)
         .ok_or_else(|| Error::new(input.first().map(|t| t.span()), format!("expected `{kw}`")))
 }
+*/
 
 fn try_parse_op(input: &mut &[TokenTree], op: &str) -> Option<Vec<Punct>> {
     let mut rest = *input;

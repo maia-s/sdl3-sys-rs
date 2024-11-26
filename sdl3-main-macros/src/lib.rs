@@ -221,47 +221,47 @@ fn app_type_ident(name: &str) -> Ident {
     priv_ident("t", name)
 }
 
-fn app_fn(name: &str, f: &Function) -> Result<TokenStream, Error> {
-    if let Some(abi) = &f.abi {
-        return Err(Error::new(
-            Some(abi.span),
-            "this function shouldn't set an ABI",
-        ));
-    }
-    Ok(miniquote! {
-        mod #{&f.ident} {}
-        #[allow(non_upper_case_globals)]
-        const #{app_raw_fn_ident(name)}: #{f.signature()} = const {
-            #f
-            #{&f.ident}
-        };
-    })
-}
-
-fn wrap(
+fn app_fn(
     name: &str,
     attr: TokenStream,
     item: TokenStream,
     f: impl FnOnce(Function, TokenStream) -> Result<TokenStream, Error>,
 ) -> TokenStream {
-    let attr = input!(attr);
-    if !attr.is_empty() {
-        Error::new(
-            Some(attr.first().unwrap().span()),
-            format!("other attributes aren't supported with `#[{name}]`"),
-        )
-        .into_token_stream()
-    } else {
-        match Function::parse(input!(item))
-            .and_then(|item| {
-                let ts = app_fn(name, &item)?;
-                Ok((item, ts))
-            })
-            .and_then(|(item, ts)| f(item, ts))
-        {
-            Ok(ts) => ts,
-            Err(err) => err.into_token_stream(),
+    wrap(attr, item, |attr, item| {
+        if !attr.is_empty() {
+            Err(Error::new(
+                Some(attr.first().unwrap().span()),
+                format!("other attributes aren't supported with `#[{name}]`"),
+            ))
+        } else {
+            let item = Function::parse(item)?;
+            if let Some(abi) = &item.abi {
+                return Err(Error::new(
+                    Some(abi.span),
+                    "this function shouldn't set an ABI",
+                ));
+            }
+            let ts = miniquote! {
+                mod #{&item.ident} {}
+                #[allow(non_upper_case_globals)]
+                const #{app_raw_fn_ident(name)}: #{item.signature()} = const {
+                    #{&item}
+                    #{&item.ident}
+                };
+            };
+            f(item, ts)
         }
+    })
+}
+
+fn wrap(
+    attr: TokenStream,
+    item: TokenStream,
+    f: impl FnOnce(&mut &[TokenTree], &mut &[TokenTree]) -> Result<TokenStream, Error>,
+) -> TokenStream {
+    match f(input!(attr), input!(item)) {
+        Ok(ts) => ts,
+        Err(err) => err.into_token_stream(),
     }
 }
 
@@ -312,7 +312,7 @@ fn shuttle_unit_resume() -> TokenStream {
 
 #[proc_macro_attribute]
 pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
-    wrap("main", attr, item, |f, main| {
+    app_fn("main", attr, item, |f, main| {
         let app_main = app_raw_fn_ident("main");
 
         let simple_return = if let Some(rtype) = &f.return_type {
@@ -424,8 +424,13 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
 }
 
 #[proc_macro_attribute]
+pub fn app_impl(attr: TokenStream, item: TokenStream) -> TokenStream {
+    wrap(attr, item, |attr, item| todo!())
+}
+
+#[proc_macro_attribute]
 pub fn app_init(attr: TokenStream, item: TokenStream) -> TokenStream {
-    wrap("app_init", attr, item, |f, init| {
+    app_fn("app_init", attr, item, |f, init| {
         let mut state = Type::unit();
         if let Some(rtype) = &f.return_type {
             if let Some(generics) = rtype.path_generics() {
@@ -488,7 +493,7 @@ pub fn app_init(attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn app_iterate(attr: TokenStream, item: TokenStream) -> TokenStream {
     let name = "app_iterate";
-    wrap(name, attr, item, |f, ts| {
+    app_fn(name, attr, item, |f, ts| {
         let state_ac = match f.params.len() {
             1 => f.params[0].ty.classify()? as u8,
             _ => 0,
@@ -516,7 +521,7 @@ pub fn app_iterate(attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn app_event(attr: TokenStream, item: TokenStream) -> TokenStream {
     let name = "app_event";
-    wrap(name, attr, item, |f, ts| {
+    app_fn(name, attr, item, |f, ts| {
         let (state_ac, event_ac) = match f.params.len() {
             1 => (0, f.params[0].ty.classify()? as u8),
             2 => (
@@ -550,7 +555,7 @@ pub fn app_event(attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn app_quit(attr: TokenStream, item: TokenStream) -> TokenStream {
     let name = "app_quit";
-    wrap(name, attr, item, |f, ts| {
+    app_fn(name, attr, item, |f, ts| {
         let state_ac = match f.params.len() {
             1 | 2 => f.params[0].ty.classify()? as u8,
             _ => 0,
