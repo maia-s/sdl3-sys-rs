@@ -104,6 +104,21 @@ pub trait Parse: Sized {
             Ok(Self::try_parse(input)?)
         }
     }
+
+    fn try_parse_all(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
+        if input.is_empty() {
+            return Ok(None);
+        }
+        let parsed = Self::parse(input)?;
+        if input.is_empty() {
+            Ok(Some(parsed))
+        } else {
+            Err(Error::new(
+                Some(input.first().unwrap().span()),
+                format!("unexpected input after {}", Self::desc()),
+            ))
+        }
+    }
 }
 
 impl<T: Parse> Parse for Option<T> {
@@ -113,6 +128,20 @@ impl<T: Parse> Parse for Option<T> {
 
     fn parse(input: &mut &[TokenTree]) -> Result<Self, Error> {
         T::try_parse(input)
+    }
+}
+
+impl<T: Parse> Parse for Vec<T> {
+    fn desc() -> &'static str {
+        T::desc()
+    }
+
+    fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
+        let mut vec = Vec::new();
+        while let Some(parsed) = T::try_parse(input)? {
+            vec.push(parsed);
+        }
+        Ok((!vec.is_empty()).then_some(vec))
     }
 }
 
@@ -132,6 +161,23 @@ pub fn flatten_token_tree(tt: TokenTree) -> TokenTree {
 
 pub fn into_input(ts: TokenStream) -> Vec<TokenTree> {
     ts.into_iter().map(flatten_token_tree).collect()
+}
+
+fn parse_group(input: &mut &[TokenTree], delimiter: Delimiter) -> Result<Group, Error> {
+    let expected = match delimiter {
+        Delimiter::None => "expected none-delimited group",
+        Delimiter::Brace => "expected `{` .. `}`",
+        Delimiter::Bracket => "expected `[` .. `]`",
+        Delimiter::Parenthesis => "expected `(` .. `)`",
+    };
+    let Some(TokenTree::Group(group)) = input.first() else {
+        return Err(Error::new(input.first().map(|t| t.span()), expected));
+    };
+    if group.delimiter() != Delimiter::Brace {
+        return Err(Error::new(Some(group.span()), expected));
+    }
+    *input = &input[1..];
+    Ok(group.clone())
 }
 
 fn try_parse_kw(input: &mut &[TokenTree], kw: &str) -> Option<Ident> {
@@ -231,9 +277,34 @@ fn read_balanced_angle_brackets_while(
 }
 
 #[derive(Clone)]
+pub struct Attribute {
+    meta: TokenStream,
+}
+
+impl IntoTokenTrees for Attribute {
+    fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
+        miniquote_to!(out => #[#{self.meta}]);
+    }
+}
+
+impl Parse for Attribute {
+    fn desc() -> &'static str {
+        "attribute"
+    }
+
+    fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
+        if try_parse_op(input, "#").is_none() {
+            return Ok(None);
+        }
+        let bracketed = parse_group(input, Delimiter::Bracket)?.stream();
+        Ok(Some(Self { meta: bracketed }))
+    }
+}
+
+#[derive(Clone)]
 pub struct ExternAbi {
-    span: Span,
-    abi: String,
+    pub span: Span,
+    pub abi: String,
 }
 
 impl IntoTokenTrees for ExternAbi {
@@ -278,6 +349,7 @@ impl Parse for ExternAbi {
 #[derive(Clone)]
 pub struct FunctionSignature {
     pub unsafe_kw: Option<Ident>,
+    pub abi: Option<ExternAbi>,
     pub params: Vec<Type>,
     pub return_type: Type,
 }
@@ -288,7 +360,7 @@ impl IntoTokenTrees for FunctionSignature {
         for param in self.params {
             miniquote_to!(&mut params => #param,);
         }
-        miniquote_to!(out => #{self.unsafe_kw} fn(#params));
+        miniquote_to!(out => #{self.unsafe_kw} #{self.abi} fn(#params));
         if !matches!(&self.return_type, Type::Tuple(v) if v.is_empty()) {
             miniquote_to!(out => -> #{self.return_type});
         }
@@ -297,7 +369,10 @@ impl IntoTokenTrees for FunctionSignature {
 
 #[derive(Clone)]
 pub struct Function {
+    pub attrs: Vec<Attribute>,
+    pub vis: Visibility,
     pub unsafe_kw: Option<Ident>,
+    pub abi: Option<ExternAbi>,
     pub ident: Ident,
     pub params: FunctionParams,
     pub return_type: Option<Type>,
@@ -308,6 +383,7 @@ impl Function {
     pub fn signature(&self) -> FunctionSignature {
         FunctionSignature {
             unsafe_kw: self.unsafe_kw.clone(),
+            abi: self.abi.clone(),
             params: self.params.0.iter().map(|p| p.ty.clone()).collect(),
             return_type: self.return_type.clone().unwrap_or(Type::unit()),
         }
@@ -316,7 +392,7 @@ impl Function {
 
 impl IntoTokenTrees for Function {
     fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
-        miniquote_to!(out => #{self.unsafe_kw} fn #{self.ident} #{self.params});
+        miniquote_to!(out => #{self.attrs} #{self.vis} #{self.unsafe_kw} #{self.abi} fn #{self.ident} #{self.params});
         if let Some(return_type) = self.return_type {
             miniquote_to!(out => -> #return_type);
         }
@@ -329,18 +405,19 @@ impl Parse for Function {
         "function"
     }
 
-    fn parse(input: &mut &[TokenTree]) -> Result<Self, Error> {
-        if let Some(vis_kw) = Visibility::parse(input)?.pub_kw {
-            return Err(Error::new(
-                Some(vis_kw.span()),
-                "function shouldn't specify visibility",
-            ));
+    fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
+        let try_input = &mut *input;
+
+        let attrs = Vec::<Attribute>::try_parse(try_input)?.unwrap_or_default();
+        let vis = Visibility::parse(try_input)?;
+        let unsafe_kw = try_parse_kw(try_input, "unsafe");
+        let abi = ExternAbi::try_parse(try_input)?;
+        if try_parse_kw(try_input, "fn").is_none() {
+            return Ok(None);
         }
-        let unsafe_kw = try_parse_kw(input, "unsafe");
-        if let Some(abi) = ExternAbi::try_parse(input)? {
-            return Err(Error::new(Some(abi.span), "function shouldn't specify abi"));
-        }
-        parse_kw(input, "fn")?;
+
+        *input = try_input;
+
         let ident = Ident::parse(input)?;
         let params = FunctionParams::parse(input)?;
         let return_type = if try_parse_op(input, "->").is_some() {
@@ -364,13 +441,16 @@ impl Parse for Function {
         } else {
             return Err(Error::new(input.first().map(|t| t.span()), "expected `{`"));
         };
-        Ok(Self {
+        Ok(Some(Self {
+            attrs,
+            vis,
             unsafe_kw,
+            abi,
             ident,
             params,
             return_type,
             body,
-        })
+        }))
     }
 }
 
@@ -573,6 +653,75 @@ impl Parse for Ident {
         if let Some(TokenTree::Ident(ident)) = input.first() {
             *input = &input[1..];
             Ok(Some(ident.clone()))
+        } else {
+            Ok(None)
+        }
+    }
+}
+
+#[derive(Clone)]
+pub struct ImplBlock {
+    pub ident: Ident,
+    pub generic_defs: Option<GenericArgs>,
+    pub generics_for_self: Option<GenericArgs>,
+    pub items: Vec<Item>,
+}
+
+impl IntoTokenTrees for ImplBlock {
+    fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
+        miniquote_to!(out => impl #{self.generic_defs} #{self.ident} #{self.generics_for_self} {#{self.items}});
+    }
+}
+
+impl Parse for ImplBlock {
+    fn desc() -> &'static str {
+        "impl block"
+    }
+
+    fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
+        if try_parse_kw(input, "impl").is_some() {
+            let generic_defs = GenericArgs::try_parse(input)?;
+            let ident = Ident::parse(input)?;
+            let generics_for_self = if generic_defs.is_some() {
+                GenericArgs::try_parse(input)?
+            } else {
+                None
+            };
+            let braced = input!(parse_group(input, Delimiter::Brace)?.stream());
+            let items = Vec::<Item>::try_parse_all(braced)?.unwrap_or_default();
+            Ok(Some(Self {
+                ident,
+                generic_defs,
+                generics_for_self,
+                items,
+            }))
+        } else {
+            Ok(None)
+        }
+    }
+}
+
+#[derive(Clone)]
+pub enum Item {
+    Function(Function),
+}
+
+impl IntoTokenTrees for Item {
+    fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
+        match self {
+            Self::Function(item) => item.into_token_trees(out),
+        }
+    }
+}
+
+impl Parse for Item {
+    fn desc() -> &'static str {
+        "item"
+    }
+
+    fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
+        if let Some(function) = Function::try_parse(input)? {
+            Ok(Some(Self::Function(function)))
         } else {
             Ok(None)
         }

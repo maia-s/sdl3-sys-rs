@@ -222,6 +222,12 @@ fn app_type_ident(name: &str) -> Ident {
 }
 
 fn app_fn(name: &str, f: &Function) -> Result<TokenStream, Error> {
+    if let Some(abi) = &f.abi {
+        return Err(Error::new(
+            Some(abi.span),
+            "this function shouldn't set an ABI",
+        ));
+    }
     Ok(miniquote! {
         mod #{&f.ident} {}
         #[allow(non_upper_case_globals)]
