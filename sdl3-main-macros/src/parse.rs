@@ -469,7 +469,19 @@ pub struct FunctionParam {
 
 impl IntoTokenTrees for FunctionParam {
     fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
-        miniquote_to!(out => #{self.mut_kw} #{self.ident}: #{self.ty});
+        if self.ident.to_string() == "self" {
+            match self.ty {
+                Type::SelfTy => return miniquote_to!(out => #{self.mut_kw} #{self.ident}),
+                Type::Ref(lt, ty) if matches!(*ty, Type::SelfTy) => {
+                    return miniquote_to!(out => & #lt #{self.ident})
+                }
+                Type::RefMut(lt, ty) if matches!(*ty, Type::SelfTy) => {
+                    return miniquote_to!(out => & #lt mut #{self.ident})
+                }
+                _ => (),
+            }
+        }
+        miniquote_to!(out => #{self.mut_kw} #{self.ident}: #{self.ty})
     }
 }
 
@@ -479,10 +491,36 @@ impl Parse for FunctionParam {
     }
 
     fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
+        let self_ref = try_parse_op(input, "&");
+        let self_lt = if self_ref.is_some() {
+            Lifetime::try_parse(input)?
+        } else {
+            None
+        };
         let mut_kw = try_parse_kw(input, "mut");
         if let Some(ident) = Ident::try_parse(input)? {
-            parse_op(input, ":")?;
-            let ty = Type::parse(input)?;
+            let ty = if ident.to_string() == "self" {
+                if self_ref.is_some() {
+                    if mut_kw.is_some() {
+                        Type::RefMut(self_lt, Box::new(Type::SelfTy))
+                    } else {
+                        Type::Ref(self_lt, Box::new(Type::SelfTy))
+                    }
+                } else {
+                    Type::SelfTy
+                }
+            } else {
+                if self_ref.is_some() {
+                    let span = Some(ident.span());
+                    return if mut_kw.is_some() {
+                        Err(Error::new(span, "expected `self` after `mut`"))
+                    } else {
+                        Err(Error::new(span, "expected `self` after `&`"))
+                    };
+                }
+                parse_op(input, ":")?;
+                Type::parse(input)?
+            };
             if matches!(&ty, Type::Ref(Some(_), _) | Type::RefMut(Some(_), _)) {
                 // this is a safety measure to restrict unbounded lifetimes to the duration of the call
                 return Err(Error::new(
@@ -907,6 +945,7 @@ pub enum Type {
     Ref(Option<Lifetime>, Box<Type>),
     RefMut(Option<Lifetime>, Box<Type>),
     Tuple(Vec<Type>),
+    SelfTy,
     Path(Path),
     Other(Vec<TokenTree>),
 }
@@ -983,6 +1022,7 @@ impl IntoTokenTrees for Type {
                 }
                 Group::new(Delimiter::Parenthesis, ts).into_token_trees(out);
             }
+            Self::SelfTy => miniquote_to!(out => Self),
             Self::Path(t) => t.into_token_trees(out),
             Self::Other(t) => t.into_token_trees(out),
         }
@@ -1032,7 +1072,13 @@ impl Parse for Type {
                 }
             }
 
-            TokenTree::Ident(_) => return Ok(Some(Type::Path(Path::parse(input)?))),
+            TokenTree::Ident(i) => {
+                if i.to_string() == "Self" {
+                    return Ok(Some(Type::SelfTy));
+                } else {
+                    return Ok(Some(Type::Path(Path::parse(input)?)));
+                }
+            }
 
             TokenTree::Punct(punct) => match punct.as_char() {
                 '*' => {
