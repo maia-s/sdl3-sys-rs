@@ -1,6 +1,6 @@
 #![doc = include_str!("../README.md")]
 
-use parse::{Error, Function, GenericArg, IntoTokenTrees, Parse, Type};
+use parse::{Error, Function, GenericArg, ImplBlock, IntoTokenTrees, Parse, Type};
 use proc_macro::{Delimiter, Group, Ident, Punct, Spacing, Span, TokenStream, TokenTree};
 
 const SDL3_MAIN: &str = "sdl3_main";
@@ -234,7 +234,7 @@ fn app_fn(
                 format!("other attributes aren't supported with `#[{name}]`"),
             ))
         } else {
-            let item = Function::parse(item)?;
+            let item = Function::parse_all(item)?;
             if let Some(abi) = &item.abi {
                 return Err(Error::new(
                     Some(abi.span),
@@ -423,7 +423,10 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
 
 #[proc_macro_attribute]
 pub fn app_impl(attr: TokenStream, item: TokenStream) -> TokenStream {
-    wrap(attr, item, |out, attr, item| todo!())
+    wrap(attr, item, |out, attr, item| {
+        let item = ImplBlock::parse_all(item)?;
+        todo!()
+    })
 }
 
 #[proc_macro_attribute]

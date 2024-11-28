@@ -94,7 +94,7 @@ pub trait Parse: Sized {
     }
 
     fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
-        Ok(Some(Self::parse(input)?))
+        Self::parse(input).map(Some)
     }
 
     fn try_parse_required(input: &mut &[TokenTree], required: bool) -> Result<Option<Self>, Error> {
@@ -105,19 +105,23 @@ pub trait Parse: Sized {
         }
     }
 
-    fn try_parse_all(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
-        if input.is_empty() {
-            return Ok(None);
-        }
+    fn parse_all(input: &mut &[TokenTree]) -> Result<Self, Error> {
         let parsed = Self::parse(input)?;
         if input.is_empty() {
-            Ok(Some(parsed))
+            Ok(parsed)
         } else {
             Err(Error::new(
                 Some(input.first().unwrap().span()),
                 format!("unexpected input after {}", Self::desc()),
             ))
         }
+    }
+
+    fn try_parse_all(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
+        if input.is_empty() {
+            return Ok(None);
+        }
+        Self::parse_all(input).map(Some)
     }
 }
 
