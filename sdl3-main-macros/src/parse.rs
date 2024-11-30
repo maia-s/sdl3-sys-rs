@@ -521,13 +521,6 @@ impl Parse for FunctionParam {
                 parse_op(input, ":")?;
                 Type::parse(input)?
             };
-            if matches!(&ty, Type::Ref(Some(_), _) | Type::RefMut(Some(_), _)) {
-                // this is a safety measure to restrict unbounded lifetimes to the duration of the call
-                return Err(Error::new(
-                    Some(ident.span()),
-                    "function param shouldn't have top level lifetime",
-                ));
-            }
             Ok(Some(Self { mut_kw, ident, ty }))
         } else if let Some(mut_kw) = mut_kw {
             Err(Error::new(
