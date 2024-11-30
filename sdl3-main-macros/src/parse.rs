@@ -228,6 +228,20 @@ fn parse_op(input: &mut &[TokenTree], op: &str) -> Result<Vec<Punct>, Error> {
         .ok_or_else(|| Error::new(input.first().map(|t| t.span()), format!("expected `{op}`")))
 }
 
+fn read_until_inclusive(
+    input: &mut &[TokenTree],
+    last: impl Fn(&TokenTree) -> bool,
+) -> Result<Vec<TokenTree>, Error> {
+    let mut vec = Vec::new();
+    while let Some(tt) = input.first() {
+        vec.push(tt.clone());
+        if last(tt) {
+            return Ok(vec);
+        }
+    }
+    Err(Error::new(None, "unexpected end of input"))
+}
+
 fn read_balanced_angle_brackets_while(
     input: &mut &[TokenTree],
     accept: impl Fn(&TokenTree) -> bool,
@@ -304,6 +318,48 @@ impl Parse for Attribute {
         }
         let bracketed = parse_group(input, Delimiter::Bracket)?.stream();
         Ok(Some(Self { meta: bracketed }))
+    }
+}
+
+#[derive(Clone)]
+pub struct ConstItem {
+    attrs: Vec<Attribute>,
+    vis: Visibility,
+    ident: Ident,
+    rest: Vec<TokenTree>,
+}
+
+impl IntoTokenTrees for ConstItem {
+    fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
+        miniquote_to!(out => #{self.attrs} #{self.vis} #{self.ident} #{self.rest})
+    }
+}
+
+impl Parse for ConstItem {
+    fn desc() -> &'static str {
+        "const item"
+    }
+
+    fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
+        let try_input = &mut { *input };
+        let attrs = Vec::<Attribute>::try_parse(try_input)?.unwrap_or_default();
+        let vis = Visibility::parse(try_input)?;
+        if try_parse_kw(try_input, "const").is_some() {
+            *input = try_input;
+            let ident = Ident::parse(input)?;
+            let rest = read_until_inclusive(
+                input,
+                |tt| matches!(tt, TokenTree::Punct(p) if p.as_char() == ';'),
+            )?;
+            Ok(Some(Self {
+                attrs,
+                vis,
+                ident,
+                rest,
+            }))
+        } else {
+            Ok(None)
+        }
     }
 }
 
@@ -740,13 +796,17 @@ impl Parse for ImplBlock {
 
 #[derive(Clone)]
 pub enum Item {
+    Const(ConstItem),
     Function(Function),
+    TypeAlias(TypeAlias),
 }
 
 impl IntoTokenTrees for Item {
     fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
         match self {
+            Self::Const(item) => item.into_token_trees(out),
             Self::Function(item) => item.into_token_trees(out),
+            Self::TypeAlias(item) => item.into_token_trees(out),
         }
     }
 }
@@ -759,6 +819,10 @@ impl Parse for Item {
     fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
         if let Some(function) = Function::try_parse(input)? {
             Ok(Some(Self::Function(function)))
+        } else if let Some(const_item) = ConstItem::try_parse(input)? {
+            Ok(Some(Self::Const(const_item)))
+        } else if let Some(alias) = TypeAlias::try_parse(input)? {
+            Ok(Some(Self::TypeAlias(alias)))
         } else {
             Ok(None)
         }
@@ -1117,6 +1181,48 @@ impl Parse for Type {
             return Ok(None);
         };
         Ok(Some(Type::Other(tts)))
+    }
+}
+
+#[derive(Clone)]
+pub struct TypeAlias {
+    attrs: Vec<Attribute>,
+    vis: Visibility,
+    ident: Ident,
+    rest: Vec<TokenTree>,
+}
+
+impl IntoTokenTrees for TypeAlias {
+    fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
+        miniquote_to!(out => #{self.attrs} #{self.vis} #{self.ident} #{self.rest})
+    }
+}
+
+impl Parse for TypeAlias {
+    fn desc() -> &'static str {
+        "type alias"
+    }
+
+    fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
+        let try_input = &mut { *input };
+        let attrs = Vec::<Attribute>::try_parse(try_input)?.unwrap_or_default();
+        let vis = Visibility::parse(try_input)?;
+        if try_parse_kw(try_input, "type").is_some() {
+            *input = try_input;
+            let ident = Ident::parse(input)?;
+            let rest = read_until_inclusive(
+                input,
+                |tt| matches!(tt, TokenTree::Punct(p) if p.as_char() == ';'),
+            )?;
+            Ok(Some(Self {
+                attrs,
+                vis,
+                ident,
+                rest,
+            }))
+        } else {
+            Ok(None)
+        }
     }
 }
 
