@@ -309,13 +309,43 @@ impl IntoTokenTrees for Attribute {
 
 impl Parse for Attribute {
     fn desc() -> &'static str {
-        "attribute"
+        "outer attribute"
     }
 
     fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
         if try_parse_op(input, "#").is_none() {
             return Ok(None);
         }
+        let bracketed = parse_group(input, Delimiter::Bracket)?.stream();
+        Ok(Some(Self { meta: bracketed }))
+    }
+}
+
+#[derive(Clone)]
+pub struct InnerAttribute {
+    meta: TokenStream,
+}
+
+impl IntoTokenTrees for InnerAttribute {
+    fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
+        miniquote_to!(out => #![#{self.meta}]);
+    }
+}
+
+impl Parse for InnerAttribute {
+    fn desc() -> &'static str {
+        "inner attribute"
+    }
+
+    fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
+        let try_input = &mut { *input };
+        if try_parse_op(try_input, "#").is_none() {
+            return Ok(None);
+        }
+        if try_parse_op(try_input, "!").is_none() {
+            return Ok(None);
+        }
+        *input = try_input;
         let bracketed = parse_group(input, Delimiter::Bracket)?.stream();
         Ok(Some(Self { meta: bracketed }))
     }
@@ -754,15 +784,23 @@ impl Parse for Ident {
 
 #[derive(Clone)]
 pub struct ImplBlock {
+    pub attrs: Vec<Attribute>,
     pub ident: Ident,
     pub generic_defs: Option<GenericArgs>,
     pub generics_for_self: Option<GenericArgs>,
+    pub inner_attrs: Vec<InnerAttribute>,
     pub items: Vec<Item>,
 }
 
 impl IntoTokenTrees for ImplBlock {
     fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
-        miniquote_to!(out => impl #{self.generic_defs} #{self.ident} #{self.generics_for_self} {#{self.items}});
+        miniquote_to! { out =>
+            #{self.attrs}
+            impl #{self.generic_defs} #{self.ident} #{self.generics_for_self} {
+                #{self.inner_attrs}
+                #{self.items}
+            }
+        }
     }
 }
 
@@ -772,7 +810,10 @@ impl Parse for ImplBlock {
     }
 
     fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
-        if try_parse_kw(input, "impl").is_some() {
+        let try_input = &mut { *input };
+        let attrs = Vec::<Attribute>::try_parse(try_input)?.unwrap_or_default();
+        if try_parse_kw(try_input, "impl").is_some() {
+            *input = try_input;
             let generic_defs = GenericArgs::try_parse(input)?;
             let ident = Ident::parse(input)?;
             let generics_for_self = if generic_defs.is_some() {
@@ -781,11 +822,14 @@ impl Parse for ImplBlock {
                 None
             };
             let braced = input!(parse_group(input, Delimiter::Brace)?.stream());
+            let inner_attrs = Vec::<InnerAttribute>::try_parse(braced)?.unwrap_or_default();
             let items = Vec::<Item>::try_parse_all(braced)?.unwrap_or_default();
             Ok(Some(Self {
+                attrs,
                 ident,
                 generic_defs,
                 generics_for_self,
+                inner_attrs,
                 items,
             }))
         } else {
