@@ -1,6 +1,9 @@
 #![doc = include_str!("../README.md")]
 
-use parse::{Error, Function, GenericArg, ImplBlock, IntoTokenTrees, Parse, Type};
+use parse::{
+    Attribute, Error, Function, GenericArg, ImplBlock, IntoTokenTrees, Item, Parse, Type,
+    Visibility,
+};
 use proc_macro::{Delimiter, Group, Ident, Punct, Spacing, Span, TokenStream, TokenTree};
 
 const SDL3_MAIN: &str = "sdl3_main";
@@ -424,8 +427,95 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn app_impl(attr: TokenStream, item: TokenStream) -> TokenStream {
     wrap(attr, item, |out, attr, item| {
-        let item = ImplBlock::parse_all(item)?;
-        todo!()
+        let impl_block = ImplBlock::parse_all(item)?;
+        let state_t = impl_block.ty.clone();
+        let mut has_init = false;
+        let mut has_iterate = false;
+        let mut has_event = false;
+        let mut has_quit = false;
+
+        for item in impl_block.items.iter() {
+            if let Item::Function(f) = item {
+                let attr = Ident::new(
+                    match f.ident.to_string().as_str() {
+                        "app_init" => {
+                            if has_init {
+                                return Err(Error::new(
+                                    Some(f.ident.span()),
+                                    "`app_init` already defined",
+                                ));
+                            }
+                            has_init = true;
+                            "app_init"
+                        }
+                        "app_iterate" => {
+                            if has_iterate {
+                                return Err(Error::new(
+                                    Some(f.ident.span()),
+                                    "`app_iterate` already defined",
+                                ));
+                            }
+                            has_iterate = true;
+                            "app_iterate"
+                        }
+                        "app_event" => {
+                            if has_event {
+                                return Err(Error::new(
+                                    Some(f.ident.span()),
+                                    "`app_event` already defined",
+                                ));
+                            }
+                            has_event = true;
+                            "app_event"
+                        }
+                        "app_quit" => {
+                            if has_quit {
+                                return Err(Error::new(
+                                    Some(f.ident.span()),
+                                    "`app_quit` already defined",
+                                ));
+                            }
+                            has_quit = true;
+                            "app_quit"
+                        }
+                        _ => continue,
+                    },
+                    Span::call_site(),
+                );
+                let mut wrapper = f.clone();
+                wrapper.attrs = Vec::new();
+                wrapper.vis = Visibility::default();
+                wrapper.abi = None;
+                wrapper.return_type = wrapper.return_type.map(|t| t.replace_self(state_t.clone()));
+                for param in wrapper.params.iter_mut() {
+                    if param.ident.to_string() == "self" {
+                        param.ident = Ident::new("__sdl3_main_self", Span::mixed_site());
+                    }
+                    param.ty = param.ty.replace_self(state_t.clone());
+                }
+                let args = wrapper.params.to_args();
+                wrapper.body = TokenTree::Group(Group::new(
+                    Delimiter::Brace,
+                    miniquote!(#{&state_t}::#{&f.ident} #args),
+                ));
+                miniquote_to!(out => #[#{sdl3_main_path()}::#attr] #wrapper)
+            }
+        }
+        if !has_init {
+            return Err(Error::new(None, "missing `app_init`"));
+        }
+        if !has_iterate {
+            return Err(Error::new(None, "missing `app_iterate`"));
+        }
+        if !has_event {
+            return Err(Error::new(None, "missing `app_event`"));
+        }
+        if !has_quit {
+            let f = Function::new(Ident::new("app_quit", Span::mixed_site()));
+            miniquote_to!(out => #[#{sdl3_main_path()}::app_quit] #f);
+        }
+        miniquote_to!(out => #attr #impl_block);
+        Ok(())
     })
 }
 

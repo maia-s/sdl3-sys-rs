@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-main"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Maia S. R."]
 license = "Zlib"
@@ -24,7 +24,7 @@ version = "0.1"
 
 [dependencies.sdl3-main-macros]
 path = "../sdl3-main-macros"
-version = "0.1"
+version = "0.1.1"
 
 [package.metadata.docs.rs]
 all-features = true

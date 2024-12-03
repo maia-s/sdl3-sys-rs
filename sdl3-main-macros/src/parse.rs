@@ -1,4 +1,8 @@
-use core::{convert::Infallible, ops::Deref, str::FromStr};
+use core::{
+    convert::Infallible,
+    ops::{Deref, DerefMut},
+    str::FromStr,
+};
 use proc_macro::{Delimiter, Group, Ident, Literal, Punct, Spacing, Span, TokenStream, TokenTree};
 
 pub trait IntoTokenTrees: Sized {
@@ -353,10 +357,10 @@ impl Parse for InnerAttribute {
 
 #[derive(Clone)]
 pub struct ConstItem {
-    attrs: Vec<Attribute>,
-    vis: Visibility,
-    ident: Ident,
-    rest: Vec<TokenTree>,
+    pub attrs: Vec<Attribute>,
+    pub vis: Visibility,
+    pub ident: Ident,
+    pub rest: Vec<TokenTree>,
 }
 
 impl IntoTokenTrees for ConstItem {
@@ -472,6 +476,19 @@ pub struct Function {
 }
 
 impl Function {
+    pub fn new(ident: Ident) -> Self {
+        Self {
+            attrs: Vec::new(),
+            vis: Visibility::default(),
+            unsafe_kw: None,
+            abi: None,
+            ident,
+            params: FunctionParams::default(),
+            return_type: None,
+            body: TokenTree::Group(Group::new(Delimiter::Brace, TokenStream::new())),
+        }
+    }
+
     pub fn signature(&self) -> FunctionSignature {
         FunctionSignature {
             unsafe_kw: self.unsafe_kw.clone(),
@@ -620,13 +637,38 @@ impl Parse for FunctionParam {
 }
 
 #[derive(Clone)]
+pub struct FunctionArgs(Vec<Ident>);
+
+impl IntoTokenTrees for FunctionArgs {
+    fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
+        let mut ts = TokenStream::new();
+        for arg in self.0 {
+            miniquote_to!(&mut ts => #arg,);
+        }
+        Group::new(Delimiter::Parenthesis, ts).into_token_trees(out);
+    }
+}
+
+#[derive(Clone, Default)]
 pub struct FunctionParams(Vec<FunctionParam>);
+
+impl FunctionParams {
+    pub fn to_args(&self) -> FunctionArgs {
+        FunctionArgs(self.iter().map(|p| p.ident.clone()).collect())
+    }
+}
 
 impl Deref for FunctionParams {
     type Target = [FunctionParam];
 
     fn deref(&self) -> &Self::Target {
         &self.0
+    }
+}
+
+impl DerefMut for FunctionParams {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
     }
 }
 
@@ -670,11 +712,22 @@ impl Parse for FunctionParams {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub enum GenericArg {
     Lifetime(Lifetime),
     Type(Type), // or constant
     Expr(TokenTree),
+}
+
+impl GenericArg {
+    #[must_use]
+    fn replace_self(&self, new_self: Type) -> Self {
+        match self {
+            Self::Lifetime(lt) => Self::Lifetime(lt.clone()),
+            Self::Type(t) => Self::Type(t.replace_self(new_self)),
+            Self::Expr(e) => Self::Expr(e.clone()),
+        }
+    }
 }
 
 impl IntoTokenTrees for GenericArg {
@@ -710,9 +763,22 @@ impl Parse for GenericArg {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct GenericArgs {
     pub args: Vec<GenericArg>,
+}
+
+impl GenericArgs {
+    #[must_use]
+    fn replace_self(&self, new_self: Type) -> Self {
+        Self {
+            args: self
+                .args
+                .iter()
+                .map(|arg| arg.replace_self(new_self.clone()))
+                .collect(),
+        }
+    }
 }
 
 impl Deref for GenericArgs {
@@ -785,9 +851,8 @@ impl Parse for Ident {
 #[derive(Clone)]
 pub struct ImplBlock {
     pub attrs: Vec<Attribute>,
-    pub ident: Ident,
     pub generic_defs: Option<GenericArgs>,
-    pub generics_for_self: Option<GenericArgs>,
+    pub ty: Type,
     pub inner_attrs: Vec<InnerAttribute>,
     pub items: Vec<Item>,
 }
@@ -796,7 +861,7 @@ impl IntoTokenTrees for ImplBlock {
     fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
         miniquote_to! { out =>
             #{self.attrs}
-            impl #{self.generic_defs} #{self.ident} #{self.generics_for_self} {
+            impl #{self.generic_defs} #{self.ty} {
                 #{self.inner_attrs}
                 #{self.items}
             }
@@ -815,20 +880,14 @@ impl Parse for ImplBlock {
         if try_parse_kw(try_input, "impl").is_some() {
             *input = try_input;
             let generic_defs = GenericArgs::try_parse(input)?;
-            let ident = Ident::parse(input)?;
-            let generics_for_self = if generic_defs.is_some() {
-                GenericArgs::try_parse(input)?
-            } else {
-                None
-            };
+            let ty = Type::parse(input)?;
             let braced = input!(parse_group(input, Delimiter::Brace)?.stream());
             let inner_attrs = Vec::<InnerAttribute>::try_parse(braced)?.unwrap_or_default();
             let items = Vec::<Item>::try_parse_all(braced)?.unwrap_or_default();
             Ok(Some(Self {
                 attrs,
-                ident,
                 generic_defs,
-                generics_for_self,
+                ty,
                 inner_attrs,
                 items,
             }))
@@ -873,7 +932,7 @@ impl Parse for Item {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Lifetime {
     apo: Punct,
     ident: Ident,
@@ -909,7 +968,7 @@ impl IntoTokenTrees for Literal {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Path {
     pub global: bool,
     pub segments: Vec<PathSeg>,
@@ -923,6 +982,18 @@ impl Path {
     pub fn last_segment_eq_no_gen(&self, cmp: &str) -> bool {
         let seg = &self.segments.last().unwrap();
         seg.generics.is_none() && seg.ident.to_string() == cmp
+    }
+
+    #[must_use]
+    pub fn replace_self(&self, new_self: Type) -> Self {
+        Self {
+            global: self.global,
+            segments: self
+                .segments
+                .iter()
+                .map(|s| s.replace_self(new_self.clone()))
+                .collect(),
+        }
     }
 }
 
@@ -994,10 +1065,20 @@ impl Parse for Path {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct PathSeg {
     pub ident: Ident,
     pub generics: Option<GenericArgs>,
+}
+
+impl PathSeg {
+    #[must_use]
+    fn replace_self(&self, new_self: Type) -> Self {
+        Self {
+            ident: self.ident.clone(),
+            generics: self.generics.as_ref().map(|g| g.replace_self(new_self)),
+        }
+    }
 }
 
 impl IntoTokenTrees for PathSeg {
@@ -1028,6 +1109,18 @@ impl IntoTokenTrees for TokenTree {
     }
 }
 
+impl IntoTokenTrees for &[TokenTree] {
+    fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
+        out.extend(self.iter().cloned());
+    }
+}
+
+impl IntoTokenTrees for &mut [TokenTree] {
+    fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
+        out.extend(self.iter().cloned());
+    }
+}
+
 #[derive(Clone, Copy)]
 #[repr(u8)]
 pub enum TypeClass {
@@ -1039,7 +1132,7 @@ pub enum TypeClass {
     OptRefMut = 4 | 3,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub enum Type {
     Ptr(Box<Type>),
     PtrMut(Box<Type>),
@@ -1107,6 +1200,22 @@ impl Type {
         let Type::Path(t) = self else { return false };
         t.last_segment_eq_no_gen(ident)
     }
+
+    #[must_use]
+    pub fn replace_self(&self, new_self: Type) -> Type {
+        match self {
+            Self::Ptr(t) => Self::Ptr(Box::new(t.replace_self(new_self))),
+            Self::PtrMut(t) => Self::PtrMut(Box::new(t.replace_self(new_self))),
+            Self::Ref(lt, t) => Self::Ref(lt.clone(), Box::new(t.replace_self(new_self))),
+            Self::RefMut(lt, t) => Self::RefMut(lt.clone(), Box::new(t.replace_self(new_self))),
+            Self::Tuple(t) => {
+                Self::Tuple(t.iter().map(|t| t.replace_self(new_self.clone())).collect())
+            }
+            Self::SelfTy => new_self,
+            Self::Path(p) => Self::Path(p.replace_self(new_self.clone())),
+            Self::Other(_) => self.clone(),
+        }
+    }
 }
 
 impl IntoTokenTrees for Type {
@@ -1142,39 +1251,44 @@ impl Parse for Type {
 
         match tt {
             TokenTree::Group(group) => {
-                if group.delimiter() == Delimiter::Parenthesis {
-                    *input = &input[1..];
-                    let input = input!(group.stream());
-                    let mut types = Vec::new();
-                    let mut trailing_comma = false;
-                    while let Some(ty) = Type::try_parse(input)? {
-                        types.push(ty);
-                        trailing_comma = try_parse_op(input, ",").is_some();
-                        if !trailing_comma {
-                            break;
+                match group.delimiter() {
+                    Delimiter::Parenthesis => {
+                        *input = &input[1..];
+                        let input = input!(group.stream());
+                        let mut types = Vec::new();
+                        let mut trailing_comma = false;
+                        while let Some(ty) = Type::try_parse(input)? {
+                            types.push(ty);
+                            trailing_comma = try_parse_op(input, ",").is_some();
+                            if !trailing_comma {
+                                break;
+                            }
+                        }
+                        if !input.is_empty() {
+                            return Err(Error::new(
+                                Some(input.first().unwrap().span()),
+                                if trailing_comma {
+                                    "expected type or `)`"
+                                } else {
+                                    "expected type, `,` or `)`"
+                                },
+                            ));
+                        }
+                        if types.len() == 1 && !trailing_comma {
+                            // this is just a type in parens
+                            return Ok(Some(types.remove(0)));
+                        } else {
+                            return Ok(Some(Type::Tuple(types)));
                         }
                     }
-                    if !input.is_empty() {
-                        return Err(Error::new(
-                            Some(input.first().unwrap().span()),
-                            if trailing_comma {
-                                "expected type or `)`"
-                            } else {
-                                "expected type, `,` or `)`"
-                            },
-                        ));
-                    }
-                    if types.len() == 1 && !trailing_comma {
-                        // this is just a type in parens
-                        return Ok(Some(types.remove(0)));
-                    } else {
-                        return Ok(Some(Type::Tuple(types)));
-                    }
+                    Delimiter::Brace => return Ok(None),
+                    _ => (),
                 }
             }
 
             TokenTree::Ident(i) => {
                 if i.to_string() == "Self" {
+                    *input = &input[1..];
                     return Ok(Some(Type::SelfTy));
                 } else {
                     return Ok(Some(Type::Path(Path::parse(input)?)));
@@ -1211,6 +1325,7 @@ impl Parse for Type {
                         return Ok(Some(Type::Path(Path::parse(input)?)));
                     }
                 }
+                ',' | ';' | '>' => return Ok(None),
                 _ => (),
             },
 
@@ -1230,10 +1345,10 @@ impl Parse for Type {
 
 #[derive(Clone)]
 pub struct TypeAlias {
-    attrs: Vec<Attribute>,
-    vis: Visibility,
-    ident: Ident,
-    rest: Vec<TokenTree>,
+    pub attrs: Vec<Attribute>,
+    pub vis: Visibility,
+    pub ident: Ident,
+    pub rest: Vec<TokenTree>,
 }
 
 impl IntoTokenTrees for TypeAlias {
@@ -1270,7 +1385,7 @@ impl Parse for TypeAlias {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct Visibility {
     pub pub_kw: Option<Ident>,
     args: Option<Group>,

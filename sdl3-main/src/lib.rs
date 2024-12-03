@@ -34,6 +34,8 @@ use state::SyncPtr;
 /// ```
 pub use sdl3_main_macros::main;
 
+pub use sdl3_main_macros::app_impl;
+
 /// The function tagged with `app_init` is called by SDL at the start of the program on the main thread.
 ///
 /// See the SDL documentation for this function:
