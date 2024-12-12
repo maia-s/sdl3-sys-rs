@@ -34,6 +34,11 @@ use state::SyncPtr;
 /// ```
 pub use sdl3_main_macros::main;
 
+/// This attribute macro can be applied to an `impl` block for a type to assign the associated
+/// functions or methods named `app_init`, `app_iterate`, `app_event` and `app_quit` to the
+/// respective sdl main callbacks, as if the corresponding attribute macros were used.
+/// All four must be defined in a single impl block, but `app_quit` is optional and will be
+/// defined as an empty function if omitted.
 pub use sdl3_main_macros::app_impl;
 
 /// The function tagged with `app_init` is called by SDL at the start of the program on the main thread.

@@ -9,6 +9,7 @@ See the documentation for that for more information.
 
 ## Callback API
 
-To use the SDL callback API, use the [`app_init`], [`app_iterate`], [`app_event`] and
-[`app_quit`] attribute macros. Don't use the `main` attribute in this mode.
+To use the SDL callback API, you can use either the [`app_impl`] attribute macro,
+or all four of the [`app_init`], [`app_iterate`], [`app_event`] and [`app_quit`]
+attribute macros. Don't use the `main` attribute macro in this mode.
 See the documentation for more information.

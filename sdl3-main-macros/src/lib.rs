@@ -1,8 +1,7 @@
 #![doc = include_str!("../README.md")]
 
 use parse::{
-    Attribute, Error, Function, GenericArg, ImplBlock, IntoTokenTrees, Item, Parse, Type,
-    Visibility,
+    Error, Function, GenericArg, ImplBlock, IntoTokenTrees, Item, Parse, Type, Visibility,
 };
 use proc_macro::{Delimiter, Group, Ident, Punct, Spacing, Span, TokenStream, TokenTree};
 
