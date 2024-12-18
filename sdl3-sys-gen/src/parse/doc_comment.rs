@@ -104,10 +104,8 @@ impl DocComment {
     ) -> Result<Option<DocComment>, ParseErr> {
         if let Some(post) = DocCommentPost::try_parse(ctx, input)? {
             if pre.is_some() {
-                Err(ParseErr::new(
-                    post.span,
-                    "item has both prefix and postfix documentation comment",
-                ))
+                // item has both prefix and postfix documentation comment; ignore postfix
+                Ok(pre)
             } else {
                 Ok(Some(post.into()))
             }
@@ -123,10 +121,8 @@ impl DocComment {
     ) -> Result<Option<DocComment>, ParseErr> {
         if let Some(post) = DocCommentPost::try_parse_rev(ctx, input)? {
             if pre.is_some() {
-                Err(ParseErr::new(
-                    post.span,
-                    "item has both prefix and postfix documentation comment",
-                ))
+                // item has both prefix and postfix documentation comment; ignore postfix
+                Ok(pre)
             } else {
                 Ok(Some(post.into()))
             }
