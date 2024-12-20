@@ -31,7 +31,7 @@ pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 6;
 ///
 /// (1,2,3) becomes 1002003.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `major`: the major version number.
 /// - `minor`: the minorversion number.
 /// - `patch`: the patch version number.
@@ -51,7 +51,7 @@ pub const fn SDL_VERSIONNUM(
 ///
 /// 1002003 becomes 1.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `version`: the version number.
 ///
 /// ### Availability
@@ -65,7 +65,7 @@ pub const fn SDL_VERSIONNUM_MAJOR(version: ::core::primitive::i32) -> ::core::pr
 ///
 /// 1002003 becomes 2.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `version`: the version number.
 ///
 /// ### Availability
@@ -79,7 +79,7 @@ pub const fn SDL_VERSIONNUM_MINOR(version: ::core::primitive::i32) -> ::core::pr
 ///
 /// 1002003 becomes 3.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `version`: the version number.
 ///
 /// ### Availability

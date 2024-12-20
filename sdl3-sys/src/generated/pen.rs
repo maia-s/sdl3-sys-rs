@@ -92,6 +92,7 @@ pub const SDL_PEN_INPUT_ERASER_TIP: SDL_PenInputFlags = ((1073741824_u32) as SDL
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PenAxis(pub ::core::ffi::c_int);
+
 impl From<SDL_PenAxis> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PenAxis) -> Self {

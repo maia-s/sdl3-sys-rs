@@ -18,8 +18,9 @@ extern "C" {
     /// The returned handle can be casted directly to a NSView or UIView. To access
     /// the backing CAMetalLayer, call [`SDL_Metal_GetLayer()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window.
+    ///
     /// ### Return value
     /// Returns handle NSView or UIView.
     ///
@@ -38,7 +39,7 @@ extern "C" {
     /// This should be called before [`SDL_DestroyWindow`], if [`SDL_Metal_CreateView`] was
     /// called after [`SDL_CreateWindow`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `view`: the [`SDL_MetalView`] object.
     ///
     /// ### Availability
@@ -52,8 +53,9 @@ extern "C" {
 extern "C" {
     /// Get a pointer to the backing CAMetalLayer for the given view.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `view`: the [`SDL_MetalView`] object.
+    ///
     /// ### Return value
     /// Returns a pointer.
     ///

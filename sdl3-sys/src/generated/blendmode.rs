@@ -69,6 +69,7 @@ pub const SDL_BLENDMODE_INVALID: SDL_BlendMode = (0x7fffffff as SDL_BlendMode);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_BlendOperation(pub ::core::ffi::c_int);
+
 impl From<SDL_BlendOperation> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_BlendOperation) -> Self {
@@ -142,6 +143,7 @@ pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_BlendFactor(pub ::core::ffi::c_int);
+
 impl From<SDL_BlendFactor> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_BlendFactor) -> Self {
@@ -280,7 +282,7 @@ extern "C" {
     /// [`SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA`] factors do not have an effect in this
     /// case.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `srcColorFactor`: the [`SDL_BlendFactor`] applied to the red, green, and
     ///   blue components of the source pixels.
     /// - `dstColorFactor`: the [`SDL_BlendFactor`] applied to the red, green, and
@@ -294,6 +296,7 @@ extern "C" {
     ///   the destination pixels.
     /// - `alphaOperation`: the [`SDL_BlendOperation`] used to combine the alpha
     ///   component of the source and destination pixels.
+    ///
     /// ### Return value
     /// Returns an [`SDL_BlendMode`] that represents the chosen factors and
     ///   operations.

@@ -20,6 +20,7 @@ pub type SDL_FingerID = Uint64;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TouchDeviceType(pub ::core::ffi::c_int);
+
 impl From<SDL_TouchDeviceType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_TouchDeviceType) -> Self {
@@ -92,9 +93,10 @@ extern "C" {
     /// Therefore the returned list might be empty, although devices are available.
     /// After using all devices at least once the number will be correct.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of devices returned, may
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns a 0 terminated array of touch device IDs or NULL on failure; call
     ///   [`SDL_GetError()`] for more information. This should be freed with
@@ -108,8 +110,9 @@ extern "C" {
 extern "C" {
     /// Get the touch device name as reported from the driver.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `touchID`: the touch device instance ID.
+    ///
     /// ### Return value
     /// Returns touch device name, or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
@@ -122,8 +125,9 @@ extern "C" {
 extern "C" {
     /// Get the type of the given touch device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `touchID`: the ID of a touch device.
+    ///
     /// ### Return value
     /// Returns touch device type.
     ///
@@ -135,10 +139,11 @@ extern "C" {
 extern "C" {
     /// Get a list of active fingers for a given touch device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `touchID`: the ID of a touch device.
     /// - `count`: a pointer filled in with the number of fingers returned, can
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns a NULL terminated array of [`SDL_Finger`] pointers or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This is a single

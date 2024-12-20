@@ -23,6 +23,7 @@ use super::error::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PowerState(pub ::core::ffi::c_int);
+
 impl From<SDL_PowerState> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PowerState) -> Self {
@@ -91,7 +92,7 @@ extern "C" {
     /// It's possible a platform can only report battery percentage or time left
     /// but not both.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `seconds`: a pointer filled in with the seconds of battery life left,
     ///   or NULL to ignore. This will be filled in with -1 if we
     ///   can't determine a value or there is no battery.
@@ -99,6 +100,7 @@ extern "C" {
     ///   left, between 0 and 100, or NULL to ignore. This will be
     ///   filled in with -1 we can't determine a value or there is no
     ///   battery.
+    ///
     /// ### Return value
     /// Returns the current battery state or [`SDL_POWERSTATE_ERROR`] on failure;
     ///   call [`SDL_GetError()`] for more information.

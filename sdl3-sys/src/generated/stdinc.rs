@@ -338,11 +338,12 @@ const _: () = ::core::assert!(
 
 /// Define a four character code as a Uint32.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `A`: the first ASCII character.
 /// - `B`: the second ASCII character.
 /// - `C`: the third ASCII character.
 /// - `D`: the fourth ASCII character.
+///
 /// ### Return value
 /// Returns the four characters converted into a Uint32, one character
 ///   per-byte.
@@ -382,6 +383,7 @@ apply_cfg!(#[cfg(all(not(any(doc, target_os = "horizon")), not(any(doc, target_o
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SDL_DUMMY_ENUM(pub ::core::ffi::c_int);
+
     impl From<SDL_DUMMY_ENUM> for ::core::ffi::c_int{
         #[inline(always)]
         fn from(value: SDL_DUMMY_ENUM) -> Self {
@@ -480,8 +482,9 @@ extern "C" {
     /// If you want to allocate memory aligned to a specific alignment, consider
     /// using [`SDL_aligned_alloc()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `size`: the size to allocate.
+    ///
     /// ### Return value
     /// Returns a pointer to the allocated memory, or NULL if allocation failed.
     ///
@@ -506,9 +509,10 @@ extern "C" {
     ///
     /// If either of `nmemb` or `size` is 0, they will both be set to 1.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `nmemb`: the number of elements in the array.
     /// - `size`: the size of each element of the array.
+    ///
     /// ### Return value
     /// Returns a pointer to the allocated array, or NULL if allocation failed.
     ///
@@ -548,9 +552,10 @@ extern "C" {
     /// - If it returns NULL (indicating failure), then `mem` will remain valid and
     ///   must still be freed with [`SDL_free()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `mem`: a pointer to allocated memory to reallocate, or NULL.
     /// - `size`: the new size of the memory.
+    ///
     /// ### Return value
     /// Returns a pointer to the newly allocated memory, or NULL if allocation
     ///   failed.
@@ -579,7 +584,7 @@ extern "C" {
     ///
     /// If `mem` is NULL, this function does nothing.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `mem`: a pointer to allocated memory, or NULL.
     ///
     /// ### Thread safety
@@ -599,8 +604,9 @@ extern "C" {
 ///
 /// SDL will always ensure that the passed `size` is greater than 0.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `size`: the size to allocate.
+///
 /// ### Return value
 /// Returns a pointer to the allocated memory, or NULL if allocation failed.
 ///
@@ -624,9 +630,10 @@ pub type SDL_malloc_func = ::core::option::Option<
 /// SDL will always ensure that the passed `nmemb` and `size` are both greater
 /// than 0.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `nmemb`: the number of elements in the array.
 /// - `size`: the size of each element of the array.
+///
 /// ### Return value
 /// Returns a pointer to the allocated array, or NULL if allocation failed.
 ///
@@ -652,9 +659,10 @@ pub type SDL_calloc_func = ::core::option::Option<
 ///
 /// SDL will always ensure that the passed `size` is greater than 0.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `mem`: a pointer to allocated memory to reallocate, or NULL.
 /// - `size`: the new size of the memory.
+///
 /// ### Return value
 /// Returns a pointer to the newly allocated memory, or NULL if allocation
 ///   failed.
@@ -681,7 +689,7 @@ pub type SDL_realloc_func = ::core::option::Option<
 ///
 /// SDL will always ensure that the passed `mem` is a non-NULL pointer.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `mem`: a pointer to allocated memory.
 ///
 /// ### Thread safety
@@ -706,7 +714,7 @@ extern "C" {
     /// runtime's `malloc` functions behind the scenes! Different platforms and
     /// build configurations might do any number of unexpected things.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `malloc_func`: filled with malloc function.
     /// - `calloc_func`: filled with calloc function.
     /// - `realloc_func`: filled with realloc function.
@@ -728,7 +736,7 @@ extern "C" {
 extern "C" {
     /// Get the current set of SDL memory functions.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `malloc_func`: filled with malloc function.
     /// - `calloc_func`: filled with calloc function.
     /// - `realloc_func`: filled with realloc function.
@@ -763,11 +771,12 @@ extern "C" {
     /// If used, usually this needs to be the first call made into the SDL library,
     /// if not the very first thing done at program startup time.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `malloc_func`: custom malloc function.
     /// - `calloc_func`: custom calloc function.
     /// - `realloc_func`: custom realloc function.
     /// - `free_func`: custom free function.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -803,9 +812,10 @@ extern "C" {
     /// The returned memory address will be a multiple of the alignment value, and
     /// the size of the memory allocated will be a multiple of the alignment value.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `alignment`: the alignment of the memory.
     /// - `size`: the size to allocate.
+    ///
     /// ### Return value
     /// Returns a pointer to the aligned memory, or NULL if allocation failed.
     ///
@@ -831,7 +841,7 @@ extern "C" {
     ///
     /// If `mem` is NULL, this function does nothing.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `mem`: a pointer previously returned by [`SDL_aligned_alloc()`], or NULL.
     ///
     /// ### Thread safety
@@ -889,9 +899,10 @@ extern "C" {
 extern "C" {
     /// Create a set of environment variables
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `populated`: true to initialize it from the C runtime environment,
     ///   false to create an empty environment.
+    ///
     /// ### Return value
     /// Returns a pointer to the new environment or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -916,9 +927,10 @@ extern "C" {
 extern "C" {
     /// Get the value of a variable in the environment.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `env`: the environment to query.
     /// - `name`: the name of the variable to get.
+    ///
     /// ### Return value
     /// Returns a pointer to the value of the variable or NULL if it can't be
     ///   found.
@@ -944,8 +956,9 @@ extern "C" {
 extern "C" {
     /// Get all variables in the environment.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `env`: the environment to query.
+    ///
     /// ### Return value
     /// Returns a NULL terminated array of pointers to environment variables in
     ///   the form "variable=value" or NULL on failure; call [`SDL_GetError()`]
@@ -970,13 +983,14 @@ extern "C" {
 extern "C" {
     /// Set the value of a variable in the environment.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `env`: the environment to modify.
     /// - `name`: the name of the variable to set.
     /// - `value`: the value of the variable to set.
     /// - `overwrite`: true to overwrite the variable if it exists, false to
     ///   return success without setting the variable if it already
     ///   exists.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1004,9 +1018,10 @@ extern "C" {
 extern "C" {
     /// Clear a variable from the environment.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `env`: the environment to modify.
     /// - `name`: the name of the variable to unset.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1033,7 +1048,7 @@ extern "C" {
 extern "C" {
     /// Destroy a set of environment variables.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `env`: the environment to destroy.
     ///
     /// ### Thread safety
@@ -1053,8 +1068,9 @@ extern "C" {
     ///
     /// This function uses SDL's cached copy of the environment and is thread-safe.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the name of the variable to get.
+    ///
     /// ### Return value
     /// Returns a pointer to the value of the variable or NULL if it can't be
     ///   found.
@@ -1073,8 +1089,9 @@ extern "C" {
     /// This function bypasses SDL's cached copy of the environment and is not
     /// thread-safe.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the name of the variable to get.
+    ///
     /// ### Return value
     /// Returns a pointer to the value of the variable or NULL if it can't be
     ///   found.
@@ -1094,11 +1111,12 @@ extern "C" {
 extern "C" {
     /// Set the value of a variable in the environment.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the name of the variable to set.
     /// - `value`: the value of the variable to set.
     /// - `overwrite`: 1 to overwrite the variable if it exists, 0 to return
     ///   success without setting the variable if it already exists.
+    ///
     /// ### Return value
     /// Returns 0 on success, -1 on error.
     ///
@@ -1121,8 +1139,9 @@ extern "C" {
 extern "C" {
     /// Clear a variable from the environment.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the name of the variable to unset.
+    ///
     /// ### Return value
     /// Returns 0 on success, -1 on error.
     ///
@@ -1140,9 +1159,10 @@ extern "C" {
 
 /// A callback used with SDL sorting and binary search functions.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `a`: a pointer to the first element being compared.
 /// - `b`: a pointer to the second element being compared.
+///
 /// ### Return value
 /// Returns -1 if `a` should be sorted before `b`, 1 if `b` should be sorted
 ///   before `a`, 0 if they are equal. If two elements are equal, their
@@ -1193,7 +1213,7 @@ extern "C" {
     /// SDL_qsort(values, SDL_arraysize(values), sizeof(values[0]), compare);
     /// ```
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `base`: a pointer to the start of the array.
     /// - `nmemb`: the number of elements in the array.
     /// - `size`: the size of the elements in the array.
@@ -1249,12 +1269,13 @@ extern "C" {
     /// data *result = SDL_bsearch(&key, values, SDL_arraysize(values), sizeof(values[0]), compare);
     /// ```
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `key`: a pointer to a key equal to the element being searched for.
     /// - `base`: a pointer to the start of the array.
     /// - `nmemb`: the number of elements in the array.
     /// - `size`: the size of the elements in the array.
     /// - `compare`: a function used to compare elements in the array.
+    ///
     /// ### Return value
     /// Returns a pointer to the matching element in the array, or NULL if not
     ///   found.
@@ -1279,10 +1300,11 @@ extern "C" {
 
 /// A callback used with SDL sorting and binary search functions.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: the `userdata` pointer passed to the sort function.
 /// - `a`: a pointer to the first element being compared.
 /// - `b`: a pointer to the second element being compared.
+///
 /// ### Return value
 /// Returns -1 if `a` should be sorted before `b`, 1 if `b` should be sorted
 ///   before `a`, 0 if they are equal. If two elements are equal, their
@@ -1340,7 +1362,7 @@ extern "C" {
     /// SDL_qsort_r(values, SDL_arraysize(values), sizeof(values[0]), compare, (const void *)(uintptr_t)sort_increasing);
     /// ```
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `base`: a pointer to the start of the array.
     /// - `nmemb`: the number of elements in the array.
     /// - `size`: the size of the elements in the array.
@@ -1405,13 +1427,14 @@ extern "C" {
     /// data *result = SDL_bsearch_r(&key, values, SDL_arraysize(values), sizeof(values[0]), compare, (const void *)(uintptr_t)sort_increasing);
     /// ```
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `key`: a pointer to a key equal to the element being searched for.
     /// - `base`: a pointer to the start of the array.
     /// - `nmemb`: the number of elements in the array.
     /// - `size`: the size of the elements in the array.
     /// - `compare`: a function used to compare elements in the array.
     /// - `userdata`: a pointer to pass to the compare function.
+    ///
     /// ### Return value
     /// Returns a pointer to the matching element in the array, or NULL if not
     ///   found.
@@ -1474,8 +1497,9 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// for English 'a-z' and 'A-Z' as true.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
@@ -1493,8 +1517,9 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// for English 'a-z', 'A-Z', and '0-9' as true.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
@@ -1512,8 +1537,9 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// 0x20 (space) or 0x9 (tab) as true.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
@@ -1531,8 +1557,9 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// 0 through 0x1F, and 0x7F, as true.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
@@ -1550,8 +1577,9 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// '0' (0x30) through '9' (0x39), as true.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
@@ -1569,8 +1597,9 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// 'A' through 'F', 'a' through 'f', and '0' through '9', as true.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
@@ -1588,8 +1617,9 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this is equivalent to
     /// `((SDL_isgraph(x)) && (!SDL_isalnum(x)))`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
@@ -1618,8 +1648,9 @@ extern "C" {
     /// - form feed (0x0C)
     /// - return (0x0D)
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
@@ -1637,8 +1668,9 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// 'A' through 'Z' as true.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
@@ -1656,8 +1688,9 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// 'a' through 'z' as true.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
@@ -1679,8 +1712,9 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// ' ' (0x20) through '~' (0x7E) as true.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
@@ -1702,8 +1736,9 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this is equivalent to
     /// `(SDL_isprint(x)) && ((x) != ' ')`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
@@ -1727,8 +1762,9 @@ extern "C" {
     /// This function returns the uppercase equivalent of `x`. If a character
     /// cannot be converted, or is already uppercase, this function returns `x`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns capitalized version of x, or x if no conversion available.
     ///
@@ -1749,8 +1785,9 @@ extern "C" {
     /// This function returns the lowercase equivalent of `x`. If a character
     /// cannot be converted, or is already lowercase, this function returns `x`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: character value to check.
+    ///
     /// ### Return value
     /// Returns lowercase version of x, or x if no conversion available.
     ///
@@ -1790,12 +1827,13 @@ extern "C" {
 ///
 /// The memory regions must not overlap. If they do, use [`SDL_memmove()`] instead.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `dst`: The destination memory region. Must not be NULL, and must not
 ///   overlap with `src`.
 /// - `src`: The source memory region. Must not be NULL, and must not overlap
 ///   with `dst`.
 /// - `len`: The length in bytes of both `dst` and `src`.
+///
 /// ### Return value
 /// Returns `dst`.
 ///
@@ -1839,10 +1877,11 @@ pub unsafe fn SDL_copyp<Dst: Sized, Src: Sized>(dst: *mut Dst, src: *const Src) 
 /// It is okay for the memory regions to overlap. If you are confident that the
 /// regions never overlap, using [`SDL_memcpy()`] may improve performance.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `dst`: The destination memory region. Must not be NULL.
 /// - `src`: The source memory region. Must not be NULL.
 /// - `len`: The length in bytes of both `dst` and `src`.
+///
 /// ### Return value
 /// Returns `dst`.
 ///
@@ -1919,12 +1958,13 @@ extern "C" {
     /// If `maxlen` is 0, no wide characters are copied and no null terminator is
     /// written.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: The destination buffer. Must not be NULL, and must not overlap
     ///   with `src`.
     /// - `src`: The null-terminated wide string to copy. Must not be NULL, and
     ///   must not overlap with `dst`.
     /// - `maxlen`: The length (in wide characters) of the destination buffer.
+    ///
     /// ### Return value
     /// Returns The length (in wide characters, excluding the null terminator) of
     ///   `src`.
@@ -1956,13 +1996,14 @@ extern "C" {
     /// If `maxlen` - SDL_wcslen(dst) - 1 is less than or equal to 0, then `dst` is
     /// unmodified.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: The destination buffer already containing the first
     ///   null-terminated wide string. Must not be NULL and must not
     ///   overlap with `src`.
     /// - `src`: The second null-terminated wide string. Must not be NULL, and
     ///   must not overlap with `dst`.
     /// - `maxlen`: The length (in wide characters) of the destination buffer.
+    ///
     /// ### Return value
     /// Returns The length (in wide characters, excluding the null terminator) of
     ///   the string in `dst` plus the length of `src`.
@@ -2008,9 +2049,10 @@ extern "C" {
     /// character; it does not care if the string is well-formed UTF-16 (or UTF-32,
     /// depending on your platform's wchar_t size), or uses valid Unicode values.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
+    ///
     /// ### Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
@@ -2045,10 +2087,11 @@ extern "C" {
     /// null-terminator character before this count), they will be considered
     /// equal.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
     /// - `maxlen`: the maximum number of wchar_t to compare.
+    ///
     /// ### Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
@@ -2084,9 +2127,10 @@ extern "C" {
     /// CHARACTER), which is to say two strings of random bits may turn out to
     /// match if they convert to the same amount of replacement characters.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
+    ///
     /// ### Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
@@ -2132,10 +2176,11 @@ extern "C" {
     /// null-terminator character before this number of bytes), they will be
     /// considered equal.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
     /// - `maxlen`: the maximum number of wchar_t values to compare.
+    ///
     /// ### Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
@@ -2162,7 +2207,7 @@ extern "C" {
     /// If the parsed number does not fit inside a `long`, the result is clamped to
     /// the minimum and maximum representable `long` values.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: The null-terminated wide string to read. Must not be NULL.
     /// - `endp`: If not NULL, the address of the first invalid wide character
     ///   (i.e. the next character after the parsed number) will be
@@ -2171,6 +2216,7 @@ extern "C" {
     ///   to 36 inclusive. If 0, the base will be inferred from the
     ///   number's prefix (0x for hexadecimal, 0 for octal, decimal
     ///   otherwise).
+    ///
     /// ### Return value
     /// Returns The parsed `long`, or 0 if no number could be parsed.
     ///
@@ -2212,12 +2258,13 @@ extern "C" {
     /// If you want to copy an UTF-8 string but need to ensure that multi-byte
     /// sequences are not truncated, consider using [`SDL_utf8strlcpy()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: The destination buffer. Must not be NULL, and must not overlap
     ///   with `src`.
     /// - `src`: The null-terminated string to copy. Must not be NULL, and must
     ///   not overlap with `dst`.
     /// - `maxlen`: The length (in characters) of the destination buffer.
+    ///
     /// ### Return value
     /// Returns The length (in characters, excluding the null terminator) of
     ///   `src`.
@@ -2250,13 +2297,14 @@ extern "C" {
     /// Note that unlike [`SDL_strlcpy()`], this function returns the number of bytes
     /// written, not the length of `src`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: The destination buffer. Must not be NULL, and must not overlap
     ///   with `src`.
     /// - `src`: The null-terminated UTF-8 string to copy. Must not be NULL, and
     ///   must not overlap with `dst`.
     /// - `dst_bytes`: The length (in bytes) of the destination buffer. Must not
     ///   be 0.
+    ///
     /// ### Return value
     /// Returns The number of bytes written, excluding the null terminator.
     ///
@@ -2286,13 +2334,14 @@ extern "C" {
     /// If `maxlen` - SDL_strlen(dst) - 1 is less than or equal to 0, then `dst` is
     /// unmodified.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: The destination buffer already containing the first
     ///   null-terminated string. Must not be NULL and must not overlap
     ///   with `src`.
     /// - `src`: The second null-terminated string. Must not be NULL, and must
     ///   not overlap with `dst`.
     /// - `maxlen`: The length (in characters) of the destination buffer.
+    ///
     /// ### Return value
     /// Returns The length (in characters, excluding the null terminator) of the
     ///   string in `dst` plus the length of `src`.
@@ -2337,8 +2386,9 @@ extern "C" {
     /// malformed UTF-8!--and converts ASCII characters 'a' through 'z' to their
     /// uppercase equivalents in-place, returning the original `str` pointer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: the string to convert in-place. Can not be NULL.
+    ///
     /// ### Return value
     /// Returns the `str` pointer passed into this function.
     ///
@@ -2363,8 +2413,9 @@ extern "C" {
     /// malformed UTF-8!--and converts ASCII characters 'A' through 'Z' to their
     /// lowercase equivalents in-place, returning the original `str` pointer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: the string to convert in-place. Can not be NULL.
+    ///
     /// ### Return value
     /// Returns the `str` pointer passed into this function.
     ///
@@ -2488,8 +2539,9 @@ extern "C" {
     /// The result of calling `SDL_atoi(str)` is equivalent to
     /// `(int)SDL_strtol(str, NULL, 10)`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
+    ///
     /// ### Return value
     /// Returns The parsed `int`.
     ///
@@ -2516,8 +2568,9 @@ extern "C" {
     /// The result of calling `SDL_atof(str)` is equivalent to `SDL_strtod(str,
     /// NULL)`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
+    ///
     /// ### Return value
     /// Returns The parsed `double`.
     ///
@@ -2546,7 +2599,7 @@ extern "C" {
     /// If the parsed number does not fit inside a `long`, the result is clamped to
     /// the minimum and maximum representable `long` values.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     /// - `endp`: If not NULL, the address of the first invalid character (i.e.
     ///   the next character after the parsed number) will be written to
@@ -2555,6 +2608,7 @@ extern "C" {
     ///   to 36 inclusive. If 0, the base will be inferred from the
     ///   number's prefix (0x for hexadecimal, 0 for octal, decimal
     ///   otherwise).
+    ///
     /// ### Return value
     /// Returns The parsed `long`, or 0 if no number could be parsed.
     ///
@@ -2589,7 +2643,7 @@ extern "C" {
     /// If the parsed number does not fit inside an `unsigned long`, the result is
     /// clamped to the maximum representable `unsigned long` value.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     /// - `endp`: If not NULL, the address of the first invalid character (i.e.
     ///   the next character after the parsed number) will be written to
@@ -2598,6 +2652,7 @@ extern "C" {
     ///   to 36 inclusive. If 0, the base will be inferred from the
     ///   number's prefix (0x for hexadecimal, 0 for octal, decimal
     ///   otherwise).
+    ///
     /// ### Return value
     /// Returns The parsed `unsigned long`, or 0 if no number could be parsed.
     ///
@@ -2631,7 +2686,7 @@ extern "C" {
     /// If the parsed number does not fit inside a `long long`, the result is
     /// clamped to the minimum and maximum representable `long long` values.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     /// - `endp`: If not NULL, the address of the first invalid character (i.e.
     ///   the next character after the parsed number) will be written to
@@ -2640,6 +2695,7 @@ extern "C" {
     ///   to 36 inclusive. If 0, the base will be inferred from the
     ///   number's prefix (0x for hexadecimal, 0 for octal, decimal
     ///   otherwise).
+    ///
     /// ### Return value
     /// Returns The parsed `long long`, or 0 if no number could be parsed.
     ///
@@ -2673,7 +2729,7 @@ extern "C" {
     /// If the parsed number does not fit inside an `unsigned long long`, the
     /// result is clamped to the maximum representable `unsigned long long` value.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     /// - `endp`: If not NULL, the address of the first invalid character (i.e.
     ///   the next character after the parsed number) will be written to
@@ -2682,6 +2738,7 @@ extern "C" {
     ///   to 36 inclusive. If 0, the base will be inferred from the
     ///   number's prefix (0x for hexadecimal, 0 for octal, decimal
     ///   otherwise).
+    ///
     /// ### Return value
     /// Returns The parsed `unsigned long long`, or 0 if no number could be
     ///   parsed.
@@ -2717,11 +2774,12 @@ extern "C" {
     /// - Whether or not INF and NAN can be parsed is unspecified.
     /// - The precision of the result is unspecified.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     /// - `endp`: If not NULL, the address of the first invalid character (i.e.
     ///   the next character after the parsed number) will be written to
     ///   this pointer.
+    ///
     /// ### Return value
     /// Returns The parsed `double`, or 0 if no number could be parsed.
     ///
@@ -2752,9 +2810,10 @@ extern "C" {
     /// null-terminating character. Also due to the nature of UTF-8, this can be
     /// used with [`SDL_qsort()`] to put strings in (roughly) alphabetical order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
+    ///
     /// ### Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
@@ -2788,10 +2847,11 @@ extern "C" {
     /// match to this number of bytes (or both have matched to a null-terminator
     /// character before this number of bytes), they will be considered equal.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
     /// - `maxlen`: the maximum number of _bytes_ to compare.
+    ///
     /// ### Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
@@ -2825,9 +2885,10 @@ extern "C" {
     /// CHARACTER), which is to say two strings of random bits may turn out to
     /// match if they convert to the same amount of replacement characters.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
+    ///
     /// ### Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
@@ -2870,10 +2931,11 @@ extern "C" {
     /// match to this number of bytes (or both have matched to a null-terminator
     /// character before this number of bytes), they will be considered equal.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
     /// - `maxlen`: the maximum number of bytes to compare.
+    ///
     /// ### Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
@@ -2895,12 +2957,13 @@ extern "C" {
     /// Searches a string for the first occurence of any character contained in a
     /// breakset, and returns a pointer from the string to that character.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: The null-terminated string to be searched. Must not be NULL, and
     ///   must not overlap with `breakset`.
     /// - `breakset`: A null-terminated string containing the list of characters
     ///   to look for. Must not be NULL, and must not overlap with
     ///   `str`.
+    ///
     /// ### Return value
     /// Returns A pointer to the location, in str, of the first occurence of a
     ///   character present in the breakset, or NULL if none is found.
@@ -2965,10 +3028,11 @@ extern "C" {
     /// [RFC3629](https://www.ietf.org/rfc/rfc3629.txt)
     /// for details.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `pstr`: a pointer to a UTF-8 string pointer to be read and adjusted.
     /// - `pslen`: a pointer to the number of bytes in the string, to be read and
     ///   adjusted. NULL is allowed.
+    ///
     /// ### Return value
     /// Returns the first Unicode codepoint in the string.
     ///
@@ -3004,9 +3068,10 @@ extern "C" {
     /// [RFC3629](https://www.ietf.org/rfc/rfc3629.txt)
     /// for details.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `start`: a pointer to the beginning of the UTF-8 string.
     /// - `pstr`: a pointer to a UTF-8 string pointer to be read and adjusted.
+    ///
     /// ### Return value
     /// Returns the previous Unicode codepoint in the string.
     ///
@@ -3039,10 +3104,11 @@ extern "C" {
     /// If `dst` is NULL, this returns NULL immediately without writing to the
     /// pointer and without setting an error.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `codepoint`: a Unicode codepoint to convert to UTF-8.
     /// - `dst`: the location to write the encoded UTF-8. Must point to at least
     ///   4 bytes!
+    ///
     /// ### Return value
     /// Returns the first byte past the newly-written UTF-8 sequence.
     ///
@@ -3131,7 +3197,7 @@ extern "C" {
     /// Reusing the seed number will cause SDL_rand_*() to repeat the same stream
     /// of 'random' numbers.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `seed`: the value to use as a random number seed, or 0 to use
     ///   [`SDL_GetPerformanceCounter()`].
     ///
@@ -3171,8 +3237,9 @@ extern "C" {
     /// libraries available with different characteristics and you should pick one
     /// of those to meet any serious needs.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `n`: the number of possible outcomes. n must be positive.
+    ///
     /// ### Return value
     /// Returns a random value in the range of \[0 .. n-1\].
     ///
@@ -3261,10 +3328,11 @@ extern "C" {
     /// libraries available with different characteristics and you should pick one
     /// of those to meet any serious needs.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `state`: a pointer to the current random number state, this may not be
     ///   NULL.
     /// - `n`: the number of possible outcomes. n must be positive.
+    ///
     /// ### Return value
     /// Returns a random value in the range of \[0 .. n-1\].
     ///
@@ -3294,9 +3362,10 @@ extern "C" {
     /// libraries available with different characteristics and you should pick one
     /// of those to meet any serious needs.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `state`: a pointer to the current random number state, this may not be
     ///   NULL.
+    ///
     /// ### Return value
     /// Returns a random value in the range of [0.0, 1.0).
     ///
@@ -3325,9 +3394,10 @@ extern "C" {
     /// libraries available with different characteristics and you should pick one
     /// of those to meet any serious needs.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `state`: a pointer to the current random number state, this may not be
     ///   NULL.
+    ///
     /// ### Return value
     /// Returns a random value in the range of \[0-SDL_MAX_UINT32\].
     ///
@@ -3367,8 +3437,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns arc cosine of `x`, in radians.
     ///
@@ -3402,8 +3473,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns arc cosine of `x`, in radians.
     ///
@@ -3437,8 +3509,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns arc sine of `x`, in radians.
     ///
@@ -3472,8 +3545,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns arc sine of `x`, in radians.
     ///
@@ -3509,8 +3583,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns arc tangent of of `x` in radians, or 0 if `x = 0`.
     ///
@@ -3546,8 +3621,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns arc tangent of of `x` in radians, or 0 if `x = 0`.
     ///
@@ -3585,9 +3661,10 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `y`: floating point value of the numerator (y coordinate).
     /// - `x`: floating point value of the denominator (x coordinate).
+    ///
     /// ### Return value
     /// Returns arc tangent of of `y / x` in radians, or, if `x = 0`, either
     ///   `-Pi/2`, `0`, or `Pi/2`, depending on the value of `y`.
@@ -3626,9 +3703,10 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `y`: floating point value of the numerator (y coordinate).
     /// - `x`: floating point value of the denominator (x coordinate).
+    ///
     /// ### Return value
     /// Returns arc tangent of of `y / x` in radians, or, if `x = 0`, either
     ///   `-Pi/2`, `0`, or `Pi/2`, depending on the value of `y`.
@@ -3659,8 +3737,9 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_ceilf`] for single-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns the ceiling of `x`.
     ///
@@ -3692,8 +3771,9 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_ceil`] for double-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns the ceiling of `x`.
     ///
@@ -3724,9 +3804,10 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_copysignf`] for single-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value to use as the magnitude.
     /// - `y`: floating point value to use as the sign.
+    ///
     /// ### Return value
     /// Returns the floating point value with the sign of y and the magnitude of
     ///   x.
@@ -3758,9 +3839,10 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_copysign`] for double-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value to use as the magnitude.
     /// - `y`: floating point value to use as the sign.
+    ///
     /// ### Return value
     /// Returns the floating point value with the sign of y and the magnitude of
     ///   x.
@@ -3792,8 +3874,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value, in radians.
+    ///
     /// ### Return value
     /// Returns cosine of `x`.
     ///
@@ -3825,8 +3908,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value, in radians.
+    ///
     /// ### Return value
     /// Returns cosine of `x`.
     ///
@@ -3863,8 +3947,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns value of `e^x`.
     ///
@@ -3900,8 +3985,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns value of `e^x`.
     ///
@@ -3927,8 +4013,9 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_copysignf`] for single-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value to use as the magnitude.
+    ///
     /// ### Return value
     /// Returns the absolute value of `x`.
     ///
@@ -3953,8 +4040,9 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_copysignf`] for double-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value to use as the magnitude.
+    ///
     /// ### Return value
     /// Returns the absolute value of `x`.
     ///
@@ -3982,8 +4070,9 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_floorf`] for single-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns the floor of `x`.
     ///
@@ -4015,8 +4104,9 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_floorf`] for double-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns the floor of `x`.
     ///
@@ -4048,8 +4138,9 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_truncf`] for single-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns `x` truncated to an integer.
     ///
@@ -4082,8 +4173,9 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_truncf`] for double-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns `x` truncated to an integer.
     ///
@@ -4115,9 +4207,10 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_fmodf`] for single-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: the numerator.
     /// - `y`: the denominator. Must not be 0.
+    ///
     /// ### Return value
     /// Returns the remainder of `x / y`.
     ///
@@ -4150,9 +4243,10 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_fmod`] for single-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: the numerator.
     /// - `y`: the denominator. Must not be 0.
+    ///
     /// ### Return value
     /// Returns the remainder of `x / y`.
     ///
@@ -4176,8 +4270,9 @@ extern "C" {
 extern "C" {
     /// Return whether the value is infinity.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: double-precision floating point value.
+    ///
     /// ### Return value
     /// Returns non-zero if the value is infinity, 0 otherwise.
     ///
@@ -4195,8 +4290,9 @@ extern "C" {
 extern "C" {
     /// Return whether the value is infinity.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns non-zero if the value is infinity, 0 otherwise.
     ///
@@ -4214,8 +4310,9 @@ extern "C" {
 extern "C" {
     /// Return whether the value is NaN.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: double-precision floating point value.
+    ///
     /// ### Return value
     /// Returns non-zero if the value is NaN, 0 otherwise.
     ///
@@ -4233,8 +4330,9 @@ extern "C" {
 extern "C" {
     /// Return whether the value is NaN.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns non-zero if the value is NaN, 0 otherwise.
     ///
@@ -4266,8 +4364,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value. Must be greater than 0.
+    ///
     /// ### Return value
     /// Returns the natural logarithm of `x`.
     ///
@@ -4301,8 +4400,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value. Must be greater than 0.
+    ///
     /// ### Return value
     /// Returns the natural logarithm of `x`.
     ///
@@ -4335,8 +4435,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value. Must be greater than 0.
+    ///
     /// ### Return value
     /// Returns the logarithm of `x`.
     ///
@@ -4370,8 +4471,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value. Must be greater than 0.
+    ///
     /// ### Return value
     /// Returns the logarithm of `x`.
     ///
@@ -4394,9 +4496,10 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_modff`] for single-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
     /// - `y`: output pointer to store the integer part of `x`.
+    ///
     /// ### Return value
     /// Returns the fractional part of `x`.
     ///
@@ -4422,9 +4525,10 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_modf`] for double-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
     /// - `y`: output pointer to store the integer part of `x`.
+    ///
     /// ### Return value
     /// Returns the fractional part of `x`.
     ///
@@ -4460,9 +4564,10 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: the base.
     /// - `y`: the exponent.
+    ///
     /// ### Return value
     /// Returns `x` raised to the power `y`.
     ///
@@ -4497,9 +4602,10 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: the base.
     /// - `y`: the exponent.
+    ///
     /// ### Return value
     /// Returns `x` raised to the power `y`.
     ///
@@ -4530,8 +4636,9 @@ extern "C" {
     /// [`SDL_roundf`] for single-precision floats. To get the result as an integer
     /// type, use [`SDL_lround`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns the nearest integer to `x`.
     ///
@@ -4564,8 +4671,9 @@ extern "C" {
     /// [`SDL_roundf`] for single-precision floats. To get the result as an integer
     /// type, use [`SDL_lroundf`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns the nearest integer to `x`.
     ///
@@ -4598,8 +4706,9 @@ extern "C" {
     /// [`SDL_lround`] for single-precision floats. To get the result as a
     /// floating-point type, use [`SDL_round`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns the nearest integer to `x`.
     ///
@@ -4632,8 +4741,9 @@ extern "C" {
     /// [`SDL_lroundf`] for double-precision floats. To get the result as a
     /// floating-point type, use [`SDL_roundf`],
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value.
+    ///
     /// ### Return value
     /// Returns the nearest integer to `x`.
     ///
@@ -4664,9 +4774,10 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_scalbnf`] for single-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value to be scaled.
     /// - `n`: integer exponent.
+    ///
     /// ### Return value
     /// Returns `x * 2^n`.
     ///
@@ -4694,9 +4805,10 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_scalbn`] for double-precision floats.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value to be scaled.
     /// - `n`: integer exponent.
+    ///
     /// ### Return value
     /// Returns `x * 2^n`.
     ///
@@ -4727,8 +4839,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value, in radians.
+    ///
     /// ### Return value
     /// Returns sine of `x`.
     ///
@@ -4760,8 +4873,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value, in radians.
+    ///
     /// ### Return value
     /// Returns sine of `x`.
     ///
@@ -4793,8 +4907,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value. Must be greater than or equal to 0.
+    ///
     /// ### Return value
     /// Returns square root of `x`.
     ///
@@ -4824,8 +4939,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value. Must be greater than or equal to 0.
+    ///
     /// ### Return value
     /// Returns square root of `x`.
     ///
@@ -4855,8 +4971,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value, in radians.
+    ///
     /// ### Return value
     /// Returns tangent of `x`.
     ///
@@ -4890,8 +5007,9 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: floating point value, in radians.
+    ///
     /// ### Return value
     /// Returns tangent of `x`.
     ///
@@ -4924,9 +5042,10 @@ extern "C" {
     /// This function allocates a context for the specified character set
     /// conversion.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `tocode`: The target character encoding, must not be NULL.
     /// - `fromcode`: The source character encoding, must not be NULL.
+    ///
     /// ### Return value
     /// Returns a handle that must be freed with [`SDL_iconv_close`], or
     ///   [`SDL_ICONV_ERROR`] on failure.
@@ -4947,8 +5066,9 @@ extern "C" {
 extern "C" {
     /// This function frees a context used for character set conversion.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `cd`: The character set conversion handle.
+    ///
     /// ### Return value
     /// Returns 0 on success, or -1 on failure.
     ///
@@ -4968,7 +5088,7 @@ extern "C" {
     ///
     /// It returns the number of succesful conversions.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `cd`: The character set conversion context, created in
     ///   [`SDL_iconv_open()`].
     /// - `inbuf`: Address of variable that points to the first character of the
@@ -4976,6 +5096,7 @@ extern "C" {
     /// - `inbytesleft`: The number of bytes in the input buffer.
     /// - `outbuf`: Address of variable that points to the output buffer.
     /// - `outbytesleft`: The number of bytes in the output buffer.
+    ///
     /// ### Return value
     /// Returns the number of conversions on success, else [`SDL_ICONV_E2BIG`] is
     ///   returned when the output buffer is too small, or [`SDL_ICONV_EILSEQ`]
@@ -5022,12 +5143,13 @@ extern "C" {
     /// The returned string is owned by the caller, and should be passed to
     /// [`SDL_free`] when no longer needed.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `tocode`: the character encoding of the output string. Examples are
     ///   "UTF-8", "UCS-4", etc.
     /// - `fromcode`: the character encoding of data in `inbuf`.
     /// - `inbuf`: the string to convert to a different encoding.
     /// - `inbytesleft`: the size of the input string _in bytes_.
+    ///
     /// ### Return value
     /// Returns a new string, converted to the new encoding, or NULL on error.
     ///
@@ -5101,11 +5223,12 @@ pub unsafe fn SDL_iconv_wchar_utf8(S: *const crate::ffi::c_wchar_t) -> *mut ::co
 ///
 /// Otherwise store `a * b` via ret and return true.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `a`: the multiplicand.
 /// - `b`: the multiplier.
 /// - `ret`: on non-overflow output, stores the multiplication result, may
 ///   not be NULL.
+///
 /// ### Return value
 /// Returns false on overflow, true if result is multiplied without overflow.
 ///
@@ -5140,11 +5263,12 @@ apply_cfg!(#[cfg(not(doc))] => {
 ///
 /// Otherwise store `a + b` via ret and return 0.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `a`: the first addend.
 /// - `b`: the second addend.
 /// - `ret`: on non-overflow output, stores the addition result, may not be
 ///   NULL.
+///
 /// ### Return value
 /// Returns false on overflow, true if result is added without overflow.
 ///

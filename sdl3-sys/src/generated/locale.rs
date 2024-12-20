@@ -58,9 +58,10 @@ extern "C" {
     /// if possible, and you can call this function again to get an updated copy of
     /// preferred locales.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of locales returned, may
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns a NULL terminated array of locale pointers, or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This is a single

@@ -47,6 +47,7 @@ pub type SDL_PropertiesID = Uint32;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PropertyType(pub ::core::ffi::c_int);
+
 impl From<SDL_PropertyType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PropertyType) -> Self {
@@ -127,9 +128,10 @@ extern "C" {
     /// [`SDL_SetPointerPropertyWithCleanup()`]), which will not be copied. Any
     /// property that already exists on `dst` will be overwritten.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the properties to copy.
     /// - `dst`: the destination properties.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -157,8 +159,9 @@ extern "C" {
     /// or want to guarantee that properties being queried aren't freed in another
     /// thread.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to lock.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -177,7 +180,7 @@ extern "C" {
 extern "C" {
     /// Unlock a group of properties.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to unlock.
     ///
     /// ### Thread safety
@@ -202,7 +205,7 @@ extern "C" {
 /// This callback will be called _during_ [`SDL_SetPointerPropertyWithCleanup`] if
 /// the function fails for any reason.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: an app-defined pointer passed to the callback.
 /// - `value`: the pointer assigned to the property to clean up.
 ///
@@ -231,13 +234,14 @@ extern "C" {
     /// instead, as those functions will handle cleanup on your behalf. This
     /// function is only for more complex, custom data.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to modify.
     /// - `value`: the new value of the property, or NULL to delete the property.
     /// - `cleanup`: the function to call when this property is deleted, or NULL
     ///   if no cleanup is necessary.
     /// - `userdata`: a pointer that is passed to the cleanup function.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -264,10 +268,11 @@ extern "C" {
 extern "C" {
     /// Set a pointer property in a group of properties.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to modify.
     /// - `value`: the new value of the property, or NULL to delete the property.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -299,10 +304,11 @@ extern "C" {
     /// This function makes a copy of the string; the caller does not have to
     /// preserve the data after this call completes.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to modify.
     /// - `value`: the new value of the property, or NULL to delete the property.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -325,10 +331,11 @@ extern "C" {
 extern "C" {
     /// Set an integer property in a group of properties.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to modify.
     /// - `value`: the new value of the property.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -351,10 +358,11 @@ extern "C" {
 extern "C" {
     /// Set a floating point property in a group of properties.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to modify.
     /// - `value`: the new value of the property.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -377,10 +385,11 @@ extern "C" {
 extern "C" {
     /// Set a boolean property in a group of properties.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to modify.
     /// - `value`: the new value of the property.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -403,9 +412,10 @@ extern "C" {
 extern "C" {
     /// Return whether a property exists in a group of properties.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to query.
     /// - `name`: the name of the property to query.
+    ///
     /// ### Return value
     /// Returns true if the property exists, or false if it doesn't.
     ///
@@ -426,9 +436,10 @@ extern "C" {
 extern "C" {
     /// Get the type of a property in a group of properties.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to query.
     /// - `name`: the name of the property to query.
+    ///
     /// ### Return value
     /// Returns the type of the property, or [`SDL_PROPERTY_TYPE_INVALID`] if it is
     ///   not set.
@@ -455,10 +466,11 @@ extern "C" {
     /// "SDL.internal.". These should be considered read-only and should not be
     /// modified by applications.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to query.
     /// - `name`: the name of the property to query.
     /// - `default_value`: the default value of the property.
+    ///
     /// ### Return value
     /// Returns the value of the property, or `default_value` if it is not set or
     ///   not a pointer property.
@@ -492,10 +504,11 @@ extern "C" {
 extern "C" {
     /// Get a string property from a group of properties.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to query.
     /// - `name`: the name of the property to query.
     /// - `default_value`: the default value of the property.
+    ///
     /// ### Return value
     /// Returns the value of the property, or `default_value` if it is not set or
     ///   not a string property.
@@ -528,10 +541,11 @@ extern "C" {
     /// You can use [`SDL_GetPropertyType()`] to query whether the property exists and
     /// is a number property.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to query.
     /// - `name`: the name of the property to query.
     /// - `default_value`: the default value of the property.
+    ///
     /// ### Return value
     /// Returns the value of the property, or `default_value` if it is not set or
     ///   not a number property.
@@ -559,10 +573,11 @@ extern "C" {
     /// You can use [`SDL_GetPropertyType()`] to query whether the property exists and
     /// is a floating point property.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to query.
     /// - `name`: the name of the property to query.
     /// - `default_value`: the default value of the property.
+    ///
     /// ### Return value
     /// Returns the value of the property, or `default_value` if it is not set or
     ///   not a float property.
@@ -590,10 +605,11 @@ extern "C" {
     /// You can use [`SDL_GetPropertyType()`] to query whether the property exists and
     /// is a boolean property.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to query.
     /// - `name`: the name of the property to query.
     /// - `default_value`: the default value of the property.
+    ///
     /// ### Return value
     /// Returns the value of the property, or `default_value` if it is not set or
     ///   not a boolean property.
@@ -618,9 +634,10 @@ extern "C" {
 extern "C" {
     /// Clear a property from a group of properties.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to modify.
     /// - `name`: the name of the property to clear.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -641,7 +658,7 @@ extern "C" {
 /// This callback is called from [`SDL_EnumerateProperties()`], and is called once
 /// per property in the set.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: an app-defined pointer passed to the callback.
 /// - `props`: the [`SDL_PropertiesID`] that is being enumerated.
 /// - `name`: the next property name in the enumeration.
@@ -669,10 +686,11 @@ extern "C" {
     /// The callback function is called for each property in the group of
     /// properties. The properties are locked during enumeration.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to query.
     /// - `callback`: the function to call for each property.
     /// - `userdata`: a pointer that is passed to `callback`.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -695,7 +713,7 @@ extern "C" {
     /// All properties are deleted and their cleanup functions will be called, if
     /// any.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to destroy.
     ///
     /// ### Thread safety

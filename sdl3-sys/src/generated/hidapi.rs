@@ -43,6 +43,7 @@ use super::error::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_hid_bus_type(pub ::core::ffi::c_int);
+
 impl From<SDL_hid_bus_type> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_hid_bus_type) -> Self {
@@ -233,11 +234,12 @@ extern "C" {
     /// or crashing on bad drivers, but [`SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS`]
     /// can be set to "0" to enumerate all HID devices.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `vendor_id`: the Vendor ID (VID) of the types of device to open, or 0
     ///   to match any vendor.
     /// - `product_id`: the Product ID (PID) of the types of device to open, or 0
     ///   to match any product.
+    ///
     /// ### Return value
     /// Returns a pointer to a linked list of type [`SDL_hid_device_info`], containing
     ///   information about the HID devices attached to the system, or NULL
@@ -260,7 +262,7 @@ extern "C" {
     ///
     /// This function frees a linked list created by [`SDL_hid_enumerate()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devs`: pointer to a list of struct_device returned from
     ///   [`SDL_hid_enumerate()`].
     ///
@@ -276,11 +278,12 @@ extern "C" {
     /// If `serial_number` is NULL, the first device with the specified VID and PID
     /// is opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `vendor_id`: the Vendor ID (VID) of the device to open.
     /// - `product_id`: the Product ID (PID) of the device to open.
     /// - `serial_number`: the Serial Number of the device to open (Optionally
     ///   NULL).
+    ///
     /// ### Return value
     /// Returns a pointer to a [`SDL_hid_device`] object on success or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -300,8 +303,9 @@ extern "C" {
     /// The path name be determined by calling [`SDL_hid_enumerate()`], or a
     /// platform-specific path name can be used (eg: /dev/hidraw0 on Linux).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `path`: the path name of the device to open.
+    ///
     /// ### Return value
     /// Returns a pointer to a [`SDL_hid_device`] object on success or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -327,11 +331,12 @@ extern "C" {
     /// exists. If it does not, it will send the data through the Control Endpoint
     /// (Endpoint 0).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `data`: the data to send, including the report number as the first
     ///   byte.
     /// - `length`: the length in bytes of the data to send.
+    ///
     /// ### Return value
     /// Returns the actual number of bytes written and -1 on on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -352,13 +357,14 @@ extern "C" {
     /// The first byte will contain the Report number if the device uses numbered
     /// reports.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `data`: a buffer to put the read data into.
     /// - `length`: the number of bytes to read. For devices with multiple
     ///   reports, make sure to read an extra byte for the report
     ///   number.
     /// - `milliseconds`: timeout in milliseconds or -1 for blocking wait.
+    ///
     /// ### Return value
     /// Returns the actual number of bytes read and -1 on on failure; call
     ///   [`SDL_GetError()`] for more information. If no packet was available to
@@ -381,12 +387,13 @@ extern "C" {
     /// The first byte will contain the Report number if the device uses numbered
     /// reports.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `data`: a buffer to put the read data into.
     /// - `length`: the number of bytes to read. For devices with multiple
     ///   reports, make sure to read an extra byte for the report
     ///   number.
+    ///
     /// ### Return value
     /// Returns the actual number of bytes read and -1 on failure; call
     ///   [`SDL_GetError()`] for more information. If no packet was available to
@@ -411,10 +418,11 @@ extern "C" {
     ///
     /// Nonblocking can be turned on and off at any time.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `nonblock`: enable or not the nonblocking reads - 1 to enable
     ///   nonblocking - 0 to disable nonblocking.
+    ///
     /// ### Return value
     /// Returns 0 on success or a negative error code on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -440,12 +448,13 @@ extern "C" {
     /// devices which do not use numbered reports), followed by the report data (16
     /// bytes). In this example, the length passed in would be 17.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `data`: the data to send, including the report number as the first
     ///   byte.
     /// - `length`: the length in bytes of the data to send, including the report
     ///   number.
+    ///
     /// ### Return value
     /// Returns the actual number of bytes written and -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -467,7 +476,7 @@ extern "C" {
     /// first byte will still contain the Report ID, and the report data will start
     /// in data\[1\].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `data`: a buffer to put the read data into, including the Report ID.
     ///   Set the first byte of `data` to the Report ID of the report to
@@ -475,6 +484,7 @@ extern "C" {
     ///   reports.
     /// - `length`: the number of bytes to read, including an extra byte for the
     ///   report ID. The buffer can be longer than the actual report.
+    ///
     /// ### Return value
     /// Returns the number of bytes read plus one for the report ID (which is
     ///   still in the first byte), or -1 on on failure; call [`SDL_GetError()`]
@@ -497,7 +507,7 @@ extern "C" {
     /// first byte will still contain the Report ID, and the report data will start
     /// in data\[1\].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `data`: a buffer to put the read data into, including the Report ID.
     ///   Set the first byte of `data` to the Report ID of the report to
@@ -505,6 +515,7 @@ extern "C" {
     ///   reports.
     /// - `length`: the number of bytes to read, including an extra byte for the
     ///   report ID. The buffer can be longer than the actual report.
+    ///
     /// ### Return value
     /// Returns the number of bytes read plus one for the report ID (which is
     ///   still in the first byte), or -1 on on failure; call [`SDL_GetError()`]
@@ -522,8 +533,9 @@ extern "C" {
 extern "C" {
     /// Close a HID device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
+    ///
     /// ### Return value
     /// Returns 0 on success or a negative error code on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -536,10 +548,11 @@ extern "C" {
 extern "C" {
     /// Get The Manufacturer String from a HID device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `string`: a wide string buffer to put the data into.
     /// - `maxlen`: the length of the buffer in multiples of wchar_t.
+    ///
     /// ### Return value
     /// Returns 0 on success or a negative error code on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -556,10 +569,11 @@ extern "C" {
 extern "C" {
     /// Get The Product String from a HID device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `string`: a wide string buffer to put the data into.
     /// - `maxlen`: the length of the buffer in multiples of wchar_t.
+    ///
     /// ### Return value
     /// Returns 0 on success or a negative error code on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -576,10 +590,11 @@ extern "C" {
 extern "C" {
     /// Get The Serial Number String from a HID device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `string`: a wide string buffer to put the data into.
     /// - `maxlen`: the length of the buffer in multiples of wchar_t.
+    ///
     /// ### Return value
     /// Returns 0 on success or a negative error code on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -596,11 +611,12 @@ extern "C" {
 extern "C" {
     /// Get a string from a HID device, based on its string index.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `string_index`: the index of the string to get.
     /// - `string`: a wide string buffer to put the data into.
     /// - `maxlen`: the length of the buffer in multiples of wchar_t.
+    ///
     /// ### Return value
     /// Returns 0 on success or a negative error code on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -618,8 +634,9 @@ extern "C" {
 extern "C" {
     /// Get the device info from a HID device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
+    ///
     /// ### Return value
     /// Returns a pointer to the [`SDL_hid_device_info`] for this hid_device or NULL
     ///   on failure; call [`SDL_GetError()`] for more information. This struct
@@ -636,10 +653,11 @@ extern "C" {
     /// User has to provide a preallocated buffer where descriptor will be copied
     /// to. The recommended size for a preallocated buffer is 4096 bytes.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device handle returned from [`SDL_hid_open()`].
     /// - `buf`: the buffer to copy descriptor into.
     /// - `buf_size`: the size of the buffer in bytes.
+    ///
     /// ### Return value
     /// Returns the number of bytes actually copied or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -656,7 +674,7 @@ extern "C" {
 extern "C" {
     /// Start or stop a BLE scan on iOS and tvOS to pair Steam Controllers.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `active`: true to start the scan, false to stop the scan.
     ///
     /// ### Availability

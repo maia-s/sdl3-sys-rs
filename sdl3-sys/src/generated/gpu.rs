@@ -154,6 +154,7 @@ use super::video::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUPrimitiveType(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUPrimitiveType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUPrimitiveType) -> Self {
@@ -221,6 +222,7 @@ pub const SDL_GPU_PRIMITIVETYPE_POINTLIST: SDL_GPUPrimitiveType = SDL_GPUPrimiti
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPULoadOp(pub ::core::ffi::c_int);
+
 impl From<SDL_GPULoadOp> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPULoadOp) -> Self {
@@ -277,6 +279,7 @@ pub const SDL_GPU_LOADOP_DONT_CARE: SDL_GPULoadOp = SDL_GPULoadOp::DONT_CARE;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUStoreOp(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUStoreOp> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUStoreOp) -> Self {
@@ -335,6 +338,7 @@ pub const SDL_GPU_STOREOP_RESOLVE_AND_STORE: SDL_GPUStoreOp = SDL_GPUStoreOp::RE
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUIndexElementSize(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUIndexElementSize> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUIndexElementSize) -> Self {
@@ -565,6 +569,7 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUTextureFormat(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUTextureFormat> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUTextureFormat) -> Self {
@@ -1064,6 +1069,7 @@ pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: SDL_GPUT
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUTextureType(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUTextureType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUTextureType) -> Self {
@@ -1133,6 +1139,7 @@ pub const SDL_GPU_TEXTURETYPE_CUBE_ARRAY: SDL_GPUTextureType = SDL_GPUTextureTyp
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSampleCount(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUSampleCount> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUSampleCount) -> Self {
@@ -1194,6 +1201,7 @@ pub const SDL_GPU_SAMPLECOUNT_8: SDL_GPUSampleCount = SDL_GPUSampleCount::_8;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUCubeMapFace(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUCubeMapFace> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUCubeMapFace) -> Self {
@@ -1301,6 +1309,7 @@ pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE: SDL_GPUBufferUsageFlags =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUTransferBufferUsage(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUTransferBufferUsage> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUTransferBufferUsage) -> Self {
@@ -1347,6 +1356,7 @@ pub const SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD: SDL_GPUTransferBufferUsage =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUShaderStage(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUShaderStage> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUShaderStage) -> Self {
@@ -1462,6 +1472,7 @@ pub const SDL_GPU_SHADERFORMAT_METALLIB: SDL_GPUShaderFormat = ((32_u32) as SDL_
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUVertexElementFormat(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUVertexElementFormat> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUVertexElementFormat) -> Self {
@@ -1624,6 +1635,7 @@ pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF4: SDL_GPUVertexElementFormat =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUVertexInputRate(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUVertexInputRate> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUVertexInputRate) -> Self {
@@ -1673,6 +1685,7 @@ pub const SDL_GPU_VERTEXINPUTRATE_INSTANCE: SDL_GPUVertexInputRate =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUFillMode(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUFillMode> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUFillMode) -> Self {
@@ -1722,6 +1735,7 @@ pub const SDL_GPU_FILLMODE_LINE: SDL_GPUFillMode = SDL_GPUFillMode::LINE;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUCullMode(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUCullMode> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUCullMode) -> Self {
@@ -1776,6 +1790,7 @@ pub const SDL_GPU_CULLMODE_BACK: SDL_GPUCullMode = SDL_GPUCullMode::BACK;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUFrontFace(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUFrontFace> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUFrontFace) -> Self {
@@ -1832,6 +1847,7 @@ pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOC
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUCompareOp(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUCompareOp> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUCompareOp) -> Self {
@@ -1921,6 +1937,7 @@ pub const SDL_GPU_COMPAREOP_ALWAYS: SDL_GPUCompareOp = SDL_GPUCompareOp::ALWAYS;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUStencilOp(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUStencilOp> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUStencilOp) -> Self {
@@ -2014,6 +2031,7 @@ pub const SDL_GPU_STENCILOP_DECREMENT_AND_WRAP: SDL_GPUStencilOp =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUBlendOp(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUBlendOp> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUBlendOp) -> Self {
@@ -2096,6 +2114,7 @@ pub const SDL_GPU_BLENDOP_MAX: SDL_GPUBlendOp = SDL_GPUBlendOp::MAX;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUBlendFactor(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUBlendFactor> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUBlendFactor) -> Self {
@@ -2242,6 +2261,7 @@ pub const SDL_GPU_COLORCOMPONENT_A: SDL_GPUColorComponentFlags =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUFilter(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUFilter> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUFilter) -> Self {
@@ -2290,6 +2310,7 @@ pub const SDL_GPU_FILTER_LINEAR: SDL_GPUFilter = SDL_GPUFilter::LINEAR;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSamplerMipmapMode(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUSamplerMipmapMode> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUSamplerMipmapMode) -> Self {
@@ -2342,6 +2363,7 @@ pub const SDL_GPU_SAMPLERMIPMAPMODE_LINEAR: SDL_GPUSamplerMipmapMode =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSamplerAddressMode(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUSamplerAddressMode> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUSamplerAddressMode) -> Self {
@@ -2423,6 +2445,7 @@ pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUPresentMode(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUPresentMode> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUPresentMode) -> Self {
@@ -2490,6 +2513,7 @@ pub const SDL_GPU_PRESENTMODE_MAILBOX: SDL_GPUPresentMode = SDL_GPUPresentMode::
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSwapchainComposition(pub ::core::ffi::c_int);
+
 impl From<SDL_GPUSwapchainComposition> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUSwapchainComposition) -> Self {
@@ -3557,11 +3581,12 @@ pub struct SDL_GPUStorageTextureReadWriteBinding {
 extern "C" {
     /// Checks for GPU runtime support.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `format_flags`: a bitflag indicating which shader formats the app is
     ///   able to provide.
     /// - `name`: the preferred GPU driver, or NULL to let SDL pick the optimal
     ///   driver.
+    ///
     /// ### Return value
     /// Returns true if supported, false otherwise.
     ///
@@ -3579,8 +3604,9 @@ extern "C" {
 extern "C" {
     /// Checks for GPU runtime support.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to use.
+    ///
     /// ### Return value
     /// Returns true if supported, false otherwise.
     ///
@@ -3595,12 +3621,13 @@ extern "C" {
 extern "C" {
     /// Creates a GPU context.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `format_flags`: a bitflag indicating which shader formats the app is
     ///   able to provide.
     /// - `debug_mode`: enable debug mode properties and validations.
     /// - `name`: the preferred GPU driver, or NULL to let SDL pick the optimal
     ///   driver.
+    ///
     /// ### Return value
     /// Returns a GPU context on success or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -3652,8 +3679,9 @@ extern "C" {
     /// - [`SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING`]: the prefix to
     ///   use for all vertex semantics, default is "TEXCOORD".
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to use.
+    ///
     /// ### Return value
     /// Returns a GPU context on success or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -3702,7 +3730,7 @@ pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: *const ::core::
 extern "C" {
     /// Destroys a GPU context previously returned by [`SDL_CreateGPUDevice`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU Context to destroy.
     ///
     /// ### Availability
@@ -3737,8 +3765,9 @@ extern "C" {
     /// "metal" or "direct3d12". These never have Unicode characters, and are not
     /// meant to be proper names.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `index`: the index of a GPU driver.
+    ///
     /// ### Return value
     /// Returns the name of the GPU driver with the given **index**.
     ///
@@ -3753,8 +3782,9 @@ extern "C" {
 extern "C" {
     /// Returns the name of the backend used to create this GPU context.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context to query.
+    ///
     /// ### Return value
     /// Returns the name of the device's driver, or NULL on error.
     ///
@@ -3766,8 +3796,9 @@ extern "C" {
 extern "C" {
     /// Returns the supported shader formats for this GPU context.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context to query.
+    ///
     /// ### Return value
     /// Returns a bitflag indicating which shader formats the driver is able to
     ///   consume.
@@ -3813,10 +3844,11 @@ extern "C" {
     /// - \[\[texture\]\]: Sampled textures, followed by read-only storage textures,
     ///   followed by write-only storage textures
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the compute pipeline to
     ///   create.
+    ///
     /// ### Return value
     /// Returns a compute pipeline object on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -3836,10 +3868,11 @@ extern "C" {
 extern "C" {
     /// Creates a pipeline object to be used in a graphics workflow.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the graphics pipeline to
     ///   create.
+    ///
     /// ### Return value
     /// Returns a graphics pipeline object on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -3861,9 +3894,10 @@ extern "C" {
     /// Creates a sampler object to be used when binding textures in a graphics
     /// workflow.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the sampler to create.
+    ///
     /// ### Return value
     /// Returns a sampler object on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -3936,9 +3970,10 @@ extern "C" {
     ///   \[\[stage_in\]\] attribute which will automatically use the vertex input
     ///   information from the [`SDL_GPUPipeline`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the shader to create.
+    ///
     /// ### Return value
     /// Returns a shader object on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -3968,9 +4003,10 @@ extern "C" {
     /// implementation will automatically fall back to the highest available sample
     /// count.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the texture to create.
+    ///
     /// ### Return value
     /// Returns a texture object on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -4004,9 +4040,10 @@ extern "C" {
     /// Note that certain combinations of usage flags are invalid. For example, a
     /// buffer cannot have both the VERTEX and INDEX flags.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the buffer to create.
+    ///
     /// ### Return value
     /// Returns a buffer object on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -4041,10 +4078,11 @@ extern "C" {
     /// Download buffers can be particularly expensive to create, so it is good
     /// practice to reuse them if data will be downloaded regularly.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the transfer buffer to
     ///   create.
+    ///
     /// ### Return value
     /// Returns a transfer buffer on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -4069,7 +4107,7 @@ extern "C" {
     ///
     /// Useful for debugging.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `buffer`: a buffer to attach the name to.
     /// - `text`: a UTF-8 string constant to mark as the name of the buffer.
@@ -4088,7 +4126,7 @@ extern "C" {
     ///
     /// Useful for debugging.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `texture`: a texture to attach the name to.
     /// - `text`: a UTF-8 string constant to mark as the name of the texture.
@@ -4107,7 +4145,7 @@ extern "C" {
     ///
     /// Useful for debugging.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
     /// - `text`: a UTF-8 string constant to insert as the label.
     ///
@@ -4133,7 +4171,7 @@ extern "C" {
     /// pass rather than the command buffer. For best results, if you push a debug
     /// group during a pass, always pop it in the same pass.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
     /// - `name`: a UTF-8 string constant that names the group.
     ///
@@ -4151,7 +4189,7 @@ extern "C" {
 extern "C" {
     /// Ends the most-recently pushed debug group.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
     ///
     /// ### Availability
@@ -4167,7 +4205,7 @@ extern "C" {
     ///
     /// You must not reference the texture after calling this function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `texture`: a texture to be destroyed.
     ///
@@ -4181,7 +4219,7 @@ extern "C" {
     ///
     /// You must not reference the sampler after calling this function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `sampler`: a sampler to be destroyed.
     ///
@@ -4195,7 +4233,7 @@ extern "C" {
     ///
     /// You must not reference the buffer after calling this function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `buffer`: a buffer to be destroyed.
     ///
@@ -4209,7 +4247,7 @@ extern "C" {
     ///
     /// You must not reference the transfer buffer after calling this function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `transfer_buffer`: a transfer buffer to be destroyed.
     ///
@@ -4226,7 +4264,7 @@ extern "C" {
     ///
     /// You must not reference the compute pipeline after calling this function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `compute_pipeline`: a compute pipeline to be destroyed.
     ///
@@ -4243,7 +4281,7 @@ extern "C" {
     ///
     /// You must not reference the shader after calling this function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `shader`: a shader to be destroyed.
     ///
@@ -4257,7 +4295,7 @@ extern "C" {
     ///
     /// You must not reference the graphics pipeline after calling this function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `graphics_pipeline`: a graphics pipeline to be destroyed.
     ///
@@ -4277,8 +4315,9 @@ extern "C" {
     /// acquired on. The command buffer should be submitted on the thread it was
     /// acquired on.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
+    ///
     /// ### Return value
     /// Returns a command buffer, or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -4297,7 +4336,7 @@ extern "C" {
     ///
     /// Subsequent draw calls will use this uniform data.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
     /// - `slot_index`: the vertex uniform slot to push data to.
     /// - `data`: client data to write.
@@ -4318,7 +4357,7 @@ extern "C" {
     ///
     /// Subsequent draw calls will use this uniform data.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
     /// - `slot_index`: the fragment uniform slot to push data to.
     /// - `data`: client data to write.
@@ -4339,7 +4378,7 @@ extern "C" {
     ///
     /// Subsequent draw calls will use this uniform data.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
     /// - `slot_index`: the uniform slot to push data to.
     /// - `data`: client data to write.
@@ -4366,7 +4405,7 @@ extern "C" {
     /// is called. You cannot begin another render pass, or begin a compute pass or
     /// copy pass until you have ended the render pass.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
     /// - `color_target_infos`: an array of texture subresources with
     ///   corresponding clear values and load/store ops.
@@ -4375,6 +4414,7 @@ extern "C" {
     /// - `depth_stencil_target_info`: a texture subresource with corresponding
     ///   clear value and load/store ops, may be
     ///   NULL.
+    ///
     /// ### Return value
     /// Returns a render pass handle.
     ///
@@ -4396,7 +4436,7 @@ extern "C" {
     ///
     /// A graphics pipeline must be bound before making any draw calls.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `graphics_pipeline`: the graphics pipeline to bind.
     ///
@@ -4411,7 +4451,7 @@ extern "C" {
 extern "C" {
     /// Sets the current viewport state on a command buffer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `viewport`: the viewport to set.
     ///
@@ -4426,7 +4466,7 @@ extern "C" {
 extern "C" {
     /// Sets the current scissor state on a command buffer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `scissor`: the scissor area to set.
     ///
@@ -4438,7 +4478,7 @@ extern "C" {
 extern "C" {
     /// Sets the current blend constants on a command buffer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `blend_constants`: the blend constant color.
     ///
@@ -4457,7 +4497,7 @@ extern "C" {
 extern "C" {
     /// Sets the current stencil reference value on a command buffer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `reference`: the stencil reference value to set.
     ///
@@ -4470,7 +4510,7 @@ extern "C" {
     /// Binds vertex buffers on a command buffer for use with subsequent draw
     /// calls.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the vertex buffer slot to begin binding from.
     /// - `bindings`: an array of [`SDL_GPUBufferBinding`] structs containing vertex
@@ -4491,7 +4531,7 @@ extern "C" {
     /// Binds an index buffer on a command buffer for use with subsequent draw
     /// calls.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `binding`: a pointer to a struct containing an index buffer and offset.
     /// - `index_element_size`: whether the index values in the buffer are 16- or
@@ -4511,7 +4551,7 @@ extern "C" {
     ///
     /// The textures must have been created with [`SDL_GPU_TEXTUREUSAGE_SAMPLER`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the vertex sampler slot to begin binding from.
     /// - `texture_sampler_bindings`: an array of texture-sampler binding
@@ -4535,7 +4575,7 @@ extern "C" {
     /// These textures must have been created with
     /// [`SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the vertex storage texture slot to begin binding from.
     /// - `storage_textures`: an array of storage textures.
@@ -4557,7 +4597,7 @@ extern "C" {
     /// These buffers must have been created with
     /// [`SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the vertex storage buffer slot to begin binding from.
     /// - `storage_buffers`: an array of buffers.
@@ -4578,7 +4618,7 @@ extern "C" {
     ///
     /// The textures must have been created with [`SDL_GPU_TEXTUREUSAGE_SAMPLER`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the fragment sampler slot to begin binding from.
     /// - `texture_sampler_bindings`: an array of texture-sampler binding
@@ -4602,7 +4642,7 @@ extern "C" {
     /// These textures must have been created with
     /// [`SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the fragment storage texture slot to begin binding from.
     /// - `storage_textures`: an array of storage textures.
@@ -4624,7 +4664,7 @@ extern "C" {
     /// These buffers must have been created with
     /// [`SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the fragment storage buffer slot to begin binding from.
     /// - `storage_buffers`: an array of storage buffers.
@@ -4651,7 +4691,7 @@ extern "C" {
     /// example, SV_VertexID). If your shader depends on these variables, the
     /// correlating draw call parameter MUST be 0.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `num_indices`: the number of indices to draw per instance.
     /// - `num_instances`: the number of instances to draw.
@@ -4682,7 +4722,7 @@ extern "C" {
     /// example, SV_VertexID). If your shader depends on these variables, the
     /// correlating draw call parameter MUST be 0.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `num_vertices`: the number of vertices to draw.
     /// - `num_instances`: the number of instances that will be drawn.
@@ -4708,7 +4748,7 @@ extern "C" {
     /// match the layout of [`SDL_GPUIndirectDrawCommand`]. You must not call this
     /// function before binding a graphics pipeline.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `buffer`: a buffer containing draw parameters.
     /// - `offset`: the offset to start reading from the draw buffer.
@@ -4733,7 +4773,7 @@ extern "C" {
     /// match the layout of [`SDL_GPUIndexedIndirectDrawCommand`]. You must not call
     /// this function before binding a graphics pipeline.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     /// - `buffer`: a buffer containing draw parameters.
     /// - `offset`: the offset to start reading from the draw buffer.
@@ -4756,7 +4796,7 @@ extern "C" {
     /// All bound graphics state on the render pass command buffer is unset. The
     /// render pass handle is now invalid.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `render_pass`: a render pass handle.
     ///
     /// ### Availability
@@ -4786,7 +4826,7 @@ extern "C" {
     /// texture in the same compute pass is only supported by specific texture
     /// formats. Make sure you check the format support!
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
     /// - `storage_texture_bindings`: an array of writeable storage texture
     ///   binding structs.
@@ -4796,6 +4836,7 @@ extern "C" {
     ///   structs.
     /// - `num_storage_buffer_bindings`: the number of storage buffers to bind
     ///   from the array.
+    ///
     /// ### Return value
     /// Returns a compute pass handle.
     ///
@@ -4816,7 +4857,7 @@ extern "C" {
 extern "C" {
     /// Binds a compute pipeline on a command buffer for use in compute dispatch.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `compute_pass`: a compute pass handle.
     /// - `compute_pipeline`: a compute pipeline to bind.
     ///
@@ -4833,7 +4874,7 @@ extern "C" {
     ///
     /// The textures must have been created with [`SDL_GPU_TEXTUREUSAGE_SAMPLER`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `compute_pass`: a compute pass handle.
     /// - `first_slot`: the compute sampler slot to begin binding from.
     /// - `texture_sampler_bindings`: an array of texture-sampler binding
@@ -4857,7 +4898,7 @@ extern "C" {
     /// These textures must have been created with
     /// [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `compute_pass`: a compute pass handle.
     /// - `first_slot`: the compute storage texture slot to begin binding from.
     /// - `storage_textures`: an array of storage textures.
@@ -4879,7 +4920,7 @@ extern "C" {
     /// These buffers must have been created with
     /// [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `compute_pass`: a compute pass handle.
     /// - `first_slot`: the compute storage buffer slot to begin binding from.
     /// - `storage_buffers`: an array of storage buffer binding structs.
@@ -4905,7 +4946,7 @@ extern "C" {
     /// guarantee of which order the writes will occur. If the write order matters,
     /// you MUST end the compute pass and begin another one.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `compute_pass`: a compute pass handle.
     /// - `groupcount_x`: number of local workgroups to dispatch in the X
     ///   dimension.
@@ -4936,7 +4977,7 @@ extern "C" {
     /// guarantee of which order the writes will occur. If the write order matters,
     /// you MUST end the compute pass and begin another one.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `compute_pass`: a compute pass handle.
     /// - `buffer`: a buffer containing dispatch parameters.
     /// - `offset`: the offset to start reading from the dispatch buffer.
@@ -4956,7 +4997,7 @@ extern "C" {
     /// All bound compute state on the command buffer is unset. The compute pass
     /// handle is now invalid.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `compute_pass`: a compute pass handle.
     ///
     /// ### Availability
@@ -4969,10 +5010,11 @@ extern "C" {
     ///
     /// You must unmap the transfer buffer before encoding upload commands.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `transfer_buffer`: a transfer buffer.
     /// - `cycle`: if true, cycles the transfer buffer if it is already bound.
+    ///
     /// ### Return value
     /// Returns the address of the mapped transfer buffer memory, or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -4989,7 +5031,7 @@ extern "C" {
 extern "C" {
     /// Unmaps a previously mapped transfer buffer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `transfer_buffer`: a previously mapped transfer buffer.
     ///
@@ -5008,8 +5050,9 @@ extern "C" {
     /// inside a copy pass. You must not begin another copy pass, or a render pass
     /// or compute pass before ending the copy pass.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
+    ///
     /// ### Return value
     /// Returns a copy pass handle.
     ///
@@ -5027,7 +5070,7 @@ extern "C" {
     /// You must align the data in the transfer buffer to a multiple of the texel
     /// size of the texture format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `copy_pass`: a copy pass handle.
     /// - `source`: the source transfer buffer with image layout information.
     /// - `destination`: the destination texture region.
@@ -5050,7 +5093,7 @@ extern "C" {
     /// The upload occurs on the GPU timeline. You may assume that the upload has
     /// finished in subsequent commands.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `copy_pass`: a copy pass handle.
     /// - `source`: the source transfer buffer with offset.
     /// - `destination`: the destination buffer with offset and size.
@@ -5073,7 +5116,7 @@ extern "C" {
     /// This copy occurs on the GPU timeline. You may assume the copy has finished
     /// in subsequent commands.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `copy_pass`: a copy pass handle.
     /// - `source`: a source texture region.
     /// - `destination`: a destination texture region.
@@ -5102,7 +5145,7 @@ extern "C" {
     /// This copy occurs on the GPU timeline. You may assume the copy has finished
     /// in subsequent commands.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `copy_pass`: a copy pass handle.
     /// - `source`: the buffer and offset to copy from.
     /// - `destination`: the buffer and offset to copy to.
@@ -5127,7 +5170,7 @@ extern "C" {
     /// This data is not guaranteed to be copied until the command buffer fence is
     /// signaled.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `copy_pass`: a copy pass handle.
     /// - `source`: the source texture region.
     /// - `destination`: the destination transfer buffer with image layout
@@ -5148,7 +5191,7 @@ extern "C" {
     /// This data is not guaranteed to be copied until the command buffer fence is
     /// signaled.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `copy_pass`: a copy pass handle.
     /// - `source`: the source buffer with offset and size.
     /// - `destination`: the destination transfer buffer with offset.
@@ -5165,7 +5208,7 @@ extern "C" {
 extern "C" {
     /// Ends the current copy pass.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `copy_pass`: a copy pass handle.
     ///
     /// ### Availability
@@ -5178,7 +5221,7 @@ extern "C" {
     ///
     /// This function must not be called inside of any pass.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command_buffer.
     /// - `texture`: a texture with more than 1 mip level.
     ///
@@ -5195,7 +5238,7 @@ extern "C" {
     ///
     /// This function must not be called inside of any pass.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
     /// - `info`: the blit info struct containing the blit parameters.
     ///
@@ -5212,10 +5255,11 @@ extern "C" {
     ///
     /// The window must be claimed before calling this function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `window`: an [`SDL_Window`].
     /// - `swapchain_composition`: the swapchain composition to check.
+    ///
     /// ### Return value
     /// Returns true if supported, false if unsupported.
     ///
@@ -5236,10 +5280,11 @@ extern "C" {
     ///
     /// The window must be claimed before calling this function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `window`: an [`SDL_Window`].
     /// - `present_mode`: the presentation mode to check.
+    ///
     /// ### Return value
     /// Returns true if supported, false if unsupported.
     ///
@@ -5267,9 +5312,10 @@ extern "C" {
     /// parameters, you must call [`SDL_SetGPUSwapchainParameters`] after claiming the
     /// window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `window`: an [`SDL_Window`].
+    ///
     /// ### Return value
     /// Returns true on success, or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -5291,7 +5337,7 @@ extern "C" {
 extern "C" {
     /// Unclaims a window, destroying its swapchain structure.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `window`: an [`SDL_Window`] that has been claimed.
     ///
@@ -5314,11 +5360,12 @@ extern "C" {
     /// [`SDL_GPU_PRESENTMODE_VSYNC`] and [`SDL_GPU_SWAPCHAINCOMPOSITION_SDR`] are always
     /// supported.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `window`: an [`SDL_Window`] that has been claimed.
     /// - `swapchain_composition`: the desired composition of the swapchain.
     /// - `present_mode`: the desired present mode for the swapchain.
+    ///
     /// ### Return value
     /// Returns true if successful, false on error; call [`SDL_GetError()`] for more
     ///   information.
@@ -5342,9 +5389,10 @@ extern "C" {
     ///
     /// Note that this format can change if the swapchain parameters change.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `window`: an [`SDL_Window`] that has been claimed.
+    ///
     /// ### Return value
     /// Returns the texture format of the swapchain.
     ///
@@ -5376,7 +5424,7 @@ extern "C" {
     /// practice is to call [`SDL_CancelGPUCommandBuffer`] if the swapchain texture
     /// handle is NULL to avoid enqueuing needless work on the GPU.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
     /// - `window`: a window that has been claimed.
     /// - `swapchain_texture`: a pointer filled in with a swapchain texture
@@ -5385,6 +5433,7 @@ extern "C" {
     ///   texture width, may be NULL.
     /// - `swapchain_texture_height`: a pointer filled in with the swapchain
     ///   texture height, may be NULL.
+    ///
     /// ### Return value
     /// Returns true on success, false on error; call [`SDL_GetError()`] for more
     ///   information.
@@ -5418,8 +5467,9 @@ extern "C" {
     /// All commands in the submission are guaranteed to begin executing before any
     /// command in a subsequent submission begins executing.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
+    ///
     /// ### Return value
     /// Returns true on success, false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -5448,8 +5498,9 @@ extern "C" {
     /// All commands in the submission are guaranteed to begin executing before any
     /// command in a subsequent submission begins executing.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
+    ///
     /// ### Return value
     /// Returns a fence associated with the command buffer, or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
@@ -5478,8 +5529,9 @@ extern "C" {
     /// is an error to call this function after a swapchain texture has been
     /// acquired.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `command_buffer`: a command buffer.
+    ///
     /// ### Return value
     /// Returns true on success, false on error; call [`SDL_GetError()`] for more
     ///   information.
@@ -5498,8 +5550,9 @@ extern "C" {
 extern "C" {
     /// Blocks the thread until the GPU is completely idle.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
+    ///
     /// ### Return value
     /// Returns true on success, false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -5515,12 +5568,13 @@ extern "C" {
 extern "C" {
     /// Blocks the thread until the given fences are signaled.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `wait_all`: if 0, wait for any fence to be signaled, if 1, wait for all
     ///   fences to be signaled.
     /// - `fences`: an array of fences to wait on.
     /// - `num_fences`: the number of fences in the fences array.
+    ///
     /// ### Return value
     /// Returns true on success, false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -5542,9 +5596,10 @@ extern "C" {
 extern "C" {
     /// Checks the status of a fence.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `fence`: a fence.
+    ///
     /// ### Return value
     /// Returns true if the fence is signaled, false if it is not.
     ///
@@ -5562,7 +5617,7 @@ extern "C" {
 extern "C" {
     /// Releases a fence obtained from [`SDL_SubmitGPUCommandBufferAndAcquireFence`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `fence`: a fence.
     ///
@@ -5577,8 +5632,9 @@ extern "C" {
 extern "C" {
     /// Obtains the texel block size for a texture format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `format`: the texture format you want to know the texel size of.
+    ///
     /// ### Return value
     /// Returns the texel block size of the texture format.
     ///
@@ -5594,11 +5650,12 @@ extern "C" {
     /// Determines whether a texture format is supported for a given type and
     /// usage.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `format`: the texture format to check.
     /// - `type`: the type of texture (2D, 3D, Cube).
     /// - `usage`: a bitmask of all usage scenarios to check.
+    ///
     /// ### Return value
     /// Returns whether the texture format is supported for this type and usage.
     ///
@@ -5615,10 +5672,11 @@ extern "C" {
 extern "C" {
     /// Determines if a sample count for a texture format is supported.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `device`: a GPU context.
     /// - `format`: the texture format to check.
     /// - `sample_count`: the sample count to check.
+    ///
     /// ### Return value
     /// Returns a hardware-specific version of min(preferred, possible).
     ///
@@ -5634,11 +5692,12 @@ extern "C" {
 extern "C" {
     /// Calculate the size in bytes of a texture format with dimensions.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `format`: a texture format.
     /// - `width`: width in pixels.
     /// - `height`: height in pixels.
     /// - `depth_or_layer_count`: depth for 3D textures or layer count otherwise.
+    ///
     /// ### Return value
     /// Returns the size of a texture with this format and dimensions.
     ///
@@ -5660,7 +5719,7 @@ apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
         /// Do NOT call any SDL_GPU functions after calling this function! This must
         /// also be called before calling [`SDL_GDKSuspendComplete`].
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `device`: a GPU context.
         ///
         /// ### Availability
@@ -5678,7 +5737,7 @@ apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
         /// When resuming, this function MUST be called before calling any other
         /// SDL_GPU functions.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `device`: a GPU context.
         ///
         /// ### Availability

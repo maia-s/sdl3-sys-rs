@@ -52,7 +52,7 @@ pub struct SDL_DialogFileFilter {
 /// no filter was selected or if the platform or method doesn't support
 /// fetching the selected filter.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: an app-provided pointer, for the callback's use.
 /// - `filelist`: the file(s) chosen by the user.
 /// - `filter`: index of the selected filter.
@@ -95,7 +95,7 @@ extern "C" {
     /// requires an event-handling loop. Apps that do not use SDL to handle events
     /// should add a call to [`SDL_PumpEvents`] in their main loop.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `callback`: an [`SDL_DialogFileCallback`] to be invoked when the user
     ///   selects a file and accepts, or cancels the dialog, or an
     ///   error occurs. The first argument is a null-terminated list
@@ -163,7 +163,7 @@ extern "C" {
     /// requires an event-handling loop. Apps that do not use SDL to handle events
     /// should add a call to [`SDL_PumpEvents`] in their main loop.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `callback`: an [`SDL_DialogFileCallback`] to be invoked when the user
     ///   selects a file and accepts, or cancels the dialog, or an
     ///   error occurs. The first argument is a null-terminated list
@@ -228,7 +228,7 @@ extern "C" {
     /// requires an event-handling loop. Apps that do not use SDL to handle events
     /// should add a call to [`SDL_PumpEvents`] in their main loop.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `callback`: an [`SDL_DialogFileCallback`] to be invoked when the user
     ///   selects a file and accepts, or cancels the dialog, or an
     ///   error occurs. The first argument is a null-terminated list

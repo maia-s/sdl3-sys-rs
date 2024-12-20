@@ -64,6 +64,7 @@ pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PixelType(pub ::core::ffi::c_int);
+
 impl From<SDL_PixelType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PixelType) -> Self {
@@ -139,6 +140,7 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_BitmapOrder(pub ::core::ffi::c_int);
+
 impl From<SDL_BitmapOrder> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_BitmapOrder) -> Self {
@@ -190,6 +192,7 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PackedOrder(pub ::core::ffi::c_int);
+
 impl From<SDL_PackedOrder> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PackedOrder) -> Self {
@@ -257,6 +260,7 @@ pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ArrayOrder(pub ::core::ffi::c_int);
+
 impl From<SDL_ArrayOrder> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_ArrayOrder) -> Self {
@@ -320,6 +324,7 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PackedLayout(pub ::core::ffi::c_int);
+
 impl From<SDL_PackedLayout> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PackedLayout) -> Self {
@@ -489,6 +494,7 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PixelFormat(pub ::core::ffi::c_int);
+
 impl From<SDL_PixelFormat> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PixelFormat) -> Self {
@@ -962,6 +968,7 @@ pub const fn SDL_BYTESPERPIXEL(X: SDL_PixelFormat) -> ::core::primitive::u8 {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ColorType(pub ::core::ffi::c_uint);
+
 impl From<SDL_ColorType> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_ColorType) -> Self {
@@ -1008,6 +1015,7 @@ pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ColorRange(pub ::core::ffi::c_uint);
+
 impl From<SDL_ColorRange> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_ColorRange) -> Self {
@@ -1069,6 +1077,7 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ColorPrimaries(pub ::core::ffi::c_uint);
+
 impl From<SDL_ColorPrimaries> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_ColorPrimaries) -> Self {
@@ -1187,6 +1196,7 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TransferCharacteristics(pub ::core::ffi::c_uint);
+
 impl From<SDL_TransferCharacteristics> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_TransferCharacteristics) -> Self {
@@ -1339,6 +1349,7 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_MatrixCoefficients(pub ::core::ffi::c_uint);
+
 impl From<SDL_MatrixCoefficients> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_MatrixCoefficients) -> Self {
@@ -1447,6 +1458,7 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ChromaLocation(pub ::core::ffi::c_uint);
+
 impl From<SDL_ChromaLocation> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_ChromaLocation) -> Self {
@@ -1524,6 +1536,7 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Colorspace(pub Uint32);
+
 impl From<SDL_Colorspace> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_Colorspace) -> Self {
@@ -1767,8 +1780,9 @@ pub struct SDL_PixelFormatDetails {
 extern "C" {
     /// Get the human readable name of a pixel format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `format`: the pixel format to query.
+    ///
     /// ### Return value
     /// Returns the human readable name of the specified pixel format or
     ///   "SDL_PIXELFORMAT_UNKNOWN" if the format isn't recognized.
@@ -1784,13 +1798,14 @@ extern "C" {
 extern "C" {
     /// Convert one of the enumerated pixel formats to a bpp value and RGBA masks.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `format`: one of the [`SDL_PixelFormat`] values.
     /// - `bpp`: a bits per pixel value; usually 15, 16, or 32.
     /// - `Rmask`: a pointer filled in with the red mask for the format.
     /// - `Gmask`: a pointer filled in with the green mask for the format.
     /// - `Bmask`: a pointer filled in with the blue mask for the format.
     /// - `Amask`: a pointer filled in with the alpha mask for the format.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1819,12 +1834,13 @@ extern "C" {
     /// This will return [`SDL_PIXELFORMAT_UNKNOWN`] if the conversion wasn't
     /// possible.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `bpp`: a bits per pixel value; usually 15, 16, or 32.
     /// - `Rmask`: the red mask for the format.
     /// - `Gmask`: the green mask for the format.
     /// - `Bmask`: the blue mask for the format.
     /// - `Amask`: the alpha mask for the format.
+    ///
     /// ### Return value
     /// Returns the [`SDL_PixelFormat`] value corresponding to the format masks, or
     ///   [`SDL_PIXELFORMAT_UNKNOWN`] if there isn't a match.
@@ -1853,8 +1869,9 @@ extern "C" {
     /// allocated), and hence should not be modified, especially the palette. Weird
     /// errors such as `Blit combination not supported` may occur.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `format`: one of the [`SDL_PixelFormat`] values.
+    ///
     /// ### Return value
     /// Returns a pointer to a [`SDL_PixelFormatDetails`] structure or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -1872,8 +1889,9 @@ extern "C" {
     ///
     /// The palette entries are initialized to white.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `ncolors`: represents the number of color entries in the color palette.
+    ///
     /// ### Return value
     /// Returns a new [`SDL_Palette`] structure on success or NULL on failure (e.g. if
     ///   there wasn't enough memory); call [`SDL_GetError()`] for more
@@ -1895,11 +1913,12 @@ extern "C" {
 extern "C" {
     /// Set a range of colors in a palette.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `palette`: the [`SDL_Palette`] structure to modify.
     /// - `colors`: an array of [`SDL_Color`] structures to copy into the palette.
     /// - `firstcolor`: the index of the first palette entry to modify.
     /// - `ncolors`: the number of entries to modify.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1921,7 +1940,7 @@ extern "C" {
 extern "C" {
     /// Free a palette created with [`SDL_CreatePalette()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `palette`: the [`SDL_Palette`] structure to be freed.
     ///
     /// ### Thread safety
@@ -1954,13 +1973,14 @@ extern "C" {
     /// format the return value can be assigned to a Uint16, and similarly a Uint8
     /// for an 8-bpp format).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
     /// - `r`: the red component of the pixel in the range 0-255.
     /// - `g`: the green component of the pixel in the range 0-255.
     /// - `b`: the blue component of the pixel in the range 0-255.
+    ///
     /// ### Return value
     /// Returns a pixel value.
     ///
@@ -2003,7 +2023,7 @@ extern "C" {
     /// format the return value can be assigned to a Uint16, and similarly a Uint8
     /// for an 8-bpp format).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
@@ -2011,6 +2031,7 @@ extern "C" {
     /// - `g`: the green component of the pixel in the range 0-255.
     /// - `b`: the blue component of the pixel in the range 0-255.
     /// - `a`: the alpha component of the pixel in the range 0-255.
+    ///
     /// ### Return value
     /// Returns a pixel value.
     ///
@@ -2044,7 +2065,7 @@ extern "C" {
     /// (e.g., a completely white pixel in 16-bit RGB565 format would return [0xff,
     /// 0xff, 0xff\] not \[0xf8, 0xfc, 0xf8\]).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `pixel`: a pixel value.
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
@@ -2086,7 +2107,7 @@ extern "C" {
     /// If the surface has no alpha component, the alpha will be returned as 0xff
     /// (100% opaque).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `pixel`: a pixel value.
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.

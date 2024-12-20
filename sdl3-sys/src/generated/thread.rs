@@ -59,6 +59,7 @@ pub type SDL_TLSID = SDL_AtomicInt;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ThreadPriority(pub ::core::ffi::c_int);
+
 impl From<SDL_ThreadPriority> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_ThreadPriority) -> Self {
@@ -95,8 +96,9 @@ pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPrio
 
 /// The function passed to [`SDL_CreateThread()`] as the new thread's entry point.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `data`: what was passed as `data` to [`SDL_CreateThread()`].
+///
 /// ### Return value
 /// Returns a value that can be reported through [`SDL_WaitThread()`].
 ///
@@ -126,10 +128,11 @@ apply_cfg!(#[cfg(doc)] => {
         /// Usually, apps should just call this function the same way on every platform
         /// and let the macros hide the details.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `fn`: the [`SDL_ThreadFunction`] function to call in the new thread.
         /// - `name`: the name of the thread.
         /// - `data`: a pointer that is passed to `fn`.
+        ///
         /// ### Return value
         /// Returns an opaque pointer to the new thread object on success, NULL if the
         ///   new thread could not be created; call [`SDL_GetError()`] for more
@@ -198,8 +201,9 @@ apply_cfg!(#[cfg(doc)] => {
         /// Usually, apps should just call this function the same way on every platform
         /// and let the macros hide the details.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `props`: the properties to use.
+        ///
         /// ### Return value
         /// Returns an opaque pointer to the new thread object on success, NULL if the
         ///   new thread could not be created; call [`SDL_GetError()`] for more
@@ -240,12 +244,13 @@ apply_cfg!(#[cfg(not(doc))] => {
     extern "C" {
         /// The actual entry point for [`SDL_CreateThread`].
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `fn`: the [`SDL_ThreadFunction`] function to call in the new thread
         /// - `name`: the name of the thread
         /// - `data`: a pointer that is passed to `fn`
         /// - `pfnBeginThread`: the C runtime's _beginthreadex (or whatnot). Can be NULL.
         /// - `pfnEndThread`: the C runtime's _endthreadex (or whatnot). Can be NULL.
+        ///
         /// ### Return value
         /// Returns an opaque pointer to the new thread object on success, NULL if the
         ///   new thread could not be created; call [`SDL_GetError()`] for more
@@ -259,10 +264,11 @@ apply_cfg!(#[cfg(not(doc))] => {
     extern "C" {
         /// The actual entry point for [`SDL_CreateThreadWithProperties`].
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `props`: the properties to use
         /// - `pfnBeginThread`: the C runtime's _beginthreadex (or whatnot). Can be NULL.
         /// - `pfnEndThread`: the C runtime's _endthreadex (or whatnot). Can be NULL.
+        ///
         /// ### Return value
         /// Returns an opaque pointer to the new thread object on success, NULL if the
         ///   new thread could not be created; call [`SDL_GetError()`] for more
@@ -312,8 +318,9 @@ apply_cfg!(#[cfg(not(doc))] => {
 extern "C" {
     /// Get the thread name as it was specified in [`SDL_CreateThread()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `thread`: the thread to query.
+    ///
     /// ### Return value
     /// Returns a pointer to a UTF-8 string that names the specified thread, or
     ///   NULL if it doesn't have a name.
@@ -351,8 +358,9 @@ extern "C" {
     /// If SDL is running on a platform that does not support threads the return
     /// value will always be zero.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `thread`: the thread to query.
+    ///
     /// ### Return value
     /// Returns the ID of the specified thread, or the ID of the current thread if
     ///   `thread` is NULL.
@@ -372,8 +380,9 @@ extern "C" {
     /// promote the thread to a higher priority) at all, and some require you to be
     /// an administrator account. Be prepared for this to fail.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `priority`: the [`SDL_ThreadPriority`] to set.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -405,7 +414,7 @@ extern "C" {
     /// Note that the thread pointer is freed by this function and is not valid
     /// afterward.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `thread`: the [`SDL_Thread`] pointer that was returned from the
     ///   [`SDL_CreateThread()`] call that started this thread.
     /// - `status`: pointer to an integer that will receive the value returned
@@ -447,7 +456,7 @@ extern "C" {
     ///
     /// It is safe to pass NULL to this function; it is a no-op.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `thread`: the [`SDL_Thread`] pointer that was returned from the
     ///   [`SDL_CreateThread()`] call that started this thread.
     ///
@@ -463,8 +472,9 @@ extern "C" {
 extern "C" {
     /// Get the current thread's value associated with a thread local storage ID.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `id`: a pointer to the thread local storage ID, may not be NULL.
+    ///
     /// ### Return value
     /// Returns the value associated with the ID for the current thread or NULL if
     ///   no value has been set; call [`SDL_GetError()`] for more information.
@@ -484,7 +494,7 @@ extern "C" {
 ///
 /// This is called when a thread exits, to allow an app to free any resources.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `value`: a pointer previously handed to [`SDL_SetTLS`].
 ///
 /// ### Availability
@@ -508,11 +518,12 @@ extern "C" {
     /// `destructor` can be NULL; it is assumed that `value` does not need to be
     /// cleaned up if so.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `id`: a pointer to the thread local storage ID, may not be NULL.
     /// - `value`: the value to associate with the ID for the current thread.
     /// - `destructor`: a function called when the thread exits, to free the
     ///   value, may be NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.

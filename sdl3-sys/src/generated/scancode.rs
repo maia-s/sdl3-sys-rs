@@ -271,6 +271,7 @@ use super::stdinc::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Scancode(pub ::core::ffi::c_int);
+
 impl From<SDL_Scancode> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_Scancode) -> Self {

@@ -134,6 +134,7 @@ pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AudioFormat(pub ::core::ffi::c_uint);
+
 impl From<SDL_AudioFormat> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_AudioFormat) -> Self {
@@ -261,8 +262,9 @@ pub const fn SDL_DEFINE_AUDIO_FORMAT(
 ///
 /// For example, `SDL_AUDIO_BITSIZE(SDL_AUDIO_S16)` returns 16.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `x`: an [`SDL_AudioFormat`] value.
+///
 /// ### Return value
 /// Returns data size in bits.
 ///
@@ -280,8 +282,9 @@ pub const fn SDL_AUDIO_BITSIZE(x: SDL_AudioFormat) -> ::core::ffi::c_uint {
 ///
 /// For example, `SDL_AUDIO_BYTESIZE(SDL_AUDIO_S16)` returns 2.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `x`: an [`SDL_AudioFormat`] value.
+///
 /// ### Return value
 /// Returns data size in bytes.
 ///
@@ -299,8 +302,9 @@ pub const fn SDL_AUDIO_BYTESIZE(x: SDL_AudioFormat) -> ::core::ffi::c_uint {
 ///
 /// For example, `SDL_AUDIO_ISFLOAT(SDL_AUDIO_S16)` returns 0.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `x`: an [`SDL_AudioFormat`] value.
+///
 /// ### Return value
 /// Returns non-zero if format is floating point, zero otherwise.
 ///
@@ -318,8 +322,9 @@ pub const fn SDL_AUDIO_ISFLOAT(x: SDL_AudioFormat) -> ::core::primitive::bool {
 ///
 /// For example, `SDL_AUDIO_ISBIGENDIAN(SDL_AUDIO_S16LE)` returns 0.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `x`: an [`SDL_AudioFormat`] value.
+///
 /// ### Return value
 /// Returns non-zero if format is bigendian, zero otherwise.
 ///
@@ -337,8 +342,9 @@ pub const fn SDL_AUDIO_ISBIGENDIAN(x: SDL_AudioFormat) -> ::core::primitive::boo
 ///
 /// For example, `SDL_AUDIO_ISLITTLEENDIAN(SDL_AUDIO_S16BE)` returns 0.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `x`: an [`SDL_AudioFormat`] value.
+///
 /// ### Return value
 /// Returns non-zero if format is littleendian, zero otherwise.
 ///
@@ -356,8 +362,9 @@ pub const fn SDL_AUDIO_ISLITTLEENDIAN(x: SDL_AudioFormat) -> ::core::primitive::
 ///
 /// For example, `SDL_AUDIO_ISSIGNED(SDL_AUDIO_U8)` returns 0.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `x`: an [`SDL_AudioFormat`] value.
+///
 /// ### Return value
 /// Returns non-zero if format is signed, zero otherwise.
 ///
@@ -375,8 +382,9 @@ pub const fn SDL_AUDIO_ISSIGNED(x: SDL_AudioFormat) -> ::core::primitive::bool {
 ///
 /// For example, `SDL_AUDIO_ISINT(SDL_AUDIO_F32)` returns 0.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `x`: an [`SDL_AudioFormat`] value.
+///
 /// ### Return value
 /// Returns non-zero if format is integer, zero otherwise.
 ///
@@ -394,8 +402,9 @@ pub const fn SDL_AUDIO_ISINT(x: SDL_AudioFormat) -> ::core::primitive::bool {
 ///
 /// For example, `SDL_AUDIO_ISUNSIGNED(SDL_AUDIO_S16)` returns 0.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `x`: an [`SDL_AudioFormat`] value.
+///
 /// ### Return value
 /// Returns non-zero if format is unsigned, zero otherwise.
 ///
@@ -467,8 +476,9 @@ pub struct SDL_AudioSpec {
 /// This reports on the size of an audio sample frame: stereo Sint16 data (2
 /// channels of 2 bytes each) would be 4 bytes per frame, for example.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `x`: an [`SDL_AudioSpec`] to query.
+///
 /// ### Return value
 /// Returns the number of bytes used per sample frame.
 ///
@@ -520,9 +530,10 @@ extern "C" {
     /// "coreaudio" or "wasapi". These never have Unicode characters, and are not
     /// meant to be proper names.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `index`: the index of the audio driver; the value ranges from 0 to
     ///   [`SDL_GetNumAudioDrivers()`] - 1.
+    ///
     /// ### Return value
     /// Returns the name of the audio driver at the requested index, or NULL if an
     ///   invalid index was specified.
@@ -571,9 +582,10 @@ extern "C" {
     /// If this function returns NULL, to signify an error, `*count` will be set to
     /// zero.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of devices returned, may
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns a 0 terminated array of device instance IDs or NULL on error; call
     ///   [`SDL_GetError()`] for more information. This should be freed with
@@ -605,9 +617,10 @@ extern "C" {
     /// If this function returns NULL, to signify an error, `*count` will be set to
     /// zero.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of devices returned, may
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns a 0 terminated array of device instance IDs, or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
@@ -628,8 +641,9 @@ extern "C" {
 extern "C" {
     /// Get the human-readable name of a specific audio device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devid`: the instance ID of the device to query.
+    ///
     /// ### Return value
     /// Returns the name of the audio device, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -669,11 +683,12 @@ extern "C" {
     /// Buffer size is only important if you need low-level control over the audio
     /// playback timing. Most apps do not need this.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devid`: the instance ID of the device to query.
     /// - `spec`: on return, will be filled with device details.
     /// - `sample_frames`: pointer to store device buffer size, in sample frames.
     ///   Can be NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -699,9 +714,10 @@ extern "C" {
     /// Audio devices usually have no remapping applied. This is represented by
     /// returning NULL, and does not signify an error.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devid`: the instance ID of the device to query.
     /// - `count`: On output, set to number of channels in the map. Can be NULL.
+    ///
     /// ### Return value
     /// Returns an array of the current channel mapping, with as many elements as
     ///   the current output spec's channels, or NULL if default. This
@@ -779,13 +795,14 @@ extern "C" {
     /// When done with an audio device, possibly at the end of the app's life, one
     /// should call [`SDL_CloseAudioDevice()`] on the returned device id.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devid`: the device instance id to open, or
     ///   [`SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK`] or
     ///   [`SDL_AUDIO_DEVICE_DEFAULT_RECORDING`] for the most reasonable
     ///   default device.
     /// - `spec`: the requested device configuration. Can be NULL to use
     ///   reasonable defaults.
+    ///
     /// ### Return value
     /// Returns the device ID on success or 0 on failure; call [`SDL_GetError()`] for
     ///   more information.
@@ -823,8 +840,9 @@ extern "C" {
     /// Physical devices can not be paused or unpaused, only logical devices
     /// created through [`SDL_OpenAudioDevice()`] can be.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device opened by [`SDL_OpenAudioDevice()`].
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -856,8 +874,9 @@ extern "C" {
     /// Physical devices can not be paused or unpaused, only logical devices
     /// created through [`SDL_OpenAudioDevice()`] can be.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device opened by [`SDL_OpenAudioDevice()`].
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -884,8 +903,9 @@ extern "C" {
     /// created through [`SDL_OpenAudioDevice()`] can be. Physical and invalid device
     /// IDs will report themselves as unpaused here.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dev`: a device opened by [`SDL_OpenAudioDevice()`].
+    ///
     /// ### Return value
     /// Returns true if device is valid and paused, false otherwise.
     ///
@@ -912,8 +932,9 @@ extern "C" {
     /// Physical devices may not have their gain changed, only logical devices, and
     /// this function will always return -1.0f when used on physical devices.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devid`: the audio device to query.
+    ///
     /// ### Return value
     /// Returns the gain of the device or -1.0f on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -950,9 +971,10 @@ extern "C" {
     /// when outputting the data elsewhere, if it likes, but that second gain is
     /// not applied until the data leaves the audiostream again.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devid`: the audio device on which to change gain.
     /// - `gain`: the gain. 1.0f is no change, 0.0f is silence.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -982,7 +1004,7 @@ extern "C" {
     /// hardware, so that applications don't drop the last buffer of data they
     /// supplied if terminating immediately afterwards.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devid`: an audio device id previously returned by
     ///   [`SDL_OpenAudioDevice()`].
     ///
@@ -1018,10 +1040,11 @@ extern "C" {
     /// device's settings. The caller is welcome to change the other end of the
     /// stream's format at any time.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devid`: an audio device to bind a stream to.
     /// - `streams`: an array of audio streams to bind.
     /// - `num_streams`: number streams listed in the `streams` array.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1049,9 +1072,10 @@ extern "C" {
     /// This is a convenience function, equivalent to calling
     /// `SDL_BindAudioStreams(devid, &stream, 1)`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devid`: an audio device to bind a stream to.
     /// - `stream`: an audio stream to bind to a device.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1081,7 +1105,7 @@ extern "C" {
     ///
     /// Unbinding a stream that isn't bound to a device is a legal no-op.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `streams`: an array of audio streams to unbind.
     /// - `num_streams`: number streams listed in the `streams` array.
     ///
@@ -1105,7 +1129,7 @@ extern "C" {
     /// This is a convenience function, equivalent to calling
     /// `SDL_UnbindAudioStreams(&stream, 1)`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: an audio stream to unbind from a device.
     ///
     /// ### Thread safety
@@ -1127,8 +1151,9 @@ extern "C" {
     /// If not bound, or invalid, this returns zero, which is not a valid device
     /// ID.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the audio stream to query.
+    ///
     /// ### Return value
     /// Returns the bound audio device, or 0 if not bound or invalid.
     ///
@@ -1147,9 +1172,10 @@ extern "C" {
 extern "C" {
     /// Create a new audio stream.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src_spec`: the format details of the input audio.
     /// - `dst_spec`: the format details of the output audio.
+    ///
     /// ### Return value
     /// Returns a new audio stream on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1177,8 +1203,9 @@ extern "C" {
 extern "C" {
     /// Get the properties associated with an audio stream.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the [`SDL_AudioStream`] to query.
+    ///
     /// ### Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1194,10 +1221,11 @@ extern "C" {
 extern "C" {
     /// Query the current format of an audio stream.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the [`SDL_AudioStream`] to query.
     /// - `src_spec`: where to store the input audio format; ignored if NULL.
     /// - `dst_spec`: where to store the output audio format; ignored if NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1231,12 +1259,13 @@ extern "C" {
     /// next sound file, and start putting that new data while the previous sound
     /// file is still queued, and everything will still play back correctly.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the stream the format is being changed.
     /// - `src_spec`: the new format of the audio input; if NULL, it is not
     ///   changed.
     /// - `dst_spec`: the new format of the audio output; if NULL, it is not
     ///   changed.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1261,8 +1290,9 @@ extern "C" {
 extern "C" {
     /// Get the frequency ratio of an audio stream.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the [`SDL_AudioStream`] to query.
+    ///
     /// ### Return value
     /// Returns the frequency ratio of the stream or 0.0 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1291,10 +1321,11 @@ extern "C" {
     /// This is applied during [`SDL_GetAudioStreamData`], and can be continuously
     /// changed to create various effects.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the stream the frequency ratio is being changed.
     /// - `ratio`: the frequency ratio. 1.0 is normal speed. Must be between 0.01
     ///   and 100.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1323,8 +1354,9 @@ extern "C" {
     ///
     /// Audio streams default to a gain of 1.0f (no change in output).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the [`SDL_AudioStream`] to query.
+    ///
     /// ### Return value
     /// Returns the gain of the stream or -1.0f on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1352,9 +1384,10 @@ extern "C" {
     /// This is applied during [`SDL_GetAudioStreamData`], and can be continuously
     /// changed to create various effects.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the stream on which the gain is being changed.
     /// - `gain`: the gain. 1.0f is no change, 0.0f is silence.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1383,9 +1416,10 @@ extern "C" {
     /// Audio streams default to no remapping applied. This is represented by
     /// returning NULL, and does not signify an error.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the [`SDL_AudioStream`] to query.
     /// - `count`: On output, set to number of channels in the map. Can be NULL.
+    ///
     /// ### Return value
     /// Returns an array of the current channel mapping, with as many elements as
     ///   the current output spec's channels, or NULL if default. This
@@ -1415,9 +1449,10 @@ extern "C" {
     /// Audio streams default to no remapping applied. This is represented by
     /// returning NULL, and does not signify an error.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the [`SDL_AudioStream`] to query.
     /// - `count`: On output, set to number of channels in the map. Can be NULL.
+    ///
     /// ### Return value
     /// Returns an array of the current channel mapping, with as many elements as
     ///   the current output spec's channels, or NULL if default. This
@@ -1472,10 +1507,11 @@ extern "C" {
     /// race condition hasn't changed the format while you this call is setting the
     /// channel map.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the [`SDL_AudioStream`] to change.
     /// - `chmap`: the new channel map, NULL to reset to default.
     /// - `count`: The number of channels in the map.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1528,10 +1564,11 @@ extern "C" {
     /// race condition hasn't changed the format while you this call is setting the
     /// channel map.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the [`SDL_AudioStream`] to change.
     /// - `chmap`: the new channel map, NULL to reset to default.
     /// - `count`: The number of channels in the map.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1565,10 +1602,11 @@ extern "C" {
     /// different than SDL2, where data was converted during the Put call and the
     /// Get call would just dequeue the previously-converted data.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the stream the audio data is being added to.
     /// - `buf`: a pointer to the audio data to add.
     /// - `len`: the number of bytes to write to the stream.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1605,10 +1643,11 @@ extern "C" {
     /// is different than SDL2, where that work was done while inputting new data
     /// to the stream and requesting the output just copied the converted data.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the stream the audio is being requested from.
     /// - `buf`: a buffer to fill with audio data.
     /// - `len`: the maximum number of bytes to fill.
+    ///
     /// ### Return value
     /// Returns the number of bytes read from the stream or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1645,8 +1684,9 @@ extern "C" {
     /// [`SDL_GetAudioStreamData`] before this function's return value is no longer
     /// clamped.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the audio stream to query.
+    ///
     /// ### Return value
     /// Returns the number of converted/resampled bytes available or -1 on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -1688,8 +1728,9 @@ extern "C" {
     /// [`SDL_GetAudioStreamData`] before this function's return value is no longer
     /// clamped.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the audio stream to query.
+    ///
     /// ### Return value
     /// Returns the number of bytes queued or -1 on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1714,8 +1755,9 @@ extern "C" {
     /// audio gaps in the output. Generally this is intended to signal the end of
     /// input, so the complete output becomes available.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the audio stream to flush.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1737,8 +1779,9 @@ extern "C" {
     /// This drops any queued data, so there will be nothing to read from the
     /// stream until more is added.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the audio stream to clear.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1769,8 +1812,9 @@ extern "C" {
     /// audio streams. This might be useful while a game is paused, or a level is
     /// loading, etc.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the audio stream associated with the audio device to pause.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1794,8 +1838,9 @@ extern "C" {
     /// previously been paused. Once unpaused, any bound audio streams will begin
     /// to progress again, and audio can be generated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the audio stream associated with the audio device to resume.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1827,8 +1872,9 @@ extern "C" {
     /// As this is just a wrapper over [`SDL_LockMutex`] for an internal lock; it has
     /// all the same attributes (recursive locks are allowed, etc).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the audio stream to lock.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1849,8 +1895,9 @@ extern "C" {
     ///
     /// This unlocks an audio stream after a call to [`SDL_LockAudioStream`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the audio stream to unlock.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1887,7 +1934,7 @@ extern "C" {
 /// appropriate, but the system goes on with the data currently available to it
 /// if this callback does nothing.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `stream`: the SDL audio stream associated with this callback.
 /// - `additional_amount`: the amount of data, in bytes, that is needed right
 ///   now.
@@ -1948,12 +1995,13 @@ extern "C" {
     ///
     /// Setting a NULL function turns off the callback.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the audio stream to set the new callback on.
     /// - `callback`: the new callback function to call when data is requested
     ///   from the stream.
     /// - `userdata`: an opaque pointer provided to the callback for its own
     ///   personal use.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information. This only fails if `stream` is NULL.
@@ -2006,12 +2054,13 @@ extern "C" {
     ///
     /// Setting a NULL function turns off the callback.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the audio stream to set the new callback on.
     /// - `callback`: the new callback function to call when data is added to the
     ///   stream.
     /// - `userdata`: an opaque pointer provided to the callback for its own
     ///   personal use.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information. This only fails if `stream` is NULL.
@@ -2042,7 +2091,7 @@ extern "C" {
     /// device that was opened alongside this stream's creation will be closed,
     /// too.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `stream`: the audio stream to destroy.
     ///
     /// ### Thread safety
@@ -2094,7 +2143,7 @@ extern "C" {
     /// Destroying the returned stream with [`SDL_DestroyAudioStream`] will also close
     /// the audio device associated with this stream.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devid`: an audio device to open, or [`SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK`]
     ///   or [`SDL_AUDIO_DEVICE_DEFAULT_RECORDING`].
     /// - `spec`: the audio stream's data format. Can be NULL.
@@ -2105,6 +2154,7 @@ extern "C" {
     ///   necessary.
     /// - `userdata`: app-controlled pointer passed to callback. Can be NULL.
     ///   Ignored if callback is NULL.
+    ///
     /// ### Return value
     /// Returns an audio stream on success, ready to use, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information. When done with this stream,
@@ -2146,7 +2196,7 @@ extern "C" {
 /// have been applied, which is to say you can make the output data louder at
 /// this point than the gain settings would suggest.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: a pointer provided by the app through
 ///   [`SDL_SetAudioPostmixCallback`], for its own use.
 /// - `spec`: the current format of audio that is to be submitted to the
@@ -2216,10 +2266,11 @@ extern "C" {
     ///
     /// Setting a NULL callback function disables any previously-set callback.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devid`: the ID of an opened audio device.
     /// - `callback`: a callback function to be called. Can be NULL.
     /// - `userdata`: app-controlled pointer passed to callback. Can be NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2287,7 +2338,7 @@ extern "C" {
     /// SDL_LoadWAV("sample.wav", &spec, &buf, &len);
     /// ```
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the data source for the WAVE data.
     /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `src` before returning, even
     ///   in the case of an error.
@@ -2297,6 +2348,7 @@ extern "C" {
     ///   function.
     /// - `audio_len`: a pointer filled with the length of the audio data buffer
     ///   in bytes.
+    ///
     /// ### Return value
     /// Returns true on success. `audio_buf` will be filled with a pointer to an
     ///   allocated buffer containing the audio data, and `audio_len` is
@@ -2337,7 +2389,7 @@ extern "C" {
     /// SDL_LoadWAV_IO(SDL_IOFromFile(path, "rb"), true, spec, audio_buf, audio_len);
     /// ```
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `path`: the file path of the WAV file to open.
     /// - `spec`: a pointer to an [`SDL_AudioSpec`] that will be set to the WAVE
     ///   data's format details on successful return.
@@ -2345,6 +2397,7 @@ extern "C" {
     ///   function.
     /// - `audio_len`: a pointer filled with the length of the audio data buffer
     ///   in bytes.
+    ///
     /// ### Return value
     /// Returns true on success. `audio_buf` will be filled with a pointer to an
     ///   allocated buffer containing the audio data, and `audio_len` is
@@ -2395,7 +2448,7 @@ extern "C" {
     /// [`SDL_MixAudio()`] is really only needed when you're mixing a single audio
     /// stream with a volume adjustment.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the destination for the mixed audio.
     /// - `src`: the source audio buffer to be mixed.
     /// - `format`: the [`SDL_AudioFormat`] structure representing the desired audio
@@ -2403,6 +2456,7 @@ extern "C" {
     /// - `len`: the length of the audio buffer in bytes.
     /// - `volume`: ranges from 0.0 - 1.0, and should be set to 1.0 for full
     ///   audio volume.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2434,7 +2488,7 @@ extern "C" {
     /// use, so it's also less efficient than using one directly, if you need to
     /// convert multiple times.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src_spec`: the format details of the input audio.
     /// - `src_data`: the audio data to be converted.
     /// - `src_len`: the len of src_data.
@@ -2443,6 +2497,7 @@ extern "C" {
     ///   which should be freed with [`SDL_free()`]. On error, it will be
     ///   NULL.
     /// - `dst_len`: will be filled with the len of dst_data.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2465,8 +2520,9 @@ extern "C" {
 extern "C" {
     /// Get the human readable name of an audio format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `format`: the audio format to query.
+    ///
     /// ### Return value
     /// Returns the human readable name of the specified audio format or
     ///   "SDL_AUDIO_UNKNOWN" if the format isn't recognized.
@@ -2486,8 +2542,9 @@ extern "C" {
     /// memset (or [`SDL_memset`]) to set an audio buffer in a specific format to
     /// silence.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `format`: the audio data format to query.
+    ///
     /// ### Return value
     /// Returns a byte value that can be passed to memset.
     ///

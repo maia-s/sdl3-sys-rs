@@ -88,7 +88,7 @@ pub struct SDL_FRect {
 
 /// Convert an [`SDL_Rect`] to [`SDL_FRect`]
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `rect`: a pointer to an [`SDL_Rect`].
 /// - `frect`: a pointer filled in with the floating point representation of
 ///   `rect`.
@@ -146,9 +146,10 @@ pub unsafe fn SDL_RectToFRect(rect: *const SDL_Rect, frect: *mut SDL_FRect) {
 /// embedded in the calling program and the linker and dynamic loader will not
 /// be able to find this function inside SDL itself).
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `p`: the point to test.
 /// - `r`: the rectangle to test.
+///
 /// ### Return value
 /// Returns true if `p` is contained by `r`, false otherwise.
 ///
@@ -187,8 +188,9 @@ pub unsafe fn SDL_PointInRect(p: *const SDL_Point, r: *const SDL_Rect) -> ::core
 /// embedded in the calling program and the linker and dynamic loader will not
 /// be able to find this function inside SDL itself).
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `r`: the rectangle to test.
+///
 /// ### Return value
 /// Returns true if the rectangle is "empty", false otherwise.
 ///
@@ -218,9 +220,10 @@ pub unsafe fn SDL_RectEmpty(r: *const SDL_Rect) -> ::core::primitive::bool {
 /// embedded in the calling program and the linker and dynamic loader will not
 /// be able to find this function inside SDL itself).
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `a`: the first rectangle to test.
 /// - `b`: the second rectangle to test.
+///
 /// ### Return value
 /// Returns true if the rectangles are equal, false otherwise.
 ///
@@ -252,9 +255,10 @@ extern "C" {
     ///
     /// If either pointer is NULL the function will return false.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `A`: an [`SDL_Rect`] structure representing the first rectangle.
     /// - `B`: an [`SDL_Rect`] structure representing the second rectangle.
+    ///
     /// ### Return value
     /// Returns true if there is an intersection, false otherwise.
     ///
@@ -277,11 +281,12 @@ extern "C" {
     ///
     /// If `result` is NULL then this function will return false.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `A`: an [`SDL_Rect`] structure representing the first rectangle.
     /// - `B`: an [`SDL_Rect`] structure representing the second rectangle.
     /// - `result`: an [`SDL_Rect`] structure filled in with the intersection of
     ///   rectangles `A` and `B`.
+    ///
     /// ### Return value
     /// Returns true if there is an intersection, false otherwise.
     ///
@@ -300,11 +305,12 @@ extern "C" {
 extern "C" {
     /// Calculate the union of two rectangles.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `A`: an [`SDL_Rect`] structure representing the first rectangle.
     /// - `B`: an [`SDL_Rect`] structure representing the second rectangle.
     /// - `result`: an [`SDL_Rect`] structure filled in with the union of rectangles
     ///   `A` and `B`.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -324,13 +330,14 @@ extern "C" {
     /// If `clip` is not NULL then only points inside of the clipping rectangle are
     /// considered.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `points`: an array of [`SDL_Point`] structures representing points to be
     ///   enclosed.
     /// - `count`: the number of structures in the `points` array.
     /// - `clip`: an [`SDL_Rect`] used for clipping or NULL to enclose all points.
     /// - `result`: an [`SDL_Rect`] structure filled in with the minimal enclosing
     ///   rectangle.
+    ///
     /// ### Return value
     /// Returns true if any points were enclosed or false if all the points were
     ///   outside of the clipping rectangle.
@@ -354,12 +361,13 @@ extern "C" {
     /// both ends will be clipped to the boundary of the rectangle and the new
     /// coordinates saved in `X1`, `Y1`, `X2`, and/or `Y2` as necessary.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `rect`: an [`SDL_Rect`] structure representing the rectangle to intersect.
     /// - `X1`: a pointer to the starting X-coordinate of the line.
     /// - `Y1`: a pointer to the starting Y-coordinate of the line.
     /// - `X2`: a pointer to the ending X-coordinate of the line.
     /// - `Y2`: a pointer to the ending Y-coordinate of the line.
+    ///
     /// ### Return value
     /// Returns true if there is an intersection, false otherwise.
     ///
@@ -386,9 +394,10 @@ extern "C" {
 /// embedded in the calling program and the linker and dynamic loader will not
 /// be able to find this function inside SDL itself).
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `p`: the point to test.
 /// - `r`: the rectangle to test.
+///
 /// ### Return value
 /// Returns true if `p` is contained by `r`, false otherwise.
 ///
@@ -430,8 +439,9 @@ pub unsafe fn SDL_PointInRectFloat(
 /// embedded in the calling program and the linker and dynamic loader will not
 /// be able to find this function inside SDL itself).
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `r`: the rectangle to test.
+///
 /// ### Return value
 /// Returns true if the rectangle is "empty", false otherwise.
 ///
@@ -464,10 +474,11 @@ pub unsafe fn SDL_RectEmptyFloat(r: *const SDL_FRect) -> ::core::primitive::bool
 /// embedded in the calling program and the linker and dynamic loader will not
 /// be able to find this function inside SDL itself).
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `a`: the first rectangle to test.
 /// - `b`: the second rectangle to test.
 /// - `epsilon`: the epsilon value for comparison.
+///
 /// ### Return value
 /// Returns true if the rectangles are equal, false otherwise.
 ///
@@ -532,9 +543,10 @@ pub unsafe fn SDL_RectsEqualEpsilon(
 /// embedded in the calling program and the linker and dynamic loader will not
 /// be able to find this function inside SDL itself).
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `a`: the first rectangle to test.
 /// - `b`: the second rectangle to test.
+///
 /// ### Return value
 /// Returns true if the rectangles are equal, false otherwise.
 ///
@@ -559,9 +571,10 @@ extern "C" {
     ///
     /// If either pointer is NULL the function will return false.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `A`: an [`SDL_FRect`] structure representing the first rectangle.
     /// - `B`: an [`SDL_FRect`] structure representing the second rectangle.
+    ///
     /// ### Return value
     /// Returns true if there is an intersection, false otherwise.
     ///
@@ -581,11 +594,12 @@ extern "C" {
     ///
     /// If `result` is NULL then this function will return false.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `A`: an [`SDL_FRect`] structure representing the first rectangle.
     /// - `B`: an [`SDL_FRect`] structure representing the second rectangle.
     /// - `result`: an [`SDL_FRect`] structure filled in with the intersection of
     ///   rectangles `A` and `B`.
+    ///
     /// ### Return value
     /// Returns true if there is an intersection, false otherwise.
     ///
@@ -604,11 +618,12 @@ extern "C" {
 extern "C" {
     /// Calculate the union of two rectangles with float precision.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `A`: an [`SDL_FRect`] structure representing the first rectangle.
     /// - `B`: an [`SDL_FRect`] structure representing the second rectangle.
     /// - `result`: an [`SDL_FRect`] structure filled in with the union of rectangles
     ///   `A` and `B`.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -629,13 +644,14 @@ extern "C" {
     /// If `clip` is not NULL then only points inside of the clipping rectangle are
     /// considered.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `points`: an array of [`SDL_FPoint`] structures representing points to be
     ///   enclosed.
     /// - `count`: the number of structures in the `points` array.
     /// - `clip`: an [`SDL_FRect`] used for clipping or NULL to enclose all points.
     /// - `result`: an [`SDL_FRect`] structure filled in with the minimal enclosing
     ///   rectangle.
+    ///
     /// ### Return value
     /// Returns true if any points were enclosed or false if all the points were
     ///   outside of the clipping rectangle.
@@ -660,12 +676,13 @@ extern "C" {
     /// both ends will be clipped to the boundary of the rectangle and the new
     /// coordinates saved in `X1`, `Y1`, `X2`, and/or `Y2` as necessary.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `rect`: an [`SDL_FRect`] structure representing the rectangle to intersect.
     /// - `X1`: a pointer to the starting X-coordinate of the line.
     /// - `Y1`: a pointer to the starting Y-coordinate of the line.
     /// - `X2`: a pointer to the ending X-coordinate of the line.
     /// - `Y2`: a pointer to the ending Y-coordinate of the line.
+    ///
     /// ### Return value
     /// Returns true if there is an intersection, false otherwise.
     ///

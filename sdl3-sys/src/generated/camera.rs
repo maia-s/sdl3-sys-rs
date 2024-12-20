@@ -75,6 +75,7 @@ pub struct SDL_CameraSpec {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_CameraPosition(pub ::core::ffi::c_int);
+
 impl From<SDL_CameraPosition> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_CameraPosition) -> Self {
@@ -144,9 +145,10 @@ extern "C" {
     /// "coremedia" or "android". These never have Unicode characters, and are not
     /// meant to be proper names.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `index`: the index of the camera driver; the value ranges from 0 to
     ///   [`SDL_GetNumCameraDrivers()`] - 1.
+    ///
     /// ### Return value
     /// Returns the name of the camera driver at the requested index, or NULL if
     ///   an invalid index was specified.
@@ -184,9 +186,10 @@ extern "C" {
 extern "C" {
     /// Get a list of currently connected camera devices.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of cameras returned, may
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns a 0 terminated array of camera instance IDs or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
@@ -225,10 +228,11 @@ extern "C" {
     /// there _is_ a camera until the user has given you permission to check
     /// through a scary warning popup.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `devid`: the camera device instance ID to query.
     /// - `count`: a pointer filled in with the number of elements in the list,
     ///   may be NULL.
+    ///
     /// ### Return value
     /// Returns a NULL terminated array of pointers to [`SDL_CameraSpec`] or NULL on
     ///   failure; call [`SDL_GetError()`] for more information. This is a
@@ -253,8 +257,9 @@ extern "C" {
 extern "C" {
     /// Get the human-readable device name for a camera.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the camera device instance ID.
+    ///
     /// ### Return value
     /// Returns a human-readable device name or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -278,8 +283,9 @@ extern "C" {
     /// points towards the user, for taking "selfies") and cameras on the back (for
     /// filming in the direction the user is facing).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the camera device instance ID.
+    ///
     /// ### Return value
     /// Returns the position of the camera on the system hardware.
     ///
@@ -326,10 +332,11 @@ extern "C" {
     /// event might come immediately, but it might come seconds, minutes, or hours
     /// later!
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the camera device instance ID.
     /// - `spec`: the desired format for data the device will provide. Can be
     ///   NULL.
+    ///
     /// ### Return value
     /// Returns an [`SDL_Camera`] object or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
@@ -369,8 +376,9 @@ extern "C" {
     /// If a camera is declined, there's nothing to be done but call
     /// [`SDL_CloseCamera()`] to dispose of it.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `camera`: the opened camera device to query.
+    ///
     /// ### Return value
     /// Returns -1 if user denied access to the camera, 1 if user approved access,
     ///   0 if no decision has been made yet.
@@ -390,8 +398,9 @@ extern "C" {
 extern "C" {
     /// Get the instance ID of an opened camera.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `camera`: an [`SDL_Camera`] to query.
+    ///
     /// ### Return value
     /// Returns the instance ID of the specified camera on success or 0 on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -410,8 +419,9 @@ extern "C" {
 extern "C" {
     /// Get the properties associated with an opened camera.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `camera`: the [`SDL_Camera`] obtained from [`SDL_OpenCamera()`].
+    ///
     /// ### Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -437,9 +447,10 @@ extern "C" {
     /// or poll [`SDL_GetCameraPermissionState()`] occasionally until it returns
     /// non-zero.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `camera`: opened camera device.
     /// - `spec`: the [`SDL_CameraSpec`] to be initialized by this function.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -487,10 +498,11 @@ extern "C" {
     /// [`SDL_EVENT_CAMERA_DEVICE_DENIED`]) event, or poll
     /// [`SDL_GetCameraPermissionState()`] occasionally until it returns non-zero.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `camera`: opened camera device.
     /// - `timestampNS`: a pointer filled in with the frame's timestamp, or 0 on
     ///   error. Can be NULL.
+    ///
     /// ### Return value
     /// Returns a new frame of video on success, NULL if none is currently
     ///   available.
@@ -526,7 +538,7 @@ extern "C" {
     /// The app should not use the surface again after calling this function;
     /// assume the surface is freed and the pointer is invalid.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `camera`: opened camera device.
     /// - `frame`: the video frame surface to release.
     ///
@@ -545,7 +557,7 @@ extern "C" {
     /// Use this function to shut down camera processing and close the camera
     /// device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `camera`: opened camera device.
     ///
     /// ### Thread safety

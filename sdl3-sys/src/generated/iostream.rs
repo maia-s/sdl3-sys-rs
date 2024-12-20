@@ -28,6 +28,7 @@ use super::properties::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_IOStatus(pub ::core::ffi::c_int);
+
 impl From<SDL_IOStatus> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_IOStatus) -> Self {
@@ -97,6 +98,7 @@ pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_IOWhence(pub ::core::ffi::c_int);
+
 impl From<SDL_IOWhence> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_IOWhence) -> Self {
@@ -317,10 +319,11 @@ extern "C" {
     ///   the filesystem. If SDL used some other method to access the filesystem,
     ///   this property will not be set.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `file`: a UTF-8 string representing the filename to open.
     /// - `mode`: an ASCII string representing the mode to be used for opening
     ///   the file.
+    ///
     /// ### Return value
     /// Returns a pointer to the [`SDL_IOStream`] structure that is created or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -375,9 +378,10 @@ extern "C" {
     /// - [`SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER`]: this will be the `size` parameter
     ///   that was passed to this function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `mem`: a pointer to a buffer to feed an [`SDL_IOStream`] stream.
     /// - `size`: the buffer size, in bytes.
+    ///
     /// ### Return value
     /// Returns a pointer to a new [`SDL_IOStream`] structure or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -429,9 +433,10 @@ extern "C" {
     /// - [`SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER`]: this will be the `size` parameter
     ///   that was passed to this function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `mem`: a pointer to a read-only buffer to feed an [`SDL_IOStream`] stream.
     /// - `size`: the buffer size, in bytes.
+    ///
     /// ### Return value
     /// Returns a pointer to a new [`SDL_IOStream`] structure or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -499,10 +504,11 @@ extern "C" {
     /// This function makes a copy of `iface` and the caller does not need to keep
     /// it around after this call.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `iface`: the interface that implements this [`SDL_IOStream`], initialized
     ///   using [`SDL_INIT_INTERFACE()`].
     /// - `userdata`: the pointer that will be passed to the interface functions.
+    ///
     /// ### Return value
     /// Returns a pointer to the allocated memory on success or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
@@ -542,8 +548,9 @@ extern "C" {
     /// should call [`SDL_FlushIO()`] before closing. Note that flushing takes time and
     /// makes the system and your app operate less efficiently, so do so sparingly.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `context`: [`SDL_IOStream`] structure to close.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -559,8 +566,9 @@ extern "C" {
 extern "C" {
     /// Get the properties associated with an [`SDL_IOStream`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
+    ///
     /// ### Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -581,8 +589,9 @@ extern "C" {
     /// [`SDL_WriteIO`] call; don't expect it to change if you just call this query
     /// function in a tight loop.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `context`: the [`SDL_IOStream`] to query.
+    ///
     /// ### Return value
     /// Returns an [`SDL_IOStatus`] enum with the current state.
     ///
@@ -598,8 +607,9 @@ extern "C" {
 extern "C" {
     /// Use this function to get the size of the data stream in an [`SDL_IOStream`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `context`: the [`SDL_IOStream`] to get the size of the data stream from.
+    ///
     /// ### Return value
     /// Returns the size of the data stream in the [`SDL_IOStream`] on success or a
     ///   negative error code on failure; call [`SDL_GetError()`] for more
@@ -623,12 +633,13 @@ extern "C" {
     ///
     /// If this stream can not seek, it will return -1.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `offset`: an offset in bytes, relative to `whence` location; can be
     ///   negative.
     /// - `whence`: any of [`SDL_IO_SEEK_SET`], [`SDL_IO_SEEK_CUR`],
     ///   [`SDL_IO_SEEK_END`].
+    ///
     /// ### Return value
     /// Returns the final offset in the data stream after the seek or -1 on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -648,9 +659,10 @@ extern "C" {
     /// `seek` method, with an offset of 0 bytes from [`SDL_IO_SEEK_CUR`], to
     /// simplify application development.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `context`: an [`SDL_IOStream`] data stream object from which to get the
     ///   current offset.
+    ///
     /// ### Return value
     /// Returns the current offset in the stream, or -1 if the information can not
     ///   be determined.
@@ -672,10 +684,11 @@ extern "C" {
     /// [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_EOF`], or on error, and
     /// [`SDL_GetIOStatus()`] will return [`SDL_IO_STATUS_ERROR`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `ptr`: a pointer to a buffer to read data into.
     /// - `size`: the number of bytes to read from the data source.
+    ///
     /// ### Return value
     /// Returns the number of bytes read, or 0 on end of file or other failure;
     ///   call [`SDL_GetError()`] for more information.
@@ -707,10 +720,11 @@ extern "C" {
     /// recoverable, such as a non-blocking write that can simply be retried later,
     /// or a fatal error.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `ptr`: a pointer to a buffer containing data to write.
     /// - `size`: the number of bytes to write.
+    ///
     /// ### Return value
     /// Returns the number of bytes written, which will be less than `size` on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -736,11 +750,12 @@ extern "C" {
     ///
     /// This function does formatted printing to the stream.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `fmt`: a printf() style format string.
     /// - `...`: additional parameters matching % tokens in the `fmt` string, if
     ///   any.
+    ///
     /// ### Return value
     /// Returns the number of bytes written or 0 on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -763,10 +778,11 @@ extern "C" {
     ///
     /// This function does formatted printing to the stream.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `fmt`: a printf() style format string.
     /// - `ap`: a variable argument list.
+    ///
     /// ### Return value
     /// Returns the number of bytes written or 0 on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -791,8 +807,9 @@ extern "C" {
     /// Normally this isn't necessary but if the stream is a pipe or socket it
     /// guarantees that any pending data is sent.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `context`: [`SDL_IOStream`] structure to flush.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -815,12 +832,13 @@ extern "C" {
     ///
     /// The data should be freed with [`SDL_free()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the [`SDL_IOStream`] to read all available data from.
     /// - `datasize`: a pointer filled in with the number of bytes read, may be
     ///   NULL.
     /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `src` before returning, even
     ///   in the case of an error.
+    ///
     /// ### Return value
     /// Returns the data or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -846,9 +864,10 @@ extern "C" {
     ///
     /// The data should be freed with [`SDL_free()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `file`: the path to read all available data from.
     /// - `datasize`: if not NULL, will store the number of bytes read.
+    ///
     /// ### Return value
     /// Returns the data or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -867,9 +886,10 @@ extern "C" {
 extern "C" {
     /// Use this function to read a byte from an [`SDL_IOStream`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the [`SDL_IOStream`] to read from.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -882,9 +902,10 @@ extern "C" {
 extern "C" {
     /// Use this function to read a signed byte from an [`SDL_IOStream`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the [`SDL_IOStream`] to read from.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -901,9 +922,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -920,9 +942,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -939,9 +962,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -958,9 +982,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -977,9 +1002,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -996,9 +1022,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1015,9 +1042,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1034,9 +1062,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1053,9 +1082,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1072,9 +1102,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1091,9 +1122,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1110,9 +1142,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the data returned will be in
     /// the native byte order.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1125,9 +1158,10 @@ extern "C" {
 extern "C" {
     /// Use this function to write a byte to an [`SDL_IOStream`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the [`SDL_IOStream`] to write to.
     /// - `value`: the byte value to write.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1140,9 +1174,10 @@ extern "C" {
 extern "C" {
     /// Use this function to write a signed byte to an [`SDL_IOStream`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the [`SDL_IOStream`] to write to.
     /// - `value`: the byte value to write.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1160,9 +1195,10 @@ extern "C" {
     /// specifies native format, and the data written will be in little-endian
     /// format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1180,9 +1216,10 @@ extern "C" {
     /// specifies native format, and the data written will be in little-endian
     /// format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1199,9 +1236,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the application always
     /// specifies native format, and the data written will be in big-endian format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1218,9 +1256,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the application always
     /// specifies native format, and the data written will be in big-endian format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1238,9 +1277,10 @@ extern "C" {
     /// specifies native format, and the data written will be in little-endian
     /// format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1258,9 +1298,10 @@ extern "C" {
     /// specifies native format, and the data written will be in little-endian
     /// format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1277,9 +1318,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the application always
     /// specifies native format, and the data written will be in big-endian format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1296,9 +1338,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the application always
     /// specifies native format, and the data written will be in big-endian format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1316,9 +1359,10 @@ extern "C" {
     /// specifies native format, and the data written will be in little-endian
     /// format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1336,9 +1380,10 @@ extern "C" {
     /// specifies native format, and the data written will be in little-endian
     /// format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1355,9 +1400,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the application always
     /// specifies native format, and the data written will be in big-endian format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1374,9 +1420,10 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the application always
     /// specifies native format, and the data written will be in big-endian format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
+    ///
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.

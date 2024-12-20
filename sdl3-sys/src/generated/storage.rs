@@ -124,9 +124,10 @@ const _: () = ::core::assert!(
 extern "C" {
     /// Opens up a read-only container for the application's filesystem.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `override`: a path to override the backend's default title root.
     /// - `props`: a property list that may contain backend-specific information.
+    ///
     /// ### Return value
     /// Returns a title storage container on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -153,10 +154,11 @@ extern "C" {
     /// This allows the backend to properly batch file operations and flush them
     /// when the container has been closed; ensuring safe and optimal save I/O.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `org`: the name of your organization.
     /// - `app`: the name of your application.
     /// - `props`: a property list that may contain backend-specific information.
+    ///
     /// ### Return value
     /// Returns a user storage container on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -186,9 +188,10 @@ extern "C" {
     /// use [`SDL_OpenTitleStorage()`] for access to game data and
     /// [`SDL_OpenUserStorage()`] for access to user data.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `path`: the base path prepended to all storage paths, or NULL for no
     ///   base path.
+    ///
     /// ### Return value
     /// Returns a filesystem storage container on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -218,10 +221,11 @@ extern "C" {
     /// This function makes a copy of `iface` and the caller does not need to keep
     /// it around after this call.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `iface`: the interface that implements this storage, initialized using
     ///   [`SDL_INIT_INTERFACE()`].
     /// - `userdata`: the pointer that will be passed to the interface functions.
+    ///
     /// ### Return value
     /// Returns a storage container on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -246,8 +250,9 @@ extern "C" {
 extern "C" {
     /// Closes and frees a storage container.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container to close.
+    ///
     /// ### Return value
     /// Returns true if the container was freed with no errors, false otherwise;
     ///   call [`SDL_GetError()`] for more information. Even if the function
@@ -272,8 +277,9 @@ extern "C" {
     /// however, it is not recommended to spinwait on this call, as the backend may
     /// depend on a synchronous message loop.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container to query.
+    ///
     /// ### Return value
     /// Returns true if the container is ready, false otherwise.
     ///
@@ -285,10 +291,11 @@ extern "C" {
 extern "C" {
     /// Query the size of a file within a storage container.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container to query.
     /// - `path`: the relative path of the file to query.
     /// - `length`: a pointer to be filled with the file's length.
+    ///
     /// ### Return value
     /// Returns true if the file could be queried or false on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -310,11 +317,12 @@ extern "C" {
     /// Synchronously read a file from a storage container into a client-provided
     /// buffer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container to read from.
     /// - `path`: the relative path of the file to read.
     /// - `destination`: a client-provided buffer to read the file into.
     /// - `length`: the length of the destination buffer.
+    ///
     /// ### Return value
     /// Returns true if the file was read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -337,11 +345,12 @@ extern "C" {
 extern "C" {
     /// Synchronously write a file from client memory into a storage container.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container to write to.
     /// - `path`: the relative path of the file to write.
     /// - `source`: a client-provided buffer to write from.
     /// - `length`: the length of the source buffer.
+    ///
     /// ### Return value
     /// Returns true if the file was written or false on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -364,9 +373,10 @@ extern "C" {
 extern "C" {
     /// Create a directory in a writable storage container.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container.
     /// - `path`: the path of the directory to create.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -395,11 +405,12 @@ extern "C" {
     /// returned [`SDL_ENUM_SUCCESS`] to halt enumeration, or all directory entries
     /// were enumerated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container.
     /// - `path`: the path of the directory to enumerate.
     /// - `callback`: a function that is called for each entry in the directory.
     /// - `userdata`: a pointer that is passed to `callback`.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -420,9 +431,10 @@ extern "C" {
 extern "C" {
     /// Remove a file or an empty directory in a writable storage container.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container.
     /// - `path`: the path of the directory to enumerate.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -441,10 +453,11 @@ extern "C" {
 extern "C" {
     /// Rename a file or directory in a writable storage container.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container.
     /// - `oldpath`: the old path.
     /// - `newpath`: the new path.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -464,10 +477,11 @@ extern "C" {
 extern "C" {
     /// Copy a file in a writable storage container.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container.
     /// - `oldpath`: the old path.
     /// - `newpath`: the new path.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -487,11 +501,12 @@ extern "C" {
 extern "C" {
     /// Get information about a filesystem path in a storage container.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container.
     /// - `path`: the path to query.
     /// - `info`: a pointer filled in with information about the path, or NULL to
     ///   check for the existence of a file.
+    ///
     /// ### Return value
     /// Returns true on success or false if the file doesn't exist, or another
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -511,8 +526,9 @@ extern "C" {
 extern "C" {
     /// Queries the remaining space in a storage container.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container to query.
+    ///
     /// ### Return value
     /// Returns the amount of remaining space, in bytes.
     ///
@@ -542,7 +558,7 @@ extern "C" {
     /// convenience, but if `count` is non-NULL, on return it will contain the
     /// number of items in the array, not counting the NULL terminator.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `storage`: a storage container.
     /// - `path`: the path of the directory to enumerate.
     /// - `pattern`: the pattern that files in the directory must match. Can be
@@ -550,6 +566,7 @@ extern "C" {
     /// - `flags`: `SDL_GLOB_*` bitflags that affect this search.
     /// - `count`: on return, will be set to the number of items in the returned
     ///   array. Can be NULL.
+    ///
     /// ### Return value
     /// Returns an array of strings on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information. The caller should pass the

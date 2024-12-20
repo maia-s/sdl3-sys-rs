@@ -90,9 +90,10 @@ extern "C" {
     /// The returned path is guaranteed to end with a path separator ('\\' on
     /// Windows, '/' on most other platforms).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `org`: the name of your organization.
     /// - `app`: the name of your application.
+    ///
     /// ### Return value
     /// Returns a UTF-8 string of the user directory in platform-dependent
     ///   notation. NULL if there's a problem (creating directory failed,
@@ -158,6 +159,7 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Folder(pub ::core::ffi::c_int);
+
 impl From<SDL_Folder> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_Folder) -> Self {
@@ -257,8 +259,9 @@ extern "C" {
     ///
     /// If NULL is returned, the error may be obtained with [`SDL_GetError()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `folder`: the type of folder to find.
+    ///
     /// ### Return value
     /// Returns either a null-terminated C string containing the full path to the
     ///   folder, or NULL if an error happened.
@@ -278,6 +281,7 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PathType(pub ::core::ffi::c_int);
+
 impl From<SDL_PathType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PathType) -> Self {
@@ -361,8 +365,9 @@ extern "C" {
     /// If parent directories are missing, it will also create them. Note that if
     /// this fails, it will not remove any parent directories it already made.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `path`: the path of the directory to create.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -389,6 +394,7 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EnumerationResult(pub ::core::ffi::c_int);
+
 impl From<SDL_EnumerationResult> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_EnumerationResult) -> Self {
@@ -437,10 +443,11 @@ pub const SDL_ENUM_FAILURE: SDL_EnumerationResult = SDL_EnumerationResult::FAILU
 /// terminate the enumeration early, and dictate the return value of the
 /// enumeration function itself.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: an app-controlled pointer that is passed to the callback.
 /// - `dirname`: the directory that is being enumerated.
 /// - `fname`: the next entry in the enumeration.
+///
 /// ### Return value
 /// Returns how the enumeration should proceed.
 ///
@@ -470,10 +477,11 @@ extern "C" {
     /// returned [`SDL_ENUM_SUCCESS`] to halt enumeration, or all directory entries
     /// were enumerated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `path`: the path of the directory to enumerate.
     /// - `callback`: a function that is called for each entry in the directory.
     /// - `userdata`: a pointer that is passed to `callback`.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -493,8 +501,9 @@ extern "C" {
     /// Directories that are not empty will fail; this function will not recursely
     /// delete directory trees.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `path`: the path to remove from the filesystem.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -518,9 +527,10 @@ extern "C" {
     /// for files. Renaming a non-empty directory across filesystems is
     /// dramatically more complex, however.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `oldpath`: the old path.
     /// - `newpath`: the new path.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -564,9 +574,10 @@ extern "C" {
     /// might be half a copy, it might be the untouched data of what was already
     /// there, or it might be a zero-byte file, etc.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `oldpath`: the old path.
     /// - `newpath`: the new path.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -582,10 +593,11 @@ extern "C" {
 extern "C" {
     /// Get information about a filesystem path.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `path`: the path to query.
     /// - `info`: a pointer filled in with information about the path, or NULL to
     ///   check for the existence of a file.
+    ///
     /// ### Return value
     /// Returns true on success or false if the file doesn't exist, or another
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -615,13 +627,14 @@ extern "C" {
     /// convenience, but if `count` is non-NULL, on return it will contain the
     /// number of items in the array, not counting the NULL terminator.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `path`: the path of the directory to enumerate.
     /// - `pattern`: the pattern that files in the directory must match. Can be
     ///   NULL.
     /// - `flags`: `SDL_GLOB_*` bitflags that affect this search.
     /// - `count`: on return, will be set to the number of items in the returned
     ///   array. Can be NULL.
+    ///
     /// ### Return value
     /// Returns an array of strings on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information. This is a single allocation

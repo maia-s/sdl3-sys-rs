@@ -4029,6 +4029,7 @@ pub const SDL_HINT_ASSERT: *const ::core::ffi::c_char = c"SDL_ASSERT".as_ptr();
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_HintPriority(pub ::core::ffi::c_int);
+
 impl From<SDL_HintPriority> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_HintPriority) -> Self {
@@ -4067,10 +4068,11 @@ extern "C" {
     /// value. Hints will replace existing hints of their priority and lower.
     /// Environment variables are considered to have override priority.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the hint to set.
     /// - `value`: the value of the hint variable.
     /// - `priority`: the [`SDL_HintPriority`] level for the hint.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -4099,9 +4101,10 @@ extern "C" {
     /// variable that takes precedence. You can use [`SDL_SetHintWithPriority()`] to
     /// set the hint with override priority instead.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the hint to set.
     /// - `value`: the value of the hint variable.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -4129,8 +4132,9 @@ extern "C" {
     /// the environment isn't set. Callbacks will be called normally with this
     /// change.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the hint to set.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -4168,8 +4172,9 @@ extern "C" {
 extern "C" {
     /// Get the value of a hint.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the hint to query.
+    ///
     /// ### Return value
     /// Returns the string value of a hint or NULL if the hint isn't set.
     ///
@@ -4193,9 +4198,10 @@ extern "C" {
 extern "C" {
     /// Get the boolean value of a hint variable.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the name of the hint to get the boolean value from.
     /// - `default_value`: the value to return if the hint does not exist.
+    ///
     /// ### Return value
     /// Returns the boolean value of a hint or the provided default value if the
     ///   hint does not exist.
@@ -4220,7 +4226,7 @@ extern "C" {
 /// This is called an initial time during [`SDL_AddHintCallback`] with the hint's
 /// current value, and then again each time the hint's value changes.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: what was passed as `userdata` to [`SDL_AddHintCallback()`].
 /// - `name`: what was passed as `name` to [`SDL_AddHintCallback()`].
 /// - `oldValue`: the previous hint value.
@@ -4251,11 +4257,12 @@ extern "C" {
     /// The callback function is called _during_ this function, to provide it an
     /// initial value, and again each time the hint's value changes.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the hint to watch.
     /// - `callback`: An [`SDL_HintCallback`] function that will be called when the
     ///   hint value changes.
     /// - `userdata`: a pointer to pass to the callback function.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -4278,7 +4285,7 @@ extern "C" {
 extern "C" {
     /// Remove a function watching a particular hint.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the hint being watched.
     /// - `callback`: an [`SDL_HintCallback`] function that will be called when the
     ///   hint value changes.

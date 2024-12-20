@@ -29,7 +29,7 @@ pub struct SDL_GUID {
 extern "C" {
     /// Get an ASCII string representation for a given [`SDL_GUID`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `guid`: the [`SDL_GUID`] you wish to convert to string.
     /// - `pszGUID`: buffer in which to write the ASCII string.
     /// - `cbGUID`: the size of pszGUID, should be at least 33 bytes.
@@ -53,8 +53,9 @@ extern "C" {
     /// an invalid GUID, the function will silently succeed, but the GUID generated
     /// will not be useful.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `pchGUID`: string containing an ASCII representation of a GUID.
+    ///
     /// ### Return value
     /// Returns a [`SDL_GUID`] structure.
     ///

@@ -47,9 +47,10 @@ extern "C" {
     /// power buttons, etc. You should wait for input from a device before you
     /// consider it actively in use.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of keyboards returned, may
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns a 0 terminated array of keyboards instance IDs or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
@@ -69,8 +70,9 @@ extern "C" {
     ///
     /// This function returns "" if the keyboard doesn't have a name.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the keyboard instance ID.
+    ///
     /// ### Return value
     /// Returns the name of the selected keyboard or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -115,8 +117,9 @@ extern "C" {
     /// Note: This function doesn't take into account whether shift has been
     /// pressed or not.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `numkeys`: if non-NULL, receives the length of the returned array.
+    ///
     /// ### Return value
     /// Returns a pointer to an array of key states.
     ///
@@ -170,7 +173,7 @@ extern "C" {
     /// This does not change the keyboard state, only the key modifier flags that
     /// SDL reports.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `modstate`: the desired [`SDL_Keymod`] for the keyboard.
     ///
     /// ### Availability
@@ -190,11 +193,12 @@ extern "C" {
     /// pass `key_event` as true. Otherwise this function simply translates the
     /// scancode based on the given modifier state.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `scancode`: the desired [`SDL_Scancode`] to query.
     /// - `modstate`: the modifier state to use when translating the scancode to
     ///   a keycode.
     /// - `key_event`: true if the keycode will be used in key events.
+    ///
     /// ### Return value
     /// Returns the [`SDL_Keycode`] that corresponds to the given [`SDL_Scancode`].
     ///
@@ -218,10 +222,11 @@ extern "C" {
     /// Note that there may be multiple scancode+modifier states that can generate
     /// this keycode, this will just return the first one found.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `key`: the desired [`SDL_Keycode`] to query.
     /// - `modstate`: a pointer to the modifier state that would be used when the
     ///   scancode generates this key, may be NULL.
+    ///
     /// ### Return value
     /// Returns the [`SDL_Scancode`] that corresponds to the given [`SDL_Keycode`].
     ///
@@ -237,11 +242,12 @@ extern "C" {
 extern "C" {
     /// Set a human-readable name for a scancode.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `scancode`: the desired [`SDL_Scancode`].
     /// - `name`: the name to use for the scancode, encoded as UTF-8. The string
     ///   is not copied, so the pointer given to this function must stay
     ///   valid while SDL is being used.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -269,8 +275,9 @@ extern "C" {
     /// unsuitable for creating a stable cross-platform two-way mapping between
     /// strings and scancodes.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `scancode`: the desired [`SDL_Scancode`] to query.
+    ///
     /// ### Return value
     /// Returns a pointer to the name for the scancode. If the scancode doesn't
     ///   have a name this function returns an empty string ("").
@@ -288,8 +295,9 @@ extern "C" {
 extern "C" {
     /// Get a scancode from a human-readable name.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the human-readable scancode name.
+    ///
     /// ### Return value
     /// Returns the [`SDL_Scancode`], or [`SDL_SCANCODE_UNKNOWN`] if the name wasn't
     ///   recognized; call [`SDL_GetError()`] for more information.
@@ -309,8 +317,9 @@ extern "C" {
     ///
     /// If the key doesn't have a name, this function returns an empty string ("").
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `key`: the desired [`SDL_Keycode`] to query.
+    ///
     /// ### Return value
     /// Returns a UTF-8 encoded string of the key name.
     ///
@@ -327,8 +336,9 @@ extern "C" {
 extern "C" {
     /// Get a key code from a human-readable name.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the human-readable key name.
+    ///
     /// ### Return value
     /// Returns key code, or `SDLK_UNKNOWN` if the name wasn't recognized; call
     ///   [`SDL_GetError()`] for more information.
@@ -356,8 +366,9 @@ extern "C" {
     /// activates an IME, which can prevent some key press events from being passed
     /// through.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to enable text input.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -400,6 +411,7 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TextInputType(pub ::core::ffi::c_int);
+
 impl From<SDL_TextInputType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_TextInputType) -> Self {
@@ -494,6 +506,7 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Capitalization(pub ::core::ffi::c_int);
+
 impl From<SDL_Capitalization> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_Capitalization) -> Self {
@@ -572,9 +585,10 @@ extern "C" {
     ///   use, overriding other properties. This is documented at
     ///   <https://developer.android.com/reference/android/text/InputType>
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to enable text input.
     /// - `props`: the properties to use.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -611,8 +625,9 @@ pub const SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: *const ::core::ffi::c_cha
 extern "C" {
     /// Check whether or not Unicode text input events are enabled for a window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to check.
+    ///
     /// ### Return value
     /// Returns true if text input events are enabled else false.
     ///
@@ -630,8 +645,9 @@ extern "C" {
     /// If [`SDL_StartTextInput()`] showed the screen keyboard, this function will hide
     /// it.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to disable text input.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -647,8 +663,9 @@ extern "C" {
 extern "C" {
     /// Dismiss the composition window/IME without disabling the subsystem.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to affect.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -668,12 +685,13 @@ extern "C" {
     /// Native input methods may place a window with word suggestions near the
     /// cursor, without covering the text being entered.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window for which to set the text input area.
     /// - `rect`: the [`SDL_Rect`] representing the text input area, in window
     ///   coordinates, or NULL to clear it.
     /// - `cursor`: the offset of the current cursor location relative to
     ///   `rect->x`, in window coordinates.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -696,12 +714,13 @@ extern "C" {
     ///
     /// This returns the values previously set by [`SDL_SetTextInputArea()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window for which to query the text input area.
     /// - `rect`: a pointer to an [`SDL_Rect`] filled in with the text input area,
     ///   may be NULL.
     /// - `cursor`: a pointer to the offset of the current cursor location
     ///   relative to `rect->x`, may be NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -737,8 +756,9 @@ extern "C" {
 extern "C" {
     /// Check whether the screen keyboard is shown for given window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window for which screen keyboard should be queried.
+    ///
     /// ### Return value
     /// Returns true if screen keyboard is shown or false if not.
     ///

@@ -48,7 +48,7 @@ extern "C" {
     /// having locked nothing. If the mutex is valid, this function will always
     /// block until it can lock the mutex, and return with it locked.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `mutex`: the mutex to lock.
     ///
     /// ### Availability
@@ -71,8 +71,9 @@ extern "C" {
     ///
     /// This function returns true if passed a NULL mutex.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `mutex`: the mutex to try to lock.
+    ///
     /// ### Return value
     /// Returns true on success, false if the mutex would block.
     ///
@@ -95,7 +96,7 @@ extern "C" {
     /// It is illegal to unlock a mutex that has not been locked by the current
     /// thread, and doing so results in undefined behavior.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `mutex`: the mutex to unlock.
     ///
     /// ### Availability
@@ -116,7 +117,7 @@ extern "C" {
     /// to destroy a locked mutex, and may result in undefined behavior depending
     /// on the platform.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `mutex`: the mutex to destroy.
     ///
     /// ### Availability
@@ -199,7 +200,7 @@ extern "C" {
     /// having locked nothing. If the rwlock is valid, this function will always
     /// block until it can lock the mutex, and return with it locked.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `rwlock`: the read/write lock to lock.
     ///
     /// ### Availability
@@ -233,7 +234,7 @@ extern "C" {
     /// having locked nothing. If the rwlock is valid, this function will always
     /// block until it can lock the mutex, and return with it locked.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `rwlock`: the read/write lock to lock.
     ///
     /// ### Availability
@@ -260,8 +261,9 @@ extern "C" {
     ///
     /// This function returns true if passed a NULL rwlock.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `rwlock`: the rwlock to try to lock.
+    ///
     /// ### Return value
     /// Returns true on success, false if the lock would block.
     ///
@@ -294,8 +296,9 @@ extern "C" {
     ///
     /// This function returns true if passed a NULL rwlock.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `rwlock`: the rwlock to try to lock.
+    ///
     /// ### Return value
     /// Returns true on success, false if the lock would block.
     ///
@@ -323,7 +326,7 @@ extern "C" {
     /// It is illegal to unlock a rwlock that has not been locked by the current
     /// thread, and doing so results in undefined behavior.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `rwlock`: the rwlock to unlock.
     ///
     /// ### Availability
@@ -346,7 +349,7 @@ extern "C" {
     /// is not safe to attempt to destroy a locked rwlock, and may result in
     /// undefined behavior depending on the platform.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `rwlock`: the rwlock to destroy.
     ///
     /// ### Availability
@@ -366,8 +369,9 @@ extern "C" {
     /// is 0. Each post operation will atomically increment the semaphore value and
     /// wake waiting threads and allow them to retry the wait operation.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `initial_value`: the starting value of the semaphore.
+    ///
     /// ### Return value
     /// Returns a new semaphore or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -391,7 +395,7 @@ extern "C" {
     /// It is not safe to destroy a semaphore if there are threads currently
     /// waiting on it.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sem`: the semaphore to destroy.
     ///
     /// ### Availability
@@ -412,7 +416,7 @@ extern "C" {
     /// This function is the equivalent of calling [`SDL_WaitSemaphoreTimeout()`] with
     /// a time length of -1.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sem`: the semaphore wait on.
     ///
     /// ### Availability
@@ -433,8 +437,9 @@ extern "C" {
     /// the semaphore doesn't have a positive value, the function immediately
     /// returns false.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sem`: the semaphore to wait on.
+    ///
     /// ### Return value
     /// Returns true if the wait succeeds, false if the wait would block.
     ///
@@ -455,10 +460,11 @@ extern "C" {
     /// pointed to by `sem` has a positive value or the specified time has elapsed.
     /// If the call is successful it will atomically decrement the semaphore value.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sem`: the semaphore to wait on.
     /// - `timeoutMS`: the length of the timeout, in milliseconds, or -1 to wait
     ///   indefinitely.
+    ///
     /// ### Return value
     /// Returns true if the wait succeeds or false if the wait times out.
     ///
@@ -478,7 +484,7 @@ extern "C" {
 extern "C" {
     /// Atomically increment a semaphore's value and wake waiting threads.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sem`: the semaphore to increment.
     ///
     /// ### Availability
@@ -494,8 +500,9 @@ extern "C" {
 extern "C" {
     /// Get the current value of a semaphore.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sem`: the semaphore to query.
+    ///
     /// ### Return value
     /// Returns the current value of the semaphore.
     ///
@@ -526,7 +533,7 @@ extern "C" {
 extern "C" {
     /// Destroy a condition variable.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `cond`: the condition variable to destroy.
     ///
     /// ### Availability
@@ -540,7 +547,7 @@ extern "C" {
 extern "C" {
     /// Restart one of the threads that are waiting on the condition variable.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `cond`: the condition variable to signal.
     ///
     /// ### Thread safety
@@ -559,7 +566,7 @@ extern "C" {
 extern "C" {
     /// Restart all threads that are waiting on the condition variable.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `cond`: the condition variable to signal.
     ///
     /// ### Thread safety
@@ -590,7 +597,7 @@ extern "C" {
     /// This function is the equivalent of calling [`SDL_WaitConditionTimeout()`] with
     /// a time length of -1.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `cond`: the condition variable to wait on.
     /// - `mutex`: the mutex used to coordinate thread access.
     ///
@@ -620,11 +627,12 @@ extern "C" {
     /// recursively (more than once) is not supported and leads to undefined
     /// behavior.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `cond`: the condition variable to wait on.
     /// - `mutex`: the mutex used to coordinate thread access.
     /// - `timeoutMS`: the maximum time to wait, in milliseconds, or -1 to wait
     ///   indefinitely.
+    ///
     /// ### Return value
     /// Returns true if the condition variable is signaled, false if the condition
     ///   is not signaled in the allotted time.
@@ -661,6 +669,7 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_InitStatus(pub ::core::ffi::c_int);
+
 impl From<SDL_InitStatus> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_InitStatus) -> Self {
@@ -769,8 +778,9 @@ extern "C" {
     /// If this function returns true, the calling code must call
     /// [`SDL_SetInitialized()`] to complete the initialization.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `state`: the initialization state to check.
+    ///
     /// ### Return value
     /// Returns true if initialization needs to be done, false otherwise.
     ///
@@ -795,8 +805,9 @@ extern "C" {
     /// If this function returns true, the calling code must call
     /// [`SDL_SetInitialized()`] to complete the cleanup.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `state`: the initialization state to check.
+    ///
     /// ### Return value
     /// Returns true if cleanup needs to be done, false otherwise.
     ///
@@ -819,7 +830,7 @@ extern "C" {
     /// [`SDL_INIT_STATUS_INITIALIZED`] or [`SDL_INIT_STATUS_UNINITIALIZED`] and allows
     /// any threads waiting for the status to proceed.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `state`: the initialization state to check.
     /// - `initialized`: the new initialization state.
     ///

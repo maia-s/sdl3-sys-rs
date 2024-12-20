@@ -880,9 +880,10 @@ pub type SDL_HapticID = Uint32;
 extern "C" {
     /// Get a list of currently connected haptic devices.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of haptic devices
     ///   returned, may be NULL.
+    ///
     /// ### Return value
     /// Returns a 0 terminated array of haptic device instance IDs or NULL on
     ///   failure; call [`SDL_GetError()`] for more information. This should be
@@ -901,8 +902,9 @@ extern "C" {
     ///
     /// This can be called before any haptic devices are opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the haptic device instance ID.
+    ///
     /// ### Return value
     /// Returns the name of the selected haptic device. If no name can be found,
     ///   this function returns NULL; call [`SDL_GetError()`] for more
@@ -927,8 +929,9 @@ extern "C" {
     /// autocenter will be disabled. To modify these values use [`SDL_SetHapticGain()`]
     /// and [`SDL_SetHapticAutocenter()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the haptic device instance ID.
+    ///
     /// ### Return value
     /// Returns the device identifier or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
@@ -949,8 +952,9 @@ extern "C" {
 extern "C" {
     /// Get the [`SDL_Haptic`] associated with an instance ID, if it has been opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the instance ID to get the [`SDL_Haptic`] for.
+    ///
     /// ### Return value
     /// Returns an [`SDL_Haptic`] on success or NULL on failure or if it hasn't been
     ///   opened yet; call [`SDL_GetError()`] for more information.
@@ -963,8 +967,9 @@ extern "C" {
 extern "C" {
     /// Get the instance ID of an opened haptic device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to query.
+    ///
     /// ### Return value
     /// Returns the instance ID of the specified haptic device on success or 0 on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -977,8 +982,9 @@ extern "C" {
 extern "C" {
     /// Get the implementation dependent name of a haptic device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] obtained from [`SDL_OpenJoystick()`].
+    ///
     /// ### Return value
     /// Returns the name of the selected haptic device. If no name can be found,
     ///   this function returns NULL; call [`SDL_GetError()`] for more
@@ -1025,8 +1031,9 @@ extern "C" {
 extern "C" {
     /// Query if a joystick has haptic features.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `joystick`: the [`SDL_Joystick`] to test for haptic capabilities.
+    ///
     /// ### Return value
     /// Returns true if the joystick is haptic or false if it isn't.
     ///
@@ -1049,8 +1056,9 @@ extern "C" {
     /// device will also get unallocated and you'll be unable to use force feedback
     /// on that device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `joystick`: the [`SDL_Joystick`] to create a haptic device from.
+    ///
     /// ### Return value
     /// Returns a valid haptic device identifier on success or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
@@ -1067,7 +1075,7 @@ extern "C" {
 extern "C" {
     /// Close a haptic device previously opened with [`SDL_OpenHaptic()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to close.
     ///
     /// ### Availability
@@ -1085,8 +1093,9 @@ extern "C" {
     /// approximation. Always check to see if your created effect was actually
     /// created and do not rely solely on [`SDL_GetMaxHapticEffects()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to query.
+    ///
     /// ### Return value
     /// Returns the number of effects the haptic device can store or a negative
     ///   error code on failure; call [`SDL_GetError()`] for more information.
@@ -1105,8 +1114,9 @@ extern "C" {
     ///
     /// This is not supported on all platforms, but will always return a value.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to query maximum playing effects.
+    ///
     /// ### Return value
     /// Returns the number of effects the haptic device can play at the same time
     ///   or -1 on failure; call [`SDL_GetError()`] for more information.
@@ -1123,8 +1133,9 @@ extern "C" {
 extern "C" {
     /// Get the haptic device's supported features in bitwise manner.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to query.
+    ///
     /// ### Return value
     /// Returns a list of supported haptic features in bitwise manner (OR'd), or 0
     ///   on failure; call [`SDL_GetError()`] for more information.
@@ -1144,8 +1155,9 @@ extern "C" {
     /// The number of haptic axes might be useful if working with the
     /// [`SDL_HapticDirection`] effect.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to query.
+    ///
     /// ### Return value
     /// Returns the number of axes on success or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1158,9 +1170,10 @@ extern "C" {
 extern "C" {
     /// Check to see if an effect is supported by a haptic device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to query.
     /// - `effect`: the desired effect to query.
+    ///
     /// ### Return value
     /// Returns true if the effect is supported or false if it isn't.
     ///
@@ -1179,10 +1192,11 @@ extern "C" {
 extern "C" {
     /// Create a new haptic effect on a specified device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: an [`SDL_Haptic`] device to create the effect on.
     /// - `effect`: an [`SDL_HapticEffect`] structure containing the properties of
     ///   the effect to create.
+    ///
     /// ### Return value
     /// Returns the ID of the effect on success or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1208,11 +1222,12 @@ extern "C" {
     /// start playing from the start. You also cannot change the type either when
     /// running [`SDL_UpdateHapticEffect()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device that has the effect.
     /// - `effect`: the identifier of the effect to update.
     /// - `data`: an [`SDL_HapticEffect`] structure containing the new effect
     ///   properties to use.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1239,11 +1254,12 @@ extern "C" {
     /// set the effect's `length` in its structure/union to [`SDL_HAPTIC_INFINITY`]
     /// instead.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to run the effect on.
     /// - `effect`: the ID of the haptic effect to run.
     /// - `iterations`: the number of iterations to run the effect; use
     ///   [`SDL_HAPTIC_INFINITY`] to repeat forever.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1265,9 +1281,10 @@ extern "C" {
 extern "C" {
     /// Stop the haptic effect on its associated haptic device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to stop the effect on.
     /// - `effect`: the ID of the haptic effect to stop.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1290,7 +1307,7 @@ extern "C" {
     /// This will stop the effect if it's running. Effects are automatically
     /// destroyed when the device is closed.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to destroy the effect on.
     /// - `effect`: the ID of the haptic effect to destroy.
     ///
@@ -1307,9 +1324,10 @@ extern "C" {
     ///
     /// Device must support the [`SDL_HAPTIC_STATUS`] feature.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to query for the effect status on.
     /// - `effect`: the ID of the haptic effect to query its status.
+    ///
     /// ### Return value
     /// Returns true if it is playing, false if it isn't playing or haptic status
     ///   isn't supported.
@@ -1335,10 +1353,11 @@ extern "C" {
     /// [`SDL_SetHapticGain()`] will scale linearly using `SDL_HAPTIC_GAIN_MAX` as the
     /// maximum.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to set the gain on.
     /// - `gain`: value to set the gain to, should be between 0 and 100 (0 -
     ///   100).
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1362,9 +1381,10 @@ extern "C" {
     ///
     /// Device must support the [`SDL_HAPTIC_AUTOCENTER`] feature.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to set autocentering on.
     /// - `autocenter`: value to set autocenter to (0-100).
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1389,8 +1409,9 @@ extern "C" {
     /// Do not modify the effects nor add new ones while the device is paused. That
     /// can cause all sorts of weird errors.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to pause.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1408,8 +1429,9 @@ extern "C" {
     ///
     /// Call to unpause after [`SDL_PauseHaptic()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to unpause.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1425,8 +1447,9 @@ extern "C" {
 extern "C" {
     /// Stop all the currently playing effects on a haptic device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the [`SDL_Haptic`] device to stop.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1443,8 +1466,9 @@ extern "C" {
 extern "C" {
     /// Check whether rumble is supported on a haptic device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: haptic device to check for rumble support.
+    ///
     /// ### Return value
     /// Returns true if the effect is supported or false if it isn't.
     ///
@@ -1459,8 +1483,9 @@ extern "C" {
 extern "C" {
     /// Initialize a haptic device for simple rumble playback.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the haptic device to initialize for simple rumble playback.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1478,10 +1503,11 @@ extern "C" {
 extern "C" {
     /// Run a simple rumble effect on a haptic device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the haptic device to play the rumble effect on.
     /// - `strength`: strength of the rumble to play as a 0-1 float value.
     /// - `length`: length of the rumble to play in milliseconds.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1502,8 +1528,9 @@ extern "C" {
 extern "C" {
     /// Stop the simple rumble on a haptic device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `haptic`: the haptic device to stop the rumble effect on.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.

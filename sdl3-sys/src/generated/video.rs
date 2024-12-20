@@ -80,6 +80,7 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: *const ::core::ffi::
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SystemTheme(pub ::core::ffi::c_int);
+
 impl From<SDL_SystemTheme> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_SystemTheme) -> Self {
@@ -167,6 +168,7 @@ pub struct SDL_DisplayMode {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_DisplayOrientation(pub ::core::ffi::c_int);
+
 impl From<SDL_DisplayOrientation> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_DisplayOrientation) -> Self {
@@ -384,6 +386,7 @@ pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitiv
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_FlashOperation(pub ::core::ffi::c_int);
+
 impl From<SDL_FlashOperation> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_FlashOperation) -> Self {
@@ -459,8 +462,9 @@ pub type SDL_EGLint = ::core::ffi::c_int;
 /// The arrays returned by each callback will be appended to the existing
 /// attribute arrays defined by SDL.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: an app-controlled pointer that is passed to the callback.
+///
 /// ### Return value
 /// Returns a newly-allocated array of attributes, terminated with `EGL_NONE`.
 ///
@@ -492,10 +496,11 @@ pub type SDL_EGLAttribArrayCallback = ::core::option::Option<
 /// The arrays returned by each callback will be appended to the existing
 /// attribute arrays defined by SDL.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: an app-controlled pointer that is passed to the callback.
 /// - `display`: the EGL display to be used.
 /// - `config`: the EGL config to be used.
+///
 /// ### Return value
 /// Returns a newly-allocated array of attributes, terminated with `EGL_NONE`.
 ///
@@ -563,6 +568,7 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GLAttr(pub ::core::ffi::c_int);
+
 impl From<SDL_GLAttr> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GLAttr) -> Self {
@@ -824,8 +830,9 @@ extern "C" {
     /// "x11" or "windows". These never have Unicode characters, and are not meant
     /// to be proper names.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `index`: the index of a video driver.
+    ///
     /// ### Return value
     /// Returns the name of the video driver with the given **index**.
     ///
@@ -871,9 +878,10 @@ extern "C" {
 extern "C" {
     /// Get a list of currently connected displays.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of displays returned, may
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns a 0 terminated array of display instance IDs or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
@@ -917,8 +925,9 @@ extern "C" {
     ///   responsible for any coordinate transformations needed to conform to the
     ///   requested display orientation.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
+    ///
     /// ### Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -937,8 +946,9 @@ pub const SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: *const ::core::ffi::
 extern "C" {
     /// Get the name of a display in UTF-8 encoding.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
+    ///
     /// ### Return value
     /// Returns the name of a display or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
@@ -956,9 +966,10 @@ extern "C" {
     ///
     /// The primary display is always located at (0,0).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
     /// - `rect`: the [`SDL_Rect`] structure filled in with the display bounds.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -987,9 +998,10 @@ extern "C" {
     /// so these are good guidelines for the maximum space available to a
     /// non-fullscreen window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
     /// - `rect`: the [`SDL_Rect`] structure filled in with the display bounds.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1009,8 +1021,9 @@ extern "C" {
 extern "C" {
     /// Get the orientation of a display when it is unrotated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
+    ///
     /// ### Return value
     /// Returns the [`SDL_DisplayOrientation`] enum value of the display, or
     ///   [`SDL_ORIENTATION_UNKNOWN`] if it isn't available.
@@ -1026,8 +1039,9 @@ extern "C" {
 extern "C" {
     /// Get the orientation of a display.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
+    ///
     /// ### Return value
     /// Returns the [`SDL_DisplayOrientation`] enum value of the display, or
     ///   [`SDL_ORIENTATION_UNKNOWN`] if it isn't available.
@@ -1048,8 +1062,9 @@ extern "C" {
     /// display scale, which means that the user expects UI elements to be twice as
     /// big on this display, to aid in readability.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
+    ///
     /// ### Return value
     /// Returns the content scale of the display, or 0.0f on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1074,10 +1089,11 @@ extern "C" {
     /// - refresh rate -> highest to lowest
     /// - pixel density -> lowest to highest
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
     /// - `count`: a pointer filled in with the number of display modes returned,
     ///   may be NULL.
+    ///
     /// ### Return value
     /// Returns a NULL terminated array of display mode pointers or NULL on
     ///   failure; call [`SDL_GetError()`] for more information. This is a
@@ -1105,7 +1121,7 @@ extern "C" {
     /// and finally checking the refresh rate. If all the available modes are too
     /// small, then false is returned.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
     /// - `w`: the width in pixels of the desired display mode.
     /// - `h`: the height in pixels of the desired display mode.
@@ -1115,6 +1131,7 @@ extern "C" {
     ///   the search.
     /// - `mode`: a pointer filled in with the closest display mode equal to or
     ///   larger than the desired mode.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1143,8 +1160,9 @@ extern "C" {
     /// function will return the previous native display mode, and not the current
     /// display mode.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
+    ///
     /// ### Return value
     /// Returns a pointer to the desktop display mode or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1166,8 +1184,9 @@ extern "C" {
     /// function will return the current display mode, and not the previous native
     /// display mode.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
+    ///
     /// ### Return value
     /// Returns a pointer to the desktop display mode or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1184,8 +1203,9 @@ extern "C" {
 extern "C" {
     /// Get the display containing a point.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `point`: the point to query.
+    ///
     /// ### Return value
     /// Returns the instance ID of the display containing the point or 0 on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -1202,8 +1222,9 @@ extern "C" {
 extern "C" {
     /// Get the display primarily containing a rect.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `rect`: the rect to query.
+    ///
     /// ### Return value
     /// Returns the instance ID of the display entirely containing the rect or
     ///   closest to the center of the rect on success or 0 on failure; call
@@ -1221,8 +1242,9 @@ extern "C" {
 extern "C" {
     /// Get the display associated with a window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns the instance ID of the display containing the center of the window
     ///   on success or 0 on failure; call [`SDL_GetError()`] for more
@@ -1244,8 +1266,9 @@ extern "C" {
     /// 1920x1080 and it has a high density back buffer of 3840x2160 pixels, it
     /// would have a pixel density of 2.0.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns the pixel density or 0.0f on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1272,8 +1295,9 @@ extern "C" {
     /// updated when that setting is changed, or the window moves to a display with
     /// a different scale setting.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns the display scale, or 0.0f on failure; call [`SDL_GetError()`] for
     ///   more information.
@@ -1300,12 +1324,13 @@ extern "C" {
     /// [`SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED`] event will be emitted with the new mode
     /// dimensions.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to affect.
     /// - `mode`: a pointer to the display mode to use, which can be NULL for
     ///   borderless fullscreen desktop mode, or one of the fullscreen
     ///   modes returned by [`SDL_GetFullscreenDisplayModes()`] to set an
     ///   exclusive fullscreen mode.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1326,8 +1351,9 @@ extern "C" {
 extern "C" {
     /// Query the display mode to use when a window is visible at fullscreen.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns a pointer to the exclusive fullscreen mode to use or NULL for
     ///   borderless fullscreen desktop mode.
@@ -1344,9 +1370,10 @@ extern "C" {
 extern "C" {
     /// Get the raw ICC profile data for the screen the window is currently on.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
     /// - `size`: the size of the ICC profile.
+    ///
     /// ### Return value
     /// Returns the raw ICC profile data on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information. This should be freed with
@@ -1363,8 +1390,9 @@ extern "C" {
 extern "C" {
     /// Get the pixel format associated with the window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns the pixel format of the window on success or
     ///   [`SDL_PIXELFORMAT_UNKNOWN`] on failure; call [`SDL_GetError()`] for more
@@ -1378,9 +1406,10 @@ extern "C" {
 extern "C" {
     /// Get a list of valid windows.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of windows returned, may
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns a NULL terminated array of [`SDL_Window`] pointers or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This is a single
@@ -1460,11 +1489,12 @@ extern "C" {
     /// loader or link to a dynamic library version. This limitation may be removed
     /// in a future version of SDL.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `title`: the title of the window, in UTF-8 encoding.
     /// - `w`: the width of the window.
     /// - `h`: the height of the window.
     /// - `flags`: 0, or one or more [`SDL_WindowFlags`] OR'd together.
+    ///
     /// ### Return value
     /// Returns the window that was created or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1524,7 +1554,7 @@ extern "C" {
     /// recursively hidden or destroyed as well. Child popup windows not explicitly
     /// hidden will be restored when the parent is shown.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `parent`: the parent of the window, must not be NULL.
     /// - `offset_x`: the x position of the popup window relative to the origin
     ///   of the parent.
@@ -1534,6 +1564,7 @@ extern "C" {
     /// - `h`: the height of the window.
     /// - `flags`: [`SDL_WINDOW_TOOLTIP`] or [`SDL_WINDOW_POPUP_MENU`], and zero or more
     ///   additional [`SDL_WindowFlags`] OR'd together.
+    ///
     /// ### Return value
     /// Returns the window that was created or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1661,8 +1692,9 @@ extern "C" {
     /// set to true, then create the renderer, then show the window with
     /// [`SDL_ShowWindow()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to use.
+    ///
     /// ### Return value
     /// Returns the window that was created or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1785,8 +1817,9 @@ extern "C" {
     /// The numeric ID is what [`SDL_WindowEvent`] references, and is necessary to map
     /// these events to specific [`SDL_Window`] objects.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns the ID of the window on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1805,8 +1838,9 @@ extern "C" {
     /// The numeric ID is what [`SDL_WindowEvent`] references, and is necessary to map
     /// these events to specific [`SDL_Window`] objects.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `id`: the ID of the window.
+    ///
     /// ### Return value
     /// Returns the window associated with `id` or NULL if it doesn't exist; call
     ///   [`SDL_GetError()`] for more information.
@@ -1822,8 +1856,9 @@ extern "C" {
 extern "C" {
     /// Get parent of a window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns the parent of the window on success or NULL if the window has no
     ///   parent.
@@ -1946,8 +1981,9 @@ extern "C" {
     /// - [`SDL_PROP_WINDOW_X11_WINDOW_NUMBER`]: the X11 Window associated with the
     ///   window
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -2061,8 +2097,9 @@ pub const SDL_PROP_WINDOW_X11_WINDOW_NUMBER: *const ::core::ffi::c_char =
 extern "C" {
     /// Get the window flags.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns a mask of the [`SDL_WindowFlags`] associated with `window`.
     ///
@@ -2085,9 +2122,10 @@ extern "C" {
     ///
     /// This string is expected to be in UTF-8 encoding.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to change.
     /// - `title`: the desired window title in UTF-8 format.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2106,8 +2144,9 @@ extern "C" {
 extern "C" {
     /// Get the title of a window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns the title of the window in UTF-8 format or "" if there is no
     ///   title.
@@ -2133,9 +2172,10 @@ extern "C" {
     /// appropriate size and be used instead, if available. Otherwise, the closest
     /// smaller image will be upscaled and be used instead.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to change.
     /// - `icon`: an [`SDL_Surface`] structure containing the icon for the window.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2173,12 +2213,13 @@ extern "C" {
     /// Additionally, as this is just a request, it can be denied by the windowing
     /// system.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to reposition.
     /// - `x`: the x coordinate of the window, or [`SDL_WINDOWPOS_CENTERED`] or
     ///   [`SDL_WINDOWPOS_UNDEFINED`].
     /// - `y`: the y coordinate of the window, or [`SDL_WINDOWPOS_CENTERED`] or
     ///   [`SDL_WINDOWPOS_UNDEFINED`].
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2205,12 +2246,13 @@ extern "C" {
     /// If you do not need the value for one of the positions a NULL may be passed
     /// in the `x` or `y` parameter.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
     /// - `x`: a pointer filled in with the x position of the window, may be
     ///   NULL.
     /// - `y`: a pointer filled in with the y position of the window, may be
     ///   NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2249,10 +2291,11 @@ extern "C" {
     /// content area to remain within the usable desktop bounds). Additionally, as
     /// this is just a request, it can be denied by the windowing system.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to change.
     /// - `w`: the width of the window, must be > 0.
     /// - `h`: the height of the window, must be > 0.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2278,10 +2321,11 @@ extern "C" {
     /// window is on a high pixel density display. Use [`SDL_GetWindowSizeInPixels()`]
     /// or [`SDL_GetRenderOutputSize()`] to get the real client area size in pixels.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query the width and height from.
     /// - `w`: a pointer filled in with the width of the window, may be NULL.
     /// - `h`: a pointer filled in with the height of the window, may be NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2310,10 +2354,11 @@ extern "C" {
     /// into the rest of the window, but it should not contain visually important
     /// or interactible content.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
     /// - `rect`: a pointer filled in with the client area that is safe for
     ///   interactive content.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2350,12 +2395,13 @@ extern "C" {
     /// Additionally, as this is just a request, it can be denied by the windowing
     /// system.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to change.
     /// - `min_aspect`: the minimum aspect ratio of the window, or 0.0f for no
     ///   limit.
     /// - `max_aspect`: the maximum aspect ratio of the window, or 0.0f for no
     ///   limit.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2376,12 +2422,13 @@ extern "C" {
 extern "C" {
     /// Get the size of a window's client area.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query the width and height from.
     /// - `min_aspect`: a pointer filled in with the minimum aspect ratio of the
     ///   window, may be NULL.
     /// - `max_aspect`: a pointer filled in with the maximum aspect ratio of the
     ///   window, may be NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2414,7 +2461,7 @@ extern "C" {
     /// This function also returns false if getting the information is not
     /// supported.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query the size values of the border
     ///   (decorations) from.
     /// - `top`: pointer to variable for storing the size of the top border; NULL
@@ -2425,6 +2472,7 @@ extern "C" {
     ///   border; NULL is permitted.
     /// - `right`: pointer to variable for storing the size of the right border;
     ///   NULL is permitted.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2446,12 +2494,13 @@ extern "C" {
 extern "C" {
     /// Get the size of a window's client area, in pixels.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window from which the drawable size should be queried.
     /// - `w`: a pointer to variable for storing the width in pixels, may be
     ///   NULL.
     /// - `h`: a pointer to variable for storing the height in pixels, may be
     ///   NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2472,10 +2521,11 @@ extern "C" {
 extern "C" {
     /// Set the minimum size of a window's client area.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to change.
     /// - `min_w`: the minimum width of the window, or 0 for no limit.
     /// - `min_h`: the minimum height of the window, or 0 for no limit.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2496,12 +2546,13 @@ extern "C" {
 extern "C" {
     /// Get the minimum size of a window's client area.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
     /// - `w`: a pointer filled in with the minimum width of the window, may be
     ///   NULL.
     /// - `h`: a pointer filled in with the minimum height of the window, may be
     ///   NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2522,10 +2573,11 @@ extern "C" {
 extern "C" {
     /// Set the maximum size of a window's client area.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to change.
     /// - `max_w`: the maximum width of the window, or 0 for no limit.
     /// - `max_h`: the maximum height of the window, or 0 for no limit.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2546,12 +2598,13 @@ extern "C" {
 extern "C" {
     /// Get the maximum size of a window's client area.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
     /// - `w`: a pointer filled in with the maximum width of the window, may be
     ///   NULL.
     /// - `h`: a pointer filled in with the maximum height of the window, may be
     ///   NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2578,9 +2631,10 @@ extern "C" {
     ///
     /// You can't change the border state of a fullscreen window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window of which to change the border state.
     /// - `bordered`: false to remove border, true to add border.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2605,9 +2659,10 @@ extern "C" {
     ///
     /// You can't change the resizable state of a fullscreen window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window of which to change the resizable state.
     /// - `resizable`: true to allow resizing, false to disallow.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2629,9 +2684,10 @@ extern "C" {
     /// This will add or remove the window's [`SDL_WINDOW_ALWAYS_ON_TOP`] flag. This
     /// will bring the window to the front and keep the window above the rest.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window of which to change the always on top state.
     /// - `on_top`: true to set the window always on top, false to disable.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2650,8 +2706,9 @@ extern "C" {
 extern "C" {
     /// Show a window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to show.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2668,8 +2725,9 @@ extern "C" {
 extern "C" {
     /// Hide a window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to hide.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2692,8 +2750,9 @@ extern "C" {
     /// input focus, an [`SDL_EVENT_WINDOW_FOCUS_GAINED`] event will be emitted, and
     /// the window will have the [`SDL_WINDOW_INPUT_FOCUS`] flag set.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to raise.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2723,8 +2782,9 @@ extern "C" {
     /// manager. Win32 and macOS enforce the constraints when maximizing, while X11
     /// and Wayland window managers may vary.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to maximize.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2751,8 +2811,9 @@ extern "C" {
     /// emitted. Note that, as this is just a request, the windowing system can
     /// deny the state change.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to minimize.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2780,8 +2841,9 @@ extern "C" {
     /// emitted. Note that, as this is just a request, the windowing system can
     /// deny the state change.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to restore.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2812,9 +2874,10 @@ extern "C" {
     /// [`SDL_EVENT_WINDOW_LEAVE_FULLSCREEN`] event will be emitted. Note that, as this
     /// is just a request, it can be denied by the windowing system.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to change.
     /// - `fullscreen`: true for fullscreen mode, false for windowed mode.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2844,9 +2907,10 @@ extern "C" {
     ///
     /// On windowing systems where changes are immediate, this does nothing.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window for which to wait for the pending state to be
     ///   applied.
+    ///
     /// ### Return value
     /// Returns true on success or false if the operation timed out before the
     ///   window was in the requested state.
@@ -2868,8 +2932,9 @@ extern "C" {
 extern "C" {
     /// Return whether the window has a surface associated with it.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns true if there is a surface associated with the window, or false
     ///   otherwise.
@@ -2896,8 +2961,9 @@ extern "C" {
     ///
     /// This function is affected by [`SDL_HINT_FRAMEBUFFER_ACCELERATION`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns the surface associated with the window, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -2926,9 +2992,10 @@ extern "C" {
     /// supported by every driver, so you should check the return value to see
     /// whether the requested setting is supported.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window.
     /// - `vsync`: the vertical refresh sync interval.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2951,10 +3018,11 @@ pub const SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE: ::core::primitive::i32 = -1_i32;
 extern "C" {
     /// Get VSync for the window surface.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
     /// - `vsync`: an int filled with the current vertical refresh sync interval.
     ///   See [`SDL_SetWindowSurfaceVSync()`] for the meaning of the value.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2978,8 +3046,9 @@ extern "C" {
     ///
     /// This function is equivalent to the SDL 1.2 API SDL_Flip().
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to update.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3006,11 +3075,12 @@ extern "C" {
     /// update more of the screen (or all of the screen!), depending on what method
     /// SDL uses to send pixels to the system.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to update.
     /// - `rects`: an array of [`SDL_Rect`] structures representing areas of the
     ///   surface to copy, in pixels.
     /// - `numrects`: the number of rectangles.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3031,8 +3101,9 @@ extern "C" {
 extern "C" {
     /// Destroy the surface associated with the window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to update.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3065,9 +3136,10 @@ extern "C" {
     /// If the caller enables a grab while another window is currently grabbed, the
     /// other window loses its grab in favor of the caller's window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window for which the keyboard grab mode should be set.
     /// - `grabbed`: this is true to grab keyboard, and false to release.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3089,9 +3161,10 @@ extern "C" {
     ///
     /// Mouse grab confines the mouse cursor to the window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window for which the mouse grab mode should be set.
     /// - `grabbed`: this is true to grab mouse, and false to release.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3111,8 +3184,9 @@ extern "C" {
 extern "C" {
     /// Get a window's keyboard grab mode.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns true if keyboard is grabbed, and false otherwise.
     ///
@@ -3127,8 +3201,9 @@ extern "C" {
 extern "C" {
     /// Get a window's mouse grab mode.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns true if mouse is grabbed, and false otherwise.
     ///
@@ -3161,10 +3236,11 @@ extern "C" {
     /// Note that this does NOT grab the cursor, it only defines the area a cursor
     /// is restricted to when the window has mouse focus.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window that will be associated with the barrier.
     /// - `rect`: a rectangle area in window-relative coordinates. If NULL the
     ///   barrier for the specified window will be destroyed.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3184,8 +3260,9 @@ extern "C" {
 extern "C" {
     /// Get the mouse confinement rectangle of a window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns a pointer to the mouse confinement rectangle of a window, or NULL
     ///   if there isn't one.
@@ -3206,9 +3283,10 @@ extern "C" {
     ///
     /// This function also returns false if setting the opacity isn't supported.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window which will be made transparent or opaque.
     /// - `opacity`: the opacity value (0.0f - transparent, 1.0f - opaque).
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3230,8 +3308,9 @@ extern "C" {
     /// If transparency isn't supported on this platform, opacity will be returned
     /// as 1.0f without error.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to get the current opacity value from.
+    ///
     /// ### Return value
     /// Returns the opacity, (0.0f - transparent, 1.0f - opaque), or -1.0f on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -3265,9 +3344,10 @@ extern "C" {
     /// Setting a parent window that is currently the sibling or descendent of the
     /// child window results in undefined behavior.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window that should become the child of a parent.
     /// - `parent`: the new parent window for the child window.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3289,9 +3369,10 @@ extern "C" {
     /// To enable modal status on a window, the window must currently be the child
     /// window of a parent, or toggling modal status on will fail.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window on which to set the modal state.
     /// - `modal`: true to toggle modal status on, false to toggle it off.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3310,9 +3391,10 @@ extern "C" {
 extern "C" {
     /// Set whether the window may have input focus.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to set focusable state.
     /// - `focusable`: true to allow input focus, false to not allow input focus.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3336,12 +3418,13 @@ extern "C" {
     /// On platforms or desktops where this is unsupported, this function does
     /// nothing.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window for which the menu will be displayed.
     /// - `x`: the x coordinate of the menu, relative to the origin (top-left) of
     ///   the client area.
     /// - `y`: the y coordinate of the menu, relative to the origin (top-left) of
     ///   the client area.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3379,6 +3462,7 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_HitTestResult(pub ::core::ffi::c_int);
+
 impl From<SDL_HitTestResult> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_HitTestResult) -> Self {
@@ -3453,10 +3537,11 @@ pub const SDL_HITTEST_RESIZE_LEFT: SDL_HitTestResult = SDL_HitTestResult::RESIZE
 
 /// Callback used for hit-testing.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `win`: the [`SDL_Window`] where hit-testing was set on.
 /// - `area`: an [`SDL_Point`] which should be hit-tested.
 /// - `data`: what was passed as `callback_data` to [`SDL_SetWindowHitTest()`].
+///
 /// ### Return value
 /// Returns an [`SDL_HitTestResult`] value.
 ///
@@ -3502,10 +3587,11 @@ extern "C" {
     /// can fire at any time, you should try to keep your callback efficient,
     /// devoid of allocations, etc.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to set hit-testing on.
     /// - `callback`: the function to call when doing a hit-test.
     /// - `callback_data`: an app-defined void pointer passed to **callback**.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3535,10 +3621,11 @@ extern "C" {
     ///
     /// The window must have been created with the [`SDL_WINDOW_TRANSPARENT`] flag.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window.
     /// - `shape`: the surface representing the shape of the window, or NULL to
     ///   remove any current shape.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3554,9 +3641,10 @@ extern "C" {
 extern "C" {
     /// Request a window to demand attention from the user.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to be flashed.
     /// - `operation`: the operation to perform.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3575,7 +3663,7 @@ extern "C" {
     /// Any child windows owned by the window will be recursively destroyed as
     /// well.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to destroy.
     ///
     /// ### Availability
@@ -3655,9 +3743,10 @@ extern "C" {
     /// If you do this, you need to retrieve all of the GL functions used in your
     /// program from the dynamic library using [`SDL_GL_GetProcAddress()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `path`: the platform dependent OpenGL library name, or NULL to open the
     ///   default OpenGL library.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3712,8 +3801,9 @@ extern "C" {
     ///   code. This will ensure the proper calling convention is followed on
     ///   platforms where this matters (Win32) thereby avoiding stack corruption.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `proc`: the name of an OpenGL function.
+    ///
     /// ### Return value
     /// Returns a pointer to the named OpenGL function. The returned pointer
     ///   should be cast to the appropriate function signature.
@@ -3735,8 +3825,9 @@ extern "C" {
     /// points for EGL functions. This is useful to provide to an EGL API and
     /// extension loader.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `proc`: the name of an EGL function.
+    ///
     /// ### Return value
     /// Returns a pointer to the named EGL function. The returned pointer should
     ///   be cast to the appropriate function signature.
@@ -3774,8 +3865,9 @@ extern "C" {
     /// context and save that information somewhere instead of calling the function
     /// every time you need to know.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `extension`: the name of the extension to check.
+    ///
     /// ### Return value
     /// Returns true if the extension is supported, false otherwise.
     ///
@@ -3806,10 +3898,11 @@ extern "C" {
     /// [`SDL_GL_GetAttribute()`] to check the values after creating the OpenGL
     /// context, since the values obtained can differ from the requested ones.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `attr`: an [`SDL_GLAttr`] enum value specifying the OpenGL attribute to
     ///   set.
     /// - `value`: the desired value for the attribute.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3829,10 +3922,11 @@ extern "C" {
 extern "C" {
     /// Get the actual value for an attribute from the current context.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `attr`: an [`SDL_GLAttr`] enum value specifying the OpenGL attribute to
     ///   get.
     /// - `value`: a pointer filled in with the current value of `attr`.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3860,8 +3954,9 @@ extern "C" {
     ///
     /// [`SDL_GLContext`] is opaque to the application.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to associate with the context.
+    ///
     /// ### Return value
     /// Returns the OpenGL context associated with `window` or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
@@ -3880,9 +3975,10 @@ extern "C" {
     ///
     /// The context must have been created with a compatible window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to associate with the context.
     /// - `context`: the OpenGL context to associate with the window.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3952,8 +4048,9 @@ extern "C" {
 extern "C" {
     /// Get the EGL surface associated with the window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns the EGLSurface pointer associated with the window, or NULL on
     ///   failure.
@@ -3971,7 +4068,7 @@ extern "C" {
     ///
     /// NOTE: These callback pointers will be reset after [`SDL_GL_ResetAttributes`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `platformAttribCallback`: callback for attributes to pass to
     ///   eglGetPlatformDisplay. May be NULL.
     /// - `surfaceAttribCallback`: callback for attributes to pass to
@@ -4008,9 +4105,10 @@ extern "C" {
     /// Read more on the Khronos wiki:
     /// <https://www.khronos.org/opengl/wiki/Swap_Interval#Adaptive_Vsync>
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `interval`: 0 for immediate updates, 1 for updates synchronized with
     ///   the vertical retrace, -1 for adaptive vsync.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -4029,11 +4127,12 @@ extern "C" {
     /// If the system can't determine the swap interval, or there isn't a valid
     /// current context, this function will set *interval to 0 as a safe default.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `interval`: output interval value. 0 if there is no vertical retrace
     ///   synchronization, 1 if the buffer swap is synchronized with
     ///   the vertical retrace, and -1 if late swaps happen
     ///   immediately instead of waiting for the next retrace.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -4056,8 +4155,9 @@ extern "C" {
     /// glBindFramebuffer(), this is the default and you won't have to do anything
     /// extra.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to change.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -4070,8 +4170,9 @@ extern "C" {
 extern "C" {
     /// Delete an OpenGL context.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `context`: the OpenGL context to be deleted.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.

@@ -49,8 +49,9 @@ extern "C" {
     /// ***Please note that spinlocks are dangerous if you don't know what you're
     /// doing. Please be careful using any sort of spinlock!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `lock`: a pointer to a lock variable.
+    ///
     /// ### Return value
     /// Returns true if the lock succeeded, false if the lock is already held.
     ///
@@ -72,7 +73,7 @@ extern "C" {
     /// ***Please note that spinlocks are dangerous if you don't know what you're
     /// doing. Please be careful using any sort of spinlock!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `lock`: a pointer to a lock variable.
     ///
     /// ### Thread safety
@@ -95,7 +96,7 @@ extern "C" {
     /// ***Please note that spinlocks are dangerous if you don't know what you're
     /// doing. Please be careful using any sort of spinlock!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `lock`: a pointer to a lock variable.
     ///
     /// ### Thread safety
@@ -332,10 +333,11 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `a`: a pointer to an [`SDL_AtomicInt`] variable to be modified.
     /// - `oldval`: the old value.
     /// - `newval`: the new value.
+    ///
     /// ### Return value
     /// Returns true if the atomic variable was set, false otherwise.
     ///
@@ -363,9 +365,10 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `a`: a pointer to an [`SDL_AtomicInt`] variable to be modified.
     /// - `v`: the desired value.
+    ///
     /// ### Return value
     /// Returns the previous value of the atomic variable.
     ///
@@ -386,8 +389,9 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `a`: a pointer to an [`SDL_AtomicInt`] variable.
+    ///
     /// ### Return value
     /// Returns the current value of an atomic variable.
     ///
@@ -410,9 +414,10 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `a`: a pointer to an [`SDL_AtomicInt`] variable to be modified.
     /// - `v`: the desired value to add.
+    ///
     /// ### Return value
     /// Returns the previous value of the atomic variable.
     ///
@@ -432,8 +437,9 @@ extern "C" {
 ///
 /// ***Note: If you don't know what this macro is for, you shouldn't use it!***
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `a`: a pointer to an [`SDL_AtomicInt`] to increment.
+///
 /// ### Return value
 /// Returns the previous value of the atomic variable.
 ///
@@ -454,8 +460,9 @@ pub unsafe fn SDL_AtomicIncRef(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int {
 ///
 /// ***Note: If you don't know what this macro is for, you shouldn't use it!***
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `a`: a pointer to an [`SDL_AtomicInt`] to increment.
+///
 /// ### Return value
 /// Returns true if the variable reached zero after decrementing, false
 ///   otherwise.
@@ -512,10 +519,11 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `a`: a pointer to an [`SDL_AtomicU32`] variable to be modified.
     /// - `oldval`: the old value.
     /// - `newval`: the new value.
+    ///
     /// ### Return value
     /// Returns true if the atomic variable was set, false otherwise.
     ///
@@ -543,9 +551,10 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `a`: a pointer to an [`SDL_AtomicU32`] variable to be modified.
     /// - `v`: the desired value.
+    ///
     /// ### Return value
     /// Returns the previous value of the atomic variable.
     ///
@@ -566,8 +575,9 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `a`: a pointer to an [`SDL_AtomicU32`] variable.
+    ///
     /// ### Return value
     /// Returns the current value of an atomic variable.
     ///
@@ -588,10 +598,11 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `a`: a pointer to a pointer.
     /// - `oldval`: the old pointer value.
     /// - `newval`: the new pointer value.
+    ///
     /// ### Return value
     /// Returns true if the pointer was set, false otherwise.
     ///
@@ -618,9 +629,10 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `a`: a pointer to a pointer.
     /// - `v`: the desired pointer value.
+    ///
     /// ### Return value
     /// Returns the previous value of the pointer.
     ///
@@ -645,8 +657,9 @@ extern "C" {
     /// ***Note: If you don't know what this function is for, you shouldn't use
     /// it!***
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `a`: a pointer to a pointer.
+    ///
     /// ### Return value
     /// Returns the current value of a pointer.
     ///

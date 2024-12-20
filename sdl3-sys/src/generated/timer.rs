@@ -121,7 +121,7 @@ extern "C" {
     /// waits at least the specified time, but possibly longer due to OS
     /// scheduling.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `ms`: the number of milliseconds to delay.
     ///
     /// ### Thread safety
@@ -139,7 +139,7 @@ extern "C" {
     /// waits at least the specified time, but possibly longer due to OS
     /// scheduling.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `ns`: the number of nanoseconds to delay.
     ///
     /// ### Thread safety
@@ -157,7 +157,7 @@ extern "C" {
     /// will attempt to wait as close to the requested time as possible, busy
     /// waiting if necessary, but could return later due to OS scheduling.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `ns`: the number of nanoseconds to delay.
     ///
     /// ### Thread safety
@@ -182,11 +182,12 @@ pub type SDL_TimerID = Uint32;
 /// scheduled. If the callback returns 0, the periodic alarm is canceled and
 /// will be removed.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: an arbitrary pointer provided by the app through
 ///   [`SDL_AddTimer`], for its own use.
 /// - `timerID`: the current timer being processed.
 /// - `interval`: the current callback time interval.
+///
 /// ### Return value
 /// Returns the new callback time interval, or 0 to disable further runs of
 ///   the callback.
@@ -229,11 +230,12 @@ extern "C" {
     /// time with [`SDL_GetTicksNS()`] or [`SDL_GetPerformanceCounter()`] in case your
     /// callback needs to adjust for variances.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `interval`: the timer delay, in milliseconds, passed to `callback`.
     /// - `callback`: the [`SDL_TimerCallback`] function to call when the specified
     ///   `interval` elapses.
     /// - `userdata`: a pointer that is passed to `callback`.
+    ///
     /// ### Return value
     /// Returns a timer ID or 0 on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -262,11 +264,12 @@ extern "C" {
 /// scheduled. If the callback returns 0, the periodic alarm is canceled and
 /// will be removed.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: an arbitrary pointer provided by the app through
 ///   [`SDL_AddTimer`], for its own use.
 /// - `timerID`: the current timer being processed.
 /// - `interval`: the current callback time interval.
+///
 /// ### Return value
 /// Returns the new callback time interval, or 0 to disable further runs of
 ///   the callback.
@@ -309,11 +312,12 @@ extern "C" {
     /// time with [`SDL_GetTicksNS()`] or [`SDL_GetPerformanceCounter()`] in case your
     /// callback needs to adjust for variances.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `interval`: the timer delay, in nanoseconds, passed to `callback`.
     /// - `callback`: the [`SDL_TimerCallback`] function to call when the specified
     ///   `interval` elapses.
     /// - `userdata`: a pointer that is passed to `callback`.
+    ///
     /// ### Return value
     /// Returns a timer ID or 0 on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -337,8 +341,9 @@ extern "C" {
 extern "C" {
     /// Remove a timer created with [`SDL_AddTimer()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `id`: the ID of the timer to remove.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.

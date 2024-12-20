@@ -144,6 +144,7 @@ pub use SDL_disabled_assert;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AssertState(pub ::core::ffi::c_int);
+
 impl From<SDL_AssertState> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_AssertState) -> Self {
@@ -224,11 +225,12 @@ extern "C" {
     ///
     /// Use the SDL_assert* macros instead.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `data`: assert data structure.
     /// - `func`: function name.
     /// - `file`: file name.
     /// - `line`: line number.
+    ///
     /// ### Return value
     /// Returns assert state.
     ///
@@ -324,7 +326,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// "break" so that your debugger takes control as soon as assert is triggered,
     /// instead of risking a bad UI interaction (deadlock, etc) in the application.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `condition`: boolean value to test.
     ///
     /// ### Thread safety
@@ -364,7 +366,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// instead of risking a bad UI interaction (deadlock, etc) in the application.
     /// *
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `condition`: boolean value to test.
     ///
     /// ### Thread safety
@@ -400,7 +402,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// "break" so that your debugger takes control as soon as assert is triggered,
     /// instead of risking a bad UI interaction (deadlock, etc) in the application.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `condition`: boolean value to test.
     ///
     /// ### Thread safety
@@ -551,7 +553,7 @@ apply_cfg!(#[cfg(not(doc))] => {
 /// "break" so that your debugger takes control as soon as assert is triggered,
 /// instead of risking a bad UI interaction (deadlock, etc) in the application.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `condition`: boolean value to test.
 ///
 /// ### Thread safety
@@ -571,10 +573,11 @@ pub use SDL_assert_always;
 
 /// A callback that fires when an SDL assertion fails.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `data`: a pointer to the [`SDL_AssertData`] structure corresponding to the
 ///   current assertion.
 /// - `userdata`: what was passed as `userdata` to [`SDL_SetAssertionHandler()`].
+///
 /// ### Return value
 /// Returns an [`SDL_AssertState`] value indicating how to handle the failure.
 ///
@@ -604,7 +607,7 @@ extern "C" {
     ///
     /// This callback is NOT reset to SDL's internal handler upon [`SDL_Quit()`]!
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `handler`: the [`SDL_AssertionHandler`] function to call when an assertion
     ///   fails or NULL for the default handler.
     /// - `userdata`: a pointer that is passed to `handler`.
@@ -659,9 +662,10 @@ extern "C" {
     /// will always be NULL for the default handler. If you don't care about this
     /// data, it is safe to pass a NULL pointer to this function to ignore it.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `puserdata`: pointer which is filled with the "userdata" pointer that
     ///   was passed to [`SDL_SetAssertionHandler()`].
+    ///
     /// ### Return value
     /// Returns the [`SDL_AssertionHandler`] that is called when an assert triggers.
     ///

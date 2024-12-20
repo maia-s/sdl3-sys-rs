@@ -51,6 +51,7 @@ pub type SDL_MouseID = Uint32;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SystemCursor(pub ::core::ffi::c_int);
+
 impl From<SDL_SystemCursor> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_SystemCursor) -> Self {
@@ -189,6 +190,7 @@ pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_MouseWheelDirection(pub ::core::ffi::c_int);
+
 impl From<SDL_MouseWheelDirection> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_MouseWheelDirection) -> Self {
@@ -285,9 +287,10 @@ extern "C" {
     /// You should wait for input from a device before you consider it actively in
     /// use.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of mice returned, may be
     ///   NULL.
+    ///
     /// ### Return value
     /// Returns a 0 terminated array of mouse instance IDs or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
@@ -307,8 +310,9 @@ extern "C" {
     ///
     /// This function returns "" if the mouse doesn't have a name.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the mouse instance ID.
+    ///
     /// ### Return value
     /// Returns the name of the selected mouse, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -341,11 +345,12 @@ extern "C" {
     /// mouse cursor position relative to the focus window. You can pass NULL for
     /// either `x` or `y`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: the x coordinate of the mouse cursor position relative to the
     ///   focus window.
     /// - `y`: the y coordinate of the mouse cursor position relative to the
     ///   focus window.
+    ///
     /// ### Return value
     /// Returns a 32-bit button bitmask of the current button state.
     ///
@@ -377,11 +382,12 @@ extern "C" {
     /// efficient function. Unless you know what you're doing and have a good
     /// reason to use this function, you probably want [`SDL_GetMouseState()`] instead.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: filled in with the current X coord relative to the desktop; can be
     ///   NULL.
     /// - `y`: filled in with the current Y coord relative to the desktop; can be
     ///   NULL.
+    ///
     /// ### Return value
     /// Returns the current button state as a bitmask which can be tested using
     ///   the SDL_BUTTON_MASK(X) macros.
@@ -407,9 +413,10 @@ extern "C" {
     /// the mouse deltas since the last call to [`SDL_GetRelativeMouseState()`] or
     /// since event initialization. You can pass NULL for either `x` or `y`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: a pointer filled with the last recorded x coordinate of the mouse.
     /// - `y`: a pointer filled with the last recorded y coordinate of the mouse.
+    ///
     /// ### Return value
     /// Returns a 32-bit button bitmask of the relative button state.
     ///
@@ -434,7 +441,7 @@ extern "C" {
     /// Note that this function will appear to succeed, but not actually move the
     /// mouse when used over Microsoft Remote Desktop.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to move the mouse into, or NULL for the current
     ///   mouse focus.
     /// - `x`: the x coordinate within the window.
@@ -463,9 +470,10 @@ extern "C" {
     /// Note that this function will appear to succeed, but not actually move the
     /// mouse when used over Microsoft Remote Desktop.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `x`: the x coordinate.
     /// - `y`: the y coordinate.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -491,9 +499,10 @@ extern "C" {
     ///
     /// This function will flush any pending mouse motion for this window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to change.
     /// - `enabled`: true to enable relative mode, false to disable.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -512,8 +521,9 @@ extern "C" {
 extern "C" {
     /// Query whether relative mouse mode is enabled for a window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns true if relative mode is enabled for a window or false otherwise.
     ///
@@ -561,8 +571,9 @@ extern "C" {
     /// app, you can disable auto capture by setting the
     /// [`SDL_HINT_MOUSE_AUTO_CAPTURE`] hint to zero.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `enabled`: true to enable capturing, false to disable.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -599,7 +610,7 @@ extern "C" {
     /// Also, [`SDL_CreateSystemCursor()`] is available, which provides several
     /// readily-available system cursors to pick from.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `data`: the color value for each pixel of the cursor.
     /// - `mask`: the mask value for each pixel of the cursor.
     /// - `w`: the width of the cursor.
@@ -608,6 +619,7 @@ extern "C" {
     ///   mouse x position, in the range of 0 to `w` - 1.
     /// - `hot_y`: the y-axis offset from the top of the cursor image to the
     ///   mouse y position, in the range of 0 to `h` - 1.
+    ///
     /// ### Return value
     /// Returns a new cursor with the specified parameters on success or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -643,10 +655,11 @@ extern "C" {
     /// appropriate size and be used instead, if available. Otherwise, the closest
     /// smaller image will be upscaled and be used instead.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `surface`: an [`SDL_Surface`] structure representing the cursor image.
     /// - `hot_x`: the x position of the cursor hot spot.
     /// - `hot_y`: the y position of the cursor hot spot.
+    ///
     /// ### Return value
     /// Returns the new cursor on success or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -669,8 +682,9 @@ extern "C" {
 extern "C" {
     /// Create a system cursor.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `id`: an [`SDL_SystemCursor`] enum value.
+    ///
     /// ### Return value
     /// Returns a cursor on success or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
@@ -691,8 +705,9 @@ extern "C" {
     /// the display. SDL_SetCursor(NULL) can be used to force cursor redraw, if
     /// this is desired for any reason.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `cursor`: a cursor to make active.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -743,7 +758,7 @@ extern "C" {
     /// Use this function to free cursor resources created with [`SDL_CreateCursor()`],
     /// [`SDL_CreateColorCursor()`] or [`SDL_CreateSystemCursor()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `cursor`: the cursor to free.
     ///
     /// ### Availability

@@ -70,6 +70,7 @@ use super::sensor::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadType(pub ::core::ffi::c_int);
+
 impl From<SDL_GamepadType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GamepadType) -> Self {
@@ -189,6 +190,7 @@ pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadButton(pub ::core::ffi::c_int);
+
 impl From<SDL_GamepadButton> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GamepadButton) -> Self {
@@ -351,6 +353,7 @@ pub const SDL_GAMEPAD_BUTTON_COUNT: SDL_GamepadButton = SDL_GamepadButton::COUNT
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadButtonLabel(pub ::core::ffi::c_int);
+
 impl From<SDL_GamepadButtonLabel> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GamepadButtonLabel) -> Self {
@@ -430,6 +433,7 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadAxis(pub ::core::ffi::c_int);
+
 impl From<SDL_GamepadAxis> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GamepadAxis) -> Self {
@@ -496,6 +500,7 @@ pub const SDL_GAMEPAD_AXIS_COUNT: SDL_GamepadAxis = SDL_GamepadAxis::COUNT;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadBindingType(pub ::core::ffi::c_int);
+
 impl From<SDL_GamepadBindingType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GamepadBindingType) -> Self {
@@ -650,8 +655,9 @@ extern "C" {
     /// "341a3608000000000000504944564944,Afterglow PS3 Controller,a:b1,b:b2,y:b3,x:b0,start:b9,guide:b12,back:b8,dpup:h0.1,dpleft:h0.8,dpdown:h0.4,dpright:h0.2,leftshoulder:b4,rightshoulder:b5,leftstick:b10,rightstick:b11,leftx:a0,lefty:a1,rightx:a2,righty:a3,lefttrigger:b6,righttrigger:b7"
     /// ```
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `mapping`: the mapping string.
+    ///
     /// ### Return value
     /// Returns 1 if a new mapping is added, 0 if an existing mapping is updated,
     ///   -1 on failure; call [`SDL_GetError()`] for more information.
@@ -693,10 +699,11 @@ extern "C" {
     /// processing it, so take this into consideration if you are in a memory
     /// constrained environment.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `src`: the data stream for the mappings to be added.
     /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `src` before returning, even
     ///   in the case of an error.
+    ///
     /// ### Return value
     /// Returns the number of mappings added or -1 on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -737,8 +744,9 @@ extern "C" {
     /// specified will be ignored (i.e. mappings for Linux will be ignored in
     /// Windows, etc).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `file`: the mappings file to load.
+    ///
     /// ### Return value
     /// Returns the number of mappings added or -1 on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -777,9 +785,10 @@ extern "C" {
 extern "C" {
     /// Get the current gamepad mappings.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of mappings returned, can
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns an array of the mapping strings, NULL-terminated, or NULL on
     ///   failure; call [`SDL_GetError()`] for more information. This is a
@@ -794,8 +803,9 @@ extern "C" {
 extern "C" {
     /// Get the gamepad mapping string for a given GUID.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `guid`: a structure containing the GUID for which a mapping is desired.
+    ///
     /// ### Return value
     /// Returns a mapping string or NULL on failure; call [`SDL_GetError()`] for more
     ///   information. This should be freed with [`SDL_free()`] when it is no
@@ -815,8 +825,9 @@ extern "C" {
     ///
     /// Details about mappings are discussed with [`SDL_AddGamepadMapping()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad you want to get the current mapping for.
+    ///
     /// ### Return value
     /// Returns a string that has the gamepad's mapping or NULL if no mapping is
     ///   available; call [`SDL_GetError()`] for more information. This should
@@ -838,10 +849,11 @@ extern "C" {
     ///
     /// Details about mappings are discussed with [`SDL_AddGamepadMapping()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
     /// - `mapping`: the mapping to use for this device, or NULL to clear the
     ///   mapping.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -875,9 +887,10 @@ extern "C" {
 extern "C" {
     /// Get a list of currently connected gamepads.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of gamepads returned, may
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns a 0 terminated array of joystick instance IDs or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
@@ -895,8 +908,9 @@ extern "C" {
 extern "C" {
     /// Check if the given joystick is supported by the gamepad interface.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
+    ///
     /// ### Return value
     /// Returns true if the given joystick is supported by the gamepad interface,
     ///   false if it isn't or it's an invalid index.
@@ -915,8 +929,9 @@ extern "C" {
     ///
     /// This can be called before any gamepads are opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
+    ///
     /// ### Return value
     /// Returns the name of the selected gamepad. If no name can be found, this
     ///   function returns NULL; call [`SDL_GetError()`] for more information.
@@ -935,8 +950,9 @@ extern "C" {
     ///
     /// This can be called before any gamepads are opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
+    ///
     /// ### Return value
     /// Returns the path of the selected gamepad. If no path can be found, this
     ///   function returns NULL; call [`SDL_GetError()`] for more information.
@@ -955,8 +971,9 @@ extern "C" {
     ///
     /// This can be called before any gamepads are opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
+    ///
     /// ### Return value
     /// Returns the player index of a gamepad, or -1 if it's not available.
     ///
@@ -974,8 +991,9 @@ extern "C" {
     ///
     /// This can be called before any gamepads are opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
+    ///
     /// ### Return value
     /// Returns the GUID of the selected gamepad. If called on an invalid index,
     ///   this function returns a zero GUID.
@@ -995,8 +1013,9 @@ extern "C" {
     /// This can be called before any gamepads are opened. If the vendor ID isn't
     /// available this function returns 0.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
+    ///
     /// ### Return value
     /// Returns the USB vendor ID of the selected gamepad. If called on an invalid
     ///   index, this function returns zero.
@@ -1016,8 +1035,9 @@ extern "C" {
     /// This can be called before any gamepads are opened. If the product ID isn't
     /// available this function returns 0.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
+    ///
     /// ### Return value
     /// Returns the USB product ID of the selected gamepad. If called on an
     ///   invalid index, this function returns zero.
@@ -1037,8 +1057,9 @@ extern "C" {
     /// This can be called before any gamepads are opened. If the product version
     /// isn't available this function returns 0.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
+    ///
     /// ### Return value
     /// Returns the product version of the selected gamepad. If called on an
     ///   invalid index, this function returns zero.
@@ -1057,8 +1078,9 @@ extern "C" {
     ///
     /// This can be called before any gamepads are opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
+    ///
     /// ### Return value
     /// Returns the gamepad type.
     ///
@@ -1077,8 +1099,9 @@ extern "C" {
     ///
     /// This can be called before any gamepads are opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
+    ///
     /// ### Return value
     /// Returns the gamepad type.
     ///
@@ -1097,8 +1120,9 @@ extern "C" {
     ///
     /// This can be called before any gamepads are opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
+    ///
     /// ### Return value
     /// Returns the mapping string. Returns NULL if no mapping is available. This
     ///   should be freed with [`SDL_free()`] when it is no longer needed.
@@ -1115,8 +1139,9 @@ extern "C" {
 extern "C" {
     /// Open a gamepad for use.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID.
+    ///
     /// ### Return value
     /// Returns a gamepad identifier or NULL if an error occurred; call
     ///   [`SDL_GetError()`] for more information.
@@ -1134,8 +1159,9 @@ extern "C" {
     /// Get the [`SDL_Gamepad`] associated with a joystick instance ID, if it has been
     /// opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the joystick instance ID of the gamepad.
+    ///
     /// ### Return value
     /// Returns an [`SDL_Gamepad`] on success or NULL on failure or if it hasn't been
     ///   opened yet; call [`SDL_GetError()`] for more information.
@@ -1148,8 +1174,9 @@ extern "C" {
 extern "C" {
     /// Get the [`SDL_Gamepad`] associated with a player index.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `player_index`: the player index, which different from the instance ID.
+    ///
     /// ### Return value
     /// Returns the [`SDL_Gamepad`] associated with a player index.
     ///
@@ -1180,9 +1207,10 @@ extern "C" {
     /// - [`SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN`]: true if this gamepad has
     ///   simple trigger rumble
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad identifier previously returned by
     ///   [`SDL_OpenGamepad()`].
+    ///
     /// ### Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1210,9 +1238,10 @@ pub const SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN: *const ::core::ffi::c_cha
 extern "C" {
     /// Get the instance ID of an opened gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad identifier previously returned by
     ///   [`SDL_OpenGamepad()`].
+    ///
     /// ### Return value
     /// Returns the instance ID of the specified gamepad on success or 0 on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -1225,9 +1254,10 @@ extern "C" {
 extern "C" {
     /// Get the implementation-dependent name for an opened gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad identifier previously returned by
     ///   [`SDL_OpenGamepad()`].
+    ///
     /// ### Return value
     /// Returns the implementation dependent name for the gamepad, or NULL if
     ///   there is no name or the identifier passed is invalid.
@@ -1243,9 +1273,10 @@ extern "C" {
 extern "C" {
     /// Get the implementation-dependent path for an opened gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad identifier previously returned by
     ///   [`SDL_OpenGamepad()`].
+    ///
     /// ### Return value
     /// Returns the implementation dependent path for the gamepad, or NULL if
     ///   there is no path or the identifier passed is invalid.
@@ -1261,8 +1292,9 @@ extern "C" {
 extern "C" {
     /// Get the type of an opened gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object to query.
+    ///
     /// ### Return value
     /// Returns the gamepad type, or [`SDL_GAMEPAD_TYPE_UNKNOWN`] if it's not
     ///   available.
@@ -1278,8 +1310,9 @@ extern "C" {
 extern "C" {
     /// Get the type of an opened gamepad, ignoring any mapping override.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object to query.
+    ///
     /// ### Return value
     /// Returns the gamepad type, or [`SDL_GAMEPAD_TYPE_UNKNOWN`] if it's not
     ///   available.
@@ -1297,8 +1330,9 @@ extern "C" {
     ///
     /// For XInput gamepads this returns the XInput user index.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object to query.
+    ///
     /// ### Return value
     /// Returns the player index for gamepad, or -1 if it's not available.
     ///
@@ -1313,10 +1347,11 @@ extern "C" {
 extern "C" {
     /// Set the player index of an opened gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object to adjust.
     /// - `player_index`: player index to assign to this gamepad, or -1 to clear
     ///   the player index and turn off player LEDs.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1337,8 +1372,9 @@ extern "C" {
     ///
     /// If the vendor ID isn't available this function returns 0.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object to query.
+    ///
     /// ### Return value
     /// Returns the USB vendor ID, or zero if unavailable.
     ///
@@ -1355,8 +1391,9 @@ extern "C" {
     ///
     /// If the product ID isn't available this function returns 0.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object to query.
+    ///
     /// ### Return value
     /// Returns the USB product ID, or zero if unavailable.
     ///
@@ -1373,8 +1410,9 @@ extern "C" {
     ///
     /// If the product version isn't available this function returns 0.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object to query.
+    ///
     /// ### Return value
     /// Returns the USB product version, or zero if unavailable.
     ///
@@ -1391,8 +1429,9 @@ extern "C" {
     ///
     /// If the firmware version isn't available this function returns 0.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object to query.
+    ///
     /// ### Return value
     /// Returns the gamepad firmware version, or zero if unavailable.
     ///
@@ -1406,8 +1445,9 @@ extern "C" {
     ///
     /// Returns the serial number of the gamepad, or NULL if it is not available.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object to query.
+    ///
     /// ### Return value
     /// Returns the serial number, or NULL if unavailable.
     ///
@@ -1422,8 +1462,9 @@ extern "C" {
     /// Returns an InputHandle_t for the gamepad that can be used with Steam Input
     /// API: <https://partner.steamgames.com/doc/api/ISteamInput>
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object to query.
+    ///
     /// ### Return value
     /// Returns the gamepad handle, or 0 if unavailable.
     ///
@@ -1435,8 +1476,9 @@ extern "C" {
 extern "C" {
     /// Get the connection state of a gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object to query.
+    ///
     /// ### Return value
     /// Returns the connection state on success or
     ///   [`SDL_JOYSTICK_CONNECTION_INVALID`] on failure; call [`SDL_GetError()`]
@@ -1456,12 +1498,13 @@ extern "C" {
     /// not uncommon for older batteries to lose stored power much faster than it
     /// reports, or completely drain when reporting it has 20 percent left, etc.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object to query.
     /// - `percent`: a pointer filled in with the percentage of battery life
     ///   left, between 0 and 100, or NULL to ignore. This will be
     ///   filled in with -1 we can't determine a value or there is no
     ///   battery.
+    ///
     /// ### Return value
     /// Returns the current battery state.
     ///
@@ -1476,9 +1519,10 @@ extern "C" {
 extern "C" {
     /// Check if a gamepad has been opened and is currently connected.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad identifier previously returned by
     ///   [`SDL_OpenGamepad()`].
+    ///
     /// ### Return value
     /// Returns true if the gamepad has been opened and is currently connected, or
     ///   false if not.
@@ -1500,8 +1544,9 @@ extern "C" {
     /// [`SDL_CloseJoystick()`] on it, for example, since doing so will likely cause
     /// SDL to crash.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad object that you want to get a joystick from.
+    ///
     /// ### Return value
     /// Returns an [`SDL_Joystick`] object, or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -1517,7 +1562,7 @@ extern "C" {
     /// If gamepad events are disabled, you must call [`SDL_UpdateGamepads()`] yourself
     /// and check the state of the gamepad when you want gamepad information.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `enabled`: whether to process gamepad events or not.
     ///
     /// ### Availability
@@ -1549,9 +1594,10 @@ extern "C" {
 extern "C" {
     /// Get the SDL joystick layer bindings for a gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad.
     /// - `count`: a pointer filled in with the number of bindings returned.
+    ///
     /// ### Return value
     /// Returns a NULL terminated array of pointers to bindings or NULL on
     ///   failure; call [`SDL_GetError()`] for more information. This is a
@@ -1586,8 +1632,9 @@ extern "C" {
     /// You do not normally need to call this function unless you are parsing
     /// [`SDL_Gamepad`] mappings in your own code.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: string representing a [`SDL_GamepadType`] type.
+    ///
     /// ### Return value
     /// Returns the [`SDL_GamepadType`] enum corresponding to the input string, or
     ///   [`SDL_GAMEPAD_TYPE_UNKNOWN`] if no match was found.
@@ -1603,8 +1650,9 @@ extern "C" {
 extern "C" {
     /// Convert from an [`SDL_GamepadType`] enum to a string.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `type`: an enum value for a given [`SDL_GamepadType`].
+    ///
     /// ### Return value
     /// Returns a string for the given type, or NULL if an invalid type is
     ///   specified. The string returned is of the format used by
@@ -1630,8 +1678,9 @@ extern "C" {
     /// [`SDL_GAMEPAD_AXIS_RIGHT_TRIGGER`] and [`SDL_GAMEPAD_AXIS_LEFT_TRIGGER`],
     /// respectively.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: string representing a [`SDL_Gamepad`] axis.
+    ///
     /// ### Return value
     /// Returns the [`SDL_GamepadAxis`] enum corresponding to the input string, or
     ///   [`SDL_GAMEPAD_AXIS_INVALID`] if no match was found.
@@ -1647,8 +1696,9 @@ extern "C" {
 extern "C" {
     /// Convert from an [`SDL_GamepadAxis`] enum to a string.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `axis`: an enum value for a given [`SDL_GamepadAxis`].
+    ///
     /// ### Return value
     /// Returns a string for the given axis, or NULL if an invalid axis is
     ///   specified. The string returned is of the format used by
@@ -1668,9 +1718,10 @@ extern "C" {
     /// This merely reports whether the gamepad's mapping defined this axis, as
     /// that is all the information SDL has about the physical device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad.
     /// - `axis`: an axis enum value (an [`SDL_GamepadAxis`] value).
+    ///
     /// ### Return value
     /// Returns true if the gamepad has this axis, false otherwise.
     ///
@@ -1698,9 +1749,10 @@ extern "C" {
     /// return a negative value. Note that this differs from the value reported by
     /// the lower-level [`SDL_GetJoystickAxis()`], which normally uses the full range.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad.
     /// - `axis`: an axis index (one of the [`SDL_GamepadAxis`] values).
+    ///
     /// ### Return value
     /// Returns axis state (including 0) on success or 0 (also) on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1722,8 +1774,9 @@ extern "C" {
     /// You do not normally need to call this function unless you are parsing
     /// [`SDL_Gamepad`] mappings in your own code.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `str`: string representing a [`SDL_Gamepad`] axis.
+    ///
     /// ### Return value
     /// Returns the [`SDL_GamepadButton`] enum corresponding to the input string, or
     ///   [`SDL_GAMEPAD_BUTTON_INVALID`] if no match was found.
@@ -1739,8 +1792,9 @@ extern "C" {
 extern "C" {
     /// Convert from an [`SDL_GamepadButton`] enum to a string.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `button`: an enum value for a given [`SDL_GamepadButton`].
+    ///
     /// ### Return value
     /// Returns a string for the given button, or NULL if an invalid button is
     ///   specified. The string returned is of the format used by
@@ -1760,9 +1814,10 @@ extern "C" {
     /// This merely reports whether the gamepad's mapping defined this button, as
     /// that is all the information SDL has about the physical device.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad.
     /// - `button`: a button enum value (an [`SDL_GamepadButton`] value).
+    ///
     /// ### Return value
     /// Returns true if the gamepad has this button, false otherwise.
     ///
@@ -1780,9 +1835,10 @@ extern "C" {
 extern "C" {
     /// Get the current state of a button on a gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad.
     /// - `button`: a button index (one of the [`SDL_GamepadButton`] values).
+    ///
     /// ### Return value
     /// Returns true if the button is pressed, false otherwise.
     ///
@@ -1801,9 +1857,10 @@ extern "C" {
 extern "C" {
     /// Get the label of a button on a gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `type`: the type of gamepad to check.
     /// - `button`: a button index (one of the [`SDL_GamepadButton`] values).
+    ///
     /// ### Return value
     /// Returns the [`SDL_GamepadButtonLabel`] enum corresponding to the button label.
     ///
@@ -1821,9 +1878,10 @@ extern "C" {
 extern "C" {
     /// Get the label of a button on a gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad.
     /// - `button`: a button index (one of the [`SDL_GamepadButton`] values).
+    ///
     /// ### Return value
     /// Returns the [`SDL_GamepadButtonLabel`] enum corresponding to the button label.
     ///
@@ -1841,8 +1899,9 @@ extern "C" {
 extern "C" {
     /// Get the number of touchpads on a gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad.
+    ///
     /// ### Return value
     /// Returns number of touchpads.
     ///
@@ -1858,9 +1917,10 @@ extern "C" {
     /// Get the number of supported simultaneous fingers on a touchpad on a game
     /// gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad.
     /// - `touchpad`: a touchpad.
+    ///
     /// ### Return value
     /// Returns number of supported simultaneous fingers.
     ///
@@ -1879,7 +1939,7 @@ extern "C" {
 extern "C" {
     /// Get the current state of a finger on a touchpad on a gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad.
     /// - `touchpad`: a touchpad.
     /// - `finger`: a finger.
@@ -1890,6 +1950,7 @@ extern "C" {
     /// - `y`: a pointer filled with the y position, normalized 0 to 1, with the
     ///   origin in the upper left, may be NULL.
     /// - `pressure`: a pointer filled with pressure value, may be NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1913,9 +1974,10 @@ extern "C" {
 extern "C" {
     /// Return whether a gamepad has a particular sensor.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad to query.
     /// - `type`: the type of sensor to query.
+    ///
     /// ### Return value
     /// Returns true if the sensor exists, false otherwise.
     ///
@@ -1935,10 +1997,11 @@ extern "C" {
 extern "C" {
     /// Set whether data reporting for a gamepad sensor is enabled.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad to update.
     /// - `type`: the type of sensor to enable/disable.
     /// - `enabled`: whether data reporting should be enabled.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1959,9 +2022,10 @@ extern "C" {
 extern "C" {
     /// Query whether sensor data reporting is enabled for a gamepad.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad to query.
     /// - `type`: the type of sensor to query.
+    ///
     /// ### Return value
     /// Returns true if the sensor is enabled, false otherwise.
     ///
@@ -1979,9 +2043,10 @@ extern "C" {
 extern "C" {
     /// Get the data rate (number of events per second) of a gamepad sensor.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad to query.
     /// - `type`: the type of sensor to query.
+    ///
     /// ### Return value
     /// Returns the data rate, or 0.0f if the data rate is not available.
     ///
@@ -1999,11 +2064,12 @@ extern "C" {
     /// The number of values and interpretation of the data is sensor dependent.
     /// See SDL_sensor.h for the details for each type of sensor.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad to query.
     /// - `type`: the type of sensor to query.
     /// - `data`: a pointer filled with the current sensor state.
     /// - `num_values`: the number of values to write to data.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2027,13 +2093,14 @@ extern "C" {
     /// This function requires you to process SDL events or call
     /// [`SDL_UpdateJoysticks()`] to update rumble state.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad to vibrate.
     /// - `low_frequency_rumble`: the intensity of the low frequency (left)
     ///   rumble motor, from 0 to 0xFFFF.
     /// - `high_frequency_rumble`: the intensity of the high frequency (right)
     ///   rumble motor, from 0 to 0xFFFF.
     /// - `duration_ms`: the duration of the rumble effect, in milliseconds.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2061,13 +2128,14 @@ extern "C" {
     /// This function requires you to process SDL events or call
     /// [`SDL_UpdateJoysticks()`] to update rumble state.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad to vibrate.
     /// - `left_rumble`: the intensity of the left trigger rumble motor, from 0
     ///   to 0xFFFF.
     /// - `right_rumble`: the intensity of the right trigger rumble motor, from 0
     ///   to 0xFFFF.
     /// - `duration_ms`: the duration of the rumble effect, in milliseconds.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2094,11 +2162,12 @@ extern "C" {
     /// For gamepads with a single color LED, the maximum of the RGB values will be
     /// used as the LED brightness.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad to update.
     /// - `red`: the intensity of the red LED.
     /// - `green`: the intensity of the green LED.
     /// - `blue`: the intensity of the blue LED.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2116,10 +2185,11 @@ extern "C" {
 extern "C" {
     /// Send a gamepad specific effect packet.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad to affect.
     /// - `data`: the data to send to the gamepad.
     /// - `size`: the size of the data to send to the gamepad.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2136,7 +2206,7 @@ extern "C" {
 extern "C" {
     /// Close a gamepad previously opened with [`SDL_OpenGamepad()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: a gamepad identifier previously returned by
     ///   [`SDL_OpenGamepad()`].
     ///
@@ -2152,9 +2222,10 @@ extern "C" {
     /// Return the sfSymbolsName for a given button on a gamepad on Apple
     /// platforms.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad to query.
     /// - `button`: a button on the gamepad.
+    ///
     /// ### Return value
     /// Returns the sfSymbolsName or NULL if the name can't be found.
     ///
@@ -2172,9 +2243,10 @@ extern "C" {
 extern "C" {
     /// Return the sfSymbolsName for a given axis on a gamepad on Apple platforms.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `gamepad`: the gamepad to query.
     /// - `axis`: an axis on the gamepad.
+    ///
     /// ### Return value
     /// Returns the sfSymbolsName or NULL if the name can't be found.
     ///

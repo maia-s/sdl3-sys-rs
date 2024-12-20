@@ -70,6 +70,7 @@ use super::stdinc::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_LogCategory(pub ::core::ffi::c_int);
+
 impl From<SDL_LogCategory> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_LogCategory) -> Self {
@@ -172,6 +173,7 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_LogPriority(pub ::core::ffi::c_int);
+
 impl From<SDL_LogPriority> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_LogPriority) -> Self {
@@ -224,7 +226,7 @@ pub const SDL_LOG_PRIORITY_COUNT: SDL_LogPriority = SDL_LogPriority::COUNT;
 extern "C" {
     /// Set the priority of all log categories.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `priority`: the [`SDL_LogPriority`] to assign.
     ///
     /// ### Thread safety
@@ -242,7 +244,7 @@ extern "C" {
 extern "C" {
     /// Set the priority of a particular log category.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `category`: the category to assign a priority to.
     /// - `priority`: the [`SDL_LogPriority`] to assign.
     ///
@@ -262,8 +264,9 @@ extern "C" {
 extern "C" {
     /// Get the priority of a particular log category.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `category`: the category to query.
+    ///
     /// ### Return value
     /// Returns the [`SDL_LogPriority`] for the requested category.
     ///
@@ -302,10 +305,11 @@ extern "C" {
     /// [`SDL_LOG_PRIORITY_WARN`] and higher have a prefix showing their priority, e.g.
     /// "WARNING: ".
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `priority`: the [`SDL_LogPriority`] to modify.
     /// - `prefix`: the prefix to use for that log priority, or NULL to use no
     ///   prefix.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -328,7 +332,7 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_CATEGORY_APPLICATION`] and [`SDL_LOG_PRIORITY_INFO`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the `fmt` string, if
     ///   any.
@@ -355,7 +359,7 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_TRACE`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
@@ -384,7 +388,7 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_VERBOSE`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
@@ -411,7 +415,7 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_DEBUG`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
@@ -439,7 +443,7 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_INFO`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
@@ -467,7 +471,7 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_WARN`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
@@ -495,7 +499,7 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_ERROR`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
@@ -523,7 +527,7 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_CRITICAL`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
@@ -551,7 +555,7 @@ extern "C" {
 extern "C" {
     /// Log a message with the specified category and priority.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `category`: the category of the message.
     /// - `priority`: the priority of the message.
     /// - `fmt`: a printf() style message format string.
@@ -585,7 +589,7 @@ extern "C" {
 extern "C" {
     /// Log a message with the specified category and priority.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `category`: the category of the message.
     /// - `priority`: the priority of the message.
     /// - `fmt`: a printf() style message format string.
@@ -621,7 +625,7 @@ extern "C" {
 /// is held so that this function is never called by more than one thread at
 /// once.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: what was passed as `userdata` to
 ///   [`SDL_SetLogOutputFunction()`].
 /// - `category`: the category of the message.
@@ -660,7 +664,7 @@ extern "C" {
 extern "C" {
     /// Get the current log output function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `callback`: an [`SDL_LogOutputFunction`] filled in with the current log
     ///   callback.
     /// - `userdata`: a pointer filled in with the pointer that is passed to
@@ -684,7 +688,7 @@ extern "C" {
 extern "C" {
     /// Replace the default log output function with one of your own.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `callback`: an [`SDL_LogOutputFunction`] to call instead of the default.
     /// - `userdata`: a pointer that is passed to `callback`.
     ///

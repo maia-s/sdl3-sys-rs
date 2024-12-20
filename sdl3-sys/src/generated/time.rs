@@ -50,6 +50,7 @@ pub struct SDL_DateTime {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_DateFormat(pub ::core::ffi::c_int);
+
 impl From<SDL_DateFormat> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_DateFormat) -> Self {
@@ -103,6 +104,7 @@ pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TimeFormat(pub ::core::ffi::c_int);
+
 impl From<SDL_TimeFormat> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_TimeFormat) -> Self {
@@ -143,11 +145,12 @@ extern "C" {
     /// formats can change, usually because the user has changed a system
     /// preference outside of your program.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dateFormat`: a pointer to the [`SDL_DateFormat`] to hold the returned date
     ///   format, may be NULL.
     /// - `timeFormat`: a pointer to the [`SDL_TimeFormat`] to hold the returned time
     ///   format, may be NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -164,8 +167,9 @@ extern "C" {
     /// Gets the current value of the system realtime clock in nanoseconds since
     /// Jan 1, 1970 in Universal Coordinated Time (UTC).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `ticks`: the [`SDL_Time`] to hold the returned tick count.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -179,12 +183,13 @@ extern "C" {
     /// Converts an [`SDL_Time`] in nanoseconds since the epoch to a calendar time in
     /// the [`SDL_DateTime`] format.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `ticks`: the [`SDL_Time`] to be converted.
     /// - `dt`: the resulting [`SDL_DateTime`].
     /// - `localTime`: the resulting [`SDL_DateTime`] will be expressed in local time
     ///   if true, otherwise it will be in Universal Coordinated
     ///   Time (UTC).
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -204,9 +209,10 @@ extern "C" {
     /// This function ignores the day_of_week member of the [`SDL_DateTime`] struct, so
     /// it may remain unset.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dt`: the source [`SDL_DateTime`].
     /// - `ticks`: the resulting [`SDL_Time`].
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -225,7 +231,7 @@ extern "C" {
     ///
     /// This function fills in the two 32-bit values of the FILETIME structure.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `ticks`: the time to convert.
     /// - `dwLowDateTime`: a pointer filled in with the low portion of the
     ///   Windows FILETIME value.
@@ -248,9 +254,10 @@ extern "C" {
     /// This function takes the two 32-bit values of the FILETIME structure as
     /// parameters.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `dwLowDateTime`: the low portion of the Windows FILETIME value.
     /// - `dwHighDateTime`: the high portion of the Windows FILETIME value.
+    ///
     /// ### Return value
     /// Returns the converted SDL time.
     ///
@@ -262,9 +269,10 @@ extern "C" {
 extern "C" {
     /// Get the number of days in a month for a given year.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `year`: the year.
     /// - `month`: the month \[1-12\].
+    ///
     /// ### Return value
     /// Returns the number of days in the requested month or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -280,10 +288,11 @@ extern "C" {
 extern "C" {
     /// Get the day of year for a calendar date.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `year`: the year component of the date.
     /// - `month`: the month component of the date.
     /// - `day`: the day component of the date.
+    ///
     /// ### Return value
     /// Returns the day of year \[0-365\] if the date is valid or -1 on failure;
     ///   call [`SDL_GetError()`] for more information.
@@ -300,10 +309,11 @@ extern "C" {
 extern "C" {
     /// Get the day of week for a calendar date.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `year`: the year component of the date.
     /// - `month`: the month component of the date.
     /// - `day`: the day component of the date.
+    ///
     /// ### Return value
     /// Returns a value between 0 and 6 (0 being Sunday) if the date is valid or
     ///   -1 on failure; call [`SDL_GetError()`] for more information.

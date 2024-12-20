@@ -56,12 +56,13 @@ extern "C" {
     ///
     /// This function is called by SDL on the main thread.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `appstate`: a place where the app can optionally store a pointer for
     ///   future use.
     /// - `argc`: the standard ANSI C main's argc; number of elements in `argv`.
     /// - `argv`: the standard ANSI C main's argv; array of command line
     ///   arguments.
+    ///
     /// ### Return value
     /// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
     ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
@@ -117,8 +118,9 @@ extern "C" {
     ///
     /// This function is called by SDL on the main thread.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
+    ///
     /// ### Return value
     /// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
     ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
@@ -169,9 +171,10 @@ extern "C" {
     /// [`SDL_AppQuit`] and terminates with an exit code that reports success to the
     /// platform.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
     /// - `event`: the new event for the app to examine.
+    ///
     /// ### Return value
     /// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
     ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
@@ -217,7 +220,7 @@ extern "C" {
     ///
     /// This function is called by SDL on the main thread.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
     /// - `result`: the result code that terminated the app (success or failure).
     ///
@@ -235,9 +238,10 @@ extern "C" {
 
 /// The prototype for the application's main() function
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `argc`: an ANSI-C style main function's argc.
 /// - `argv`: an ANSI-C style main function's argv.
+///
 /// ### Return value
 /// Returns an ANSI-C main return code; generally 0 is considered successful
 ///   program completion, and small non-zero values are considered
@@ -273,9 +277,10 @@ extern "C" {
     /// docs/README-main-functions.md in the source tree) for a more detailed
     /// explanation.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `argc`: an ANSI-C style main function's argc.
     /// - `argv`: an ANSI-C style main function's argv.
+    ///
     /// ### Return value
     /// Returns an ANSI-C main return code; generally 0 is considered successful
     ///   program completion, and small non-zero values are considered
@@ -319,7 +324,7 @@ extern "C" {
     /// using [`SDL_main`] (like when using SDL_MAIN_HANDLED). When using this, you do
     /// *not* need [`SDL_SetMainReady()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `argc`: the argc parameter from the application's main() function, or 0
     ///   if the platform's main-equivalent has no argc.
     /// - `argv`: the argv parameter from the application's main() function, or
@@ -329,6 +334,7 @@ extern "C" {
     ///   literally have to be `main`.
     /// - `reserved`: should be NULL (reserved for future use, will probably be
     ///   platform-specific then).
+    ///
     /// ### Return value
     /// Returns the return value from mainFunction: 0 on success, otherwise
     ///   failure; [`SDL_GetError()`] might have more information on the
@@ -360,13 +366,14 @@ extern "C" {
     /// header-only library, and you should not call this directly unless you
     /// _really_ know what you're doing.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `argc`: standard Unix main argc.
     /// - `argv`: standard Unix main argv.
     /// - `appinit`: the application's [`SDL_AppInit`] function.
     /// - `appiter`: the application's [`SDL_AppIterate`] function.
     /// - `appevent`: the application's [`SDL_AppEvent`] function.
     /// - `appquit`: the application's [`SDL_AppQuit`] function.
+    ///
     /// ### Return value
     /// Returns standard Unix main return value.
     ///
@@ -399,7 +406,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
         /// Most applications do not need to, and should not, call this directly; SDL
         /// will call it when initializing the video subsystem.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `name`: the window class name, in UTF-8 encoding. If NULL, SDL
         ///   currently uses "SDL_app" but this isn't guaranteed.
         /// - `style`: the value to use in WNDCLASSEX::style. If `name` is NULL, SDL
@@ -407,6 +414,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
         ///   what is specified here.
         /// - `hInst`: the HINSTANCE to use in WNDCLASSEX::hInstance. If zero, SDL
         ///   will use `GetModuleHandle(NULL)` instead.
+        ///
         /// ### Return value
         /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.

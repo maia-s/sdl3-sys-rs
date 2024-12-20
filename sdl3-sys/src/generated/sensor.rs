@@ -99,6 +99,7 @@ pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SensorType(pub ::core::ffi::c_int);
+
 impl From<SDL_SensorType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_SensorType) -> Self {
@@ -164,9 +165,10 @@ pub const SDL_SENSOR_GYRO_R: SDL_SensorType = SDL_SensorType::GYRO_R;
 extern "C" {
     /// Get a list of currently connected sensors.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of sensors returned, may
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns a 0 terminated array of sensor instance IDs or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
@@ -182,8 +184,9 @@ extern "C" {
     ///
     /// This can be called before any sensors are opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the sensor instance ID.
+    ///
     /// ### Return value
     /// Returns the sensor name, or NULL if `instance_id` is not valid.
     ///
@@ -197,8 +200,9 @@ extern "C" {
     ///
     /// This can be called before any sensors are opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the sensor instance ID.
+    ///
     /// ### Return value
     /// Returns the [`SDL_SensorType`], or [`SDL_SENSOR_INVALID`] if `instance_id` is
     ///   not valid.
@@ -213,8 +217,9 @@ extern "C" {
     ///
     /// This can be called before any sensors are opened.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the sensor instance ID.
+    ///
     /// ### Return value
     /// Returns the sensor platform dependent type, or -1 if `instance_id` is not
     ///   valid.
@@ -227,8 +232,9 @@ extern "C" {
 extern "C" {
     /// Open a sensor for use.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the sensor instance ID.
+    ///
     /// ### Return value
     /// Returns an [`SDL_Sensor`] object or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
@@ -241,8 +247,9 @@ extern "C" {
 extern "C" {
     /// Return the [`SDL_Sensor`] associated with an instance ID.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance_id`: the sensor instance ID.
+    ///
     /// ### Return value
     /// Returns an [`SDL_Sensor`] object or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
@@ -255,8 +262,9 @@ extern "C" {
 extern "C" {
     /// Get the properties associated with a sensor.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sensor`: the [`SDL_Sensor`] object.
+    ///
     /// ### Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -269,8 +277,9 @@ extern "C" {
 extern "C" {
     /// Get the implementation dependent name of a sensor.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sensor`: the [`SDL_Sensor`] object.
+    ///
     /// ### Return value
     /// Returns the sensor name or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -283,8 +292,9 @@ extern "C" {
 extern "C" {
     /// Get the type of a sensor.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sensor`: the [`SDL_Sensor`] object to inspect.
+    ///
     /// ### Return value
     /// Returns the [`SDL_SensorType`] type, or [`SDL_SENSOR_INVALID`] if `sensor` is
     ///   NULL.
@@ -297,8 +307,9 @@ extern "C" {
 extern "C" {
     /// Get the platform dependent type of a sensor.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sensor`: the [`SDL_Sensor`] object to inspect.
+    ///
     /// ### Return value
     /// Returns the sensor platform dependent type, or -1 if `sensor` is NULL.
     ///
@@ -310,8 +321,9 @@ extern "C" {
 extern "C" {
     /// Get the instance ID of a sensor.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sensor`: the [`SDL_Sensor`] object to inspect.
+    ///
     /// ### Return value
     /// Returns the sensor instance ID, or 0 on failure; call [`SDL_GetError()`] for
     ///   more information.
@@ -326,10 +338,11 @@ extern "C" {
     ///
     /// The number of values and interpretation of the data is sensor dependent.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sensor`: the [`SDL_Sensor`] object to query.
     /// - `data`: a pointer filled with the current sensor state.
     /// - `num_values`: the number of values to write to data.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -346,7 +359,7 @@ extern "C" {
 extern "C" {
     /// Close a sensor previously opened with [`SDL_OpenSensor()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sensor`: the [`SDL_Sensor`] object to close.
     ///
     /// ### Availability

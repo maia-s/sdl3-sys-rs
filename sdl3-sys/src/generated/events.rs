@@ -158,6 +158,7 @@ use super::video::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EventType(pub Uint32);
+
 impl From<SDL_EventType> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_EventType) -> Self {
@@ -1844,6 +1845,7 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EventAction(pub ::core::ffi::c_int);
+
 impl From<SDL_EventAction> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_EventAction) -> Self {
@@ -1901,7 +1903,7 @@ extern "C" {
     /// Otherwise, the events may not be ready to be filtered when you call
     /// [`SDL_PeepEvents()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `events`: destination buffer for the retrieved events, may be NULL to
     ///   leave the events in the queue and return the number of events
     ///   that would have been stored.
@@ -1913,6 +1915,7 @@ extern "C" {
     ///   [`SDL_EVENT_FIRST`] is a safe choice.
     /// - `maxType`: maximum value of the event type to be considered;
     ///   [`SDL_EVENT_LAST`] is a safe choice.
+    ///
     /// ### Return value
     /// Returns the number of events actually stored or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1942,8 +1945,9 @@ extern "C" {
     /// If you need to check for a range of event types, use [`SDL_HasEvents()`]
     /// instead.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `type`: the type of event to be queried; see [`SDL_EventType`] for details.
+    ///
     /// ### Return value
     /// Returns true if events matching `type` are present, or false if events
     ///   matching `type` are not present.
@@ -1964,11 +1968,12 @@ extern "C" {
     ///
     /// If you need to check for a single event type, use [`SDL_HasEvent()`] instead.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `minType`: the low end of event type to be queried, inclusive; see
     ///   [`SDL_EventType`] for details.
     /// - `maxType`: the high end of event type to be queried, inclusive; see
     ///   [`SDL_EventType`] for details.
+    ///
     /// ### Return value
     /// Returns true if events with type >= `minType` and <= `maxType` are
     ///   present, or false if not.
@@ -2002,7 +2007,7 @@ extern "C" {
     /// use [`SDL_PeepEvents()`] to remove and clean up those events before calling
     /// this function.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `type`: the type of event to be cleared; see [`SDL_EventType`] for details.
     ///
     /// ### Thread safety
@@ -2030,7 +2035,7 @@ extern "C" {
     /// sure that all pending OS events are flushed, you can call [`SDL_PumpEvents()`]
     /// on the main thread immediately before the flush call.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `minType`: the low end of event type to be cleared, inclusive; see
     ///   [`SDL_EventType`] for details.
     /// - `maxType`: the high end of event type to be cleared, inclusive; see
@@ -2079,9 +2084,10 @@ extern "C" {
     /// }
     /// ```
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `event`: the [`SDL_Event`] structure to be filled with the next event from
     ///   the queue, or NULL.
+    ///
     /// ### Return value
     /// Returns true if this got an event or false if there are none available.
     ///
@@ -2109,9 +2115,10 @@ extern "C" {
     /// As this function may implicitly call [`SDL_PumpEvents()`], you can only call
     /// this function in the thread that initialized the video subsystem.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `event`: the [`SDL_Event`] structure to be filled in with the next event
     ///   from the queue, or NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false if there was an error while waiting for
     ///   events; call [`SDL_GetError()`] for more information.
@@ -2144,11 +2151,12 @@ extern "C" {
     /// The timeout is not guaranteed, the actual wait time could be longer due to
     /// system scheduling.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `event`: the [`SDL_Event`] structure to be filled in with the next event
     ///   from the queue, or NULL.
     /// - `timeoutMS`: the maximum number of milliseconds to wait for the next
     ///   available event.
+    ///
     /// ### Return value
     /// Returns true if this got an event or false if the timeout elapsed without
     ///   any events available.
@@ -2190,8 +2198,9 @@ extern "C" {
     /// get an event type that does not conflict with other code that also wants
     /// its own custom event types.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `event`: the [`SDL_Event`] to be added to the queue.
+    ///
     /// ### Return value
     /// Returns true on success, false if the event was filtered or on failure;
     ///   call [`SDL_GetError()`] for more information. A common reason for
@@ -2212,10 +2221,11 @@ extern "C" {
 
 /// A function pointer used for callbacks that watch the event queue.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: what was passed as `userdata` to [`SDL_SetEventFilter()`] or
 ///   [`SDL_AddEventWatch`], etc.
 /// - `event`: the event that triggered the callback.
+///
 /// ### Return value
 /// Returns true to permit event to be added to the queue, and false to
 ///   disallow it. When used with [`SDL_AddEventWatch`], the return value is
@@ -2270,7 +2280,7 @@ extern "C" {
     /// the event filter, but events pushed onto the queue with [`SDL_PeepEvents()`] do
     /// not.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `filter`: an [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
@@ -2295,10 +2305,11 @@ extern "C" {
     /// This function can be used to "chain" filters, by saving the existing filter
     /// before replacing it with a function that will call that saved filter.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `filter`: the current callback function will be stored here.
     /// - `userdata`: the pointer that is passed to the current event filter will
     ///   be stored here.
+    ///
     /// ### Return value
     /// Returns true on success or false if there is no event filter set.
     ///
@@ -2334,9 +2345,10 @@ extern "C" {
     /// callback set with [`SDL_SetEventFilter()`], nor for events posted by the user
     /// through [`SDL_PeepEvents()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `filter`: an [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2362,7 +2374,7 @@ extern "C" {
     /// This function takes the same input as [`SDL_AddEventWatch()`] to identify and
     /// delete the corresponding callback.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `filter`: the function originally passed to [`SDL_AddEventWatch()`].
     /// - `userdata`: the pointer originally passed to [`SDL_AddEventWatch()`].
     ///
@@ -2385,7 +2397,7 @@ extern "C" {
     /// this function does not change the filter permanently, it only uses the
     /// supplied filter until this function returns.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `filter`: the [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
@@ -2404,7 +2416,7 @@ extern "C" {
 extern "C" {
     /// Set the state of processing events by type.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `type`: the type of event; see [`SDL_EventType`] for details.
     /// - `enabled`: whether to process the event or not.
     ///
@@ -2422,8 +2434,9 @@ extern "C" {
 extern "C" {
     /// Query the state of processing events by type.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `type`: the type of event; see [`SDL_EventType`] for details.
+    ///
     /// ### Return value
     /// Returns true if the event is being processed, false otherwise.
     ///
@@ -2442,8 +2455,9 @@ extern "C" {
     /// Allocate a set of user-defined events, and return the beginning event
     /// number for that set of events.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `numevents`: the number of events to be allocated.
+    ///
     /// ### Return value
     /// Returns the beginning event number, or 0 if numevents is invalid or if
     ///   there are not enough user-defined events left.
@@ -2462,8 +2476,9 @@ extern "C" {
 extern "C" {
     /// Get window associated with an event.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `event`: an event containing a `windowID`.
+    ///
     /// ### Return value
     /// Returns the associated window on success or NULL if there is none.
     ///

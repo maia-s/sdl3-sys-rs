@@ -42,12 +42,13 @@ extern "C" {
     ///
     /// See [`SDL_CreateProcessWithProperties()`] for more details.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `args`: the path and arguments for the new process.
     /// - `pipe_stdio`: true to create pipes to the process's standard input and
     ///   from the process's standard output, false for the process
     ///   to have no input and inherit the application's standard
     ///   output.
+    ///
     /// ### Return value
     /// Returns the newly created and running process, or NULL if the process
     ///   couldn't be created.
@@ -126,6 +127,7 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ProcessIO(pub ::core::ffi::c_int);
+
 impl From<SDL_ProcessIO> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_ProcessIO) -> Self {
@@ -211,8 +213,9 @@ extern "C" {
     /// from properly tracking the lifetime of the underlying process. You should
     /// use [`SDL_WaitProcess()`] instead.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to use.
+    ///
     /// ### Return value
     /// Returns the newly created and running process, or NULL if the process
     ///   couldn't be created.
@@ -283,8 +286,9 @@ extern "C" {
     /// - [`SDL_PROP_PROCESS_BACKGROUND_BOOLEAN`]: true if the process is running in
     ///   the background.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `process`: the process to query.
+    ///
     /// ### Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -328,12 +332,13 @@ extern "C" {
     ///
     /// The data should be freed with [`SDL_free()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `process`: The process to read.
     /// - `datasize`: a pointer filled in with the number of bytes read, may be
     ///   NULL.
     /// - `exitcode`: a pointer filled in with the process exit code if the
     ///   process has exited, may be NULL.
+    ///
     /// ### Return value
     /// Returns the data or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -367,8 +372,9 @@ extern "C" {
     /// so if you may need to call [`SDL_GetOutputStream()`] and read the output in
     /// parallel with writing input.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `process`: The process to get the input stream for.
+    ///
     /// ### Return value
     /// Returns the input stream or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -396,8 +402,9 @@ extern "C" {
     /// Reading from this stream can return 0 with [`SDL_GetIOStatus()`] returning
     /// [`SDL_IO_STATUS_NOT_READY`] if no output is available yet.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `process`: The process to get the output stream for.
+    ///
     /// ### Return value
     /// Returns the output stream or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -418,13 +425,14 @@ extern "C" {
 extern "C" {
     /// Stop a process.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `process`: The process to stop.
     /// - `force`: true to terminate the process immediately, false to try to
     ///   stop the process gracefully. In general you should try to stop
     ///   the process gracefully first as terminating a process may
     ///   leave it with half-written data or in some other unstable
     ///   state.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -455,12 +463,13 @@ extern "C" {
     /// normally, a negative signal if it terminated due to a signal, or -255
     /// otherwise. It will not be changed if the process is still running.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `process`: The process to wait for.
     /// - `block`: If true, block until the process finishes; otherwise, report
     ///   on the process' status.
     /// - `exitcode`: a pointer filled in with the process exit code if the
     ///   process has exited, may be NULL.
+    ///
     /// ### Return value
     /// Returns true if the process exited, false otherwise.
     ///
@@ -489,7 +498,7 @@ extern "C" {
     /// to track it. If you want to stop the process you should use
     /// [`SDL_KillProcess()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `process`: The process object to destroy.
     ///
     /// ### Thread safety

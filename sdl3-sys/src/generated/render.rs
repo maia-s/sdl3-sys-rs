@@ -76,6 +76,7 @@ pub struct SDL_Vertex {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TextureAccess(pub ::core::ffi::c_int);
+
 impl From<SDL_TextureAccess> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_TextureAccess) -> Self {
@@ -129,6 +130,7 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGE
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_RendererLogicalPresentation(pub ::core::ffi::c_int);
+
 impl From<SDL_RendererLogicalPresentation> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_RendererLogicalPresentation) -> Self {
@@ -240,9 +242,10 @@ extern "C" {
     /// "direct3d12" or "metal". These never have Unicode characters, and are not
     /// meant to be proper names.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `index`: the index of the rendering driver; the value ranges from 0 to
     ///   [`SDL_GetNumRenderDrivers()`] - 1.
+    ///
     /// ### Return value
     /// Returns the name of the rendering driver at the requested index, or NULL
     ///   if an invalid index was specified.
@@ -261,7 +264,7 @@ extern "C" {
 extern "C" {
     /// Create a window and default renderer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `title`: the title of the window, in UTF-8 encoding.
     /// - `width`: the width of the window.
     /// - `height`: the height of the window.
@@ -269,6 +272,7 @@ extern "C" {
     ///   [`SDL_CreateWindow()`]).
     /// - `window`: a pointer filled with the window, or NULL on error.
     /// - `renderer`: a pointer filled with the renderer, or NULL on error.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -305,10 +309,11 @@ extern "C" {
     /// can call [`SDL_SetRenderLogicalPresentation()`] to change the content size and
     /// scaling options.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window where rendering is displayed.
     /// - `name`: the name of the rendering driver to initialize, or NULL to let
     ///   SDL choose one.
+    ///
     /// ### Return value
     /// Returns a valid rendering context or NULL if there was an error; call
     ///   [`SDL_GetError()`] for more information.
@@ -369,8 +374,9 @@ extern "C" {
     /// - [`SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER`]: the
     ///   queue family index used for presentation.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `props`: the properties to use.
+    ///
     /// ### Return value
     /// Returns a valid rendering context or NULL if there was an error; call
     ///   [`SDL_GetError()`] for more information.
@@ -431,9 +437,10 @@ extern "C" {
     /// create a software renderer, but they are intended to be used with an
     /// [`SDL_Window`] as the final destination and not an [`SDL_Surface`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `surface`: the [`SDL_Surface`] structure representing the surface where
     ///   rendering is done.
+    ///
     /// ### Return value
     /// Returns a valid rendering context or NULL if there was an error; call
     ///   [`SDL_GetError()`] for more information.
@@ -452,8 +459,9 @@ extern "C" {
 extern "C" {
     /// Get the renderer associated with a window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to query.
+    ///
     /// ### Return value
     /// Returns the rendering context on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -469,8 +477,9 @@ extern "C" {
 extern "C" {
     /// Get the window associated with a renderer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer to query.
+    ///
     /// ### Return value
     /// Returns the window on success or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
@@ -486,8 +495,9 @@ extern "C" {
 extern "C" {
     /// Get the name of a renderer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
+    ///
     /// ### Return value
     /// Returns the name of the selected renderer, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -575,8 +585,9 @@ extern "C" {
     ///   swapchain images, or potential frames in flight, used by the Vulkan
     ///   renderer
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
+    ///
     /// ### Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -663,10 +674,11 @@ extern "C" {
     /// This returns the true output size in pixels, ignoring any render targets or
     /// logical size and presentation.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `w`: a pointer filled in with the width in pixels.
     /// - `h`: a pointer filled in with the height in pixels.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -694,10 +706,11 @@ extern "C" {
     /// logical size, otherwise it will return the value of
     /// [`SDL_GetRenderOutputSize()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `w`: a pointer filled in with the current width.
     /// - `h`: a pointer filled in with the current height.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -722,12 +735,13 @@ extern "C" {
     ///
     /// The contents of a texture when first created are not defined.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `format`: one of the enumerated values in [`SDL_PixelFormat`].
     /// - `access`: one of the enumerated values in [`SDL_TextureAccess`].
     /// - `w`: the width of the texture in pixels.
     /// - `h`: the height of the texture in pixels.
+    ///
     /// ### Return value
     /// Returns a pointer to the created texture or NULL if no rendering context
     ///   was active, the format was unsupported, or the width or height
@@ -766,10 +780,11 @@ extern "C" {
     /// format of the surface, and can be queried using the
     /// [`SDL_PROP_TEXTURE_FORMAT_NUMBER`] property.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `surface`: the [`SDL_Surface`] structure containing pixel data used to fill
     ///   the texture.
+    ///
     /// ### Return value
     /// Returns the created texture or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
@@ -884,9 +899,10 @@ extern "C" {
     ///   VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL associated with the texture, if
     ///   you want to wrap an existing texture.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `props`: the properties to use.
+    ///
     /// ### Return value
     /// Returns a pointer to the created texture or NULL if no rendering context
     ///   was active, the format was unsupported, or the width or height
@@ -1069,8 +1085,9 @@ extern "C" {
     /// - [`SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER`]: the VkImage associated with the
     ///   texture
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to query.
+    ///
     /// ### Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -1163,8 +1180,9 @@ pub const SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER: *const ::core::ffi::c_char =
 extern "C" {
     /// Get the renderer that created an [`SDL_Texture`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to query.
+    ///
     /// ### Return value
     /// Returns a pointer to the [`SDL_Renderer`] that created the texture, or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
@@ -1180,12 +1198,13 @@ extern "C" {
 extern "C" {
     /// Get the size of a texture, as floating point values.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to query.
     /// - `w`: a pointer filled in with the width of the texture in pixels. This
     ///   argument can be NULL if you don't need this information.
     /// - `h`: a pointer filled in with the height of the texture in pixels. This
     ///   argument can be NULL if you don't need this information.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1214,11 +1233,12 @@ extern "C" {
     /// Color modulation is not always supported by the renderer; it will return
     /// false if color modulation is not supported.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to update.
     /// - `r`: the red color value multiplied into copy operations.
     /// - `g`: the green color value multiplied into copy operations.
     /// - `b`: the blue color value multiplied into copy operations.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1253,11 +1273,12 @@ extern "C" {
     /// Color modulation is not always supported by the renderer; it will return
     /// false if color modulation is not supported.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to update.
     /// - `r`: the red color value multiplied into copy operations.
     /// - `g`: the green color value multiplied into copy operations.
     /// - `b`: the blue color value multiplied into copy operations.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1283,11 +1304,12 @@ extern "C" {
 extern "C" {
     /// Get the additional color value multiplied into render copy operations.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to query.
     /// - `r`: a pointer filled in with the current red color value.
     /// - `g`: a pointer filled in with the current green color value.
     /// - `b`: a pointer filled in with the current blue color value.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1313,11 +1335,12 @@ extern "C" {
 extern "C" {
     /// Get the additional color value multiplied into render copy operations.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to query.
     /// - `r`: a pointer filled in with the current red color value.
     /// - `g`: a pointer filled in with the current green color value.
     /// - `b`: a pointer filled in with the current blue color value.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1351,9 +1374,10 @@ extern "C" {
     /// Alpha modulation is not always supported by the renderer; it will return
     /// false if alpha modulation is not supported.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to update.
     /// - `alpha`: the source alpha value multiplied into copy operations.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1385,9 +1409,10 @@ extern "C" {
     /// Alpha modulation is not always supported by the renderer; it will return
     /// false if alpha modulation is not supported.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to update.
     /// - `alpha`: the source alpha value multiplied into copy operations.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1411,9 +1436,10 @@ extern "C" {
 extern "C" {
     /// Get the additional alpha value multiplied into render copy operations.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to query.
     /// - `alpha`: a pointer filled in with the current alpha value.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1437,9 +1463,10 @@ extern "C" {
 extern "C" {
     /// Get the additional alpha value multiplied into render copy operations.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to query.
     /// - `alpha`: a pointer filled in with the current alpha value.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1466,9 +1493,10 @@ extern "C" {
     /// If the blend mode is not supported, the closest supported mode is chosen
     /// and this function returns false.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to update.
     /// - `blendMode`: the [`SDL_BlendMode`] to use for texture blending.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1490,9 +1518,10 @@ extern "C" {
 extern "C" {
     /// Get the blend mode used for texture copy operations.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to query.
     /// - `blendMode`: a pointer filled in with the current [`SDL_BlendMode`].
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1518,9 +1547,10 @@ extern "C" {
     ///
     /// If the scale mode is not supported, the closest supported mode is chosen.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to update.
     /// - `scaleMode`: the [`SDL_ScaleMode`] to use for texture scaling.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1542,9 +1572,10 @@ extern "C" {
 extern "C" {
     /// Get the scale mode used for texture scale operations.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to query.
     /// - `scaleMode`: a pointer filled in with the current scale mode.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1577,13 +1608,14 @@ extern "C" {
     /// While this function will work with streaming textures, for optimization
     /// reasons you may not get the pixels back if you lock the texture afterward.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to update.
     /// - `rect`: an [`SDL_Rect`] structure representing the area to update, or NULL
     ///   to update the entire texture.
     /// - `pixels`: the raw pixel data in the format of the texture.
     /// - `pitch`: the number of bytes in a row of pixel data, including padding
     ///   between lines.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1615,7 +1647,7 @@ extern "C" {
     /// block of Y and U/V planes in the proper order, but this function is
     /// available if your pixel data is not contiguous.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to update.
     /// - `rect`: a pointer to the rectangle of pixels to update, or NULL to
     ///   update the entire texture.
@@ -1628,6 +1660,7 @@ extern "C" {
     /// - `Vplane`: the raw pixel data for the V plane.
     /// - `Vpitch`: the number of bytes between rows of pixel data for the V
     ///   plane.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1660,7 +1693,7 @@ extern "C" {
     /// block of NV12/21 planes in the proper order, but this function is available
     /// if your pixel data is not contiguous.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to update.
     /// - `rect`: a pointer to the rectangle of pixels to update, or NULL to
     ///   update the entire texture.
@@ -1670,6 +1703,7 @@ extern "C" {
     /// - `UVplane`: the raw pixel data for the UV plane.
     /// - `UVpitch`: the number of bytes between rows of pixel data for the UV
     ///   plane.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1704,7 +1738,7 @@ extern "C" {
     /// You must use [`SDL_UnlockTexture()`] to unlock the pixels and apply any
     /// changes.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to lock for access, which was created with
     ///   [`SDL_TEXTUREACCESS_STREAMING`].
     /// - `rect`: an [`SDL_Rect`] structure representing the area to lock for access;
@@ -1713,6 +1747,7 @@ extern "C" {
     ///   appropriately offset by the locked area.
     /// - `pitch`: this is filled in with the pitch of the locked pixels; the
     ///   pitch is the length of one row in bytes.
+    ///
     /// ### Return value
     /// Returns true on success or false if the texture is not valid or was not
     ///   created with [`SDL_TEXTUREACCESS_STREAMING`]; call [`SDL_GetError()`]
@@ -1753,13 +1788,14 @@ extern "C" {
     /// The returned surface is freed internally after calling [`SDL_UnlockTexture()`]
     /// or [`SDL_DestroyTexture()`]. The caller should not free it.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to lock for access, which must be created with
     ///   [`SDL_TEXTUREACCESS_STREAMING`].
     /// - `rect`: a pointer to the rectangle to lock for access. If the rect is
     ///   NULL, the entire texture will be locked.
     /// - `surface`: this is filled in with an SDL surface representing the
     ///   locked area.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1791,7 +1827,7 @@ extern "C" {
     /// Which is to say: locking and immediately unlocking a texture can result in
     /// corrupted textures, depending on the renderer in use.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: a texture locked by [`SDL_LockTexture()`].
     ///
     /// ### Thread safety
@@ -1812,11 +1848,12 @@ extern "C" {
     /// To stop rendering to a texture and render to the window again, call this
     /// function with a NULL `texture`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `texture`: the targeted texture, which must be created with the
     ///   [`SDL_TEXTUREACCESS_TARGET`] flag, or NULL to render to the
     ///   window instead of a texture.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1841,8 +1878,9 @@ extern "C" {
     /// The default render target is the window for which the renderer was created,
     /// and is reported a NULL here.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
+    ///
     /// ### Return value
     /// Returns the current render target or NULL for the default render target.
     ///
@@ -1881,11 +1919,12 @@ extern "C" {
     /// You can convert coordinates in an event into rendering coordinates using
     /// [`SDL_ConvertEventToRenderCoordinates()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `w`: the width of the logical resolution.
     /// - `h`: the height of the logical resolution.
     /// - `mode`: the presentation mode used.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1914,11 +1953,12 @@ extern "C" {
     /// This function gets the width and height of the logical rendering output, or
     /// the output size in pixels if a logical resolution is not enabled.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `w`: an int to be filled with the width.
     /// - `h`: an int to be filled with the height.
     /// - `mode`: the presentation mode used.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1947,10 +1987,11 @@ extern "C" {
     /// presentation is disabled, it will fill the rectangle with the output size,
     /// in pixels.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `rect`: a pointer filled in with the final presentation rectangle, may
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -1979,12 +2020,13 @@ extern "C" {
     /// - The scale ([`SDL_SetRenderScale`])
     /// - The viewport ([`SDL_SetRenderViewport`])
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `window_x`: the x coordinate in window coordinates.
     /// - `window_y`: the y coordinate in window coordinates.
     /// - `x`: a pointer filled with the x coordinate in render coordinates.
     /// - `y`: a pointer filled with the y coordinate in render coordinates.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2017,7 +2059,7 @@ extern "C" {
     /// - The scale ([`SDL_SetRenderScale`])
     /// - The viewport ([`SDL_SetRenderViewport`])
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `x`: the x coordinate in render coordinates.
     /// - `y`: the y coordinate in render coordinates.
@@ -2025,6 +2067,7 @@ extern "C" {
     ///   coordinates.
     /// - `window_y`: a pointer filled with the y coordinate in window
     ///   coordinates.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2063,9 +2106,10 @@ extern "C" {
     ///
     /// Once converted, the coordinates may be outside the rendering area.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `event`: the event to modify.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2093,10 +2137,11 @@ extern "C" {
     ///
     /// The area's width and height must be >= 0.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `rect`: the [`SDL_Rect`] structure representing the drawing area, or NULL
     ///   to set the viewport to the entire target.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2119,9 +2164,10 @@ extern "C" {
 extern "C" {
     /// Get the drawing area for the current target.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `rect`: an [`SDL_Rect`] structure filled in with the current drawing area.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2148,8 +2194,9 @@ extern "C" {
     /// whether you should restore a specific rectangle or NULL. Note that the
     /// viewport is always reset when changing rendering targets.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
+    ///
     /// ### Return value
     /// Returns true if the viewport was set to a specific rectangle, or false if
     ///   it was set to NULL (the entire target).
@@ -2176,10 +2223,11 @@ extern "C" {
     /// rendering into the rest of the render target, but it should not contain
     /// visually important or interactible content.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `rect`: a pointer filled in with the area that is safe for interactive
     ///   content.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2198,10 +2246,11 @@ extern "C" {
 extern "C" {
     /// Set the clip rectangle for rendering on the specified target.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `rect`: an [`SDL_Rect`] structure representing the clip area, relative to
     ///   the viewport, or NULL to disable clipping.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2224,10 +2273,11 @@ extern "C" {
 extern "C" {
     /// Get the clip rectangle for the current target.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `rect`: an [`SDL_Rect`] structure filled in with the current clipping area
     ///   or an empty rectangle if clipping is disabled.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2250,8 +2300,9 @@ extern "C" {
 extern "C" {
     /// Get whether clipping is enabled on the given renderer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
+    ///
     /// ### Return value
     /// Returns true if clipping is enabled or false if not; call [`SDL_GetError()`]
     ///   for more information.
@@ -2279,10 +2330,11 @@ extern "C" {
     /// will be handled using the appropriate quality hints. For best results use
     /// integer scaling factors.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `scaleX`: the horizontal scaling factor.
     /// - `scaleY`: the vertical scaling factor.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2305,10 +2357,11 @@ extern "C" {
 extern "C" {
     /// Get the drawing scale for the current target.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `scaleX`: a pointer filled in with the horizontal scaling factor.
     /// - `scaleY`: a pointer filled in with the vertical scaling factor.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2334,7 +2387,7 @@ extern "C" {
     /// Set the color for drawing or filling rectangles, lines, and points, and for
     /// [`SDL_RenderClear()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `r`: the red value used to draw on the rendering target.
     /// - `g`: the green value used to draw on the rendering target.
@@ -2342,6 +2395,7 @@ extern "C" {
     /// - `a`: the alpha value used to draw on the rendering target; usually
     ///   [`SDL_ALPHA_OPAQUE`] (255). Use [`SDL_SetRenderDrawBlendMode`] to
     ///   specify how the alpha channel is used.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2370,7 +2424,7 @@ extern "C" {
     /// Set the color for drawing or filling rectangles, lines, and points, and for
     /// [`SDL_RenderClear()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `r`: the red value used to draw on the rendering target.
     /// - `g`: the green value used to draw on the rendering target.
@@ -2378,6 +2432,7 @@ extern "C" {
     /// - `a`: the alpha value used to draw on the rendering target. Use
     ///   [`SDL_SetRenderDrawBlendMode`] to specify how the alpha channel is
     ///   used.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2403,7 +2458,7 @@ extern "C" {
 extern "C" {
     /// Get the color used for drawing operations (Rect, Line and Clear).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `r`: a pointer filled in with the red value used to draw on the
     ///   rendering target.
@@ -2413,6 +2468,7 @@ extern "C" {
     ///   rendering target.
     /// - `a`: a pointer filled in with the alpha value used to draw on the
     ///   rendering target; usually [`SDL_ALPHA_OPAQUE`] (255).
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2438,7 +2494,7 @@ extern "C" {
 extern "C" {
     /// Get the color used for drawing operations (Rect, Line and Clear).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `r`: a pointer filled in with the red value used to draw on the
     ///   rendering target.
@@ -2448,6 +2504,7 @@ extern "C" {
     ///   rendering target.
     /// - `a`: a pointer filled in with the alpha value used to draw on the
     ///   rendering target.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2481,9 +2538,10 @@ extern "C" {
     /// The color scale does not affect the alpha channel, only the color
     /// brightness.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `scale`: the color scale value.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2505,9 +2563,10 @@ extern "C" {
 extern "C" {
     /// Get the color scale used for render operations.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `scale`: a pointer filled in with the current color scale value.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2531,9 +2590,10 @@ extern "C" {
     ///
     /// If the blend mode is not supported, the closest supported mode is chosen.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `blendMode`: the [`SDL_BlendMode`] to use for blending.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2555,9 +2615,10 @@ extern "C" {
 extern "C" {
     /// Get the blend mode used for drawing operations.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `blendMode`: a pointer filled in with the current [`SDL_BlendMode`].
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2584,8 +2645,9 @@ extern "C" {
     /// the rendering target to current renderer draw color, so make sure to invoke
     /// [`SDL_SetRenderDrawColor()`] when needed.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2604,10 +2666,11 @@ extern "C" {
 extern "C" {
     /// Draw a point on the current rendering target at subpixel precision.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should draw a point.
     /// - `x`: the x coordinate of the point.
     /// - `y`: the y coordinate of the point.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2630,10 +2693,11 @@ extern "C" {
 extern "C" {
     /// Draw multiple points on the current rendering target at subpixel precision.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should draw multiple points.
     /// - `points`: the points to draw.
     /// - `count`: the number of points to draw.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2656,12 +2720,13 @@ extern "C" {
 extern "C" {
     /// Draw a line on the current rendering target at subpixel precision.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should draw a line.
     /// - `x1`: the x coordinate of the start point.
     /// - `y1`: the y coordinate of the start point.
     /// - `x2`: the x coordinate of the end point.
     /// - `y2`: the y coordinate of the end point.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2687,10 +2752,11 @@ extern "C" {
     /// Draw a series of connected lines on the current rendering target at
     /// subpixel precision.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should draw multiple lines.
     /// - `points`: the points along the lines.
     /// - `count`: the number of points, drawing count-1 lines.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2713,10 +2779,11 @@ extern "C" {
 extern "C" {
     /// Draw a rectangle on the current rendering target at subpixel precision.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should draw a rectangle.
     /// - `rect`: a pointer to the destination rectangle, or NULL to outline the
     ///   entire rendering target.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2739,10 +2806,11 @@ extern "C" {
     /// Draw some number of rectangles on the current rendering target at subpixel
     /// precision.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should draw multiple rectangles.
     /// - `rects`: a pointer to an array of destination rectangles.
     /// - `count`: the number of rectangles.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2766,10 +2834,11 @@ extern "C" {
     /// Fill a rectangle on the current rendering target with the drawing color at
     /// subpixel precision.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should fill a rectangle.
     /// - `rect`: a pointer to the destination rectangle, or NULL for the entire
     ///   rendering target.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2792,10 +2861,11 @@ extern "C" {
     /// Fill some number of rectangles on the current rendering target with the
     /// drawing color at subpixel precision.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should fill multiple rectangles.
     /// - `rects`: a pointer to an array of destination rectangles.
     /// - `count`: the number of rectangles.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2819,13 +2889,14 @@ extern "C" {
     /// Copy a portion of the texture to the current rendering target at subpixel
     /// precision.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should copy parts of a texture.
     /// - `texture`: the source texture.
     /// - `srcrect`: a pointer to the source rectangle, or NULL for the entire
     ///   texture.
     /// - `dstrect`: a pointer to the destination rectangle, or NULL for the
     ///   entire rendering target.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2851,7 +2922,7 @@ extern "C" {
     /// Copy a portion of the source texture to the current rendering target, with
     /// rotation and flipping, at subpixel precision.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should copy parts of a texture.
     /// - `texture`: the source texture.
     /// - `srcrect`: a pointer to the source rectangle, or NULL for the entire
@@ -2865,6 +2936,7 @@ extern "C" {
     ///   around dstrect.w/2, dstrect.h/2).
     /// - `flip`: an [`SDL_FlipMode`] value stating which flipping actions should be
     ///   performed on the texture.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2895,7 +2967,7 @@ extern "C" {
     /// The pixels in `srcrect` will be repeated as many times as needed to
     /// completely fill `dstrect`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should copy parts of a texture.
     /// - `texture`: the source texture.
     /// - `srcrect`: a pointer to the source rectangle, or NULL for the entire
@@ -2905,6 +2977,7 @@ extern "C" {
     ///   64x64 tiles.
     /// - `dstrect`: a pointer to the destination rectangle, or NULL for the
     ///   entire rendering target.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2936,7 +3009,7 @@ extern "C" {
     /// the corners of the destination rectangle. The sides and center are then
     /// stretched into place to cover the remaining destination rectangle.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should copy parts of a texture.
     /// - `texture`: the source texture.
     /// - `srcrect`: the [`SDL_Rect`] structure representing the rectangle to be used
@@ -2950,6 +3023,7 @@ extern "C" {
     ///   corner of `dstrect`, or 0.0f for an unscaled copy.
     /// - `dstrect`: a pointer to the destination rectangle, or NULL for the
     ///   entire rendering target.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -2980,7 +3054,7 @@ extern "C" {
     /// vertex array Color and alpha modulation is done per vertex
     /// ([`SDL_SetTextureColorMod`] and [`SDL_SetTextureAlphaMod`] are ignored).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `texture`: (optional) The SDL texture to use.
     /// - `vertices`: vertices.
@@ -2989,6 +3063,7 @@ extern "C" {
     ///   array, if NULL all vertices will be rendered in sequential
     ///   order.
     /// - `num_indices`: number of indices.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3016,7 +3091,7 @@ extern "C" {
     /// vertex arrays Color and alpha modulation is done per vertex
     /// ([`SDL_SetTextureColorMod`] and [`SDL_SetTextureAlphaMod`] are ignored).
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `texture`: (optional) The SDL texture to use.
     /// - `xy`: vertex positions.
@@ -3030,6 +3105,7 @@ extern "C" {
     ///   if NULL all vertices will be rendered in sequential order.
     /// - `num_indices`: number of indices.
     /// - `size_indices`: index size: 1 (byte), 2 (short), 4 (int).
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3067,10 +3143,11 @@ extern "C" {
     /// frequently. If you're using this on the main rendering target, it should be
     /// called after rendering and before [`SDL_RenderPresent()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `rect`: an [`SDL_Rect`] structure representing the area in pixels relative
     ///   to the to current viewport, or NULL for the entire viewport.
+    ///
     /// ### Return value
     /// Returns a new [`SDL_Surface`] on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -3113,8 +3190,9 @@ extern "C" {
     /// [`SDL_RenderPresent`] while rendering to a texture will still update the screen
     /// with any current drawing that has been done _to the window itself_.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3147,7 +3225,7 @@ extern "C" {
     /// Passing NULL or an otherwise invalid texture will set the SDL error message
     /// to "Invalid texture".
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `texture`: the texture to destroy.
     ///
     /// ### Thread safety
@@ -3168,7 +3246,7 @@ extern "C" {
     ///
     /// This should be called before destroying the associated window.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     ///
     /// ### Thread safety
@@ -3205,8 +3283,9 @@ extern "C" {
     /// OpenGL state that can confuse things; you should use your best judgment and
     /// be prepared to make changes if specific state needs to be protected.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3225,8 +3304,9 @@ extern "C" {
     /// This function returns `void *`, so SDL doesn't have to include Metal's
     /// headers, but it can be safely cast to a `CAMetalLayer *`.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer to query.
+    ///
     /// ### Return value
     /// Returns a `CAMetalLayer *` on success, or NULL if the renderer isn't a
     ///   Metal renderer.
@@ -3253,8 +3333,9 @@ extern "C" {
     /// doesn't apply to command encoders for render targets, just the window's
     /// backbuffer. Check your return values!
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer to query.
+    ///
     /// ### Return value
     /// Returns an `id<MTLRenderCommandEncoder>` on success, or NULL if the
     ///   renderer isn't a Metal renderer or there was an error.
@@ -3285,7 +3366,7 @@ extern "C" {
     /// [`SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER`] will give you the
     /// maximum number of semaphores you'll need.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the rendering context.
     /// - `wait_stage_mask`: the VkPipelineStageFlags for the wait.
     /// - `wait_semaphore`: a VkSempahore to wait on before rendering the current
@@ -3293,6 +3374,7 @@ extern "C" {
     /// - `signal_semaphore`: a VkSempahore that SDL will signal when rendering
     ///   for the current frame is complete, or 0 if not
     ///   needed.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3323,9 +3405,10 @@ extern "C" {
     /// every driver, so you should check the return value to see whether the
     /// requested setting is supported.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer to toggle.
     /// - `vsync`: the vertical refresh sync interval.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3351,10 +3434,11 @@ pub const SDL_RENDERER_VSYNC_ADAPTIVE: ::core::ffi::c_int = ((-1_i32) as ::core:
 extern "C" {
     /// Get VSync of the given renderer.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer to toggle.
     /// - `vsync`: an int filled with the current vertical refresh sync interval.
     ///   See [`SDL_SetRenderVSync()`] for the meaning of the value.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -3409,11 +3493,12 @@ extern "C" {
     ///
     /// The text is drawn in the color specified by [`SDL_SetRenderDrawColor()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `renderer`: the renderer which should draw a line of text.
     /// - `x`: the x coordinate where the top-left corner of the text will draw.
     /// - `y`: the y coordinate where the top-left corner of the text will draw.
     /// - `str`: the string to render.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.

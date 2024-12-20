@@ -10,8 +10,9 @@ use super::error::*;
 extern "C" {
     /// Put UTF-8 text into the clipboard.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `text`: the text to store in the clipboard.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -72,8 +73,9 @@ extern "C" {
 extern "C" {
     /// Put UTF-8 text into the primary selection.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `text`: the text to store in the primary selection.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -140,10 +142,11 @@ extern "C" {
 /// clipboard is cleared or new data is set. The clipboard is automatically
 /// cleared in [`SDL_Quit()`].
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: a pointer to provided user data.
 /// - `mime_type`: the requested mime-type.
 /// - `size`: a pointer filled in with the length of the returned data.
+///
 /// ### Return value
 /// Returns a pointer to the data for the provided mime-type. Returning NULL
 ///   or setting length to 0 will cause no data to be sent to the
@@ -168,7 +171,7 @@ pub type SDL_ClipboardDataCallback = ::core::option::Option<
 /// Callback function that will be called when the clipboard is cleared, or new
 /// data is set.
 ///
-/// ### Arguments
+/// ### Parameters
 /// - `userdata`: a pointer to provided user data.
 ///
 /// ### Availability
@@ -191,7 +194,7 @@ extern "C" {
     /// not need to be null terminated (e.g. you can directly copy a portion of a
     /// document)
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `callback`: a function pointer to the function that provides the
     ///   clipboard data.
     /// - `cleanup`: a function pointer to the function that cleans up the
@@ -199,6 +202,7 @@ extern "C" {
     /// - `userdata`: an opaque pointer that will be forwarded to the callbacks.
     /// - `mime_types`: a list of mime-types that are being offered.
     /// - `num_mime_types`: the number of mime-types in the mime_types list.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -246,9 +250,10 @@ extern "C" {
     /// The size of text data does not include the terminator, but the text is
     /// guaranteed to be null terminated.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `mime_type`: the mime type to read from the clipboard.
     /// - `size`: a pointer filled in with the length of the returned data.
+    ///
     /// ### Return value
     /// Returns the retrieved data buffer or NULL on failure; call [`SDL_GetError()`]
     ///   for more information. This should be freed with [`SDL_free()`] when it
@@ -272,8 +277,9 @@ extern "C" {
 extern "C" {
     /// Query whether there is data in the clipboard for the provided mime type.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `mime_type`: the mime type to check for data for.
+    ///
     /// ### Return value
     /// Returns true if there exists data in clipboard for the provided mime type,
     ///   false if it does not.
@@ -293,9 +299,10 @@ extern "C" {
 extern "C" {
     /// Retrieve the list of mime types available in the clipboard.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `num_mime_types`: a pointer filled with the number of mime types, may
     ///   be NULL.
+    ///
     /// ### Return value
     /// Returns a null terminated array of strings with mime types, or NULL on
     ///   failure; call [`SDL_GetError()`] for more information. This should be

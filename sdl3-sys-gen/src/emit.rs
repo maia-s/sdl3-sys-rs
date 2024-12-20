@@ -365,6 +365,9 @@ impl DocComment {
 
         let mut section = |ctx: &mut EmitContext, name| -> EmitResult {
             if current_section != name {
+                if name == "Return value" && current_section == "Parameters" {
+                    writeln!(ctx, "{pfx}")?;
+                }
                 current_section = name;
                 writeln!(ctx, "{pfx} ### {name}")?;
             }
@@ -393,7 +396,7 @@ impl DocComment {
                 };
                 match cmd {
                     "param" => {
-                        section(ctx, "Arguments")?;
+                        section(ctx, "Parameters")?;
                         let (param, rest) = rest.split_once(char::is_whitespace).unwrap();
                         let rest = rest.trim_start();
                         writeln!(ctx, "{pfx} - `{param}`: {rest}")?;
@@ -1506,6 +1509,7 @@ impl Emit for TypeDef {
                 write!(ctx, "pub struct {enum_ident}(pub ")?;
                 enum_base_type.emit(ctx)?;
                 writeln!(ctx, ");")?;
+                writeln!(ctx)?;
 
                 write!(ctx, "impl From<{enum_ident}> for ")?;
                 enum_base_type.emit(ctx)?;

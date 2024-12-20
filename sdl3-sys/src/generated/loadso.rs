@@ -28,8 +28,9 @@ use super::error::*;
 extern "C" {
     /// Dynamically load a shared object.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `sofile`: a system-dependent name of the object file.
+    ///
     /// ### Return value
     /// Returns an opaque pointer to the object handle or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
@@ -61,9 +62,10 @@ extern "C" {
     ///
     /// If the requested function doesn't exist, NULL is returned.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `handle`: a valid shared object handle returned by [`SDL_LoadObject()`].
     /// - `name`: the name of the function to look up.
+    ///
     /// ### Return value
     /// Returns a pointer to the function or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
@@ -88,7 +90,7 @@ extern "C" {
     /// Note that any pointers from this object looked up through
     /// [`SDL_LoadFunction()`] will no longer be valid.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `handle`: a valid shared object handle returned by [`SDL_LoadObject()`].
     ///
     /// ### Thread safety

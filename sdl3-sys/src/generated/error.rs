@@ -36,10 +36,11 @@ extern "C" {
     /// }
     /// ```
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `fmt`: a printf()-style message format string.
     /// - `...`: additional parameters matching % tokens in the `fmt` string, if
     ///   any.
+    ///
     /// ### Return value
     /// Returns false.
     ///
@@ -61,9 +62,10 @@ extern "C" {
     ///
     /// Calling this function will replace any previous error message that was set.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `fmt`: a printf()-style message format string.
     /// - `ap`: a variable argument list.
+    ///
     /// ### Return value
     /// Returns false.
     ///

@@ -106,6 +106,7 @@ pub const SDL_INIT_CAMERA: SDL_InitFlags = (0x00010000 as SDL_InitFlags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AppResult(pub ::core::ffi::c_int);
+
 impl From<SDL_AppResult> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_AppResult) -> Self {
@@ -208,8 +209,9 @@ extern "C" {
     /// calling [`SDL_Init`], using either [`SDL_SetAppMetadata()`] or
     /// [`SDL_SetAppMetadataProperty()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `flags`: subsystem initialization flags.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -232,8 +234,9 @@ extern "C" {
     ///
     /// This function and [`SDL_Init()`] are interchangeable.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `flags`: any of the flags used by [`SDL_Init()`]; see [`SDL_Init`] for details.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -254,7 +257,7 @@ extern "C" {
     /// You still need to call [`SDL_Quit()`] even if you close all open subsystems
     /// with [`SDL_QuitSubSystem()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `flags`: any of the flags used by [`SDL_Init()`]; see [`SDL_Init`] for details.
     ///
     /// ### Availability
@@ -269,8 +272,9 @@ extern "C" {
 extern "C" {
     /// Get a mask of the specified subsystems which are currently initialized.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `flags`: any of the flags used by [`SDL_Init()`]; see [`SDL_Init`] for details.
+    ///
     /// ### Return value
     /// Returns a mask of all initialized subsystems if `flags` is 0, otherwise it
     ///   returns the initialization status of the specified subsystems.
@@ -325,13 +329,14 @@ extern "C" {
     /// supply significantly more detailed metadata with
     /// [`SDL_SetAppMetadataProperty()`].
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `appname`: The name of the application ("My Game 2: Bad Guy's
     ///   Revenge!").
     /// - `appversion`: The version of the application ("1.0.0beta5" or a git
     ///   hash, or whatever makes sense).
     /// - `appidentifier`: A unique string in reverse-domain format that
     ///   identifies this app ("com.example.mygame2").
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -400,9 +405,10 @@ extern "C" {
     ///   Future versions of SDL might add new types. This defaults to
     ///   "application".
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the name of the metadata property to set.
     /// - `value`: the value of the property, or NULL to remove that property.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -450,8 +456,9 @@ extern "C" {
     /// [`SDL_SetAppMetadataProperty()`]. See [`SDL_SetAppMetadataProperty()`] for the list
     /// of available properties and their meanings.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `name`: the name of the metadata property to get.
+    ///
     /// ### Return value
     /// Returns the current value of the metadata property, or the default if it
     ///   is not set, NULL for properties with no default.

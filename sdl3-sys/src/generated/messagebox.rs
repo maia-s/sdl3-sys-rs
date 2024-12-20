@@ -103,6 +103,7 @@ pub struct SDL_MessageBoxColor {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_MessageBoxColorType(pub ::core::ffi::c_int);
+
 impl From<SDL_MessageBoxColorType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_MessageBoxColorType) -> Self {
@@ -203,11 +204,12 @@ extern "C" {
     /// concern, check the return value from this function and fall back to writing
     /// to stderr if you can.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `messageboxdata`: the [`SDL_MessageBoxData`] structure with title, text and
     ///   other options.
     /// - `buttonid`: the pointer to which user id of hit button should be
     ///   copied.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -252,11 +254,12 @@ extern "C" {
     /// concern, check the return value from this function and fall back to writing
     /// to stderr if you can.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `flags`: an [`SDL_MessageBoxFlags`] value.
     /// - `title`: UTF-8 title text.
     /// - `message`: UTF-8 message text.
     /// - `window`: the parent window, or NULL for no parent.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.

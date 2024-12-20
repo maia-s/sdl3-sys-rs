@@ -113,8 +113,9 @@ extern "C" {
     /// supported. Either do not link to the Vulkan loader or link to a dynamic
     /// library version.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `path`: the platform dependent Vulkan loader library name or NULL.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -176,8 +177,9 @@ extern "C" {
     ///
     /// You should not free the returned array; it is owned by SDL.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `count`: a pointer filled in with the number of extensions returned.
+    ///
     /// ### Return value
     /// Returns an array of extension name strings on success, NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
@@ -202,13 +204,14 @@ extern "C" {
     /// If `allocator` is NULL, Vulkan will use the system default allocator. This
     /// argument is passed directly to Vulkan and isn't used by SDL itself.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `window`: the window to which to attach the Vulkan surface.
     /// - `instance`: the Vulkan instance handle.
     /// - `allocator`: a VkAllocationCallbacks struct, which lets the app set the
     ///   allocator that creates the surface. Can be NULL.
     /// - `surface`: a pointer to a VkSurfaceKHR handle to output the newly
     ///   created surface.
+    ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
@@ -240,7 +243,7 @@ extern "C" {
     /// If `allocator` is NULL, Vulkan will use the system default allocator. This
     /// argument is passed directly to Vulkan and isn't used by SDL itself.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance`: the Vulkan instance handle.
     /// - `surface`: vkSurfaceKHR handle to destroy.
     /// - `allocator`: a VkAllocationCallbacks struct, which lets the app set the
@@ -266,11 +269,12 @@ extern "C" {
     /// The `instance` must have been created with extensions returned by
     /// [`SDL_Vulkan_GetInstanceExtensions()`] enabled.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `instance`: the Vulkan instance handle.
     /// - `physicalDevice`: a valid Vulkan physical device handle.
     /// - `queueFamilyIndex`: a valid queue family index for the given physical
     ///   device.
+    ///
     /// ### Return value
     /// Returns true if supported, false if unsupported or an error occurred.
     ///

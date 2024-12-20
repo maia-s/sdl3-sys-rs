@@ -30,10 +30,11 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
     /// As this is processing a message directly from the Windows event loop, this
     /// callback should do the minimum required work and return quickly.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `userdata`: the app-defined pointer provided to
     ///   [`SDL_SetWindowsMessageHook`].
     /// - `msg`: a pointer to a Win32 event structure to process.
+    ///
     /// ### Return value
     /// Returns true to let event continue on, false to drop it.
     ///
@@ -55,7 +56,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
         /// The callback may modify the message, and should return true if the message
         /// should continue to be processed, or false to prevent further processing.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `callback`: the [`SDL_WindowsMessageHook`] function to call.
         /// - `userdata`: a pointer to pass to every iteration of `callback`.
         ///
@@ -81,8 +82,9 @@ apply_cfg!(#[cfg(any(any(doc, windows), any(/* always disabled: SDL_PLATFORM_WIN
         /// The returned adapter index can be passed to `IDirect3D9::CreateDevice` and
         /// controls on which monitor a full screen application will appear.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `displayID`: the instance of the display to query.
+        ///
         /// ### Return value
         /// Returns the D3D9 adapter index on success or -1 on failure; call
         ///   [`SDL_GetError()`] for more information.
@@ -99,10 +101,11 @@ apply_cfg!(#[cfg(any(any(doc, windows), any(/* always disabled: SDL_PLATFORM_WIN
         /// `EnumOutputs` respectively to get the objects required to create a DX10 or
         /// DX11 device and swap chain.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `displayID`: the instance of the display to query.
         /// - `adapterIndex`: a pointer to be filled in with the adapter index.
         /// - `outputIndex`: a pointer to be filled in with the output index.
+        ///
         /// ### Return value
         /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
@@ -146,7 +149,7 @@ extern "C" {
     /// The callback may modify the event, and should return true if the event
     /// should continue to be processed, or false to prevent further processing.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `callback`: the [`SDL_X11EventHook`] function to call.
     /// - `userdata`: a pointer to pass to every iteration of `callback`.
     ///
@@ -161,9 +164,10 @@ apply_cfg!(#[cfg(any(doc, target_os = "linux"))] => {
         ///
         /// This uses setpriority() if possible, and RealtimeKit if available.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `threadID`: the Unix thread ID to change priority of.
         /// - `priority`: the new, Unix-specific, priority value.
+        ///
         /// ### Return value
         /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
@@ -178,11 +182,12 @@ apply_cfg!(#[cfg(any(doc, target_os = "linux"))] => {
         ///
         /// This uses setpriority() if possible, and RealtimeKit if available.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `threadID`: the Unix thread ID to change priority of.
         /// - `sdlPriority`: the new [`SDL_ThreadPriority`] value.
         /// - `schedPolicy`: the new scheduling policy (SCHED_FIFO, SCHED_RR,
         ///   SCHED_OTHER, etc...).
+        ///
         /// ### Return value
         /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
@@ -203,7 +208,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
     /// [`SDL_SetiOSAnimationCallback`], the system will call that function pointer at
     /// a regular interval.
     ///
-    /// ### Arguments
+    /// ### Parameters
     /// - `userdata`: what was passed as `callbackParam` to
     ///   [`SDL_SetiOSAnimationCallback`] as `callbackParam`.
     ///
@@ -239,12 +244,13 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
         ///
         /// <https://wiki.libsdl.org/SDL3/README/main-functions>
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `window`: the window for which the animation callback should be set.
         /// - `interval`: the number of frames after which **callback** will be
         ///   called.
         /// - `callback`: the function to call for every frame.
         /// - `callbackParam`: a pointer that is passed to `callback`.
+        ///
         /// ### Return value
         /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
@@ -262,7 +268,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
         ///
         /// This function is only available on Apple iOS.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `enabled`: true to enable the event pump, false to disable it.
         ///
         /// ### Availability
@@ -534,10 +540,11 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         ///
         /// <https://developer.android.com/reference/android/Manifest.permission>
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `permission`: the permission to request.
         /// - `cb`: the callback to trigger when the request has a response.
         /// - `userdata`: an app-controlled pointer that is passed to the callback.
+        ///
         /// ### Return value
         /// Returns true if the request was submitted, false if there was an error
         ///   submitting. The result of the request is only ever reported
@@ -565,12 +572,13 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         ///
         /// <https://developer.android.com/reference/android/view/Gravity>
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `message`: text message to be shown.
         /// - `duration`: 0=short, 1=long.
         /// - `gravity`: where the notification should appear on the screen.
         /// - `xoffset`: set this parameter only when gravity >=0.
         /// - `yoffset`: set this parameter only when gravity >=0.
+        ///
         /// ### Return value
         /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
@@ -588,9 +596,10 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         ///
         /// Override "boolean onUnhandledMessage(Message msg)" to handle the message.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `command`: user command that must be greater or equal to 0x8000.
         /// - `param`: user parameter.
+        ///
         /// ### Return value
         /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
@@ -647,6 +656,7 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Sandbox(pub ::core::ffi::c_int);
+
 impl From<SDL_Sandbox> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_Sandbox) -> Self {
@@ -845,8 +855,9 @@ apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
         /// XTaskQueueCloseHandle to reduce the reference count to avoid a resource
         /// leak.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `outTaskQueue`: a pointer to be filled in with task queue handle.
+        ///
         /// ### Return value
         /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
@@ -862,9 +873,10 @@ apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
         /// This is effectively a synchronous version of XUserAddAsync, which always
         /// prefers the default user and allows a sign-in UI.
         ///
-        /// ### Arguments
+        /// ### Parameters
         /// - `outUserHandle`: a pointer to be filled in with the default user
         ///   handle.
+        ///
         /// ### Return value
         /// Returns true if success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
