@@ -343,7 +343,7 @@ pub const SDL_WINDOW_NOT_FOCUSABLE: SDL_WindowFlags = (2147483648_u64 as SDL_Win
 pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376_u32;
 
 #[inline(always)]
-pub const fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: ::core::primitive::u32) -> ::core::ffi::c_int {
+pub const fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c_int {
     ((SDL_WINDOWPOS_UNDEFINED_MASK | X) as ::core::ffi::c_int)
 }
 
@@ -361,7 +361,7 @@ pub const fn SDL_WINDOWPOS_ISUNDEFINED(X: ::core::ffi::c_int) -> ::core::primiti
 pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 
 #[inline(always)]
-pub const fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: ::core::primitive::u32) -> ::core::ffi::c_int {
+pub const fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c_int {
     ((SDL_WINDOWPOS_CENTERED_MASK | X) as ::core::ffi::c_int)
 }
 

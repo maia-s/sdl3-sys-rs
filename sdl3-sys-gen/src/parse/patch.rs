@@ -302,6 +302,8 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             )
         },
         patch: |_ctx, define| {
+            let args = define.args.as_mut().unwrap();
+            args[0].ty = Type::ident_str("SDL_DisplayID");
             define.value = define.value.cast_expr(Type::primitive(PrimitiveType::Int));
             Ok(true)
         },
