@@ -191,7 +191,6 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                     | "SDL_stack_free"
                     | "SDL_static_cast"
                     | "SDL_STRINGIFY_ARG"
-                    | "SDL_TriggerBreakpoint"
                     | "SDL_UINT64_C"
                     | "SDL_zero"
                     | "SDL_zeroa"
@@ -257,7 +256,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
     EmitDefinePatch {
         module: Some("assert"),
         match_ident: |i| i == "SDL_AssertBreakpoint",
-        patch: |ctx, _| {
+        patch: |ctx, define| {
             ctx.register_sym(
                 Ident::new_inline("SDL_AssertBreakpoint"),
                 None,
@@ -267,12 +266,32 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 false,
                 false,
             )?;
+            define.doc.emit(ctx)?;
             ctx.write_str(str_block! {r#"
                 #[inline(always)]
                 pub unsafe fn SDL_AssertBreakpoint() {
                     unsafe { SDL_TriggerBreakpoint() }
                 }
 
+            "#})?;
+            Ok(true)
+        },
+    },
+    EmitDefinePatch {
+        module: Some("assert"),
+        match_ident: |i| i == "SDL_TriggerBreakpoint",
+        patch: |ctx, define| {
+            ctx.register_sym(
+                Ident::new_inline("SDL_TriggerBreakpoint"),
+                None,
+                Some(Type::function(Vec::new(), Type::void(), true, true)),
+                None,
+                SymKind::Other,
+                false,
+                false,
+            )?;
+            define.doc.emit(ctx)?;
+            ctx.write_str(str_block! {r#"
                 #[inline(always)]
                 pub unsafe fn SDL_TriggerBreakpoint() {
                     crate::breakpoint()
