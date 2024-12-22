@@ -958,6 +958,13 @@ impl PreProcState {
         value: DefineValue,
     ) -> EmitResult {
         if let Ok(true) = self.is_defined_ignore_target(&key) {
+            if let DefineValue::Expr(Expr::Literal(new_lit)) = &value {
+                if let DefineValue::Expr(Expr::Literal(old_lit)) = &self.lookup(&key)?.unwrap().1 {
+                    if new_lit == old_lit {
+                        return Ok(());
+                    }
+                }
+            }
             return Err(ParseErr::new(key.span, "already defined").into());
         }
         self.undefined.remove(&key);

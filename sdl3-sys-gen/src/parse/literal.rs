@@ -1,7 +1,7 @@
 use super::{GetSpan, Op, Parse, ParseContext, ParseErr, ParseRawRes, Span, Spanned};
 use std::{borrow::Cow, ffi::CString};
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum Literal {
     Integer(IntegerLiteral),
     Float(FloatLiteral),
@@ -40,6 +40,16 @@ impl Parse for Literal {
 pub enum FloatLiteral {
     Float(Spanned<f32>),
     Double(Spanned<f64>),
+}
+
+impl PartialEq for FloatLiteral {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (Self::Float(s), Self::Float(o)) => s.value == o.value,
+            (Self::Double(s), Self::Double(o)) => s.value == o.value,
+            _ => false,
+        }
+    }
 }
 
 impl GetSpan for FloatLiteral {
@@ -171,7 +181,13 @@ pub struct IntegerLiteral {
     pub ndigits: u32,
 }
 
-#[derive(Clone, Debug)]
+impl PartialEq for IntegerLiteral {
+    fn eq(&self, other: &Self) -> bool {
+        self.kind == other.kind && self.value == other.value
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum IntegerLiteralType {
     Unsuffixed,
     Unsigned,
@@ -441,6 +457,12 @@ impl Parse for IntegerLiteral {
 pub struct StringLiteral {
     pub span: Span,
     pub str: CString,
+}
+
+impl PartialEq for StringLiteral {
+    fn eq(&self, other: &Self) -> bool {
+        self.str == other.str
+    }
 }
 
 impl GetSpan for StringLiteral {
