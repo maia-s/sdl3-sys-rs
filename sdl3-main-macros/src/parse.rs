@@ -446,6 +446,7 @@ impl Parse for ExternAbi {
 pub struct FunctionSignature {
     pub unsafe_kw: Option<Ident>,
     pub abi: Option<ExternAbi>,
+    pub generics: Option<Generics>,
     pub params: Vec<Type>,
     pub return_type: Type,
 }
@@ -456,7 +457,7 @@ impl IntoTokenTrees for FunctionSignature {
         for param in self.params {
             miniquote_to!(&mut params => #param,);
         }
-        miniquote_to!(out => #{self.unsafe_kw} #{self.abi} fn(#params));
+        miniquote_to!(out => #{self.unsafe_kw} #{self.abi} fn #{self.generics} (#params));
         if !matches!(&self.return_type, Type::Tuple(v) if v.is_empty()) {
             miniquote_to!(out => -> #{self.return_type});
         }
@@ -470,6 +471,7 @@ pub struct Function {
     pub unsafe_kw: Option<Ident>,
     pub abi: Option<ExternAbi>,
     pub ident: Ident,
+    pub generics: Option<Generics>,
     pub params: FunctionParams,
     pub return_type: Option<Type>,
     pub body: TokenTree,
@@ -483,6 +485,7 @@ impl Function {
             unsafe_kw: None,
             abi: None,
             ident,
+            generics: None,
             params: FunctionParams::default(),
             return_type: None,
             body: TokenTree::Group(Group::new(Delimiter::Brace, TokenStream::new())),
@@ -493,6 +496,7 @@ impl Function {
         FunctionSignature {
             unsafe_kw: self.unsafe_kw.clone(),
             abi: self.abi.clone(),
+            generics: self.generics.clone(),
             params: self.params.0.iter().map(|p| p.ty.clone()).collect(),
             return_type: self.return_type.clone().unwrap_or(Type::unit()),
         }
@@ -501,7 +505,7 @@ impl Function {
 
 impl IntoTokenTrees for Function {
     fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
-        miniquote_to!(out => #{self.attrs} #{self.vis} #{self.unsafe_kw} #{self.abi} fn #{self.ident} #{self.params});
+        miniquote_to!(out => #{self.attrs} #{self.vis} #{self.unsafe_kw} #{self.abi} fn #{self.ident} #{self.generics} #{self.params});
         if let Some(return_type) = self.return_type {
             miniquote_to!(out => -> #return_type);
         }
@@ -528,6 +532,7 @@ impl Parse for Function {
         *input = try_input;
 
         let ident = Ident::parse(input)?;
+        let generics = Generics::try_parse(input)?;
         let params = FunctionParams::parse(input)?;
         let return_type = if try_parse_op(input, "->").is_some() {
             let rtype = Type::parse(input)?;
@@ -556,6 +561,7 @@ impl Parse for Function {
             unsafe_kw,
             abi,
             ident,
+            generics,
             params,
             return_type,
             body,
@@ -713,13 +719,13 @@ impl Parse for FunctionParams {
 }
 
 #[derive(Clone, Debug)]
-pub enum GenericArg {
+pub enum Generic {
     Lifetime(Lifetime),
     Type(Type), // or constant
     Expr(TokenTree),
 }
 
-impl GenericArg {
+impl Generic {
     #[must_use]
     fn replace_self(&self, new_self: Type) -> Self {
         match self {
@@ -730,7 +736,7 @@ impl GenericArg {
     }
 }
 
-impl IntoTokenTrees for GenericArg {
+impl IntoTokenTrees for Generic {
     fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
         match self {
             Self::Lifetime(lt) => lt.into_token_trees(out),
@@ -740,7 +746,7 @@ impl IntoTokenTrees for GenericArg {
     }
 }
 
-impl Parse for GenericArg {
+impl Parse for Generic {
     fn desc() -> &'static str {
         "generic argument"
     }
@@ -763,17 +769,17 @@ impl Parse for GenericArg {
     }
 }
 
-#[derive(Clone, Debug)]
-pub struct GenericArgs {
-    pub args: Vec<GenericArg>,
+#[derive(Clone, Debug, Default)]
+pub struct Generics {
+    pub params: Vec<Generic>,
 }
 
-impl GenericArgs {
+impl Generics {
     #[must_use]
     fn replace_self(&self, new_self: Type) -> Self {
         Self {
-            args: self
-                .args
+            params: self
+                .params
                 .iter()
                 .map(|arg| arg.replace_self(new_self.clone()))
                 .collect(),
@@ -781,25 +787,25 @@ impl GenericArgs {
     }
 }
 
-impl Deref for GenericArgs {
-    type Target = [GenericArg];
+impl Deref for Generics {
+    type Target = [Generic];
 
     fn deref(&self) -> &Self::Target {
-        &self.args
+        &self.params
     }
 }
 
-impl IntoTokenTrees for GenericArgs {
+impl IntoTokenTrees for Generics {
     fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
-        miniquote_to!(out => ::<);
-        for arg in self.args {
+        miniquote_to!(out => <);
+        for arg in self.params {
             miniquote_to!(out => #arg,);
         }
         miniquote_to!(out => >);
     }
 }
 
-impl Parse for GenericArgs {
+impl Parse for Generics {
     fn desc() -> &'static str {
         "generic arguments"
     }
@@ -807,14 +813,14 @@ impl Parse for GenericArgs {
     fn try_parse(input: &mut &[TokenTree]) -> Result<Option<Self>, Error> {
         if try_parse_op(input, "<").is_some() {
             let mut args = Vec::new();
-            while let Some(arg) = GenericArg::try_parse(input)? {
+            while let Some(arg) = Generic::try_parse(input)? {
                 args.push(arg);
                 if try_parse_op(input, ",").is_none() {
                     break;
                 }
             }
             parse_op(input, ">")?;
-            Ok(Some(Self { args }))
+            Ok(Some(Self { params: args }))
         } else {
             Ok(None)
         }
@@ -851,7 +857,7 @@ impl Parse for Ident {
 #[derive(Clone)]
 pub struct ImplBlock {
     pub attrs: Vec<Attribute>,
-    pub generic_defs: Option<GenericArgs>,
+    pub generic_defs: Option<Generics>,
     pub ty: Type,
     pub inner_attrs: Vec<InnerAttribute>,
     pub items: Vec<Item>,
@@ -879,7 +885,7 @@ impl Parse for ImplBlock {
         let attrs = Vec::<Attribute>::try_parse(try_input)?.unwrap_or_default();
         if try_parse_kw(try_input, "impl").is_some() {
             *input = try_input;
-            let generic_defs = GenericArgs::try_parse(input)?;
+            let generic_defs = Generics::try_parse(input)?;
             let ty = Type::parse(input)?;
             let braced = input!(parse_group(input, Delimiter::Brace)?.stream());
             let inner_attrs = Vec::<InnerAttribute>::try_parse(braced)?.unwrap_or_default();
@@ -975,7 +981,7 @@ pub struct Path {
 }
 
 impl Path {
-    pub fn last_segment_generics(&self) -> Option<&GenericArgs> {
+    pub fn last_segment_generics(&self) -> Option<&Generics> {
         self.segments.last().unwrap().generics.as_ref()
     }
 
@@ -1047,7 +1053,7 @@ impl Parse for Path {
             loop {
                 let mut sep = try_parse_op(input, "::").is_some();
                 if matches!(input.first(), Some(TokenTree::Punct(p)) if p.as_char() == '<') {
-                    segments.last_mut().unwrap().generics = Some(GenericArgs::parse(input)?);
+                    segments.last_mut().unwrap().generics = Some(Generics::parse(input)?);
                     sep = try_parse_op(input, "::").is_some();
                 }
                 if !sep {
@@ -1068,7 +1074,7 @@ impl Parse for Path {
 #[derive(Clone, Debug)]
 pub struct PathSeg {
     pub ident: Ident,
-    pub generics: Option<GenericArgs>,
+    pub generics: Option<Generics>,
 }
 
 impl PathSeg {
@@ -1162,7 +1168,7 @@ impl Type {
                             "`Option` is missing generics",
                         ));
                     };
-                    let generics = &generics.args;
+                    let generics = &generics.params;
                     if generics.len() != 1 {
                         return Err(Error::new(
                             Some(seg.ident.span()),
@@ -1172,7 +1178,7 @@ impl Type {
                             ),
                         ));
                     }
-                    let GenericArg::Type(t) = &generics[0] else {
+                    let Generic::Type(t) = &generics[0] else {
                         return Err(Error::new(
                             Some(seg.ident.span()),
                             "the generic argument to `Option` isn't a type",
@@ -1191,7 +1197,7 @@ impl Type {
         }
     }
 
-    pub fn path_generics(&self) -> Option<&GenericArgs> {
+    pub fn path_generics(&self) -> Option<&Generics> {
         let Type::Path(t) = self else { return None };
         t.last_segment_generics()
     }

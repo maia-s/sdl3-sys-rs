@@ -1,8 +1,6 @@
 #![doc = include_str!("../README.md")]
 
-use parse::{
-    Error, Function, GenericArg, ImplBlock, IntoTokenTrees, Item, Parse, Type, Visibility,
-};
+use parse::{Error, Function, Generic, ImplBlock, IntoTokenTrees, Item, Parse, Type, Visibility};
 use proc_macro::{Delimiter, Group, Ident, Punct, Spacing, Span, TokenStream, TokenTree};
 
 const SDL3_MAIN: &str = "sdl3_main";
@@ -524,8 +522,8 @@ pub fn app_init(attr: TokenStream, item: TokenStream) -> TokenStream {
         let mut state = Type::unit();
         if let Some(rtype) = &f.return_type {
             if let Some(generics) = rtype.path_generics() {
-                if generics.args.len() == 1 {
-                    if let GenericArg::Type(t) = &generics.args[0] {
+                if generics.params.len() == 1 {
+                    if let Generic::Type(t) = &generics.params[0] {
                         state = t.clone();
                     }
                 }
