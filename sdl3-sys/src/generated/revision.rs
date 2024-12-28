@@ -17,7 +17,7 @@ apply_cfg!(#[cfg(doc)] => {
 });
 
 apply_cfg!(#[cfg(not(doc))] => {
-    pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL3-preview-3.1.6-491-g1a466b554".as_ptr();
+    pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL3-preview-3.1.6-500-gc030e6f78".as_ptr();
 
 });
 
