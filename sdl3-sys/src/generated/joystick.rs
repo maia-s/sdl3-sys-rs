@@ -581,14 +581,14 @@ pub struct SDL_VirtualJoystickDesc {
     /// User data pointer passed to callbacks
     pub userdata: *mut ::core::ffi::c_void,
     /// Called when the joystick state should be updated
-    pub Update: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>,
+    pub Update: ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void)>,
     /// Called when the player index is set
     pub SetPlayerIndex: ::core::option::Option<
-        extern "C" fn(userdata: *mut ::core::ffi::c_void, player_index: ::core::ffi::c_int),
+        unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void, player_index: ::core::ffi::c_int),
     >,
     /// Implements [`SDL_RumbleJoystick()`]
     pub Rumble: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             low_frequency_rumble: Uint16,
             high_frequency_rumble: Uint16,
@@ -596,7 +596,7 @@ pub struct SDL_VirtualJoystickDesc {
     >,
     /// Implements [`SDL_RumbleJoystickTriggers()`]
     pub RumbleTriggers: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             left_rumble: Uint16,
             right_rumble: Uint16,
@@ -604,7 +604,7 @@ pub struct SDL_VirtualJoystickDesc {
     >,
     /// Implements [`SDL_SetJoystickLED()`]
     pub SetLED: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             red: Uint8,
             green: Uint8,
@@ -613,7 +613,7 @@ pub struct SDL_VirtualJoystickDesc {
     >,
     /// Implements [`SDL_SendJoystickEffect()`]
     pub SendEffect: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             data: *const ::core::ffi::c_void,
             size: ::core::ffi::c_int,
@@ -621,13 +621,13 @@ pub struct SDL_VirtualJoystickDesc {
     >,
     /// Implements [`SDL_SetGamepadSensorEnabled()`]
     pub SetSensorsEnabled: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             enabled: ::core::primitive::bool,
         ) -> ::core::primitive::bool,
     >,
     /// Cleans up the userdata when the joystick is detached
-    pub Cleanup: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void)>,
+    pub Cleanup: ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void)>,
 }
 
 impl SDL_VirtualJoystickDesc {

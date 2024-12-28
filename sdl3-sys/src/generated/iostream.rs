@@ -157,13 +157,14 @@ pub struct SDL_IOStreamInterface {
     /// Return the number of bytes in this [`SDL_IOStream`]
     ///
     /// \return the total size of the data stream, or -1 on error.
-    pub size: ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> Sint64>,
+    pub size:
+        ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void) -> Sint64>,
     /// Seek to `offset` relative to `whence`, one of stdio's whence values:
     /// [`SDL_IO_SEEK_SET`], [`SDL_IO_SEEK_CUR`], [`SDL_IO_SEEK_END`]
     ///
     /// \return the final offset in the data stream, or -1 on error.
     pub seek: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             offset: Sint64,
             whence: SDL_IOWhence,
@@ -178,7 +179,7 @@ pub struct SDL_IOStreamInterface {
     ///
     /// \return the number of bytes read
     pub read: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             ptr: *mut ::core::ffi::c_void,
             size: ::core::primitive::usize,
@@ -194,7 +195,7 @@ pub struct SDL_IOStreamInterface {
     ///
     /// \return the number of bytes written
     pub write: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             ptr: *const ::core::ffi::c_void,
             size: ::core::primitive::usize,
@@ -209,7 +210,7 @@ pub struct SDL_IOStreamInterface {
     ///
     /// \return true if successful or false on write error when flushing data.
     pub flush: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             status: *mut SDL_IOStatus,
         ) -> ::core::primitive::bool,
@@ -224,7 +225,7 @@ pub struct SDL_IOStreamInterface {
     ///
     /// \return true if successful or false on write error when flushing data.
     pub close: ::core::option::Option<
-        extern "C" fn(userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool,
+        unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool,
     >,
 }
 

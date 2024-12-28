@@ -879,7 +879,7 @@ impl Emit for Function {
 
 impl Emit for FnPointer {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        write!(ctx, "::core::option::Option<")?;
+        write!(ctx, "::core::option::Option<unsafe ")?;
         emit_extern_start(ctx, &self.abi, true)?;
         write!(ctx, "fn")?;
         self.args.emit(ctx)?;

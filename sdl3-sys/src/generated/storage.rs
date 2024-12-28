@@ -29,13 +29,13 @@ use super::properties::*;
 pub struct SDL_StorageInterface {
     pub version: Uint32,
     pub close: ::core::option::Option<
-        extern "C" fn(userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool,
+        unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool,
     >,
     pub ready: ::core::option::Option<
-        extern "C" fn(userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool,
+        unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool,
     >,
     pub enumerate: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             path: *const ::core::ffi::c_char,
             callback: SDL_EnumerateDirectoryCallback,
@@ -43,14 +43,14 @@ pub struct SDL_StorageInterface {
         ) -> ::core::primitive::bool,
     >,
     pub info: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             path: *const ::core::ffi::c_char,
             info: *mut SDL_PathInfo,
         ) -> ::core::primitive::bool,
     >,
     pub read_file: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             path: *const ::core::ffi::c_char,
             destination: *mut ::core::ffi::c_void,
@@ -58,7 +58,7 @@ pub struct SDL_StorageInterface {
         ) -> ::core::primitive::bool,
     >,
     pub write_file: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             path: *const ::core::ffi::c_char,
             source: *const ::core::ffi::c_void,
@@ -66,33 +66,33 @@ pub struct SDL_StorageInterface {
         ) -> ::core::primitive::bool,
     >,
     pub mkdir: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             path: *const ::core::ffi::c_char,
         ) -> ::core::primitive::bool,
     >,
     pub remove: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             path: *const ::core::ffi::c_char,
         ) -> ::core::primitive::bool,
     >,
     pub rename: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             oldpath: *const ::core::ffi::c_char,
             newpath: *const ::core::ffi::c_char,
         ) -> ::core::primitive::bool,
     >,
     pub copy: ::core::option::Option<
-        extern "C" fn(
+        unsafe extern "C" fn(
             userdata: *mut ::core::ffi::c_void,
             oldpath: *const ::core::ffi::c_char,
             newpath: *const ::core::ffi::c_char,
         ) -> ::core::primitive::bool,
     >,
     pub space_remaining:
-        ::core::option::Option<extern "C" fn(userdata: *mut ::core::ffi::c_void) -> Uint64>,
+        ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void) -> Uint64>,
 }
 
 impl SDL_StorageInterface {
