@@ -64,6 +64,10 @@ pub struct SDL_DialogFileFilter {
 /// no filter was selected or if the platform or method doesn't support
 /// fetching the selected filter.
 ///
+/// In Android, the `filelist` are `content://` URIs. They should be opened
+/// using [`SDL_IOFromFile()`] with appropriate modes. This applies both to open
+/// and save file dialog.
+///
 /// ### Parameters
 /// - `userdata`: an app-provided pointer, for the callback's use.
 /// - `filelist`: the file(s) chosen by the user.

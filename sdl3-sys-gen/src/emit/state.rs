@@ -267,6 +267,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__ARM_ARCH",
             "__clang_analyzer__",
             "__cplusplus",
+            "__has_include",
             "__SUNPRO_C",
             "__WATCOMC__",
             "assert",

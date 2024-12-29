@@ -72,8 +72,8 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `icon`: a surface to be used as icon. May be NULL.
-    /// - `tooltip`: a tooltip to be displayed when the mouse hovers the icon.
-    ///   Not supported on all platforms. May be NULL.
+    /// - `tooltip`: a tooltip to be displayed when the mouse hovers the icon in
+    ///   UTF-8 encoding. Not supported on all platforms. May be NULL.
     ///
     /// ### Return value
     /// Returns The newly created system tray icon.
@@ -111,7 +111,7 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `tray`: the tray icon to be updated.
-    /// - `tooltip`: the new tooltip. May be NULL.
+    /// - `tooltip`: the new tooltip in UTF-8 encoding. May be NULL.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -277,8 +277,8 @@ extern "C" {
     /// - `menu`: the menu to append the entry to.
     /// - `pos`: the desired position for the new entry. Entries at or following
     ///   this place will be moved. If pos is -1, the entry is appended.
-    /// - `label`: the text to be displayed on the entry, or NULL for a
-    ///   separator.
+    /// - `label`: the text to be displayed on the entry, in UTF-8 encoding, or
+    ///   NULL for a separator.
     /// - `flags`: a combination of flags, some of which are mandatory.
     ///
     /// ### Return value
@@ -310,7 +310,7 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `entry`: the entry to be updated.
-    /// - `label`: the new label for the entry.
+    /// - `label`: the new label for the entry in UTF-8 encoding.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -331,7 +331,7 @@ extern "C" {
     /// - `entry`: the entry to be read.
     ///
     /// ### Return value
-    /// Returns the label of the entry.
+    /// Returns the label of the entry in UTF-8 encoding.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
