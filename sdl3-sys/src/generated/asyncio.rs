@@ -137,7 +137,7 @@ pub const SDL_ASYNCIO_TASK_CLOSE: SDL_AsyncIOTaskType = SDL_AsyncIOTaskType::CLO
 /// | ------------------- | --------------- | ----------- |
 /// | [`COMPLETE`](SDL_AsyncIOResult::COMPLETE) | [`SDL_ASYNCIO_COMPLETE`] | request was completed without error |
 /// | [`FAILURE`](SDL_AsyncIOResult::FAILURE) | [`SDL_ASYNCIO_FAILURE`] | request failed for some reason; check [`SDL_GetError()`]! |
-/// | [`CANCELLED`](SDL_AsyncIOResult::CANCELLED) | [`SDL_ASYNCIO_CANCELLED`] | request was cancelled before completing. |
+/// | [`CANCELED`](SDL_AsyncIOResult::CANCELED) | [`SDL_ASYNCIO_CANCELED`] | request was canceled before completing. |
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AsyncIOResult(pub ::core::ffi::c_int);
@@ -156,7 +156,7 @@ impl ::core::fmt::Debug for SDL_AsyncIOResult {
         f.write_str(match *self {
             Self::COMPLETE => "SDL_ASYNCIO_COMPLETE",
             Self::FAILURE => "SDL_ASYNCIO_FAILURE",
-            Self::CANCELLED => "SDL_ASYNCIO_CANCELLED",
+            Self::CANCELED => "SDL_ASYNCIO_CANCELED",
 
             _ => return write!(f, "SDL_AsyncIOResult({})", self.0),
         })
@@ -168,16 +168,16 @@ impl SDL_AsyncIOResult {
     pub const COMPLETE: Self = Self(0);
     /// request failed for some reason; check [`SDL_GetError()`]!
     pub const FAILURE: Self = Self(1);
-    /// request was cancelled before completing.
-    pub const CANCELLED: Self = Self(2);
+    /// request was canceled before completing.
+    pub const CANCELED: Self = Self(2);
 }
 
 /// request was completed without error
 pub const SDL_ASYNCIO_COMPLETE: SDL_AsyncIOResult = SDL_AsyncIOResult::COMPLETE;
 /// request failed for some reason; check [`SDL_GetError()`]!
 pub const SDL_ASYNCIO_FAILURE: SDL_AsyncIOResult = SDL_AsyncIOResult::FAILURE;
-/// request was cancelled before completing.
-pub const SDL_ASYNCIO_CANCELLED: SDL_AsyncIOResult = SDL_AsyncIOResult::CANCELLED;
+/// request was canceled before completing.
+pub const SDL_ASYNCIO_CANCELED: SDL_AsyncIOResult = SDL_AsyncIOResult::CANCELED;
 
 /// Information about a completed asynchronous I/O request.
 ///

@@ -146,6 +146,7 @@ use super::video::*;
 /// | [`FINGER_DOWN`](SDL_EventType::FINGER_DOWN) | [`SDL_EVENT_FINGER_DOWN`] | |
 /// | [`FINGER_UP`](SDL_EventType::FINGER_UP) | [`SDL_EVENT_FINGER_UP`] | |
 /// | [`FINGER_MOTION`](SDL_EventType::FINGER_MOTION) | [`SDL_EVENT_FINGER_MOTION`] | |
+/// | [`FINGER_CANCELED`](SDL_EventType::FINGER_CANCELED) | [`SDL_EVENT_FINGER_CANCELED`] | |
 /// | [`CLIPBOARD_UPDATE`](SDL_EventType::CLIPBOARD_UPDATE) | [`SDL_EVENT_CLIPBOARD_UPDATE`] | The clipboard or primary selection changed |
 /// | [`DROP_FILE`](SDL_EventType::DROP_FILE) | [`SDL_EVENT_DROP_FILE`] | The system requests a file open |
 /// | [`DROP_TEXT`](SDL_EventType::DROP_TEXT) | [`SDL_EVENT_DROP_TEXT`] | text/plain drag-and-drop event |
@@ -279,6 +280,7 @@ impl ::core::fmt::Debug for SDL_EventType {
             Self::FINGER_DOWN => "SDL_EVENT_FINGER_DOWN",
             Self::FINGER_UP => "SDL_EVENT_FINGER_UP",
             Self::FINGER_MOTION => "SDL_EVENT_FINGER_MOTION",
+            Self::FINGER_CANCELED => "SDL_EVENT_FINGER_CANCELED",
             Self::CLIPBOARD_UPDATE => "SDL_EVENT_CLIPBOARD_UPDATE",
             Self::DROP_FILE => "SDL_EVENT_DROP_FILE",
             Self::DROP_TEXT => "SDL_EVENT_DROP_TEXT",
@@ -496,6 +498,7 @@ impl SDL_EventType {
     pub const FINGER_DOWN: Self = Self(0x700);
     pub const FINGER_UP: Self = Self(1793);
     pub const FINGER_MOTION: Self = Self(1794);
+    pub const FINGER_CANCELED: Self = Self(1795);
     /// The clipboard or primary selection changed
     pub const CLIPBOARD_UPDATE: Self = Self(0x900);
     /// The system requests a file open
@@ -748,6 +751,7 @@ pub const SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED: SDL_EventType =
 pub const SDL_EVENT_FINGER_DOWN: SDL_EventType = SDL_EventType::FINGER_DOWN;
 pub const SDL_EVENT_FINGER_UP: SDL_EventType = SDL_EventType::FINGER_UP;
 pub const SDL_EVENT_FINGER_MOTION: SDL_EventType = SDL_EventType::FINGER_MOTION;
+pub const SDL_EVENT_FINGER_CANCELED: SDL_EventType = SDL_EventType::FINGER_CANCELED;
 /// The clipboard or primary selection changed
 pub const SDL_EVENT_CLIPBOARD_UPDATE: SDL_EventType = SDL_EventType::CLIPBOARD_UPDATE;
 /// The system requests a file open
@@ -1463,7 +1467,7 @@ pub struct SDL_RenderEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TouchFingerEvent {
-    /// [`SDL_EVENT_FINGER_MOTION`] or [`SDL_EVENT_FINGER_DOWN`] or [`SDL_EVENT_FINGER_UP`]
+    /// [`SDL_EVENT_FINGER_DOWN`], [`SDL_EVENT_FINGER_UP`], [`SDL_EVENT_FINGER_MOTION`], or [`SDL_EVENT_FINGER_CANCELED`]
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
     /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
@@ -1684,7 +1688,7 @@ pub struct SDL_ClipboardEvent {
     /// are we owning the clipboard (internal update)
     pub owner: ::core::primitive::bool,
     /// number of mime types
-    pub n_mime_types: Sint32,
+    pub num_mime_types: Sint32,
     /// current mime types
     pub mime_types: *mut *const ::core::ffi::c_char,
 }
