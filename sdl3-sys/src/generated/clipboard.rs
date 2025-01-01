@@ -266,7 +266,7 @@ extern "C" {
         callback: SDL_ClipboardDataCallback,
         cleanup: SDL_ClipboardCleanupCallback,
         userdata: *mut ::core::ffi::c_void,
-        mime_types: *const *const ::core::ffi::c_char,
+        mime_types: *mut *const ::core::ffi::c_char,
         num_mime_types: ::core::primitive::usize,
     ) -> ::core::primitive::bool;
 }

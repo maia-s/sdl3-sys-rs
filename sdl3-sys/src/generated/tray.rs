@@ -234,9 +234,9 @@ extern "C" {
     ///   menu.
     ///
     /// ### Return value
-    /// Returns the entries within the given menu. The pointer becomes invalid
-    ///   when any function that inserts or deletes entries in the menu is
-    ///   called.
+    /// Returns a NULL-terminated list of entries within the given menu. The
+    ///   pointer becomes invalid when any function that inserts or deletes
+    ///   entries in the menu is called.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.

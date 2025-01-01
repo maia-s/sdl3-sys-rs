@@ -361,6 +361,8 @@ extern "C" {
     ///
     /// If the key doesn't have a name, this function returns an empty string ("").
     ///
+    /// Letters will be presented in their uppercase form, if applicable.
+    ///
     /// ### Parameters
     /// - `key`: the desired [`SDL_Keycode`] to query.
     ///

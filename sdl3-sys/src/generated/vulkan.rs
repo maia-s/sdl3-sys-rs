@@ -88,6 +88,13 @@ extern "C" {
     /// creating any Vulkan windows. If no Vulkan loader library is loaded, the
     /// default library will be loaded upon creation of the first Vulkan window.
     ///
+    /// SDL keeps a counter of how many times this function has been successfully
+    /// called, so it is safe to call this function multiple times, so long as it
+    /// is eventually paired with an equivalent number of calls to
+    /// [`SDL_Vulkan_UnloadLibrary`]. The `path` argument is ignored unless there is no
+    /// library currently loaded, and and the library isn't actually unloaded until
+    /// there have been an equivalent number of calls to [`SDL_Vulkan_UnloadLibrary`].
+    ///
     /// It is fairly common for Vulkan applications to link with libvulkan instead
     /// of explicitly loading it at run time. This will work with SDL provided the
     /// application links to a dynamic library and both it and SDL use the same
@@ -119,6 +126,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -154,6 +164,20 @@ extern "C" {
 
 extern "C" {
     /// Unload the Vulkan library previously loaded by [`SDL_Vulkan_LoadLibrary()`].
+    ///
+    /// SDL keeps a counter of how many times this function has been called, so it
+    /// is safe to call this function multiple times, so long as it is paired with
+    /// an equivalent number of calls to [`SDL_Vulkan_LoadLibrary`]. The library isn't
+    /// actually unloaded until there have been an equivalent number of calls to
+    /// [`SDL_Vulkan_UnloadLibrary`].
+    ///
+    /// Once the library has actually been unloaded, if any Vulkan instances
+    /// remain, they will likely crash the program. Clean up any existing Vulkan
+    /// resources, and destroy appropriate windows, renderers and GPU devices
+    /// before calling this function.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
