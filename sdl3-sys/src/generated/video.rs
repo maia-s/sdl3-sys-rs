@@ -137,6 +137,7 @@ pub const SDL_SYSTEM_THEME_DARK: SDL_SystemTheme = SDL_SystemTheme::DARK;
 /// - [`SDL_SetWindowFullscreenMode`]
 /// - [`SDL_GetWindowFullscreenMode`]
 #[repr(C)]
+// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DisplayMode {
     /// the display this mode is associated with
@@ -157,23 +158,6 @@ pub struct SDL_DisplayMode {
     pub refresh_rate_denominator: ::core::ffi::c_int,
     /// Private
     pub internal: *mut SDL_DisplayModeData,
-}
-
-impl ::core::default::Default for SDL_DisplayMode {
-    #[inline(always)]
-    fn default() -> Self {
-        Self {
-            displayID: ::core::default::Default::default(),
-            format: ::core::default::Default::default(),
-            w: ::core::default::Default::default(),
-            h: ::core::default::Default::default(),
-            pixel_density: ::core::default::Default::default(),
-            refresh_rate: ::core::default::Default::default(),
-            refresh_rate_numerator: ::core::default::Default::default(),
-            refresh_rate_denominator: ::core::default::Default::default(),
-            internal: ::core::ptr::null_mut(),
-        }
-    }
 }
 
 /// Display orientation values; the way a display is rotated.

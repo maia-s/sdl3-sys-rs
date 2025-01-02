@@ -78,12 +78,12 @@ impl Parse for StructOrUnion {
         };
         let _guard = ctx.with_parent_struct_guard(Some(generated_ident.clone()));
         let fields = StructFields::try_parse(ctx, &mut rest2)?;
-        let mut has_refcount = false;
+        let mut has_refcount_or_internal = false;
         if let Some(fields) = &fields {
             rest = rest2;
             for field in fields.fields.iter() {
-                if field.ident.as_str() == "refcount" {
-                    has_refcount = true;
+                if matches!(field.ident.as_str(), "refcount" | "internal") {
+                    has_refcount_or_internal = true;
                     break;
                 }
             }
@@ -107,12 +107,12 @@ impl Parse for StructOrUnion {
             generated_ident,
             fields,
             hidden: false,
-            can_copy: if has_refcount {
+            can_copy: if has_refcount_or_internal {
                 CanCopy::Never
             } else {
                 CanCopy::Default
             },
-            can_construct: !has_refcount,
+            can_construct: !has_refcount_or_internal,
         };
         patch_parsed_struct(ctx, &mut this)?;
         Ok((rest, Some(this)))
