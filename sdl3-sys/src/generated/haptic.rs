@@ -455,6 +455,7 @@ pub const SDL_HAPTIC_INFINITY: ::core::primitive::u32 = 4294967295_u32;
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_HapticDirection {
     /// The type of encoding.
     pub r#type: Uint8,
@@ -478,6 +479,7 @@ pub struct SDL_HapticDirection {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_HapticConstant {
     /// [`SDL_HAPTIC_CONSTANT`]
     pub r#type: Uint16,
@@ -568,6 +570,7 @@ pub struct SDL_HapticConstant {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_HapticPeriodic {
     /// [`SDL_HAPTIC_SINE`], [`SDL_HAPTIC_SQUARE`]
     /// [`SDL_HAPTIC_TRIANGLE`], [`SDL_HAPTIC_SAWTOOTHUP`] or
@@ -631,6 +634,7 @@ pub struct SDL_HapticPeriodic {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_HapticCondition {
     /// [`SDL_HAPTIC_SPRING`], [`SDL_HAPTIC_DAMPER`],
     /// [`SDL_HAPTIC_INERTIA`] or [`SDL_HAPTIC_FRICTION`]
@@ -677,6 +681,7 @@ pub struct SDL_HapticCondition {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_HapticRamp {
     /// [`SDL_HAPTIC_RAMP`]
     pub r#type: Uint16,
@@ -721,6 +726,7 @@ pub struct SDL_HapticRamp {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_HapticLeftRight {
     /// [`SDL_HAPTIC_LEFTRIGHT`]
     pub r#type: Uint16,

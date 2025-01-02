@@ -100,6 +100,13 @@ pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SensorType(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_SensorType {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::INVALID
+    }
+}
+
 impl From<SDL_SensorType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_SensorType) -> Self {

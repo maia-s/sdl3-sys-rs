@@ -653,6 +653,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         kind: SymKind,
         can_derive_copy: bool,
         can_derive_debug: bool,
+        can_derive_default: bool,
     ) -> EmitResult {
         let module = self.inner().module.clone();
         self.scope_mut().register_sym(Sym {
@@ -664,6 +665,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             kind,
             can_derive_copy,
             can_derive_debug,
+            can_derive_default,
         })?;
         self.emit_pending()?;
         Ok(())
@@ -1075,6 +1077,7 @@ pub struct Sym {
     pub kind: SymKind,
     pub can_derive_copy: bool,
     pub can_derive_debug: bool,
+    pub can_derive_default: bool,
 }
 
 impl Sym {
@@ -1392,6 +1395,7 @@ impl InnerScope {
                 }(sym.ident.clone()),
                 can_derive_copy: false,
                 can_derive_debug: false,
+                can_derive_default: false,
             })?;
         }
 

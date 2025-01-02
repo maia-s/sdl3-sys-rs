@@ -70,6 +70,13 @@ pub const SDL_BLENDMODE_INVALID: SDL_BlendMode = (0x7fffffff as SDL_BlendMode);
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_BlendOperation(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_BlendOperation {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::ADD
+    }
+}
+
 impl From<SDL_BlendOperation> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_BlendOperation) -> Self {
@@ -143,6 +150,13 @@ pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_BlendFactor(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_BlendFactor {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::ZERO
+    }
+}
 
 impl From<SDL_BlendFactor> for ::core::ffi::c_int {
     #[inline(always)]

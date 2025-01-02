@@ -60,6 +60,13 @@ pub type SDL_TLSID = SDL_AtomicInt;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ThreadPriority(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_ThreadPriority {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::LOW
+    }
+}
+
 impl From<SDL_ThreadPriority> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_ThreadPriority) -> Self {
@@ -114,6 +121,13 @@ pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPrio
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ThreadState(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_ThreadState {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::UNKNOWN
+    }
+}
 
 impl From<SDL_ThreadState> for ::core::ffi::c_int {
     #[inline(always)]

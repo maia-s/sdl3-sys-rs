@@ -24,6 +24,13 @@ use super::error::*;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PowerState(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_PowerState {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::ERROR
+    }
+}
+
 impl From<SDL_PowerState> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PowerState) -> Self {

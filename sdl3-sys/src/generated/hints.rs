@@ -4111,6 +4111,13 @@ pub const SDL_HINT_ASSERT: *const ::core::ffi::c_char = c"SDL_ASSERT".as_ptr();
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_HintPriority(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_HintPriority {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::DEFAULT
+    }
+}
+
 impl From<SDL_HintPriority> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_HintPriority) -> Self {

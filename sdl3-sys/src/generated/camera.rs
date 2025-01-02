@@ -78,6 +78,7 @@ pub type SDL_CameraID = Uint32;
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_CameraSpec {
     /// Frame format
     pub format: SDL_PixelFormat,
@@ -110,6 +111,13 @@ pub struct SDL_CameraSpec {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_CameraPosition(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_CameraPosition {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::UNKNOWN
+    }
+}
 
 impl From<SDL_CameraPosition> for ::core::ffi::c_int {
     #[inline(always)]

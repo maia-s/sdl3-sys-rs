@@ -46,6 +46,13 @@ pub type SDL_FingerID = Uint64;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TouchDeviceType(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_TouchDeviceType {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::INVALID
+    }
+}
+
 impl From<SDL_TouchDeviceType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_TouchDeviceType) -> Self {
@@ -102,6 +109,7 @@ pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType =
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_Finger {
     /// the finger ID
     pub id: SDL_FingerID,

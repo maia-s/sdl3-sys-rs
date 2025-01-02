@@ -114,6 +114,7 @@ impl Value {
                 string: STRING_TYPE.into(),
                 can_derive_copy: true,
                 can_derive_debug: true,
+                can_derive_default: true,
             })),
             Value::RustCode(r) => Ok(r.ty.clone()),
             Value::TargetDependent(_) => todo!(),

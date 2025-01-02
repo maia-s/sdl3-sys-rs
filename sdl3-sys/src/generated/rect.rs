@@ -16,6 +16,7 @@ use super::error::*;
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_Point {
     pub x: ::core::ffi::c_int,
     pub y: ::core::ffi::c_int,
@@ -32,6 +33,7 @@ pub struct SDL_Point {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_FPoint {
     pub x: ::core::ffi::c_float,
     pub y: ::core::ffi::c_float,
@@ -53,6 +55,7 @@ pub struct SDL_FPoint {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_Rect {
     pub x: ::core::ffi::c_int,
     pub y: ::core::ffi::c_int,
@@ -79,6 +82,7 @@ pub struct SDL_Rect {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_FRect {
     pub x: ::core::ffi::c_float,
     pub y: ::core::ffi::c_float,

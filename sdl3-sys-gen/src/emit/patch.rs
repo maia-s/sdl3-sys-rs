@@ -277,6 +277,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 SymKind::Other,
                 false,
                 false,
+                false,
             )?;
             define.doc.emit(ctx)?;
             ctx.write_str(str_block! {r#"
@@ -299,6 +300,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 Some(Type::function(Vec::new(), Type::void(), true, true)),
                 None,
                 SymKind::Other,
+                false,
                 false,
                 false,
             )?;
@@ -648,8 +650,18 @@ fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
         SymKind::Other,
         false,
         true,
+        false,
     )?;
-    ctx.register_sym(etf, None, Some(ty), None, SymKind::Other, false, true)?;
+    ctx.register_sym(
+        etf,
+        None,
+        Some(ty),
+        None,
+        SymKind::Other,
+        false,
+        true,
+        false,
+    )?;
 
     let cfg_default = "#[cfg(not(windows))]";
     let cfg_win = "#[cfg(windows)]";

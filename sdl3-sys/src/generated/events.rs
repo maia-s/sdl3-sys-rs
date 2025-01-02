@@ -184,6 +184,13 @@ use super::video::*;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EventType(pub Uint32);
 
+impl ::core::default::Default for SDL_EventType {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::FIRST
+    }
+}
+
 impl From<SDL_EventType> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_EventType) -> Self {
@@ -823,6 +830,7 @@ pub const SDL_EVENT_ENUM_PADDING: SDL_EventType = SDL_EventType::ENUM_PADDING;
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_CommonEvent {
     /// Event type, shared with all events, Uint32 to cover user events which are not in the [`SDL_EventType`] enumeration
     pub r#type: Uint32,
@@ -838,6 +846,7 @@ pub struct SDL_CommonEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_DisplayEvent {
     /// SDL_DISPLAYEVENT_*
     pub r#type: SDL_EventType,
@@ -859,6 +868,7 @@ pub struct SDL_DisplayEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_WindowEvent {
     /// SDL_EVENT_WINDOW_*
     pub r#type: SDL_EventType,
@@ -880,6 +890,7 @@ pub struct SDL_WindowEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_KeyboardDeviceEvent {
     /// [`SDL_EVENT_KEYBOARD_ADDED`] or [`SDL_EVENT_KEYBOARD_REMOVED`]
     pub r#type: SDL_EventType,
@@ -907,6 +918,7 @@ pub struct SDL_KeyboardDeviceEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_KeyboardEvent {
     /// [`SDL_EVENT_KEY_DOWN`] or [`SDL_EVENT_KEY_UP`]
     pub r#type: SDL_EventType,
@@ -1019,6 +1031,7 @@ pub struct SDL_TextInputEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_MouseDeviceEvent {
     /// [`SDL_EVENT_MOUSE_ADDED`] or [`SDL_EVENT_MOUSE_REMOVED`]
     pub r#type: SDL_EventType,
@@ -1036,6 +1049,7 @@ pub struct SDL_MouseDeviceEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_MouseMotionEvent {
     /// [`SDL_EVENT_MOUSE_MOTION`]
     pub r#type: SDL_EventType,
@@ -1065,6 +1079,7 @@ pub struct SDL_MouseMotionEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_MouseButtonEvent {
     /// [`SDL_EVENT_MOUSE_BUTTON_DOWN`] or [`SDL_EVENT_MOUSE_BUTTON_UP`]
     pub r#type: SDL_EventType,
@@ -1095,6 +1110,7 @@ pub struct SDL_MouseButtonEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_MouseWheelEvent {
     /// [`SDL_EVENT_MOUSE_WHEEL`]
     pub r#type: SDL_EventType,
@@ -1124,6 +1140,7 @@ pub struct SDL_MouseWheelEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_JoyAxisEvent {
     /// [`SDL_EVENT_JOYSTICK_AXIS_MOTION`]
     pub r#type: SDL_EventType,
@@ -1149,6 +1166,7 @@ pub struct SDL_JoyAxisEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_JoyBallEvent {
     /// [`SDL_EVENT_JOYSTICK_BALL_MOTION`]
     pub r#type: SDL_EventType,
@@ -1175,6 +1193,7 @@ pub struct SDL_JoyBallEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_JoyHatEvent {
     /// [`SDL_EVENT_JOYSTICK_HAT_MOTION`]
     pub r#type: SDL_EventType,
@@ -1204,6 +1223,7 @@ pub struct SDL_JoyHatEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_JoyButtonEvent {
     /// [`SDL_EVENT_JOYSTICK_BUTTON_DOWN`] or [`SDL_EVENT_JOYSTICK_BUTTON_UP`]
     pub r#type: SDL_EventType,
@@ -1233,6 +1253,7 @@ pub struct SDL_JoyButtonEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_JoyDeviceEvent {
     /// [`SDL_EVENT_JOYSTICK_ADDED`] or [`SDL_EVENT_JOYSTICK_REMOVED`] or [`SDL_EVENT_JOYSTICK_UPDATE_COMPLETE`]
     pub r#type: SDL_EventType,
@@ -1250,6 +1271,7 @@ pub struct SDL_JoyDeviceEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_JoyBatteryEvent {
     /// [`SDL_EVENT_JOYSTICK_BATTERY_UPDATED`]
     pub r#type: SDL_EventType,
@@ -1271,6 +1293,7 @@ pub struct SDL_JoyBatteryEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_GamepadAxisEvent {
     /// [`SDL_EVENT_GAMEPAD_AXIS_MOTION`]
     pub r#type: SDL_EventType,
@@ -1296,6 +1319,7 @@ pub struct SDL_GamepadAxisEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_GamepadButtonEvent {
     /// [`SDL_EVENT_GAMEPAD_BUTTON_DOWN`] or [`SDL_EVENT_GAMEPAD_BUTTON_UP`]
     pub r#type: SDL_EventType,
@@ -1329,6 +1353,7 @@ pub struct SDL_GamepadButtonEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_GamepadDeviceEvent {
     /// [`SDL_EVENT_GAMEPAD_ADDED`], [`SDL_EVENT_GAMEPAD_REMOVED`], or [`SDL_EVENT_GAMEPAD_REMAPPED`], [`SDL_EVENT_GAMEPAD_UPDATE_COMPLETE`] or [`SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED`]
     pub r#type: SDL_EventType,
@@ -1346,6 +1371,7 @@ pub struct SDL_GamepadDeviceEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_GamepadTouchpadEvent {
     /// [`SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN`] or [`SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION`] or [`SDL_EVENT_GAMEPAD_TOUCHPAD_UP`]
     pub r#type: SDL_EventType,
@@ -1373,6 +1399,7 @@ pub struct SDL_GamepadTouchpadEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_GamepadSensorEvent {
     /// [`SDL_EVENT_GAMEPAD_SENSOR_UPDATE`]
     pub r#type: SDL_EventType,
@@ -1396,6 +1423,7 @@ pub struct SDL_GamepadSensorEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_AudioDeviceEvent {
     /// [`SDL_EVENT_AUDIO_DEVICE_ADDED`], or [`SDL_EVENT_AUDIO_DEVICE_REMOVED`], or [`SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED`]
     pub r#type: SDL_EventType,
@@ -1418,6 +1446,7 @@ pub struct SDL_AudioDeviceEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_CameraDeviceEvent {
     /// [`SDL_EVENT_CAMERA_DEVICE_ADDED`], [`SDL_EVENT_CAMERA_DEVICE_REMOVED`], [`SDL_EVENT_CAMERA_DEVICE_APPROVED`], [`SDL_EVENT_CAMERA_DEVICE_DENIED`]
     pub r#type: SDL_EventType,
@@ -1435,6 +1464,7 @@ pub struct SDL_CameraDeviceEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_RenderEvent {
     /// [`SDL_EVENT_RENDER_TARGETS_RESET`], [`SDL_EVENT_RENDER_DEVICE_RESET`], [`SDL_EVENT_RENDER_DEVICE_LOST`]
     pub r#type: SDL_EventType,
@@ -1466,6 +1496,7 @@ pub struct SDL_RenderEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_TouchFingerEvent {
     /// [`SDL_EVENT_FINGER_DOWN`], [`SDL_EVENT_FINGER_UP`], [`SDL_EVENT_FINGER_MOTION`], or [`SDL_EVENT_FINGER_CANCELED`]
     pub r#type: SDL_EventType,
@@ -1506,6 +1537,7 @@ pub struct SDL_TouchFingerEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_PenProximityEvent {
     /// [`SDL_EVENT_PEN_PROXIMITY_IN`] or [`SDL_EVENT_PEN_PROXIMITY_OUT`]
     pub r#type: SDL_EventType,
@@ -1531,6 +1563,7 @@ pub struct SDL_PenProximityEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_PenMotionEvent {
     /// [`SDL_EVENT_PEN_MOTION`]
     pub r#type: SDL_EventType,
@@ -1559,6 +1592,7 @@ pub struct SDL_PenMotionEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_PenTouchEvent {
     /// [`SDL_EVENT_PEN_DOWN`] or [`SDL_EVENT_PEN_UP`]
     pub r#type: SDL_EventType,
@@ -1591,6 +1625,7 @@ pub struct SDL_PenTouchEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_PenButtonEvent {
     /// [`SDL_EVENT_PEN_BUTTON_DOWN`] or [`SDL_EVENT_PEN_BUTTON_UP`]
     pub r#type: SDL_EventType,
@@ -1623,6 +1658,7 @@ pub struct SDL_PenButtonEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_PenAxisEvent {
     /// [`SDL_EVENT_PEN_AXIS`]
     pub r#type: SDL_EventType,
@@ -1700,6 +1736,7 @@ pub struct SDL_ClipboardEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_SensorEvent {
     /// [`SDL_EVENT_SENSOR_UPDATE`]
     pub r#type: SDL_EventType,
@@ -1721,6 +1758,7 @@ pub struct SDL_SensorEvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_QuitEvent {
     /// [`SDL_EVENT_QUIT`]
     pub r#type: SDL_EventType,
@@ -1890,6 +1928,13 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EventAction(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_EventAction {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::ADDEVENT
+    }
+}
 
 impl From<SDL_EventAction> for ::core::ffi::c_int {
     #[inline(always)]

@@ -81,6 +81,13 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: *const ::core::ffi::
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SystemTheme(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_SystemTheme {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::UNKNOWN
+    }
+}
+
 impl From<SDL_SystemTheme> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_SystemTheme) -> Self {
@@ -168,6 +175,13 @@ pub struct SDL_DisplayMode {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_DisplayOrientation(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_DisplayOrientation {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::UNKNOWN
+    }
+}
 
 impl From<SDL_DisplayOrientation> for ::core::ffi::c_int {
     #[inline(always)]
@@ -439,6 +453,13 @@ pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitiv
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_FlashOperation(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_FlashOperation {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::CANCEL
+    }
+}
+
 impl From<SDL_FlashOperation> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_FlashOperation) -> Self {
@@ -636,6 +657,13 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GLAttr(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_GLAttr {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::RED_SIZE
+    }
+}
 
 impl From<SDL_GLAttr> for ::core::ffi::c_int {
     #[inline(always)]
@@ -3799,6 +3827,13 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_HitTestResult(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_HitTestResult {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::NORMAL
+    }
+}
 
 impl From<SDL_HitTestResult> for ::core::ffi::c_int {
     #[inline(always)]

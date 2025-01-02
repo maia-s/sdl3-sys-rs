@@ -128,6 +128,13 @@ extern "C" {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ProcessIO(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_ProcessIO {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::INHERITED
+    }
+}
+
 impl From<SDL_ProcessIO> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_ProcessIO) -> Self {

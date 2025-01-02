@@ -207,6 +207,13 @@ pub use SDL_disabled_assert;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AssertState(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_AssertState {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::RETRY
+    }
+}
+
 impl From<SDL_AssertState> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_AssertState) -> Self {

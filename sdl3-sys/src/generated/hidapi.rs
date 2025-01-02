@@ -44,6 +44,13 @@ use super::error::*;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_hid_bus_type(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_hid_bus_type {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::UNKNOWN
+    }
+}
+
 impl From<SDL_hid_bus_type> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_hid_bus_type) -> Self {

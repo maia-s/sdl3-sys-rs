@@ -80,6 +80,13 @@ pub type SDL_JoystickID = Uint32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_JoystickType(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_JoystickType {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::UNKNOWN
+    }
+}
+
 impl From<SDL_JoystickType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_JoystickType) -> Self {
@@ -153,6 +160,13 @@ pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_JoystickConnectionState(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_JoystickConnectionState {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::INVALID
+    }
+}
 
 impl From<SDL_JoystickConnectionState> for ::core::ffi::c_int {
     #[inline(always)]
@@ -503,6 +517,7 @@ extern "C" {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_VirtualJoystickTouchpadDesc {
     /// the number of simultaneous fingers on this touchpad
     pub nfingers: Uint16,
@@ -519,6 +534,7 @@ pub struct SDL_VirtualJoystickTouchpadDesc {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_VirtualJoystickSensorDesc {
     /// the type of this sensor
     pub r#type: SDL_SensorType,

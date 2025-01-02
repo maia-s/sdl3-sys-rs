@@ -53,6 +53,7 @@ pub const SDL_SOFTWARE_RENDERER: *const ::core::ffi::c_char = c"software".as_ptr
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_Vertex {
     /// Vertex position, in [`SDL_Renderer`] coordinates
     pub position: SDL_FPoint,
@@ -76,6 +77,13 @@ pub struct SDL_Vertex {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TextureAccess(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_TextureAccess {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::STATIC
+    }
+}
 
 impl From<SDL_TextureAccess> for ::core::ffi::c_int {
     #[inline(always)]
@@ -130,6 +138,13 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGE
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_RendererLogicalPresentation(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_RendererLogicalPresentation {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::DISABLED
+    }
+}
 
 impl From<SDL_RendererLogicalPresentation> for ::core::ffi::c_int {
     #[inline(always)]

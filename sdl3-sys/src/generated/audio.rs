@@ -177,6 +177,13 @@ pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AudioFormat(pub ::core::ffi::c_uint);
 
+impl ::core::default::Default for SDL_AudioFormat {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::UNKNOWN
+    }
+}
+
 impl From<SDL_AudioFormat> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_AudioFormat) -> Self {
@@ -530,6 +537,7 @@ pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID = (0xfffffffe as
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_AudioSpec {
     /// Audio data format
     pub format: SDL_AudioFormat,

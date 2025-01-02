@@ -24,6 +24,7 @@ use super::stdinc::*;
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_GUID {
     pub data: [Uint8; 16],
 }

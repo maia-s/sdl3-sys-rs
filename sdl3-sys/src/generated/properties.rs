@@ -48,6 +48,13 @@ pub type SDL_PropertiesID = Uint32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PropertyType(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_PropertyType {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::INVALID
+    }
+}
+
 impl From<SDL_PropertyType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PropertyType) -> Self {

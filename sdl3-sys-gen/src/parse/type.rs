@@ -226,6 +226,29 @@ impl Type {
                 .unwrap_or(false),
         }
     }
+
+    pub fn can_derive_default(&self, ctx: &EmitContext) -> bool {
+        match &self.ty {
+            TypeEnum::Primitive(_) => true,
+            TypeEnum::Ident(ident) => ctx
+                .lookup_sym(ident)
+                .map(|s| s.can_derive_default)
+                .unwrap_or(false),
+            TypeEnum::Enum(_) => true,
+            TypeEnum::Struct(s) => s.can_derive_default(ctx),
+            TypeEnum::Pointer(_) => false,
+            TypeEnum::Array(ty, _) => ty.can_derive_default(ctx),
+            TypeEnum::FnPointer(_) => true,
+            TypeEnum::DotDotDot => false,
+            TypeEnum::Rust(r) => r.can_derive_default,
+            TypeEnum::Function(_) => false,
+            TypeEnum::Infer(i) => i
+                .borrow()
+                .as_ref()
+                .map(|i| i.can_derive_default(ctx))
+                .unwrap_or(false),
+        }
+    }
 }
 
 impl Parse for Type {
@@ -283,6 +306,7 @@ pub struct RustType {
     pub string: String,
     pub can_derive_copy: bool,
     pub can_derive_debug: bool,
+    pub can_derive_default: bool,
 }
 
 #[derive(Clone, Debug)]

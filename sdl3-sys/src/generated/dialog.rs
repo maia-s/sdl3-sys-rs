@@ -289,6 +289,13 @@ extern "C" {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_FileDialogType(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_FileDialogType {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::OPENFILE
+    }
+}
+
 impl From<SDL_FileDialogType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_FileDialogType) -> Self {

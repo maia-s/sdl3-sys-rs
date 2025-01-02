@@ -83,6 +83,13 @@ use super::sensor::*;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadType(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_GamepadType {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::UNKNOWN
+    }
+}
+
 impl From<SDL_GamepadType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GamepadType) -> Self {
@@ -202,6 +209,13 @@ pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadButton(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_GamepadButton {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::INVALID
+    }
+}
 
 impl From<SDL_GamepadButton> for ::core::ffi::c_int {
     #[inline(always)]
@@ -366,6 +380,13 @@ pub const SDL_GAMEPAD_BUTTON_COUNT: SDL_GamepadButton = SDL_GamepadButton::COUNT
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadButtonLabel(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_GamepadButtonLabel {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::UNKNOWN
+    }
+}
+
 impl From<SDL_GamepadButtonLabel> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GamepadButtonLabel) -> Self {
@@ -446,6 +467,13 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadAxis(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_GamepadAxis {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::INVALID
+    }
+}
+
 impl From<SDL_GamepadAxis> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GamepadAxis) -> Self {
@@ -512,6 +540,13 @@ pub const SDL_GAMEPAD_AXIS_COUNT: SDL_GamepadAxis = SDL_GamepadAxis::COUNT;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadBindingType(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_GamepadBindingType {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::NONE
+    }
+}
 
 impl From<SDL_GamepadBindingType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -612,6 +647,7 @@ pub union SDL_GamepadBinding__AnonUnion1 {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_GamepadBinding__AnonUnion1__AnonStruct1 {
     pub axis: ::core::ffi::c_int,
     pub axis_min: ::core::ffi::c_int,
@@ -621,6 +657,7 @@ pub struct SDL_GamepadBinding__AnonUnion1__AnonStruct1 {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_GamepadBinding__AnonUnion1__AnonStruct2 {
     pub hat: ::core::ffi::c_int,
     pub hat_mask: ::core::ffi::c_int,
@@ -636,6 +673,7 @@ pub union SDL_GamepadBinding__AnonUnion2 {
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_GamepadBinding__AnonUnion2__AnonStruct1 {
     pub axis: SDL_GamepadAxis,
     pub axis_min: ::core::ffi::c_int,

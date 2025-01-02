@@ -698,6 +698,13 @@ extern "C" {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Sandbox(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_Sandbox {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::NONE
+    }
+}
+
 impl From<SDL_Sandbox> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_Sandbox) -> Self {

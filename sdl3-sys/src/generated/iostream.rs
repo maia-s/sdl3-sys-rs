@@ -29,6 +29,13 @@ use super::properties::*;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_IOStatus(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_IOStatus {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::READY
+    }
+}
+
 impl From<SDL_IOStatus> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_IOStatus) -> Self {
@@ -98,6 +105,13 @@ pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_IOWhence(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_IOWhence {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::SET
+    }
+}
 
 impl From<SDL_IOWhence> for ::core::ffi::c_int {
     #[inline(always)]

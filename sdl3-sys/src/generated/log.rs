@@ -71,6 +71,13 @@ use super::stdinc::*;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_LogCategory(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_LogCategory {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::APPLICATION
+    }
+}
+
 impl From<SDL_LogCategory> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_LogCategory) -> Self {
@@ -173,6 +180,13 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_LogPriority(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_LogPriority {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::INVALID
+    }
+}
 
 impl From<SDL_LogPriority> for ::core::ffi::c_int {
     #[inline(always)]

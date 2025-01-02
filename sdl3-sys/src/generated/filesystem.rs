@@ -160,6 +160,13 @@ extern "C" {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Folder(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_Folder {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::HOME
+    }
+}
+
 impl From<SDL_Folder> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_Folder) -> Self {
@@ -294,6 +301,13 @@ extern "C" {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PathType(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_PathType {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::NONE
+    }
+}
+
 impl From<SDL_PathType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PathType) -> Self {
@@ -347,6 +361,7 @@ pub const SDL_PATHTYPE_OTHER: SDL_PathType = SDL_PathType::OTHER;
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_PathInfo {
     /// the path type
     pub r#type: SDL_PathType,
@@ -414,6 +429,13 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EnumerationResult(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_EnumerationResult {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::CONTINUE
+    }
+}
 
 impl From<SDL_EnumerationResult> for ::core::ffi::c_int {
     #[inline(always)]

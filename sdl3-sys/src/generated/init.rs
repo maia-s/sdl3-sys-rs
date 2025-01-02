@@ -107,6 +107,13 @@ pub const SDL_INIT_CAMERA: SDL_InitFlags = (0x00010000 as SDL_InitFlags);
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AppResult(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_AppResult {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::CONTINUE
+    }
+}
+
 impl From<SDL_AppResult> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_AppResult) -> Self {

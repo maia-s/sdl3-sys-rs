@@ -465,6 +465,13 @@ extern "C" {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TextInputType(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_TextInputType {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::TEXT
+    }
+}
+
 impl From<SDL_TextInputType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_TextInputType) -> Self {
@@ -558,6 +565,13 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Capitalization(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_Capitalization {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::NONE
+    }
+}
 
 impl From<SDL_Capitalization> for ::core::ffi::c_int {
     #[inline(always)]

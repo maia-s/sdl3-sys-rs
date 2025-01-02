@@ -68,6 +68,13 @@ pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = (0x00000008 as SDL_Surfac
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ScaleMode(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_ScaleMode {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::NEAREST
+    }
+}
+
 impl From<SDL_ScaleMode> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_ScaleMode) -> Self {
@@ -114,6 +121,13 @@ pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_FlipMode(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_FlipMode {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::NONE
+    }
+}
 
 impl From<SDL_FlipMode> for ::core::ffi::c_int {
     #[inline(always)]

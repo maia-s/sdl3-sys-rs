@@ -52,6 +52,13 @@ pub type SDL_MouseID = Uint32;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SystemCursor(pub ::core::ffi::c_int);
 
+impl ::core::default::Default for SDL_SystemCursor {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::DEFAULT
+    }
+}
+
 impl From<SDL_SystemCursor> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_SystemCursor) -> Self {
@@ -190,6 +197,13 @@ pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_MouseWheelDirection(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_MouseWheelDirection {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::NORMAL
+    }
+}
 
 impl From<SDL_MouseWheelDirection> for ::core::ffi::c_int {
     #[inline(always)]

@@ -12,6 +12,7 @@ use super::stdinc::*;
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
+#[derive(Default)]
 pub struct SDL_DateTime {
     /// Year
     pub year: ::core::ffi::c_int,
@@ -50,6 +51,13 @@ pub struct SDL_DateTime {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_DateFormat(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_DateFormat {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::YYYYMMDD
+    }
+}
 
 impl From<SDL_DateFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -104,6 +112,13 @@ pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TimeFormat(pub ::core::ffi::c_int);
+
+impl ::core::default::Default for SDL_TimeFormat {
+    #[inline(always)]
+    fn default() -> Self {
+        Self::_24HR
+    }
+}
 
 impl From<SDL_TimeFormat> for ::core::ffi::c_int {
     #[inline(always)]
