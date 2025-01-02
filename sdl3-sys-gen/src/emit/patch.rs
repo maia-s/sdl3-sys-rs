@@ -2,8 +2,8 @@ use super::{
     Cfg, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, StructSym, SymKind, Value,
 };
 use crate::parse::{
-    Block, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident, IdentOrKw, Item, Items,
-    Kw_static, ParseErr, RustCode, Span, StringLiteral, Type, TypeDef,
+    Block, CanDefault, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident, IdentOrKw,
+    Item, Items, Kw_static, ParseErr, RustCode, Span, StringLiteral, Type, TypeDef,
 };
 use core::fmt::Write;
 use std::ffi::CString;
@@ -277,7 +277,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 SymKind::Other,
                 false,
                 false,
-                false,
+                CanDefault::No,
             )?;
             define.doc.emit(ctx)?;
             ctx.write_str(str_block! {r#"
@@ -302,7 +302,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 SymKind::Other,
                 false,
                 false,
-                false,
+                CanDefault::No,
             )?;
             define.doc.emit(ctx)?;
             ctx.write_str(str_block! {r#"
@@ -650,7 +650,7 @@ fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
         SymKind::Other,
         false,
         true,
-        false,
+        CanDefault::No,
     )?;
     ctx.register_sym(
         etf,
@@ -660,7 +660,7 @@ fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
         SymKind::Other,
         false,
         true,
-        false,
+        CanDefault::No,
     )?;
 
     let cfg_default = "#[cfg(not(windows))]";

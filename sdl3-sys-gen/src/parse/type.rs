@@ -14,6 +14,13 @@ pub enum CanCopy {
     Never,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum CanDefault {
+    Derive,
+    Manual,
+    No,
+}
+
 #[derive(Clone, Debug)]
 pub struct Type {
     pub span: Span,
@@ -227,26 +234,26 @@ impl Type {
         }
     }
 
-    pub fn can_derive_default(&self, ctx: &EmitContext) -> bool {
+    pub fn can_default(&self, ctx: &EmitContext) -> CanDefault {
         match &self.ty {
-            TypeEnum::Primitive(_) => true,
+            TypeEnum::Primitive(_) => CanDefault::Derive,
             TypeEnum::Ident(ident) => ctx
                 .lookup_sym(ident)
-                .map(|s| s.can_derive_default)
-                .unwrap_or(false),
-            TypeEnum::Enum(_) => true,
-            TypeEnum::Struct(s) => s.can_derive_default(ctx),
-            TypeEnum::Pointer(_) => false,
-            TypeEnum::Array(ty, _) => ty.can_derive_default(ctx),
-            TypeEnum::FnPointer(_) => true,
-            TypeEnum::DotDotDot => false,
-            TypeEnum::Rust(r) => r.can_derive_default,
-            TypeEnum::Function(_) => false,
+                .map(|s| s.can_default)
+                .unwrap_or(CanDefault::No),
+            TypeEnum::Enum(_) => CanDefault::Derive,
+            TypeEnum::Struct(s) => s.can_default(ctx),
+            TypeEnum::Pointer(_) => CanDefault::Manual,
+            TypeEnum::Array(ty, _) => ty.can_default(ctx),
+            TypeEnum::FnPointer(_) => CanDefault::Derive,
+            TypeEnum::DotDotDot => CanDefault::No,
+            TypeEnum::Rust(r) => r.can_default,
+            TypeEnum::Function(_) => CanDefault::No,
             TypeEnum::Infer(i) => i
                 .borrow()
                 .as_ref()
-                .map(|i| i.can_derive_default(ctx))
-                .unwrap_or(false),
+                .map(|i| i.can_default(ctx))
+                .unwrap_or(CanDefault::No),
         }
     }
 }
@@ -306,7 +313,7 @@ pub struct RustType {
     pub string: String,
     pub can_derive_copy: bool,
     pub can_derive_debug: bool,
-    pub can_derive_default: bool,
+    pub can_default: CanDefault,
 }
 
 #[derive(Clone, Debug)]

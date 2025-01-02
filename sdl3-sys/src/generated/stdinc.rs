@@ -531,6 +531,16 @@ pub struct SDL_alignment_test {
     pub b: *mut ::core::ffi::c_void,
 }
 
+impl ::core::default::Default for SDL_alignment_test {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            a: ::core::default::Default::default(),
+            b: ::core::ptr::null_mut(),
+        }
+    }
+}
+
 const _: () = ::core::assert!(
     (::core::mem::size_of::<SDL_alignment_test>()
         == (2 * ::core::mem::size_of::<*mut ::core::ffi::c_void>()))

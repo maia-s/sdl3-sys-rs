@@ -1,10 +1,10 @@
 use crate::{
     common_ident_prefix,
     parse::{
-        ArgDecl, CanCopy, Conditional, ConditionalExpr, Define, DocComment, DocCommentFile, Expr,
-        FnAbi, FnDeclArgs, FnPointer, Function, GetSpan, Ident, IdentOrKwT, Include,
-        IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock, PrimitiveType, StructFields,
-        StructKind, StructOrUnion, Type, TypeDef, TypeEnum,
+        ArgDecl, CanCopy, CanDefault, Conditional, ConditionalExpr, Define, DocComment,
+        DocCommentFile, Expr, FnAbi, FnDeclArgs, FnPointer, Function, GetSpan, Ident, IdentOrKwT,
+        Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock, PrimitiveType,
+        StructFields, StructKind, StructOrUnion, Type, TypeDef, TypeEnum,
     },
 };
 use std::{
@@ -652,7 +652,7 @@ impl Emit for Define {
                         SymKind::Other,
                         false,
                         arg.ty.can_derive_debug(ctx),
-                        arg.ty.can_derive_default(ctx),
+                        arg.ty.can_default(ctx),
                     )?;
                 }
                 let _guard = ctx.expect_unresolved_sym_dependency_guard();
@@ -709,7 +709,7 @@ impl Emit for Define {
                     SymKind::Other,
                     false,
                     false,
-                    false,
+                    CanDefault::No,
                 )?;
                 writeln!(ctx, "{f}")?;
                 return Ok(());
@@ -736,7 +736,7 @@ impl Emit for Define {
                     SymKind::Other,
                     true,
                     ty.can_derive_debug(ctx),
-                    ty.can_derive_default(ctx),
+                    ty.can_default(ctx),
                 )?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub const ")?;
@@ -799,7 +799,7 @@ impl Emit for Function {
                 SymKind::Other,
                 false,
                 false,
-                false,
+                CanDefault::No,
             )?;
             emit_extern_start(ctx, &self.abi, false)?;
             self.doc.emit(ctx)?;
@@ -831,7 +831,7 @@ impl Emit for Function {
                         SymKind::Other,
                         false,
                         arg.ty.can_derive_debug(&ctx_body),
-                        arg.ty.can_derive_default(&ctx_body),
+                        arg.ty.can_default(&ctx_body),
                     )?;
                 }
             }
@@ -857,7 +857,7 @@ impl Emit for Function {
                 SymKind::Other,
                 false,
                 false,
-                false,
+                CanDefault::No,
             )?;
 
             self.doc.emit(ctx)?;
@@ -962,18 +962,21 @@ impl StructOrUnion {
         true
     }
 
-    pub fn can_derive_default(&self, ctx: &EmitContext) -> bool {
+    pub fn can_default(&self, ctx: &EmitContext) -> CanDefault {
         if !self.can_construct || matches!(self.kind, StructKind::Union) {
-            return false;
+            return CanDefault::No;
         }
+        let mut can = CanDefault::Derive;
         if let Some(fields) = &self.fields {
             for field in fields.fields.iter() {
-                if !field.ty.can_derive_default(ctx) {
-                    return false;
+                match field.ty.can_default(ctx) {
+                    CanDefault::Derive => (),
+                    CanDefault::Manual => can = CanDefault::Manual,
+                    CanDefault::No => return CanDefault::No,
                 }
             }
         }
-        true
+        can
     }
 
     pub fn emit_with_doc_and_ident(
@@ -1027,6 +1030,11 @@ impl StructOrUnion {
             let can_derive_copy = !is_interface
                 && (sym.can_copy == CanCopy::Always
                     || (sym.can_copy != CanCopy::Never && self.can_derive_copy(ctx, Some(fields))));
+            let can_default = if is_interface || !sym.can_construct {
+                CanDefault::No
+            } else {
+                self.can_default(ctx)
+            };
 
             let ctx_ool = &mut { ctx.with_ool_output() };
             if self.hidden {
@@ -1047,7 +1055,7 @@ impl StructOrUnion {
                     r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
                 )?;
             }
-            if !is_interface && sym.can_construct && self.can_derive_default(ctx_ool) {
+            if can_default == CanDefault::Derive {
                 writeln!(ctx_ool, "#[derive(Default)]")?;
             }
             writeln!(
@@ -1070,6 +1078,29 @@ impl StructOrUnion {
             ctx_ool.decrease_indent();
             writeln!(ctx_ool, "}}")?;
             writeln!(ctx_ool)?;
+
+            if can_default == CanDefault::Manual {
+                writeln!(ctx_ool, "impl ::core::default::Default for {ident} {{")?;
+                ctx_ool.increase_indent();
+                writeln!(ctx_ool, "#[inline(always)]")?;
+                writeln!(ctx_ool, "fn default() -> Self {{")?;
+                ctx_ool.increase_indent();
+                writeln!(ctx_ool, "Self {{")?;
+                ctx_ool.increase_indent();
+                for field in fields.fields.iter() {
+                    field.ident.emit(ctx_ool)?;
+                    write!(ctx_ool, ": ")?;
+                    field.ty.emit_default_value(ctx_ool)?;
+                    writeln!(ctx_ool, ",")?;
+                }
+                ctx_ool.decrease_indent();
+                writeln!(ctx_ool, "}}")?;
+                ctx_ool.decrease_indent();
+                writeln!(ctx_ool, "}}")?;
+                ctx_ool.decrease_indent();
+                writeln!(ctx_ool, "}}")?;
+                writeln!(ctx_ool)?;
+            }
 
             if is_interface {
                 writeln!(ctx_ool, "impl {ident} {{")?;
@@ -1172,6 +1203,20 @@ impl Type {
             }
         }
         Ok(None)
+    }
+
+    pub fn emit_default_value(&self, ctx: &mut EmitContext) -> EmitResult {
+        match &self.ty {
+            TypeEnum::Pointer(p) => {
+                if p.is_const {
+                    write!(ctx, "::core::ptr::null()")?
+                } else {
+                    write!(ctx, "::core::ptr::null_mut()")?
+                }
+            }
+            _ => write!(ctx, "::core::default::Default::default()")?,
+        }
+        Ok(())
     }
 }
 
@@ -1314,7 +1359,7 @@ impl Emit for TypeDef {
                     SymKind::Other,
                     true,
                     true,
-                    true,
+                    CanDefault::Derive,
                 )?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "{assoc_doc}")?;
@@ -1339,7 +1384,7 @@ impl Emit for TypeDef {
                     sym.kind,
                     sym.can_derive_copy,
                     sym.can_derive_debug,
-                    sym.can_derive_default,
+                    sym.can_default,
                 )?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "{assoc_doc}")?;
@@ -1396,7 +1441,7 @@ impl Emit for TypeDef {
                     SymKind::Other,
                     true,
                     true,
-                    true,
+                    CanDefault::Derive,
                 )?;
 
                 let mut doc_consts = String::new();
@@ -1436,7 +1481,7 @@ impl Emit for TypeDef {
                         SymKind::Other,
                         true,
                         true,
-                        true,
+                        CanDefault::Derive,
                     )?;
 
                     let variant_ident = variant.ident.as_str();
@@ -1615,7 +1660,7 @@ impl Emit for TypeDef {
                     }(s.ident.clone().unwrap()),
                     s.can_derive_copy(ctx, None),
                     s.can_derive_debug(ctx),
-                    s.can_derive_default(ctx),
+                    s.can_default(ctx),
                 )?;
 
                 ctx.flush_ool_output()?;
@@ -1643,7 +1688,7 @@ impl Emit for TypeDef {
                     SymKind::Other,
                     false,
                     true,
-                    false,
+                    CanDefault::Manual,
                 )?;
                 self.doc.emit(ctx)?;
                 write!(ctx, "pub type {} = ", self.ident.as_str())?;
@@ -1662,7 +1707,7 @@ impl Emit for TypeDef {
                     SymKind::Other,
                     ty.can_derive_copy(ctx),
                     ty.can_derive_debug(ctx),
-                    ty.can_derive_default(ctx),
+                    ty.can_default(ctx),
                 )?;
                 self.doc.emit(ctx)?;
                 todo!()
@@ -1677,7 +1722,7 @@ impl Emit for TypeDef {
                     SymKind::Other,
                     false,
                     true,
-                    true,
+                    CanDefault::Derive,
                 )?;
                 self.doc.emit(ctx)?;
                 write!(
@@ -1709,7 +1754,7 @@ impl Emit for TypeDef {
                     SymKind::Other,
                     r.can_derive_copy,
                     r.can_derive_debug,
-                    r.can_derive_default,
+                    r.can_default,
                 )?;
                 writeln!(ctx, "pub type {} = {};", self.ident.as_str(), r.string)?;
                 Ok(())

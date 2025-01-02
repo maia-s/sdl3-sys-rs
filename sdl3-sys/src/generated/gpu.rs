@@ -2915,6 +2915,18 @@ pub struct SDL_GPUTextureTransferInfo {
     pub rows_per_layer: Uint32,
 }
 
+impl ::core::default::Default for SDL_GPUTextureTransferInfo {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            transfer_buffer: ::core::ptr::null_mut(),
+            offset: ::core::default::Default::default(),
+            pixels_per_row: ::core::default::Default::default(),
+            rows_per_layer: ::core::default::Default::default(),
+        }
+    }
+}
+
 /// A structure specifying a location in a transfer buffer.
 ///
 /// Used when transferring buffer data to or from a transfer buffer.
@@ -2933,6 +2945,16 @@ pub struct SDL_GPUTransferBufferLocation {
     pub transfer_buffer: *mut SDL_GPUTransferBuffer,
     /// The starting byte of the buffer data in the transfer buffer.
     pub offset: Uint32,
+}
+
+impl ::core::default::Default for SDL_GPUTransferBufferLocation {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            transfer_buffer: ::core::ptr::null_mut(),
+            offset: ::core::default::Default::default(),
+        }
+    }
 }
 
 /// A structure specifying a location in a texture.
@@ -2960,6 +2982,20 @@ pub struct SDL_GPUTextureLocation {
     pub y: Uint32,
     /// The front offset of the location.
     pub z: Uint32,
+}
+
+impl ::core::default::Default for SDL_GPUTextureLocation {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            texture: ::core::ptr::null_mut(),
+            mip_level: ::core::default::Default::default(),
+            layer: ::core::default::Default::default(),
+            x: ::core::default::Default::default(),
+            y: ::core::default::Default::default(),
+            z: ::core::default::Default::default(),
+        }
+    }
 }
 
 /// A structure specifying a region of a texture.
@@ -2996,6 +3032,23 @@ pub struct SDL_GPUTextureRegion {
     pub d: Uint32,
 }
 
+impl ::core::default::Default for SDL_GPUTextureRegion {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            texture: ::core::ptr::null_mut(),
+            mip_level: ::core::default::Default::default(),
+            layer: ::core::default::Default::default(),
+            x: ::core::default::Default::default(),
+            y: ::core::default::Default::default(),
+            z: ::core::default::Default::default(),
+            w: ::core::default::Default::default(),
+            h: ::core::default::Default::default(),
+            d: ::core::default::Default::default(),
+        }
+    }
+}
+
 /// A structure specifying a region of a texture used in the blit operation.
 ///
 /// ### Availability
@@ -3023,6 +3076,21 @@ pub struct SDL_GPUBlitRegion {
     pub h: Uint32,
 }
 
+impl ::core::default::Default for SDL_GPUBlitRegion {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            texture: ::core::ptr::null_mut(),
+            mip_level: ::core::default::Default::default(),
+            layer_or_depth_plane: ::core::default::Default::default(),
+            x: ::core::default::Default::default(),
+            y: ::core::default::Default::default(),
+            w: ::core::default::Default::default(),
+            h: ::core::default::Default::default(),
+        }
+    }
+}
+
 /// A structure specifying a location in a buffer.
 ///
 /// Used when copying data between buffers.
@@ -3040,6 +3108,16 @@ pub struct SDL_GPUBufferLocation {
     pub buffer: *mut SDL_GPUBuffer,
     /// The starting byte within the buffer.
     pub offset: Uint32,
+}
+
+impl ::core::default::Default for SDL_GPUBufferLocation {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            buffer: ::core::ptr::null_mut(),
+            offset: ::core::default::Default::default(),
+        }
+    }
 }
 
 /// A structure specifying a region of a buffer.
@@ -3062,6 +3140,17 @@ pub struct SDL_GPUBufferRegion {
     pub offset: Uint32,
     /// The size in bytes of the region.
     pub size: Uint32,
+}
+
+impl ::core::default::Default for SDL_GPUBufferRegion {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            buffer: ::core::ptr::null_mut(),
+            offset: ::core::default::Default::default(),
+            size: ::core::default::Default::default(),
+        }
+    }
 }
 
 /// A structure specifying the parameters of an indirect draw command.
@@ -3271,6 +3360,18 @@ pub struct SDL_GPUVertexInputState {
     pub num_vertex_attributes: Uint32,
 }
 
+impl ::core::default::Default for SDL_GPUVertexInputState {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            vertex_buffer_descriptions: ::core::ptr::null(),
+            num_vertex_buffers: ::core::default::Default::default(),
+            vertex_attributes: ::core::ptr::null(),
+            num_vertex_attributes: ::core::default::Default::default(),
+        }
+    }
+}
+
 /// A structure specifying the stencil operation state of a graphics pipeline.
 ///
 /// ### Availability
@@ -3358,6 +3459,24 @@ pub struct SDL_GPUShaderCreateInfo {
     pub num_uniform_buffers: Uint32,
     /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
+}
+
+impl ::core::default::Default for SDL_GPUShaderCreateInfo {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            code_size: ::core::default::Default::default(),
+            code: ::core::ptr::null(),
+            entrypoint: ::core::ptr::null(),
+            format: ::core::default::Default::default(),
+            stage: ::core::default::Default::default(),
+            num_samplers: ::core::default::Default::default(),
+            num_storage_textures: ::core::default::Default::default(),
+            num_storage_buffers: ::core::default::Default::default(),
+            num_uniform_buffers: ::core::default::Default::default(),
+            props: ::core::default::Default::default(),
+        }
+    }
 }
 
 /// A structure specifying the parameters of a texture.
@@ -3584,6 +3703,21 @@ pub struct SDL_GPUGraphicsPipelineTargetInfo {
     pub padding3: Uint8,
 }
 
+impl ::core::default::Default for SDL_GPUGraphicsPipelineTargetInfo {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            color_target_descriptions: ::core::ptr::null(),
+            num_color_targets: ::core::default::Default::default(),
+            depth_stencil_format: ::core::default::Default::default(),
+            has_depth_stencil_target: ::core::default::Default::default(),
+            padding1: ::core::default::Default::default(),
+            padding2: ::core::default::Default::default(),
+            padding3: ::core::default::Default::default(),
+        }
+    }
+}
+
 /// A structure specifying the parameters of a graphics pipeline state.
 ///
 /// ### Availability
@@ -3619,6 +3753,23 @@ pub struct SDL_GPUGraphicsPipelineCreateInfo {
     pub target_info: SDL_GPUGraphicsPipelineTargetInfo,
     /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
+}
+
+impl ::core::default::Default for SDL_GPUGraphicsPipelineCreateInfo {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            vertex_shader: ::core::ptr::null_mut(),
+            fragment_shader: ::core::ptr::null_mut(),
+            vertex_input_state: ::core::default::Default::default(),
+            primitive_type: ::core::default::Default::default(),
+            rasterizer_state: ::core::default::Default::default(),
+            multisample_state: ::core::default::Default::default(),
+            depth_stencil_state: ::core::default::Default::default(),
+            target_info: ::core::default::Default::default(),
+            props: ::core::default::Default::default(),
+        }
+    }
 }
 
 /// A structure specifying the parameters of a compute pipeline state.
@@ -3660,6 +3811,28 @@ pub struct SDL_GPUComputePipelineCreateInfo {
     pub threadcount_z: Uint32,
     /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
+}
+
+impl ::core::default::Default for SDL_GPUComputePipelineCreateInfo {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            code_size: ::core::default::Default::default(),
+            code: ::core::ptr::null(),
+            entrypoint: ::core::ptr::null(),
+            format: ::core::default::Default::default(),
+            num_samplers: ::core::default::Default::default(),
+            num_readonly_storage_textures: ::core::default::Default::default(),
+            num_readonly_storage_buffers: ::core::default::Default::default(),
+            num_readwrite_storage_textures: ::core::default::Default::default(),
+            num_readwrite_storage_buffers: ::core::default::Default::default(),
+            num_uniform_buffers: ::core::default::Default::default(),
+            threadcount_x: ::core::default::Default::default(),
+            threadcount_y: ::core::default::Default::default(),
+            threadcount_z: ::core::default::Default::default(),
+            props: ::core::default::Default::default(),
+        }
+    }
 }
 
 /// A structure specifying the parameters of a color target used by a render
@@ -3725,6 +3898,27 @@ pub struct SDL_GPUColorTargetInfo {
     pub cycle_resolve_texture: ::core::primitive::bool,
     pub padding1: Uint8,
     pub padding2: Uint8,
+}
+
+impl ::core::default::Default for SDL_GPUColorTargetInfo {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            texture: ::core::ptr::null_mut(),
+            mip_level: ::core::default::Default::default(),
+            layer_or_depth_plane: ::core::default::Default::default(),
+            clear_color: ::core::default::Default::default(),
+            load_op: ::core::default::Default::default(),
+            store_op: ::core::default::Default::default(),
+            resolve_texture: ::core::ptr::null_mut(),
+            resolve_mip_level: ::core::default::Default::default(),
+            resolve_layer: ::core::default::Default::default(),
+            cycle: ::core::default::Default::default(),
+            cycle_resolve_texture: ::core::default::Default::default(),
+            padding1: ::core::default::Default::default(),
+            padding2: ::core::default::Default::default(),
+        }
+    }
 }
 
 /// A structure specifying the parameters of a depth-stencil target used by a
@@ -3795,6 +3989,24 @@ pub struct SDL_GPUDepthStencilTargetInfo {
     pub padding2: Uint8,
 }
 
+impl ::core::default::Default for SDL_GPUDepthStencilTargetInfo {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            texture: ::core::ptr::null_mut(),
+            clear_depth: ::core::default::Default::default(),
+            load_op: ::core::default::Default::default(),
+            store_op: ::core::default::Default::default(),
+            stencil_load_op: ::core::default::Default::default(),
+            stencil_store_op: ::core::default::Default::default(),
+            cycle: ::core::default::Default::default(),
+            clear_stencil: ::core::default::Default::default(),
+            padding1: ::core::default::Default::default(),
+            padding2: ::core::default::Default::default(),
+        }
+    }
+}
+
 /// A structure containing parameters for a blit command.
 ///
 /// ### Availability
@@ -3825,6 +4037,24 @@ pub struct SDL_GPUBlitInfo {
     pub padding3: Uint8,
 }
 
+impl ::core::default::Default for SDL_GPUBlitInfo {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            source: ::core::default::Default::default(),
+            destination: ::core::default::Default::default(),
+            load_op: ::core::default::Default::default(),
+            clear_color: ::core::default::Default::default(),
+            flip_mode: ::core::default::Default::default(),
+            filter: ::core::default::Default::default(),
+            cycle: ::core::default::Default::default(),
+            padding1: ::core::default::Default::default(),
+            padding2: ::core::default::Default::default(),
+            padding3: ::core::default::Default::default(),
+        }
+    }
+}
+
 /// A structure specifying parameters in a buffer binding call.
 ///
 /// ### Availability
@@ -3843,6 +4073,16 @@ pub struct SDL_GPUBufferBinding {
     pub offset: Uint32,
 }
 
+impl ::core::default::Default for SDL_GPUBufferBinding {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            buffer: ::core::ptr::null_mut(),
+            offset: ::core::default::Default::default(),
+        }
+    }
+}
+
 /// A structure specifying parameters in a sampler binding call.
 ///
 /// ### Availability
@@ -3859,6 +4099,16 @@ pub struct SDL_GPUTextureSamplerBinding {
     pub texture: *mut SDL_GPUTexture,
     /// The sampler to bind.
     pub sampler: *mut SDL_GPUSampler,
+}
+
+impl ::core::default::Default for SDL_GPUTextureSamplerBinding {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            texture: ::core::ptr::null_mut(),
+            sampler: ::core::ptr::null_mut(),
+        }
+    }
 }
 
 /// A structure specifying parameters related to binding buffers in a compute
@@ -3880,6 +4130,19 @@ pub struct SDL_GPUStorageBufferReadWriteBinding {
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
+}
+
+impl ::core::default::Default for SDL_GPUStorageBufferReadWriteBinding {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            buffer: ::core::ptr::null_mut(),
+            cycle: ::core::default::Default::default(),
+            padding1: ::core::default::Default::default(),
+            padding2: ::core::default::Default::default(),
+            padding3: ::core::default::Default::default(),
+        }
+    }
 }
 
 /// A structure specifying parameters related to binding textures in a compute
@@ -3905,6 +4168,21 @@ pub struct SDL_GPUStorageTextureReadWriteBinding {
     pub padding1: Uint8,
     pub padding2: Uint8,
     pub padding3: Uint8,
+}
+
+impl ::core::default::Default for SDL_GPUStorageTextureReadWriteBinding {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            texture: ::core::ptr::null_mut(),
+            mip_level: ::core::default::Default::default(),
+            layer: ::core::default::Default::default(),
+            cycle: ::core::default::Default::default(),
+            padding1: ::core::default::Default::default(),
+            padding2: ::core::default::Default::default(),
+            padding3: ::core::default::Default::default(),
+        }
+    }
 }
 
 extern "C" {

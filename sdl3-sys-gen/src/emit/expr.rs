@@ -3,9 +3,9 @@ use super::{
     EmitResult, Eval, Sym,
 };
 use crate::parse::{
-    Alternative, Ambiguous, BinaryOp, Cast, DefineValue, Expr, FloatLiteral, FnCall, GetSpan,
-    Ident, IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr, PrimitiveType,
-    RustCode, RustType, SizeOf, Span, StringLiteral, Ternary, Type, TypeEnum,
+    Alternative, Ambiguous, BinaryOp, CanDefault, Cast, DefineValue, Expr, FloatLiteral, FnCall,
+    GetSpan, Ident, IntegerLiteral, IntegerLiteralType, Literal, Op, Parenthesized, ParseErr,
+    PrimitiveType, RustCode, RustType, SizeOf, Span, StringLiteral, Ternary, Type, TypeEnum,
 };
 use core::fmt::{self, Display, Write};
 
@@ -114,7 +114,7 @@ impl Value {
                 string: STRING_TYPE.into(),
                 can_derive_copy: true,
                 can_derive_debug: true,
-                can_derive_default: true,
+                can_default: CanDefault::Manual,
             })),
             Value::RustCode(r) => Ok(r.ty.clone()),
             Value::TargetDependent(_) => todo!(),

@@ -75,6 +75,17 @@ pub struct SDL_MessageBoxButtonData {
     pub text: *const ::core::ffi::c_char,
 }
 
+impl ::core::default::Default for SDL_MessageBoxButtonData {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            flags: ::core::default::Default::default(),
+            buttonID: ::core::default::Default::default(),
+            text: ::core::ptr::null(),
+        }
+    }
+}
+
 /// RGB value used in a message box color scheme
 ///
 /// ### Availability
@@ -188,6 +199,21 @@ pub struct SDL_MessageBoxData {
     pub buttons: *const SDL_MessageBoxButtonData,
     /// [`SDL_MessageBoxColorScheme`], can be NULL to use system settings
     pub colorScheme: *const SDL_MessageBoxColorScheme,
+}
+
+impl ::core::default::Default for SDL_MessageBoxData {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            flags: ::core::default::Default::default(),
+            window: ::core::ptr::null_mut(),
+            title: ::core::ptr::null(),
+            message: ::core::ptr::null(),
+            numbuttons: ::core::default::Default::default(),
+            buttons: ::core::ptr::null(),
+            colorScheme: ::core::ptr::null(),
+        }
+    }
 }
 
 extern "C" {

@@ -159,6 +159,23 @@ pub struct SDL_DisplayMode {
     pub internal: *mut SDL_DisplayModeData,
 }
 
+impl ::core::default::Default for SDL_DisplayMode {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            displayID: ::core::default::Default::default(),
+            format: ::core::default::Default::default(),
+            w: ::core::default::Default::default(),
+            h: ::core::default::Default::default(),
+            pixel_density: ::core::default::Default::default(),
+            refresh_rate: ::core::default::Default::default(),
+            refresh_rate_numerator: ::core::default::Default::default(),
+            refresh_rate_denominator: ::core::default::Default::default(),
+            internal: ::core::ptr::null_mut(),
+        }
+    }
+}
+
 /// Display orientation values; the way a display is rotated.
 ///
 /// ### Availability

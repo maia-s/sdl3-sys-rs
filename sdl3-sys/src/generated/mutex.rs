@@ -780,6 +780,17 @@ pub struct SDL_InitState {
     pub reserved: *mut ::core::ffi::c_void,
 }
 
+impl ::core::default::Default for SDL_InitState {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            status: ::core::default::Default::default(),
+            thread: ::core::default::Default::default(),
+            reserved: ::core::ptr::null_mut(),
+        }
+    }
+}
+
 extern "C" {
     /// Return whether initialization should be done.
     ///

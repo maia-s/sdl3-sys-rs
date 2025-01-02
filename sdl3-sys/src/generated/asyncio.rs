@@ -218,6 +218,22 @@ pub struct SDL_AsyncIOOutcome {
     pub userdata: *mut ::core::ffi::c_void,
 }
 
+impl ::core::default::Default for SDL_AsyncIOOutcome {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            asyncio: ::core::ptr::null_mut(),
+            r#type: ::core::default::Default::default(),
+            result: ::core::default::Default::default(),
+            buffer: ::core::ptr::null_mut(),
+            offset: ::core::default::Default::default(),
+            bytes_requested: ::core::default::Default::default(),
+            bytes_transferred: ::core::default::Default::default(),
+            userdata: ::core::ptr::null_mut(),
+        }
+    }
+}
+
 extern "C" {
     /// Use this function to create a new [`SDL_AsyncIO`] object for reading from
     /// and/or writing to a named file.

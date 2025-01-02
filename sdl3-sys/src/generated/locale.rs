@@ -32,6 +32,16 @@ pub struct SDL_Locale {
     pub country: *const ::core::ffi::c_char,
 }
 
+impl ::core::default::Default for SDL_Locale {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            language: ::core::ptr::null(),
+            country: ::core::ptr::null(),
+        }
+    }
+}
+
 extern "C" {
     /// Report the user's preferred locale.
     ///

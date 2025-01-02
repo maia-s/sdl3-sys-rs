@@ -44,6 +44,16 @@ pub struct SDL_DialogFileFilter {
     pub pattern: *const ::core::ffi::c_char,
 }
 
+impl ::core::default::Default for SDL_DialogFileFilter {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            name: ::core::ptr::null(),
+            pattern: ::core::ptr::null(),
+        }
+    }
+}
+
 /// Callback used by file dialog functions.
 ///
 /// The specific usage is described in each function.

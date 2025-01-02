@@ -163,6 +163,29 @@ pub struct SDL_hid_device_info {
     pub next: *mut SDL_hid_device_info,
 }
 
+impl ::core::default::Default for SDL_hid_device_info {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            path: ::core::ptr::null_mut(),
+            vendor_id: ::core::default::Default::default(),
+            product_id: ::core::default::Default::default(),
+            serial_number: ::core::ptr::null_mut(),
+            release_number: ::core::default::Default::default(),
+            manufacturer_string: ::core::ptr::null_mut(),
+            product_string: ::core::ptr::null_mut(),
+            usage_page: ::core::default::Default::default(),
+            usage: ::core::default::Default::default(),
+            interface_number: ::core::default::Default::default(),
+            interface_class: ::core::default::Default::default(),
+            interface_subclass: ::core::default::Default::default(),
+            interface_protocol: ::core::default::Default::default(),
+            bus_type: ::core::default::Default::default(),
+            next: ::core::ptr::null_mut(),
+        }
+    }
+}
+
 extern "C" {
     /// Initialize the HIDAPI library.
     ///

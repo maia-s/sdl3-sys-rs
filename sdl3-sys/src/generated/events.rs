@@ -970,6 +970,21 @@ pub struct SDL_TextEditingEvent {
     pub length: Sint32,
 }
 
+impl ::core::default::Default for SDL_TextEditingEvent {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            r#type: ::core::default::Default::default(),
+            reserved: ::core::default::Default::default(),
+            timestamp: ::core::default::Default::default(),
+            windowID: ::core::default::Default::default(),
+            text: ::core::ptr::null(),
+            start: ::core::default::Default::default(),
+            length: ::core::default::Default::default(),
+        }
+    }
+}
+
 /// Keyboard IME candidates event structure (event.edit_candidates.*)
 ///
 /// ### Availability
@@ -998,6 +1013,25 @@ pub struct SDL_TextEditingCandidatesEvent {
     pub padding3: Uint8,
 }
 
+impl ::core::default::Default for SDL_TextEditingCandidatesEvent {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            r#type: ::core::default::Default::default(),
+            reserved: ::core::default::Default::default(),
+            timestamp: ::core::default::Default::default(),
+            windowID: ::core::default::Default::default(),
+            candidates: ::core::ptr::null(),
+            num_candidates: ::core::default::Default::default(),
+            selected_candidate: ::core::default::Default::default(),
+            horizontal: ::core::default::Default::default(),
+            padding1: ::core::default::Default::default(),
+            padding2: ::core::default::Default::default(),
+            padding3: ::core::default::Default::default(),
+        }
+    }
+}
+
 /// Keyboard text input event structure (event.text.*)
 ///
 /// This event will never be delivered unless text input is enabled by calling
@@ -1022,6 +1056,19 @@ pub struct SDL_TextInputEvent {
     pub windowID: SDL_WindowID,
     /// The input text, UTF-8 encoded
     pub text: *const ::core::ffi::c_char,
+}
+
+impl ::core::default::Default for SDL_TextInputEvent {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            r#type: ::core::default::Default::default(),
+            reserved: ::core::default::Default::default(),
+            timestamp: ::core::default::Default::default(),
+            windowID: ::core::default::Default::default(),
+            text: ::core::ptr::null(),
+        }
+    }
 }
 
 /// Mouse device event structure (event.mdevice.*)
@@ -1707,6 +1754,22 @@ pub struct SDL_DropEvent {
     pub data: *const ::core::ffi::c_char,
 }
 
+impl ::core::default::Default for SDL_DropEvent {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            r#type: ::core::default::Default::default(),
+            reserved: ::core::default::Default::default(),
+            timestamp: ::core::default::Default::default(),
+            windowID: ::core::default::Default::default(),
+            x: ::core::default::Default::default(),
+            y: ::core::default::Default::default(),
+            source: ::core::ptr::null(),
+            data: ::core::ptr::null(),
+        }
+    }
+}
+
 /// An event triggered when the clipboard contents have changed
 /// (event.clipboard.*)
 ///
@@ -1727,6 +1790,20 @@ pub struct SDL_ClipboardEvent {
     pub num_mime_types: Sint32,
     /// current mime types
     pub mime_types: *mut *const ::core::ffi::c_char,
+}
+
+impl ::core::default::Default for SDL_ClipboardEvent {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            r#type: ::core::default::Default::default(),
+            reserved: ::core::default::Default::default(),
+            timestamp: ::core::default::Default::default(),
+            owner: ::core::default::Default::default(),
+            num_mime_types: ::core::default::Default::default(),
+            mime_types: ::core::ptr::null_mut(),
+        }
+    }
 }
 
 /// Sensor event structure (event.sensor.*)
@@ -1794,6 +1871,21 @@ pub struct SDL_UserEvent {
     pub data1: *mut ::core::ffi::c_void,
     /// User defined data pointer
     pub data2: *mut ::core::ffi::c_void,
+}
+
+impl ::core::default::Default for SDL_UserEvent {
+    #[inline(always)]
+    fn default() -> Self {
+        Self {
+            r#type: ::core::default::Default::default(),
+            reserved: ::core::default::Default::default(),
+            timestamp: ::core::default::Default::default(),
+            windowID: ::core::default::Default::default(),
+            code: ::core::default::Default::default(),
+            data1: ::core::ptr::null_mut(),
+            data2: ::core::ptr::null_mut(),
+        }
+    }
 }
 
 /// The structure for all events in SDL.
