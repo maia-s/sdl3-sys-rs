@@ -1085,16 +1085,10 @@ impl StructOrUnion {
                 writeln!(ctx_ool, "#[inline(always)]")?;
                 writeln!(ctx_ool, "fn default() -> Self {{")?;
                 ctx_ool.increase_indent();
-                writeln!(ctx_ool, "Self {{")?;
-                ctx_ool.increase_indent();
-                for field in fields.fields.iter() {
-                    field.ident.emit(ctx_ool)?;
-                    write!(ctx_ool, ": ")?;
-                    field.ty.emit_default_value(ctx_ool)?;
-                    writeln!(ctx_ool, ",")?;
-                }
-                ctx_ool.decrease_indent();
-                writeln!(ctx_ool, "}}")?;
+                writeln!(
+                    ctx_ool,
+                    "unsafe {{ ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }}"
+                )?;
                 ctx_ool.decrease_indent();
                 writeln!(ctx_ool, "}}")?;
                 ctx_ool.decrease_indent();
@@ -1203,20 +1197,6 @@ impl Type {
             }
         }
         Ok(None)
-    }
-
-    pub fn emit_default_value(&self, ctx: &mut EmitContext) -> EmitResult {
-        match &self.ty {
-            TypeEnum::Pointer(p) => {
-                if p.is_const {
-                    write!(ctx, "::core::ptr::null()")?
-                } else {
-                    write!(ctx, "::core::ptr::null_mut()")?
-                }
-            }
-            _ => write!(ctx, "::core::default::Default::default()")?,
-        }
-        Ok(())
     }
 }
 

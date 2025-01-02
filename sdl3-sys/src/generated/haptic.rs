@@ -792,22 +792,7 @@ pub struct SDL_HapticCustom {
 impl ::core::default::Default for SDL_HapticCustom {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            r#type: ::core::default::Default::default(),
-            direction: ::core::default::Default::default(),
-            length: ::core::default::Default::default(),
-            delay: ::core::default::Default::default(),
-            button: ::core::default::Default::default(),
-            interval: ::core::default::Default::default(),
-            channels: ::core::default::Default::default(),
-            period: ::core::default::Default::default(),
-            samples: ::core::default::Default::default(),
-            data: ::core::ptr::null_mut(),
-            attack_length: ::core::default::Default::default(),
-            attack_level: ::core::default::Default::default(),
-            fade_length: ::core::default::Default::default(),
-            fade_level: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 

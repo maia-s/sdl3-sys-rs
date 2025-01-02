@@ -534,10 +534,7 @@ pub struct SDL_alignment_test {
 impl ::core::default::Default for SDL_alignment_test {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            a: ::core::default::Default::default(),
-            b: ::core::ptr::null_mut(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 

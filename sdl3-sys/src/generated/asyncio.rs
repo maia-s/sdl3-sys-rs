@@ -221,16 +221,7 @@ pub struct SDL_AsyncIOOutcome {
 impl ::core::default::Default for SDL_AsyncIOOutcome {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            asyncio: ::core::ptr::null_mut(),
-            r#type: ::core::default::Default::default(),
-            result: ::core::default::Default::default(),
-            buffer: ::core::ptr::null_mut(),
-            offset: ::core::default::Default::default(),
-            bytes_requested: ::core::default::Default::default(),
-            bytes_transferred: ::core::default::Default::default(),
-            userdata: ::core::ptr::null_mut(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 

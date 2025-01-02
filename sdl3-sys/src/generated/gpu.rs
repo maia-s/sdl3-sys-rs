@@ -2918,12 +2918,7 @@ pub struct SDL_GPUTextureTransferInfo {
 impl ::core::default::Default for SDL_GPUTextureTransferInfo {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            transfer_buffer: ::core::ptr::null_mut(),
-            offset: ::core::default::Default::default(),
-            pixels_per_row: ::core::default::Default::default(),
-            rows_per_layer: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -2950,10 +2945,7 @@ pub struct SDL_GPUTransferBufferLocation {
 impl ::core::default::Default for SDL_GPUTransferBufferLocation {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            transfer_buffer: ::core::ptr::null_mut(),
-            offset: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -2987,14 +2979,7 @@ pub struct SDL_GPUTextureLocation {
 impl ::core::default::Default for SDL_GPUTextureLocation {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            texture: ::core::ptr::null_mut(),
-            mip_level: ::core::default::Default::default(),
-            layer: ::core::default::Default::default(),
-            x: ::core::default::Default::default(),
-            y: ::core::default::Default::default(),
-            z: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -3035,17 +3020,7 @@ pub struct SDL_GPUTextureRegion {
 impl ::core::default::Default for SDL_GPUTextureRegion {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            texture: ::core::ptr::null_mut(),
-            mip_level: ::core::default::Default::default(),
-            layer: ::core::default::Default::default(),
-            x: ::core::default::Default::default(),
-            y: ::core::default::Default::default(),
-            z: ::core::default::Default::default(),
-            w: ::core::default::Default::default(),
-            h: ::core::default::Default::default(),
-            d: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -3079,15 +3054,7 @@ pub struct SDL_GPUBlitRegion {
 impl ::core::default::Default for SDL_GPUBlitRegion {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            texture: ::core::ptr::null_mut(),
-            mip_level: ::core::default::Default::default(),
-            layer_or_depth_plane: ::core::default::Default::default(),
-            x: ::core::default::Default::default(),
-            y: ::core::default::Default::default(),
-            w: ::core::default::Default::default(),
-            h: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -3113,10 +3080,7 @@ pub struct SDL_GPUBufferLocation {
 impl ::core::default::Default for SDL_GPUBufferLocation {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            buffer: ::core::ptr::null_mut(),
-            offset: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -3145,11 +3109,7 @@ pub struct SDL_GPUBufferRegion {
 impl ::core::default::Default for SDL_GPUBufferRegion {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            buffer: ::core::ptr::null_mut(),
-            offset: ::core::default::Default::default(),
-            size: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -3363,12 +3323,7 @@ pub struct SDL_GPUVertexInputState {
 impl ::core::default::Default for SDL_GPUVertexInputState {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            vertex_buffer_descriptions: ::core::ptr::null(),
-            num_vertex_buffers: ::core::default::Default::default(),
-            vertex_attributes: ::core::ptr::null(),
-            num_vertex_attributes: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -3464,18 +3419,7 @@ pub struct SDL_GPUShaderCreateInfo {
 impl ::core::default::Default for SDL_GPUShaderCreateInfo {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            code_size: ::core::default::Default::default(),
-            code: ::core::ptr::null(),
-            entrypoint: ::core::ptr::null(),
-            format: ::core::default::Default::default(),
-            stage: ::core::default::Default::default(),
-            num_samplers: ::core::default::Default::default(),
-            num_storage_textures: ::core::default::Default::default(),
-            num_storage_buffers: ::core::default::Default::default(),
-            num_uniform_buffers: ::core::default::Default::default(),
-            props: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -3706,15 +3650,7 @@ pub struct SDL_GPUGraphicsPipelineTargetInfo {
 impl ::core::default::Default for SDL_GPUGraphicsPipelineTargetInfo {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            color_target_descriptions: ::core::ptr::null(),
-            num_color_targets: ::core::default::Default::default(),
-            depth_stencil_format: ::core::default::Default::default(),
-            has_depth_stencil_target: ::core::default::Default::default(),
-            padding1: ::core::default::Default::default(),
-            padding2: ::core::default::Default::default(),
-            padding3: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -3758,17 +3694,7 @@ pub struct SDL_GPUGraphicsPipelineCreateInfo {
 impl ::core::default::Default for SDL_GPUGraphicsPipelineCreateInfo {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            vertex_shader: ::core::ptr::null_mut(),
-            fragment_shader: ::core::ptr::null_mut(),
-            vertex_input_state: ::core::default::Default::default(),
-            primitive_type: ::core::default::Default::default(),
-            rasterizer_state: ::core::default::Default::default(),
-            multisample_state: ::core::default::Default::default(),
-            depth_stencil_state: ::core::default::Default::default(),
-            target_info: ::core::default::Default::default(),
-            props: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -3816,22 +3742,7 @@ pub struct SDL_GPUComputePipelineCreateInfo {
 impl ::core::default::Default for SDL_GPUComputePipelineCreateInfo {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            code_size: ::core::default::Default::default(),
-            code: ::core::ptr::null(),
-            entrypoint: ::core::ptr::null(),
-            format: ::core::default::Default::default(),
-            num_samplers: ::core::default::Default::default(),
-            num_readonly_storage_textures: ::core::default::Default::default(),
-            num_readonly_storage_buffers: ::core::default::Default::default(),
-            num_readwrite_storage_textures: ::core::default::Default::default(),
-            num_readwrite_storage_buffers: ::core::default::Default::default(),
-            num_uniform_buffers: ::core::default::Default::default(),
-            threadcount_x: ::core::default::Default::default(),
-            threadcount_y: ::core::default::Default::default(),
-            threadcount_z: ::core::default::Default::default(),
-            props: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -3903,21 +3814,7 @@ pub struct SDL_GPUColorTargetInfo {
 impl ::core::default::Default for SDL_GPUColorTargetInfo {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            texture: ::core::ptr::null_mut(),
-            mip_level: ::core::default::Default::default(),
-            layer_or_depth_plane: ::core::default::Default::default(),
-            clear_color: ::core::default::Default::default(),
-            load_op: ::core::default::Default::default(),
-            store_op: ::core::default::Default::default(),
-            resolve_texture: ::core::ptr::null_mut(),
-            resolve_mip_level: ::core::default::Default::default(),
-            resolve_layer: ::core::default::Default::default(),
-            cycle: ::core::default::Default::default(),
-            cycle_resolve_texture: ::core::default::Default::default(),
-            padding1: ::core::default::Default::default(),
-            padding2: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -3992,18 +3889,7 @@ pub struct SDL_GPUDepthStencilTargetInfo {
 impl ::core::default::Default for SDL_GPUDepthStencilTargetInfo {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            texture: ::core::ptr::null_mut(),
-            clear_depth: ::core::default::Default::default(),
-            load_op: ::core::default::Default::default(),
-            store_op: ::core::default::Default::default(),
-            stencil_load_op: ::core::default::Default::default(),
-            stencil_store_op: ::core::default::Default::default(),
-            cycle: ::core::default::Default::default(),
-            clear_stencil: ::core::default::Default::default(),
-            padding1: ::core::default::Default::default(),
-            padding2: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -4040,18 +3926,7 @@ pub struct SDL_GPUBlitInfo {
 impl ::core::default::Default for SDL_GPUBlitInfo {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            source: ::core::default::Default::default(),
-            destination: ::core::default::Default::default(),
-            load_op: ::core::default::Default::default(),
-            clear_color: ::core::default::Default::default(),
-            flip_mode: ::core::default::Default::default(),
-            filter: ::core::default::Default::default(),
-            cycle: ::core::default::Default::default(),
-            padding1: ::core::default::Default::default(),
-            padding2: ::core::default::Default::default(),
-            padding3: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -4076,10 +3951,7 @@ pub struct SDL_GPUBufferBinding {
 impl ::core::default::Default for SDL_GPUBufferBinding {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            buffer: ::core::ptr::null_mut(),
-            offset: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -4104,10 +3976,7 @@ pub struct SDL_GPUTextureSamplerBinding {
 impl ::core::default::Default for SDL_GPUTextureSamplerBinding {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            texture: ::core::ptr::null_mut(),
-            sampler: ::core::ptr::null_mut(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -4135,13 +4004,7 @@ pub struct SDL_GPUStorageBufferReadWriteBinding {
 impl ::core::default::Default for SDL_GPUStorageBufferReadWriteBinding {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            buffer: ::core::ptr::null_mut(),
-            cycle: ::core::default::Default::default(),
-            padding1: ::core::default::Default::default(),
-            padding2: ::core::default::Default::default(),
-            padding3: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -4173,15 +4036,7 @@ pub struct SDL_GPUStorageTextureReadWriteBinding {
 impl ::core::default::Default for SDL_GPUStorageTextureReadWriteBinding {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            texture: ::core::ptr::null_mut(),
-            mip_level: ::core::default::Default::default(),
-            layer: ::core::default::Default::default(),
-            cycle: ::core::default::Default::default(),
-            padding1: ::core::default::Default::default(),
-            padding2: ::core::default::Default::default(),
-            padding3: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 

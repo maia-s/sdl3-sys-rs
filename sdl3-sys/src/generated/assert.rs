@@ -292,15 +292,7 @@ pub struct SDL_AssertData {
 impl ::core::default::Default for SDL_AssertData {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            always_ignore: ::core::default::Default::default(),
-            trigger_count: ::core::default::Default::default(),
-            condition: ::core::ptr::null(),
-            filename: ::core::ptr::null(),
-            linenum: ::core::default::Default::default(),
-            function: ::core::ptr::null(),
-            next: ::core::ptr::null(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 

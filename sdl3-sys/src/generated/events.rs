@@ -973,15 +973,7 @@ pub struct SDL_TextEditingEvent {
 impl ::core::default::Default for SDL_TextEditingEvent {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            r#type: ::core::default::Default::default(),
-            reserved: ::core::default::Default::default(),
-            timestamp: ::core::default::Default::default(),
-            windowID: ::core::default::Default::default(),
-            text: ::core::ptr::null(),
-            start: ::core::default::Default::default(),
-            length: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -1016,19 +1008,7 @@ pub struct SDL_TextEditingCandidatesEvent {
 impl ::core::default::Default for SDL_TextEditingCandidatesEvent {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            r#type: ::core::default::Default::default(),
-            reserved: ::core::default::Default::default(),
-            timestamp: ::core::default::Default::default(),
-            windowID: ::core::default::Default::default(),
-            candidates: ::core::ptr::null(),
-            num_candidates: ::core::default::Default::default(),
-            selected_candidate: ::core::default::Default::default(),
-            horizontal: ::core::default::Default::default(),
-            padding1: ::core::default::Default::default(),
-            padding2: ::core::default::Default::default(),
-            padding3: ::core::default::Default::default(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -1061,13 +1041,7 @@ pub struct SDL_TextInputEvent {
 impl ::core::default::Default for SDL_TextInputEvent {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            r#type: ::core::default::Default::default(),
-            reserved: ::core::default::Default::default(),
-            timestamp: ::core::default::Default::default(),
-            windowID: ::core::default::Default::default(),
-            text: ::core::ptr::null(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -1757,16 +1731,7 @@ pub struct SDL_DropEvent {
 impl ::core::default::Default for SDL_DropEvent {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            r#type: ::core::default::Default::default(),
-            reserved: ::core::default::Default::default(),
-            timestamp: ::core::default::Default::default(),
-            windowID: ::core::default::Default::default(),
-            x: ::core::default::Default::default(),
-            y: ::core::default::Default::default(),
-            source: ::core::ptr::null(),
-            data: ::core::ptr::null(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -1795,14 +1760,7 @@ pub struct SDL_ClipboardEvent {
 impl ::core::default::Default for SDL_ClipboardEvent {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            r#type: ::core::default::Default::default(),
-            reserved: ::core::default::Default::default(),
-            timestamp: ::core::default::Default::default(),
-            owner: ::core::default::Default::default(),
-            num_mime_types: ::core::default::Default::default(),
-            mime_types: ::core::ptr::null_mut(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -1876,15 +1834,7 @@ pub struct SDL_UserEvent {
 impl ::core::default::Default for SDL_UserEvent {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            r#type: ::core::default::Default::default(),
-            reserved: ::core::default::Default::default(),
-            timestamp: ::core::default::Default::default(),
-            windowID: ::core::default::Default::default(),
-            code: ::core::default::Default::default(),
-            data1: ::core::ptr::null_mut(),
-            data2: ::core::ptr::null_mut(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 

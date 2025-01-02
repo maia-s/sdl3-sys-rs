@@ -78,11 +78,7 @@ pub struct SDL_MessageBoxButtonData {
 impl ::core::default::Default for SDL_MessageBoxButtonData {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            flags: ::core::default::Default::default(),
-            buttonID: ::core::default::Default::default(),
-            text: ::core::ptr::null(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
@@ -204,15 +200,7 @@ pub struct SDL_MessageBoxData {
 impl ::core::default::Default for SDL_MessageBoxData {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            flags: ::core::default::Default::default(),
-            window: ::core::ptr::null_mut(),
-            title: ::core::ptr::null(),
-            message: ::core::ptr::null(),
-            numbuttons: ::core::default::Default::default(),
-            buttons: ::core::ptr::null(),
-            colorScheme: ::core::ptr::null(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 

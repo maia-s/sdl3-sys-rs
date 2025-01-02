@@ -783,11 +783,7 @@ pub struct SDL_InitState {
 impl ::core::default::Default for SDL_InitState {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            status: ::core::default::Default::default(),
-            thread: ::core::default::Default::default(),
-            reserved: ::core::ptr::null_mut(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 

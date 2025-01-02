@@ -35,10 +35,7 @@ pub struct SDL_Locale {
 impl ::core::default::Default for SDL_Locale {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            language: ::core::ptr::null(),
-            country: ::core::ptr::null(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 

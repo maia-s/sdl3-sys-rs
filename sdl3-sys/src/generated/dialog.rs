@@ -47,10 +47,7 @@ pub struct SDL_DialogFileFilter {
 impl ::core::default::Default for SDL_DialogFileFilter {
     #[inline(always)]
     fn default() -> Self {
-        Self {
-            name: ::core::ptr::null(),
-            pattern: ::core::ptr::null(),
-        }
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
     }
 }
 
