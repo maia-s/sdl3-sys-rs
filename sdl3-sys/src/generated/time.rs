@@ -49,15 +49,8 @@ pub struct SDL_DateTime {
 /// | [`DDMMYYYY`](SDL_DateFormat::DDMMYYYY) | [`SDL_DATE_FORMAT_DDMMYYYY`] | Day/Month/Year |
 /// | [`MMDDYYYY`](SDL_DateFormat::MMDDYYYY) | [`SDL_DATE_FORMAT_MMDDYYYY`] | Month/Day/Year |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_DateFormat(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_DateFormat {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::YYYYMMDD
-    }
-}
 
 impl From<SDL_DateFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -110,15 +103,8 @@ pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 /// | [`_24HR`](SDL_TimeFormat::_24HR) | [`SDL_TIME_FORMAT_24HR`] | 24 hour time |
 /// | [`_12HR`](SDL_TimeFormat::_12HR) | [`SDL_TIME_FORMAT_12HR`] | 12 hour time |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TimeFormat(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_TimeFormat {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::_24HR
-    }
-}
 
 impl From<SDL_TimeFormat> for ::core::ffi::c_int {
     #[inline(always)]

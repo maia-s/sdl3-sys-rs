@@ -49,15 +49,8 @@ pub type SDL_MouseID = Uint32;
 /// | [`W_RESIZE`](SDL_SystemCursor::W_RESIZE) | [`SDL_SYSTEM_CURSOR_W_RESIZE`] | Window resize left. May be EW_RESIZE. |
 /// | [`COUNT`](SDL_SystemCursor::COUNT) | [`SDL_SYSTEM_CURSOR_COUNT`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SystemCursor(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_SystemCursor {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::DEFAULT
-    }
-}
 
 impl From<SDL_SystemCursor> for ::core::ffi::c_int {
     #[inline(always)]
@@ -195,15 +188,8 @@ pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 /// | [`NORMAL`](SDL_MouseWheelDirection::NORMAL) | [`SDL_MOUSEWHEEL_NORMAL`] | The scroll direction is normal |
 /// | [`FLIPPED`](SDL_MouseWheelDirection::FLIPPED) | [`SDL_MOUSEWHEEL_FLIPPED`] | The scroll direction is flipped / natural |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_MouseWheelDirection(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_MouseWheelDirection {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NORMAL
-    }
-}
 
 impl From<SDL_MouseWheelDirection> for ::core::ffi::c_int {
     #[inline(always)]

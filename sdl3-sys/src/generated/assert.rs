@@ -204,15 +204,8 @@ pub use SDL_disabled_assert;
 /// | [`IGNORE`](SDL_AssertState::IGNORE) | [`SDL_ASSERTION_IGNORE`] | Ignore the assert. |
 /// | [`ALWAYS_IGNORE`](SDL_AssertState::ALWAYS_IGNORE) | [`SDL_ASSERTION_ALWAYS_IGNORE`] | Ignore the assert from now on. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AssertState(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_AssertState {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::RETRY
-    }
-}
 
 impl From<SDL_AssertState> for ::core::ffi::c_int {
     #[inline(always)]

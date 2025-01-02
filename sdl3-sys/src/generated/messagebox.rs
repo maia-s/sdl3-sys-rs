@@ -109,15 +109,8 @@ pub struct SDL_MessageBoxColor {
 /// | [`BUTTON_SELECTED`](SDL_MessageBoxColorType::BUTTON_SELECTED) | [`SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED`] | |
 /// | [`COUNT`](SDL_MessageBoxColorType::COUNT) | [`SDL_MESSAGEBOX_COLOR_COUNT`] | Size of the colors array of [`SDL_MessageBoxColorScheme`]. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_MessageBoxColorType(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_MessageBoxColorType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::BACKGROUND
-    }
-}
 
 impl From<SDL_MessageBoxColorType> for ::core::ffi::c_int {
     #[inline(always)]

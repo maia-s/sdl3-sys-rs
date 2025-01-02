@@ -552,15 +552,8 @@ apply_cfg!(#[cfg(all(not(any(doc, target_os = "horizon")), not(any(doc, target_o
     /// | ------------------- | --------------- | ----------- |
     /// | [`DUMMY_ENUM_VALUE`](SDL_DUMMY_ENUM::DUMMY_ENUM_VALUE) | [`DUMMY_ENUM_VALUE`] | |
     #[repr(transparent)]
-    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SDL_DUMMY_ENUM(pub ::core::ffi::c_int);
-
-    impl ::core::default::Default for SDL_DUMMY_ENUM {
-        #[inline(always)]
-        fn default() -> Self {
-            Self::DUMMY_ENUM_VALUE
-        }
-    }
 
     impl From<SDL_DUMMY_ENUM> for ::core::ffi::c_int{
         #[inline(always)]

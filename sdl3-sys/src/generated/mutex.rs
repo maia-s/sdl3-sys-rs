@@ -673,15 +673,8 @@ extern "C" {
 /// | [`INITIALIZED`](SDL_InitStatus::INITIALIZED) | [`SDL_INIT_STATUS_INITIALIZED`] | |
 /// | [`UNINITIALIZING`](SDL_InitStatus::UNINITIALIZING) | [`SDL_INIT_STATUS_UNINITIALIZING`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_InitStatus(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_InitStatus {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNINITIALIZED
-    }
-}
 
 impl From<SDL_InitStatus> for ::core::ffi::c_int {
     #[inline(always)]

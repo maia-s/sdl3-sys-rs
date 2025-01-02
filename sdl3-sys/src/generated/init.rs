@@ -104,15 +104,8 @@ pub const SDL_INIT_CAMERA: SDL_InitFlags = (0x00010000 as SDL_InitFlags);
 /// | [`SUCCESS`](SDL_AppResult::SUCCESS) | [`SDL_APP_SUCCESS`] | Value that requests termination with success from the main callbacks. |
 /// | [`FAILURE`](SDL_AppResult::FAILURE) | [`SDL_APP_FAILURE`] | Value that requests termination with error from the main callbacks. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AppResult(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_AppResult {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::CONTINUE
-    }
-}
 
 impl From<SDL_AppResult> for ::core::ffi::c_int {
     #[inline(always)]

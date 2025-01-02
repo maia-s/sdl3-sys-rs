@@ -109,15 +109,8 @@ pub struct SDL_CameraSpec {
 /// | [`FRONT_FACING`](SDL_CameraPosition::FRONT_FACING) | [`SDL_CAMERA_POSITION_FRONT_FACING`] | |
 /// | [`BACK_FACING`](SDL_CameraPosition::BACK_FACING) | [`SDL_CAMERA_POSITION_BACK_FACING`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_CameraPosition(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_CameraPosition {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_CameraPosition> for ::core::ffi::c_int {
     #[inline(always)]

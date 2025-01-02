@@ -87,15 +87,8 @@ use super::stdinc::*;
 /// | [`WRITE`](SDL_AsyncIOTaskType::WRITE) | [`SDL_ASYNCIO_TASK_WRITE`] | A write operation. |
 /// | [`CLOSE`](SDL_AsyncIOTaskType::CLOSE) | [`SDL_ASYNCIO_TASK_CLOSE`] | A close operation. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AsyncIOTaskType(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_AsyncIOTaskType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::READ
-    }
-}
 
 impl From<SDL_AsyncIOTaskType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -146,15 +139,8 @@ pub const SDL_ASYNCIO_TASK_CLOSE: SDL_AsyncIOTaskType = SDL_AsyncIOTaskType::CLO
 /// | [`FAILURE`](SDL_AsyncIOResult::FAILURE) | [`SDL_ASYNCIO_FAILURE`] | request failed for some reason; check [`SDL_GetError()`]! |
 /// | [`CANCELED`](SDL_AsyncIOResult::CANCELED) | [`SDL_ASYNCIO_CANCELED`] | request was canceled before completing. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AsyncIOResult(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_AsyncIOResult {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::COMPLETE
-    }
-}
 
 impl From<SDL_AsyncIOResult> for ::core::ffi::c_int {
     #[inline(always)]

@@ -68,15 +68,8 @@ use super::stdinc::*;
 /// | [`RESERVED10`](SDL_LogCategory::RESERVED10) | [`SDL_LOG_CATEGORY_RESERVED10`] | |
 /// | [`CUSTOM`](SDL_LogCategory::CUSTOM) | [`SDL_LOG_CATEGORY_CUSTOM`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_LogCategory(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_LogCategory {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::APPLICATION
-    }
-}
 
 impl From<SDL_LogCategory> for ::core::ffi::c_int {
     #[inline(always)]
@@ -178,15 +171,8 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 /// | [`CRITICAL`](SDL_LogPriority::CRITICAL) | [`SDL_LOG_PRIORITY_CRITICAL`] | |
 /// | [`COUNT`](SDL_LogPriority::COUNT) | [`SDL_LOG_PRIORITY_COUNT`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_LogPriority(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_LogPriority {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INVALID
-    }
-}
 
 impl From<SDL_LogPriority> for ::core::ffi::c_int {
     #[inline(always)]

@@ -80,15 +80,8 @@ use super::sensor::*;
 /// | [`NINTENDO_SWITCH_JOYCON_PAIR`](SDL_GamepadType::NINTENDO_SWITCH_JOYCON_PAIR) | [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR`] | |
 /// | [`COUNT`](SDL_GamepadType::COUNT) | [`SDL_GAMEPAD_TYPE_COUNT`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadType(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GamepadType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_GamepadType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -207,15 +200,8 @@ pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 /// | [`MISC6`](SDL_GamepadButton::MISC6) | [`SDL_GAMEPAD_BUTTON_MISC6`] | Additional button |
 /// | [`COUNT`](SDL_GamepadButton::COUNT) | [`SDL_GAMEPAD_BUTTON_COUNT`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadButton(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GamepadButton {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INVALID
-    }
-}
 
 impl From<SDL_GamepadButton> for ::core::ffi::c_int {
     #[inline(always)]
@@ -377,15 +363,8 @@ pub const SDL_GAMEPAD_BUTTON_COUNT: SDL_GamepadButton = SDL_GamepadButton::COUNT
 /// | [`SQUARE`](SDL_GamepadButtonLabel::SQUARE) | [`SDL_GAMEPAD_BUTTON_LABEL_SQUARE`] | |
 /// | [`TRIANGLE`](SDL_GamepadButtonLabel::TRIANGLE) | [`SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadButtonLabel(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GamepadButtonLabel {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_GamepadButtonLabel> for ::core::ffi::c_int {
     #[inline(always)]
@@ -464,15 +443,8 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
 /// | [`RIGHT_TRIGGER`](SDL_GamepadAxis::RIGHT_TRIGGER) | [`SDL_GAMEPAD_AXIS_RIGHT_TRIGGER`] | |
 /// | [`COUNT`](SDL_GamepadAxis::COUNT) | [`SDL_GAMEPAD_AXIS_COUNT`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadAxis(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GamepadAxis {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INVALID
-    }
-}
 
 impl From<SDL_GamepadAxis> for ::core::ffi::c_int {
     #[inline(always)]
@@ -538,15 +510,8 @@ pub const SDL_GAMEPAD_AXIS_COUNT: SDL_GamepadAxis = SDL_GamepadAxis::COUNT;
 /// | [`AXIS`](SDL_GamepadBindingType::AXIS) | [`SDL_GAMEPAD_BINDTYPE_AXIS`] | |
 /// | [`HAT`](SDL_GamepadBindingType::HAT) | [`SDL_GAMEPAD_BINDTYPE_HAT`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GamepadBindingType(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GamepadBindingType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NONE
-    }
-}
 
 impl From<SDL_GamepadBindingType> for ::core::ffi::c_int {
     #[inline(always)]

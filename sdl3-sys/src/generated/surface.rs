@@ -65,15 +65,8 @@ pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = (0x00000008 as SDL_Surfac
 /// | [`NEAREST`](SDL_ScaleMode::NEAREST) | [`SDL_SCALEMODE_NEAREST`] | nearest pixel sampling |
 /// | [`LINEAR`](SDL_ScaleMode::LINEAR) | [`SDL_SCALEMODE_LINEAR`] | linear filtering |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ScaleMode(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_ScaleMode {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NEAREST
-    }
-}
 
 impl From<SDL_ScaleMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -119,15 +112,8 @@ pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
 /// | [`HORIZONTAL`](SDL_FlipMode::HORIZONTAL) | [`SDL_FLIP_HORIZONTAL`] | flip horizontally |
 /// | [`VERTICAL`](SDL_FlipMode::VERTICAL) | [`SDL_FLIP_VERTICAL`] | flip vertically |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_FlipMode(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_FlipMode {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NONE
-    }
-}
 
 impl From<SDL_FlipMode> for ::core::ffi::c_int {
     #[inline(always)]

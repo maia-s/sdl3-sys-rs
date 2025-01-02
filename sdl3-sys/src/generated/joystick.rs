@@ -77,15 +77,8 @@ pub type SDL_JoystickID = Uint32;
 /// | [`THROTTLE`](SDL_JoystickType::THROTTLE) | [`SDL_JOYSTICK_TYPE_THROTTLE`] | |
 /// | [`COUNT`](SDL_JoystickType::COUNT) | [`SDL_JOYSTICK_TYPE_COUNT`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_JoystickType(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_JoystickType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_JoystickType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -158,15 +151,8 @@ pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 /// | [`WIRED`](SDL_JoystickConnectionState::WIRED) | [`SDL_JOYSTICK_CONNECTION_WIRED`] | |
 /// | [`WIRELESS`](SDL_JoystickConnectionState::WIRELESS) | [`SDL_JOYSTICK_CONNECTION_WIRELESS`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_JoystickConnectionState(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_JoystickConnectionState {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INVALID
-    }
-}
 
 impl From<SDL_JoystickConnectionState> for ::core::ffi::c_int {
     #[inline(always)]

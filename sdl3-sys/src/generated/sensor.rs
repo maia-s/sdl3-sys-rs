@@ -97,15 +97,8 @@ pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 /// | [`ACCEL_R`](SDL_SensorType::ACCEL_R) | [`SDL_SENSOR_ACCEL_R`] | Accelerometer for right Joy-Con controller |
 /// | [`GYRO_R`](SDL_SensorType::GYRO_R) | [`SDL_SENSOR_GYRO_R`] | Gyroscope for right Joy-Con controller |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SensorType(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_SensorType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INVALID
-    }
-}
 
 impl From<SDL_SensorType> for ::core::ffi::c_int {
     #[inline(always)]

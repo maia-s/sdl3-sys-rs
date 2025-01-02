@@ -75,15 +75,8 @@ pub struct SDL_Vertex {
 /// | [`STREAMING`](SDL_TextureAccess::STREAMING) | [`SDL_TEXTUREACCESS_STREAMING`] | Changes frequently, lockable |
 /// | [`TARGET`](SDL_TextureAccess::TARGET) | [`SDL_TEXTUREACCESS_TARGET`] | Texture can be used as a render target |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TextureAccess(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_TextureAccess {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::STATIC
-    }
-}
 
 impl From<SDL_TextureAccess> for ::core::ffi::c_int {
     #[inline(always)]
@@ -136,15 +129,8 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGE
 /// | [`OVERSCAN`](SDL_RendererLogicalPresentation::OVERSCAN) | [`SDL_LOGICAL_PRESENTATION_OVERSCAN`] | The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds |
 /// | [`INTEGER_SCALE`](SDL_RendererLogicalPresentation::INTEGER_SCALE) | [`SDL_LOGICAL_PRESENTATION_INTEGER_SCALE`] | The rendered content is scaled up by integer multiples to fit the output resolution |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_RendererLogicalPresentation(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_RendererLogicalPresentation {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::DISABLED
-    }
-}
 
 impl From<SDL_RendererLogicalPresentation> for ::core::ffi::c_int {
     #[inline(always)]

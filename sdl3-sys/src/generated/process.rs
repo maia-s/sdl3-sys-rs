@@ -125,15 +125,8 @@ extern "C" {
 /// | [`APP`](SDL_ProcessIO::APP) | [`SDL_PROCESS_STDIO_APP`] | The I/O stream is connected to a new [`SDL_IOStream`] that the application can read or write |
 /// | [`REDIRECT`](SDL_ProcessIO::REDIRECT) | [`SDL_PROCESS_STDIO_REDIRECT`] | The I/O stream is redirected to an existing [`SDL_IOStream`]. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ProcessIO(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_ProcessIO {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INHERITED
-    }
-}
 
 impl From<SDL_ProcessIO> for ::core::ffi::c_int {
     #[inline(always)]

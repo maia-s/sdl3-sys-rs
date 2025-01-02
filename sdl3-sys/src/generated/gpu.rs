@@ -303,15 +303,8 @@ use super::video::*;
 /// | [`LINESTRIP`](SDL_GPUPrimitiveType::LINESTRIP) | [`SDL_GPU_PRIMITIVETYPE_LINESTRIP`] | A series of connected lines. |
 /// | [`POINTLIST`](SDL_GPUPrimitiveType::POINTLIST) | [`SDL_GPU_PRIMITIVETYPE_POINTLIST`] | A series of separate points. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUPrimitiveType(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUPrimitiveType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::TRIANGLELIST
-    }
-}
 
 impl From<SDL_GPUPrimitiveType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -378,15 +371,8 @@ pub const SDL_GPU_PRIMITIVETYPE_POINTLIST: SDL_GPUPrimitiveType = SDL_GPUPrimiti
 /// | [`CLEAR`](SDL_GPULoadOp::CLEAR) | [`SDL_GPU_LOADOP_CLEAR`] | The contents of the texture will be cleared to a color. |
 /// | [`DONT_CARE`](SDL_GPULoadOp::DONT_CARE) | [`SDL_GPU_LOADOP_DONT_CARE`] | The previous contents of the texture need not be preserved. The contents will be undefined. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPULoadOp(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPULoadOp {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::LOAD
-    }
-}
 
 impl From<SDL_GPULoadOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -442,15 +428,8 @@ pub const SDL_GPU_LOADOP_DONT_CARE: SDL_GPULoadOp = SDL_GPULoadOp::DONT_CARE;
 /// | [`RESOLVE`](SDL_GPUStoreOp::RESOLVE) | [`SDL_GPU_STOREOP_RESOLVE`] | The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture may then be discarded and will be undefined. |
 /// | [`RESOLVE_AND_STORE`](SDL_GPUStoreOp::RESOLVE_AND_STORE) | [`SDL_GPU_STOREOP_RESOLVE_AND_STORE`] | The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture will be written to memory. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUStoreOp(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUStoreOp {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::STORE
-    }
-}
 
 impl From<SDL_GPUStoreOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -508,15 +487,8 @@ pub const SDL_GPU_STOREOP_RESOLVE_AND_STORE: SDL_GPUStoreOp = SDL_GPUStoreOp::RE
 /// | [`_16BIT`](SDL_GPUIndexElementSize::_16BIT) | [`SDL_GPU_INDEXELEMENTSIZE_16BIT`] | The index elements are 16-bit. |
 /// | [`_32BIT`](SDL_GPUIndexElementSize::_32BIT) | [`SDL_GPU_INDEXELEMENTSIZE_32BIT`] | The index elements are 32-bit. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUIndexElementSize(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUIndexElementSize {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::_16BIT
-    }
-}
 
 impl From<SDL_GPUIndexElementSize> for ::core::ffi::c_int {
     #[inline(always)]
@@ -746,15 +718,8 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 /// | [`ASTC_12x10_FLOAT`](SDL_GPUTextureFormat::ASTC_12x10_FLOAT) | [`SDL_GPU_TEXTUREFORMAT_ASTC_12x10_FLOAT`] | |
 /// | [`ASTC_12x12_FLOAT`](SDL_GPUTextureFormat::ASTC_12x12_FLOAT) | [`SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUTextureFormat(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUTextureFormat {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INVALID
-    }
-}
 
 impl From<SDL_GPUTextureFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1253,15 +1218,8 @@ pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: SDL_GPUT
 /// | [`CUBE`](SDL_GPUTextureType::CUBE) | [`SDL_GPU_TEXTURETYPE_CUBE`] | The texture is a cube image. |
 /// | [`CUBE_ARRAY`](SDL_GPUTextureType::CUBE_ARRAY) | [`SDL_GPU_TEXTURETYPE_CUBE_ARRAY`] | The texture is a cube array image. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUTextureType(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUTextureType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::_2D
-    }
-}
 
 impl From<SDL_GPUTextureType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1330,15 +1288,8 @@ pub const SDL_GPU_TEXTURETYPE_CUBE_ARRAY: SDL_GPUTextureType = SDL_GPUTextureTyp
 /// | [`_4`](SDL_GPUSampleCount::_4) | [`SDL_GPU_SAMPLECOUNT_4`] | MSAA 4x |
 /// | [`_8`](SDL_GPUSampleCount::_8) | [`SDL_GPU_SAMPLECOUNT_8`] | MSAA 8x |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSampleCount(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUSampleCount {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::_1
-    }
-}
 
 impl From<SDL_GPUSampleCount> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1399,15 +1350,8 @@ pub const SDL_GPU_SAMPLECOUNT_8: SDL_GPUSampleCount = SDL_GPUSampleCount::_8;
 /// | [`POSITIVEZ`](SDL_GPUCubeMapFace::POSITIVEZ) | [`SDL_GPU_CUBEMAPFACE_POSITIVEZ`] | |
 /// | [`NEGATIVEZ`](SDL_GPUCubeMapFace::NEGATIVEZ) | [`SDL_GPU_CUBEMAPFACE_NEGATIVEZ`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUCubeMapFace(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUCubeMapFace {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::POSITIVEX
-    }
-}
 
 impl From<SDL_GPUCubeMapFace> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1514,15 +1458,8 @@ pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE: SDL_GPUBufferUsageFlags =
 /// | [`UPLOAD`](SDL_GPUTransferBufferUsage::UPLOAD) | [`SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD`] | |
 /// | [`DOWNLOAD`](SDL_GPUTransferBufferUsage::DOWNLOAD) | [`SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUTransferBufferUsage(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUTransferBufferUsage {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UPLOAD
-    }
-}
 
 impl From<SDL_GPUTransferBufferUsage> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1568,15 +1505,8 @@ pub const SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD: SDL_GPUTransferBufferUsage =
 /// | [`VERTEX`](SDL_GPUShaderStage::VERTEX) | [`SDL_GPU_SHADERSTAGE_VERTEX`] | |
 /// | [`FRAGMENT`](SDL_GPUShaderStage::FRAGMENT) | [`SDL_GPU_SHADERSTAGE_FRAGMENT`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUShaderStage(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUShaderStage {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::VERTEX
-    }
-}
 
 impl From<SDL_GPUShaderStage> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1691,15 +1621,8 @@ pub const SDL_GPU_SHADERFORMAT_METALLIB: SDL_GPUShaderFormat = ((32_u32) as SDL_
 /// | [`HALF2`](SDL_GPUVertexElementFormat::HALF2) | [`SDL_GPU_VERTEXELEMENTFORMAT_HALF2`] | |
 /// | [`HALF4`](SDL_GPUVertexElementFormat::HALF4) | [`SDL_GPU_VERTEXELEMENTFORMAT_HALF4`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUVertexElementFormat(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUVertexElementFormat {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INVALID
-    }
-}
 
 impl From<SDL_GPUVertexElementFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1861,15 +1784,8 @@ pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF4: SDL_GPUVertexElementFormat =
 /// | [`VERTEX`](SDL_GPUVertexInputRate::VERTEX) | [`SDL_GPU_VERTEXINPUTRATE_VERTEX`] | Attribute addressing is a function of the vertex index. |
 /// | [`INSTANCE`](SDL_GPUVertexInputRate::INSTANCE) | [`SDL_GPU_VERTEXINPUTRATE_INSTANCE`] | Attribute addressing is a function of the instance index. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUVertexInputRate(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUVertexInputRate {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::VERTEX
-    }
-}
 
 impl From<SDL_GPUVertexInputRate> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1918,15 +1834,8 @@ pub const SDL_GPU_VERTEXINPUTRATE_INSTANCE: SDL_GPUVertexInputRate =
 /// | [`FILL`](SDL_GPUFillMode::FILL) | [`SDL_GPU_FILLMODE_FILL`] | Polygons will be rendered via rasterization. |
 /// | [`LINE`](SDL_GPUFillMode::LINE) | [`SDL_GPU_FILLMODE_LINE`] | Polygon edges will be drawn as line segments. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUFillMode(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUFillMode {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::FILL
-    }
-}
 
 impl From<SDL_GPUFillMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1975,15 +1884,8 @@ pub const SDL_GPU_FILLMODE_LINE: SDL_GPUFillMode = SDL_GPUFillMode::LINE;
 /// | [`FRONT`](SDL_GPUCullMode::FRONT) | [`SDL_GPU_CULLMODE_FRONT`] | Front-facing triangles are culled. |
 /// | [`BACK`](SDL_GPUCullMode::BACK) | [`SDL_GPU_CULLMODE_BACK`] | Back-facing triangles are culled. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUCullMode(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUCullMode {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NONE
-    }
-}
 
 impl From<SDL_GPUCullMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2037,15 +1939,8 @@ pub const SDL_GPU_CULLMODE_BACK: SDL_GPUCullMode = SDL_GPUCullMode::BACK;
 /// | [`COUNTER_CLOCKWISE`](SDL_GPUFrontFace::COUNTER_CLOCKWISE) | [`SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE`] | A triangle with counter-clockwise vertex winding will be considered front-facing. |
 /// | [`CLOCKWISE`](SDL_GPUFrontFace::CLOCKWISE) | [`SDL_GPU_FRONTFACE_CLOCKWISE`] | A triangle with clockwise vertex winding will be considered front-facing. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUFrontFace(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUFrontFace {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::COUNTER_CLOCKWISE
-    }
-}
 
 impl From<SDL_GPUFrontFace> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2101,15 +1996,8 @@ pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOC
 /// | [`GREATER_OR_EQUAL`](SDL_GPUCompareOp::GREATER_OR_EQUAL) | [`SDL_GPU_COMPAREOP_GREATER_OR_EQUAL`] | The comparison evalutes reference >= test. |
 /// | [`ALWAYS`](SDL_GPUCompareOp::ALWAYS) | [`SDL_GPU_COMPAREOP_ALWAYS`] | The comparison always evaluates true. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUCompareOp(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUCompareOp {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INVALID
-    }
-}
 
 impl From<SDL_GPUCompareOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2198,15 +2086,8 @@ pub const SDL_GPU_COMPAREOP_ALWAYS: SDL_GPUCompareOp = SDL_GPUCompareOp::ALWAYS;
 /// | [`INCREMENT_AND_WRAP`](SDL_GPUStencilOp::INCREMENT_AND_WRAP) | [`SDL_GPU_STENCILOP_INCREMENT_AND_WRAP`] | Increments the current value and wraps back to 0. |
 /// | [`DECREMENT_AND_WRAP`](SDL_GPUStencilOp::DECREMENT_AND_WRAP) | [`SDL_GPU_STENCILOP_DECREMENT_AND_WRAP`] | Decrements the current value and wraps to the maximum value. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUStencilOp(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUStencilOp {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INVALID
-    }
-}
 
 impl From<SDL_GPUStencilOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2299,15 +2180,8 @@ pub const SDL_GPU_STENCILOP_DECREMENT_AND_WRAP: SDL_GPUStencilOp =
 /// | [`MIN`](SDL_GPUBlendOp::MIN) | [`SDL_GPU_BLENDOP_MIN`] | min(source, destination) |
 /// | [`MAX`](SDL_GPUBlendOp::MAX) | [`SDL_GPU_BLENDOP_MAX`] | max(source, destination) |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUBlendOp(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUBlendOp {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INVALID
-    }
-}
 
 impl From<SDL_GPUBlendOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2389,15 +2263,8 @@ pub const SDL_GPU_BLENDOP_MAX: SDL_GPUBlendOp = SDL_GPUBlendOp::MAX;
 /// | [`ONE_MINUS_CONSTANT_COLOR`](SDL_GPUBlendFactor::ONE_MINUS_CONSTANT_COLOR) | [`SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR`] | 1 - blend constant |
 /// | [`SRC_ALPHA_SATURATE`](SDL_GPUBlendFactor::SRC_ALPHA_SATURATE) | [`SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE`] | min(source alpha, 1 - destination alpha) |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUBlendFactor(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUBlendFactor {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INVALID
-    }
-}
 
 impl From<SDL_GPUBlendFactor> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2543,15 +2410,8 @@ pub const SDL_GPU_COLORCOMPONENT_A: SDL_GPUColorComponentFlags =
 /// | [`NEAREST`](SDL_GPUFilter::NEAREST) | [`SDL_GPU_FILTER_NEAREST`] | Point filtering. |
 /// | [`LINEAR`](SDL_GPUFilter::LINEAR) | [`SDL_GPU_FILTER_LINEAR`] | Linear filtering. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUFilter(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUFilter {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NEAREST
-    }
-}
 
 impl From<SDL_GPUFilter> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2599,15 +2459,8 @@ pub const SDL_GPU_FILTER_LINEAR: SDL_GPUFilter = SDL_GPUFilter::LINEAR;
 /// | [`NEAREST`](SDL_GPUSamplerMipmapMode::NEAREST) | [`SDL_GPU_SAMPLERMIPMAPMODE_NEAREST`] | Point filtering. |
 /// | [`LINEAR`](SDL_GPUSamplerMipmapMode::LINEAR) | [`SDL_GPU_SAMPLERMIPMAPMODE_LINEAR`] | Linear filtering. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSamplerMipmapMode(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUSamplerMipmapMode {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NEAREST
-    }
-}
 
 impl From<SDL_GPUSamplerMipmapMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2659,15 +2512,8 @@ pub const SDL_GPU_SAMPLERMIPMAPMODE_LINEAR: SDL_GPUSamplerMipmapMode =
 /// | [`MIRRORED_REPEAT`](SDL_GPUSamplerAddressMode::MIRRORED_REPEAT) | [`SDL_GPU_SAMPLERADDRESSMODE_MIRRORED_REPEAT`] | Specifies that the coordinates will wrap around mirrored. |
 /// | [`CLAMP_TO_EDGE`](SDL_GPUSamplerAddressMode::CLAMP_TO_EDGE) | [`SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE`] | Specifies that the coordinates will clamp to the 0-1 range. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSamplerAddressMode(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUSamplerAddressMode {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::REPEAT
-    }
-}
 
 impl From<SDL_GPUSamplerAddressMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2742,15 +2588,8 @@ pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
 /// | [`IMMEDIATE`](SDL_GPUPresentMode::IMMEDIATE) | [`SDL_GPU_PRESENTMODE_IMMEDIATE`] | |
 /// | [`MAILBOX`](SDL_GPUPresentMode::MAILBOX) | [`SDL_GPU_PRESENTMODE_MAILBOX`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUPresentMode(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUPresentMode {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::VSYNC
-    }
-}
 
 impl From<SDL_GPUPresentMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2818,15 +2657,8 @@ pub const SDL_GPU_PRESENTMODE_MAILBOX: SDL_GPUPresentMode = SDL_GPUPresentMode::
 /// | [`HDR_EXTENDED_LINEAR`](SDL_GPUSwapchainComposition::HDR_EXTENDED_LINEAR) | [`SDL_GPU_SWAPCHAINCOMPOSITION_HDR_EXTENDED_LINEAR`] | |
 /// | [`HDR10_ST2084`](SDL_GPUSwapchainComposition::HDR10_ST2084) | [`SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2084`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSwapchainComposition(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GPUSwapchainComposition {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::SDR
-    }
-}
 
 impl From<SDL_GPUSwapchainComposition> for ::core::ffi::c_int {
     #[inline(always)]

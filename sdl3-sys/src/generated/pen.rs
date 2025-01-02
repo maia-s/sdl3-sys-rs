@@ -90,15 +90,8 @@ pub const SDL_PEN_INPUT_ERASER_TIP: SDL_PenInputFlags = ((1073741824_u32) as SDL
 /// | [`TANGENTIAL_PRESSURE`](SDL_PenAxis::TANGENTIAL_PRESSURE) | [`SDL_PEN_AXIS_TANGENTIAL_PRESSURE`] | Pressure from squeezing the pen ("barrel pressure"). |
 /// | [`COUNT`](SDL_PenAxis::COUNT) | [`SDL_PEN_AXIS_COUNT`] | Total known pen axis types in this version of SDL. This number may grow in future releases! |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PenAxis(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_PenAxis {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::PRESSURE
-    }
-}
 
 impl From<SDL_PenAxis> for ::core::ffi::c_int {
     #[inline(always)]

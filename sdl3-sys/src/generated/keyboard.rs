@@ -462,15 +462,8 @@ extern "C" {
 /// | [`NUMBER_PASSWORD_HIDDEN`](SDL_TextInputType::NUMBER_PASSWORD_HIDDEN) | [`SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN`] | The input is a secure PIN that is hidden |
 /// | [`NUMBER_PASSWORD_VISIBLE`](SDL_TextInputType::NUMBER_PASSWORD_VISIBLE) | [`SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE`] | The input is a secure PIN that is visible |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TextInputType(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_TextInputType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::TEXT
-    }
-}
 
 impl From<SDL_TextInputType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -563,15 +556,8 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
 /// | [`WORDS`](SDL_Capitalization::WORDS) | [`SDL_CAPITALIZE_WORDS`] | The first letter of words will be capitalized |
 /// | [`LETTERS`](SDL_Capitalization::LETTERS) | [`SDL_CAPITALIZE_LETTERS`] | All letters will be capitalized |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Capitalization(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_Capitalization {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NONE
-    }
-}
 
 impl From<SDL_Capitalization> for ::core::ffi::c_int {
     #[inline(always)]

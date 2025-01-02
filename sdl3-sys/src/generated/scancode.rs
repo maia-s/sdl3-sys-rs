@@ -274,15 +274,8 @@ use super::stdinc::*;
 /// | [`RESERVED`](SDL_Scancode::RESERVED) | [`SDL_SCANCODE_RESERVED`] | 400-500 reserved for dynamic keycodes |
 /// | [`COUNT`](SDL_Scancode::COUNT) | [`SDL_SCANCODE_COUNT`] | not a key, just marks the number of scancodes for array bounds |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Scancode(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_Scancode {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_Scancode> for ::core::ffi::c_int {
     #[inline(always)]

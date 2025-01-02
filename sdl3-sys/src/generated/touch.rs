@@ -43,15 +43,8 @@ pub type SDL_FingerID = Uint64;
 /// | [`INDIRECT_ABSOLUTE`](SDL_TouchDeviceType::INDIRECT_ABSOLUTE) | [`SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE`] | trackpad with absolute device coordinates |
 /// | [`INDIRECT_RELATIVE`](SDL_TouchDeviceType::INDIRECT_RELATIVE) | [`SDL_TOUCH_DEVICE_INDIRECT_RELATIVE`] | trackpad with screen cursor-relative coordinates |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TouchDeviceType(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_TouchDeviceType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::INVALID
-    }
-}
 
 impl From<SDL_TouchDeviceType> for ::core::ffi::c_int {
     #[inline(always)]

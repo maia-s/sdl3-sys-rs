@@ -4108,15 +4108,8 @@ pub const SDL_HINT_ASSERT: *const ::core::ffi::c_char = c"SDL_ASSERT".as_ptr();
 /// | [`NORMAL`](SDL_HintPriority::NORMAL) | [`SDL_HINT_NORMAL`] | |
 /// | [`OVERRIDE`](SDL_HintPriority::OVERRIDE) | [`SDL_HINT_OVERRIDE`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_HintPriority(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_HintPriority {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::DEFAULT
-    }
-}
 
 impl From<SDL_HintPriority> for ::core::ffi::c_int {
     #[inline(always)]

@@ -1450,7 +1450,6 @@ impl Emit for TypeDef {
                 }
 
                 let mut seen_target_dependent = HashSet::new();
-                let mut first_short_variant_ident = None;
 
                 for variant in &e.variants {
                     ctx.register_sym(
@@ -1469,9 +1468,6 @@ impl Emit for TypeDef {
                     if !is_valid_ident(short_variant_ident) {
                         short_variant_ident =
                             &variant_ident[variant_ident.len() - short_variant_ident.len() - 1..];
-                    }
-                    if first_short_variant_ident.is_none() {
-                        first_short_variant_ident = Some(short_variant_ident);
                     }
 
                     let Some(expr) = variant.expr.as_ref().or(next_expr.as_ref()) else {
@@ -1560,23 +1556,11 @@ impl Emit for TypeDef {
                 writeln!(ctx, "#[repr(transparent)]")?;
                 writeln!(
                     ctx,
-                    "#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]"
+                    "#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]"
                 )?;
                 write!(ctx, "pub struct {enum_ident}(pub ")?;
                 enum_base_type.emit(ctx)?;
                 writeln!(ctx, ");")?;
-                writeln!(ctx)?;
-
-                writeln!(ctx, "impl ::core::default::Default for {enum_ident} {{")?;
-                ctx.increase_indent();
-                writeln!(ctx, "#[inline(always)]")?;
-                writeln!(ctx, "fn default() -> Self {{")?;
-                ctx.increase_indent();
-                writeln!(ctx, "Self::{}", first_short_variant_ident.unwrap())?;
-                ctx.decrease_indent();
-                writeln!(ctx, "}}")?;
-                ctx.decrease_indent();
-                writeln!(ctx, "}}")?;
                 writeln!(ctx)?;
 
                 write!(ctx, "impl From<{enum_ident}> for ")?;

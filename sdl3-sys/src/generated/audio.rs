@@ -174,15 +174,8 @@ pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 /// | [`S32`](SDL_AudioFormat::S32) | [`SDL_AUDIO_S32`] | (target dependent) |
 /// | [`F32`](SDL_AudioFormat::F32) | [`SDL_AUDIO_F32`] | (target dependent) |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AudioFormat(pub ::core::ffi::c_uint);
-
-impl ::core::default::Default for SDL_AudioFormat {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_AudioFormat> for ::core::ffi::c_uint {
     #[inline(always)]

@@ -57,15 +57,8 @@ pub type SDL_TLSID = SDL_AtomicInt;
 /// | [`HIGH`](SDL_ThreadPriority::HIGH) | [`SDL_THREAD_PRIORITY_HIGH`] | |
 /// | [`TIME_CRITICAL`](SDL_ThreadPriority::TIME_CRITICAL) | [`SDL_THREAD_PRIORITY_TIME_CRITICAL`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ThreadPriority(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_ThreadPriority {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::LOW
-    }
-}
 
 impl From<SDL_ThreadPriority> for ::core::ffi::c_int {
     #[inline(always)]
@@ -119,15 +112,8 @@ pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPrio
 /// | [`DETACHED`](SDL_ThreadState::DETACHED) | [`SDL_THREAD_DETACHED`] | The thread is detached and can't be waited on |
 /// | [`COMPLETE`](SDL_ThreadState::COMPLETE) | [`SDL_THREAD_COMPLETE`] | The thread has finished and should be cleaned up with [`SDL_WaitThread()`] |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ThreadState(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_ThreadState {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_ThreadState> for ::core::ffi::c_int {
     #[inline(always)]

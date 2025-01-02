@@ -695,15 +695,8 @@ extern "C" {
 /// | [`SNAP`](SDL_Sandbox::SNAP) | [`SDL_SANDBOX_SNAP`] | |
 /// | [`MACOS`](SDL_Sandbox::MACOS) | [`SDL_SANDBOX_MACOS`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Sandbox(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_Sandbox {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NONE
-    }
-}
 
 impl From<SDL_Sandbox> for ::core::ffi::c_int {
     #[inline(always)]

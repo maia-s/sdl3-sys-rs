@@ -157,15 +157,8 @@ extern "C" {
 /// | [`VIDEOS`](SDL_Folder::VIDEOS) | [`SDL_FOLDER_VIDEOS`] | Video files that can be played using a standard video player (mp4, webm...). |
 /// | [`COUNT`](SDL_Folder::COUNT) | [`SDL_FOLDER_COUNT`] | Total number of types in this enum, not a folder type by itself. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Folder(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_Folder {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::HOME
-    }
-}
 
 impl From<SDL_Folder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -298,15 +291,8 @@ extern "C" {
 /// | [`DIRECTORY`](SDL_PathType::DIRECTORY) | [`SDL_PATHTYPE_DIRECTORY`] | a directory |
 /// | [`OTHER`](SDL_PathType::OTHER) | [`SDL_PATHTYPE_OTHER`] | something completely different like a device node (not a symlink, those are always followed) |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PathType(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_PathType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NONE
-    }
-}
 
 impl From<SDL_PathType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -427,15 +413,8 @@ extern "C" {
 /// | [`SUCCESS`](SDL_EnumerationResult::SUCCESS) | [`SDL_ENUM_SUCCESS`] | Value that requests that enumeration stop, successfully. |
 /// | [`FAILURE`](SDL_EnumerationResult::FAILURE) | [`SDL_ENUM_FAILURE`] | Value that requests that enumeration stop, as a failure. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EnumerationResult(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_EnumerationResult {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::CONTINUE
-    }
-}
 
 impl From<SDL_EnumerationResult> for ::core::ffi::c_int {
     #[inline(always)]

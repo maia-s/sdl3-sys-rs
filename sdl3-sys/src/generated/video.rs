@@ -78,15 +78,8 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: *const ::core::ffi::
 /// | [`LIGHT`](SDL_SystemTheme::LIGHT) | [`SDL_SYSTEM_THEME_LIGHT`] | Light colored system theme |
 /// | [`DARK`](SDL_SystemTheme::DARK) | [`SDL_SYSTEM_THEME_DARK`] | Dark colored system theme |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SystemTheme(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_SystemTheme {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_SystemTheme> for ::core::ffi::c_int {
     #[inline(always)]
@@ -174,15 +167,8 @@ pub struct SDL_DisplayMode {
 /// | [`PORTRAIT`](SDL_DisplayOrientation::PORTRAIT) | [`SDL_ORIENTATION_PORTRAIT`] | The display is in portrait mode |
 /// | [`PORTRAIT_FLIPPED`](SDL_DisplayOrientation::PORTRAIT_FLIPPED) | [`SDL_ORIENTATION_PORTRAIT_FLIPPED`] | The display is in portrait mode, upside down |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_DisplayOrientation(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_DisplayOrientation {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_DisplayOrientation> for ::core::ffi::c_int {
     #[inline(always)]
@@ -451,15 +437,8 @@ pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitiv
 /// | [`BRIEFLY`](SDL_FlashOperation::BRIEFLY) | [`SDL_FLASH_BRIEFLY`] | Flash the window briefly to get attention |
 /// | [`UNTIL_FOCUSED`](SDL_FlashOperation::UNTIL_FOCUSED) | [`SDL_FLASH_UNTIL_FOCUSED`] | Flash the window until it gets focus |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_FlashOperation(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_FlashOperation {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::CANCEL
-    }
-}
 
 impl From<SDL_FlashOperation> for ::core::ffi::c_int {
     #[inline(always)]
@@ -656,15 +635,8 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 /// | [`FLOATBUFFERS`](SDL_GLAttr::FLOATBUFFERS) | [`SDL_GL_FLOATBUFFERS`] | |
 /// | [`EGL_PLATFORM`](SDL_GLAttr::EGL_PLATFORM) | [`SDL_GL_EGL_PLATFORM`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GLAttr(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_GLAttr {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::RED_SIZE
-    }
-}
 
 impl From<SDL_GLAttr> for ::core::ffi::c_int {
     #[inline(always)]
@@ -3826,15 +3798,8 @@ extern "C" {
 /// | [`RESIZE_BOTTOMLEFT`](SDL_HitTestResult::RESIZE_BOTTOMLEFT) | [`SDL_HITTEST_RESIZE_BOTTOMLEFT`] | Region is the resizable bottom-left corner border. |
 /// | [`RESIZE_LEFT`](SDL_HitTestResult::RESIZE_LEFT) | [`SDL_HITTEST_RESIZE_LEFT`] | Region is the resizable left border. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_HitTestResult(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_HitTestResult {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NORMAL
-    }
-}
 
 impl From<SDL_HitTestResult> for ::core::ffi::c_int {
     #[inline(always)]

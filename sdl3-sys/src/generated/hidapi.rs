@@ -41,15 +41,8 @@ use super::error::*;
 /// | [`I2C`](SDL_hid_bus_type::I2C) | [`SDL_HID_API_BUS_I2C`] |  I2C bus Specifications: <https://docs.microsoft.com/previous-versions/windows/hardware/design/dn642101(v=vs.85)> |
 /// | [`SPI`](SDL_hid_bus_type::SPI) | [`SDL_HID_API_BUS_SPI`] |  SPI bus Specifications: <https://www.microsoft.com/download/details.aspx?id=103325> |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_hid_bus_type(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_hid_bus_type {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_hid_bus_type> for ::core::ffi::c_int {
     #[inline(always)]

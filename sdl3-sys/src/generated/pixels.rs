@@ -114,15 +114,8 @@ pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 /// | [`ARRAYF32`](SDL_PixelType::ARRAYF32) | [`SDL_PIXELTYPE_ARRAYF32`] | |
 /// | [`INDEX2`](SDL_PixelType::INDEX2) | [`SDL_PIXELTYPE_INDEX2`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PixelType(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_PixelType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_PixelType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -197,15 +190,8 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 /// | [`_4321`](SDL_BitmapOrder::_4321) | [`SDL_BITMAPORDER_4321`] | |
 /// | [`_1234`](SDL_BitmapOrder::_1234) | [`SDL_BITMAPORDER_1234`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_BitmapOrder(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_BitmapOrder {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NONE
-    }
-}
 
 impl From<SDL_BitmapOrder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -256,15 +242,8 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 /// | [`ABGR`](SDL_PackedOrder::ABGR) | [`SDL_PACKEDORDER_ABGR`] | |
 /// | [`BGRA`](SDL_PackedOrder::BGRA) | [`SDL_PACKEDORDER_BGRA`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PackedOrder(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_PackedOrder {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NONE
-    }
-}
 
 impl From<SDL_PackedOrder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -331,15 +310,8 @@ pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 /// | [`BGRA`](SDL_ArrayOrder::BGRA) | [`SDL_ARRAYORDER_BGRA`] | |
 /// | [`ABGR`](SDL_ArrayOrder::ABGR) | [`SDL_ARRAYORDER_ABGR`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ArrayOrder(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_ArrayOrder {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NONE
-    }
-}
 
 impl From<SDL_ArrayOrder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -402,15 +374,8 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 /// | [`_2101010`](SDL_PackedLayout::_2101010) | [`SDL_PACKEDLAYOUT_2101010`] | |
 /// | [`_1010102`](SDL_PackedLayout::_1010102) | [`SDL_PACKEDLAYOUT_1010102`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PackedLayout(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_PackedLayout {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NONE
-    }
-}
 
 impl From<SDL_PackedLayout> for ::core::ffi::c_int {
     #[inline(always)]
@@ -601,15 +566,8 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 /// | [`BGRX32`](SDL_PixelFormat::BGRX32) | [`SDL_PIXELFORMAT_BGRX32`] | (target dependent) |
 /// | [`XBGR32`](SDL_PixelFormat::XBGR32) | [`SDL_PIXELFORMAT_XBGR32`] | (target dependent) |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PixelFormat(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_PixelFormat {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_PixelFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1333,15 +1291,8 @@ pub const fn SDL_BYTESPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8
 /// | [`RGB`](SDL_ColorType::RGB) | [`SDL_COLOR_TYPE_RGB`] | |
 /// | [`YCBCR`](SDL_ColorType::YCBCR) | [`SDL_COLOR_TYPE_YCBCR`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ColorType(pub ::core::ffi::c_uint);
-
-impl ::core::default::Default for SDL_ColorType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_ColorType> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1387,15 +1338,8 @@ pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 /// | [`LIMITED`](SDL_ColorRange::LIMITED) | [`SDL_COLOR_RANGE_LIMITED`] | Narrow range, e.g. 16-235 for 8-bit RGB and luma, and 16-240 for 8-bit chroma |
 /// | [`FULL`](SDL_ColorRange::FULL) | [`SDL_COLOR_RANGE_FULL`] | Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ColorRange(pub ::core::ffi::c_uint);
-
-impl ::core::default::Default for SDL_ColorRange {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_ColorRange> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1456,15 +1400,8 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 /// | [`EBU3213`](SDL_ColorPrimaries::EBU3213) | [`SDL_COLOR_PRIMARIES_EBU3213`] | EBU Tech. 3213-E |
 /// | [`CUSTOM`](SDL_ColorPrimaries::CUSTOM) | [`SDL_COLOR_PRIMARIES_CUSTOM`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ColorPrimaries(pub ::core::ffi::c_uint);
-
-impl ::core::default::Default for SDL_ColorPrimaries {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_ColorPrimaries> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1582,15 +1519,8 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 /// | [`HLG`](SDL_TransferCharacteristics::HLG) | [`SDL_TRANSFER_CHARACTERISTICS_HLG`] | ARIB STD-B67, known as "hybrid log-gamma" (HLG) |
 /// | [`CUSTOM`](SDL_TransferCharacteristics::CUSTOM) | [`SDL_TRANSFER_CHARACTERISTICS_CUSTOM`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TransferCharacteristics(pub ::core::ffi::c_uint);
-
-impl ::core::default::Default for SDL_TransferCharacteristics {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_TransferCharacteristics> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1742,15 +1672,8 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 /// | [`ICTCP`](SDL_MatrixCoefficients::ICTCP) | [`SDL_MATRIX_COEFFICIENTS_ICTCP`] | ITU-R BT.2100-0 ICTCP |
 /// | [`CUSTOM`](SDL_MatrixCoefficients::CUSTOM) | [`SDL_MATRIX_COEFFICIENTS_CUSTOM`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_MatrixCoefficients(pub ::core::ffi::c_uint);
-
-impl ::core::default::Default for SDL_MatrixCoefficients {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::IDENTITY
-    }
-}
 
 impl From<SDL_MatrixCoefficients> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1858,15 +1781,8 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 /// | [`CENTER`](SDL_ChromaLocation::CENTER) | [`SDL_CHROMA_LOCATION_CENTER`] | In JPEG/JFIF, H.261, and MPEG-1, Cb and Cr are taken at the center of the 2x2 square. In other words, they are offset one-half pixel to the right and one-half pixel down compared to the top-left pixel. |
 /// | [`TOPLEFT`](SDL_ChromaLocation::TOPLEFT) | [`SDL_CHROMA_LOCATION_TOPLEFT`] | In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located"). |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ChromaLocation(pub ::core::ffi::c_uint);
-
-impl ::core::default::Default for SDL_ChromaLocation {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::NONE
-    }
-}
 
 impl From<SDL_ChromaLocation> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1943,15 +1859,8 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 /// | [`RGB_DEFAULT`](SDL_Colorspace::RGB_DEFAULT) | [`SDL_COLORSPACE_RGB_DEFAULT`] | The default colorspace for RGB surfaces if no colorspace is specified |
 /// | [`YUV_DEFAULT`](SDL_Colorspace::YUV_DEFAULT) | [`SDL_COLORSPACE_YUV_DEFAULT`] | The default colorspace for YUV surfaces if no colorspace is specified |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Colorspace(pub Uint32);
-
-impl ::core::default::Default for SDL_Colorspace {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::UNKNOWN
-    }
-}
 
 impl From<SDL_Colorspace> for Uint32 {
     #[inline(always)]

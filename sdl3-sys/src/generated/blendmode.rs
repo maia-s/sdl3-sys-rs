@@ -67,15 +67,8 @@ pub const SDL_BLENDMODE_INVALID: SDL_BlendMode = (0x7fffffff as SDL_BlendMode);
 /// | [`MINIMUM`](SDL_BlendOperation::MINIMUM) | [`SDL_BLENDOPERATION_MINIMUM`] | min(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan |
 /// | [`MAXIMUM`](SDL_BlendOperation::MAXIMUM) | [`SDL_BLENDOPERATION_MAXIMUM`] | max(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_BlendOperation(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_BlendOperation {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::ADD
-    }
-}
 
 impl From<SDL_BlendOperation> for ::core::ffi::c_int {
     #[inline(always)]
@@ -148,15 +141,8 @@ pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 /// | [`DST_ALPHA`](SDL_BlendFactor::DST_ALPHA) | [`SDL_BLENDFACTOR_DST_ALPHA`] | dstA, dstA, dstA, dstA |
 /// | [`ONE_MINUS_DST_ALPHA`](SDL_BlendFactor::ONE_MINUS_DST_ALPHA) | [`SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA`] | 1-dstA, 1-dstA, 1-dstA, 1-dstA |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_BlendFactor(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_BlendFactor {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::ZERO
-    }
-}
 
 impl From<SDL_BlendFactor> for ::core::ffi::c_int {
     #[inline(always)]

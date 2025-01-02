@@ -21,15 +21,8 @@ use super::error::*;
 /// | [`CHARGING`](SDL_PowerState::CHARGING) | [`SDL_POWERSTATE_CHARGING`] | Plugged in, charging battery |
 /// | [`CHARGED`](SDL_PowerState::CHARGED) | [`SDL_POWERSTATE_CHARGED`] | Plugged in, battery charged |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PowerState(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_PowerState {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::ERROR
-    }
-}
 
 impl From<SDL_PowerState> for ::core::ffi::c_int {
     #[inline(always)]

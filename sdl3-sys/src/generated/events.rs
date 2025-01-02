@@ -181,15 +181,8 @@ use super::video::*;
 /// | [`LAST`](SDL_EventType::LAST) | [`SDL_EVENT_LAST`] | *  This last event is only for bounding internal arrays |
 /// | [`ENUM_PADDING`](SDL_EventType::ENUM_PADDING) | [`SDL_EVENT_ENUM_PADDING`] | |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EventType(pub Uint32);
-
-impl ::core::default::Default for SDL_EventType {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::FIRST
-    }
-}
 
 impl From<SDL_EventType> for Uint32 {
     #[inline(always)]
@@ -1968,15 +1961,8 @@ extern "C" {
 /// | [`PEEKEVENT`](SDL_EventAction::PEEKEVENT) | [`SDL_PEEKEVENT`] | Check but don't remove events from the queue front. |
 /// | [`GETEVENT`](SDL_EventAction::GETEVENT) | [`SDL_GETEVENT`] | Retrieve/remove events from the front of the queue. |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EventAction(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_EventAction {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::ADDEVENT
-    }
-}
 
 impl From<SDL_EventAction> for ::core::ffi::c_int {
     #[inline(always)]

@@ -26,15 +26,8 @@ use super::properties::*;
 /// | [`READONLY`](SDL_IOStatus::READONLY) | [`SDL_IO_STATUS_READONLY`] | Tried to write a read-only buffer |
 /// | [`WRITEONLY`](SDL_IOStatus::WRITEONLY) | [`SDL_IO_STATUS_WRITEONLY`] | Tried to read a write-only buffer |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_IOStatus(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_IOStatus {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::READY
-    }
-}
 
 impl From<SDL_IOStatus> for ::core::ffi::c_int {
     #[inline(always)]
@@ -103,15 +96,8 @@ pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 /// | [`CUR`](SDL_IOWhence::CUR) | [`SDL_IO_SEEK_CUR`] | Seek relative to current read point |
 /// | [`END`](SDL_IOWhence::END) | [`SDL_IO_SEEK_END`] | Seek relative to the end of data |
 #[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_IOWhence(pub ::core::ffi::c_int);
-
-impl ::core::default::Default for SDL_IOWhence {
-    #[inline(always)]
-    fn default() -> Self {
-        Self::SET
-    }
-}
 
 impl From<SDL_IOWhence> for ::core::ffi::c_int {
     #[inline(always)]
