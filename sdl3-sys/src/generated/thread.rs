@@ -362,11 +362,11 @@ apply_cfg!(#[cfg(not(doc))] => {
     pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<*const ::core::ffi::c_void, SDL_FunctionPointer>(core::ptr::null()) };
     #[cfg(windows)]
     extern "cdecl" {
-        fn _beginthreadex(security: *mut ::core::ffi::c_void, stack_size: ::core::ffi::c_uint, start_address: Option<extern "stdcall" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, arglist: *mut ::core::ffi::c_void, initflag: ::core::ffi::c_uint, thrdaddr: ::core::ffi::c_uint) -> ::core::primitive::usize;
+        fn _beginthreadex(security: *mut ::core::ffi::c_void, stack_size: ::core::ffi::c_uint, start_address: Option<unsafe extern "stdcall" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, arglist: *mut ::core::ffi::c_void, initflag: ::core::ffi::c_uint, thrdaddr: ::core::ffi::c_uint) -> ::core::primitive::usize;
         fn _endthreadex(retval: ::core::ffi::c_uint);
     }
     #[cfg(windows)]
-    pub const SDL_BeginThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<unsafe extern "cdecl" fn(*mut ::core::ffi::c_void, ::core::ffi::c_uint, Option<extern "stdcall" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, *mut ::core::ffi::c_void, ::core::ffi::c_uint, ::core::ffi::c_uint) -> ::core::primitive::usize, SDL_FunctionPointer>(_beginthreadex) };
+    pub const SDL_BeginThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<unsafe extern "cdecl" fn(*mut ::core::ffi::c_void, ::core::ffi::c_uint, Option<unsafe extern "stdcall" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, *mut ::core::ffi::c_void, ::core::ffi::c_uint, ::core::ffi::c_uint) -> ::core::primitive::usize, SDL_FunctionPointer>(_beginthreadex) };
     #[cfg(windows)]
     pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<unsafe extern "cdecl" fn (::core::ffi::c_uint), SDL_FunctionPointer>(_endthreadex) };
 
