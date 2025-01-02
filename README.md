@@ -13,3 +13,10 @@ See the [`sdl3-sys`](sdl3-sys) dir for the SDL 3 Rust bindings.
 
 Because we can do better. `sdl3-sys-gen` makes platform independent bindings with full documentation
 from the original headers and collects the output into modules. The generator is standalone.
+
+## Higher-level bindings
+
+If you prefer to work with more rusty and higher level constructs instead of the direct FFI bindings
+in this crate you may want to take a look at:
+
+* [The SDL3 crate](https://crates.io/crates/sdl3)
