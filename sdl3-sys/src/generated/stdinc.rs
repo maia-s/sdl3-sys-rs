@@ -583,6 +583,7 @@ pub struct SDL_alignment_test {
 }
 
 impl ::core::default::Default for SDL_alignment_test {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }

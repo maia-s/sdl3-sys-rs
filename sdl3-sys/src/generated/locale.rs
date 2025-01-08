@@ -33,6 +33,7 @@ pub struct SDL_Locale {
 }
 
 impl ::core::default::Default for SDL_Locale {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }

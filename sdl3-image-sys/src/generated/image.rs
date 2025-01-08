@@ -2254,6 +2254,7 @@ pub struct IMG_Animation {
 }
 
 impl ::core::default::Default for IMG_Animation {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }

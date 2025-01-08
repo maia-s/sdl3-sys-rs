@@ -45,6 +45,7 @@ pub struct SDL_DialogFileFilter {
 }
 
 impl ::core::default::Default for SDL_DialogFileFilter {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }

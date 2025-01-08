@@ -1091,6 +1091,7 @@ impl StructOrUnion {
             if can_default == CanDefault::Manual {
                 writeln!(ctx_ool, "impl ::core::default::Default for {ident} {{")?;
                 ctx_ool.increase_indent();
+                writeln!(ctx_ool, "/// Initialize all fields to zero")?;
                 writeln!(ctx_ool, "#[inline(always)]")?;
                 writeln!(ctx_ool, "fn default() -> Self {{")?;
                 ctx_ool.increase_indent();

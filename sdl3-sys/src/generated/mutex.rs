@@ -774,6 +774,7 @@ pub struct SDL_InitState {
 }
 
 impl ::core::default::Default for SDL_InitState {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }

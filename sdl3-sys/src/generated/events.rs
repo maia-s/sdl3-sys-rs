@@ -964,6 +964,7 @@ pub struct SDL_TextEditingEvent {
 }
 
 impl ::core::default::Default for SDL_TextEditingEvent {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -999,6 +1000,7 @@ pub struct SDL_TextEditingCandidatesEvent {
 }
 
 impl ::core::default::Default for SDL_TextEditingCandidatesEvent {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -1032,6 +1034,7 @@ pub struct SDL_TextInputEvent {
 }
 
 impl ::core::default::Default for SDL_TextInputEvent {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -1722,6 +1725,7 @@ pub struct SDL_DropEvent {
 }
 
 impl ::core::default::Default for SDL_DropEvent {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -1751,6 +1755,7 @@ pub struct SDL_ClipboardEvent {
 }
 
 impl ::core::default::Default for SDL_ClipboardEvent {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -1825,6 +1830,7 @@ pub struct SDL_UserEvent {
 }
 
 impl ::core::default::Default for SDL_UserEvent {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }

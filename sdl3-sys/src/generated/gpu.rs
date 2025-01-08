@@ -2748,6 +2748,7 @@ pub struct SDL_GPUTextureTransferInfo {
 }
 
 impl ::core::default::Default for SDL_GPUTextureTransferInfo {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -2775,6 +2776,7 @@ pub struct SDL_GPUTransferBufferLocation {
 }
 
 impl ::core::default::Default for SDL_GPUTransferBufferLocation {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -2809,6 +2811,7 @@ pub struct SDL_GPUTextureLocation {
 }
 
 impl ::core::default::Default for SDL_GPUTextureLocation {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -2850,6 +2853,7 @@ pub struct SDL_GPUTextureRegion {
 }
 
 impl ::core::default::Default for SDL_GPUTextureRegion {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -2884,6 +2888,7 @@ pub struct SDL_GPUBlitRegion {
 }
 
 impl ::core::default::Default for SDL_GPUBlitRegion {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -2910,6 +2915,7 @@ pub struct SDL_GPUBufferLocation {
 }
 
 impl ::core::default::Default for SDL_GPUBufferLocation {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -2939,6 +2945,7 @@ pub struct SDL_GPUBufferRegion {
 }
 
 impl ::core::default::Default for SDL_GPUBufferRegion {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -3153,6 +3160,7 @@ pub struct SDL_GPUVertexInputState {
 }
 
 impl ::core::default::Default for SDL_GPUVertexInputState {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -3249,6 +3257,7 @@ pub struct SDL_GPUShaderCreateInfo {
 }
 
 impl ::core::default::Default for SDL_GPUShaderCreateInfo {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -3480,6 +3489,7 @@ pub struct SDL_GPUGraphicsPipelineTargetInfo {
 }
 
 impl ::core::default::Default for SDL_GPUGraphicsPipelineTargetInfo {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -3524,6 +3534,7 @@ pub struct SDL_GPUGraphicsPipelineCreateInfo {
 }
 
 impl ::core::default::Default for SDL_GPUGraphicsPipelineCreateInfo {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -3572,6 +3583,7 @@ pub struct SDL_GPUComputePipelineCreateInfo {
 }
 
 impl ::core::default::Default for SDL_GPUComputePipelineCreateInfo {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -3644,6 +3656,7 @@ pub struct SDL_GPUColorTargetInfo {
 }
 
 impl ::core::default::Default for SDL_GPUColorTargetInfo {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -3719,6 +3732,7 @@ pub struct SDL_GPUDepthStencilTargetInfo {
 }
 
 impl ::core::default::Default for SDL_GPUDepthStencilTargetInfo {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -3756,6 +3770,7 @@ pub struct SDL_GPUBlitInfo {
 }
 
 impl ::core::default::Default for SDL_GPUBlitInfo {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -3781,6 +3796,7 @@ pub struct SDL_GPUBufferBinding {
 }
 
 impl ::core::default::Default for SDL_GPUBufferBinding {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -3806,6 +3822,7 @@ pub struct SDL_GPUTextureSamplerBinding {
 }
 
 impl ::core::default::Default for SDL_GPUTextureSamplerBinding {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -3834,6 +3851,7 @@ pub struct SDL_GPUStorageBufferReadWriteBinding {
 }
 
 impl ::core::default::Default for SDL_GPUStorageBufferReadWriteBinding {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -3866,6 +3884,7 @@ pub struct SDL_GPUStorageTextureReadWriteBinding {
 }
 
 impl ::core::default::Default for SDL_GPUStorageTextureReadWriteBinding {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }

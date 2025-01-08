@@ -157,6 +157,7 @@ pub struct SDL_hid_device_info {
 }
 
 impl ::core::default::Default for SDL_hid_device_info {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }

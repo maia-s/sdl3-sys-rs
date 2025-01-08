@@ -76,6 +76,7 @@ pub struct SDL_MessageBoxButtonData {
 }
 
 impl ::core::default::Default for SDL_MessageBoxButtonData {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
@@ -191,6 +192,7 @@ pub struct SDL_MessageBoxData {
 }
 
 impl ::core::default::Default for SDL_MessageBoxData {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }

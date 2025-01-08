@@ -283,6 +283,7 @@ pub struct SDL_AssertData {
 }
 
 impl ::core::default::Default for SDL_AssertData {
+    /// Initialize all fields to zero
     #[inline(always)]
     fn default() -> Self {
         unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
