@@ -75,6 +75,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5a2d2f3481209a6b42eec2fbb49063fb4e8d35b57023401495d4fe0f85c817f0"
 
 [[package]]
+name = "sdl3-image-src"
+version = "0.0.0"
+
+[[package]]
+name = "sdl3-image-sys"
+version = "0.0.0"
+
+[[package]]
 name = "sdl3-main"
 version = "0.2.0"
 dependencies = [

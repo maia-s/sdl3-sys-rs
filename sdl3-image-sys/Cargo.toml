@@ -1,0 +1,12 @@
+[package]
+name = "sdl3-image-sys"
+version = "0.0.0"
+edition = "2021"
+authors = ["Maia S. R."]
+license = "Zlib"
+description = "Low level Rust bindings for SDL3_image"
+repository = "https://github.com/maia-s/sdl3-sys-rs"
+documentation = "https://docs.rs/sdl3-image-sys"
+keywords = ["sdl", "graphics"]
+categories = ["external-ffi-bindings", "no-std"]
+# links = "SDL3_image"

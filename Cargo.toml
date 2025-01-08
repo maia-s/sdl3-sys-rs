@@ -1,6 +1,8 @@
 [workspace]
 resolver = "2"
 members = [
+    "sdl3-image-src",
+    "sdl3-image-sys",
     "sdl3-main",
     "sdl3-main-macros",
     "sdl3-src",
