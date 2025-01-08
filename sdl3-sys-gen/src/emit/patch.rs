@@ -187,10 +187,6 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                     | "SDL_OUT_CAP"
                     | "SDL_OUT_Z_BYTECAP"
                     | "SDL_OUT_Z_CAP"
-                    | "SDL_PRILLd"
-                    | "SDL_PRILLu"
-                    | "SDL_PRILLx"
-                    | "SDL_PRILLX"
                     | "SDL_PRINTF_FORMAT_STRING"
                     | "SDL_PRINTF_VARARG_FUNC"
                     | "SDL_PRINTF_VARARG_FUNCV"
@@ -558,48 +554,58 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
     },
     EmitDefinePatch {
         module: Some("stdinc"),
-        match_ident: |i| i.starts_with("SDL_PRI") && i.ends_with("64"),
+        match_ident: |i| i.starts_with("SDL_PRI"),
         patch: |ctx, define| {
-            writeln!(
-                ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-            )?;
-            define.emit(ctx)?;
-            Ok(true)
-        },
-    },
-    EmitDefinePatch {
-        module: Some("stdinc"),
-        match_ident: |i| i == "SDL_PRILL_PREFIX",
-        patch: |ctx, define| {
-            writeln!(
-                ctx,
-                r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-            )?;
-            define.emit(ctx)?;
-            let Some(Value::String(StringLiteral { str, .. })) = define.value.try_eval(ctx)? else {
-                unreachable!()
-            };
-            let mut bytes = str.into_bytes_with_nul();
-            let edit = bytes.len() - 1;
-            bytes.push(0);
-            for ch in [b'd', b'u', b'x', b'X'] {
-                bytes[edit] = ch;
-                writeln!(
-                    ctx,
-                    r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-                )?;
-                Define {
-                    span: Span::none(),
-                    doc: None,
-                    ident: IdentOrKw::new_inline(format!("SDL_PRILL{}", char::from(ch))),
-                    args: None,
-                    value: DefineValue::Expr(Expr::Value(Value::String(StringLiteral {
-                        span: Span::none(),
-                        str: CString::from_vec_with_nul(bytes.clone()).unwrap(),
-                    }))),
+            let in_doc = define.doc.is_some();
+            if define.ident.as_str() != "SDL_PRILL_PREFIX"
+                && define.ident.as_str().starts_with("SDL_PRILL")
+            {
+                if in_doc {
+                    let DefineValue::ExprFollowedBy(_, str) = &define.value else {
+                        dbg!(&define.value);
+                        unreachable!()
+                    };
+                    let Some(Value::String(StringLiteral { str, .. })) = str.try_eval(ctx)? else {
+                        unreachable!()
+                    };
+                    define.doc.emit(ctx)?;
+                    writeln!(
+                        ctx,
+                        "pub const {}: *const ::core::ffi::c_char = c\"ll{}\".as_ptr();",
+                        define.ident.as_str(),
+                        str.to_string_lossy()
+                    )?;
+                    writeln!(ctx)?;
                 }
-                .emit(ctx)?;
+            } else {
+                if !in_doc {
+                    writeln!(ctx, "#[cfg(not(doc))]")?;
+                };
+                define.emit(ctx)?;
+            }
+            if !in_doc && define.ident.as_str() == "SDL_PRILL_PREFIX" {
+                let Some(Value::String(StringLiteral { str, .. })) = define.value.try_eval(ctx)?
+                else {
+                    unreachable!()
+                };
+                let mut bytes = str.into_bytes_with_nul();
+                let edit = bytes.len() - 1;
+                bytes.push(0);
+                for ch in [b'd', b'u', b'x', b'X'] {
+                    bytes[edit] = ch;
+                    writeln!(ctx, "#[cfg(not(doc))]")?;
+                    Define {
+                        span: Span::none(),
+                        doc: None,
+                        ident: IdentOrKw::new_inline(format!("SDL_PRILL{}", char::from(ch))),
+                        args: None,
+                        value: DefineValue::Expr(Expr::Value(Value::String(StringLiteral {
+                            span: Span::none(),
+                            str: CString::from_vec_with_nul(bytes.clone()).unwrap(),
+                        }))),
+                    }
+                    .emit(ctx)?;
+                }
             }
             Ok(true)
         },

@@ -221,7 +221,6 @@ pub const SDL_MIN_TIME: SDL_Time = (SDL_MIN_SINT64 as SDL_Time);
 pub const SDL_FLT_EPSILON: ::core::ffi::c_float = ::core::primitive::f32::EPSILON;
 
 apply_cfg!(#[cfg(doc)] => {
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     /// A printf-formatting string for an Sint64 value.
     ///
     /// Use it like this:
@@ -234,7 +233,6 @@ apply_cfg!(#[cfg(doc)] => {
     /// This macro is available since SDL 3.1.3.
     pub const SDL_PRIs64: *const ::core::ffi::c_char = c"lld".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     /// A printf-formatting string for a Uint64 value.
     ///
     /// Use it like this:
@@ -247,7 +245,6 @@ apply_cfg!(#[cfg(doc)] => {
     /// This macro is available since SDL 3.1.3.
     pub const SDL_PRIu64: *const ::core::ffi::c_char = c"llu".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     /// A printf-formatting string for a Uint64 value as lower-case hexadecimal.
     ///
     /// Use it like this:
@@ -260,7 +257,6 @@ apply_cfg!(#[cfg(doc)] => {
     /// This macro is available since SDL 3.1.3.
     pub const SDL_PRIx64: *const ::core::ffi::c_char = c"llx".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     /// A printf-formatting string for a Uint64 value as upper-case hexadecimal.
     ///
     /// Use it like this:
@@ -321,7 +317,6 @@ apply_cfg!(#[cfg(doc)] => {
     /// This macro is available since SDL 3.1.3.
     pub const SDL_PRIX32: *const ::core::ffi::c_char = c"X".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     /// A printf-formatting string prefix for a `long long` value.
     ///
     /// This is just the prefix! You probably actually want [`SDL_PRILLd`], [`SDL_PRILLu`],
@@ -337,35 +332,73 @@ apply_cfg!(#[cfg(doc)] => {
     /// This macro is available since SDL 3.1.3.
     pub const SDL_PRILL_PREFIX: *const ::core::ffi::c_char = c"ll".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    /// A printf-formatting string for a `long long` value.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRILLd " bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
     pub const SDL_PRILLd: *const ::core::ffi::c_char = c"lld".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    /// A printf-formatting string for a `unsigned long long` value.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRILLu " bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
     pub const SDL_PRILLu: *const ::core::ffi::c_char = c"llu".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    /// A printf-formatting string for an `unsigned long long` value as lower-case
+    /// hexadecimal.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRILLx " bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
     pub const SDL_PRILLx: *const ::core::ffi::c_char = c"llx".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    /// A printf-formatting string for an `unsigned long long` value as upper-case
+    /// hexadecimal.
+    ///
+    /// Use it like this:
+    ///
+    /// ```c
+    /// SDL_Log("There are %" SDL_PRILLX " bottles of beer on the wall.", bottles);
+    /// ```
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.1.3.
     pub const SDL_PRILLX: *const ::core::ffi::c_char = c"llX".as_ptr();
 
 });
 
 apply_cfg!(#[cfg(any(doc, windows))] => {
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRIs64: *const ::core::ffi::c_char = c"I64d".as_ptr();
 
 });
 
 apply_cfg!(#[cfg(not(any(doc, windows)))] => {
     apply_cfg!(#[cfg(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))] => {
-        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+        #[cfg(not(doc))]
         pub const SDL_PRIs64: *const ::core::ffi::c_char = c"ld".as_ptr();
 
     });
 
     apply_cfg!(#[cfg(not(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))] => {
-        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+        #[cfg(not(doc))]
         pub const SDL_PRIs64: *const ::core::ffi::c_char = c"lld".as_ptr();
 
     });
@@ -373,20 +406,20 @@ apply_cfg!(#[cfg(not(any(doc, windows)))] => {
 });
 
 apply_cfg!(#[cfg(any(doc, windows))] => {
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRIu64: *const ::core::ffi::c_char = c"I64u".as_ptr();
 
 });
 
 apply_cfg!(#[cfg(not(any(doc, windows)))] => {
     apply_cfg!(#[cfg(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))] => {
-        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+        #[cfg(not(doc))]
         pub const SDL_PRIu64: *const ::core::ffi::c_char = c"lu".as_ptr();
 
     });
 
     apply_cfg!(#[cfg(not(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))] => {
-        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+        #[cfg(not(doc))]
         pub const SDL_PRIu64: *const ::core::ffi::c_char = c"llu".as_ptr();
 
     });
@@ -394,20 +427,20 @@ apply_cfg!(#[cfg(not(any(doc, windows)))] => {
 });
 
 apply_cfg!(#[cfg(any(doc, windows))] => {
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRIx64: *const ::core::ffi::c_char = c"I64x".as_ptr();
 
 });
 
 apply_cfg!(#[cfg(not(any(doc, windows)))] => {
     apply_cfg!(#[cfg(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64")))] => {
-        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+        #[cfg(not(doc))]
         pub const SDL_PRIx64: *const ::core::ffi::c_char = c"lx".as_ptr();
 
     });
 
     apply_cfg!(#[cfg(not(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64"))))] => {
-        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+        #[cfg(not(doc))]
         pub const SDL_PRIx64: *const ::core::ffi::c_char = c"llx".as_ptr();
 
     });
@@ -415,68 +448,72 @@ apply_cfg!(#[cfg(not(any(doc, windows)))] => {
 });
 
 apply_cfg!(#[cfg(any(doc, windows))] => {
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRIX64: *const ::core::ffi::c_char = c"I64X".as_ptr();
 
 });
 
 apply_cfg!(#[cfg(not(any(doc, windows)))] => {
     apply_cfg!(#[cfg(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64")))] => {
-        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+        #[cfg(not(doc))]
         pub const SDL_PRIX64: *const ::core::ffi::c_char = c"lX".as_ptr();
 
     });
 
     apply_cfg!(#[cfg(not(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64"))))] => {
-        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+        #[cfg(not(doc))]
         pub const SDL_PRIX64: *const ::core::ffi::c_char = c"llX".as_ptr();
 
     });
 
 });
 
+#[cfg(not(doc))]
 pub const SDL_PRIs32: *const ::core::ffi::c_char = c"d".as_ptr();
 
+#[cfg(not(doc))]
 pub const SDL_PRIu32: *const ::core::ffi::c_char = c"u".as_ptr();
 
+#[cfg(not(doc))]
 pub const SDL_PRIx32: *const ::core::ffi::c_char = c"x".as_ptr();
 
+#[cfg(not(doc))]
 pub const SDL_PRIX32: *const ::core::ffi::c_char = c"X".as_ptr();
 
 apply_cfg!(#[cfg(any(doc, windows))] => {
     const _: () = ::core::assert!((::core::mem::size_of::<::core::ffi::c_longlong>() == 8_usize));
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRILL_PREFIX: *const ::core::ffi::c_char = c"I64".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRILLd: *const ::core::ffi::c_char = c"I64d".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRILLu: *const ::core::ffi::c_char = c"I64u".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRILLx: *const ::core::ffi::c_char = c"I64x".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRILLX: *const ::core::ffi::c_char = c"I64X".as_ptr();
 
 });
 
 apply_cfg!(#[cfg(not(any(doc, windows)))] => {
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRILL_PREFIX: *const ::core::ffi::c_char = c"ll".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRILLd: *const ::core::ffi::c_char = c"lld".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRILLu: *const ::core::ffi::c_char = c"llu".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRILLx: *const ::core::ffi::c_char = c"llx".as_ptr();
 
-    #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
+    #[cfg(not(doc))]
     pub const SDL_PRILLX: *const ::core::ffi::c_char = c"llX".as_ptr();
 
 });

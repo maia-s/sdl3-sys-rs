@@ -6,6 +6,11 @@ SDL 3 is ABI stable as of the 3.1.3 preview release, but `sdl3-sys` is new
 and may have bugs. Please submit an issue at github if you have any issues
 or comments!
 
+Many types can be initialized to all zero with the `Default` trait for convenience.
+However, many of these aren't valid when passed to SDL without further modification.
+They're intended to be used with `..Default::default()` in initializers.
+The `Default` impl of interface types also sets the version field to the correct value.
+
 Known issues:
 - Satellite libraries (mixer, image, ttf) aren't available yet
 - There are no tests yet, except for static asserts translated from the
@@ -51,7 +56,7 @@ convention for libraries. You can change this behaviour with the following featu
 ### Building from source
 
 When building from source with the `build-from-source` feature flag, you can enable these
-additional features to modify the build. These have no effect when not building from source.
+additional features to configure the build. These have no effect when not building from source.
 
 | Feature | Description |
 | ------- | ----------- |
@@ -94,4 +99,4 @@ These features are mutually exclusive. Features higher in this list override lat
 | Feature | Description |
 | ------- | ----------- |
 | `debug-impls` | Implement the `Debug` trait for most SDL types. |
-| `nightly` | Enable features that need the nightly compiler. This enables the `VaList` type that is only available in nightly, as well as enabling some intrinsics. |
+| `nightly` | Enable features that need the nightly compiler. This enables the `VaList` type, as well as enabling some intrinsics. |
