@@ -337,6 +337,11 @@ pub fn generate(root: &Path, libs: &[&str]) -> Result<(), Error> {
         let headers_path = lib.headers_path();
 
         let mut gen = Gen::new(
+            match lib.lib_name.as_str() {
+                "SDL3" => "SDL_",
+                "SDL3_image" => "IMG_",
+                _ => return Err(format!("unknown library `{}`", lib.lib_name).into()),
+            },
             emitted_sdl3,
             headers_path.clone(),
             lib.output_path(),
@@ -390,6 +395,7 @@ pub type EmittedItems = BTreeMap<String, InnerEmitContext>;
 
 #[derive(Default)]
 pub struct Gen {
+    sym_prefix: &'static str,
     revision: String,
     parsed: ParsedItems,
     emitted: RefCell<EmittedItems>,
@@ -401,6 +407,7 @@ pub struct Gen {
 
 impl Gen {
     pub fn new(
+        sym_prefix: &'static str,
         emitted_sdl3: EmittedItems,
         headers_path: PathBuf,
         output_path: PathBuf,
@@ -408,6 +415,7 @@ impl Gen {
     ) -> Result<Self, Error> {
         DirBuilder::new().recursive(true).create(&output_path)?;
         Ok(Self {
+            sym_prefix,
             revision,
             parsed: ParsedItems::new(),
             emitted_sdl3,
@@ -591,7 +599,7 @@ pub enum Error {
     Io(io::Error),
     Parse(ParseErr),
     Emit(EmitErr),
-    Other(&'static str),
+    Other(String),
 }
 
 impl error::Error for Error {}
@@ -631,8 +639,14 @@ impl From<EmitErr> for Error {
     }
 }
 
-impl From<&'static str> for Error {
-    fn from(value: &'static str) -> Self {
+impl From<&str> for Error {
+    fn from(value: &str) -> Self {
+        Self::Other(value.to_string())
+    }
+}
+
+impl From<String> for Error {
+    fn from(value: String) -> Self {
         Self::Other(value)
     }
 }

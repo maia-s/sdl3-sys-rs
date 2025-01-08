@@ -244,11 +244,14 @@ impl Emit for Items {
 }
 
 impl DocComment {
-    fn insert_links(line: &str) -> Result<String, EmitErr> {
+    fn insert_links(ctx: &EmitContext, line: &str) -> Result<String, EmitErr> {
         let mut patched = String::new();
         let mut i0 = 0;
         let mut quoted = 0;
-        for (i, _) in line.match_indices(['h', 'S', '[', ']']) {
+        for (i, _) in line.match_indices(|c| match c {
+            'h' | 'S' | '[' | ']' => true,
+            _ => c as u32 == ctx.gen.sym_prefix.as_bytes()[0] as u32,
+        }) {
             if i < i0 {
                 continue;
             }
@@ -273,7 +276,8 @@ impl DocComment {
                         })
                         .unwrap_or(line.len() - i);
                     write!(patched, "<{}>", &line[i..i0])?;
-                } else if line[i..].starts_with("SDL_")
+                } else if (line[i..].starts_with("SDL_")
+                    || line[i..].starts_with(ctx.gen.sym_prefix))
                     && (i == 0
                         || line.as_bytes()[i - 1].is_ascii_whitespace()
                         || line.as_bytes()[i - 1] == b'('
@@ -375,7 +379,7 @@ impl DocComment {
         };
 
         'lines: while let Some(line) = lines.next() {
-            let line = Self::insert_links(line)?;
+            let line = Self::insert_links(ctx, line)?;
 
             if line.is_empty() {
                 writeln!(ctx, "{pfx}")?;
@@ -389,7 +393,7 @@ impl DocComment {
                 let mut emit_block = |ctx: &mut EmitContext, plen| -> EmitResult {
                     let bpfx = " ".repeat(plen);
                     while let Some(line) = lines.peek().and_then(|s| s.strip_prefix(&bpfx)) {
-                        writeln!(ctx, "{pfx}   {}", Self::insert_links(line)?)?;
+                        writeln!(ctx, "{pfx}   {}", Self::insert_links(ctx, line)?)?;
                         lines.next();
                     }
                     Ok(())
@@ -1331,7 +1335,7 @@ impl Emit for TypeDef {
                 if let Some(doc) = doc {
                     let doc = doc.to_string();
                     for line in doc.lines() {
-                        write!(ctx_assoc_doc, " {}", DocComment::insert_links(line)?)?;
+                        write!(ctx_assoc_doc, " {}", DocComment::insert_links(ctx, line)?)?;
                     }
                 }
                 writeln!(ctx_assoc_doc, " |")?;
@@ -1521,7 +1525,7 @@ impl Emit for TypeDef {
                         if let Some(doc) = &variant.doc {
                             let doc = doc.to_string();
                             for line in doc.lines() {
-                                write!(ctx_doc, " {}", DocComment::insert_links(line)?)?;
+                                write!(ctx_doc, " {}", DocComment::insert_links(ctx, line)?)?;
                             }
                         }
                         writeln!(ctx_doc, " |")?;

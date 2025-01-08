@@ -74,13 +74,13 @@ extern "C" {
     /// manage those details for you, determining the file type from the filename's
     /// extension.
     ///
-    /// There is also IMG_Load_IO(), which is equivalent to this function except
+    /// There is also [`IMG_Load_IO()`], which is equivalent to this function except
     /// that it will rely on SDL_image to determine what type of data it is
     /// loading, much like passing a NULL for type.
     ///
     /// If you are using SDL's 2D rendering API, there is an equivalent call to
     /// load images directly into an [`SDL_Texture`] for use by the GPU without using a
-    /// software surface: call IMG_LoadTextureTyped_IO() instead.
+    /// software surface: call [`IMG_LoadTextureTyped_IO()`] instead.
     ///
     /// When done with the returned surface, the app should dispose of it with a
     /// call to [`SDL_DestroySurface()`].
@@ -99,8 +99,8 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_Load
-    /// - IMG_Load_IO
+    /// - [`IMG_Load`]
+    /// - [`IMG_Load_IO`]
     /// - [`SDL_DestroySurface`]
     pub fn IMG_LoadTyped_IO(
         src: *mut SDL_IOStream,
@@ -132,11 +132,11 @@ extern "C" {
     ///
     /// There is a separate function to read files from an [`SDL_IOStream`], if you
     /// need an i/o abstraction to provide data from anywhere instead of a simple
-    /// filesystem read; that function is IMG_Load_IO().
+    /// filesystem read; that function is [`IMG_Load_IO()`].
     ///
     /// If you are using SDL's 2D rendering API, there is an equivalent call to
     /// load images directly into an [`SDL_Texture`] for use by the GPU without using a
-    /// software surface: call IMG_LoadTexture() instead.
+    /// software surface: call [`IMG_LoadTexture()`] instead.
     ///
     /// When done with the returned surface, the app should dispose of it with a
     /// call to
@@ -153,8 +153,8 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadTyped_IO
-    /// - IMG_Load_IO
+    /// - [`IMG_LoadTyped_IO`]
+    /// - [`IMG_Load_IO`]
     /// - [`SDL_DestroySurface`]
     pub fn IMG_Load(file: *const ::core::ffi::c_char) -> *mut SDL_Surface;
 }
@@ -189,13 +189,13 @@ extern "C" {
     /// manage those details for you, determining the file type from the filename's
     /// extension.
     ///
-    /// There is also IMG_LoadTyped_IO(), which is equivalent to this function
+    /// There is also [`IMG_LoadTyped_IO()`], which is equivalent to this function
     /// except a file extension (like "BMP", "JPG", etc) can be specified, in case
     /// SDL_image cannot autodetect the file format.
     ///
     /// If you are using SDL's 2D rendering API, there is an equivalent call to
     /// load images directly into an [`SDL_Texture`] for use by the GPU without using a
-    /// software surface: call IMG_LoadTexture_IO() instead.
+    /// software surface: call [`IMG_LoadTexture_IO()`] instead.
     ///
     /// When done with the returned surface, the app should dispose of it with a
     /// call to [`SDL_DestroySurface()`].
@@ -212,8 +212,8 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_Load
-    /// - IMG_LoadTyped_IO
+    /// - [`IMG_Load`]
+    /// - [`IMG_LoadTyped_IO`]
     /// - [`SDL_DestroySurface`]
     pub fn IMG_Load_IO(
         src: *mut SDL_IOStream,
@@ -237,10 +237,10 @@ extern "C" {
     ///
     /// There is a separate function to read files from an [`SDL_IOStream`], if you
     /// need an i/o abstraction to provide data from anywhere instead of a simple
-    /// filesystem read; that function is IMG_LoadTexture_IO().
+    /// filesystem read; that function is [`IMG_LoadTexture_IO()`].
     ///
     /// If you would rather decode an image to an [`SDL_Surface`] (a buffer of pixels
-    /// in CPU memory), call IMG_Load() instead.
+    /// in CPU memory), call [`IMG_Load()`] instead.
     ///
     /// When done with the returned texture, the app should dispose of it with a
     /// call to [`SDL_DestroyTexture()`].
@@ -256,8 +256,8 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadTextureTyped_IO
-    /// - IMG_LoadTexture_IO
+    /// - [`IMG_LoadTextureTyped_IO`]
+    /// - [`IMG_LoadTexture_IO`]
     pub fn IMG_LoadTexture(
         renderer: *mut SDL_Renderer,
         file: *const ::core::ffi::c_char,
@@ -287,12 +287,12 @@ extern "C" {
     /// this function and manage those details for you, determining the file type
     /// from the filename's extension.
     ///
-    /// There is also IMG_LoadTextureTyped_IO(), which is equivalent to this
+    /// There is also [`IMG_LoadTextureTyped_IO()`], which is equivalent to this
     /// function except a file extension (like "BMP", "JPG", etc) can be specified,
     /// in case SDL_image cannot autodetect the file format.
     ///
     /// If you would rather decode an image to an [`SDL_Surface`] (a buffer of pixels
-    /// in CPU memory), call IMG_Load() instead.
+    /// in CPU memory), call [`IMG_Load()`] instead.
     ///
     /// When done with the returned texture, the app should dispose of it with a
     /// call to [`SDL_DestroyTexture()`].
@@ -310,8 +310,8 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadTexture
-    /// - IMG_LoadTextureTyped_IO
+    /// - [`IMG_LoadTexture`]
+    /// - [`IMG_LoadTextureTyped_IO`]
     /// - [`SDL_DestroyTexture`]
     pub fn IMG_LoadTexture_IO(
         renderer: *mut SDL_Renderer,
@@ -349,12 +349,12 @@ extern "C" {
     /// function and manage those details for you, determining the file type from
     /// the filename's extension.
     ///
-    /// There is also IMG_LoadTexture_IO(), which is equivalent to this function
+    /// There is also [`IMG_LoadTexture_IO()`], which is equivalent to this function
     /// except that it will rely on SDL_image to determine what type of data it is
     /// loading, much like passing a NULL for type.
     ///
     /// If you would rather decode an image to an [`SDL_Surface`] (a buffer of pixels
-    /// in CPU memory), call IMG_LoadTyped_IO() instead.
+    /// in CPU memory), call [`IMG_LoadTyped_IO()`] instead.
     ///
     /// When done with the returned texture, the app should dispose of it with a
     /// call to [`SDL_DestroyTexture()`].
@@ -374,8 +374,8 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadTexture
-    /// - IMG_LoadTexture_IO
+    /// - [`IMG_LoadTexture`]
+    /// - [`IMG_LoadTexture_IO`]
     /// - [`SDL_DestroyTexture`]
     pub fn IMG_LoadTextureTyped_IO(
         renderer: *mut SDL_Renderer,
@@ -397,7 +397,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -413,24 +413,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isAVIF(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -446,7 +446,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -462,23 +462,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isICO(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -494,7 +494,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -510,23 +510,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isCUR(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -542,7 +542,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -558,23 +558,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isBMP(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -590,7 +590,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -606,23 +606,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isGIF(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -638,7 +638,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -654,23 +654,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isJPG(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -686,7 +686,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -702,23 +702,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isJXL(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -734,7 +734,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -750,23 +750,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isLBM(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -782,7 +782,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -798,23 +798,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isPCX(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -830,7 +830,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -846,23 +846,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isPNG(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -878,7 +878,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -894,23 +894,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isPNM(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -926,7 +926,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -942,23 +942,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isSVG(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -974,7 +974,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -990,23 +990,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isQOI(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -1022,7 +1022,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -1038,23 +1038,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isTIF(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -1070,7 +1070,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -1086,23 +1086,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXPM
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isXCF(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -1118,7 +1118,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -1134,23 +1134,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXV
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXV`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isXPM(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -1166,7 +1166,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -1182,23 +1182,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isWEBP
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isWEBP`]
     pub fn IMG_isXV(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -1214,7 +1214,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different IMG_isTYPE function, or load the image without further
+    /// with a different [`IMG_isTYPE`] function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -1230,23 +1230,23 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_isAVIF
-    /// - IMG_isICO
-    /// - IMG_isCUR
-    /// - IMG_isBMP
-    /// - IMG_isGIF
-    /// - IMG_isJPG
-    /// - IMG_isJXL
-    /// - IMG_isLBM
-    /// - IMG_isPCX
-    /// - IMG_isPNG
-    /// - IMG_isPNM
-    /// - IMG_isSVG
-    /// - IMG_isQOI
-    /// - IMG_isTIF
-    /// - IMG_isXCF
-    /// - IMG_isXPM
-    /// - IMG_isXV
+    /// - [`IMG_isAVIF`]
+    /// - [`IMG_isICO`]
+    /// - [`IMG_isCUR`]
+    /// - [`IMG_isBMP`]
+    /// - [`IMG_isGIF`]
+    /// - [`IMG_isJPG`]
+    /// - [`IMG_isJXL`]
+    /// - [`IMG_isLBM`]
+    /// - [`IMG_isPCX`]
+    /// - [`IMG_isPNG`]
+    /// - [`IMG_isPNM`]
+    /// - [`IMG_isSVG`]
+    /// - [`IMG_isQOI`]
+    /// - [`IMG_isTIF`]
+    /// - [`IMG_isXCF`]
+    /// - [`IMG_isXPM`]
+    /// - [`IMG_isXV`]
     pub fn IMG_isWEBP(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
@@ -1268,24 +1268,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadAVIF_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1307,24 +1307,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadICO_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1346,24 +1346,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadCUR_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1385,24 +1385,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadBMP_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1424,24 +1424,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadGIF_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1463,24 +1463,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadJPG_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1502,24 +1502,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadJXL_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1541,24 +1541,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadLBM_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1580,24 +1580,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadPCX_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1619,24 +1619,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadPNG_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1658,24 +1658,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadPNM_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1697,24 +1697,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadSVG_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1736,24 +1736,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadQOI_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1775,24 +1775,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadTGA_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1814,24 +1814,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadTIF_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1853,24 +1853,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadXCF_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1892,24 +1892,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXV_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXV_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadXPM_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1931,24 +1931,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadWEBP_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadWEBP_IO`]
     pub fn IMG_LoadXV_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -1970,24 +1970,24 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAVIF_IO
-    /// - IMG_LoadICO_IO
-    /// - IMG_LoadCUR_IO
-    /// - IMG_LoadBMP_IO
-    /// - IMG_LoadGIF_IO
-    /// - IMG_LoadJPG_IO
-    /// - IMG_LoadJXL_IO
-    /// - IMG_LoadLBM_IO
-    /// - IMG_LoadPCX_IO
-    /// - IMG_LoadPNG_IO
-    /// - IMG_LoadPNM_IO
-    /// - IMG_LoadSVG_IO
-    /// - IMG_LoadQOI_IO
-    /// - IMG_LoadTGA_IO
-    /// - IMG_LoadTIF_IO
-    /// - IMG_LoadXCF_IO
-    /// - IMG_LoadXPM_IO
-    /// - IMG_LoadXV_IO
+    /// - [`IMG_LoadAVIF_IO`]
+    /// - [`IMG_LoadICO_IO`]
+    /// - [`IMG_LoadCUR_IO`]
+    /// - [`IMG_LoadBMP_IO`]
+    /// - [`IMG_LoadGIF_IO`]
+    /// - [`IMG_LoadJPG_IO`]
+    /// - [`IMG_LoadJXL_IO`]
+    /// - [`IMG_LoadLBM_IO`]
+    /// - [`IMG_LoadPCX_IO`]
+    /// - [`IMG_LoadPNG_IO`]
+    /// - [`IMG_LoadPNM_IO`]
+    /// - [`IMG_LoadSVG_IO`]
+    /// - [`IMG_LoadQOI_IO`]
+    /// - [`IMG_LoadTGA_IO`]
+    /// - [`IMG_LoadTIF_IO`]
+    /// - [`IMG_LoadXCF_IO`]
+    /// - [`IMG_LoadXPM_IO`]
+    /// - [`IMG_LoadXV_IO`]
     pub fn IMG_LoadWEBP_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
@@ -2025,7 +2025,7 @@ extern "C" {
     ///
     /// The returned surface will be an 8bpp indexed surface, if possible,
     /// otherwise it will be 32bpp. If you always want 32-bit data, use
-    /// IMG_ReadXPMFromArrayToRGB888() instead.
+    /// [`IMG_ReadXPMFromArrayToRGB888()`] instead.
     ///
     /// When done with the returned surface, the app should dispose of it with a
     /// call to [`SDL_DestroySurface()`].
@@ -2040,7 +2040,7 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_ReadXPMFromArrayToRGB888
+    /// - [`IMG_ReadXPMFromArrayToRGB888`]
     pub fn IMG_ReadXPMFromArray(xpm: *mut *mut ::core::ffi::c_char) -> *mut SDL_Surface;
 }
 
@@ -2048,7 +2048,7 @@ extern "C" {
     /// Load an XPM image from a memory array.
     ///
     /// The returned surface will always be a 32-bit RGB surface. If you want 8-bit
-    /// indexed colors (and the XPM data allows it), use IMG_ReadXPMFromArray()
+    /// indexed colors (and the XPM data allows it), use [`IMG_ReadXPMFromArray()`]
     /// instead.
     ///
     /// When done with the returned surface, the app should dispose of it with a
@@ -2064,7 +2064,7 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_ReadXPMFromArray
+    /// - [`IMG_ReadXPMFromArray`]
     pub fn IMG_ReadXPMFromArrayToRGB888(xpm: *mut *mut ::core::ffi::c_char) -> *mut SDL_Surface;
 }
 
@@ -2087,7 +2087,7 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_SaveAVIF_IO
+    /// - [`IMG_SaveAVIF_IO`]
     pub fn IMG_SaveAVIF(
         surface: *mut SDL_Surface,
         file: *const ::core::ffi::c_char,
@@ -2098,7 +2098,7 @@ extern "C" {
 extern "C" {
     /// Save an [`SDL_Surface`] into AVIF image data, via an [`SDL_IOStream`].
     ///
-    /// If you just want to save to a filename, you can use IMG_SaveAVIF() instead.
+    /// If you just want to save to a filename, you can use [`IMG_SaveAVIF()`] instead.
     ///
     /// If `closeio` is true, `dst` will be closed before returning, whether this
     /// function succeeds or not.
@@ -2119,7 +2119,7 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_SaveAVIF
+    /// - [`IMG_SaveAVIF`]
     pub fn IMG_SaveAVIF_IO(
         surface: *mut SDL_Surface,
         dst: *mut SDL_IOStream,
@@ -2145,7 +2145,7 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_SavePNG_IO
+    /// - [`IMG_SavePNG_IO`]
     pub fn IMG_SavePNG(
         surface: *mut SDL_Surface,
         file: *const ::core::ffi::c_char,
@@ -2155,7 +2155,7 @@ extern "C" {
 extern "C" {
     /// Save an [`SDL_Surface`] into PNG image data, via an [`SDL_IOStream`].
     ///
-    /// If you just want to save to a filename, you can use IMG_SavePNG() instead.
+    /// If you just want to save to a filename, you can use [`IMG_SavePNG()`] instead.
     ///
     /// If `closeio` is true, `dst` will be closed before returning, whether this
     /// function succeeds or not.
@@ -2174,7 +2174,7 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_SavePNG
+    /// - [`IMG_SavePNG`]
     pub fn IMG_SavePNG_IO(
         surface: *mut SDL_Surface,
         dst: *mut SDL_IOStream,
@@ -2201,7 +2201,7 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_SaveJPG_IO
+    /// - [`IMG_SaveJPG_IO`]
     pub fn IMG_SaveJPG(
         surface: *mut SDL_Surface,
         file: *const ::core::ffi::c_char,
@@ -2212,7 +2212,7 @@ extern "C" {
 extern "C" {
     /// Save an [`SDL_Surface`] into JPEG image data, via an [`SDL_IOStream`].
     ///
-    /// If you just want to save to a filename, you can use IMG_SaveJPG() instead.
+    /// If you just want to save to a filename, you can use [`IMG_SaveJPG()`] instead.
     ///
     /// If `closeio` is true, `dst` will be closed before returning, whether this
     /// function succeeds or not.
@@ -2233,7 +2233,7 @@ extern "C" {
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_SaveJPG
+    /// - [`IMG_SaveJPG`]
     pub fn IMG_SaveJPG_IO(
         surface: *mut SDL_Surface,
         dst: *mut SDL_IOStream,
@@ -2265,19 +2265,19 @@ extern "C" {
     /// Load an animation from a file.
     ///
     /// When done with the returned animation, the app should dispose of it with a
-    /// call to IMG_FreeAnimation().
+    /// call to [`IMG_FreeAnimation()`].
     ///
     /// ### Parameters
     /// - `file`: path on the filesystem containing an animated image.
     ///
     /// ### Return value
-    /// Returns a new IMG_Animation, or NULL on error.
+    /// Returns a new [`IMG_Animation`], or NULL on error.
     ///
     /// ### Availability
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_FreeAnimation
+    /// - [`IMG_FreeAnimation`]
     pub fn IMG_LoadAnimation(file: *const ::core::ffi::c_char) -> *mut IMG_Animation;
 }
 
@@ -2289,7 +2289,7 @@ extern "C" {
     /// during this call in any case.
     ///
     /// When done with the returned animation, the app should dispose of it with a
-    /// call to IMG_FreeAnimation().
+    /// call to [`IMG_FreeAnimation()`].
     ///
     /// ### Parameters
     /// - `src`: an [`SDL_IOStream`] that data will be read from.
@@ -2297,13 +2297,13 @@ extern "C" {
     ///   to leave it open.
     ///
     /// ### Return value
-    /// Returns a new IMG_Animation, or NULL on error.
+    /// Returns a new [`IMG_Animation`], or NULL on error.
     ///
     /// ### Availability
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_FreeAnimation
+    /// - [`IMG_FreeAnimation`]
     pub fn IMG_LoadAnimation_IO(
         src: *mut SDL_IOStream,
         closeio: ::core::primitive::bool,
@@ -2324,7 +2324,7 @@ extern "C" {
     /// during this call in any case.
     ///
     /// When done with the returned animation, the app should dispose of it with a
-    /// call to IMG_FreeAnimation().
+    /// call to [`IMG_FreeAnimation()`].
     ///
     /// ### Parameters
     /// - `src`: an [`SDL_IOStream`] that data will be read from.
@@ -2333,15 +2333,15 @@ extern "C" {
     /// - `type`: a filename extension that represent this data ("GIF", etc).
     ///
     /// ### Return value
-    /// Returns a new IMG_Animation, or NULL on error.
+    /// Returns a new [`IMG_Animation`], or NULL on error.
     ///
     /// ### Availability
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAnimation
-    /// - IMG_LoadAnimation_IO
-    /// - IMG_FreeAnimation
+    /// - [`IMG_LoadAnimation`]
+    /// - [`IMG_LoadAnimation_IO`]
+    /// - [`IMG_FreeAnimation`]
     pub fn IMG_LoadAnimationTyped_IO(
         src: *mut SDL_IOStream,
         closeio: ::core::primitive::bool,
@@ -2350,20 +2350,20 @@ extern "C" {
 }
 
 extern "C" {
-    /// Dispose of an IMG_Animation and free its resources.
+    /// Dispose of an [`IMG_Animation`] and free its resources.
     ///
     /// The provided `anim` pointer is not valid once this call returns.
     ///
     /// ### Parameters
-    /// - `anim`: IMG_Animation to dispose of.
+    /// - `anim`: [`IMG_Animation`] to dispose of.
     ///
     /// ### Availability
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAnimation
-    /// - IMG_LoadAnimation_IO
-    /// - IMG_LoadAnimationTyped_IO
+    /// - [`IMG_LoadAnimation`]
+    /// - [`IMG_LoadAnimation_IO`]
+    /// - [`IMG_LoadAnimationTyped_IO`]
     pub fn IMG_FreeAnimation(anim: *mut IMG_Animation);
 }
 
@@ -2379,16 +2379,16 @@ extern "C" {
     /// - `src`: an [`SDL_IOStream`] that data will be read from.
     ///
     /// ### Return value
-    /// Returns a new IMG_Animation, or NULL on error.
+    /// Returns a new [`IMG_Animation`], or NULL on error.
     ///
     /// ### Availability
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAnimation
-    /// - IMG_LoadAnimation_IO
-    /// - IMG_LoadAnimationTyped_IO
-    /// - IMG_FreeAnimation
+    /// - [`IMG_LoadAnimation`]
+    /// - [`IMG_LoadAnimation_IO`]
+    /// - [`IMG_LoadAnimationTyped_IO`]
+    /// - [`IMG_FreeAnimation`]
     pub fn IMG_LoadGIFAnimation_IO(src: *mut SDL_IOStream) -> *mut IMG_Animation;
 }
 
@@ -2404,16 +2404,16 @@ extern "C" {
     /// - `src`: an [`SDL_IOStream`] that data will be read from.
     ///
     /// ### Return value
-    /// Returns a new IMG_Animation, or NULL on error.
+    /// Returns a new [`IMG_Animation`], or NULL on error.
     ///
     /// ### Availability
     /// This function is available since SDL_image 3.0.0.
     ///
     /// ### See also
-    /// - IMG_LoadAnimation
-    /// - IMG_LoadAnimation_IO
-    /// - IMG_LoadAnimationTyped_IO
-    /// - IMG_FreeAnimation
+    /// - [`IMG_LoadAnimation`]
+    /// - [`IMG_LoadAnimation_IO`]
+    /// - [`IMG_LoadAnimationTyped_IO`]
+    /// - [`IMG_FreeAnimation`]
     pub fn IMG_LoadWEBPAnimation_IO(src: *mut SDL_IOStream) -> *mut IMG_Animation;
 }
 
