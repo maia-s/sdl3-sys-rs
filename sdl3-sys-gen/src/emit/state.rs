@@ -283,6 +283,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "DOXYGEN_SHOULD_IGNORE_THIS",
             "NO_SDL_VULKAN_TYPEDEFS",
             format!("SDL_{module}_h_"), "SDL_locale_h", "SDL_main_impl_h_",
+            format!("SDL_{module}_h_").to_ascii_uppercase(),
             "SDL_ASSERT_LEVEL",
             "SDL_AssertBreakpoint",
             "SDL_AtomicDecRef",

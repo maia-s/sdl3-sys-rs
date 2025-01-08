@@ -10,3 +10,6 @@ documentation = "https://docs.rs/sdl3-image-sys"
 keywords = ["sdl", "graphics"]
 categories = ["external-ffi-bindings", "no-std"]
 # links = "SDL3_image"
+
+[dependencies]
+sdl3-sys = { version = "0.2", path = "../sdl3-sys" }

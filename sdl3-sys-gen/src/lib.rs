@@ -37,6 +37,7 @@ use parse::{DefineValue, Ident, Items, Parse, ParseContext, ParseErr, Source, Sp
 use std::{
     cell::RefCell,
     collections::{BTreeMap, HashSet},
+    env::{current_dir, set_current_dir},
     error,
     fmt::{self, Debug, Display},
     fs::{self, read_dir, DirBuilder, File, OpenOptions},
@@ -121,181 +122,286 @@ fn patch_file(path: &Path, patches: &[LinesPatch]) -> io::Result<()> {
     fs::write(path, contents)
 }
 
-pub fn generate(source_crate_path: &Path, target_crate_path: &Path) -> Result<(), Error> {
-    let sdl_path = source_crate_path.join("SDL");
-    let showrev_path = sdl_path.join("build-scripts/showrev.sh");
-    let headers_path = sdl_path.join("include/SDL3");
-    let source_cargo_toml_path = source_crate_path.join("Cargo.toml");
-    let source_lib_rs_path = source_crate_path.join("src/lib.rs");
-    let target_cargo_toml_path = target_crate_path.join("Cargo.toml");
-    let target_readme_path = target_crate_path.join("README.md");
-    let output_path = target_crate_path.join("src/generated");
+struct Crate {
+    name: String,
+    root_path: PathBuf,
+}
 
-    let Some(revision) = ({
-        let output = Command::new(showrev_path).output()?;
-        output
-            .status
-            .success()
-            .then(|| String::from_utf8_lossy(output.stdout.trim_ascii()).into_owned())
-    }) else {
-        return Err("couldn't get SDL revision".into());
-    };
+impl Crate {
+    fn new(root: &Path, name: impl ToString) -> Self {
+        let name = name.to_string();
+        let root_path = root.join(&name);
+        Self { name, root_path }
+    }
 
-    let (rest, revision_hash) = revision.rsplit_once('-').unwrap();
-    let (revision_tag, revision_offset) = rest.rsplit_once('-').unwrap();
-    let (revision_tag_base, version) = revision_tag.rsplit_once('-').unwrap();
+    fn cargo_toml_path(&self) -> PathBuf {
+        self.root_path.join("Cargo.toml")
+    }
 
-    let (sdl3_src_ver, sdl3_src_ver_display) = match revision_tag_base {
-        "release" => {
-            assert_eq!(revision_offset, "0", "off tag stable release");
-            (version.to_string(), version.to_string())
+    fn lib_rs_path(&self) -> PathBuf {
+        self.root_path.join("src/lib.rs")
+    }
+
+    fn readme_path(&self) -> PathBuf {
+        self.root_path.join("README.md")
+    }
+
+    fn generated_path(&self) -> PathBuf {
+        self.root_path.join("src/generated")
+    }
+}
+
+struct Library {
+    lib_name: String,
+    lib_dir: String,
+    src_crate: Crate,
+    sys_crate: Crate,
+    revision: String,
+}
+
+impl Library {
+    fn new(root: &Path, name: &str) -> Result<Self, Error> {
+        let (pfx, module) = name.split_once('-').unwrap_or((name, ""));
+        let pfx_uc = pfx.to_ascii_uppercase();
+        let pfx_base_uc = pfx.strip_suffix('3').unwrap().to_ascii_uppercase();
+        let name = name.to_string();
+        let lib_name = if module.is_empty() {
+            pfx_uc
+        } else {
+            format!("{pfx_uc}_{module}")
+        };
+        let lib_dir = if module.is_empty() {
+            pfx_base_uc
+        } else {
+            format!("{pfx_base_uc}_{module}")
+        };
+        let src_crate = Crate::new(root, format!("{name}-src"));
+        let sys_crate = Crate::new(root, format!("{name}-sys"));
+
+        let git_describe = {
+            let cwd = current_dir()?;
+            set_current_dir(src_crate.root_path.join(&lib_dir))?;
+            let _cwd = Defer::new(|| set_current_dir(cwd).unwrap());
+            Command::new("git")
+                .args(["describe", "--tags", "--long"])
+                .output()?
+        };
+        if !git_describe.status.success() {
+            return Err("git describe failed".into());
         }
-        "preview" => {
-            if revision_offset == "0" {
-                let ver = format!("{version}-{revision_tag_base}");
-                (format!("{ver}-{revision_offset}"), ver)
-            } else {
-                let ver =
-                    format!("{version}-{revision_tag_base}-{revision_offset}-{revision_hash}");
+        let git_describe = String::from_utf8_lossy(&git_describe.stdout)
+            .trim()
+            .to_owned();
+
+        let (rest, revision_hash) = git_describe.rsplit_once('-').unwrap();
+        let (revision_tag, revision_offset) = rest.rsplit_once('-').unwrap();
+        let (revision_tag_base, version) = revision_tag.rsplit_once('-').unwrap();
+
+        let (src_ver, src_ver_display) = match revision_tag_base {
+            "release" => {
+                assert_eq!(revision_offset, "0", "off tag stable release");
+                let ver = version.to_string();
                 (ver.clone(), ver)
             }
-        }
-        _ => return Err("unrecognized SDL tag".into()),
-    };
-
-    // match what SDL's cmake script does
-    let revision = if revision_offset == "0" {
-        format!("SDL3-{revision_tag}")
-    } else {
-        format!("SDL3-{revision_tag}-{revision_offset}-{revision_hash}")
-    };
-
-    patch_file(
-        &source_cargo_toml_path,
-        &[LinesPatch {
-            match_lines: &[&|s| s.starts_with("version =")],
-            apply: &|_| format!("version = \"{sdl3_src_ver}\"\n"),
-        }],
-    )?;
-
-    patch_file(
-        &source_lib_rs_path,
-        &[
-            LinesPatch {
-                match_lines: &[&|s| s.starts_with("pub const REVISION:")],
-                apply: &|_| format!("pub const REVISION: &str = {revision:?};\n"),
-            },
-            LinesPatch {
-                match_lines: &[&|s| s.starts_with("pub const VERSION:")],
-                apply: &|_| format!("pub const VERSION: &str = {version:?};\n"),
-            },
-            LinesPatch {
-                match_lines: &[&|s| s.starts_with("pub const REVISION_TAG:")],
-                apply: &|_| format!("pub const REVISION_TAG: &str = {revision_tag:?};\n"),
-            },
-            LinesPatch {
-                match_lines: &[&|s| s.starts_with("pub const REVISION_TAG_BASE:")],
-                apply: &|_| format!("pub const REVISION_TAG_BASE: &str = {revision_tag_base:?};\n"),
-            },
-            LinesPatch {
-                match_lines: &[&|s| s.starts_with("pub const REVISION_OFFSET:")],
-                apply: &|_| format!("pub const REVISION_OFFSET: &str = {revision_offset:?};\n"),
-            },
-            LinesPatch {
-                match_lines: &[&|s| s.starts_with("pub const REVISION_HASH:")],
-                apply: &|_| format!("pub const REVISION_HASH: &str = {revision_hash:?};\n"),
-            },
-        ],
-    )?;
-
-    patch_file(
-        &target_cargo_toml_path,
-        &[
-            LinesPatch {
-                match_lines: &[&|s| s.starts_with("version =") && s.contains("+SDL")],
-                apply: &|lines| {
-                    let line = &lines[0];
-                    let Some((revision_pos, _)) =
-                        line.char_indices().rev().find(|(_, c)| *c == '+')
-                    else {
-                        unreachable!()
-                    };
-                    format!("{}{revision}\"\n", &line[..=revision_pos])
-                },
-            },
-            LinesPatch {
-                match_lines: &[&|s| s == "[build-dependencies.sdl3-src]", &|s| {
-                    s.starts_with("version =")
-                }],
-                apply: &|lines| format!("{}version = \"{sdl3_src_ver}\"\n", lines[0]),
-            },
-        ],
-    )?;
-
-    patch_file(
-        &target_readme_path,
-        &[LinesPatch {
-            match_lines: &[&|s| s.contains("bindings for SDL version ")],
-            apply: &|lines| {
-                let match_ = "bindings for SDL version ";
-                let line = &lines[0];
-                let pfx = &line[..line.find(match_).unwrap() + match_.len()];
-                format!("{pfx}`{sdl3_src_ver_display}` and earlier.\n")
-            },
-        }],
-    )?;
-
-    let mut gen = Gen::new(headers_path.clone(), output_path.to_owned(), revision)?;
-
-    for entry in read_dir(headers_path)? {
-        let entry = entry?;
-        let name = entry.file_name();
-        let name = name.to_string_lossy();
-        let name_lc = name.to_ascii_lowercase();
-
-        if let Some(module) = name_lc
-            .strip_prefix("sdl_")
-            .and_then(|s| s.strip_suffix(".h"))
-        {
-            if skip(module) {
-                continue;
+            "preview" => {
+                if revision_offset == "0" {
+                    let ver = format!("{version}-{revision_tag_base}");
+                    (format!("{ver}-{revision_offset}"), ver)
+                } else {
+                    let ver =
+                        format!("{version}-{revision_tag_base}-{revision_offset}-{revision_hash}");
+                    (ver.clone(), ver)
+                }
             }
-            let mut buf = String::new();
-            File::open(entry.path())?.read_to_string(&mut buf)?;
-            let buf = gen.patch_module(module, buf);
-            let display_path = entry.path();
-            let display_path = if let Ok(p) =
-                display_path.strip_prefix(PathBuf::from_iter([env!["CARGO_MANIFEST_DIR"], ".."]))
-            {
-                p.to_string_lossy().to_string()
-            } else {
-                display_path.to_string_lossy().to_string()
-            };
-            gen.parse(module, display_path, buf)?;
-        }
+            _ => return Err("unrecognized tag".into()),
+        };
+
+        // match what SDL's cmake script does
+        let revision = if revision_offset == "0" {
+            format!("{lib_name}-{revision_tag}")
+        } else {
+            format!("{lib_name}-{revision_tag}-{revision_offset}-{revision_hash}")
+        };
+
+        patch_file(
+            &src_crate.cargo_toml_path(),
+            &[LinesPatch {
+                match_lines: &[&|s| s.starts_with("version =")],
+                apply: &|_| format!("version = \"{src_ver}\"\n"),
+            }],
+        )?;
+
+        patch_file(
+            &src_crate.lib_rs_path(),
+            &[
+                LinesPatch {
+                    match_lines: &[&|s| s.starts_with("pub const REVISION:")],
+                    apply: &|_| format!("pub const REVISION: &str = {revision:?};\n"),
+                },
+                LinesPatch {
+                    match_lines: &[&|s| s.starts_with("pub const VERSION:")],
+                    apply: &|_| format!("pub const VERSION: &str = {version:?};\n"),
+                },
+                LinesPatch {
+                    match_lines: &[&|s| s.starts_with("pub const REVISION_TAG:")],
+                    apply: &|_| format!("pub const REVISION_TAG: &str = {revision_tag:?};\n"),
+                },
+                LinesPatch {
+                    match_lines: &[&|s| s.starts_with("pub const REVISION_TAG_BASE:")],
+                    apply: &|_| {
+                        format!("pub const REVISION_TAG_BASE: &str = {revision_tag_base:?};\n")
+                    },
+                },
+                LinesPatch {
+                    match_lines: &[&|s| s.starts_with("pub const REVISION_OFFSET:")],
+                    apply: &|_| format!("pub const REVISION_OFFSET: &str = {revision_offset:?};\n"),
+                },
+                LinesPatch {
+                    match_lines: &[&|s| s.starts_with("pub const REVISION_HASH:")],
+                    apply: &|_| format!("pub const REVISION_HASH: &str = {revision_hash:?};\n"),
+                },
+            ],
+        )?;
+
+        patch_file(
+            &sys_crate.cargo_toml_path(),
+            &[
+                LinesPatch {
+                    match_lines: &[&|s| {
+                        s.starts_with("version =") && s.contains(&format!("+{lib_name}-"))
+                    }],
+                    apply: &|lines| {
+                        let line = &lines[0];
+                        let Some((revision_pos, _)) =
+                            line.char_indices().rev().find(|(_, c)| *c == '+')
+                        else {
+                            unreachable!()
+                        };
+                        format!("{}{}\"\n", &line[..=revision_pos], revision)
+                    },
+                },
+                LinesPatch {
+                    match_lines: &[
+                        &|s| s == format!("[build-dependencies.{}]", src_crate.name),
+                        &|s| s.starts_with("version ="),
+                    ],
+                    apply: &|lines| format!("{}version = \"{}\"\n", lines[0], src_ver),
+                },
+            ],
+        )?;
+
+        patch_file(
+            &sys_crate.readme_path(),
+            &[LinesPatch {
+                match_lines: &[&|s| s.contains(&format!("bindings for {} version ", lib_dir))],
+                apply: &|lines| {
+                    let match_ = &format!("bindings for {} version ", lib_dir);
+                    let line = &lines[0];
+                    let pfx = &line[..line.find(match_).unwrap() + match_.len()];
+                    format!("{pfx}`{}` and earlier.\n", src_ver_display)
+                },
+            }],
+        )?;
+
+        Ok(Self {
+            lib_name,
+            lib_dir,
+            src_crate,
+            sys_crate,
+            revision,
+        })
     }
 
-    gen.emit_top_level()?; // create empty mod.rs to be appended by emit
-    for module in gen.parsed.keys() {
-        gen.emit(module)?;
+    fn headers_path(&self) -> PathBuf {
+        self.src_crate
+            .root_path
+            .join(&self.lib_dir)
+            .join("include")
+            .join(&self.lib_name)
     }
-    gen.emit_top_level()?; // rewrite final mod.rs in sorted order
+
+    fn output_path(&self) -> PathBuf {
+        self.sys_crate.generated_path()
+    }
+}
+
+pub fn generate(root: &Path, libs: &[&str]) -> Result<(), Error> {
+    let libs = libs
+        .iter()
+        .map(|lib| Library::new(root, lib))
+        .collect::<Result<Vec<_>, _>>()?;
+
+    let mut emitted_sdl3 = EmittedItems::new();
+
+    for (i, lib) in libs.into_iter().enumerate() {
+        let headers_path = lib.headers_path();
+
+        let mut gen = Gen::new(
+            emitted_sdl3,
+            headers_path.clone(),
+            lib.output_path(),
+            lib.revision,
+        )?;
+
+        for entry in read_dir(headers_path)? {
+            let entry = entry?;
+            let name = entry.file_name();
+            let name = name.to_string_lossy();
+            let name_lc = name.to_ascii_lowercase();
+
+            if let Some(module) = name_lc
+                .strip_prefix("sdl_")
+                .and_then(|s| s.strip_suffix(".h"))
+            {
+                if skip(module) {
+                    continue;
+                }
+                let mut buf = String::new();
+                File::open(entry.path())?.read_to_string(&mut buf)?;
+                let buf = gen.patch_module(module, buf);
+                let display_path = entry.path();
+                let display_path = display_path
+                    .strip_prefix(root)
+                    .unwrap_or(&display_path)
+                    .to_string_lossy()
+                    .to_string();
+                gen.parse(module, display_path, buf)?;
+            }
+        }
+
+        gen.emit_top_level()?; // create empty mod.rs to be appended by emit
+        for module in gen.parsed.keys() {
+            gen.emit(module)?;
+        }
+        gen.emit_top_level()?; // rewrite final mod.rs in sorted order
+
+        if i == 0 {
+            emitted_sdl3 = gen.emitted.into_inner();
+        } else {
+            emitted_sdl3 = gen.emitted_sdl3;
+        }
+    }
 
     Ok(())
 }
 
+pub type ParsedItems = BTreeMap<String, Items>;
+pub type EmittedItems = BTreeMap<String, InnerEmitContext>;
+
 #[derive(Default)]
 pub struct Gen {
     revision: String,
-    parsed: BTreeMap<String, Items>,
-    emitted: RefCell<BTreeMap<String, InnerEmitContext>>,
+    parsed: ParsedItems,
+    emitted: RefCell<EmittedItems>,
     skipped: RefCell<HashSet<String>>,
     headers_path: PathBuf,
     output_path: PathBuf,
+    emitted_sdl3: EmittedItems,
 }
 
 impl Gen {
     pub fn new(
+        emitted_sdl3: EmittedItems,
         headers_path: PathBuf,
         output_path: PathBuf,
         revision: String,
@@ -303,7 +409,8 @@ impl Gen {
         DirBuilder::new().recursive(true).create(&output_path)?;
         Ok(Self {
             revision,
-            parsed: BTreeMap::new(),
+            parsed: ParsedItems::new(),
+            emitted_sdl3,
             emitted: RefCell::new(BTreeMap::new()),
             skipped: RefCell::new(HashSet::new()),
             headers_path,
@@ -326,7 +433,10 @@ impl Gen {
     }
 
     pub fn emit(&self, module: &str) -> Result<(), Error> {
-        if !self.emitted.borrow().contains_key(module) && !self.skipped.borrow().contains(module) {
+        if !self.emitted.borrow().contains_key(module)
+            && !self.emitted_sdl3.contains_key(module)
+            && !self.skipped.borrow().contains(module)
+        {
             if !self.parsed.contains_key(module) || skip_emit(module) {
                 self.skipped.borrow_mut().insert(module.to_string());
                 return Ok(());

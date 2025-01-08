@@ -5,9 +5,9 @@ use std::{
 };
 
 fn main() {
-    let source_crate_path = PathBuf::from_iter([env!("CARGO_MANIFEST_DIR"), "..", "sdl3-src"]);
-    let target_crate_path = PathBuf::from_iter([env!("CARGO_MANIFEST_DIR"), "..", "sdl3-sys"]);
-    match sdl3_sys_gen::generate(&source_crate_path, &target_crate_path) {
+    let root = PathBuf::from_iter([env!("CARGO_MANIFEST_DIR"), ".."]);
+    let crates = ["sdl3", "sdl3-image"];
+    match sdl3_sys_gen::generate(&root, &crates) {
         Ok(()) => (),
         Err(e) => {
             if stderr().is_terminal() {

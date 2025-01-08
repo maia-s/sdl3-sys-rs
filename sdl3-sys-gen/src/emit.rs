@@ -757,7 +757,16 @@ impl Emit for Define {
 
 impl Emit for Include {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        if let Some(module) = self.path.as_str().strip_prefix("SDL3/SDL_") {
+        if self.path.as_str() == "SDL3/SDL.h" {
+            for included in ctx.r#gen.emitted_sdl3.values() {
+                ctx.preproc_state()
+                    .borrow_mut()
+                    .include(&included.preproc_state.borrow())?;
+                ctx.scope_mut().include(&included.scope)?;
+            }
+            writeln!(ctx, "use sdl3_sys::everything::*;")?;
+            writeln!(ctx)?;
+        } else if let Some(module) = self.path.as_str().strip_prefix("SDL3/SDL_") {
             let module = module.strip_suffix(".h").unwrap();
             if !ctx.r#gen.emitted.borrow().contains_key(module) {
                 ctx.r#gen.emit(module)?;

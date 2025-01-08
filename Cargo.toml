@@ -12,4 +12,5 @@ members = [
 default-members = [
     "sdl3-sys",
     "sdl3-main",
+    "sdl3-image-sys",
 ]
