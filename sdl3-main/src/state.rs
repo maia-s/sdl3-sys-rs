@@ -9,6 +9,7 @@ use alloc::{boxed::Box, sync::Arc};
 #[cfg(feature = "std")]
 use std::sync::{Mutex, RwLock};
 
+/// This trait is for internal use only. It's exempt from semver.
 pub trait AppState: Send + Sync + Sized {
     /// # Safety
     /// - `raw` must've been previously got from `into_raw` and not passed to `from_raw` before
@@ -92,6 +93,7 @@ impl<T> SyncPtr<T> {
 unsafe impl<T> Send for SyncPtr<T> {}
 unsafe impl<T> Sync for SyncPtr<T> {}
 
+/// This trait is for internal use only. It's exempt from semver.
 pub trait BorrowVal<Borrowed>: AppState {
     /// # Safety
     /// - `raw` must've been obtained from [`AppState::into_raw`] and be valid
@@ -100,6 +102,7 @@ pub trait BorrowVal<Borrowed>: AppState {
     unsafe fn borrow_val<R>(raw: *mut c_void, f: impl FnOnce(Borrowed) -> R) -> R;
 }
 
+/// This trait is for internal use only. It's exempt from semver.
 pub trait BorrowRef<Borrowed>: AppState {
     /// # Safety
     /// - `raw` must've been obtained from [`AppState::into_raw`] and be valid
@@ -108,6 +111,7 @@ pub trait BorrowRef<Borrowed>: AppState {
     unsafe fn borrow_ref<R>(raw: *mut c_void, f: impl FnOnce(&Borrowed) -> R) -> R;
 }
 
+/// This trait is for internal use only. It's exempt from semver.
 pub trait BorrowMut<Borrowed>: AppState {
     /// # Safety
     /// - `raw` must've been obtained from [`AppState::into_raw`] and be valid
@@ -116,6 +120,7 @@ pub trait BorrowMut<Borrowed>: AppState {
     unsafe fn borrow_mut<R>(raw: *mut c_void, f: impl FnOnce(&mut Borrowed) -> R) -> R;
 }
 
+/// This trait is for internal use only. It's exempt from semver.
 pub trait ConsumeVal<Consumed>: AppState {
     /// # Safety
     /// - all borrows from `raw` must end before this function is called
@@ -135,6 +140,7 @@ pub trait ConsumeVal<Consumed>: AppState {
     }
 }
 
+/// This trait is for internal use only. It's exempt from semver.
 pub trait ConsumeRef<Consumed>: AppState {
     /// # Safety
     /// - all borrows from `raw` must end before this function is called
@@ -151,6 +157,7 @@ impl<S: BorrowRef<T>, T> ConsumeRef<T> for S {
     }
 }
 
+/// This trait is for internal use only. It's exempt from semver.
 pub trait ConsumeMut<Consumed>: AppState {
     /// # Safety
     /// - all borrows from `raw` must end before this function is called

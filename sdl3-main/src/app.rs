@@ -168,6 +168,7 @@ macro_rules! impl_app {
     label = "for the function attached to this `main` attribute",
     note = "see the `sdl3-main` crate documentation for supported signatures"
 )]
+/// This trait is for internal use only. It's exempt from semver.
 pub trait AppMain: sealed::AppMain::Sealed {
     #[doc(hidden)] // not currently public
     /// # Safety
@@ -227,6 +228,7 @@ impl_app! {
     label = "for the function attached to this `main` attribute",
     note = "see the `sdl3-main` crate documentation for supported signatures"
 )]
+/// This trait is for internal use only. It's exempt from semver.
 pub trait AppMainWithResult: sealed::AppMainWithResult::Sealed {
     #[doc(hidden)] // not currently public
     /// The result of the main function
@@ -255,6 +257,7 @@ impl_app! {
     label = "for the function attached to this `app_init` attribute",
     note = "see the `sdl3-main` crate documentation for supported signatures"
 )]
+/// This trait is for internal use only. It's exempt from semver.
 pub trait AppInit<S>: sealed::AppInit::Sealed<S> {
     #[doc(hidden)] // not currently public
     /// # Safety
@@ -417,6 +420,7 @@ impl_app! {
     label = "for the function attached to this `app_iterate` attribute",
     note = "see the `sdl3-main` crate documentation for supported signatures"
 )]
+/// This trait is for internal use only. It's exempt from semver.
 pub trait AppIterate<S, const STATE_AC: u8>: sealed::AppIterate::Sealed<S, STATE_AC> {
     #[doc(hidden)] // not currently public
     /// # Safety
@@ -460,6 +464,7 @@ impl_app! {
     label = "for the function attached to this `app_event` attribute",
     note = "see the `sdl3-main` crate documentation for supported signatures"
 )]
+/// This trait is for internal use only. It's exempt from semver.
 pub trait AppEvent<S, const STATE_AC: u8, const EVENT_AC: u8>:
     sealed::AppEvent::Sealed<S, STATE_AC, EVENT_AC>
 {
@@ -579,6 +584,7 @@ impl_app! {
     label = "for the function attached to this `app_quit` attribute",
     note = "see the `sdl3-main` crate documentation for supported signatures"
 )]
+/// This trait is for internal use only. It's exempt from semver.
 pub trait AppQuit<S, const STATE_AC: u8>: sealed::AppQuit::Sealed<S, STATE_AC> {
     #[doc(hidden)] // not currently public
     /// # Safety
