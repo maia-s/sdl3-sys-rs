@@ -11,5 +11,11 @@ keywords = ["sdl", "graphics"]
 categories = ["external-ffi-bindings", "no-std"]
 # links = "SDL3_image"
 
+[features]
+default = []
+
+# Implement the Debug trait for applicable types
+debug-impls = []
+
 [dependencies]
 sdl3-sys = { version = "0.2", path = "../sdl3-sys" }
