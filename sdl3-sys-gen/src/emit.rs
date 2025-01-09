@@ -49,6 +49,7 @@ pub fn doc_link_sym(s: &str) -> Option<(&str, &str)> {
         | "SDL_Flip()"
         | "SDL_UpdateRects()"
         // text
+        | "IMG_isTYPE"
         | "SDL_GPU"
         | "SDL_HINT_X"
         // FIXME: work around for rustdoc bug: https://github.com/rust-lang/rust/issues/133150

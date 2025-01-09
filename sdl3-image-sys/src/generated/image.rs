@@ -397,7 +397,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -446,7 +446,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -494,7 +494,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -542,7 +542,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -590,7 +590,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -638,7 +638,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -686,7 +686,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -734,7 +734,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -782,7 +782,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -830,7 +830,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -878,7 +878,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -926,7 +926,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -974,7 +974,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -1022,7 +1022,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -1070,7 +1070,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -1118,7 +1118,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -1166,7 +1166,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
@@ -1214,7 +1214,7 @@ extern "C" {
     /// This function will always attempt to seek `src` back to where it started
     /// when this function was called, but it will not report any errors in doing
     /// so, but assuming seeking works, this means you can immediately use this
-    /// with a different [`IMG_isTYPE`] function, or load the image without further
+    /// with a different IMG_isTYPE function, or load the image without further
     /// seeking.
     ///
     /// You do not need to call this function to load data; SDL_image can work to
