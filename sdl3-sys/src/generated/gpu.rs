@@ -3980,7 +3980,7 @@ extern "C" {
     ///   provide SPIR-V shaders if applicable.
     /// - [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN`]: The app is able to
     ///   provide DXBC shaders if applicable
-    ///   [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN`]: The app is able to
+    /// - [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN`]: The app is able to
     ///   provide DXIL shaders if applicable.
     /// - [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN`]: The app is able to
     ///   provide MSL shaders if applicable.
@@ -4149,6 +4149,12 @@ extern "C" {
     /// - \[\[texture\]\]: Sampled textures, followed by read-only storage textures,
     ///   followed by read-write storage textures
     ///
+    /// There are optional properties that can be provided through `props`. These
+    /// are the supported properties:
+    ///
+    /// - [`SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING`]: a name that can be
+    ///   displayed in debugging tools.
+    ///
     /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the compute pipeline to
@@ -4170,8 +4176,17 @@ extern "C" {
     ) -> *mut SDL_GPUComputePipeline;
 }
 
+pub const SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING: *const ::core::ffi::c_char =
+    c"SDL.gpu.computepipeline.create.name".as_ptr();
+
 extern "C" {
     /// Creates a pipeline object to be used in a graphics workflow.
+    ///
+    /// There are optional properties that can be provided through `props`. These
+    /// are the supported properties:
+    ///
+    /// - [`SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING`]: a name that can be
+    ///   displayed in debugging tools.
     ///
     /// ### Parameters
     /// - `device`: a GPU Context.
@@ -4195,9 +4210,18 @@ extern "C" {
     ) -> *mut SDL_GPUGraphicsPipeline;
 }
 
+pub const SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING: *const ::core::ffi::c_char =
+    c"SDL.gpu.graphicspipeline.create.name".as_ptr();
+
 extern "C" {
     /// Creates a sampler object to be used when binding textures in a graphics
     /// workflow.
+    ///
+    /// There are optional properties that can be provided through `props`. These
+    /// are the supported properties:
+    ///
+    /// - [`SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING`]: a name that can be displayed
+    ///   in debugging tools.
     ///
     /// ### Parameters
     /// - `device`: a GPU Context.
@@ -4219,6 +4243,9 @@ extern "C" {
         createinfo: *const SDL_GPUSamplerCreateInfo,
     ) -> *mut SDL_GPUSampler;
 }
+
+pub const SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING: *const ::core::ffi::c_char =
+    c"SDL.gpu.sampler.create.name".as_ptr();
 
 extern "C" {
     /// Creates a shader to be used when creating a graphics pipeline.
@@ -4277,6 +4304,12 @@ extern "C" {
     /// [`SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING`] with
     /// [`SDL_CreateGPUDeviceWithProperties()`].
     ///
+    /// There are optional properties that can be provided through `props`. These
+    /// are the supported properties:
+    ///
+    /// - [`SDL_PROP_GPU_SHADER_CREATE_NAME_STRING`]: a name that can be displayed in
+    ///   debugging tools.
+    ///
     /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the shader to create.
@@ -4297,6 +4330,9 @@ extern "C" {
     ) -> *mut SDL_GPUShader;
 }
 
+pub const SDL_PROP_GPU_SHADER_CREATE_NAME_STRING: *const ::core::ffi::c_char =
+    c"SDL.gpu.shader.create.name".as_ptr();
+
 extern "C" {
     /// Creates a texture object to be used in graphics or compute workflows.
     ///
@@ -4313,27 +4349,26 @@ extern "C" {
     /// There are optional properties that can be provided through
     /// SDL_GPUTextureCreateInfo's `props`. These are the supported properties:
     ///
-    /// - [`SDL_PROP_PROCESS_CREATE_ARGS_POINTER`]: an array of strings containing
-    ///   the program to run, any arguments, and a NULL pointer, e.g. const char
-    ///   *args\[\] = { "myprogram", "argument", NULL }. This is a required property.
-    /// - [`SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT`]: (Direct3D 12 only) if
+    /// - [`SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT`]: (Direct3D 12 only) if
     ///   the texture usage is [`SDL_GPU_TEXTUREUSAGE_COLOR_TARGET`], clear the texture
     ///   to a color with this red intensity. Defaults to zero.
-    /// - [`SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT`]: (Direct3D 12 only) if
+    /// - [`SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT`]: (Direct3D 12 only) if
     ///   the texture usage is [`SDL_GPU_TEXTUREUSAGE_COLOR_TARGET`], clear the texture
     ///   to a color with this green intensity. Defaults to zero.
-    /// - [`SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT`]: (Direct3D 12 only) if
+    /// - [`SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT`]: (Direct3D 12 only) if
     ///   the texture usage is [`SDL_GPU_TEXTUREUSAGE_COLOR_TARGET`], clear the texture
     ///   to a color with this blue intensity. Defaults to zero.
-    /// - [`SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT`]: (Direct3D 12 only) if
+    /// - [`SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT`]: (Direct3D 12 only) if
     ///   the texture usage is [`SDL_GPU_TEXTUREUSAGE_COLOR_TARGET`], clear the texture
     ///   to a color with this alpha intensity. Defaults to zero.
-    /// - [`SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT`]: (Direct3D 12 only)
+    /// - [`SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT`]: (Direct3D 12 only)
     ///   if the texture usage is [`SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET`], clear
     ///   the texture to a depth of this value. Defaults to zero.
-    /// - [`SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8`]: (Direct3D 12
+    /// - [`SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8`]: (Direct3D 12
     ///   only) if the texture usage is [`SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET`],
     ///   clear the texture to a stencil of this value. Defaults to zero.
+    /// - [`SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING`]: a name that can be displayed
+    ///   in debugging tools.
     ///
     /// ### Parameters
     /// - `device`: a GPU Context.
@@ -4363,23 +4398,26 @@ extern "C" {
     ) -> *mut SDL_GPUTexture;
 }
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT: *const ::core::ffi::c_char =
-    c"SDL.gpu.createtexture.d3d12.clear.r".as_ptr();
+pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.gpu.texture.create.d3d12.clear.r".as_ptr();
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT: *const ::core::ffi::c_char =
-    c"SDL.gpu.createtexture.d3d12.clear.g".as_ptr();
+pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.gpu.texture.create.d3d12.clear.g".as_ptr();
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT: *const ::core::ffi::c_char =
-    c"SDL.gpu.createtexture.d3d12.clear.b".as_ptr();
+pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.gpu.texture.create.d3d12.clear.b".as_ptr();
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT: *const ::core::ffi::c_char =
-    c"SDL.gpu.createtexture.d3d12.clear.a".as_ptr();
+pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.gpu.texture.create.d3d12.clear.a".as_ptr();
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT: *const ::core::ffi::c_char =
-    c"SDL.gpu.createtexture.d3d12.clear.depth".as_ptr();
+pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT: *const ::core::ffi::c_char =
+    c"SDL.gpu.texture.create.d3d12.clear.depth".as_ptr();
 
-pub const SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8: *const ::core::ffi::c_char =
-    c"SDL.gpu.createtexture.d3d12.clear.stencil".as_ptr();
+pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8: *const ::core::ffi::c_char =
+    c"SDL.gpu.texture.create.d3d12.clear.stencil".as_ptr();
+
+pub const SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING: *const ::core::ffi::c_char =
+    c"SDL.gpu.texture.create.name".as_ptr();
 
 extern "C" {
     /// Creates a buffer object to be used in graphics or compute workflows.
@@ -4395,6 +4433,12 @@ extern "C" {
     /// [this blog post](https://moonside.games/posts/sdl-gpu-concepts-cycling/)
     /// .
     ///
+    /// There are optional properties that can be provided through `props`. These
+    /// are the supported properties:
+    ///
+    /// - [`SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING`]: a name that can be displayed in
+    ///   debugging tools.
+    ///
     /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the buffer to create.
@@ -4407,7 +4451,6 @@ extern "C" {
     /// This function is available since SDL 3.1.3.
     ///
     /// ### See also
-    /// - [`SDL_SetGPUBufferName`]
     /// - [`SDL_UploadToGPUBuffer`]
     /// - [`SDL_DownloadFromGPUBuffer`]
     /// - [`SDL_CopyGPUBufferToBuffer`]
@@ -4426,12 +4469,21 @@ extern "C" {
     ) -> *mut SDL_GPUBuffer;
 }
 
+pub const SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING: *const ::core::ffi::c_char =
+    c"SDL.gpu.buffer.create.name".as_ptr();
+
 extern "C" {
     /// Creates a transfer buffer to be used when uploading to or downloading from
     /// graphics resources.
     ///
     /// Download buffers can be particularly expensive to create, so it is good
     /// practice to reuse them if data will be downloaded regularly.
+    ///
+    /// There are optional properties that can be provided through `props`. These
+    /// are the supported properties:
+    ///
+    /// - [`SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING`]: a name that can be
+    ///   displayed in debugging tools.
     ///
     /// ### Parameters
     /// - `device`: a GPU Context.
@@ -4457,18 +4509,29 @@ extern "C" {
     ) -> *mut SDL_GPUTransferBuffer;
 }
 
+pub const SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING: *const ::core::ffi::c_char =
+    c"SDL.gpu.transferbuffer.create.name".as_ptr();
+
 extern "C" {
     /// Sets an arbitrary string constant to label a buffer.
     ///
-    /// Useful for debugging.
+    /// You should use [`SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING`] with
+    /// [`SDL_CreateGPUBuffer`] instead of this function to avoid thread safety issues.
     ///
     /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `buffer`: a buffer to attach the name to.
     /// - `text`: a UTF-8 string constant to mark as the name of the buffer.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe, you must make sure the
+    ///   buffer is not simultaneously used by any other thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_CreateGPUBuffer`]
     pub fn SDL_SetGPUBufferName(
         device: *mut SDL_GPUDevice,
         buffer: *mut SDL_GPUBuffer,
@@ -4479,15 +4542,24 @@ extern "C" {
 extern "C" {
     /// Sets an arbitrary string constant to label a texture.
     ///
-    /// Useful for debugging.
+    /// You should use [`SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING`] with
+    /// [`SDL_CreateGPUTexture`] instead of this function to avoid thread safety
+    /// issues.
     ///
     /// ### Parameters
     /// - `device`: a GPU Context.
     /// - `texture`: a texture to attach the name to.
     /// - `text`: a UTF-8 string constant to mark as the name of the texture.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe, you must make sure the
+    ///   texture is not simultaneously used by any other thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
+    ///
+    /// ### See also
+    /// - [`SDL_CreateGPUTexture`]
     pub fn SDL_SetGPUTextureName(
         device: *mut SDL_GPUDevice,
         texture: *mut SDL_GPUTexture,
@@ -5781,7 +5853,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     pub fn SDL_SetGPUAllowedFramesInFlight(
         device: *mut SDL_GPUDevice,
         allowed_frames_in_flight: Uint32,
@@ -5884,7 +5956,7 @@ extern "C" {
     ///   created the window.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_AcquireGPUSwapchainTexture`]
@@ -5934,7 +6006,7 @@ extern "C" {
     ///   created the window.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_SubmitGPUCommandBuffer`]
@@ -6255,7 +6327,6 @@ apply_cfg!(#[cfg(any(doc, all(windows, feature = "target-gdk")))] => {
 ///
 /// ### See also
 /// - [`SDL_CreateGPUBuffer`]
-/// - [`SDL_SetGPUBufferName`]
 /// - [`SDL_UploadToGPUBuffer`]
 /// - [`SDL_DownloadFromGPUBuffer`]
 /// - [`SDL_CopyGPUBufferToBuffer`]
@@ -6441,7 +6512,6 @@ pub struct SDL_GPUShader {
 ///
 /// ### See also
 /// - [`SDL_CreateGPUTexture`]
-/// - [`SDL_SetGPUTextureName`]
 /// - [`SDL_UploadToGPUTexture`]
 /// - [`SDL_DownloadFromGPUTexture`]
 /// - [`SDL_CopyGPUTextureToTexture`]

@@ -329,6 +329,9 @@ extern "C" {
     /// Returns a pointer to the [`SDL_IOStream`] structure that is created or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -387,6 +390,9 @@ extern "C" {
     /// Returns a pointer to a new [`SDL_IOStream`] structure or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -442,6 +448,9 @@ extern "C" {
     /// Returns a pointer to a new [`SDL_IOStream`] structure or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -475,6 +484,9 @@ extern "C" {
     /// ### Return value
     /// Returns a pointer to a new [`SDL_IOStream`] structure or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -513,6 +525,9 @@ extern "C" {
     /// ### Return value
     /// Returns a pointer to the allocated memory on success or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -556,6 +571,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -573,6 +591,9 @@ extern "C" {
     /// ### Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -597,8 +618,7 @@ extern "C" {
     /// Returns an [`SDL_IOStatus`] enum with the current state.
     ///
     /// ### Thread safety
-    /// This function should not be called at the same time that
-    ///   another thread is operating on the same [`SDL_IOStream`].
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -615,6 +635,9 @@ extern "C" {
     /// Returns the size of the data stream in the [`SDL_IOStream`] on success or a
     ///   negative error code on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -645,6 +668,9 @@ extern "C" {
     /// Returns the final offset in the data stream after the seek or -1 on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -667,6 +693,9 @@ extern "C" {
     /// ### Return value
     /// Returns the current offset in the stream, or -1 if the information can not
     ///   be determined.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -695,6 +724,9 @@ extern "C" {
     /// ### Return value
     /// Returns the number of bytes read, or 0 on end of file or other failure;
     ///   call [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -732,6 +764,9 @@ extern "C" {
     /// Returns the number of bytes written, which will be less than `size` on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -763,6 +798,9 @@ extern "C" {
     /// Returns the number of bytes written or 0 on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -790,6 +828,9 @@ extern "C" {
     /// Returns the number of bytes written or 0 on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -816,6 +857,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -845,6 +889,9 @@ extern "C" {
     /// ### Return value
     /// Returns the data or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -876,6 +923,9 @@ extern "C" {
     /// Returns the data or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     ///
@@ -903,8 +953,11 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_SaveFile`]
@@ -921,7 +974,7 @@ extern "C" {
     /// Save all the data into a file path.
     ///
     /// ### Parameters
-    /// - `file`: the path to read all available data from.
+    /// - `file`: the path to write all available data into.
     /// - `data`: the data to be written. If datasize is 0, may be NULL or a
     ///   invalid pointer.
     /// - `datasize`: the number of bytes to be written.
@@ -930,8 +983,11 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_SaveFile_IO`]
@@ -959,6 +1015,9 @@ extern "C" {
     /// Returns true on success or false on failure or EOF; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU8(src: *mut SDL_IOStream, value: *mut Uint8) -> ::core::primitive::bool;
@@ -979,6 +1038,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1005,6 +1067,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU16LE(src: *mut SDL_IOStream, value: *mut Uint16) -> ::core::primitive::bool;
@@ -1029,6 +1094,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1055,6 +1123,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU16BE(src: *mut SDL_IOStream, value: *mut Uint16) -> ::core::primitive::bool;
@@ -1079,6 +1150,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1105,6 +1179,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU32LE(src: *mut SDL_IOStream, value: *mut Uint32) -> ::core::primitive::bool;
@@ -1129,6 +1206,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1155,6 +1235,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU32BE(src: *mut SDL_IOStream, value: *mut Uint32) -> ::core::primitive::bool;
@@ -1179,6 +1262,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1205,6 +1291,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU64LE(src: *mut SDL_IOStream, value: *mut Uint64) -> ::core::primitive::bool;
@@ -1229,6 +1318,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1255,6 +1347,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadU64BE(src: *mut SDL_IOStream, value: *mut Uint64) -> ::core::primitive::bool;
@@ -1280,6 +1375,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_ReadS64BE(src: *mut SDL_IOStream, value: *mut Sint64) -> ::core::primitive::bool;
@@ -1296,6 +1394,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU8(dst: *mut SDL_IOStream, value: Uint8) -> ::core::primitive::bool;
@@ -1311,6 +1412,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1333,6 +1437,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU16LE(dst: *mut SDL_IOStream, value: Uint16) -> ::core::primitive::bool;
@@ -1354,6 +1461,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteS16LE(dst: *mut SDL_IOStream, value: Sint16) -> ::core::primitive::bool;
@@ -1374,6 +1484,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU16BE(dst: *mut SDL_IOStream, value: Uint16) -> ::core::primitive::bool;
@@ -1393,6 +1506,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1415,6 +1531,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU32LE(dst: *mut SDL_IOStream, value: Uint32) -> ::core::primitive::bool;
@@ -1436,6 +1555,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteS32LE(dst: *mut SDL_IOStream, value: Sint32) -> ::core::primitive::bool;
@@ -1456,6 +1578,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU32BE(dst: *mut SDL_IOStream, value: Uint32) -> ::core::primitive::bool;
@@ -1475,6 +1600,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
@@ -1497,6 +1625,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU64LE(dst: *mut SDL_IOStream, value: Uint64) -> ::core::primitive::bool;
@@ -1518,6 +1649,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteS64LE(dst: *mut SDL_IOStream, value: Sint64) -> ::core::primitive::bool;
@@ -1538,6 +1672,9 @@ extern "C" {
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.
     pub fn SDL_WriteU64BE(dst: *mut SDL_IOStream, value: Uint64) -> ::core::primitive::bool;
@@ -1557,6 +1694,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.1.3.

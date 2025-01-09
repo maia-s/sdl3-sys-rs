@@ -19,6 +19,28 @@
 //! options, like [`SDL_strlcpy()`], which functions as a safer form of strcpy().
 
 apply_cfg!(#[cfg(doc)] => {
+    /// Don't let SDL use "long long" C types.
+    ///
+    /// SDL will define this if it believes the compiler doesn't understand the
+    /// "long long" syntax for C datatypes. This can happen on older compilers.
+    ///
+    /// If _your_ compiler doesn't support "long long" but SDL doesn't know it, it
+    /// is safe to define this yourself to build against the SDL headers.
+    ///
+    /// If this is defined, it will remove access to some C runtime support
+    /// functions, like [`SDL_ulltoa`] and [`SDL_strtoll`] that refer to this datatype
+    /// explicitly. The rest of SDL will still be available.
+    ///
+    /// SDL's own source code cannot be built with a compiler that has this
+    /// defined, for various technical reasons.
+    pub const SDL_NOLONGLONG: ::core::primitive::i32 = 1;
+
+});
+
+apply_cfg!(#[cfg(not(doc))] => {
+});
+
+apply_cfg!(#[cfg(doc)] => {
     /// The largest value that a `size_t` can hold for the target platform.
     ///
     /// `size_t` is generally the same size as a pointer in modern times, but this

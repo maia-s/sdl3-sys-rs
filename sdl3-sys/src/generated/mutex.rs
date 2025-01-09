@@ -748,7 +748,7 @@ pub const SDL_INIT_STATUS_UNINITIALIZING: SDL_InitStatus = SDL_InitStatus::UNINI
 ///    {
 ///        if (!SDL_ShouldQuit(&init)) {
 ///            // The system is not initialized
-///            return true;
+///            return;
 ///        }
 ///
 ///        // At this point, you should not leave this function without calling SDL_SetInitialized()

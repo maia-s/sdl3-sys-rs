@@ -19,12 +19,16 @@ use super::scancode::*;
 /// A special exception is the number keys at the top of the keyboard which map
 /// to SDLK_0...SDLK_9 on AZERTY layouts.
 ///
+/// Keys with the `SDLK_EXTENDED_MASK` bit set do not map to a scancode or
+/// unicode code point.
+///
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Constant | Description |
 /// | -------- | ----------- |
+/// | [`SDLK_EXTENDED_MASK`] | |
 /// | [`SDLK_SCANCODE_MASK`] | |
 /// | [`SDLK_UNKNOWN`] | 0 |
 /// | [`SDLK_RETURN`] | '\r' |
@@ -275,7 +279,16 @@ use super::scancode::*;
 /// | [`SDLK_SOFTRIGHT`] | SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SOFTRIGHT`]) |
 /// | [`SDLK_CALL`] | SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CALL`]) |
 /// | [`SDLK_ENDCALL`] | SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_ENDCALL`]) |
+/// | [`SDLK_LEFT_TAB`] | Extended key Left Tab |
+/// | [`SDLK_LEVEL5_SHIFT`] | Extended key Level 5 Shift |
+/// | [`SDLK_MULTI_KEY_COMPOSE`] | Extended key Multi-key Compose |
+/// | [`SDLK_LMETA`] | Extended key Left Meta |
+/// | [`SDLK_RMETA`] | Extended key Right Meta |
+/// | [`SDLK_LHYPER`] | Extended key Left Hyper |
+/// | [`SDLK_RHYPER`] | Extended key Right Hyper |
 pub type SDL_Keycode = Uint32;
+
+pub const SDLK_EXTENDED_MASK: SDL_Keycode = ((536870912_u32) as SDL_Keycode);
 
 pub const SDLK_SCANCODE_MASK: SDL_Keycode = ((1073741824_u32) as SDL_Keycode);
 
@@ -1031,6 +1044,27 @@ pub const SDLK_CALL: SDL_Keycode = (0x40000121 as SDL_Keycode);
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_ENDCALL`])
 pub const SDLK_ENDCALL: SDL_Keycode = (0x40000122 as SDL_Keycode);
 
+/// Extended key Left Tab
+pub const SDLK_LEFT_TAB: SDL_Keycode = (0x20000001 as SDL_Keycode);
+
+/// Extended key Level 5 Shift
+pub const SDLK_LEVEL5_SHIFT: SDL_Keycode = (0x20000002 as SDL_Keycode);
+
+/// Extended key Multi-key Compose
+pub const SDLK_MULTI_KEY_COMPOSE: SDL_Keycode = (0x20000003 as SDL_Keycode);
+
+/// Extended key Left Meta
+pub const SDLK_LMETA: SDL_Keycode = (0x20000004 as SDL_Keycode);
+
+/// Extended key Right Meta
+pub const SDLK_RMETA: SDL_Keycode = (0x20000005 as SDL_Keycode);
+
+/// Extended key Left Hyper
+pub const SDLK_LHYPER: SDL_Keycode = (0x20000006 as SDL_Keycode);
+
+/// Extended key Right Hyper
+pub const SDLK_RHYPER: SDL_Keycode = (0x20000007 as SDL_Keycode);
+
 /// Valid key modifiers (possibly OR'd together).
 ///
 /// ### Availability
@@ -1042,6 +1076,7 @@ pub const SDLK_ENDCALL: SDL_Keycode = (0x40000122 as SDL_Keycode);
 /// | [`SDL_KMOD_NONE`] | no modifier is applicable. |
 /// | [`SDL_KMOD_LSHIFT`] | the left Shift key is down. |
 /// | [`SDL_KMOD_RSHIFT`] | the right Shift key is down. |
+/// | [`SDL_KMOD_LEVEL5`] | the Level 5 Shift key is down. |
 /// | [`SDL_KMOD_LCTRL`] | the left Ctrl (Control) key is down. |
 /// | [`SDL_KMOD_RCTRL`] | the right Ctrl (Control) key is down. |
 /// | [`SDL_KMOD_LALT`] | the left Alt key is down. |
@@ -1066,6 +1101,9 @@ pub const SDL_KMOD_LSHIFT: SDL_Keymod = (0x0001 as SDL_Keymod);
 
 /// the right Shift key is down.
 pub const SDL_KMOD_RSHIFT: SDL_Keymod = (0x0002 as SDL_Keymod);
+
+/// the Level 5 Shift key is down.
+pub const SDL_KMOD_LEVEL5: SDL_Keymod = (0x0004 as SDL_Keymod);
 
 /// the left Ctrl (Control) key is down.
 pub const SDL_KMOD_LCTRL: SDL_Keymod = (0x0040 as SDL_Keymod);

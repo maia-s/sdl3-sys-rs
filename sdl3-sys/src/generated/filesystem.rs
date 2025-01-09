@@ -480,6 +480,9 @@ pub const SDL_ENUM_FAILURE: SDL_EnumerationResult = SDL_EnumerationResult::FAILU
 /// terminate the enumeration early, and dictate the return value of the
 /// enumeration function itself.
 ///
+/// `dirname` is guaranteed to end with a path separator ('\\' on Windows, '/'
+/// on most other platforms).
+///
 /// ### Parameters
 /// - `userdata`: an app-controlled pointer that is passed to the callback.
 /// - `dirname`: the directory that is being enumerated.
@@ -700,13 +703,16 @@ extern "C" {
     /// platforms without this concept, this would cause surprises with file access
     /// outside of SDL.
     ///
+    /// The returned path is guaranteed to end with a path separator ('\\' on
+    /// Windows, '/' on most other platforms).
+    ///
     /// ### Return value
     /// Returns a UTF-8 string of the current working directory in
     ///   platform-dependent notation. NULL if there's a problem. This
     ///   should be freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     pub fn SDL_GetCurrentDirectory() -> *mut ::core::ffi::c_char;
 }
 

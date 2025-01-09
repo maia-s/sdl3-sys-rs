@@ -2480,7 +2480,7 @@ pub const SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE: *const ::core::ffi::c_char =
 /// - "1": Relative mouse motion will be scaled using the system mouse
 ///   acceleration curve.
 ///
-/// If [`SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE`] is set, that will override the
+/// If [`SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE`] is set, that will be applied after
 /// system speed scale.
 ///
 /// This hint can be set anytime.
@@ -3263,6 +3263,27 @@ pub const SDL_HINT_VIDEO_FORCE_EGL: *const ::core::ffi::c_char = c"SDL_VIDEO_FOR
 /// This hint is available since SDL 3.1.3.
 pub const SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES: *const ::core::ffi::c_char =
     c"SDL_VIDEO_MAC_FULLSCREEN_SPACES".as_ptr();
+
+/// A variable that specifies the menu visibility when a window is fullscreen
+/// in Spaces on macOS.
+///
+/// The variable can be set to the following values:
+///
+/// - "0": The menu will be hidden when the window is in a fullscreen space,
+///   and not accessible by moving the mouse to the top of the screen.
+/// - "1": The menu will be accessible when the window is in a fullscreen
+///   space.
+/// - "auto": The menu will be hidden if fullscreen mode was toggled on
+///   programmatically via `SDL_SetWindowFullscreen()`, and accessible if
+///   fullscreen was entered via the "fullscreen" button on the window title
+///   bar. (default)
+///
+/// This hint can be set anytime.
+///
+/// ### Availability
+/// This hint is available since SDL 3.1.9.
+pub const SDL_HINT_VIDEO_MAC_FULLSCREEN_MENU_VISIBILITY: *const ::core::ffi::c_char =
+    c"SDL_VIDEO_MAC_FULLSCREEN_MENU_VISIBILITY".as_ptr();
 
 /// A variable controlling whether fullscreen windows are minimized when they
 /// lose focus.
@@ -4083,6 +4104,34 @@ pub const SDL_HINT_XINPUT_ENABLED: *const ::core::ffi::c_char = c"SDL_XINPUT_ENA
 /// ### Availability
 /// This hint is available since SDL 3.1.3.
 pub const SDL_HINT_ASSERT: *const ::core::ffi::c_char = c"SDL_ASSERT".as_ptr();
+
+/// A variable controlling whether pen events should generate synthetic mouse
+/// events.
+///
+/// The variable can be set to the following values:
+///
+/// - "0": Pen events will not generate mouse events.
+/// - "1": Pen events will generate mouse events. (default)
+///
+/// This hint can be set anytime.
+///
+/// ### Availability
+/// This hint is available since SDL 3.2.0.
+pub const SDL_HINT_PEN_MOUSE_EVENTS: *const ::core::ffi::c_char = c"SDL_PEN_MOUSE_EVENTS".as_ptr();
+
+/// A variable controlling whether pen events should generate synthetic touch
+/// events.
+///
+/// The variable can be set to the following values:
+///
+/// - "0": Pen events will not generate touch events.
+/// - "1": Pen events will generate touch events. (default)
+///
+/// This hint can be set anytime.
+///
+/// ### Availability
+/// This hint is available since SDL 3.2.0.
+pub const SDL_HINT_PEN_TOUCH_EVENTS: *const ::core::ffi::c_char = c"SDL_PEN_TOUCH_EVENTS".as_ptr();
 
 /// An enumeration of hint priorities.
 ///

@@ -79,7 +79,7 @@ extern "C" {
     /// Returns The newly created system tray icon.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_CreateTrayMenu`]
@@ -99,7 +99,7 @@ extern "C" {
     /// - `icon`: the new icon. May be NULL.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_CreateTray`]
@@ -114,7 +114,7 @@ extern "C" {
     /// - `tooltip`: the new tooltip in UTF-8 encoding. May be NULL.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_CreateTray`]
@@ -138,7 +138,7 @@ extern "C" {
     /// Returns the newly created menu.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_CreateTray`]
@@ -164,7 +164,7 @@ extern "C" {
     /// Returns the newly created menu.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_InsertTrayEntryAt`]
@@ -191,7 +191,7 @@ extern "C" {
     /// Returns the newly created menu.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_CreateTray`]
@@ -202,7 +202,7 @@ extern "C" {
 extern "C" {
     /// Gets a previously created tray entry submenu.
     ///
-    /// You should have called [`SDL_CreateTraySubenu()`] on the entry object. This
+    /// You should have called [`SDL_CreateTraySubmenu()`] on the entry object. This
     /// function allows you to fetch it again later.
     ///
     /// This function does the same thing as [`SDL_GetTrayMenu()`], except that it
@@ -217,7 +217,7 @@ extern "C" {
     /// Returns the newly created menu.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_InsertTrayEntryAt`]
@@ -239,7 +239,7 @@ extern "C" {
     ///   entries in the menu is called.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_RemoveTrayEntry`]
@@ -257,7 +257,7 @@ extern "C" {
     /// - `entry`: The entry to be deleted.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_GetTrayEntries`]
@@ -285,7 +285,7 @@ extern "C" {
     /// Returns the newly created entry, or NULL if pos is out of bounds.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_TrayEntryFlags`]
@@ -313,7 +313,7 @@ extern "C" {
     /// - `label`: the new label for the entry in UTF-8 encoding.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_GetTrayEntries`]
@@ -334,7 +334,7 @@ extern "C" {
     /// Returns the label of the entry in UTF-8 encoding.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_GetTrayEntries`]
@@ -350,11 +350,10 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `entry`: the entry to be updated.
-    /// - `checked`: [`SDL_TRUE`] if the entry should be checked; [`SDL_FALSE`]
-    ///   otherwise.
+    /// - `checked`: true if the entry should be checked; false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_GetTrayEntries`]
@@ -372,10 +371,10 @@ extern "C" {
     /// - `entry`: the entry to be read.
     ///
     /// ### Return value
-    /// Returns [`SDL_TRUE`] if the entry is checked; [`SDL_FALSE`] otherwise.
+    /// Returns true if the entry is checked; false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_GetTrayEntries`]
@@ -389,11 +388,10 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `entry`: the entry to be updated.
-    /// - `enabled`: [`SDL_TRUE`] if the entry should be enabled; [`SDL_FALSE`]
-    ///   otherwise.
+    /// - `enabled`: true if the entry should be enabled; false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_GetTrayEntries`]
@@ -409,10 +407,10 @@ extern "C" {
     /// - `entry`: the entry to be read.
     ///
     /// ### Return value
-    /// Returns [`SDL_TRUE`] if the entry is enabled; [`SDL_FALSE`] otherwise.
+    /// Returns true if the entry is enabled; false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_GetTrayEntries`]
@@ -431,7 +429,7 @@ extern "C" {
     ///   it will be invoked.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_GetTrayEntries`]
@@ -444,6 +442,17 @@ extern "C" {
 }
 
 extern "C" {
+    /// Simulate a click on a tray entry.
+    ///
+    /// ### Parameters
+    /// - `entry`: The entry to activate.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.2.0.
+    pub fn SDL_ClickTrayEntry(entry: *mut SDL_TrayEntry);
+}
+
+extern "C" {
     /// Destroys a tray object.
     ///
     /// This also destroys all associated menus and entries.
@@ -452,7 +461,7 @@ extern "C" {
     /// - `tray`: the tray icon to be destroyed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_CreateTray`]
@@ -469,7 +478,7 @@ extern "C" {
     /// Returns the parent menu.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_InsertTrayEntryAt`]
@@ -490,7 +499,7 @@ extern "C" {
     /// Returns the parent entry, or NULL if this menu is not a submenu.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_CreateTraySubmenu`]
@@ -512,7 +521,7 @@ extern "C" {
     /// Returns the parent tray, or NULL if this menu is a submenu.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_CreateTrayMenu`]

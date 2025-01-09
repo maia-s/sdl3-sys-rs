@@ -203,7 +203,7 @@ impl Library {
                 let ver = version.to_string();
                 (ver.clone(), ver)
             }
-            "preview" => {
+            "preview" | "prerelease" => {
                 if revision_offset == "0" {
                     let ver = format!("{version}-{revision_tag_base}");
                     (format!("{ver}-{revision_offset}"), ver)

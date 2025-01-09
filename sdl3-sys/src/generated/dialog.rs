@@ -369,7 +369,7 @@ extern "C" {
     ///   different one, depending on the OS's constraints.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_FileDialogType`]

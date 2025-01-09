@@ -80,8 +80,7 @@ apply_cfg!(#[cfg(doc)] => {
     ///
     /// If the program is not running under a debugger, [`SDL_TriggerBreakpoint`] will
     /// likely terminate the app, possibly without warning. If the current platform
-    /// isn't supported (SDL doesn't know how to trigger a breakpoint), this macro
-    /// does nothing.
+    /// isn't supported, this macro is left undefined.
     ///
     /// ### Thread safety
     /// It is safe to call this macro from any thread.

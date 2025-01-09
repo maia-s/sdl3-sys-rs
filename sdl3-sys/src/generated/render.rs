@@ -1789,8 +1789,8 @@ extern "C" {
     ///   [`SDL_TEXTUREACCESS_STREAMING`].
     /// - `rect`: a pointer to the rectangle to lock for access. If the rect is
     ///   NULL, the entire texture will be locked.
-    /// - `surface`: this is filled in with an SDL surface representing the
-    ///   locked area.
+    /// - `surface`: a pointer to an SDL surface of size **rect**. Don't assume
+    ///   any specific pixel content.
     ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
@@ -2991,7 +2991,7 @@ extern "C" {
     /// You may only call this function from the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_RenderTexture`]
@@ -3591,7 +3591,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.2.0.
+    /// This function is available since SDL 3.1.8.
     ///
     /// ### See also
     /// - [`SDL_RenderDebugText`]

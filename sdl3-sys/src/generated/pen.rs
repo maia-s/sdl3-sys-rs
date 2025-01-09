@@ -13,6 +13,10 @@
 
 use super::stdinc::*;
 
+use super::mouse::*;
+
+use super::touch::*;
+
 /// SDL pen instance IDs.
 ///
 /// Zero is used to signify an invalid/null device.
@@ -24,6 +28,18 @@ use super::stdinc::*;
 /// ### Availability
 /// This datatype is available since SDL 3.1.3.
 pub type SDL_PenID = Uint32;
+
+/// The [`SDL_MouseID`] for mouse events simulated with pen input.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
+pub const SDL_PEN_MOUSEID: SDL_MouseID = (-2_i32 as SDL_MouseID);
+
+/// The [`SDL_TouchID`] for touch events simulated with pen input.
+///
+/// ### Availability
+/// This macro is available since SDL 3.1.3.
+pub const SDL_PEN_TOUCHID: SDL_TouchID = (-2_i32 as SDL_TouchID);
 
 /// Pen input flags, as reported by various pen events' `pen_state` field.
 ///
