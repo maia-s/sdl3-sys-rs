@@ -302,6 +302,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_memcpy",
             "SDL_memmove",
             "SDL_memset",
+            "SDL_NOLONGLONG",
             "SDL_PI_D",
             "SDL_PI_F",
             "SDL_PRILLd",
