@@ -82,7 +82,12 @@ version = "3.1.0-preview-0"
 name = "sdl3-image-sys"
 version = "0.0.0"
 dependencies = [
+ "cmake",
+ "pkg-config",
+ "rpkg-config",
+ "sdl3-image-src",
  "sdl3-sys",
+ "vcpkg",
 ]
 
 [[package]]

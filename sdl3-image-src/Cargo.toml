@@ -9,3 +9,13 @@ repository = "https://github.com/maia-s/sdl3-sys-rs"
 # documentation = "https://docs.rs/sdl3-image-src"
 keywords = ["sdl"]
 categories = ["no-std"]
+exclude = [
+    "/SDL_image/external/aom",
+    "/SDL_image/external/dav1d",
+    "/SDL_image/external/libavif",
+    "/SDL_image/external/libjxl",
+    #"/SDL_image/external/libtiff",
+    "/SDL_image/external/libwebp",
+    "/SDL_image/external/SDL",
+    "/SDL_image/VisualC/external/optional",
+]
