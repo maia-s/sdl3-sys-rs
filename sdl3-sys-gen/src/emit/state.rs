@@ -234,6 +234,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__x86_64__" = CfgExpr(r#"target_arch = "x86_64""#);
             "_DEBUG" = CfgExpr("debug_assertions");
             "_M_IA64" = CfgExpr(always_false!("_M_IA64"));
+            "_M_IX86" = CfgExpr(r#"target_arch = "x86""#);
             "_M_X64" = CfgExpr(r#"target_arch = "x86_64""#);
             "_MSC_VER" = CfgExpr(r#"all(windows, target_env = "msvc")"#);
             "_WIN64" = CfgExpr(r#"all(windows, target_pointer_width = "64")"#);
