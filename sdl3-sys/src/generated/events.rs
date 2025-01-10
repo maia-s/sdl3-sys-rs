@@ -1926,6 +1926,14 @@ pub union SDL_Event {
     pub padding: [Uint8; 128],
 }
 
+impl ::core::default::Default for SDL_Event {
+    /// Initialize all fields to zero
+    #[inline(always)]
+    fn default() -> Self {
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
+    }
+}
+
 const _: () = ::core::assert!(
     (::core::mem::size_of::<SDL_Event>() == crate::size_of_field!(SDL_Event, padding))
 );

@@ -977,10 +977,14 @@ impl StructOrUnion {
     }
 
     pub fn can_default(&self, ctx: &EmitContext) -> CanDefault {
-        if !self.can_construct || matches!(self.kind, StructKind::Union) {
+        if !self.can_construct {
             return CanDefault::No;
         }
-        let mut can = CanDefault::Derive;
+        let mut can = if matches!(self.kind, StructKind::Union) {
+            CanDefault::Manual
+        } else {
+            CanDefault::Derive
+        };
         if let Some(fields) = &self.fields {
             for field in fields.fields.iter() {
                 match field.ty.can_default(ctx) {

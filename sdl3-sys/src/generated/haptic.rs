@@ -888,6 +888,14 @@ pub union SDL_HapticEffect {
     pub custom: SDL_HapticCustom,
 }
 
+impl ::core::default::Default for SDL_HapticEffect {
+    /// Initialize all fields to zero
+    #[inline(always)]
+    fn default() -> Self {
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
+    }
+}
+
 /// This is a unique ID for a haptic device for the time it is connected to the
 /// system, and is never reused for the lifetime of the application.
 ///

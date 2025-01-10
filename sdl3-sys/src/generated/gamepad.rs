@@ -607,12 +607,28 @@ pub struct SDL_GamepadBinding {
     pub output: SDL_GamepadBinding__AnonUnion2,
 }
 
+impl ::core::default::Default for SDL_GamepadBinding {
+    /// Initialize all fields to zero
+    #[inline(always)]
+    fn default() -> Self {
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
+    }
+}
+
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub union SDL_GamepadBinding__AnonUnion1 {
     pub button: ::core::ffi::c_int,
     pub axis: SDL_GamepadBinding__AnonUnion1__AnonStruct1,
     pub hat: SDL_GamepadBinding__AnonUnion1__AnonStruct2,
+}
+
+impl ::core::default::Default for SDL_GamepadBinding__AnonUnion1 {
+    /// Initialize all fields to zero
+    #[inline(always)]
+    fn default() -> Self {
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
+    }
 }
 
 #[repr(C)]
@@ -639,6 +655,14 @@ pub struct SDL_GamepadBinding__AnonUnion1__AnonStruct2 {
 pub union SDL_GamepadBinding__AnonUnion2 {
     pub button: SDL_GamepadButton,
     pub axis: SDL_GamepadBinding__AnonUnion2__AnonStruct1,
+}
+
+impl ::core::default::Default for SDL_GamepadBinding__AnonUnion2 {
+    /// Initialize all fields to zero
+    #[inline(always)]
+    fn default() -> Self {
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
+    }
 }
 
 #[repr(C)]
