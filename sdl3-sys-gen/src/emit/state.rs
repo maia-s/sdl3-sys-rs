@@ -253,7 +253,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_PLATFORM_PSP" = CfgExpr(r#"any(doc, target_os = "psp")"#);
             "SDL_PLATFORM_TVOS" = CfgExpr(r#"any(doc, target_os = "tvos")"#);
             "SDL_PLATFORM_VITA" = CfgExpr(r#"any(doc, target_os = "vita")"#);
-            "SDL_PLATFORM_WIN32" = CfgExpr("any(doc, windows)");
+            "SDL_PLATFORM_WIN32" = CfgExpr(r#"any(doc, target_os = "windows")"#);
             "SDL_PLATFORM_WINDOWS" = CfgExpr("any(doc, windows)");
             "SDL_PLATFORM_WINGDK" = CfgExpr(r#"any(doc, all(target_os = "windows", feature = "target-gdk"))"#);
             "SDL_WIKI_DOCUMENTATION_SECTION" = CfgExpr("doc");

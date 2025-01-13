@@ -81,7 +81,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 
 });
 
-apply_cfg!(#[cfg(any(any(doc, windows), any(doc, all(target_os = "windows", feature = "target-gdk"))))] => {
+apply_cfg!(#[cfg(any(any(doc, target_os = "windows"), any(doc, all(target_os = "windows", feature = "target-gdk"))))] => {
     extern "C" {
         /// Get the D3D9 adapter index that matches the specified display.
         ///
