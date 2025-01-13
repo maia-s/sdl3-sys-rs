@@ -63,7 +63,7 @@ additional features to configure the build. These have no effect when not buildi
 ## Target specific features
 | Feature | Description |
 | ------- | ----------- |
-| `target-gdk` | Enable APIs that require Microsoft's Game Development Kit (GDK). (This is not related to Gnome's GDK.)
+| `target-gdk` | Enable APIs that require Microsoft's Game Development Kit (GDK). (This is not related to Gnome's GDK.) |
 
 ## Optional integrations
 
