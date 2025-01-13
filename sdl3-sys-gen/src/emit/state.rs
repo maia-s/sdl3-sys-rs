@@ -221,11 +221,11 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__ARM_ARCH_7M__" = CfgExpr(r#"target_feature = "armv7-m""#);
             "__ARM_ARCH_7S__" = CfgExpr(r#"target_feature = "armv7s""#);
             "__ARM_ARCH_8A__" = CfgExpr(r#"target_feature = "armv8-a""#);
-            "__clang__" = CfgExpr(always_false!("__clang__"));
+            "__clang__" = CfgExpr(always_false!("__clang__")); // not needed
             "__EMSCRIPTEN__" = CfgExpr(r#"target_os = "emscripten""#);
-            "__GNUC__" = CfgExpr(always_false!("__GNUC__"));
+            "__GNUC__" = CfgExpr(always_false!("__GNUC__")); // not needed
             "__i386__" = CfgExpr(r#"target_arch = "x86""#);
-            "__ia64" = CfgExpr(always_false!("__ia64"));
+            "__ia64" = CfgExpr(always_false!("__ia64")); // not supported by rust?
             "__LP64__" = CfgExpr(r#"all(not(windows), target_pointer_width = "64")"#);
             "__OPTIMIZE__" = CfgExpr("not(debug_assertions)");
             "__powerpc__" = CfgExpr(r#"any(target_arch = "powerpc", target_arch = "powerpc64")"#);
@@ -233,7 +233,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__ppc__" = CfgExpr(r#"any(target_arch = "powerpc", target_arch = "powerpc64")"#);
             "__x86_64__" = CfgExpr(r#"target_arch = "x86_64""#);
             "_DEBUG" = CfgExpr("debug_assertions");
-            "_M_IA64" = CfgExpr(always_false!("_M_IA64"));
+            "_M_IA64" = CfgExpr(always_false!("_M_IA64")); // not supported by rust?
             "_M_IX86" = CfgExpr(r#"target_arch = "x86""#);
             "_M_X64" = CfgExpr(r#"target_arch = "x86_64""#);
             "_MSC_VER" = CfgExpr(r#"all(windows, target_env = "msvc")"#);
@@ -245,17 +245,17 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_PLATFORM_ANDROID" = CfgExpr(r#"any(doc, target_os = "android")"#);
             "SDL_PLATFORM_APPLE" = CfgExpr(r#"any(doc, target_vendor = "apple")"#);
             "SDL_PLATFORM_EMSCRIPTEN" = CfgExpr(r#"any(doc, target_os = "emscripten")"#);
-            "SDL_PLATFORM_GDK" = CfgExpr(always_false!("SDL_PLATFORM_GDK")); // change WIN32 if this is changed
+            "SDL_PLATFORM_GDK" = CfgExpr(r#"any(doc, all(windows, feature = "target-gdk"))"#);
             "SDL_PLATFORM_IOS" = CfgExpr(r#"any(doc, target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos")"#);
             "SDL_PLATFORM_LINUX" = CfgExpr(r#"any(doc, target_os = "linux")"#);
-            "SDL_PLATFORM_NGAGE" = CfgExpr(always_false!("SDL_PLATFORM_NGAGE"));
-            "SDL_PLATFORM_PS2" = CfgExpr(always_false!("SDL_PLATFORM_PS2"));
+            "SDL_PLATFORM_NGAGE" = CfgExpr(always_false!("SDL_PLATFORM_NGAGE")); // not currently used in public headers
+            "SDL_PLATFORM_PS2" = CfgExpr(always_false!("SDL_PLATFORM_PS2")); // not currently used in public headers
             "SDL_PLATFORM_PSP" = CfgExpr(r#"any(doc, target_os = "psp")"#);
             "SDL_PLATFORM_TVOS" = CfgExpr(r#"any(doc, target_os = "tvos")"#);
             "SDL_PLATFORM_VITA" = CfgExpr(r#"any(doc, target_os = "vita")"#);
             "SDL_PLATFORM_WIN32" = CfgExpr("any(doc, windows)");
             "SDL_PLATFORM_WINDOWS" = CfgExpr("any(doc, windows)");
-            "SDL_PLATFORM_WINGDK" = CfgExpr(always_false!("SDL_PLATFORM_WINGDK"));
+            "SDL_PLATFORM_WINGDK" = CfgExpr(r#"any(doc, all(target_os = "windows", feature = "target-gdk"))"#);
             "SDL_WIKI_DOCUMENTATION_SECTION" = CfgExpr("doc");
         }
 

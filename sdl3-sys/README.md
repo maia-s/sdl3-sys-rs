@@ -15,8 +15,6 @@ Known issues:
 - Satellite libraries (mixer, image, ttf) aren't available yet
 - There are no tests yet, except for static asserts translated from the
   original headers
-- Some less common targets are missing detection or features to enable
-  corresponding SDL features
 
 <div class="warning">
 
@@ -61,6 +59,11 @@ additional features to configure the build. These have no effect when not buildi
 | Feature | Description |
 | ------- | ----------- |
 | `sdl-unix-console-build` | Allow building SDL without X11 or Wayland support on Linux and other targets that usually use X11/Wayland. By default, SDL requires either X11 or Wayland on these targets as a sanity check. |
+
+## Target specific features
+| Feature | Description |
+| ------- | ----------- |
+| `target-gdk` | Enable APIs that require Microsoft's Game Development Kit (GDK). (This is not related to Gnome's GDK.)
 
 ## Optional integrations
 

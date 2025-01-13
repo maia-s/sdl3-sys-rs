@@ -40,6 +40,10 @@ use-pkg-config = ["dep:pkg-config"]
 # This has no effect if the link-framework feature is enabled.
 use-vcpkg = ["dep:vcpkg"]
 
+# Enable APIs that require Microsoft's Game Development Kit (GDK).
+# (This is not related to Gnome's GDK)
+target-gdk = []
+
 # These are mutually exlusive; if more than one is enabled, the former in the list is used
 # (so e.g. disabled overrides release). If none are selected, either release or debug will
 # be enabled based on the build profile

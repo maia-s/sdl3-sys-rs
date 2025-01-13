@@ -81,7 +81,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 
 });
 
-apply_cfg!(#[cfg(any(any(doc, windows), any(/* always disabled: SDL_PLATFORM_WINGDK */)))] => {
+apply_cfg!(#[cfg(any(any(doc, windows), any(doc, all(target_os = "windows", feature = "target-gdk"))))] => {
     extern "C" {
         /// Get the D3D9 adapter index that matches the specified display.
         ///
@@ -889,7 +889,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
 
 });
 
-apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
+apply_cfg!(#[cfg(any(doc, all(windows, feature = "target-gdk")))] => {
     pub type XTaskQueueHandle = *mut XTaskQueueObject;
 
     pub type XUserHandle = *mut XUser;

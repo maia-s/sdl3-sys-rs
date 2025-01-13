@@ -6206,7 +6206,7 @@ extern "C" {
     ) -> Uint32;
 }
 
-apply_cfg!(#[cfg(any(/* always disabled: SDL_PLATFORM_GDK */))] => {
+apply_cfg!(#[cfg(any(doc, all(windows, feature = "target-gdk")))] => {
     extern "C" {
         /// Call this to suspend GPU operation on Xbox when you receive the
         /// [`SDL_EVENT_DID_ENTER_BACKGROUND`] event.
