@@ -491,6 +491,14 @@ const TYPEDEF_PATCHES: &[TypeDefPatch] = &[
         },
     },
     TypeDefPatch {
+        module: Some("pen"),
+        match_ident: |i| i == "SDL_PenID",
+        patch: |_, td| {
+            td.use_for_defines = None;
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
         module: Some("sensor"),
         match_ident: |i| i == "SDL_SensorID",
         patch: |_, td| {
