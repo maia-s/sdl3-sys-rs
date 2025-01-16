@@ -1,4 +1,16 @@
-//! SDL thread management routines.
+//! SDL offers cross-platform thread management functions. These are mostly
+//! concerned with starting threads, setting their priority, and dealing with
+//! their termination.
+//!
+//! In addition, there is support for Thread Local Storage (data that is unique
+//! to each thread, but accessed from a single key).
+//!
+//! On platforms without thread support (such as Emscripten when built without
+//! pthreads), these functions still exist, but things like [`SDL_CreateThread()`]
+//! will report failure without doing anything.
+//!
+//! If you're going to work with threads, you almost certainly need to have a
+//! good understanding of [CategoryMutex](CategoryMutex) as well.
 
 use super::stdinc::*;
 
@@ -18,7 +30,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 /// can be useful at times.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GetThreadID`]
@@ -31,7 +43,7 @@ pub type SDL_ThreadID = Uint64;
 /// IDs that is unique to each thread.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GetTLS`]
@@ -47,7 +59,7 @@ pub type SDL_TLSID = SDL_AtomicInt;
 /// this behavior.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -99,7 +111,7 @@ pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPrio
 /// The current state of a thread can be checked by calling [`SDL_GetThreadState`].
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GetThreadState`]
@@ -166,7 +178,7 @@ pub const SDL_THREAD_COMPLETE: SDL_ThreadState = SDL_ThreadState::COMPLETE;
 /// Returns a value that can be reported through [`SDL_WaitThread()`].
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_ThreadFunction = ::core::option::Option<
     unsafe extern "C" fn(data: *mut ::core::ffi::c_void) -> ::core::ffi::c_int,
 >;
@@ -202,7 +214,7 @@ apply_cfg!(#[cfg(doc)] => {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         ///
         /// ### See also
         /// - [`SDL_CreateThreadWithProperties`]
@@ -273,7 +285,7 @@ apply_cfg!(#[cfg(doc)] => {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         ///
         /// ### See also
         /// - [`SDL_CreateThread`]
@@ -320,7 +332,7 @@ apply_cfg!(#[cfg(not(doc))] => {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_CreateThreadRuntime(r#fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
     }
 
@@ -338,7 +350,7 @@ apply_cfg!(#[cfg(not(doc))] => {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_CreateThreadWithPropertiesRuntime(props: SDL_PropertiesID, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
     }
 
@@ -389,7 +401,7 @@ extern "C" {
     ///   NULL if it doesn't have a name.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetThreadName(thread: *mut SDL_Thread) -> *const ::core::ffi::c_char;
 }
 
@@ -407,7 +419,7 @@ extern "C" {
     /// Returns the ID of the current thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetThreadID`]
@@ -429,7 +441,7 @@ extern "C" {
     ///   `thread` is NULL.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetCurrentThreadID`]
@@ -451,7 +463,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_SetCurrentThreadPriority(priority: SDL_ThreadPriority) -> ::core::primitive::bool;
 }
 
@@ -485,7 +497,7 @@ extern "C" {
     ///   detached or isn't valid, may be NULL.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateThread`]
@@ -504,7 +516,7 @@ extern "C" {
     ///   isn't valid.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_ThreadState`]
@@ -542,7 +554,7 @@ extern "C" {
     ///   [`SDL_CreateThread()`] call that started this thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateThread`]
@@ -564,7 +576,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetTLS`]
@@ -579,7 +591,7 @@ extern "C" {
 /// - `value`: a pointer previously handed to [`SDL_SetTLS`].
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_SetTLS`]
@@ -613,7 +625,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetTLS`]
@@ -635,7 +647,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_CleanupTLS();
 }
 
@@ -644,7 +656,7 @@ extern "C" {
 /// These are opaque data.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_CreateThread`]

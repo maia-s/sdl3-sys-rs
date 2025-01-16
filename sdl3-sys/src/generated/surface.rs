@@ -31,7 +31,7 @@ use super::iostream::*;
 /// These are generally considered read-only.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Constant | Description |
@@ -57,7 +57,7 @@ pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = (0x00000008 as SDL_Surfac
 /// The scaling mode.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -103,7 +103,7 @@ pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
 /// The flip mode.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -172,7 +172,7 @@ pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
 /// by 32x16 bytes of UV plane.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_CreateSurface`]
@@ -202,7 +202,7 @@ pub struct SDL_Surface {
 /// Evaluates to true if the surface needs to be locked before access.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const unsafe fn SDL_MUSTLOCK(S: *const SDL_Surface) -> ::core::primitive::bool {
     ((unsafe { ::core::ptr::addr_of!((*S).flags).read() } & SDL_SURFACE_LOCK_NEEDED)
@@ -224,7 +224,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateSurfaceFrom`]
@@ -261,7 +261,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateSurface`]
@@ -284,7 +284,7 @@ extern "C" {
     /// - `surface`: the [`SDL_Surface`] to free.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateSurface`]
@@ -320,7 +320,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetSurfaceProperties(surface: *mut SDL_Surface) -> SDL_PropertiesID;
 }
 
@@ -349,7 +349,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetSurfaceColorspace`]
@@ -374,7 +374,7 @@ extern "C" {
     ///   the surface is NULL.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetSurfaceColorspace`]
@@ -407,7 +407,7 @@ extern "C" {
     ///   more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetPaletteColors`]
@@ -428,7 +428,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreatePalette`]
@@ -450,7 +450,7 @@ extern "C" {
     ///   no palette used.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetSurfacePalette`]
@@ -478,7 +478,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_RemoveSurfaceAlternateImages`]
@@ -500,7 +500,7 @@ extern "C" {
     /// Returns true if alternate versions are available or false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_AddSurfaceAlternateImage`]
@@ -530,7 +530,7 @@ extern "C" {
     ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_AddSurfaceAlternateImage`]
@@ -552,7 +552,7 @@ extern "C" {
     /// - `surface`: the [`SDL_Surface`] structure to update.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_AddSurfaceAlternateImage`]
@@ -581,7 +581,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_MUSTLOCK`]
@@ -596,7 +596,7 @@ extern "C" {
     /// - `surface`: the [`SDL_Surface`] structure to be unlocked.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LockSurface`]
@@ -619,7 +619,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DestroySurface`]
@@ -645,7 +645,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DestroySurface`]
@@ -674,7 +674,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LoadBMP_IO`]
@@ -704,7 +704,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LoadBMP`]
@@ -730,7 +730,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_BlitSurface`]
@@ -754,7 +754,7 @@ extern "C" {
     /// Returns true if the surface is RLE enabled, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetSurfaceRLE`]
@@ -781,7 +781,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetSurfaceColorKey`]
@@ -806,7 +806,7 @@ extern "C" {
     /// Returns true if the surface has a color key, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetSurfaceColorKey`]
@@ -831,7 +831,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetSurfaceColorKey`]
@@ -862,7 +862,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetSurfaceColorMod`]
@@ -889,7 +889,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetSurfaceAlphaMod`]
@@ -919,7 +919,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetSurfaceAlphaMod`]
@@ -942,7 +942,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetSurfaceColorMod`]
@@ -969,7 +969,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetSurfaceBlendMode`]
@@ -991,7 +991,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetSurfaceBlendMode`]
@@ -1020,7 +1020,7 @@ extern "C" {
     ///   blits will be completely clipped.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetSurfaceClipRect`]
@@ -1047,7 +1047,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetSurfaceClipRect`]
@@ -1069,7 +1069,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_FlipSurface(
         surface: *mut SDL_Surface,
         flip: SDL_FlipMode,
@@ -1092,7 +1092,7 @@ extern "C" {
     ///   more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DestroySurface`]
@@ -1116,7 +1116,7 @@ extern "C" {
     ///   more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DestroySurface`]
@@ -1151,7 +1151,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_ConvertSurfaceAndColorspace`]
@@ -1185,7 +1185,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_ConvertSurface`]
@@ -1217,7 +1217,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_ConvertPixelsAndColorspace`]
@@ -1260,7 +1260,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_ConvertPixels`]
@@ -1302,7 +1302,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_PremultiplyAlpha(
         width: ::core::ffi::c_int,
         height: ::core::ffi::c_int,
@@ -1331,7 +1331,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_PremultiplySurfaceAlpha(
         surface: *mut SDL_Surface,
         linear: ::core::primitive::bool,
@@ -1358,7 +1358,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_ClearSurface(
         surface: *mut SDL_Surface,
         r: ::core::ffi::c_float,
@@ -1391,7 +1391,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_FillSurfaceRects`]
@@ -1425,7 +1425,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_FillSurfaceRect`]
@@ -1513,7 +1513,7 @@ extern "C" {
     ///   from multiple threads.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_BlitSurfaceScaled`]
@@ -1549,7 +1549,7 @@ extern "C" {
     ///   from multiple threads.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_BlitSurface`]
@@ -1585,7 +1585,7 @@ extern "C" {
     ///   from multiple threads.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_BlitSurface`]
@@ -1623,7 +1623,7 @@ extern "C" {
     ///   from multiple threads.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_BlitSurfaceScaled`]
@@ -1661,7 +1661,7 @@ extern "C" {
     ///   from multiple threads.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_BlitSurface`]
@@ -1702,7 +1702,7 @@ extern "C" {
     ///   from multiple threads.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_BlitSurface`]
@@ -1752,7 +1752,7 @@ extern "C" {
     ///   from multiple threads.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_BlitSurface`]
@@ -1798,7 +1798,7 @@ extern "C" {
     /// Returns a pixel value.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_MapSurfaceRGBA`]
@@ -1834,7 +1834,7 @@ extern "C" {
     /// Returns a pixel value.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_MapSurfaceRGB`]
@@ -1874,7 +1874,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadSurfacePixel(
         surface: *mut SDL_Surface,
         x: ::core::ffi::c_int,
@@ -1910,7 +1910,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadSurfacePixelFloat(
         surface: *mut SDL_Surface,
         x: ::core::ffi::c_int,
@@ -1945,7 +1945,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteSurfacePixel(
         surface: *mut SDL_Surface,
         x: ::core::ffi::c_int,
@@ -1977,7 +1977,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteSurfacePixelFloat(
         surface: *mut SDL_Surface,
         x: ::core::ffi::c_int,

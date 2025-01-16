@@ -41,7 +41,7 @@ use super::surface::*;
 /// The value 0 is an invalid ID.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_DisplayID = Uint32;
 
 /// This is a unique ID for a window.
@@ -49,7 +49,7 @@ pub type SDL_DisplayID = Uint32;
 /// The value 0 is an invalid ID.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_WindowID = Uint32;
 
 /// The pointer to the global `wl_display` object used by the Wayland video
@@ -69,7 +69,7 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: *const ::core::ffi::
 /// System theme.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -121,7 +121,7 @@ pub const SDL_SYSTEM_THEME_DARK: SDL_SystemTheme = SDL_SystemTheme::DARK;
 /// The structure that defines a display mode.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GetFullscreenDisplayModes`]
@@ -156,7 +156,7 @@ pub struct SDL_DisplayMode {
 /// Display orientation values; the way a display is rotated.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -227,7 +227,7 @@ pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
 /// the user or system outside of the app's control.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GetWindowFlags`]
@@ -343,7 +343,7 @@ pub const SDL_WINDOW_NOT_FOCUSABLE: SDL_WindowFlags = (2147483648_u64 as SDL_Win
 /// [`SDL_WINDOWPOS_UNDEFINED`] or [`SDL_WINDOWPOS_UNDEFINED_DISPLAY`].
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376_u32;
 
 /// Used to indicate that you don't care what the window position is.
@@ -355,7 +355,7 @@ pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376_u32;
 /// - `X`: the [`SDL_DisplayID`] of the display to use.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c_int {
     ((SDL_WINDOWPOS_UNDEFINED_MASK | X) as ::core::ffi::c_int)
@@ -366,7 +366,7 @@ pub const fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c
 /// This always uses the primary display.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_WINDOWPOS_UNDEFINED: ::core::ffi::c_int = SDL_WINDOWPOS_UNDEFINED_DISPLAY(0);
 
 /// A macro to test if the window position is marked as "undefined."
@@ -375,7 +375,7 @@ pub const SDL_WINDOWPOS_UNDEFINED: ::core::ffi::c_int = SDL_WINDOWPOS_UNDEFINED_
 /// - `X`: the window position value.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_ISUNDEFINED(X: ::core::ffi::c_int) -> ::core::primitive::bool {
     (((X as ::core::primitive::u32) & 4294901760_u32) == SDL_WINDOWPOS_UNDEFINED_MASK)
@@ -387,7 +387,7 @@ pub const fn SDL_WINDOWPOS_ISUNDEFINED(X: ::core::ffi::c_int) -> ::core::primiti
 /// [`SDL_WINDOWPOS_CENTERED`] or [`SDL_WINDOWPOS_CENTERED_DISPLAY`].
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 
 /// Used to indicate that the window position should be centered.
@@ -399,7 +399,7 @@ pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 /// - `X`: the [`SDL_DisplayID`] of the display to use.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c_int {
     ((SDL_WINDOWPOS_CENTERED_MASK | X) as ::core::ffi::c_int)
@@ -410,7 +410,7 @@ pub const fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c_
 /// This always uses the primary display.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_WINDOWPOS_CENTERED: ::core::ffi::c_int = SDL_WINDOWPOS_CENTERED_DISPLAY(0);
 
 /// A macro to test if the window position is marked as "centered."
@@ -419,7 +419,7 @@ pub const SDL_WINDOWPOS_CENTERED: ::core::ffi::c_int = SDL_WINDOWPOS_CENTERED_DI
 /// - `X`: the window position value.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitive::bool {
     (((X as ::core::primitive::u32) & 4294901760_u32) == SDL_WINDOWPOS_CENTERED_MASK)
@@ -428,7 +428,7 @@ pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitiv
 /// Window flash operation.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -480,7 +480,7 @@ pub const SDL_FLASH_UNTIL_FOCUSED: SDL_FlashOperation = SDL_FlashOperation::UNTI
 /// An opaque handle to an OpenGL context.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GL_CreateContext`]
@@ -489,31 +489,31 @@ pub type SDL_GLContext = *mut SDL_GLContextState;
 /// Opaque type for an EGL display.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_EGLDisplay = *mut ::core::ffi::c_void;
 
 /// Opaque type for an EGL config.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_EGLConfig = *mut ::core::ffi::c_void;
 
 /// Opaque type for an EGL surface.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_EGLSurface = *mut ::core::ffi::c_void;
 
 /// An EGL attribute, used when creating an EGL context.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_EGLAttrib = ::core::primitive::isize;
 
 /// An EGL integer attribute, used when creating an EGL surface.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_EGLint = ::core::ffi::c_int;
 
 /// EGL platform attribute initialization callback.
@@ -538,7 +538,7 @@ pub type SDL_EGLint = ::core::ffi::c_int;
 /// Returns a newly-allocated array of attributes, terminated with `EGL_NONE`.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_EGL_SetAttributeCallbacks`]
@@ -574,7 +574,7 @@ pub type SDL_EGLAttribArrayCallback = ::core::option::Option<
 /// Returns a newly-allocated array of attributes, terminated with `EGL_NONE`.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_EGL_SetAttributeCallbacks`]
@@ -601,7 +601,7 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 /// you should check to see exactly what you got.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -797,7 +797,7 @@ pub const SDL_GL_EGL_PLATFORM: SDL_GLAttr = SDL_GLAttr::EGL_PLATFORM;
 /// Possible values to be set for the [`SDL_GL_CONTEXT_PROFILE_MASK`] attribute.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Constant | Description |
@@ -819,7 +819,7 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = (0x0004 as SDL_GLProfile);
 /// Possible flags to be set for the [`SDL_GL_CONTEXT_FLAGS`] attribute.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Constant | Description |
@@ -842,7 +842,7 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag = (0x0008 as SD
 /// attribute.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Constant | Description |
@@ -860,7 +860,7 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLContextReleaseFlag =
 /// Possible values to be set [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] attribute.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Constant | Description |
@@ -885,7 +885,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetVideoDriver`]
@@ -912,7 +912,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetNumVideoDrivers`]
@@ -934,7 +934,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetNumVideoDrivers`]
@@ -952,7 +952,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetSystemTheme() -> SDL_SystemTheme;
 }
 
@@ -972,7 +972,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetDisplays(count: *mut ::core::ffi::c_int) -> *mut SDL_DisplayID;
 }
 
@@ -987,7 +987,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -1023,7 +1023,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetDisplayProperties(displayID: SDL_DisplayID) -> SDL_PropertiesID;
 }
 
@@ -1047,7 +1047,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -1057,7 +1057,8 @@ extern "C" {
 extern "C" {
     /// Get the desktop area represented by a display.
     ///
-    /// The primary display is always located at (0,0).
+    /// The primary display is often located at (0,0), but may be placed at a
+    /// different location depending on monitor layout.
     ///
     /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
@@ -1071,7 +1072,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetDisplayUsableBounds`]
@@ -1106,7 +1107,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetDisplayBounds`]
@@ -1131,7 +1132,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -1152,7 +1153,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -1167,6 +1168,12 @@ extern "C" {
     /// display scale, which means that the user expects UI elements to be twice as
     /// big on this display, to aid in readability.
     ///
+    /// After window creation, [`SDL_GetWindowDisplayScale()`] should be used to query
+    /// the content scale factor for individual windows instead of querying the
+    /// display for a window and calling this function, as the per-window content
+    /// scale factor may differ from the base value of the display it is on,
+    /// particularly on high-DPI and/or multi-monitor desktop configurations.
+    ///
     /// ### Parameters
     /// - `displayID`: the instance ID of the display to query.
     ///
@@ -1178,9 +1185,10 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
+    /// - [`SDL_GetWindowDisplayScale`]
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetDisplayContentScale(displayID: SDL_DisplayID) -> ::core::ffi::c_float;
 }
@@ -1212,7 +1220,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -1251,7 +1259,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetDisplays`]
@@ -1285,7 +1293,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetCurrentDisplayMode`]
@@ -1312,7 +1320,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetDesktopDisplayMode`]
@@ -1334,7 +1342,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetDisplayBounds`]
@@ -1357,7 +1365,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetDisplayBounds`]
@@ -1380,7 +1388,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetDisplayBounds`]
@@ -1406,7 +1414,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowDisplayScale`]
@@ -1438,7 +1446,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetWindowDisplayScale(window: *mut SDL_Window) -> ::core::ffi::c_float;
 }
 
@@ -1474,7 +1482,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowFullscreenMode`]
@@ -1500,7 +1508,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowFullscreenMode`]
@@ -1524,7 +1532,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetWindowICCProfile(
         window: *mut SDL_Window,
         size: *mut ::core::primitive::usize,
@@ -1546,7 +1554,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetWindowPixelFormat(window: *mut SDL_Window) -> SDL_PixelFormat;
 }
 
@@ -1567,7 +1575,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetWindows(count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Window;
 }
 
@@ -1653,7 +1661,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateWindowAndRenderer`]
@@ -1726,7 +1734,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateWindow`]
@@ -1861,7 +1869,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateProperties`]
@@ -1989,7 +1997,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowFromID`]
@@ -2013,7 +2021,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowID`]
@@ -2034,7 +2042,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreatePopupWindow`]
@@ -2164,7 +2172,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetWindowProperties(window: *mut SDL_Window) -> SDL_PropertiesID;
 }
 
@@ -2285,7 +2293,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateWindow`]
@@ -2315,7 +2323,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowTitle`]
@@ -2339,7 +2347,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowTitle`]
@@ -2371,7 +2379,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_SetWindowIcon(
         window: *mut SDL_Window,
         icon: *mut SDL_Surface,
@@ -2417,7 +2425,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowPosition`]
@@ -2453,7 +2461,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowPosition`]
@@ -2498,7 +2506,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSize`]
@@ -2531,7 +2539,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetRenderOutputSize`]
@@ -2567,7 +2575,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetWindowSafeArea(
         window: *mut SDL_Window,
         rect: *mut SDL_Rect,
@@ -2613,7 +2621,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowAspectRatio`]
@@ -2643,7 +2651,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowAspectRatio`]
@@ -2690,7 +2698,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSize`]
@@ -2721,7 +2729,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateWindow`]
@@ -2749,7 +2757,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMinimumSize`]
@@ -2779,7 +2787,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMaximumSize`]
@@ -2807,7 +2815,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMaximumSize`]
@@ -2837,7 +2845,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMinimumSize`]
@@ -2870,7 +2878,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowFlags`]
@@ -2901,7 +2909,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowFlags`]
@@ -2929,7 +2937,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowFlags`]
@@ -2953,7 +2961,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_HideWindow`]
@@ -2975,7 +2983,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_ShowWindow`]
@@ -3004,7 +3012,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_RaiseWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
@@ -3039,7 +3047,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_MinimizeWindow`]
@@ -3074,7 +3082,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_MaximizeWindow`]
@@ -3110,7 +3118,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_MaximizeWindow`]
@@ -3147,7 +3155,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowFullscreenMode`]
@@ -3184,7 +3192,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowSize`]
@@ -3211,7 +3219,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSurface`]
@@ -3243,7 +3251,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DestroyWindowSurface`]
@@ -3278,7 +3286,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSurfaceVSync`]
@@ -3308,7 +3316,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowSurfaceVSync`]
@@ -3337,7 +3345,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSurface`]
@@ -3372,7 +3380,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSurface`]
@@ -3398,7 +3406,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowSurface`]
@@ -3437,7 +3445,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowKeyboardGrab`]
@@ -3465,7 +3473,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMouseRect`]
@@ -3491,7 +3499,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowKeyboardGrab`]
@@ -3511,7 +3519,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMouseRect`]
@@ -3531,7 +3539,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowMouseGrab`]
@@ -3558,7 +3566,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowMouseRect`]
@@ -3584,7 +3592,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowMouseRect`]
@@ -3613,7 +3621,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowOpacity`]
@@ -3640,7 +3648,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowOpacity`]
@@ -3680,7 +3688,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowModal`]
@@ -3708,7 +3716,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowParent`]
@@ -3734,7 +3742,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_SetWindowFocusable(
         window: *mut SDL_Window,
         focusable: ::core::primitive::bool,
@@ -3767,7 +3775,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_ShowWindowSystemMenu(
         window: *mut SDL_Window,
         x: ::core::ffi::c_int,
@@ -3781,7 +3789,7 @@ extern "C" {
 /// This function should only be called on the main thread.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HitTest`]
@@ -3940,7 +3948,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_SetWindowHitTest(
         window: *mut SDL_Window,
         callback: SDL_HitTest,
@@ -3977,7 +3985,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_SetWindowShape(
         window: *mut SDL_Window,
         shape: *mut SDL_Surface,
@@ -3999,7 +4007,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_FlashWindow(
         window: *mut SDL_Window,
         operation: SDL_FlashOperation,
@@ -4023,7 +4031,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreatePopupWindow`]
@@ -4046,7 +4054,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DisableScreenSaver`]
@@ -4065,7 +4073,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DisableScreenSaver`]
@@ -4090,7 +4098,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_EnableScreenSaver`]
@@ -4120,7 +4128,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GL_GetProcAddress`]
@@ -4180,7 +4188,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GL_ExtensionSupported`]
@@ -4207,7 +4215,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_EGL_GetCurrentDisplay`]
@@ -4221,7 +4229,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GL_LoadLibrary`]
@@ -4252,7 +4260,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GL_ExtensionSupported(
         extension: *const ::core::ffi::c_char,
     ) -> ::core::primitive::bool;
@@ -4265,7 +4273,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GL_GetAttribute`]
@@ -4294,7 +4302,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GL_GetAttribute`]
@@ -4321,7 +4329,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GL_ResetAttributes`]
@@ -4354,7 +4362,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GL_DestroyContext`]
@@ -4379,7 +4387,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GL_CreateContext`]
@@ -4400,7 +4408,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GL_GetCurrentWindow() -> *mut SDL_Window;
 }
 
@@ -4415,7 +4423,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GL_MakeCurrent`]
@@ -4433,7 +4441,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_EGL_GetCurrentDisplay() -> SDL_EGLDisplay;
 }
 
@@ -4448,7 +4456,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_EGL_GetCurrentConfig() -> SDL_EGLConfig;
 }
 
@@ -4466,7 +4474,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_EGL_GetWindowSurface(window: *mut SDL_Window) -> SDL_EGLSurface;
 }
 
@@ -4491,7 +4499,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_EGL_SetAttributeCallbacks(
         platformAttribCallback: SDL_EGLAttribArrayCallback,
         surfaceAttribCallback: SDL_EGLIntArrayCallback,
@@ -4530,7 +4538,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GL_GetSwapInterval`]
@@ -4557,7 +4565,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GL_SetSwapInterval`]
@@ -4585,7 +4593,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GL_SwapWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
@@ -4603,7 +4611,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GL_CreateContext`]
@@ -4615,7 +4623,7 @@ extern "C" {
 /// This lives as a field in [`SDL_DisplayMode`], as opaque data.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_DisplayMode`]
@@ -4632,7 +4640,7 @@ pub struct SDL_GLContextState {
 /// The struct used as an opaque handle to a window.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_CreateWindow`]

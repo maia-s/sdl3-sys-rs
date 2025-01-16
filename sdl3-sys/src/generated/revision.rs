@@ -11,13 +11,13 @@ apply_cfg!(#[cfg(doc)] => {
     /// way.
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.1.3.
+    /// This macro is available since SDL 3.2.0.
     pub const SDL_REVISION: *const ::core::ffi::c_char = c"Some arbitrary string decided at SDL build time".as_ptr();
 
 });
 
 apply_cfg!(#[cfg(not(doc))] => {
-    pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL3-prerelease-3.1.10".as_ptr();
+    pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL3-release-3.2.0".as_ptr();
 
 });
 

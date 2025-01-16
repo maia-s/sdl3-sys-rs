@@ -131,7 +131,7 @@ extern "C" {
     /// This function is not thread safe.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_Vulkan_GetVkGetInstanceProcAddr`]
@@ -158,7 +158,7 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_Vulkan_GetVkGetInstanceProcAddr() -> SDL_FunctionPointer;
 }
 
@@ -180,7 +180,7 @@ extern "C" {
     /// This function is not thread safe.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_Vulkan_LoadLibrary`]
@@ -209,7 +209,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_Vulkan_CreateSurface`]
@@ -241,7 +241,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_Vulkan_GetInstanceExtensions`]
@@ -274,7 +274,7 @@ extern "C" {
     ///   allocator that destroys the surface. Can be NULL.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_Vulkan_GetInstanceExtensions`]
@@ -303,7 +303,7 @@ extern "C" {
     /// Returns true if supported, false if unsupported or an error occurred.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_Vulkan_GetInstanceExtensions`]

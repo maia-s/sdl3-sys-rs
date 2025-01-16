@@ -23,7 +23,7 @@ use super::scancode::*;
 /// unicode code point.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Constant | Description |
@@ -1068,7 +1068,7 @@ pub const SDLK_RHYPER: SDL_Keycode = (0x20000007 as SDL_Keycode);
 /// Valid key modifiers (possibly OR'd together).
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Constant | Description |

@@ -66,7 +66,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetClipboardText`]
@@ -89,7 +89,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_HasClipboardText`]
@@ -107,7 +107,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetClipboardText`]
@@ -129,7 +129,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetPrimarySelectionText`]
@@ -153,7 +153,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_HasPrimarySelectionText`]
@@ -172,7 +172,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetPrimarySelectionText`]
@@ -201,7 +201,7 @@ extern "C" {
 ///   freed so it needs to be retained and dealt with internally.
 ///
 /// ### Availability
-/// This function is available since SDL 3.1.3.
+/// This function is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_SetClipboardData`]
@@ -220,7 +220,7 @@ pub type SDL_ClipboardDataCallback = ::core::option::Option<
 /// - `userdata`: a pointer to provided user data.
 ///
 /// ### Availability
-/// This function is available since SDL 3.1.3.
+/// This function is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_SetClipboardData`]
@@ -256,7 +256,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_ClearClipboardData`]
@@ -282,7 +282,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetClipboardData`]
@@ -308,7 +308,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_HasClipboardData`]
@@ -333,7 +333,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetClipboardData`]
@@ -357,7 +357,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetClipboardData`]

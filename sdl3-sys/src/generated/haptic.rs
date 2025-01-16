@@ -99,7 +99,7 @@ use super::joystick::*;
 /// Constant haptic effect.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
@@ -110,7 +110,7 @@ pub const SDL_HAPTIC_CONSTANT: Uint16 = ((1_u32) as Uint16);
 /// Periodic haptic effect that simulates sine waves.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
@@ -121,7 +121,7 @@ pub const SDL_HAPTIC_SINE: Uint16 = ((2_u32) as Uint16);
 /// Periodic haptic effect that simulates square waves.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
@@ -132,7 +132,7 @@ pub const SDL_HAPTIC_SQUARE: Uint16 = ((4_u32) as Uint16);
 /// Periodic haptic effect that simulates triangular waves.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
@@ -143,7 +143,7 @@ pub const SDL_HAPTIC_TRIANGLE: Uint16 = ((8_u32) as Uint16);
 /// Periodic haptic effect that simulates saw tooth up waves.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
@@ -154,7 +154,7 @@ pub const SDL_HAPTIC_SAWTOOTHUP: Uint16 = ((16_u32) as Uint16);
 /// Periodic haptic effect that simulates saw tooth down waves.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
@@ -165,7 +165,7 @@ pub const SDL_HAPTIC_SAWTOOTHDOWN: Uint16 = ((32_u32) as Uint16);
 /// Ramp haptic effect.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticRamp`]
@@ -177,7 +177,7 @@ pub const SDL_HAPTIC_RAMP: Uint16 = ((64_u32) as Uint16);
 /// axes position.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
@@ -189,7 +189,7 @@ pub const SDL_HAPTIC_SPRING: Uint16 = ((128_u32) as Uint16);
 /// axes velocity.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
@@ -201,7 +201,7 @@ pub const SDL_HAPTIC_DAMPER: Uint16 = ((256_u32) as Uint16);
 /// acceleration.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
@@ -213,7 +213,7 @@ pub const SDL_HAPTIC_INERTIA: Uint16 = ((512_u32) as Uint16);
 /// axes movement.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
@@ -224,7 +224,7 @@ pub const SDL_HAPTIC_FRICTION: Uint16 = ((1024_u32) as Uint16);
 /// Haptic effect for direct control over high/low frequency motors.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticLeftRight`]
@@ -233,19 +233,19 @@ pub const SDL_HAPTIC_LEFTRIGHT: Uint16 = ((2048_u32) as Uint16);
 /// Reserved for future use.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_HAPTIC_RESERVED1: Uint16 = ((4096_u32) as Uint16);
 
 /// Reserved for future use.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_HAPTIC_RESERVED2: Uint16 = ((8192_u32) as Uint16);
 
 /// Reserved for future use.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_HAPTIC_RESERVED3: Uint16 = ((16384_u32) as Uint16);
 
 /// Custom effect is supported.
@@ -253,7 +253,7 @@ pub const SDL_HAPTIC_RESERVED3: Uint16 = ((16384_u32) as Uint16);
 /// User defined custom haptic effect.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_HAPTIC_CUSTOM: Uint16 = ((32768_u32) as Uint16);
 
 /// Device can set global gain.
@@ -261,7 +261,7 @@ pub const SDL_HAPTIC_CUSTOM: Uint16 = ((32768_u32) as Uint16);
 /// Device supports setting the global gain.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_SetHapticGain`]
@@ -272,7 +272,7 @@ pub const SDL_HAPTIC_GAIN: ::core::primitive::u32 = 65536_u32;
 /// Device supports setting autocenter.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_SetHapticAutocenter`]
@@ -283,7 +283,7 @@ pub const SDL_HAPTIC_AUTOCENTER: ::core::primitive::u32 = 131072_u32;
 /// Device supports querying effect status.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GetHapticEffectStatus`]
@@ -294,7 +294,7 @@ pub const SDL_HAPTIC_STATUS: ::core::primitive::u32 = 262144_u32;
 /// Devices supports being paused.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_PauseHaptic`]
@@ -304,7 +304,7 @@ pub const SDL_HAPTIC_PAUSE: ::core::primitive::u32 = 524288_u32;
 /// Uses polar coordinates for the direction.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticDirection`]
@@ -313,7 +313,7 @@ pub const SDL_HAPTIC_POLAR: Uint8 = (0 as Uint8);
 /// Uses cartesian coordinates for the direction.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticDirection`]
@@ -322,7 +322,7 @@ pub const SDL_HAPTIC_CARTESIAN: Uint8 = (1 as Uint8);
 /// Uses spherical coordinates for the direction.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticDirection`]
@@ -334,7 +334,7 @@ pub const SDL_HAPTIC_SPHERICAL: Uint8 = (2 as Uint8);
 /// guess the correct axis.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticDirection`]
@@ -343,7 +343,7 @@ pub const SDL_HAPTIC_STEERING_AXIS: Uint8 = (3 as Uint8);
 /// Used to play a device an infinite number of times.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_RunHapticEffect`]
@@ -443,7 +443,7 @@ pub const SDL_HAPTIC_INFINITY: ::core::primitive::u32 = 4294967295_u32;
 /// ```
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HAPTIC_POLAR`]
@@ -471,7 +471,7 @@ pub struct SDL_HapticDirection {
 /// the joystick.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HAPTIC_CONSTANT`]
@@ -558,7 +558,7 @@ pub struct SDL_HapticConstant {
 /// ```
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HAPTIC_SINE`]
@@ -622,7 +622,7 @@ pub struct SDL_HapticPeriodic {
 /// negative.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticDirection`]
@@ -639,7 +639,7 @@ pub struct SDL_HapticCondition {
     /// [`SDL_HAPTIC_SPRING`], [`SDL_HAPTIC_DAMPER`],
     /// [`SDL_HAPTIC_INERTIA`] or [`SDL_HAPTIC_FRICTION`]
     pub r#type: Uint16,
-    /// Direction of the effect - Not used ATM.
+    /// Direction of the effect.
     pub direction: SDL_HapticDirection,
     /// Duration of the effect.
     pub length: Uint32,
@@ -673,7 +673,7 @@ pub struct SDL_HapticCondition {
 /// instead of linear.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HAPTIC_RAMP`]
@@ -718,7 +718,7 @@ pub struct SDL_HapticRamp {
 /// is high frequency, and the large (left) motor is low frequency.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HAPTIC_LEFTRIGHT`]
@@ -750,7 +750,7 @@ pub struct SDL_HapticLeftRight {
 /// Otherwise it uses the samples in data for the different axes.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HAPTIC_CUSTOM`]
@@ -860,7 +860,7 @@ impl ::core::default::Default for SDL_HapticCustom {
 /// effect level.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_HapticConstant`]
@@ -904,7 +904,7 @@ impl ::core::default::Default for SDL_HapticEffect {
 /// The value 0 is an invalid ID.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_HapticID = Uint32;
 
 extern "C" {
@@ -920,7 +920,7 @@ extern "C" {
     ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_OpenHaptic`]
@@ -941,7 +941,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetHapticName`]
@@ -967,7 +967,7 @@ extern "C" {
     ///   more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CloseHaptic`]
@@ -990,7 +990,7 @@ extern "C" {
     ///   opened yet; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetHapticFromID(instance_id: SDL_HapticID) -> *mut SDL_Haptic;
 }
 
@@ -1005,7 +1005,7 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetHapticID(haptic: *mut SDL_Haptic) -> SDL_HapticID;
 }
 
@@ -1021,7 +1021,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetHapticNameForID`]
@@ -1035,7 +1035,7 @@ extern "C" {
     /// Returns true if the mouse is haptic or false if it isn't.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_OpenHapticFromMouse`]
@@ -1050,7 +1050,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CloseHaptic`]
@@ -1068,7 +1068,7 @@ extern "C" {
     /// Returns true if the joystick is haptic or false if it isn't.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_OpenHapticFromJoystick`]
@@ -1094,7 +1094,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CloseHaptic`]
@@ -1109,7 +1109,7 @@ extern "C" {
     /// - `haptic`: the [`SDL_Haptic`] device to close.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_OpenHaptic`]
@@ -1131,7 +1131,7 @@ extern "C" {
     ///   error code on failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetMaxHapticEffectsPlaying`]
@@ -1152,7 +1152,7 @@ extern "C" {
     ///   or -1 on failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetMaxHapticEffects`]
@@ -1171,7 +1171,7 @@ extern "C" {
     ///   on failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_HapticEffectSupported`]
@@ -1193,7 +1193,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetNumHapticAxes(haptic: *mut SDL_Haptic) -> ::core::ffi::c_int;
 }
 
@@ -1208,7 +1208,7 @@ extern "C" {
     /// Returns true if the effect is supported or false if it isn't.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateHapticEffect`]
@@ -1232,7 +1232,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DestroyHapticEffect`]
@@ -1263,7 +1263,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateHapticEffect`]
@@ -1295,7 +1295,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetHapticEffectStatus`]
@@ -1320,7 +1320,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_RunHapticEffect`]
@@ -1342,7 +1342,7 @@ extern "C" {
     /// - `effect`: the ID of the haptic effect to destroy.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateHapticEffect`]
@@ -1363,7 +1363,7 @@ extern "C" {
     ///   isn't supported.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetHapticFeatures`]
@@ -1393,7 +1393,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetHapticFeatures`]
@@ -1420,7 +1420,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetHapticFeatures`]
@@ -1447,7 +1447,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_ResumeHaptic`]
@@ -1467,7 +1467,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_PauseHaptic`]
@@ -1485,7 +1485,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_RunHapticEffect`]
@@ -1503,7 +1503,7 @@ extern "C" {
     /// Returns true if the effect is supported or false if it isn't.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_InitHapticRumble`]
@@ -1521,7 +1521,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_PlayHapticRumble`]
@@ -1543,7 +1543,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_InitHapticRumble`]
@@ -1566,7 +1566,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_PlayHapticRumble`]
@@ -1576,7 +1576,7 @@ extern "C" {
 /// The haptic structure used to identify an SDL haptic.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_OpenHaptic`]

@@ -18,7 +18,7 @@ use super::error::*;
 /// code (so Canada would be "CA").
 ///
 /// ### Availability
-/// This function is available since SDL 3.1.3.
+/// This function is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GetPreferredLocales`]
@@ -83,7 +83,7 @@ extern "C" {
     ///   longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPreferredLocales(count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Locale;
 }
 

@@ -8,7 +8,7 @@ use super::stdinc::*;
 /// If this were SDL version 3.2.1, this value would be 3.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_MAJOR_VERSION: ::core::primitive::i32 = 3;
 
 /// The current minor version of the SDL headers.
@@ -16,16 +16,16 @@ pub const SDL_MAJOR_VERSION: ::core::primitive::i32 = 3;
 /// If this were SDL version 3.2.1, this value would be 2.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
-pub const SDL_MINOR_VERSION: ::core::primitive::i32 = 1;
+/// This macro is available since SDL 3.2.0.
+pub const SDL_MINOR_VERSION: ::core::primitive::i32 = 2;
 
 /// The current micro (or patchlevel) version of the SDL headers.
 ///
 /// If this were SDL version 3.2.1, this value would be 1.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
-pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 10;
+/// This macro is available since SDL 3.2.0.
+pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 0;
 
 /// This macro turns the version numbers into a numeric value.
 ///
@@ -37,7 +37,7 @@ pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 10;
 /// - `patch`: the patch version number.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_VERSIONNUM(
     major: ::core::primitive::i32,
@@ -55,7 +55,7 @@ pub const fn SDL_VERSIONNUM(
 /// - `version`: the version number.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_VERSIONNUM_MAJOR(version: ::core::primitive::i32) -> ::core::primitive::i32 {
     (version / 1000000_i32)
@@ -69,7 +69,7 @@ pub const fn SDL_VERSIONNUM_MAJOR(version: ::core::primitive::i32) -> ::core::pr
 /// - `version`: the version number.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_VERSIONNUM_MINOR(version: ::core::primitive::i32) -> ::core::primitive::i32 {
     ((version / 1000_i32) % 1000_i32)
@@ -83,7 +83,7 @@ pub const fn SDL_VERSIONNUM_MINOR(version: ::core::primitive::i32) -> ::core::pr
 /// - `version`: the version number.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_VERSIONNUM_MICRO(version: ::core::primitive::i32) -> ::core::primitive::i32 {
     (version % 1000_i32)
@@ -92,7 +92,7 @@ pub const fn SDL_VERSIONNUM_MICRO(version: ::core::primitive::i32) -> ::core::pr
 /// This is the version number macro for the current SDL version.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GetVersion`]
@@ -102,7 +102,7 @@ pub const SDL_VERSION: ::core::primitive::i32 =
 /// This macro will evaluate to true if compiled with SDL at least X.Y.Z.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_VERSION_ATLEAST(
     X: ::core::primitive::i32,
@@ -126,7 +126,7 @@ extern "C" {
     /// Returns the version of the linked library.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetRevision`]
@@ -155,7 +155,7 @@ extern "C" {
     ///   the SDL library in use.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetVersion`]

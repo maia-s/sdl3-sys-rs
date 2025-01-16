@@ -49,7 +49,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
     ///   Windows event loop.
     ///
     /// ### Availability
-    /// This datatype is available since SDL 3.1.3.
+    /// This datatype is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowsMessageHook`]
@@ -67,7 +67,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
         /// - `userdata`: a pointer to pass to every iteration of `callback`.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         ///
         /// ### See also
         /// - [`SDL_WindowsMessageHook`]
@@ -96,7 +96,7 @@ apply_cfg!(#[cfg(any(any(doc, target_os = "windows"), any(doc, all(target_os = "
         ///   [`SDL_GetError()`] for more information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_GetDirect3D9AdapterIndex(displayID: SDL_DisplayID) -> ::core::ffi::c_int;
     }
 
@@ -117,7 +117,7 @@ apply_cfg!(#[cfg(any(any(doc, target_os = "windows"), any(doc, all(target_os = "
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_GetDXGIOutputInfo(displayID: SDL_DisplayID, adapterIndex: *mut ::core::ffi::c_int, outputIndex: *mut ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
@@ -162,7 +162,7 @@ apply_cfg!(#[cfg(not(any(feature = "use-x11-dl-v2", feature = "use-x11-v2")))] =
 ///   X11 event loop.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_SetX11EventHook`]
@@ -184,7 +184,7 @@ extern "C" {
     /// - `userdata`: a pointer to pass to every iteration of `callback`.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_SetX11EventHook(callback: SDL_X11EventHook, userdata: *mut ::core::ffi::c_void);
 }
 
@@ -203,7 +203,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "linux"))] => {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_SetLinuxThreadPriority(threadID: Sint64, priority: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
@@ -223,7 +223,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "linux"))] => {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_SetLinuxThreadPriorityAndPolicy(threadID: Sint64, sdlPriority: ::core::ffi::c_int, schedPolicy: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
@@ -243,7 +243,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
     ///   [`SDL_SetiOSAnimationCallback`] as `callbackParam`.
     ///
     /// ### Availability
-    /// This datatype is available since SDL 3.1.3.
+    /// This datatype is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetiOSAnimationCallback`]
@@ -286,7 +286,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         ///
         /// ### See also
         /// - [`SDL_SetiOSEventPump`]
@@ -302,7 +302,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
         /// - `enabled`: true to enable the event pump, false to disable it.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         ///
         /// ### See also
         /// - [`SDL_SetiOSAnimationCallback`]
@@ -331,7 +331,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         ///
         /// ### See also
         /// - [`SDL_GetAndroidActivity`]
@@ -360,7 +360,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         ///
         /// ### See also
         /// - [`SDL_GetAndroidJNIEnv`]
@@ -401,7 +401,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         /// Returns the Android API level.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_GetAndroidSDKVersion() -> ::core::ffi::c_int;
     }
 
@@ -412,7 +412,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         /// Returns true if this is a Chromebook, false otherwise.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_IsChromebook() -> ::core::primitive::bool;
     }
 
@@ -423,7 +423,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         /// Returns true if this is a DeX docking station, false otherwise.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_IsDeXMode() -> ::core::primitive::bool;
     }
 
@@ -434,7 +434,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_SendAndroidBackButton();
     }
 
@@ -442,14 +442,14 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
     /// <http://developer.android.com/guide/topics/data/data-storage.html>
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.1.3.
+    /// This macro is available since SDL 3.2.0.
     pub const SDL_ANDROID_EXTERNAL_STORAGE_READ: Uint32 = (0x01 as Uint32);
 
     /// See the official Android developer guide for more information:
     /// <http://developer.android.com/guide/topics/data/data-storage.html>
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.1.3.
+    /// This macro is available since SDL 3.2.0.
     pub const SDL_ANDROID_EXTERNAL_STORAGE_WRITE: Uint32 = (0x02 as Uint32);
 
     extern "C" {
@@ -470,7 +470,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         ///   [`SDL_GetError()`] for more information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         ///
         /// ### See also
         /// - [`SDL_GetAndroidExternalStoragePath`]
@@ -491,7 +491,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         ///   currently unavailable.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         ///
         /// ### See also
         /// - [`SDL_GetAndroidExternalStoragePath`]
@@ -516,7 +516,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         ///   or NULL on failure; call [`SDL_GetError()`] for more information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         ///
         /// ### See also
         /// - [`SDL_GetAndroidExternalStorageState`]
@@ -542,7 +542,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         ///   on failure; call [`SDL_GetError()`] for more information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         ///
         /// ### See also
         /// - [`SDL_GetAndroidInternalStoragePath`]
@@ -558,7 +558,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
     /// - `granted`: true if permission is granted, false if denied.
     ///
     /// ### Availability
-    /// This datatype is available since SDL 3.1.3.
+    /// This datatype is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_RequestAndroidPermission`]
@@ -601,7 +601,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_RequestAndroidPermission(permission: *const ::core::ffi::c_char, cb: SDL_RequestAndroidPermissionCallback, userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool;
     }
 
@@ -634,7 +634,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_ShowAndroidToast(message: *const ::core::ffi::c_char, duration: ::core::ffi::c_int, gravity: ::core::ffi::c_int, xoffset: ::core::ffi::c_int, yoffset: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
@@ -655,7 +655,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_SendAndroidMessage(command: Uint32, param: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
@@ -670,7 +670,7 @@ extern "C" {
     /// Returns true if the device is a tablet, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_IsTablet() -> ::core::primitive::bool;
 }
 
@@ -683,7 +683,7 @@ extern "C" {
     /// Returns true if the device is a TV, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_IsTV() -> ::core::primitive::bool;
 }
 
@@ -749,7 +749,7 @@ extern "C" {
     ///   application is not running in a sandbox environment.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.6.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetSandbox() -> SDL_Sandbox;
 }
 
@@ -768,7 +768,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_OnApplicationWillTerminate();
 }
 
@@ -787,7 +787,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_OnApplicationDidReceiveMemoryWarning();
 }
 
@@ -806,7 +806,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_OnApplicationWillEnterBackground();
 }
 
@@ -825,7 +825,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_OnApplicationDidEnterBackground();
 }
 
@@ -844,7 +844,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_OnApplicationWillEnterForeground();
 }
 
@@ -863,7 +863,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_OnApplicationDidEnterForeground();
 }
 
@@ -883,7 +883,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
         /// It is safe to call this function from any thread.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_OnApplicationDidChangeStatusBarOrientation();
     }
 
@@ -910,7 +910,7 @@ apply_cfg!(#[cfg(any(doc, all(windows, feature = "target-gdk")))] => {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_GetGDKTaskQueue(outTaskQueue: *mut XTaskQueueHandle) -> ::core::primitive::bool;
     }
 
@@ -929,7 +929,7 @@ apply_cfg!(#[cfg(any(doc, all(windows, feature = "target-gdk")))] => {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_GetGDKDefaultUser(outUserHandle: *mut XUserHandle) -> ::core::primitive::bool;
     }
 

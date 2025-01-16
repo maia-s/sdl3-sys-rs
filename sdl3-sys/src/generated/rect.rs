@@ -8,7 +8,7 @@ use super::error::*;
 /// The structure that defines a point (using integers).
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GetRectEnclosingPoints`]
@@ -25,7 +25,7 @@ pub struct SDL_Point {
 /// The structure that defines a point (using floating point values).
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GetRectEnclosingPointsFloat`]
@@ -42,7 +42,7 @@ pub struct SDL_FPoint {
 /// A rectangle, with the origin at the upper left (using integers).
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_RectEmpty`]
@@ -67,7 +67,7 @@ pub struct SDL_Rect {
 /// values).
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_RectEmptyFloat`]
@@ -101,7 +101,7 @@ pub struct SDL_FRect {
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.1.3.
+/// This function is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_RectToFRect(rect: *const SDL_Rect, frect: *mut SDL_FRect) {
     {
@@ -161,7 +161,7 @@ pub unsafe fn SDL_RectToFRect(rect: *const SDL_Rect, frect: *mut SDL_FRect) {
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.1.3.
+/// This function is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_PointInRect(p: *const SDL_Point, r: *const SDL_Rect) -> ::core::primitive::bool {
     return if (((((!p.is_null() && !r.is_null())
@@ -202,7 +202,7 @@ pub unsafe fn SDL_PointInRect(p: *const SDL_Point, r: *const SDL_Rect) -> ::core
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.1.3.
+/// This function is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_RectEmpty(r: *const SDL_Rect) -> ::core::primitive::bool {
     return if ((!(!r.is_null()) || (unsafe { ::core::ptr::addr_of!((*r).w).read() } <= 0_i32))
@@ -235,7 +235,7 @@ pub unsafe fn SDL_RectEmpty(r: *const SDL_Rect) -> ::core::primitive::bool {
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.1.3.
+/// This function is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_RectsEqual(a: *const SDL_Rect, b: *const SDL_Rect) -> ::core::primitive::bool {
     return if (((((!a.is_null() && !b.is_null())
@@ -270,7 +270,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetRectIntersection`]
@@ -295,7 +295,7 @@ extern "C" {
     /// Returns true if there is an intersection, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_HasRectIntersection`]
@@ -320,7 +320,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetRectUnion(
         A: *const SDL_Rect,
         B: *const SDL_Rect,
@@ -347,7 +347,7 @@ extern "C" {
     ///   outside of the clipping rectangle.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetRectEnclosingPoints(
         points: *const SDL_Point,
         count: ::core::ffi::c_int,
@@ -376,7 +376,7 @@ extern "C" {
     /// Returns true if there is an intersection, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetRectAndLineIntersection(
         rect: *const SDL_Rect,
         X1: *mut ::core::ffi::c_int,
@@ -409,7 +409,7 @@ extern "C" {
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.1.3.
+/// This function is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_PointInRectFloat(
     p: *const SDL_FPoint,
@@ -453,7 +453,7 @@ pub unsafe fn SDL_PointInRectFloat(
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.1.3.
+/// This function is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_RectEmptyFloat(r: *const SDL_FRect) -> ::core::primitive::bool {
     return if ((!(!r.is_null()) || (unsafe { ::core::ptr::addr_of!((*r).w).read() } < 0.0_f32))
@@ -490,7 +490,7 @@ pub unsafe fn SDL_RectEmptyFloat(r: *const SDL_FRect) -> ::core::primitive::bool
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.1.3.
+/// This function is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_RectsEqualFloat`]
@@ -558,7 +558,7 @@ pub unsafe fn SDL_RectsEqualEpsilon(
 /// It is safe to call this function from any thread.
 ///
 /// ### Availability
-/// This function is available since SDL 3.1.3.
+/// This function is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_RectsEqualEpsilon`]
@@ -583,7 +583,7 @@ extern "C" {
     /// Returns true if there is an intersection, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetRectIntersection`]
@@ -608,7 +608,7 @@ extern "C" {
     /// Returns true if there is an intersection, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_HasRectIntersectionFloat`]
@@ -633,7 +633,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetRectUnionFloat(
         A: *const SDL_FRect,
         B: *const SDL_FRect,
@@ -661,7 +661,7 @@ extern "C" {
     ///   outside of the clipping rectangle.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetRectEnclosingPointsFloat(
         points: *const SDL_FPoint,
         count: ::core::ffi::c_int,
@@ -691,7 +691,7 @@ extern "C" {
     /// Returns true if there is an intersection, false otherwise.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetRectAndLineIntersectionFloat(
         rect: *const SDL_FRect,
         X1: *mut ::core::ffi::c_float,

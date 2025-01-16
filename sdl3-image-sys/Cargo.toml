@@ -36,7 +36,7 @@ use-vcpkg = ["dep:vcpkg"]
 debug-impls = []
 
 [dependencies]
-sdl3-sys = { version = "0.3", path = "../sdl3-sys" }
+sdl3-sys = { version = "0.4", path = "../sdl3-sys" }
 
 [build-dependencies.cmake]
 version = "0.1"

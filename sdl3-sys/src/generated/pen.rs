@@ -26,25 +26,25 @@ use super::touch::*;
 /// pen physically leaves the area and returns, it might get a new ID.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_PenID = Uint32;
 
 /// The [`SDL_MouseID`] for mouse events simulated with pen input.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_PEN_MOUSEID: SDL_MouseID = (-2_i32 as SDL_MouseID);
 
 /// The [`SDL_TouchID`] for touch events simulated with pen input.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_PEN_TOUCHID: SDL_TouchID = (-2_i32 as SDL_TouchID);
 
 /// Pen input flags, as reported by various pen events' `pen_state` field.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Constant | Description |
@@ -92,7 +92,7 @@ pub const SDL_PEN_INPUT_ERASER_TIP: SDL_PenInputFlags = ((1073741824_u32) as SDL
 /// `SDL_sinf(xtilt * SDL_PI_F / 180.0)`.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |

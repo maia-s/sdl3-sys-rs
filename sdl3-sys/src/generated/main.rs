@@ -41,7 +41,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// explanation.
     ///
     /// ### Availability
-    /// This macro is used by the headers since SDL 3.1.3.
+    /// This macro is used by the headers since SDL 3.2.0.
     pub const SDL_MAIN_HANDLED: ::core::primitive::i32 = 1;
 
 });
@@ -96,7 +96,7 @@ extern "C" {
     ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_AppIterate`]
@@ -158,7 +158,7 @@ extern "C" {
     ///   for events not pushed on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_AppInit`]
@@ -213,7 +213,7 @@ extern "C" {
     ///   the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_AppInit`]
@@ -257,7 +257,7 @@ extern "C" {
     ///   if other threads that push events are still active.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_AppInit`]
@@ -276,7 +276,7 @@ extern "C" {
 ///   errors.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_main_func = ::core::option::Option<
     unsafe extern "C" fn(
         argc: ::core::ffi::c_int,
@@ -318,7 +318,7 @@ extern "C" {
     /// This is the program entry point.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_main(
         argc: ::core::ffi::c_int,
         argv: *mut *mut ::core::ffi::c_char,
@@ -335,7 +335,7 @@ extern "C" {
     /// including SDL.h.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_Init`]
@@ -373,7 +373,7 @@ extern "C" {
     ///   process's initial thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_RunApp(
         argc: ::core::ffi::c_int,
         argv: *mut *mut ::core::ffi::c_char,
@@ -410,7 +410,7 @@ extern "C" {
     ///   function call in [`SDL_main`].
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_EnterAppMainCallbacks(
         argc: ::core::ffi::c_int,
         argv: *mut *mut ::core::ffi::c_char,
@@ -448,7 +448,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
         ///   information.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_RegisterApp(name: *const ::core::ffi::c_char, style: Uint32, hInst: *mut ::core::ffi::c_void) -> ::core::primitive::bool;
     }
 
@@ -466,7 +466,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
         /// zero through calls to this function.
         ///
         /// ### Availability
-        /// This function is available since SDL 3.1.3.
+        /// This function is available since SDL 3.2.0.
         pub fn SDL_UnregisterApp();
     }
 
@@ -479,7 +479,7 @@ extern "C" {
     /// do nothing and set an "unsupported" error message.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GDKSuspendComplete();
 }
 

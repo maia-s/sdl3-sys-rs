@@ -28,7 +28,7 @@ use super::video::*;
 /// single asterisk ("*"), which serves as an "All files" filter.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_DialogFileCallback`]
@@ -82,7 +82,7 @@ impl ::core::default::Default for SDL_DialogFileFilter {
 /// - `filter`: index of the selected filter.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_DialogFileFilter`]
@@ -142,7 +142,7 @@ extern "C" {
     ///   different one, depending on the OS's constraints.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DialogFileCallback`]
@@ -203,7 +203,7 @@ extern "C" {
     ///   different one, depending on the OS's constraints.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DialogFileCallback`]
@@ -260,7 +260,7 @@ extern "C" {
     ///   different one, depending on the OS's constraints.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DialogFileCallback`]
@@ -282,7 +282,7 @@ extern "C" {
 /// dialog to present to the user.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_ShowFileDialogWithProperties`]
@@ -369,7 +369,7 @@ extern "C" {
     ///   different one, depending on the OS's constraints.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_FileDialogType`]

@@ -1,4 +1,16 @@
-//! Functions to provide thread synchronization primitives.
+//! SDL offers several thread synchronization primitives. This document can't
+//! cover the complicated topic of thread safety, but reading up on what each
+//! of these primitives are, why they are useful, and how to correctly use them
+//! is vital to writing correct and safe multithreaded programs.
+//!
+//! - Mutexes: [`SDL_CreateMutex()`]
+//! - Read/Write locks: [`SDL_CreateRWLock()`]
+//! - Semaphores: [`SDL_CreateSemaphore()`]
+//! - Condition variables: [`SDL_CreateCondition()`]
+//!
+//! SDL also offers a datatype, [`SDL_InitState`], which can be used to make sure
+//! only one thread initializes/deinitializes some resource that several
+//! threads might try to use for the first time simultaneously.
 
 use super::stdinc::*;
 
@@ -29,7 +41,7 @@ extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DestroyMutex`]
@@ -58,7 +70,7 @@ extern "C" {
     /// - `mutex`: the mutex to lock.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_TryLockMutex`]
@@ -84,7 +96,7 @@ extern "C" {
     /// Returns true on success, false if the mutex would block.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LockMutex`]
@@ -106,7 +118,7 @@ extern "C" {
     /// - `mutex`: the mutex to unlock.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LockMutex`]
@@ -127,7 +139,7 @@ extern "C" {
     /// - `mutex`: the mutex to destroy.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateMutex`]
@@ -167,7 +179,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DestroyRWLock`]
@@ -210,7 +222,7 @@ extern "C" {
     /// - `rwlock`: the read/write lock to lock.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LockRWLockForWriting`]
@@ -244,7 +256,7 @@ extern "C" {
     /// - `rwlock`: the read/write lock to lock.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LockRWLockForReading`]
@@ -274,7 +286,7 @@ extern "C" {
     /// Returns true on success, false if the lock would block.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LockRWLockForReading`]
@@ -309,7 +321,7 @@ extern "C" {
     /// Returns true on success, false if the lock would block.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LockRWLockForWriting`]
@@ -336,7 +348,7 @@ extern "C" {
     /// - `rwlock`: the rwlock to unlock.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LockRWLockForReading`]
@@ -359,7 +371,7 @@ extern "C" {
     /// - `rwlock`: the rwlock to destroy.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateRWLock`]
@@ -383,7 +395,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DestroySemaphore`]
@@ -405,7 +417,7 @@ extern "C" {
     /// - `sem`: the semaphore to destroy.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateSemaphore`]
@@ -426,7 +438,7 @@ extern "C" {
     /// - `sem`: the semaphore wait on.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SignalSemaphore`]
@@ -450,7 +462,7 @@ extern "C" {
     /// Returns true if the wait succeeds, false if the wait would block.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SignalSemaphore`]
@@ -475,7 +487,7 @@ extern "C" {
     /// Returns true if the wait succeeds or false if the wait times out.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SignalSemaphore`]
@@ -494,7 +506,7 @@ extern "C" {
     /// - `sem`: the semaphore to increment.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_TryWaitSemaphore`]
@@ -513,7 +525,7 @@ extern "C" {
     /// Returns the current value of the semaphore.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetSemaphoreValue(sem: *mut SDL_Semaphore) -> Uint32;
 }
 
@@ -525,7 +537,7 @@ extern "C" {
     ///   for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_BroadcastCondition`]
@@ -543,7 +555,7 @@ extern "C" {
     /// - `cond`: the condition variable to destroy.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateCondition`]
@@ -560,7 +572,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_BroadcastCondition`]
@@ -579,7 +591,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SignalCondition`]
@@ -611,7 +623,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_BroadcastCondition`]
@@ -647,7 +659,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_BroadcastCondition`]
@@ -663,7 +675,7 @@ extern "C" {
 /// The current status of an [`SDL_InitState`] structure.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -764,7 +776,7 @@ pub const SDL_INIT_STATUS_UNINITIALIZING: SDL_InitStatus = SDL_InitStatus::UNINI
 /// code.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_InitState {
@@ -802,7 +814,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetInitialized`]
@@ -829,7 +841,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetInitialized`]
@@ -852,7 +864,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_ShouldInit`]
@@ -871,7 +883,7 @@ extern "C" {
 /// <https://en.wikipedia.org/wiki/Condition_variable>
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 #[repr(C)]
 pub struct SDL_Condition {
     _opaque: [::core::primitive::u8; 0],
@@ -887,7 +899,7 @@ pub struct SDL_Condition {
 /// <https://en.wikipedia.org/wiki/Mutex>
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 #[repr(C)]
 pub struct SDL_Mutex {
     _opaque: [::core::primitive::u8; 0],
@@ -909,7 +921,7 @@ pub struct SDL_Mutex {
 /// These are documented in the other rwlock functions.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 #[repr(C)]
 pub struct SDL_RWLock {
     _opaque: [::core::primitive::u8; 0],
@@ -927,7 +939,7 @@ pub struct SDL_RWLock {
 /// <https://en.wikipedia.org/wiki/Semaphore_(programming)>
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 #[repr(C)]
 pub struct SDL_Semaphore {
     _opaque: [::core::primitive::u8; 0],

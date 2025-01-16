@@ -17,7 +17,7 @@ extern "C" {
     ///   available, returns a string beginning with the text "Unknown".
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPlatform() -> *const ::core::ffi::c_char;
 }
 

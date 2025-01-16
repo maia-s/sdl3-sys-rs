@@ -1,4 +1,15 @@
-//! SDL touch management.
+//! SDL offers touch input, on platforms that support it. It can manage
+//! multiple touch devices and track multiple fingers on those devices.
+//!
+//! Touches are mostly dealt with through the event system, in the
+//! [`SDL_EVENT_FINGER_DOWN`], [`SDL_EVENT_FINGER_MOTION`], and [`SDL_EVENT_FINGER_UP`]
+//! events, but there are also functions to query for hardware details, etc.
+//!
+//! The touch system, by default, will also send virtual mouse events; this can
+//! be useful for making a some desktop apps work on a phone without
+//! significant changes. For apps that care about mouse and touch input
+//! separately, they should ignore mouse events that have a `which` field of
+//! [`SDL_TOUCH_MOUSEID`].
 
 use super::stdinc::*;
 
@@ -14,7 +25,7 @@ use super::mouse::*;
 /// The value 0 is an invalid ID.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_TouchID = Uint64;
 
 /// A unique ID for a single finger on a touch device.
@@ -27,13 +38,13 @@ pub type SDL_TouchID = Uint64;
 /// The value 0 is an invalid ID.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_FingerID = Uint64;
 
 /// An enum that describes the type of a touch device.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -95,7 +106,7 @@ pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType =
 /// reality), and this struct reports details of the specific fingers.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GetTouchFingers`]
@@ -117,13 +128,13 @@ pub struct SDL_Finger {
 /// The [`SDL_MouseID`] for mouse events simulated with touch input.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_TOUCH_MOUSEID: SDL_MouseID = (-1_i32 as SDL_MouseID);
 
 /// The [`SDL_TouchID`] for touch events simulated with mouse input.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_MOUSE_TOUCHID: SDL_TouchID = (-1_i32 as SDL_TouchID);
 
 extern "C" {
@@ -143,7 +154,7 @@ extern "C" {
     ///   [`SDL_free()`] when it is no longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetTouchDevices(count: *mut ::core::ffi::c_int) -> *mut SDL_TouchID;
 }
 
@@ -158,7 +169,7 @@ extern "C" {
     ///   more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetTouchDeviceName(touchID: SDL_TouchID) -> *const ::core::ffi::c_char;
 }
 
@@ -172,7 +183,7 @@ extern "C" {
     /// Returns touch device type.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetTouchDeviceType(touchID: SDL_TouchID) -> SDL_TouchDeviceType;
 }
 
@@ -191,7 +202,7 @@ extern "C" {
     ///   longer needed.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetTouchFingers(
         touchID: SDL_TouchID,
         count: *mut ::core::ffi::c_int,

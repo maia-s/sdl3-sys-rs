@@ -54,7 +54,7 @@ apply_cfg!(#[cfg(doc)] => {
     ///   [`SDL_assert_paranoid`].
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.1.3.
+    /// This macro is available since SDL 3.2.0.
     pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 1;
 
 });
@@ -86,7 +86,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// It is safe to call this macro from any thread.
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.1.3.
+    /// This macro is available since SDL 3.2.0.
     #[inline(always)]
     pub unsafe fn SDL_TriggerBreakpoint() {
         crate::breakpoint()
@@ -168,7 +168,7 @@ pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 3;
 /// - `condition`: the condition to assert (but not actually run here).
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[doc(hidden)]
 #[macro_export]
 macro_rules! SDL_disabled_assert {
@@ -192,7 +192,7 @@ pub use SDL_disabled_assert;
 /// problem).
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -260,7 +260,7 @@ pub const SDL_ASSERTION_ALWAYS_IGNORE: SDL_AssertState = SDL_AssertState::ALWAYS
 /// returned as a linked list from [`SDL_GetAssertionReport()`].
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -307,7 +307,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_ReportAssertion(
         data: *mut SDL_AssertData,
         func: *const ::core::ffi::c_char,
@@ -323,7 +323,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// instead.
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.1.3.
+    /// This macro is available since SDL 3.2.0.
     #[inline(always)]
     pub unsafe fn SDL_AssertBreakpoint() {
         unsafe { SDL_TriggerBreakpoint() }
@@ -358,7 +358,7 @@ apply_cfg!(#[cfg(not(doc))] => {
 /// - `condition`: the condition to assert.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[doc(hidden)]
 #[macro_export]
 macro_rules! SDL_enabled_assert {
@@ -435,7 +435,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// It is safe to call this macro from any thread.
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.1.3.
+    /// This macro is available since SDL 3.2.0.
     #[doc(hidden)]
     #[macro_export]
     macro_rules! SDL_assert {
@@ -475,7 +475,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// It is safe to call this macro from any thread.
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.1.3.
+    /// This macro is available since SDL 3.2.0.
     #[doc(hidden)]
     #[macro_export]
     macro_rules! SDL_assert_release {
@@ -511,7 +511,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// It is safe to call this macro from any thread.
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.1.3.
+    /// This macro is available since SDL 3.2.0.
     #[doc(hidden)]
     #[macro_export]
     macro_rules! SDL_assert_paranoid {
@@ -662,7 +662,7 @@ apply_cfg!(#[cfg(not(doc))] => {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[doc(hidden)]
 #[macro_export]
 macro_rules! SDL_assert_always {
@@ -688,7 +688,7 @@ pub use SDL_assert_always;
 ///   assert at any time.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_AssertionHandler = ::core::option::Option<
     unsafe extern "C" fn(
         data: *const SDL_AssertData,
@@ -718,7 +718,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetAssertionHandler`]
@@ -744,7 +744,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetAssertionHandler`]
@@ -775,7 +775,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetAssertionHandler`]
@@ -815,7 +815,7 @@ extern "C" {
     ///   returned pointer invalid.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_ResetAssertionReport`]
@@ -836,7 +836,7 @@ extern "C" {
     ///   memory leaks or crashes.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetAssertionReport`]

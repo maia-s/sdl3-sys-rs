@@ -1,4 +1,13 @@
 //! SDL power management routines.
+//!
+//! There is a single function in this category: [`SDL_GetPowerInfo()`].
+//!
+//! This function is useful for games on the go. This allows an app to know if
+//! it's running on a draining battery, which can be useful if the app wants to
+//! reduce processing, or perhaps framerate, to extend the duration of the
+//! battery's charge. Perhaps the app just wants to show a battery meter when
+//! fullscreen, or alert the user when the power is getting extremely low, so
+//! they can save their game.
 
 use super::stdinc::*;
 
@@ -9,7 +18,7 @@ use super::error::*;
 /// These are results returned by [`SDL_GetPowerInfo()`].
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -106,7 +115,7 @@ extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPowerInfo(
         seconds: *mut ::core::ffi::c_int,
         percent: *mut ::core::ffi::c_int,

@@ -59,7 +59,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LockSpinlock`]
@@ -80,7 +80,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_TryLockSpinlock`]
@@ -103,7 +103,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LockSpinlock`]
@@ -127,7 +127,7 @@ apply_cfg!(#[cfg(doc)] => {
     ///   dealing with some very sensitive code; be careful!
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.1.3.
+    /// This macro is available since SDL 3.2.0.
     #[inline(always)]
     pub fn SDL_CompilerBarrier() {
         ::core::sync::atomic::compiler_fence(::core::sync::atomic::Ordering::SeqCst)
@@ -183,7 +183,7 @@ extern "C" {
     ///   dealing with some very sensitive code; be careful!
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_MemoryBarrierRelease`]
@@ -211,7 +211,7 @@ extern "C" {
     ///   dealing with some very sensitive code; be careful!
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_MemoryBarrierAcquire`]
@@ -246,7 +246,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// This macro is safe to use from any thread.
     ///
     /// ### Availability
-    /// This macro is available since SDL 3.1.3.
+    /// This macro is available since SDL 3.2.0.
     #[inline(always)]
     pub fn SDL_CPUPauseInstruction() {
         #[cfg(all(feature = "nightly", any(target_arch = "aarch64", target_arch = "arm64ec")))]
@@ -311,7 +311,7 @@ apply_cfg!(#[cfg(not(doc))] => {
 /// directly. You have to use SDL atomic functions.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_CompareAndSwapAtomicInt`]
@@ -343,7 +343,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetAtomicInt`]
@@ -374,7 +374,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetAtomicInt`]
@@ -397,7 +397,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetAtomicInt`]
@@ -423,7 +423,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_AtomicDecRef`]
@@ -445,7 +445,7 @@ extern "C" {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_AtomicDecRef`]
@@ -469,7 +469,7 @@ pub unsafe fn SDL_AtomicIncRef(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_AtomicIncRef`]
@@ -498,7 +498,7 @@ pub unsafe fn SDL_AtomicDecRef(a: *mut SDL_AtomicInt) -> ::core::primitive::bool
 /// directly. You have to use SDL atomic functions.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_CompareAndSwapAtomicU32`]
@@ -529,7 +529,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetAtomicU32`]
@@ -560,7 +560,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetAtomicU32`]
@@ -583,7 +583,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetAtomicU32`]
@@ -608,7 +608,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CompareAndSwapAtomicInt`]
@@ -638,7 +638,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CompareAndSwapAtomicPointer`]
@@ -665,7 +665,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CompareAndSwapAtomicPointer`]

@@ -9,7 +9,7 @@ use super::video::*;
 /// A handle to a CAMetalLayer-backed NSView (macOS) or UIView (iOS/tvOS).
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_MetalView = *mut ::core::ffi::c_void;
 
 extern "C" {
@@ -29,7 +29,7 @@ extern "C" {
     /// Returns handle NSView or UIView.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_Metal_DestroyView`]
@@ -47,7 +47,7 @@ extern "C" {
     /// - `view`: the [`SDL_MetalView`] object.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_Metal_CreateView`]
@@ -64,7 +64,7 @@ extern "C" {
     /// Returns a pointer.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_Metal_GetLayer(view: SDL_MetalView) -> *mut ::core::ffi::c_void;
 }
 

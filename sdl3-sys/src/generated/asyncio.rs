@@ -247,7 +247,7 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CloseAsyncIO`]
@@ -277,7 +277,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetAsyncIOSize(asyncio: *mut SDL_AsyncIO) -> Sint64;
 }
 
@@ -317,7 +317,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_WriteAsyncIO`]
@@ -367,7 +367,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_ReadAsyncIO`]
@@ -432,7 +432,7 @@ extern "C" {
     ///   threads should not attempt to close the same object.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_CloseAsyncIO(
         asyncio: *mut SDL_AsyncIO,
         flush: ::core::primitive::bool,
@@ -455,7 +455,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DestroyAsyncIOQueue`]
@@ -493,7 +493,7 @@ extern "C" {
     ///   [`SDL_WaitAsyncIOResult`].
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_DestroyAsyncIOQueue(queue: *mut SDL_AsyncIOQueue);
 }
 
@@ -522,7 +522,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_WaitAsyncIOResult`]
@@ -575,7 +575,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SignalAsyncIOQueue`]
@@ -607,7 +607,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_WaitAsyncIOResult`]
@@ -644,7 +644,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_LoadFile_IO`]

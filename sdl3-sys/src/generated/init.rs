@@ -33,7 +33,7 @@ use super::events::*;
 /// the subsystems which you will be using in your application.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_Init`]
@@ -95,7 +95,7 @@ pub const SDL_INIT_CAMERA: SDL_InitFlags = (0x00010000 as SDL_InitFlags);
 /// for complete details.
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -162,7 +162,7 @@ pub const SDL_APP_FAILURE: SDL_AppResult = SDL_AppResult::FAILURE;
 ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_AppInit_func = ::core::option::Option<
     unsafe extern "C" fn(
         appstate: *mut *mut ::core::ffi::c_void,
@@ -185,7 +185,7 @@ pub type SDL_AppInit_func = ::core::option::Option<
 ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_AppIterate_func = ::core::option::Option<
     unsafe extern "C" fn(appstate: *mut ::core::ffi::c_void) -> SDL_AppResult,
 >;
@@ -205,7 +205,7 @@ pub type SDL_AppIterate_func = ::core::option::Option<
 ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_AppEvent_func = ::core::option::Option<
     unsafe extern "C" fn(
         appstate: *mut ::core::ffi::c_void,
@@ -224,7 +224,7 @@ pub type SDL_AppEvent_func = ::core::option::Option<
 /// - `result`: the result code that terminated the app (success or failure).
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_AppQuit_func = ::core::option::Option<
     unsafe extern "C" fn(appstate: *mut ::core::ffi::c_void, result: SDL_AppResult),
 >;
@@ -279,7 +279,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetAppMetadata`]
@@ -304,7 +304,7 @@ extern "C" {
     ///   information.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_Init`]
@@ -323,7 +323,7 @@ extern "C" {
     /// - `flags`: any of the flags used by [`SDL_Init()`]; see [`SDL_Init`] for details.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_InitSubSystem`]
@@ -342,7 +342,7 @@ extern "C" {
     ///   returns the initialization status of the specified subsystems.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_Init`]
@@ -362,7 +362,7 @@ extern "C" {
     /// other dynamically loaded code.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_Init`]
@@ -387,7 +387,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_RunOnMainThread`]
@@ -400,7 +400,7 @@ extern "C" {
 /// - `userdata`: an app-controlled pointer that is passed to the callback.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.8.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_RunOnMainThread`]
@@ -432,7 +432,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.8.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_IsMainThread`]
@@ -480,7 +480,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetAppMetadataProperty`]
@@ -552,7 +552,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetAppMetadataProperty`]
@@ -605,7 +605,7 @@ extern "C" {
     ///   property from another thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetAppMetadata`]

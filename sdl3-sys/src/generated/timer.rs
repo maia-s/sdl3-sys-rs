@@ -1,4 +1,17 @@
-//! SDL time management routines.
+//! SDL provides time management functionality. It is useful for dealing with
+//! (usually) small durations of time.
+//!
+//! This is not to be confused with _calendar time_ management, which is
+//! provided by [CategoryTime](CategoryTime).
+//!
+//! This category covers measuring time elapsed ([`SDL_GetTicks()`],
+//! [`SDL_GetPerformanceCounter()`]), putting a thread to sleep for a certain
+//! amount of time ([`SDL_Delay()`], [`SDL_DelayNS()`], [`SDL_DelayPrecise()`]), and firing
+//! a callback function after a certain amount of time has elasped
+//! ([`SDL_AddTimer()`], etc).
+//!
+//! There are also useful macros to convert between time units, like
+//! [`SDL_SECONDS_TO_NS()`] and such.
 
 use super::stdinc::*;
 
@@ -9,7 +22,7 @@ use super::error::*;
 /// This is always 1000.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_MS_PER_SECOND: ::core::primitive::i32 = 1000;
 
 /// Number of microseconds in a second.
@@ -17,7 +30,7 @@ pub const SDL_MS_PER_SECOND: ::core::primitive::i32 = 1000;
 /// This is always 1000000.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_US_PER_SECOND: ::core::primitive::i32 = 1000000;
 
 /// Number of nanoseconds in a second.
@@ -25,7 +38,7 @@ pub const SDL_US_PER_SECOND: ::core::primitive::i32 = 1000000;
 /// This is always 1000000000.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_NS_PER_SECOND: ::core::primitive::i64 = 1000000000_i64;
 
 /// Number of nanoseconds in a millisecond.
@@ -33,7 +46,7 @@ pub const SDL_NS_PER_SECOND: ::core::primitive::i64 = 1000000000_i64;
 /// This is always 1000000.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_NS_PER_MS: ::core::primitive::i32 = 1000000;
 
 /// Number of nanoseconds in a microsecond.
@@ -41,7 +54,7 @@ pub const SDL_NS_PER_MS: ::core::primitive::i32 = 1000000;
 /// This is always 1000.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 pub const SDL_NS_PER_US: ::core::primitive::i32 = 1000;
 
 /// Convert seconds to nanoseconds.
@@ -58,7 +71,7 @@ pub const SDL_NS_PER_US: ::core::primitive::i32 = 1000;
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_SECONDS_TO_NS(S: Uint64) -> Uint64 {
     (S * (SDL_NS_PER_SECOND as Uint64))
@@ -79,7 +92,7 @@ pub const fn SDL_SECONDS_TO_NS(S: Uint64) -> Uint64 {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_NS_TO_SECONDS(NS: Uint64) -> Uint64 {
     (NS / (SDL_NS_PER_SECOND as Uint64))
@@ -99,7 +112,7 @@ pub const fn SDL_NS_TO_SECONDS(NS: Uint64) -> Uint64 {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_MS_TO_NS(MS: Uint64) -> Uint64 {
     (MS * (SDL_NS_PER_MS as Uint64))
@@ -120,7 +133,7 @@ pub const fn SDL_MS_TO_NS(MS: Uint64) -> Uint64 {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_NS_TO_MS(NS: Uint64) -> Uint64 {
     (NS / (SDL_NS_PER_MS as Uint64))
@@ -140,7 +153,7 @@ pub const fn SDL_NS_TO_MS(NS: Uint64) -> Uint64 {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_US_TO_NS(US: Uint64) -> Uint64 {
     (US * (SDL_NS_PER_US as Uint64))
@@ -161,7 +174,7 @@ pub const fn SDL_US_TO_NS(US: Uint64) -> Uint64 {
 /// It is safe to call this macro from any thread.
 ///
 /// ### Availability
-/// This macro is available since SDL 3.1.3.
+/// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_NS_TO_US(NS: Uint64) -> Uint64 {
     (NS / (SDL_NS_PER_US as Uint64))
@@ -178,7 +191,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetTicks() -> Uint64;
 }
 
@@ -193,7 +206,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetTicksNS() -> Uint64;
 }
 
@@ -213,7 +226,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetPerformanceFrequency`]
@@ -230,7 +243,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetPerformanceCounter`]
@@ -251,7 +264,11 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
+    ///
+    /// ### See also
+    /// - [`SDL_DelayNS`]
+    /// - [`SDL_DelayPrecise`]
     pub fn SDL_Delay(ms: Uint32);
 }
 
@@ -269,7 +286,11 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
+    ///
+    /// ### See also
+    /// - [`SDL_Delay`]
+    /// - [`SDL_DelayPrecise`]
     pub fn SDL_DelayNS(ns: Uint64);
 }
 
@@ -287,14 +308,18 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.6.
+    /// This function is available since SDL 3.2.0.
+    ///
+    /// ### See also
+    /// - [`SDL_Delay`]
+    /// - [`SDL_DelayNS`]
     pub fn SDL_DelayPrecise(ns: Uint64);
 }
 
 /// Definition of the timer ID type.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_TimerID = Uint32;
 
 /// Function prototype for the millisecond timer callback function.
@@ -321,7 +346,7 @@ pub type SDL_TimerID = Uint32;
 ///   the callback touches that need to be protected.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_AddTimer`]
@@ -367,7 +392,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_AddTimerNS`]
@@ -403,7 +428,7 @@ extern "C" {
 ///   the callback touches that need to be protected.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_AddTimerNS`]
@@ -449,7 +474,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_AddTimer`]
@@ -475,7 +500,7 @@ extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_AddTimer`]

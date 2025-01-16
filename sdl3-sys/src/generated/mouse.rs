@@ -1,4 +1,33 @@
-//! SDL mouse handling.
+//! Any GUI application has to deal with the mouse, and SDL provides functions
+//! to manage mouse input and the displayed cursor.
+//!
+//! Most interactions with the mouse will come through the event subsystem.
+//! Moving a mouse generates an [`SDL_EVENT_MOUSE_MOTION`] event, pushing a button
+//! generates [`SDL_EVENT_MOUSE_BUTTON_DOWN`], etc, but one can also query the
+//! current state of the mouse at any time with [`SDL_GetMouseState()`].
+//!
+//! For certain games, it's useful to disassociate the mouse cursor from mouse
+//! input. An FPS, for example, would not want the player's motion to stop as
+//! the mouse hits the edge of the window. For these scenarios, use
+//! [`SDL_SetWindowRelativeMouseMode()`], which hides the cursor, grabs mouse input
+//! to the window, and reads mouse input no matter how far it moves.
+//!
+//! Games that want the system to track the mouse but want to draw their own
+//! cursor can use [`SDL_HideCursor()`] and [`SDL_ShowCursor()`]. It might be more
+//! efficient to let the system manage the cursor, if possible, using
+//! [`SDL_SetCursor()`] with a custom image made through [`SDL_CreateColorCursor()`],
+//! or perhaps just a specific system cursor from [`SDL_CreateSystemCursor()`].
+//!
+//! SDL can, on many platforms, differentiate between multiple connected mice,
+//! allowing for interesting input scenarios and multiplayer games. They can be
+//! enumerated with [`SDL_GetMice()`], and SDL will send [`SDL_EVENT_MOUSE_ADDED`] and
+//! [`SDL_EVENT_MOUSE_REMOVED`] events as they are connected and unplugged.
+//!
+//! Since many apps only care about basic mouse input, SDL offers a virtual
+//! mouse device for touch and pen input, which often can make a desktop
+//! application work on a touchscreen phone without any code changes. Apps that
+//! care about touch/pen separately from mouse input should filter out events
+//! with a `which` field of SDL_TOUCH_MOUSEID/SDL_PEN_MOUSEID.
 
 use super::stdinc::*;
 
@@ -16,13 +45,13 @@ use super::video::*;
 /// The value 0 is an invalid ID.
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 pub type SDL_MouseID = Uint32;
 
 /// Cursor types for [`SDL_CreateSystemCursor()`].
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -180,7 +209,7 @@ pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 /// Scroll direction types for the Scroll event
 ///
 /// ### Availability
-/// This enum is available since SDL 3.1.3.
+/// This enum is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
@@ -232,7 +261,7 @@ pub const SDL_MOUSEWHEEL_FLIPPED: SDL_MouseWheelDirection = SDL_MouseWheelDirect
 /// - Button 5: Side mouse button 2
 ///
 /// ### Availability
-/// This datatype is available since SDL 3.1.3.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ### See also
 /// - [`SDL_GetMouseState`]
@@ -275,7 +304,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetMice`]
@@ -303,7 +332,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetMouseNameForID`]
@@ -327,7 +356,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetMice`]
@@ -344,7 +373,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetMouseFocus() -> *mut SDL_Window;
 }
 
@@ -379,7 +408,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetGlobalMouseState`]
@@ -424,7 +453,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CaptureMouse`]
@@ -469,7 +498,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetMouseState`]
@@ -500,7 +529,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_WarpMouseGlobal`]
@@ -534,7 +563,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_WarpMouseInWindow`]
@@ -571,7 +600,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetWindowRelativeMouseMode`]
@@ -594,7 +623,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetWindowRelativeMouseMode`]
@@ -648,7 +677,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetGlobalMouseState`]
@@ -697,7 +726,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateColorCursor`]
@@ -740,7 +769,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateCursor`]
@@ -768,7 +797,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_DestroyCursor`]
@@ -794,7 +823,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_GetCursor`]
@@ -814,7 +843,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_SetCursor`]
@@ -835,7 +864,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     pub fn SDL_GetDefaultCursor() -> *mut SDL_Cursor;
 }
 
@@ -852,7 +881,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CreateColorCursor`]
@@ -872,7 +901,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CursorVisible`]
@@ -891,7 +920,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_CursorVisible`]
@@ -910,7 +939,7 @@ extern "C" {
     /// This function should only be called on the main thread.
     ///
     /// ### Availability
-    /// This function is available since SDL 3.1.3.
+    /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
     /// - [`SDL_HideCursor`]
@@ -923,7 +952,7 @@ extern "C" {
 /// This is opaque data.
 ///
 /// ### Availability
-/// This struct is available since SDL 3.1.3.
+/// This struct is available since SDL 3.2.0.
 #[repr(C)]
 pub struct SDL_Cursor {
     _opaque: [::core::primitive::u8; 0],
