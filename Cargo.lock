@@ -87,7 +87,7 @@ dependencies = [
 
 [[package]]
 name = "sdl3-main"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "sdl3-main-macros",
  "sdl3-sys",
@@ -103,7 +103,7 @@ version = "3.1.10-prerelease-0"
 
 [[package]]
 name = "sdl3-sys"
-version = "0.2.3+SDL3-prerelease-3.1.10"
+version = "0.3.0+SDL3-prerelease-3.1.10"
 dependencies = [
  "ash",
  "cmake",
