@@ -1,4 +1,4 @@
-// This is a Rust port of examples/game/01-snake from SDL.
+// This is a Rust port of examples/demo/01-snake from SDL.
 //
 // While it uses some Rust concepts, it's not intended to be idiomatic Rust,
 // but rather a close translation of the original.
@@ -330,7 +330,7 @@ fn app_iterate(app: &mut AppState) -> AppResult {
 const EXTENDED_METADATA: &[(*const c_char, *const c_char)] = &[
     (
         SDL_PROP_APP_METADATA_URL_STRING,
-        c"https://examples.libsdl.org/SDL3/game/01-snake/".as_ptr(),
+        c"https://examples.libsdl.org/SDL3/demo/01-snake/".as_ptr(),
     ),
     (SDL_PROP_APP_METADATA_CREATOR_STRING, c"SDL team".as_ptr()),
     (
@@ -364,7 +364,7 @@ fn app_init() -> Option<Box<Mutex<AppState>>> {
         let mut app = AppState::new();
 
         if !SDL_CreateWindowAndRenderer(
-            c"examples/game/snake".as_ptr(),
+            c"examples/demo/snake".as_ptr(),
             SDL_WINDOW_WIDTH,
             SDL_WINDOW_HEIGHT,
             0,
