@@ -222,6 +222,11 @@ impl Library {
         } else {
             format!("{lib_name}-{revision_tag}-{revision_offset}-{revision_hash}")
         };
+        let revision_metadata = if revision_tag_base == "release" {
+            format!("{lib_name}-{src_ver_display}")
+        } else {
+            revision.clone()
+        };
 
         patch_file(
             &src_crate.cargo_toml_path(),
@@ -277,7 +282,7 @@ impl Library {
                         else {
                             unreachable!()
                         };
-                        format!("{}{}\"\n", &line[..=revision_pos], revision)
+                        format!("{}{}\"\n", &line[..=revision_pos], revision_metadata)
                     },
                 },
                 LinesPatch {
