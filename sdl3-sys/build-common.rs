@@ -28,6 +28,26 @@ fn top_level_cargo_target_dir() -> std::path::PathBuf {
     target
 }
 
+#[cfg(feature = "build-from-source")]
+fn find_and_output_cmake_dir_metadata(out_dir: &std::path::Path) -> Result<(), Box<dyn Error>> {
+    use std::path::{Path, PathBuf};
+    fn try_dir(dir: &Path) -> bool {
+        if dir.join(format!("{}Config.cmake", LIB_NAME)).exists() {
+            println!("cargo::metadata=CMAKE_DIR={}", dir.display());
+            true
+        } else {
+            false
+        }
+    }
+    if try_dir(&out_dir.join(PathBuf::from_iter(["lib", "cmake", LIB_NAME])))
+        || try_dir(&out_dir.join("cmake"))
+    {
+        Ok(())
+    } else {
+        Err(format!("cmake dir not found in {}", out_dir.display()).into())
+    }
+}
+
 fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<(), Box<dyn Error>> {
     let _ = &f;
     let _ = PACKAGE_NAME;
@@ -46,18 +66,12 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
         #[cfg(feature = "build-from-source")]
         {
             use rpkg_config::{Link, PkgConfig};
-            use std::path::{Path, PathBuf};
+            use std::path::Path;
 
             let mut config = Config::new(SOURCE_DIR);
             f(&mut config)?;
             let out_dir = config.build();
             println!("cargo::metadata=OUT_DIR={}", out_dir.display());
-            println!(
-                "cargo::metadata=CMAKE_DIR={}",
-                out_dir
-                    .join(PathBuf::from_iter(["lib", "cmake", LIB_NAME]))
-                    .display()
-            );
 
             if let Ok(cfg) = PkgConfig::open(
                 &out_dir.join(format!("lib/pkgconfig/{PACKAGE_NAME}.pc")),
@@ -110,6 +124,8 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
                 println!("cargo::rustc-link-search={}/lib64", out_dir.display());
                 println!("cargo::rustc-link-lib={link_kind}{LIB_NAME}");
             }
+
+            find_and_output_cmake_dir_metadata(&out_dir)?;
 
             #[cfg(all(windows, not(feature = "link-static")))]
             {
