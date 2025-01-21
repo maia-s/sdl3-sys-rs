@@ -14,10 +14,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         let _ = config;
         #[cfg(feature = "build-from-source")]
         {
-            if let Some(sdl3_out) = env::var_os("DEP_SDL3_OUT_DIR") {
-                let path = std::path::PathBuf::from(sdl3_out)
-                    .join(std::path::PathBuf::from_iter(["lib", "cmake", "SDL3"]));
-                config.define("SDL3_DIR", path);
+            if let Some(sdl3_cmake_dir) = env::var_os("DEP_SDL3_CMAKE_DIR") {
+                config.define("SDL3_DIR", sdl3_cmake_dir);
             }
             if cfg!(feature = "link-static") {
                 config.define("BUILD_SHARED_LIBS", "OFF");

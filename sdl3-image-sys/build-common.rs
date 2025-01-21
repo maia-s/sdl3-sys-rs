@@ -46,12 +46,18 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
         #[cfg(feature = "build-from-source")]
         {
             use rpkg_config::{Link, PkgConfig};
-            use std::path::Path;
+            use std::path::{Path, PathBuf};
 
             let mut config = Config::new(SOURCE_DIR);
             f(&mut config)?;
             let out_dir = config.build();
             println!("cargo::metadata=OUT_DIR={}", out_dir.display());
+            println!(
+                "cargo::metadata=CMAKE_DIR={}",
+                out_dir
+                    .join(PathBuf::from_iter(["lib", "cmake", LIB_NAME]))
+                    .display()
+            );
 
             if let Ok(cfg) = PkgConfig::open(
                 &out_dir.join(format!("lib/pkgconfig/{PACKAGE_NAME}.pc")),
