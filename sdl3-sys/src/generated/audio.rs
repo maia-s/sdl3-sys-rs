@@ -958,7 +958,7 @@ extern "C" {
     /// created through [`SDL_OpenAudioDevice()`] can be.
     ///
     /// ### Parameters
-    /// - `dev`: a device opened by [`SDL_OpenAudioDevice()`].
+    /// - `devid`: a device opened by [`SDL_OpenAudioDevice()`].
     ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
@@ -973,7 +973,7 @@ extern "C" {
     /// ### See also
     /// - [`SDL_ResumeAudioDevice`]
     /// - [`SDL_AudioDevicePaused`]
-    pub fn SDL_PauseAudioDevice(dev: SDL_AudioDeviceID) -> ::core::primitive::bool;
+    pub fn SDL_PauseAudioDevice(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -992,7 +992,7 @@ extern "C" {
     /// created through [`SDL_OpenAudioDevice()`] can be.
     ///
     /// ### Parameters
-    /// - `dev`: a device opened by [`SDL_OpenAudioDevice()`].
+    /// - `devid`: a device opened by [`SDL_OpenAudioDevice()`].
     ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
@@ -1007,7 +1007,7 @@ extern "C" {
     /// ### See also
     /// - [`SDL_AudioDevicePaused`]
     /// - [`SDL_PauseAudioDevice`]
-    pub fn SDL_ResumeAudioDevice(dev: SDL_AudioDeviceID) -> ::core::primitive::bool;
+    pub fn SDL_ResumeAudioDevice(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1021,7 +1021,7 @@ extern "C" {
     /// IDs will report themselves as unpaused here.
     ///
     /// ### Parameters
-    /// - `dev`: a device opened by [`SDL_OpenAudioDevice()`].
+    /// - `devid`: a device opened by [`SDL_OpenAudioDevice()`].
     ///
     /// ### Return value
     /// Returns true if device is valid and paused, false otherwise.
@@ -1035,7 +1035,7 @@ extern "C" {
     /// ### See also
     /// - [`SDL_PauseAudioDevice`]
     /// - [`SDL_ResumeAudioDevice`]
-    pub fn SDL_AudioDevicePaused(dev: SDL_AudioDeviceID) -> ::core::primitive::bool;
+    pub fn SDL_AudioDevicePaused(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
 }
 
 extern "C" {
@@ -1981,6 +1981,9 @@ extern "C" {
     /// This function unpauses audio processing for a given device that has
     /// previously been paused. Once unpaused, any bound audio streams will begin
     /// to progress again, and audio can be generated.
+    ///
+    /// Remember, [`SDL_OpenAudioDeviceStream`] opens device in a paused state, so this
+    /// function call is required for audio playback to begin on such device.
     ///
     /// ### Parameters
     /// - `stream`: the audio stream associated with the audio device to resume.

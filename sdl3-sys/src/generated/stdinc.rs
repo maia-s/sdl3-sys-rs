@@ -5002,7 +5002,7 @@ extern "C" {
     /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
-    /// - [`SDL_atan2f`]
+    /// - [`SDL_atan2`]
     /// - [`SDL_atan`]
     /// - [`SDL_tan`]
     pub fn SDL_atan2f(y: ::core::ffi::c_float, x: ::core::ffi::c_float) -> ::core::ffi::c_float;
@@ -5138,7 +5138,7 @@ extern "C" {
     /// This function is available since SDL 3.2.0.
     ///
     /// ### See also
-    /// - [`SDL_copysignf`]
+    /// - [`SDL_copysign`]
     /// - [`SDL_fabsf`]
     pub fn SDL_copysignf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
@@ -5295,7 +5295,7 @@ extern "C" {
     /// Range: `0 <= y <= INF`
     ///
     /// This function operates on double-precision floating point values, use
-    /// [`SDL_copysignf`] for single-precision floats.
+    /// [`SDL_fabsf`] for single-precision floats.
     ///
     /// ### Parameters
     /// - `x`: floating point value to use as the magnitude.
@@ -5322,7 +5322,7 @@ extern "C" {
     /// Range: `0 <= y <= INF`
     ///
     /// This function operates on single-precision floating point values, use
-    /// [`SDL_copysignf`] for double-precision floats.
+    /// [`SDL_fabs`] for double-precision floats.
     ///
     /// ### Parameters
     /// - `x`: floating point value to use as the magnitude.
@@ -5386,7 +5386,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`, y integer
     ///
     /// This function operates on single-precision floating point values, use
-    /// [`SDL_floorf`] for double-precision floats.
+    /// [`SDL_floor`] for double-precision floats.
     ///
     /// ### Parameters
     /// - `x`: floating point value.
@@ -5455,7 +5455,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`, y integer
     ///
     /// This function operates on single-precision floating point values, use
-    /// [`SDL_truncf`] for double-precision floats.
+    /// [`SDL_trunc`] for double-precision floats.
     ///
     /// ### Parameters
     /// - `x`: floating point value.
@@ -5525,7 +5525,7 @@ extern "C" {
     /// Range: `-y <= z <= y`
     ///
     /// This function operates on single-precision floating point values, use
-    /// [`SDL_fmod`] for single-precision floats.
+    /// [`SDL_fmod`] for double-precision floats.
     ///
     /// ### Parameters
     /// - `x`: the numerator.
@@ -5879,7 +5879,7 @@ extern "C" {
     /// instead.
     ///
     /// This function operates on single-precision floating point values, use
-    /// [`SDL_powf`] for double-precision floats.
+    /// [`SDL_pow`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given
@@ -5951,8 +5951,8 @@ extern "C" {
     ///
     /// Range: `-INF <= y <= INF`, y integer
     ///
-    /// This function operates on double-precision floating point values, use
-    /// [`SDL_roundf`] for single-precision floats. To get the result as an integer
+    /// This function operates on single-precision floating point values, use
+    /// [`SDL_round`] for double-precision floats. To get the result as an integer
     /// type, use [`SDL_lroundf`].
     ///
     /// ### Parameters
@@ -5987,7 +5987,7 @@ extern "C" {
     /// Range: `MIN_LONG <= y <= MAX_LONG`
     ///
     /// This function operates on double-precision floating point values, use
-    /// [`SDL_lround`] for single-precision floats. To get the result as a
+    /// [`SDL_lroundf`] for single-precision floats. To get the result as a
     /// floating-point type, use [`SDL_round`].
     ///
     /// ### Parameters
@@ -6022,8 +6022,8 @@ extern "C" {
     /// Range: `MIN_LONG <= y <= MAX_LONG`
     ///
     /// This function operates on single-precision floating point values, use
-    /// [`SDL_lroundf`] for double-precision floats. To get the result as a
-    /// floating-point type, use [`SDL_roundf`],
+    /// [`SDL_lround`] for double-precision floats. To get the result as a
+    /// floating-point type, use [`SDL_roundf`].
     ///
     /// ### Parameters
     /// - `x`: floating point value.
@@ -6284,7 +6284,7 @@ extern "C" {
     /// Range: `-INF <= y <= INF`
     ///
     /// This function operates on single-precision floating point values, use
-    /// [`SDL_tanf`] for double-precision floats.
+    /// [`SDL_tan`] for double-precision floats.
     ///
     /// This function may use a different approximation across different versions,
     /// platforms and configurations. i.e, it can return a different value given

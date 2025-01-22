@@ -265,7 +265,7 @@ extern "C" {
     /// through a scary warning popup.
     ///
     /// ### Parameters
-    /// - `devid`: the camera device instance ID to query.
+    /// - `instance_id`: the camera device instance ID.
     /// - `count`: a pointer filled in with the number of elements in the list,
     ///   may be NULL.
     ///
@@ -285,7 +285,7 @@ extern "C" {
     /// - [`SDL_GetCameras`]
     /// - [`SDL_OpenCamera`]
     pub fn SDL_GetCameraSupportedFormats(
-        devid: SDL_CameraID,
+        instance_id: SDL_CameraID,
         count: *mut ::core::ffi::c_int,
     ) -> *mut *mut SDL_CameraSpec;
 }

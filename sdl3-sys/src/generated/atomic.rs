@@ -459,7 +459,7 @@ pub unsafe fn SDL_AtomicIncRef(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int {
 /// ***Note: If you don't know what this macro is for, you shouldn't use it!***
 ///
 /// ### Parameters
-/// - `a`: a pointer to an [`SDL_AtomicInt`] to increment.
+/// - `a`: a pointer to an [`SDL_AtomicInt`] to decrement.
 ///
 /// ### Return value
 /// Returns true if the variable reached zero after decrementing, false
