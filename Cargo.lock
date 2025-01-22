@@ -133,7 +133,7 @@ dependencies = [
 
 [[package]]
 name = "sdl3-ttf-src"
-version = "2.20.0-release-401-gec2271b"
+version = "2.20.0-release-456-g099520d"
 
 [[package]]
 name = "sdl3-ttf-sys"

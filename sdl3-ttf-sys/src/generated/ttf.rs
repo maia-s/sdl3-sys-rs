@@ -755,6 +755,23 @@ extern "C" {
 }
 
 extern "C" {
+    /// Query the number of faces of a font.
+    ///
+    /// ### Parameters
+    /// - `font`: the font to query.
+    ///
+    /// ### Return value
+    /// Returns the number of FreeType font faces.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL_ttf 3.0.0.
+    pub fn TTF_GetNumFontFaces(font: *const TTF_Font) -> ::core::ffi::c_int;
+}
+
+extern "C" {
     /// Query a font's current FreeType hinter setting.
     ///
     /// The hinter setting is a single value:
@@ -785,8 +802,9 @@ extern "C" {
 extern "C" {
     /// Enable Signed Distance Field rendering for a font.
     ///
-    /// This works with the Blended APIs. SDF is a technique that
-    /// helps fonts look sharp even when scaling and rotating.
+    /// SDF is a technique that helps fonts look sharp even when scaling and rotating, and requires special shader support for display.
+    ///
+    /// This works with Blended APIs, and generates the raw signed distance values in the alpha channel of the resulting texture.
     ///
     /// This updates any [`TTF_Text`] objects using this font, and clears already-generated glyphs, if any, from the cache.
     ///
@@ -1162,7 +1180,9 @@ extern "C" {
 
 /// Direction flags
 ///
-/// The values here are chosen to match hb_direction_t.
+/// The values here are chosen to match
+/// [hb_direction_t](https://harfbuzz.github.io/harfbuzz-hb-common.html#hb-direction-t)
+/// .
 ///
 /// ### Availability
 /// This enum is available since SDL_ttf 3.0.0.
@@ -1380,12 +1400,70 @@ extern "C" {
     pub fn TTF_FontHasGlyph(font: *mut TTF_Font, ch: Uint32) -> ::core::primitive::bool;
 }
 
+/// The type of data in a glyph image
+///
+/// ### Availability
+/// This enum is available since SDL_ttf 3.0.0.
+///
+/// ### Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`INVALID`](TTF_ImageType::INVALID) | [`TTF_IMAGE_INVALID`] | |
+/// | [`ALPHA`](TTF_ImageType::ALPHA) | [`TTF_IMAGE_ALPHA`] | The color channels are white |
+/// | [`COLOR`](TTF_ImageType::COLOR) | [`TTF_IMAGE_COLOR`] | The color channels have image data |
+/// | [`SDF`](TTF_ImageType::SDF) | [`TTF_IMAGE_SDF`] | The alpha channel has signed distance field information |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct TTF_ImageType(pub ::core::ffi::c_int);
+
+impl From<TTF_ImageType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: TTF_ImageType) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for TTF_ImageType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "TTF_IMAGE_INVALID",
+            Self::ALPHA => "TTF_IMAGE_ALPHA",
+            Self::COLOR => "TTF_IMAGE_COLOR",
+            Self::SDF => "TTF_IMAGE_SDF",
+
+            _ => return write!(f, "TTF_ImageType({})", self.0),
+        })
+    }
+}
+
+impl TTF_ImageType {
+    pub const INVALID: Self = Self(0);
+    /// The color channels are white
+    pub const ALPHA: Self = Self(1);
+    /// The color channels have image data
+    pub const COLOR: Self = Self(2);
+    /// The alpha channel has signed distance field information
+    pub const SDF: Self = Self(3);
+}
+
+pub const TTF_IMAGE_INVALID: TTF_ImageType = TTF_ImageType::INVALID;
+/// The color channels are white
+pub const TTF_IMAGE_ALPHA: TTF_ImageType = TTF_ImageType::ALPHA;
+/// The color channels have image data
+pub const TTF_IMAGE_COLOR: TTF_ImageType = TTF_ImageType::COLOR;
+/// The alpha channel has signed distance field information
+pub const TTF_IMAGE_SDF: TTF_ImageType = TTF_ImageType::SDF;
+
 extern "C" {
     /// Get the pixel image for a UNICODE codepoint.
     ///
     /// ### Parameters
     /// - `font`: the font to query.
     /// - `ch`: the codepoint to check.
+    /// - `image_type`: a pointer filled in with the glyph image type, may be
+    ///   NULL.
     ///
     /// ### Return value
     /// Returns an [`SDL_Surface`] containing the glyph, or NULL on failure; call
@@ -1397,7 +1475,11 @@ extern "C" {
     ///
     /// ### Availability
     /// This function is available since SDL_ttf 3.0.0.
-    pub fn TTF_GetGlyphImage(font: *mut TTF_Font, ch: Uint32) -> *mut SDL_Surface;
+    pub fn TTF_GetGlyphImage(
+        font: *mut TTF_Font,
+        ch: Uint32,
+        image_type: *mut TTF_ImageType,
+    ) -> *mut SDL_Surface;
 }
 
 extern "C" {
@@ -1409,6 +1491,8 @@ extern "C" {
     /// ### Parameters
     /// - `font`: the font to query.
     /// - `glyph_index`: the index of the glyph to return.
+    /// - `image_type`: a pointer filled in with the glyph image type, may be
+    ///   NULL.
     ///
     /// ### Return value
     /// Returns an [`SDL_Surface`] containing the glyph, or NULL on failure; call
@@ -1420,7 +1504,11 @@ extern "C" {
     ///
     /// ### Availability
     /// This function is available since SDL_ttf 3.0.0.
-    pub fn TTF_GetGlyphImageForIndex(font: *mut TTF_Font, glyph_index: Uint32) -> *mut SDL_Surface;
+    pub fn TTF_GetGlyphImageForIndex(
+        font: *mut TTF_Font,
+        glyph_index: Uint32,
+        image_type: *mut TTF_ImageType,
+    ) -> *mut SDL_Surface;
 }
 
 extern "C" {
@@ -2285,6 +2373,44 @@ extern "C" {
 }
 
 extern "C" {
+    /// Create a text engine for drawing text on an SDL renderer, with the
+    /// specified properties.
+    ///
+    /// These are the supported properties:
+    ///
+    /// - [`TTF_PROP_RENDERER_TEXT_ENGINE_RENDERER`]\: the renderer to use for
+    ///   creating textures and drawing text
+    /// - [`TTF_PROP_RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE`]\: the size of the
+    ///   texture atlas
+    ///
+    /// ### Parameters
+    /// - `props`: the properties to use.
+    ///
+    /// ### Return value
+    /// Returns a [`TTF_TextEngine`] object or NULL on failure; call [`SDL_GetError()`]
+    ///   for more information.
+    ///
+    /// ### Thread safety
+    /// This function should be called on the thread that created the
+    ///   renderer.
+    ///
+    /// ### Availability
+    /// This function is available since SDL_ttf 3.0.0.
+    ///
+    /// ### See also
+    /// - [`TTF_DestroyRendererTextEngine`]
+    pub fn TTF_CreateRendererTextEngineWithProperties(
+        props: SDL_PropertiesID,
+    ) -> *mut TTF_TextEngine;
+}
+
+pub const TTF_PROP_RENDERER_TEXT_ENGINE_RENDERER: *const ::core::ffi::c_char =
+    c"SDL_ttf.renderer_text_engine.create.renderer".as_ptr();
+
+pub const TTF_PROP_RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE: *const ::core::ffi::c_char =
+    c"SDL_ttf.renderer_text_engine.create.atlas_texture_size".as_ptr();
+
+extern "C" {
     /// Draw text to an SDL renderer.
     ///
     /// `text` must have been created using a [`TTF_TextEngine`] from
@@ -2364,6 +2490,42 @@ extern "C" {
     pub fn TTF_CreateGPUTextEngine(device: *mut SDL_GPUDevice) -> *mut TTF_TextEngine;
 }
 
+extern "C" {
+    /// Create a text engine for drawing text with the SDL GPU API, with the
+    /// specified properties.
+    ///
+    /// These are the supported properties:
+    ///
+    /// - [`TTF_PROP_GPU_TEXT_ENGINE_DEVICE`]\: the [`SDL_GPUDevice`] to use for creating
+    ///   textures and drawing text.
+    /// - [`TTF_PROP_GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE`]\: the size of the texture
+    ///   atlas
+    ///
+    /// ### Parameters
+    /// - `props`: the properties to use.
+    ///
+    /// ### Return value
+    /// Returns a [`TTF_TextEngine`] object or NULL on failure; call [`SDL_GetError()`]
+    ///   for more information.
+    ///
+    /// ### Thread safety
+    /// This function should be called on the thread that created the
+    ///   device.
+    ///
+    /// ### Availability
+    /// This function is available since SDL_ttf 3.0.0.
+    ///
+    /// ### See also
+    /// - [`TTF_DestroyGPUTextEngine`]
+    pub fn TTF_CreateGPUTextEngineWithProperties(props: SDL_PropertiesID) -> *mut TTF_TextEngine;
+}
+
+pub const TTF_PROP_GPU_TEXT_ENGINE_DEVICE: *const ::core::ffi::c_char =
+    c"SDL_ttf.gpu_text_engine.create.device".as_ptr();
+
+pub const TTF_PROP_GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE: *const ::core::ffi::c_char =
+    c"SDL_ttf.gpu_text_engine.create.atlas_texture_size".as_ptr();
+
 /// Draw sequence returned by [`TTF_GetGPUTextDrawData`]
 ///
 /// ### Availability
@@ -2386,6 +2548,8 @@ pub struct TTF_GPUAtlasDrawSequence {
     pub indices: *mut ::core::ffi::c_int,
     /// Number of indices
     pub num_indices: ::core::ffi::c_int,
+    /// The image type of this draw sequence
+    pub image_type: TTF_ImageType,
     /// The next sequence (will be NULL in case of the last sequence)
     pub next: *mut TTF_GPUAtlasDrawSequence,
 }
@@ -2403,6 +2567,12 @@ extern "C" {
     ///
     /// `text` must have been created using a [`TTF_TextEngine`] from
     /// [`TTF_CreateGPUTextEngine()`].
+    ///
+    /// The positive X-axis is taken towards the right and the positive Y-axis is
+    /// taken upwards for both the vertex and the texture coordinates, i.e, it
+    /// follows the same convention used by the SDL_GPU API. If you want to use a
+    /// different coordinate system you will need to transform the vertices
+    /// yourself.
     ///
     /// If the text looks blocky use linear filtering.
     ///
@@ -3278,23 +3448,27 @@ extern "C" {
 /// ### Known values (`sdl3-sys`)
 /// | Constant | Description |
 /// | -------- | ----------- |
+/// | [`TTF_SUBSTRING_DIRECTION_MASK`] | The mask for the flow direction for this substring |
 /// | [`TTF_SUBSTRING_TEXT_START`] | This substring contains the beginning of the text |
 /// | [`TTF_SUBSTRING_LINE_START`] | This substring contains the beginning of line `line_index` |
 /// | [`TTF_SUBSTRING_LINE_END`] | This substring contains the end of line `line_index` |
 /// | [`TTF_SUBSTRING_TEXT_END`] | This substring contains the end of the text |
 pub type TTF_SubStringFlags = Uint32;
 
+/// The mask for the flow direction for this substring
+pub const TTF_SUBSTRING_DIRECTION_MASK: TTF_SubStringFlags = (0x000000ff as TTF_SubStringFlags);
+
 /// This substring contains the beginning of the text
-pub const TTF_SUBSTRING_TEXT_START: TTF_SubStringFlags = (0x00000001 as TTF_SubStringFlags);
+pub const TTF_SUBSTRING_TEXT_START: TTF_SubStringFlags = (0x00000100 as TTF_SubStringFlags);
 
 /// This substring contains the beginning of line `line_index`
-pub const TTF_SUBSTRING_LINE_START: TTF_SubStringFlags = (0x00000002 as TTF_SubStringFlags);
+pub const TTF_SUBSTRING_LINE_START: TTF_SubStringFlags = (0x00000200 as TTF_SubStringFlags);
 
 /// This substring contains the end of line `line_index`
-pub const TTF_SUBSTRING_LINE_END: TTF_SubStringFlags = (0x00000004 as TTF_SubStringFlags);
+pub const TTF_SUBSTRING_LINE_END: TTF_SubStringFlags = (0x00000400 as TTF_SubStringFlags);
 
 /// This substring contains the end of the text
-pub const TTF_SUBSTRING_TEXT_END: TTF_SubStringFlags = (0x00000008 as TTF_SubStringFlags);
+pub const TTF_SUBSTRING_TEXT_END: TTF_SubStringFlags = (0x00000800 as TTF_SubStringFlags);
 
 /// The representation of a substring within text.
 ///
@@ -3638,6 +3812,10 @@ pub struct TTF_Font {
     _opaque: [::core::primitive::u8; 0],
 }
 
+/// Internal data for [`TTF_Text`]
+///
+/// ### Availability
+/// This struct is available since SDL_ttf 3.0.0.
 #[repr(C)]
 pub struct TTF_TextData {
     _opaque: [::core::primitive::u8; 0],
