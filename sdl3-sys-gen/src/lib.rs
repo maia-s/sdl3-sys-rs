@@ -197,36 +197,32 @@ impl Library {
         let (revision_tag, revision_offset) = rest.rsplit_once('-').unwrap();
         let (revision_tag_base, version) = revision_tag.rsplit_once('-').unwrap();
 
-        let (src_ver, src_ver_display) = match revision_tag_base {
-            "release" => {
-                assert_eq!(revision_offset, "0", "off tag stable release");
-                let ver = version.to_string();
-                (ver.clone(), ver)
-            }
-            "preview" | "prerelease" => {
-                if revision_offset == "0" {
+        let (src_ver, src_ver_display, revision, revision_metadata) =
+            match (revision_tag_base, revision_offset) {
+                ("release", "0") => {
+                    let ver = version.to_string();
+                    (
+                        ver.clone(),
+                        ver.clone(),
+                        format!("{lib_name}-{revision_tag}"),
+                        format!("{lib_name}-{ver}"),
+                    )
+                }
+
+                (_, "0") => {
                     let ver = format!("{version}-{revision_tag_base}");
-                    (format!("{ver}-{revision_offset}"), ver)
-                } else {
+                    let rev = format!("{lib_name}-{revision_tag}");
+                    (format!("{ver}-{revision_offset}"), ver, rev.clone(), rev)
+                }
+
+                (_, _) => {
                     let ver =
                         format!("{version}-{revision_tag_base}-{revision_offset}-{revision_hash}");
-                    (ver.clone(), ver)
+                    let rev =
+                        format!("{lib_name}-{revision_tag}-{revision_offset}-{revision_hash}");
+                    (ver.clone(), ver, rev.clone(), rev)
                 }
-            }
-            _ => return Err("unrecognized tag".into()),
-        };
-
-        // match what SDL's cmake script does
-        let revision = if revision_offset == "0" {
-            format!("{lib_name}-{revision_tag}")
-        } else {
-            format!("{lib_name}-{revision_tag}-{revision_offset}-{revision_hash}")
-        };
-        let revision_metadata = if revision_tag_base == "release" {
-            format!("{lib_name}-{src_ver_display}")
-        } else {
-            revision.clone()
-        };
+            };
 
         patch_file(
             &src_crate.cargo_toml_path(),
