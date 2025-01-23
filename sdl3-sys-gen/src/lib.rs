@@ -114,12 +114,14 @@ impl LinesPatch<'_> {
     }
 }
 
-fn patch_file(path: &Path, patches: &[LinesPatch]) -> io::Result<()> {
-    let mut contents = fs::read_to_string(path)?;
+fn patch_file(path: &Path, patches: &[LinesPatch]) -> Result<(), Error> {
+    let mut contents = fs::read_to_string(path)
+        .map_err(|e| format!("error reading `{}`: {}", path.display(), e))?;
     for patch in patches {
         contents = patch.patch(&contents);
     }
-    fs::write(path, contents)
+    fs::write(path, contents)?;
+    Ok(())
 }
 
 struct Crate {
