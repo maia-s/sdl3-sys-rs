@@ -58,13 +58,13 @@ fn draw_background(renderer: *mut SDL_Renderer, w: i32, h: i32) {
 
 fn main() -> ExitCode {
     let Ok(args) = env::args().map(CString::new).collect::<Result<Vec<_>, _>>() else {
-        log_and_quit!(1, c"null byte in argument\n");
+        log_and_quit!(1, c"null byte in argument");
     };
 
     if args.len() < 2 {
         log_and_quit!(
             1,
-            c"Usage: %s [-fullscreen] [-tonemap X] [-save file.png] <image_file> ...\n",
+            c"Usage: %s [-fullscreen] [-tonemap X] [-save file.png] <image_file> ...",
             &args[0],
         );
     }
@@ -130,16 +130,12 @@ fn main() -> ExitCode {
                     }
                     SDL_DestroySurface(surface);
                     if !saved {
-                        SDL_Log(
-                            c"Couldn't save %s: %s\n".as_ptr(),
-                            save_file,
-                            SDL_GetError(),
-                        );
+                        SDL_Log(c"Couldn't save %s: %s".as_ptr(), save_file, SDL_GetError());
                         result = 3;
                     }
                 } else {
                     SDL_Log(
-                        c"Couldn't load %s: %s\n".as_ptr(),
+                        c"Couldn't load %s: %s".as_ptr(),
                         arg.as_ptr(),
                         SDL_GetError(),
                     );
@@ -155,13 +151,13 @@ fn main() -> ExitCode {
     }
 
     if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
-        log_and_quit!(2, c"SDL_Init(SDL_INIT_VIDEO) failed: %s)\n", SDL_GetError(),);
+        log_and_quit!(2, c"SDL_Init(SDL_INIT_VIDEO) failed: %s)", SDL_GetError(),);
     }
     defer!(unsafe { SDL_Quit() });
 
     let window = unsafe { SDL_CreateWindow(c"".as_ptr(), 0, 0, flags) };
     if window.is_null() {
-        log_and_quit!(2, c"SDL_CreateWindow() failed: %s\n", SDL_GetError());
+        log_and_quit!(2, c"SDL_CreateWindow() failed: %s", SDL_GetError());
     }
     defer!(unsafe { SDL_DestroyWindow(window) });
 
@@ -192,7 +188,7 @@ fn main() -> ExitCode {
     if renderer.is_null() {
         renderer = unsafe { SDL_CreateRenderer(window, ptr::null()) };
         if renderer.is_null() {
-            log_and_quit!(2, c"SDL_CreateRenderer() failed: %s\n", SDL_GetError());
+            log_and_quit!(2, c"SDL_CreateRenderer() failed: %s", SDL_GetError());
         }
     }
     defer!(unsafe { SDL_DestroyRenderer(renderer) });
@@ -210,7 +206,7 @@ fn main() -> ExitCode {
                 let surface = IMG_Load(image.file.as_ptr());
                 if surface.is_null() {
                     SDL_Log(
-                        c"Couldn't load %s: %s\n".as_ptr(),
+                        c"Couldn't load %s: %s".as_ptr(),
                         image.file.as_ptr(),
                         SDL_GetError(),
                     );
@@ -227,7 +223,7 @@ fn main() -> ExitCode {
                 let temp = SDL_ConvertSurface(surface, SDL_PixelFormat::RGBA32);
                 SDL_DestroySurface(surface);
                 if temp.is_null() {
-                    SDL_Log(c"Couldn't convert surface: %s\n".as_ptr(), SDL_GetError());
+                    SDL_Log(c"Couldn't convert surface: %s".as_ptr(), SDL_GetError());
                     i += 1;
                     continue;
                 }
@@ -235,7 +231,7 @@ fn main() -> ExitCode {
                 texture = SDL_CreateTextureFromSurface(renderer, temp);
                 SDL_DestroySurface(temp);
                 if texture.is_null() {
-                    SDL_Log(c"Couldn't create texture: %s\n".as_ptr(), SDL_GetError());
+                    SDL_Log(c"Couldn't create texture: %s".as_ptr(), SDL_GetError());
                     i += 1;
                     continue;
                 }
@@ -245,7 +241,7 @@ fn main() -> ExitCode {
                 texture = IMG_LoadTexture(renderer, image.file.as_ptr());
                 if texture.is_null() {
                     SDL_Log(
-                        c"Couldn't load %s: %s\n".as_ptr(),
+                        c"Couldn't load %s: %s".as_ptr(),
                         image.file.as_ptr(),
                         SDL_GetError(),
                     );
