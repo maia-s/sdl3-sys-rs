@@ -1,0 +1,60 @@
+[package]
+name = "sdl3-ttf-sys"
+version = "0.0.0"
+edition = "2021"
+authors = ["Maia S. R."]
+license = "Zlib"
+description = "Low level Rust bindings for SDL3_ttf"
+repository = "https://github.com/maia-s/sdl3-sys-rs"
+documentation = "https://docs.rs/sdl3-ttf-sys"
+keywords = ["sdl", "font"]
+categories = ["external-ffi-bindings", "no-std"]
+links = "SDL3_ttf"
+
+[features]
+default = []
+
+# Build and link SDL3_ttf from source instead of linking a pre-existing library
+build-from-source = ["dep:cmake", "dep:rpkg-config", "dep:sdl3-ttf-src"]
+
+# Build and link a static SDL3_ttf library from source
+build-from-source-static = ["build-from-source", "link-static"]
+
+# Link SDL3_ttf as a static library. The default is to link a shared/dynamic library.
+link-static = []
+
+# Use pkg-config to get link flags for SDL3_ttf. Only used when not building from source.
+# This has no effect if the link-framework feature is enabled.
+use-pkg-config = ["dep:pkg-config"]
+
+# Use vcpkg to get link flags for SDL3_ttf. Only used when not building from source.
+# The link-static feature has no effect when using vcpkg.
+# This has no effect if the link-framework feature is enabled.
+use-vcpkg = ["dep:vcpkg"]
+
+# Implement the Debug trait for applicable types
+debug-impls = ["sdl3-sys/debug-impls"]
+
+[dependencies]
+sdl3-sys = { version = "0.4", path = "../sdl3-sys" }
+
+[build-dependencies.cmake]
+version = "0.1"
+optional = true
+
+[build-dependencies.pkg-config]
+version = "0.3"
+optional = true
+
+[build-dependencies.rpkg-config]
+version = "0.1.2"
+optional = true
+
+[build-dependencies.sdl3-ttf-src]
+version = "2.20.0-release-401-gec2271b"
+path = "../sdl3-ttf-src"
+optional = true
+
+[build-dependencies.vcpkg]
+version = "0.2"
+optional = true

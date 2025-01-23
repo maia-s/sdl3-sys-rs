@@ -473,6 +473,15 @@ const STRUCT_PATCHES: &[StructPatch] = &[
             Ok(true)
         },
     },
+    StructPatch {
+        module: Some("textengine"),
+        match_ident: |i| i == "TTF_CopyOperation",
+        patch: |_, s| {
+            // part of union
+            s.can_copy = CanCopy::Always;
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_parsed_typedef(ctx: &ParseContext, e: &mut TypeDef) -> Result<bool, ParseErr> {

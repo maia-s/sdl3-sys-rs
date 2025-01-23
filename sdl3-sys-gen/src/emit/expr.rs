@@ -885,7 +885,8 @@ impl Eval for SizeOf {
                             false,
                         ))))
                     } else {
-                        todo!()
+                        ctx.add_unresolved_sym_dependency(ident.clone())?;
+                        Err(ParseErr::new(ident.span(), "unresolved type").into())
                     }
                 }
 

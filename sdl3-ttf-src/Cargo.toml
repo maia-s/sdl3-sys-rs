@@ -1,0 +1,14 @@
+[package]
+name = "sdl3-ttf-src"
+version = "2.20.0-release-401-gec2271b"
+edition = "2021"
+authors = ["SDL developers"]
+license = "Zlib"
+description = "Source code of the SDL3_ttf library"
+repository = "https://github.com/maia-s/sdl3-sys-rs"
+# documentation = "https://docs.rs/sdl3-ttf-src"
+keywords = ["sdl"]
+categories = ["no-std"]
+exclude = [
+    "/SDL_ttf/external/harfbuzz/test",
+]

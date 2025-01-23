@@ -340,9 +340,11 @@ pub fn generate(root: &Path, libs: &[&str]) -> Result<(), Error> {
         let headers_path = lib.headers_path();
 
         let mut gen = Gen::new(
+            lib.lib_name.clone(),
             match lib.lib_name.as_str() {
                 "SDL3" => "SDL_",
                 "SDL3_image" => "IMG_",
+                "SDL3_ttf" => "TTF_",
                 _ => return Err(format!("unknown library `{}`", lib.lib_name).into()),
             },
             emitted_sdl3,
@@ -398,6 +400,7 @@ pub type EmittedItems = BTreeMap<String, InnerEmitContext>;
 
 #[derive(Default)]
 pub struct Gen {
+    lib_name: String,
     sym_prefix: &'static str,
     revision: String,
     parsed: ParsedItems,
@@ -410,6 +413,7 @@ pub struct Gen {
 
 impl Gen {
     pub fn new(
+        lib_name: String,
         sym_prefix: &'static str,
         emitted_sdl3: EmittedItems,
         headers_path: PathBuf,
@@ -418,6 +422,7 @@ impl Gen {
     ) -> Result<Self, Error> {
         DirBuilder::new().recursive(true).create(&output_path)?;
         Ok(Self {
+            lib_name,
             sym_prefix,
             revision,
             parsed: ParsedItems::new(),

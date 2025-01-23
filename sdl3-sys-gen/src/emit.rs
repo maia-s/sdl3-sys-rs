@@ -20,7 +20,10 @@ mod expr;
 pub use expr::Value;
 mod item;
 mod patch;
-use patch::{patch_emit_define, patch_emit_function, patch_emit_macro_call, patch_emit_type_def};
+use patch::{
+    patch_emit_define, patch_emit_function, patch_emit_macro_call, patch_emit_struct_or_union,
+    patch_emit_type_def,
+};
 mod state;
 pub use state::{Cfg, DefineState, EmitContext, InnerEmitContext, Sym, SymKind};
 use state::{EmitStatus, PreProcState, StructSym};
@@ -205,16 +208,18 @@ impl Emit for Item {
             Item::FileDoc(dc) => dc.emit(ctx),
             Item::StructOrUnion(s) => {
                 if let Some(ident) = &s.ident {
-                    ctx.scope_mut().register_struct_or_union_sym(StructSym {
-                        kind: s.kind,
-                        doc: s.doc.clone(),
-                        ident: ident.clone(),
-                        fields: s.fields.clone(),
-                        emit_status: EmitStatus::NotEmitted,
-                        hidden: s.hidden,
-                        can_copy: s.can_copy,
-                        can_construct: s.can_construct,
-                    })?;
+                    if !patch_emit_struct_or_union(ctx, ident.as_str(), s)? {
+                        ctx.scope_mut().register_struct_or_union_sym(StructSym {
+                            kind: s.kind,
+                            doc: s.doc.clone(),
+                            ident: ident.clone(),
+                            fields: s.fields.clone(),
+                            emit_status: EmitStatus::NotEmitted,
+                            hidden: s.hidden,
+                            can_copy: s.can_copy,
+                            can_construct: s.can_construct,
+                        })?;
+                    }
                     Ok(())
                 } else {
                     todo!()
@@ -775,7 +780,11 @@ impl Emit for Include {
             }
             writeln!(ctx, "use sdl3_sys::everything::*;")?;
             writeln!(ctx)?;
-        } else if let Some(module) = self.path.as_str().strip_prefix("SDL3/SDL_") {
+        } else if let Some(module) = self
+            .path
+            .as_str()
+            .strip_prefix(&format!("{}/SDL_", ctx.gen.lib_name))
+        {
             let module = module.strip_suffix(".h").unwrap();
             if !ctx.r#gen.emitted.borrow().contains_key(module) {
                 ctx.r#gen.emit(module)?;

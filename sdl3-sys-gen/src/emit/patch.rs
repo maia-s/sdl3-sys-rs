@@ -3,10 +3,11 @@ use super::{
 };
 use crate::parse::{
     Block, CanDefault, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident, IdentOrKw,
-    Item, Items, Kw_static, ParseErr, RustCode, Span, StringLiteral, Type, TypeDef,
+    Item, Items, Kw_static, ParseErr, RustCode, Span, StringLiteral, StructOrUnion, Type, TypeDef,
+    TypeEnum,
 };
-use core::fmt::Write;
-use std::ffi::CString;
+use core::{cell::RefCell, fmt::Write};
+use std::{ffi::CString, rc::Rc};
 use str_block::str_block;
 
 const VULKAN_CRATE_VERSIONS: &[(&str, &[&str])] = &[("ash", &["0.38"])];
@@ -928,6 +929,37 @@ const EVAL_MACRO_CALL_PATCHES: &[EvalMacroCallPatch] = &[
     },
 ];
 
+type EmitStructOrUnionPatch = EmitPatch<StructOrUnion>;
+
+const EMIT_STRUCT_OR_UNION_PATCHES: &[EmitStructOrUnionPatch] = &[EmitStructOrUnionPatch {
+    module: Some("textengine"),
+    match_ident: |i| i == "TTF_TextEngine",
+    patch: |ctx, s| {
+        TypeDef {
+            span: Span::none(),
+            doc: None,
+            ident: s.ident.as_ref().unwrap().clone(),
+            ty: Type {
+                span: Span::none(),
+                is_const: false,
+                ty: TypeEnum::Struct(Box::new(s.clone())),
+            },
+            use_for_defines: None,
+            associated_defines: Rc::new(RefCell::new(Vec::new())),
+        }
+        .emit(ctx)?;
+        Ok(true)
+    },
+}];
+
+pub fn patch_emit_struct_or_union(
+    ctx: &mut EmitContext,
+    ident: &str,
+    s: &StructOrUnion,
+) -> Result<bool, EmitErr> {
+    patch_emit(ctx, s, ident, EMIT_STRUCT_OR_UNION_PATCHES)
+}
+
 type EmitOpaqueStructPatch = EmitPatch<StructSym>;
 
 const EMIT_OPAQUE_STRUCT_PATCHES: &[EmitOpaqueStructPatch] = &[EmitOpaqueStructPatch {
@@ -1068,6 +1100,15 @@ const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[
                     Ok(())
                 },
             )?;
+            Ok(true)
+        },
+    },
+    EmitTypeDefPatch {
+        module: Some("ttf"),
+        match_ident: |i| i == "TTF_TextEngine",
+        patch: |ctx, _| {
+            writeln!(ctx, "pub use super::textengine::TTF_TextEngine;")?;
+            writeln!(ctx)?;
             Ok(true)
         },
     },

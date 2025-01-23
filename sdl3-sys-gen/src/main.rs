@@ -6,7 +6,7 @@ use std::{
 
 fn main() {
     let root = PathBuf::from_iter([env!("CARGO_MANIFEST_DIR"), ".."]);
-    let crates = ["sdl3", "sdl3-image"];
+    let crates = ["sdl3", "sdl3-image", "sdl3-ttf"];
     match sdl3_sys_gen::generate(&root, &crates) {
         Ok(()) => (),
         Err(e) => {
