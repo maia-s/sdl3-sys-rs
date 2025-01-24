@@ -7,6 +7,21 @@ type Config = cmake::Config;
 #[cfg(not(feature = "build-from-source"))]
 type Config = ();
 
+#[allow(unused)]
+macro_rules! cmake_vars {
+    ($config:ident => $($cvar:ident),* $(,)?) => {
+        $(
+            let cvar = stringify!($cvar);
+            if env::var_os(format!("CARGO_FEATURE_NO_{cvar}")).is_some() {
+                $config.define(cvar, "OFF");
+            }
+            if env::var_os(format!("CARGO_FEATURE_{cvar}")).is_some() {
+                $config.define(cvar, "ON");
+            }
+        )*
+    }
+}
+
 #[cfg(all(windows, feature = "build-from-source", not(feature = "link-static")))]
 // based on find_cargo_target_dir from sdl2-sys
 fn top_level_cargo_target_dir() -> std::path::PathBuf {

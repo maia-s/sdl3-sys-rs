@@ -20,6 +20,9 @@ build-from-source = ["dep:cmake", "dep:rpkg-config", "dep:sdl3-image-src"]
 # Build and link a static SDL3_image library from source
 build-from-source-static = ["build-from-source", "link-static"]
 
+# Build and link a static SDL3_image library from source using vendored libraries
+build-static-vendored = ["build-from-source-static", "sdlimage-vendored"]
+
 # Link SDL3_image as a static library. The default is to link a shared/dynamic library.
 link-static = []
 
@@ -34,6 +37,112 @@ use-vcpkg = ["dep:vcpkg"]
 
 # Implement the Debug trait for applicable types
 debug-impls = []
+
+no-default-anything = [
+    "no-default-backends",
+    "no-default-formats",
+]
+
+no-default-backends = [
+    "no-sdlimage-backend-imageio",
+    "no-sdlimage-backend-stb",
+    "no-sdlimage-backend-wic",
+]
+
+no-default-formats = [
+    "no-sdlimage-avif",
+    "no-sdlimage-bmp",
+    "no-sdlimage-gif",
+    "no-sdlimage-jpg",
+    "no-sdlimage-jxl",
+    "no-sdlimage-lbm",
+    "no-sdlimage-pcx",
+    "no-sdlimage-png",
+    "no-sdlimage-pnm",
+    "no-sdlimage-qoi",
+    "no-sdlimage-svg",
+    "no-sdlimage-tga",
+    "no-sdlimage-tif",
+    "no-sdlimage-webp",
+    "no-sdlimage-xcf",
+    "no-sdlimage-xpm",
+    "no-sdlimage-xv",
+    "no-sdlimage-avif-save",
+    "no-sdlimage-jpg-save",
+    "no-sdlimage-png-save",
+]
+
+sdlimage-deps-shared = []
+no-sdlimage-deps-shared = []
+
+sdlimage-vendored = []
+no-sdlimage-vendored = []
+
+sdlimage-backend-imageio = []
+sdlimage-backend-stb = []
+sdlimage-backend-wic = []
+
+no-sdlimage-backend-imageio = []
+no-sdlimage-backend-stb = []
+no-sdlimage-backend-wic = []
+
+sdlimage-avif = []
+sdlimage-bmp = []
+sdlimage-gif = []
+sdlimage-jpg = []
+sdlimage-jxl = []
+sdlimage-lbm = []
+sdlimage-pcx = []
+sdlimage-png = []
+sdlimage-pnm = []
+sdlimage-qoi = []
+sdlimage-svg = []
+sdlimage-tga = []
+sdlimage-tif = []
+sdlimage-webp = []
+sdlimage-xcf = []
+sdlimage-xpm = []
+sdlimage-xv = []
+
+no-sdlimage-avif = []
+no-sdlimage-bmp = []
+no-sdlimage-gif = []
+no-sdlimage-jpg = []
+no-sdlimage-jxl = []
+no-sdlimage-lbm = []
+no-sdlimage-pcx = []
+no-sdlimage-png = []
+no-sdlimage-pnm = []
+no-sdlimage-qoi = []
+no-sdlimage-svg = []
+no-sdlimage-tga = []
+no-sdlimage-tif = []
+no-sdlimage-webp = []
+no-sdlimage-xcf = []
+no-sdlimage-xpm = []
+no-sdlimage-xv = []
+
+sdlimage-avif-save = ["sdlimage-avif"]
+sdlimage-jpg-save = ["sdlimage-jpg"]
+sdlimage-png-save = ["sdlimage-png"]
+
+no-sdlimage-avif-save = []
+no-sdlimage-jpg-save = []
+no-sdlimage-png-save = []
+
+sdlimage-avif-shared = ["sdlimage-avif"]
+sdlimage-jpg-shared = ["sdlimage-jpg"]
+sdlimage-jxl-shared = ["sdlimage-jxl"]
+sdlimage-png-shared = ["sdlimage-png"]
+sdlimage-tif-shared = ["sdlimage-tif"]
+sdlimage-webp-shared = ["sdlimage-webp"]
+
+no-sdlimage-avif-shared = []
+no-sdlimage-jpg-shared = []
+no-sdlimage-jxl-shared = []
+no-sdlimage-png-shared = []
+no-sdlimage-tif-shared = []
+no-sdlimage-webp-shared = []
 
 [dependencies]
 sdl3-sys = { version = "0.4", path = "../sdl3-sys" }

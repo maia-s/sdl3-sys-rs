@@ -20,6 +20,40 @@ fn main() -> Result<(), Box<dyn Error>> {
             if cfg!(feature = "link-static") {
                 config.define("BUILD_SHARED_LIBS", "OFF");
             }
+
+            cmake_vars! { config =>
+                SDLIMAGE_DEPS_SHARED,
+                SDLIMAGE_VENDORED,
+                SDLIMAGE_BACKEND_STB,
+                SDLIMAGE_BACKEND_WIC,
+                SDLIMAGE_BACKEND_IMAGEIO,
+                SDLIMAGE_AVIF,
+                SDLIMAGE_BMP,
+                SDLIMAGE_GIF,
+                SDLIMAGE_JPG,
+                SDLIMAGE_JXL,
+                SDLIMAGE_LBM,
+                SDLIMAGE_PCX,
+                SDLIMAGE_PNG,
+                SDLIMAGE_PNM,
+                SDLIMAGE_QOI,
+                SDLIMAGE_SVG,
+                SDLIMAGE_TGA,
+                SDLIMAGE_TIF,
+                SDLIMAGE_WEBP,
+                SDLIMAGE_XCF,
+                SDLIMAGE_XPM,
+                SDLIMAGE_XV,
+                SDLIMAGE_AVIF_SAVE,
+                SDLIMAGE_JPG_SAVE,
+                SDLIMAGE_PNG_SAVE,
+                SDLIMAGE_AVIF_SHARED,
+                SDLIMAGE_JPG_SHARED,
+                SDLIMAGE_JXL_SHARED,
+                SDLIMAGE_PNG_SHARED,
+                SDLIMAGE_TIF_SHARED,
+                SDLIMAGE_WEBP_SHARED,
+            }
         }
         Ok(())
     })?;
