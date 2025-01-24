@@ -1,20 +1,15 @@
 # sdl3-sys: Low level Rust bindings for SDL 3
 
+These are low level Rust bindings for SDL, the [Simple DirectMedia Layer](<https://libsdl.org>).
 This version of `sdl3-sys` has bindings for SDL version `3.2.0` and earlier.
-
-SDL 3 is ABI stable as of the 3.1.3 preview release, but `sdl3-sys` is new
-and may have bugs. Please submit an issue at github if you have any issues
-or comments!
 
 Many types can be initialized to all zero with the `Default` trait for convenience.
 However, many of these aren't valid when passed to SDL without further modification.
 They're intended to be used with `..Default::default()` in initializers.
 The `Default` impl of interface types also sets the version field to the correct value.
 
-Known issues:
-- Satellite libraries (mixer, image, ttf) aren't available yet
-- There are no tests yet, except for static asserts translated from the
-  original headers
+Satellite libraries aren't stable yet, but will be released as separate crates as
+they're available.
 
 <div class="warning">
 
@@ -33,10 +28,8 @@ If you're looking for more idiomatic or higher level bindings, check out the
 
 ## Usage
 
-`sdl3-sys` requires SDL version `3.1.3-preview` or later. Some APIs may require
-a later version. You can check availability in the documentation. Starting with
-version `3.1.3-preview`, all later releases of SDL 3 are ABI compatible with
-earlier ones.
+`sdl3-sys` requires SDL version `3.1.3` or later, but `3.2.0` or later is preferred.
+Some APIs may require a later version. You can check availability in the documentation.
 
 By default, `sdl3-sys` will attempt to link to a dynamic/shared library named
 `SDL3` in the default library search path, using the usual platform specific naming
