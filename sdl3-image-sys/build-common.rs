@@ -40,6 +40,7 @@ fn find_and_output_cmake_dir_metadata(out_dir: &std::path::Path) -> Result<(), B
         }
     }
     if try_dir(&out_dir.join(PathBuf::from_iter(["lib", "cmake", LIB_NAME])))
+        || try_dir(&out_dir.join(PathBuf::from_iter(["lib64", "cmake", LIB_NAME])))
         || try_dir(&out_dir.join("cmake"))
     {
         Ok(())
