@@ -608,10 +608,10 @@ pub struct SDL_HapticPeriodic {
 ///
 /// The struct handles the following effects:
 ///
-/// - [`SDL_HAPTIC_SPRING`]: Effect based on axes position.
-/// - [`SDL_HAPTIC_DAMPER`]: Effect based on axes velocity.
-/// - [`SDL_HAPTIC_INERTIA`]: Effect based on axes acceleration.
-/// - [`SDL_HAPTIC_FRICTION`]: Effect based on axes movement.
+/// - [`SDL_HAPTIC_SPRING`]\: Effect based on axes position.
+/// - [`SDL_HAPTIC_DAMPER`]\: Effect based on axes velocity.
+/// - [`SDL_HAPTIC_INERTIA`]\: Effect based on axes acceleration.
+/// - [`SDL_HAPTIC_FRICTION`]\: Effect based on axes movement.
 ///
 /// Direction is handled by condition internals instead of a direction member.
 /// The condition effect specific members have three parameters. The first

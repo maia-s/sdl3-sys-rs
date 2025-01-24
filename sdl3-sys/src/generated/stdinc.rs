@@ -2130,7 +2130,7 @@ extern "C" {
     /// <https://en.wikipedia.org/wiki/MurmurHash>
     ///
     /// A seed may be specified, which changes the final results consistently, but
-    /// this does not work like [`SDL_crc16`] and [`SDL_crc32`]: you can't feed a previous
+    /// this does not work like [`SDL_crc16`] and [`SDL_crc32`]\: you can't feed a previous
     /// result from this function back into itself as the next seed value to
     /// calculate a hash in chunks; it won't produce the same hash as it would if
     /// the same data was provided in a single call.

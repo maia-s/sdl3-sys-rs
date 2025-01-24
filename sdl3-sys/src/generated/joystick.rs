@@ -23,7 +23,7 @@
 //!
 //! If you would like to receive joystick updates while the application is in
 //! the background, you should set the following hint before calling
-//! [`SDL_Init()`]: [`SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS`]
+//! [`SDL_Init()`]\: [`SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS`]
 
 use super::stdinc::*;
 
@@ -898,15 +898,15 @@ extern "C" {
     ///
     /// The following read-only properties are provided by SDL:
     ///
-    /// - [`SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN`]: true if this joystick has an
+    /// - [`SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN`]\: true if this joystick has an
     ///   LED that has adjustable brightness
-    /// - [`SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN`]: true if this joystick has an LED
+    /// - [`SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN`]\: true if this joystick has an LED
     ///   that has adjustable color
-    /// - [`SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN`]: true if this joystick has a
+    /// - [`SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN`]\: true if this joystick has a
     ///   player LED
-    /// - [`SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN`]: true if this joystick has
+    /// - [`SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN`]\: true if this joystick has
     ///   left/right rumble
-    /// - [`SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN`]: true if this joystick has
+    /// - [`SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN`]\: true if this joystick has
     ///   simple trigger rumble
     ///
     /// ### Parameters

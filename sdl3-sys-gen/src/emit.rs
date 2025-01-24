@@ -318,6 +318,10 @@ impl DocComment {
                             i0 = end + 1;
                             quoted += 1;
                         }
+                        // escape `:` after inserted links
+                        if line.as_bytes().get(i0) == Some(&b':') {
+                            patched.write_char('\\')?;
+                        }
                     } else {
                         write!(patched, "{}", &line[i0..i])?;
                         i0 = i;

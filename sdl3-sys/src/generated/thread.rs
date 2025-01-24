@@ -190,9 +190,9 @@ apply_cfg!(#[cfg(doc)] => {
         /// This is a convenience function, equivalent to calling
         /// [`SDL_CreateThreadWithProperties`] with the following properties set:
         ///
-        /// - [`SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER`]: `fn`
-        /// - [`SDL_PROP_THREAD_CREATE_NAME_STRING`]: `name`
-        /// - [`SDL_PROP_THREAD_CREATE_USERDATA_POINTER`]: `data`
+        /// - [`SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER`]\: `fn`
+        /// - [`SDL_PROP_THREAD_CREATE_NAME_STRING`]\: `name`
+        /// - [`SDL_PROP_THREAD_CREATE_USERDATA_POINTER`]\: `data`
         ///
         /// Note that this "function" is actually a macro that calls an internal
         /// function with two extra parameters not listed here; they are hidden through
@@ -227,15 +227,15 @@ apply_cfg!(#[cfg(doc)] => {
         ///
         /// These are the supported properties:
         ///
-        /// - [`SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER`]: an [`SDL_ThreadFunction`]
+        /// - [`SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER`]\: an [`SDL_ThreadFunction`]
         ///   value that will be called at the start of the new thread's life.
         ///   Required.
-        /// - [`SDL_PROP_THREAD_CREATE_NAME_STRING`]: the name of the new thread, which
+        /// - [`SDL_PROP_THREAD_CREATE_NAME_STRING`]\: the name of the new thread, which
         ///   might be available to debuggers. Optional, defaults to NULL.
-        /// - [`SDL_PROP_THREAD_CREATE_USERDATA_POINTER`]: an arbitrary app-defined
+        /// - [`SDL_PROP_THREAD_CREATE_USERDATA_POINTER`]\: an arbitrary app-defined
         ///   pointer, which is passed to the entry function on the new thread, as its
         ///   only parameter. Optional, defaults to NULL.
-        /// - [`SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER`]: the size, in bytes, of the new
+        /// - [`SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER`]\: the size, in bytes, of the new
         ///   thread's stack. Optional, defaults to 0 (system-defined default).
         ///
         /// SDL makes an attempt to report [`SDL_PROP_THREAD_CREATE_NAME_STRING`] to the

@@ -26,7 +26,7 @@
 //!
 //! If you would like to receive gamepad updates while the application is in
 //! the background, you should set the following hint before calling
-//! [`SDL_Init()`]: [`SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS`]
+//! [`SDL_Init()`]\: [`SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS`]
 //!
 //! Gamepads support various optional features such as rumble, color LEDs,
 //! touchpad, gyro, etc. The support for these features varies depending on the
@@ -1241,15 +1241,15 @@ extern "C" {
     ///
     /// The following read-only properties are provided by SDL:
     ///
-    /// - [`SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN`]: true if this gamepad has an LED
+    /// - [`SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN`]\: true if this gamepad has an LED
     ///   that has adjustable brightness
-    /// - [`SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN`]: true if this gamepad has an LED
+    /// - [`SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN`]\: true if this gamepad has an LED
     ///   that has adjustable color
-    /// - [`SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN`]: true if this gamepad has a
+    /// - [`SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN`]\: true if this gamepad has a
     ///   player LED
-    /// - [`SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN`]: true if this gamepad has
+    /// - [`SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN`]\: true if this gamepad has
     ///   left/right rumble
-    /// - [`SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN`]: true if this gamepad has
+    /// - [`SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN`]\: true if this gamepad has
     ///   simple trigger rumble
     ///
     /// ### Parameters

@@ -333,23 +333,23 @@ extern "C" {
     ///
     /// These are the supported properties:
     ///
-    /// - [`SDL_PROP_FILE_DIALOG_FILTERS_POINTER`]: a pointer to a list of
+    /// - [`SDL_PROP_FILE_DIALOG_FILTERS_POINTER`]\: a pointer to a list of
     ///   [`SDL_DialogFileFilter`] structs, which will be used as filters for
     ///   file-based selections. Ignored if the dialog is an "Open Folder" dialog.
     ///   If non-NULL, the array of filters must remain valid at least until the
     ///   callback is invoked.
-    /// - [`SDL_PROP_FILE_DIALOG_NFILTERS_NUMBER`]: the number of filters in the
+    /// - [`SDL_PROP_FILE_DIALOG_NFILTERS_NUMBER`]\: the number of filters in the
     ///   array of filters, if it exists.
-    /// - [`SDL_PROP_FILE_DIALOG_WINDOW_POINTER`]: the window that the dialog should
+    /// - [`SDL_PROP_FILE_DIALOG_WINDOW_POINTER`]\: the window that the dialog should
     ///   be modal for.
-    /// - [`SDL_PROP_FILE_DIALOG_LOCATION_STRING`]: the default folder or file to
+    /// - [`SDL_PROP_FILE_DIALOG_LOCATION_STRING`]\: the default folder or file to
     ///   start the dialog at.
-    /// - [`SDL_PROP_FILE_DIALOG_MANY_BOOLEAN`]: true to allow the user to select
+    /// - [`SDL_PROP_FILE_DIALOG_MANY_BOOLEAN`]\: true to allow the user to select
     ///   more than one entry.
-    /// - [`SDL_PROP_FILE_DIALOG_TITLE_STRING`]: the title for the dialog.
-    /// - [`SDL_PROP_FILE_DIALOG_ACCEPT_STRING`]: the label that the accept button
+    /// - [`SDL_PROP_FILE_DIALOG_TITLE_STRING`]\: the title for the dialog.
+    /// - [`SDL_PROP_FILE_DIALOG_ACCEPT_STRING`]\: the label that the accept button
     ///   should have.
-    /// - [`SDL_PROP_FILE_DIALOG_CANCEL_STRING`]: the label that the cancel button
+    /// - [`SDL_PROP_FILE_DIALOG_CANCEL_STRING`]\: the label that the cancel button
     ///   should have.
     ///
     /// Note that each platform may or may not support any of the properties.
