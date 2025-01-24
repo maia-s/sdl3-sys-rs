@@ -38,7 +38,7 @@ use-vcpkg = ["dep:vcpkg"]
 # Implement the Debug trait for applicable types
 debug-impls = []
 
-no-default-anything = [
+no-default = [
     "no-default-backends",
     "no-default-formats",
 ]
