@@ -1,3 +1,7 @@
+//! Header file for SDL_image library
+//!
+//! A simple library to load images of various formats as SDL surfaces
+
 use sdl3_sys::everything::*;
 
 /// * Printable format: "%d.%d.%d", MAJOR, MINOR, MICRO
@@ -5,7 +9,7 @@ pub const SDL_IMAGE_MAJOR_VERSION: ::core::primitive::i32 = 3;
 
 pub const SDL_IMAGE_MINOR_VERSION: ::core::primitive::i32 = 1;
 
-pub const SDL_IMAGE_MICRO_VERSION: ::core::primitive::i32 = 0;
+pub const SDL_IMAGE_MICRO_VERSION: ::core::primitive::i32 = 1;
 
 /// * This is the version number macro for the current SDL_image version.
 pub const SDL_IMAGE_VERSION: ::core::primitive::i32 = SDL_VERSIONNUM(
@@ -2242,7 +2246,9 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-/// * Animated image support Currently only animated GIFs are supported.
+/// Animated image support
+///
+/// Currently only animated GIFs and WEBP images are supported.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct IMG_Animation {
