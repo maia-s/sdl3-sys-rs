@@ -1,6 +1,6 @@
 # sdl3-sys: Low level Rust bindings for SDL 3
 
-These are low level Rust bindings for SDL, the [Simple DirectMedia Layer](<https://libsdl.org>).
+These are low level Rust bindings for SDL, the [Simple DirectMedia Layer](https://libsdl.org).
 This version of `sdl3-sys` has bindings for SDL version `3.2.0` and earlier.
 
 Many types can be initialized to all zero with the `Default` trait for convenience.
