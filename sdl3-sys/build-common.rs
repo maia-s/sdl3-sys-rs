@@ -214,6 +214,9 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
 
                 if !handled {
                     // yolo
+                    if cfg!(target_os = "macos") {
+                        println!("cargo::rustc-link-search=/opt/homebrew/lib");
+                    }
                     println!("cargo::rustc-link-lib={link_kind}{LIB_NAME}");
                 }
             }
