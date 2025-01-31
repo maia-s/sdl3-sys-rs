@@ -65,7 +65,7 @@ fn main() -> ExitCode {
         log_and_quit!(
             1,
             c"Usage: %s [-fullscreen] [-tonemap X] [-save file.png] <image_file> ...",
-            &args[0],
+            args[0].as_ptr(),
         );
     }
 
