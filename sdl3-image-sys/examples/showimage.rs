@@ -1,7 +1,7 @@
 // Based on showimage.c from the SDL_image examples.
 // Like the original, this code is licensed under the Zlib license.
 
-use sdl3_image_sys::{IMG_Load, IMG_LoadTexture, IMG_SaveAVIF, IMG_SaveJPG, IMG_SavePNG};
+use sdl3_image_sys::image::{IMG_Load, IMG_LoadTexture, IMG_SaveAVIF, IMG_SaveJPG, IMG_SavePNG};
 use sdl3_sys::everything::*;
 use std::{
     env,
