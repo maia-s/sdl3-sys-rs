@@ -261,7 +261,7 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `menu`: The menu to get entries from.
-    /// - `size`: An optional pointer to obtain the number of entries in the
+    /// - `count`: An optional pointer to obtain the number of entries in the
     ///   menu.
     ///
     /// ### Return value
@@ -281,7 +281,7 @@ extern "C" {
     /// - [`SDL_InsertTrayEntryAt`]
     pub fn SDL_GetTrayEntries(
         menu: *mut SDL_TrayMenu,
-        size: *mut ::core::ffi::c_int,
+        count: *mut ::core::ffi::c_int,
     ) -> *mut *const SDL_TrayEntry;
 }
 

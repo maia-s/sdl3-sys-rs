@@ -2846,6 +2846,7 @@ impl ::core::default::Default for SDL_GPUTextureLocation {
 /// ### See also
 /// - [`SDL_UploadToGPUTexture`]
 /// - [`SDL_DownloadFromGPUTexture`]
+/// - [`SDL_CreateGPUTexture`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -6275,6 +6276,8 @@ extern "C" {
 
 extern "C" {
     /// Releases a fence obtained from [`SDL_SubmitGPUCommandBufferAndAcquireFence`].
+    ///
+    /// You must not reference the fence after calling this function.
     ///
     /// ### Parameters
     /// - `device`: a GPU context.

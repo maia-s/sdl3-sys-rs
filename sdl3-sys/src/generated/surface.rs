@@ -1637,6 +1637,41 @@ extern "C" {
 }
 
 extern "C" {
+    /// Perform a stretched pixel copy from one surface to another.
+    ///
+    /// ### Parameters
+    /// - `src`: the [`SDL_Surface`] structure to be copied from.
+    /// - `srcrect`: the [`SDL_Rect`] structure representing the rectangle to be
+    ///   copied, may not be NULL.
+    /// - `dst`: the [`SDL_Surface`] structure that is the blit target.
+    /// - `dstrect`: the [`SDL_Rect`] structure representing the target rectangle in
+    ///   the destination surface, may not be NULL.
+    /// - `scaleMode`: the [`SDL_ScaleMode`] to be used.
+    ///
+    /// ### Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ### Thread safety
+    /// The same destination surface should not be used from two
+    ///   threads at once. It is safe to use the same source surface
+    ///   from multiple threads.
+    ///
+    /// ### Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ### See also
+    /// - [`SDL_BlitSurfaceScaled`]
+    pub fn SDL_StretchSurface(
+        src: *mut SDL_Surface,
+        srcrect: *const SDL_Rect,
+        dst: *mut SDL_Surface,
+        dstrect: *const SDL_Rect,
+        scaleMode: SDL_ScaleMode,
+    ) -> ::core::primitive::bool;
+}
+
+extern "C" {
     /// Perform a tiled blit to a destination surface, which may be of a different
     /// format.
     ///

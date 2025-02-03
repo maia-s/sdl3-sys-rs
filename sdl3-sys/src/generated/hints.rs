@@ -2295,8 +2295,8 @@ pub const SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK: *const ::core::ffi::c_cha
 pub const SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH: *const ::core::ffi::c_char =
     c"SDL_MAC_OPENGL_ASYNC_DISPATCH".as_ptr();
 
-/// A variable controlling whether the Option (⌥) key on macOS should be
-/// remapped to act as the Alt key.
+/// A variable controlling whether the Option key on macOS should be remapped
+/// to act as the Alt key.
 ///
 /// The variable can be set to the following values:
 ///

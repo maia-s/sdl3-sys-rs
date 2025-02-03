@@ -37,6 +37,9 @@ extern "C" {
     /// - `pszGUID`: buffer in which to write the ASCII string.
     /// - `cbGUID`: the size of pszGUID, should be at least 33 bytes.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -61,6 +64,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns a [`SDL_GUID`] structure.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
