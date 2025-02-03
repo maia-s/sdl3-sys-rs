@@ -10,7 +10,7 @@ pub const SDL_TTF_MAJOR_VERSION: ::core::primitive::i32 = 3;
 
 pub const SDL_TTF_MINOR_VERSION: ::core::primitive::i32 = 1;
 
-pub const SDL_TTF_MICRO_VERSION: ::core::primitive::i32 = 0;
+pub const SDL_TTF_MICRO_VERSION: ::core::primitive::i32 = 2;
 
 /// * This is the version number macro for the current SDL_ttf version.
 pub const SDL_TTF_VERSION: ::core::primitive::i32 = SDL_VERSIONNUM(
@@ -837,22 +837,26 @@ extern "C" {
 extern "C" {
     /// Enable Signed Distance Field rendering for a font.
     ///
-    /// SDF is a technique that helps fonts look sharp even when scaling and rotating, and requires special shader support for display.
+    /// SDF is a technique that helps fonts look sharp even when scaling and
+    /// rotating, and requires special shader support for display.
     ///
-    /// This works with Blended APIs, and generates the raw signed distance values in the alpha channel of the resulting texture.
+    /// This works with Blended APIs, and generates the raw signed distance values
+    /// in the alpha channel of the resulting texture.
     ///
-    /// This updates any [`TTF_Text`] objects using this font, and clears already-generated glyphs, if any, from the cache.
+    /// This updates any [`TTF_Text`] objects using this font, and clears
+    /// already-generated glyphs, if any, from the cache.
     ///
     /// ### Parameters
     /// - `font`: the font to set SDF support on.
     /// - `enabled`: true to enable SDF, false to disable.
     ///
     /// ### Return value
-    /// Returns true on success or false on failure; call [`SDL_GetError()`]
-    ///   for more information.
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
     ///
     /// ### Thread safety
-    /// This function should be called on the thread that created the font.
+    /// This function should be called on the thread that created the
+    ///   font.
     ///
     /// ### Availability
     /// This function is available since SDL_ttf 3.0.0.
@@ -869,8 +873,7 @@ extern "C" {
     /// Query whether Signed Distance Field rendering is enabled for a font.
     ///
     /// ### Parameters
-    /// - `font`: the font to query
-    ///
+    /// - `font`: the font to query.
     ///
     /// ### Return value
     /// Returns true if enabled, false otherwise.
@@ -1150,8 +1153,7 @@ extern "C" {
     /// Scalability lets us distinguish between outline and bitmap fonts.
     ///
     /// ### Parameters
-    /// - `font`: the font to query
-    ///
+    /// - `font`: the font to query.
     ///
     /// ### Return value
     /// Returns true if the font is scalable, false otherwise.
@@ -1331,15 +1333,62 @@ extern "C" {
 }
 
 extern "C" {
+    /// Convert from a 4 character string to a 32-bit tag.
+    ///
+    /// ### Parameters
+    /// - `string`: the 4 character string to convert.
+    ///
+    /// ### Return value
+    /// Returns the 32-bit representation of the string.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL_ttf 3.0.0.
+    ///
+    /// ### See also
+    /// - [`TTF_TagToString`]
+    pub fn TTF_StringToTag(string: *const ::core::ffi::c_char) -> Uint32;
+}
+
+extern "C" {
+    /// Convert from a 32-bit tag to a 4 character string.
+    ///
+    /// ### Parameters
+    /// - `tag`: the 32-bit tag to convert.
+    /// - `string`: a pointer filled in with the 4 character representation of
+    ///   the tag.
+    /// - `size`: the size of the buffer pointed at by string, should be at least
+    ///   4.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ### Availability
+    /// This function is available since SDL_ttf 3.0.0.
+    ///
+    /// ### See also
+    /// - [`TTF_TagToString`]
+    pub fn TTF_TagToString(
+        tag: Uint32,
+        string: *mut ::core::ffi::c_char,
+        size: ::core::primitive::usize,
+    );
+}
+
+extern "C" {
     /// Set the script to be used for text shaping by a font.
     ///
-    /// This returns false if SDL_ttf isn't build with HarfBuzz support.
+    /// This returns false if SDL_ttf isn't built with HarfBuzz support.
     ///
     /// This updates any [`TTF_Text`] objects using this font.
     ///
     /// ### Parameters
     /// - `font`: the font to modify.
-    /// - `script`: a script tag in the format used by HarfBuzz.
+    /// - `script`: an
+    ///   [ISO 15924 code](https://unicode.org/iso15924/iso15924-codes.html)
+    ///   .
     ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
@@ -1351,6 +1400,9 @@ extern "C" {
     ///
     /// ### Availability
     /// This function is available since SDL_ttf 3.0.0.
+    ///
+    /// ### See also
+    /// - [`TTF_StringToTag`]
     pub fn TTF_SetFontScript(font: *mut TTF_Font, script: Uint32) -> ::core::primitive::bool;
 }
 
@@ -1361,7 +1413,9 @@ extern "C" {
     /// - `font`: the font to query.
     ///
     /// ### Return value
-    /// Returns a script tag in the format used by HarfBuzz.
+    /// Returns an
+    ///   [ISO 15924 code](https://unicode.org/iso15924/iso15924-codes.html)
+    ///   or 0 if a script hasn't been set.
     ///
     /// ### Thread safety
     /// This function should be called on the thread that created the
@@ -1369,6 +1423,9 @@ extern "C" {
     ///
     /// ### Availability
     /// This function is available since SDL_ttf 3.0.0.
+    ///
+    /// ### See also
+    /// - [`TTF_TagToString`]
     pub fn TTF_GetFontScript(font: *mut TTF_Font) -> Uint32;
 }
 
@@ -1379,34 +1436,42 @@ extern "C" {
     /// - `ch`: the character code to check.
     ///
     /// ### Return value
-    /// Returns a script tag in the format used by HarfBuzz on success, or 0 on
-    ///   failure; call [`SDL_GetError()`] for more information.
+    /// Returns an
+    ///   [ISO 15924 code](https://unicode.org/iso15924/iso15924-codes.html)
+    ///   on success, or 0 on failure; call [`SDL_GetError()`] for more
+    ///   information.
     ///
     /// ### Thread safety
     /// This function is thread-safe.
     ///
     /// ### Availability
     /// This function is available since SDL_ttf 3.0.0.
+    ///
+    /// ### See also
+    /// - [`TTF_TagToString`]
     pub fn TTF_GetGlyphScript(ch: Uint32) -> Uint32;
 }
 
 extern "C" {
     /// Set language to be used for text shaping by a font.
     ///
-    /// If SDL_ttf was not built with HarfBuzz support, this function returns false.
+    /// If SDL_ttf was not built with HarfBuzz support, this function returns
+    /// false.
     ///
     /// This updates any [`TTF_Text`] objects using this font.
     ///
     /// ### Parameters
     /// - `font`: the font to specify a language for.
-    /// - `language_bcp47`: a null-terminated string containing the desired language's BCP47 code. Or null to reset the value.
+    /// - `language_bcp47`: a null-terminated string containing the desired
+    ///   language's BCP47 code. Or null to reset the value.
     ///
     /// ### Return value
-    /// Returns true on success or false on failure; call [`SDL_GetError()`]
-    ///   for more information.
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
     ///
     /// ### Thread safety
-    /// This function should be called on the thread that created the font.
+    /// This function should be called on the thread that created the
+    ///   font.
     ///
     /// ### Availability
     /// This function is available since SDL_ttf 3.0.0.
@@ -1597,14 +1662,16 @@ extern "C" {
     /// - `font`: the font to query.
     /// - `previous_ch`: the previous codepoint.
     /// - `ch`: the current codepoint.
-    /// - `kerning`: a pointer filled in with the kerning size between the two glyphs, in pixels, may be NULL.
+    /// - `kerning`: a pointer filled in with the kerning size between the two
+    ///   glyphs, in pixels, may be NULL.
     ///
     /// ### Return value
-    /// Returns true on success or false on failure; call [`SDL_GetError()`]
-    ///   for more information.
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
     ///
     /// ### Thread safety
-    /// This function should be called on the thread that created the font.
+    /// This function should be called on the thread that created the
+    ///   font.
     ///
     /// ### Availability
     /// This function is available since SDL_ttf 3.0.0.
@@ -2404,6 +2471,8 @@ extern "C" {
     ///
     /// ### See also
     /// - [`TTF_DestroyRendererTextEngine`]
+    /// - [`TTF_DrawRendererText`]
+    /// - [`TTF_CreateRendererTextEngineWithProperties`]
     pub fn TTF_CreateRendererTextEngine(renderer: *mut SDL_Renderer) -> *mut TTF_TextEngine;
 }
 
@@ -2433,7 +2502,9 @@ extern "C" {
     /// This function is available since SDL_ttf 3.0.0.
     ///
     /// ### See also
+    /// - [`TTF_CreateRendererTextEngine`]
     /// - [`TTF_DestroyRendererTextEngine`]
+    /// - [`TTF_DrawRendererText`]
     pub fn TTF_CreateRendererTextEngineWithProperties(
         props: SDL_PropertiesID,
     ) -> *mut TTF_TextEngine;
@@ -2521,7 +2592,9 @@ extern "C" {
     /// This function is available since SDL_ttf 3.0.0.
     ///
     /// ### See also
+    /// - [`TTF_CreateGPUTextEngineWithProperties`]
     /// - [`TTF_DestroyGPUTextEngine`]
+    /// - [`TTF_GetGPUTextDrawData`]
     pub fn TTF_CreateGPUTextEngine(device: *mut SDL_GPUDevice) -> *mut TTF_TextEngine;
 }
 
@@ -2551,7 +2624,9 @@ extern "C" {
     /// This function is available since SDL_ttf 3.0.0.
     ///
     /// ### See also
+    /// - [`TTF_CreateGPUTextEngine`]
     /// - [`TTF_DestroyGPUTextEngine`]
+    /// - [`TTF_GetGPUTextDrawData`]
     pub fn TTF_CreateGPUTextEngineWithProperties(props: SDL_PropertiesID) -> *mut TTF_TextEngine;
 }
 
@@ -2952,11 +3027,13 @@ extern "C" {
 extern "C" {
     /// Set the script to be used for text shaping a text object.
     ///
-    /// This returns false if SDL_ttf isn't build with HarfBuzz support.
+    /// This returns false if SDL_ttf isn't built with HarfBuzz support.
     ///
     /// ### Parameters
     /// - `text`: the text to modify.
-    /// - `script`: a script tag in the format used by HarfBuzz.
+    /// - `script`: an
+    ///   [ISO 15924 code](https://unicode.org/iso15924/iso15924-codes.html)
+    ///   .
     ///
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
@@ -2968,6 +3045,9 @@ extern "C" {
     ///
     /// ### Availability
     /// This function is available since SDL_ttf 3.0.0.
+    ///
+    /// ### See also
+    /// - [`TTF_StringToTag`]
     pub fn TTF_SetTextScript(text: *mut TTF_Text, script: Uint32) -> ::core::primitive::bool;
 }
 
@@ -2980,7 +3060,10 @@ extern "C" {
     /// - `text`: the text to query.
     ///
     /// ### Return value
-    /// Returns a script tag in the format used by HarfBuzz.
+    /// Returns an
+    ///   [ISO 15924 code](https://unicode.org/iso15924/iso15924-codes.html)
+    ///   or 0 if a script hasn't been set on either the text object or the
+    ///   font.
     ///
     /// ### Thread safety
     /// This function should be called on the thread that created the
@@ -2988,6 +3071,9 @@ extern "C" {
     ///
     /// ### Availability
     /// This function is available since SDL_ttf 3.0.0.
+    ///
+    /// ### See also
+    /// - [`TTF_TagToString`]
     pub fn TTF_GetTextScript(text: *mut TTF_Text) -> Uint32;
 }
 
