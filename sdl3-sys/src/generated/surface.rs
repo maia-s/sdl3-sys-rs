@@ -171,6 +171,9 @@ pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
 /// format with a pitch of 32 would consist of 32x32 bytes of Y plane followed
 /// by 32x16 bytes of UV plane.
 ///
+/// When a surface holds MJPG format data, pixels points at the compressed JPEG
+/// image and pitch is the length of that data.
+///
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 ///
@@ -311,6 +314,10 @@ extern "C" {
     ///   the same tone mapping that Chrome uses for HDR content, the form "*=N",
     ///   where N is a floating point scale factor applied in linear space, and
     ///   "none", which disables tone mapping. This defaults to "chrome".
+    /// - [`SDL_PROP_SURFACE_HOTSPOT_X_NUMBER`]\: the hotspot pixel offset from the
+    ///   left edge of the image, if this surface is being used as a cursor.
+    /// - [`SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER`]\: the hotspot pixel offset from the
+    ///   top edge of the image, if this surface is being used as a cursor.
     ///
     /// ### Parameters
     /// - `surface`: the [`SDL_Surface`] structure to query.
@@ -332,6 +339,12 @@ pub const SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT: *const ::core::ffi::c_char =
 
 pub const SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING: *const ::core::ffi::c_char =
     c"SDL.surface.tonemap".as_ptr();
+
+pub const SDL_PROP_SURFACE_HOTSPOT_X_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.surface.hotspot.x".as_ptr();
+
+pub const SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.surface.hotspot.y".as_ptr();
 
 extern "C" {
     /// Set the colorspace used by a surface.

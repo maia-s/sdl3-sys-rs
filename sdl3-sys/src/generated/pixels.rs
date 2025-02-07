@@ -557,6 +557,7 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 /// | [`NV21`](SDL_PixelFormat::NV21) | [`SDL_PIXELFORMAT_NV21`] | Planar mode: Y + V/U interleaved  (2 planes) |
 /// | [`P010`](SDL_PixelFormat::P010) | [`SDL_PIXELFORMAT_P010`] | Planar mode: Y + U/V interleaved  (2 planes) |
 /// | [`EXTERNAL_OES`](SDL_PixelFormat::EXTERNAL_OES) | [`SDL_PIXELFORMAT_EXTERNAL_OES`] | Android video texture format |
+/// | [`MJPG`](SDL_PixelFormat::MJPG) | [`SDL_PIXELFORMAT_MJPG`] | Motion JPEG |
 /// | [`RGBA32`](SDL_PixelFormat::RGBA32) | [`SDL_PIXELFORMAT_RGBA32`] | (target dependent) |
 /// | [`ARGB32`](SDL_PixelFormat::ARGB32) | [`SDL_PIXELFORMAT_ARGB32`] | (target dependent) |
 /// | [`BGRA32`](SDL_PixelFormat::BGRA32) | [`SDL_PIXELFORMAT_BGRA32`] | (target dependent) |
@@ -645,6 +646,7 @@ impl ::core::fmt::Debug for SDL_PixelFormat {
             Self::NV21 => "SDL_PIXELFORMAT_NV21",
             Self::P010 => "SDL_PIXELFORMAT_P010",
             Self::EXTERNAL_OES => "SDL_PIXELFORMAT_EXTERNAL_OES",
+            Self::MJPG => "SDL_PIXELFORMAT_MJPG",
             Self::RGBA32 => "SDL_PIXELFORMAT_RGBA32",
             Self::ARGB32 => "SDL_PIXELFORMAT_ARGB32",
             Self::BGRA32 => "SDL_PIXELFORMAT_BGRA32",
@@ -741,6 +743,8 @@ impl SDL_PixelFormat {
     pub const P010: Self = Self(0x30313050);
     /// Android video texture format
     pub const EXTERNAL_OES: Self = Self(0x2053454f);
+    /// Motion JPEG
+    pub const MJPG: Self = Self(0x47504a4d);
     #[cfg(target_endian = "big")]
     #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const RGBA32: Self = SDL_PIXELFORMAT_RGBA8888;
@@ -864,6 +868,8 @@ pub const SDL_PIXELFORMAT_NV21: SDL_PixelFormat = SDL_PixelFormat::NV21;
 pub const SDL_PIXELFORMAT_P010: SDL_PixelFormat = SDL_PixelFormat::P010;
 /// Android video texture format
 pub const SDL_PIXELFORMAT_EXTERNAL_OES: SDL_PixelFormat = SDL_PixelFormat::EXTERNAL_OES;
+/// Motion JPEG
+pub const SDL_PIXELFORMAT_MJPG: SDL_PixelFormat = SDL_PixelFormat::MJPG;
 #[cfg(target_endian = "big")]
 #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_PIXELFORMAT_RGBA32: SDL_PixelFormat = SDL_PixelFormat::RGBA32;

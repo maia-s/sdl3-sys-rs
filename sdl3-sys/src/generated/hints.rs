@@ -2140,6 +2140,28 @@ pub const SDL_HINT_JOYSTICK_WHEEL_DEVICES_EXCLUDED: *const ::core::ffi::c_char =
 pub const SDL_HINT_JOYSTICK_ZERO_CENTERED_DEVICES: *const ::core::ffi::c_char =
     c"SDL_JOYSTICK_ZERO_CENTERED_DEVICES".as_ptr();
 
+/// A variable containing a list of devices and their desired number of haptic
+/// (force feedback) enabled axis.
+///
+/// The format of the string is a comma separated list of USB VID/PID pairs in
+/// hexadecimal form plus the number of desired axes, e.g.
+///
+/// `0xAAAA/0xBBBB/1,0xCCCC/0xDDDD/3`
+///
+/// This hint supports a "wildcard" device that will set the number of haptic
+/// axes on all initialized haptic devices which were not defined explicitly in
+/// this hint.
+///
+/// `0xFFFF/0xFFFF/1`
+///
+/// This hint should be set before a controller is opened. The number of haptic
+/// axes won't exceed the number of real axes found on the device.
+///
+/// ### Availability
+/// This hint is available since SDL 3.2.5.
+pub const SDL_HINT_JOYSTICK_HAPTIC_AXES: *const ::core::ffi::c_char =
+    c"SDL_JOYSTICK_HAPTIC_AXES".as_ptr();
+
 /// A variable that controls keycode representation in keyboard events.
 ///
 /// This variable is a comma separated set of options for translating keycodes
