@@ -1,7 +1,7 @@
-# sdl3-image-sys: Low level Rust bindings for SDL_image 3
+# sdl3-image-sys: Low level Rust bindings for SDL3_image
 
-These are low level Rust bindings for SDL_image, an add-on library for [SDL](https://libsdl.org)
-for loading images.
+These are low level Rust bindings for SDL3_image, an add-on library for
+[SDL 3](https://libsdl.org) for loading images.
 This version of `sdl3-image-sys` has bindings for SDL_image version `3.2.0` and earlier.
 
 <div class="warning">
@@ -36,69 +36,88 @@ convention for libraries. You can change this behaviour with the following featu
 
 ### Building from source
 
-When building from source with the `build-from-source` feature flag, you can enable these
-features to configure which image formats and backends to use. These correspond to SDL_image's cmake variables. These are all autodetected by default. You can use a `no-` prefix to disable a feature,
-for example `no-sdlimage-png` disables PNG support (unless activated by a backend). Activated
+When building from source with the `build-from-source` feature flag, you can use
+features to configure which backends and image formats to support. Features marked with "(cmake)" below all have
+an `sdlimage-` prefix and correspond to SDL_image's cmake variables. They're autodetected if not set. You can use a `no-` prefix to disable a cmake feature,
+for example `no-sdlimage-png` disables png support. Activated
 features override features disabled with the `no-` prefix.
 
-You can disable all backends and/or formats by default with the following features.
+If an image format is supported by an enabled backend, the backend will handle it and disabling the format's feature has no effect.
 
-| Feature             | Description |
-| ------------------- | ----------- |
-| no-default          | Disable all backends and formats by default |
-| no-default-backends | Disable all backends by default |
-| no-default-formats  | Disable all formats by default, except for formats supported by enabled backends |
+#### Defaults
+
+Backends and formats are autodetected by default. You can disable them by default instead and enable only the features you want. 
+
+(These are not cmake features)
+
+| Feature               | Description |
+| --------------------- | ----------- |
+| `no-default`          | Disable all backends and formats by default |
+| `no-default-backends` | Disable all backends by default |
+| `no-default-formats`  | Disable all formats by default, except for formats supported by enabled backends |
+
+#### Linking and vendoring
+
+| Feature (cmake) | Description |
+| --------------- | ----------- |
+| `vendored`      | Build dependencies from source as part of building SDL_image. SDL_image can vendor all external libraries, but this crate currently only includes support for vendoring the libraries for png, jpg and tif formats for size reasons. (Also consider using the stb backend if you only need basic png or jpg support.) |
+| `deps-shared`   | Use shared libraries for dependencies. You can also enable this for select libraries only, see below |
 
 #### Backends
 
-Features for backends are enabled with a `sdlimage-backend-` prefix and disabled with `no-sdlimage-backend-`.
-For example, to enable the STB backend, enable the `sdlimage-backend-stb` feature. To disable it,
-enable the `no-sdlimage-backend-stb` feature. Enabled features override disabled features.
+Features for backends are enabled with a `sdlimage-backend-` prefix and disabled
+with `no-sdlimage-backend-`. For example, to enable the STB backend, enable the
+`sdlimage-backend-stb` feature. To disable it, enable the `no-sdlimage-backend-stb`
+feature. Enabled features override disabled features.
 
-These features only have an effect when building SDL_image from source.
-
-| Backend | Description |
-| ------- | ----------- |
-| stb     | Use STB_image for loading supported formats (all targets) |
-| imageio | Use ImageIO for loading supported formats on Apple targets |
-| wic     | Use WIC for loading supported formats on Microsoft targets |
+| Feature (cmake, backend) | Description |
+| --------------- | ----------- |
+| `stb`           | Use [stb_image](https://github.com/nothings/stb) for loading supported formats (all targets). This backend is always vendored |
+| `imageio`       | Use ImageIO for loading supported formats on Apple targets |
+| `wic`           | Use WIC for loading supported formats on Microsoft targets |
 
 #### Image formats
 
-Features for formats are enabled with a `sdlimage-` prefix and disabled with `no-sdlimage-`.
-For example, to enable PNG support, enable the `sdlimage-png` feature. To disable it,
-enable the `no-sdlimage-png` feature. Enabled features override disabled features, and
-disabled formats will still be availabe if supported by an enabled backend.
+These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` prefix.
 
-These features only have an effect when building SDL_image from source.
+| Feature (cmake) | Built-in | STB | WIC | ImageIO | Library |
+| --------------- | :------: | :-: | :-: | :-----: | ------- |
+| `avif`          |          |     |     |         | libavif (BSD-2-Clause) + aom (BSD-2-Clause) + dav1d (BSD-2-Clause) + ... |
+| `bmp`           | ✅       |     |     | ✅       |         |
+| `gif`           | ✅       |     |     | ✅       |         |
+| `jpg`           |          | ✅  | ✅  | ✅       | libjpeg (IJG-short) |
+| `jxl`           |          |     |     |         | libjxl (BSD-3-Clause) + ... |
+| `lbm`           | ✅       |     |     |         |         |
+| `pcx`           | ✅       |     |     |         |         |
+| `png`           |          | ✅  | ✅  | ✅       | libpng (Libpng) + libz (Zlib) |
+| `pnm`           | ✅       |     |     |         |         |
+| `qoi`           | ✅ (MIT) |     |     |         |         |
+| `svg`           | ✅       |     |     |         |         |
+| `tga`           | ✅       |     |     | ✅      |         |
+| `tif`           |          |     | ✅  | ✅      | libtiff (libtiff) |
+| `webp`          |          |     |     |         | libwebp (BSD-3-Clause) |
+| `xcf`           | ✅       |     |     |         |         |
+| `xpm`           | ✅       |     |     |         |         |
+| `xv`            | ✅       |     |     |         |         |
 
-| Format | Built-in | STB | WIC | ImageIO | Library |
-| ------ | :------: | :-: | :-: | :-----: | ------- |
-| avif   |          |     |     |         | libavif (BSD-2-Clause) + aom (BSD-2-Clause) + dav1d (BSD-2-Clause) + ... |
-| bmp    | ✅       |     |     | ✅       |         |
-| gif    | ✅       |     |     | ✅       |         |
-| jpg    |          | ✅  | ✅  | ✅       | libjpeg (IJG-short) |
-| jxl    |          |     |     |         | libjxl (BSD-3-Clause) + ... |
-| lbm    | ✅       |     |     |         |         |
-| pcx    | ✅       |     |     |         |         |
-| png    |          | ✅  | ✅  | ✅       | libpng (Libpng) + libz (Zlib) |
-| pnm    | ✅       |     |     |         |         |
-| qoi    | ✅ (MIT) |     |     |         |         |
-| svg    | ✅       |     |     |         |         |
-| tga    | ✅       |     |     | ✅      |         |
-| tif    |          |     | ✅  | ✅      | libtiff (libtiff) |
-| webp   |          |     |     |         | libwebp (BSD-3-Clause) |
-| xcf    | ✅       |     |     |         |         |
-| xpm    | ✅       |     |     |         |         |
-| xv     | ✅       |     |     |         |         |
+##### Save support
 
-Save support
+| Feature (cmake) | Description |
+| --------------- | ----------- |
+| `avif-save`     | Support saving images in avif format. Enables the `sdlimage-avif` feature |
+| `jpg-save`      | Support saving images in jpg format. Enables the `sdlimage-jpg` feature |
+| `png-save`      | Support saving images in png format. Enables the `sdlimage-png` feature |
 
-| Format    | Description |
-| --------- | ----------- |
-| avif-save | Support saving images in AVIF format. Enables the `sdlimage-avif` feature |
-| jpg-save  | Support saving images in JPG format. Enables the `sdlimage-jpg` feature |
-| png-save  | Support saving images in PNG format. Enables the `sdlimage-png` feature |
+##### Shared linking
+
+| Feature (cmake) | Description |
+| --------------- | ----------- |
+| `avif-shared`   | Use shared libraries for avif |
+| `jpg-shared`    | Use shared library for jpeg |
+| `jxl-shared`    | Use shared libraries for jxl |
+| `png-shared`    | Use shared libraries for png |
+| `tif-shared`    | Use shared library for tiff |
+| `webp-shared`   | Use shared library for webp |
 
 ## Other features
 
@@ -108,4 +127,4 @@ Save support
 
 ## Version history
 
-TBD
+- 0.1.0: First release
