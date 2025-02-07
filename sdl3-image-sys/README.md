@@ -60,7 +60,7 @@ Backends and formats are autodetected by default. You can disable them by defaul
 
 | Feature (cmake) | Description |
 | --------------- | ----------- |
-| `vendored`      | Build dependencies from source as part of building SDL_image. SDL_image can vendor all external libraries, but this crate currently only includes support for vendoring the libraries for png, jpg and tif formats for size reasons. (Also consider using the stb backend if you only need basic png or jpg support.) |
+| `vendored`      | Build dependencies from source as part of building SDL_image. SDL_image can vendor all external libraries, but this crate currently only includes support for vendoring the libraries for png and jpg formats for size reasons. (Also consider using the stb backend if you only need basic png and jpg support.) |
 | `deps-shared`   | Use shared libraries for dependencies. You can also enable this for select libraries only, see below |
 
 #### Backends

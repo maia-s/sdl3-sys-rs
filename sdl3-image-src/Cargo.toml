@@ -14,7 +14,7 @@ exclude = [
     "/SDL_image/external/dav1d",
     "/SDL_image/external/libavif",
     "/SDL_image/external/libjxl",
-    #"/SDL_image/external/libtiff",
+    "/SDL_image/external/libtiff",
     "/SDL_image/external/libwebp",
     "/SDL_image/external/SDL",
     "/SDL_image/VisualC/external/optional",
