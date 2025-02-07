@@ -99,6 +99,7 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Version history
 
+- 0.4.4: Update SDL to 3.2.4
 - 0.4.3: Update SDL to 3.2.2
 - 0.4.2: Add homebrew to library search path on macos (fix for Apple Silicon)
 - 0.4.1: Fix linking on Fedora and other Linux distros that use lib64
