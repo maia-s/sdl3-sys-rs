@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-sys"
-version = "0.4.3+SDL3-release-3.2.2-41-g6cb3d37a2"
+version = "0.4.4+SDL3-3.2.4"
 edition = "2021"
 authors = ["Maia S. R."]
 license = "Zlib"
@@ -109,7 +109,7 @@ version = "0.1.2"
 optional = true
 
 [build-dependencies.sdl3-src]
-version = "3.2.2-release-41-g6cb3d37a2"
+version = "3.2.4"
 path = "../sdl3-src"
 optional = true
 

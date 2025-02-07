@@ -3139,6 +3139,7 @@ pub struct SDL_GPUVertexBufferDescription {
 /// ### See also
 /// - [`SDL_GPUVertexBufferDescription`]
 /// - [`SDL_GPUVertexInputState`]
+/// - [`SDL_GPUVertexElementFormat`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
