@@ -8,8 +8,8 @@ However, many of these aren't valid when passed to SDL without further modificat
 They're intended to be used with `..Default::default()` in initializers.
 The `Default` impl of interface types also sets the version field to the correct value.
 
-Satellite libraries aren't stable yet, but will be released as separate crates as
-they're available.
+SDL_image is available via the [`sdl3-image-sys`](https://crates.io/crates/sdl3-image-sys) crate.
+Other satellite libraries aren't stable yet, but will be released as they're available.
 
 <div class="warning">
 
