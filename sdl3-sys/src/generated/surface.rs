@@ -64,6 +64,7 @@ pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = (0x00000008 as SDL_Surfac
 /// | ------------------- | --------------- | ----------- |
 /// | [`NEAREST`](SDL_ScaleMode::NEAREST) | [`SDL_SCALEMODE_NEAREST`] | nearest pixel sampling |
 /// | [`LINEAR`](SDL_ScaleMode::LINEAR) | [`SDL_SCALEMODE_LINEAR`] | linear filtering |
+/// | [`BEST`](SDL_ScaleMode::BEST) | [`SDL_SCALEMODE_BEST`] | anisotropic filtering |
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ScaleMode(pub ::core::ffi::c_int);
@@ -82,7 +83,7 @@ impl ::core::fmt::Debug for SDL_ScaleMode {
         f.write_str(match *self {
             Self::NEAREST => "SDL_SCALEMODE_NEAREST",
             Self::LINEAR => "SDL_SCALEMODE_LINEAR",
-
+            Self::BEST => "SDL_SCALEMODE_BEST",
             _ => return write!(f, "SDL_ScaleMode({})", self.0),
         })
     }
@@ -93,12 +94,16 @@ impl SDL_ScaleMode {
     pub const NEAREST: Self = Self(0);
     /// linear filtering
     pub const LINEAR: Self = Self(1);
+    /// anisotropic filtering
+    pub const BEST: Self = Self(2);
 }
 
 /// nearest pixel sampling
 pub const SDL_SCALEMODE_NEAREST: SDL_ScaleMode = SDL_ScaleMode::NEAREST;
 /// linear filtering
 pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
+/// best filtering
+pub const SDL_SCALEMODE_BEST: SDL_ScaleMode = SDL_ScaleMode::BEST;
 
 /// The flip mode.
 ///
