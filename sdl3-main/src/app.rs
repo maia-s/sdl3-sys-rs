@@ -599,7 +599,9 @@ impl_app! {
         unsafe fn quit(self, appstate: *mut c_void, _result: SDL_AppResult) {
             unsafe {
                 self();
-                let _ = S::from_raw(appstate);
+                if !appstate.is_null() {
+                    let _ = S::from_raw(appstate);
+                }
             };
         }
     }
