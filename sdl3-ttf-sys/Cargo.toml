@@ -10,6 +10,7 @@ documentation = "https://docs.rs/sdl3-ttf-sys"
 keywords = ["sdl", "font"]
 categories = ["external-ffi-bindings", "no-std"]
 links = "SDL3_ttf"
+autoexamples = false
 
 [features]
 default = []
@@ -58,3 +59,6 @@ optional = true
 [build-dependencies.vcpkg]
 version = "0.2"
 optional = true
+
+[[example]]
+name = "showfont"
