@@ -381,6 +381,14 @@ const ENUM_PATCHES: &[EnumPatch] = &[
             Ok(true)
         },
     },
+    EnumPatch {
+        module: Some("ttf"),
+        match_ident: |i| i == "TTF_Direction",
+        patch: |_, e| {
+            e.base_type = Some(Type::primitive(PrimitiveType::Uint32T));
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_parsed_struct(ctx: &ParseContext, e: &mut StructOrUnion) -> Result<bool, ParseErr> {

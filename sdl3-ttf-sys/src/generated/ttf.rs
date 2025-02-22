@@ -1237,9 +1237,9 @@ extern "C" {
 /// | [`BTT`](TTF_Direction::BTT) | [`TTF_DIRECTION_BTT`] | Bottom to Top |
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct TTF_Direction(pub ::core::ffi::c_int);
+pub struct TTF_Direction(pub ::core::primitive::u32);
 
-impl From<TTF_Direction> for ::core::ffi::c_int {
+impl From<TTF_Direction> for ::core::primitive::u32 {
     #[inline(always)]
     fn from(value: TTF_Direction) -> Self {
         value.0
