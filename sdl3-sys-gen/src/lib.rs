@@ -296,12 +296,16 @@ impl Library {
         patch_file(
             &sys_crate.readme_path(),
             &[LinesPatch {
-                match_lines: &[&|s| s.contains(&format!("bindings for {} version ", lib_dir))],
+                match_lines: &[&|s| s.contains(&format!("bindings for {} version", lib_dir))],
                 apply: &|lines| {
-                    let match_ = &format!("bindings for {} version ", lib_dir);
+                    let match_ = &format!("bindings for {} version", lib_dir);
                     let line = &lines[0];
                     let pfx = &line[..line.find(match_).unwrap() + match_.len()];
-                    format!("{pfx}`{}` and earlier.\n", src_ver_display)
+                    if src_ver_display == "3.2.0" {
+                        format!("{pfx} `{}`.\n", src_ver_display)
+                    } else {
+                        format!("{pfx}s `3.2.0` to `{}`, inclusive.\n", src_ver_display)
+                    }
                 },
             }],
         )?;
