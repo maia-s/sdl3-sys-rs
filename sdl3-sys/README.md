@@ -97,8 +97,9 @@ These features are mutually exclusive. Features higher in this list override lat
 | `debug-impls` | Implement the `Debug` trait for most SDL types. |
 | `nightly` | Enable features that need the nightly compiler. This enables the `VaList` type, as well as enabling some intrinsics. |
 
-## Version history
+## Recent changes
 
+- 0.4.5: Update SDL to 3.2.6
 - 0.4.4: Update SDL to 3.2.4
 - 0.4.3: Update SDL to 3.2.2
 - 0.4.2: Add homebrew to library search path on macos (fix for Apple Silicon)
