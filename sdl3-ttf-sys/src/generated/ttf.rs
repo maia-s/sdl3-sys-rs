@@ -8,9 +8,9 @@ use sdl3_sys::everything::*;
 /// * Printable format: "%d.%d.%d", MAJOR, MINOR, MICRO
 pub const SDL_TTF_MAJOR_VERSION: ::core::primitive::i32 = 3;
 
-pub const SDL_TTF_MINOR_VERSION: ::core::primitive::i32 = 1;
+pub const SDL_TTF_MINOR_VERSION: ::core::primitive::i32 = 2;
 
-pub const SDL_TTF_MICRO_VERSION: ::core::primitive::i32 = 2;
+pub const SDL_TTF_MICRO_VERSION: ::core::primitive::i32 = 0;
 
 /// * This is the version number macro for the current SDL_ttf version.
 pub const SDL_TTF_VERSION: ::core::primitive::i32 = SDL_VERSIONNUM(
