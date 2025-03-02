@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-image-sys"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Maia S. R."]
 license = "Zlib"
@@ -12,7 +12,7 @@ categories = ["external-ffi-bindings", "no-std"]
 links = "SDL3_image"
 
 [features]
-default = []
+default = ["no-sdlimage-vendored"] # breaks on msvc bc of missimg libs
 
 # Build and link SDL3_image from source instead of linking a pre-existing library
 build-from-source = ["dep:cmake", "dep:rpkg-config", "dep:sdl3-image-src"]
@@ -75,7 +75,8 @@ no-default-formats = [
 sdlimage-deps-shared = []
 no-sdlimage-deps-shared = []
 
-sdlimage-vendored = []
+# disable libraries that aren't included in the crate for now
+sdlimage-vendored = ["no-sdlimage-avif", "no-sdlimage-jxl", "no-sdlimage-tif", "no-sdlimage-webp"]
 no-sdlimage-vendored = []
 
 sdlimage-backend-imageio = []
@@ -145,7 +146,7 @@ no-sdlimage-tif-shared = []
 no-sdlimage-webp-shared = []
 
 [dependencies]
-sdl3-sys = { version = "0.4", path = "../sdl3-sys" }
+sdl3-sys = { version = "0.4.5", path = "../sdl3-sys" }
 
 [build-dependencies.cmake]
 version = "0.1"
