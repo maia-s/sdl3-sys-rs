@@ -20,6 +20,13 @@ fn main() -> Result<(), Box<dyn Error>> {
             if cfg!(feature = "link-static") {
                 config.define("BUILD_SHARED_LIBS", "OFF");
             }
+            config.define("SDLTTF_SAMPLES", "OFF");
+
+            cmake_vars! { config =>
+                SDLTTF_VENDORED,
+                SDLTTF_HARFBUZZ,
+                SDLTTF_PLUTOSVG,
+            }
         }
         Ok(())
     })?;

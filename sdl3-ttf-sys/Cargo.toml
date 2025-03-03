@@ -1,13 +1,13 @@
 [package]
 name = "sdl3-ttf-sys"
-version = "0.0.0"
+version = "0.1.0"
 edition = "2021"
 authors = ["Maia S. R."]
 license = "Zlib"
 description = "Low level Rust bindings for SDL3_ttf"
 repository = "https://github.com/maia-s/sdl3-sys-rs"
 documentation = "https://docs.rs/sdl3-ttf-sys"
-keywords = ["sdl", "font"]
+keywords = ["sdl", "ttf", "font"]
 categories = ["external-ffi-bindings", "no-std"]
 links = "SDL3_ttf"
 autoexamples = false
@@ -20,6 +20,9 @@ build-from-source = ["dep:cmake", "dep:rpkg-config", "dep:sdl3-ttf-src"]
 
 # Build and link a static SDL3_ttf library from source
 build-from-source-static = ["build-from-source", "link-static"]
+
+# Build and link a static SDL3_ttf library from source using vendored libraries
+build-static-vendored = ["build-from-source-static", "sdlttf-vendored"]
 
 # Link SDL3_ttf as a static library. The default is to link a shared/dynamic library.
 link-static = []
@@ -35,6 +38,14 @@ use-vcpkg = ["dep:vcpkg"]
 
 # Implement the Debug trait for applicable types
 debug-impls = ["sdl3-sys/debug-impls"]
+
+sdlttf-vendored = []
+no-sdlttf-vendored = []
+
+sdlttf-harfbuzz = []
+sdlttf-plutosvg = []
+no-sdlttf-harfbuzz = []
+no-sdlttf-plutosvg = []
 
 [dependencies]
 sdl3-sys = { version = "0.4", path = "../sdl3-sys" }

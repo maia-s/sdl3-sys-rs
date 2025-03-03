@@ -27,9 +27,9 @@ convention for libraries. You can change this behaviour with the following featu
 
 | Feature | Description |
 | ------- | ----------- |
-| `use-pkg-config` | Use `pkg-config` to find and link the SDL 3 library. |
-| `use-vcpkg` | Use `vcpkg` to find and link the SDL 3 library. |
-| `build-from-source` | Build and link SDL 3 from source. You have to install any dependencies SDL needs to build for your target first. See below for build related features. |
+| `use-pkg-config` | Use `pkg-config` to find and link the SDL_image library. |
+| `use-vcpkg` | Use `vcpkg` to find and link the SDL_image library. |
+| `build-from-source` | Build and link SDL_image from source. You have to install any dependencies SDL needs to build for your target first. See below for build related features. |
 | `build-from-source-static` | Shortcut for enabling both the `build-from-source` and `link-static` features. This should no longer be necessary. |
 | `build-static-vendored` | Build and link SDL_image from source, use vendored libraries (see below), and link it all statically. |
 | `link-static` | Link SDL_image statically. |
