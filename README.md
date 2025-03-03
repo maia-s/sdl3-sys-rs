@@ -8,6 +8,11 @@ See the [`sdl3-sys`](sdl3-sys) dir for the SDL 3 Rust bindings.
 - [`sdl3-sys-gen`](sdl3-sys-gen): Parser and generator that generates `sdl3-sys` from the official SDL 3 headers.
 - [`sdl3-main`](sdl3-main): Tools for using SDL's main and callback APIs.
 - [`sdl3-main-macros`](sdl3-main-macros): Proc-macros for `sdl3-main`.
+- [`sdl3-image-sys`](sdl3-image-sys): Rust bindings for SDL3_image
+- [`sdl3-image-src`](sdl3-image-sys): Source code crate for SDL3_image
+- [`sdl3-ttf-sys`](sdl3-ttf-sys): Rust bindings for SDL3_ttf
+- [`sdl3-ttf-src`](sdl3-ttf-src): Source code crate for SDL3_ttf
+
 
 ### Why not use bindgen?
 
