@@ -1,4 +1,4 @@
-# sdl3-ttf-sys
+# sdl3-ttf-sys: Low level Rust bindings for SDL3_ttf
 
 These are low level Rust bindings for SDL3_ttf, an add-on library for
 [SDL 3](https://libsdl.org) for rendering text.
