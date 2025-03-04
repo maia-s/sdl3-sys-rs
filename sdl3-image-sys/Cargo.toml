@@ -161,7 +161,7 @@ version = "0.1.2"
 optional = true
 
 [build-dependencies.sdl3-image-src]
-version = "3.2.2"
+version = "3.2.4"
 path = "../sdl3-image-src"
 optional = true
 
