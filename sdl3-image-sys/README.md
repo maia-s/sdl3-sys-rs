@@ -127,6 +127,7 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 
 ## Recent changes
 
+- 0.1.2: Update SDL_image to 3.2.4
 - 0.1.1: Update SDL_image to 3.2.2, disable vendoring by default on all targets, and when
          vendoring, disable libraries that aren't included in the crate by default
 - 0.1.0: First release

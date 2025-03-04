@@ -80,7 +80,7 @@ version = "3.2.4"
 
 [[package]]
 name = "sdl3-image-sys"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "cmake",
  "pkg-config",
