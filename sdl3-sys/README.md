@@ -99,6 +99,7 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
+- 0.4.6: Update SDL to 3.2.8
 - 0.4.5: Update SDL to 3.2.6
 - 0.4.4: Update SDL to 3.2.4
 - 0.4.3: Update SDL to 3.2.2
