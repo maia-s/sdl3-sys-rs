@@ -14,9 +14,8 @@ use super::error::*;
 /// - [`SDL_GetRectEnclosingPoints`]
 /// - [`SDL_PointInRect`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_Point {
     pub x: ::core::ffi::c_int,
     pub y: ::core::ffi::c_int,
@@ -31,9 +30,8 @@ pub struct SDL_Point {
 /// - [`SDL_GetRectEnclosingPointsFloat`]
 /// - [`SDL_PointInRectFloat`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_FPoint {
     pub x: ::core::ffi::c_float,
     pub y: ::core::ffi::c_float,
@@ -53,9 +51,8 @@ pub struct SDL_FPoint {
 /// - [`SDL_GetRectUnion`]
 /// - [`SDL_GetRectEnclosingPoints`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_Rect {
     pub x: ::core::ffi::c_int,
     pub y: ::core::ffi::c_int,
@@ -80,9 +77,8 @@ pub struct SDL_Rect {
 /// - [`SDL_GetRectEnclosingPointsFloat`]
 /// - [`SDL_PointInRectFloat`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_FRect {
     pub x: ::core::ffi::c_float,
     pub y: ::core::ffi::c_float,

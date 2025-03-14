@@ -1,7 +1,7 @@
 use crate::{
     common_ident_prefix,
     parse::{
-        ArgDecl, CanCopy, CanDefault, Conditional, ConditionalExpr, Define, DocComment,
+        ArgDecl, CanCmp, CanCopy, CanDefault, Conditional, ConditionalExpr, Define, DocComment,
         DocCommentFile, Expr, FnAbi, FnDeclArgs, FnPointer, Function, GetSpan, Ident, IdentOrKwT,
         Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock, PrimitiveType,
         StructFields, StructKind, StructOrUnion, Type, TypeDef, TypeEnum,
@@ -218,6 +218,7 @@ impl Emit for Item {
                             hidden: s.hidden,
                             can_copy: s.can_copy,
                             can_construct: s.can_construct,
+                            can_eq: s.can_eq,
                         })?;
                     }
                     Ok(())
@@ -666,6 +667,7 @@ impl Emit for Define {
                         SymKind::Other,
                         false,
                         arg.ty.can_derive_debug(ctx),
+                        arg.ty.can_derive_eq(ctx),
                         arg.ty.can_default(ctx),
                     )?;
                 }
@@ -723,6 +725,7 @@ impl Emit for Define {
                     SymKind::Other,
                     false,
                     false,
+                    CanCmp::No,
                     CanDefault::No,
                 )?;
                 writeln!(ctx, "{f}")?;
@@ -750,6 +753,7 @@ impl Emit for Define {
                     SymKind::Other,
                     true,
                     ty.can_derive_debug(ctx),
+                    ty.can_derive_eq(ctx),
                     ty.can_default(ctx),
                 )?;
                 self.doc.emit(ctx)?;
@@ -826,6 +830,7 @@ impl Emit for Function {
                 SymKind::Other,
                 false,
                 false,
+                CanCmp::No,
                 CanDefault::No,
             )?;
             emit_extern_start(ctx, &self.abi, false)?;
@@ -858,6 +863,7 @@ impl Emit for Function {
                         SymKind::Other,
                         false,
                         arg.ty.can_derive_debug(&ctx_body),
+                        arg.ty.can_derive_eq(&ctx_body),
                         arg.ty.can_default(&ctx_body),
                     )?;
                 }
@@ -884,6 +890,7 @@ impl Emit for Function {
                 SymKind::Other,
                 false,
                 false,
+                CanCmp::No,
                 CanDefault::No,
             )?;
 
@@ -988,6 +995,26 @@ impl StructOrUnion {
         }
         true
     }
+    pub fn can_derive_eq(
+        &self,
+        ctx: &EmitContext,
+        fields_override: Option<&StructFields>,
+    ) -> CanCmp {
+        if self.can_eq == CanCmp::Auto {
+            let mut derive_eq = CanCmp::Full;
+            if let Some(fields) = fields_override.or(self.fields.as_ref()) {
+                for field in fields.fields.iter() {
+                    match field.ty.can_derive_eq(ctx) {
+                        CanCmp::Auto | CanCmp::Full => (),
+                        CanCmp::Partial => derive_eq = CanCmp::Partial,
+                        CanCmp::No => return CanCmp::No,
+                    }
+                }
+                return derive_eq;
+            }
+        }
+        self.can_eq
+    }
 
     pub fn can_default(&self, ctx: &EmitContext) -> CanDefault {
         if !self.can_construct {
@@ -1028,6 +1055,7 @@ impl StructOrUnion {
             hidden: self.hidden,
             can_copy: self.can_copy,
             can_construct: self.can_construct,
+            can_eq: self.can_eq,
         })?;
 
         if let (true, Some(fields)) = (sym.emit_status != EmitStatus::Emitted, &sym.fields) {
@@ -1040,6 +1068,7 @@ impl StructOrUnion {
                 hidden: self.hidden,
                 can_copy: self.can_copy,
                 can_construct: self.can_construct,
+                can_eq: self.can_eq,
             })?;
 
             let is_interface = if sym
@@ -1061,6 +1090,11 @@ impl StructOrUnion {
             let can_derive_copy = !is_interface
                 && (sym.can_copy == CanCopy::Always
                     || (sym.can_copy != CanCopy::Never && self.can_derive_copy(ctx, Some(fields))));
+            let can_derive_eq = if sym.can_eq != CanCmp::Auto {
+                sym.can_eq
+            } else {
+                self.can_derive_eq(ctx, Some(fields))
+            };
             let can_default = if is_interface || !sym.can_construct {
                 CanDefault::No
             } else {
@@ -1080,14 +1114,20 @@ impl StructOrUnion {
             if can_derive_copy {
                 writeln!(ctx_ool, "#[derive(Clone, Copy)]")?;
             }
+            if can_default == CanDefault::Derive {
+                writeln!(ctx_ool, "#[derive(Default)]")?;
+            }
+            match can_derive_eq {
+                CanCmp::Auto => unreachable!(),
+                CanCmp::No => (),
+                CanCmp::Partial => writeln!(ctx_ool, "#[derive(PartialEq)]")?,
+                CanCmp::Full => writeln!(ctx_ool, "#[derive(PartialEq, Eq, Hash)]")?,
+            }
             if self.can_derive_debug(ctx_ool) {
                 writeln!(
                     ctx_ool,
                     r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
                 )?;
-            }
-            if can_default == CanDefault::Derive {
-                writeln!(ctx_ool, "#[derive(Default)]")?;
             }
             writeln!(
                 ctx_ool,
@@ -1362,7 +1402,7 @@ impl Emit for TypeDef {
         drop(ctx_assoc_doc);
 
         match &self.ty.ty {
-            TypeEnum::Primitive(_) => {
+            TypeEnum::Primitive(pt) => {
                 ctx.register_sym(
                     self.ident.clone(),
                     Some(self.ty.clone()),
@@ -1371,6 +1411,7 @@ impl Emit for TypeDef {
                     SymKind::Other,
                     true,
                     true,
+                    pt.can_cmp(),
                     CanDefault::Derive,
                 )?;
                 self.doc.emit(ctx)?;
@@ -1396,6 +1437,7 @@ impl Emit for TypeDef {
                     sym.kind,
                     sym.can_derive_copy,
                     sym.can_derive_debug,
+                    sym.can_derive_eq,
                     sym.can_default,
                 )?;
                 self.doc.emit(ctx)?;
@@ -1453,6 +1495,7 @@ impl Emit for TypeDef {
                     SymKind::Other,
                     true,
                     true,
+                    CanCmp::Full,
                     CanDefault::Derive,
                 )?;
 
@@ -1492,6 +1535,7 @@ impl Emit for TypeDef {
                         SymKind::Other,
                         true,
                         true,
+                        CanCmp::Full,
                         CanDefault::Derive,
                     )?;
 
@@ -1656,6 +1700,7 @@ impl Emit for TypeDef {
                     }(s.ident.clone().unwrap()),
                     s.can_derive_copy(ctx, None),
                     s.can_derive_debug(ctx),
+                    s.can_derive_eq(ctx, None),
                     s.can_default(ctx),
                 )?;
 
@@ -1684,6 +1729,7 @@ impl Emit for TypeDef {
                     SymKind::Other,
                     false,
                     true,
+                    CanCmp::No,
                     CanDefault::Manual,
                 )?;
                 self.doc.emit(ctx)?;
@@ -1703,6 +1749,7 @@ impl Emit for TypeDef {
                     SymKind::Other,
                     ty.can_derive_copy(ctx),
                     ty.can_derive_debug(ctx),
+                    ty.can_derive_eq(ctx),
                     ty.can_default(ctx),
                 )?;
                 self.doc.emit(ctx)?;
@@ -1718,6 +1765,7 @@ impl Emit for TypeDef {
                     SymKind::Other,
                     false,
                     true,
+                    CanCmp::No,
                     CanDefault::Derive,
                 )?;
                 self.doc.emit(ctx)?;
@@ -1750,6 +1798,7 @@ impl Emit for TypeDef {
                     SymKind::Other,
                     r.can_derive_copy,
                     r.can_derive_debug,
+                    r.can_derive_eq,
                     r.can_default,
                 )?;
                 writeln!(ctx, "pub type {} = {};", self.ident.as_str(), r.string)?;

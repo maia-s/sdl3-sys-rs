@@ -2,9 +2,9 @@ use super::{
     Cfg, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, StructSym, SymKind, Value,
 };
 use crate::parse::{
-    Block, CanDefault, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident, IdentOrKw,
-    Item, Items, Kw_static, ParseErr, RustCode, Span, StringLiteral, StructOrUnion, Type, TypeDef,
-    TypeEnum,
+    Block, CanCmp, CanDefault, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident,
+    IdentOrKw, Item, Items, Kw_static, ParseErr, RustCode, Span, StringLiteral, StructOrUnion,
+    Type, TypeDef, TypeEnum,
 };
 use core::{cell::RefCell, fmt::Write};
 use std::{ffi::CString, rc::Rc};
@@ -274,6 +274,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 SymKind::Other,
                 false,
                 false,
+                CanCmp::No,
                 CanDefault::No,
             )?;
             define.doc.emit(ctx)?;
@@ -299,6 +300,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 SymKind::Other,
                 false,
                 false,
+                CanCmp::No,
                 CanDefault::No,
             )?;
             define.doc.emit(ctx)?;
@@ -657,6 +659,7 @@ fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
         SymKind::Other,
         false,
         true,
+        CanCmp::No,
         CanDefault::No,
     )?;
     ctx.register_sym(
@@ -667,6 +670,7 @@ fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
         SymKind::Other,
         false,
         true,
+        CanCmp::No,
         CanDefault::No,
     )?;
 

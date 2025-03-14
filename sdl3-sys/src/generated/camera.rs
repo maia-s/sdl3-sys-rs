@@ -76,9 +76,8 @@ pub type SDL_CameraID = Uint32;
 /// - [`SDL_GetCameraSupportedFormats`]
 /// - [`SDL_GetCameraFormat`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_CameraSpec {
     /// Frame format
     pub format: SDL_PixelFormat,

@@ -528,9 +528,8 @@ pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID = (0xfffffffe as
 /// ### See also
 /// - [`SDL_AudioFormat`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_AudioSpec {
     /// Audio data format
     pub format: SDL_AudioFormat,

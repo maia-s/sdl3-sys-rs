@@ -51,9 +51,8 @@ pub const SDL_SOFTWARE_RENDERER: *const ::core::ffi::c_char = c"software".as_ptr
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_Vertex {
     /// Vertex position, in [`SDL_Renderer`] coordinates
     pub position: SDL_FPoint,
@@ -196,6 +195,7 @@ pub const SDL_LOGICAL_PRESENTATION_INTEGER_SCALE: SDL_RendererLogicalPresentatio
 /// - [`SDL_DestroyTexture`]
 #[repr(C)]
 // #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
+#[derive(PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Texture {
     /// The format of the texture, read-only

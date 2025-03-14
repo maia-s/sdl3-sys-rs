@@ -361,9 +361,8 @@ pub const SDL_PATHTYPE_OTHER: SDL_PathType = SDL_PathType::OTHER;
 /// - [`SDL_GetPathInfo`]
 /// - [`SDL_GetStoragePathInfo`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_PathInfo {
     /// the path type
     pub r#type: SDL_PathType,

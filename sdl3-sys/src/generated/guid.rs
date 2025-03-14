@@ -22,9 +22,8 @@ use super::stdinc::*;
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GUID {
     pub data: [Uint8; 16],
 }

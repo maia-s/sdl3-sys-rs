@@ -319,8 +319,8 @@ apply_cfg!(#[cfg(not(doc))] => {
 /// - [`SDL_SetAtomicInt`]
 /// - [`SDL_AddAtomicInt`]
 #[repr(C)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 #[derive(Default)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AtomicInt {
     pub value: ::core::ffi::c_int,
 }
@@ -505,8 +505,8 @@ pub unsafe fn SDL_AtomicDecRef(a: *mut SDL_AtomicInt) -> ::core::primitive::bool
 /// - [`SDL_GetAtomicU32`]
 /// - [`SDL_SetAtomicU32`]
 #[repr(C)]
-#[cfg_attr(feature = "debug-impls", derive(Debug))]
 #[derive(Default)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_AtomicU32 {
     pub value: Uint32,
 }

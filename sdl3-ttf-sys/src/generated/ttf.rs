@@ -3604,9 +3604,8 @@ pub const TTF_SUBSTRING_TEXT_END: TTF_SubStringFlags = (0x00000800 as TTF_SubStr
 /// - [`TTF_GetTextSubStringForPoint`]
 /// - [`TTF_GetTextSubStringsForRange`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct TTF_SubString {
     /// The flags for this substring
     pub flags: TTF_SubStringFlags,

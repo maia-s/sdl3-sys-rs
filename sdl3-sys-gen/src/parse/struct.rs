@@ -1,7 +1,7 @@
 use super::{
-    patch_parsed_struct, CanCopy, Delimited, DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op,
-    Parse, ParseContext, ParseErr, ParseRawRes, Span, Spanned, Type, TypeWithReqIdent,
-    WsAndComments,
+    patch_parsed_struct, CanCmp, CanCopy, Delimited, DocComment, GetSpan, Ident, Kw_struct,
+    Kw_union, Op, Parse, ParseContext, ParseErr, ParseRawRes, Span, Spanned, Type,
+    TypeWithReqIdent, WsAndComments,
 };
 use std::borrow::Cow;
 
@@ -22,6 +22,7 @@ pub struct StructOrUnion {
     pub hidden: bool,
     pub can_copy: CanCopy,
     pub can_construct: bool,
+    pub can_eq: CanCmp,
 }
 
 impl StructOrUnion {
@@ -77,8 +78,18 @@ impl Parse for StructOrUnion {
             ))
         };
         let _guard = ctx.with_parent_struct_guard(Some(generated_ident.clone()));
+        let kind = if kw_struct.is_some() {
+            StructKind::Struct
+        } else {
+            StructKind::Union
+        };
         let fields = StructFields::try_parse(ctx, &mut rest2)?;
         let mut has_refcount_or_internal = false;
+        let mut can_eq = if kind == StructKind::Struct {
+            CanCmp::Auto
+        } else {
+            CanCmp::No
+        };
         if let Some(fields) = &fields {
             rest = rest2;
             for field in fields.fields.iter() {
@@ -94,11 +105,6 @@ impl Parse for StructOrUnion {
             .unwrap_or_else(|| kw_union.as_ref().unwrap().span())
             .start()
             .join(&rest.start());
-        let kind = if kw_struct.is_some() {
-            StructKind::Struct
-        } else {
-            StructKind::Union
-        };
         let mut this = Self {
             span,
             doc,
@@ -113,6 +119,7 @@ impl Parse for StructOrUnion {
                 CanCopy::Default
             },
             can_construct: !has_refcount_or_internal,
+            can_eq,
         };
         patch_parsed_struct(ctx, &mut this)?;
         Ok((rest, Some(this)))

@@ -821,9 +821,8 @@ pub const SDL_EVENT_ENUM_PADDING: SDL_EventType = SDL_EventType::ENUM_PADDING;
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_CommonEvent {
     /// Event type, shared with all events, Uint32 to cover user events which are not in the [`SDL_EventType`] enumeration
     pub r#type: Uint32,
@@ -837,9 +836,8 @@ pub struct SDL_CommonEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_DisplayEvent {
     /// SDL_DISPLAYEVENT_*
     pub r#type: SDL_EventType,
@@ -859,9 +857,8 @@ pub struct SDL_DisplayEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_WindowEvent {
     /// SDL_EVENT_WINDOW_*
     pub r#type: SDL_EventType,
@@ -881,9 +878,8 @@ pub struct SDL_WindowEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_KeyboardDeviceEvent {
     /// [`SDL_EVENT_KEYBOARD_ADDED`] or [`SDL_EVENT_KEYBOARD_REMOVED`]
     pub r#type: SDL_EventType,
@@ -909,9 +905,8 @@ pub struct SDL_KeyboardDeviceEvent {
 /// - [`SDL_GetKeyFromScancode`]
 /// - [`SDL_HINT_KEYCODE_OPTIONS`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_KeyboardEvent {
     /// [`SDL_EVENT_KEY_DOWN`] or [`SDL_EVENT_KEY_UP`]
     pub r#type: SDL_EventType,
@@ -1046,9 +1041,8 @@ impl ::core::default::Default for SDL_TextInputEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_MouseDeviceEvent {
     /// [`SDL_EVENT_MOUSE_ADDED`] or [`SDL_EVENT_MOUSE_REMOVED`]
     pub r#type: SDL_EventType,
@@ -1064,9 +1058,8 @@ pub struct SDL_MouseDeviceEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_MouseMotionEvent {
     /// [`SDL_EVENT_MOUSE_MOTION`]
     pub r#type: SDL_EventType,
@@ -1094,9 +1087,8 @@ pub struct SDL_MouseMotionEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_MouseButtonEvent {
     /// [`SDL_EVENT_MOUSE_BUTTON_DOWN`] or [`SDL_EVENT_MOUSE_BUTTON_UP`]
     pub r#type: SDL_EventType,
@@ -1125,9 +1117,8 @@ pub struct SDL_MouseButtonEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_MouseWheelEvent {
     /// [`SDL_EVENT_MOUSE_WHEEL`]
     pub r#type: SDL_EventType,
@@ -1155,9 +1146,8 @@ pub struct SDL_MouseWheelEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_JoyAxisEvent {
     /// [`SDL_EVENT_JOYSTICK_AXIS_MOTION`]
     pub r#type: SDL_EventType,
@@ -1181,9 +1171,8 @@ pub struct SDL_JoyAxisEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_JoyBallEvent {
     /// [`SDL_EVENT_JOYSTICK_BALL_MOTION`]
     pub r#type: SDL_EventType,
@@ -1208,9 +1197,8 @@ pub struct SDL_JoyBallEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_JoyHatEvent {
     /// [`SDL_EVENT_JOYSTICK_HAT_MOTION`]
     pub r#type: SDL_EventType,
@@ -1238,9 +1226,8 @@ pub struct SDL_JoyHatEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_JoyButtonEvent {
     /// [`SDL_EVENT_JOYSTICK_BUTTON_DOWN`] or [`SDL_EVENT_JOYSTICK_BUTTON_UP`]
     pub r#type: SDL_EventType,
@@ -1268,9 +1255,8 @@ pub struct SDL_JoyButtonEvent {
 /// ### See also
 /// - [`SDL_GamepadDeviceEvent`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_JoyDeviceEvent {
     /// [`SDL_EVENT_JOYSTICK_ADDED`] or [`SDL_EVENT_JOYSTICK_REMOVED`] or [`SDL_EVENT_JOYSTICK_UPDATE_COMPLETE`]
     pub r#type: SDL_EventType,
@@ -1286,9 +1272,8 @@ pub struct SDL_JoyDeviceEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_JoyBatteryEvent {
     /// [`SDL_EVENT_JOYSTICK_BATTERY_UPDATED`]
     pub r#type: SDL_EventType,
@@ -1308,9 +1293,8 @@ pub struct SDL_JoyBatteryEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GamepadAxisEvent {
     /// [`SDL_EVENT_GAMEPAD_AXIS_MOTION`]
     pub r#type: SDL_EventType,
@@ -1334,9 +1318,8 @@ pub struct SDL_GamepadAxisEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GamepadButtonEvent {
     /// [`SDL_EVENT_GAMEPAD_BUTTON_DOWN`] or [`SDL_EVENT_GAMEPAD_BUTTON_UP`]
     pub r#type: SDL_EventType,
@@ -1368,9 +1351,8 @@ pub struct SDL_GamepadButtonEvent {
 /// ### See also
 /// - [`SDL_JoyDeviceEvent`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GamepadDeviceEvent {
     /// [`SDL_EVENT_GAMEPAD_ADDED`], [`SDL_EVENT_GAMEPAD_REMOVED`], or [`SDL_EVENT_GAMEPAD_REMAPPED`], [`SDL_EVENT_GAMEPAD_UPDATE_COMPLETE`] or [`SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED`]
     pub r#type: SDL_EventType,
@@ -1386,9 +1368,8 @@ pub struct SDL_GamepadDeviceEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GamepadTouchpadEvent {
     /// [`SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN`] or [`SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION`] or [`SDL_EVENT_GAMEPAD_TOUCHPAD_UP`]
     pub r#type: SDL_EventType,
@@ -1414,9 +1395,8 @@ pub struct SDL_GamepadTouchpadEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GamepadSensorEvent {
     /// [`SDL_EVENT_GAMEPAD_SENSOR_UPDATE`]
     pub r#type: SDL_EventType,
@@ -1438,9 +1418,8 @@ pub struct SDL_GamepadSensorEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_AudioDeviceEvent {
     /// [`SDL_EVENT_AUDIO_DEVICE_ADDED`], or [`SDL_EVENT_AUDIO_DEVICE_REMOVED`], or [`SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED`]
     pub r#type: SDL_EventType,
@@ -1461,9 +1440,8 @@ pub struct SDL_AudioDeviceEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_CameraDeviceEvent {
     /// [`SDL_EVENT_CAMERA_DEVICE_ADDED`], [`SDL_EVENT_CAMERA_DEVICE_REMOVED`], [`SDL_EVENT_CAMERA_DEVICE_APPROVED`], [`SDL_EVENT_CAMERA_DEVICE_DENIED`]
     pub r#type: SDL_EventType,
@@ -1479,9 +1457,8 @@ pub struct SDL_CameraDeviceEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_RenderEvent {
     /// [`SDL_EVENT_RENDER_TARGETS_RESET`], [`SDL_EVENT_RENDER_DEVICE_RESET`], [`SDL_EVENT_RENDER_DEVICE_LOST`]
     pub r#type: SDL_EventType,
@@ -1511,9 +1488,8 @@ pub struct SDL_RenderEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_TouchFingerEvent {
     /// [`SDL_EVENT_FINGER_DOWN`], [`SDL_EVENT_FINGER_UP`], [`SDL_EVENT_FINGER_MOTION`], or [`SDL_EVENT_FINGER_CANCELED`]
     pub r#type: SDL_EventType,
@@ -1552,9 +1528,8 @@ pub struct SDL_TouchFingerEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_PenProximityEvent {
     /// [`SDL_EVENT_PEN_PROXIMITY_IN`] or [`SDL_EVENT_PEN_PROXIMITY_OUT`]
     pub r#type: SDL_EventType,
@@ -1578,9 +1553,8 @@ pub struct SDL_PenProximityEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_PenMotionEvent {
     /// [`SDL_EVENT_PEN_MOTION`]
     pub r#type: SDL_EventType,
@@ -1607,9 +1581,8 @@ pub struct SDL_PenMotionEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_PenTouchEvent {
     /// [`SDL_EVENT_PEN_DOWN`] or [`SDL_EVENT_PEN_UP`]
     pub r#type: SDL_EventType,
@@ -1640,9 +1613,8 @@ pub struct SDL_PenTouchEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_PenButtonEvent {
     /// [`SDL_EVENT_PEN_BUTTON_DOWN`] or [`SDL_EVENT_PEN_BUTTON_UP`]
     pub r#type: SDL_EventType,
@@ -1673,9 +1645,8 @@ pub struct SDL_PenButtonEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_PenAxisEvent {
     /// [`SDL_EVENT_PEN_AXIS`]
     pub r#type: SDL_EventType,
@@ -1767,9 +1738,8 @@ impl ::core::default::Default for SDL_ClipboardEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_SensorEvent {
     /// [`SDL_EVENT_SENSOR_UPDATE`]
     pub r#type: SDL_EventType,
@@ -1789,9 +1759,8 @@ pub struct SDL_SensorEvent {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_QuitEvent {
     /// [`SDL_EVENT_QUIT`]
     pub r#type: SDL_EventType,

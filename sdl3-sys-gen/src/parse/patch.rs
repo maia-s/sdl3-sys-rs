@@ -1,6 +1,6 @@
 use super::{
-    CanCopy, Cast, Define, DefineValue, Enum, Expr, GetSpan, ParseContext, ParseErr, PrimitiveType,
-    StructOrUnion, Type, TypeDef,
+    CanCmp, CanCopy, Cast, Define, DefineValue, Enum, Expr, GetSpan, ParseContext, ParseErr,
+    PrimitiveType, StructOrUnion, Type, TypeDef,
 };
 
 struct Patch<T: ?Sized> {
@@ -417,6 +417,7 @@ const STRUCT_PATCHES: &[StructPatch] = &[
         patch: |_, s| {
             // atomic
             s.can_copy = CanCopy::Never;
+            s.can_eq = CanCmp::No;
             Ok(true)
         },
     },

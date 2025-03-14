@@ -2725,9 +2725,8 @@ pub const SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2084: SDL_GPUSwapchainComposition
 /// ### See also
 /// - [`SDL_SetGPUViewport`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUViewport {
     /// The left offset of the viewport.
     pub x: ::core::ffi::c_float,
@@ -2987,9 +2986,8 @@ impl ::core::default::Default for SDL_GPUBufferRegion {
 /// ### See also
 /// - [`SDL_DrawGPUPrimitivesIndirect`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUIndirectDrawCommand {
     /// The number of vertices to draw.
     pub num_vertices: Uint32,
@@ -3016,9 +3014,8 @@ pub struct SDL_GPUIndirectDrawCommand {
 /// ### See also
 /// - [`SDL_DrawGPUIndexedPrimitivesIndirect`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUIndexedIndirectDrawCommand {
     /// The number of indices to draw per instance.
     pub num_indices: Uint32,
@@ -3040,9 +3037,8 @@ pub struct SDL_GPUIndexedIndirectDrawCommand {
 /// ### See also
 /// - [`SDL_DispatchGPUComputeIndirect`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUIndirectDispatchCommand {
     /// The number of local workgroups to dispatch in the X dimension.
     pub groupcount_x: Uint32,
@@ -3067,9 +3063,8 @@ pub struct SDL_GPUIndirectDispatchCommand {
 /// - [`SDL_GPUSamplerAddressMode`]
 /// - [`SDL_GPUCompareOp`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUSamplerCreateInfo {
     /// The minification filter to apply to lookups.
     pub min_filter: SDL_GPUFilter,
@@ -3122,9 +3117,8 @@ pub struct SDL_GPUSamplerCreateInfo {
 /// - [`SDL_GPUVertexAttribute`]
 /// - [`SDL_GPUVertexInputRate`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUVertexBufferDescription {
     /// The binding slot of the vertex buffer.
     pub slot: Uint32,
@@ -3149,9 +3143,8 @@ pub struct SDL_GPUVertexBufferDescription {
 /// - [`SDL_GPUVertexInputState`]
 /// - [`SDL_GPUVertexElementFormat`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUVertexAttribute {
     /// The shader input location index.
     pub location: Uint32,
@@ -3203,9 +3196,8 @@ impl ::core::default::Default for SDL_GPUVertexInputState {
 /// ### See also
 /// - [`SDL_GPUDepthStencilState`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUStencilOpState {
     /// The action performed on samples that fail the stencil test.
     pub fail_op: SDL_GPUStencilOp,
@@ -3225,9 +3217,8 @@ pub struct SDL_GPUStencilOpState {
 /// ### See also
 /// - [`SDL_GPUColorTargetDescription`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUColorTargetBlendState {
     /// The value to be multiplied by the source RGB value.
     pub src_color_blendfactor: SDL_GPUBlendFactor,
@@ -3308,9 +3299,8 @@ impl ::core::default::Default for SDL_GPUShaderCreateInfo {
 /// - [`SDL_GPUTextureUsageFlags`]
 /// - [`SDL_GPUSampleCount`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUTextureCreateInfo {
     /// The base dimensionality of the texture.
     pub r#type: SDL_GPUTextureType,
@@ -3344,9 +3334,8 @@ pub struct SDL_GPUTextureCreateInfo {
 /// - [`SDL_CreateGPUBuffer`]
 /// - [`SDL_GPUBufferUsageFlags`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUBufferCreateInfo {
     /// How the buffer is intended to be used by the client.
     pub usage: SDL_GPUBufferUsageFlags,
@@ -3364,9 +3353,8 @@ pub struct SDL_GPUBufferCreateInfo {
 /// ### See also
 /// - [`SDL_CreateGPUTransferBuffer`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUTransferBufferCreateInfo {
     /// How the transfer buffer is intended to be used by the client.
     pub usage: SDL_GPUTransferBufferUsage,
@@ -3393,9 +3381,8 @@ pub struct SDL_GPUTransferBufferCreateInfo {
 /// ### See also
 /// - [`SDL_GPUGraphicsPipelineCreateInfo`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPURasterizerState {
     /// Whether polygons will be filled in or drawn as lines.
     pub fill_mode: SDL_GPUFillMode,
@@ -3426,9 +3413,8 @@ pub struct SDL_GPURasterizerState {
 /// ### See also
 /// - [`SDL_GPUGraphicsPipelineCreateInfo`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUMultisampleState {
     /// The number of samples to be used in rasterization.
     pub sample_count: SDL_GPUSampleCount,
@@ -3450,9 +3436,8 @@ pub struct SDL_GPUMultisampleState {
 /// ### See also
 /// - [`SDL_GPUGraphicsPipelineCreateInfo`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUDepthStencilState {
     /// The comparison operator used for depth testing.
     pub compare_op: SDL_GPUCompareOp,
@@ -3484,9 +3469,8 @@ pub struct SDL_GPUDepthStencilState {
 /// ### See also
 /// - [`SDL_GPUGraphicsPipelineTargetInfo`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GPUColorTargetDescription {
     /// The pixel format of the texture to be used as a color target.
     pub format: SDL_GPUTextureFormat,

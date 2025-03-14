@@ -1,11 +1,11 @@
 use std::borrow::Cow;
 
 use super::{
-    GetSpan, IdentOrKw, Kw_const, Parse, ParseContext, ParseErr, ParseRawRes, Span, Spanned,
-    WsAndComments,
+    CanCmp, GetSpan, IdentOrKw, Kw_const, Parse, ParseContext, ParseErr, ParseRawRes, Span,
+    Spanned, WsAndComments,
 };
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum PrimitiveType {
     Char,
     SignedChar,
@@ -35,6 +35,39 @@ pub enum PrimitiveType {
     UintPtrT,
     WcharT,
     VaList,
+}
+
+impl PrimitiveType {
+    pub fn can_cmp(&self) -> CanCmp {
+        match self {
+            Self::Char
+            | Self::SignedChar
+            | Self::UnsignedChar
+            | Self::Short
+            | Self::UnsignedShort
+            | Self::Int
+            | Self::UnsignedInt
+            | Self::Long
+            | Self::UnsignedLong
+            | Self::LongLong
+            | Self::UnsignedLongLong
+            | Self::Bool
+            | Self::SizeT
+            | Self::Int8T
+            | Self::Uint8T
+            | Self::Int16T
+            | Self::Uint16T
+            | Self::Int32T
+            | Self::Uint32T
+            | Self::Int64T
+            | Self::Uint64T
+            | Self::IntPtrT
+            | Self::UintPtrT
+            | Self::WcharT => CanCmp::Full,
+            Self::Float | Self::Double => CanCmp::Partial,
+            Self::Void | Self::VaList => CanCmp::No,
+        }
+    }
 }
 
 pub struct PrimitiveTypeParse {

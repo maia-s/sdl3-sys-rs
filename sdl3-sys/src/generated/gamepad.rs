@@ -632,9 +632,8 @@ impl ::core::default::Default for SDL_GamepadBinding__AnonUnion1 {
 }
 
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GamepadBinding__AnonUnion1__AnonStruct1 {
     pub axis: ::core::ffi::c_int,
     pub axis_min: ::core::ffi::c_int,
@@ -642,9 +641,8 @@ pub struct SDL_GamepadBinding__AnonUnion1__AnonStruct1 {
 }
 
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GamepadBinding__AnonUnion1__AnonStruct2 {
     pub hat: ::core::ffi::c_int,
     pub hat_mask: ::core::ffi::c_int,
@@ -666,9 +664,8 @@ impl ::core::default::Default for SDL_GamepadBinding__AnonUnion2 {
 }
 
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_GamepadBinding__AnonUnion2__AnonStruct1 {
     pub axis: SDL_GamepadAxis,
     pub axis_min: ::core::ffi::c_int,

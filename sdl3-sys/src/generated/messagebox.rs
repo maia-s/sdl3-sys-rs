@@ -99,9 +99,8 @@ impl ::core::default::Default for SDL_MessageBoxButtonData {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_MessageBoxColor {
     pub r: Uint8,
     pub g: Uint8,
@@ -175,9 +174,8 @@ pub const SDL_MESSAGEBOX_COLOR_COUNT: SDL_MessageBoxColorType = SDL_MessageBoxCo
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_MessageBoxColorScheme {
     pub colors: [SDL_MessageBoxColor; SDL_MESSAGEBOX_COLOR_COUNT.0 as ::core::primitive::usize],
 }

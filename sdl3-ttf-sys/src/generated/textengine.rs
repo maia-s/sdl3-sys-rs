@@ -56,9 +56,8 @@ pub const TTF_DRAW_COMMAND_COPY: TTF_DrawCommand = TTF_DrawCommand::COPY;
 /// ### See also
 /// - [`TTF_DrawOperation`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct TTF_FillOperation {
     /// [`TTF_DRAW_COMMAND_FILL`]
     pub cmd: TTF_DrawCommand,

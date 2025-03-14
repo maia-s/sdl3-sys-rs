@@ -111,9 +111,8 @@ pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType =
 /// ### See also
 /// - [`SDL_GetTouchFingers`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_Finger {
     /// the finger ID
     pub id: SDL_FingerID,

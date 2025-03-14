@@ -21,6 +21,14 @@ pub enum CanDefault {
     No,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum CanCmp {
+    Auto,
+    No,
+    Partial,
+    Full,
+}
+
 #[derive(Clone, Debug)]
 pub struct Type {
     pub span: Span,
@@ -234,6 +242,29 @@ impl Type {
         }
     }
 
+    pub fn can_derive_eq(&self, ctx: &EmitContext) -> CanCmp {
+        match &self.ty {
+            TypeEnum::Primitive(pt) => pt.can_cmp(),
+            TypeEnum::Ident(ident) => ctx
+                .lookup_sym(ident)
+                .map(|s| s.can_derive_eq)
+                .unwrap_or(CanCmp::No),
+            TypeEnum::Enum(_) => CanCmp::Full,
+            TypeEnum::Struct(s) => s.can_derive_eq(ctx, None),
+            TypeEnum::Pointer(_) => CanCmp::No,
+            TypeEnum::Array(ty, _) => ty.can_derive_eq(ctx),
+            TypeEnum::FnPointer(_) => CanCmp::No,
+            TypeEnum::DotDotDot => CanCmp::No,
+            TypeEnum::Rust(r) => r.can_derive_eq,
+            TypeEnum::Function(_) => CanCmp::No,
+            TypeEnum::Infer(i) => i
+                .borrow()
+                .as_ref()
+                .map(|i| i.can_derive_eq(ctx))
+                .unwrap_or(CanCmp::No),
+        }
+    }
+
     pub fn can_default(&self, ctx: &EmitContext) -> CanDefault {
         match &self.ty {
             TypeEnum::Primitive(_) => CanDefault::Derive,
@@ -313,6 +344,7 @@ pub struct RustType {
     pub string: String,
     pub can_derive_copy: bool,
     pub can_derive_debug: bool,
+    pub can_derive_eq: CanCmp,
     pub can_default: CanDefault,
 }
 

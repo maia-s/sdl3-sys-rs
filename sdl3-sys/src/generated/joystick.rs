@@ -501,9 +501,8 @@ extern "C" {
 /// ### See also
 /// - [`SDL_VirtualJoystickDesc`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_VirtualJoystickTouchpadDesc {
     /// the number of simultaneous fingers on this touchpad
     pub nfingers: Uint16,
@@ -518,9 +517,8 @@ pub struct SDL_VirtualJoystickTouchpadDesc {
 /// ### See also
 /// - [`SDL_VirtualJoystickDesc`]
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_VirtualJoystickSensorDesc {
     /// the type of this sensor
     pub r#type: SDL_SensorType,

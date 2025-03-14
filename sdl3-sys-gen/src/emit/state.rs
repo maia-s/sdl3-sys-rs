@@ -1,8 +1,9 @@
 use super::{patch::patch_emit_opaque_struct, Emit, EmitErr, EmitResult, Eval, Value};
 use crate::{
     parse::{
-        CanCopy, CanDefault, DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident, IdentOrKw,
-        ParseErr, PrimitiveType, RustCode, Span, StructFields, StructKind, Type, TypeEnum,
+        CanCmp, CanCopy, CanDefault, DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident,
+        IdentOrKw, ParseErr, PrimitiveType, RustCode, Span, StructFields, StructKind, Type,
+        TypeEnum,
     },
     Defer, Gen,
 };
@@ -657,6 +658,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         kind: SymKind,
         can_derive_copy: bool,
         can_derive_debug: bool,
+        can_derive_eq: CanCmp,
         can_default: CanDefault,
     ) -> EmitResult {
         let module = self.inner().module.clone();
@@ -669,6 +671,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             kind,
             can_derive_copy,
             can_derive_debug,
+            can_derive_eq,
             can_default,
         })?;
         self.emit_pending()?;
@@ -1081,6 +1084,7 @@ pub struct Sym {
     pub kind: SymKind,
     pub can_derive_copy: bool,
     pub can_derive_debug: bool,
+    pub can_derive_eq: CanCmp,
     pub can_default: CanDefault,
 }
 
@@ -1119,6 +1123,7 @@ pub struct StructSym {
     pub hidden: bool,
     pub can_copy: CanCopy,
     pub can_construct: bool,
+    pub can_eq: CanCmp,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -1243,6 +1248,13 @@ impl Scope {
             if sym.can_construct != regd.can_construct && !sym.can_construct {
                 changed = true;
                 regd.can_construct = sym.can_construct;
+            }
+            if sym.can_eq != CanCmp::Auto && sym.can_eq != regd.can_eq {
+                if regd.can_eq != CanCmp::Auto {
+                    return Err(ParseErr::new(sym.ident.span(), "conflicting can_eq").into());
+                }
+                changed = true;
+                regd.can_eq = sym.can_eq;
             }
             if regd.fields.is_some() {
                 if sym.fields.is_some() {
@@ -1399,6 +1411,7 @@ impl InnerScope {
                 }(sym.ident.clone()),
                 can_derive_copy: false,
                 can_derive_debug: false,
+                can_derive_eq: CanCmp::No,
                 can_default: CanDefault::No,
             })?;
         }

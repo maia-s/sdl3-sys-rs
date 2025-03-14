@@ -2218,9 +2218,8 @@ pub const fn SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(cspace: SDL_Colorspace) -> ::cor
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_Color {
     pub r: Uint8,
     pub g: Uint8,
@@ -2234,9 +2233,8 @@ pub struct SDL_Color {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_FColor {
     pub r: ::core::ffi::c_float,
     pub g: ::core::ffi::c_float,
@@ -2270,9 +2268,8 @@ pub struct SDL_Palette {
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
-#[derive(Default)]
 pub struct SDL_PixelFormatDetails {
     pub format: SDL_PixelFormat,
     pub bits_per_pixel: Uint8,
