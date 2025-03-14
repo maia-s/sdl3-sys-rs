@@ -95,6 +95,7 @@ impl Parse for StructOrUnion {
             for field in fields.fields.iter() {
                 if matches!(field.ident.as_str(), "refcount" | "internal") {
                     has_refcount_or_internal = true;
+                    can_eq = CanCmp::No;
                     break;
                 }
             }
