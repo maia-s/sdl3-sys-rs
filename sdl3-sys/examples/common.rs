@@ -14,7 +14,8 @@ pub unsafe fn load_shader(
     device: *mut SDL_GPUDevice,
     shader_name: &'static str,
 ) -> *mut SDL_GPUShader {
-    const COMPILED_SHADERS_DIR: &'static str = "./content/shaders/compiled";
+    // NOTE this dir is expected to contain both compiled .spv and shadercross' json output
+    const COMPILED_SHADERS_DIR: &'static str = "./sdl3-sys/examples/content/shaders/compiled";
 
     let backend_formats = SDL_GetGPUShaderFormats(device);
     let (format, entrypoint) = if backend_formats & SDL_GPU_SHADERFORMAT_SPIRV != 0 {
