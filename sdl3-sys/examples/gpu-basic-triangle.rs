@@ -9,11 +9,6 @@ mod common;
 
 use common::*;
 
-const BLOCK_SIZE_IN_PIXELS: i32 = 24;
-
-const GAME_WIDTH: i8 = 24;
-const GAME_HEIGHT: i8 = 18;
-
 struct AppState {
     window: *mut SDL_Window,
     device: *mut SDL_GPUDevice,
@@ -42,8 +37,7 @@ unsafe impl Send for AppState {}
 #[app_iterate]
 fn app_iterate(app: &mut AppState) -> AppResult {
     unsafe {
-        let ticks = SDL_GetTicks();
-        app.game_state.step(ticks);
+        app.game_state.step();
 
         let command_buffer = SDL_AcquireGPUCommandBuffer(app.device);
         if command_buffer.is_null() {
@@ -203,11 +197,6 @@ fn app_event(app: &mut AppState, event: &SDL_Event) -> AppResult {
                 AppResult::Continue
             }
 
-            SDL_EVENT_KEY_UP => {
-                app.game_state.key_released(event.key.scancode);
-                AppResult::Continue
-            }
-
             _ => AppResult::Continue,
         }
     }
@@ -216,63 +205,30 @@ fn app_event(app: &mut AppState, event: &SDL_Event) -> AppResult {
 #[app_quit]
 fn app_quit() {}
 
-const STEP_RATE_IN_MILLISECONDS: u64 = 16;
-
-pub const WINDOW_WIDTH: i32 = BLOCK_SIZE_IN_PIXELS * GAME_WIDTH as i32;
-pub const WINDOW_HEIGHT: i32 = BLOCK_SIZE_IN_PIXELS * GAME_HEIGHT as i32;
-
 pub struct GameState {
-    accumulated_ticks: u64,
-    last_step: u64,
-    keys_down: Vec<SDL_Scancode>,
-    keys_just_pressed: Vec<SDL_Scancode>,
-
     pub use_wire_frame_mode: bool,
     pub use_small_viewport: bool,
     pub use_scissor_rect: bool,
+    keys_just_pressed: Vec<SDL_Scancode>,
 }
 
 impl GameState {
     pub fn new() -> Self {
         Self {
-            accumulated_ticks: 0,
-            last_step: 0,
-            keys_down: Default::default(),
-            keys_just_pressed: Default::default(),
-
             use_wire_frame_mode: false,
             use_small_viewport: false,
             use_scissor_rect: false,
+            keys_just_pressed: Default::default(),
         }
     }
 
     pub fn key_pressed(&mut self, scan_code: SDL_Scancode) {
-        if !self.keys_down.contains(&scan_code) {
-            self.keys_down.push(scan_code);
+        if !self.keys_just_pressed.contains(&scan_code) {
             self.keys_just_pressed.push(scan_code);
         }
     }
 
-    pub fn key_released(&mut self, scan_code: SDL_Scancode) {
-        self.keys_down.retain(|k| *k != scan_code);
-        self.keys_just_pressed.retain(|k| *k != scan_code);
-    }
-
-    // TODO get rid of fixed step ticks; simplify the rest
-    pub fn step(&mut self, ticks: u64) {
-        let new_ticks = ticks - self.last_step;
-        self.accumulated_ticks += new_ticks;
-        self.last_step = ticks;
-
-        while self.accumulated_ticks >= STEP_RATE_IN_MILLISECONDS {
-            self.accumulated_ticks -= STEP_RATE_IN_MILLISECONDS;
-            self.fixed_step();
-
-            self.keys_just_pressed.clear();
-        }
-    }
-
-    fn fixed_step(&mut self) {
+    pub fn step(&mut self) {
         if self.keys_just_pressed.contains(&SDL_Scancode::LEFT) {
             self.use_wire_frame_mode = !self.use_wire_frame_mode;
         }
@@ -282,5 +238,7 @@ impl GameState {
         if self.keys_just_pressed.contains(&SDL_Scancode::RIGHT) {
             self.use_scissor_rect = !self.use_scissor_rect;
         }
+
+        self.keys_just_pressed.clear();
     }
 }

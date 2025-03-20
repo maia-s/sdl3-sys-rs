@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use std::ffi::{CStr, CString, c_char};
 use std::ptr::{null, null_mut};
 
