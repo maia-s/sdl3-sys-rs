@@ -1,6 +1,4 @@
-use core::ffi::CStr;
-use core::ffi::c_char;
-use std::ptr::{null, null_mut};
+use std::ptr::null_mut;
 use std::sync::Mutex;
 
 use sdl3_main::{AppResult, app_event, app_init, app_iterate, app_quit};
@@ -11,9 +9,6 @@ use sdl3_sys::everything::*;
 mod common;
 
 use common::*;
-
-const SDL_WINDOW_WIDTH: i32 = 640;
-const SDL_WINDOW_HEIGHT: i32 = 480;
 
 struct AppState {
     window: *mut SDL_Window,
