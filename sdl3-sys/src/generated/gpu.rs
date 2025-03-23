@@ -6342,7 +6342,7 @@ extern "C" {
     /// - `sample_count`: the sample count to check.
     ///
     /// ### Return value
-    /// Returns a hardware-specific version of min(preferred, possible).
+    /// Returns whether the sample count is supported for this texture format.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.

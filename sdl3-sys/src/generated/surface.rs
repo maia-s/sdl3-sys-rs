@@ -62,6 +62,7 @@ pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = (0x00000008 as SDL_Surfac
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
+/// | [`INVALID`](SDL_ScaleMode::INVALID) | [`SDL_SCALEMODE_INVALID`] | |
 /// | [`NEAREST`](SDL_ScaleMode::NEAREST) | [`SDL_SCALEMODE_NEAREST`] | nearest pixel sampling |
 /// | [`LINEAR`](SDL_ScaleMode::LINEAR) | [`SDL_SCALEMODE_LINEAR`] | linear filtering |
 #[repr(transparent)]
@@ -80,6 +81,7 @@ impl ::core::fmt::Debug for SDL_ScaleMode {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
         #[allow(unreachable_patterns)]
         f.write_str(match *self {
+            Self::INVALID => "SDL_SCALEMODE_INVALID",
             Self::NEAREST => "SDL_SCALEMODE_NEAREST",
             Self::LINEAR => "SDL_SCALEMODE_LINEAR",
 
@@ -89,12 +91,14 @@ impl ::core::fmt::Debug for SDL_ScaleMode {
 }
 
 impl SDL_ScaleMode {
+    pub const INVALID: Self = Self(-1_i32);
     /// nearest pixel sampling
-    pub const NEAREST: Self = Self(0);
+    pub const NEAREST: Self = Self(0_i32);
     /// linear filtering
-    pub const LINEAR: Self = Self(1);
+    pub const LINEAR: Self = Self(1_i32);
 }
 
+pub const SDL_SCALEMODE_INVALID: SDL_ScaleMode = SDL_ScaleMode::INVALID;
 /// nearest pixel sampling
 pub const SDL_SCALEMODE_NEAREST: SDL_ScaleMode = SDL_ScaleMode::NEAREST;
 /// linear filtering
@@ -226,6 +230,9 @@ extern "C" {
     /// Returns the new [`SDL_Surface`] structure that is created or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -263,6 +270,9 @@ extern "C" {
     /// Returns the new [`SDL_Surface`] structure that is created or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -285,6 +295,9 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `surface`: the [`SDL_Surface`] to free.
+    ///
+    /// ### Thread safety
+    /// No other thread should be using the surface when it is freed.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -326,6 +339,9 @@ extern "C" {
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetSurfaceProperties(surface: *mut SDL_Surface) -> SDL_PropertiesID;
@@ -361,6 +377,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -385,6 +404,9 @@ extern "C" {
     /// ### Return value
     /// Returns the colorspace used by the surface, or [`SDL_COLORSPACE_UNKNOWN`] if
     ///   the surface is NULL.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -419,6 +441,9 @@ extern "C" {
     ///   the surface didn't have an index format); call [`SDL_GetError()`] for
     ///   more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -439,6 +464,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -461,6 +489,9 @@ extern "C" {
     /// ### Return value
     /// Returns a pointer to the palette used by the surface, or NULL if there is
     ///   no palette used.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -490,6 +521,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -511,6 +545,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns true if alternate versions are available or false otherwise.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -542,6 +579,9 @@ extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information. This should be
     ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -563,6 +603,9 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `surface`: the [`SDL_Surface`] structure to update.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -593,6 +636,11 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe. The locking referred to by
+    ///   this function is making the pixels available for direct
+    ///   access, not thread-safe locking.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -607,6 +655,11 @@ extern "C" {
     ///
     /// ### Parameters
     /// - `surface`: the [`SDL_Surface`] structure to be unlocked.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe. The locking referred to by
+    ///   this function is making the pixels available for direct
+    ///   access, not thread-safe locking.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -630,6 +683,9 @@ extern "C" {
     /// ### Return value
     /// Returns a pointer to a new [`SDL_Surface`] structure or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -656,6 +712,9 @@ extern "C" {
     /// ### Return value
     /// Returns a pointer to a new [`SDL_Surface`] structure or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -685,6 +744,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -716,6 +778,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -742,6 +807,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -765,6 +833,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns true if the surface is RLE enabled, false otherwise.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -793,6 +864,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -818,6 +892,9 @@ extern "C" {
     /// ### Return value
     /// Returns true if the surface has a color key, false otherwise.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -842,6 +919,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -874,6 +954,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -900,6 +983,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -931,6 +1017,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -953,6 +1042,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -981,6 +1073,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1002,6 +1097,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1032,6 +1130,9 @@ extern "C" {
     /// Returns true if the rectangle intersects the surface, otherwise false and
     ///   blits will be completely clipped.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1059,6 +1160,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1080,6 +1184,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1104,6 +1211,9 @@ extern "C" {
     /// Returns a copy of the surface or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1127,6 +1237,9 @@ extern "C" {
     /// ### Return value
     /// Returns a copy of the surface or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1163,6 +1276,9 @@ extern "C" {
     /// Returns the new [`SDL_Surface`] structure that is created or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1197,6 +1313,9 @@ extern "C" {
     /// Returns the new [`SDL_Surface`] structure that is created or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1228,6 +1347,11 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// The same destination pixels should not be used from two
+    ///   threads at once. It is safe to use the same source pixels
+    ///   from multiple threads.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1272,6 +1396,11 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// The same destination pixels should not be used from two
+    ///   threads at once. It is safe to use the same source pixels
+    ///   from multiple threads.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1314,6 +1443,11 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// The same destination pixels should not be used from two
+    ///   threads at once. It is safe to use the same source pixels
+    ///   from multiple threads.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_PremultiplyAlpha(
@@ -1343,6 +1477,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_PremultiplySurfaceAlpha(
@@ -1369,6 +1506,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1403,6 +1543,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1436,6 +1579,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1521,9 +1667,8 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// The same destination surface should not be used from two
-    ///   threads at once. It is safe to use the same source surface
-    ///   from multiple threads.
+    /// Only one thread should be using the `src` and `dst` surfaces
+    ///   at any given time.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1557,9 +1702,8 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// The same destination surface should not be used from two
-    ///   threads at once. It is safe to use the same source surface
-    ///   from multiple threads.
+    /// Only one thread should be using the `src` and `dst` surfaces
+    ///   at any given time.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1593,9 +1737,8 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// The same destination surface should not be used from two
-    ///   threads at once. It is safe to use the same source surface
-    ///   from multiple threads.
+    /// Only one thread should be using the `src` and `dst` surfaces
+    ///   at any given time.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1631,9 +1774,8 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// The same destination surface should not be used from two
-    ///   threads at once. It is safe to use the same source surface
-    ///   from multiple threads.
+    /// Only one thread should be using the `src` and `dst` surfaces
+    ///   at any given time.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1666,9 +1808,8 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// The same destination surface should not be used from two
-    ///   threads at once. It is safe to use the same source surface
-    ///   from multiple threads.
+    /// Only one thread should be using the `src` and `dst` surfaces
+    ///   at any given time.
     ///
     /// ### Availability
     /// This function is available since SDL 3.4.0.
@@ -1704,9 +1845,8 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// The same destination surface should not be used from two
-    ///   threads at once. It is safe to use the same source surface
-    ///   from multiple threads.
+    /// Only one thread should be using the `src` and `dst` surfaces
+    ///   at any given time.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1745,9 +1885,8 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// The same destination surface should not be used from two
-    ///   threads at once. It is safe to use the same source surface
-    ///   from multiple threads.
+    /// Only one thread should be using the `src` and `dst` surfaces
+    ///   at any given time.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1795,9 +1934,8 @@ extern "C" {
     ///   information.
     ///
     /// ### Thread safety
-    /// The same destination surface should not be used from two
-    ///   threads at once. It is safe to use the same source surface
-    ///   from multiple threads.
+    /// Only one thread should be using the `src` and `dst` surfaces
+    ///   at any given time.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1845,6 +1983,9 @@ extern "C" {
     /// ### Return value
     /// Returns a pixel value.
     ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1880,6 +2021,9 @@ extern "C" {
     ///
     /// ### Return value
     /// Returns a pixel value.
+    ///
+    /// ### Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
@@ -1921,6 +2065,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadSurfacePixel(
@@ -1957,6 +2104,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadSurfacePixelFloat(
@@ -1992,6 +2142,9 @@ extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ### Thread safety
+    /// This function is not thread safe.
+    ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteSurfacePixel(
@@ -2023,6 +2176,9 @@ extern "C" {
     /// ### Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ### Thread safety
+    /// This function is not thread safe.
     ///
     /// ### Availability
     /// This function is available since SDL 3.2.0.

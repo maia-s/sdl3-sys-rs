@@ -101,6 +101,10 @@ extern "C" {
     /// It's possible a platform can only report battery percentage or time left
     /// but not both.
     ///
+    /// On some platforms, retrieving power supply details might be expensive. If
+    /// you want to display continuous status you could call this function every
+    /// minute or so.
+    ///
     /// ### Parameters
     /// - `seconds`: a pointer filled in with the seconds of battery life left,
     ///   or NULL to ignore. This will be filled in with -1 if we

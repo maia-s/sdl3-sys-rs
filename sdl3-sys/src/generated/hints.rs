@@ -3541,6 +3541,22 @@ pub const SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY: *const ::core::ffi::c_char =
 pub const SDL_HINT_VIDEO_WIN_D3DCOMPILER: *const ::core::ffi::c_char =
     c"SDL_VIDEO_WIN_D3DCOMPILER".as_ptr();
 
+/// A variable controlling whether SDL should call XSelectInput() to enable
+/// input events on X11 windows wrapped by SDL windows.
+///
+/// The variable can be set to the following values:
+///
+/// - "0": Don't call XSelectInput(), assuming the native window code has done
+///   it already.
+/// - "1": Call XSelectInput() to enable input events. (default)
+///
+/// This hint should be set before creating a window.
+///
+/// ### Availability
+/// This hint is available since SDL 3.2.10.
+pub const SDL_HINT_VIDEO_X11_EXTERNAL_WINDOW_INPUT: *const ::core::ffi::c_char =
+    c"SDL_VIDEO_X11_EXTERNAL_WINDOW_INPUT".as_ptr();
+
 /// A variable controlling whether the X11 _NET_WM_BYPASS_COMPOSITOR hint
 /// should be used.
 ///
