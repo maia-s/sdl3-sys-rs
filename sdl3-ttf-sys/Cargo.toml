@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-ttf-sys"
-version = "0.1.0"
+version = "0.1.0+SDL3-ttf-3.2.0"
 edition = "2021"
 authors = ["Maia S. R."]
 license = "Zlib"

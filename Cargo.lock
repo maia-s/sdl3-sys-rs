@@ -80,7 +80,7 @@ version = "3.2.4"
 
 [[package]]
 name = "sdl3-image-sys"
-version = "0.1.2"
+version = "0.1.2+SDL3-image-3.2.4"
 dependencies = [
  "cmake",
  "pkg-config",
@@ -137,7 +137,7 @@ version = "3.2.0"
 
 [[package]]
 name = "sdl3-ttf-sys"
-version = "0.1.0"
+version = "0.1.0+SDL3-ttf-3.2.0"
 dependencies = [
  "cmake",
  "pkg-config",
