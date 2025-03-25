@@ -103,7 +103,7 @@ use super::joystick::*;
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_CONSTANT: Uint16 = ((1_u32) as Uint16);
+pub const SDL_HAPTIC_CONSTANT: Uint16 = (1_u32 as Uint16);
 
 /// Sine wave effect supported.
 ///
@@ -114,7 +114,7 @@ pub const SDL_HAPTIC_CONSTANT: Uint16 = ((1_u32) as Uint16);
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_SINE: Uint16 = ((2_u32) as Uint16);
+pub const SDL_HAPTIC_SINE: Uint16 = (2_u32 as Uint16);
 
 /// Square wave effect supported.
 ///
@@ -125,7 +125,7 @@ pub const SDL_HAPTIC_SINE: Uint16 = ((2_u32) as Uint16);
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_SQUARE: Uint16 = ((4_u32) as Uint16);
+pub const SDL_HAPTIC_SQUARE: Uint16 = (4_u32 as Uint16);
 
 /// Triangle wave effect supported.
 ///
@@ -136,7 +136,7 @@ pub const SDL_HAPTIC_SQUARE: Uint16 = ((4_u32) as Uint16);
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_TRIANGLE: Uint16 = ((8_u32) as Uint16);
+pub const SDL_HAPTIC_TRIANGLE: Uint16 = (8_u32 as Uint16);
 
 /// Sawtoothup wave effect supported.
 ///
@@ -147,7 +147,7 @@ pub const SDL_HAPTIC_TRIANGLE: Uint16 = ((8_u32) as Uint16);
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_SAWTOOTHUP: Uint16 = ((16_u32) as Uint16);
+pub const SDL_HAPTIC_SAWTOOTHUP: Uint16 = (16_u32 as Uint16);
 
 /// Sawtoothdown wave effect supported.
 ///
@@ -158,7 +158,7 @@ pub const SDL_HAPTIC_SAWTOOTHUP: Uint16 = ((16_u32) as Uint16);
 ///
 /// ### See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_SAWTOOTHDOWN: Uint16 = ((32_u32) as Uint16);
+pub const SDL_HAPTIC_SAWTOOTHDOWN: Uint16 = (32_u32 as Uint16);
 
 /// Ramp effect supported.
 ///
@@ -169,7 +169,7 @@ pub const SDL_HAPTIC_SAWTOOTHDOWN: Uint16 = ((32_u32) as Uint16);
 ///
 /// ### See also
 /// - [`SDL_HapticRamp`]
-pub const SDL_HAPTIC_RAMP: Uint16 = ((64_u32) as Uint16);
+pub const SDL_HAPTIC_RAMP: Uint16 = (64_u32 as Uint16);
 
 /// Spring effect supported - uses axes position.
 ///
@@ -181,7 +181,7 @@ pub const SDL_HAPTIC_RAMP: Uint16 = ((64_u32) as Uint16);
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_SPRING: Uint16 = ((128_u32) as Uint16);
+pub const SDL_HAPTIC_SPRING: Uint16 = (128_u32 as Uint16);
 
 /// Damper effect supported - uses axes velocity.
 ///
@@ -193,7 +193,7 @@ pub const SDL_HAPTIC_SPRING: Uint16 = ((128_u32) as Uint16);
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_DAMPER: Uint16 = ((256_u32) as Uint16);
+pub const SDL_HAPTIC_DAMPER: Uint16 = (256_u32 as Uint16);
 
 /// Inertia effect supported - uses axes acceleration.
 ///
@@ -205,7 +205,7 @@ pub const SDL_HAPTIC_DAMPER: Uint16 = ((256_u32) as Uint16);
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_INERTIA: Uint16 = ((512_u32) as Uint16);
+pub const SDL_HAPTIC_INERTIA: Uint16 = (512_u32 as Uint16);
 
 /// Friction effect supported - uses axes movement.
 ///
@@ -217,7 +217,7 @@ pub const SDL_HAPTIC_INERTIA: Uint16 = ((512_u32) as Uint16);
 ///
 /// ### See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_FRICTION: Uint16 = ((1024_u32) as Uint16);
+pub const SDL_HAPTIC_FRICTION: Uint16 = (1024_u32 as Uint16);
 
 /// Left/Right effect supported.
 ///
@@ -228,25 +228,25 @@ pub const SDL_HAPTIC_FRICTION: Uint16 = ((1024_u32) as Uint16);
 ///
 /// ### See also
 /// - [`SDL_HapticLeftRight`]
-pub const SDL_HAPTIC_LEFTRIGHT: Uint16 = ((2048_u32) as Uint16);
+pub const SDL_HAPTIC_LEFTRIGHT: Uint16 = (2048_u32 as Uint16);
 
 /// Reserved for future use.
 ///
 /// ### Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_HAPTIC_RESERVED1: Uint16 = ((4096_u32) as Uint16);
+pub const SDL_HAPTIC_RESERVED1: Uint16 = (4096_u32 as Uint16);
 
 /// Reserved for future use.
 ///
 /// ### Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_HAPTIC_RESERVED2: Uint16 = ((8192_u32) as Uint16);
+pub const SDL_HAPTIC_RESERVED2: Uint16 = (8192_u32 as Uint16);
 
 /// Reserved for future use.
 ///
 /// ### Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_HAPTIC_RESERVED3: Uint16 = ((16384_u32) as Uint16);
+pub const SDL_HAPTIC_RESERVED3: Uint16 = (16384_u32 as Uint16);
 
 /// Custom effect is supported.
 ///
@@ -254,7 +254,7 @@ pub const SDL_HAPTIC_RESERVED3: Uint16 = ((16384_u32) as Uint16);
 ///
 /// ### Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_HAPTIC_CUSTOM: Uint16 = ((32768_u32) as Uint16);
+pub const SDL_HAPTIC_CUSTOM: Uint16 = (32768_u32 as Uint16);
 
 /// Device can set global gain.
 ///
@@ -899,7 +899,19 @@ impl ::core::default::Default for SDL_HapticEffect {
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_HapticID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_HapticID(pub Uint32);
+
+impl From<SDL_HapticID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_HapticID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_HapticID {}
 
 extern "C" {
     /// Get a list of currently connected haptic devices.

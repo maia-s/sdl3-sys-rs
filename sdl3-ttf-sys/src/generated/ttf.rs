@@ -552,29 +552,63 @@ extern "C" {
 /// - [`TTF_GetFontStyle`]
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`TTF_STYLE_NORMAL`] | No special style |
-/// | [`TTF_STYLE_BOLD`] | Bold style |
-/// | [`TTF_STYLE_ITALIC`] | Italic style |
-/// | [`TTF_STYLE_UNDERLINE`] | Underlined text |
-/// | [`TTF_STYLE_STRIKETHROUGH`] | Strikethrough text |
-pub type TTF_FontStyleFlags = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`NORMAL`](TTF_FontStyleFlags::NORMAL) | [`TTF_STYLE_NORMAL`] | No special style |
+/// | [`BOLD`](TTF_FontStyleFlags::BOLD) | [`TTF_STYLE_BOLD`] | Bold style |
+/// | [`ITALIC`](TTF_FontStyleFlags::ITALIC) | [`TTF_STYLE_ITALIC`] | Italic style |
+/// | [`UNDERLINE`](TTF_FontStyleFlags::UNDERLINE) | [`TTF_STYLE_UNDERLINE`] | Underlined text |
+/// | [`STRIKETHROUGH`](TTF_FontStyleFlags::STRIKETHROUGH) | [`TTF_STYLE_STRIKETHROUGH`] | Strikethrough text |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct TTF_FontStyleFlags(pub Uint32);
+
+impl From<TTF_FontStyleFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: TTF_FontStyleFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for TTF_FontStyleFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NORMAL => "TTF_STYLE_NORMAL",
+            Self::BOLD => "TTF_STYLE_BOLD",
+            Self::ITALIC => "TTF_STYLE_ITALIC",
+            Self::UNDERLINE => "TTF_STYLE_UNDERLINE",
+            Self::STRIKETHROUGH => "TTF_STYLE_STRIKETHROUGH",
+
+            _ => return write!(f, "TTF_FontStyleFlags({})", self.0),
+        })
+    }
+}
+
+impl TTF_FontStyleFlags {
+    /// No special style
+    pub const NORMAL: Self = Self((0x00 as Uint32));
+    /// Bold style
+    pub const BOLD: Self = Self((0x01 as Uint32));
+    /// Italic style
+    pub const ITALIC: Self = Self((0x02 as Uint32));
+    /// Underlined text
+    pub const UNDERLINE: Self = Self((0x04 as Uint32));
+    /// Strikethrough text
+    pub const STRIKETHROUGH: Self = Self((0x08 as Uint32));
+}
 
 /// No special style
-pub const TTF_STYLE_NORMAL: TTF_FontStyleFlags = (0x00 as TTF_FontStyleFlags);
-
+pub const TTF_STYLE_NORMAL: TTF_FontStyleFlags = TTF_FontStyleFlags::NORMAL;
 /// Bold style
-pub const TTF_STYLE_BOLD: TTF_FontStyleFlags = (0x01 as TTF_FontStyleFlags);
-
+pub const TTF_STYLE_BOLD: TTF_FontStyleFlags = TTF_FontStyleFlags::BOLD;
 /// Italic style
-pub const TTF_STYLE_ITALIC: TTF_FontStyleFlags = (0x02 as TTF_FontStyleFlags);
-
+pub const TTF_STYLE_ITALIC: TTF_FontStyleFlags = TTF_FontStyleFlags::ITALIC;
 /// Underlined text
-pub const TTF_STYLE_UNDERLINE: TTF_FontStyleFlags = (0x04 as TTF_FontStyleFlags);
-
+pub const TTF_STYLE_UNDERLINE: TTF_FontStyleFlags = TTF_FontStyleFlags::UNDERLINE;
 /// Strikethrough text
-pub const TTF_STYLE_STRIKETHROUGH: TTF_FontStyleFlags = (0x08 as TTF_FontStyleFlags);
+pub const TTF_STYLE_STRIKETHROUGH: TTF_FontStyleFlags = TTF_FontStyleFlags::STRIKETHROUGH;
 
 extern "C" {
     /// Set a font's current style.
@@ -738,17 +772,17 @@ impl ::core::fmt::Debug for TTF_HintingFlags {
 }
 
 impl TTF_HintingFlags {
-    pub const INVALID: Self = Self(-1_i32);
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
     /// Normal hinting applies standard grid-fitting.
-    pub const NORMAL: Self = Self(0_i32);
+    pub const NORMAL: Self = Self((0_i32 as ::core::ffi::c_int));
     /// Light hinting applies subtle adjustments to improve rendering.
-    pub const LIGHT: Self = Self(1_i32);
+    pub const LIGHT: Self = Self((1_i32 as ::core::ffi::c_int));
     /// Monochrome hinting adjusts the font for better rendering at lower resolutions.
-    pub const MONO: Self = Self(2_i32);
+    pub const MONO: Self = Self((2_i32 as ::core::ffi::c_int));
     /// No hinting, the font is rendered without any grid-fitting.
-    pub const NONE: Self = Self(3_i32);
+    pub const NONE: Self = Self((3_i32 as ::core::ffi::c_int));
     /// Light hinting with subpixel rendering for more precise font edges.
-    pub const LIGHT_SUBPIXEL: Self = Self(4_i32);
+    pub const LIGHT_SUBPIXEL: Self = Self((4_i32 as ::core::ffi::c_int));
 }
 
 pub const TTF_HINTING_INVALID: TTF_HintingFlags = TTF_HintingFlags::INVALID;
@@ -981,10 +1015,10 @@ impl ::core::fmt::Debug for TTF_HorizontalAlignment {
 }
 
 impl TTF_HorizontalAlignment {
-    pub const INVALID: Self = Self(-1_i32);
-    pub const LEFT: Self = Self(0_i32);
-    pub const CENTER: Self = Self(1_i32);
-    pub const RIGHT: Self = Self(2_i32);
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
+    pub const LEFT: Self = Self((0_i32 as ::core::ffi::c_int));
+    pub const CENTER: Self = Self((1_i32 as ::core::ffi::c_int));
+    pub const RIGHT: Self = Self((2_i32 as ::core::ffi::c_int));
 }
 
 pub const TTF_HORIZONTAL_ALIGN_INVALID: TTF_HorizontalAlignment = TTF_HorizontalAlignment::INVALID;
@@ -1316,15 +1350,15 @@ impl ::core::fmt::Debug for TTF_Direction {
 }
 
 impl TTF_Direction {
-    pub const INVALID: Self = Self(0);
+    pub const INVALID: Self = Self((0 as ::core::primitive::u32));
     /// Left to Right
-    pub const LTR: Self = Self(4);
+    pub const LTR: Self = Self((4 as ::core::primitive::u32));
     /// Right to Left
-    pub const RTL: Self = Self(5);
+    pub const RTL: Self = Self((5 as ::core::primitive::u32));
     /// Top to Bottom
-    pub const TTB: Self = Self(6);
+    pub const TTB: Self = Self((6 as ::core::primitive::u32));
     /// Bottom to Top
-    pub const BTT: Self = Self(7);
+    pub const BTT: Self = Self((7 as ::core::primitive::u32));
 }
 
 pub const TTF_DIRECTION_INVALID: TTF_Direction = TTF_Direction::INVALID;
@@ -1592,13 +1626,13 @@ impl ::core::fmt::Debug for TTF_ImageType {
 }
 
 impl TTF_ImageType {
-    pub const INVALID: Self = Self(0);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
     /// The color channels are white
-    pub const ALPHA: Self = Self(1);
+    pub const ALPHA: Self = Self((1 as ::core::ffi::c_int));
     /// The color channels have image data
-    pub const COLOR: Self = Self(2);
+    pub const COLOR: Self = Self((2 as ::core::ffi::c_int));
     /// The alpha channel has signed distance field information
-    pub const SDF: Self = Self(3);
+    pub const SDF: Self = Self((3 as ::core::ffi::c_int));
 }
 
 pub const TTF_IMAGE_INVALID: TTF_ImageType = TTF_ImageType::INVALID;
@@ -2819,9 +2853,9 @@ impl ::core::fmt::Debug for TTF_GPUTextEngineWinding {
 }
 
 impl TTF_GPUTextEngineWinding {
-    pub const INVALID: Self = Self(-1_i32);
-    pub const CLOCKWISE: Self = Self(0_i32);
-    pub const COUNTER_CLOCKWISE: Self = Self(1_i32);
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
+    pub const CLOCKWISE: Self = Self((0_i32 as ::core::ffi::c_int));
+    pub const COUNTER_CLOCKWISE: Self = Self((1_i32 as ::core::ffi::c_int));
 }
 
 pub const TTF_GPU_TEXTENGINE_WINDING_INVALID: TTF_GPUTextEngineWinding =
@@ -3620,29 +3654,63 @@ extern "C" {
 /// - [`TTF_SubString`]
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`TTF_SUBSTRING_DIRECTION_MASK`] | The mask for the flow direction for this substring |
-/// | [`TTF_SUBSTRING_TEXT_START`] | This substring contains the beginning of the text |
-/// | [`TTF_SUBSTRING_LINE_START`] | This substring contains the beginning of line `line_index` |
-/// | [`TTF_SUBSTRING_LINE_END`] | This substring contains the end of line `line_index` |
-/// | [`TTF_SUBSTRING_TEXT_END`] | This substring contains the end of the text |
-pub type TTF_SubStringFlags = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`DIRECTION_MASK`](TTF_SubStringFlags::DIRECTION_MASK) | [`TTF_SUBSTRING_DIRECTION_MASK`] | The mask for the flow direction for this substring |
+/// | [`TEXT_START`](TTF_SubStringFlags::TEXT_START) | [`TTF_SUBSTRING_TEXT_START`] | This substring contains the beginning of the text |
+/// | [`LINE_START`](TTF_SubStringFlags::LINE_START) | [`TTF_SUBSTRING_LINE_START`] | This substring contains the beginning of line `line_index` |
+/// | [`LINE_END`](TTF_SubStringFlags::LINE_END) | [`TTF_SUBSTRING_LINE_END`] | This substring contains the end of line `line_index` |
+/// | [`TEXT_END`](TTF_SubStringFlags::TEXT_END) | [`TTF_SUBSTRING_TEXT_END`] | This substring contains the end of the text |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct TTF_SubStringFlags(pub Uint32);
+
+impl From<TTF_SubStringFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: TTF_SubStringFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for TTF_SubStringFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::DIRECTION_MASK => "TTF_SUBSTRING_DIRECTION_MASK",
+            Self::TEXT_START => "TTF_SUBSTRING_TEXT_START",
+            Self::LINE_START => "TTF_SUBSTRING_LINE_START",
+            Self::LINE_END => "TTF_SUBSTRING_LINE_END",
+            Self::TEXT_END => "TTF_SUBSTRING_TEXT_END",
+
+            _ => return write!(f, "TTF_SubStringFlags({})", self.0),
+        })
+    }
+}
+
+impl TTF_SubStringFlags {
+    /// The mask for the flow direction for this substring
+    pub const DIRECTION_MASK: Self = Self((0x000000ff as Uint32));
+    /// This substring contains the beginning of the text
+    pub const TEXT_START: Self = Self((0x00000100 as Uint32));
+    /// This substring contains the beginning of line `line_index`
+    pub const LINE_START: Self = Self((0x00000200 as Uint32));
+    /// This substring contains the end of line `line_index`
+    pub const LINE_END: Self = Self((0x00000400 as Uint32));
+    /// This substring contains the end of the text
+    pub const TEXT_END: Self = Self((0x00000800 as Uint32));
+}
 
 /// The mask for the flow direction for this substring
-pub const TTF_SUBSTRING_DIRECTION_MASK: TTF_SubStringFlags = (0x000000ff as TTF_SubStringFlags);
-
+pub const TTF_SUBSTRING_DIRECTION_MASK: TTF_SubStringFlags = TTF_SubStringFlags::DIRECTION_MASK;
 /// This substring contains the beginning of the text
-pub const TTF_SUBSTRING_TEXT_START: TTF_SubStringFlags = (0x00000100 as TTF_SubStringFlags);
-
+pub const TTF_SUBSTRING_TEXT_START: TTF_SubStringFlags = TTF_SubStringFlags::TEXT_START;
 /// This substring contains the beginning of line `line_index`
-pub const TTF_SUBSTRING_LINE_START: TTF_SubStringFlags = (0x00000200 as TTF_SubStringFlags);
-
+pub const TTF_SUBSTRING_LINE_START: TTF_SubStringFlags = TTF_SubStringFlags::LINE_START;
 /// This substring contains the end of line `line_index`
-pub const TTF_SUBSTRING_LINE_END: TTF_SubStringFlags = (0x00000400 as TTF_SubStringFlags);
-
+pub const TTF_SUBSTRING_LINE_END: TTF_SubStringFlags = TTF_SubStringFlags::LINE_END;
 /// This substring contains the end of the text
-pub const TTF_SUBSTRING_TEXT_END: TTF_SubStringFlags = (0x00000800 as TTF_SubStringFlags);
+pub const TTF_SUBSTRING_TEXT_END: TTF_SubStringFlags = TTF_SubStringFlags::TEXT_END;
 
 /// The representation of a substring within text.
 ///

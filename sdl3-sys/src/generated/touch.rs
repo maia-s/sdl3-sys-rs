@@ -26,7 +26,19 @@ use super::mouse::*;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_TouchID = Uint64;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_TouchID(pub Uint64);
+
+impl From<SDL_TouchID> for Uint64 {
+    #[inline(always)]
+    fn from(value: SDL_TouchID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_TouchID {}
 
 /// A unique ID for a single finger on a touch device.
 ///
@@ -39,7 +51,19 @@ pub type SDL_TouchID = Uint64;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_FingerID = Uint64;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_FingerID(pub Uint64);
+
+impl From<SDL_FingerID> for Uint64 {
+    #[inline(always)]
+    fn from(value: SDL_FingerID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_FingerID {}
 
 /// An enum that describes the type of a touch device.
 ///
@@ -80,13 +104,13 @@ impl ::core::fmt::Debug for SDL_TouchDeviceType {
 }
 
 impl SDL_TouchDeviceType {
-    pub const INVALID: Self = Self(-1_i32);
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
     /// touch screen with window-relative coordinates
-    pub const DIRECT: Self = Self(0_i32);
+    pub const DIRECT: Self = Self((0_i32 as ::core::ffi::c_int));
     /// trackpad with absolute device coordinates
-    pub const INDIRECT_ABSOLUTE: Self = Self(1_i32);
+    pub const INDIRECT_ABSOLUTE: Self = Self((1_i32 as ::core::ffi::c_int));
     /// trackpad with screen cursor-relative coordinates
-    pub const INDIRECT_RELATIVE: Self = Self(2_i32);
+    pub const INDIRECT_RELATIVE: Self = Self((2_i32 as ::core::ffi::c_int));
 }
 
 pub const SDL_TOUCH_DEVICE_INVALID: SDL_TouchDeviceType = SDL_TouchDeviceType::INVALID;
@@ -128,13 +152,13 @@ pub struct SDL_Finger {
 ///
 /// ### Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_TOUCH_MOUSEID: SDL_MouseID = (-1_i32 as SDL_MouseID);
+pub const SDL_TOUCH_MOUSEID: SDL_MouseID = SDL_MouseID((-1_i32 as Uint32));
 
 /// The [`SDL_TouchID`] for touch events simulated with mouse input.
 ///
 /// ### Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_MOUSE_TOUCHID: SDL_TouchID = (-1_i32 as SDL_TouchID);
+pub const SDL_MOUSE_TOUCHID: SDL_TouchID = SDL_TouchID((-1_i32 as Uint64));
 
 extern "C" {
     /// Get a list of registered touch devices.

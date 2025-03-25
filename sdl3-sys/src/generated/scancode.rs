@@ -545,52 +545,52 @@ impl ::core::fmt::Debug for SDL_Scancode {
 }
 
 impl SDL_Scancode {
-    pub const UNKNOWN: Self = Self(0);
-    pub const A: Self = Self(4);
-    pub const B: Self = Self(5);
-    pub const C: Self = Self(6);
-    pub const D: Self = Self(7);
-    pub const E: Self = Self(8);
-    pub const F: Self = Self(9);
-    pub const G: Self = Self(10);
-    pub const H: Self = Self(11);
-    pub const I: Self = Self(12);
-    pub const J: Self = Self(13);
-    pub const K: Self = Self(14);
-    pub const L: Self = Self(15);
-    pub const M: Self = Self(16);
-    pub const N: Self = Self(17);
-    pub const O: Self = Self(18);
-    pub const P: Self = Self(19);
-    pub const Q: Self = Self(20);
-    pub const R: Self = Self(21);
-    pub const S: Self = Self(22);
-    pub const T: Self = Self(23);
-    pub const U: Self = Self(24);
-    pub const V: Self = Self(25);
-    pub const W: Self = Self(26);
-    pub const X: Self = Self(27);
-    pub const Y: Self = Self(28);
-    pub const Z: Self = Self(29);
-    pub const _1: Self = Self(30);
-    pub const _2: Self = Self(31);
-    pub const _3: Self = Self(32);
-    pub const _4: Self = Self(33);
-    pub const _5: Self = Self(34);
-    pub const _6: Self = Self(35);
-    pub const _7: Self = Self(36);
-    pub const _8: Self = Self(37);
-    pub const _9: Self = Self(38);
-    pub const _0: Self = Self(39);
-    pub const RETURN: Self = Self(40);
-    pub const ESCAPE: Self = Self(41);
-    pub const BACKSPACE: Self = Self(42);
-    pub const TAB: Self = Self(43);
-    pub const SPACE: Self = Self(44);
-    pub const MINUS: Self = Self(45);
-    pub const EQUALS: Self = Self(46);
-    pub const LEFTBRACKET: Self = Self(47);
-    pub const RIGHTBRACKET: Self = Self(48);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
+    pub const A: Self = Self((4 as ::core::ffi::c_int));
+    pub const B: Self = Self((5 as ::core::ffi::c_int));
+    pub const C: Self = Self((6 as ::core::ffi::c_int));
+    pub const D: Self = Self((7 as ::core::ffi::c_int));
+    pub const E: Self = Self((8 as ::core::ffi::c_int));
+    pub const F: Self = Self((9 as ::core::ffi::c_int));
+    pub const G: Self = Self((10 as ::core::ffi::c_int));
+    pub const H: Self = Self((11 as ::core::ffi::c_int));
+    pub const I: Self = Self((12 as ::core::ffi::c_int));
+    pub const J: Self = Self((13 as ::core::ffi::c_int));
+    pub const K: Self = Self((14 as ::core::ffi::c_int));
+    pub const L: Self = Self((15 as ::core::ffi::c_int));
+    pub const M: Self = Self((16 as ::core::ffi::c_int));
+    pub const N: Self = Self((17 as ::core::ffi::c_int));
+    pub const O: Self = Self((18 as ::core::ffi::c_int));
+    pub const P: Self = Self((19 as ::core::ffi::c_int));
+    pub const Q: Self = Self((20 as ::core::ffi::c_int));
+    pub const R: Self = Self((21 as ::core::ffi::c_int));
+    pub const S: Self = Self((22 as ::core::ffi::c_int));
+    pub const T: Self = Self((23 as ::core::ffi::c_int));
+    pub const U: Self = Self((24 as ::core::ffi::c_int));
+    pub const V: Self = Self((25 as ::core::ffi::c_int));
+    pub const W: Self = Self((26 as ::core::ffi::c_int));
+    pub const X: Self = Self((27 as ::core::ffi::c_int));
+    pub const Y: Self = Self((28 as ::core::ffi::c_int));
+    pub const Z: Self = Self((29 as ::core::ffi::c_int));
+    pub const _1: Self = Self((30 as ::core::ffi::c_int));
+    pub const _2: Self = Self((31 as ::core::ffi::c_int));
+    pub const _3: Self = Self((32 as ::core::ffi::c_int));
+    pub const _4: Self = Self((33 as ::core::ffi::c_int));
+    pub const _5: Self = Self((34 as ::core::ffi::c_int));
+    pub const _6: Self = Self((35 as ::core::ffi::c_int));
+    pub const _7: Self = Self((36 as ::core::ffi::c_int));
+    pub const _8: Self = Self((37 as ::core::ffi::c_int));
+    pub const _9: Self = Self((38 as ::core::ffi::c_int));
+    pub const _0: Self = Self((39 as ::core::ffi::c_int));
+    pub const RETURN: Self = Self((40 as ::core::ffi::c_int));
+    pub const ESCAPE: Self = Self((41 as ::core::ffi::c_int));
+    pub const BACKSPACE: Self = Self((42 as ::core::ffi::c_int));
+    pub const TAB: Self = Self((43 as ::core::ffi::c_int));
+    pub const SPACE: Self = Self((44 as ::core::ffi::c_int));
+    pub const MINUS: Self = Self((45 as ::core::ffi::c_int));
+    pub const EQUALS: Self = Self((46 as ::core::ffi::c_int));
+    pub const LEFTBRACKET: Self = Self((47 as ::core::ffi::c_int));
+    pub const RIGHTBRACKET: Self = Self((48 as ::core::ffi::c_int));
     /// Located at the lower left of the return
     /// key on ISO keyboards and at the right end
     /// of the QWERTY row on ANSI keyboards.
@@ -604,7 +604,7 @@ impl SDL_Scancode {
     /// ACCENT and POUND SIGN in a French Mac
     /// layout, and ASTERISK and MICRO SIGN in a
     /// French Windows layout.
-    pub const BACKSLASH: Self = Self(49);
+    pub const BACKSLASH: Self = Self((49 as ::core::ffi::c_int));
     /// ISO USB keyboards actually use this code
     /// instead of 49 for the same key, but all
     /// OSes I've seen treat the two codes
@@ -616,9 +616,9 @@ impl SDL_Scancode {
     /// should not rely on this code because SDL
     /// will never generate it with most (all?)
     /// keyboards.
-    pub const NONUSHASH: Self = Self(50);
-    pub const SEMICOLON: Self = Self(51);
-    pub const APOSTROPHE: Self = Self(52);
+    pub const NONUSHASH: Self = Self((50 as ::core::ffi::c_int));
+    pub const SEMICOLON: Self = Self((51 as ::core::ffi::c_int));
+    pub const APOSTROPHE: Self = Self((52 as ::core::ffi::c_int));
     /// Located in the top left corner (on both ANSI
     /// and ISO keyboards). Produces GRAVE ACCENT and
     /// TILDE in a US Windows layout and in US and UK
@@ -635,56 +635,56 @@ impl SDL_Scancode {
     /// keyboards, and LESS-THAN SIGN and GREATER-THAN
     /// SIGN in a Swiss German, German, or French Mac
     /// layout on ANSI keyboards.
-    pub const GRAVE: Self = Self(53);
-    pub const COMMA: Self = Self(54);
-    pub const PERIOD: Self = Self(55);
-    pub const SLASH: Self = Self(56);
-    pub const CAPSLOCK: Self = Self(57);
-    pub const F1: Self = Self(58);
-    pub const F2: Self = Self(59);
-    pub const F3: Self = Self(60);
-    pub const F4: Self = Self(61);
-    pub const F5: Self = Self(62);
-    pub const F6: Self = Self(63);
-    pub const F7: Self = Self(64);
-    pub const F8: Self = Self(65);
-    pub const F9: Self = Self(66);
-    pub const F10: Self = Self(67);
-    pub const F11: Self = Self(68);
-    pub const F12: Self = Self(69);
-    pub const PRINTSCREEN: Self = Self(70);
-    pub const SCROLLLOCK: Self = Self(71);
-    pub const PAUSE: Self = Self(72);
+    pub const GRAVE: Self = Self((53 as ::core::ffi::c_int));
+    pub const COMMA: Self = Self((54 as ::core::ffi::c_int));
+    pub const PERIOD: Self = Self((55 as ::core::ffi::c_int));
+    pub const SLASH: Self = Self((56 as ::core::ffi::c_int));
+    pub const CAPSLOCK: Self = Self((57 as ::core::ffi::c_int));
+    pub const F1: Self = Self((58 as ::core::ffi::c_int));
+    pub const F2: Self = Self((59 as ::core::ffi::c_int));
+    pub const F3: Self = Self((60 as ::core::ffi::c_int));
+    pub const F4: Self = Self((61 as ::core::ffi::c_int));
+    pub const F5: Self = Self((62 as ::core::ffi::c_int));
+    pub const F6: Self = Self((63 as ::core::ffi::c_int));
+    pub const F7: Self = Self((64 as ::core::ffi::c_int));
+    pub const F8: Self = Self((65 as ::core::ffi::c_int));
+    pub const F9: Self = Self((66 as ::core::ffi::c_int));
+    pub const F10: Self = Self((67 as ::core::ffi::c_int));
+    pub const F11: Self = Self((68 as ::core::ffi::c_int));
+    pub const F12: Self = Self((69 as ::core::ffi::c_int));
+    pub const PRINTSCREEN: Self = Self((70 as ::core::ffi::c_int));
+    pub const SCROLLLOCK: Self = Self((71 as ::core::ffi::c_int));
+    pub const PAUSE: Self = Self((72 as ::core::ffi::c_int));
     /// insert on PC, help on some Mac keyboards (but
     /// does send code 73, not 117)
-    pub const INSERT: Self = Self(73);
-    pub const HOME: Self = Self(74);
-    pub const PAGEUP: Self = Self(75);
-    pub const DELETE: Self = Self(76);
-    pub const END: Self = Self(77);
-    pub const PAGEDOWN: Self = Self(78);
-    pub const RIGHT: Self = Self(79);
-    pub const LEFT: Self = Self(80);
-    pub const DOWN: Self = Self(81);
-    pub const UP: Self = Self(82);
+    pub const INSERT: Self = Self((73 as ::core::ffi::c_int));
+    pub const HOME: Self = Self((74 as ::core::ffi::c_int));
+    pub const PAGEUP: Self = Self((75 as ::core::ffi::c_int));
+    pub const DELETE: Self = Self((76 as ::core::ffi::c_int));
+    pub const END: Self = Self((77 as ::core::ffi::c_int));
+    pub const PAGEDOWN: Self = Self((78 as ::core::ffi::c_int));
+    pub const RIGHT: Self = Self((79 as ::core::ffi::c_int));
+    pub const LEFT: Self = Self((80 as ::core::ffi::c_int));
+    pub const DOWN: Self = Self((81 as ::core::ffi::c_int));
+    pub const UP: Self = Self((82 as ::core::ffi::c_int));
     /// num lock on PC, clear on Mac keyboards
-    pub const NUMLOCKCLEAR: Self = Self(83);
-    pub const KP_DIVIDE: Self = Self(84);
-    pub const KP_MULTIPLY: Self = Self(85);
-    pub const KP_MINUS: Self = Self(86);
-    pub const KP_PLUS: Self = Self(87);
-    pub const KP_ENTER: Self = Self(88);
-    pub const KP_1: Self = Self(89);
-    pub const KP_2: Self = Self(90);
-    pub const KP_3: Self = Self(91);
-    pub const KP_4: Self = Self(92);
-    pub const KP_5: Self = Self(93);
-    pub const KP_6: Self = Self(94);
-    pub const KP_7: Self = Self(95);
-    pub const KP_8: Self = Self(96);
-    pub const KP_9: Self = Self(97);
-    pub const KP_0: Self = Self(98);
-    pub const KP_PERIOD: Self = Self(99);
+    pub const NUMLOCKCLEAR: Self = Self((83 as ::core::ffi::c_int));
+    pub const KP_DIVIDE: Self = Self((84 as ::core::ffi::c_int));
+    pub const KP_MULTIPLY: Self = Self((85 as ::core::ffi::c_int));
+    pub const KP_MINUS: Self = Self((86 as ::core::ffi::c_int));
+    pub const KP_PLUS: Self = Self((87 as ::core::ffi::c_int));
+    pub const KP_ENTER: Self = Self((88 as ::core::ffi::c_int));
+    pub const KP_1: Self = Self((89 as ::core::ffi::c_int));
+    pub const KP_2: Self = Self((90 as ::core::ffi::c_int));
+    pub const KP_3: Self = Self((91 as ::core::ffi::c_int));
+    pub const KP_4: Self = Self((92 as ::core::ffi::c_int));
+    pub const KP_5: Self = Self((93 as ::core::ffi::c_int));
+    pub const KP_6: Self = Self((94 as ::core::ffi::c_int));
+    pub const KP_7: Self = Self((95 as ::core::ffi::c_int));
+    pub const KP_8: Self = Self((96 as ::core::ffi::c_int));
+    pub const KP_9: Self = Self((97 as ::core::ffi::c_int));
+    pub const KP_0: Self = Self((98 as ::core::ffi::c_int));
+    pub const KP_PERIOD: Self = Self((99 as ::core::ffi::c_int));
     /// This is the additional key that ISO
     /// keyboards have over ANSI ones,
     /// located between left shift and Y.
@@ -695,232 +695,232 @@ impl SDL_Scancode {
     /// LESS-THAN SIGN and GREATER-THAN SIGN
     /// in a Swiss German, German, or French
     /// layout.
-    pub const NONUSBACKSLASH: Self = Self(100);
+    pub const NONUSBACKSLASH: Self = Self((100 as ::core::ffi::c_int));
     /// windows contextual menu, compose
-    pub const APPLICATION: Self = Self(101);
+    pub const APPLICATION: Self = Self((101 as ::core::ffi::c_int));
     /// The USB document says this is a status flag,
     /// not a physical key - but some Mac keyboards
     /// do have a power key.
-    pub const POWER: Self = Self(102);
-    pub const KP_EQUALS: Self = Self(103);
-    pub const F13: Self = Self(104);
-    pub const F14: Self = Self(105);
-    pub const F15: Self = Self(106);
-    pub const F16: Self = Self(107);
-    pub const F17: Self = Self(108);
-    pub const F18: Self = Self(109);
-    pub const F19: Self = Self(110);
-    pub const F20: Self = Self(111);
-    pub const F21: Self = Self(112);
-    pub const F22: Self = Self(113);
-    pub const F23: Self = Self(114);
-    pub const F24: Self = Self(115);
-    pub const EXECUTE: Self = Self(116);
+    pub const POWER: Self = Self((102 as ::core::ffi::c_int));
+    pub const KP_EQUALS: Self = Self((103 as ::core::ffi::c_int));
+    pub const F13: Self = Self((104 as ::core::ffi::c_int));
+    pub const F14: Self = Self((105 as ::core::ffi::c_int));
+    pub const F15: Self = Self((106 as ::core::ffi::c_int));
+    pub const F16: Self = Self((107 as ::core::ffi::c_int));
+    pub const F17: Self = Self((108 as ::core::ffi::c_int));
+    pub const F18: Self = Self((109 as ::core::ffi::c_int));
+    pub const F19: Self = Self((110 as ::core::ffi::c_int));
+    pub const F20: Self = Self((111 as ::core::ffi::c_int));
+    pub const F21: Self = Self((112 as ::core::ffi::c_int));
+    pub const F22: Self = Self((113 as ::core::ffi::c_int));
+    pub const F23: Self = Self((114 as ::core::ffi::c_int));
+    pub const F24: Self = Self((115 as ::core::ffi::c_int));
+    pub const EXECUTE: Self = Self((116 as ::core::ffi::c_int));
     /// AL Integrated Help Center
-    pub const HELP: Self = Self(117);
+    pub const HELP: Self = Self((117 as ::core::ffi::c_int));
     /// Menu (show menu)
-    pub const MENU: Self = Self(118);
-    pub const SELECT: Self = Self(119);
+    pub const MENU: Self = Self((118 as ::core::ffi::c_int));
+    pub const SELECT: Self = Self((119 as ::core::ffi::c_int));
     /// AC Stop
-    pub const STOP: Self = Self(120);
+    pub const STOP: Self = Self((120 as ::core::ffi::c_int));
     /// AC Redo/Repeat
-    pub const AGAIN: Self = Self(121);
+    pub const AGAIN: Self = Self((121 as ::core::ffi::c_int));
     /// AC Undo
-    pub const UNDO: Self = Self(122);
+    pub const UNDO: Self = Self((122 as ::core::ffi::c_int));
     /// AC Cut
-    pub const CUT: Self = Self(123);
+    pub const CUT: Self = Self((123 as ::core::ffi::c_int));
     /// AC Copy
-    pub const COPY: Self = Self(124);
+    pub const COPY: Self = Self((124 as ::core::ffi::c_int));
     /// AC Paste
-    pub const PASTE: Self = Self(125);
+    pub const PASTE: Self = Self((125 as ::core::ffi::c_int));
     /// AC Find
-    pub const FIND: Self = Self(126);
-    pub const MUTE: Self = Self(127);
-    pub const VOLUMEUP: Self = Self(128);
-    pub const VOLUMEDOWN: Self = Self(129);
-    pub const KP_COMMA: Self = Self(133);
-    pub const KP_EQUALSAS400: Self = Self(134);
+    pub const FIND: Self = Self((126 as ::core::ffi::c_int));
+    pub const MUTE: Self = Self((127 as ::core::ffi::c_int));
+    pub const VOLUMEUP: Self = Self((128 as ::core::ffi::c_int));
+    pub const VOLUMEDOWN: Self = Self((129 as ::core::ffi::c_int));
+    pub const KP_COMMA: Self = Self((133 as ::core::ffi::c_int));
+    pub const KP_EQUALSAS400: Self = Self((134 as ::core::ffi::c_int));
     /// used on Asian keyboards, see
     /// footnotes in USB doc
-    pub const INTERNATIONAL1: Self = Self(135);
-    pub const INTERNATIONAL2: Self = Self(136);
+    pub const INTERNATIONAL1: Self = Self((135 as ::core::ffi::c_int));
+    pub const INTERNATIONAL2: Self = Self((136 as ::core::ffi::c_int));
     /// Yen
-    pub const INTERNATIONAL3: Self = Self(137);
-    pub const INTERNATIONAL4: Self = Self(138);
-    pub const INTERNATIONAL5: Self = Self(139);
-    pub const INTERNATIONAL6: Self = Self(140);
-    pub const INTERNATIONAL7: Self = Self(141);
-    pub const INTERNATIONAL8: Self = Self(142);
-    pub const INTERNATIONAL9: Self = Self(143);
+    pub const INTERNATIONAL3: Self = Self((137 as ::core::ffi::c_int));
+    pub const INTERNATIONAL4: Self = Self((138 as ::core::ffi::c_int));
+    pub const INTERNATIONAL5: Self = Self((139 as ::core::ffi::c_int));
+    pub const INTERNATIONAL6: Self = Self((140 as ::core::ffi::c_int));
+    pub const INTERNATIONAL7: Self = Self((141 as ::core::ffi::c_int));
+    pub const INTERNATIONAL8: Self = Self((142 as ::core::ffi::c_int));
+    pub const INTERNATIONAL9: Self = Self((143 as ::core::ffi::c_int));
     /// Hangul/English toggle
-    pub const LANG1: Self = Self(144);
+    pub const LANG1: Self = Self((144 as ::core::ffi::c_int));
     /// Hanja conversion
-    pub const LANG2: Self = Self(145);
+    pub const LANG2: Self = Self((145 as ::core::ffi::c_int));
     /// Katakana
-    pub const LANG3: Self = Self(146);
+    pub const LANG3: Self = Self((146 as ::core::ffi::c_int));
     /// Hiragana
-    pub const LANG4: Self = Self(147);
+    pub const LANG4: Self = Self((147 as ::core::ffi::c_int));
     /// Zenkaku/Hankaku
-    pub const LANG5: Self = Self(148);
+    pub const LANG5: Self = Self((148 as ::core::ffi::c_int));
     /// reserved
-    pub const LANG6: Self = Self(149);
+    pub const LANG6: Self = Self((149 as ::core::ffi::c_int));
     /// reserved
-    pub const LANG7: Self = Self(150);
+    pub const LANG7: Self = Self((150 as ::core::ffi::c_int));
     /// reserved
-    pub const LANG8: Self = Self(151);
+    pub const LANG8: Self = Self((151 as ::core::ffi::c_int));
     /// reserved
-    pub const LANG9: Self = Self(152);
+    pub const LANG9: Self = Self((152 as ::core::ffi::c_int));
     /// Erase-Eaze
-    pub const ALTERASE: Self = Self(153);
-    pub const SYSREQ: Self = Self(154);
+    pub const ALTERASE: Self = Self((153 as ::core::ffi::c_int));
+    pub const SYSREQ: Self = Self((154 as ::core::ffi::c_int));
     /// AC Cancel
-    pub const CANCEL: Self = Self(155);
-    pub const CLEAR: Self = Self(156);
-    pub const PRIOR: Self = Self(157);
-    pub const RETURN2: Self = Self(158);
-    pub const SEPARATOR: Self = Self(159);
-    pub const OUT: Self = Self(160);
-    pub const OPER: Self = Self(161);
-    pub const CLEARAGAIN: Self = Self(162);
-    pub const CRSEL: Self = Self(163);
-    pub const EXSEL: Self = Self(164);
-    pub const KP_00: Self = Self(176);
-    pub const KP_000: Self = Self(177);
-    pub const THOUSANDSSEPARATOR: Self = Self(178);
-    pub const DECIMALSEPARATOR: Self = Self(179);
-    pub const CURRENCYUNIT: Self = Self(180);
-    pub const CURRENCYSUBUNIT: Self = Self(181);
-    pub const KP_LEFTPAREN: Self = Self(182);
-    pub const KP_RIGHTPAREN: Self = Self(183);
-    pub const KP_LEFTBRACE: Self = Self(184);
-    pub const KP_RIGHTBRACE: Self = Self(185);
-    pub const KP_TAB: Self = Self(186);
-    pub const KP_BACKSPACE: Self = Self(187);
-    pub const KP_A: Self = Self(188);
-    pub const KP_B: Self = Self(189);
-    pub const KP_C: Self = Self(190);
-    pub const KP_D: Self = Self(191);
-    pub const KP_E: Self = Self(192);
-    pub const KP_F: Self = Self(193);
-    pub const KP_XOR: Self = Self(194);
-    pub const KP_POWER: Self = Self(195);
-    pub const KP_PERCENT: Self = Self(196);
-    pub const KP_LESS: Self = Self(197);
-    pub const KP_GREATER: Self = Self(198);
-    pub const KP_AMPERSAND: Self = Self(199);
-    pub const KP_DBLAMPERSAND: Self = Self(200);
-    pub const KP_VERTICALBAR: Self = Self(201);
-    pub const KP_DBLVERTICALBAR: Self = Self(202);
-    pub const KP_COLON: Self = Self(203);
-    pub const KP_HASH: Self = Self(204);
-    pub const KP_SPACE: Self = Self(205);
-    pub const KP_AT: Self = Self(206);
-    pub const KP_EXCLAM: Self = Self(207);
-    pub const KP_MEMSTORE: Self = Self(208);
-    pub const KP_MEMRECALL: Self = Self(209);
-    pub const KP_MEMCLEAR: Self = Self(210);
-    pub const KP_MEMADD: Self = Self(211);
-    pub const KP_MEMSUBTRACT: Self = Self(212);
-    pub const KP_MEMMULTIPLY: Self = Self(213);
-    pub const KP_MEMDIVIDE: Self = Self(214);
-    pub const KP_PLUSMINUS: Self = Self(215);
-    pub const KP_CLEAR: Self = Self(216);
-    pub const KP_CLEARENTRY: Self = Self(217);
-    pub const KP_BINARY: Self = Self(218);
-    pub const KP_OCTAL: Self = Self(219);
-    pub const KP_DECIMAL: Self = Self(220);
-    pub const KP_HEXADECIMAL: Self = Self(221);
-    pub const LCTRL: Self = Self(224);
-    pub const LSHIFT: Self = Self(225);
+    pub const CANCEL: Self = Self((155 as ::core::ffi::c_int));
+    pub const CLEAR: Self = Self((156 as ::core::ffi::c_int));
+    pub const PRIOR: Self = Self((157 as ::core::ffi::c_int));
+    pub const RETURN2: Self = Self((158 as ::core::ffi::c_int));
+    pub const SEPARATOR: Self = Self((159 as ::core::ffi::c_int));
+    pub const OUT: Self = Self((160 as ::core::ffi::c_int));
+    pub const OPER: Self = Self((161 as ::core::ffi::c_int));
+    pub const CLEARAGAIN: Self = Self((162 as ::core::ffi::c_int));
+    pub const CRSEL: Self = Self((163 as ::core::ffi::c_int));
+    pub const EXSEL: Self = Self((164 as ::core::ffi::c_int));
+    pub const KP_00: Self = Self((176 as ::core::ffi::c_int));
+    pub const KP_000: Self = Self((177 as ::core::ffi::c_int));
+    pub const THOUSANDSSEPARATOR: Self = Self((178 as ::core::ffi::c_int));
+    pub const DECIMALSEPARATOR: Self = Self((179 as ::core::ffi::c_int));
+    pub const CURRENCYUNIT: Self = Self((180 as ::core::ffi::c_int));
+    pub const CURRENCYSUBUNIT: Self = Self((181 as ::core::ffi::c_int));
+    pub const KP_LEFTPAREN: Self = Self((182 as ::core::ffi::c_int));
+    pub const KP_RIGHTPAREN: Self = Self((183 as ::core::ffi::c_int));
+    pub const KP_LEFTBRACE: Self = Self((184 as ::core::ffi::c_int));
+    pub const KP_RIGHTBRACE: Self = Self((185 as ::core::ffi::c_int));
+    pub const KP_TAB: Self = Self((186 as ::core::ffi::c_int));
+    pub const KP_BACKSPACE: Self = Self((187 as ::core::ffi::c_int));
+    pub const KP_A: Self = Self((188 as ::core::ffi::c_int));
+    pub const KP_B: Self = Self((189 as ::core::ffi::c_int));
+    pub const KP_C: Self = Self((190 as ::core::ffi::c_int));
+    pub const KP_D: Self = Self((191 as ::core::ffi::c_int));
+    pub const KP_E: Self = Self((192 as ::core::ffi::c_int));
+    pub const KP_F: Self = Self((193 as ::core::ffi::c_int));
+    pub const KP_XOR: Self = Self((194 as ::core::ffi::c_int));
+    pub const KP_POWER: Self = Self((195 as ::core::ffi::c_int));
+    pub const KP_PERCENT: Self = Self((196 as ::core::ffi::c_int));
+    pub const KP_LESS: Self = Self((197 as ::core::ffi::c_int));
+    pub const KP_GREATER: Self = Self((198 as ::core::ffi::c_int));
+    pub const KP_AMPERSAND: Self = Self((199 as ::core::ffi::c_int));
+    pub const KP_DBLAMPERSAND: Self = Self((200 as ::core::ffi::c_int));
+    pub const KP_VERTICALBAR: Self = Self((201 as ::core::ffi::c_int));
+    pub const KP_DBLVERTICALBAR: Self = Self((202 as ::core::ffi::c_int));
+    pub const KP_COLON: Self = Self((203 as ::core::ffi::c_int));
+    pub const KP_HASH: Self = Self((204 as ::core::ffi::c_int));
+    pub const KP_SPACE: Self = Self((205 as ::core::ffi::c_int));
+    pub const KP_AT: Self = Self((206 as ::core::ffi::c_int));
+    pub const KP_EXCLAM: Self = Self((207 as ::core::ffi::c_int));
+    pub const KP_MEMSTORE: Self = Self((208 as ::core::ffi::c_int));
+    pub const KP_MEMRECALL: Self = Self((209 as ::core::ffi::c_int));
+    pub const KP_MEMCLEAR: Self = Self((210 as ::core::ffi::c_int));
+    pub const KP_MEMADD: Self = Self((211 as ::core::ffi::c_int));
+    pub const KP_MEMSUBTRACT: Self = Self((212 as ::core::ffi::c_int));
+    pub const KP_MEMMULTIPLY: Self = Self((213 as ::core::ffi::c_int));
+    pub const KP_MEMDIVIDE: Self = Self((214 as ::core::ffi::c_int));
+    pub const KP_PLUSMINUS: Self = Self((215 as ::core::ffi::c_int));
+    pub const KP_CLEAR: Self = Self((216 as ::core::ffi::c_int));
+    pub const KP_CLEARENTRY: Self = Self((217 as ::core::ffi::c_int));
+    pub const KP_BINARY: Self = Self((218 as ::core::ffi::c_int));
+    pub const KP_OCTAL: Self = Self((219 as ::core::ffi::c_int));
+    pub const KP_DECIMAL: Self = Self((220 as ::core::ffi::c_int));
+    pub const KP_HEXADECIMAL: Self = Self((221 as ::core::ffi::c_int));
+    pub const LCTRL: Self = Self((224 as ::core::ffi::c_int));
+    pub const LSHIFT: Self = Self((225 as ::core::ffi::c_int));
     /// alt, option
-    pub const LALT: Self = Self(226);
+    pub const LALT: Self = Self((226 as ::core::ffi::c_int));
     /// windows, command (apple), meta
-    pub const LGUI: Self = Self(227);
-    pub const RCTRL: Self = Self(228);
-    pub const RSHIFT: Self = Self(229);
+    pub const LGUI: Self = Self((227 as ::core::ffi::c_int));
+    pub const RCTRL: Self = Self((228 as ::core::ffi::c_int));
+    pub const RSHIFT: Self = Self((229 as ::core::ffi::c_int));
     /// alt gr, option
-    pub const RALT: Self = Self(230);
+    pub const RALT: Self = Self((230 as ::core::ffi::c_int));
     /// windows, command (apple), meta
-    pub const RGUI: Self = Self(231);
+    pub const RGUI: Self = Self((231 as ::core::ffi::c_int));
     /// I'm not sure if this is really not covered
     /// by any of the above, but since there's a
     /// special [`SDL_KMOD_MODE`] for it I'm adding it here
-    pub const MODE: Self = Self(257);
+    pub const MODE: Self = Self((257 as ::core::ffi::c_int));
     /// Sleep
-    pub const SLEEP: Self = Self(258);
+    pub const SLEEP: Self = Self((258 as ::core::ffi::c_int));
     /// Wake
-    pub const WAKE: Self = Self(259);
+    pub const WAKE: Self = Self((259 as ::core::ffi::c_int));
     /// Channel Increment
-    pub const CHANNEL_INCREMENT: Self = Self(260);
+    pub const CHANNEL_INCREMENT: Self = Self((260 as ::core::ffi::c_int));
     /// Channel Decrement
-    pub const CHANNEL_DECREMENT: Self = Self(261);
+    pub const CHANNEL_DECREMENT: Self = Self((261 as ::core::ffi::c_int));
     /// Play
-    pub const MEDIA_PLAY: Self = Self(262);
+    pub const MEDIA_PLAY: Self = Self((262 as ::core::ffi::c_int));
     /// Pause
-    pub const MEDIA_PAUSE: Self = Self(263);
+    pub const MEDIA_PAUSE: Self = Self((263 as ::core::ffi::c_int));
     /// Record
-    pub const MEDIA_RECORD: Self = Self(264);
+    pub const MEDIA_RECORD: Self = Self((264 as ::core::ffi::c_int));
     /// Fast Forward
-    pub const MEDIA_FAST_FORWARD: Self = Self(265);
+    pub const MEDIA_FAST_FORWARD: Self = Self((265 as ::core::ffi::c_int));
     /// Rewind
-    pub const MEDIA_REWIND: Self = Self(266);
+    pub const MEDIA_REWIND: Self = Self((266 as ::core::ffi::c_int));
     /// Next Track
-    pub const MEDIA_NEXT_TRACK: Self = Self(267);
+    pub const MEDIA_NEXT_TRACK: Self = Self((267 as ::core::ffi::c_int));
     /// Previous Track
-    pub const MEDIA_PREVIOUS_TRACK: Self = Self(268);
+    pub const MEDIA_PREVIOUS_TRACK: Self = Self((268 as ::core::ffi::c_int));
     /// Stop
-    pub const MEDIA_STOP: Self = Self(269);
+    pub const MEDIA_STOP: Self = Self((269 as ::core::ffi::c_int));
     /// Eject
-    pub const MEDIA_EJECT: Self = Self(270);
+    pub const MEDIA_EJECT: Self = Self((270 as ::core::ffi::c_int));
     /// Play / Pause
-    pub const MEDIA_PLAY_PAUSE: Self = Self(271);
-    pub const MEDIA_SELECT: Self = Self(272);
+    pub const MEDIA_PLAY_PAUSE: Self = Self((271 as ::core::ffi::c_int));
+    pub const MEDIA_SELECT: Self = Self((272 as ::core::ffi::c_int));
     /// AC New
-    pub const AC_NEW: Self = Self(273);
+    pub const AC_NEW: Self = Self((273 as ::core::ffi::c_int));
     /// AC Open
-    pub const AC_OPEN: Self = Self(274);
+    pub const AC_OPEN: Self = Self((274 as ::core::ffi::c_int));
     /// AC Close
-    pub const AC_CLOSE: Self = Self(275);
+    pub const AC_CLOSE: Self = Self((275 as ::core::ffi::c_int));
     /// AC Exit
-    pub const AC_EXIT: Self = Self(276);
+    pub const AC_EXIT: Self = Self((276 as ::core::ffi::c_int));
     /// AC Save
-    pub const AC_SAVE: Self = Self(277);
+    pub const AC_SAVE: Self = Self((277 as ::core::ffi::c_int));
     /// AC Print
-    pub const AC_PRINT: Self = Self(278);
+    pub const AC_PRINT: Self = Self((278 as ::core::ffi::c_int));
     /// AC Properties
-    pub const AC_PROPERTIES: Self = Self(279);
+    pub const AC_PROPERTIES: Self = Self((279 as ::core::ffi::c_int));
     /// AC Search
-    pub const AC_SEARCH: Self = Self(280);
+    pub const AC_SEARCH: Self = Self((280 as ::core::ffi::c_int));
     /// AC Home
-    pub const AC_HOME: Self = Self(281);
+    pub const AC_HOME: Self = Self((281 as ::core::ffi::c_int));
     /// AC Back
-    pub const AC_BACK: Self = Self(282);
+    pub const AC_BACK: Self = Self((282 as ::core::ffi::c_int));
     /// AC Forward
-    pub const AC_FORWARD: Self = Self(283);
+    pub const AC_FORWARD: Self = Self((283 as ::core::ffi::c_int));
     /// AC Stop
-    pub const AC_STOP: Self = Self(284);
+    pub const AC_STOP: Self = Self((284 as ::core::ffi::c_int));
     /// AC Refresh
-    pub const AC_REFRESH: Self = Self(285);
+    pub const AC_REFRESH: Self = Self((285 as ::core::ffi::c_int));
     /// AC Bookmarks
-    pub const AC_BOOKMARKS: Self = Self(286);
+    pub const AC_BOOKMARKS: Self = Self((286 as ::core::ffi::c_int));
     /// Usually situated below the display on phones and
     /// used as a multi-function feature key for selecting
     /// a software defined function shown on the bottom left
     /// of the display.
-    pub const SOFTLEFT: Self = Self(287);
+    pub const SOFTLEFT: Self = Self((287 as ::core::ffi::c_int));
     /// Usually situated below the display on phones and
     /// used as a multi-function feature key for selecting
     /// a software defined function shown on the bottom right
     /// of the display.
-    pub const SOFTRIGHT: Self = Self(288);
+    pub const SOFTRIGHT: Self = Self((288 as ::core::ffi::c_int));
     /// Used for accepting phone calls.
-    pub const CALL: Self = Self(289);
+    pub const CALL: Self = Self((289 as ::core::ffi::c_int));
     /// Used for rejecting phone calls.
-    pub const ENDCALL: Self = Self(290);
+    pub const ENDCALL: Self = Self((290 as ::core::ffi::c_int));
     /// 400-500 reserved for dynamic keycodes
-    pub const RESERVED: Self = Self(400);
+    pub const RESERVED: Self = Self((400 as ::core::ffi::c_int));
     /// not a key, just marks the number of scancodes for array bounds
-    pub const COUNT: Self = Self(512);
+    pub const COUNT: Self = Self((512 as ::core::ffi::c_int));
 }
 
 pub const SDL_SCANCODE_UNKNOWN: SDL_Scancode = SDL_Scancode::UNKNOWN;

@@ -1,7 +1,7 @@
 use super::{
-    patch_parsed_typedef, DocComment, Enum, Expr, FnAbi, FnDeclArgs, GetSpan, Ident, Kw_const,
-    Kw_struct, Kw_typedef, Op, Parse, ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse,
-    Span, StructOrUnion, WsAndComments,
+    patch_parsed_typedef, DocComment, Enum, EnumKind, EnumVariant, Expr, FnAbi, FnDeclArgs,
+    GetSpan, Ident, Kw_const, Kw_struct, Kw_typedef, Op, Parse, ParseContext, ParseRawRes,
+    PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion, WsAndComments,
 };
 use crate::emit::EmitContext;
 use core::cell::RefCell;
@@ -563,13 +563,32 @@ impl<const IDENT_SPEC: u8> Parse for TypeWithIdent<IDENT_SPEC> {
 }
 
 #[derive(Clone, Debug)]
+pub enum TypeDefKind {
+    Alias,
+    Enum {
+        kind: EnumKind,
+        variants: Rc<RefCell<Vec<EnumVariant>>>,
+        match_define: fn(&str) -> bool,
+    },
+}
+
+impl TypeDefKind {
+    pub fn new_enum(kind: EnumKind) -> Self {
+        Self::Enum {
+            kind,
+            variants: Rc::new(RefCell::new(Vec::new())),
+            match_define: |_| true,
+        }
+    }
+}
+
+#[derive(Clone, Debug)]
 pub struct TypeDef {
     pub span: Span,
     pub doc: Option<DocComment>,
     pub ident: Ident,
     pub ty: Type,
-    pub use_for_defines: Option<&'static str>,
-    pub associated_defines: Rc<RefCell<Vec<(Ident, Option<DocComment>)>>>,
+    pub kind: TypeDefKind,
 }
 
 impl Parse for TypeDef {
@@ -583,18 +602,24 @@ impl Parse for TypeDef {
         if let Some(typedef_kw) = Kw_typedef::try_parse(ctx, &mut rest)? {
             WsAndComments::try_parse(ctx, &mut rest)?;
             let TypeWithIdent { ty, ident } = TypeWithReqIdent::parse(ctx, &mut rest)?;
+            let ident = ident.unwrap();
             WsAndComments::try_parse(ctx, &mut rest)?;
             let semi = <Op![;]>::parse(ctx, &mut rest)?;
             let span = typedef_kw.span.join(&semi.span);
             let doc = DocComment::try_parse_combine_postfix(ctx, &mut rest, doc)?;
-            let use_for_defines = matches!(ty.ty, TypeEnum::Ident(_) | TypeEnum::Primitive(_));
+            let kind = if ident.as_str().ends_with("Flags") {
+                TypeDefKind::new_enum(EnumKind::Flags)
+            } else if ident.as_str().ends_with("ID") && !ident.as_str().ends_with("UID") {
+                TypeDefKind::new_enum(EnumKind::Id)
+            } else {
+                TypeDefKind::Alias
+            };
             let mut this = TypeDef {
                 span,
                 doc,
-                ident: ident.unwrap(),
+                ident,
                 ty,
-                use_for_defines: use_for_defines.then_some(""),
-                associated_defines: Rc::new(RefCell::new(Vec::new())),
+                kind,
             };
             patch_parsed_typedef(ctx, &mut this)?;
             Ok((rest, Some(this)))

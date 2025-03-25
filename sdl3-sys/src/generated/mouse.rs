@@ -46,7 +46,19 @@ use super::video::*;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_MouseID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_MouseID(pub Uint32);
+
+impl From<SDL_MouseID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_MouseID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_MouseID {}
 
 /// Cursor types for [`SDL_CreateSystemCursor()`].
 ///
@@ -122,46 +134,46 @@ impl ::core::fmt::Debug for SDL_SystemCursor {
 
 impl SDL_SystemCursor {
     /// Default cursor. Usually an arrow.
-    pub const DEFAULT: Self = Self(0);
+    pub const DEFAULT: Self = Self((0 as ::core::ffi::c_int));
     /// Text selection. Usually an I-beam.
-    pub const TEXT: Self = Self(1);
+    pub const TEXT: Self = Self((1 as ::core::ffi::c_int));
     /// Wait. Usually an hourglass or watch or spinning ball.
-    pub const WAIT: Self = Self(2);
+    pub const WAIT: Self = Self((2 as ::core::ffi::c_int));
     /// Crosshair.
-    pub const CROSSHAIR: Self = Self(3);
+    pub const CROSSHAIR: Self = Self((3 as ::core::ffi::c_int));
     /// Program is busy but still interactive. Usually it's WAIT with an arrow.
-    pub const PROGRESS: Self = Self(4);
+    pub const PROGRESS: Self = Self((4 as ::core::ffi::c_int));
     /// Double arrow pointing northwest and southeast.
-    pub const NWSE_RESIZE: Self = Self(5);
+    pub const NWSE_RESIZE: Self = Self((5 as ::core::ffi::c_int));
     /// Double arrow pointing northeast and southwest.
-    pub const NESW_RESIZE: Self = Self(6);
+    pub const NESW_RESIZE: Self = Self((6 as ::core::ffi::c_int));
     /// Double arrow pointing west and east.
-    pub const EW_RESIZE: Self = Self(7);
+    pub const EW_RESIZE: Self = Self((7 as ::core::ffi::c_int));
     /// Double arrow pointing north and south.
-    pub const NS_RESIZE: Self = Self(8);
+    pub const NS_RESIZE: Self = Self((8 as ::core::ffi::c_int));
     /// Four pointed arrow pointing north, south, east, and west.
-    pub const MOVE: Self = Self(9);
+    pub const MOVE: Self = Self((9 as ::core::ffi::c_int));
     /// Not permitted. Usually a slashed circle or crossbones.
-    pub const NOT_ALLOWED: Self = Self(10);
+    pub const NOT_ALLOWED: Self = Self((10 as ::core::ffi::c_int));
     /// Pointer that indicates a link. Usually a pointing hand.
-    pub const POINTER: Self = Self(11);
+    pub const POINTER: Self = Self((11 as ::core::ffi::c_int));
     /// Window resize top-left. This may be a single arrow or a double arrow like NWSE_RESIZE.
-    pub const NW_RESIZE: Self = Self(12);
+    pub const NW_RESIZE: Self = Self((12 as ::core::ffi::c_int));
     /// Window resize top. May be NS_RESIZE.
-    pub const N_RESIZE: Self = Self(13);
+    pub const N_RESIZE: Self = Self((13 as ::core::ffi::c_int));
     /// Window resize top-right. May be NESW_RESIZE.
-    pub const NE_RESIZE: Self = Self(14);
+    pub const NE_RESIZE: Self = Self((14 as ::core::ffi::c_int));
     /// Window resize right. May be EW_RESIZE.
-    pub const E_RESIZE: Self = Self(15);
+    pub const E_RESIZE: Self = Self((15 as ::core::ffi::c_int));
     /// Window resize bottom-right. May be NWSE_RESIZE.
-    pub const SE_RESIZE: Self = Self(16);
+    pub const SE_RESIZE: Self = Self((16 as ::core::ffi::c_int));
     /// Window resize bottom. May be NS_RESIZE.
-    pub const S_RESIZE: Self = Self(17);
+    pub const S_RESIZE: Self = Self((17 as ::core::ffi::c_int));
     /// Window resize bottom-left. May be NESW_RESIZE.
-    pub const SW_RESIZE: Self = Self(18);
+    pub const SW_RESIZE: Self = Self((18 as ::core::ffi::c_int));
     /// Window resize left. May be EW_RESIZE.
-    pub const W_RESIZE: Self = Self(19);
-    pub const COUNT: Self = Self(20);
+    pub const W_RESIZE: Self = Self((19 as ::core::ffi::c_int));
+    pub const COUNT: Self = Self((20 as ::core::ffi::c_int));
 }
 
 /// Default cursor. Usually an arrow.
@@ -242,32 +254,15 @@ impl ::core::fmt::Debug for SDL_MouseWheelDirection {
 
 impl SDL_MouseWheelDirection {
     /// The scroll direction is normal
-    pub const NORMAL: Self = Self(0);
+    pub const NORMAL: Self = Self((0 as ::core::ffi::c_int));
     /// The scroll direction is flipped / natural
-    pub const FLIPPED: Self = Self(1);
+    pub const FLIPPED: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// The scroll direction is normal
 pub const SDL_MOUSEWHEEL_NORMAL: SDL_MouseWheelDirection = SDL_MouseWheelDirection::NORMAL;
 /// The scroll direction is flipped / natural
 pub const SDL_MOUSEWHEEL_FLIPPED: SDL_MouseWheelDirection = SDL_MouseWheelDirection::FLIPPED;
-
-/// A bitmask of pressed mouse buttons, as reported by [`SDL_GetMouseState`], etc.
-///
-/// - Button 1: Left mouse button
-/// - Button 2: Middle mouse button
-/// - Button 3: Right mouse button
-/// - Button 4: Side mouse button 1
-/// - Button 5: Side mouse button 2
-///
-/// ### Availability
-/// This datatype is available since SDL 3.2.0.
-///
-/// ### See also
-/// - [`SDL_GetMouseState`]
-/// - [`SDL_GetGlobalMouseState`]
-/// - [`SDL_GetRelativeMouseState`]
-pub type SDL_MouseButtonFlags = Uint32;
 
 pub const SDL_BUTTON_LEFT: ::core::primitive::i32 = 1;
 
@@ -281,18 +276,8 @@ pub const SDL_BUTTON_X2: ::core::primitive::i32 = 5;
 
 #[inline(always)]
 pub const fn SDL_BUTTON_MASK(X: ::core::primitive::i32) -> SDL_MouseButtonFlags {
-    ((1_u32 << (X - 1_i32)) as SDL_MouseButtonFlags)
+    SDL_MouseButtonFlags(((1_u32 << (X - 1_i32)) as Uint32))
 }
-
-pub const SDL_BUTTON_LMASK: SDL_MouseButtonFlags = SDL_BUTTON_MASK(SDL_BUTTON_LEFT);
-
-pub const SDL_BUTTON_MMASK: SDL_MouseButtonFlags = SDL_BUTTON_MASK(SDL_BUTTON_MIDDLE);
-
-pub const SDL_BUTTON_RMASK: SDL_MouseButtonFlags = SDL_BUTTON_MASK(SDL_BUTTON_RIGHT);
-
-pub const SDL_BUTTON_X1MASK: SDL_MouseButtonFlags = SDL_BUTTON_MASK(SDL_BUTTON_X1);
-
-pub const SDL_BUTTON_X2MASK: SDL_MouseButtonFlags = SDL_BUTTON_MASK(SDL_BUTTON_X2);
 
 extern "C" {
     /// Return whether a mouse is currently connected.
@@ -957,6 +942,71 @@ extern "C" {
 pub struct SDL_Cursor {
     _opaque: [::core::primitive::u8; 0],
 }
+
+/// A bitmask of pressed mouse buttons, as reported by [`SDL_GetMouseState`], etc.
+///
+/// - Button 1: Left mouse button
+/// - Button 2: Middle mouse button
+/// - Button 3: Right mouse button
+/// - Button 4: Side mouse button 1
+/// - Button 5: Side mouse button 2
+///
+/// ### Availability
+/// This datatype is available since SDL 3.2.0.
+///
+/// ### See also
+/// - [`SDL_GetMouseState`]
+/// - [`SDL_GetGlobalMouseState`]
+/// - [`SDL_GetRelativeMouseState`]
+///
+/// ### Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`LMASK`](SDL_MouseButtonFlags::LMASK) | [`SDL_BUTTON_LMASK`] | |
+/// | [`MMASK`](SDL_MouseButtonFlags::MMASK) | [`SDL_BUTTON_MMASK`] | |
+/// | [`RMASK`](SDL_MouseButtonFlags::RMASK) | [`SDL_BUTTON_RMASK`] | |
+/// | [`X1MASK`](SDL_MouseButtonFlags::X1MASK) | [`SDL_BUTTON_X1MASK`] | |
+/// | [`X2MASK`](SDL_MouseButtonFlags::X2MASK) | [`SDL_BUTTON_X2MASK`] | |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_MouseButtonFlags(pub Uint32);
+
+impl From<SDL_MouseButtonFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_MouseButtonFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_MouseButtonFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::LMASK => "SDL_BUTTON_LMASK",
+            Self::MMASK => "SDL_BUTTON_MMASK",
+            Self::RMASK => "SDL_BUTTON_RMASK",
+            Self::X1MASK => "SDL_BUTTON_X1MASK",
+            Self::X2MASK => "SDL_BUTTON_X2MASK",
+
+            _ => return write!(f, "SDL_MouseButtonFlags({})", self.0),
+        })
+    }
+}
+
+impl SDL_MouseButtonFlags {
+    pub const LMASK: Self = SDL_BUTTON_MASK(SDL_BUTTON_LEFT);
+    pub const MMASK: Self = SDL_BUTTON_MASK(SDL_BUTTON_MIDDLE);
+    pub const RMASK: Self = SDL_BUTTON_MASK(SDL_BUTTON_RIGHT);
+    pub const X1MASK: Self = SDL_BUTTON_MASK(SDL_BUTTON_X1);
+    pub const X2MASK: Self = SDL_BUTTON_MASK(SDL_BUTTON_X2);
+}
+
+pub const SDL_BUTTON_LMASK: SDL_MouseButtonFlags = SDL_MouseButtonFlags::LMASK;
+pub const SDL_BUTTON_MMASK: SDL_MouseButtonFlags = SDL_MouseButtonFlags::MMASK;
+pub const SDL_BUTTON_RMASK: SDL_MouseButtonFlags = SDL_MouseButtonFlags::RMASK;
+pub const SDL_BUTTON_X1MASK: SDL_MouseButtonFlags = SDL_MouseButtonFlags::X1MASK;
+pub const SDL_BUTTON_X2MASK: SDL_MouseButtonFlags = SDL_MouseButtonFlags::X2MASK;
 
 #[cfg(doc)]
 use crate::everything::*;

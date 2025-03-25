@@ -25,29 +25,63 @@ use super::video::*;
 /// - [`SDL_InsertTrayEntryAt`]
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_TRAYENTRY_BUTTON`] | Make the entry a simple button. Required. |
-/// | [`SDL_TRAYENTRY_CHECKBOX`] | Make the entry a checkbox. Required. |
-/// | [`SDL_TRAYENTRY_SUBMENU`] | Prepare the entry to have a submenu. Required |
-/// | [`SDL_TRAYENTRY_DISABLED`] | Make the entry disabled. Optional. |
-/// | [`SDL_TRAYENTRY_CHECKED`] | Make the entry checked. This is valid only for checkboxes. Optional. |
-pub type SDL_TrayEntryFlags = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`BUTTON`](SDL_TrayEntryFlags::BUTTON) | [`SDL_TRAYENTRY_BUTTON`] | Make the entry a simple button. Required. |
+/// | [`CHECKBOX`](SDL_TrayEntryFlags::CHECKBOX) | [`SDL_TRAYENTRY_CHECKBOX`] | Make the entry a checkbox. Required. |
+/// | [`SUBMENU`](SDL_TrayEntryFlags::SUBMENU) | [`SDL_TRAYENTRY_SUBMENU`] | Prepare the entry to have a submenu. Required |
+/// | [`DISABLED`](SDL_TrayEntryFlags::DISABLED) | [`SDL_TRAYENTRY_DISABLED`] | Make the entry disabled. Optional. |
+/// | [`CHECKED`](SDL_TrayEntryFlags::CHECKED) | [`SDL_TRAYENTRY_CHECKED`] | Make the entry checked. This is valid only for checkboxes. Optional. |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_TrayEntryFlags(pub Uint32);
+
+impl From<SDL_TrayEntryFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_TrayEntryFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_TrayEntryFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::BUTTON => "SDL_TRAYENTRY_BUTTON",
+            Self::CHECKBOX => "SDL_TRAYENTRY_CHECKBOX",
+            Self::SUBMENU => "SDL_TRAYENTRY_SUBMENU",
+            Self::DISABLED => "SDL_TRAYENTRY_DISABLED",
+            Self::CHECKED => "SDL_TRAYENTRY_CHECKED",
+
+            _ => return write!(f, "SDL_TrayEntryFlags({})", self.0),
+        })
+    }
+}
+
+impl SDL_TrayEntryFlags {
+    /// Make the entry a simple button. Required.
+    pub const BUTTON: Self = Self((0x00000001 as Uint32));
+    /// Make the entry a checkbox. Required.
+    pub const CHECKBOX: Self = Self((0x00000002 as Uint32));
+    /// Prepare the entry to have a submenu. Required
+    pub const SUBMENU: Self = Self((0x00000004 as Uint32));
+    /// Make the entry disabled. Optional.
+    pub const DISABLED: Self = Self((0x80000000 as Uint32));
+    /// Make the entry checked. This is valid only for checkboxes. Optional.
+    pub const CHECKED: Self = Self((0x40000000 as Uint32));
+}
 
 /// Make the entry a simple button. Required.
-pub const SDL_TRAYENTRY_BUTTON: SDL_TrayEntryFlags = (0x00000001 as SDL_TrayEntryFlags);
-
+pub const SDL_TRAYENTRY_BUTTON: SDL_TrayEntryFlags = SDL_TrayEntryFlags::BUTTON;
 /// Make the entry a checkbox. Required.
-pub const SDL_TRAYENTRY_CHECKBOX: SDL_TrayEntryFlags = (0x00000002 as SDL_TrayEntryFlags);
-
+pub const SDL_TRAYENTRY_CHECKBOX: SDL_TrayEntryFlags = SDL_TrayEntryFlags::CHECKBOX;
 /// Prepare the entry to have a submenu. Required
-pub const SDL_TRAYENTRY_SUBMENU: SDL_TrayEntryFlags = (0x00000004 as SDL_TrayEntryFlags);
-
+pub const SDL_TRAYENTRY_SUBMENU: SDL_TrayEntryFlags = SDL_TrayEntryFlags::SUBMENU;
 /// Make the entry disabled. Optional.
-pub const SDL_TRAYENTRY_DISABLED: SDL_TrayEntryFlags = (0x80000000 as SDL_TrayEntryFlags);
-
+pub const SDL_TRAYENTRY_DISABLED: SDL_TrayEntryFlags = SDL_TrayEntryFlags::DISABLED;
 /// Make the entry checked. This is valid only for checkboxes. Optional.
-pub const SDL_TRAYENTRY_CHECKED: SDL_TrayEntryFlags = (0x40000000 as SDL_TrayEntryFlags);
+pub const SDL_TRAYENTRY_CHECKED: SDL_TrayEntryFlags = SDL_TrayEntryFlags::CHECKED;
 
 /// A callback that is invoked when a tray entry is selected.
 ///

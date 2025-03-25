@@ -347,15 +347,15 @@ impl ::core::fmt::Debug for SDL_GPUPrimitiveType {
 
 impl SDL_GPUPrimitiveType {
     /// A series of separate triangles.
-    pub const TRIANGLELIST: Self = Self(0);
+    pub const TRIANGLELIST: Self = Self((0 as ::core::ffi::c_int));
     /// A series of connected triangles.
-    pub const TRIANGLESTRIP: Self = Self(1);
+    pub const TRIANGLESTRIP: Self = Self((1 as ::core::ffi::c_int));
     /// A series of separate lines.
-    pub const LINELIST: Self = Self(2);
+    pub const LINELIST: Self = Self((2 as ::core::ffi::c_int));
     /// A series of connected lines.
-    pub const LINESTRIP: Self = Self(3);
+    pub const LINESTRIP: Self = Self((3 as ::core::ffi::c_int));
     /// A series of separate points.
-    pub const POINTLIST: Self = Self(4);
+    pub const POINTLIST: Self = Self((4 as ::core::ffi::c_int));
 }
 
 /// A series of separate triangles.
@@ -413,11 +413,11 @@ impl ::core::fmt::Debug for SDL_GPULoadOp {
 
 impl SDL_GPULoadOp {
     /// The previous contents of the texture will be preserved.
-    pub const LOAD: Self = Self(0);
+    pub const LOAD: Self = Self((0 as ::core::ffi::c_int));
     /// The contents of the texture will be cleared to a color.
-    pub const CLEAR: Self = Self(1);
+    pub const CLEAR: Self = Self((1 as ::core::ffi::c_int));
     /// The previous contents of the texture need not be preserved. The contents will be undefined.
-    pub const DONT_CARE: Self = Self(2);
+    pub const DONT_CARE: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// The previous contents of the texture will be preserved.
@@ -471,13 +471,13 @@ impl ::core::fmt::Debug for SDL_GPUStoreOp {
 
 impl SDL_GPUStoreOp {
     /// The contents generated during the render pass will be written to memory.
-    pub const STORE: Self = Self(0);
+    pub const STORE: Self = Self((0 as ::core::ffi::c_int));
     /// The contents generated during the render pass are not needed and may be discarded. The contents will be undefined.
-    pub const DONT_CARE: Self = Self(1);
+    pub const DONT_CARE: Self = Self((1 as ::core::ffi::c_int));
     /// The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture may then be discarded and will be undefined.
-    pub const RESOLVE: Self = Self(2);
+    pub const RESOLVE: Self = Self((2 as ::core::ffi::c_int));
     /// The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture will be written to memory.
-    pub const RESOLVE_AND_STORE: Self = Self(3);
+    pub const RESOLVE_AND_STORE: Self = Self((3 as ::core::ffi::c_int));
 }
 
 /// The contents generated during the render pass will be written to memory.
@@ -528,9 +528,9 @@ impl ::core::fmt::Debug for SDL_GPUIndexElementSize {
 
 impl SDL_GPUIndexElementSize {
     /// The index elements are 16-bit.
-    pub const _16BIT: Self = Self(0);
+    pub const _16BIT: Self = Self((0 as ::core::ffi::c_int));
     /// The index elements are 32-bit.
-    pub const _32BIT: Self = Self(1);
+    pub const _32BIT: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// The index elements are 16-bit.
@@ -860,111 +860,111 @@ impl ::core::fmt::Debug for SDL_GPUTextureFormat {
 }
 
 impl SDL_GPUTextureFormat {
-    pub const INVALID: Self = Self(0);
-    pub const A8_UNORM: Self = Self(1);
-    pub const R8_UNORM: Self = Self(2);
-    pub const R8G8_UNORM: Self = Self(3);
-    pub const R8G8B8A8_UNORM: Self = Self(4);
-    pub const R16_UNORM: Self = Self(5);
-    pub const R16G16_UNORM: Self = Self(6);
-    pub const R16G16B16A16_UNORM: Self = Self(7);
-    pub const R10G10B10A2_UNORM: Self = Self(8);
-    pub const B5G6R5_UNORM: Self = Self(9);
-    pub const B5G5R5A1_UNORM: Self = Self(10);
-    pub const B4G4R4A4_UNORM: Self = Self(11);
-    pub const B8G8R8A8_UNORM: Self = Self(12);
-    pub const BC1_RGBA_UNORM: Self = Self(13);
-    pub const BC2_RGBA_UNORM: Self = Self(14);
-    pub const BC3_RGBA_UNORM: Self = Self(15);
-    pub const BC4_R_UNORM: Self = Self(16);
-    pub const BC5_RG_UNORM: Self = Self(17);
-    pub const BC7_RGBA_UNORM: Self = Self(18);
-    pub const BC6H_RGB_FLOAT: Self = Self(19);
-    pub const BC6H_RGB_UFLOAT: Self = Self(20);
-    pub const R8_SNORM: Self = Self(21);
-    pub const R8G8_SNORM: Self = Self(22);
-    pub const R8G8B8A8_SNORM: Self = Self(23);
-    pub const R16_SNORM: Self = Self(24);
-    pub const R16G16_SNORM: Self = Self(25);
-    pub const R16G16B16A16_SNORM: Self = Self(26);
-    pub const R16_FLOAT: Self = Self(27);
-    pub const R16G16_FLOAT: Self = Self(28);
-    pub const R16G16B16A16_FLOAT: Self = Self(29);
-    pub const R32_FLOAT: Self = Self(30);
-    pub const R32G32_FLOAT: Self = Self(31);
-    pub const R32G32B32A32_FLOAT: Self = Self(32);
-    pub const R11G11B10_UFLOAT: Self = Self(33);
-    pub const R8_UINT: Self = Self(34);
-    pub const R8G8_UINT: Self = Self(35);
-    pub const R8G8B8A8_UINT: Self = Self(36);
-    pub const R16_UINT: Self = Self(37);
-    pub const R16G16_UINT: Self = Self(38);
-    pub const R16G16B16A16_UINT: Self = Self(39);
-    pub const R32_UINT: Self = Self(40);
-    pub const R32G32_UINT: Self = Self(41);
-    pub const R32G32B32A32_UINT: Self = Self(42);
-    pub const R8_INT: Self = Self(43);
-    pub const R8G8_INT: Self = Self(44);
-    pub const R8G8B8A8_INT: Self = Self(45);
-    pub const R16_INT: Self = Self(46);
-    pub const R16G16_INT: Self = Self(47);
-    pub const R16G16B16A16_INT: Self = Self(48);
-    pub const R32_INT: Self = Self(49);
-    pub const R32G32_INT: Self = Self(50);
-    pub const R32G32B32A32_INT: Self = Self(51);
-    pub const R8G8B8A8_UNORM_SRGB: Self = Self(52);
-    pub const B8G8R8A8_UNORM_SRGB: Self = Self(53);
-    pub const BC1_RGBA_UNORM_SRGB: Self = Self(54);
-    pub const BC2_RGBA_UNORM_SRGB: Self = Self(55);
-    pub const BC3_RGBA_UNORM_SRGB: Self = Self(56);
-    pub const BC7_RGBA_UNORM_SRGB: Self = Self(57);
-    pub const D16_UNORM: Self = Self(58);
-    pub const D24_UNORM: Self = Self(59);
-    pub const D32_FLOAT: Self = Self(60);
-    pub const D24_UNORM_S8_UINT: Self = Self(61);
-    pub const D32_FLOAT_S8_UINT: Self = Self(62);
-    pub const ASTC_4x4_UNORM: Self = Self(63);
-    pub const ASTC_5x4_UNORM: Self = Self(64);
-    pub const ASTC_5x5_UNORM: Self = Self(65);
-    pub const ASTC_6x5_UNORM: Self = Self(66);
-    pub const ASTC_6x6_UNORM: Self = Self(67);
-    pub const ASTC_8x5_UNORM: Self = Self(68);
-    pub const ASTC_8x6_UNORM: Self = Self(69);
-    pub const ASTC_8x8_UNORM: Self = Self(70);
-    pub const ASTC_10x5_UNORM: Self = Self(71);
-    pub const ASTC_10x6_UNORM: Self = Self(72);
-    pub const ASTC_10x8_UNORM: Self = Self(73);
-    pub const ASTC_10x10_UNORM: Self = Self(74);
-    pub const ASTC_12x10_UNORM: Self = Self(75);
-    pub const ASTC_12x12_UNORM: Self = Self(76);
-    pub const ASTC_4x4_UNORM_SRGB: Self = Self(77);
-    pub const ASTC_5x4_UNORM_SRGB: Self = Self(78);
-    pub const ASTC_5x5_UNORM_SRGB: Self = Self(79);
-    pub const ASTC_6x5_UNORM_SRGB: Self = Self(80);
-    pub const ASTC_6x6_UNORM_SRGB: Self = Self(81);
-    pub const ASTC_8x5_UNORM_SRGB: Self = Self(82);
-    pub const ASTC_8x6_UNORM_SRGB: Self = Self(83);
-    pub const ASTC_8x8_UNORM_SRGB: Self = Self(84);
-    pub const ASTC_10x5_UNORM_SRGB: Self = Self(85);
-    pub const ASTC_10x6_UNORM_SRGB: Self = Self(86);
-    pub const ASTC_10x8_UNORM_SRGB: Self = Self(87);
-    pub const ASTC_10x10_UNORM_SRGB: Self = Self(88);
-    pub const ASTC_12x10_UNORM_SRGB: Self = Self(89);
-    pub const ASTC_12x12_UNORM_SRGB: Self = Self(90);
-    pub const ASTC_4x4_FLOAT: Self = Self(91);
-    pub const ASTC_5x4_FLOAT: Self = Self(92);
-    pub const ASTC_5x5_FLOAT: Self = Self(93);
-    pub const ASTC_6x5_FLOAT: Self = Self(94);
-    pub const ASTC_6x6_FLOAT: Self = Self(95);
-    pub const ASTC_8x5_FLOAT: Self = Self(96);
-    pub const ASTC_8x6_FLOAT: Self = Self(97);
-    pub const ASTC_8x8_FLOAT: Self = Self(98);
-    pub const ASTC_10x5_FLOAT: Self = Self(99);
-    pub const ASTC_10x6_FLOAT: Self = Self(100);
-    pub const ASTC_10x8_FLOAT: Self = Self(101);
-    pub const ASTC_10x10_FLOAT: Self = Self(102);
-    pub const ASTC_12x10_FLOAT: Self = Self(103);
-    pub const ASTC_12x12_FLOAT: Self = Self(104);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
+    pub const A8_UNORM: Self = Self((1 as ::core::ffi::c_int));
+    pub const R8_UNORM: Self = Self((2 as ::core::ffi::c_int));
+    pub const R8G8_UNORM: Self = Self((3 as ::core::ffi::c_int));
+    pub const R8G8B8A8_UNORM: Self = Self((4 as ::core::ffi::c_int));
+    pub const R16_UNORM: Self = Self((5 as ::core::ffi::c_int));
+    pub const R16G16_UNORM: Self = Self((6 as ::core::ffi::c_int));
+    pub const R16G16B16A16_UNORM: Self = Self((7 as ::core::ffi::c_int));
+    pub const R10G10B10A2_UNORM: Self = Self((8 as ::core::ffi::c_int));
+    pub const B5G6R5_UNORM: Self = Self((9 as ::core::ffi::c_int));
+    pub const B5G5R5A1_UNORM: Self = Self((10 as ::core::ffi::c_int));
+    pub const B4G4R4A4_UNORM: Self = Self((11 as ::core::ffi::c_int));
+    pub const B8G8R8A8_UNORM: Self = Self((12 as ::core::ffi::c_int));
+    pub const BC1_RGBA_UNORM: Self = Self((13 as ::core::ffi::c_int));
+    pub const BC2_RGBA_UNORM: Self = Self((14 as ::core::ffi::c_int));
+    pub const BC3_RGBA_UNORM: Self = Self((15 as ::core::ffi::c_int));
+    pub const BC4_R_UNORM: Self = Self((16 as ::core::ffi::c_int));
+    pub const BC5_RG_UNORM: Self = Self((17 as ::core::ffi::c_int));
+    pub const BC7_RGBA_UNORM: Self = Self((18 as ::core::ffi::c_int));
+    pub const BC6H_RGB_FLOAT: Self = Self((19 as ::core::ffi::c_int));
+    pub const BC6H_RGB_UFLOAT: Self = Self((20 as ::core::ffi::c_int));
+    pub const R8_SNORM: Self = Self((21 as ::core::ffi::c_int));
+    pub const R8G8_SNORM: Self = Self((22 as ::core::ffi::c_int));
+    pub const R8G8B8A8_SNORM: Self = Self((23 as ::core::ffi::c_int));
+    pub const R16_SNORM: Self = Self((24 as ::core::ffi::c_int));
+    pub const R16G16_SNORM: Self = Self((25 as ::core::ffi::c_int));
+    pub const R16G16B16A16_SNORM: Self = Self((26 as ::core::ffi::c_int));
+    pub const R16_FLOAT: Self = Self((27 as ::core::ffi::c_int));
+    pub const R16G16_FLOAT: Self = Self((28 as ::core::ffi::c_int));
+    pub const R16G16B16A16_FLOAT: Self = Self((29 as ::core::ffi::c_int));
+    pub const R32_FLOAT: Self = Self((30 as ::core::ffi::c_int));
+    pub const R32G32_FLOAT: Self = Self((31 as ::core::ffi::c_int));
+    pub const R32G32B32A32_FLOAT: Self = Self((32 as ::core::ffi::c_int));
+    pub const R11G11B10_UFLOAT: Self = Self((33 as ::core::ffi::c_int));
+    pub const R8_UINT: Self = Self((34 as ::core::ffi::c_int));
+    pub const R8G8_UINT: Self = Self((35 as ::core::ffi::c_int));
+    pub const R8G8B8A8_UINT: Self = Self((36 as ::core::ffi::c_int));
+    pub const R16_UINT: Self = Self((37 as ::core::ffi::c_int));
+    pub const R16G16_UINT: Self = Self((38 as ::core::ffi::c_int));
+    pub const R16G16B16A16_UINT: Self = Self((39 as ::core::ffi::c_int));
+    pub const R32_UINT: Self = Self((40 as ::core::ffi::c_int));
+    pub const R32G32_UINT: Self = Self((41 as ::core::ffi::c_int));
+    pub const R32G32B32A32_UINT: Self = Self((42 as ::core::ffi::c_int));
+    pub const R8_INT: Self = Self((43 as ::core::ffi::c_int));
+    pub const R8G8_INT: Self = Self((44 as ::core::ffi::c_int));
+    pub const R8G8B8A8_INT: Self = Self((45 as ::core::ffi::c_int));
+    pub const R16_INT: Self = Self((46 as ::core::ffi::c_int));
+    pub const R16G16_INT: Self = Self((47 as ::core::ffi::c_int));
+    pub const R16G16B16A16_INT: Self = Self((48 as ::core::ffi::c_int));
+    pub const R32_INT: Self = Self((49 as ::core::ffi::c_int));
+    pub const R32G32_INT: Self = Self((50 as ::core::ffi::c_int));
+    pub const R32G32B32A32_INT: Self = Self((51 as ::core::ffi::c_int));
+    pub const R8G8B8A8_UNORM_SRGB: Self = Self((52 as ::core::ffi::c_int));
+    pub const B8G8R8A8_UNORM_SRGB: Self = Self((53 as ::core::ffi::c_int));
+    pub const BC1_RGBA_UNORM_SRGB: Self = Self((54 as ::core::ffi::c_int));
+    pub const BC2_RGBA_UNORM_SRGB: Self = Self((55 as ::core::ffi::c_int));
+    pub const BC3_RGBA_UNORM_SRGB: Self = Self((56 as ::core::ffi::c_int));
+    pub const BC7_RGBA_UNORM_SRGB: Self = Self((57 as ::core::ffi::c_int));
+    pub const D16_UNORM: Self = Self((58 as ::core::ffi::c_int));
+    pub const D24_UNORM: Self = Self((59 as ::core::ffi::c_int));
+    pub const D32_FLOAT: Self = Self((60 as ::core::ffi::c_int));
+    pub const D24_UNORM_S8_UINT: Self = Self((61 as ::core::ffi::c_int));
+    pub const D32_FLOAT_S8_UINT: Self = Self((62 as ::core::ffi::c_int));
+    pub const ASTC_4x4_UNORM: Self = Self((63 as ::core::ffi::c_int));
+    pub const ASTC_5x4_UNORM: Self = Self((64 as ::core::ffi::c_int));
+    pub const ASTC_5x5_UNORM: Self = Self((65 as ::core::ffi::c_int));
+    pub const ASTC_6x5_UNORM: Self = Self((66 as ::core::ffi::c_int));
+    pub const ASTC_6x6_UNORM: Self = Self((67 as ::core::ffi::c_int));
+    pub const ASTC_8x5_UNORM: Self = Self((68 as ::core::ffi::c_int));
+    pub const ASTC_8x6_UNORM: Self = Self((69 as ::core::ffi::c_int));
+    pub const ASTC_8x8_UNORM: Self = Self((70 as ::core::ffi::c_int));
+    pub const ASTC_10x5_UNORM: Self = Self((71 as ::core::ffi::c_int));
+    pub const ASTC_10x6_UNORM: Self = Self((72 as ::core::ffi::c_int));
+    pub const ASTC_10x8_UNORM: Self = Self((73 as ::core::ffi::c_int));
+    pub const ASTC_10x10_UNORM: Self = Self((74 as ::core::ffi::c_int));
+    pub const ASTC_12x10_UNORM: Self = Self((75 as ::core::ffi::c_int));
+    pub const ASTC_12x12_UNORM: Self = Self((76 as ::core::ffi::c_int));
+    pub const ASTC_4x4_UNORM_SRGB: Self = Self((77 as ::core::ffi::c_int));
+    pub const ASTC_5x4_UNORM_SRGB: Self = Self((78 as ::core::ffi::c_int));
+    pub const ASTC_5x5_UNORM_SRGB: Self = Self((79 as ::core::ffi::c_int));
+    pub const ASTC_6x5_UNORM_SRGB: Self = Self((80 as ::core::ffi::c_int));
+    pub const ASTC_6x6_UNORM_SRGB: Self = Self((81 as ::core::ffi::c_int));
+    pub const ASTC_8x5_UNORM_SRGB: Self = Self((82 as ::core::ffi::c_int));
+    pub const ASTC_8x6_UNORM_SRGB: Self = Self((83 as ::core::ffi::c_int));
+    pub const ASTC_8x8_UNORM_SRGB: Self = Self((84 as ::core::ffi::c_int));
+    pub const ASTC_10x5_UNORM_SRGB: Self = Self((85 as ::core::ffi::c_int));
+    pub const ASTC_10x6_UNORM_SRGB: Self = Self((86 as ::core::ffi::c_int));
+    pub const ASTC_10x8_UNORM_SRGB: Self = Self((87 as ::core::ffi::c_int));
+    pub const ASTC_10x10_UNORM_SRGB: Self = Self((88 as ::core::ffi::c_int));
+    pub const ASTC_12x10_UNORM_SRGB: Self = Self((89 as ::core::ffi::c_int));
+    pub const ASTC_12x12_UNORM_SRGB: Self = Self((90 as ::core::ffi::c_int));
+    pub const ASTC_4x4_FLOAT: Self = Self((91 as ::core::ffi::c_int));
+    pub const ASTC_5x4_FLOAT: Self = Self((92 as ::core::ffi::c_int));
+    pub const ASTC_5x5_FLOAT: Self = Self((93 as ::core::ffi::c_int));
+    pub const ASTC_6x5_FLOAT: Self = Self((94 as ::core::ffi::c_int));
+    pub const ASTC_6x6_FLOAT: Self = Self((95 as ::core::ffi::c_int));
+    pub const ASTC_8x5_FLOAT: Self = Self((96 as ::core::ffi::c_int));
+    pub const ASTC_8x6_FLOAT: Self = Self((97 as ::core::ffi::c_int));
+    pub const ASTC_8x8_FLOAT: Self = Self((98 as ::core::ffi::c_int));
+    pub const ASTC_10x5_FLOAT: Self = Self((99 as ::core::ffi::c_int));
+    pub const ASTC_10x6_FLOAT: Self = Self((100 as ::core::ffi::c_int));
+    pub const ASTC_10x8_FLOAT: Self = Self((101 as ::core::ffi::c_int));
+    pub const ASTC_10x10_FLOAT: Self = Self((102 as ::core::ffi::c_int));
+    pub const ASTC_12x10_FLOAT: Self = Self((103 as ::core::ffi::c_int));
+    pub const ASTC_12x12_FLOAT: Self = Self((104 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_TEXTUREFORMAT_INVALID: SDL_GPUTextureFormat = SDL_GPUTextureFormat::INVALID;
@@ -1177,44 +1177,84 @@ pub const SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT: SDL_GPUTextureFormat =
 /// - [`SDL_CreateGPUTexture`]
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GPU_TEXTUREUSAGE_SAMPLER`] | Texture supports sampling. |
-/// | [`SDL_GPU_TEXTUREUSAGE_COLOR_TARGET`] | Texture is a color render target. |
-/// | [`SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET`] | Texture is a depth stencil target. |
-/// | [`SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ`] | Texture supports storage reads in graphics stages. |
-/// | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ`] | Texture supports storage reads in the compute stage. |
-/// | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE`] | Texture supports storage writes in the compute stage. |
-/// | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE`] | Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE. |
-pub type SDL_GPUTextureUsageFlags = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SAMPLER`](SDL_GPUTextureUsageFlags::SAMPLER) | [`SDL_GPU_TEXTUREUSAGE_SAMPLER`] | Texture supports sampling. |
+/// | [`COLOR_TARGET`](SDL_GPUTextureUsageFlags::COLOR_TARGET) | [`SDL_GPU_TEXTUREUSAGE_COLOR_TARGET`] | Texture is a color render target. |
+/// | [`DEPTH_STENCIL_TARGET`](SDL_GPUTextureUsageFlags::DEPTH_STENCIL_TARGET) | [`SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET`] | Texture is a depth stencil target. |
+/// | [`GRAPHICS_STORAGE_READ`](SDL_GPUTextureUsageFlags::GRAPHICS_STORAGE_READ) | [`SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ`] | Texture supports storage reads in graphics stages. |
+/// | [`COMPUTE_STORAGE_READ`](SDL_GPUTextureUsageFlags::COMPUTE_STORAGE_READ) | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ`] | Texture supports storage reads in the compute stage. |
+/// | [`COMPUTE_STORAGE_WRITE`](SDL_GPUTextureUsageFlags::COMPUTE_STORAGE_WRITE) | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE`] | Texture supports storage writes in the compute stage. |
+/// | [`COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE`](SDL_GPUTextureUsageFlags::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE) | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE`] | Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE. |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GPUTextureUsageFlags(pub Uint32);
+
+impl From<SDL_GPUTextureUsageFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_GPUTextureUsageFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUTextureUsageFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::SAMPLER => "SDL_GPU_TEXTUREUSAGE_SAMPLER",
+            Self::COLOR_TARGET => "SDL_GPU_TEXTUREUSAGE_COLOR_TARGET",
+            Self::DEPTH_STENCIL_TARGET => "SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET",
+            Self::GRAPHICS_STORAGE_READ => "SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ",
+            Self::COMPUTE_STORAGE_READ => "SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ",
+            Self::COMPUTE_STORAGE_WRITE => "SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE",
+            Self::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE => {
+                "SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE"
+            }
+
+            _ => return write!(f, "SDL_GPUTextureUsageFlags({})", self.0),
+        })
+    }
+}
+
+impl SDL_GPUTextureUsageFlags {
+    /// Texture supports sampling.
+    pub const SAMPLER: Self = Self((1_u32 as Uint32));
+    /// Texture is a color render target.
+    pub const COLOR_TARGET: Self = Self((2_u32 as Uint32));
+    /// Texture is a depth stencil target.
+    pub const DEPTH_STENCIL_TARGET: Self = Self((4_u32 as Uint32));
+    /// Texture supports storage reads in graphics stages.
+    pub const GRAPHICS_STORAGE_READ: Self = Self((8_u32 as Uint32));
+    /// Texture supports storage reads in the compute stage.
+    pub const COMPUTE_STORAGE_READ: Self = Self((16_u32 as Uint32));
+    /// Texture supports storage writes in the compute stage.
+    pub const COMPUTE_STORAGE_WRITE: Self = Self((32_u32 as Uint32));
+    /// Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE.
+    pub const COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: Self = Self((64_u32 as Uint32));
+}
 
 /// Texture supports sampling.
 pub const SDL_GPU_TEXTUREUSAGE_SAMPLER: SDL_GPUTextureUsageFlags =
-    ((1_u32) as SDL_GPUTextureUsageFlags);
-
+    SDL_GPUTextureUsageFlags::SAMPLER;
 /// Texture is a color render target.
 pub const SDL_GPU_TEXTUREUSAGE_COLOR_TARGET: SDL_GPUTextureUsageFlags =
-    ((2_u32) as SDL_GPUTextureUsageFlags);
-
+    SDL_GPUTextureUsageFlags::COLOR_TARGET;
 /// Texture is a depth stencil target.
 pub const SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET: SDL_GPUTextureUsageFlags =
-    ((4_u32) as SDL_GPUTextureUsageFlags);
-
+    SDL_GPUTextureUsageFlags::DEPTH_STENCIL_TARGET;
 /// Texture supports storage reads in graphics stages.
 pub const SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ: SDL_GPUTextureUsageFlags =
-    ((8_u32) as SDL_GPUTextureUsageFlags);
-
+    SDL_GPUTextureUsageFlags::GRAPHICS_STORAGE_READ;
 /// Texture supports storage reads in the compute stage.
 pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ: SDL_GPUTextureUsageFlags =
-    ((16_u32) as SDL_GPUTextureUsageFlags);
-
+    SDL_GPUTextureUsageFlags::COMPUTE_STORAGE_READ;
 /// Texture supports storage writes in the compute stage.
 pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE: SDL_GPUTextureUsageFlags =
-    ((32_u32) as SDL_GPUTextureUsageFlags);
-
+    SDL_GPUTextureUsageFlags::COMPUTE_STORAGE_WRITE;
 /// Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE.
 pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: SDL_GPUTextureUsageFlags =
-    ((64_u32) as SDL_GPUTextureUsageFlags);
+    SDL_GPUTextureUsageFlags::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE;
 
 /// Specifies the type of a texture.
 ///
@@ -1261,15 +1301,15 @@ impl ::core::fmt::Debug for SDL_GPUTextureType {
 
 impl SDL_GPUTextureType {
     /// The texture is a 2-dimensional image.
-    pub const _2D: Self = Self(0);
+    pub const _2D: Self = Self((0 as ::core::ffi::c_int));
     /// The texture is a 2-dimensional array image.
-    pub const _2D_ARRAY: Self = Self(1);
+    pub const _2D_ARRAY: Self = Self((1 as ::core::ffi::c_int));
     /// The texture is a 3-dimensional image.
-    pub const _3D: Self = Self(2);
+    pub const _3D: Self = Self((2 as ::core::ffi::c_int));
     /// The texture is a cube image.
-    pub const CUBE: Self = Self(3);
+    pub const CUBE: Self = Self((3 as ::core::ffi::c_int));
     /// The texture is a cube array image.
-    pub const CUBE_ARRAY: Self = Self(4);
+    pub const CUBE_ARRAY: Self = Self((4 as ::core::ffi::c_int));
 }
 
 /// The texture is a 2-dimensional image.
@@ -1330,13 +1370,13 @@ impl ::core::fmt::Debug for SDL_GPUSampleCount {
 
 impl SDL_GPUSampleCount {
     /// No multisampling.
-    pub const _1: Self = Self(0);
+    pub const _1: Self = Self((0 as ::core::ffi::c_int));
     /// MSAA 2x
-    pub const _2: Self = Self(1);
+    pub const _2: Self = Self((1 as ::core::ffi::c_int));
     /// MSAA 4x
-    pub const _4: Self = Self(2);
+    pub const _4: Self = Self((2 as ::core::ffi::c_int));
     /// MSAA 8x
-    pub const _8: Self = Self(3);
+    pub const _8: Self = Self((3 as ::core::ffi::c_int));
 }
 
 /// No multisampling.
@@ -1393,12 +1433,12 @@ impl ::core::fmt::Debug for SDL_GPUCubeMapFace {
 }
 
 impl SDL_GPUCubeMapFace {
-    pub const POSITIVEX: Self = Self(0);
-    pub const NEGATIVEX: Self = Self(1);
-    pub const POSITIVEY: Self = Self(2);
-    pub const NEGATIVEY: Self = Self(3);
-    pub const POSITIVEZ: Self = Self(4);
-    pub const NEGATIVEZ: Self = Self(5);
+    pub const POSITIVEX: Self = Self((0 as ::core::ffi::c_int));
+    pub const NEGATIVEX: Self = Self((1 as ::core::ffi::c_int));
+    pub const POSITIVEY: Self = Self((2 as ::core::ffi::c_int));
+    pub const NEGATIVEY: Self = Self((3 as ::core::ffi::c_int));
+    pub const POSITIVEZ: Self = Self((4 as ::core::ffi::c_int));
+    pub const NEGATIVEZ: Self = Self((5 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_CUBEMAPFACE_POSITIVEX: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace::POSITIVEX;
@@ -1427,38 +1467,72 @@ pub const SDL_GPU_CUBEMAPFACE_NEGATIVEZ: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace
 /// - [`SDL_CreateGPUBuffer`]
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GPU_BUFFERUSAGE_VERTEX`] | Buffer is a vertex buffer. |
-/// | [`SDL_GPU_BUFFERUSAGE_INDEX`] | Buffer is an index buffer. |
-/// | [`SDL_GPU_BUFFERUSAGE_INDIRECT`] | Buffer is an indirect buffer. |
-/// | [`SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ`] | Buffer supports storage reads in graphics stages. |
-/// | [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ`] | Buffer supports storage reads in the compute stage. |
-/// | [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE`] | Buffer supports storage writes in the compute stage. |
-pub type SDL_GPUBufferUsageFlags = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`VERTEX`](SDL_GPUBufferUsageFlags::VERTEX) | [`SDL_GPU_BUFFERUSAGE_VERTEX`] | Buffer is a vertex buffer. |
+/// | [`INDEX`](SDL_GPUBufferUsageFlags::INDEX) | [`SDL_GPU_BUFFERUSAGE_INDEX`] | Buffer is an index buffer. |
+/// | [`INDIRECT`](SDL_GPUBufferUsageFlags::INDIRECT) | [`SDL_GPU_BUFFERUSAGE_INDIRECT`] | Buffer is an indirect buffer. |
+/// | [`GRAPHICS_STORAGE_READ`](SDL_GPUBufferUsageFlags::GRAPHICS_STORAGE_READ) | [`SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ`] | Buffer supports storage reads in graphics stages. |
+/// | [`COMPUTE_STORAGE_READ`](SDL_GPUBufferUsageFlags::COMPUTE_STORAGE_READ) | [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ`] | Buffer supports storage reads in the compute stage. |
+/// | [`COMPUTE_STORAGE_WRITE`](SDL_GPUBufferUsageFlags::COMPUTE_STORAGE_WRITE) | [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE`] | Buffer supports storage writes in the compute stage. |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GPUBufferUsageFlags(pub Uint32);
+
+impl From<SDL_GPUBufferUsageFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_GPUBufferUsageFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUBufferUsageFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::VERTEX => "SDL_GPU_BUFFERUSAGE_VERTEX",
+            Self::INDEX => "SDL_GPU_BUFFERUSAGE_INDEX",
+            Self::INDIRECT => "SDL_GPU_BUFFERUSAGE_INDIRECT",
+            Self::GRAPHICS_STORAGE_READ => "SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ",
+            Self::COMPUTE_STORAGE_READ => "SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ",
+            Self::COMPUTE_STORAGE_WRITE => "SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE",
+
+            _ => return write!(f, "SDL_GPUBufferUsageFlags({})", self.0),
+        })
+    }
+}
+
+impl SDL_GPUBufferUsageFlags {
+    /// Buffer is a vertex buffer.
+    pub const VERTEX: Self = Self((1_u32 as Uint32));
+    /// Buffer is an index buffer.
+    pub const INDEX: Self = Self((2_u32 as Uint32));
+    /// Buffer is an indirect buffer.
+    pub const INDIRECT: Self = Self((4_u32 as Uint32));
+    /// Buffer supports storage reads in graphics stages.
+    pub const GRAPHICS_STORAGE_READ: Self = Self((8_u32 as Uint32));
+    /// Buffer supports storage reads in the compute stage.
+    pub const COMPUTE_STORAGE_READ: Self = Self((16_u32 as Uint32));
+    /// Buffer supports storage writes in the compute stage.
+    pub const COMPUTE_STORAGE_WRITE: Self = Self((32_u32 as Uint32));
+}
 
 /// Buffer is a vertex buffer.
-pub const SDL_GPU_BUFFERUSAGE_VERTEX: SDL_GPUBufferUsageFlags =
-    ((1_u32) as SDL_GPUBufferUsageFlags);
-
+pub const SDL_GPU_BUFFERUSAGE_VERTEX: SDL_GPUBufferUsageFlags = SDL_GPUBufferUsageFlags::VERTEX;
 /// Buffer is an index buffer.
-pub const SDL_GPU_BUFFERUSAGE_INDEX: SDL_GPUBufferUsageFlags = ((2_u32) as SDL_GPUBufferUsageFlags);
-
+pub const SDL_GPU_BUFFERUSAGE_INDEX: SDL_GPUBufferUsageFlags = SDL_GPUBufferUsageFlags::INDEX;
 /// Buffer is an indirect buffer.
-pub const SDL_GPU_BUFFERUSAGE_INDIRECT: SDL_GPUBufferUsageFlags =
-    ((4_u32) as SDL_GPUBufferUsageFlags);
-
+pub const SDL_GPU_BUFFERUSAGE_INDIRECT: SDL_GPUBufferUsageFlags = SDL_GPUBufferUsageFlags::INDIRECT;
 /// Buffer supports storage reads in graphics stages.
 pub const SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ: SDL_GPUBufferUsageFlags =
-    ((8_u32) as SDL_GPUBufferUsageFlags);
-
+    SDL_GPUBufferUsageFlags::GRAPHICS_STORAGE_READ;
 /// Buffer supports storage reads in the compute stage.
 pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ: SDL_GPUBufferUsageFlags =
-    ((16_u32) as SDL_GPUBufferUsageFlags);
-
+    SDL_GPUBufferUsageFlags::COMPUTE_STORAGE_READ;
 /// Buffer supports storage writes in the compute stage.
 pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE: SDL_GPUBufferUsageFlags =
-    ((32_u32) as SDL_GPUBufferUsageFlags);
+    SDL_GPUBufferUsageFlags::COMPUTE_STORAGE_WRITE;
 
 /// Specifies how a transfer buffer is intended to be used by the client.
 ///
@@ -1501,8 +1575,8 @@ impl ::core::fmt::Debug for SDL_GPUTransferBufferUsage {
 }
 
 impl SDL_GPUTransferBufferUsage {
-    pub const UPLOAD: Self = Self(0);
-    pub const DOWNLOAD: Self = Self(1);
+    pub const UPLOAD: Self = Self((0 as ::core::ffi::c_int));
+    pub const DOWNLOAD: Self = Self((1 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD: SDL_GPUTransferBufferUsage =
@@ -1548,8 +1622,8 @@ impl ::core::fmt::Debug for SDL_GPUShaderStage {
 }
 
 impl SDL_GPUShaderStage {
-    pub const VERTEX: Self = Self(0);
-    pub const FRAGMENT: Self = Self(1);
+    pub const VERTEX: Self = Self((0 as ::core::ffi::c_int));
+    pub const FRAGMENT: Self = Self((1 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_SHADERSTAGE_VERTEX: SDL_GPUShaderStage = SDL_GPUShaderStage::VERTEX;
@@ -1566,36 +1640,73 @@ pub const SDL_GPU_SHADERSTAGE_FRAGMENT: SDL_GPUShaderStage = SDL_GPUShaderStage:
 /// - [`SDL_CreateGPUShader`]
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GPU_SHADERFORMAT_INVALID`] | |
-/// | [`SDL_GPU_SHADERFORMAT_PRIVATE`] | Shaders for NDA'd platforms. |
-/// | [`SDL_GPU_SHADERFORMAT_SPIRV`] | SPIR-V shaders for Vulkan. |
-/// | [`SDL_GPU_SHADERFORMAT_DXBC`] | DXBC SM5_1 shaders for D3D12. |
-/// | [`SDL_GPU_SHADERFORMAT_DXIL`] | DXIL SM6_0 shaders for D3D12. |
-/// | [`SDL_GPU_SHADERFORMAT_MSL`] | MSL shaders for Metal. |
-/// | [`SDL_GPU_SHADERFORMAT_METALLIB`] | Precompiled metallib shaders for Metal. |
-pub type SDL_GPUShaderFormat = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`INVALID`](SDL_GPUShaderFormat::INVALID) | [`SDL_GPU_SHADERFORMAT_INVALID`] | |
+/// | [`PRIVATE`](SDL_GPUShaderFormat::PRIVATE) | [`SDL_GPU_SHADERFORMAT_PRIVATE`] | Shaders for NDA'd platforms. |
+/// | [`SPIRV`](SDL_GPUShaderFormat::SPIRV) | [`SDL_GPU_SHADERFORMAT_SPIRV`] | SPIR-V shaders for Vulkan. |
+/// | [`DXBC`](SDL_GPUShaderFormat::DXBC) | [`SDL_GPU_SHADERFORMAT_DXBC`] | DXBC SM5_1 shaders for D3D12. |
+/// | [`DXIL`](SDL_GPUShaderFormat::DXIL) | [`SDL_GPU_SHADERFORMAT_DXIL`] | DXIL SM6_0 shaders for D3D12. |
+/// | [`MSL`](SDL_GPUShaderFormat::MSL) | [`SDL_GPU_SHADERFORMAT_MSL`] | MSL shaders for Metal. |
+/// | [`METALLIB`](SDL_GPUShaderFormat::METALLIB) | [`SDL_GPU_SHADERFORMAT_METALLIB`] | Precompiled metallib shaders for Metal. |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GPUShaderFormat(pub Uint32);
 
-pub const SDL_GPU_SHADERFORMAT_INVALID: SDL_GPUShaderFormat = (0 as SDL_GPUShaderFormat);
+impl From<SDL_GPUShaderFormat> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_GPUShaderFormat) -> Self {
+        value.0
+    }
+}
 
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUShaderFormat {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_GPU_SHADERFORMAT_INVALID",
+            Self::PRIVATE => "SDL_GPU_SHADERFORMAT_PRIVATE",
+            Self::SPIRV => "SDL_GPU_SHADERFORMAT_SPIRV",
+            Self::DXBC => "SDL_GPU_SHADERFORMAT_DXBC",
+            Self::DXIL => "SDL_GPU_SHADERFORMAT_DXIL",
+            Self::MSL => "SDL_GPU_SHADERFORMAT_MSL",
+            Self::METALLIB => "SDL_GPU_SHADERFORMAT_METALLIB",
+
+            _ => return write!(f, "SDL_GPUShaderFormat({})", self.0),
+        })
+    }
+}
+
+impl SDL_GPUShaderFormat {
+    pub const INVALID: Self = Self((0 as Uint32));
+    /// Shaders for NDA'd platforms.
+    pub const PRIVATE: Self = Self((1_u32 as Uint32));
+    /// SPIR-V shaders for Vulkan.
+    pub const SPIRV: Self = Self((2_u32 as Uint32));
+    /// DXBC SM5_1 shaders for D3D12.
+    pub const DXBC: Self = Self((4_u32 as Uint32));
+    /// DXIL SM6_0 shaders for D3D12.
+    pub const DXIL: Self = Self((8_u32 as Uint32));
+    /// MSL shaders for Metal.
+    pub const MSL: Self = Self((16_u32 as Uint32));
+    /// Precompiled metallib shaders for Metal.
+    pub const METALLIB: Self = Self((32_u32 as Uint32));
+}
+
+pub const SDL_GPU_SHADERFORMAT_INVALID: SDL_GPUShaderFormat = SDL_GPUShaderFormat::INVALID;
 /// Shaders for NDA'd platforms.
-pub const SDL_GPU_SHADERFORMAT_PRIVATE: SDL_GPUShaderFormat = ((1_u32) as SDL_GPUShaderFormat);
-
+pub const SDL_GPU_SHADERFORMAT_PRIVATE: SDL_GPUShaderFormat = SDL_GPUShaderFormat::PRIVATE;
 /// SPIR-V shaders for Vulkan.
-pub const SDL_GPU_SHADERFORMAT_SPIRV: SDL_GPUShaderFormat = ((2_u32) as SDL_GPUShaderFormat);
-
+pub const SDL_GPU_SHADERFORMAT_SPIRV: SDL_GPUShaderFormat = SDL_GPUShaderFormat::SPIRV;
 /// DXBC SM5_1 shaders for D3D12.
-pub const SDL_GPU_SHADERFORMAT_DXBC: SDL_GPUShaderFormat = ((4_u32) as SDL_GPUShaderFormat);
-
+pub const SDL_GPU_SHADERFORMAT_DXBC: SDL_GPUShaderFormat = SDL_GPUShaderFormat::DXBC;
 /// DXIL SM6_0 shaders for D3D12.
-pub const SDL_GPU_SHADERFORMAT_DXIL: SDL_GPUShaderFormat = ((8_u32) as SDL_GPUShaderFormat);
-
+pub const SDL_GPU_SHADERFORMAT_DXIL: SDL_GPUShaderFormat = SDL_GPUShaderFormat::DXIL;
 /// MSL shaders for Metal.
-pub const SDL_GPU_SHADERFORMAT_MSL: SDL_GPUShaderFormat = ((16_u32) as SDL_GPUShaderFormat);
-
+pub const SDL_GPU_SHADERFORMAT_MSL: SDL_GPUShaderFormat = SDL_GPUShaderFormat::MSL;
 /// Precompiled metallib shaders for Metal.
-pub const SDL_GPU_SHADERFORMAT_METALLIB: SDL_GPUShaderFormat = ((32_u32) as SDL_GPUShaderFormat);
+pub const SDL_GPU_SHADERFORMAT_METALLIB: SDL_GPUShaderFormat = SDL_GPUShaderFormat::METALLIB;
 
 /// Specifies the format of a vertex attribute.
 ///
@@ -1693,37 +1804,37 @@ impl ::core::fmt::Debug for SDL_GPUVertexElementFormat {
 }
 
 impl SDL_GPUVertexElementFormat {
-    pub const INVALID: Self = Self(0);
-    pub const INT: Self = Self(1);
-    pub const INT2: Self = Self(2);
-    pub const INT3: Self = Self(3);
-    pub const INT4: Self = Self(4);
-    pub const UINT: Self = Self(5);
-    pub const UINT2: Self = Self(6);
-    pub const UINT3: Self = Self(7);
-    pub const UINT4: Self = Self(8);
-    pub const FLOAT: Self = Self(9);
-    pub const FLOAT2: Self = Self(10);
-    pub const FLOAT3: Self = Self(11);
-    pub const FLOAT4: Self = Self(12);
-    pub const BYTE2: Self = Self(13);
-    pub const BYTE4: Self = Self(14);
-    pub const UBYTE2: Self = Self(15);
-    pub const UBYTE4: Self = Self(16);
-    pub const BYTE2_NORM: Self = Self(17);
-    pub const BYTE4_NORM: Self = Self(18);
-    pub const UBYTE2_NORM: Self = Self(19);
-    pub const UBYTE4_NORM: Self = Self(20);
-    pub const SHORT2: Self = Self(21);
-    pub const SHORT4: Self = Self(22);
-    pub const USHORT2: Self = Self(23);
-    pub const USHORT4: Self = Self(24);
-    pub const SHORT2_NORM: Self = Self(25);
-    pub const SHORT4_NORM: Self = Self(26);
-    pub const USHORT2_NORM: Self = Self(27);
-    pub const USHORT4_NORM: Self = Self(28);
-    pub const HALF2: Self = Self(29);
-    pub const HALF4: Self = Self(30);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
+    pub const INT: Self = Self((1 as ::core::ffi::c_int));
+    pub const INT2: Self = Self((2 as ::core::ffi::c_int));
+    pub const INT3: Self = Self((3 as ::core::ffi::c_int));
+    pub const INT4: Self = Self((4 as ::core::ffi::c_int));
+    pub const UINT: Self = Self((5 as ::core::ffi::c_int));
+    pub const UINT2: Self = Self((6 as ::core::ffi::c_int));
+    pub const UINT3: Self = Self((7 as ::core::ffi::c_int));
+    pub const UINT4: Self = Self((8 as ::core::ffi::c_int));
+    pub const FLOAT: Self = Self((9 as ::core::ffi::c_int));
+    pub const FLOAT2: Self = Self((10 as ::core::ffi::c_int));
+    pub const FLOAT3: Self = Self((11 as ::core::ffi::c_int));
+    pub const FLOAT4: Self = Self((12 as ::core::ffi::c_int));
+    pub const BYTE2: Self = Self((13 as ::core::ffi::c_int));
+    pub const BYTE4: Self = Self((14 as ::core::ffi::c_int));
+    pub const UBYTE2: Self = Self((15 as ::core::ffi::c_int));
+    pub const UBYTE4: Self = Self((16 as ::core::ffi::c_int));
+    pub const BYTE2_NORM: Self = Self((17 as ::core::ffi::c_int));
+    pub const BYTE4_NORM: Self = Self((18 as ::core::ffi::c_int));
+    pub const UBYTE2_NORM: Self = Self((19 as ::core::ffi::c_int));
+    pub const UBYTE4_NORM: Self = Self((20 as ::core::ffi::c_int));
+    pub const SHORT2: Self = Self((21 as ::core::ffi::c_int));
+    pub const SHORT4: Self = Self((22 as ::core::ffi::c_int));
+    pub const USHORT2: Self = Self((23 as ::core::ffi::c_int));
+    pub const USHORT4: Self = Self((24 as ::core::ffi::c_int));
+    pub const SHORT2_NORM: Self = Self((25 as ::core::ffi::c_int));
+    pub const SHORT4_NORM: Self = Self((26 as ::core::ffi::c_int));
+    pub const USHORT2_NORM: Self = Self((27 as ::core::ffi::c_int));
+    pub const USHORT4_NORM: Self = Self((28 as ::core::ffi::c_int));
+    pub const HALF2: Self = Self((29 as ::core::ffi::c_int));
+    pub const HALF4: Self = Self((30 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_VERTEXELEMENTFORMAT_INVALID: SDL_GPUVertexElementFormat =
@@ -1828,9 +1939,9 @@ impl ::core::fmt::Debug for SDL_GPUVertexInputRate {
 
 impl SDL_GPUVertexInputRate {
     /// Attribute addressing is a function of the vertex index.
-    pub const VERTEX: Self = Self(0);
+    pub const VERTEX: Self = Self((0 as ::core::ffi::c_int));
     /// Attribute addressing is a function of the instance index.
-    pub const INSTANCE: Self = Self(1);
+    pub const INSTANCE: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// Attribute addressing is a function of the vertex index.
@@ -1878,9 +1989,9 @@ impl ::core::fmt::Debug for SDL_GPUFillMode {
 
 impl SDL_GPUFillMode {
     /// Polygons will be rendered via rasterization.
-    pub const FILL: Self = Self(0);
+    pub const FILL: Self = Self((0 as ::core::ffi::c_int));
     /// Polygon edges will be drawn as line segments.
-    pub const LINE: Self = Self(1);
+    pub const LINE: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// Polygons will be rendered via rasterization.
@@ -1929,11 +2040,11 @@ impl ::core::fmt::Debug for SDL_GPUCullMode {
 
 impl SDL_GPUCullMode {
     /// No triangles are culled.
-    pub const NONE: Self = Self(0);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
     /// Front-facing triangles are culled.
-    pub const FRONT: Self = Self(1);
+    pub const FRONT: Self = Self((1 as ::core::ffi::c_int));
     /// Back-facing triangles are culled.
-    pub const BACK: Self = Self(2);
+    pub const BACK: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// No triangles are culled.
@@ -1983,9 +2094,9 @@ impl ::core::fmt::Debug for SDL_GPUFrontFace {
 
 impl SDL_GPUFrontFace {
     /// A triangle with counter-clockwise vertex winding will be considered front-facing.
-    pub const COUNTER_CLOCKWISE: Self = Self(0);
+    pub const COUNTER_CLOCKWISE: Self = Self((0 as ::core::ffi::c_int));
     /// A triangle with clockwise vertex winding will be considered front-facing.
-    pub const CLOCKWISE: Self = Self(1);
+    pub const CLOCKWISE: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// A triangle with counter-clockwise vertex winding will be considered front-facing.
@@ -2046,23 +2157,23 @@ impl ::core::fmt::Debug for SDL_GPUCompareOp {
 }
 
 impl SDL_GPUCompareOp {
-    pub const INVALID: Self = Self(0);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
     /// The comparison always evaluates false.
-    pub const NEVER: Self = Self(1);
+    pub const NEVER: Self = Self((1 as ::core::ffi::c_int));
     /// The comparison evaluates reference < test.
-    pub const LESS: Self = Self(2);
+    pub const LESS: Self = Self((2 as ::core::ffi::c_int));
     /// The comparison evaluates reference == test.
-    pub const EQUAL: Self = Self(3);
+    pub const EQUAL: Self = Self((3 as ::core::ffi::c_int));
     /// The comparison evaluates reference <= test.
-    pub const LESS_OR_EQUAL: Self = Self(4);
+    pub const LESS_OR_EQUAL: Self = Self((4 as ::core::ffi::c_int));
     /// The comparison evaluates reference > test.
-    pub const GREATER: Self = Self(5);
+    pub const GREATER: Self = Self((5 as ::core::ffi::c_int));
     /// The comparison evaluates reference != test.
-    pub const NOT_EQUAL: Self = Self(6);
+    pub const NOT_EQUAL: Self = Self((6 as ::core::ffi::c_int));
     /// The comparison evalutes reference >= test.
-    pub const GREATER_OR_EQUAL: Self = Self(7);
+    pub const GREATER_OR_EQUAL: Self = Self((7 as ::core::ffi::c_int));
     /// The comparison always evaluates true.
-    pub const ALWAYS: Self = Self(8);
+    pub const ALWAYS: Self = Self((8 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_COMPAREOP_INVALID: SDL_GPUCompareOp = SDL_GPUCompareOp::INVALID;
@@ -2136,23 +2247,23 @@ impl ::core::fmt::Debug for SDL_GPUStencilOp {
 }
 
 impl SDL_GPUStencilOp {
-    pub const INVALID: Self = Self(0);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
     /// Keeps the current value.
-    pub const KEEP: Self = Self(1);
+    pub const KEEP: Self = Self((1 as ::core::ffi::c_int));
     /// Sets the value to 0.
-    pub const ZERO: Self = Self(2);
+    pub const ZERO: Self = Self((2 as ::core::ffi::c_int));
     /// Sets the value to reference.
-    pub const REPLACE: Self = Self(3);
+    pub const REPLACE: Self = Self((3 as ::core::ffi::c_int));
     /// Increments the current value and clamps to the maximum value.
-    pub const INCREMENT_AND_CLAMP: Self = Self(4);
+    pub const INCREMENT_AND_CLAMP: Self = Self((4 as ::core::ffi::c_int));
     /// Decrements the current value and clamps to 0.
-    pub const DECREMENT_AND_CLAMP: Self = Self(5);
+    pub const DECREMENT_AND_CLAMP: Self = Self((5 as ::core::ffi::c_int));
     /// Bitwise-inverts the current value.
-    pub const INVERT: Self = Self(6);
+    pub const INVERT: Self = Self((6 as ::core::ffi::c_int));
     /// Increments the current value and wraps back to 0.
-    pub const INCREMENT_AND_WRAP: Self = Self(7);
+    pub const INCREMENT_AND_WRAP: Self = Self((7 as ::core::ffi::c_int));
     /// Decrements the current value and wraps to the maximum value.
-    pub const DECREMENT_AND_WRAP: Self = Self(8);
+    pub const DECREMENT_AND_WRAP: Self = Self((8 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_STENCILOP_INVALID: SDL_GPUStencilOp = SDL_GPUStencilOp::INVALID;
@@ -2227,17 +2338,17 @@ impl ::core::fmt::Debug for SDL_GPUBlendOp {
 }
 
 impl SDL_GPUBlendOp {
-    pub const INVALID: Self = Self(0);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
     /// (source * source_factor) + (destination * destination_factor)
-    pub const ADD: Self = Self(1);
+    pub const ADD: Self = Self((1 as ::core::ffi::c_int));
     /// (source * source_factor) - (destination * destination_factor)
-    pub const SUBTRACT: Self = Self(2);
+    pub const SUBTRACT: Self = Self((2 as ::core::ffi::c_int));
     /// (destination * destination_factor) - (source * source_factor)
-    pub const REVERSE_SUBTRACT: Self = Self(3);
+    pub const REVERSE_SUBTRACT: Self = Self((3 as ::core::ffi::c_int));
     /// min(source, destination)
-    pub const MIN: Self = Self(4);
+    pub const MIN: Self = Self((4 as ::core::ffi::c_int));
     /// max(source, destination)
-    pub const MAX: Self = Self(5);
+    pub const MAX: Self = Self((5 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_BLENDOP_INVALID: SDL_GPUBlendOp = SDL_GPUBlendOp::INVALID;
@@ -2318,33 +2429,33 @@ impl ::core::fmt::Debug for SDL_GPUBlendFactor {
 }
 
 impl SDL_GPUBlendFactor {
-    pub const INVALID: Self = Self(0);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
     /// 0
-    pub const ZERO: Self = Self(1);
+    pub const ZERO: Self = Self((1 as ::core::ffi::c_int));
     /// 1
-    pub const ONE: Self = Self(2);
+    pub const ONE: Self = Self((2 as ::core::ffi::c_int));
     /// source color
-    pub const SRC_COLOR: Self = Self(3);
+    pub const SRC_COLOR: Self = Self((3 as ::core::ffi::c_int));
     /// 1 - source color
-    pub const ONE_MINUS_SRC_COLOR: Self = Self(4);
+    pub const ONE_MINUS_SRC_COLOR: Self = Self((4 as ::core::ffi::c_int));
     /// destination color
-    pub const DST_COLOR: Self = Self(5);
+    pub const DST_COLOR: Self = Self((5 as ::core::ffi::c_int));
     /// 1 - destination color
-    pub const ONE_MINUS_DST_COLOR: Self = Self(6);
+    pub const ONE_MINUS_DST_COLOR: Self = Self((6 as ::core::ffi::c_int));
     /// source alpha
-    pub const SRC_ALPHA: Self = Self(7);
+    pub const SRC_ALPHA: Self = Self((7 as ::core::ffi::c_int));
     /// 1 - source alpha
-    pub const ONE_MINUS_SRC_ALPHA: Self = Self(8);
+    pub const ONE_MINUS_SRC_ALPHA: Self = Self((8 as ::core::ffi::c_int));
     /// destination alpha
-    pub const DST_ALPHA: Self = Self(9);
+    pub const DST_ALPHA: Self = Self((9 as ::core::ffi::c_int));
     /// 1 - destination alpha
-    pub const ONE_MINUS_DST_ALPHA: Self = Self(10);
+    pub const ONE_MINUS_DST_ALPHA: Self = Self((10 as ::core::ffi::c_int));
     /// blend constant
-    pub const CONSTANT_COLOR: Self = Self(11);
+    pub const CONSTANT_COLOR: Self = Self((11 as ::core::ffi::c_int));
     /// 1 - blend constant
-    pub const ONE_MINUS_CONSTANT_COLOR: Self = Self(12);
+    pub const ONE_MINUS_CONSTANT_COLOR: Self = Self((12 as ::core::ffi::c_int));
     /// min(source alpha, 1 - destination alpha)
-    pub const SRC_ALPHA_SATURATE: Self = Self(13);
+    pub const SRC_ALPHA_SATURATE: Self = Self((13 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_BLENDFACTOR_INVALID: SDL_GPUBlendFactor = SDL_GPUBlendFactor::INVALID;
@@ -2391,29 +2502,57 @@ pub const SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE: SDL_GPUBlendFactor =
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GPU_COLORCOMPONENT_R`] | the red component |
-/// | [`SDL_GPU_COLORCOMPONENT_G`] | the green component |
-/// | [`SDL_GPU_COLORCOMPONENT_B`] | the blue component |
-/// | [`SDL_GPU_COLORCOMPONENT_A`] | the alpha component |
-pub type SDL_GPUColorComponentFlags = Uint8;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`R`](SDL_GPUColorComponentFlags::R) | [`SDL_GPU_COLORCOMPONENT_R`] | the red component |
+/// | [`G`](SDL_GPUColorComponentFlags::G) | [`SDL_GPU_COLORCOMPONENT_G`] | the green component |
+/// | [`B`](SDL_GPUColorComponentFlags::B) | [`SDL_GPU_COLORCOMPONENT_B`] | the blue component |
+/// | [`A`](SDL_GPUColorComponentFlags::A) | [`SDL_GPU_COLORCOMPONENT_A`] | the alpha component |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GPUColorComponentFlags(pub Uint8);
+
+impl From<SDL_GPUColorComponentFlags> for Uint8 {
+    #[inline(always)]
+    fn from(value: SDL_GPUColorComponentFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUColorComponentFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::R => "SDL_GPU_COLORCOMPONENT_R",
+            Self::G => "SDL_GPU_COLORCOMPONENT_G",
+            Self::B => "SDL_GPU_COLORCOMPONENT_B",
+            Self::A => "SDL_GPU_COLORCOMPONENT_A",
+
+            _ => return write!(f, "SDL_GPUColorComponentFlags({})", self.0),
+        })
+    }
+}
+
+impl SDL_GPUColorComponentFlags {
+    /// the red component
+    pub const R: Self = Self((1_u32 as Uint8));
+    /// the green component
+    pub const G: Self = Self((2_u32 as Uint8));
+    /// the blue component
+    pub const B: Self = Self((4_u32 as Uint8));
+    /// the alpha component
+    pub const A: Self = Self((8_u32 as Uint8));
+}
 
 /// the red component
-pub const SDL_GPU_COLORCOMPONENT_R: SDL_GPUColorComponentFlags =
-    ((1_u32) as SDL_GPUColorComponentFlags);
-
+pub const SDL_GPU_COLORCOMPONENT_R: SDL_GPUColorComponentFlags = SDL_GPUColorComponentFlags::R;
 /// the green component
-pub const SDL_GPU_COLORCOMPONENT_G: SDL_GPUColorComponentFlags =
-    ((2_u32) as SDL_GPUColorComponentFlags);
-
+pub const SDL_GPU_COLORCOMPONENT_G: SDL_GPUColorComponentFlags = SDL_GPUColorComponentFlags::G;
 /// the blue component
-pub const SDL_GPU_COLORCOMPONENT_B: SDL_GPUColorComponentFlags =
-    ((4_u32) as SDL_GPUColorComponentFlags);
-
+pub const SDL_GPU_COLORCOMPONENT_B: SDL_GPUColorComponentFlags = SDL_GPUColorComponentFlags::B;
 /// the alpha component
-pub const SDL_GPU_COLORCOMPONENT_A: SDL_GPUColorComponentFlags =
-    ((8_u32) as SDL_GPUColorComponentFlags);
+pub const SDL_GPU_COLORCOMPONENT_A: SDL_GPUColorComponentFlags = SDL_GPUColorComponentFlags::A;
 
 /// Specifies a filter operation used by a sampler.
 ///
@@ -2454,9 +2593,9 @@ impl ::core::fmt::Debug for SDL_GPUFilter {
 
 impl SDL_GPUFilter {
     /// Point filtering.
-    pub const NEAREST: Self = Self(0);
+    pub const NEAREST: Self = Self((0 as ::core::ffi::c_int));
     /// Linear filtering.
-    pub const LINEAR: Self = Self(1);
+    pub const LINEAR: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// Point filtering.
@@ -2503,9 +2642,9 @@ impl ::core::fmt::Debug for SDL_GPUSamplerMipmapMode {
 
 impl SDL_GPUSamplerMipmapMode {
     /// Point filtering.
-    pub const NEAREST: Self = Self(0);
+    pub const NEAREST: Self = Self((0 as ::core::ffi::c_int));
     /// Linear filtering.
-    pub const LINEAR: Self = Self(1);
+    pub const LINEAR: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// Point filtering.
@@ -2557,11 +2696,11 @@ impl ::core::fmt::Debug for SDL_GPUSamplerAddressMode {
 
 impl SDL_GPUSamplerAddressMode {
     /// Specifies that the coordinates will wrap around.
-    pub const REPEAT: Self = Self(0);
+    pub const REPEAT: Self = Self((0 as ::core::ffi::c_int));
     /// Specifies that the coordinates will wrap around mirrored.
-    pub const MIRRORED_REPEAT: Self = Self(1);
+    pub const MIRRORED_REPEAT: Self = Self((1 as ::core::ffi::c_int));
     /// Specifies that the coordinates will clamp to the 0-1 range.
-    pub const CLAMP_TO_EDGE: Self = Self(2);
+    pub const CLAMP_TO_EDGE: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Specifies that the coordinates will wrap around.
@@ -2632,9 +2771,9 @@ impl ::core::fmt::Debug for SDL_GPUPresentMode {
 }
 
 impl SDL_GPUPresentMode {
-    pub const VSYNC: Self = Self(0);
-    pub const IMMEDIATE: Self = Self(1);
-    pub const MAILBOX: Self = Self(2);
+    pub const VSYNC: Self = Self((0 as ::core::ffi::c_int));
+    pub const IMMEDIATE: Self = Self((1 as ::core::ffi::c_int));
+    pub const MAILBOX: Self = Self((2 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_PRESENTMODE_VSYNC: SDL_GPUPresentMode = SDL_GPUPresentMode::VSYNC;
@@ -2702,10 +2841,10 @@ impl ::core::fmt::Debug for SDL_GPUSwapchainComposition {
 }
 
 impl SDL_GPUSwapchainComposition {
-    pub const SDR: Self = Self(0);
-    pub const SDR_LINEAR: Self = Self(1);
-    pub const HDR_EXTENDED_LINEAR: Self = Self(2);
-    pub const HDR10_ST2084: Self = Self(3);
+    pub const SDR: Self = Self((0 as ::core::ffi::c_int));
+    pub const SDR_LINEAR: Self = Self((1 as ::core::ffi::c_int));
+    pub const HDR_EXTENDED_LINEAR: Self = Self((2 as ::core::ffi::c_int));
+    pub const HDR10_ST2084: Self = Self((3 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_SWAPCHAINCOMPOSITION_SDR: SDL_GPUSwapchainComposition =

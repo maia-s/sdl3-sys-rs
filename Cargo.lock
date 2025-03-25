@@ -80,7 +80,7 @@ version = "3.2.4"
 
 [[package]]
 name = "sdl3-image-sys"
-version = "0.1.2+SDL3-image-3.2.4"
+version = "0.2.0+SDL3-image-3.2.4"
 dependencies = [
  "cmake",
  "pkg-config",
@@ -92,7 +92,7 @@ dependencies = [
 
 [[package]]
 name = "sdl3-main"
-version = "0.4.1"
+version = "0.5.0"
 dependencies = [
  "sdl3-main-macros",
  "sdl3-sys",
@@ -108,7 +108,7 @@ version = "3.2.10"
 
 [[package]]
 name = "sdl3-sys"
-version = "0.4.7+SDL3-3.2.10"
+version = "0.5.0+SDL3-3.2.10"
 dependencies = [
  "ash",
  "cmake",
@@ -137,7 +137,7 @@ version = "3.2.2"
 
 [[package]]
 name = "sdl3-ttf-sys"
-version = "0.1.2+SDL3-ttf-3.2.2"
+version = "0.2.0+SDL3-ttf-3.2.2"
 dependencies = [
  "cmake",
  "pkg-config",

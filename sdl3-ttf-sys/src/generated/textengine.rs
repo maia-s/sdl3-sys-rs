@@ -39,9 +39,9 @@ impl ::core::fmt::Debug for TTF_DrawCommand {
 }
 
 impl TTF_DrawCommand {
-    pub const NOOP: Self = Self(0);
-    pub const FILL: Self = Self(1);
-    pub const COPY: Self = Self(2);
+    pub const NOOP: Self = Self((0 as ::core::ffi::c_int));
+    pub const FILL: Self = Self((1 as ::core::ffi::c_int));
+    pub const COPY: Self = Self((2 as ::core::ffi::c_int));
 }
 
 pub const TTF_DRAW_COMMAND_NOOP: TTF_DrawCommand = TTF_DrawCommand::NOOP;

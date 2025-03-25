@@ -43,39 +43,77 @@ use super::events::*;
 /// - [`SDL_WasInit`]
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_INIT_AUDIO`] | [`SDL_INIT_AUDIO`] implies [`SDL_INIT_EVENTS`] |
-/// | [`SDL_INIT_VIDEO`] | [`SDL_INIT_VIDEO`] implies [`SDL_INIT_EVENTS`], should be initialized on the main thread |
-/// | [`SDL_INIT_JOYSTICK`] | [`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`], should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`] |
-/// | [`SDL_INIT_HAPTIC`] | |
-/// | [`SDL_INIT_GAMEPAD`] | [`SDL_INIT_GAMEPAD`] implies [`SDL_INIT_JOYSTICK`] |
-/// | [`SDL_INIT_EVENTS`] | |
-/// | [`SDL_INIT_SENSOR`] | [`SDL_INIT_SENSOR`] implies [`SDL_INIT_EVENTS`] |
-/// | [`SDL_INIT_CAMERA`] | [`SDL_INIT_CAMERA`] implies [`SDL_INIT_EVENTS`] |
-pub type SDL_InitFlags = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`AUDIO`](SDL_InitFlags::AUDIO) | [`SDL_INIT_AUDIO`] | [`SDL_INIT_AUDIO`] implies [`SDL_INIT_EVENTS`] |
+/// | [`VIDEO`](SDL_InitFlags::VIDEO) | [`SDL_INIT_VIDEO`] | [`SDL_INIT_VIDEO`] implies [`SDL_INIT_EVENTS`], should be initialized on the main thread |
+/// | [`JOYSTICK`](SDL_InitFlags::JOYSTICK) | [`SDL_INIT_JOYSTICK`] | [`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`], should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`] |
+/// | [`HAPTIC`](SDL_InitFlags::HAPTIC) | [`SDL_INIT_HAPTIC`] | |
+/// | [`GAMEPAD`](SDL_InitFlags::GAMEPAD) | [`SDL_INIT_GAMEPAD`] | [`SDL_INIT_GAMEPAD`] implies [`SDL_INIT_JOYSTICK`] |
+/// | [`EVENTS`](SDL_InitFlags::EVENTS) | [`SDL_INIT_EVENTS`] | |
+/// | [`SENSOR`](SDL_InitFlags::SENSOR) | [`SDL_INIT_SENSOR`] | [`SDL_INIT_SENSOR`] implies [`SDL_INIT_EVENTS`] |
+/// | [`CAMERA`](SDL_InitFlags::CAMERA) | [`SDL_INIT_CAMERA`] | [`SDL_INIT_CAMERA`] implies [`SDL_INIT_EVENTS`] |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_InitFlags(pub Uint32);
+
+impl From<SDL_InitFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_InitFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_InitFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::AUDIO => "SDL_INIT_AUDIO",
+            Self::VIDEO => "SDL_INIT_VIDEO",
+            Self::JOYSTICK => "SDL_INIT_JOYSTICK",
+            Self::HAPTIC => "SDL_INIT_HAPTIC",
+            Self::GAMEPAD => "SDL_INIT_GAMEPAD",
+            Self::EVENTS => "SDL_INIT_EVENTS",
+            Self::SENSOR => "SDL_INIT_SENSOR",
+            Self::CAMERA => "SDL_INIT_CAMERA",
+
+            _ => return write!(f, "SDL_InitFlags({})", self.0),
+        })
+    }
+}
+
+impl SDL_InitFlags {
+    /// [`SDL_INIT_AUDIO`] implies [`SDL_INIT_EVENTS`]
+    pub const AUDIO: Self = Self((0x00000010 as Uint32));
+    /// [`SDL_INIT_VIDEO`] implies [`SDL_INIT_EVENTS`], should be initialized on the main thread
+    pub const VIDEO: Self = Self((0x00000020 as Uint32));
+    /// [`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`], should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`]
+    pub const JOYSTICK: Self = Self((0x00000200 as Uint32));
+    pub const HAPTIC: Self = Self((0x00001000 as Uint32));
+    /// [`SDL_INIT_GAMEPAD`] implies [`SDL_INIT_JOYSTICK`]
+    pub const GAMEPAD: Self = Self((0x00002000 as Uint32));
+    pub const EVENTS: Self = Self((0x00004000 as Uint32));
+    /// [`SDL_INIT_SENSOR`] implies [`SDL_INIT_EVENTS`]
+    pub const SENSOR: Self = Self((0x00008000 as Uint32));
+    /// [`SDL_INIT_CAMERA`] implies [`SDL_INIT_EVENTS`]
+    pub const CAMERA: Self = Self((0x00010000 as Uint32));
+}
 
 /// [`SDL_INIT_AUDIO`] implies [`SDL_INIT_EVENTS`]
-pub const SDL_INIT_AUDIO: SDL_InitFlags = (0x00000010 as SDL_InitFlags);
-
+pub const SDL_INIT_AUDIO: SDL_InitFlags = SDL_InitFlags::AUDIO;
 /// [`SDL_INIT_VIDEO`] implies [`SDL_INIT_EVENTS`], should be initialized on the main thread
-pub const SDL_INIT_VIDEO: SDL_InitFlags = (0x00000020 as SDL_InitFlags);
-
+pub const SDL_INIT_VIDEO: SDL_InitFlags = SDL_InitFlags::VIDEO;
 /// [`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`], should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`]
-pub const SDL_INIT_JOYSTICK: SDL_InitFlags = (0x00000200 as SDL_InitFlags);
-
-pub const SDL_INIT_HAPTIC: SDL_InitFlags = (0x00001000 as SDL_InitFlags);
-
+pub const SDL_INIT_JOYSTICK: SDL_InitFlags = SDL_InitFlags::JOYSTICK;
+pub const SDL_INIT_HAPTIC: SDL_InitFlags = SDL_InitFlags::HAPTIC;
 /// [`SDL_INIT_GAMEPAD`] implies [`SDL_INIT_JOYSTICK`]
-pub const SDL_INIT_GAMEPAD: SDL_InitFlags = (0x00002000 as SDL_InitFlags);
-
-pub const SDL_INIT_EVENTS: SDL_InitFlags = (0x00004000 as SDL_InitFlags);
-
+pub const SDL_INIT_GAMEPAD: SDL_InitFlags = SDL_InitFlags::GAMEPAD;
+pub const SDL_INIT_EVENTS: SDL_InitFlags = SDL_InitFlags::EVENTS;
 /// [`SDL_INIT_SENSOR`] implies [`SDL_INIT_EVENTS`]
-pub const SDL_INIT_SENSOR: SDL_InitFlags = (0x00008000 as SDL_InitFlags);
-
+pub const SDL_INIT_SENSOR: SDL_InitFlags = SDL_InitFlags::SENSOR;
 /// [`SDL_INIT_CAMERA`] implies [`SDL_INIT_EVENTS`]
-pub const SDL_INIT_CAMERA: SDL_InitFlags = (0x00010000 as SDL_InitFlags);
+pub const SDL_INIT_CAMERA: SDL_InitFlags = SDL_InitFlags::CAMERA;
 
 /// Return values for optional main callbacks.
 ///
@@ -130,11 +168,11 @@ impl ::core::fmt::Debug for SDL_AppResult {
 
 impl SDL_AppResult {
     /// Value that requests that the app continue from the main callbacks.
-    pub const CONTINUE: Self = Self(0);
+    pub const CONTINUE: Self = Self((0 as ::core::ffi::c_int));
     /// Value that requests termination with success from the main callbacks.
-    pub const SUCCESS: Self = Self(1);
+    pub const SUCCESS: Self = Self((1 as ::core::ffi::c_int));
     /// Value that requests termination with error from the main callbacks.
-    pub const FAILURE: Self = Self(2);
+    pub const FAILURE: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Value that requests that the app continue from the main callbacks.

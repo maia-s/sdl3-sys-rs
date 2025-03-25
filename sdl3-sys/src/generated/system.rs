@@ -728,11 +728,11 @@ impl ::core::fmt::Debug for SDL_Sandbox {
 }
 
 impl SDL_Sandbox {
-    pub const NONE: Self = Self(0);
-    pub const UNKNOWN_CONTAINER: Self = Self(1);
-    pub const FLATPAK: Self = Self(2);
-    pub const SNAP: Self = Self(3);
-    pub const MACOS: Self = Self(4);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
+    pub const UNKNOWN_CONTAINER: Self = Self((1 as ::core::ffi::c_int));
+    pub const FLATPAK: Self = Self((2 as ::core::ffi::c_int));
+    pub const SNAP: Self = Self((3 as ::core::ffi::c_int));
+    pub const MACOS: Self = Self((4 as ::core::ffi::c_int));
 }
 
 pub const SDL_SANDBOX_NONE: SDL_Sandbox = SDL_Sandbox::NONE;

@@ -82,11 +82,11 @@ impl ::core::fmt::Debug for SDL_DateFormat {
 
 impl SDL_DateFormat {
     /// Year/Month/Day
-    pub const YYYYMMDD: Self = Self(0);
+    pub const YYYYMMDD: Self = Self((0 as ::core::ffi::c_int));
     /// Day/Month/Year
-    pub const DDMMYYYY: Self = Self(1);
+    pub const DDMMYYYY: Self = Self((1 as ::core::ffi::c_int));
     /// Month/Day/Year
-    pub const MMDDYYYY: Self = Self(2);
+    pub const MMDDYYYY: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Year/Month/Day
@@ -135,9 +135,9 @@ impl ::core::fmt::Debug for SDL_TimeFormat {
 
 impl SDL_TimeFormat {
     /// 24 hour time
-    pub const _24HR: Self = Self(0);
+    pub const _24HR: Self = Self((0 as ::core::ffi::c_int));
     /// 12 hour time
-    pub const _12HR: Self = Self(1);
+    pub const _12HR: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// 24 hour time

@@ -152,13 +152,13 @@ impl ::core::fmt::Debug for SDL_ProcessIO {
 
 impl SDL_ProcessIO {
     /// The I/O stream is inherited from the application.
-    pub const INHERITED: Self = Self(0);
+    pub const INHERITED: Self = Self((0 as ::core::ffi::c_int));
     /// The I/O stream is ignored.
-    pub const NULL: Self = Self(1);
+    pub const NULL: Self = Self((1 as ::core::ffi::c_int));
     /// The I/O stream is connected to a new [`SDL_IOStream`] that the application can read or write
-    pub const APP: Self = Self(2);
+    pub const APP: Self = Self((2 as ::core::ffi::c_int));
     /// The I/O stream is redirected to an existing [`SDL_IOStream`].
-    pub const REDIRECT: Self = Self(3);
+    pub const REDIRECT: Self = Self((3 as ::core::ffi::c_int));
 }
 
 /// The I/O stream is inherited from the application.

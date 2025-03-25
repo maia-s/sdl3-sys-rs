@@ -678,6 +678,10 @@ impl From<Error> for EmitErr {
     }
 }
 
+pub const fn is_valid_ident(s: &str) -> bool {
+    matches!(s.as_bytes()[0], b'a'..=b'z' | b'A'..=b'Z' | b'_')
+}
+
 fn common_doc_prefix<'a>(a: &'a str, b: &str) -> &'a str {
     let i = 'pfx: {
         for (i, (ca, cb)) in a.chars().zip(b.chars()).enumerate() {
@@ -708,6 +712,34 @@ fn common_ident_prefix<'a>(a: &'a str, b: &str) -> &'a str {
         }
     }
     &a[..i]
+}
+
+fn find_common_ident_prefix<'a>(for_type: &str, mut it: impl Iterator<Item = &'a str>) -> &'a str {
+    #[allow(clippy::single_match)]
+    match for_type {
+        "SDL_AudioDeviceID" => return "SDL_AUDIO_DEVICE_",
+        "SDL_GlobFlags" => return "SDL_GLOB_",
+        _ => (),
+    }
+
+    let mut prefix = it.next().unwrap_or_default();
+    if let Some(next) = it.next() {
+        prefix = common_ident_prefix(prefix, next);
+        for i in it {
+            prefix = common_ident_prefix(prefix, i);
+        }
+        prefix
+    } else {
+        ""
+    }
+}
+
+fn strip_common_ident_prefix<'a>(ident: &'a str, prefix: &str) -> &'a str {
+    let mut stripped = ident.strip_prefix(prefix).unwrap();
+    if !is_valid_ident(stripped) {
+        stripped = &ident[ident.len() - stripped.len() - 1..];
+    }
+    stripped
 }
 
 const fn is_rust_keyword(s: &str) -> bool {

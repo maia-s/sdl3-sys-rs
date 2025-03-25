@@ -208,29 +208,29 @@ impl ::core::fmt::Debug for SDL_Folder {
 
 impl SDL_Folder {
     /// The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents.
-    pub const HOME: Self = Self(0);
+    pub const HOME: Self = Self((0 as ::core::ffi::c_int));
     /// The folder of files that are displayed on the desktop. Note that the existence of a desktop folder does not guarantee that the system does show icons on its desktop; certain GNU/Linux distros with a graphical environment may not have desktop icons.
-    pub const DESKTOP: Self = Self(1);
+    pub const DESKTOP: Self = Self((1 as ::core::ffi::c_int));
     /// User document files, possibly application-specific. This is a good place to save a user's projects.
-    pub const DOCUMENTS: Self = Self(2);
+    pub const DOCUMENTS: Self = Self((2 as ::core::ffi::c_int));
     /// Standard folder for user files downloaded from the internet.
-    pub const DOWNLOADS: Self = Self(3);
+    pub const DOWNLOADS: Self = Self((3 as ::core::ffi::c_int));
     /// Music files that can be played using a standard music player (mp3, ogg...).
-    pub const MUSIC: Self = Self(4);
+    pub const MUSIC: Self = Self((4 as ::core::ffi::c_int));
     /// Image files that can be displayed using a standard viewer (png, jpg...).
-    pub const PICTURES: Self = Self(5);
+    pub const PICTURES: Self = Self((5 as ::core::ffi::c_int));
     /// Files that are meant to be shared with other users on the same computer.
-    pub const PUBLICSHARE: Self = Self(6);
+    pub const PUBLICSHARE: Self = Self((6 as ::core::ffi::c_int));
     /// Save files for games.
-    pub const SAVEDGAMES: Self = Self(7);
+    pub const SAVEDGAMES: Self = Self((7 as ::core::ffi::c_int));
     /// Application screenshots.
-    pub const SCREENSHOTS: Self = Self(8);
+    pub const SCREENSHOTS: Self = Self((8 as ::core::ffi::c_int));
     /// Template files to be used when the user requests the desktop environment to create a new file in a certain folder, such as "New Text File.txt".  Any file in the Templates folder can be used as a starting point for a new file.
-    pub const TEMPLATES: Self = Self(9);
+    pub const TEMPLATES: Self = Self((9 as ::core::ffi::c_int));
     /// Video files that can be played using a standard video player (mp4, webm...).
-    pub const VIDEOS: Self = Self(10);
+    pub const VIDEOS: Self = Self((10 as ::core::ffi::c_int));
     /// Total number of types in this enum, not a folder type by itself.
-    pub const COUNT: Self = Self(11);
+    pub const COUNT: Self = Self((11 as ::core::ffi::c_int));
 }
 
 /// The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents.
@@ -334,13 +334,13 @@ impl ::core::fmt::Debug for SDL_PathType {
 
 impl SDL_PathType {
     /// path does not exist
-    pub const NONE: Self = Self(0);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
     /// a normal file
-    pub const FILE: Self = Self(1);
+    pub const FILE: Self = Self((1 as ::core::ffi::c_int));
     /// a directory
-    pub const DIRECTORY: Self = Self(2);
+    pub const DIRECTORY: Self = Self((2 as ::core::ffi::c_int));
     /// something completely different like a device node (not a symlink, those are always followed)
-    pub const OTHER: Self = Self(3);
+    pub const OTHER: Self = Self((3 as ::core::ffi::c_int));
 }
 
 /// path does not exist
@@ -386,12 +386,37 @@ pub struct SDL_PathInfo {
 /// - [`SDL_GlobStorageDirectory`]
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GLOB_CASEINSENSITIVE`] | |
-pub type SDL_GlobFlags = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`CASEINSENSITIVE`](SDL_GlobFlags::CASEINSENSITIVE) | [`SDL_GLOB_CASEINSENSITIVE`] | |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GlobFlags(pub Uint32);
 
-pub const SDL_GLOB_CASEINSENSITIVE: SDL_GlobFlags = ((1_u32) as SDL_GlobFlags);
+impl From<SDL_GlobFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_GlobFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GlobFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::CASEINSENSITIVE => "SDL_GLOB_CASEINSENSITIVE",
+
+            _ => return write!(f, "SDL_GlobFlags({})", self.0),
+        })
+    }
+}
+
+impl SDL_GlobFlags {
+    pub const CASEINSENSITIVE: Self = Self((1_u32 as Uint32));
+}
+
+pub const SDL_GLOB_CASEINSENSITIVE: SDL_GlobFlags = SDL_GlobFlags::CASEINSENSITIVE;
 
 extern "C" {
     /// Create a directory, and any missing parent directories.
@@ -454,11 +479,11 @@ impl ::core::fmt::Debug for SDL_EnumerationResult {
 
 impl SDL_EnumerationResult {
     /// Value that requests that enumeration continue.
-    pub const CONTINUE: Self = Self(0);
+    pub const CONTINUE: Self = Self((0 as ::core::ffi::c_int));
     /// Value that requests that enumeration stop, successfully.
-    pub const SUCCESS: Self = Self(1);
+    pub const SUCCESS: Self = Self((1 as ::core::ffi::c_int));
     /// Value that requests that enumeration stop, as a failure.
-    pub const FAILURE: Self = Self(2);
+    pub const FAILURE: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Value that requests that enumeration continue.

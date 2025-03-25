@@ -19,7 +19,19 @@ use super::properties::*;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_SensorID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_SensorID(pub Uint32);
+
+impl From<SDL_SensorID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_SensorID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_SensorID {}
 
 /// A constant to represent standard gravity for accelerometer sensors.
 ///
@@ -130,21 +142,21 @@ impl ::core::fmt::Debug for SDL_SensorType {
 
 impl SDL_SensorType {
     /// Returned for an invalid sensor
-    pub const INVALID: Self = Self(-1_i32);
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
     /// Unknown sensor type
-    pub const UNKNOWN: Self = Self(0_i32);
+    pub const UNKNOWN: Self = Self((0_i32 as ::core::ffi::c_int));
     /// Accelerometer
-    pub const ACCEL: Self = Self(1_i32);
+    pub const ACCEL: Self = Self((1_i32 as ::core::ffi::c_int));
     /// Gyroscope
-    pub const GYRO: Self = Self(2_i32);
+    pub const GYRO: Self = Self((2_i32 as ::core::ffi::c_int));
     /// Accelerometer for left Joy-Con controller and Wii nunchuk
-    pub const ACCEL_L: Self = Self(3_i32);
+    pub const ACCEL_L: Self = Self((3_i32 as ::core::ffi::c_int));
     /// Gyroscope for left Joy-Con controller
-    pub const GYRO_L: Self = Self(4_i32);
+    pub const GYRO_L: Self = Self((4_i32 as ::core::ffi::c_int));
     /// Accelerometer for right Joy-Con controller
-    pub const ACCEL_R: Self = Self(5_i32);
+    pub const ACCEL_R: Self = Self((5_i32 as ::core::ffi::c_int));
     /// Gyroscope for right Joy-Con controller
-    pub const GYRO_R: Self = Self(6_i32);
+    pub const GYRO_R: Self = Self((6_i32 as ::core::ffi::c_int));
 }
 
 /// Returned for an invalid sensor

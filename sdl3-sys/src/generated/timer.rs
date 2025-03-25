@@ -320,7 +320,19 @@ extern "C" {
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_TimerID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_TimerID(pub Uint32);
+
+impl From<SDL_TimerID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_TimerID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_TimerID {}
 
 /// Function prototype for the millisecond timer callback function.
 ///

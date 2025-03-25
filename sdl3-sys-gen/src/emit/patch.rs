@@ -4,10 +4,10 @@ use super::{
 use crate::parse::{
     Block, CanCmp, CanDefault, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident,
     IdentOrKw, Item, Items, Kw_static, ParseErr, RustCode, Span, StringLiteral, StructOrUnion,
-    Type, TypeDef, TypeEnum,
+    Type, TypeDef, TypeDefKind, TypeEnum,
 };
-use core::{cell::RefCell, fmt::Write};
-use std::{ffi::CString, rc::Rc};
+use core::fmt::Write;
+use std::ffi::CString;
 use str_block::str_block;
 
 const VULKAN_CRATE_VERSIONS: &[(&str, &[&str])] = &[("ash", &["0.38"])];
@@ -606,6 +606,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                             span: Span::none(),
                             str: CString::from_vec_with_nul(bytes.clone()).unwrap(),
                         }))),
+                        skip: false,
                     }
                     .emit(ctx)?;
                 }
@@ -948,8 +949,7 @@ const EMIT_STRUCT_OR_UNION_PATCHES: &[EmitStructOrUnionPatch] = &[EmitStructOrUn
                 is_const: false,
                 ty: TypeEnum::Struct(Box::new(s.clone())),
             },
-            use_for_defines: None,
-            associated_defines: Rc::new(RefCell::new(Vec::new())),
+            kind: TypeDefKind::Alias,
         }
         .emit(ctx)?;
         Ok(true)

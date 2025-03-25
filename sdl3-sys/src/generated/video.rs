@@ -42,7 +42,19 @@ use super::surface::*;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_DisplayID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_DisplayID(pub Uint32);
+
+impl From<SDL_DisplayID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_DisplayID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_DisplayID {}
 
 /// This is a unique ID for a window.
 ///
@@ -50,7 +62,19 @@ pub type SDL_DisplayID = Uint32;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_WindowID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_WindowID(pub Uint32);
+
+impl From<SDL_WindowID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_WindowID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_WindowID {}
 
 /// The pointer to the global `wl_display` object used by the Wayland video
 /// backend.
@@ -104,11 +128,11 @@ impl ::core::fmt::Debug for SDL_SystemTheme {
 
 impl SDL_SystemTheme {
     /// Unknown system theme
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
     /// Light colored system theme
-    pub const LIGHT: Self = Self(1);
+    pub const LIGHT: Self = Self((1 as ::core::ffi::c_int));
     /// Dark colored system theme
-    pub const DARK: Self = Self(2);
+    pub const DARK: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Unknown system theme
@@ -195,15 +219,15 @@ impl ::core::fmt::Debug for SDL_DisplayOrientation {
 
 impl SDL_DisplayOrientation {
     /// The display orientation can't be determined
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
     /// The display is in landscape mode, with the right side up, relative to portrait mode
-    pub const LANDSCAPE: Self = Self(1);
+    pub const LANDSCAPE: Self = Self((1 as ::core::ffi::c_int));
     /// The display is in landscape mode, with the left side up, relative to portrait mode
-    pub const LANDSCAPE_FLIPPED: Self = Self(2);
+    pub const LANDSCAPE_FLIPPED: Self = Self((2 as ::core::ffi::c_int));
     /// The display is in portrait mode
-    pub const PORTRAIT: Self = Self(3);
+    pub const PORTRAIT: Self = Self((3 as ::core::ffi::c_int));
     /// The display is in portrait mode, upside down
-    pub const PORTRAIT_FLIPPED: Self = Self(4);
+    pub const PORTRAIT_FLIPPED: Self = Self((4 as ::core::ffi::c_int));
 }
 
 /// The display orientation can't be determined
@@ -233,109 +257,183 @@ pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
 /// - [`SDL_GetWindowFlags`]
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_WINDOW_FULLSCREEN`] | window is in fullscreen mode |
-/// | [`SDL_WINDOW_OPENGL`] | window usable with OpenGL context |
-/// | [`SDL_WINDOW_OCCLUDED`] | window is occluded |
-/// | [`SDL_WINDOW_HIDDEN`] | window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible |
-/// | [`SDL_WINDOW_BORDERLESS`] | no window decoration |
-/// | [`SDL_WINDOW_RESIZABLE`] | window can be resized |
-/// | [`SDL_WINDOW_MINIMIZED`] | window is minimized |
-/// | [`SDL_WINDOW_MAXIMIZED`] | window is maximized |
-/// | [`SDL_WINDOW_MOUSE_GRABBED`] | window has grabbed mouse input |
-/// | [`SDL_WINDOW_INPUT_FOCUS`] | window has input focus |
-/// | [`SDL_WINDOW_MOUSE_FOCUS`] | window has mouse focus |
-/// | [`SDL_WINDOW_EXTERNAL`] | window not created by SDL |
-/// | [`SDL_WINDOW_MODAL`] | window is modal |
-/// | [`SDL_WINDOW_HIGH_PIXEL_DENSITY`] | window uses high pixel density back buffer if possible |
-/// | [`SDL_WINDOW_MOUSE_CAPTURE`] | window has mouse captured (unrelated to MOUSE_GRABBED) |
-/// | [`SDL_WINDOW_MOUSE_RELATIVE_MODE`] | window has relative mode enabled |
-/// | [`SDL_WINDOW_ALWAYS_ON_TOP`] | window should always be above others |
-/// | [`SDL_WINDOW_UTILITY`] | window should be treated as a utility window, not showing in the task bar and window list |
-/// | [`SDL_WINDOW_TOOLTIP`] | window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window |
-/// | [`SDL_WINDOW_POPUP_MENU`] | window should be treated as a popup menu, requires a parent window |
-/// | [`SDL_WINDOW_KEYBOARD_GRABBED`] | window has grabbed keyboard input |
-/// | [`SDL_WINDOW_VULKAN`] | window usable for Vulkan surface |
-/// | [`SDL_WINDOW_METAL`] | window usable for Metal view |
-/// | [`SDL_WINDOW_TRANSPARENT`] | window with transparent buffer |
-/// | [`SDL_WINDOW_NOT_FOCUSABLE`] | window should not be focusable |
-pub type SDL_WindowFlags = Uint64;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`FULLSCREEN`](SDL_WindowFlags::FULLSCREEN) | [`SDL_WINDOW_FULLSCREEN`] | window is in fullscreen mode |
+/// | [`OPENGL`](SDL_WindowFlags::OPENGL) | [`SDL_WINDOW_OPENGL`] | window usable with OpenGL context |
+/// | [`OCCLUDED`](SDL_WindowFlags::OCCLUDED) | [`SDL_WINDOW_OCCLUDED`] | window is occluded |
+/// | [`HIDDEN`](SDL_WindowFlags::HIDDEN) | [`SDL_WINDOW_HIDDEN`] | window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible |
+/// | [`BORDERLESS`](SDL_WindowFlags::BORDERLESS) | [`SDL_WINDOW_BORDERLESS`] | no window decoration |
+/// | [`RESIZABLE`](SDL_WindowFlags::RESIZABLE) | [`SDL_WINDOW_RESIZABLE`] | window can be resized |
+/// | [`MINIMIZED`](SDL_WindowFlags::MINIMIZED) | [`SDL_WINDOW_MINIMIZED`] | window is minimized |
+/// | [`MAXIMIZED`](SDL_WindowFlags::MAXIMIZED) | [`SDL_WINDOW_MAXIMIZED`] | window is maximized |
+/// | [`MOUSE_GRABBED`](SDL_WindowFlags::MOUSE_GRABBED) | [`SDL_WINDOW_MOUSE_GRABBED`] | window has grabbed mouse input |
+/// | [`INPUT_FOCUS`](SDL_WindowFlags::INPUT_FOCUS) | [`SDL_WINDOW_INPUT_FOCUS`] | window has input focus |
+/// | [`MOUSE_FOCUS`](SDL_WindowFlags::MOUSE_FOCUS) | [`SDL_WINDOW_MOUSE_FOCUS`] | window has mouse focus |
+/// | [`EXTERNAL`](SDL_WindowFlags::EXTERNAL) | [`SDL_WINDOW_EXTERNAL`] | window not created by SDL |
+/// | [`MODAL`](SDL_WindowFlags::MODAL) | [`SDL_WINDOW_MODAL`] | window is modal |
+/// | [`HIGH_PIXEL_DENSITY`](SDL_WindowFlags::HIGH_PIXEL_DENSITY) | [`SDL_WINDOW_HIGH_PIXEL_DENSITY`] | window uses high pixel density back buffer if possible |
+/// | [`MOUSE_CAPTURE`](SDL_WindowFlags::MOUSE_CAPTURE) | [`SDL_WINDOW_MOUSE_CAPTURE`] | window has mouse captured (unrelated to MOUSE_GRABBED) |
+/// | [`MOUSE_RELATIVE_MODE`](SDL_WindowFlags::MOUSE_RELATIVE_MODE) | [`SDL_WINDOW_MOUSE_RELATIVE_MODE`] | window has relative mode enabled |
+/// | [`ALWAYS_ON_TOP`](SDL_WindowFlags::ALWAYS_ON_TOP) | [`SDL_WINDOW_ALWAYS_ON_TOP`] | window should always be above others |
+/// | [`UTILITY`](SDL_WindowFlags::UTILITY) | [`SDL_WINDOW_UTILITY`] | window should be treated as a utility window, not showing in the task bar and window list |
+/// | [`TOOLTIP`](SDL_WindowFlags::TOOLTIP) | [`SDL_WINDOW_TOOLTIP`] | window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window |
+/// | [`POPUP_MENU`](SDL_WindowFlags::POPUP_MENU) | [`SDL_WINDOW_POPUP_MENU`] | window should be treated as a popup menu, requires a parent window |
+/// | [`KEYBOARD_GRABBED`](SDL_WindowFlags::KEYBOARD_GRABBED) | [`SDL_WINDOW_KEYBOARD_GRABBED`] | window has grabbed keyboard input |
+/// | [`VULKAN`](SDL_WindowFlags::VULKAN) | [`SDL_WINDOW_VULKAN`] | window usable for Vulkan surface |
+/// | [`METAL`](SDL_WindowFlags::METAL) | [`SDL_WINDOW_METAL`] | window usable for Metal view |
+/// | [`TRANSPARENT`](SDL_WindowFlags::TRANSPARENT) | [`SDL_WINDOW_TRANSPARENT`] | window with transparent buffer |
+/// | [`NOT_FOCUSABLE`](SDL_WindowFlags::NOT_FOCUSABLE) | [`SDL_WINDOW_NOT_FOCUSABLE`] | window should not be focusable |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_WindowFlags(pub Uint64);
+
+impl From<SDL_WindowFlags> for Uint64 {
+    #[inline(always)]
+    fn from(value: SDL_WindowFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_WindowFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::FULLSCREEN => "SDL_WINDOW_FULLSCREEN",
+            Self::OPENGL => "SDL_WINDOW_OPENGL",
+            Self::OCCLUDED => "SDL_WINDOW_OCCLUDED",
+            Self::HIDDEN => "SDL_WINDOW_HIDDEN",
+            Self::BORDERLESS => "SDL_WINDOW_BORDERLESS",
+            Self::RESIZABLE => "SDL_WINDOW_RESIZABLE",
+            Self::MINIMIZED => "SDL_WINDOW_MINIMIZED",
+            Self::MAXIMIZED => "SDL_WINDOW_MAXIMIZED",
+            Self::MOUSE_GRABBED => "SDL_WINDOW_MOUSE_GRABBED",
+            Self::INPUT_FOCUS => "SDL_WINDOW_INPUT_FOCUS",
+            Self::MOUSE_FOCUS => "SDL_WINDOW_MOUSE_FOCUS",
+            Self::EXTERNAL => "SDL_WINDOW_EXTERNAL",
+            Self::MODAL => "SDL_WINDOW_MODAL",
+            Self::HIGH_PIXEL_DENSITY => "SDL_WINDOW_HIGH_PIXEL_DENSITY",
+            Self::MOUSE_CAPTURE => "SDL_WINDOW_MOUSE_CAPTURE",
+            Self::MOUSE_RELATIVE_MODE => "SDL_WINDOW_MOUSE_RELATIVE_MODE",
+            Self::ALWAYS_ON_TOP => "SDL_WINDOW_ALWAYS_ON_TOP",
+            Self::UTILITY => "SDL_WINDOW_UTILITY",
+            Self::TOOLTIP => "SDL_WINDOW_TOOLTIP",
+            Self::POPUP_MENU => "SDL_WINDOW_POPUP_MENU",
+            Self::KEYBOARD_GRABBED => "SDL_WINDOW_KEYBOARD_GRABBED",
+            Self::VULKAN => "SDL_WINDOW_VULKAN",
+            Self::METAL => "SDL_WINDOW_METAL",
+            Self::TRANSPARENT => "SDL_WINDOW_TRANSPARENT",
+            Self::NOT_FOCUSABLE => "SDL_WINDOW_NOT_FOCUSABLE",
+
+            _ => return write!(f, "SDL_WindowFlags({})", self.0),
+        })
+    }
+}
+
+impl SDL_WindowFlags {
+    /// window is in fullscreen mode
+    pub const FULLSCREEN: Self = Self((1_u64 as Uint64));
+    /// window usable with OpenGL context
+    pub const OPENGL: Self = Self((2_u64 as Uint64));
+    /// window is occluded
+    pub const OCCLUDED: Self = Self((4_u64 as Uint64));
+    /// window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible
+    pub const HIDDEN: Self = Self((8_u64 as Uint64));
+    /// no window decoration
+    pub const BORDERLESS: Self = Self((16_u64 as Uint64));
+    /// window can be resized
+    pub const RESIZABLE: Self = Self((32_u64 as Uint64));
+    /// window is minimized
+    pub const MINIMIZED: Self = Self((64_u64 as Uint64));
+    /// window is maximized
+    pub const MAXIMIZED: Self = Self((128_u64 as Uint64));
+    /// window has grabbed mouse input
+    pub const MOUSE_GRABBED: Self = Self((256_u64 as Uint64));
+    /// window has input focus
+    pub const INPUT_FOCUS: Self = Self((512_u64 as Uint64));
+    /// window has mouse focus
+    pub const MOUSE_FOCUS: Self = Self((1024_u64 as Uint64));
+    /// window not created by SDL
+    pub const EXTERNAL: Self = Self((2048_u64 as Uint64));
+    /// window is modal
+    pub const MODAL: Self = Self((4096_u64 as Uint64));
+    /// window uses high pixel density back buffer if possible
+    pub const HIGH_PIXEL_DENSITY: Self = Self((8192_u64 as Uint64));
+    /// window has mouse captured (unrelated to MOUSE_GRABBED)
+    pub const MOUSE_CAPTURE: Self = Self((16384_u64 as Uint64));
+    /// window has relative mode enabled
+    pub const MOUSE_RELATIVE_MODE: Self = Self((32768_u64 as Uint64));
+    /// window should always be above others
+    pub const ALWAYS_ON_TOP: Self = Self((65536_u64 as Uint64));
+    /// window should be treated as a utility window, not showing in the task bar and window list
+    pub const UTILITY: Self = Self((131072_u64 as Uint64));
+    /// window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window
+    pub const TOOLTIP: Self = Self((262144_u64 as Uint64));
+    /// window should be treated as a popup menu, requires a parent window
+    pub const POPUP_MENU: Self = Self((524288_u64 as Uint64));
+    /// window has grabbed keyboard input
+    pub const KEYBOARD_GRABBED: Self = Self((1048576_u64 as Uint64));
+    /// window usable for Vulkan surface
+    pub const VULKAN: Self = Self((268435456_u64 as Uint64));
+    /// window usable for Metal view
+    pub const METAL: Self = Self((536870912_u64 as Uint64));
+    /// window with transparent buffer
+    pub const TRANSPARENT: Self = Self((1073741824_u64 as Uint64));
+    /// window should not be focusable
+    pub const NOT_FOCUSABLE: Self = Self((2147483648_u64 as Uint64));
+}
 
 /// window is in fullscreen mode
-pub const SDL_WINDOW_FULLSCREEN: SDL_WindowFlags = (1_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_FULLSCREEN: SDL_WindowFlags = SDL_WindowFlags::FULLSCREEN;
 /// window usable with OpenGL context
-pub const SDL_WINDOW_OPENGL: SDL_WindowFlags = (2_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_OPENGL: SDL_WindowFlags = SDL_WindowFlags::OPENGL;
 /// window is occluded
-pub const SDL_WINDOW_OCCLUDED: SDL_WindowFlags = (4_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_OCCLUDED: SDL_WindowFlags = SDL_WindowFlags::OCCLUDED;
 /// window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible
-pub const SDL_WINDOW_HIDDEN: SDL_WindowFlags = (8_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_HIDDEN: SDL_WindowFlags = SDL_WindowFlags::HIDDEN;
 /// no window decoration
-pub const SDL_WINDOW_BORDERLESS: SDL_WindowFlags = (16_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_BORDERLESS: SDL_WindowFlags = SDL_WindowFlags::BORDERLESS;
 /// window can be resized
-pub const SDL_WINDOW_RESIZABLE: SDL_WindowFlags = (32_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_RESIZABLE: SDL_WindowFlags = SDL_WindowFlags::RESIZABLE;
 /// window is minimized
-pub const SDL_WINDOW_MINIMIZED: SDL_WindowFlags = (64_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MINIMIZED: SDL_WindowFlags = SDL_WindowFlags::MINIMIZED;
 /// window is maximized
-pub const SDL_WINDOW_MAXIMIZED: SDL_WindowFlags = (128_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MAXIMIZED: SDL_WindowFlags = SDL_WindowFlags::MAXIMIZED;
 /// window has grabbed mouse input
-pub const SDL_WINDOW_MOUSE_GRABBED: SDL_WindowFlags = (256_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MOUSE_GRABBED: SDL_WindowFlags = SDL_WindowFlags::MOUSE_GRABBED;
 /// window has input focus
-pub const SDL_WINDOW_INPUT_FOCUS: SDL_WindowFlags = (512_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_INPUT_FOCUS: SDL_WindowFlags = SDL_WindowFlags::INPUT_FOCUS;
 /// window has mouse focus
-pub const SDL_WINDOW_MOUSE_FOCUS: SDL_WindowFlags = (1024_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MOUSE_FOCUS: SDL_WindowFlags = SDL_WindowFlags::MOUSE_FOCUS;
 /// window not created by SDL
-pub const SDL_WINDOW_EXTERNAL: SDL_WindowFlags = (2048_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_EXTERNAL: SDL_WindowFlags = SDL_WindowFlags::EXTERNAL;
 /// window is modal
-pub const SDL_WINDOW_MODAL: SDL_WindowFlags = (4096_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MODAL: SDL_WindowFlags = SDL_WindowFlags::MODAL;
 /// window uses high pixel density back buffer if possible
-pub const SDL_WINDOW_HIGH_PIXEL_DENSITY: SDL_WindowFlags = (8192_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_HIGH_PIXEL_DENSITY: SDL_WindowFlags = SDL_WindowFlags::HIGH_PIXEL_DENSITY;
 /// window has mouse captured (unrelated to MOUSE_GRABBED)
-pub const SDL_WINDOW_MOUSE_CAPTURE: SDL_WindowFlags = (16384_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MOUSE_CAPTURE: SDL_WindowFlags = SDL_WindowFlags::MOUSE_CAPTURE;
 /// window has relative mode enabled
-pub const SDL_WINDOW_MOUSE_RELATIVE_MODE: SDL_WindowFlags = (32768_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MOUSE_RELATIVE_MODE: SDL_WindowFlags = SDL_WindowFlags::MOUSE_RELATIVE_MODE;
 /// window should always be above others
-pub const SDL_WINDOW_ALWAYS_ON_TOP: SDL_WindowFlags = (65536_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_ALWAYS_ON_TOP: SDL_WindowFlags = SDL_WindowFlags::ALWAYS_ON_TOP;
 /// window should be treated as a utility window, not showing in the task bar and window list
-pub const SDL_WINDOW_UTILITY: SDL_WindowFlags = (131072_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_UTILITY: SDL_WindowFlags = SDL_WindowFlags::UTILITY;
 /// window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window
-pub const SDL_WINDOW_TOOLTIP: SDL_WindowFlags = (262144_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_TOOLTIP: SDL_WindowFlags = SDL_WindowFlags::TOOLTIP;
 /// window should be treated as a popup menu, requires a parent window
-pub const SDL_WINDOW_POPUP_MENU: SDL_WindowFlags = (524288_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_POPUP_MENU: SDL_WindowFlags = SDL_WindowFlags::POPUP_MENU;
 /// window has grabbed keyboard input
-pub const SDL_WINDOW_KEYBOARD_GRABBED: SDL_WindowFlags = (1048576_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_KEYBOARD_GRABBED: SDL_WindowFlags = SDL_WindowFlags::KEYBOARD_GRABBED;
 /// window usable for Vulkan surface
-pub const SDL_WINDOW_VULKAN: SDL_WindowFlags = (268435456_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_VULKAN: SDL_WindowFlags = SDL_WindowFlags::VULKAN;
 /// window usable for Metal view
-pub const SDL_WINDOW_METAL: SDL_WindowFlags = (536870912_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_METAL: SDL_WindowFlags = SDL_WindowFlags::METAL;
 /// window with transparent buffer
-pub const SDL_WINDOW_TRANSPARENT: SDL_WindowFlags = (1073741824_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_TRANSPARENT: SDL_WindowFlags = SDL_WindowFlags::TRANSPARENT;
 /// window should not be focusable
-pub const SDL_WINDOW_NOT_FOCUSABLE: SDL_WindowFlags = (2147483648_u64 as SDL_WindowFlags);
+pub const SDL_WINDOW_NOT_FOCUSABLE: SDL_WindowFlags = SDL_WindowFlags::NOT_FOCUSABLE;
 
 /// A magic value used with [`SDL_WINDOWPOS_UNDEFINED`].
 ///
@@ -358,7 +456,7 @@ pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376_u32;
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c_int {
-    ((SDL_WINDOWPOS_UNDEFINED_MASK | X) as ::core::ffi::c_int)
+    ((SDL_WINDOWPOS_UNDEFINED_MASK | X.0) as ::core::ffi::c_int)
 }
 
 /// Used to indicate that you don't care what the window position/display is.
@@ -367,7 +465,8 @@ pub const fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c
 ///
 /// ### Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_WINDOWPOS_UNDEFINED: ::core::ffi::c_int = SDL_WINDOWPOS_UNDEFINED_DISPLAY(0);
+pub const SDL_WINDOWPOS_UNDEFINED: ::core::ffi::c_int =
+    SDL_WINDOWPOS_UNDEFINED_DISPLAY(SDL_DisplayID((0 as Uint32)));
 
 /// A macro to test if the window position is marked as "undefined."
 ///
@@ -402,7 +501,7 @@ pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c_int {
-    ((SDL_WINDOWPOS_CENTERED_MASK | X) as ::core::ffi::c_int)
+    ((SDL_WINDOWPOS_CENTERED_MASK | X.0) as ::core::ffi::c_int)
 }
 
 /// Used to indicate that the window position should be centered.
@@ -411,7 +510,8 @@ pub const fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c_
 ///
 /// ### Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_WINDOWPOS_CENTERED: ::core::ffi::c_int = SDL_WINDOWPOS_CENTERED_DISPLAY(0);
+pub const SDL_WINDOWPOS_CENTERED: ::core::ffi::c_int =
+    SDL_WINDOWPOS_CENTERED_DISPLAY(SDL_DisplayID((0 as Uint32)));
 
 /// A macro to test if the window position is marked as "centered."
 ///
@@ -463,11 +563,11 @@ impl ::core::fmt::Debug for SDL_FlashOperation {
 
 impl SDL_FlashOperation {
     /// Cancel any window flash state
-    pub const CANCEL: Self = Self(0);
+    pub const CANCEL: Self = Self((0 as ::core::ffi::c_int));
     /// Flash the window briefly to get attention
-    pub const BRIEFLY: Self = Self(1);
+    pub const BRIEFLY: Self = Self((1 as ::core::ffi::c_int));
     /// Flash the window until it gets focus
-    pub const UNTIL_FOCUSED: Self = Self(2);
+    pub const UNTIL_FOCUSED: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Cancel any window flash state
@@ -686,58 +786,58 @@ impl ::core::fmt::Debug for SDL_GLAttr {
 
 impl SDL_GLAttr {
     /// the minimum number of bits for the red channel of the color buffer; defaults to 3.
-    pub const RED_SIZE: Self = Self(0);
+    pub const RED_SIZE: Self = Self((0 as ::core::ffi::c_int));
     /// the minimum number of bits for the green channel of the color buffer; defaults to 3.
-    pub const GREEN_SIZE: Self = Self(1);
+    pub const GREEN_SIZE: Self = Self((1 as ::core::ffi::c_int));
     /// the minimum number of bits for the blue channel of the color buffer; defaults to 2.
-    pub const BLUE_SIZE: Self = Self(2);
+    pub const BLUE_SIZE: Self = Self((2 as ::core::ffi::c_int));
     /// the minimum number of bits for the alpha channel of the color buffer; defaults to 0.
-    pub const ALPHA_SIZE: Self = Self(3);
+    pub const ALPHA_SIZE: Self = Self((3 as ::core::ffi::c_int));
     /// the minimum number of bits for frame buffer size; defaults to 0.
-    pub const BUFFER_SIZE: Self = Self(4);
+    pub const BUFFER_SIZE: Self = Self((4 as ::core::ffi::c_int));
     /// whether the output is single or double buffered; defaults to double buffering on.
-    pub const DOUBLEBUFFER: Self = Self(5);
+    pub const DOUBLEBUFFER: Self = Self((5 as ::core::ffi::c_int));
     /// the minimum number of bits in the depth buffer; defaults to 16.
-    pub const DEPTH_SIZE: Self = Self(6);
+    pub const DEPTH_SIZE: Self = Self((6 as ::core::ffi::c_int));
     /// the minimum number of bits in the stencil buffer; defaults to 0.
-    pub const STENCIL_SIZE: Self = Self(7);
+    pub const STENCIL_SIZE: Self = Self((7 as ::core::ffi::c_int));
     /// the minimum number of bits for the red channel of the accumulation buffer; defaults to 0.
-    pub const ACCUM_RED_SIZE: Self = Self(8);
+    pub const ACCUM_RED_SIZE: Self = Self((8 as ::core::ffi::c_int));
     /// the minimum number of bits for the green channel of the accumulation buffer; defaults to 0.
-    pub const ACCUM_GREEN_SIZE: Self = Self(9);
+    pub const ACCUM_GREEN_SIZE: Self = Self((9 as ::core::ffi::c_int));
     /// the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0.
-    pub const ACCUM_BLUE_SIZE: Self = Self(10);
+    pub const ACCUM_BLUE_SIZE: Self = Self((10 as ::core::ffi::c_int));
     /// the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0.
-    pub const ACCUM_ALPHA_SIZE: Self = Self(11);
+    pub const ACCUM_ALPHA_SIZE: Self = Self((11 as ::core::ffi::c_int));
     /// whether the output is stereo 3D; defaults to off.
-    pub const STEREO: Self = Self(12);
+    pub const STEREO: Self = Self((12 as ::core::ffi::c_int));
     /// the number of buffers used for multisample anti-aliasing; defaults to 0.
-    pub const MULTISAMPLEBUFFERS: Self = Self(13);
+    pub const MULTISAMPLEBUFFERS: Self = Self((13 as ::core::ffi::c_int));
     /// the number of samples used around the current pixel used for multisample anti-aliasing.
-    pub const MULTISAMPLESAMPLES: Self = Self(14);
+    pub const MULTISAMPLESAMPLES: Self = Self((14 as ::core::ffi::c_int));
     /// set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either.
-    pub const ACCELERATED_VISUAL: Self = Self(15);
+    pub const ACCELERATED_VISUAL: Self = Self((15 as ::core::ffi::c_int));
     /// not used (deprecated).
-    pub const RETAINED_BACKING: Self = Self(16);
+    pub const RETAINED_BACKING: Self = Self((16 as ::core::ffi::c_int));
     /// OpenGL context major version.
-    pub const CONTEXT_MAJOR_VERSION: Self = Self(17);
+    pub const CONTEXT_MAJOR_VERSION: Self = Self((17 as ::core::ffi::c_int));
     /// OpenGL context minor version.
-    pub const CONTEXT_MINOR_VERSION: Self = Self(18);
+    pub const CONTEXT_MINOR_VERSION: Self = Self((18 as ::core::ffi::c_int));
     /// some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0.
-    pub const CONTEXT_FLAGS: Self = Self(19);
+    pub const CONTEXT_FLAGS: Self = Self((19 as ::core::ffi::c_int));
     /// type of GL context (Core, Compatibility, ES). See [`SDL_GLProfile`]; default value depends on platform.
-    pub const CONTEXT_PROFILE_MASK: Self = Self(20);
+    pub const CONTEXT_PROFILE_MASK: Self = Self((20 as ::core::ffi::c_int));
     /// OpenGL context sharing; defaults to 0.
-    pub const SHARE_WITH_CURRENT_CONTEXT: Self = Self(21);
+    pub const SHARE_WITH_CURRENT_CONTEXT: Self = Self((21 as ::core::ffi::c_int));
     /// requests sRGB capable visual; defaults to 0.
-    pub const FRAMEBUFFER_SRGB_CAPABLE: Self = Self(22);
+    pub const FRAMEBUFFER_SRGB_CAPABLE: Self = Self((22 as ::core::ffi::c_int));
     /// sets context the release behavior. See [`SDL_GLContextReleaseFlag`]; defaults to FLUSH.
-    pub const CONTEXT_RELEASE_BEHAVIOR: Self = Self(23);
+    pub const CONTEXT_RELEASE_BEHAVIOR: Self = Self((23 as ::core::ffi::c_int));
     /// set context reset notification. See [`SDL_GLContextResetNotification`]; defaults to NO_NOTIFICATION.
-    pub const CONTEXT_RESET_NOTIFICATION: Self = Self(24);
-    pub const CONTEXT_NO_ERROR: Self = Self(25);
-    pub const FLOATBUFFERS: Self = Self(26);
-    pub const EGL_PLATFORM: Self = Self(27);
+    pub const CONTEXT_RESET_NOTIFICATION: Self = Self((24 as ::core::ffi::c_int));
+    pub const CONTEXT_NO_ERROR: Self = Self((25 as ::core::ffi::c_int));
+    pub const FLOATBUFFERS: Self = Self((26 as ::core::ffi::c_int));
+    pub const EGL_PLATFORM: Self = Self((27 as ::core::ffi::c_int));
 }
 
 /// the minimum number of bits for the red channel of the color buffer; defaults to 3.
@@ -800,21 +900,51 @@ pub const SDL_GL_EGL_PLATFORM: SDL_GLAttr = SDL_GLAttr::EGL_PLATFORM;
 /// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GL_CONTEXT_PROFILE_CORE`] | OpenGL Core Profile context |
-/// | [`SDL_GL_CONTEXT_PROFILE_COMPATIBILITY`] | OpenGL Compatibility Profile context |
-/// | [`SDL_GL_CONTEXT_PROFILE_ES`] | GLX_CONTEXT_ES2_PROFILE_BIT_EXT |
-pub type SDL_GLProfile = Sint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`CORE`](SDL_GLProfile::CORE) | [`SDL_GL_CONTEXT_PROFILE_CORE`] | OpenGL Core Profile context |
+/// | [`COMPATIBILITY`](SDL_GLProfile::COMPATIBILITY) | [`SDL_GL_CONTEXT_PROFILE_COMPATIBILITY`] | OpenGL Compatibility Profile context |
+/// | [`ES`](SDL_GLProfile::ES) | [`SDL_GL_CONTEXT_PROFILE_ES`] | GLX_CONTEXT_ES2_PROFILE_BIT_EXT |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GLProfile(pub Sint32);
+
+impl From<SDL_GLProfile> for Sint32 {
+    #[inline(always)]
+    fn from(value: SDL_GLProfile) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GLProfile {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::CORE => "SDL_GL_CONTEXT_PROFILE_CORE",
+            Self::COMPATIBILITY => "SDL_GL_CONTEXT_PROFILE_COMPATIBILITY",
+            Self::ES => "SDL_GL_CONTEXT_PROFILE_ES",
+
+            _ => return write!(f, "SDL_GLProfile({})", self.0),
+        })
+    }
+}
+
+impl SDL_GLProfile {
+    /// OpenGL Core Profile context
+    pub const CORE: Self = Self((0x0001 as Sint32));
+    /// OpenGL Compatibility Profile context
+    pub const COMPATIBILITY: Self = Self((0x0002 as Sint32));
+    /// GLX_CONTEXT_ES2_PROFILE_BIT_EXT
+    pub const ES: Self = Self((0x0004 as Sint32));
+}
 
 /// OpenGL Core Profile context
-pub const SDL_GL_CONTEXT_PROFILE_CORE: SDL_GLProfile = (0x0001 as SDL_GLProfile);
-
+pub const SDL_GL_CONTEXT_PROFILE_CORE: SDL_GLProfile = SDL_GLProfile::CORE;
 /// OpenGL Compatibility Profile context
-pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLProfile = (0x0002 as SDL_GLProfile);
-
+pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLProfile = SDL_GLProfile::COMPATIBILITY;
 /// GLX_CONTEXT_ES2_PROFILE_BIT_EXT
-pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = (0x0004 as SDL_GLProfile);
+pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = SDL_GLProfile::ES;
 
 /// Possible flags to be set for the [`SDL_GL_CONTEXT_FLAGS`] attribute.
 ///
@@ -822,21 +952,52 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = (0x0004 as SDL_GLProfile);
 /// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GL_CONTEXT_DEBUG_FLAG`] | |
-/// | [`SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG`] | |
-/// | [`SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG`] | |
-/// | [`SDL_GL_CONTEXT_RESET_ISOLATION_FLAG`] | |
-pub type SDL_GLContextFlag = Sint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`DEBUG_FLAG`](SDL_GLContextFlag::DEBUG_FLAG) | [`SDL_GL_CONTEXT_DEBUG_FLAG`] | |
+/// | [`FORWARD_COMPATIBLE_FLAG`](SDL_GLContextFlag::FORWARD_COMPATIBLE_FLAG) | [`SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG`] | |
+/// | [`ROBUST_ACCESS_FLAG`](SDL_GLContextFlag::ROBUST_ACCESS_FLAG) | [`SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG`] | |
+/// | [`RESET_ISOLATION_FLAG`](SDL_GLContextFlag::RESET_ISOLATION_FLAG) | [`SDL_GL_CONTEXT_RESET_ISOLATION_FLAG`] | |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GLContextFlag(pub Sint32);
 
-pub const SDL_GL_CONTEXT_DEBUG_FLAG: SDL_GLContextFlag = (0x0001 as SDL_GLContextFlag);
+impl From<SDL_GLContextFlag> for Sint32 {
+    #[inline(always)]
+    fn from(value: SDL_GLContextFlag) -> Self {
+        value.0
+    }
+}
 
-pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: SDL_GLContextFlag = (0x0002 as SDL_GLContextFlag);
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GLContextFlag {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::DEBUG_FLAG => "SDL_GL_CONTEXT_DEBUG_FLAG",
+            Self::FORWARD_COMPATIBLE_FLAG => "SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG",
+            Self::ROBUST_ACCESS_FLAG => "SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG",
+            Self::RESET_ISOLATION_FLAG => "SDL_GL_CONTEXT_RESET_ISOLATION_FLAG",
 
-pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: SDL_GLContextFlag = (0x0004 as SDL_GLContextFlag);
+            _ => return write!(f, "SDL_GLContextFlag({})", self.0),
+        })
+    }
+}
 
-pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag = (0x0008 as SDL_GLContextFlag);
+impl SDL_GLContextFlag {
+    pub const DEBUG_FLAG: Self = Self((0x0001 as Sint32));
+    pub const FORWARD_COMPATIBLE_FLAG: Self = Self((0x0002 as Sint32));
+    pub const ROBUST_ACCESS_FLAG: Self = Self((0x0004 as Sint32));
+    pub const RESET_ISOLATION_FLAG: Self = Self((0x0008 as Sint32));
+}
+
+pub const SDL_GL_CONTEXT_DEBUG_FLAG: SDL_GLContextFlag = SDL_GLContextFlag::DEBUG_FLAG;
+pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: SDL_GLContextFlag =
+    SDL_GLContextFlag::FORWARD_COMPATIBLE_FLAG;
+pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: SDL_GLContextFlag =
+    SDL_GLContextFlag::ROBUST_ACCESS_FLAG;
+pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag =
+    SDL_GLContextFlag::RESET_ISOLATION_FLAG;
 
 /// Possible values to be set for the [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`]
 /// attribute.
@@ -845,17 +1006,43 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag = (0x0008 as SD
 /// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE`] | |
-/// | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH`] | |
-pub type SDL_GLContextReleaseFlag = Sint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`NONE`](SDL_GLContextReleaseFlag::NONE) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE`] | |
+/// | [`FLUSH`](SDL_GLContextReleaseFlag::FLUSH) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH`] | |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GLContextReleaseFlag(pub Sint32);
+
+impl From<SDL_GLContextReleaseFlag> for Sint32 {
+    #[inline(always)]
+    fn from(value: SDL_GLContextReleaseFlag) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GLContextReleaseFlag {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE",
+            Self::FLUSH => "SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH",
+
+            _ => return write!(f, "SDL_GLContextReleaseFlag({})", self.0),
+        })
+    }
+}
+
+impl SDL_GLContextReleaseFlag {
+    pub const NONE: Self = Self((0x0000 as Sint32));
+    pub const FLUSH: Self = Self((0x0001 as Sint32));
+}
 
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: SDL_GLContextReleaseFlag =
-    (0x0000 as SDL_GLContextReleaseFlag);
-
+    SDL_GLContextReleaseFlag::NONE;
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLContextReleaseFlag =
-    (0x0001 as SDL_GLContextReleaseFlag);
+    SDL_GLContextReleaseFlag::FLUSH;
 
 /// Possible values to be set [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] attribute.
 ///
@@ -863,17 +1050,43 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLContextReleaseFlag =
 /// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GL_CONTEXT_RESET_NO_NOTIFICATION`] | |
-/// | [`SDL_GL_CONTEXT_RESET_LOSE_CONTEXT`] | |
-pub type SDL_GLContextResetNotification = Sint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`NO_NOTIFICATION`](SDL_GLContextResetNotification::NO_NOTIFICATION) | [`SDL_GL_CONTEXT_RESET_NO_NOTIFICATION`] | |
+/// | [`LOSE_CONTEXT`](SDL_GLContextResetNotification::LOSE_CONTEXT) | [`SDL_GL_CONTEXT_RESET_LOSE_CONTEXT`] | |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GLContextResetNotification(pub Sint32);
+
+impl From<SDL_GLContextResetNotification> for Sint32 {
+    #[inline(always)]
+    fn from(value: SDL_GLContextResetNotification) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GLContextResetNotification {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NO_NOTIFICATION => "SDL_GL_CONTEXT_RESET_NO_NOTIFICATION",
+            Self::LOSE_CONTEXT => "SDL_GL_CONTEXT_RESET_LOSE_CONTEXT",
+
+            _ => return write!(f, "SDL_GLContextResetNotification({})", self.0),
+        })
+    }
+}
+
+impl SDL_GLContextResetNotification {
+    pub const NO_NOTIFICATION: Self = Self((0x0000 as Sint32));
+    pub const LOSE_CONTEXT: Self = Self((0x0001 as Sint32));
+}
 
 pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification =
-    (0x0000 as SDL_GLContextResetNotification);
-
+    SDL_GLContextResetNotification::NO_NOTIFICATION;
 pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification =
-    (0x0001 as SDL_GLContextResetNotification);
+    SDL_GLContextResetNotification::LOSE_CONTEXT;
 
 extern "C" {
     /// Get the number of video drivers compiled into SDL.
@@ -3841,25 +4054,25 @@ impl ::core::fmt::Debug for SDL_HitTestResult {
 
 impl SDL_HitTestResult {
     /// Region is normal. No special properties.
-    pub const NORMAL: Self = Self(0);
+    pub const NORMAL: Self = Self((0 as ::core::ffi::c_int));
     /// Region can drag entire window.
-    pub const DRAGGABLE: Self = Self(1);
+    pub const DRAGGABLE: Self = Self((1 as ::core::ffi::c_int));
     /// Region is the resizable top-left corner border.
-    pub const RESIZE_TOPLEFT: Self = Self(2);
+    pub const RESIZE_TOPLEFT: Self = Self((2 as ::core::ffi::c_int));
     /// Region is the resizable top border.
-    pub const RESIZE_TOP: Self = Self(3);
+    pub const RESIZE_TOP: Self = Self((3 as ::core::ffi::c_int));
     /// Region is the resizable top-right corner border.
-    pub const RESIZE_TOPRIGHT: Self = Self(4);
+    pub const RESIZE_TOPRIGHT: Self = Self((4 as ::core::ffi::c_int));
     /// Region is the resizable right border.
-    pub const RESIZE_RIGHT: Self = Self(5);
+    pub const RESIZE_RIGHT: Self = Self((5 as ::core::ffi::c_int));
     /// Region is the resizable bottom-right corner border.
-    pub const RESIZE_BOTTOMRIGHT: Self = Self(6);
+    pub const RESIZE_BOTTOMRIGHT: Self = Self((6 as ::core::ffi::c_int));
     /// Region is the resizable bottom border.
-    pub const RESIZE_BOTTOM: Self = Self(7);
+    pub const RESIZE_BOTTOM: Self = Self((7 as ::core::ffi::c_int));
     /// Region is the resizable bottom-left corner border.
-    pub const RESIZE_BOTTOMLEFT: Self = Self(8);
+    pub const RESIZE_BOTTOMLEFT: Self = Self((8 as ::core::ffi::c_int));
     /// Region is the resizable left border.
-    pub const RESIZE_LEFT: Self = Self(9);
+    pub const RESIZE_LEFT: Self = Self((9 as ::core::ffi::c_int));
 }
 
 /// Region is normal. No special properties.

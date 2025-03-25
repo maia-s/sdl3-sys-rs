@@ -119,26 +119,26 @@ impl ::core::fmt::Debug for SDL_LogCategory {
 }
 
 impl SDL_LogCategory {
-    pub const APPLICATION: Self = Self(0);
-    pub const ERROR: Self = Self(1);
-    pub const ASSERT: Self = Self(2);
-    pub const SYSTEM: Self = Self(3);
-    pub const AUDIO: Self = Self(4);
-    pub const VIDEO: Self = Self(5);
-    pub const RENDER: Self = Self(6);
-    pub const INPUT: Self = Self(7);
-    pub const TEST: Self = Self(8);
-    pub const GPU: Self = Self(9);
-    pub const RESERVED2: Self = Self(10);
-    pub const RESERVED3: Self = Self(11);
-    pub const RESERVED4: Self = Self(12);
-    pub const RESERVED5: Self = Self(13);
-    pub const RESERVED6: Self = Self(14);
-    pub const RESERVED7: Self = Self(15);
-    pub const RESERVED8: Self = Self(16);
-    pub const RESERVED9: Self = Self(17);
-    pub const RESERVED10: Self = Self(18);
-    pub const CUSTOM: Self = Self(19);
+    pub const APPLICATION: Self = Self((0 as ::core::ffi::c_int));
+    pub const ERROR: Self = Self((1 as ::core::ffi::c_int));
+    pub const ASSERT: Self = Self((2 as ::core::ffi::c_int));
+    pub const SYSTEM: Self = Self((3 as ::core::ffi::c_int));
+    pub const AUDIO: Self = Self((4 as ::core::ffi::c_int));
+    pub const VIDEO: Self = Self((5 as ::core::ffi::c_int));
+    pub const RENDER: Self = Self((6 as ::core::ffi::c_int));
+    pub const INPUT: Self = Self((7 as ::core::ffi::c_int));
+    pub const TEST: Self = Self((8 as ::core::ffi::c_int));
+    pub const GPU: Self = Self((9 as ::core::ffi::c_int));
+    pub const RESERVED2: Self = Self((10 as ::core::ffi::c_int));
+    pub const RESERVED3: Self = Self((11 as ::core::ffi::c_int));
+    pub const RESERVED4: Self = Self((12 as ::core::ffi::c_int));
+    pub const RESERVED5: Self = Self((13 as ::core::ffi::c_int));
+    pub const RESERVED6: Self = Self((14 as ::core::ffi::c_int));
+    pub const RESERVED7: Self = Self((15 as ::core::ffi::c_int));
+    pub const RESERVED8: Self = Self((16 as ::core::ffi::c_int));
+    pub const RESERVED9: Self = Self((17 as ::core::ffi::c_int));
+    pub const RESERVED10: Self = Self((18 as ::core::ffi::c_int));
+    pub const CUSTOM: Self = Self((19 as ::core::ffi::c_int));
 }
 
 pub const SDL_LOG_CATEGORY_APPLICATION: SDL_LogCategory = SDL_LogCategory::APPLICATION;
@@ -211,15 +211,15 @@ impl ::core::fmt::Debug for SDL_LogPriority {
 }
 
 impl SDL_LogPriority {
-    pub const INVALID: Self = Self(0);
-    pub const TRACE: Self = Self(1);
-    pub const VERBOSE: Self = Self(2);
-    pub const DEBUG: Self = Self(3);
-    pub const INFO: Self = Self(4);
-    pub const WARN: Self = Self(5);
-    pub const ERROR: Self = Self(6);
-    pub const CRITICAL: Self = Self(7);
-    pub const COUNT: Self = Self(8);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
+    pub const TRACE: Self = Self((1 as ::core::ffi::c_int));
+    pub const VERBOSE: Self = Self((2 as ::core::ffi::c_int));
+    pub const DEBUG: Self = Self((3 as ::core::ffi::c_int));
+    pub const INFO: Self = Self((4 as ::core::ffi::c_int));
+    pub const WARN: Self = Self((5 as ::core::ffi::c_int));
+    pub const ERROR: Self = Self((6 as ::core::ffi::c_int));
+    pub const CRITICAL: Self = Self((7 as ::core::ffi::c_int));
+    pub const COUNT: Self = Self((8 as ::core::ffi::c_int));
 }
 
 pub const SDL_LOG_PRIORITY_INVALID: SDL_LogPriority = SDL_LogPriority::INVALID;

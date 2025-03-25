@@ -711,10 +711,10 @@ impl ::core::fmt::Debug for SDL_InitStatus {
 }
 
 impl SDL_InitStatus {
-    pub const UNINITIALIZED: Self = Self(0);
-    pub const INITIALIZING: Self = Self(1);
-    pub const INITIALIZED: Self = Self(2);
-    pub const UNINITIALIZING: Self = Self(3);
+    pub const UNINITIALIZED: Self = Self((0 as ::core::ffi::c_int));
+    pub const INITIALIZING: Self = Self((1 as ::core::ffi::c_int));
+    pub const INITIALIZED: Self = Self((2 as ::core::ffi::c_int));
+    pub const UNINITIALIZING: Self = Self((3 as ::core::ffi::c_int));
 }
 
 pub const SDL_INIT_STATUS_UNINITIALIZED: SDL_InitStatus = SDL_InitStatus::UNINITIALIZED;

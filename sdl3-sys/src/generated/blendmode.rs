@@ -17,40 +17,79 @@ use super::stdinc::*;
 /// - [`SDL_ComposeCustomBlendMode`]
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_BLENDMODE_NONE`] | no blending: dstRGBA = srcRGBA |
-/// | [`SDL_BLENDMODE_BLEND`] | alpha blending: dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)), dstA = srcA + (dstA * (1-srcA)) |
-/// | [`SDL_BLENDMODE_BLEND_PREMULTIPLIED`] | pre-multiplied alpha blending: dstRGBA = srcRGBA + (dstRGBA * (1-srcA)) |
-/// | [`SDL_BLENDMODE_ADD`] | additive blending: dstRGB = (srcRGB * srcA) + dstRGB, dstA = dstA |
-/// | [`SDL_BLENDMODE_ADD_PREMULTIPLIED`] | pre-multiplied additive blending: dstRGB = srcRGB + dstRGB, dstA = dstA |
-/// | [`SDL_BLENDMODE_MOD`] | color modulate: dstRGB = srcRGB * dstRGB, dstA = dstA |
-/// | [`SDL_BLENDMODE_MUL`] | color multiply: dstRGB = (srcRGB * dstRGB) + (dstRGB * (1-srcA)), dstA = dstA |
-/// | [`SDL_BLENDMODE_INVALID`] | |
-pub type SDL_BlendMode = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`NONE`](SDL_BlendMode::NONE) | [`SDL_BLENDMODE_NONE`] | no blending: dstRGBA = srcRGBA |
+/// | [`BLEND`](SDL_BlendMode::BLEND) | [`SDL_BLENDMODE_BLEND`] | alpha blending: dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)), dstA = srcA + (dstA * (1-srcA)) |
+/// | [`BLEND_PREMULTIPLIED`](SDL_BlendMode::BLEND_PREMULTIPLIED) | [`SDL_BLENDMODE_BLEND_PREMULTIPLIED`] | pre-multiplied alpha blending: dstRGBA = srcRGBA + (dstRGBA * (1-srcA)) |
+/// | [`ADD`](SDL_BlendMode::ADD) | [`SDL_BLENDMODE_ADD`] | additive blending: dstRGB = (srcRGB * srcA) + dstRGB, dstA = dstA |
+/// | [`ADD_PREMULTIPLIED`](SDL_BlendMode::ADD_PREMULTIPLIED) | [`SDL_BLENDMODE_ADD_PREMULTIPLIED`] | pre-multiplied additive blending: dstRGB = srcRGB + dstRGB, dstA = dstA |
+/// | [`MOD`](SDL_BlendMode::MOD) | [`SDL_BLENDMODE_MOD`] | color modulate: dstRGB = srcRGB * dstRGB, dstA = dstA |
+/// | [`MUL`](SDL_BlendMode::MUL) | [`SDL_BLENDMODE_MUL`] | color multiply: dstRGB = (srcRGB * dstRGB) + (dstRGB * (1-srcA)), dstA = dstA |
+/// | [`INVALID`](SDL_BlendMode::INVALID) | [`SDL_BLENDMODE_INVALID`] | |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_BlendMode(pub Uint32);
+
+impl From<SDL_BlendMode> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_BlendMode) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_BlendMode {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::NONE => "SDL_BLENDMODE_NONE",
+            Self::BLEND => "SDL_BLENDMODE_BLEND",
+            Self::BLEND_PREMULTIPLIED => "SDL_BLENDMODE_BLEND_PREMULTIPLIED",
+            Self::ADD => "SDL_BLENDMODE_ADD",
+            Self::ADD_PREMULTIPLIED => "SDL_BLENDMODE_ADD_PREMULTIPLIED",
+            Self::MOD => "SDL_BLENDMODE_MOD",
+            Self::MUL => "SDL_BLENDMODE_MUL",
+            Self::INVALID => "SDL_BLENDMODE_INVALID",
+
+            _ => return write!(f, "SDL_BlendMode({})", self.0),
+        })
+    }
+}
+
+impl SDL_BlendMode {
+    /// no blending: dstRGBA = srcRGBA
+    pub const NONE: Self = Self((0x00000000 as Uint32));
+    /// alpha blending: dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)), dstA = srcA + (dstA * (1-srcA))
+    pub const BLEND: Self = Self((0x00000001 as Uint32));
+    /// pre-multiplied alpha blending: dstRGBA = srcRGBA + (dstRGBA * (1-srcA))
+    pub const BLEND_PREMULTIPLIED: Self = Self((0x00000010 as Uint32));
+    /// additive blending: dstRGB = (srcRGB * srcA) + dstRGB, dstA = dstA
+    pub const ADD: Self = Self((0x00000002 as Uint32));
+    /// pre-multiplied additive blending: dstRGB = srcRGB + dstRGB, dstA = dstA
+    pub const ADD_PREMULTIPLIED: Self = Self((0x00000020 as Uint32));
+    /// color modulate: dstRGB = srcRGB * dstRGB, dstA = dstA
+    pub const MOD: Self = Self((0x00000004 as Uint32));
+    /// color multiply: dstRGB = (srcRGB * dstRGB) + (dstRGB * (1-srcA)), dstA = dstA
+    pub const MUL: Self = Self((0x00000008 as Uint32));
+    pub const INVALID: Self = Self((0x7fffffff as Uint32));
+}
 
 /// no blending: dstRGBA = srcRGBA
-pub const SDL_BLENDMODE_NONE: SDL_BlendMode = (0x00000000 as SDL_BlendMode);
-
+pub const SDL_BLENDMODE_NONE: SDL_BlendMode = SDL_BlendMode::NONE;
 /// alpha blending: dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)), dstA = srcA + (dstA * (1-srcA))
-pub const SDL_BLENDMODE_BLEND: SDL_BlendMode = (0x00000001 as SDL_BlendMode);
-
+pub const SDL_BLENDMODE_BLEND: SDL_BlendMode = SDL_BlendMode::BLEND;
 /// pre-multiplied alpha blending: dstRGBA = srcRGBA + (dstRGBA * (1-srcA))
-pub const SDL_BLENDMODE_BLEND_PREMULTIPLIED: SDL_BlendMode = (0x00000010 as SDL_BlendMode);
-
+pub const SDL_BLENDMODE_BLEND_PREMULTIPLIED: SDL_BlendMode = SDL_BlendMode::BLEND_PREMULTIPLIED;
 /// additive blending: dstRGB = (srcRGB * srcA) + dstRGB, dstA = dstA
-pub const SDL_BLENDMODE_ADD: SDL_BlendMode = (0x00000002 as SDL_BlendMode);
-
+pub const SDL_BLENDMODE_ADD: SDL_BlendMode = SDL_BlendMode::ADD;
 /// pre-multiplied additive blending: dstRGB = srcRGB + dstRGB, dstA = dstA
-pub const SDL_BLENDMODE_ADD_PREMULTIPLIED: SDL_BlendMode = (0x00000020 as SDL_BlendMode);
-
+pub const SDL_BLENDMODE_ADD_PREMULTIPLIED: SDL_BlendMode = SDL_BlendMode::ADD_PREMULTIPLIED;
 /// color modulate: dstRGB = srcRGB * dstRGB, dstA = dstA
-pub const SDL_BLENDMODE_MOD: SDL_BlendMode = (0x00000004 as SDL_BlendMode);
-
+pub const SDL_BLENDMODE_MOD: SDL_BlendMode = SDL_BlendMode::MOD;
 /// color multiply: dstRGB = (srcRGB * dstRGB) + (dstRGB * (1-srcA)), dstA = dstA
-pub const SDL_BLENDMODE_MUL: SDL_BlendMode = (0x00000008 as SDL_BlendMode);
-
-pub const SDL_BLENDMODE_INVALID: SDL_BlendMode = (0x7fffffff as SDL_BlendMode);
+pub const SDL_BLENDMODE_MUL: SDL_BlendMode = SDL_BlendMode::MUL;
+pub const SDL_BLENDMODE_INVALID: SDL_BlendMode = SDL_BlendMode::INVALID;
 
 /// The blend operation used when combining source and destination pixel
 /// components.
@@ -95,15 +134,15 @@ impl ::core::fmt::Debug for SDL_BlendOperation {
 
 impl SDL_BlendOperation {
     /// dst + src: supported by all renderers
-    pub const ADD: Self = Self(0x1);
+    pub const ADD: Self = Self((0x1 as ::core::ffi::c_int));
     /// src - dst : supported by D3D, OpenGL, OpenGLES, and Vulkan
-    pub const SUBTRACT: Self = Self(0x2);
+    pub const SUBTRACT: Self = Self((0x2 as ::core::ffi::c_int));
     /// dst - src : supported by D3D, OpenGL, OpenGLES, and Vulkan
-    pub const REV_SUBTRACT: Self = Self(0x3);
+    pub const REV_SUBTRACT: Self = Self((0x3 as ::core::ffi::c_int));
     /// min(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan
-    pub const MINIMUM: Self = Self(0x4);
+    pub const MINIMUM: Self = Self((0x4 as ::core::ffi::c_int));
     /// max(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan
-    pub const MAXIMUM: Self = Self(0x5);
+    pub const MAXIMUM: Self = Self((0x5 as ::core::ffi::c_int));
 }
 
 /// dst + src: supported by all renderers
@@ -174,25 +213,25 @@ impl ::core::fmt::Debug for SDL_BlendFactor {
 
 impl SDL_BlendFactor {
     /// 0, 0, 0, 0
-    pub const ZERO: Self = Self(0x1);
+    pub const ZERO: Self = Self((0x1 as ::core::ffi::c_int));
     /// 1, 1, 1, 1
-    pub const ONE: Self = Self(0x2);
+    pub const ONE: Self = Self((0x2 as ::core::ffi::c_int));
     /// srcR, srcG, srcB, srcA
-    pub const SRC_COLOR: Self = Self(0x3);
+    pub const SRC_COLOR: Self = Self((0x3 as ::core::ffi::c_int));
     /// 1-srcR, 1-srcG, 1-srcB, 1-srcA
-    pub const ONE_MINUS_SRC_COLOR: Self = Self(0x4);
+    pub const ONE_MINUS_SRC_COLOR: Self = Self((0x4 as ::core::ffi::c_int));
     /// srcA, srcA, srcA, srcA
-    pub const SRC_ALPHA: Self = Self(0x5);
+    pub const SRC_ALPHA: Self = Self((0x5 as ::core::ffi::c_int));
     /// 1-srcA, 1-srcA, 1-srcA, 1-srcA
-    pub const ONE_MINUS_SRC_ALPHA: Self = Self(0x6);
+    pub const ONE_MINUS_SRC_ALPHA: Self = Self((0x6 as ::core::ffi::c_int));
     /// dstR, dstG, dstB, dstA
-    pub const DST_COLOR: Self = Self(0x7);
+    pub const DST_COLOR: Self = Self((0x7 as ::core::ffi::c_int));
     /// 1-dstR, 1-dstG, 1-dstB, 1-dstA
-    pub const ONE_MINUS_DST_COLOR: Self = Self(0x8);
+    pub const ONE_MINUS_DST_COLOR: Self = Self((0x8 as ::core::ffi::c_int));
     /// dstA, dstA, dstA, dstA
-    pub const DST_ALPHA: Self = Self(0x9);
+    pub const DST_ALPHA: Self = Self((0x9 as ::core::ffi::c_int));
     /// 1-dstA, 1-dstA, 1-dstA, 1-dstA
-    pub const ONE_MINUS_DST_ALPHA: Self = Self(0xa);
+    pub const ONE_MINUS_DST_ALPHA: Self = Self((0xa as ::core::ffi::c_int));
 }
 
 /// 0, 0, 0, 0

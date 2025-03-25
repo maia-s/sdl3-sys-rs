@@ -113,11 +113,11 @@ impl ::core::fmt::Debug for SDL_AsyncIOTaskType {
 
 impl SDL_AsyncIOTaskType {
     /// A read operation.
-    pub const READ: Self = Self(0);
+    pub const READ: Self = Self((0 as ::core::ffi::c_int));
     /// A write operation.
-    pub const WRITE: Self = Self(1);
+    pub const WRITE: Self = Self((1 as ::core::ffi::c_int));
     /// A close operation.
-    pub const CLOSE: Self = Self(2);
+    pub const CLOSE: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// A read operation.
@@ -165,11 +165,11 @@ impl ::core::fmt::Debug for SDL_AsyncIOResult {
 
 impl SDL_AsyncIOResult {
     /// request was completed without error
-    pub const COMPLETE: Self = Self(0);
+    pub const COMPLETE: Self = Self((0 as ::core::ffi::c_int));
     /// request failed for some reason; check [`SDL_GetError()`]!
-    pub const FAILURE: Self = Self(1);
+    pub const FAILURE: Self = Self((1 as ::core::ffi::c_int));
     /// request was canceled before completing.
-    pub const CANCELED: Self = Self(2);
+    pub const CANCELED: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// request was completed without error

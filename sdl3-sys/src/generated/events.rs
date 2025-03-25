@@ -322,245 +322,245 @@ impl ::core::fmt::Debug for SDL_EventType {
 
 impl SDL_EventType {
     /// Unused (do not remove)
-    pub const FIRST: Self = Self(0);
+    pub const FIRST: Self = Self((0 as Uint32));
     /// User-requested quit
-    pub const QUIT: Self = Self(0x100);
+    pub const QUIT: Self = Self((0x100 as Uint32));
     /// The application is being terminated by the OS. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationWillTerminate()
     /// Called on Android in onDestroy()
-    pub const TERMINATING: Self = Self(257);
+    pub const TERMINATING: Self = Self((257 as Uint32));
     /// The application is low on memory, free memory if possible. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationDidReceiveMemoryWarning()
     /// Called on Android in onTrimMemory()
-    pub const LOW_MEMORY: Self = Self(258);
+    pub const LOW_MEMORY: Self = Self((258 as Uint32));
     /// The application is about to enter the background. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationWillResignActive()
     /// Called on Android in onPause()
-    pub const WILL_ENTER_BACKGROUND: Self = Self(259);
+    pub const WILL_ENTER_BACKGROUND: Self = Self((259 as Uint32));
     /// The application did enter the background and may not get CPU for some time. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationDidEnterBackground()
     /// Called on Android in onPause()
-    pub const DID_ENTER_BACKGROUND: Self = Self(260);
+    pub const DID_ENTER_BACKGROUND: Self = Self((260 as Uint32));
     /// The application is about to enter the foreground. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationWillEnterForeground()
     /// Called on Android in onResume()
-    pub const WILL_ENTER_FOREGROUND: Self = Self(261);
+    pub const WILL_ENTER_FOREGROUND: Self = Self((261 as Uint32));
     /// The application is now interactive. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationDidBecomeActive()
     /// Called on Android in onResume()
-    pub const DID_ENTER_FOREGROUND: Self = Self(262);
+    pub const DID_ENTER_FOREGROUND: Self = Self((262 as Uint32));
     /// The user's locale preferences have changed.
-    pub const LOCALE_CHANGED: Self = Self(263);
+    pub const LOCALE_CHANGED: Self = Self((263 as Uint32));
     /// The system theme changed
-    pub const SYSTEM_THEME_CHANGED: Self = Self(264);
+    pub const SYSTEM_THEME_CHANGED: Self = Self((264 as Uint32));
     /// Display orientation has changed to data1
-    pub const DISPLAY_ORIENTATION: Self = Self(0x151);
+    pub const DISPLAY_ORIENTATION: Self = Self((0x151 as Uint32));
     /// Display has been added to the system
-    pub const DISPLAY_ADDED: Self = Self(338);
+    pub const DISPLAY_ADDED: Self = Self((338 as Uint32));
     /// Display has been removed from the system
-    pub const DISPLAY_REMOVED: Self = Self(339);
+    pub const DISPLAY_REMOVED: Self = Self((339 as Uint32));
     /// Display has changed position
-    pub const DISPLAY_MOVED: Self = Self(340);
+    pub const DISPLAY_MOVED: Self = Self((340 as Uint32));
     /// Display has changed desktop mode
-    pub const DISPLAY_DESKTOP_MODE_CHANGED: Self = Self(341);
+    pub const DISPLAY_DESKTOP_MODE_CHANGED: Self = Self((341 as Uint32));
     /// Display has changed current mode
-    pub const DISPLAY_CURRENT_MODE_CHANGED: Self = Self(342);
+    pub const DISPLAY_CURRENT_MODE_CHANGED: Self = Self((342 as Uint32));
     /// Display has changed content scale
-    pub const DISPLAY_CONTENT_SCALE_CHANGED: Self = Self(343);
+    pub const DISPLAY_CONTENT_SCALE_CHANGED: Self = Self((343 as Uint32));
     pub const DISPLAY_FIRST: Self = SDL_EVENT_DISPLAY_ORIENTATION;
     pub const DISPLAY_LAST: Self = SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED;
     /// Window has been shown
-    pub const WINDOW_SHOWN: Self = Self(0x202);
+    pub const WINDOW_SHOWN: Self = Self((0x202 as Uint32));
     /// Window has been hidden
-    pub const WINDOW_HIDDEN: Self = Self(515);
+    pub const WINDOW_HIDDEN: Self = Self((515 as Uint32));
     /// Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event
-    pub const WINDOW_EXPOSED: Self = Self(516);
+    pub const WINDOW_EXPOSED: Self = Self((516 as Uint32));
     /// Window has been moved to data1, data2
-    pub const WINDOW_MOVED: Self = Self(517);
+    pub const WINDOW_MOVED: Self = Self((517 as Uint32));
     /// Window has been resized to data1xdata2
-    pub const WINDOW_RESIZED: Self = Self(518);
+    pub const WINDOW_RESIZED: Self = Self((518 as Uint32));
     /// The pixel size of the window has changed to data1xdata2
-    pub const WINDOW_PIXEL_SIZE_CHANGED: Self = Self(519);
+    pub const WINDOW_PIXEL_SIZE_CHANGED: Self = Self((519 as Uint32));
     /// The pixel size of a Metal view associated with the window has changed
-    pub const WINDOW_METAL_VIEW_RESIZED: Self = Self(520);
+    pub const WINDOW_METAL_VIEW_RESIZED: Self = Self((520 as Uint32));
     /// Window has been minimized
-    pub const WINDOW_MINIMIZED: Self = Self(521);
+    pub const WINDOW_MINIMIZED: Self = Self((521 as Uint32));
     /// Window has been maximized
-    pub const WINDOW_MAXIMIZED: Self = Self(522);
+    pub const WINDOW_MAXIMIZED: Self = Self((522 as Uint32));
     /// Window has been restored to normal size and position
-    pub const WINDOW_RESTORED: Self = Self(523);
+    pub const WINDOW_RESTORED: Self = Self((523 as Uint32));
     /// Window has gained mouse focus
-    pub const WINDOW_MOUSE_ENTER: Self = Self(524);
+    pub const WINDOW_MOUSE_ENTER: Self = Self((524 as Uint32));
     /// Window has lost mouse focus
-    pub const WINDOW_MOUSE_LEAVE: Self = Self(525);
+    pub const WINDOW_MOUSE_LEAVE: Self = Self((525 as Uint32));
     /// Window has gained keyboard focus
-    pub const WINDOW_FOCUS_GAINED: Self = Self(526);
+    pub const WINDOW_FOCUS_GAINED: Self = Self((526 as Uint32));
     /// Window has lost keyboard focus
-    pub const WINDOW_FOCUS_LOST: Self = Self(527);
+    pub const WINDOW_FOCUS_LOST: Self = Self((527 as Uint32));
     /// The window manager requests that the window be closed
-    pub const WINDOW_CLOSE_REQUESTED: Self = Self(528);
+    pub const WINDOW_CLOSE_REQUESTED: Self = Self((528 as Uint32));
     /// Window had a hit test that wasn't [`SDL_HITTEST_NORMAL`]
-    pub const WINDOW_HIT_TEST: Self = Self(529);
+    pub const WINDOW_HIT_TEST: Self = Self((529 as Uint32));
     /// The ICC profile of the window's display has changed
-    pub const WINDOW_ICCPROF_CHANGED: Self = Self(530);
+    pub const WINDOW_ICCPROF_CHANGED: Self = Self((530 as Uint32));
     /// Window has been moved to display data1
-    pub const WINDOW_DISPLAY_CHANGED: Self = Self(531);
+    pub const WINDOW_DISPLAY_CHANGED: Self = Self((531 as Uint32));
     /// Window display scale has been changed
-    pub const WINDOW_DISPLAY_SCALE_CHANGED: Self = Self(532);
+    pub const WINDOW_DISPLAY_SCALE_CHANGED: Self = Self((532 as Uint32));
     /// The window safe area has been changed
-    pub const WINDOW_SAFE_AREA_CHANGED: Self = Self(533);
+    pub const WINDOW_SAFE_AREA_CHANGED: Self = Self((533 as Uint32));
     /// The window has been occluded
-    pub const WINDOW_OCCLUDED: Self = Self(534);
+    pub const WINDOW_OCCLUDED: Self = Self((534 as Uint32));
     /// The window has entered fullscreen mode
-    pub const WINDOW_ENTER_FULLSCREEN: Self = Self(535);
+    pub const WINDOW_ENTER_FULLSCREEN: Self = Self((535 as Uint32));
     /// The window has left fullscreen mode
-    pub const WINDOW_LEAVE_FULLSCREEN: Self = Self(536);
+    pub const WINDOW_LEAVE_FULLSCREEN: Self = Self((536 as Uint32));
     /// The window with the associated ID is being or has been destroyed. If this message is being handled
     /// in an event watcher, the window handle is still valid and can still be used to retrieve any properties
     /// associated with the window. Otherwise, the handle has already been destroyed and all resources
     /// associated with it are invalid
-    pub const WINDOW_DESTROYED: Self = Self(537);
+    pub const WINDOW_DESTROYED: Self = Self((537 as Uint32));
     /// Window HDR properties have changed
-    pub const WINDOW_HDR_STATE_CHANGED: Self = Self(538);
+    pub const WINDOW_HDR_STATE_CHANGED: Self = Self((538 as Uint32));
     pub const WINDOW_FIRST: Self = SDL_EVENT_WINDOW_SHOWN;
     pub const WINDOW_LAST: Self = SDL_EVENT_WINDOW_HDR_STATE_CHANGED;
     /// Key pressed
-    pub const KEY_DOWN: Self = Self(0x300);
+    pub const KEY_DOWN: Self = Self((0x300 as Uint32));
     /// Key released
-    pub const KEY_UP: Self = Self(769);
+    pub const KEY_UP: Self = Self((769 as Uint32));
     /// Keyboard text editing (composition)
-    pub const TEXT_EDITING: Self = Self(770);
+    pub const TEXT_EDITING: Self = Self((770 as Uint32));
     /// Keyboard text input
-    pub const TEXT_INPUT: Self = Self(771);
+    pub const TEXT_INPUT: Self = Self((771 as Uint32));
     /// Keymap changed due to a system event such as an
     /// input language or keyboard layout change.
-    pub const KEYMAP_CHANGED: Self = Self(772);
+    pub const KEYMAP_CHANGED: Self = Self((772 as Uint32));
     /// A new keyboard has been inserted into the system
-    pub const KEYBOARD_ADDED: Self = Self(773);
+    pub const KEYBOARD_ADDED: Self = Self((773 as Uint32));
     /// A keyboard has been removed
-    pub const KEYBOARD_REMOVED: Self = Self(774);
+    pub const KEYBOARD_REMOVED: Self = Self((774 as Uint32));
     /// Keyboard text editing candidates
-    pub const TEXT_EDITING_CANDIDATES: Self = Self(775);
+    pub const TEXT_EDITING_CANDIDATES: Self = Self((775 as Uint32));
     /// Mouse moved
-    pub const MOUSE_MOTION: Self = Self(0x400);
+    pub const MOUSE_MOTION: Self = Self((0x400 as Uint32));
     /// Mouse button pressed
-    pub const MOUSE_BUTTON_DOWN: Self = Self(1025);
+    pub const MOUSE_BUTTON_DOWN: Self = Self((1025 as Uint32));
     /// Mouse button released
-    pub const MOUSE_BUTTON_UP: Self = Self(1026);
+    pub const MOUSE_BUTTON_UP: Self = Self((1026 as Uint32));
     /// Mouse wheel motion
-    pub const MOUSE_WHEEL: Self = Self(1027);
+    pub const MOUSE_WHEEL: Self = Self((1027 as Uint32));
     /// A new mouse has been inserted into the system
-    pub const MOUSE_ADDED: Self = Self(1028);
+    pub const MOUSE_ADDED: Self = Self((1028 as Uint32));
     /// A mouse has been removed
-    pub const MOUSE_REMOVED: Self = Self(1029);
+    pub const MOUSE_REMOVED: Self = Self((1029 as Uint32));
     /// Joystick axis motion
-    pub const JOYSTICK_AXIS_MOTION: Self = Self(0x600);
+    pub const JOYSTICK_AXIS_MOTION: Self = Self((0x600 as Uint32));
     /// Joystick trackball motion
-    pub const JOYSTICK_BALL_MOTION: Self = Self(1537);
+    pub const JOYSTICK_BALL_MOTION: Self = Self((1537 as Uint32));
     /// Joystick hat position change
-    pub const JOYSTICK_HAT_MOTION: Self = Self(1538);
+    pub const JOYSTICK_HAT_MOTION: Self = Self((1538 as Uint32));
     /// Joystick button pressed
-    pub const JOYSTICK_BUTTON_DOWN: Self = Self(1539);
+    pub const JOYSTICK_BUTTON_DOWN: Self = Self((1539 as Uint32));
     /// Joystick button released
-    pub const JOYSTICK_BUTTON_UP: Self = Self(1540);
+    pub const JOYSTICK_BUTTON_UP: Self = Self((1540 as Uint32));
     /// A new joystick has been inserted into the system
-    pub const JOYSTICK_ADDED: Self = Self(1541);
+    pub const JOYSTICK_ADDED: Self = Self((1541 as Uint32));
     /// An opened joystick has been removed
-    pub const JOYSTICK_REMOVED: Self = Self(1542);
+    pub const JOYSTICK_REMOVED: Self = Self((1542 as Uint32));
     /// Joystick battery level change
-    pub const JOYSTICK_BATTERY_UPDATED: Self = Self(1543);
+    pub const JOYSTICK_BATTERY_UPDATED: Self = Self((1543 as Uint32));
     /// Joystick update is complete
-    pub const JOYSTICK_UPDATE_COMPLETE: Self = Self(1544);
+    pub const JOYSTICK_UPDATE_COMPLETE: Self = Self((1544 as Uint32));
     /// Gamepad axis motion
-    pub const GAMEPAD_AXIS_MOTION: Self = Self(0x650);
+    pub const GAMEPAD_AXIS_MOTION: Self = Self((0x650 as Uint32));
     /// Gamepad button pressed
-    pub const GAMEPAD_BUTTON_DOWN: Self = Self(1617);
+    pub const GAMEPAD_BUTTON_DOWN: Self = Self((1617 as Uint32));
     /// Gamepad button released
-    pub const GAMEPAD_BUTTON_UP: Self = Self(1618);
+    pub const GAMEPAD_BUTTON_UP: Self = Self((1618 as Uint32));
     /// A new gamepad has been inserted into the system
-    pub const GAMEPAD_ADDED: Self = Self(1619);
+    pub const GAMEPAD_ADDED: Self = Self((1619 as Uint32));
     /// A gamepad has been removed
-    pub const GAMEPAD_REMOVED: Self = Self(1620);
+    pub const GAMEPAD_REMOVED: Self = Self((1620 as Uint32));
     /// The gamepad mapping was updated
-    pub const GAMEPAD_REMAPPED: Self = Self(1621);
+    pub const GAMEPAD_REMAPPED: Self = Self((1621 as Uint32));
     /// Gamepad touchpad was touched
-    pub const GAMEPAD_TOUCHPAD_DOWN: Self = Self(1622);
+    pub const GAMEPAD_TOUCHPAD_DOWN: Self = Self((1622 as Uint32));
     /// Gamepad touchpad finger was moved
-    pub const GAMEPAD_TOUCHPAD_MOTION: Self = Self(1623);
+    pub const GAMEPAD_TOUCHPAD_MOTION: Self = Self((1623 as Uint32));
     /// Gamepad touchpad finger was lifted
-    pub const GAMEPAD_TOUCHPAD_UP: Self = Self(1624);
+    pub const GAMEPAD_TOUCHPAD_UP: Self = Self((1624 as Uint32));
     /// Gamepad sensor was updated
-    pub const GAMEPAD_SENSOR_UPDATE: Self = Self(1625);
+    pub const GAMEPAD_SENSOR_UPDATE: Self = Self((1625 as Uint32));
     /// Gamepad update is complete
-    pub const GAMEPAD_UPDATE_COMPLETE: Self = Self(1626);
+    pub const GAMEPAD_UPDATE_COMPLETE: Self = Self((1626 as Uint32));
     /// Gamepad Steam handle has changed
-    pub const GAMEPAD_STEAM_HANDLE_UPDATED: Self = Self(1627);
-    pub const FINGER_DOWN: Self = Self(0x700);
-    pub const FINGER_UP: Self = Self(1793);
-    pub const FINGER_MOTION: Self = Self(1794);
-    pub const FINGER_CANCELED: Self = Self(1795);
+    pub const GAMEPAD_STEAM_HANDLE_UPDATED: Self = Self((1627 as Uint32));
+    pub const FINGER_DOWN: Self = Self((0x700 as Uint32));
+    pub const FINGER_UP: Self = Self((1793 as Uint32));
+    pub const FINGER_MOTION: Self = Self((1794 as Uint32));
+    pub const FINGER_CANCELED: Self = Self((1795 as Uint32));
     /// The clipboard or primary selection changed
-    pub const CLIPBOARD_UPDATE: Self = Self(0x900);
+    pub const CLIPBOARD_UPDATE: Self = Self((0x900 as Uint32));
     /// The system requests a file open
-    pub const DROP_FILE: Self = Self(0x1000);
+    pub const DROP_FILE: Self = Self((0x1000 as Uint32));
     /// text/plain drag-and-drop event
-    pub const DROP_TEXT: Self = Self(4097);
+    pub const DROP_TEXT: Self = Self((4097 as Uint32));
     /// A new set of drops is beginning (NULL filename)
-    pub const DROP_BEGIN: Self = Self(4098);
+    pub const DROP_BEGIN: Self = Self((4098 as Uint32));
     /// Current set of drops is now complete (NULL filename)
-    pub const DROP_COMPLETE: Self = Self(4099);
+    pub const DROP_COMPLETE: Self = Self((4099 as Uint32));
     /// Position while moving over the window
-    pub const DROP_POSITION: Self = Self(4100);
+    pub const DROP_POSITION: Self = Self((4100 as Uint32));
     /// A new audio device is available
-    pub const AUDIO_DEVICE_ADDED: Self = Self(0x1100);
+    pub const AUDIO_DEVICE_ADDED: Self = Self((0x1100 as Uint32));
     /// An audio device has been removed.
-    pub const AUDIO_DEVICE_REMOVED: Self = Self(4353);
+    pub const AUDIO_DEVICE_REMOVED: Self = Self((4353 as Uint32));
     /// An audio device's format has been changed by the system.
-    pub const AUDIO_DEVICE_FORMAT_CHANGED: Self = Self(4354);
+    pub const AUDIO_DEVICE_FORMAT_CHANGED: Self = Self((4354 as Uint32));
     /// A sensor was updated
-    pub const SENSOR_UPDATE: Self = Self(0x1200);
+    pub const SENSOR_UPDATE: Self = Self((0x1200 as Uint32));
     /// Pressure-sensitive pen has become available
-    pub const PEN_PROXIMITY_IN: Self = Self(0x1300);
+    pub const PEN_PROXIMITY_IN: Self = Self((0x1300 as Uint32));
     /// Pressure-sensitive pen has become unavailable
-    pub const PEN_PROXIMITY_OUT: Self = Self(4865);
+    pub const PEN_PROXIMITY_OUT: Self = Self((4865 as Uint32));
     /// Pressure-sensitive pen touched drawing surface
-    pub const PEN_DOWN: Self = Self(4866);
+    pub const PEN_DOWN: Self = Self((4866 as Uint32));
     /// Pressure-sensitive pen stopped touching drawing surface
-    pub const PEN_UP: Self = Self(4867);
+    pub const PEN_UP: Self = Self((4867 as Uint32));
     /// Pressure-sensitive pen button pressed
-    pub const PEN_BUTTON_DOWN: Self = Self(4868);
+    pub const PEN_BUTTON_DOWN: Self = Self((4868 as Uint32));
     /// Pressure-sensitive pen button released
-    pub const PEN_BUTTON_UP: Self = Self(4869);
+    pub const PEN_BUTTON_UP: Self = Self((4869 as Uint32));
     /// Pressure-sensitive pen is moving on the tablet
-    pub const PEN_MOTION: Self = Self(4870);
+    pub const PEN_MOTION: Self = Self((4870 as Uint32));
     /// Pressure-sensitive pen angle/pressure/etc changed
-    pub const PEN_AXIS: Self = Self(4871);
+    pub const PEN_AXIS: Self = Self((4871 as Uint32));
     /// A new camera device is available
-    pub const CAMERA_DEVICE_ADDED: Self = Self(0x1400);
+    pub const CAMERA_DEVICE_ADDED: Self = Self((0x1400 as Uint32));
     /// A camera device has been removed.
-    pub const CAMERA_DEVICE_REMOVED: Self = Self(5121);
+    pub const CAMERA_DEVICE_REMOVED: Self = Self((5121 as Uint32));
     /// A camera device has been approved for use by the user.
-    pub const CAMERA_DEVICE_APPROVED: Self = Self(5122);
+    pub const CAMERA_DEVICE_APPROVED: Self = Self((5122 as Uint32));
     /// A camera device has been denied for use by the user.
-    pub const CAMERA_DEVICE_DENIED: Self = Self(5123);
+    pub const CAMERA_DEVICE_DENIED: Self = Self((5123 as Uint32));
     /// The render targets have been reset and their contents need to be updated
-    pub const RENDER_TARGETS_RESET: Self = Self(0x2000);
+    pub const RENDER_TARGETS_RESET: Self = Self((0x2000 as Uint32));
     /// The device has been reset and all textures need to be recreated
-    pub const RENDER_DEVICE_RESET: Self = Self(8193);
+    pub const RENDER_DEVICE_RESET: Self = Self((8193 as Uint32));
     /// The device has been lost and can't be recovered.
-    pub const RENDER_DEVICE_LOST: Self = Self(8194);
-    pub const PRIVATE0: Self = Self(0x4000);
-    pub const PRIVATE1: Self = Self(16385);
-    pub const PRIVATE2: Self = Self(16386);
-    pub const PRIVATE3: Self = Self(16387);
+    pub const RENDER_DEVICE_LOST: Self = Self((8194 as Uint32));
+    pub const PRIVATE0: Self = Self((0x4000 as Uint32));
+    pub const PRIVATE1: Self = Self((16385 as Uint32));
+    pub const PRIVATE2: Self = Self((16386 as Uint32));
+    pub const PRIVATE3: Self = Self((16387 as Uint32));
     /// Signals the end of an event poll cycle
-    pub const POLL_SENTINEL: Self = Self(0x7f00);
+    pub const POLL_SENTINEL: Self = Self((0x7f00 as Uint32));
     ///  Events [`SDL_EVENT_USER`] through [`SDL_EVENT_LAST`] are for your use,
     /// and should be allocated with [`SDL_RegisterEvents()`]
-    pub const USER: Self = Self(0x8000);
+    pub const USER: Self = Self((0x8000 as Uint32));
     /// *  This last event is only for bounding internal arrays
-    pub const LAST: Self = Self(0xffff);
-    pub const ENUM_PADDING: Self = Self(0x7fffffff);
+    pub const LAST: Self = Self((0xffff as Uint32));
+    pub const ENUM_PADDING: Self = Self((0x7fffffff as Uint32));
 }
 
 /// Unused (do not remove)
@@ -1970,11 +1970,11 @@ impl ::core::fmt::Debug for SDL_EventAction {
 
 impl SDL_EventAction {
     /// Add events to the back of the queue.
-    pub const ADDEVENT: Self = Self(0);
+    pub const ADDEVENT: Self = Self((0 as ::core::ffi::c_int));
     /// Check but don't remove events from the queue front.
-    pub const PEEKEVENT: Self = Self(1);
+    pub const PEEKEVENT: Self = Self((1 as ::core::ffi::c_int));
     /// Retrieve/remove events from the front of the queue.
-    pub const GETEVENT: Self = Self(2);
+    pub const GETEVENT: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Add events to the back of the queue.

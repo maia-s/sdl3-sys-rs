@@ -28,7 +28,19 @@ use super::error::*;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_PropertiesID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_PropertiesID(pub Uint32);
+
+impl From<SDL_PropertiesID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_PropertiesID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_PropertiesID {}
 
 /// SDL property type
 ///
@@ -73,12 +85,12 @@ impl ::core::fmt::Debug for SDL_PropertyType {
 }
 
 impl SDL_PropertyType {
-    pub const INVALID: Self = Self(0);
-    pub const POINTER: Self = Self(1);
-    pub const STRING: Self = Self(2);
-    pub const NUMBER: Self = Self(3);
-    pub const FLOAT: Self = Self(4);
-    pub const BOOLEAN: Self = Self(5);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
+    pub const POINTER: Self = Self((1 as ::core::ffi::c_int));
+    pub const STRING: Self = Self((2 as ::core::ffi::c_int));
+    pub const NUMBER: Self = Self((3 as ::core::ffi::c_int));
+    pub const FLOAT: Self = Self((4 as ::core::ffi::c_int));
+    pub const BOOLEAN: Self = Self((5 as ::core::ffi::c_int));
 }
 
 pub const SDL_PROPERTY_TYPE_INVALID: SDL_PropertyType = SDL_PropertyType::INVALID;

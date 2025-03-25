@@ -120,18 +120,18 @@ impl ::core::fmt::Debug for SDL_GamepadType {
 }
 
 impl SDL_GamepadType {
-    pub const UNKNOWN: Self = Self(0);
-    pub const STANDARD: Self = Self(1);
-    pub const XBOX360: Self = Self(2);
-    pub const XBOXONE: Self = Self(3);
-    pub const PS3: Self = Self(4);
-    pub const PS4: Self = Self(5);
-    pub const PS5: Self = Self(6);
-    pub const NINTENDO_SWITCH_PRO: Self = Self(7);
-    pub const NINTENDO_SWITCH_JOYCON_LEFT: Self = Self(8);
-    pub const NINTENDO_SWITCH_JOYCON_RIGHT: Self = Self(9);
-    pub const NINTENDO_SWITCH_JOYCON_PAIR: Self = Self(10);
-    pub const COUNT: Self = Self(11);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
+    pub const STANDARD: Self = Self((1 as ::core::ffi::c_int));
+    pub const XBOX360: Self = Self((2 as ::core::ffi::c_int));
+    pub const XBOXONE: Self = Self((3 as ::core::ffi::c_int));
+    pub const PS3: Self = Self((4 as ::core::ffi::c_int));
+    pub const PS4: Self = Self((5 as ::core::ffi::c_int));
+    pub const PS5: Self = Self((6 as ::core::ffi::c_int));
+    pub const NINTENDO_SWITCH_PRO: Self = Self((7 as ::core::ffi::c_int));
+    pub const NINTENDO_SWITCH_JOYCON_LEFT: Self = Self((8 as ::core::ffi::c_int));
+    pub const NINTENDO_SWITCH_JOYCON_RIGHT: Self = Self((9 as ::core::ffi::c_int));
+    pub const NINTENDO_SWITCH_JOYCON_PAIR: Self = Self((10 as ::core::ffi::c_int));
+    pub const COUNT: Self = Self((11 as ::core::ffi::c_int));
 }
 
 pub const SDL_GAMEPAD_TYPE_UNKNOWN: SDL_GamepadType = SDL_GamepadType::UNKNOWN;
@@ -256,49 +256,49 @@ impl ::core::fmt::Debug for SDL_GamepadButton {
 }
 
 impl SDL_GamepadButton {
-    pub const INVALID: Self = Self(-1_i32);
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
     /// Bottom face button (e.g. Xbox A button)
-    pub const SOUTH: Self = Self(0_i32);
+    pub const SOUTH: Self = Self((0_i32 as ::core::ffi::c_int));
     /// Right face button (e.g. Xbox B button)
-    pub const EAST: Self = Self(1_i32);
+    pub const EAST: Self = Self((1_i32 as ::core::ffi::c_int));
     /// Left face button (e.g. Xbox X button)
-    pub const WEST: Self = Self(2_i32);
+    pub const WEST: Self = Self((2_i32 as ::core::ffi::c_int));
     /// Top face button (e.g. Xbox Y button)
-    pub const NORTH: Self = Self(3_i32);
-    pub const BACK: Self = Self(4_i32);
-    pub const GUIDE: Self = Self(5_i32);
-    pub const START: Self = Self(6_i32);
-    pub const LEFT_STICK: Self = Self(7_i32);
-    pub const RIGHT_STICK: Self = Self(8_i32);
-    pub const LEFT_SHOULDER: Self = Self(9_i32);
-    pub const RIGHT_SHOULDER: Self = Self(10_i32);
-    pub const DPAD_UP: Self = Self(11_i32);
-    pub const DPAD_DOWN: Self = Self(12_i32);
-    pub const DPAD_LEFT: Self = Self(13_i32);
-    pub const DPAD_RIGHT: Self = Self(14_i32);
+    pub const NORTH: Self = Self((3_i32 as ::core::ffi::c_int));
+    pub const BACK: Self = Self((4_i32 as ::core::ffi::c_int));
+    pub const GUIDE: Self = Self((5_i32 as ::core::ffi::c_int));
+    pub const START: Self = Self((6_i32 as ::core::ffi::c_int));
+    pub const LEFT_STICK: Self = Self((7_i32 as ::core::ffi::c_int));
+    pub const RIGHT_STICK: Self = Self((8_i32 as ::core::ffi::c_int));
+    pub const LEFT_SHOULDER: Self = Self((9_i32 as ::core::ffi::c_int));
+    pub const RIGHT_SHOULDER: Self = Self((10_i32 as ::core::ffi::c_int));
+    pub const DPAD_UP: Self = Self((11_i32 as ::core::ffi::c_int));
+    pub const DPAD_DOWN: Self = Self((12_i32 as ::core::ffi::c_int));
+    pub const DPAD_LEFT: Self = Self((13_i32 as ::core::ffi::c_int));
+    pub const DPAD_RIGHT: Self = Self((14_i32 as ::core::ffi::c_int));
     /// Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button, Google Stadia capture button)
-    pub const MISC1: Self = Self(15_i32);
+    pub const MISC1: Self = Self((15_i32 as ::core::ffi::c_int));
     /// Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1)
-    pub const RIGHT_PADDLE1: Self = Self(16_i32);
+    pub const RIGHT_PADDLE1: Self = Self((16_i32 as ::core::ffi::c_int));
     /// Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3)
-    pub const LEFT_PADDLE1: Self = Self(17_i32);
+    pub const LEFT_PADDLE1: Self = Self((17_i32 as ::core::ffi::c_int));
     /// Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2)
-    pub const RIGHT_PADDLE2: Self = Self(18_i32);
+    pub const RIGHT_PADDLE2: Self = Self((18_i32 as ::core::ffi::c_int));
     /// Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4)
-    pub const LEFT_PADDLE2: Self = Self(19_i32);
+    pub const LEFT_PADDLE2: Self = Self((19_i32 as ::core::ffi::c_int));
     /// PS4/PS5 touchpad button
-    pub const TOUCHPAD: Self = Self(20_i32);
+    pub const TOUCHPAD: Self = Self((20_i32 as ::core::ffi::c_int));
     /// Additional button
-    pub const MISC2: Self = Self(21_i32);
+    pub const MISC2: Self = Self((21_i32 as ::core::ffi::c_int));
     /// Additional button
-    pub const MISC3: Self = Self(22_i32);
+    pub const MISC3: Self = Self((22_i32 as ::core::ffi::c_int));
     /// Additional button
-    pub const MISC4: Self = Self(23_i32);
+    pub const MISC4: Self = Self((23_i32 as ::core::ffi::c_int));
     /// Additional button
-    pub const MISC5: Self = Self(24_i32);
+    pub const MISC5: Self = Self((24_i32 as ::core::ffi::c_int));
     /// Additional button
-    pub const MISC6: Self = Self(25_i32);
-    pub const COUNT: Self = Self(26_i32);
+    pub const MISC6: Self = Self((25_i32 as ::core::ffi::c_int));
+    pub const COUNT: Self = Self((26_i32 as ::core::ffi::c_int));
 }
 
 pub const SDL_GAMEPAD_BUTTON_INVALID: SDL_GamepadButton = SDL_GamepadButton::INVALID;
@@ -400,15 +400,15 @@ impl ::core::fmt::Debug for SDL_GamepadButtonLabel {
 }
 
 impl SDL_GamepadButtonLabel {
-    pub const UNKNOWN: Self = Self(0);
-    pub const A: Self = Self(1);
-    pub const B: Self = Self(2);
-    pub const X: Self = Self(3);
-    pub const Y: Self = Self(4);
-    pub const CROSS: Self = Self(5);
-    pub const CIRCLE: Self = Self(6);
-    pub const SQUARE: Self = Self(7);
-    pub const TRIANGLE: Self = Self(8);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
+    pub const A: Self = Self((1 as ::core::ffi::c_int));
+    pub const B: Self = Self((2 as ::core::ffi::c_int));
+    pub const X: Self = Self((3 as ::core::ffi::c_int));
+    pub const Y: Self = Self((4 as ::core::ffi::c_int));
+    pub const CROSS: Self = Self((5 as ::core::ffi::c_int));
+    pub const CIRCLE: Self = Self((6 as ::core::ffi::c_int));
+    pub const SQUARE: Self = Self((7 as ::core::ffi::c_int));
+    pub const TRIANGLE: Self = Self((8 as ::core::ffi::c_int));
 }
 
 pub const SDL_GAMEPAD_BUTTON_LABEL_UNKNOWN: SDL_GamepadButtonLabel =
@@ -479,14 +479,14 @@ impl ::core::fmt::Debug for SDL_GamepadAxis {
 }
 
 impl SDL_GamepadAxis {
-    pub const INVALID: Self = Self(-1_i32);
-    pub const LEFTX: Self = Self(0_i32);
-    pub const LEFTY: Self = Self(1_i32);
-    pub const RIGHTX: Self = Self(2_i32);
-    pub const RIGHTY: Self = Self(3_i32);
-    pub const LEFT_TRIGGER: Self = Self(4_i32);
-    pub const RIGHT_TRIGGER: Self = Self(5_i32);
-    pub const COUNT: Self = Self(6_i32);
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
+    pub const LEFTX: Self = Self((0_i32 as ::core::ffi::c_int));
+    pub const LEFTY: Self = Self((1_i32 as ::core::ffi::c_int));
+    pub const RIGHTX: Self = Self((2_i32 as ::core::ffi::c_int));
+    pub const RIGHTY: Self = Self((3_i32 as ::core::ffi::c_int));
+    pub const LEFT_TRIGGER: Self = Self((4_i32 as ::core::ffi::c_int));
+    pub const RIGHT_TRIGGER: Self = Self((5_i32 as ::core::ffi::c_int));
+    pub const COUNT: Self = Self((6_i32 as ::core::ffi::c_int));
 }
 
 pub const SDL_GAMEPAD_AXIS_INVALID: SDL_GamepadAxis = SDL_GamepadAxis::INVALID;
@@ -542,10 +542,10 @@ impl ::core::fmt::Debug for SDL_GamepadBindingType {
 }
 
 impl SDL_GamepadBindingType {
-    pub const NONE: Self = Self(0);
-    pub const BUTTON: Self = Self(1);
-    pub const AXIS: Self = Self(2);
-    pub const HAT: Self = Self(3);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
+    pub const BUTTON: Self = Self((1 as ::core::ffi::c_int));
+    pub const AXIS: Self = Self((2 as ::core::ffi::c_int));
+    pub const HAT: Self = Self((3 as ::core::ffi::c_int));
 }
 
 pub const SDL_GAMEPAD_BINDTYPE_NONE: SDL_GamepadBindingType = SDL_GamepadBindingType::NONE;

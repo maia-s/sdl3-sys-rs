@@ -62,7 +62,19 @@ use super::surface::*;
 ///
 /// ### See also
 /// - [`SDL_GetCameras`]
-pub type SDL_CameraID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_CameraID(pub Uint32);
+
+impl From<SDL_CameraID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_CameraID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_CameraID {}
 
 /// The details of an output format for a camera device.
 ///
@@ -133,9 +145,9 @@ impl ::core::fmt::Debug for SDL_CameraPosition {
 }
 
 impl SDL_CameraPosition {
-    pub const UNKNOWN: Self = Self(0);
-    pub const FRONT_FACING: Self = Self(1);
-    pub const BACK_FACING: Self = Self(2);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
+    pub const FRONT_FACING: Self = Self((1 as ::core::ffi::c_int));
+    pub const BACK_FACING: Self = Self((2 as ::core::ffi::c_int));
 }
 
 pub const SDL_CAMERA_POSITION_UNKNOWN: SDL_CameraPosition = SDL_CameraPosition::UNKNOWN;

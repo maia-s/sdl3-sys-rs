@@ -37,7 +37,7 @@ use sdl3_sys::{
     },
     stdinc::SDL_rand,
     timer::SDL_GetTicks,
-    video::{SDL_DestroyWindow, SDL_Window},
+    video::{SDL_DestroyWindow, SDL_Window, SDL_WindowFlags},
 };
 
 const STEP_RATE_IN_MILLISECONDS: u32 = 125;
@@ -368,7 +368,7 @@ fn app_init() -> Option<Box<Mutex<AppState>>> {
             c"examples/demo/snake".as_ptr(),
             SDL_WINDOW_WIDTH,
             SDL_WINDOW_HEIGHT,
-            0,
+            SDL_WindowFlags(0),
             &mut app.window,
             &mut app.renderer,
         ) {

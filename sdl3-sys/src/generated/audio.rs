@@ -212,23 +212,23 @@ impl ::core::fmt::Debug for SDL_AudioFormat {
 
 impl SDL_AudioFormat {
     /// Unspecified audio format
-    pub const UNKNOWN: Self = Self(0x0000);
+    pub const UNKNOWN: Self = Self((0x0000 as ::core::ffi::c_uint));
     /// Unsigned 8-bit samples
-    pub const U8: Self = Self(0x0008);
+    pub const U8: Self = Self((0x0008 as ::core::ffi::c_uint));
     /// Signed 8-bit samples
-    pub const S8: Self = Self(0x8008);
+    pub const S8: Self = Self((0x8008 as ::core::ffi::c_uint));
     /// Signed 16-bit samples
-    pub const S16LE: Self = Self(0x8010);
+    pub const S16LE: Self = Self((0x8010 as ::core::ffi::c_uint));
     /// As above, but big-endian byte order
-    pub const S16BE: Self = Self(0x9010);
+    pub const S16BE: Self = Self((0x9010 as ::core::ffi::c_uint));
     /// 32-bit integer samples
-    pub const S32LE: Self = Self(0x8020);
+    pub const S32LE: Self = Self((0x8020 as ::core::ffi::c_uint));
     /// As above, but big-endian byte order
-    pub const S32BE: Self = Self(0x9020);
+    pub const S32BE: Self = Self((0x9020 as ::core::ffi::c_uint));
     /// 32-bit floating point samples
-    pub const F32LE: Self = Self(0x8120);
+    pub const F32LE: Self = Self((0x8120 as ::core::ffi::c_uint));
     /// As above, but big-endian byte order
-    pub const F32BE: Self = Self(0x9120);
+    pub const F32BE: Self = Self((0x9120 as ::core::ffi::c_uint));
     #[cfg(target_endian = "little")]
     #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const S16: Self = SDL_AUDIO_S16LE;
@@ -320,9 +320,10 @@ pub const fn SDL_DEFINE_AUDIO_FORMAT(
     size: ::core::primitive::u8,
 ) -> SDL_AudioFormat {
     SDL_AudioFormat(
-        (((((((signed_) as Uint16) << 15) | (((bigendian) as Uint16) << 12))
+        ((((((((signed_) as Uint16) << 15) | (((bigendian) as Uint16) << 12))
             | (((flt) as Uint16) << 8)) as ::core::primitive::u32)
-            | (((size as ::core::ffi::c_int) as ::core::primitive::u32) & SDL_AUDIO_MASK_BITSIZE)),
+            | (((size as ::core::ffi::c_int) as ::core::primitive::u32) & SDL_AUDIO_MASK_BITSIZE))
+            as ::core::ffi::c_uint),
     )
 }
 
@@ -494,11 +495,54 @@ pub const fn SDL_AUDIO_ISUNSIGNED(x: SDL_AudioFormat) -> ::core::primitive::bool
 /// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK`] | A value used to request a default playback audio device.  Several functions that require an [`SDL_AudioDeviceID`] will accept this value to signify the app just wants the system to choose a default device instead of the app providing a specific one.  \since This macro is available since SDL 3.2.0. |
-/// | [`SDL_AUDIO_DEVICE_DEFAULT_RECORDING`] | A value used to request a default recording audio device.  Several functions that require an [`SDL_AudioDeviceID`] will accept this value to signify the app just wants the system to choose a default device instead of the app providing a specific one.  \since This macro is available since SDL 3.2.0. |
-pub type SDL_AudioDeviceID = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`DEFAULT_PLAYBACK`](SDL_AudioDeviceID::DEFAULT_PLAYBACK) | [`SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK`] | A value used to request a default playback audio device.  Several functions that require an [`SDL_AudioDeviceID`] will accept this value to signify the app just wants the system to choose a default device instead of the app providing a specific one.  \since This macro is available since SDL 3.2.0. |
+/// | [`DEFAULT_RECORDING`](SDL_AudioDeviceID::DEFAULT_RECORDING) | [`SDL_AUDIO_DEVICE_DEFAULT_RECORDING`] | A value used to request a default recording audio device.  Several functions that require an [`SDL_AudioDeviceID`] will accept this value to signify the app just wants the system to choose a default device instead of the app providing a specific one.  \since This macro is available since SDL 3.2.0. |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SDL_AudioDeviceID(pub Uint32);
+
+impl From<SDL_AudioDeviceID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_AudioDeviceID) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_AudioDeviceID {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::DEFAULT_PLAYBACK => "SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK",
+            Self::DEFAULT_RECORDING => "SDL_AUDIO_DEVICE_DEFAULT_RECORDING",
+
+            _ => return write!(f, "SDL_AudioDeviceID({})", self.0),
+        })
+    }
+}
+
+impl SDL_AudioDeviceID {
+    /// A value used to request a default playback audio device.
+    ///
+    /// Several functions that require an [`SDL_AudioDeviceID`] will accept this value
+    /// to signify the app just wants the system to choose a default device instead
+    /// of the app providing a specific one.
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.2.0.
+    pub const DEFAULT_PLAYBACK: Self = Self((0xffffffff as Uint32));
+    /// A value used to request a default recording audio device.
+    ///
+    /// Several functions that require an [`SDL_AudioDeviceID`] will accept this value
+    /// to signify the app just wants the system to choose a default device instead
+    /// of the app providing a specific one.
+    ///
+    /// ### Availability
+    /// This macro is available since SDL 3.2.0.
+    pub const DEFAULT_RECORDING: Self = Self((0xfffffffe as Uint32));
+}
 
 /// A value used to request a default playback audio device.
 ///
@@ -508,8 +552,8 @@ pub type SDL_AudioDeviceID = Uint32;
 ///
 /// ### Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID = (0xffffffff as SDL_AudioDeviceID);
-
+pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID =
+    SDL_AudioDeviceID::DEFAULT_PLAYBACK;
 /// A value used to request a default recording audio device.
 ///
 /// Several functions that require an [`SDL_AudioDeviceID`] will accept this value
@@ -518,7 +562,8 @@ pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID = (0xffffffff as 
 ///
 /// ### Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID = (0xfffffffe as SDL_AudioDeviceID);
+pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID =
+    SDL_AudioDeviceID::DEFAULT_RECORDING;
 
 /// Format specifier for audio data.
 ///

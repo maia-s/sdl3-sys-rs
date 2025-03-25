@@ -28,7 +28,19 @@ use super::video::*;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_KeyboardID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_KeyboardID(pub Uint32);
+
+impl From<SDL_KeyboardID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_KeyboardID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_KeyboardID {}
 
 extern "C" {
     /// Return whether a keyboard is currently connected.
@@ -496,23 +508,23 @@ impl ::core::fmt::Debug for SDL_TextInputType {
 
 impl SDL_TextInputType {
     /// The input is text
-    pub const TEXT: Self = Self(0);
+    pub const TEXT: Self = Self((0 as ::core::ffi::c_int));
     /// The input is a person's name
-    pub const TEXT_NAME: Self = Self(1);
+    pub const TEXT_NAME: Self = Self((1 as ::core::ffi::c_int));
     /// The input is an e-mail address
-    pub const TEXT_EMAIL: Self = Self(2);
+    pub const TEXT_EMAIL: Self = Self((2 as ::core::ffi::c_int));
     /// The input is a username
-    pub const TEXT_USERNAME: Self = Self(3);
+    pub const TEXT_USERNAME: Self = Self((3 as ::core::ffi::c_int));
     /// The input is a secure password that is hidden
-    pub const TEXT_PASSWORD_HIDDEN: Self = Self(4);
+    pub const TEXT_PASSWORD_HIDDEN: Self = Self((4 as ::core::ffi::c_int));
     /// The input is a secure password that is visible
-    pub const TEXT_PASSWORD_VISIBLE: Self = Self(5);
+    pub const TEXT_PASSWORD_VISIBLE: Self = Self((5 as ::core::ffi::c_int));
     /// The input is a number
-    pub const NUMBER: Self = Self(6);
+    pub const NUMBER: Self = Self((6 as ::core::ffi::c_int));
     /// The input is a secure PIN that is hidden
-    pub const NUMBER_PASSWORD_HIDDEN: Self = Self(7);
+    pub const NUMBER_PASSWORD_HIDDEN: Self = Self((7 as ::core::ffi::c_int));
     /// The input is a secure PIN that is visible
-    pub const NUMBER_PASSWORD_VISIBLE: Self = Self(8);
+    pub const NUMBER_PASSWORD_VISIBLE: Self = Self((8 as ::core::ffi::c_int));
 }
 
 /// The input is text
@@ -585,13 +597,13 @@ impl ::core::fmt::Debug for SDL_Capitalization {
 
 impl SDL_Capitalization {
     /// No auto-capitalization will be done
-    pub const NONE: Self = Self(0);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
     /// The first letter of sentences will be capitalized
-    pub const SENTENCES: Self = Self(1);
+    pub const SENTENCES: Self = Self((1 as ::core::ffi::c_int));
     /// The first letter of words will be capitalized
-    pub const WORDS: Self = Self(2);
+    pub const WORDS: Self = Self((2 as ::core::ffi::c_int));
     /// All letters will be capitalized
-    pub const LETTERS: Self = Self(3);
+    pub const LETTERS: Self = Self((3 as ::core::ffi::c_int));
 }
 
 /// No auto-capitalization will be done

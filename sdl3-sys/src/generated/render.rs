@@ -100,11 +100,11 @@ impl ::core::fmt::Debug for SDL_TextureAccess {
 
 impl SDL_TextureAccess {
     /// Changes rarely, not lockable
-    pub const STATIC: Self = Self(0);
+    pub const STATIC: Self = Self((0 as ::core::ffi::c_int));
     /// Changes frequently, lockable
-    pub const STREAMING: Self = Self(1);
+    pub const STREAMING: Self = Self((1 as ::core::ffi::c_int));
     /// Texture can be used as a render target
-    pub const TARGET: Self = Self(2);
+    pub const TARGET: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Changes rarely, not lockable
@@ -156,15 +156,15 @@ impl ::core::fmt::Debug for SDL_RendererLogicalPresentation {
 
 impl SDL_RendererLogicalPresentation {
     /// There is no logical size in effect
-    pub const DISABLED: Self = Self(0);
+    pub const DISABLED: Self = Self((0 as ::core::ffi::c_int));
     /// The rendered content is stretched to the output resolution
-    pub const STRETCH: Self = Self(1);
+    pub const STRETCH: Self = Self((1 as ::core::ffi::c_int));
     /// The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars
-    pub const LETTERBOX: Self = Self(2);
+    pub const LETTERBOX: Self = Self((2 as ::core::ffi::c_int));
     /// The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds
-    pub const OVERSCAN: Self = Self(3);
+    pub const OVERSCAN: Self = Self((3 as ::core::ffi::c_int));
     /// The rendered content is scaled up by integer multiples to fit the output resolution
-    pub const INTEGER_SCALE: Self = Self(4);
+    pub const INTEGER_SCALE: Self = Self((4 as ::core::ffi::c_int));
 }
 
 /// There is no logical size in effect
@@ -3535,7 +3535,7 @@ extern "C" {
 
 pub const SDL_RENDERER_VSYNC_DISABLED: ::core::ffi::c_int = (0 as ::core::ffi::c_int);
 
-pub const SDL_RENDERER_VSYNC_ADAPTIVE: ::core::ffi::c_int = ((-1_i32) as ::core::ffi::c_int);
+pub const SDL_RENDERER_VSYNC_ADAPTIVE: ::core::ffi::c_int = (-1_i32 as ::core::ffi::c_int);
 
 extern "C" {
     /// Get VSync of the given renderer.

@@ -48,7 +48,19 @@ use super::sensor::*;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_JoystickID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_JoystickID(pub Uint32);
+
+impl From<SDL_JoystickID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_JoystickID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_JoystickID {}
 
 /// An enum of some common joystick types.
 ///
@@ -110,17 +122,17 @@ impl ::core::fmt::Debug for SDL_JoystickType {
 }
 
 impl SDL_JoystickType {
-    pub const UNKNOWN: Self = Self(0);
-    pub const GAMEPAD: Self = Self(1);
-    pub const WHEEL: Self = Self(2);
-    pub const ARCADE_STICK: Self = Self(3);
-    pub const FLIGHT_STICK: Self = Self(4);
-    pub const DANCE_PAD: Self = Self(5);
-    pub const GUITAR: Self = Self(6);
-    pub const DRUM_KIT: Self = Self(7);
-    pub const ARCADE_PAD: Self = Self(8);
-    pub const THROTTLE: Self = Self(9);
-    pub const COUNT: Self = Self(10);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
+    pub const GAMEPAD: Self = Self((1 as ::core::ffi::c_int));
+    pub const WHEEL: Self = Self((2 as ::core::ffi::c_int));
+    pub const ARCADE_STICK: Self = Self((3 as ::core::ffi::c_int));
+    pub const FLIGHT_STICK: Self = Self((4 as ::core::ffi::c_int));
+    pub const DANCE_PAD: Self = Self((5 as ::core::ffi::c_int));
+    pub const GUITAR: Self = Self((6 as ::core::ffi::c_int));
+    pub const DRUM_KIT: Self = Self((7 as ::core::ffi::c_int));
+    pub const ARCADE_PAD: Self = Self((8 as ::core::ffi::c_int));
+    pub const THROTTLE: Self = Self((9 as ::core::ffi::c_int));
+    pub const COUNT: Self = Self((10 as ::core::ffi::c_int));
 }
 
 pub const SDL_JOYSTICK_TYPE_UNKNOWN: SDL_JoystickType = SDL_JoystickType::UNKNOWN;
@@ -177,10 +189,10 @@ impl ::core::fmt::Debug for SDL_JoystickConnectionState {
 }
 
 impl SDL_JoystickConnectionState {
-    pub const INVALID: Self = Self(-1_i32);
-    pub const UNKNOWN: Self = Self(0_i32);
-    pub const WIRED: Self = Self(1_i32);
-    pub const WIRELESS: Self = Self(2_i32);
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
+    pub const UNKNOWN: Self = Self((0_i32 as ::core::ffi::c_int));
+    pub const WIRED: Self = Self((1_i32 as ::core::ffi::c_int));
+    pub const WIRELESS: Self = Self((2_i32 as ::core::ffi::c_int));
 }
 
 pub const SDL_JOYSTICK_CONNECTION_INVALID: SDL_JoystickConnectionState =

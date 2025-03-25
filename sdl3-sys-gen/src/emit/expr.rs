@@ -794,7 +794,7 @@ impl Eval for Cast {
         } else if let Some(sym) = self.ty.is_c_enum(ctx)? {
             ctx.capture_output(|ctx| {
                 write!(ctx, "{}(", sym.ident)?;
-                self.expr.emit(ctx)?;
+                self.expr.cast(sym.enum_base_ty.unwrap()).emit(ctx)?;
                 write!(ctx, ")")?;
                 Ok(())
             })
@@ -1773,7 +1773,10 @@ impl Eval for FnCall {
                         }
                         first = false;
                         if let Ok(Some(argval)) = arg.try_eval(ctx) {
-                            if let Some(argval) = argval.coerce(ctx, arg_ty)? {
+                            if let Ok(Some(_)) = arg_ty.is_c_enum(ctx) {
+                                arg.cast(arg_ty.clone()).emit(ctx)?;
+                                continue;
+                            } else if let Some(argval) = argval.coerce(ctx, arg_ty)? {
                                 argval.emit(ctx)?;
                                 continue;
                             }

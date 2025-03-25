@@ -35,7 +35,19 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 /// ### See also
 /// - [`SDL_GetThreadID`]
 /// - [`SDL_GetCurrentThreadID`]
-pub type SDL_ThreadID = Uint64;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_ThreadID(pub Uint64);
+
+impl From<SDL_ThreadID> for Uint64 {
+    #[inline(always)]
+    fn from(value: SDL_ThreadID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_ThreadID {}
 
 /// Thread local storage ID.
 ///
@@ -48,7 +60,19 @@ pub type SDL_ThreadID = Uint64;
 /// ### See also
 /// - [`SDL_GetTLS`]
 /// - [`SDL_SetTLS`]
-pub type SDL_TLSID = SDL_AtomicInt;
+#[repr(transparent)]
+#[derive(Default)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_TLSID(pub SDL_AtomicInt);
+
+impl From<SDL_TLSID> for SDL_AtomicInt {
+    #[inline(always)]
+    fn from(value: SDL_TLSID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_TLSID {}
 
 /// The SDL thread priority.
 ///
@@ -95,10 +119,10 @@ impl ::core::fmt::Debug for SDL_ThreadPriority {
 }
 
 impl SDL_ThreadPriority {
-    pub const LOW: Self = Self(0);
-    pub const NORMAL: Self = Self(1);
-    pub const HIGH: Self = Self(2);
-    pub const TIME_CRITICAL: Self = Self(3);
+    pub const LOW: Self = Self((0 as ::core::ffi::c_int));
+    pub const NORMAL: Self = Self((1 as ::core::ffi::c_int));
+    pub const HIGH: Self = Self((2 as ::core::ffi::c_int));
+    pub const TIME_CRITICAL: Self = Self((3 as ::core::ffi::c_int));
 }
 
 pub const SDL_THREAD_PRIORITY_LOW: SDL_ThreadPriority = SDL_ThreadPriority::LOW;
@@ -151,13 +175,13 @@ impl ::core::fmt::Debug for SDL_ThreadState {
 
 impl SDL_ThreadState {
     /// The thread is not valid
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
     /// The thread is currently running
-    pub const ALIVE: Self = Self(1);
+    pub const ALIVE: Self = Self((1 as ::core::ffi::c_int));
     /// The thread is detached and can't be waited on
-    pub const DETACHED: Self = Self(2);
+    pub const DETACHED: Self = Self((2 as ::core::ffi::c_int));
     /// The thread has finished and should be cleaned up with [`SDL_WaitThread()`]
-    pub const COMPLETE: Self = Self(3);
+    pub const COMPLETE: Self = Self((3 as ::core::ffi::c_int));
 }
 
 /// The thread is not valid
@@ -376,7 +400,7 @@ apply_cfg!(#[cfg(not(doc))] => {
 
     #[inline(always)]
     pub unsafe fn SDL_CreateThreadWithProperties(props: SDL_PropertiesID, ) -> *mut SDL_Thread {
-        unsafe { SDL_CreateThreadWithPropertiesRuntime((props), SDL_BeginThreadFunction, SDL_EndThreadFunction) }
+        unsafe { SDL_CreateThreadWithPropertiesRuntime(props, SDL_BeginThreadFunction, SDL_EndThreadFunction) }
     }
 
 

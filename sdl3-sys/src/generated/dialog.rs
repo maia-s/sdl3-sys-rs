@@ -319,9 +319,9 @@ impl ::core::fmt::Debug for SDL_FileDialogType {
 }
 
 impl SDL_FileDialogType {
-    pub const OPENFILE: Self = Self(0);
-    pub const SAVEFILE: Self = Self(1);
-    pub const OPENFOLDER: Self = Self(2);
+    pub const OPENFILE: Self = Self((0 as ::core::ffi::c_int));
+    pub const SAVEFILE: Self = Self((1 as ::core::ffi::c_int));
+    pub const OPENFOLDER: Self = Self((2 as ::core::ffi::c_int));
 }
 
 pub const SDL_FILEDIALOG_OPENFILE: SDL_FileDialogType = SDL_FileDialogType::OPENFILE;

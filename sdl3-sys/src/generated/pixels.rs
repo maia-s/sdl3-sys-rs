@@ -149,19 +149,19 @@ impl ::core::fmt::Debug for SDL_PixelType {
 }
 
 impl SDL_PixelType {
-    pub const UNKNOWN: Self = Self(0);
-    pub const INDEX1: Self = Self(1);
-    pub const INDEX4: Self = Self(2);
-    pub const INDEX8: Self = Self(3);
-    pub const PACKED8: Self = Self(4);
-    pub const PACKED16: Self = Self(5);
-    pub const PACKED32: Self = Self(6);
-    pub const ARRAYU8: Self = Self(7);
-    pub const ARRAYU16: Self = Self(8);
-    pub const ARRAYU32: Self = Self(9);
-    pub const ARRAYF16: Self = Self(10);
-    pub const ARRAYF32: Self = Self(11);
-    pub const INDEX2: Self = Self(12);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
+    pub const INDEX1: Self = Self((1 as ::core::ffi::c_int));
+    pub const INDEX4: Self = Self((2 as ::core::ffi::c_int));
+    pub const INDEX8: Self = Self((3 as ::core::ffi::c_int));
+    pub const PACKED8: Self = Self((4 as ::core::ffi::c_int));
+    pub const PACKED16: Self = Self((5 as ::core::ffi::c_int));
+    pub const PACKED32: Self = Self((6 as ::core::ffi::c_int));
+    pub const ARRAYU8: Self = Self((7 as ::core::ffi::c_int));
+    pub const ARRAYU16: Self = Self((8 as ::core::ffi::c_int));
+    pub const ARRAYU32: Self = Self((9 as ::core::ffi::c_int));
+    pub const ARRAYF16: Self = Self((10 as ::core::ffi::c_int));
+    pub const ARRAYF32: Self = Self((11 as ::core::ffi::c_int));
+    pub const INDEX2: Self = Self((12 as ::core::ffi::c_int));
 }
 
 pub const SDL_PIXELTYPE_UNKNOWN: SDL_PixelType = SDL_PixelType::UNKNOWN;
@@ -215,9 +215,9 @@ impl ::core::fmt::Debug for SDL_BitmapOrder {
 }
 
 impl SDL_BitmapOrder {
-    pub const NONE: Self = Self(0);
-    pub const _4321: Self = Self(1);
-    pub const _1234: Self = Self(2);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
+    pub const _4321: Self = Self((1 as ::core::ffi::c_int));
+    pub const _1234: Self = Self((2 as ::core::ffi::c_int));
 }
 
 pub const SDL_BITMAPORDER_NONE: SDL_BitmapOrder = SDL_BitmapOrder::NONE;
@@ -273,15 +273,15 @@ impl ::core::fmt::Debug for SDL_PackedOrder {
 }
 
 impl SDL_PackedOrder {
-    pub const NONE: Self = Self(0);
-    pub const XRGB: Self = Self(1);
-    pub const RGBX: Self = Self(2);
-    pub const ARGB: Self = Self(3);
-    pub const RGBA: Self = Self(4);
-    pub const XBGR: Self = Self(5);
-    pub const BGRX: Self = Self(6);
-    pub const ABGR: Self = Self(7);
-    pub const BGRA: Self = Self(8);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
+    pub const XRGB: Self = Self((1 as ::core::ffi::c_int));
+    pub const RGBX: Self = Self((2 as ::core::ffi::c_int));
+    pub const ARGB: Self = Self((3 as ::core::ffi::c_int));
+    pub const RGBA: Self = Self((4 as ::core::ffi::c_int));
+    pub const XBGR: Self = Self((5 as ::core::ffi::c_int));
+    pub const BGRX: Self = Self((6 as ::core::ffi::c_int));
+    pub const ABGR: Self = Self((7 as ::core::ffi::c_int));
+    pub const BGRA: Self = Self((8 as ::core::ffi::c_int));
 }
 
 pub const SDL_PACKEDORDER_NONE: SDL_PackedOrder = SDL_PackedOrder::NONE;
@@ -339,13 +339,13 @@ impl ::core::fmt::Debug for SDL_ArrayOrder {
 }
 
 impl SDL_ArrayOrder {
-    pub const NONE: Self = Self(0);
-    pub const RGB: Self = Self(1);
-    pub const RGBA: Self = Self(2);
-    pub const ARGB: Self = Self(3);
-    pub const BGR: Self = Self(4);
-    pub const BGRA: Self = Self(5);
-    pub const ABGR: Self = Self(6);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
+    pub const RGB: Self = Self((1 as ::core::ffi::c_int));
+    pub const RGBA: Self = Self((2 as ::core::ffi::c_int));
+    pub const ARGB: Self = Self((3 as ::core::ffi::c_int));
+    pub const BGR: Self = Self((4 as ::core::ffi::c_int));
+    pub const BGRA: Self = Self((5 as ::core::ffi::c_int));
+    pub const ABGR: Self = Self((6 as ::core::ffi::c_int));
 }
 
 pub const SDL_ARRAYORDER_NONE: SDL_ArrayOrder = SDL_ArrayOrder::NONE;
@@ -405,15 +405,15 @@ impl ::core::fmt::Debug for SDL_PackedLayout {
 }
 
 impl SDL_PackedLayout {
-    pub const NONE: Self = Self(0);
-    pub const _332: Self = Self(1);
-    pub const _4444: Self = Self(2);
-    pub const _1555: Self = Self(3);
-    pub const _5551: Self = Self(4);
-    pub const _565: Self = Self(5);
-    pub const _8888: Self = Self(6);
-    pub const _2101010: Self = Self(7);
-    pub const _1010102: Self = Self(8);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
+    pub const _332: Self = Self((1 as ::core::ffi::c_int));
+    pub const _4444: Self = Self((2 as ::core::ffi::c_int));
+    pub const _1555: Self = Self((3 as ::core::ffi::c_int));
+    pub const _5551: Self = Self((4 as ::core::ffi::c_int));
+    pub const _565: Self = Self((5 as ::core::ffi::c_int));
+    pub const _8888: Self = Self((6 as ::core::ffi::c_int));
+    pub const _2101010: Self = Self((7 as ::core::ffi::c_int));
+    pub const _1010102: Self = Self((8 as ::core::ffi::c_int));
 }
 
 pub const SDL_PACKEDLAYOUT_NONE: SDL_PackedLayout = SDL_PackedLayout::NONE;
@@ -670,81 +670,81 @@ impl ::core::fmt::Debug for SDL_PixelFormat {
 }
 
 impl SDL_PixelFormat {
-    pub const UNKNOWN: Self = Self(0);
-    pub const INDEX1LSB: Self = Self(0x11100100);
-    pub const INDEX1MSB: Self = Self(0x11200100);
-    pub const INDEX2LSB: Self = Self(0x1c100200);
-    pub const INDEX2MSB: Self = Self(0x1c200200);
-    pub const INDEX4LSB: Self = Self(0x12100400);
-    pub const INDEX4MSB: Self = Self(0x12200400);
-    pub const INDEX8: Self = Self(0x13000801);
-    pub const RGB332: Self = Self(0x14110801);
-    pub const XRGB4444: Self = Self(0x15120c02);
-    pub const XBGR4444: Self = Self(0x15520c02);
-    pub const XRGB1555: Self = Self(0x15130f02);
-    pub const XBGR1555: Self = Self(0x15530f02);
-    pub const ARGB4444: Self = Self(0x15321002);
-    pub const RGBA4444: Self = Self(0x15421002);
-    pub const ABGR4444: Self = Self(0x15721002);
-    pub const BGRA4444: Self = Self(0x15821002);
-    pub const ARGB1555: Self = Self(0x15331002);
-    pub const RGBA5551: Self = Self(0x15441002);
-    pub const ABGR1555: Self = Self(0x15731002);
-    pub const BGRA5551: Self = Self(0x15841002);
-    pub const RGB565: Self = Self(0x15151002);
-    pub const BGR565: Self = Self(0x15551002);
-    pub const RGB24: Self = Self(0x17101803);
-    pub const BGR24: Self = Self(0x17401803);
-    pub const XRGB8888: Self = Self(0x16161804);
-    pub const RGBX8888: Self = Self(0x16261804);
-    pub const XBGR8888: Self = Self(0x16561804);
-    pub const BGRX8888: Self = Self(0x16661804);
-    pub const ARGB8888: Self = Self(0x16362004);
-    pub const RGBA8888: Self = Self(0x16462004);
-    pub const ABGR8888: Self = Self(0x16762004);
-    pub const BGRA8888: Self = Self(0x16862004);
-    pub const XRGB2101010: Self = Self(0x16172004);
-    pub const XBGR2101010: Self = Self(0x16572004);
-    pub const ARGB2101010: Self = Self(0x16372004);
-    pub const ABGR2101010: Self = Self(0x16772004);
-    pub const RGB48: Self = Self(0x18103006);
-    pub const BGR48: Self = Self(0x18403006);
-    pub const RGBA64: Self = Self(0x18204008);
-    pub const ARGB64: Self = Self(0x18304008);
-    pub const BGRA64: Self = Self(0x18504008);
-    pub const ABGR64: Self = Self(0x18604008);
-    pub const RGB48_FLOAT: Self = Self(0x1a103006);
-    pub const BGR48_FLOAT: Self = Self(0x1a403006);
-    pub const RGBA64_FLOAT: Self = Self(0x1a204008);
-    pub const ARGB64_FLOAT: Self = Self(0x1a304008);
-    pub const BGRA64_FLOAT: Self = Self(0x1a504008);
-    pub const ABGR64_FLOAT: Self = Self(0x1a604008);
-    pub const RGB96_FLOAT: Self = Self(0x1b10600c);
-    pub const BGR96_FLOAT: Self = Self(0x1b40600c);
-    pub const RGBA128_FLOAT: Self = Self(0x1b208010);
-    pub const ARGB128_FLOAT: Self = Self(0x1b308010);
-    pub const BGRA128_FLOAT: Self = Self(0x1b508010);
-    pub const ABGR128_FLOAT: Self = Self(0x1b608010);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
+    pub const INDEX1LSB: Self = Self((0x11100100 as ::core::ffi::c_int));
+    pub const INDEX1MSB: Self = Self((0x11200100 as ::core::ffi::c_int));
+    pub const INDEX2LSB: Self = Self((0x1c100200 as ::core::ffi::c_int));
+    pub const INDEX2MSB: Self = Self((0x1c200200 as ::core::ffi::c_int));
+    pub const INDEX4LSB: Self = Self((0x12100400 as ::core::ffi::c_int));
+    pub const INDEX4MSB: Self = Self((0x12200400 as ::core::ffi::c_int));
+    pub const INDEX8: Self = Self((0x13000801 as ::core::ffi::c_int));
+    pub const RGB332: Self = Self((0x14110801 as ::core::ffi::c_int));
+    pub const XRGB4444: Self = Self((0x15120c02 as ::core::ffi::c_int));
+    pub const XBGR4444: Self = Self((0x15520c02 as ::core::ffi::c_int));
+    pub const XRGB1555: Self = Self((0x15130f02 as ::core::ffi::c_int));
+    pub const XBGR1555: Self = Self((0x15530f02 as ::core::ffi::c_int));
+    pub const ARGB4444: Self = Self((0x15321002 as ::core::ffi::c_int));
+    pub const RGBA4444: Self = Self((0x15421002 as ::core::ffi::c_int));
+    pub const ABGR4444: Self = Self((0x15721002 as ::core::ffi::c_int));
+    pub const BGRA4444: Self = Self((0x15821002 as ::core::ffi::c_int));
+    pub const ARGB1555: Self = Self((0x15331002 as ::core::ffi::c_int));
+    pub const RGBA5551: Self = Self((0x15441002 as ::core::ffi::c_int));
+    pub const ABGR1555: Self = Self((0x15731002 as ::core::ffi::c_int));
+    pub const BGRA5551: Self = Self((0x15841002 as ::core::ffi::c_int));
+    pub const RGB565: Self = Self((0x15151002 as ::core::ffi::c_int));
+    pub const BGR565: Self = Self((0x15551002 as ::core::ffi::c_int));
+    pub const RGB24: Self = Self((0x17101803 as ::core::ffi::c_int));
+    pub const BGR24: Self = Self((0x17401803 as ::core::ffi::c_int));
+    pub const XRGB8888: Self = Self((0x16161804 as ::core::ffi::c_int));
+    pub const RGBX8888: Self = Self((0x16261804 as ::core::ffi::c_int));
+    pub const XBGR8888: Self = Self((0x16561804 as ::core::ffi::c_int));
+    pub const BGRX8888: Self = Self((0x16661804 as ::core::ffi::c_int));
+    pub const ARGB8888: Self = Self((0x16362004 as ::core::ffi::c_int));
+    pub const RGBA8888: Self = Self((0x16462004 as ::core::ffi::c_int));
+    pub const ABGR8888: Self = Self((0x16762004 as ::core::ffi::c_int));
+    pub const BGRA8888: Self = Self((0x16862004 as ::core::ffi::c_int));
+    pub const XRGB2101010: Self = Self((0x16172004 as ::core::ffi::c_int));
+    pub const XBGR2101010: Self = Self((0x16572004 as ::core::ffi::c_int));
+    pub const ARGB2101010: Self = Self((0x16372004 as ::core::ffi::c_int));
+    pub const ABGR2101010: Self = Self((0x16772004 as ::core::ffi::c_int));
+    pub const RGB48: Self = Self((0x18103006 as ::core::ffi::c_int));
+    pub const BGR48: Self = Self((0x18403006 as ::core::ffi::c_int));
+    pub const RGBA64: Self = Self((0x18204008 as ::core::ffi::c_int));
+    pub const ARGB64: Self = Self((0x18304008 as ::core::ffi::c_int));
+    pub const BGRA64: Self = Self((0x18504008 as ::core::ffi::c_int));
+    pub const ABGR64: Self = Self((0x18604008 as ::core::ffi::c_int));
+    pub const RGB48_FLOAT: Self = Self((0x1a103006 as ::core::ffi::c_int));
+    pub const BGR48_FLOAT: Self = Self((0x1a403006 as ::core::ffi::c_int));
+    pub const RGBA64_FLOAT: Self = Self((0x1a204008 as ::core::ffi::c_int));
+    pub const ARGB64_FLOAT: Self = Self((0x1a304008 as ::core::ffi::c_int));
+    pub const BGRA64_FLOAT: Self = Self((0x1a504008 as ::core::ffi::c_int));
+    pub const ABGR64_FLOAT: Self = Self((0x1a604008 as ::core::ffi::c_int));
+    pub const RGB96_FLOAT: Self = Self((0x1b10600c as ::core::ffi::c_int));
+    pub const BGR96_FLOAT: Self = Self((0x1b40600c as ::core::ffi::c_int));
+    pub const RGBA128_FLOAT: Self = Self((0x1b208010 as ::core::ffi::c_int));
+    pub const ARGB128_FLOAT: Self = Self((0x1b308010 as ::core::ffi::c_int));
+    pub const BGRA128_FLOAT: Self = Self((0x1b508010 as ::core::ffi::c_int));
+    pub const ABGR128_FLOAT: Self = Self((0x1b608010 as ::core::ffi::c_int));
     /// Planar mode: Y + V + U  (3 planes)
-    pub const YV12: Self = Self(0x32315659);
+    pub const YV12: Self = Self((0x32315659 as ::core::ffi::c_int));
     /// Planar mode: Y + U + V  (3 planes)
-    pub const IYUV: Self = Self(0x56555949);
+    pub const IYUV: Self = Self((0x56555949 as ::core::ffi::c_int));
     /// Packed mode: Y0+U0+Y1+V0 (1 plane)
-    pub const YUY2: Self = Self(0x32595559);
+    pub const YUY2: Self = Self((0x32595559 as ::core::ffi::c_int));
     /// Packed mode: U0+Y0+V0+Y1 (1 plane)
-    pub const UYVY: Self = Self(0x59565955);
+    pub const UYVY: Self = Self((0x59565955 as ::core::ffi::c_int));
     /// Packed mode: Y0+V0+Y1+U0 (1 plane)
-    pub const YVYU: Self = Self(0x55595659);
+    pub const YVYU: Self = Self((0x55595659 as ::core::ffi::c_int));
     /// Planar mode: Y + U/V interleaved  (2 planes)
-    pub const NV12: Self = Self(0x3231564e);
+    pub const NV12: Self = Self((0x3231564e as ::core::ffi::c_int));
     /// Planar mode: Y + V/U interleaved  (2 planes)
-    pub const NV21: Self = Self(0x3132564e);
+    pub const NV21: Self = Self((0x3132564e as ::core::ffi::c_int));
     /// Planar mode: Y + U/V interleaved  (2 planes)
-    pub const P010: Self = Self(0x30313050);
+    pub const P010: Self = Self((0x30313050 as ::core::ffi::c_int));
     /// Android video texture format
-    pub const EXTERNAL_OES: Self = Self(0x2053454f);
+    pub const EXTERNAL_OES: Self = Self((0x2053454f as ::core::ffi::c_int));
     /// Motion JPEG
-    pub const MJPG: Self = Self(0x47504a4d);
+    pub const MJPG: Self = Self((0x47504a4d as ::core::ffi::c_int));
     #[cfg(target_endian = "big")]
     #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const RGBA32: Self = SDL_PIXELFORMAT_RGBA8888;
@@ -953,9 +953,9 @@ pub const fn SDL_DEFINE_PIXELFORMAT(
     bytes: ::core::primitive::u8,
 ) -> SDL_PixelFormat {
     SDL_PixelFormat(
-        (((((268435456_i32 | (r#type.0 << 24)) | (order << 20)) | (layout.0 << 16))
+        ((((((268435456_i32 | (r#type.0 << 24)) | (order << 20)) | (layout.0 << 16))
             | ((bits as ::core::ffi::c_int) << 8))
-            | ((bytes as ::core::ffi::c_int) << 0)),
+            | ((bytes as ::core::ffi::c_int) << 0)) as ::core::ffi::c_int),
     )
 }
 
@@ -1089,11 +1089,11 @@ pub const fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormat) -> ::core::primit
 /// - [`SDL_BYTESPERPIXEL`]
 #[inline(always)]
 pub const fn SDL_BITSPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8 {
-    ((if SDL_ISPIXELFORMAT_FOURCC(format) {
+    (if SDL_ISPIXELFORMAT_FOURCC(format) {
         0_i32
     } else {
         ((format.0 >> 8) & 255_i32)
-    }) as ::core::primitive::u8)
+    } as ::core::primitive::u8)
 }
 
 /// A macro to determine if an [`SDL_PixelFormat`] is an indexed format.
@@ -1271,7 +1271,7 @@ pub const fn SDL_ISPIXELFORMAT_10BIT(format: SDL_PixelFormat) -> ::core::primiti
 /// - [`SDL_BITSPERPIXEL`]
 #[inline(always)]
 pub const fn SDL_BYTESPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8 {
-    ((if SDL_ISPIXELFORMAT_FOURCC(format) {
+    (if SDL_ISPIXELFORMAT_FOURCC(format) {
         if ((((format.0 == SDL_PIXELFORMAT_YUY2.0) || (format.0 == SDL_PIXELFORMAT_UYVY.0))
             || (format.0 == SDL_PIXELFORMAT_YVYU.0))
             || (format.0 == SDL_PIXELFORMAT_P010.0))
@@ -1282,7 +1282,7 @@ pub const fn SDL_BYTESPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8
         }
     } else {
         ((format.0 >> 0) & 255_i32)
-    }) as ::core::primitive::u8)
+    } as ::core::primitive::u8)
 }
 
 /// Colorspace color type.
@@ -1322,9 +1322,9 @@ impl ::core::fmt::Debug for SDL_ColorType {
 }
 
 impl SDL_ColorType {
-    pub const UNKNOWN: Self = Self(0);
-    pub const RGB: Self = Self(1);
-    pub const YCBCR: Self = Self(2);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_uint));
+    pub const RGB: Self = Self((1 as ::core::ffi::c_uint));
+    pub const YCBCR: Self = Self((2 as ::core::ffi::c_uint));
 }
 
 pub const SDL_COLOR_TYPE_UNKNOWN: SDL_ColorType = SDL_ColorType::UNKNOWN;
@@ -1369,11 +1369,11 @@ impl ::core::fmt::Debug for SDL_ColorRange {
 }
 
 impl SDL_ColorRange {
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_uint));
     /// Narrow range, e.g. 16-235 for 8-bit RGB and luma, and 16-240 for 8-bit chroma
-    pub const LIMITED: Self = Self(1);
+    pub const LIMITED: Self = Self((1 as ::core::ffi::c_uint));
     /// Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma
-    pub const FULL: Self = Self(2);
+    pub const FULL: Self = Self((2 as ::core::ffi::c_uint));
 }
 
 pub const SDL_COLOR_RANGE_UNKNOWN: SDL_ColorRange = SDL_ColorRange::UNKNOWN;
@@ -1442,31 +1442,31 @@ impl ::core::fmt::Debug for SDL_ColorPrimaries {
 }
 
 impl SDL_ColorPrimaries {
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_uint));
     /// ITU-R BT.709-6
-    pub const BT709: Self = Self(1);
-    pub const UNSPECIFIED: Self = Self(2);
+    pub const BT709: Self = Self((1 as ::core::ffi::c_uint));
+    pub const UNSPECIFIED: Self = Self((2 as ::core::ffi::c_uint));
     /// ITU-R BT.470-6 System M
-    pub const BT470M: Self = Self(4);
+    pub const BT470M: Self = Self((4 as ::core::ffi::c_uint));
     /// ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625
-    pub const BT470BG: Self = Self(5);
+    pub const BT470BG: Self = Self((5 as ::core::ffi::c_uint));
     /// ITU-R BT.601-7 525, SMPTE 170M
-    pub const BT601: Self = Self(6);
+    pub const BT601: Self = Self((6 as ::core::ffi::c_uint));
     /// SMPTE 240M, functionally the same as [`SDL_COLOR_PRIMARIES_BT601`]
-    pub const SMPTE240: Self = Self(7);
+    pub const SMPTE240: Self = Self((7 as ::core::ffi::c_uint));
     /// Generic film (color filters using Illuminant C)
-    pub const GENERIC_FILM: Self = Self(8);
+    pub const GENERIC_FILM: Self = Self((8 as ::core::ffi::c_uint));
     /// ITU-R BT.2020-2 / ITU-R BT.2100-0
-    pub const BT2020: Self = Self(9);
+    pub const BT2020: Self = Self((9 as ::core::ffi::c_uint));
     /// SMPTE ST 428-1
-    pub const XYZ: Self = Self(10);
+    pub const XYZ: Self = Self((10 as ::core::ffi::c_uint));
     /// SMPTE RP 431-2
-    pub const SMPTE431: Self = Self(11);
+    pub const SMPTE431: Self = Self((11 as ::core::ffi::c_uint));
     /// SMPTE EG 432-1 / DCI P3
-    pub const SMPTE432: Self = Self(12);
+    pub const SMPTE432: Self = Self((12 as ::core::ffi::c_uint));
     /// EBU Tech. 3213-E
-    pub const EBU3213: Self = Self(22);
-    pub const CUSTOM: Self = Self(31);
+    pub const EBU3213: Self = Self((22 as ::core::ffi::c_uint));
+    pub const CUSTOM: Self = Self((31 as ::core::ffi::c_uint));
 }
 
 pub const SDL_COLOR_PRIMARIES_UNKNOWN: SDL_ColorPrimaries = SDL_ColorPrimaries::UNKNOWN;
@@ -1566,38 +1566,38 @@ impl ::core::fmt::Debug for SDL_TransferCharacteristics {
 }
 
 impl SDL_TransferCharacteristics {
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_uint));
     /// Rec. ITU-R BT.709-6 / ITU-R BT1361
-    pub const BT709: Self = Self(1);
-    pub const UNSPECIFIED: Self = Self(2);
+    pub const BT709: Self = Self((1 as ::core::ffi::c_uint));
+    pub const UNSPECIFIED: Self = Self((2 as ::core::ffi::c_uint));
     /// ITU-R BT.470-6 System M / ITU-R BT1700 625 PAL & SECAM
-    pub const GAMMA22: Self = Self(4);
+    pub const GAMMA22: Self = Self((4 as ::core::ffi::c_uint));
     /// ITU-R BT.470-6 System B, G
-    pub const GAMMA28: Self = Self(5);
+    pub const GAMMA28: Self = Self((5 as ::core::ffi::c_uint));
     /// SMPTE ST 170M / ITU-R BT.601-7 525 or 625
-    pub const BT601: Self = Self(6);
+    pub const BT601: Self = Self((6 as ::core::ffi::c_uint));
     /// SMPTE ST 240M
-    pub const SMPTE240: Self = Self(7);
-    pub const LINEAR: Self = Self(8);
-    pub const LOG100: Self = Self(9);
-    pub const LOG100_SQRT10: Self = Self(10);
+    pub const SMPTE240: Self = Self((7 as ::core::ffi::c_uint));
+    pub const LINEAR: Self = Self((8 as ::core::ffi::c_uint));
+    pub const LOG100: Self = Self((9 as ::core::ffi::c_uint));
+    pub const LOG100_SQRT10: Self = Self((10 as ::core::ffi::c_uint));
     /// IEC 61966-2-4
-    pub const IEC61966: Self = Self(11);
+    pub const IEC61966: Self = Self((11 as ::core::ffi::c_uint));
     /// ITU-R BT1361 Extended Colour Gamut
-    pub const BT1361: Self = Self(12);
+    pub const BT1361: Self = Self((12 as ::core::ffi::c_uint));
     /// IEC 61966-2-1 (sRGB or sYCC)
-    pub const SRGB: Self = Self(13);
+    pub const SRGB: Self = Self((13 as ::core::ffi::c_uint));
     /// ITU-R BT2020 for 10-bit system
-    pub const BT2020_10BIT: Self = Self(14);
+    pub const BT2020_10BIT: Self = Self((14 as ::core::ffi::c_uint));
     /// ITU-R BT2020 for 12-bit system
-    pub const BT2020_12BIT: Self = Self(15);
+    pub const BT2020_12BIT: Self = Self((15 as ::core::ffi::c_uint));
     /// SMPTE ST 2084 for 10-, 12-, 14- and 16-bit systems
-    pub const PQ: Self = Self(16);
+    pub const PQ: Self = Self((16 as ::core::ffi::c_uint));
     /// SMPTE ST 428-1
-    pub const SMPTE428: Self = Self(17);
+    pub const SMPTE428: Self = Self((17 as ::core::ffi::c_uint));
     /// ARIB STD-B67, known as "hybrid log-gamma" (HLG)
-    pub const HLG: Self = Self(18);
-    pub const CUSTOM: Self = Self(31);
+    pub const HLG: Self = Self((18 as ::core::ffi::c_uint));
+    pub const CUSTOM: Self = Self((31 as ::core::ffi::c_uint));
 }
 
 pub const SDL_TRANSFER_CHARACTERISTICS_UNKNOWN: SDL_TransferCharacteristics =
@@ -1715,30 +1715,30 @@ impl ::core::fmt::Debug for SDL_MatrixCoefficients {
 }
 
 impl SDL_MatrixCoefficients {
-    pub const IDENTITY: Self = Self(0);
+    pub const IDENTITY: Self = Self((0 as ::core::ffi::c_uint));
     /// ITU-R BT.709-6
-    pub const BT709: Self = Self(1);
-    pub const UNSPECIFIED: Self = Self(2);
+    pub const BT709: Self = Self((1 as ::core::ffi::c_uint));
+    pub const UNSPECIFIED: Self = Self((2 as ::core::ffi::c_uint));
     /// US FCC Title 47
-    pub const FCC: Self = Self(4);
+    pub const FCC: Self = Self((4 as ::core::ffi::c_uint));
     /// ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as [`SDL_MATRIX_COEFFICIENTS_BT601`]
-    pub const BT470BG: Self = Self(5);
+    pub const BT470BG: Self = Self((5 as ::core::ffi::c_uint));
     /// ITU-R BT.601-7 525
-    pub const BT601: Self = Self(6);
+    pub const BT601: Self = Self((6 as ::core::ffi::c_uint));
     /// SMPTE 240M
-    pub const SMPTE240: Self = Self(7);
-    pub const YCGCO: Self = Self(8);
+    pub const SMPTE240: Self = Self((7 as ::core::ffi::c_uint));
+    pub const YCGCO: Self = Self((8 as ::core::ffi::c_uint));
     /// ITU-R BT.2020-2 non-constant luminance
-    pub const BT2020_NCL: Self = Self(9);
+    pub const BT2020_NCL: Self = Self((9 as ::core::ffi::c_uint));
     /// ITU-R BT.2020-2 constant luminance
-    pub const BT2020_CL: Self = Self(10);
+    pub const BT2020_CL: Self = Self((10 as ::core::ffi::c_uint));
     /// SMPTE ST 2085
-    pub const SMPTE2085: Self = Self(11);
-    pub const CHROMA_DERIVED_NCL: Self = Self(12);
-    pub const CHROMA_DERIVED_CL: Self = Self(13);
+    pub const SMPTE2085: Self = Self((11 as ::core::ffi::c_uint));
+    pub const CHROMA_DERIVED_NCL: Self = Self((12 as ::core::ffi::c_uint));
+    pub const CHROMA_DERIVED_CL: Self = Self((13 as ::core::ffi::c_uint));
     /// ITU-R BT.2100-0 ICTCP
-    pub const ICTCP: Self = Self(14);
-    pub const CUSTOM: Self = Self(31);
+    pub const ICTCP: Self = Self((14 as ::core::ffi::c_uint));
+    pub const CUSTOM: Self = Self((31 as ::core::ffi::c_uint));
 }
 
 pub const SDL_MATRIX_COEFFICIENTS_IDENTITY: SDL_MatrixCoefficients =
@@ -1814,13 +1814,13 @@ impl ::core::fmt::Debug for SDL_ChromaLocation {
 
 impl SDL_ChromaLocation {
     /// RGB, no chroma sampling
-    pub const NONE: Self = Self(0);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_uint));
     /// In MPEG-2, MPEG-4, and AVC, Cb and Cr are taken on midpoint of the left-edge of the 2x2 square. In other words, they have the same horizontal location as the top-left pixel, but is shifted one-half pixel down vertically.
-    pub const LEFT: Self = Self(1);
+    pub const LEFT: Self = Self((1 as ::core::ffi::c_uint));
     /// In JPEG/JFIF, H.261, and MPEG-1, Cb and Cr are taken at the center of the 2x2 square. In other words, they are offset one-half pixel to the right and one-half pixel down compared to the top-left pixel.
-    pub const CENTER: Self = Self(2);
+    pub const CENTER: Self = Self((2 as ::core::ffi::c_uint));
     /// In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located").
-    pub const TOPLEFT: Self = Self(3);
+    pub const TOPLEFT: Self = Self((3 as ::core::ffi::c_uint));
 }
 
 /// RGB, no chroma sampling
@@ -1900,27 +1900,27 @@ impl ::core::fmt::Debug for SDL_Colorspace {
 }
 
 impl SDL_Colorspace {
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709
-    pub const SRGB: Self = Self(0x120005a0);
+    pub const SRGB: Self = Self((0x120005a0 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709
-    pub const SRGB_LINEAR: Self = Self(0x12000500);
+    pub const SRGB_LINEAR: Self = Self((0x12000500 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020
-    pub const HDR10: Self = Self(0x12002600);
+    pub const HDR10: Self = Self((0x12002600 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_NONE_P709_X601
-    pub const JPEG: Self = Self(0x220004c6);
+    pub const JPEG: Self = Self((0x220004c6 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601
-    pub const BT601_LIMITED: Self = Self(0x211018c6);
+    pub const BT601_LIMITED: Self = Self((0x211018c6 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601
-    pub const BT601_FULL: Self = Self(0x221018c6);
+    pub const BT601_FULL: Self = Self((0x221018c6 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709
-    pub const BT709_LIMITED: Self = Self(0x21100421);
+    pub const BT709_LIMITED: Self = Self((0x21100421 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709
-    pub const BT709_FULL: Self = Self(0x22100421);
+    pub const BT709_FULL: Self = Self((0x22100421 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P2020
-    pub const BT2020_LIMITED: Self = Self(0x21102609);
+    pub const BT2020_LIMITED: Self = Self((0x21102609 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P2020
-    pub const BT2020_FULL: Self = Self(0x22102609);
+    pub const BT2020_FULL: Self = Self((0x22102609 as Uint32));
     /// The default colorspace for RGB surfaces if no colorspace is specified
     pub const RGB_DEFAULT: Self = SDL_COLORSPACE_SRGB;
     /// The default colorspace for YUV surfaces if no colorspace is specified
@@ -2019,7 +2019,7 @@ pub const fn SDL_DEFINE_COLORSPACE(
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACETYPE(cspace: SDL_Colorspace) -> SDL_ColorType {
-    SDL_ColorType(((cspace.0 >> 28) & 15_u32))
+    SDL_ColorType((((cspace.0 >> 28) & 15_u32) as ::core::ffi::c_uint))
 }
 
 /// A macro to retrieve the range of an [`SDL_Colorspace`].
@@ -2037,7 +2037,7 @@ pub const fn SDL_COLORSPACETYPE(cspace: SDL_Colorspace) -> SDL_ColorType {
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACERANGE(cspace: SDL_Colorspace) -> SDL_ColorRange {
-    SDL_ColorRange(((cspace.0 >> 24) & 15_u32))
+    SDL_ColorRange((((cspace.0 >> 24) & 15_u32) as ::core::ffi::c_uint))
 }
 
 /// A macro to retrieve the chroma sample location of an [`SDL_Colorspace`].
@@ -2055,7 +2055,7 @@ pub const fn SDL_COLORSPACERANGE(cspace: SDL_Colorspace) -> SDL_ColorRange {
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACECHROMA(cspace: SDL_Colorspace) -> SDL_ChromaLocation {
-    SDL_ChromaLocation(((cspace.0 >> 20) & 15_u32))
+    SDL_ChromaLocation((((cspace.0 >> 20) & 15_u32) as ::core::ffi::c_uint))
 }
 
 /// A macro to retrieve the primaries of an [`SDL_Colorspace`].
@@ -2073,7 +2073,7 @@ pub const fn SDL_COLORSPACECHROMA(cspace: SDL_Colorspace) -> SDL_ChromaLocation 
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACEPRIMARIES(cspace: SDL_Colorspace) -> SDL_ColorPrimaries {
-    SDL_ColorPrimaries(((cspace.0 >> 10) & 31_u32))
+    SDL_ColorPrimaries((((cspace.0 >> 10) & 31_u32) as ::core::ffi::c_uint))
 }
 
 /// A macro to retrieve the transfer characteristics of an [`SDL_Colorspace`].
@@ -2091,7 +2091,7 @@ pub const fn SDL_COLORSPACEPRIMARIES(cspace: SDL_Colorspace) -> SDL_ColorPrimari
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACETRANSFER(cspace: SDL_Colorspace) -> SDL_TransferCharacteristics {
-    SDL_TransferCharacteristics(((cspace.0 >> 5) & 31_u32))
+    SDL_TransferCharacteristics((((cspace.0 >> 5) & 31_u32) as ::core::ffi::c_uint))
 }
 
 /// A macro to retrieve the matrix coefficients of an [`SDL_Colorspace`].
@@ -2109,7 +2109,7 @@ pub const fn SDL_COLORSPACETRANSFER(cspace: SDL_Colorspace) -> SDL_TransferChara
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACEMATRIX(cspace: SDL_Colorspace) -> SDL_MatrixCoefficients {
-    SDL_MatrixCoefficients((cspace.0 & 31_u32))
+    SDL_MatrixCoefficients(((cspace.0 & 31_u32) as ::core::ffi::c_uint))
 }
 
 /// A macro to determine if an [`SDL_Colorspace`] has a limited range.

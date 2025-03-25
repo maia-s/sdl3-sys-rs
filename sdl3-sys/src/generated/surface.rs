@@ -34,25 +34,57 @@ use super::iostream::*;
 /// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_SURFACE_PREALLOCATED`] | Surface uses preallocated pixel memory |
-/// | [`SDL_SURFACE_LOCK_NEEDED`] | Surface needs to be locked to access pixels |
-/// | [`SDL_SURFACE_LOCKED`] | Surface is currently locked |
-/// | [`SDL_SURFACE_SIMD_ALIGNED`] | Surface uses pixel memory allocated with [`SDL_aligned_alloc()`] |
-pub type SDL_SurfaceFlags = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`PREALLOCATED`](SDL_SurfaceFlags::PREALLOCATED) | [`SDL_SURFACE_PREALLOCATED`] | Surface uses preallocated pixel memory |
+/// | [`LOCK_NEEDED`](SDL_SurfaceFlags::LOCK_NEEDED) | [`SDL_SURFACE_LOCK_NEEDED`] | Surface needs to be locked to access pixels |
+/// | [`LOCKED`](SDL_SurfaceFlags::LOCKED) | [`SDL_SURFACE_LOCKED`] | Surface is currently locked |
+/// | [`SIMD_ALIGNED`](SDL_SurfaceFlags::SIMD_ALIGNED) | [`SDL_SURFACE_SIMD_ALIGNED`] | Surface uses pixel memory allocated with [`SDL_aligned_alloc()`] |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_SurfaceFlags(pub Uint32);
+
+impl From<SDL_SurfaceFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_SurfaceFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_SurfaceFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::PREALLOCATED => "SDL_SURFACE_PREALLOCATED",
+            Self::LOCK_NEEDED => "SDL_SURFACE_LOCK_NEEDED",
+            Self::LOCKED => "SDL_SURFACE_LOCKED",
+            Self::SIMD_ALIGNED => "SDL_SURFACE_SIMD_ALIGNED",
+
+            _ => return write!(f, "SDL_SurfaceFlags({})", self.0),
+        })
+    }
+}
+
+impl SDL_SurfaceFlags {
+    /// Surface uses preallocated pixel memory
+    pub const PREALLOCATED: Self = Self((0x00000001 as Uint32));
+    /// Surface needs to be locked to access pixels
+    pub const LOCK_NEEDED: Self = Self((0x00000002 as Uint32));
+    /// Surface is currently locked
+    pub const LOCKED: Self = Self((0x00000004 as Uint32));
+    /// Surface uses pixel memory allocated with [`SDL_aligned_alloc()`]
+    pub const SIMD_ALIGNED: Self = Self((0x00000008 as Uint32));
+}
 
 /// Surface uses preallocated pixel memory
-pub const SDL_SURFACE_PREALLOCATED: SDL_SurfaceFlags = (0x00000001 as SDL_SurfaceFlags);
-
+pub const SDL_SURFACE_PREALLOCATED: SDL_SurfaceFlags = SDL_SurfaceFlags::PREALLOCATED;
 /// Surface needs to be locked to access pixels
-pub const SDL_SURFACE_LOCK_NEEDED: SDL_SurfaceFlags = (0x00000002 as SDL_SurfaceFlags);
-
+pub const SDL_SURFACE_LOCK_NEEDED: SDL_SurfaceFlags = SDL_SurfaceFlags::LOCK_NEEDED;
 /// Surface is currently locked
-pub const SDL_SURFACE_LOCKED: SDL_SurfaceFlags = (0x00000004 as SDL_SurfaceFlags);
-
+pub const SDL_SURFACE_LOCKED: SDL_SurfaceFlags = SDL_SurfaceFlags::LOCKED;
 /// Surface uses pixel memory allocated with [`SDL_aligned_alloc()`]
-pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = (0x00000008 as SDL_SurfaceFlags);
+pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = SDL_SurfaceFlags::SIMD_ALIGNED;
 
 /// The scaling mode.
 ///
@@ -91,11 +123,11 @@ impl ::core::fmt::Debug for SDL_ScaleMode {
 }
 
 impl SDL_ScaleMode {
-    pub const INVALID: Self = Self(-1_i32);
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
     /// nearest pixel sampling
-    pub const NEAREST: Self = Self(0_i32);
+    pub const NEAREST: Self = Self((0_i32 as ::core::ffi::c_int));
     /// linear filtering
-    pub const LINEAR: Self = Self(1_i32);
+    pub const LINEAR: Self = Self((1_i32 as ::core::ffi::c_int));
 }
 
 pub const SDL_SCALEMODE_INVALID: SDL_ScaleMode = SDL_ScaleMode::INVALID;
@@ -142,11 +174,11 @@ impl ::core::fmt::Debug for SDL_FlipMode {
 
 impl SDL_FlipMode {
     /// Do not flip
-    pub const NONE: Self = Self(0);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
     /// flip horizontally
-    pub const HORIZONTAL: Self = Self(1);
+    pub const HORIZONTAL: Self = Self((1 as ::core::ffi::c_int));
     /// flip vertically
-    pub const VERTICAL: Self = Self(2);
+    pub const VERTICAL: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Do not flip
@@ -212,8 +244,8 @@ pub struct SDL_Surface {
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const unsafe fn SDL_MUSTLOCK(S: *const SDL_Surface) -> ::core::primitive::bool {
-    ((unsafe { ::core::ptr::addr_of!((*S).flags).read() } & SDL_SURFACE_LOCK_NEEDED)
-        == SDL_SURFACE_LOCK_NEEDED)
+    ((unsafe { ::core::ptr::addr_of!((*S).flags).read() }.0 & SDL_SURFACE_LOCK_NEEDED.0)
+        == SDL_SURFACE_LOCK_NEEDED.0)
 }
 
 extern "C" {

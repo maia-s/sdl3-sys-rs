@@ -55,17 +55,17 @@ impl ::core::fmt::Debug for SDL_IOStatus {
 
 impl SDL_IOStatus {
     /// Everything is ready (no errors and not EOF).
-    pub const READY: Self = Self(0);
+    pub const READY: Self = Self((0 as ::core::ffi::c_int));
     /// Read or write I/O error
-    pub const ERROR: Self = Self(1);
+    pub const ERROR: Self = Self((1 as ::core::ffi::c_int));
     /// End of file
-    pub const EOF: Self = Self(2);
+    pub const EOF: Self = Self((2 as ::core::ffi::c_int));
     /// Non blocking I/O, not ready
-    pub const NOT_READY: Self = Self(3);
+    pub const NOT_READY: Self = Self((3 as ::core::ffi::c_int));
     /// Tried to write a read-only buffer
-    pub const READONLY: Self = Self(4);
+    pub const READONLY: Self = Self((4 as ::core::ffi::c_int));
     /// Tried to read a write-only buffer
-    pub const WRITEONLY: Self = Self(5);
+    pub const WRITEONLY: Self = Self((5 as ::core::ffi::c_int));
 }
 
 /// Everything is ready (no errors and not EOF).
@@ -122,11 +122,11 @@ impl ::core::fmt::Debug for SDL_IOWhence {
 
 impl SDL_IOWhence {
     /// Seek from the beginning of data
-    pub const SET: Self = Self(0);
+    pub const SET: Self = Self((0 as ::core::ffi::c_int));
     /// Seek relative to current read point
-    pub const CUR: Self = Self(1);
+    pub const CUR: Self = Self((1 as ::core::ffi::c_int));
     /// Seek relative to the end of data
-    pub const END: Self = Self(2);
+    pub const END: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Seek from the beginning of data

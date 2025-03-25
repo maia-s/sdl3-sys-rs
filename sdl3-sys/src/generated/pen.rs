@@ -27,19 +27,31 @@ use super::touch::*;
 ///
 /// ### Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_PenID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_PenID(pub Uint32);
+
+impl From<SDL_PenID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_PenID) -> Self {
+        value.0
+    }
+}
+
+impl SDL_PenID {}
 
 /// The [`SDL_MouseID`] for mouse events simulated with pen input.
 ///
 /// ### Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_PEN_MOUSEID: SDL_MouseID = (-2_i32 as SDL_MouseID);
+pub const SDL_PEN_MOUSEID: SDL_MouseID = SDL_MouseID((-2_i32 as Uint32));
 
 /// The [`SDL_TouchID`] for touch events simulated with pen input.
 ///
 /// ### Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_PEN_TOUCHID: SDL_TouchID = (-2_i32 as SDL_TouchID);
+pub const SDL_PEN_TOUCHID: SDL_TouchID = SDL_TouchID((-2_i32 as Uint64));
 
 /// Pen input flags, as reported by various pen events' `pen_state` field.
 ///
@@ -47,37 +59,75 @@ pub const SDL_PEN_TOUCHID: SDL_TouchID = (-2_i32 as SDL_TouchID);
 /// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_PEN_INPUT_DOWN`] | pen is pressed down |
-/// | [`SDL_PEN_INPUT_BUTTON_1`] | button 1 is pressed |
-/// | [`SDL_PEN_INPUT_BUTTON_2`] | button 2 is pressed |
-/// | [`SDL_PEN_INPUT_BUTTON_3`] | button 3 is pressed |
-/// | [`SDL_PEN_INPUT_BUTTON_4`] | button 4 is pressed |
-/// | [`SDL_PEN_INPUT_BUTTON_5`] | button 5 is pressed |
-/// | [`SDL_PEN_INPUT_ERASER_TIP`] | eraser tip is used |
-pub type SDL_PenInputFlags = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`DOWN`](SDL_PenInputFlags::DOWN) | [`SDL_PEN_INPUT_DOWN`] | pen is pressed down |
+/// | [`BUTTON_1`](SDL_PenInputFlags::BUTTON_1) | [`SDL_PEN_INPUT_BUTTON_1`] | button 1 is pressed |
+/// | [`BUTTON_2`](SDL_PenInputFlags::BUTTON_2) | [`SDL_PEN_INPUT_BUTTON_2`] | button 2 is pressed |
+/// | [`BUTTON_3`](SDL_PenInputFlags::BUTTON_3) | [`SDL_PEN_INPUT_BUTTON_3`] | button 3 is pressed |
+/// | [`BUTTON_4`](SDL_PenInputFlags::BUTTON_4) | [`SDL_PEN_INPUT_BUTTON_4`] | button 4 is pressed |
+/// | [`BUTTON_5`](SDL_PenInputFlags::BUTTON_5) | [`SDL_PEN_INPUT_BUTTON_5`] | button 5 is pressed |
+/// | [`ERASER_TIP`](SDL_PenInputFlags::ERASER_TIP) | [`SDL_PEN_INPUT_ERASER_TIP`] | eraser tip is used |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_PenInputFlags(pub Uint32);
+
+impl From<SDL_PenInputFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_PenInputFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_PenInputFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::DOWN => "SDL_PEN_INPUT_DOWN",
+            Self::BUTTON_1 => "SDL_PEN_INPUT_BUTTON_1",
+            Self::BUTTON_2 => "SDL_PEN_INPUT_BUTTON_2",
+            Self::BUTTON_3 => "SDL_PEN_INPUT_BUTTON_3",
+            Self::BUTTON_4 => "SDL_PEN_INPUT_BUTTON_4",
+            Self::BUTTON_5 => "SDL_PEN_INPUT_BUTTON_5",
+            Self::ERASER_TIP => "SDL_PEN_INPUT_ERASER_TIP",
+
+            _ => return write!(f, "SDL_PenInputFlags({})", self.0),
+        })
+    }
+}
+
+impl SDL_PenInputFlags {
+    /// pen is pressed down
+    pub const DOWN: Self = Self((1_u32 as Uint32));
+    /// button 1 is pressed
+    pub const BUTTON_1: Self = Self((2_u32 as Uint32));
+    /// button 2 is pressed
+    pub const BUTTON_2: Self = Self((4_u32 as Uint32));
+    /// button 3 is pressed
+    pub const BUTTON_3: Self = Self((8_u32 as Uint32));
+    /// button 4 is pressed
+    pub const BUTTON_4: Self = Self((16_u32 as Uint32));
+    /// button 5 is pressed
+    pub const BUTTON_5: Self = Self((32_u32 as Uint32));
+    /// eraser tip is used
+    pub const ERASER_TIP: Self = Self((1073741824_u32 as Uint32));
+}
 
 /// pen is pressed down
-pub const SDL_PEN_INPUT_DOWN: SDL_PenInputFlags = ((1_u32) as SDL_PenInputFlags);
-
+pub const SDL_PEN_INPUT_DOWN: SDL_PenInputFlags = SDL_PenInputFlags::DOWN;
 /// button 1 is pressed
-pub const SDL_PEN_INPUT_BUTTON_1: SDL_PenInputFlags = ((2_u32) as SDL_PenInputFlags);
-
+pub const SDL_PEN_INPUT_BUTTON_1: SDL_PenInputFlags = SDL_PenInputFlags::BUTTON_1;
 /// button 2 is pressed
-pub const SDL_PEN_INPUT_BUTTON_2: SDL_PenInputFlags = ((4_u32) as SDL_PenInputFlags);
-
+pub const SDL_PEN_INPUT_BUTTON_2: SDL_PenInputFlags = SDL_PenInputFlags::BUTTON_2;
 /// button 3 is pressed
-pub const SDL_PEN_INPUT_BUTTON_3: SDL_PenInputFlags = ((8_u32) as SDL_PenInputFlags);
-
+pub const SDL_PEN_INPUT_BUTTON_3: SDL_PenInputFlags = SDL_PenInputFlags::BUTTON_3;
 /// button 4 is pressed
-pub const SDL_PEN_INPUT_BUTTON_4: SDL_PenInputFlags = ((16_u32) as SDL_PenInputFlags);
-
+pub const SDL_PEN_INPUT_BUTTON_4: SDL_PenInputFlags = SDL_PenInputFlags::BUTTON_4;
 /// button 5 is pressed
-pub const SDL_PEN_INPUT_BUTTON_5: SDL_PenInputFlags = ((32_u32) as SDL_PenInputFlags);
-
+pub const SDL_PEN_INPUT_BUTTON_5: SDL_PenInputFlags = SDL_PenInputFlags::BUTTON_5;
 /// eraser tip is used
-pub const SDL_PEN_INPUT_ERASER_TIP: SDL_PenInputFlags = ((1073741824_u32) as SDL_PenInputFlags);
+pub const SDL_PEN_INPUT_ERASER_TIP: SDL_PenInputFlags = SDL_PenInputFlags::ERASER_TIP;
 
 /// Pen axis indices.
 ///
@@ -137,21 +187,21 @@ impl ::core::fmt::Debug for SDL_PenAxis {
 
 impl SDL_PenAxis {
     /// Pen pressure.  Unidirectional: 0 to 1.0
-    pub const PRESSURE: Self = Self(0);
+    pub const PRESSURE: Self = Self((0 as ::core::ffi::c_int));
     /// Pen horizontal tilt angle.  Bidirectional: -90.0 to 90.0 (left-to-right).
-    pub const XTILT: Self = Self(1);
+    pub const XTILT: Self = Self((1 as ::core::ffi::c_int));
     /// Pen vertical tilt angle.  Bidirectional: -90.0 to 90.0 (top-to-down).
-    pub const YTILT: Self = Self(2);
+    pub const YTILT: Self = Self((2 as ::core::ffi::c_int));
     /// Pen distance to drawing surface.  Unidirectional: 0.0 to 1.0
-    pub const DISTANCE: Self = Self(3);
+    pub const DISTANCE: Self = Self((3 as ::core::ffi::c_int));
     /// Pen barrel rotation.  Bidirectional: -180 to 179.9 (clockwise, 0 is facing up, -180.0 is facing down).
-    pub const ROTATION: Self = Self(4);
+    pub const ROTATION: Self = Self((4 as ::core::ffi::c_int));
     /// Pen finger wheel or slider (e.g., Airbrush Pen).  Unidirectional: 0 to 1.0
-    pub const SLIDER: Self = Self(5);
+    pub const SLIDER: Self = Self((5 as ::core::ffi::c_int));
     /// Pressure from squeezing the pen ("barrel pressure").
-    pub const TANGENTIAL_PRESSURE: Self = Self(6);
+    pub const TANGENTIAL_PRESSURE: Self = Self((6 as ::core::ffi::c_int));
     /// Total known pen axis types in this version of SDL. This number may grow in future releases!
-    pub const COUNT: Self = Self(7);
+    pub const COUNT: Self = Self((7 as ::core::ffi::c_int));
 }
 
 /// Pen pressure.  Unidirectional: 0 to 1.0

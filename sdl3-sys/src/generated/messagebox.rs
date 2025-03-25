@@ -25,31 +25,65 @@ use super::video::*;
 /// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_MESSAGEBOX_ERROR`] | error dialog |
-/// | [`SDL_MESSAGEBOX_WARNING`] | warning dialog |
-/// | [`SDL_MESSAGEBOX_INFORMATION`] | informational dialog |
-/// | [`SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT`] | buttons placed left to right |
-/// | [`SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT`] | buttons placed right to left |
-pub type SDL_MessageBoxFlags = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`ERROR`](SDL_MessageBoxFlags::ERROR) | [`SDL_MESSAGEBOX_ERROR`] | error dialog |
+/// | [`WARNING`](SDL_MessageBoxFlags::WARNING) | [`SDL_MESSAGEBOX_WARNING`] | warning dialog |
+/// | [`INFORMATION`](SDL_MessageBoxFlags::INFORMATION) | [`SDL_MESSAGEBOX_INFORMATION`] | informational dialog |
+/// | [`BUTTONS_LEFT_TO_RIGHT`](SDL_MessageBoxFlags::BUTTONS_LEFT_TO_RIGHT) | [`SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT`] | buttons placed left to right |
+/// | [`BUTTONS_RIGHT_TO_LEFT`](SDL_MessageBoxFlags::BUTTONS_RIGHT_TO_LEFT) | [`SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT`] | buttons placed right to left |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_MessageBoxFlags(pub Uint32);
+
+impl From<SDL_MessageBoxFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_MessageBoxFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_MessageBoxFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::ERROR => "SDL_MESSAGEBOX_ERROR",
+            Self::WARNING => "SDL_MESSAGEBOX_WARNING",
+            Self::INFORMATION => "SDL_MESSAGEBOX_INFORMATION",
+            Self::BUTTONS_LEFT_TO_RIGHT => "SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT",
+            Self::BUTTONS_RIGHT_TO_LEFT => "SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT",
+
+            _ => return write!(f, "SDL_MessageBoxFlags({})", self.0),
+        })
+    }
+}
+
+impl SDL_MessageBoxFlags {
+    /// error dialog
+    pub const ERROR: Self = Self((0x00000010 as Uint32));
+    /// warning dialog
+    pub const WARNING: Self = Self((0x00000020 as Uint32));
+    /// informational dialog
+    pub const INFORMATION: Self = Self((0x00000040 as Uint32));
+    /// buttons placed left to right
+    pub const BUTTONS_LEFT_TO_RIGHT: Self = Self((0x00000080 as Uint32));
+    /// buttons placed right to left
+    pub const BUTTONS_RIGHT_TO_LEFT: Self = Self((0x00000100 as Uint32));
+}
 
 /// error dialog
-pub const SDL_MESSAGEBOX_ERROR: SDL_MessageBoxFlags = (0x00000010 as SDL_MessageBoxFlags);
-
+pub const SDL_MESSAGEBOX_ERROR: SDL_MessageBoxFlags = SDL_MessageBoxFlags::ERROR;
 /// warning dialog
-pub const SDL_MESSAGEBOX_WARNING: SDL_MessageBoxFlags = (0x00000020 as SDL_MessageBoxFlags);
-
+pub const SDL_MESSAGEBOX_WARNING: SDL_MessageBoxFlags = SDL_MessageBoxFlags::WARNING;
 /// informational dialog
-pub const SDL_MESSAGEBOX_INFORMATION: SDL_MessageBoxFlags = (0x00000040 as SDL_MessageBoxFlags);
-
+pub const SDL_MESSAGEBOX_INFORMATION: SDL_MessageBoxFlags = SDL_MessageBoxFlags::INFORMATION;
 /// buttons placed left to right
 pub const SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT: SDL_MessageBoxFlags =
-    (0x00000080 as SDL_MessageBoxFlags);
-
+    SDL_MessageBoxFlags::BUTTONS_LEFT_TO_RIGHT;
 /// buttons placed right to left
 pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: SDL_MessageBoxFlags =
-    (0x00000100 as SDL_MessageBoxFlags);
+    SDL_MessageBoxFlags::BUTTONS_RIGHT_TO_LEFT;
 
 /// [`SDL_MessageBoxButtonData`] flags.
 ///
@@ -57,19 +91,47 @@ pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: SDL_MessageBoxFlags =
 /// This datatype is available since SDL 3.2.0.
 ///
 /// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT`] | Marks the default button when return is hit |
-/// | [`SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT`] | Marks the default button when escape is hit |
-pub type SDL_MessageBoxButtonFlags = Uint32;
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`RETURNKEY_DEFAULT`](SDL_MessageBoxButtonFlags::RETURNKEY_DEFAULT) | [`SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT`] | Marks the default button when return is hit |
+/// | [`ESCAPEKEY_DEFAULT`](SDL_MessageBoxButtonFlags::ESCAPEKEY_DEFAULT) | [`SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT`] | Marks the default button when escape is hit |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_MessageBoxButtonFlags(pub Uint32);
+
+impl From<SDL_MessageBoxButtonFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_MessageBoxButtonFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_MessageBoxButtonFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::RETURNKEY_DEFAULT => "SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT",
+            Self::ESCAPEKEY_DEFAULT => "SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT",
+
+            _ => return write!(f, "SDL_MessageBoxButtonFlags({})", self.0),
+        })
+    }
+}
+
+impl SDL_MessageBoxButtonFlags {
+    /// Marks the default button when return is hit
+    pub const RETURNKEY_DEFAULT: Self = Self((0x00000001 as Uint32));
+    /// Marks the default button when escape is hit
+    pub const ESCAPEKEY_DEFAULT: Self = Self((0x00000002 as Uint32));
+}
 
 /// Marks the default button when return is hit
 pub const SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT: SDL_MessageBoxButtonFlags =
-    (0x00000001 as SDL_MessageBoxButtonFlags);
-
+    SDL_MessageBoxButtonFlags::RETURNKEY_DEFAULT;
 /// Marks the default button when escape is hit
 pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: SDL_MessageBoxButtonFlags =
-    (0x00000002 as SDL_MessageBoxButtonFlags);
+    SDL_MessageBoxButtonFlags::ESCAPEKEY_DEFAULT;
 
 /// Individual button data.
 ///
@@ -148,13 +210,13 @@ impl ::core::fmt::Debug for SDL_MessageBoxColorType {
 }
 
 impl SDL_MessageBoxColorType {
-    pub const BACKGROUND: Self = Self(0);
-    pub const TEXT: Self = Self(1);
-    pub const BUTTON_BORDER: Self = Self(2);
-    pub const BUTTON_BACKGROUND: Self = Self(3);
-    pub const BUTTON_SELECTED: Self = Self(4);
+    pub const BACKGROUND: Self = Self((0 as ::core::ffi::c_int));
+    pub const TEXT: Self = Self((1 as ::core::ffi::c_int));
+    pub const BUTTON_BORDER: Self = Self((2 as ::core::ffi::c_int));
+    pub const BUTTON_BACKGROUND: Self = Self((3 as ::core::ffi::c_int));
+    pub const BUTTON_SELECTED: Self = Self((4 as ::core::ffi::c_int));
     /// Size of the colors array of [`SDL_MessageBoxColorScheme`].
-    pub const COUNT: Self = Self(5);
+    pub const COUNT: Self = Self((5 as ::core::ffi::c_int));
 }
 
 pub const SDL_MESSAGEBOX_COLOR_BACKGROUND: SDL_MessageBoxColorType =

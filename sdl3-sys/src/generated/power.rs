@@ -59,17 +59,17 @@ impl ::core::fmt::Debug for SDL_PowerState {
 
 impl SDL_PowerState {
     /// error determining power status
-    pub const ERROR: Self = Self(-1_i32);
+    pub const ERROR: Self = Self((-1_i32 as ::core::ffi::c_int));
     /// cannot determine power status
-    pub const UNKNOWN: Self = Self(0_i32);
+    pub const UNKNOWN: Self = Self((0_i32 as ::core::ffi::c_int));
     /// Not plugged in, running on the battery
-    pub const ON_BATTERY: Self = Self(1_i32);
+    pub const ON_BATTERY: Self = Self((1_i32 as ::core::ffi::c_int));
     /// Plugged in, no battery available
-    pub const NO_BATTERY: Self = Self(2_i32);
+    pub const NO_BATTERY: Self = Self((2_i32 as ::core::ffi::c_int));
     /// Plugged in, charging battery
-    pub const CHARGING: Self = Self(3_i32);
+    pub const CHARGING: Self = Self((3_i32 as ::core::ffi::c_int));
     /// Plugged in, battery charged
-    pub const CHARGED: Self = Self(4_i32);
+    pub const CHARGED: Self = Self((4_i32 as ::core::ffi::c_int));
 }
 
 /// error determining power status

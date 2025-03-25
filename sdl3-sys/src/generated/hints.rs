@@ -4242,9 +4242,9 @@ impl ::core::fmt::Debug for SDL_HintPriority {
 }
 
 impl SDL_HintPriority {
-    pub const DEFAULT: Self = Self(0);
-    pub const NORMAL: Self = Self(1);
-    pub const OVERRIDE: Self = Self(2);
+    pub const DEFAULT: Self = Self((0 as ::core::ffi::c_int));
+    pub const NORMAL: Self = Self((1 as ::core::ffi::c_int));
+    pub const OVERRIDE: Self = Self((2 as ::core::ffi::c_int));
 }
 
 pub const SDL_HINT_DEFAULT: SDL_HintPriority = SDL_HintPriority::DEFAULT;

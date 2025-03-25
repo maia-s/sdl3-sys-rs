@@ -231,15 +231,15 @@ impl ::core::fmt::Debug for SDL_AssertState {
 
 impl SDL_AssertState {
     /// Retry the assert immediately.
-    pub const RETRY: Self = Self(0);
+    pub const RETRY: Self = Self((0 as ::core::ffi::c_int));
     /// Make the debugger trigger a breakpoint.
-    pub const BREAK: Self = Self(1);
+    pub const BREAK: Self = Self((1 as ::core::ffi::c_int));
     /// Terminate the program.
-    pub const ABORT: Self = Self(2);
+    pub const ABORT: Self = Self((2 as ::core::ffi::c_int));
     /// Ignore the assert.
-    pub const IGNORE: Self = Self(3);
+    pub const IGNORE: Self = Self((3 as ::core::ffi::c_int));
     /// Ignore the assert from now on.
-    pub const ALWAYS_IGNORE: Self = Self(4);
+    pub const ALWAYS_IGNORE: Self = Self((4 as ::core::ffi::c_int));
 }
 
 /// Retry the assert immediately.
