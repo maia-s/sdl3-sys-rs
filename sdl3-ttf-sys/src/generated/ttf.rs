@@ -10,7 +10,7 @@ pub const SDL_TTF_MAJOR_VERSION: ::core::primitive::i32 = 3;
 
 pub const SDL_TTF_MINOR_VERSION: ::core::primitive::i32 = 2;
 
-pub const SDL_TTF_MICRO_VERSION: ::core::primitive::i32 = 0;
+pub const SDL_TTF_MICRO_VERSION: ::core::primitive::i32 = 2;
 
 /// * This is the version number macro for the current SDL_ttf version.
 pub const SDL_TTF_VERSION: ::core::primitive::i32 = SDL_VERSIONNUM(
@@ -545,7 +545,7 @@ extern "C" {
 /// or query font style, such as [`TTF_SetFontStyle`] or [`TTF_GetFontStyle`].
 ///
 /// ### Availability
-/// This function is available since SDL_ttf 3.0.0.
+/// This datatype is available since SDL_ttf 3.0.0.
 ///
 /// ### See also
 /// - [`TTF_SetFontStyle`]
@@ -703,6 +703,7 @@ extern "C" {
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
+/// | [`INVALID`](TTF_HintingFlags::INVALID) | [`TTF_HINTING_INVALID`] | |
 /// | [`NORMAL`](TTF_HintingFlags::NORMAL) | [`TTF_HINTING_NORMAL`] | Normal hinting applies standard grid-fitting. |
 /// | [`LIGHT`](TTF_HintingFlags::LIGHT) | [`TTF_HINTING_LIGHT`] | Light hinting applies subtle adjustments to improve rendering. |
 /// | [`MONO`](TTF_HintingFlags::MONO) | [`TTF_HINTING_MONO`] | Monochrome hinting adjusts the font for better rendering at lower resolutions. |
@@ -724,6 +725,7 @@ impl ::core::fmt::Debug for TTF_HintingFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
         #[allow(unreachable_patterns)]
         f.write_str(match *self {
+            Self::INVALID => "TTF_HINTING_INVALID",
             Self::NORMAL => "TTF_HINTING_NORMAL",
             Self::LIGHT => "TTF_HINTING_LIGHT",
             Self::MONO => "TTF_HINTING_MONO",
@@ -736,18 +738,20 @@ impl ::core::fmt::Debug for TTF_HintingFlags {
 }
 
 impl TTF_HintingFlags {
+    pub const INVALID: Self = Self(-1_i32);
     /// Normal hinting applies standard grid-fitting.
-    pub const NORMAL: Self = Self(0);
+    pub const NORMAL: Self = Self(0_i32);
     /// Light hinting applies subtle adjustments to improve rendering.
-    pub const LIGHT: Self = Self(1);
+    pub const LIGHT: Self = Self(1_i32);
     /// Monochrome hinting adjusts the font for better rendering at lower resolutions.
-    pub const MONO: Self = Self(2);
+    pub const MONO: Self = Self(2_i32);
     /// No hinting, the font is rendered without any grid-fitting.
-    pub const NONE: Self = Self(3);
+    pub const NONE: Self = Self(3_i32);
     /// Light hinting with subpixel rendering for more precise font edges.
-    pub const LIGHT_SUBPIXEL: Self = Self(4);
+    pub const LIGHT_SUBPIXEL: Self = Self(4_i32);
 }
 
+pub const TTF_HINTING_INVALID: TTF_HintingFlags = TTF_HintingFlags::INVALID;
 /// Normal hinting applies standard grid-fitting.
 pub const TTF_HINTING_NORMAL: TTF_HintingFlags = TTF_HintingFlags::NORMAL;
 /// Light hinting applies subtle adjustments to improve rendering.
@@ -821,7 +825,8 @@ extern "C" {
     /// - `font`: the font to query.
     ///
     /// ### Return value
-    /// Returns the font's current hinter value.
+    /// Returns the font's current hinter value, or [`TTF_HINTING_INVALID`] if the
+    ///   font is invalid.
     ///
     /// ### Thread safety
     /// It is safe to call this function from any thread.
@@ -888,6 +893,54 @@ extern "C" {
     /// - [`TTF_SetFontSDF`]
     pub fn TTF_GetFontSDF(font: *const TTF_Font) -> ::core::primitive::bool;
 }
+
+extern "C" {
+    /// Query a font's weight, in terms of the lightness/heaviness of the strokes.
+    ///
+    /// ### Parameters
+    /// - `font`: the font to query.
+    ///
+    /// ### Return value
+    /// Returns the font's current weight.
+    ///
+    /// ### Thread safety
+    /// This function should be called on the thread that created the
+    ///   font.
+    ///
+    /// ### Availability
+    /// This function is available since SDL_ttf 3.4.0.
+    pub fn TTF_GetFontWeight(font: *const TTF_Font) -> ::core::ffi::c_int;
+}
+
+/// Thin (100) named font weight value
+pub const TTF_FONT_WEIGHT_THIN: ::core::primitive::i32 = 100;
+
+/// ExtraLight (200) named font weight value
+pub const TTF_FONT_WEIGHT_EXTRA_LIGHT: ::core::primitive::i32 = 200;
+
+/// Light (300) named font weight value
+pub const TTF_FONT_WEIGHT_LIGHT: ::core::primitive::i32 = 300;
+
+/// Normal (400) named font weight value
+pub const TTF_FONT_WEIGHT_NORMAL: ::core::primitive::i32 = 400;
+
+/// Medium (500) named font weight value
+pub const TTF_FONT_WEIGHT_MEDIUM: ::core::primitive::i32 = 500;
+
+/// SemiBold (600) named font weight value
+pub const TTF_FONT_WEIGHT_SEMI_BOLD: ::core::primitive::i32 = 600;
+
+/// Bold (700) named font weight value
+pub const TTF_FONT_WEIGHT_BOLD: ::core::primitive::i32 = 700;
+
+/// ExtraBold (800) named font weight value
+pub const TTF_FONT_WEIGHT_EXTRA_BOLD: ::core::primitive::i32 = 800;
+
+/// Black (900) named font weight value
+pub const TTF_FONT_WEIGHT_BLACK: ::core::primitive::i32 = 900;
+
+/// ExtraBlack (950) named font weight value
+pub const TTF_FONT_WEIGHT_EXTRA_BLACK: ::core::primitive::i32 = 950;
 
 /// The horizontal alignment used when rendering wrapped text.
 ///

@@ -2,7 +2,7 @@
 
 These are low level Rust bindings for SDL3_ttf, an add-on library for
 [SDL 3](https://libsdl.org) for rendering text.
-This version of `sdl3-ttf-sys` has bindings for SDL_ttf version `3.2.0`.
+This version of `sdl3-ttf-sys` has bindings for SDL_ttf versions `3.2.0` to `3.2.2`, inclusive.
 
 <div class="warning">
 
