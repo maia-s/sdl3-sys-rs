@@ -8,7 +8,11 @@ However, many of these aren't valid when passed to SDL without further modificat
 They're intended to be used with `..Default::default()` in initializers.
 The `Default` impl of interface types also sets the version field to the correct value.
 
-SDL_image is available via the [`sdl3-image-sys`](https://crates.io/crates/sdl3-image-sys) crate.
+Add-on crates:
+- [`sdl3-main`](https://crates.io/crates/sdl3-image-sys): Tools for using SDL's main and callback interface
+- [`sdl3-image-sys`](https://crates.io/crates/sdl3-image-sys): Bindings for SDL3_image
+- [`sdl3-ttf-sys`](https://crates.io/crates/sdl3-image-sys): Bindings for SDL3_ttf
+
 Other satellite libraries aren't stable yet, but will be released as they're available.
 
 <div class="warning">
