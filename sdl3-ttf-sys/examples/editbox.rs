@@ -70,7 +70,7 @@ pub struct EditBox {
 
     // Cursor support
     cursor: c_int,
-    cursor_length: c_int,
+    _cursor_length: c_int,
     cursor_visible: bool,
     last_cursor_change: u64,
     cursor_rect: SDL_FRect,
@@ -492,7 +492,7 @@ impl EditBox {
 
             has_focus: false,
             cursor: 0,
-            cursor_length: 0,
+            _cursor_length: 0,
             cursor_visible: false,
             last_cursor_change: 0,
             cursor_rect: SDL_FRect::default(),

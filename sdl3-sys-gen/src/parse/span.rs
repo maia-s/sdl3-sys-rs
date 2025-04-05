@@ -1,7 +1,7 @@
 #![allow(unexpected_cfgs)]
 
 use super::{Parse, ParseContext, ParseErr, ParseRawRes, ParseRes};
-use core::hash::Hash;
+use core::{hash::Hash, ptr};
 use std::{
     borrow::Cow,
     fmt::{self, Debug, Display},
@@ -172,7 +172,10 @@ impl Span {
     }
 
     pub fn join(&self, other: &Self) -> Self {
-        assert!(self.source().text.as_ptr() == other.source().text.as_ptr());
+        assert!(ptr::eq(
+            self.source().text.as_ptr(),
+            other.source().text.as_ptr()
+        ));
         assert!(self.source().text.len() == other.source().text.len());
         self.clone_range(self.start.min(other.start), self.end.max(other.end))
     }

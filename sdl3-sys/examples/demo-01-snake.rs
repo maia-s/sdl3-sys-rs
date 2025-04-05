@@ -48,7 +48,8 @@ const SDL_WINDOW_HEIGHT: i32 = SNAKE_BLOCK_SIZE_IN_PIXELS * SNAKE_GAME_HEIGHT as
 const SNAKE_GAME_WIDTH: i8 = 24;
 const SNAKE_GAME_HEIGHT: i8 = 18;
 const SNAKE_MATRIX_SIZE: u16 = SNAKE_GAME_WIDTH as u16 * SNAKE_GAME_HEIGHT as u16;
-const SNAKE_ARRAY_SIZE: usize = (((SNAKE_MATRIX_SIZE + 1) * SNAKE_CELL_MAX_BITS + 7) / 8) as usize;
+const SNAKE_ARRAY_SIZE: usize =
+    ((SNAKE_MATRIX_SIZE + 1) * SNAKE_CELL_MAX_BITS).div_ceil(8) as usize;
 
 const THREE_BITS: u16 = (1_u16 << SNAKE_CELL_MAX_BITS) - 1;
 const fn shift(x: i8, y: i8) -> (usize, u16) {
