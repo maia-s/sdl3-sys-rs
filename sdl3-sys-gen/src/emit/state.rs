@@ -214,6 +214,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             ".sdl3-sys.big-endian" = CfgExpr(r#"target_endian = "big""#);
             ".sdl3-sys.little-endian" = CfgExpr(r#"target_endian = "little""#);
             "__aarch64__" = CfgExpr(r#"target_arch = "aarch64""#);
+            "__APPLE__" = CfgExpr(r#"target_vendor = "apple""#);
             "__arm__" = CfgExpr(r#"target_arch = "arm""#);
             "__ARM_ARCH_7__" = CfgExpr(r#"all(target_arch = "arm", target_feature = "v7")"#);
             "__ARM_ARCH_7A__" = CfgExpr(r#"target_feature = "armv7-a""#);
@@ -297,6 +298,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_DEFINE_STDBOOL",
             "SDL_EndThreadFunction",
             "SDL_FUNCTION_POINTER_IS_VOID_POINTER",
+            "SDL_INCLUDE_STDBOOL_H",
             "SDL_INTERNAL",
             "SDL_MAIN_AVAILABLE",
             "SDL_MAIN_EXPORTED",
