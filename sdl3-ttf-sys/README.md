@@ -63,4 +63,6 @@ disables harfbuzz support. Activated features override features disabled with th
 
 ## Recent changes
 
+- 0.1.2: Fix vendored build of Freetype with CMake 4
+- 0.1.1: Update SDL_ttf to 3.2.2
 - 0.1.0: First release
