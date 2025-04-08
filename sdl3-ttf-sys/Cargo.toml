@@ -63,7 +63,7 @@ version = "0.1.2"
 optional = true
 
 [build-dependencies.sdl3-ttf-src]
-version = "3.2.3"
+version = "3.2.2"
 path = "../sdl3-ttf-src"
 optional = true
 
