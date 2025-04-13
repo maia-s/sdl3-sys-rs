@@ -279,7 +279,8 @@ impl DocComment {
                         .find(|c: char| {
                             c.is_ascii_whitespace()
                                 || c == ','
-                                || line.as_bytes().get(i - 1).copied() == Some(b'(') && c == ')'
+                                || line.as_bytes().get(i.wrapping_sub(1)).copied() == Some(b'(')
+                                    && c == ')'
                         })
                         .unwrap_or(line.len() - i);
                     write!(patched, "<{}>", &line[i..i0])?;
