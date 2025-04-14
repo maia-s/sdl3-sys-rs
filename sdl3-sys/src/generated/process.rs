@@ -135,6 +135,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_ProcessIO {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_ProcessIO> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ProcessIO) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_ProcessIO> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_ProcessIO) -> Self {

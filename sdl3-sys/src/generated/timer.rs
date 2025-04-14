@@ -332,6 +332,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_TimerID {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_TimerID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_TimerID) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_TimerID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_TimerID) -> Self {

@@ -47,6 +47,13 @@ impl ::core::cmp::PartialEq<Uint64> for SDL_ThreadID {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_ThreadID> for Uint64 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ThreadID) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_ThreadID> for Uint64 {
     #[inline(always)]
     fn from(value: SDL_ThreadID) -> Self {
@@ -110,6 +117,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_ThreadPriority {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_ThreadPriority> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ThreadPriority) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_ThreadPriority> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_ThreadPriority) -> Self {
@@ -169,6 +183,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_ThreadState {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_ThreadState> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ThreadState) -> bool {
+        self == &other.0
     }
 }
 

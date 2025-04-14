@@ -1236,6 +1236,13 @@ impl Enum {
                             &self.0 == other
                         }}
                     }}
+
+                    impl ::core::cmp::PartialEq<{enum_ident_s}> for {enum_base_type_s} {{
+                        #[inline(always)]
+                        fn eq(&self, other: &{enum_ident_s}) -> bool {{
+                            self == &other.0
+                        }}
+                    }}
                 "},
                 enum_base_type_s = enum_base_type_s,
                 enum_ident_s = enum_ident_s,

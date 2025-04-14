@@ -60,6 +60,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_JoystickID {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_JoystickID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_JoystickID) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_JoystickID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_JoystickID) -> Self {
@@ -103,6 +110,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_JoystickType {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_JoystickType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_JoystickType) -> bool {
+        self == &other.0
     }
 }
 
@@ -184,6 +198,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_JoystickConnectionState 
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_JoystickConnectionState> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_JoystickConnectionState) -> bool {
+        self == &other.0
     }
 }
 

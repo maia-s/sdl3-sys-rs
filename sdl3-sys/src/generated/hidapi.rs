@@ -51,6 +51,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_hid_bus_type {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_hid_bus_type> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_hid_bus_type) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_hid_bus_type> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_hid_bus_type) -> Self {

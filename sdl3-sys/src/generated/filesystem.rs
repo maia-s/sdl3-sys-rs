@@ -183,6 +183,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_Folder {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_Folder> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_Folder) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_Folder> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_Folder) -> Self {
@@ -324,6 +331,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PathType {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_PathType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PathType) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_PathType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PathType) -> Self {
@@ -411,6 +425,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_GlobFlags {
     #[inline(always)]
     fn eq(&self, other: &Uint32) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GlobFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GlobFlags) -> bool {
+        self == &other.0
     }
 }
 
@@ -555,6 +576,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_EnumerationResult {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_EnumerationResult> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_EnumerationResult) -> bool {
+        self == &other.0
     }
 }
 

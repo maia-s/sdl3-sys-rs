@@ -297,6 +297,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_Keycode {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_Keycode> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_Keycode) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_Keycode> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_Keycode) -> Self {
@@ -1644,6 +1651,13 @@ impl ::core::cmp::PartialEq<Uint16> for SDL_Keymod {
     #[inline(always)]
     fn eq(&self, other: &Uint16) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_Keymod> for Uint16 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_Keymod) -> bool {
+        self == &other.0
     }
 }
 

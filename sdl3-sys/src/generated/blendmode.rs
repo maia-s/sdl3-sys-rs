@@ -38,6 +38,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_BlendMode {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_BlendMode> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_BlendMode) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_BlendMode> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_BlendMode) -> Self {
@@ -248,6 +255,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_BlendOperation {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_BlendOperation> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_BlendOperation) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_BlendOperation> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_BlendOperation) -> Self {
@@ -326,6 +340,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_BlendFactor {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_BlendFactor> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_BlendFactor) -> bool {
+        self == &other.0
     }
 }
 

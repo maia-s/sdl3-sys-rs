@@ -911,6 +911,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_HapticID {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_HapticID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_HapticID) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_HapticID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_HapticID) -> Self {

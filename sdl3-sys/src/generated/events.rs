@@ -191,6 +191,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_EventType {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_EventType> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_EventType) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_EventType> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_EventType) -> Self {
@@ -1958,6 +1965,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_EventAction {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_EventAction> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_EventAction) -> bool {
+        self == &other.0
     }
 }
 

@@ -584,6 +584,13 @@ apply_cfg!(#[cfg(all(not(any(doc, target_os = "horizon")), not(any(doc, target_o
         }
     }
 
+    impl ::core::cmp::PartialEq<SDL_DUMMY_ENUM> for ::core::ffi::c_int {
+        #[inline(always)]
+        fn eq(&self, other: &SDL_DUMMY_ENUM) -> bool {
+            self == &other.0
+        }
+    }
+
     impl From<SDL_DUMMY_ENUM> for ::core::ffi::c_int{
         #[inline(always)]
         fn from(value: SDL_DUMMY_ENUM) -> Self {

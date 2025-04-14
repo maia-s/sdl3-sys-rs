@@ -40,6 +40,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PowerState {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_PowerState> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PowerState) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_PowerState> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PowerState) -> Self {

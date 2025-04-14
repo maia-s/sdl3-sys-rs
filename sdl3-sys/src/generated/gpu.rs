@@ -329,6 +329,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUPrimitiveType {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPUPrimitiveType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUPrimitiveType) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPUPrimitiveType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUPrimitiveType) -> Self {
@@ -404,6 +411,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPULoadOp {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPULoadOp> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPULoadOp) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPULoadOp> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPULoadOp) -> Self {
@@ -465,6 +479,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUStoreOp {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUStoreOp> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUStoreOp) -> bool {
+        self == &other.0
     }
 }
 
@@ -531,6 +552,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUIndexElementSize {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUIndexElementSize> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUIndexElementSize) -> bool {
+        self == &other.0
     }
 }
 
@@ -768,6 +796,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUTextureFormat {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUTextureFormat> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUTextureFormat) -> bool {
+        self == &other.0
     }
 }
 
@@ -1232,6 +1267,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_GPUTextureUsageFlags {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPUTextureUsageFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUTextureUsageFlags) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPUTextureUsageFlags> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_GPUTextureUsageFlags) -> Self {
@@ -1450,6 +1492,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUTextureType {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPUTextureType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUTextureType) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPUTextureType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUTextureType) -> Self {
@@ -1527,6 +1576,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUSampleCount {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPUSampleCount> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUSampleCount) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPUSampleCount> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUSampleCount) -> Self {
@@ -1593,6 +1649,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUCubeMapFace {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUCubeMapFace> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUCubeMapFace) -> bool {
+        self == &other.0
     }
 }
 
@@ -1671,6 +1734,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_GPUBufferUsageFlags {
     #[inline(always)]
     fn eq(&self, other: &Uint32) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUBufferUsageFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUBufferUsageFlags) -> bool {
+        self == &other.0
     }
 }
 
@@ -1869,6 +1939,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUTransferBufferUsage {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPUTransferBufferUsage> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUTransferBufferUsage) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPUTransferBufferUsage> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUTransferBufferUsage) -> Self {
@@ -1920,6 +1997,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUShaderStage {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUShaderStage> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUShaderStage) -> bool {
+        self == &other.0
     }
 }
 
@@ -1979,6 +2063,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_GPUShaderFormat {
     #[inline(always)]
     fn eq(&self, other: &Uint32) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUShaderFormat> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUShaderFormat) -> bool {
+        self == &other.0
     }
 }
 
@@ -2204,6 +2295,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUVertexElementFormat {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPUVertexElementFormat> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUVertexElementFormat) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPUVertexElementFormat> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUVertexElementFormat) -> Self {
@@ -2374,6 +2472,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUVertexInputRate {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPUVertexInputRate> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUVertexInputRate) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPUVertexInputRate> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUVertexInputRate) -> Self {
@@ -2431,6 +2536,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUFillMode {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPUFillMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUFillMode) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPUFillMode> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUFillMode) -> Self {
@@ -2485,6 +2597,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUCullMode {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUCullMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUCullMode) -> bool {
+        self == &other.0
     }
 }
 
@@ -2550,6 +2669,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUFrontFace {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPUFrontFace> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUFrontFace) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPUFrontFace> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUFrontFace) -> Self {
@@ -2611,6 +2737,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUCompareOp {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUCompareOp> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUCompareOp) -> bool {
+        self == &other.0
     }
 }
 
@@ -2708,6 +2841,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUStencilOp {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUStencilOp> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUStencilOp) -> bool {
+        self == &other.0
     }
 }
 
@@ -2812,6 +2952,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUBlendOp {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPUBlendOp> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUBlendOp) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPUBlendOp> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUBlendOp) -> Self {
@@ -2899,6 +3046,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUBlendFactor {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUBlendFactor> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUBlendFactor) -> bool {
+        self == &other.0
     }
 }
 
@@ -3022,6 +3176,13 @@ impl ::core::cmp::PartialEq<Uint8> for SDL_GPUColorComponentFlags {
     #[inline(always)]
     fn eq(&self, other: &Uint8) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUColorComponentFlags> for Uint8 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUColorComponentFlags) -> bool {
+        self == &other.0
     }
 }
 
@@ -3184,6 +3345,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUFilter {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPUFilter> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUFilter) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPUFilter> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUFilter) -> Self {
@@ -3237,6 +3405,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUSamplerMipmapMode {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUSamplerMipmapMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUSamplerMipmapMode) -> bool {
+        self == &other.0
     }
 }
 
@@ -3297,6 +3472,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUSamplerAddressMode {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUSamplerAddressMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUSamplerAddressMode) -> bool {
+        self == &other.0
     }
 }
 
@@ -3383,6 +3565,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUPresentMode {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GPUPresentMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUPresentMode) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GPUPresentMode> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUPresentMode) -> Self {
@@ -3456,6 +3645,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUSwapchainComposition 
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUSwapchainComposition> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUSwapchainComposition) -> bool {
+        self == &other.0
     }
 }
 

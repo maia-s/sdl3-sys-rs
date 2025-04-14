@@ -213,6 +213,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_AssertState {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_AssertState> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_AssertState) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_AssertState> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_AssertState) -> Self {

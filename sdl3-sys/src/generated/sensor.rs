@@ -31,6 +31,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_SensorID {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_SensorID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_SensorID) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_SensorID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_SensorID) -> Self {
@@ -125,6 +132,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_SensorType {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_SensorType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_SensorType) -> bool {
+        self == &other.0
     }
 }
 

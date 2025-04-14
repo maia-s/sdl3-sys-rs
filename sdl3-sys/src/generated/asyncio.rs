@@ -97,6 +97,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_AsyncIOTaskType {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_AsyncIOTaskType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_AsyncIOTaskType) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_AsyncIOTaskType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_AsyncIOTaskType) -> Self {
@@ -153,6 +160,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_AsyncIOResult {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_AsyncIOResult> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_AsyncIOResult) -> bool {
+        self == &other.0
     }
 }
 

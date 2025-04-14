@@ -74,6 +74,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_CameraID {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_CameraID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_CameraID) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_CameraID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_CameraID) -> Self {
@@ -134,6 +141,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_CameraPosition {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_CameraPosition> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_CameraPosition) -> bool {
+        self == &other.0
     }
 }
 

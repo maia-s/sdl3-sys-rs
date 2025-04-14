@@ -43,6 +43,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_MessageBoxFlags {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_MessageBoxFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_MessageBoxFlags) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_MessageBoxFlags> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_MessageBoxFlags) -> Self {
@@ -215,6 +222,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_MessageBoxButtonFlags {
     #[inline(always)]
     fn eq(&self, other: &Uint32) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_MessageBoxButtonFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_MessageBoxButtonFlags) -> bool {
+        self == &other.0
     }
 }
 
@@ -391,6 +405,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_MessageBoxColorType {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_MessageBoxColorType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_MessageBoxColorType) -> bool {
+        self == &other.0
     }
 }
 

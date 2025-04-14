@@ -24,6 +24,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_DrawCommand {
     }
 }
 
+impl ::core::cmp::PartialEq<TTF_DrawCommand> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_DrawCommand) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<TTF_DrawCommand> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: TTF_DrawCommand) -> Self {

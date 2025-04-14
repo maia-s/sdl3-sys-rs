@@ -124,6 +124,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PixelType {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_PixelType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PixelType) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_PixelType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PixelType) -> Self {
@@ -207,6 +214,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_BitmapOrder {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_BitmapOrder> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_BitmapOrder) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_BitmapOrder> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_BitmapOrder) -> Self {
@@ -263,6 +277,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PackedOrder {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_PackedOrder> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PackedOrder) -> bool {
+        self == &other.0
     }
 }
 
@@ -341,6 +362,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_ArrayOrder {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_ArrayOrder> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ArrayOrder) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_ArrayOrder> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_ArrayOrder) -> Self {
@@ -409,6 +437,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PackedLayout {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_PackedLayout> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PackedLayout) -> bool {
+        self == &other.0
     }
 }
 
@@ -609,6 +644,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PixelFormat {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_PixelFormat> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PixelFormat) -> bool {
+        self == &other.0
     }
 }
 
@@ -1349,6 +1391,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_ColorType {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_ColorType> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ColorType) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_ColorType> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_ColorType) -> Self {
@@ -1400,6 +1449,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_ColorRange {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_uint) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_ColorRange> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ColorRange) -> bool {
+        self == &other.0
     }
 }
 
@@ -1469,6 +1525,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_ColorPrimaries {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_uint) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_ColorPrimaries> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ColorPrimaries) -> bool {
+        self == &other.0
     }
 }
 
@@ -1595,6 +1658,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_TransferCharacteristics
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_uint) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_TransferCharacteristics> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_TransferCharacteristics) -> bool {
+        self == &other.0
     }
 }
 
@@ -1758,6 +1828,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_MatrixCoefficients {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_MatrixCoefficients> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_MatrixCoefficients) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_MatrixCoefficients> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_MatrixCoefficients) -> Self {
@@ -1874,6 +1951,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_ChromaLocation {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_ChromaLocation> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ChromaLocation) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_ChromaLocation> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_ChromaLocation) -> Self {
@@ -1956,6 +2040,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_Colorspace {
     #[inline(always)]
     fn eq(&self, other: &Uint32) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_Colorspace> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_Colorspace) -> bool {
+        self == &other.0
     }
 }
 

@@ -96,6 +96,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GamepadType {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GamepadType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GamepadType) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GamepadType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GamepadType) -> Self {
@@ -220,6 +227,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GamepadButton {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GamepadButton> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GamepadButton) -> bool {
+        self == &other.0
     }
 }
 
@@ -393,6 +407,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GamepadButtonLabel {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GamepadButtonLabel> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GamepadButtonLabel) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GamepadButtonLabel> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GamepadButtonLabel) -> Self {
@@ -480,6 +501,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GamepadAxis {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GamepadAxis> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GamepadAxis) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GamepadAxis> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GamepadAxis) -> Self {
@@ -551,6 +579,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GamepadBindingType {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GamepadBindingType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GamepadBindingType) -> bool {
+        self == &other.0
     }
 }
 

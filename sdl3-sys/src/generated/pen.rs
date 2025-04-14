@@ -39,6 +39,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_PenID {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_PenID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PenID) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_PenID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_PenID) -> Self {
@@ -83,6 +90,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_PenInputFlags {
     #[inline(always)]
     fn eq(&self, other: &Uint32) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_PenInputFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PenInputFlags) -> bool {
+        self == &other.0
     }
 }
 
@@ -291,6 +305,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PenAxis {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_PenAxis> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PenAxis) -> bool {
+        self == &other.0
     }
 }
 

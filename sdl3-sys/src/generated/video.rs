@@ -54,6 +54,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_DisplayID {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_DisplayID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_DisplayID) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_DisplayID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_DisplayID) -> Self {
@@ -78,6 +85,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_WindowID {
     #[inline(always)]
     fn eq(&self, other: &Uint32) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_WindowID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_WindowID) -> bool {
+        self == &other.0
     }
 }
 
@@ -123,6 +137,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_SystemTheme {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_SystemTheme> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_SystemTheme) -> bool {
+        self == &other.0
     }
 }
 
@@ -219,6 +240,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_DisplayOrientation {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_DisplayOrientation> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_DisplayOrientation) -> bool {
+        self == &other.0
     }
 }
 
@@ -320,6 +348,13 @@ impl ::core::cmp::PartialEq<Uint64> for SDL_WindowFlags {
     #[inline(always)]
     fn eq(&self, other: &Uint64) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_WindowFlags> for Uint64 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_WindowFlags) -> bool {
+        self == &other.0
     }
 }
 
@@ -839,6 +874,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_FlashOperation {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_FlashOperation> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_FlashOperation) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_FlashOperation> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_FlashOperation) -> Self {
@@ -1044,6 +1086,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GLAttr {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GLAttr> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GLAttr) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GLAttr> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GLAttr) -> Self {
@@ -1222,6 +1271,13 @@ impl ::core::cmp::PartialEq<Sint32> for SDL_GLProfile {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GLProfile> for Sint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GLProfile) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GLProfile> for Sint32 {
     #[inline(always)]
     fn from(value: SDL_GLProfile) -> Self {
@@ -1367,6 +1423,13 @@ impl ::core::cmp::PartialEq<Sint32> for SDL_GLContextFlag {
     #[inline(always)]
     fn eq(&self, other: &Sint32) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GLContextFlag> for Sint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GLContextFlag) -> bool {
+        self == &other.0
     }
 }
 
@@ -1528,6 +1591,13 @@ impl ::core::cmp::PartialEq<Sint32> for SDL_GLContextReleaseFlag {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_GLContextReleaseFlag> for Sint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GLContextReleaseFlag) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_GLContextReleaseFlag> for Sint32 {
     #[inline(always)]
     fn from(value: SDL_GLContextReleaseFlag) -> Self {
@@ -1655,6 +1725,13 @@ impl ::core::cmp::PartialEq<Sint32> for SDL_GLContextResetNotification {
     #[inline(always)]
     fn eq(&self, other: &Sint32) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GLContextResetNotification> for Sint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GLContextResetNotification) -> bool {
+        self == &other.0
     }
 }
 
@@ -4711,6 +4788,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_HitTestResult {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_HitTestResult> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_HitTestResult) -> bool {
+        self == &other.0
     }
 }
 

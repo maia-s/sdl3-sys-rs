@@ -66,6 +66,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_DateFormat {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_DateFormat> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_DateFormat) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_DateFormat> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_DateFormat) -> Self {
@@ -124,6 +131,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_TimeFormat {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_TimeFormat> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_TimeFormat) -> bool {
+        self == &other.0
     }
 }
 

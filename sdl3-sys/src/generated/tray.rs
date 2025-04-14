@@ -43,6 +43,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_TrayEntryFlags {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_TrayEntryFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_TrayEntryFlags) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_TrayEntryFlags> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_TrayEntryFlags) -> Self {

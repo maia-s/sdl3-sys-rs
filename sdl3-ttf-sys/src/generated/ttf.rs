@@ -570,6 +570,13 @@ impl ::core::cmp::PartialEq<Uint32> for TTF_FontStyleFlags {
     }
 }
 
+impl ::core::cmp::PartialEq<TTF_FontStyleFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_FontStyleFlags) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<TTF_FontStyleFlags> for Uint32 {
     #[inline(always)]
     fn from(value: TTF_FontStyleFlags) -> Self {
@@ -863,6 +870,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_HintingFlags {
     }
 }
 
+impl ::core::cmp::PartialEq<TTF_HintingFlags> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_HintingFlags) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<TTF_HintingFlags> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: TTF_HintingFlags) -> Self {
@@ -1112,6 +1126,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_HorizontalAlignment {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<TTF_HorizontalAlignment> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_HorizontalAlignment) -> bool {
+        self == &other.0
     }
 }
 
@@ -1456,6 +1477,13 @@ impl ::core::cmp::PartialEq<::core::primitive::u32> for TTF_Direction {
     }
 }
 
+impl ::core::cmp::PartialEq<TTF_Direction> for ::core::primitive::u32 {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_Direction) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<TTF_Direction> for ::core::primitive::u32 {
     #[inline(always)]
     fn from(value: TTF_Direction) -> Self {
@@ -1737,6 +1765,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_ImageType {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<TTF_ImageType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_ImageType) -> bool {
+        self == &other.0
     }
 }
 
@@ -2975,6 +3010,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_GPUTextEngineWinding {
     }
 }
 
+impl ::core::cmp::PartialEq<TTF_GPUTextEngineWinding> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_GPUTextEngineWinding) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<TTF_GPUTextEngineWinding> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: TTF_GPUTextEngineWinding) -> Self {
@@ -3813,6 +3855,13 @@ impl ::core::cmp::PartialEq<Uint32> for TTF_SubStringFlags {
     #[inline(always)]
     fn eq(&self, other: &Uint32) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<TTF_SubStringFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_SubStringFlags) -> bool {
+        self == &other.0
     }
 }
 

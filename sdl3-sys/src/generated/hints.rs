@@ -4227,6 +4227,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_HintPriority {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_HintPriority> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_HintPriority) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_HintPriority> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_HintPriority) -> Self {

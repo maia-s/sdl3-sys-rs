@@ -38,6 +38,13 @@ impl ::core::cmp::PartialEq<Uint64> for SDL_TouchID {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_TouchID> for Uint64 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_TouchID) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_TouchID> for Uint64 {
     #[inline(always)]
     fn from(value: SDL_TouchID) -> Self {
@@ -70,6 +77,13 @@ impl ::core::cmp::PartialEq<Uint64> for SDL_FingerID {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_FingerID> for Uint64 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_FingerID) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_FingerID> for Uint64 {
     #[inline(always)]
     fn from(value: SDL_FingerID) -> Self {
@@ -99,6 +113,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_TouchDeviceType {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_TouchDeviceType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_TouchDeviceType) -> bool {
+        self == &other.0
     }
 }
 

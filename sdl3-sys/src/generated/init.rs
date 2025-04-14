@@ -64,6 +64,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_InitFlags {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_InitFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_InitFlags) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_InitFlags> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_InitFlags) -> Self {
@@ -277,6 +284,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_AppResult {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_AppResult> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_AppResult) -> bool {
+        self == &other.0
     }
 }
 

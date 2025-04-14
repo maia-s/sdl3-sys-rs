@@ -87,6 +87,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_LogCategory {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_LogCategory> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_LogCategory) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_LogCategory> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_LogCategory) -> Self {
@@ -194,6 +201,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_LogPriority {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_LogPriority> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_LogPriority) -> bool {
+        self == &other.0
     }
 }
 

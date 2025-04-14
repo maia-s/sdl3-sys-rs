@@ -84,6 +84,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_TextureAccess {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_TextureAccess> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_TextureAccess) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_TextureAccess> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_TextureAccess) -> Self {
@@ -142,6 +149,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_RendererLogicalPresentat
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_RendererLogicalPresentation> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_RendererLogicalPresentation) -> bool {
+        self == &other.0
     }
 }
 

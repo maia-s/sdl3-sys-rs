@@ -51,6 +51,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_SurfaceFlags {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_SurfaceFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_SurfaceFlags) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_SurfaceFlags> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_SurfaceFlags) -> Self {
@@ -213,6 +220,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_ScaleMode {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_ScaleMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ScaleMode) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_ScaleMode> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_ScaleMode) -> Self {
@@ -267,6 +281,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_FlipMode {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_FlipMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_FlipMode) -> bool {
+        self == &other.0
     }
 }
 

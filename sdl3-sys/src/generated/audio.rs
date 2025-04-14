@@ -184,6 +184,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_AudioFormat {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_AudioFormat> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_AudioFormat) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_AudioFormat> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_AudioFormat) -> Self {
@@ -514,6 +521,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_AudioDeviceID {
     #[inline(always)]
     fn eq(&self, other: &Uint32) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_AudioDeviceID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_AudioDeviceID) -> bool {
+        self == &other.0
     }
 }
 

@@ -58,6 +58,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_MouseID {
     }
 }
 
+impl ::core::cmp::PartialEq<SDL_MouseID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_MouseID) -> bool {
+        self == &other.0
+    }
+}
+
 impl From<SDL_MouseID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_MouseID) -> Self {
@@ -104,6 +111,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_SystemCursor {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_SystemCursor> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_SystemCursor) -> bool {
+        self == &other.0
     }
 }
 
@@ -250,6 +264,13 @@ impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_MouseWheelDirection {
     #[inline(always)]
     fn eq(&self, other: &::core::ffi::c_int) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_MouseWheelDirection> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_MouseWheelDirection) -> bool {
+        self == &other.0
     }
 }
 
@@ -996,6 +1017,13 @@ impl ::core::cmp::PartialEq<Uint32> for SDL_MouseButtonFlags {
     #[inline(always)]
     fn eq(&self, other: &Uint32) -> bool {
         &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_MouseButtonFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_MouseButtonFlags) -> bool {
+        self == &other.0
     }
 }
 
