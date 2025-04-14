@@ -78,14 +78,9 @@ fn rust_version() -> Option<(usize, usize)> {
     let major = it.next()?.parse().ok()?;
     let mut minor = it.next()?.parse().ok()?;
     let (micro, _) = it.next()?.split_once(' ')?;
-    let mut channel = "";
-    if let Some((_, chan)) = micro.split_once('-') {
-        channel = chan;
-    }
-    if channel == "nightly" {
+    if let Some((_, "nightly")) = micro.split_once('-') {
         minor -= 1;
     }
-    dbg!("rustc", major, minor);
     Some((major, minor))
 }
 
