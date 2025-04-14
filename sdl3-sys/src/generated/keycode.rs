@@ -290,6 +290,13 @@ use super::scancode::*;
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Keycode(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_Keycode {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_Keycode> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_Keycode) -> Self {
@@ -1633,6 +1640,13 @@ pub const fn SDL_SCANCODE_TO_KEYCODE(X: SDL_Scancode) -> Uint32 {
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_Keymod(pub Uint16);
 
+impl ::core::cmp::PartialEq<Uint16> for SDL_Keymod {
+    #[inline(always)]
+    fn eq(&self, other: &Uint16) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_Keymod> for Uint16 {
     #[inline(always)]
     fn from(value: SDL_Keymod) -> Self {
@@ -1666,6 +1680,63 @@ impl ::core::fmt::Debug for SDL_Keymod {
 
             _ => return write!(f, "SDL_Keymod({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_Keymod {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_Keymod {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_Keymod {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_Keymod {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_Keymod {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_Keymod {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_Keymod {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 

@@ -44,6 +44,13 @@ use super::error::*;
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_hid_bus_type(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_hid_bus_type {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_hid_bus_type> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_hid_bus_type) -> Self {

@@ -17,6 +17,13 @@ use super::ttf::*;
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct TTF_DrawCommand(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_DrawCommand {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<TTF_DrawCommand> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: TTF_DrawCommand) -> Self {

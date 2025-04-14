@@ -297,6 +297,13 @@ extern "C" {
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_FileDialogType(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_FileDialogType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_FileDialogType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_FileDialogType) -> Self {

@@ -53,6 +53,13 @@ use super::sensor::*;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_JoystickID(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_JoystickID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_JoystickID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_JoystickID) -> Self {
@@ -91,6 +98,13 @@ impl SDL_JoystickID {}
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_JoystickType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_JoystickType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_JoystickType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -165,6 +179,13 @@ pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_JoystickConnectionState(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_JoystickConnectionState {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_JoystickConnectionState> for ::core::ffi::c_int {
     #[inline(always)]

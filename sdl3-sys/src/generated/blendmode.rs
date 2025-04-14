@@ -31,6 +31,13 @@ use super::stdinc::*;
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_BlendMode(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_BlendMode {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_BlendMode> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_BlendMode) -> Self {
@@ -54,6 +61,63 @@ impl ::core::fmt::Debug for SDL_BlendMode {
 
             _ => return write!(f, "SDL_BlendMode({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_BlendMode {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_BlendMode {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_BlendMode {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_BlendMode {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_BlendMode {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_BlendMode {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_BlendMode {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -108,6 +172,13 @@ pub const SDL_BLENDMODE_INVALID: SDL_BlendMode = SDL_BlendMode::INVALID;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_BlendOperation(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_BlendOperation {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_BlendOperation> for ::core::ffi::c_int {
     #[inline(always)]
@@ -182,6 +253,13 @@ pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_BlendFactor(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_BlendFactor {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_BlendFactor> for ::core::ffi::c_int {
     #[inline(always)]

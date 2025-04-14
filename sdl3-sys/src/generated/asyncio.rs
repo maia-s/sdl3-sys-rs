@@ -90,6 +90,13 @@ use super::stdinc::*;
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AsyncIOTaskType(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_AsyncIOTaskType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_AsyncIOTaskType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_AsyncIOTaskType) -> Self {
@@ -141,6 +148,13 @@ pub const SDL_ASYNCIO_TASK_CLOSE: SDL_AsyncIOTaskType = SDL_AsyncIOTaskType::CLO
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AsyncIOResult(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_AsyncIOResult {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_AsyncIOResult> for ::core::ffi::c_int {
     #[inline(always)]

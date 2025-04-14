@@ -704,6 +704,13 @@ extern "C" {
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Sandbox(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_Sandbox {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_Sandbox> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_Sandbox) -> Self {

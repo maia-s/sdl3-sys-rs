@@ -36,6 +36,13 @@ use super::video::*;
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_TrayEntryFlags(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_TrayEntryFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_TrayEntryFlags> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_TrayEntryFlags) -> Self {
@@ -56,6 +63,63 @@ impl ::core::fmt::Debug for SDL_TrayEntryFlags {
 
             _ => return write!(f, "SDL_TrayEntryFlags({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_TrayEntryFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_TrayEntryFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_TrayEntryFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_TrayEntryFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_TrayEntryFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_TrayEntryFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_TrayEntryFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 

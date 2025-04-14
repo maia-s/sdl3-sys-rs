@@ -577,6 +577,13 @@ apply_cfg!(#[cfg(all(not(any(doc, target_os = "horizon")), not(any(doc, target_o
     #[derive(PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SDL_DUMMY_ENUM(pub ::core::ffi::c_int);
 
+    impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_DUMMY_ENUM {
+        #[inline(always)]
+        fn eq(&self, other: &::core::ffi::c_int) -> bool {
+            &self.0 == other
+        }
+    }
+
     impl From<SDL_DUMMY_ENUM> for ::core::ffi::c_int{
         #[inline(always)]
         fn from(value: SDL_DUMMY_ENUM) -> Self {

@@ -322,6 +322,13 @@ use super::video::*;
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUPrimitiveType(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUPrimitiveType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GPUPrimitiveType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUPrimitiveType) -> Self {
@@ -390,6 +397,13 @@ pub const SDL_GPU_PRIMITIVETYPE_POINTLIST: SDL_GPUPrimitiveType = SDL_GPUPrimiti
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPULoadOp(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPULoadOp {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GPULoadOp> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPULoadOp) -> Self {
@@ -446,6 +460,13 @@ pub const SDL_GPU_LOADOP_DONT_CARE: SDL_GPULoadOp = SDL_GPULoadOp::DONT_CARE;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUStoreOp(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUStoreOp {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUStoreOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -505,6 +526,13 @@ pub const SDL_GPU_STOREOP_RESOLVE_AND_STORE: SDL_GPUStoreOp = SDL_GPUStoreOp::RE
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUIndexElementSize(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUIndexElementSize {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUIndexElementSize> for ::core::ffi::c_int {
     #[inline(always)]
@@ -735,6 +763,13 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUTextureFormat(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUTextureFormat {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUTextureFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1190,6 +1225,13 @@ pub const SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT: SDL_GPUTextureFormat =
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_GPUTextureUsageFlags(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_GPUTextureUsageFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GPUTextureUsageFlags> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_GPUTextureUsageFlags) -> Self {
@@ -1214,6 +1256,63 @@ impl ::core::fmt::Debug for SDL_GPUTextureUsageFlags {
 
             _ => return write!(f, "SDL_GPUTextureUsageFlags({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GPUTextureUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GPUTextureUsageFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GPUTextureUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GPUTextureUsageFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GPUTextureUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GPUTextureUsageFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GPUTextureUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -1275,6 +1374,13 @@ pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: SDL_GPUT
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUTextureType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUTextureType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUTextureType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1346,6 +1452,13 @@ pub const SDL_GPU_TEXTURETYPE_CUBE_ARRAY: SDL_GPUTextureType = SDL_GPUTextureTyp
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSampleCount(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUSampleCount {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GPUSampleCount> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUSampleCount) -> Self {
@@ -1407,6 +1520,13 @@ pub const SDL_GPU_SAMPLECOUNT_8: SDL_GPUSampleCount = SDL_GPUSampleCount::_8;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUCubeMapFace(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUCubeMapFace {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUCubeMapFace> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1479,6 +1599,13 @@ pub const SDL_GPU_CUBEMAPFACE_NEGATIVEZ: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_GPUBufferUsageFlags(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_GPUBufferUsageFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GPUBufferUsageFlags> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_GPUBufferUsageFlags) -> Self {
@@ -1500,6 +1627,63 @@ impl ::core::fmt::Debug for SDL_GPUBufferUsageFlags {
 
             _ => return write!(f, "SDL_GPUBufferUsageFlags({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GPUBufferUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GPUBufferUsageFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GPUBufferUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GPUBufferUsageFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GPUBufferUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GPUBufferUsageFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GPUBufferUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -1554,6 +1738,13 @@ pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE: SDL_GPUBufferUsageFlags =
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUTransferBufferUsage(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUTransferBufferUsage {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GPUTransferBufferUsage> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUTransferBufferUsage) -> Self {
@@ -1600,6 +1791,13 @@ pub const SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD: SDL_GPUTransferBufferUsage =
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUShaderStage(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUShaderStage {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUShaderStage> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1653,6 +1851,13 @@ pub const SDL_GPU_SHADERSTAGE_FRAGMENT: SDL_GPUShaderStage = SDL_GPUShaderStage:
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_GPUShaderFormat(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_GPUShaderFormat {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GPUShaderFormat> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_GPUShaderFormat) -> Self {
@@ -1675,6 +1880,63 @@ impl ::core::fmt::Debug for SDL_GPUShaderFormat {
 
             _ => return write!(f, "SDL_GPUShaderFormat({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GPUShaderFormat {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GPUShaderFormat {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GPUShaderFormat {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GPUShaderFormat {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GPUShaderFormat {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GPUShaderFormat {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GPUShaderFormat {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -1753,6 +2015,13 @@ pub const SDL_GPU_SHADERFORMAT_METALLIB: SDL_GPUShaderFormat = SDL_GPUShaderForm
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUVertexElementFormat(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUVertexElementFormat {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUVertexElementFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1917,6 +2186,13 @@ pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF4: SDL_GPUVertexElementFormat =
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUVertexInputRate(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUVertexInputRate {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GPUVertexInputRate> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUVertexInputRate) -> Self {
@@ -1967,6 +2243,13 @@ pub const SDL_GPU_VERTEXINPUTRATE_INSTANCE: SDL_GPUVertexInputRate =
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUFillMode(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUFillMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GPUFillMode> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUFillMode) -> Self {
@@ -2016,6 +2299,13 @@ pub const SDL_GPU_FILLMODE_LINE: SDL_GPUFillMode = SDL_GPUFillMode::LINE;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUCullMode(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUCullMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUCullMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2071,6 +2361,13 @@ pub const SDL_GPU_CULLMODE_BACK: SDL_GPUCullMode = SDL_GPUCullMode::BACK;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUFrontFace(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUFrontFace {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUFrontFace> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2128,6 +2425,13 @@ pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOC
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUCompareOp(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUCompareOp {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUCompareOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2218,6 +2522,13 @@ pub const SDL_GPU_COMPAREOP_ALWAYS: SDL_GPUCompareOp = SDL_GPUCompareOp::ALWAYS;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUStencilOp(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUStencilOp {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUStencilOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2313,6 +2624,13 @@ pub const SDL_GPU_STENCILOP_DECREMENT_AND_WRAP: SDL_GPUStencilOp =
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUBlendOp(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUBlendOp {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GPUBlendOp> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUBlendOp) -> Self {
@@ -2395,6 +2713,13 @@ pub const SDL_GPU_BLENDOP_MAX: SDL_GPUBlendOp = SDL_GPUBlendOp::MAX;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUBlendFactor(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUBlendFactor {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUBlendFactor> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2512,6 +2837,13 @@ pub const SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE: SDL_GPUBlendFactor =
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_GPUColorComponentFlags(pub Uint8);
 
+impl ::core::cmp::PartialEq<Uint8> for SDL_GPUColorComponentFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint8) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GPUColorComponentFlags> for Uint8 {
     #[inline(always)]
     fn from(value: SDL_GPUColorComponentFlags) -> Self {
@@ -2531,6 +2863,63 @@ impl ::core::fmt::Debug for SDL_GPUColorComponentFlags {
 
             _ => return write!(f, "SDL_GPUColorComponentFlags({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GPUColorComponentFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GPUColorComponentFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GPUColorComponentFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GPUColorComponentFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GPUColorComponentFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GPUColorComponentFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GPUColorComponentFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -2570,6 +2959,13 @@ pub const SDL_GPU_COLORCOMPONENT_A: SDL_GPUColorComponentFlags = SDL_GPUColorCom
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUFilter(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUFilter {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUFilter> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2619,6 +3015,13 @@ pub const SDL_GPU_FILTER_LINEAR: SDL_GPUFilter = SDL_GPUFilter::LINEAR;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSamplerMipmapMode(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUSamplerMipmapMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUSamplerMipmapMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2672,6 +3075,13 @@ pub const SDL_GPU_SAMPLERMIPMAPMODE_LINEAR: SDL_GPUSamplerMipmapMode =
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSamplerAddressMode(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUSamplerAddressMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUSamplerAddressMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2749,6 +3159,13 @@ pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUPresentMode(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUPresentMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GPUPresentMode> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GPUPresentMode) -> Self {
@@ -2817,6 +3234,13 @@ pub const SDL_GPU_PRESENTMODE_MAILBOX: SDL_GPUPresentMode = SDL_GPUPresentMode::
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSwapchainComposition(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUSwapchainComposition {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_GPUSwapchainComposition> for ::core::ffi::c_int {
     #[inline(always)]

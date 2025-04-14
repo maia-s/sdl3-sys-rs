@@ -51,6 +51,13 @@ use super::video::*;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_MouseID(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_MouseID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_MouseID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_MouseID) -> Self {
@@ -92,6 +99,13 @@ impl SDL_MouseID {}
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SystemCursor(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_SystemCursor {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_SystemCursor> for ::core::ffi::c_int {
     #[inline(always)]
@@ -231,6 +245,13 @@ pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_MouseWheelDirection(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_MouseWheelDirection {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_MouseWheelDirection> for ::core::ffi::c_int {
     #[inline(always)]
@@ -971,6 +992,13 @@ pub struct SDL_Cursor {
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_MouseButtonFlags(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_MouseButtonFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_MouseButtonFlags> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_MouseButtonFlags) -> Self {
@@ -991,6 +1019,63 @@ impl ::core::fmt::Debug for SDL_MouseButtonFlags {
 
             _ => return write!(f, "SDL_MouseButtonFlags({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_MouseButtonFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_MouseButtonFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_MouseButtonFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_MouseButtonFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_MouseButtonFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_MouseButtonFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_MouseButtonFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 

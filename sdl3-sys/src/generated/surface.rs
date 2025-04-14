@@ -44,6 +44,13 @@ use super::iostream::*;
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_SurfaceFlags(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_SurfaceFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_SurfaceFlags> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_SurfaceFlags) -> Self {
@@ -63,6 +70,63 @@ impl ::core::fmt::Debug for SDL_SurfaceFlags {
 
             _ => return write!(f, "SDL_SurfaceFlags({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_SurfaceFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_SurfaceFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_SurfaceFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_SurfaceFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_SurfaceFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_SurfaceFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_SurfaceFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -100,6 +164,13 @@ pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = SDL_SurfaceFlags::SIMD_AL
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ScaleMode(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_ScaleMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_ScaleMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -150,6 +221,13 @@ pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_FlipMode(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_FlipMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_FlipMode> for ::core::ffi::c_int {
     #[inline(always)]

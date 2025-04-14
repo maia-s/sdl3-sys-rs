@@ -31,6 +31,13 @@ use super::mouse::*;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TouchID(pub Uint64);
 
+impl ::core::cmp::PartialEq<Uint64> for SDL_TouchID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint64) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_TouchID> for Uint64 {
     #[inline(always)]
     fn from(value: SDL_TouchID) -> Self {
@@ -56,6 +63,13 @@ impl SDL_TouchID {}
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_FingerID(pub Uint64);
 
+impl ::core::cmp::PartialEq<Uint64> for SDL_FingerID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint64) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_FingerID> for Uint64 {
     #[inline(always)]
     fn from(value: SDL_FingerID) -> Self {
@@ -80,6 +94,13 @@ impl SDL_FingerID {}
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TouchDeviceType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_TouchDeviceType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_TouchDeviceType> for ::core::ffi::c_int {
     #[inline(always)]

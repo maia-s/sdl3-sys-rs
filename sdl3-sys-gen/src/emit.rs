@@ -1028,10 +1028,6 @@ impl Enum {
 
         let doc = if doc.is_some() { &doc } else { &self.doc };
 
-        if self.hidden {
-            writeln!(ctx, "#[doc(hidden)]")?;
-        }
-
         let enum_ident = self.ident.clone().unwrap();
         let enum_ident_s = enum_ident.as_str();
         let enum_base_type = self.base_type.clone();
@@ -1042,6 +1038,7 @@ impl Enum {
         let known_values: Vec<_> = idents.collect();
 
         let enum_base_type = enum_base_type.unwrap_or(Type::primitive(PrimitiveType::Int));
+        let enum_base_type_s = ctx.capture_output(|ctx| enum_base_type.emit(ctx))?;
 
         if !self.registered.get() {
             ctx.register_sym(
@@ -1189,6 +1186,10 @@ impl Enum {
         drop(ctx_impl);
         drop(ctx_doc);
 
+        if self.hidden {
+            writeln!(ctx, "#[doc(hidden)]")?;
+        }
+
         ctx.write_str(&doc_out)?;
 
         let can_derive_debug = self.variants.is_empty();
@@ -1202,10 +1203,27 @@ impl Enum {
             matches!(self.kind, EnumKind::Enum | EnumKind::Id),
             can_derive_debug,
         )?;
-        write!(ctx, "pub struct {enum_ident_s}(pub ")?;
-        enum_base_type.emit(ctx)?;
-        writeln!(ctx, ");")?;
+        writeln!(ctx, "pub struct {enum_ident_s}(pub {enum_base_type_s});")?;
         writeln!(ctx)?;
+
+        if matches!(
+            enum_base_type.can_derive_eq(ctx),
+            CanCmp::Partial | CanCmp::Full
+        ) {
+            writeln!(
+                ctx,
+                str_block! {"
+                    impl ::core::cmp::PartialEq<{enum_base_type_s}> for {enum_ident_s} {{
+                        #[inline(always)]
+                        fn eq(&self, other: &{enum_base_type_s}) -> bool {{
+                            &self.0 == other
+                        }}
+                    }}
+                "},
+                enum_base_type_s = enum_base_type_s,
+                enum_ident_s = enum_ident_s,
+            )?;
+        }
 
         write!(ctx, "impl From<{enum_ident_s}> for ")?;
         enum_base_type.emit(ctx)?;
@@ -1226,20 +1244,85 @@ impl Enum {
             writeln!(
                 ctx,
                 str_block! {"
-                #[cfg(feature = \"debug-impls\")]
-                impl ::core::fmt::Debug for {} {{
-                    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {{
-                        #[allow(unreachable_patterns)]
-                        f.write_str(match *self {{
-                            {}
-                            _ => return write!(f, {}, self.0),
-                        }})
+                    #[cfg(feature = \"debug-impls\")]
+                    impl ::core::fmt::Debug for {} {{
+                        fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {{
+                            #[allow(unreachable_patterns)]
+                            f.write_str(match *self {{
+                                {}
+                                _ => return write!(f, {}, self.0),
+                            }})
+                        }}
                     }}
-                }}
-            "},
+                "},
                 enum_ident_s,
                 debug_consts,
                 format!("\"{}({{}})\"", enum_ident_s)
+            )?;
+        }
+
+        if self.kind == EnumKind::Flags {
+            writeln!(
+                ctx,
+                str_block! {r"
+                    impl ::core::ops::BitAnd for {enum_ident_s} {{
+                        type Output = Self;
+
+                        #[inline(always)]
+                        fn bitand(self, rhs: Self) -> Self::Output {{
+                            Self(self.0 & rhs.0)
+                        }}
+                    }}
+
+                    impl ::core::ops::BitAndAssign for {enum_ident_s} {{
+                        #[inline(always)]
+                        fn bitand_assign(&mut self, rhs: Self) {{
+                            self.0 &= rhs.0;
+                        }}
+                    }}
+
+                    impl ::core::ops::BitOr for {enum_ident_s} {{
+                        type Output = Self;
+
+                        #[inline(always)]
+                        fn bitor(self, rhs: Self) -> Self::Output {{
+                            Self(self.0 | rhs.0)
+                        }}
+                    }}
+
+                    impl ::core::ops::BitOrAssign for {enum_ident_s} {{
+                        #[inline(always)]
+                        fn bitor_assign(&mut self, rhs: Self) {{
+                            self.0 |= rhs.0;
+                        }}
+                    }}
+
+                    impl ::core::ops::BitXor for {enum_ident_s} {{
+                        type Output = Self;
+
+                        #[inline(always)]
+                        fn bitxor(self, rhs: Self) -> Self::Output {{
+                            Self(self.0 ^ rhs.0)
+                        }}
+                    }}
+
+                    impl ::core::ops::BitXorAssign for {enum_ident_s} {{
+                        #[inline(always)]
+                        fn bitxor_assign(&mut self, rhs: Self) {{
+                            self.0 ^= rhs.0;
+                        }}
+                    }}
+
+                    impl ::core::ops::Not for {enum_ident_s} {{
+                        type Output = Self;
+
+                        #[inline(always)]
+                        fn not(self) -> Self::Output {{
+                            Self(!self.0)
+                        }}
+                    }}
+                "},
+                enum_ident_s = enum_ident_s,
             )?;
         }
 
@@ -1665,10 +1748,6 @@ impl Emit for TypeDef {
         if patch_emit_type_def(ctx, self.ident.as_str(), self)? {
             return Ok(());
         }
-
-        let mut assoc_doc = String::new();
-        let mut ctx_assoc_doc = ctx.with_output(&mut assoc_doc);
-        writeln!(ctx_assoc_doc, "/// KIND: {:?}", self.kind)?;
 
         match &self.kind {
             TypeDefKind::Alias => match &self.ty.ty {

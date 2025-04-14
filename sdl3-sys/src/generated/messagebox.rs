@@ -36,6 +36,13 @@ use super::video::*;
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_MessageBoxFlags(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_MessageBoxFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_MessageBoxFlags> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_MessageBoxFlags) -> Self {
@@ -56,6 +63,63 @@ impl ::core::fmt::Debug for SDL_MessageBoxFlags {
 
             _ => return write!(f, "SDL_MessageBoxFlags({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_MessageBoxFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_MessageBoxFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_MessageBoxFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_MessageBoxFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_MessageBoxFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_MessageBoxFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_MessageBoxFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -99,6 +163,13 @@ pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: SDL_MessageBoxFlags =
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_MessageBoxButtonFlags(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_MessageBoxButtonFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_MessageBoxButtonFlags> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_MessageBoxButtonFlags) -> Self {
@@ -116,6 +187,63 @@ impl ::core::fmt::Debug for SDL_MessageBoxButtonFlags {
 
             _ => return write!(f, "SDL_MessageBoxButtonFlags({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_MessageBoxButtonFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_MessageBoxButtonFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_MessageBoxButtonFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_MessageBoxButtonFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_MessageBoxButtonFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_MessageBoxButtonFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_MessageBoxButtonFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -184,6 +312,13 @@ pub struct SDL_MessageBoxColor {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_MessageBoxColorType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_MessageBoxColorType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_MessageBoxColorType> for ::core::ffi::c_int {
     #[inline(always)]

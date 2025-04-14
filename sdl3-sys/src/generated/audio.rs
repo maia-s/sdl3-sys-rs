@@ -177,6 +177,13 @@ pub const SDL_AUDIO_MASK_SIGNED: ::core::primitive::u32 = 32768_u32;
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AudioFormat(pub ::core::ffi::c_uint);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_AudioFormat {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_AudioFormat> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_AudioFormat) -> Self {
@@ -502,6 +509,13 @@ pub const fn SDL_AUDIO_ISUNSIGNED(x: SDL_AudioFormat) -> ::core::primitive::bool
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AudioDeviceID(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_AudioDeviceID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_AudioDeviceID> for Uint32 {
     #[inline(always)]

@@ -117,6 +117,13 @@ pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PixelType(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PixelType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_PixelType> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_PixelType) -> Self {
@@ -193,6 +200,13 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_BitmapOrder(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_BitmapOrder {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_BitmapOrder> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_BitmapOrder) -> Self {
@@ -244,6 +258,13 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PackedOrder(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PackedOrder {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_PackedOrder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -313,6 +334,13 @@ pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ArrayOrder(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_ArrayOrder {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_ArrayOrder> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_ArrayOrder) -> Self {
@@ -376,6 +404,13 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PackedLayout(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PackedLayout {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_PackedLayout> for ::core::ffi::c_int {
     #[inline(always)]
@@ -569,6 +604,13 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PixelFormat(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PixelFormat {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_PixelFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1300,6 +1342,13 @@ pub const fn SDL_BYTESPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ColorType(pub ::core::ffi::c_uint);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_ColorType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_ColorType> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_ColorType) -> Self {
@@ -1346,6 +1395,13 @@ pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ColorRange(pub ::core::ffi::c_uint);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_ColorRange {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_ColorRange> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1408,6 +1464,13 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ColorPrimaries(pub ::core::ffi::c_uint);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_ColorPrimaries {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_ColorPrimaries> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1527,6 +1590,13 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TransferCharacteristics(pub ::core::ffi::c_uint);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_TransferCharacteristics {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_TransferCharacteristics> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1681,6 +1751,13 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_MatrixCoefficients(pub ::core::ffi::c_uint);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_MatrixCoefficients {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_MatrixCoefficients> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_MatrixCoefficients) -> Self {
@@ -1790,6 +1867,13 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ChromaLocation(pub ::core::ffi::c_uint);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_ChromaLocation {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_ChromaLocation> for ::core::ffi::c_uint {
     #[inline(always)]
     fn from(value: SDL_ChromaLocation) -> Self {
@@ -1867,6 +1951,13 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Colorspace(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_Colorspace {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_Colorspace> for Uint32 {
     #[inline(always)]

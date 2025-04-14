@@ -325,6 +325,13 @@ extern "C" {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_TimerID(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_TimerID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_TimerID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_TimerID) -> Self {

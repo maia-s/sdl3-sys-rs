@@ -563,6 +563,13 @@ extern "C" {
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct TTF_FontStyleFlags(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for TTF_FontStyleFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<TTF_FontStyleFlags> for Uint32 {
     #[inline(always)]
     fn from(value: TTF_FontStyleFlags) -> Self {
@@ -583,6 +590,63 @@ impl ::core::fmt::Debug for TTF_FontStyleFlags {
 
             _ => return write!(f, "TTF_FontStyleFlags({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for TTF_FontStyleFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for TTF_FontStyleFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for TTF_FontStyleFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for TTF_FontStyleFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for TTF_FontStyleFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for TTF_FontStyleFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for TTF_FontStyleFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -746,6 +810,13 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct TTF_HintingFlags(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_HintingFlags {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<TTF_HintingFlags> for ::core::ffi::c_int {
     #[inline(always)]
@@ -991,6 +1062,13 @@ pub const TTF_FONT_WEIGHT_EXTRA_BLACK: ::core::primitive::i32 = 950;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct TTF_HorizontalAlignment(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_HorizontalAlignment {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<TTF_HorizontalAlignment> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1326,6 +1404,13 @@ extern "C" {
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct TTF_Direction(pub ::core::primitive::u32);
 
+impl ::core::cmp::PartialEq<::core::primitive::u32> for TTF_Direction {
+    #[inline(always)]
+    fn eq(&self, other: &::core::primitive::u32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<TTF_Direction> for ::core::primitive::u32 {
     #[inline(always)]
     fn from(value: TTF_Direction) -> Self {
@@ -1602,6 +1687,13 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct TTF_ImageType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_ImageType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<TTF_ImageType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2831,6 +2923,13 @@ extern "C" {
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct TTF_GPUTextEngineWinding(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_GPUTextEngineWinding {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<TTF_GPUTextEngineWinding> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: TTF_GPUTextEngineWinding) -> Self {
@@ -3665,6 +3764,13 @@ extern "C" {
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct TTF_SubStringFlags(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for TTF_SubStringFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<TTF_SubStringFlags> for Uint32 {
     #[inline(always)]
     fn from(value: TTF_SubStringFlags) -> Self {
@@ -3685,6 +3791,63 @@ impl ::core::fmt::Debug for TTF_SubStringFlags {
 
             _ => return write!(f, "TTF_SubStringFlags({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for TTF_SubStringFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for TTF_SubStringFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for TTF_SubStringFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for TTF_SubStringFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for TTF_SubStringFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for TTF_SubStringFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for TTF_SubStringFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 

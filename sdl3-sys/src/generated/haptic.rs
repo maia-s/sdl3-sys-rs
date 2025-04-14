@@ -904,6 +904,13 @@ impl ::core::default::Default for SDL_HapticEffect {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticID(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_HapticID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_HapticID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_HapticID) -> Self {

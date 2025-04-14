@@ -4220,6 +4220,13 @@ pub const SDL_HINT_PEN_TOUCH_EVENTS: *const ::core::ffi::c_char = c"SDL_PEN_TOUC
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_HintPriority(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_HintPriority {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_HintPriority> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_HintPriority) -> Self {

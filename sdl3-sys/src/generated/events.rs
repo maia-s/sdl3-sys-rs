@@ -184,6 +184,13 @@ use super::video::*;
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EventType(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_EventType {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_EventType> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_EventType) -> Self {
@@ -1946,6 +1953,13 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EventAction(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_EventAction {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_EventAction> for ::core::ffi::c_int {
     #[inline(always)]

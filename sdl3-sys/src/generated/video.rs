@@ -47,6 +47,13 @@ use super::surface::*;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DisplayID(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_DisplayID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_DisplayID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_DisplayID) -> Self {
@@ -66,6 +73,13 @@ impl SDL_DisplayID {}
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_WindowID(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_WindowID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_WindowID> for Uint32 {
     #[inline(always)]
@@ -104,6 +118,13 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: *const ::core::ffi::
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SystemTheme(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_SystemTheme {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_SystemTheme> for ::core::ffi::c_int {
     #[inline(always)]
@@ -193,6 +214,13 @@ pub struct SDL_DisplayMode {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_DisplayOrientation(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_DisplayOrientation {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_DisplayOrientation> for ::core::ffi::c_int {
     #[inline(always)]
@@ -288,6 +316,13 @@ pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_WindowFlags(pub Uint64);
 
+impl ::core::cmp::PartialEq<Uint64> for SDL_WindowFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint64) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_WindowFlags> for Uint64 {
     #[inline(always)]
     fn from(value: SDL_WindowFlags) -> Self {
@@ -328,6 +363,63 @@ impl ::core::fmt::Debug for SDL_WindowFlags {
 
             _ => return write!(f, "SDL_WindowFlags({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_WindowFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_WindowFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_WindowFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_WindowFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_WindowFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_WindowFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_WindowFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -540,6 +632,13 @@ pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitiv
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_FlashOperation(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_FlashOperation {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_FlashOperation> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_FlashOperation) -> Self {
@@ -738,6 +837,13 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GLAttr(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GLAttr {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GLAttr> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_GLAttr) -> Self {
@@ -909,6 +1015,13 @@ pub const SDL_GL_EGL_PLATFORM: SDL_GLAttr = SDL_GLAttr::EGL_PLATFORM;
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_GLProfile(pub Sint32);
 
+impl ::core::cmp::PartialEq<Sint32> for SDL_GLProfile {
+    #[inline(always)]
+    fn eq(&self, other: &Sint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GLProfile> for Sint32 {
     #[inline(always)]
     fn from(value: SDL_GLProfile) -> Self {
@@ -927,6 +1040,63 @@ impl ::core::fmt::Debug for SDL_GLProfile {
 
             _ => return write!(f, "SDL_GLProfile({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GLProfile {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GLProfile {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GLProfile {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GLProfile {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GLProfile {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GLProfile {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GLProfile {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -962,6 +1132,13 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = SDL_GLProfile::ES;
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_GLContextFlag(pub Sint32);
 
+impl ::core::cmp::PartialEq<Sint32> for SDL_GLContextFlag {
+    #[inline(always)]
+    fn eq(&self, other: &Sint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GLContextFlag> for Sint32 {
     #[inline(always)]
     fn from(value: SDL_GLContextFlag) -> Self {
@@ -981,6 +1158,63 @@ impl ::core::fmt::Debug for SDL_GLContextFlag {
 
             _ => return write!(f, "SDL_GLContextFlag({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GLContextFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GLContextFlag {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GLContextFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GLContextFlag {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GLContextFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GLContextFlag {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GLContextFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -1014,6 +1248,13 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag =
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_GLContextReleaseFlag(pub Sint32);
 
+impl ::core::cmp::PartialEq<Sint32> for SDL_GLContextReleaseFlag {
+    #[inline(always)]
+    fn eq(&self, other: &Sint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GLContextReleaseFlag> for Sint32 {
     #[inline(always)]
     fn from(value: SDL_GLContextReleaseFlag) -> Self {
@@ -1031,6 +1272,63 @@ impl ::core::fmt::Debug for SDL_GLContextReleaseFlag {
 
             _ => return write!(f, "SDL_GLContextReleaseFlag({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GLContextReleaseFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GLContextReleaseFlag {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GLContextReleaseFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GLContextReleaseFlag {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GLContextReleaseFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GLContextReleaseFlag {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GLContextReleaseFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -1058,6 +1356,13 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLContextReleaseFlag =
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_GLContextResetNotification(pub Sint32);
 
+impl ::core::cmp::PartialEq<Sint32> for SDL_GLContextResetNotification {
+    #[inline(always)]
+    fn eq(&self, other: &Sint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_GLContextResetNotification> for Sint32 {
     #[inline(always)]
     fn from(value: SDL_GLContextResetNotification) -> Self {
@@ -1075,6 +1380,63 @@ impl ::core::fmt::Debug for SDL_GLContextResetNotification {
 
             _ => return write!(f, "SDL_GLContextResetNotification({})", self.0),
         })
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GLContextResetNotification {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GLContextResetNotification {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GLContextResetNotification {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GLContextResetNotification {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GLContextResetNotification {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GLContextResetNotification {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GLContextResetNotification {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
@@ -4023,6 +4385,13 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_HitTestResult(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_HitTestResult {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_HitTestResult> for ::core::ffi::c_int {
     #[inline(always)]

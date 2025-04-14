@@ -33,6 +33,13 @@ use super::error::*;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_PropertiesID(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_PropertiesID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_PropertiesID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_PropertiesID) -> Self {
@@ -59,6 +66,13 @@ impl SDL_PropertiesID {}
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PropertyType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PropertyType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_PropertyType> for ::core::ffi::c_int {
     #[inline(always)]

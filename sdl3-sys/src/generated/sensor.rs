@@ -24,6 +24,13 @@ use super::properties::*;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_SensorID(pub Uint32);
 
+impl ::core::cmp::PartialEq<Uint32> for SDL_SensorID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_SensorID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_SensorID) -> Self {
@@ -113,6 +120,13 @@ pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SensorType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_SensorType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_SensorType> for ::core::ffi::c_int {
     #[inline(always)]

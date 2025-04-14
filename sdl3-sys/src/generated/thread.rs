@@ -40,6 +40,13 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_ThreadID(pub Uint64);
 
+impl ::core::cmp::PartialEq<Uint64> for SDL_ThreadID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint64) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_ThreadID> for Uint64 {
     #[inline(always)]
     fn from(value: SDL_ThreadID) -> Self {
@@ -96,6 +103,13 @@ impl SDL_TLSID {}
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ThreadPriority(pub ::core::ffi::c_int);
 
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_ThreadPriority {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
 impl From<SDL_ThreadPriority> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_ThreadPriority) -> Self {
@@ -150,6 +164,13 @@ pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPrio
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ThreadState(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_ThreadState {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
 
 impl From<SDL_ThreadState> for ::core::ffi::c_int {
     #[inline(always)]
