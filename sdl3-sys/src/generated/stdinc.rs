@@ -5050,71 +5050,102 @@ extern "C" {
     pub fn SDL_ceilf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
-    /// Copy the sign of one floating-point value to another.
-    ///
-    /// The definition of copysign is that ``copysign(x, y) = abs(x) * sign(y)``.
-    ///
-    /// Domain: `-INF <= x <= INF`, ``-INF <= y <= f``
-    ///
-    /// Range: `-INF <= z <= INF`
-    ///
-    /// This function operates on double-precision floating point values, use
-    /// [`SDL_copysignf`] for single-precision floats.
-    ///
-    /// ### Parameters
-    /// - `x`: floating point value to use as the magnitude.
-    /// - `y`: floating point value to use as the sign.
-    ///
-    /// ### Return value
-    /// Returns the floating point value with the sign of y and the magnitude of
-    ///   x.
-    ///
-    /// ### Thread safety
-    /// It is safe to call this function from any thread.
-    ///
-    /// ### Availability
-    /// This function is available since SDL 3.2.0.
-    ///
-    /// ### See also
-    /// - [`SDL_copysignf`]
-    /// - [`SDL_fabs`]
-    pub fn SDL_copysign(
-        x: ::core::ffi::c_double,
-        y: ::core::ffi::c_double,
-    ) -> ::core::ffi::c_double;
+/// Copy the sign of one floating-point value to another.
+///
+/// The definition of copysign is that ``copysign(x, y) = abs(x) * sign(y)``.
+///
+/// Domain: `-INF <= x <= INF`, ``-INF <= y <= f``
+///
+/// Range: `-INF <= z <= INF`
+///
+/// This function operates on double-precision floating point values, use
+/// [`SDL_copysignf`] for single-precision floats.
+///
+/// ### Parameters
+/// - `x`: floating point value to use as the magnitude.
+/// - `y`: floating point value to use as the sign.
+///
+/// ### Return value
+/// Returns the floating point value with the sign of y and the magnitude of
+///   x.
+///
+/// ### Thread safety
+/// It is safe to call this function from any thread.
+///
+/// ### Availability
+/// This function is available since SDL 3.2.0.
+///
+/// ### See also
+/// - [`SDL_copysignf`]
+/// - [`SDL_fabs`]
+#[inline(always)]
+pub unsafe fn SDL_copysign(
+    x: ::core::ffi::c_double,
+    y: ::core::ffi::c_double,
+) -> ::core::ffi::c_double {
+    #[cfg(feature = "-core-float")]
+    {
+        return x.copysign(y);
+    }
+    #[cfg(not(feature = "-core-float"))]
+    {
+        extern "C" {
+            fn SDL_copysign(
+                x: ::core::ffi::c_double,
+                y: ::core::ffi::c_double,
+            ) -> ::core::ffi::c_double;
+        }
+        return unsafe { SDL_copysign(x, y) };
+    };
 }
 
-extern "C" {
-    /// Copy the sign of one floating-point value to another.
-    ///
-    /// The definition of copysign is that ``copysign(x, y) = abs(x) * sign(y)``.
-    ///
-    /// Domain: `-INF <= x <= INF`, ``-INF <= y <= f``
-    ///
-    /// Range: `-INF <= z <= INF`
-    ///
-    /// This function operates on single-precision floating point values, use
-    /// [`SDL_copysign`] for double-precision floats.
-    ///
-    /// ### Parameters
-    /// - `x`: floating point value to use as the magnitude.
-    /// - `y`: floating point value to use as the sign.
-    ///
-    /// ### Return value
-    /// Returns the floating point value with the sign of y and the magnitude of
-    ///   x.
-    ///
-    /// ### Thread safety
-    /// It is safe to call this function from any thread.
-    ///
-    /// ### Availability
-    /// This function is available since SDL 3.2.0.
-    ///
-    /// ### See also
-    /// - [`SDL_copysign`]
-    /// - [`SDL_fabsf`]
-    pub fn SDL_copysignf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
+/// Copy the sign of one floating-point value to another.
+///
+/// The definition of copysign is that ``copysign(x, y) = abs(x) * sign(y)``.
+///
+/// Domain: `-INF <= x <= INF`, ``-INF <= y <= f``
+///
+/// Range: `-INF <= z <= INF`
+///
+/// This function operates on single-precision floating point values, use
+/// [`SDL_copysign`] for double-precision floats.
+///
+/// ### Parameters
+/// - `x`: floating point value to use as the magnitude.
+/// - `y`: floating point value to use as the sign.
+///
+/// ### Return value
+/// Returns the floating point value with the sign of y and the magnitude of
+///   x.
+///
+/// ### Thread safety
+/// It is safe to call this function from any thread.
+///
+/// ### Availability
+/// This function is available since SDL 3.2.0.
+///
+/// ### See also
+/// - [`SDL_copysign`]
+/// - [`SDL_fabsf`]
+#[inline(always)]
+pub unsafe fn SDL_copysignf(
+    x: ::core::ffi::c_float,
+    y: ::core::ffi::c_float,
+) -> ::core::ffi::c_float {
+    #[cfg(feature = "-core-float")]
+    {
+        return x.copysign(y);
+    }
+    #[cfg(not(feature = "-core-float"))]
+    {
+        extern "C" {
+            fn SDL_copysignf(
+                x: ::core::ffi::c_float,
+                y: ::core::ffi::c_float,
+            ) -> ::core::ffi::c_float;
+        }
+        return unsafe { SDL_copysignf(x, y) };
+    };
 }
 
 extern "C" {
@@ -5261,58 +5292,80 @@ extern "C" {
     pub fn SDL_expf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
-    /// Compute the absolute value of `x`
-    ///
-    /// Domain: `-INF <= x <= INF`
-    ///
-    /// Range: `0 <= y <= INF`
-    ///
-    /// This function operates on double-precision floating point values, use
-    /// [`SDL_fabsf`] for single-precision floats.
-    ///
-    /// ### Parameters
-    /// - `x`: floating point value to use as the magnitude.
-    ///
-    /// ### Return value
-    /// Returns the absolute value of `x`.
-    ///
-    /// ### Thread safety
-    /// It is safe to call this function from any thread.
-    ///
-    /// ### Availability
-    /// This function is available since SDL 3.2.0.
-    ///
-    /// ### See also
-    /// - [`SDL_fabsf`]
-    pub fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+/// Compute the absolute value of `x`
+///
+/// Domain: `-INF <= x <= INF`
+///
+/// Range: `0 <= y <= INF`
+///
+/// This function operates on double-precision floating point values, use
+/// [`SDL_fabsf`] for single-precision floats.
+///
+/// ### Parameters
+/// - `x`: floating point value to use as the magnitude.
+///
+/// ### Return value
+/// Returns the absolute value of `x`.
+///
+/// ### Thread safety
+/// It is safe to call this function from any thread.
+///
+/// ### Availability
+/// This function is available since SDL 3.2.0.
+///
+/// ### See also
+/// - [`SDL_fabsf`]
+#[inline(always)]
+pub unsafe fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double {
+    #[cfg(feature = "-core-float")]
+    {
+        return x.abs();
+    }
+    #[cfg(not(feature = "-core-float"))]
+    {
+        extern "C" {
+            fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+        }
+        return unsafe { SDL_fabs(x) };
+    };
 }
 
-extern "C" {
-    /// Compute the absolute value of `x`
-    ///
-    /// Domain: `-INF <= x <= INF`
-    ///
-    /// Range: `0 <= y <= INF`
-    ///
-    /// This function operates on single-precision floating point values, use
-    /// [`SDL_fabs`] for double-precision floats.
-    ///
-    /// ### Parameters
-    /// - `x`: floating point value to use as the magnitude.
-    ///
-    /// ### Return value
-    /// Returns the absolute value of `x`.
-    ///
-    /// ### Thread safety
-    /// It is safe to call this function from any thread.
-    ///
-    /// ### Availability
-    /// This function is available since SDL 3.2.0.
-    ///
-    /// ### See also
-    /// - [`SDL_fabs`]
-    pub fn SDL_fabsf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+/// Compute the absolute value of `x`
+///
+/// Domain: `-INF <= x <= INF`
+///
+/// Range: `0 <= y <= INF`
+///
+/// This function operates on single-precision floating point values, use
+/// [`SDL_fabs`] for double-precision floats.
+///
+/// ### Parameters
+/// - `x`: floating point value to use as the magnitude.
+///
+/// ### Return value
+/// Returns the absolute value of `x`.
+///
+/// ### Thread safety
+/// It is safe to call this function from any thread.
+///
+/// ### Availability
+/// This function is available since SDL 3.2.0.
+///
+/// ### See also
+/// - [`SDL_fabs`]
+#[inline(always)]
+pub unsafe fn SDL_fabsf(x: ::core::ffi::c_float) -> ::core::ffi::c_float {
+    #[cfg(feature = "-core-float")]
+    {
+        return x.abs();
+    }
+    #[cfg(not(feature = "-core-float"))]
+    {
+        extern "C" {
+            fn SDL_fabsf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+        }
+        return unsafe { SDL_fabsf(x) };
+    };
 }
 
 extern "C" {

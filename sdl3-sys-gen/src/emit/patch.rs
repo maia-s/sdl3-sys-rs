@@ -123,6 +123,90 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
     },
     EmitFunctionPatch {
         module: Some("stdinc"),
+        match_ident: |i| matches!(i, "SDL_copysign" | "SDL_copysignf"),
+        patch: |ctx, f| {
+            let mut fr = f.clone();
+            let ty = ctx.capture_output(|ctx| fr.return_type.emit(ctx))?;
+            let arg0 = &f.args.args[0];
+            let arg1 = &f.args.args[1];
+            fr.extern_kw = None;
+            fr.static_kw = Some(Kw_static { span: Span::none() });
+            fr.body = Some(Block {
+                span: Span::none(),
+                items: Items(vec![Item::Expr(Expr::Value(Value::RustCode(
+                    RustCode::boxed(
+                        format!(
+                            str_block! {r#"
+                                #[cfg(feature = "-core-float")]
+                                {{
+                                    return {arg0}.copysign({arg1});
+                                }}
+                                #[cfg(not(feature = "-core-float"))]
+                                {{
+                                    extern "C" {{
+                                        fn {ident}({arg0}: {ty}, {arg1}: {ty}) -> {ty};
+                                    }}
+                                    return unsafe {{ {ident}({arg0}, {arg1}) }};
+                                }}
+                            "#},
+                            ty = ty,
+                            ident = f.ident.as_str(),
+                            arg0 = arg0.ident.as_ref().unwrap().as_str(),
+                            arg1 = arg1.ident.as_ref().unwrap().as_str(),
+                        ),
+                        arg0.ty.clone(),
+                        false,
+                        true,
+                    ),
+                )))]),
+            });
+            fr.emit(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitFunctionPatch {
+        module: Some("stdinc"),
+        match_ident: |i| matches!(i, "SDL_fabs" | "SDL_fabsf"),
+        patch: |ctx, f| {
+            let mut fr = f.clone();
+            let ty = ctx.capture_output(|ctx| fr.return_type.emit(ctx))?;
+            let arg0 = &f.args.args[0];
+            fr.extern_kw = None;
+            fr.static_kw = Some(Kw_static { span: Span::none() });
+            fr.body = Some(Block {
+                span: Span::none(),
+                items: Items(vec![Item::Expr(Expr::Value(Value::RustCode(
+                    RustCode::boxed(
+                        format!(
+                            str_block! {r#"
+                                #[cfg(feature = "-core-float")]
+                                {{
+                                    return {arg0}.abs();
+                                }}
+                                #[cfg(not(feature = "-core-float"))]
+                                {{
+                                    extern "C" {{
+                                        fn {ident}({arg0}: {ty}) -> {ty};
+                                    }}
+                                    return unsafe {{ {ident}({arg0}) }};
+                                }}
+                            "#},
+                            ty = ty,
+                            ident = f.ident.as_str(),
+                            arg0 = arg0.ident.as_ref().unwrap().as_str(),
+                        ),
+                        arg0.ty.clone(),
+                        false,
+                        true,
+                    ),
+                )))]),
+            });
+            fr.emit(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitFunctionPatch {
+        module: Some("stdinc"),
         match_ident: |i| matches!(i, "SDL_memcpy" | "SDL_memmove"),
         patch: |ctx, f| {
             let mut f = f.clone();
