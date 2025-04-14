@@ -333,36 +333,236 @@ impl From<SDL_WindowFlags> for Uint64 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_WindowFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::FULLSCREEN => "SDL_WINDOW_FULLSCREEN",
-            Self::OPENGL => "SDL_WINDOW_OPENGL",
-            Self::OCCLUDED => "SDL_WINDOW_OCCLUDED",
-            Self::HIDDEN => "SDL_WINDOW_HIDDEN",
-            Self::BORDERLESS => "SDL_WINDOW_BORDERLESS",
-            Self::RESIZABLE => "SDL_WINDOW_RESIZABLE",
-            Self::MINIMIZED => "SDL_WINDOW_MINIMIZED",
-            Self::MAXIMIZED => "SDL_WINDOW_MAXIMIZED",
-            Self::MOUSE_GRABBED => "SDL_WINDOW_MOUSE_GRABBED",
-            Self::INPUT_FOCUS => "SDL_WINDOW_INPUT_FOCUS",
-            Self::MOUSE_FOCUS => "SDL_WINDOW_MOUSE_FOCUS",
-            Self::EXTERNAL => "SDL_WINDOW_EXTERNAL",
-            Self::MODAL => "SDL_WINDOW_MODAL",
-            Self::HIGH_PIXEL_DENSITY => "SDL_WINDOW_HIGH_PIXEL_DENSITY",
-            Self::MOUSE_CAPTURE => "SDL_WINDOW_MOUSE_CAPTURE",
-            Self::MOUSE_RELATIVE_MODE => "SDL_WINDOW_MOUSE_RELATIVE_MODE",
-            Self::ALWAYS_ON_TOP => "SDL_WINDOW_ALWAYS_ON_TOP",
-            Self::UTILITY => "SDL_WINDOW_UTILITY",
-            Self::TOOLTIP => "SDL_WINDOW_TOOLTIP",
-            Self::POPUP_MENU => "SDL_WINDOW_POPUP_MENU",
-            Self::KEYBOARD_GRABBED => "SDL_WINDOW_KEYBOARD_GRABBED",
-            Self::VULKAN => "SDL_WINDOW_VULKAN",
-            Self::METAL => "SDL_WINDOW_METAL",
-            Self::TRANSPARENT => "SDL_WINDOW_TRANSPARENT",
-            Self::NOT_FOCUSABLE => "SDL_WINDOW_NOT_FOCUSABLE",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_WindowFlags(")?;
+        let all_bits = all_bits | Self::FULLSCREEN.0;
+        if (Self::FULLSCREEN != 0 || self.0 == 0) && *self & Self::FULLSCREEN == Self::FULLSCREEN {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "FULLSCREEN")?;
+        }
+        let all_bits = all_bits | Self::OPENGL.0;
+        if (Self::OPENGL != 0 || self.0 == 0) && *self & Self::OPENGL == Self::OPENGL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "OPENGL")?;
+        }
+        let all_bits = all_bits | Self::OCCLUDED.0;
+        if (Self::OCCLUDED != 0 || self.0 == 0) && *self & Self::OCCLUDED == Self::OCCLUDED {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "OCCLUDED")?;
+        }
+        let all_bits = all_bits | Self::HIDDEN.0;
+        if (Self::HIDDEN != 0 || self.0 == 0) && *self & Self::HIDDEN == Self::HIDDEN {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "HIDDEN")?;
+        }
+        let all_bits = all_bits | Self::BORDERLESS.0;
+        if (Self::BORDERLESS != 0 || self.0 == 0) && *self & Self::BORDERLESS == Self::BORDERLESS {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BORDERLESS")?;
+        }
+        let all_bits = all_bits | Self::RESIZABLE.0;
+        if (Self::RESIZABLE != 0 || self.0 == 0) && *self & Self::RESIZABLE == Self::RESIZABLE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RESIZABLE")?;
+        }
+        let all_bits = all_bits | Self::MINIMIZED.0;
+        if (Self::MINIMIZED != 0 || self.0 == 0) && *self & Self::MINIMIZED == Self::MINIMIZED {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MINIMIZED")?;
+        }
+        let all_bits = all_bits | Self::MAXIMIZED.0;
+        if (Self::MAXIMIZED != 0 || self.0 == 0) && *self & Self::MAXIMIZED == Self::MAXIMIZED {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MAXIMIZED")?;
+        }
+        let all_bits = all_bits | Self::MOUSE_GRABBED.0;
+        if (Self::MOUSE_GRABBED != 0 || self.0 == 0)
+            && *self & Self::MOUSE_GRABBED == Self::MOUSE_GRABBED
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MOUSE_GRABBED")?;
+        }
+        let all_bits = all_bits | Self::INPUT_FOCUS.0;
+        if (Self::INPUT_FOCUS != 0 || self.0 == 0) && *self & Self::INPUT_FOCUS == Self::INPUT_FOCUS
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "INPUT_FOCUS")?;
+        }
+        let all_bits = all_bits | Self::MOUSE_FOCUS.0;
+        if (Self::MOUSE_FOCUS != 0 || self.0 == 0) && *self & Self::MOUSE_FOCUS == Self::MOUSE_FOCUS
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MOUSE_FOCUS")?;
+        }
+        let all_bits = all_bits | Self::EXTERNAL.0;
+        if (Self::EXTERNAL != 0 || self.0 == 0) && *self & Self::EXTERNAL == Self::EXTERNAL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "EXTERNAL")?;
+        }
+        let all_bits = all_bits | Self::MODAL.0;
+        if (Self::MODAL != 0 || self.0 == 0) && *self & Self::MODAL == Self::MODAL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MODAL")?;
+        }
+        let all_bits = all_bits | Self::HIGH_PIXEL_DENSITY.0;
+        if (Self::HIGH_PIXEL_DENSITY != 0 || self.0 == 0)
+            && *self & Self::HIGH_PIXEL_DENSITY == Self::HIGH_PIXEL_DENSITY
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "HIGH_PIXEL_DENSITY")?;
+        }
+        let all_bits = all_bits | Self::MOUSE_CAPTURE.0;
+        if (Self::MOUSE_CAPTURE != 0 || self.0 == 0)
+            && *self & Self::MOUSE_CAPTURE == Self::MOUSE_CAPTURE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MOUSE_CAPTURE")?;
+        }
+        let all_bits = all_bits | Self::MOUSE_RELATIVE_MODE.0;
+        if (Self::MOUSE_RELATIVE_MODE != 0 || self.0 == 0)
+            && *self & Self::MOUSE_RELATIVE_MODE == Self::MOUSE_RELATIVE_MODE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MOUSE_RELATIVE_MODE")?;
+        }
+        let all_bits = all_bits | Self::ALWAYS_ON_TOP.0;
+        if (Self::ALWAYS_ON_TOP != 0 || self.0 == 0)
+            && *self & Self::ALWAYS_ON_TOP == Self::ALWAYS_ON_TOP
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ALWAYS_ON_TOP")?;
+        }
+        let all_bits = all_bits | Self::UTILITY.0;
+        if (Self::UTILITY != 0 || self.0 == 0) && *self & Self::UTILITY == Self::UTILITY {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "UTILITY")?;
+        }
+        let all_bits = all_bits | Self::TOOLTIP.0;
+        if (Self::TOOLTIP != 0 || self.0 == 0) && *self & Self::TOOLTIP == Self::TOOLTIP {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "TOOLTIP")?;
+        }
+        let all_bits = all_bits | Self::POPUP_MENU.0;
+        if (Self::POPUP_MENU != 0 || self.0 == 0) && *self & Self::POPUP_MENU == Self::POPUP_MENU {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "POPUP_MENU")?;
+        }
+        let all_bits = all_bits | Self::KEYBOARD_GRABBED.0;
+        if (Self::KEYBOARD_GRABBED != 0 || self.0 == 0)
+            && *self & Self::KEYBOARD_GRABBED == Self::KEYBOARD_GRABBED
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "KEYBOARD_GRABBED")?;
+        }
+        let all_bits = all_bits | Self::VULKAN.0;
+        if (Self::VULKAN != 0 || self.0 == 0) && *self & Self::VULKAN == Self::VULKAN {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "VULKAN")?;
+        }
+        let all_bits = all_bits | Self::METAL.0;
+        if (Self::METAL != 0 || self.0 == 0) && *self & Self::METAL == Self::METAL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "METAL")?;
+        }
+        let all_bits = all_bits | Self::TRANSPARENT.0;
+        if (Self::TRANSPARENT != 0 || self.0 == 0) && *self & Self::TRANSPARENT == Self::TRANSPARENT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "TRANSPARENT")?;
+        }
+        let all_bits = all_bits | Self::NOT_FOCUSABLE.0;
+        if (Self::NOT_FOCUSABLE != 0 || self.0 == 0)
+            && *self & Self::NOT_FOCUSABLE == Self::NOT_FOCUSABLE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NOT_FOCUSABLE")?;
+        }
 
-            _ => return write!(f, "SDL_WindowFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 
@@ -1032,14 +1232,45 @@ impl From<SDL_GLProfile> for Sint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_GLProfile {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::CORE => "SDL_GL_CONTEXT_PROFILE_CORE",
-            Self::COMPATIBILITY => "SDL_GL_CONTEXT_PROFILE_COMPATIBILITY",
-            Self::ES => "SDL_GL_CONTEXT_PROFILE_ES",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GLProfile(")?;
+        let all_bits = all_bits | Self::CORE.0;
+        if (Self::CORE != 0 || self.0 == 0) && *self & Self::CORE == Self::CORE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "CORE")?;
+        }
+        let all_bits = all_bits | Self::COMPATIBILITY.0;
+        if (Self::COMPATIBILITY != 0 || self.0 == 0)
+            && *self & Self::COMPATIBILITY == Self::COMPATIBILITY
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COMPATIBILITY")?;
+        }
+        let all_bits = all_bits | Self::ES.0;
+        if (Self::ES != 0 || self.0 == 0) && *self & Self::ES == Self::ES {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ES")?;
+        }
 
-            _ => return write!(f, "SDL_GLProfile({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 
@@ -1149,15 +1380,57 @@ impl From<SDL_GLContextFlag> for Sint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_GLContextFlag {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::DEBUG_FLAG => "SDL_GL_CONTEXT_DEBUG_FLAG",
-            Self::FORWARD_COMPATIBLE_FLAG => "SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG",
-            Self::ROBUST_ACCESS_FLAG => "SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG",
-            Self::RESET_ISOLATION_FLAG => "SDL_GL_CONTEXT_RESET_ISOLATION_FLAG",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GLContextFlag(")?;
+        let all_bits = all_bits | Self::DEBUG_FLAG.0;
+        if (Self::DEBUG_FLAG != 0 || self.0 == 0) && *self & Self::DEBUG_FLAG == Self::DEBUG_FLAG {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DEBUG_FLAG")?;
+        }
+        let all_bits = all_bits | Self::FORWARD_COMPATIBLE_FLAG.0;
+        if (Self::FORWARD_COMPATIBLE_FLAG != 0 || self.0 == 0)
+            && *self & Self::FORWARD_COMPATIBLE_FLAG == Self::FORWARD_COMPATIBLE_FLAG
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "FORWARD_COMPATIBLE_FLAG")?;
+        }
+        let all_bits = all_bits | Self::ROBUST_ACCESS_FLAG.0;
+        if (Self::ROBUST_ACCESS_FLAG != 0 || self.0 == 0)
+            && *self & Self::ROBUST_ACCESS_FLAG == Self::ROBUST_ACCESS_FLAG
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ROBUST_ACCESS_FLAG")?;
+        }
+        let all_bits = all_bits | Self::RESET_ISOLATION_FLAG.0;
+        if (Self::RESET_ISOLATION_FLAG != 0 || self.0 == 0)
+            && *self & Self::RESET_ISOLATION_FLAG == Self::RESET_ISOLATION_FLAG
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RESET_ISOLATION_FLAG")?;
+        }
 
-            _ => return write!(f, "SDL_GLContextFlag({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 
@@ -1265,13 +1538,35 @@ impl From<SDL_GLContextReleaseFlag> for Sint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_GLContextReleaseFlag {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::NONE => "SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE",
-            Self::FLUSH => "SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GLContextReleaseFlag(")?;
+        let all_bits = all_bits | Self::NONE.0;
+        if (Self::NONE != 0 || self.0 == 0) && *self & Self::NONE == Self::NONE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NONE")?;
+        }
+        let all_bits = all_bits | Self::FLUSH.0;
+        if (Self::FLUSH != 0 || self.0 == 0) && *self & Self::FLUSH == Self::FLUSH {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "FLUSH")?;
+        }
 
-            _ => return write!(f, "SDL_GLContextReleaseFlag({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 
@@ -1373,13 +1668,39 @@ impl From<SDL_GLContextResetNotification> for Sint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_GLContextResetNotification {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::NO_NOTIFICATION => "SDL_GL_CONTEXT_RESET_NO_NOTIFICATION",
-            Self::LOSE_CONTEXT => "SDL_GL_CONTEXT_RESET_LOSE_CONTEXT",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GLContextResetNotification(")?;
+        let all_bits = all_bits | Self::NO_NOTIFICATION.0;
+        if (Self::NO_NOTIFICATION != 0 || self.0 == 0)
+            && *self & Self::NO_NOTIFICATION == Self::NO_NOTIFICATION
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NO_NOTIFICATION")?;
+        }
+        let all_bits = all_bits | Self::LOSE_CONTEXT.0;
+        if (Self::LOSE_CONTEXT != 0 || self.0 == 0)
+            && *self & Self::LOSE_CONTEXT == Self::LOSE_CONTEXT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LOSE_CONTEXT")?;
+        }
 
-            _ => return write!(f, "SDL_GLContextResetNotification({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 

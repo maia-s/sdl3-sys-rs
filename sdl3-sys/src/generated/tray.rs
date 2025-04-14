@@ -53,16 +53,59 @@ impl From<SDL_TrayEntryFlags> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_TrayEntryFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::BUTTON => "SDL_TRAYENTRY_BUTTON",
-            Self::CHECKBOX => "SDL_TRAYENTRY_CHECKBOX",
-            Self::SUBMENU => "SDL_TRAYENTRY_SUBMENU",
-            Self::DISABLED => "SDL_TRAYENTRY_DISABLED",
-            Self::CHECKED => "SDL_TRAYENTRY_CHECKED",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_TrayEntryFlags(")?;
+        let all_bits = all_bits | Self::BUTTON.0;
+        if (Self::BUTTON != 0 || self.0 == 0) && *self & Self::BUTTON == Self::BUTTON {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BUTTON")?;
+        }
+        let all_bits = all_bits | Self::CHECKBOX.0;
+        if (Self::CHECKBOX != 0 || self.0 == 0) && *self & Self::CHECKBOX == Self::CHECKBOX {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "CHECKBOX")?;
+        }
+        let all_bits = all_bits | Self::SUBMENU.0;
+        if (Self::SUBMENU != 0 || self.0 == 0) && *self & Self::SUBMENU == Self::SUBMENU {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SUBMENU")?;
+        }
+        let all_bits = all_bits | Self::DISABLED.0;
+        if (Self::DISABLED != 0 || self.0 == 0) && *self & Self::DISABLED == Self::DISABLED {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DISABLED")?;
+        }
+        let all_bits = all_bits | Self::CHECKED.0;
+        if (Self::CHECKED != 0 || self.0 == 0) && *self & Self::CHECKED == Self::CHECKED {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "CHECKED")?;
+        }
 
-            _ => return write!(f, "SDL_TrayEntryFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 

@@ -1657,29 +1657,163 @@ impl From<SDL_Keymod> for Uint16 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_Keymod {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::NONE => "SDL_KMOD_NONE",
-            Self::LSHIFT => "SDL_KMOD_LSHIFT",
-            Self::RSHIFT => "SDL_KMOD_RSHIFT",
-            Self::LEVEL5 => "SDL_KMOD_LEVEL5",
-            Self::LCTRL => "SDL_KMOD_LCTRL",
-            Self::RCTRL => "SDL_KMOD_RCTRL",
-            Self::LALT => "SDL_KMOD_LALT",
-            Self::RALT => "SDL_KMOD_RALT",
-            Self::LGUI => "SDL_KMOD_LGUI",
-            Self::RGUI => "SDL_KMOD_RGUI",
-            Self::NUM => "SDL_KMOD_NUM",
-            Self::CAPS => "SDL_KMOD_CAPS",
-            Self::MODE => "SDL_KMOD_MODE",
-            Self::SCROLL => "SDL_KMOD_SCROLL",
-            Self::CTRL => "SDL_KMOD_CTRL",
-            Self::SHIFT => "SDL_KMOD_SHIFT",
-            Self::ALT => "SDL_KMOD_ALT",
-            Self::GUI => "SDL_KMOD_GUI",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_Keymod(")?;
+        let all_bits = all_bits | Self::NONE.0;
+        if (Self::NONE != 0 || self.0 == 0) && *self & Self::NONE == Self::NONE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NONE")?;
+        }
+        let all_bits = all_bits | Self::LSHIFT.0;
+        if (Self::LSHIFT != 0 || self.0 == 0) && *self & Self::LSHIFT == Self::LSHIFT {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LSHIFT")?;
+        }
+        let all_bits = all_bits | Self::RSHIFT.0;
+        if (Self::RSHIFT != 0 || self.0 == 0) && *self & Self::RSHIFT == Self::RSHIFT {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RSHIFT")?;
+        }
+        let all_bits = all_bits | Self::LEVEL5.0;
+        if (Self::LEVEL5 != 0 || self.0 == 0) && *self & Self::LEVEL5 == Self::LEVEL5 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LEVEL5")?;
+        }
+        let all_bits = all_bits | Self::LCTRL.0;
+        if (Self::LCTRL != 0 || self.0 == 0) && *self & Self::LCTRL == Self::LCTRL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LCTRL")?;
+        }
+        let all_bits = all_bits | Self::RCTRL.0;
+        if (Self::RCTRL != 0 || self.0 == 0) && *self & Self::RCTRL == Self::RCTRL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RCTRL")?;
+        }
+        let all_bits = all_bits | Self::LALT.0;
+        if (Self::LALT != 0 || self.0 == 0) && *self & Self::LALT == Self::LALT {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LALT")?;
+        }
+        let all_bits = all_bits | Self::RALT.0;
+        if (Self::RALT != 0 || self.0 == 0) && *self & Self::RALT == Self::RALT {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RALT")?;
+        }
+        let all_bits = all_bits | Self::LGUI.0;
+        if (Self::LGUI != 0 || self.0 == 0) && *self & Self::LGUI == Self::LGUI {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LGUI")?;
+        }
+        let all_bits = all_bits | Self::RGUI.0;
+        if (Self::RGUI != 0 || self.0 == 0) && *self & Self::RGUI == Self::RGUI {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RGUI")?;
+        }
+        let all_bits = all_bits | Self::NUM.0;
+        if (Self::NUM != 0 || self.0 == 0) && *self & Self::NUM == Self::NUM {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NUM")?;
+        }
+        let all_bits = all_bits | Self::CAPS.0;
+        if (Self::CAPS != 0 || self.0 == 0) && *self & Self::CAPS == Self::CAPS {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "CAPS")?;
+        }
+        let all_bits = all_bits | Self::MODE.0;
+        if (Self::MODE != 0 || self.0 == 0) && *self & Self::MODE == Self::MODE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MODE")?;
+        }
+        let all_bits = all_bits | Self::SCROLL.0;
+        if (Self::SCROLL != 0 || self.0 == 0) && *self & Self::SCROLL == Self::SCROLL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SCROLL")?;
+        }
+        let all_bits = all_bits | Self::CTRL.0;
+        if (Self::CTRL != 0 || self.0 == 0) && *self & Self::CTRL == Self::CTRL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "CTRL")?;
+        }
+        let all_bits = all_bits | Self::SHIFT.0;
+        if (Self::SHIFT != 0 || self.0 == 0) && *self & Self::SHIFT == Self::SHIFT {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SHIFT")?;
+        }
+        let all_bits = all_bits | Self::ALT.0;
+        if (Self::ALT != 0 || self.0 == 0) && *self & Self::ALT == Self::ALT {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ALT")?;
+        }
+        let all_bits = all_bits | Self::GUI.0;
+        if (Self::GUI != 0 || self.0 == 0) && *self & Self::GUI == Self::GUI {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "GUI")?;
+        }
 
-            _ => return write!(f, "SDL_Keymod({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 

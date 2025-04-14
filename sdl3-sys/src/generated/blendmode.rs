@@ -48,19 +48,87 @@ impl From<SDL_BlendMode> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_BlendMode {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::NONE => "SDL_BLENDMODE_NONE",
-            Self::BLEND => "SDL_BLENDMODE_BLEND",
-            Self::BLEND_PREMULTIPLIED => "SDL_BLENDMODE_BLEND_PREMULTIPLIED",
-            Self::ADD => "SDL_BLENDMODE_ADD",
-            Self::ADD_PREMULTIPLIED => "SDL_BLENDMODE_ADD_PREMULTIPLIED",
-            Self::MOD => "SDL_BLENDMODE_MOD",
-            Self::MUL => "SDL_BLENDMODE_MUL",
-            Self::INVALID => "SDL_BLENDMODE_INVALID",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_BlendMode(")?;
+        let all_bits = all_bits | Self::NONE.0;
+        if (Self::NONE != 0 || self.0 == 0) && *self & Self::NONE == Self::NONE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NONE")?;
+        }
+        let all_bits = all_bits | Self::BLEND.0;
+        if (Self::BLEND != 0 || self.0 == 0) && *self & Self::BLEND == Self::BLEND {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BLEND")?;
+        }
+        let all_bits = all_bits | Self::BLEND_PREMULTIPLIED.0;
+        if (Self::BLEND_PREMULTIPLIED != 0 || self.0 == 0)
+            && *self & Self::BLEND_PREMULTIPLIED == Self::BLEND_PREMULTIPLIED
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BLEND_PREMULTIPLIED")?;
+        }
+        let all_bits = all_bits | Self::ADD.0;
+        if (Self::ADD != 0 || self.0 == 0) && *self & Self::ADD == Self::ADD {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ADD")?;
+        }
+        let all_bits = all_bits | Self::ADD_PREMULTIPLIED.0;
+        if (Self::ADD_PREMULTIPLIED != 0 || self.0 == 0)
+            && *self & Self::ADD_PREMULTIPLIED == Self::ADD_PREMULTIPLIED
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ADD_PREMULTIPLIED")?;
+        }
+        let all_bits = all_bits | Self::MOD.0;
+        if (Self::MOD != 0 || self.0 == 0) && *self & Self::MOD == Self::MOD {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MOD")?;
+        }
+        let all_bits = all_bits | Self::MUL.0;
+        if (Self::MUL != 0 || self.0 == 0) && *self & Self::MUL == Self::MUL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MUL")?;
+        }
+        let all_bits = all_bits | Self::INVALID.0;
+        if (Self::INVALID != 0 || self.0 == 0) && *self & Self::INVALID == Self::INVALID {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "INVALID")?;
+        }
 
-            _ => return write!(f, "SDL_BlendMode({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 

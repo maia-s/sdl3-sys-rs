@@ -53,16 +53,64 @@ impl From<SDL_MessageBoxFlags> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_MessageBoxFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::ERROR => "SDL_MESSAGEBOX_ERROR",
-            Self::WARNING => "SDL_MESSAGEBOX_WARNING",
-            Self::INFORMATION => "SDL_MESSAGEBOX_INFORMATION",
-            Self::BUTTONS_LEFT_TO_RIGHT => "SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT",
-            Self::BUTTONS_RIGHT_TO_LEFT => "SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_MessageBoxFlags(")?;
+        let all_bits = all_bits | Self::ERROR.0;
+        if (Self::ERROR != 0 || self.0 == 0) && *self & Self::ERROR == Self::ERROR {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ERROR")?;
+        }
+        let all_bits = all_bits | Self::WARNING.0;
+        if (Self::WARNING != 0 || self.0 == 0) && *self & Self::WARNING == Self::WARNING {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "WARNING")?;
+        }
+        let all_bits = all_bits | Self::INFORMATION.0;
+        if (Self::INFORMATION != 0 || self.0 == 0) && *self & Self::INFORMATION == Self::INFORMATION
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "INFORMATION")?;
+        }
+        let all_bits = all_bits | Self::BUTTONS_LEFT_TO_RIGHT.0;
+        if (Self::BUTTONS_LEFT_TO_RIGHT != 0 || self.0 == 0)
+            && *self & Self::BUTTONS_LEFT_TO_RIGHT == Self::BUTTONS_LEFT_TO_RIGHT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BUTTONS_LEFT_TO_RIGHT")?;
+        }
+        let all_bits = all_bits | Self::BUTTONS_RIGHT_TO_LEFT.0;
+        if (Self::BUTTONS_RIGHT_TO_LEFT != 0 || self.0 == 0)
+            && *self & Self::BUTTONS_RIGHT_TO_LEFT == Self::BUTTONS_RIGHT_TO_LEFT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BUTTONS_RIGHT_TO_LEFT")?;
+        }
 
-            _ => return write!(f, "SDL_MessageBoxFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 
@@ -180,13 +228,39 @@ impl From<SDL_MessageBoxButtonFlags> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_MessageBoxButtonFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::RETURNKEY_DEFAULT => "SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT",
-            Self::ESCAPEKEY_DEFAULT => "SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_MessageBoxButtonFlags(")?;
+        let all_bits = all_bits | Self::RETURNKEY_DEFAULT.0;
+        if (Self::RETURNKEY_DEFAULT != 0 || self.0 == 0)
+            && *self & Self::RETURNKEY_DEFAULT == Self::RETURNKEY_DEFAULT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RETURNKEY_DEFAULT")?;
+        }
+        let all_bits = all_bits | Self::ESCAPEKEY_DEFAULT.0;
+        if (Self::ESCAPEKEY_DEFAULT != 0 || self.0 == 0)
+            && *self & Self::ESCAPEKEY_DEFAULT == Self::ESCAPEKEY_DEFAULT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ESCAPEKEY_DEFAULT")?;
+        }
 
-            _ => return write!(f, "SDL_MessageBoxButtonFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 

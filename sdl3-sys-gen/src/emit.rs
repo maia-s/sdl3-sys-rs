@@ -1175,10 +1175,27 @@ impl Enum {
                 "pub const {variant_ident}: {enum_ident_s} = {enum_ident_s}::{short_variant_ident};"
             )?;
 
-            writeln!(
-                ctx_debug,
-                "Self::{short_variant_ident} => {variant_ident:?},"
-            )?;
+            if self.kind != EnumKind::Flags {
+                writeln!(
+                    ctx_debug,
+                    "Self::{short_variant_ident} => {variant_ident:?},"
+                )?;
+            } else {
+                write!(
+                    ctx_debug,
+                    str_block! {"
+                        let all_bits = all_bits | Self::{short_variant_ident}.0;
+                        if (Self::{short_variant_ident} != 0 || self.0 == 0) && *self & Self::{short_variant_ident} == Self::{short_variant_ident} {{
+                            if !first {{
+                                write!(f, \" | \")?;
+                            }}
+                            first = false;
+                            write!(f, \"{short_variant_ident}\")?;
+                        }}
+                    "},
+                    short_variant_ident = short_variant_ident,
+                )?;
+            }
         }
 
         drop(ctx_debug);
@@ -1241,24 +1258,51 @@ impl Enum {
         )?;
 
         if !can_derive_debug {
-            writeln!(
-                ctx,
-                str_block! {"
-                    #[cfg(feature = \"debug-impls\")]
-                    impl ::core::fmt::Debug for {} {{
-                        fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {{
-                            #[allow(unreachable_patterns)]
-                            f.write_str(match *self {{
-                                {}
-                                _ => return write!(f, {}, self.0),
-                            }})
+            if self.kind != EnumKind::Flags {
+                writeln!(
+                    ctx,
+                    str_block! {"
+                        #[cfg(feature = \"debug-impls\")]
+                        impl ::core::fmt::Debug for {enum_ident_s} {{
+                            fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {{
+                                #[allow(unreachable_patterns)]
+                                f.write_str(match *self {{
+                                    {debug_consts}
+                                    _ => return write!(f, \"{enum_ident_s}({{}})\", self.0),
+                                }})
+                            }}
                         }}
-                    }}
-                "},
-                enum_ident_s,
-                debug_consts,
-                format!("\"{}({{}})\"", enum_ident_s)
-            )?;
+                    "},
+                    enum_ident_s = enum_ident_s,
+                    debug_consts = debug_consts,
+                )?;
+            } else {
+                writeln!(
+                    ctx,
+                    str_block! {"
+                        #[cfg(feature = \"debug-impls\")]
+                        impl ::core::fmt::Debug for {enum_ident_s} {{
+                            fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {{
+                                let mut first = true;
+                                let all_bits = 0;
+                                write!(f, \"{enum_ident_s}(\")?;
+                                {debug_consts}
+                                if self.0 & !all_bits != 0 {{
+                                    if !first {{
+                                        write!(f, \" | \")?;
+                                    }}
+                                    write!(f, \"{{:#x}}\", self.0)?;
+                                }} else if first {{
+                                    write!(f, \"0\")?;
+                                }}
+                                write!(f, \")\")
+                            }}
+                        }}
+                    "},
+                    enum_ident_s = enum_ident_s,
+                    debug_consts = debug_consts,
+                )?;
+            };
         }
 
         if self.kind == EnumKind::Flags {

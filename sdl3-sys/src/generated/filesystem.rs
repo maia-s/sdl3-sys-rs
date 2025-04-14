@@ -424,12 +424,29 @@ impl From<SDL_GlobFlags> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_GlobFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::CASEINSENSITIVE => "SDL_GLOB_CASEINSENSITIVE",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GlobFlags(")?;
+        let all_bits = all_bits | Self::CASEINSENSITIVE.0;
+        if (Self::CASEINSENSITIVE != 0 || self.0 == 0)
+            && *self & Self::CASEINSENSITIVE == Self::CASEINSENSITIVE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "CASEINSENSITIVE")?;
+        }
 
-            _ => return write!(f, "SDL_GlobFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 

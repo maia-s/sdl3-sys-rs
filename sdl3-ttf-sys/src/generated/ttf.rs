@@ -580,16 +580,61 @@ impl From<TTF_FontStyleFlags> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for TTF_FontStyleFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::NORMAL => "TTF_STYLE_NORMAL",
-            Self::BOLD => "TTF_STYLE_BOLD",
-            Self::ITALIC => "TTF_STYLE_ITALIC",
-            Self::UNDERLINE => "TTF_STYLE_UNDERLINE",
-            Self::STRIKETHROUGH => "TTF_STYLE_STRIKETHROUGH",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "TTF_FontStyleFlags(")?;
+        let all_bits = all_bits | Self::NORMAL.0;
+        if (Self::NORMAL != 0 || self.0 == 0) && *self & Self::NORMAL == Self::NORMAL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NORMAL")?;
+        }
+        let all_bits = all_bits | Self::BOLD.0;
+        if (Self::BOLD != 0 || self.0 == 0) && *self & Self::BOLD == Self::BOLD {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BOLD")?;
+        }
+        let all_bits = all_bits | Self::ITALIC.0;
+        if (Self::ITALIC != 0 || self.0 == 0) && *self & Self::ITALIC == Self::ITALIC {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ITALIC")?;
+        }
+        let all_bits = all_bits | Self::UNDERLINE.0;
+        if (Self::UNDERLINE != 0 || self.0 == 0) && *self & Self::UNDERLINE == Self::UNDERLINE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "UNDERLINE")?;
+        }
+        let all_bits = all_bits | Self::STRIKETHROUGH.0;
+        if (Self::STRIKETHROUGH != 0 || self.0 == 0)
+            && *self & Self::STRIKETHROUGH == Self::STRIKETHROUGH
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "STRIKETHROUGH")?;
+        }
 
-            _ => return write!(f, "TTF_FontStyleFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 
@@ -3781,16 +3826,61 @@ impl From<TTF_SubStringFlags> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for TTF_SubStringFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::DIRECTION_MASK => "TTF_SUBSTRING_DIRECTION_MASK",
-            Self::TEXT_START => "TTF_SUBSTRING_TEXT_START",
-            Self::LINE_START => "TTF_SUBSTRING_LINE_START",
-            Self::LINE_END => "TTF_SUBSTRING_LINE_END",
-            Self::TEXT_END => "TTF_SUBSTRING_TEXT_END",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "TTF_SubStringFlags(")?;
+        let all_bits = all_bits | Self::DIRECTION_MASK.0;
+        if (Self::DIRECTION_MASK != 0 || self.0 == 0)
+            && *self & Self::DIRECTION_MASK == Self::DIRECTION_MASK
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DIRECTION_MASK")?;
+        }
+        let all_bits = all_bits | Self::TEXT_START.0;
+        if (Self::TEXT_START != 0 || self.0 == 0) && *self & Self::TEXT_START == Self::TEXT_START {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "TEXT_START")?;
+        }
+        let all_bits = all_bits | Self::LINE_START.0;
+        if (Self::LINE_START != 0 || self.0 == 0) && *self & Self::LINE_START == Self::LINE_START {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LINE_START")?;
+        }
+        let all_bits = all_bits | Self::LINE_END.0;
+        if (Self::LINE_END != 0 || self.0 == 0) && *self & Self::LINE_END == Self::LINE_END {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LINE_END")?;
+        }
+        let all_bits = all_bits | Self::TEXT_END.0;
+        if (Self::TEXT_END != 0 || self.0 == 0) && *self & Self::TEXT_END == Self::TEXT_END {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "TEXT_END")?;
+        }
 
-            _ => return write!(f, "TTF_SubStringFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 

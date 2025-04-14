@@ -1009,16 +1009,59 @@ impl From<SDL_MouseButtonFlags> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_MouseButtonFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::LMASK => "SDL_BUTTON_LMASK",
-            Self::MMASK => "SDL_BUTTON_MMASK",
-            Self::RMASK => "SDL_BUTTON_RMASK",
-            Self::X1MASK => "SDL_BUTTON_X1MASK",
-            Self::X2MASK => "SDL_BUTTON_X2MASK",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_MouseButtonFlags(")?;
+        let all_bits = all_bits | Self::LMASK.0;
+        if (Self::LMASK != 0 || self.0 == 0) && *self & Self::LMASK == Self::LMASK {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LMASK")?;
+        }
+        let all_bits = all_bits | Self::MMASK.0;
+        if (Self::MMASK != 0 || self.0 == 0) && *self & Self::MMASK == Self::MMASK {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MMASK")?;
+        }
+        let all_bits = all_bits | Self::RMASK.0;
+        if (Self::RMASK != 0 || self.0 == 0) && *self & Self::RMASK == Self::RMASK {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RMASK")?;
+        }
+        let all_bits = all_bits | Self::X1MASK.0;
+        if (Self::X1MASK != 0 || self.0 == 0) && *self & Self::X1MASK == Self::X1MASK {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "X1MASK")?;
+        }
+        let all_bits = all_bits | Self::X2MASK.0;
+        if (Self::X2MASK != 0 || self.0 == 0) && *self & Self::X2MASK == Self::X2MASK {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "X2MASK")?;
+        }
 
-            _ => return write!(f, "SDL_MouseButtonFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 

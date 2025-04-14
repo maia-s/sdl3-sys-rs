@@ -96,18 +96,75 @@ impl From<SDL_PenInputFlags> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_PenInputFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::DOWN => "SDL_PEN_INPUT_DOWN",
-            Self::BUTTON_1 => "SDL_PEN_INPUT_BUTTON_1",
-            Self::BUTTON_2 => "SDL_PEN_INPUT_BUTTON_2",
-            Self::BUTTON_3 => "SDL_PEN_INPUT_BUTTON_3",
-            Self::BUTTON_4 => "SDL_PEN_INPUT_BUTTON_4",
-            Self::BUTTON_5 => "SDL_PEN_INPUT_BUTTON_5",
-            Self::ERASER_TIP => "SDL_PEN_INPUT_ERASER_TIP",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_PenInputFlags(")?;
+        let all_bits = all_bits | Self::DOWN.0;
+        if (Self::DOWN != 0 || self.0 == 0) && *self & Self::DOWN == Self::DOWN {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DOWN")?;
+        }
+        let all_bits = all_bits | Self::BUTTON_1.0;
+        if (Self::BUTTON_1 != 0 || self.0 == 0) && *self & Self::BUTTON_1 == Self::BUTTON_1 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BUTTON_1")?;
+        }
+        let all_bits = all_bits | Self::BUTTON_2.0;
+        if (Self::BUTTON_2 != 0 || self.0 == 0) && *self & Self::BUTTON_2 == Self::BUTTON_2 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BUTTON_2")?;
+        }
+        let all_bits = all_bits | Self::BUTTON_3.0;
+        if (Self::BUTTON_3 != 0 || self.0 == 0) && *self & Self::BUTTON_3 == Self::BUTTON_3 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BUTTON_3")?;
+        }
+        let all_bits = all_bits | Self::BUTTON_4.0;
+        if (Self::BUTTON_4 != 0 || self.0 == 0) && *self & Self::BUTTON_4 == Self::BUTTON_4 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BUTTON_4")?;
+        }
+        let all_bits = all_bits | Self::BUTTON_5.0;
+        if (Self::BUTTON_5 != 0 || self.0 == 0) && *self & Self::BUTTON_5 == Self::BUTTON_5 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BUTTON_5")?;
+        }
+        let all_bits = all_bits | Self::ERASER_TIP.0;
+        if (Self::ERASER_TIP != 0 || self.0 == 0) && *self & Self::ERASER_TIP == Self::ERASER_TIP {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ERASER_TIP")?;
+        }
 
-            _ => return write!(f, "SDL_PenInputFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 

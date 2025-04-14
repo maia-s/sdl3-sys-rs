@@ -1242,20 +1242,88 @@ impl From<SDL_GPUTextureUsageFlags> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_GPUTextureUsageFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::SAMPLER => "SDL_GPU_TEXTUREUSAGE_SAMPLER",
-            Self::COLOR_TARGET => "SDL_GPU_TEXTUREUSAGE_COLOR_TARGET",
-            Self::DEPTH_STENCIL_TARGET => "SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET",
-            Self::GRAPHICS_STORAGE_READ => "SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ",
-            Self::COMPUTE_STORAGE_READ => "SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ",
-            Self::COMPUTE_STORAGE_WRITE => "SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE",
-            Self::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE => {
-                "SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE"
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GPUTextureUsageFlags(")?;
+        let all_bits = all_bits | Self::SAMPLER.0;
+        if (Self::SAMPLER != 0 || self.0 == 0) && *self & Self::SAMPLER == Self::SAMPLER {
+            if !first {
+                write!(f, " | ")?;
             }
+            first = false;
+            write!(f, "SAMPLER")?;
+        }
+        let all_bits = all_bits | Self::COLOR_TARGET.0;
+        if (Self::COLOR_TARGET != 0 || self.0 == 0)
+            && *self & Self::COLOR_TARGET == Self::COLOR_TARGET
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COLOR_TARGET")?;
+        }
+        let all_bits = all_bits | Self::DEPTH_STENCIL_TARGET.0;
+        if (Self::DEPTH_STENCIL_TARGET != 0 || self.0 == 0)
+            && *self & Self::DEPTH_STENCIL_TARGET == Self::DEPTH_STENCIL_TARGET
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DEPTH_STENCIL_TARGET")?;
+        }
+        let all_bits = all_bits | Self::GRAPHICS_STORAGE_READ.0;
+        if (Self::GRAPHICS_STORAGE_READ != 0 || self.0 == 0)
+            && *self & Self::GRAPHICS_STORAGE_READ == Self::GRAPHICS_STORAGE_READ
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "GRAPHICS_STORAGE_READ")?;
+        }
+        let all_bits = all_bits | Self::COMPUTE_STORAGE_READ.0;
+        if (Self::COMPUTE_STORAGE_READ != 0 || self.0 == 0)
+            && *self & Self::COMPUTE_STORAGE_READ == Self::COMPUTE_STORAGE_READ
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COMPUTE_STORAGE_READ")?;
+        }
+        let all_bits = all_bits | Self::COMPUTE_STORAGE_WRITE.0;
+        if (Self::COMPUTE_STORAGE_WRITE != 0 || self.0 == 0)
+            && *self & Self::COMPUTE_STORAGE_WRITE == Self::COMPUTE_STORAGE_WRITE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COMPUTE_STORAGE_WRITE")?;
+        }
+        let all_bits = all_bits | Self::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE.0;
+        if (Self::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE != 0 || self.0 == 0)
+            && *self & Self::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE
+                == Self::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE")?;
+        }
 
-            _ => return write!(f, "SDL_GPUTextureUsageFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 
@@ -1616,17 +1684,73 @@ impl From<SDL_GPUBufferUsageFlags> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_GPUBufferUsageFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::VERTEX => "SDL_GPU_BUFFERUSAGE_VERTEX",
-            Self::INDEX => "SDL_GPU_BUFFERUSAGE_INDEX",
-            Self::INDIRECT => "SDL_GPU_BUFFERUSAGE_INDIRECT",
-            Self::GRAPHICS_STORAGE_READ => "SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ",
-            Self::COMPUTE_STORAGE_READ => "SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ",
-            Self::COMPUTE_STORAGE_WRITE => "SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GPUBufferUsageFlags(")?;
+        let all_bits = all_bits | Self::VERTEX.0;
+        if (Self::VERTEX != 0 || self.0 == 0) && *self & Self::VERTEX == Self::VERTEX {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "VERTEX")?;
+        }
+        let all_bits = all_bits | Self::INDEX.0;
+        if (Self::INDEX != 0 || self.0 == 0) && *self & Self::INDEX == Self::INDEX {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "INDEX")?;
+        }
+        let all_bits = all_bits | Self::INDIRECT.0;
+        if (Self::INDIRECT != 0 || self.0 == 0) && *self & Self::INDIRECT == Self::INDIRECT {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "INDIRECT")?;
+        }
+        let all_bits = all_bits | Self::GRAPHICS_STORAGE_READ.0;
+        if (Self::GRAPHICS_STORAGE_READ != 0 || self.0 == 0)
+            && *self & Self::GRAPHICS_STORAGE_READ == Self::GRAPHICS_STORAGE_READ
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "GRAPHICS_STORAGE_READ")?;
+        }
+        let all_bits = all_bits | Self::COMPUTE_STORAGE_READ.0;
+        if (Self::COMPUTE_STORAGE_READ != 0 || self.0 == 0)
+            && *self & Self::COMPUTE_STORAGE_READ == Self::COMPUTE_STORAGE_READ
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COMPUTE_STORAGE_READ")?;
+        }
+        let all_bits = all_bits | Self::COMPUTE_STORAGE_WRITE.0;
+        if (Self::COMPUTE_STORAGE_WRITE != 0 || self.0 == 0)
+            && *self & Self::COMPUTE_STORAGE_WRITE == Self::COMPUTE_STORAGE_WRITE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COMPUTE_STORAGE_WRITE")?;
+        }
 
-            _ => return write!(f, "SDL_GPUBufferUsageFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 
@@ -1868,18 +1992,75 @@ impl From<SDL_GPUShaderFormat> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_GPUShaderFormat {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::INVALID => "SDL_GPU_SHADERFORMAT_INVALID",
-            Self::PRIVATE => "SDL_GPU_SHADERFORMAT_PRIVATE",
-            Self::SPIRV => "SDL_GPU_SHADERFORMAT_SPIRV",
-            Self::DXBC => "SDL_GPU_SHADERFORMAT_DXBC",
-            Self::DXIL => "SDL_GPU_SHADERFORMAT_DXIL",
-            Self::MSL => "SDL_GPU_SHADERFORMAT_MSL",
-            Self::METALLIB => "SDL_GPU_SHADERFORMAT_METALLIB",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GPUShaderFormat(")?;
+        let all_bits = all_bits | Self::INVALID.0;
+        if (Self::INVALID != 0 || self.0 == 0) && *self & Self::INVALID == Self::INVALID {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "INVALID")?;
+        }
+        let all_bits = all_bits | Self::PRIVATE.0;
+        if (Self::PRIVATE != 0 || self.0 == 0) && *self & Self::PRIVATE == Self::PRIVATE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "PRIVATE")?;
+        }
+        let all_bits = all_bits | Self::SPIRV.0;
+        if (Self::SPIRV != 0 || self.0 == 0) && *self & Self::SPIRV == Self::SPIRV {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SPIRV")?;
+        }
+        let all_bits = all_bits | Self::DXBC.0;
+        if (Self::DXBC != 0 || self.0 == 0) && *self & Self::DXBC == Self::DXBC {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DXBC")?;
+        }
+        let all_bits = all_bits | Self::DXIL.0;
+        if (Self::DXIL != 0 || self.0 == 0) && *self & Self::DXIL == Self::DXIL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DXIL")?;
+        }
+        let all_bits = all_bits | Self::MSL.0;
+        if (Self::MSL != 0 || self.0 == 0) && *self & Self::MSL == Self::MSL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MSL")?;
+        }
+        let all_bits = all_bits | Self::METALLIB.0;
+        if (Self::METALLIB != 0 || self.0 == 0) && *self & Self::METALLIB == Self::METALLIB {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "METALLIB")?;
+        }
 
-            _ => return write!(f, "SDL_GPUShaderFormat({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 
@@ -2854,15 +3035,51 @@ impl From<SDL_GPUColorComponentFlags> for Uint8 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_GPUColorComponentFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::R => "SDL_GPU_COLORCOMPONENT_R",
-            Self::G => "SDL_GPU_COLORCOMPONENT_G",
-            Self::B => "SDL_GPU_COLORCOMPONENT_B",
-            Self::A => "SDL_GPU_COLORCOMPONENT_A",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GPUColorComponentFlags(")?;
+        let all_bits = all_bits | Self::R.0;
+        if (Self::R != 0 || self.0 == 0) && *self & Self::R == Self::R {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "R")?;
+        }
+        let all_bits = all_bits | Self::G.0;
+        if (Self::G != 0 || self.0 == 0) && *self & Self::G == Self::G {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "G")?;
+        }
+        let all_bits = all_bits | Self::B.0;
+        if (Self::B != 0 || self.0 == 0) && *self & Self::B == Self::B {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "B")?;
+        }
+        let all_bits = all_bits | Self::A.0;
+        if (Self::A != 0 || self.0 == 0) && *self & Self::A == Self::A {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "A")?;
+        }
 
-            _ => return write!(f, "SDL_GPUColorComponentFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 

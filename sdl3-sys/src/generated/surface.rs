@@ -61,15 +61,56 @@ impl From<SDL_SurfaceFlags> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_SurfaceFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::PREALLOCATED => "SDL_SURFACE_PREALLOCATED",
-            Self::LOCK_NEEDED => "SDL_SURFACE_LOCK_NEEDED",
-            Self::LOCKED => "SDL_SURFACE_LOCKED",
-            Self::SIMD_ALIGNED => "SDL_SURFACE_SIMD_ALIGNED",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_SurfaceFlags(")?;
+        let all_bits = all_bits | Self::PREALLOCATED.0;
+        if (Self::PREALLOCATED != 0 || self.0 == 0)
+            && *self & Self::PREALLOCATED == Self::PREALLOCATED
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "PREALLOCATED")?;
+        }
+        let all_bits = all_bits | Self::LOCK_NEEDED.0;
+        if (Self::LOCK_NEEDED != 0 || self.0 == 0) && *self & Self::LOCK_NEEDED == Self::LOCK_NEEDED
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LOCK_NEEDED")?;
+        }
+        let all_bits = all_bits | Self::LOCKED.0;
+        if (Self::LOCKED != 0 || self.0 == 0) && *self & Self::LOCKED == Self::LOCKED {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LOCKED")?;
+        }
+        let all_bits = all_bits | Self::SIMD_ALIGNED.0;
+        if (Self::SIMD_ALIGNED != 0 || self.0 == 0)
+            && *self & Self::SIMD_ALIGNED == Self::SIMD_ALIGNED
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SIMD_ALIGNED")?;
+        }
 
-            _ => return write!(f, "SDL_SurfaceFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 

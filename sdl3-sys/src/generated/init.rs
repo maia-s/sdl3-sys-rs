@@ -74,19 +74,83 @@ impl From<SDL_InitFlags> for Uint32 {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_InitFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::AUDIO => "SDL_INIT_AUDIO",
-            Self::VIDEO => "SDL_INIT_VIDEO",
-            Self::JOYSTICK => "SDL_INIT_JOYSTICK",
-            Self::HAPTIC => "SDL_INIT_HAPTIC",
-            Self::GAMEPAD => "SDL_INIT_GAMEPAD",
-            Self::EVENTS => "SDL_INIT_EVENTS",
-            Self::SENSOR => "SDL_INIT_SENSOR",
-            Self::CAMERA => "SDL_INIT_CAMERA",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_InitFlags(")?;
+        let all_bits = all_bits | Self::AUDIO.0;
+        if (Self::AUDIO != 0 || self.0 == 0) && *self & Self::AUDIO == Self::AUDIO {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "AUDIO")?;
+        }
+        let all_bits = all_bits | Self::VIDEO.0;
+        if (Self::VIDEO != 0 || self.0 == 0) && *self & Self::VIDEO == Self::VIDEO {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "VIDEO")?;
+        }
+        let all_bits = all_bits | Self::JOYSTICK.0;
+        if (Self::JOYSTICK != 0 || self.0 == 0) && *self & Self::JOYSTICK == Self::JOYSTICK {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "JOYSTICK")?;
+        }
+        let all_bits = all_bits | Self::HAPTIC.0;
+        if (Self::HAPTIC != 0 || self.0 == 0) && *self & Self::HAPTIC == Self::HAPTIC {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "HAPTIC")?;
+        }
+        let all_bits = all_bits | Self::GAMEPAD.0;
+        if (Self::GAMEPAD != 0 || self.0 == 0) && *self & Self::GAMEPAD == Self::GAMEPAD {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "GAMEPAD")?;
+        }
+        let all_bits = all_bits | Self::EVENTS.0;
+        if (Self::EVENTS != 0 || self.0 == 0) && *self & Self::EVENTS == Self::EVENTS {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "EVENTS")?;
+        }
+        let all_bits = all_bits | Self::SENSOR.0;
+        if (Self::SENSOR != 0 || self.0 == 0) && *self & Self::SENSOR == Self::SENSOR {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SENSOR")?;
+        }
+        let all_bits = all_bits | Self::CAMERA.0;
+        if (Self::CAMERA != 0 || self.0 == 0) && *self & Self::CAMERA == Self::CAMERA {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "CAMERA")?;
+        }
 
-            _ => return write!(f, "SDL_InitFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
     }
 }
 
