@@ -31,8 +31,8 @@ fn config(key: &str) -> &str {
 
     CONFIG
         .get_or_init(|| {
-            let config_file = format!("{}/config.txt", env::var("CARGO_PKG_NAME").unwrap());
-            let config = read_to_string(&config_file)
+            let config_file = "config.txt";
+            let config = read_to_string(config_file)
                 .unwrap_or_else(|e| panic!("error reading {config_file}: {e}"));
             let mut map = BTreeMap::new();
             for line in config.lines() {
