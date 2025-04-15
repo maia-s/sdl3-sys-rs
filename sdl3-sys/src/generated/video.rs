@@ -68,8 +68,6 @@ impl From<SDL_DisplayID> for Uint32 {
     }
 }
 
-impl SDL_DisplayID {}
-
 /// This is a unique ID for a window.
 ///
 /// The value 0 is an invalid ID.
@@ -101,8 +99,6 @@ impl From<SDL_WindowID> for Uint32 {
         value.0
     }
 }
-
-impl SDL_WindowID {}
 
 /// The pointer to the global `wl_display` object used by the Wayland video
 /// backend.

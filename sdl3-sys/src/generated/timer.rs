@@ -346,8 +346,6 @@ impl From<SDL_TimerID> for Uint32 {
     }
 }
 
-impl SDL_TimerID {}
-
 /// Function prototype for the millisecond timer callback function.
 ///
 /// The callback function is passed the current timer interval and returns the

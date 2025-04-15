@@ -88,8 +88,6 @@ impl From<SDL_CameraID> for Uint32 {
     }
 }
 
-impl SDL_CameraID {}
-
 /// The details of an output format for a camera device.
 ///
 /// Cameras often support multiple formats; each one will be encapsulated in

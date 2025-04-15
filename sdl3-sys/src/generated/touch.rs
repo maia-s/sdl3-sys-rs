@@ -52,8 +52,6 @@ impl From<SDL_TouchID> for Uint64 {
     }
 }
 
-impl SDL_TouchID {}
-
 /// A unique ID for a single finger on a touch device.
 ///
 /// This ID is valid for the time the finger (stylus, etc) is touching and will
@@ -90,8 +88,6 @@ impl From<SDL_FingerID> for Uint64 {
         value.0
     }
 }
-
-impl SDL_FingerID {}
 
 /// An enum that describes the type of a touch device.
 ///

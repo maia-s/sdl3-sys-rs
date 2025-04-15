@@ -54,8 +54,6 @@ impl From<SDL_PropertiesID> for Uint32 {
     }
 }
 
-impl SDL_PropertiesID {}
-
 /// SDL property type
 ///
 /// ### Availability

@@ -72,8 +72,6 @@ impl From<SDL_MouseID> for Uint32 {
     }
 }
 
-impl SDL_MouseID {}
-
 /// Cursor types for [`SDL_CreateSystemCursor()`].
 ///
 /// ### Availability

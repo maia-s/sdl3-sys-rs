@@ -925,8 +925,6 @@ impl From<SDL_HapticID> for Uint32 {
     }
 }
 
-impl SDL_HapticID {}
-
 extern "C" {
     /// Get a list of currently connected haptic devices.
     ///

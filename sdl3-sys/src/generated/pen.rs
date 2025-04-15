@@ -53,8 +53,6 @@ impl From<SDL_PenID> for Uint32 {
     }
 }
 
-impl SDL_PenID {}
-
 /// The [`SDL_MouseID`] for mouse events simulated with pen input.
 ///
 /// ### Availability

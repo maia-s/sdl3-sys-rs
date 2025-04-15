@@ -1380,12 +1380,14 @@ impl Enum {
             )?;
         }
 
-        writeln!(ctx, "impl {enum_ident_s} {{")?;
-        ctx.increase_indent();
-        ctx.write_str(&impl_consts)?;
-        ctx.decrease_indent();
-        writeln!(ctx, "}}")?;
-        writeln!(ctx)?;
+        if !impl_consts.is_empty() {
+            writeln!(ctx, "impl {enum_ident_s} {{")?;
+            ctx.increase_indent();
+            ctx.write_str(&impl_consts)?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            writeln!(ctx)?;
+        }
         ctx.write_str(&global_consts)?;
         writeln!(ctx)?;
         ctx.flush_ool_output()?;

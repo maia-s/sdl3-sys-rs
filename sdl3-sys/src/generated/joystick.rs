@@ -74,8 +74,6 @@ impl From<SDL_JoystickID> for Uint32 {
     }
 }
 
-impl SDL_JoystickID {}
-
 /// An enum of some common joystick types.
 ///
 /// In some cases, SDL can identify a low-level joystick as being a certain

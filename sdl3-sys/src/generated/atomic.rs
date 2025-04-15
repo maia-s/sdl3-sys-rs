@@ -46,8 +46,6 @@ use super::stdinc::*;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_SpinLock(pub ::core::ffi::c_int);
 
-impl SDL_SpinLock {}
-
 extern "C" {
     /// Try to lock a spin lock by setting it to a non-zero value.
     ///

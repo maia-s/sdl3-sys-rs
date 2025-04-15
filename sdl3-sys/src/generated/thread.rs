@@ -61,8 +61,6 @@ impl From<SDL_ThreadID> for Uint64 {
     }
 }
 
-impl SDL_ThreadID {}
-
 /// Thread local storage ID.
 ///
 /// 0 is the invalid ID. An app can create these and then set data for these
@@ -85,8 +83,6 @@ impl From<SDL_TLSID> for SDL_AtomicInt {
         value.0
     }
 }
-
-impl SDL_TLSID {}
 
 /// The SDL thread priority.
 ///

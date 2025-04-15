@@ -45,8 +45,6 @@ impl From<SDL_SensorID> for Uint32 {
     }
 }
 
-impl SDL_SensorID {}
-
 /// A constant to represent standard gravity for accelerometer sensors.
 ///
 /// The accelerometer returns the current acceleration in SI meters per second

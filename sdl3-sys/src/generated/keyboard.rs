@@ -54,8 +54,6 @@ impl From<SDL_KeyboardID> for Uint32 {
     }
 }
 
-impl SDL_KeyboardID {}
-
 extern "C" {
     /// Return whether a keyboard is currently connected.
     ///
