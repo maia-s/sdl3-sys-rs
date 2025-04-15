@@ -10,6 +10,7 @@ pub enum EnumKind {
     Enum,
     Flags,
     Id,
+    Lock,
 }
 
 #[derive(Clone, Debug)]

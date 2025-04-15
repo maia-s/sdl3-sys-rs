@@ -1209,24 +1209,26 @@ impl Enum {
 
         ctx.write_str(&doc_out)?;
 
+        let can_derive_eq = if self.kind != EnumKind::Lock {
+            enum_base_type.can_derive_eq(ctx)
+        } else {
+            CanCmp::No
+        };
         let can_derive_debug = self.variants.is_empty();
 
         writeln!(ctx, "#[repr(transparent)]")?;
         emit_derives(
             ctx,
-            enum_base_type.can_derive_copy(ctx),
+            enum_base_type.can_derive_copy(ctx) && self.kind != EnumKind::Lock,
             enum_base_type.can_default(ctx),
-            enum_base_type.can_derive_eq(ctx),
+            can_derive_eq,
             matches!(self.kind, EnumKind::Enum | EnumKind::Id),
             can_derive_debug,
         )?;
         writeln!(ctx, "pub struct {enum_ident_s}(pub {enum_base_type_s});")?;
         writeln!(ctx)?;
 
-        if matches!(
-            enum_base_type.can_derive_eq(ctx),
-            CanCmp::Partial | CanCmp::Full
-        ) {
+        if matches!(can_derive_eq, CanCmp::Partial | CanCmp::Full) {
             writeln!(
                 ctx,
                 str_block! {"
@@ -1249,20 +1251,21 @@ impl Enum {
             )?;
         }
 
-        write!(ctx, "impl From<{enum_ident_s}> for ")?;
-        enum_base_type.emit(ctx)?;
-        writeln!(
-            ctx,
-            str_block! {r#"
-                {{
-                    #[inline(always)]
-                    fn from(value: {}) -> Self {{
-                        value.0
+        if self.kind != EnumKind::Lock {
+            writeln!(
+                ctx,
+                str_block! {r#"
+                    impl From<{enum_ident_s}> for {enum_base_type_s} {{
+                        #[inline(always)]
+                        fn from(value: {enum_ident_s}) -> Self {{
+                            value.0
+                        }}
                     }}
-                }}
-            "#},
-            enum_ident_s
-        )?;
+                "#},
+                enum_base_type_s = enum_base_type_s,
+                enum_ident_s = enum_ident_s,
+            )?;
+        }
 
         if !can_derive_debug {
             if self.kind != EnumKind::Flags {

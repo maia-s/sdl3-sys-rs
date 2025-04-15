@@ -501,6 +501,14 @@ type TypeDefPatch = Patch<TypeDef>;
 
 const TYPEDEF_PATCHES: &[TypeDefPatch] = &[
     TypeDefPatch {
+        module: Some("atomic"),
+        match_ident: |i| i == "SDL_SpinLock",
+        patch: |_, td| {
+            td.kind = TypeDefKind::new_enum(EnumKind::Lock);
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
         module: Some("blendmode"),
         match_ident: |i| i == "SDL_BlendMode",
         patch: |_, td| {

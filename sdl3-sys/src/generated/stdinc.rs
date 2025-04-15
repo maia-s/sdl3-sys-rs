@@ -591,7 +591,7 @@ apply_cfg!(#[cfg(all(not(any(doc, target_os = "horizon")), not(any(doc, target_o
         }
     }
 
-    impl From<SDL_DUMMY_ENUM> for ::core::ffi::c_int{
+    impl From<SDL_DUMMY_ENUM> for ::core::ffi::c_int {
         #[inline(always)]
         fn from(value: SDL_DUMMY_ENUM) -> Self {
             value.0
