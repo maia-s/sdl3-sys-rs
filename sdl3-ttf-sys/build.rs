@@ -1,7 +1,3 @@
-const PACKAGE_NAME: &str = "sdl3-ttf";
-const LIB_NAME: &str = "SDL3_ttf";
-const LIB_MIN_VERSION: &str = "3.1.0";
-
 #[cfg(feature = "build-from-source")]
 const SOURCE_DIR: &str = sdl3_ttf_src::SOURCE_DIR;
 

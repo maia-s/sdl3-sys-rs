@@ -1,11 +1,11 @@
 // to edit, edit `build-common.rs` in the repo root and run generate-and-check.sh
 
-use std::{env, error::Error};
+use std::{collections::BTreeMap, env, error::Error, fs::read_to_string, sync::OnceLock};
 
 #[cfg(feature = "build-from-source")]
-type Config = cmake::Config;
+type BuildConfig = cmake::Config;
 #[cfg(not(feature = "build-from-source"))]
-type Config = ();
+type BuildConfig = ();
 
 #[allow(unused)]
 macro_rules! cmake_vars {
@@ -20,6 +20,38 @@ macro_rules! cmake_vars {
             }
         )*
     }
+}
+
+fn config(key: &str) -> &str {
+    struct Config {
+        map: BTreeMap<String, String>,
+    }
+
+    static CONFIG: OnceLock<Config> = OnceLock::new();
+
+    CONFIG
+        .get_or_init(|| {
+            let config_file = format!("{}/config.txt", env::var("CARGO_PKG_NAME").unwrap());
+            let config = read_to_string(&config_file)
+                .unwrap_or_else(|e| panic!("error reading {config_file}: {e}"));
+            let mut map = BTreeMap::new();
+            for line in config.lines() {
+                let (key, value) = line
+                    .split_once(":")
+                    .unwrap_or_else(|| panic!("invalid config line: `{line}`"));
+                let (key, value) = (key.trim(), value.trim());
+                if let Some(prev) = map.insert(key.to_owned(), value.to_owned()) {
+                    panic!(
+                        "config key `{}` already set to `{}`, new value `{}`",
+                        key, prev, value
+                    );
+                }
+            }
+            Config { map }
+        })
+        .map
+        .get(key)
+        .unwrap_or_else(|| panic!("config key {key} not set"))
 }
 
 #[cfg(all(windows, feature = "build-from-source", not(feature = "link-static")))]
@@ -47,15 +79,19 @@ fn top_level_cargo_target_dir() -> std::path::PathBuf {
 fn find_and_output_cmake_dir_metadata(out_dir: &std::path::Path) -> Result<(), Box<dyn Error>> {
     use std::path::{Path, PathBuf};
     fn try_dir(dir: &Path) -> bool {
-        if dir.join(format!("{}Config.cmake", LIB_NAME)).exists() {
+        if dir
+            .join(format!("{}Config.cmake", config("lib_name")))
+            .exists()
+        {
             println!("cargo::metadata=CMAKE_DIR={}", dir.display());
             true
         } else {
             false
         }
     }
-    if try_dir(&out_dir.join(PathBuf::from_iter(["lib", "cmake", LIB_NAME])))
-        || try_dir(&out_dir.join(PathBuf::from_iter(["lib64", "cmake", LIB_NAME])))
+    let lib_name = config("lib_name");
+    if try_dir(&out_dir.join(PathBuf::from_iter(["lib", "cmake", lib_name])))
+        || try_dir(&out_dir.join(PathBuf::from_iter(["lib64", "cmake", lib_name])))
         || try_dir(&out_dir.join("cmake"))
     {
         Ok(())
@@ -93,11 +129,10 @@ fn rust_version_at_least(major: usize, minor: usize) -> bool {
     }
 }
 
-fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<(), Box<dyn Error>> {
+fn build(
+    f: impl FnOnce(&mut BuildConfig) -> Result<(), Box<dyn Error>>,
+) -> Result<(), Box<dyn Error>> {
     let _ = &f;
-    let _ = PACKAGE_NAME;
-    let _ = LIB_NAME;
-    let _ = LIB_MIN_VERSION;
 
     if env::var("DOCS_RS").is_ok() {
         // don't build/link on docs.rs
@@ -108,21 +143,25 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
             ""
         };
 
+        let lib_name = config("lib_name");
+
         #[cfg(feature = "build-from-source")]
         {
             use rpkg_config::{Link, PkgConfig};
             use std::path::Path;
 
-            let mut config = Config::new(SOURCE_DIR);
-            f(&mut config)?;
-            let out_dir = config.build();
+            let package_name = config("package_name");
+
+            let mut build_config = BuildConfig::new(SOURCE_DIR);
+            f(&mut build_config)?;
+            let out_dir = build_config.build();
             println!("cargo::metadata=OUT_DIR={}", out_dir.display());
 
             if let Ok(cfg) = PkgConfig::open(
-                &out_dir.join(format!("lib/pkgconfig/{PACKAGE_NAME}.pc")),
+                &out_dir.join(format!("lib/pkgconfig/{package_name}.pc")),
             )
             .or_else(|_| {
-                PkgConfig::open(&out_dir.join(format!("lib64/pkgconfig/{PACKAGE_NAME}.pc")))
+                PkgConfig::open(&out_dir.join(format!("lib64/pkgconfig/{package_name}.pc")))
             }) {
                 for link in cfg.libs_with_private(cfg!(feature = "link-static"))? {
                     match link {
@@ -135,11 +174,11 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
                         }
 
                         Link::Lib(path) => {
-                            if path == Path::new(LIB_NAME) {
+                            if path == Path::new(lib_name) {
                                 if cfg!(feature = "link-static")
                                     && env::var("CARGO_CFG_TARGET_ENV").unwrap() == "msvc"
                                 {
-                                    println!("cargo::rustc-link-lib=static={LIB_NAME}-static")
+                                    println!("cargo::rustc-link-lib=static={lib_name}-static")
                                 } else {
                                     println!("cargo::rustc-link-lib={link_kind}{}", path.display())
                                 }
@@ -162,12 +201,12 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
                 }
             } else if LINK_FRAMEWORK {
                 println!("cargo::rustc-link-search=framework={}", out_dir.display());
-                println!("cargo::rustc-link-lib=framework={LIB_NAME}");
+                println!("cargo::rustc-link-lib=framework={lib_name}");
             } else {
                 println!("cargo::rustc-link-search={}", out_dir.display());
                 println!("cargo::rustc-link-search={}/lib", out_dir.display());
                 println!("cargo::rustc-link-search={}/lib64", out_dir.display());
-                println!("cargo::rustc-link-lib={link_kind}{LIB_NAME}");
+                println!("cargo::rustc-link-lib={link_kind}{lib_name}");
             }
 
             find_and_output_cmake_dir_metadata(&out_dir)?;
@@ -176,8 +215,8 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
             {
                 // Windows can't find the built dll when run, so copy it to the target dir
                 std::fs::copy(
-                    out_dir.join("bin").join(format!("{LIB_NAME}.dll")),
-                    top_level_cargo_target_dir().join(format!("{LIB_NAME}.dll")),
+                    out_dir.join("bin").join(format!("{lib_name}.dll")),
+                    top_level_cargo_target_dir().join(format!("{lib_name}.dll")),
                 )?;
             }
         }
@@ -187,7 +226,7 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
             if LINK_FRAMEWORK {
                 // FIXME: rust doesn't support linking to xcframeworks
                 let link_search = |name| {
-                    println!("cargo::rustc-link-search=framework=/Library/Frameworks/{LIB_NAME}.xcframework/{name}");
+                    println!("cargo::rustc-link-search=framework=/Library/Frameworks/{lib_name}.xcframework/{name}");
                 };
                 if env::var("CARGO_CFG_TARGET_OS").unwrap() == "macos" {
                     link_search("macos-arm64_x86_64");
@@ -204,7 +243,7 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
                         link_search("tvos-arm64");
                     }
                 }
-                println!("cargo::rustc-link-lib=framework={LIB_NAME}");
+                println!("cargo::rustc-link-lib=framework={lib_name}");
             } else {
                 #[allow(unused_mut)]
                 let mut handled = false;
@@ -213,8 +252,8 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
                 if !handled {
                     if let Ok(lib) = pkg_config::Config::new()
                         .statik(cfg!(feature = "link-static"))
-                        .atleast_version(LIB_MIN_VERSION)
-                        .probe(PACKAGE_NAME)
+                        .atleast_version(config("lib_min_version"))
+                        .probe(config("package_name"))
                     {
                         handled = true;
                         for path in lib.link_paths.iter() {
@@ -224,7 +263,7 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
                             println!("cargo::rustc-link-search=framework={}", path.display());
                         }
                         for s in lib.libs.iter() {
-                            if s == LIB_NAME {
+                            if s == lib_name {
                                 println!("cargo::rustc-link-lib={link_kind}{s}");
                             } else {
                                 println!("cargo::rustc-link-lib={s}");
@@ -238,7 +277,7 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
 
                 #[cfg(feature = "use-vcpkg")]
                 if !handled {
-                    handled = vcpkg::find_package(PACKAGE_NAME).is_ok();
+                    handled = vcpkg::find_package(config("package_name")).is_ok();
                 }
 
                 if !handled {
@@ -246,7 +285,7 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
                     if cfg!(target_os = "macos") {
                         println!("cargo::rustc-link-search=/opt/homebrew/lib");
                     }
-                    println!("cargo::rustc-link-lib={link_kind}{LIB_NAME}");
+                    println!("cargo::rustc-link-lib={link_kind}{lib_name}");
                 }
             }
         }

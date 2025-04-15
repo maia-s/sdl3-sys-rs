@@ -127,13 +127,40 @@ fn patch_file(path: &Path, patches: &[LinesPatch]) -> Result<(), Error> {
 struct Crate {
     name: String,
     root_path: PathBuf,
+    config: BTreeMap<String, String>,
 }
 
 impl Crate {
     fn new(root: &Path, name: impl ToString) -> Self {
         let name = name.to_string();
         let root_path = root.join(&name);
-        Self { name, root_path }
+        let config_file = root_path.join("config.txt");
+        let mut config = BTreeMap::new();
+        if let Ok(config_src) = fs::read_to_string(&config_file) {
+            for line in config_src.lines() {
+                let (key, value) = line
+                    .split_once(":")
+                    .unwrap_or_else(|| panic!("invalid config line: `{line}`"));
+                let (key, value) = (key.trim(), value.trim());
+                if let Some(prev) = config.insert(key.to_owned(), value.to_owned()) {
+                    panic!(
+                        "config key `{}` already set to `{}`, new value `{}`",
+                        key, prev, value
+                    );
+                }
+            }
+        }
+        Self {
+            name,
+            root_path,
+            config,
+        }
+    }
+
+    fn config(&self, key: &str) -> &str {
+        self.config
+            .get(key)
+            .unwrap_or_else(|| panic!("config key {key} not set"))
     }
 
     fn cargo_toml_path(&self) -> PathBuf {
@@ -155,7 +182,6 @@ impl Crate {
 
 struct Library {
     lib_name: String,
-    lib_dir: String,
     src_crate: Crate,
     sys_crate: Crate,
     revision: String,
@@ -163,27 +189,17 @@ struct Library {
 
 impl Library {
     fn new(root: &Path, name: &str) -> Result<Self, Error> {
-        let (pfx, module) = name.split_once('-').unwrap_or((name, ""));
-        let pfx_uc = pfx.to_ascii_uppercase();
-        let pfx_base_uc = pfx.strip_suffix('3').unwrap().to_ascii_uppercase();
         let name = name.to_string();
-        let lib_name = if module.is_empty() {
-            pfx_uc
-        } else {
-            format!("{pfx_uc}_{module}")
-        };
-        let lib_name_meta = lib_name.replace('_', "-"); // version metadata can't have `_`
-        let lib_dir = if module.is_empty() {
-            pfx_base_uc
-        } else {
-            format!("{pfx_base_uc}_{module}")
-        };
         let src_crate = Crate::new(root, format!("{name}-src"));
         let sys_crate = Crate::new(root, format!("{name}-sys"));
+        let lib_name = sys_crate.config("lib_name");
+        let lib_name_meta = lib_name.replace('_', "-"); // version metadata can't have `_`
+        let lib_dir = sys_crate.config("lib_dir");
 
         let git_describe = {
             let cwd = current_dir()?;
-            set_current_dir(src_crate.root_path.join(&lib_dir))?;
+            set_current_dir(src_crate.root_path.join(lib_dir))
+                .map_err(|e| format!("error setting cwd to `{}`: {}", lib_dir, e))?;
             let _cwd = Defer::new(|| set_current_dir(cwd).unwrap());
             Command::new("git")
                 .args(["describe", "--tags", "--long"])
@@ -198,36 +214,68 @@ impl Library {
 
         let (rest, revision_hash) = git_describe.rsplit_once('-').unwrap();
         let (revision_tag, revision_offset) = rest.rsplit_once('-').unwrap();
-        let (revision_tag_base, version) = revision_tag.rsplit_once('-').unwrap();
 
-        let (src_ver, src_ver_display, revision, revision_metadata) =
-            match (revision_tag_base, revision_offset) {
-                ("release", "0") => {
-                    let ver = version.to_string();
+        let (revision_tag_base, version, src_ver, src_ver_display, revision, revision_metadata) =
+            if let Some((revision_tag_base, version)) = revision_tag.rsplit_once('-') {
+                match (revision_tag_base, revision_offset) {
+                    ("release", "0") => {
+                        let ver = version.to_string();
+                        (
+                            revision_tag_base,
+                            version,
+                            ver.clone(),
+                            ver.clone(),
+                            format!("{lib_name}-{revision_tag}"),
+                            format!("{lib_name_meta}-{ver}"),
+                        )
+                    }
+
+                    (_, "0") => {
+                        let ver = format!("{version}-{revision_tag_base}");
+                        let rev = format!("{lib_name}-{revision_tag}");
+                        let rev_meta = format!("{lib_name_meta}-{revision_tag}");
+                        (
+                            revision_tag_base,
+                            version,
+                            format!("{ver}-{revision_offset}"),
+                            ver,
+                            rev,
+                            rev_meta,
+                        )
+                    }
+
+                    (_, _) => {
+                        let ver = format!(
+                            "{version}-{revision_tag_base}-{revision_offset}-{revision_hash}"
+                        );
+                        let rev =
+                            format!("{lib_name}-{revision_tag}-{revision_offset}-{revision_hash}");
+                        let rev_meta = format!(
+                            "{lib_name_meta}-{revision_tag}-{revision_offset}-{revision_hash}"
+                        );
+                        (revision_tag_base, version, ver.clone(), ver, rev, rev_meta)
+                    }
+                }
+            } else if revision_tag.starts_with('v')
+                && revision_tag[1..].chars().next().unwrap().is_ascii_digit()
+            {
+                let revision_tag_base = "";
+                let version = &revision_tag[1..];
+                let ver = version.to_owned();
+                if revision_offset == "0" {
                     (
+                        revision_tag_base,
+                        version,
                         ver.clone(),
-                        ver.clone(),
+                        ver,
                         format!("{lib_name}-{revision_tag}"),
-                        format!("{lib_name_meta}-{ver}"),
+                        format!("{lib_name_meta}-{revision_tag}"),
                     )
+                } else {
+                    todo!()
                 }
-
-                (_, "0") => {
-                    let ver = format!("{version}-{revision_tag_base}");
-                    let rev = format!("{lib_name}-{revision_tag}");
-                    let rev_meta = format!("{lib_name_meta}-{revision_tag}");
-                    (format!("{ver}-{revision_offset}"), ver, rev, rev_meta)
-                }
-
-                (_, _) => {
-                    let ver =
-                        format!("{version}-{revision_tag_base}-{revision_offset}-{revision_hash}");
-                    let rev =
-                        format!("{lib_name}-{revision_tag}-{revision_offset}-{revision_hash}");
-                    let rev_meta =
-                        format!("{lib_name_meta}-{revision_tag}-{revision_offset}-{revision_hash}");
-                    (ver.clone(), ver, rev, rev_meta)
-                }
+            } else {
+                todo!()
             };
 
         patch_file(
@@ -315,20 +363,27 @@ impl Library {
         )?;
 
         Ok(Self {
-            lib_name,
-            lib_dir,
+            lib_name: lib_name.to_owned(),
             src_crate,
             sys_crate,
             revision,
         })
     }
 
+    fn config(&self, key: &str) -> &str {
+        self.sys_crate.config(key)
+    }
+
+    fn source_root_path(&self) -> PathBuf {
+        self.src_crate.root_path.join(self.config("lib_dir"))
+    }
+
     fn headers_path(&self) -> PathBuf {
-        self.src_crate
-            .root_path
-            .join(&self.lib_dir)
-            .join("include")
-            .join(&self.lib_name)
+        self.source_root_path().join(self.config("include_dir"))
+    }
+
+    fn headers_prefix(&self) -> &str {
+        self.config("headers_prefix")
     }
 
     fn output_path(&self) -> PathBuf {
@@ -336,7 +391,7 @@ impl Library {
     }
 }
 
-pub fn generate(root: &Path, libs: &[&str]) -> Result<(), Error> {
+pub fn generate(root: &Path, libs: &[String]) -> Result<(), Error> {
     let libs = libs
         .iter()
         .map(|lib| Library::new(root, lib))
@@ -346,36 +401,44 @@ pub fn generate(root: &Path, libs: &[&str]) -> Result<(), Error> {
 
     for (i, lib) in libs.into_iter().enumerate() {
         let headers_path = lib.headers_path();
+        let headers_prefix = lib.headers_prefix().to_ascii_lowercase();
 
         let mut gen = Gen::new(
             lib.lib_name.clone(),
-            match lib.lib_name.as_str() {
-                "SDL3" => "SDL_",
-                "SDL3_image" => "IMG_",
-                "SDL3_ttf" => "TTF_",
-                _ => return Err(format!("unknown library `{}`", lib.lib_name).into()),
-            },
+            lib.config("sym_prefix").to_owned(),
             emitted_sdl3,
             headers_path.clone(),
             lib.output_path(),
             lib.revision,
         )?;
 
-        for entry in read_dir(headers_path)? {
+        for entry in read_dir(&headers_path)
+            .map_err(|e| format!("couldn't open dir `{}`: {}", headers_path.display(), e))?
+        {
             let entry = entry?;
             let name = entry.file_name();
             let name = name.to_string_lossy();
             let name_lc = name.to_ascii_lowercase();
 
             if let Some(module) = name_lc
-                .strip_prefix("sdl_")
+                .strip_prefix(&headers_prefix)
                 .and_then(|s| s.strip_suffix(".h"))
             {
                 if skip(module) {
                     continue;
                 }
                 let mut buf = String::new();
-                File::open(entry.path())?.read_to_string(&mut buf)?;
+                let entry_path = entry.path();
+                File::open(&entry_path)
+                    .map_err(|e| {
+                        format!(
+                            "error opening `{}` for reading: {}",
+                            entry_path.display(),
+                            e
+                        )
+                    })?
+                    .read_to_string(&mut buf)
+                    .map_err(|e| format!("`{}` isn't valid utf-8: {}", entry_path.display(), e))?;
                 let buf = gen.patch_module(module, buf);
                 let display_path = entry.path();
                 let display_path = display_path
@@ -409,7 +472,7 @@ pub type EmittedItems = BTreeMap<String, InnerEmitContext>;
 #[derive(Default)]
 pub struct Gen {
     lib_name: String,
-    sym_prefix: &'static str,
+    sym_prefix: String,
     revision: String,
     parsed: ParsedItems,
     emitted: RefCell<EmittedItems>,
@@ -422,7 +485,7 @@ pub struct Gen {
 impl Gen {
     pub fn new(
         lib_name: String,
-        sym_prefix: &'static str,
+        sym_prefix: String,
         emitted_sdl3: EmittedItems,
         headers_path: PathBuf,
         output_path: PathBuf,
@@ -506,7 +569,11 @@ impl Gen {
             let mut path = self.output_path.clone();
             path.push("mod");
             path.set_extension("rs");
-            let mut file = Writable(BufWriter::new(OpenOptions::new().append(true).open(&path)?));
+            let mut file = Writable(BufWriter::new(
+                OpenOptions::new().append(true).open(&path).map_err(|e| {
+                    format!("error opening `{}` for writing: {}", path.display(), e)
+                })?,
+            ));
             writeln!(file, "pub mod {module};")?;
         }
         Ok(())

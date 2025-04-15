@@ -1,0 +1,7 @@
+package_name: sdl3-image
+lib_name: SDL3_image
+lib_min_version: 3.2.0
+lib_dir: SDL_image
+include_dir: include/SDL3_image
+sym_prefix: IMG_
+headers_prefix: SDL_

@@ -1,7 +1,3 @@
-const PACKAGE_NAME: &str = "sdl3";
-const LIB_NAME: &str = "SDL3";
-const LIB_MIN_VERSION: &str = "3.1.3";
-
 #[cfg(feature = "build-from-source")]
 const SOURCE_DIR: &str = sdl3_src::SOURCE_DIR;
 

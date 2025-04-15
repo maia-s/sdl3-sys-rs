@@ -324,7 +324,7 @@ impl DocComment {
                         .unwrap_or(line.len() - i);
                     write!(patched, "<{}>", &line[i..i0])?;
                 } else if (line[i..].starts_with("SDL_")
-                    || line[i..].starts_with(ctx.gen.sym_prefix))
+                    || line[i..].starts_with(&ctx.gen.sym_prefix))
                     && (i == 0
                         || line.as_bytes()[i - 1].is_ascii_whitespace()
                         || line.as_bytes()[i - 1] == b'('
