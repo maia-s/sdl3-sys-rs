@@ -3,13 +3,6 @@
 #![cfg_attr(feature = "nightly", feature(c_variadic))] // https://github.com/rust-lang/rust/issues/44930
 #![cfg_attr(all(feature = "nightly", doc), feature(doc_auto_cfg))] // https://github.com/rust-lang/rust/issues/43781
 #![cfg_attr(all(feature = "nightly", doc), feature(doc_cfg))] // https://github.com/rust-lang/rust/issues/43781
-#![cfg_attr(
-    all(
-        feature = "nightly",
-        any(target_arch = "arm", target_arch = "aarch64", target_arch = "arm64ec")
-    ),
-    feature(stdarch_arm_hints)
-)] // https://github.com/rust-lang/rust/issues/117218
 #![doc = include_str!("../README.md")]
 
 use core::mem::size_of;
