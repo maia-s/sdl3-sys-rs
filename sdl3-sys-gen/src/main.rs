@@ -12,7 +12,7 @@ fn main() {
         let entry = entry.unwrap();
         if entry.file_type().unwrap().is_dir() {
             let name = entry.file_name();
-            let name = format!("{}", name.display());
+            let name = name.to_string_lossy();
             if let Some(name) = name.strip_suffix("-sys") {
                 crates.push(name.to_owned());
             }
