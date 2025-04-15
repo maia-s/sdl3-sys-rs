@@ -438,7 +438,7 @@ pub fn generate(root: &Path, libs: &[String]) -> Result<(), Error> {
                         )
                     })?
                     .read_to_string(&mut buf)
-                    .map_err(|e| format!("`{}` isn't valid utf-8: {}", entry_path.display(), e))?;
+                    .map_err(|e| format!("error reading `{}`: {}", entry_path.display(), e))?;
                 let buf = gen.patch_module(module, buf);
                 let display_path = entry.path();
                 let display_path = display_path
