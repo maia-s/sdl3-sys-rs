@@ -1,7 +1,7 @@
 #[cfg(feature = "build-from-source")]
 const SOURCE_DIR: &str = sdl3_image_src::SOURCE_DIR;
 
-const LINK_FRAMEWORK: bool = false;
+const LINK_FRAMEWORK: bool = cfg!(feature = "link-framework");
 
 include!("build-common.rs");
 
