@@ -7,7 +7,7 @@ use crate::{
         PrimitiveType, StructFields, StructKind, StructOrUnion, Type, TypeDef, TypeDefKind,
         TypeEnum,
     },
-    strip_common_ident_prefix,
+    strip_common_ident_prefix, Metadata,
 };
 use core::cell::Cell;
 use std::{
@@ -807,6 +807,13 @@ impl Emit for Define {
                 value.emit(ctx)?;
                 writeln!(ctx, ";")?;
                 writeln!(ctx)?;
+                let ident_s = self.ident.as_str();
+                if ident_s.starts_with("SDL_PROP_") {
+                    ctx.register_metadata(Metadata::Property {
+                        name: ident_s.to_owned(),
+                        doc: ctx.capture_output(|ctx| self.doc.emit(ctx))?,
+                    });
+                }
             } else {
                 ctx.log_skipped("constant value define", self.ident.as_str())?;
             }

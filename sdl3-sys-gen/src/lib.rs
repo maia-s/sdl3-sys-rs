@@ -46,6 +46,7 @@ use std::{
     process::{Command, Stdio},
     thread,
 };
+use str_block::str_block;
 
 fn skip(module: &str) -> bool {
     [
@@ -80,6 +81,11 @@ fn format_and_write(input: String, path: &Path) -> Result<(), Error> {
     let output = String::from_utf8(fmt.wait_with_output()?.stdout).unwrap();
     fs::write(path, output)?;
     Ok(())
+}
+
+pub enum Metadata {
+    Hint { name: String, doc: String },
+    Property { name: String, doc: String },
 }
 
 struct LinesPatch<'a> {
@@ -625,6 +631,77 @@ impl Gen {
         }
         writeln!(output, "}}")?;
         format_and_write(output, &path)?;
+
+        let mut metadata_out = String::new();
+        writeln!(
+            metadata_out,
+            "use sdl3_sys::{{metadata::Property, properties::SDL_PropertyType}};"
+        )?;
+        writeln!(metadata_out)?;
+        writeln!(metadata_out, "pub const PROPERTIES: &[Property] = &[")?;
+        let emitted = self.emitted.borrow();
+        for module in emitted.keys() {
+            for md in &emitted[module].metadata {
+                match md {
+                    Metadata::Hint { name: _, doc: _ } => todo!(),
+                    Metadata::Property { name, doc } => {
+                        let short_name = name.strip_prefix("SDL_PROP_").unwrap();
+                        let ty;
+                        let short_name = if let Some(s) = short_name.strip_suffix("_POINTER") {
+                            ty = "POINTER";
+                            s
+                        } else if let Some(s) = short_name.strip_suffix("_STRING") {
+                            ty = "STRING";
+                            s
+                        } else if let Some(s) = short_name.strip_suffix("_NUMBER") {
+                            ty = "NUMBER";
+                            s
+                        } else if let Some(s) = short_name.strip_suffix("_FLOAT") {
+                            ty = "FLOAT";
+                            s
+                        } else if let Some(s) = short_name.strip_suffix("_BOOLEAN") {
+                            ty = "BOOLEAN";
+                            s
+                        } else {
+                            ty = match name.as_str() {
+                                "SDL_PROP_WINDOW_OPENVR_OVERLAY_ID" => "NUMBER",
+                                "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8" => "NUMBER",
+                                _ => panic!("unknown property type for property {name}"),
+                            };
+                            short_name
+                        };
+                        // rustfmt won't format this so indent it manually
+                        let mut lines = String::new();
+                        write!(
+                            lines,
+                            str_block! {"
+                                Property {{
+                                    module: {module:?},
+                                    name: {name:?},
+                                    short_name: {short_name:?},
+                                    value: unsafe {{ ::core::ffi::CStr::from_ptr(crate::{module}::{name}) }},
+                                    doc: {doc:?},
+                                    ty: SDL_PropertyType::{ty},
+                                }},
+                            "},
+                            module = module,
+                            name = name,
+                            short_name = short_name,
+                            doc = doc,
+                            ty = ty,
+                        )?;
+                        for line in lines.lines() {
+                            writeln!(metadata_out, "    {line}")?;
+                        }
+                    }
+                }
+            }
+        }
+        writeln!(metadata_out, "];")?;
+
+        let mut meta_path = self.output_path.join("..").join("generated_metadata");
+        meta_path.set_extension("rs");
+        format_and_write(metadata_out, &meta_path)?;
         Ok(())
     }
 

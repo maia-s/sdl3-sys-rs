@@ -5,6 +5,8 @@
 #![cfg_attr(all(feature = "nightly", doc), feature(doc_cfg))] // https://github.com/rust-lang/rust/issues/43781
 #![doc = include_str!("../README.md")]
 
+extern crate self as sdl3_sys;
+
 use core::mem::size_of;
 
 // This macro is used to apply a cfg attribute to multiple items
@@ -79,3 +81,5 @@ pub mod ffi {
     #[cfg(all(not(doc), not(feature = "nightly")))]
     pub enum VaList {}
 }
+
+pub mod metadata;
