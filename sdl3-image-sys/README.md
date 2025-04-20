@@ -34,6 +34,7 @@ convention for libraries. You can change this behaviour with the following featu
 | `build-static-vendored` | Build and link SDL_image from source, use vendored libraries (see below), and link it all statically. |
 | `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3_image.xcframework` to be located at `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
 | `link-static` | Link SDL_image statically. |
+| `no-link` | Don't build or link anything. This is useful if you only want metadata. |
 
 ### Building from source
 
@@ -125,10 +126,11 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 | Feature | Description |
 | ------- | ----------- |
 | `debug-impls` | Implement the `Debug` trait for most SDL_image types. |
+| `metadata`    | Enable metadata. |
 
 ## Recent changes
 
-- 0.2.0: Update sdl3-sys to 0.5.0
+- 0.2.0: Update sdl3-sys to 0.5.0, add `no-link` and `metadata` features
 - 0.1.3: Add `link-framework` feature (doesn't work with `build-from-source` yet)
 - 0.1.2: Update SDL_image to 3.2.4
 - 0.1.1: Update SDL_image to 3.2.2, disable vendoring by default on all targets, and when

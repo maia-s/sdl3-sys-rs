@@ -27,6 +27,9 @@ link-static = []
 # Link SDL as an Apple framework. The link-static feature has no effect if this is enabled.
 link-framework = []
 
+# Don't link anything. This overrides all other build and link related features.
+no-link = []
+
 # When building from source, use the `SDL_UNIX_CONSOLE_BUILD` flag to disable the X11 dependency
 # and build a console-only version of SDL. This has no effect when not building from source.
 sdl-unix-console-build = []
@@ -54,6 +57,9 @@ assert-level-paranoid = []
 
 # Implement the Debug trait for applicable types
 debug-impls = []
+
+# Enable metadata
+metadata = []
 
 # Enable nightly features
 nightly = []
