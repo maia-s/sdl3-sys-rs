@@ -60,6 +60,7 @@ debug-impls = []
 
 # Enable metadata
 metadata = []
+only-metadata = ["metadata", "no-link"]
 
 # Enable nightly features
 nightly = []

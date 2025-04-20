@@ -44,6 +44,10 @@ use-vcpkg = ["dep:vcpkg"]
 # Implement the Debug trait for applicable types
 debug-impls = []
 
+# Enable metadata
+metadata = []
+only-metadata = ["metadata", "no-link"]
+
 no-default = [
     "no-default-backends",
     "no-default-formats",

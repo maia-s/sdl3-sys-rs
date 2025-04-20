@@ -127,6 +127,7 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 | ------- | ----------- |
 | `debug-impls` | Implement the `Debug` trait for most SDL_image types. |
 | `metadata`    | Enable metadata. |
+| `only-metadata` | Shortcut for enabling both the `metadata` and `no-link` features. |
 
 ## Recent changes
 

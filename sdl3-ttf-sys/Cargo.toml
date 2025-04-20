@@ -45,6 +45,10 @@ use-vcpkg = ["dep:vcpkg"]
 # Implement the Debug trait for applicable types
 debug-impls = ["sdl3-sys/debug-impls"]
 
+# Enable metadata
+metadata = []
+only-metadata = ["metadata", "no-link"]
+
 sdlttf-vendored = []
 no-sdlttf-vendored = []
 
