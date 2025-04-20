@@ -6,8 +6,8 @@ pub struct Property {
     pub name: &'static str,
     pub short_name: &'static str,
     pub value: &'static CStr,
-    pub doc: &'static str,
     pub ty: SDL_PropertyType,
+    pub doc: &'static str,
 }
 
 #[cfg(feature = "metadata")]
