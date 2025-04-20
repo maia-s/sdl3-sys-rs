@@ -808,10 +808,23 @@ impl Emit for Define {
                 writeln!(ctx, ";")?;
                 writeln!(ctx)?;
                 let ident_s = self.ident.as_str();
-                if ident_s.starts_with("SDL_PROP_") {
+                if ident_s.starts_with("SDL_HINT_") {
+                    ctx.register_metadata(Metadata::Hint {
+                        name: ident_s.to_owned(),
+                        doc: ctx
+                            .capture_output(|ctx| self.doc.emit(ctx))?
+                            .lines()
+                            .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
+                            .collect(),
+                    });
+                } else if ident_s.starts_with("SDL_PROP_") {
                     ctx.register_metadata(Metadata::Property {
                         name: ident_s.to_owned(),
-                        doc: ctx.capture_output(|ctx| self.doc.emit(ctx))?,
+                        doc: ctx
+                            .capture_output(|ctx| self.doc.emit(ctx))?
+                            .lines()
+                            .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
+                            .collect(),
                     });
                 }
             } else {

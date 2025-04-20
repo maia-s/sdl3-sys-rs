@@ -635,15 +635,34 @@ impl Gen {
         let mut metadata_out = String::new();
         writeln!(
             metadata_out,
-            "use sdl3_sys::{{metadata::Property, properties::SDL_PropertyType}};"
+            "use sdl3_sys::{{metadata::{{Hint, Property}}, properties::SDL_PropertyType}};"
         )?;
         writeln!(metadata_out)?;
-        writeln!(metadata_out, "pub const PROPERTIES: &[Property] = &[")?;
+        let mut metadata_out_hints = String::new();
+        let mut metadata_out_props = String::new();
         let emitted = self.emitted.borrow();
         for module in emitted.keys() {
             for md in &emitted[module].metadata {
                 match md {
-                    Metadata::Hint { name: _, doc: _ } => todo!(),
+                    Metadata::Hint { name, doc } => {
+                        let short_name = name.strip_prefix("SDL_HINT_").unwrap();
+                        write!(
+                            metadata_out_hints,
+                            str_block! {"
+                                Hint {{
+                                    module: {module:?},
+                                    name: {name:?},
+                                    short_name: {short_name:?},
+                                    value: unsafe {{ ::core::ffi::CStr::from_ptr(crate::{module}::{name}) }},
+                                    doc: {doc:?},
+                                }},
+                            "},
+                            module = module,
+                            name = name,
+                            short_name = short_name,
+                            doc = doc,
+                        )?;
+                    }
                     Metadata::Property { name, doc } => {
                         let short_name = name.strip_prefix("SDL_PROP_").unwrap();
                         let ty;
@@ -670,10 +689,8 @@ impl Gen {
                             };
                             short_name
                         };
-                        // rustfmt won't format this so indent it manually
-                        let mut lines = String::new();
                         write!(
-                            lines,
+                            metadata_out_props,
                             str_block! {"
                                 Property {{
                                     module: {module:?},
@@ -690,12 +707,21 @@ impl Gen {
                             doc = doc,
                             ty = ty,
                         )?;
-                        for line in lines.lines() {
-                            writeln!(metadata_out, "    {line}")?;
-                        }
                     }
                 }
             }
+        }
+        writeln!(metadata_out, "pub const HINTS: &[Hint] = &[")?;
+        for line in metadata_out_hints.lines() {
+            // rustfmt won't format this
+            writeln!(metadata_out, "    {line}")?;
+        }
+        writeln!(metadata_out, "];")?;
+        writeln!(metadata_out)?;
+        writeln!(metadata_out, "pub const PROPERTIES: &[Property] = &[")?;
+        for line in metadata_out_props.lines() {
+            // rustfmt won't format this
+            writeln!(metadata_out, "    {line}")?;
         }
         writeln!(metadata_out, "];")?;
 
