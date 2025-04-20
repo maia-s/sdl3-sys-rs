@@ -24,7 +24,7 @@ build-from-source-static = ["build-from-source", "link-static"]
 # Link SDL as a static library. The default is to link a shared/dynamic library.
 link-static = []
 
-# Link SDL as a mac framework. The link-static feature has no effect if this is enabled.
+# Link SDL as an Apple framework. The link-static feature has no effect if this is enabled.
 link-framework = []
 
 # When building from source, use the `SDL_UNIX_CONSOLE_BUILD` flag to disable the X11 dependency
