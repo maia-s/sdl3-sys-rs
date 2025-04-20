@@ -134,8 +134,8 @@ fn build(
 ) -> Result<(), Box<dyn Error>> {
     let _ = &f;
 
-    if env::var("DOCS_RS").is_ok() {
-        // don't build/link on docs.rs
+    if cfg!(feature = "no-link") || env::var("DOCS_RS").is_ok() {
+        // don't build/link with no-link feature or on docs.rs
     } else {
         let link_kind = if cfg!(feature = "link-static") {
             "static="
