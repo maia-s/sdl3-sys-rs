@@ -106,7 +106,7 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
-- 0.5.0: Make IDs and flag types newtypes.
+- 0.5.0: Make IDs and flag types newtypes, add metadata
 - 0.4.7: Update SDL to 3.2.10, derive PartialEq/Eq/Hash traits for applicable types
 - 0.4.6: Update SDL to 3.2.8
 - 0.4.5: Update SDL to 3.2.6
