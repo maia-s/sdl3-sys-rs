@@ -18,13 +18,13 @@ use super::video::*;
 /// the time a tray entry is created. Other flags are optional; zero or more of
 /// those can be OR'ed together with the required flag.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_InsertTrayEntryAt`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`BUTTON`](SDL_TrayEntryFlags::BUTTON) | [`SDL_TRAYENTRY_BUTTON`] | Make the entry a simple button. Required. |
@@ -205,15 +205,15 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_TrayEntryFlags {
 
 /// A callback that is invoked when a tray entry is selected.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: an optional pointer to pass extra data to the callback when
 ///   it will be invoked.
 /// - `entry`: the tray entry that was selected.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_SetTrayEntryCallback`]
 pub type SDL_TrayCallback = ::core::option::Option<
     unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void, entry: *mut SDL_TrayEntry),
@@ -228,21 +228,21 @@ extern "C" {
     ///
     /// Using tray icons require the video subsystem.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `icon`: a surface to be used as icon. May be NULL.
     /// - `tooltip`: a tooltip to be displayed when the mouse hovers the icon in
     ///   UTF-8 encoding. Not supported on all platforms. May be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns The newly created system tray icon.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateTrayMenu`]
     /// - [`SDL_GetTrayMenu`]
     /// - [`SDL_DestroyTray`]
@@ -255,18 +255,18 @@ extern "C" {
 extern "C" {
     /// Updates the system tray icon's icon.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `tray`: the tray icon to be updated.
     /// - `icon`: the new icon. May be NULL.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateTray`]
     pub fn SDL_SetTrayIcon(tray: *mut SDL_Tray, icon: *mut SDL_Surface);
 }
@@ -274,18 +274,18 @@ extern "C" {
 extern "C" {
     /// Updates the system tray icon's tooltip.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `tray`: the tray icon to be updated.
     /// - `tooltip`: the new tooltip in UTF-8 encoding. May be NULL.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateTray`]
     pub fn SDL_SetTrayTooltip(tray: *mut SDL_Tray, tooltip: *const ::core::ffi::c_char);
 }
@@ -300,20 +300,20 @@ extern "C" {
     ///
     /// A menu does not need to be destroyed; it will be destroyed with the tray.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `tray`: the tray to bind the menu to.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the newly created menu.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateTray`]
     /// - [`SDL_GetTrayMenu`]
     /// - [`SDL_GetTrayMenuParentTray`]
@@ -330,20 +330,20 @@ extern "C" {
     ///
     /// A menu does not need to be destroyed; it will be destroyed with the tray.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `entry`: the tray entry to bind the menu to.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the newly created menu.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_InsertTrayEntryAt`]
     /// - [`SDL_GetTraySubmenu`]
     /// - [`SDL_GetTrayMenuParentEntry`]
@@ -361,20 +361,20 @@ extern "C" {
     ///
     /// A menu does not need to be destroyed; it will be destroyed with the tray.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `tray`: the tray entry to bind the menu to.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the newly created menu.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateTray`]
     /// - [`SDL_CreateTrayMenu`]
     pub fn SDL_GetTrayMenu(tray: *mut SDL_Tray) -> *mut SDL_TrayMenu;
@@ -391,20 +391,20 @@ extern "C" {
     ///
     /// A menu does not need to be destroyed; it will be destroyed with the tray.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `entry`: the tray entry to bind the menu to.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the newly created menu.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_InsertTrayEntryAt`]
     /// - [`SDL_CreateTraySubmenu`]
     pub fn SDL_GetTraySubmenu(entry: *mut SDL_TrayEntry) -> *mut SDL_TrayMenu;
@@ -413,24 +413,24 @@ extern "C" {
 extern "C" {
     /// Returns a list of entries in the menu, in order.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `menu`: The menu to get entries from.
     /// - `count`: An optional pointer to obtain the number of entries in the
     ///   menu.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a NULL-terminated list of entries within the given menu. The
     ///   pointer becomes invalid when any function that inserts or deletes
     ///   entries in the menu is called.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_RemoveTrayEntry`]
     /// - [`SDL_InsertTrayEntryAt`]
     pub fn SDL_GetTrayEntries(
@@ -442,17 +442,17 @@ extern "C" {
 extern "C" {
     /// Removes a tray entry.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `entry`: The entry to be deleted.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetTrayEntries`]
     /// - [`SDL_InsertTrayEntryAt`]
     pub fn SDL_RemoveTrayEntry(entry: *mut SDL_TrayEntry);
@@ -466,7 +466,7 @@ extern "C" {
     ///
     /// An entry does not need to be destroyed; it will be destroyed with the tray.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `menu`: the menu to append the entry to.
     /// - `pos`: the desired position for the new entry. Entries at or following
     ///   this place will be moved. If pos is -1, the entry is appended.
@@ -474,17 +474,17 @@ extern "C" {
     ///   NULL for a separator.
     /// - `flags`: a combination of flags, some of which are mandatory.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the newly created entry, or NULL if pos is out of bounds.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_TrayEntryFlags`]
     /// - [`SDL_GetTrayEntries`]
     /// - [`SDL_RemoveTrayEntry`]
@@ -505,18 +505,18 @@ extern "C" {
     /// label (separators), or to set a NULL label to an entry that has a non-NULL
     /// label. The function will silently fail if that happens.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `entry`: the entry to be updated.
     /// - `label`: the new label for the entry in UTF-8 encoding.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetTrayEntries`]
     /// - [`SDL_InsertTrayEntryAt`]
     /// - [`SDL_GetTrayEntryLabel`]
@@ -528,20 +528,20 @@ extern "C" {
     ///
     /// If the returned value is NULL, the entry is a separator.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `entry`: the entry to be read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the label of the entry in UTF-8 encoding.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetTrayEntries`]
     /// - [`SDL_InsertTrayEntryAt`]
     /// - [`SDL_SetTrayEntryLabel`]
@@ -553,18 +553,18 @@ extern "C" {
     ///
     /// The entry must have been created with the [`SDL_TRAYENTRY_CHECKBOX`] flag.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `entry`: the entry to be updated.
     /// - `checked`: true if the entry should be checked; false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetTrayEntries`]
     /// - [`SDL_InsertTrayEntryAt`]
     /// - [`SDL_GetTrayEntryChecked`]
@@ -576,20 +576,20 @@ extern "C" {
     ///
     /// The entry must have been created with the [`SDL_TRAYENTRY_CHECKBOX`] flag.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `entry`: the entry to be read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if the entry is checked; false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetTrayEntries`]
     /// - [`SDL_InsertTrayEntryAt`]
     /// - [`SDL_SetTrayEntryChecked`]
@@ -599,18 +599,18 @@ extern "C" {
 extern "C" {
     /// Sets whether or not an entry is enabled.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `entry`: the entry to be updated.
     /// - `enabled`: true if the entry should be enabled; false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetTrayEntries`]
     /// - [`SDL_InsertTrayEntryAt`]
     /// - [`SDL_GetTrayEntryEnabled`]
@@ -620,20 +620,20 @@ extern "C" {
 extern "C" {
     /// Gets whether or not an entry is enabled.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `entry`: the entry to be read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if the entry is enabled; false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetTrayEntries`]
     /// - [`SDL_InsertTrayEntryAt`]
     /// - [`SDL_SetTrayEntryEnabled`]
@@ -643,20 +643,20 @@ extern "C" {
 extern "C" {
     /// Sets a callback to be invoked when the entry is selected.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `entry`: the entry to be updated.
     /// - `callback`: a callback to be invoked when the entry is selected.
     /// - `userdata`: an optional pointer to pass extra data to the callback when
     ///   it will be invoked.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetTrayEntries`]
     /// - [`SDL_InsertTrayEntryAt`]
     pub fn SDL_SetTrayEntryCallback(
@@ -669,14 +669,14 @@ extern "C" {
 extern "C" {
     /// Simulate a click on a tray entry.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `entry`: The entry to activate.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ClickTrayEntry(entry: *mut SDL_TrayEntry);
 }
@@ -686,17 +686,17 @@ extern "C" {
     ///
     /// This also destroys all associated menus and entries.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `tray`: the tray icon to be destroyed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateTray`]
     pub fn SDL_DestroyTray(tray: *mut SDL_Tray);
 }
@@ -704,20 +704,20 @@ extern "C" {
 extern "C" {
     /// Gets the menu containing a certain tray entry.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `entry`: the entry for which to get the parent menu.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the parent menu.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_InsertTrayEntryAt`]
     pub fn SDL_GetTrayEntryParent(entry: *mut SDL_TrayEntry) -> *mut SDL_TrayMenu;
 }
@@ -729,20 +729,20 @@ extern "C" {
     /// Either this function or [`SDL_GetTrayMenuParentTray()`] will return non-NULL
     /// for any given menu.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `menu`: the menu for which to get the parent entry.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the parent entry, or NULL if this menu is not a submenu.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateTraySubmenu`]
     /// - [`SDL_GetTrayMenuParentTray`]
     pub fn SDL_GetTrayMenuParentEntry(menu: *mut SDL_TrayMenu) -> *mut SDL_TrayEntry;
@@ -755,20 +755,20 @@ extern "C" {
     /// Either this function or [`SDL_GetTrayMenuParentEntry()`] will return non-NULL
     /// for any given menu.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `menu`: the menu for which to get the parent enttrayry.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the parent tray, or NULL if this menu is a submenu.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   tray.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateTrayMenu`]
     /// - [`SDL_GetTrayMenuParentEntry`]
     pub fn SDL_GetTrayMenuParentTray(menu: *mut SDL_TrayMenu) -> *mut SDL_Tray;
@@ -780,17 +780,17 @@ extern "C" {
     /// This is called automatically by the event loop and is only needed if you're
     /// using trays but aren't handling SDL events.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_UpdateTrays();
 }
 
 /// An opaque handle representing a toplevel system tray object.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 pub struct SDL_Tray {
@@ -799,7 +799,7 @@ pub struct SDL_Tray {
 
 /// An opaque handle representing an entry on a system tray object.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 pub struct SDL_TrayEntry {
@@ -808,7 +808,7 @@ pub struct SDL_TrayEntry {
 
 /// An opaque handle representing a menu/submenu on a system tray object.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 pub struct SDL_TrayMenu {

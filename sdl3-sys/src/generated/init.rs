@@ -32,17 +32,17 @@ use super::events::*;
 /// These are the flags which may be passed to [`SDL_Init()`]. You should specify
 /// the subsystems which you will be using in your application.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_Init`]
 /// - [`SDL_Quit`]
 /// - [`SDL_InitSubSystem`]
 /// - [`SDL_QuitSubSystem`]
 /// - [`SDL_WasInit`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`AUDIO`](SDL_InitFlags::AUDIO) | [`SDL_INIT_AUDIO`] | [`SDL_INIT_AUDIO`] implies [`SDL_INIT_EVENTS`] |
@@ -273,10 +273,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_InitFlags {
 /// [Main callbacks in SDL3](https://wiki.libsdl.org/SDL3/README/main-functions#main-callbacks-in-sdl3)
 /// for complete details.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`CONTINUE`](SDL_AppResult::CONTINUE) | [`SDL_APP_CONTINUE`] | Value that requests that the app continue from the main callbacks. |
@@ -349,18 +349,18 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_AppResult {
 /// the scenes for apps using the optional main callbacks. Apps that want to
 /// use this should just implement [`SDL_AppInit`] directly.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `appstate`: a place where the app can optionally store a pointer for
 ///   future use.
 /// - `argc`: the standard ANSI C main's argc; number of elements in `argv`.
 /// - `argv`: the standard ANSI C main's argv; array of command line
 ///   arguments.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
 ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 pub type SDL_AppInit_func = ::core::option::Option<
     unsafe extern "C" fn(
@@ -376,14 +376,14 @@ pub type SDL_AppInit_func = ::core::option::Option<
 /// the scenes for apps using the optional main callbacks. Apps that want to
 /// use this should just implement [`SDL_AppIterate`] directly.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
 ///
-/// ### Return value
+/// ## Return value
 /// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
 ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 pub type SDL_AppIterate_func = ::core::option::Option<
     unsafe extern "C" fn(appstate: *mut ::core::ffi::c_void) -> SDL_AppResult,
@@ -395,15 +395,15 @@ pub type SDL_AppIterate_func = ::core::option::Option<
 /// the scenes for apps using the optional main callbacks. Apps that want to
 /// use this should just implement [`SDL_AppEvent`] directly.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
 /// - `event`: the new event for the app to examine.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
 ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 pub type SDL_AppEvent_func = ::core::option::Option<
     unsafe extern "C" fn(
@@ -418,11 +418,11 @@ pub type SDL_AppEvent_func = ::core::option::Option<
 /// the scenes for apps using the optional main callbacks. Apps that want to
 /// use this should just implement [`SDL_AppEvent`] directly.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `appstate`: an optional pointer, provided by the app in [`SDL_AppInit`].
 /// - `result`: the result code that terminated the app (success or failure).
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 pub type SDL_AppQuit_func = ::core::option::Option<
     unsafe extern "C" fn(appstate: *mut ::core::ffi::c_void, result: SDL_AppResult),
@@ -470,17 +470,17 @@ extern "C" {
     /// calling [`SDL_Init`], using either [`SDL_SetAppMetadata()`] or
     /// [`SDL_SetAppMetadataProperty()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `flags`: subsystem initialization flags.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetAppMetadata`]
     /// - [`SDL_SetAppMetadataProperty`]
     /// - [`SDL_InitSubSystem`]
@@ -495,17 +495,17 @@ extern "C" {
     ///
     /// This function and [`SDL_Init()`] are interchangeable.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `flags`: any of the flags used by [`SDL_Init()`]; see [`SDL_Init`] for details.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Init`]
     /// - [`SDL_Quit`]
     /// - [`SDL_QuitSubSystem`]
@@ -518,13 +518,13 @@ extern "C" {
     /// You still need to call [`SDL_Quit()`] even if you close all open subsystems
     /// with [`SDL_QuitSubSystem()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `flags`: any of the flags used by [`SDL_Init()`]; see [`SDL_Init`] for details.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_InitSubSystem`]
     /// - [`SDL_Quit`]
     pub fn SDL_QuitSubSystem(flags: SDL_InitFlags);
@@ -533,17 +533,17 @@ extern "C" {
 extern "C" {
     /// Get a mask of the specified subsystems which are currently initialized.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `flags`: any of the flags used by [`SDL_Init()`]; see [`SDL_Init`] for details.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a mask of all initialized subsystems if `flags` is 0, otherwise it
     ///   returns the initialization status of the specified subsystems.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Init`]
     /// - [`SDL_InitSubSystem`]
     pub fn SDL_WasInit(flags: SDL_InitFlags) -> SDL_InitFlags;
@@ -560,10 +560,10 @@ extern "C" {
     /// application is shutdown, but it is not wise to do this from a library or
     /// other dynamically loaded code.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Init`]
     /// - [`SDL_QuitSubSystem`]
     pub fn SDL_Quit();
@@ -579,29 +579,29 @@ extern "C" {
     /// [`SDL_AppInit()`], [`SDL_AppIterate()`], and [`SDL_AppQuit()`] are all called on the
     /// main thread.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if this thread is the main thread, or false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_RunOnMainThread`]
     pub fn SDL_IsMainThread() -> ::core::primitive::bool;
 }
 
 /// Callback run on the main thread.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: an app-controlled pointer that is passed to the callback.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_RunOnMainThread`]
 pub type SDL_MainThreadCallback =
     ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
@@ -617,23 +617,23 @@ extern "C" {
     /// the main thread wait for the current thread while this function is being
     /// called with `wait_complete` true.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `callback`: the callback to call on the main thread.
     /// - `userdata`: a pointer that is passed to `callback`.
     /// - `wait_complete`: true to wait for the callback to complete, false to
     ///   return immediately.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_IsMainThread`]
     pub fn SDL_RunOnMainThread(
         callback: SDL_MainThreadCallback,
@@ -663,7 +663,7 @@ extern "C" {
     /// supply significantly more detailed metadata with
     /// [`SDL_SetAppMetadataProperty()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `appname`: The name of the application ("My Game 2: Bad Guy's
     ///   Revenge!").
     /// - `appversion`: The version of the application ("1.0.0beta5" or a git
@@ -671,17 +671,17 @@ extern "C" {
     /// - `appidentifier`: A unique string in reverse-domain format that
     ///   identifies this app ("com.example.mygame2").
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetAppMetadataProperty`]
     pub fn SDL_SetAppMetadata(
         appname: *const ::core::ffi::c_char,
@@ -739,21 +739,21 @@ extern "C" {
     ///   Future versions of SDL might add new types. This defaults to
     ///   "application".
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `name`: the name of the metadata property to set.
     /// - `value`: the value of the property, or NULL to remove that property.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetAppMetadataProperty`]
     /// - [`SDL_SetAppMetadata`]
     pub fn SDL_SetAppMetadataProperty(
@@ -790,23 +790,23 @@ extern "C" {
     /// [`SDL_SetAppMetadataProperty()`]. See [`SDL_SetAppMetadataProperty()`] for the list
     /// of available properties and their meanings.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `name`: the name of the metadata property to get.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the current value of the metadata property, or the default if it
     ///   is not set, NULL for properties with no default.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, although
     ///   the string returned is not protected and could potentially be
     ///   freed if you call [`SDL_SetAppMetadataProperty()`] to set that
     ///   property from another thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetAppMetadata`]
     /// - [`SDL_SetAppMetadataProperty`]
     pub fn SDL_GetAppMetadataProperty(

@@ -52,7 +52,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// In modern times, it's generally expected to cover an entire linear address
     /// space. But be careful!
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_SIZE_MAX: ::core::primitive::usize = ::core::primitive::usize::MAX;
 
@@ -83,7 +83,7 @@ apply_cfg!(#[cfg(not(doc))] => {
 
 /// A signed 8-bit integer type.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub type Sint8 = ::core::primitive::i8;
 
@@ -93,7 +93,7 @@ pub const SDL_MIN_SINT8: Sint8 = ((-128_i32) as Sint8);
 
 /// An unsigned 8-bit integer type.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub type Uint8 = ::core::primitive::u8;
 
@@ -103,7 +103,7 @@ pub const SDL_MIN_UINT8: Uint8 = (0x00 as Uint8);
 
 /// A signed 16-bit integer type.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub type Sint16 = ::core::primitive::i16;
 
@@ -113,7 +113,7 @@ pub const SDL_MIN_SINT16: Sint16 = ((-32768_i32) as Sint16);
 
 /// An unsigned 16-bit integer type.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub type Uint16 = ::core::primitive::u16;
 
@@ -123,7 +123,7 @@ pub const SDL_MIN_UINT16: Uint16 = (0x0000 as Uint16);
 
 /// A signed 32-bit integer type.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub type Sint32 = ::core::primitive::i32;
 
@@ -133,7 +133,7 @@ pub const SDL_MIN_SINT32: Sint32 = ((-2147483648_i32) as Sint32);
 
 /// An unsigned 32-bit integer type.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub type Uint32 = ::core::primitive::u32;
 
@@ -143,10 +143,10 @@ pub const SDL_MIN_UINT32: Uint32 = (0x00000000 as Uint32);
 
 /// A signed 64-bit integer type.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - SDL_SINT64_C
 pub type Sint64 = ::core::primitive::i64;
 
@@ -156,10 +156,10 @@ pub const SDL_MIN_SINT64: ::core::primitive::i64 = -9223372036854775808_i64;
 
 /// An unsigned 64-bit integer type.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - SDL_UINT64_C
 pub type Uint64 = ::core::primitive::u64;
 
@@ -174,10 +174,10 @@ pub const SDL_MIN_UINT64: ::core::primitive::u64 = 0_u64;
 /// and [`SDL_SECONDS_TO_NS()`], and between Windows FILETIME values with
 /// [`SDL_TimeToWindows()`] and [`SDL_TimeFromWindows()`].
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_MAX_SINT64`]
 /// - [`SDL_MIN_SINT64`]
 pub type SDL_Time = Sint64;
@@ -197,7 +197,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRIs64 " bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRIs64: *const ::core::ffi::c_char = c"lld".as_ptr();
 
@@ -209,7 +209,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRIu64 " bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRIu64: *const ::core::ffi::c_char = c"llu".as_ptr();
 
@@ -221,7 +221,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRIx64 " bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRIx64: *const ::core::ffi::c_char = c"llx".as_ptr();
 
@@ -233,7 +233,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRIX64 " bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRIX64: *const ::core::ffi::c_char = c"llX".as_ptr();
 
@@ -245,7 +245,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRIs32 " bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRIs32: *const ::core::ffi::c_char = c"d".as_ptr();
 
@@ -257,7 +257,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRIu32 " bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRIu32: *const ::core::ffi::c_char = c"u".as_ptr();
 
@@ -269,7 +269,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRIx32 " bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRIx32: *const ::core::ffi::c_char = c"x".as_ptr();
 
@@ -281,7 +281,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRIX32 " bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRIX32: *const ::core::ffi::c_char = c"X".as_ptr();
 
@@ -296,7 +296,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRILL_PREFIX "d bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRILL_PREFIX: *const ::core::ffi::c_char = c"ll".as_ptr();
 
@@ -308,7 +308,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRILLd " bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRILLd: *const ::core::ffi::c_char = c"lld".as_ptr();
 
@@ -320,7 +320,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRILLu " bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRILLu: *const ::core::ffi::c_char = c"llu".as_ptr();
 
@@ -333,7 +333,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRILLx " bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRILLx: *const ::core::ffi::c_char = c"llx".as_ptr();
 
@@ -346,7 +346,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// SDL_Log("There are %" SDL_PRILLX " bottles of beer on the wall.", bottles);
     /// ```
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_PRILLX: *const ::core::ffi::c_char = c"llX".as_ptr();
 
@@ -521,20 +521,20 @@ const _: () = ::core::assert!(
 
 /// Define a four character code as a Uint32.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `A`: the first ASCII character.
 /// - `B`: the second ASCII character.
 /// - `C`: the third ASCII character.
 /// - `D`: the fourth ASCII character.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the four characters converted into a Uint32, one character
 ///   per-byte.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_FOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> Uint32 {
@@ -567,7 +567,7 @@ const _: () = ::core::assert!((!(0 as ::core::ffi::c_int) == ((-1_i32) as ::core
 
 apply_cfg!(#[cfg(all(not(any(doc, target_os = "horizon")), not(any(doc, target_os = "vita"))))] => {
     #[doc(hidden)]
-    /// ### Known values (`sdl3-sys`)
+    /// ## Known values (`sdl3-sys`)
     /// | Associated constant | Global constant | Description |
     /// | ------------------- | --------------- | ----------- |
     /// | [`DUMMY_ENUM_VALUE`](SDL_DUMMY_ENUM::DUMMY_ENUM_VALUE) | [`DUMMY_ENUM_VALUE`] | |
@@ -656,18 +656,18 @@ apply_cfg!(#[cfg(all(not(any(doc, target_os = "horizon")), not(any(doc, target_o
 /// stream = SDL_OpenIO(&iface, NULL);
 /// ```
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_IOStreamInterface`]
 /// - [`SDL_StorageInterface`]
 /// - [`SDL_VirtualJoystickDesc`]
 ///
-/// ### Safety (`sdl3-sys`)
+/// ## Safety (`sdl3-sys`)
 /// - `iface` must point to memory that is valid for writing the type `T`.
 /// - The type `T` must be a `repr(C)` struct.
 /// - The first field of the struct must be of type `u32`. It will be set to
@@ -704,19 +704,19 @@ extern "C" {
     /// [`SDL_aligned_alloc()`] if you need to allocate memory aligned to an alignment
     /// greater than this guarantee.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `size`: the size to allocate.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the allocated memory, or NULL if allocation failed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_free`]
     /// - [`SDL_calloc`]
     /// - [`SDL_realloc`]
@@ -735,20 +735,20 @@ extern "C" {
     /// aligned to either the *fundamental alignment* (`alignof(max_align_t)` in
     /// C11 and later) or `2 * sizeof(void *)`, whichever is smaller.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `nmemb`: the number of elements in the array.
     /// - `size`: the size of each element of the array.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the allocated array, or NULL if allocation failed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_free`]
     /// - [`SDL_malloc`]
     /// - [`SDL_realloc`]
@@ -783,21 +783,21 @@ extern "C" {
     /// (`alignof(max_align_t)` in C11 and later) or `2 * sizeof(void *)`,
     /// whichever is smaller.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `mem`: a pointer to allocated memory to reallocate, or NULL.
     /// - `size`: the new size of the memory.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the newly allocated memory, or NULL if allocation
     ///   failed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_free`]
     /// - [`SDL_malloc`]
     /// - [`SDL_calloc`]
@@ -815,16 +815,16 @@ extern "C" {
     ///
     /// If `mem` is NULL, this function does nothing.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `mem`: a pointer to allocated memory, or NULL.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_malloc`]
     /// - [`SDL_calloc`]
     /// - [`SDL_realloc`]
@@ -835,19 +835,19 @@ extern "C" {
 ///
 /// SDL will always ensure that the passed `size` is greater than 0.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `size`: the size to allocate.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a pointer to the allocated memory, or NULL if allocation failed.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It should be safe to call this callback from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_malloc`]
 /// - [`SDL_GetOriginalMemoryFunctions`]
 /// - [`SDL_GetMemoryFunctions`]
@@ -861,20 +861,20 @@ pub type SDL_malloc_func = ::core::option::Option<
 /// SDL will always ensure that the passed `nmemb` and `size` are both greater
 /// than 0.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `nmemb`: the number of elements in the array.
 /// - `size`: the size of each element of the array.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a pointer to the allocated array, or NULL if allocation failed.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It should be safe to call this callback from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_calloc`]
 /// - [`SDL_GetOriginalMemoryFunctions`]
 /// - [`SDL_GetMemoryFunctions`]
@@ -890,21 +890,21 @@ pub type SDL_calloc_func = ::core::option::Option<
 ///
 /// SDL will always ensure that the passed `size` is greater than 0.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `mem`: a pointer to allocated memory to reallocate, or NULL.
 /// - `size`: the new size of the memory.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a pointer to the newly allocated memory, or NULL if allocation
 ///   failed.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It should be safe to call this callback from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_realloc`]
 /// - [`SDL_GetOriginalMemoryFunctions`]
 /// - [`SDL_GetMemoryFunctions`]
@@ -920,16 +920,16 @@ pub type SDL_realloc_func = ::core::option::Option<
 ///
 /// SDL will always ensure that the passed `mem` is a non-NULL pointer.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `mem`: a pointer to allocated memory.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It should be safe to call this callback from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_free`]
 /// - [`SDL_GetOriginalMemoryFunctions`]
 /// - [`SDL_GetMemoryFunctions`]
@@ -945,16 +945,16 @@ extern "C" {
     /// runtime's `malloc` functions behind the scenes! Different platforms and
     /// build configurations might do any number of unexpected things.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `malloc_func`: filled with malloc function.
     /// - `calloc_func`: filled with calloc function.
     /// - `realloc_func`: filled with realloc function.
     /// - `free_func`: filled with free function.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetOriginalMemoryFunctions(
         malloc_func: *mut SDL_malloc_func,
@@ -967,21 +967,21 @@ extern "C" {
 extern "C" {
     /// Get the current set of SDL memory functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `malloc_func`: filled with malloc function.
     /// - `calloc_func`: filled with calloc function.
     /// - `realloc_func`: filled with realloc function.
     /// - `free_func`: filled with free function.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This does not hold a lock, so do not call this in the
     ///   unlikely event of a background thread calling
     ///   [`SDL_SetMemoryFunctions`] simultaneously.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetMemoryFunctions`]
     /// - [`SDL_GetOriginalMemoryFunctions`]
     pub fn SDL_GetMemoryFunctions(
@@ -1002,25 +1002,25 @@ extern "C" {
     /// If used, usually this needs to be the first call made into the SDL library,
     /// if not the very first thing done at program startup time.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `malloc_func`: custom malloc function.
     /// - `calloc_func`: custom calloc function.
     /// - `realloc_func`: custom realloc function.
     /// - `free_func`: custom free function.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, but one
     ///   should not replace the memory functions once any allocations
     ///   are made!
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetMemoryFunctions`]
     /// - [`SDL_GetOriginalMemoryFunctions`]
     pub fn SDL_SetMemoryFunctions(
@@ -1043,20 +1043,20 @@ extern "C" {
     /// The returned memory address will be a multiple of the alignment value, and
     /// the size of the memory allocated will be a multiple of the alignment value.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `alignment`: the alignment of the memory.
     /// - `size`: the size to allocate.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the aligned memory, or NULL if allocation failed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_aligned_free`]
     pub fn SDL_aligned_alloc(
         alignment: ::core::primitive::usize,
@@ -1072,16 +1072,16 @@ extern "C" {
     ///
     /// If `mem` is NULL, this function does nothing.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `mem`: a pointer previously returned by [`SDL_aligned_alloc()`], or NULL.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_aligned_alloc`]
     pub fn SDL_aligned_free(mem: *mut ::core::ffi::c_void);
 }
@@ -1089,14 +1089,14 @@ extern "C" {
 extern "C" {
     /// Get the number of outstanding (unfreed) allocations.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of allocations or -1 if allocation counting is
     ///   disabled.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetNumAllocations() -> ::core::ffi::c_int;
 }
@@ -1110,17 +1110,17 @@ extern "C" {
     /// [`SDL_setenv_unsafe()`] or [`SDL_unsetenv_unsafe()`] if you want changes to persist
     /// in the C runtime environment after [`SDL_Quit()`].
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the environment for the process or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetEnvironmentVariable`]
     /// - [`SDL_GetEnvironmentVariables`]
     /// - [`SDL_SetEnvironmentVariable`]
@@ -1131,23 +1131,23 @@ extern "C" {
 extern "C" {
     /// Create a set of environment variables
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `populated`: true to initialize it from the C runtime environment,
     ///   false to create an empty environment.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the new environment or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// If `populated` is false, it is safe to call this function
     ///   from any thread, otherwise it is safe if no other threads are
     ///   calling setenv() or unsetenv()
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetEnvironmentVariable`]
     /// - [`SDL_GetEnvironmentVariables`]
     /// - [`SDL_SetEnvironmentVariable`]
@@ -1159,21 +1159,21 @@ extern "C" {
 extern "C" {
     /// Get the value of a variable in the environment.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `env`: the environment to query.
     /// - `name`: the name of the variable to get.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the value of the variable or NULL if it can't be
     ///   found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetEnvironment`]
     /// - [`SDL_CreateEnvironment`]
     /// - [`SDL_GetEnvironmentVariables`]
@@ -1188,22 +1188,22 @@ extern "C" {
 extern "C" {
     /// Get all variables in the environment.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `env`: the environment to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a NULL terminated array of pointers to environment variables in
     ///   the form "variable=value" or NULL on failure; call [`SDL_GetError()`]
     ///   for more information. This is a single allocation that should be
     ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetEnvironment`]
     /// - [`SDL_CreateEnvironment`]
     /// - [`SDL_GetEnvironmentVariables`]
@@ -1215,7 +1215,7 @@ extern "C" {
 extern "C" {
     /// Set the value of a variable in the environment.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `env`: the environment to modify.
     /// - `name`: the name of the variable to set.
     /// - `value`: the value of the variable to set.
@@ -1223,17 +1223,17 @@ extern "C" {
     ///   return success without setting the variable if it already
     ///   exists.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetEnvironment`]
     /// - [`SDL_CreateEnvironment`]
     /// - [`SDL_GetEnvironmentVariable`]
@@ -1250,21 +1250,21 @@ extern "C" {
 extern "C" {
     /// Clear a variable from the environment.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `env`: the environment to modify.
     /// - `name`: the name of the variable to unset.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetEnvironment`]
     /// - [`SDL_CreateEnvironment`]
     /// - [`SDL_GetEnvironmentVariable`]
@@ -1280,17 +1280,17 @@ extern "C" {
 extern "C" {
     /// Destroy a set of environment variables.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `env`: the environment to destroy.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the environment is no longer in use.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateEnvironment`]
     pub fn SDL_DestroyEnvironment(env: *mut SDL_Environment);
 }
@@ -1300,17 +1300,17 @@ extern "C" {
     ///
     /// This function uses SDL's cached copy of the environment and is thread-safe.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `name`: the name of the variable to get.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the value of the variable or NULL if it can't be
     ///   found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_getenv(name: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
 }
@@ -1321,21 +1321,21 @@ extern "C" {
     /// This function bypasses SDL's cached copy of the environment and is not
     /// thread-safe.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `name`: the name of the variable to get.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the value of the variable or NULL if it can't be
     ///   found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe, consider using [`SDL_getenv()`]
     ///   instead.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_getenv`]
     pub fn SDL_getenv_unsafe(name: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
 }
@@ -1343,23 +1343,23 @@ extern "C" {
 extern "C" {
     /// Set the value of a variable in the environment.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `name`: the name of the variable to set.
     /// - `value`: the value of the variable to set.
     /// - `overwrite`: 1 to overwrite the variable if it exists, 0 to return
     ///   success without setting the variable if it already exists.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns 0 on success, -1 on error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe, consider using
     ///   [`SDL_SetEnvironmentVariable()`] instead.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetEnvironmentVariable`]
     pub fn SDL_setenv_unsafe(
         name: *const ::core::ffi::c_char,
@@ -1371,39 +1371,39 @@ extern "C" {
 extern "C" {
     /// Clear a variable from the environment.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `name`: the name of the variable to unset.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns 0 on success, -1 on error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe, consider using
     ///   [`SDL_UnsetEnvironmentVariable()`] instead.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_UnsetEnvironmentVariable`]
     pub fn SDL_unsetenv_unsafe(name: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
 }
 
 /// A callback used with SDL sorting and binary search functions.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `a`: a pointer to the first element being compared.
 /// - `b`: a pointer to the second element being compared.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns -1 if `a` should be sorted before `b`, 1 if `b` should be sorted
 ///   before `a`, 0 if they are equal. If two elements are equal, their
 ///   order in the sorted array is undefined.
 ///
-/// ### Availability
+/// ## Availability
 /// This callback is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_bsearch`]
 /// - [`SDL_qsort`]
 pub type SDL_CompareCallback = ::core::option::Option<
@@ -1445,19 +1445,19 @@ extern "C" {
     /// SDL_qsort(values, SDL_arraysize(values), sizeof(values[0]), compare);
     /// ```
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `base`: a pointer to the start of the array.
     /// - `nmemb`: the number of elements in the array.
     /// - `size`: the size of the elements in the array.
     /// - `compare`: a function used to compare elements in the array.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_bsearch`]
     /// - [`SDL_qsort_r`]
     pub fn SDL_qsort(
@@ -1501,24 +1501,24 @@ extern "C" {
     /// data *result = SDL_bsearch(&key, values, SDL_arraysize(values), sizeof(values[0]), compare);
     /// ```
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `key`: a pointer to a key equal to the element being searched for.
     /// - `base`: a pointer to the start of the array.
     /// - `nmemb`: the number of elements in the array.
     /// - `size`: the size of the elements in the array.
     /// - `compare`: a function used to compare elements in the array.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the matching element in the array, or NULL if not
     ///   found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_bsearch_r`]
     /// - [`SDL_qsort`]
     pub fn SDL_bsearch(
@@ -1532,20 +1532,20 @@ extern "C" {
 
 /// A callback used with SDL sorting and binary search functions.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: the `userdata` pointer passed to the sort function.
 /// - `a`: a pointer to the first element being compared.
 /// - `b`: a pointer to the second element being compared.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns -1 if `a` should be sorted before `b`, 1 if `b` should be sorted
 ///   before `a`, 0 if they are equal. If two elements are equal, their
 ///   order in the sorted array is undefined.
 ///
-/// ### Availability
+/// ## Availability
 /// This callback is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_qsort_r`]
 /// - [`SDL_bsearch_r`]
 pub type SDL_CompareCallback_r = ::core::option::Option<
@@ -1594,20 +1594,20 @@ extern "C" {
     /// SDL_qsort_r(values, SDL_arraysize(values), sizeof(values[0]), compare, (const void *)(uintptr_t)sort_increasing);
     /// ```
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `base`: a pointer to the start of the array.
     /// - `nmemb`: the number of elements in the array.
     /// - `size`: the size of the elements in the array.
     /// - `compare`: a function used to compare elements in the array.
     /// - `userdata`: a pointer to pass to the compare function.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_bsearch_r`]
     /// - [`SDL_qsort`]
     pub fn SDL_qsort_r(
@@ -1659,7 +1659,7 @@ extern "C" {
     /// data *result = SDL_bsearch_r(&key, values, SDL_arraysize(values), sizeof(values[0]), compare, (const void *)(uintptr_t)sort_increasing);
     /// ```
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `key`: a pointer to a key equal to the element being searched for.
     /// - `base`: a pointer to the start of the array.
     /// - `nmemb`: the number of elements in the array.
@@ -1667,17 +1667,17 @@ extern "C" {
     /// - `compare`: a function used to compare elements in the array.
     /// - `userdata`: a pointer to pass to the compare function.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the matching element in the array, or NULL if not
     ///   found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_bsearch`]
     /// - [`SDL_qsort_r`]
     pub fn SDL_bsearch_r(
@@ -1693,16 +1693,16 @@ extern "C" {
 extern "C" {
     /// Compute the absolute value of `x`.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: an integer value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the absolute value of x.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_abs(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -1742,16 +1742,16 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// for English 'a-z' and 'A-Z' as true.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_isalpha(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -1762,16 +1762,16 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// for English 'a-z', 'A-Z', and '0-9' as true.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_isalnum(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -1782,16 +1782,16 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// 0x20 (space) or 0x9 (tab) as true.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_isblank(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -1802,16 +1802,16 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// 0 through 0x1F, and 0x7F, as true.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_iscntrl(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -1822,16 +1822,16 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// '0' (0x30) through '9' (0x39), as true.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_isdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -1842,16 +1842,16 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// 'A' through 'F', 'a' through 'f', and '0' through '9', as true.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_isxdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -1862,19 +1862,19 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this is equivalent to
     /// `((SDL_isgraph(x)) && (!SDL_isalnum(x)))`.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_isgraph`]
     /// - [`SDL_isalnum`]
     pub fn SDL_ispunct(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
@@ -1893,16 +1893,16 @@ extern "C" {
     /// - form feed (0x0C)
     /// - return (0x0D)
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_isspace(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -1913,16 +1913,16 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// 'A' through 'Z' as true.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_isupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -1933,16 +1933,16 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// 'a' through 'z' as true.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_islower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -1957,16 +1957,16 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
     /// ' ' (0x20) through '~' (0x7E) as true.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_isprint(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -1981,19 +1981,19 @@ extern "C" {
     /// **WARNING**: Regardless of system locale, this is equivalent to
     /// `(SDL_isprint(x)) && ((x) != ' ')`.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if x falls within the character class, zero otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_isprint`]
     pub fn SDL_isgraph(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -2007,16 +2007,16 @@ extern "C" {
     /// This function returns the uppercase equivalent of `x`. If a character
     /// cannot be converted, or is already uppercase, this function returns `x`.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns capitalized version of x, or x if no conversion available.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_toupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -2030,16 +2030,16 @@ extern "C" {
     /// This function returns the lowercase equivalent of `x`. If a character
     /// cannot be converted, or is already lowercase, this function returns `x`.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: character value to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns lowercase version of x, or x if no conversion available.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_tolower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
@@ -2054,18 +2054,18 @@ extern "C" {
     /// value to be updated with the next block. The first call to this function
     /// for a set of blocks should pass in a zero CRC value.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `crc`: the current checksum for this data set, or 0 for a new data set.
     /// - `data`: a new block of data to add to the checksum.
     /// - `len`: the size, in bytes, of the new block of data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a CRC-16 checksum value of all blocks in the data set.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_crc16(
         crc: Uint16,
@@ -2084,18 +2084,18 @@ extern "C" {
     /// value to be updated with the next block. The first call to this function
     /// for a set of blocks should pass in a zero CRC value.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `crc`: the current checksum for this data set, or 0 for a new data set.
     /// - `data`: a new block of data to add to the checksum.
     /// - `len`: the size, in bytes, of the new block of data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a CRC-32 checksum value of all blocks in the data set.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_crc32(
         crc: Uint32,
@@ -2119,18 +2119,18 @@ extern "C" {
     /// cryptographically secure, so it shouldn't be used for hashing top-secret
     /// data.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `data`: the data to be hashed.
     /// - `len`: the size of data, in bytes.
     /// - `seed`: a value that alters the final hash value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a Murmur3 32-bit hash value.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_murmur3_32(
         data: *const ::core::ffi::c_void,
@@ -2143,23 +2143,23 @@ extern "C" {
 ///
 /// The memory regions must not overlap. If they do, use [`SDL_memmove()`] instead.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `dst`: The destination memory region. Must not be NULL, and must not
 ///   overlap with `src`.
 /// - `src`: The source memory region. Must not be NULL, and must not overlap
 ///   with `dst`.
 /// - `len`: The length in bytes of both `dst` and `src`.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns `dst`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this function from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This function is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_memmove`]
 #[inline(always)]
 pub unsafe fn SDL_memcpy(
@@ -2187,14 +2187,14 @@ pub unsafe fn SDL_memcpy(
 /// This macro looks like it double-evaluates its parameters, but the extras
 /// them are in `sizeof` sections, which generate no code nor side-effects.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `dst`: a pointer to the destination object. Must not be NULL.
 /// - `src`: a pointer to the source object. Must not be NULL.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this function from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This function is available since SDL 3.2.0.
 ///
 /// # Safety
@@ -2218,21 +2218,21 @@ pub unsafe fn SDL_copyp<Dst: Sized, Src: Sized>(dst: *mut Dst, src: *const Src) 
 /// It is okay for the memory regions to overlap. If you are confident that the
 /// regions never overlap, using [`SDL_memcpy()`] may improve performance.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `dst`: The destination memory region. Must not be NULL.
 /// - `src`: The source memory region. Must not be NULL.
 /// - `len`: The length in bytes of both `dst` and `src`.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns `dst`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this function from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This function is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_memcpy`]
 #[inline(always)]
 pub unsafe fn SDL_memmove(
@@ -2253,18 +2253,18 @@ extern "C" {
     /// Despite `c` being an `int` instead of a `char`, this only operates on
     /// bytes; `c` must be a value between 0 and 255, inclusive.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the destination memory region. Must not be NULL.
     /// - `c`: the byte value to set.
     /// - `len`: the length, in bytes, to set in `dst`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `dst`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_memset(
         dst: *mut ::core::ffi::c_void,
@@ -2282,18 +2282,18 @@ extern "C" {
     /// Unlike [`SDL_memset`], this sets 32-bit values, not bytes, so it's not limited
     /// to a range of 0-255.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the destination memory region. Must not be NULL.
     /// - `val`: the Uint32 value to set.
     /// - `dwords`: the number of Uint32 values to set in `dst`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `dst`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_memset4(
         dst: *mut ::core::ffi::c_void,
@@ -2309,16 +2309,16 @@ extern "C" {
 ///
 /// This requires a pointer to an object, not an object itself, nor an array.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `x`: a pointer to the object to clear.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_zero`]
 /// - [`SDL_zeroa`]
 ///
@@ -2333,20 +2333,20 @@ pub unsafe fn SDL_zerop<T>(x: *mut T) -> *mut T {
 extern "C" {
     /// Compare two buffers of memory.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `s1`: the first buffer to compare. NULL is not permitted!
     /// - `s2`: the second buffer to compare. NULL is not permitted!
     /// - `len`: the number of bytes to compare between the buffers.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns less than zero if s1 is "less than" s2, greater than zero if s1 is
     ///   "greater than" s2, and zero if the buffers match exactly for `len`
     ///   bytes.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_memcmp(
         s1: *const ::core::ffi::c_void,
@@ -2368,20 +2368,20 @@ extern "C" {
     /// Also be aware that wchar_t is different sizes on different platforms (4
     /// bytes on Linux, 2 on Windows, etc).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `wstr`: The null-terminated wide string to read. Must not be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the length (in wchar_t values, excluding the null terminator) of
     ///   `wstr`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_wcsnlen`]
     /// - [`SDL_utf8strlen`]
     /// - [`SDL_utf8strnlen`]
@@ -2404,21 +2404,21 @@ extern "C" {
     ///
     /// Also, `maxlen` is a count of wide characters, not bytes!
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `wstr`: The null-terminated wide string to read. Must not be NULL.
     /// - `maxlen`: The maximum amount of wide characters to count.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the length (in wide characters, excluding the null terminator) of
     ///   `wstr` but never more than `maxlen`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_wcslen`]
     /// - [`SDL_utf8strlen`]
     /// - [`SDL_utf8strnlen`]
@@ -2439,24 +2439,24 @@ extern "C" {
     /// If `maxlen` is 0, no wide characters are copied and no null terminator is
     /// written.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: The destination buffer. Must not be NULL, and must not overlap
     ///   with `src`.
     /// - `src`: The null-terminated wide string to copy. Must not be NULL, and
     ///   must not overlap with `dst`.
     /// - `maxlen`: The length (in wide characters) of the destination buffer.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the length (in wide characters, excluding the null terminator) of
     ///   `src`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_wcslcat`]
     pub fn SDL_wcslcpy(
         dst: *mut crate::ffi::c_wchar_t,
@@ -2477,7 +2477,7 @@ extern "C" {
     /// If `maxlen` - SDL_wcslen(dst) - 1 is less than or equal to 0, then `dst` is
     /// unmodified.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: The destination buffer already containing the first
     ///   null-terminated wide string. Must not be NULL and must not
     ///   overlap with `src`.
@@ -2485,17 +2485,17 @@ extern "C" {
     ///   must not overlap with `dst`.
     /// - `maxlen`: The length (in wide characters) of the destination buffer.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the length (in wide characters, excluding the null terminator) of
     ///   the string in `dst` plus the length of `src`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_wcslcpy`]
     pub fn SDL_wcslcat(
         dst: *mut crate::ffi::c_wchar_t,
@@ -2513,16 +2513,16 @@ extern "C" {
     /// The returned string is owned by the caller, and should be passed to
     /// [`SDL_free`] when no longer needed.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `wstr`: the string to copy.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the newly-allocated wide string.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_wcsdup(wstr: *const crate::ffi::c_wchar_t) -> *mut crate::ffi::c_wchar_t;
 }
@@ -2536,18 +2536,18 @@ extern "C" {
     /// Note that this looks for strings of _wide characters_, not _codepoints_, so
     /// it's legal to search for malformed and incomplete UTF-16 sequences.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `haystack`: the wide string to search. Must not be NULL.
     /// - `needle`: the wide string to search for. Must not be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the first instance of `needle` in the string, or NULL
     ///   if not found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_wcsstr(
         haystack: *const crate::ffi::c_wchar_t,
@@ -2567,20 +2567,20 @@ extern "C" {
     /// Note that this looks for strings of _wide characters_, not _codepoints_, so
     /// it's legal to search for malformed and incomplete UTF-16 sequences.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `haystack`: the wide string to search. Must not be NULL.
     /// - `needle`: the wide string to search for. Must not be NULL.
     /// - `maxlen`: the maximum number of wide characters to search in
     ///   `haystack`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the first instance of `needle` in the string, or NULL
     ///   if not found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_wcsnstr(
         haystack: *const crate::ffi::c_wchar_t,
@@ -2596,19 +2596,19 @@ extern "C" {
     /// character; it does not care if the string is well-formed UTF-16 (or UTF-32,
     /// depending on your platform's wchar_t size), or uses valid Unicode values.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
     ///   exactly.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_wcscmp(
         str1: *const crate::ffi::c_wchar_t,
@@ -2634,20 +2634,20 @@ extern "C" {
     /// null-terminator character before this count), they will be considered
     /// equal.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
     /// - `maxlen`: the maximum number of wchar_t to compare.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
     ///   exactly.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_wcsncmp(
         str1: *const crate::ffi::c_wchar_t,
@@ -2674,19 +2674,19 @@ extern "C" {
     /// CHARACTER), which is to say two strings of random bits may turn out to
     /// match if they convert to the same amount of replacement characters.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
     ///   exactly.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_wcscasecmp(
         str1: *const crate::ffi::c_wchar_t,
@@ -2723,20 +2723,20 @@ extern "C" {
     /// null-terminator character before this number of bytes), they will be
     /// considered equal.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
     /// - `maxlen`: the maximum number of wchar_t values to compare.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
     ///   exactly.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_wcsncasecmp(
         str1: *const crate::ffi::c_wchar_t,
@@ -2754,7 +2754,7 @@ extern "C" {
     /// If the parsed number does not fit inside a `long`, the result is clamped to
     /// the minimum and maximum representable `long` values.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: The null-terminated wide string to read. Must not be NULL.
     /// - `endp`: If not NULL, the address of the first invalid wide character
     ///   (i.e. the next character after the parsed number) will be
@@ -2764,16 +2764,16 @@ extern "C" {
     ///   number's prefix (0x for hexadecimal, 0 for octal, decimal
     ///   otherwise).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the parsed `long`, or 0 if no number could be parsed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_strtol`]
     pub fn SDL_wcstol(
         str: *const crate::ffi::c_wchar_t,
@@ -2789,19 +2789,19 @@ extern "C" {
     ///
     /// If you need the length of a UTF-8 string, consider using [`SDL_utf8strlen()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the length (in bytes, excluding the null terminator) of `src`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_strnlen`]
     /// - [`SDL_utf8strlen`]
     /// - [`SDL_utf8strnlen`]
@@ -2817,21 +2817,21 @@ extern "C" {
     ///
     /// If you need the length of a UTF-8 string, consider using [`SDL_utf8strnlen()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     /// - `maxlen`: The maximum amount of bytes to count.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the length (in bytes, excluding the null terminator) of `src` but
     ///   never more than `maxlen`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_strlen`]
     /// - [`SDL_utf8strlen`]
     /// - [`SDL_utf8strnlen`]
@@ -2853,24 +2853,24 @@ extern "C" {
     /// If you want to copy an UTF-8 string but need to ensure that multi-byte
     /// sequences are not truncated, consider using [`SDL_utf8strlcpy()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: The destination buffer. Must not be NULL, and must not overlap
     ///   with `src`.
     /// - `src`: The null-terminated string to copy. Must not be NULL, and must
     ///   not overlap with `dst`.
     /// - `maxlen`: The length (in characters) of the destination buffer.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the length (in characters, excluding the null terminator) of
     ///   `src`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_strlcat`]
     /// - [`SDL_utf8strlcpy`]
     pub fn SDL_strlcpy(
@@ -2892,7 +2892,7 @@ extern "C" {
     /// Note that unlike [`SDL_strlcpy()`], this function returns the number of bytes
     /// written, not the length of `src`.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: The destination buffer. Must not be NULL, and must not overlap
     ///   with `src`.
     /// - `src`: The null-terminated UTF-8 string to copy. Must not be NULL, and
@@ -2900,16 +2900,16 @@ extern "C" {
     /// - `dst_bytes`: The length (in bytes) of the destination buffer. Must not
     ///   be 0.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of bytes written, excluding the null terminator.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_strlcpy`]
     pub fn SDL_utf8strlcpy(
         dst: *mut ::core::ffi::c_char,
@@ -2929,7 +2929,7 @@ extern "C" {
     /// If `maxlen` - SDL_strlen(dst) - 1 is less than or equal to 0, then `dst` is
     /// unmodified.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: The destination buffer already containing the first
     ///   null-terminated string. Must not be NULL and must not overlap
     ///   with `src`.
@@ -2937,17 +2937,17 @@ extern "C" {
     ///   not overlap with `dst`.
     /// - `maxlen`: The length (in characters) of the destination buffer.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the length (in characters, excluding the null terminator) of the
     ///   string in `dst` plus the length of `src`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_strlcpy`]
     pub fn SDL_strlcat(
         dst: *mut ::core::ffi::c_char,
@@ -2965,16 +2965,16 @@ extern "C" {
     /// The returned string is owned by the caller, and should be passed to
     /// [`SDL_free`] when no longer needed.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: the string to copy.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the newly-allocated string.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strdup(str: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
 }
@@ -2993,18 +2993,18 @@ extern "C" {
     /// The returned string is owned by the caller, and should be passed to
     /// [`SDL_free`] when no longer needed.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: the string to copy.
     /// - `maxlen`: the maximum length of the copied string, not counting the
     ///   null-terminator character.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the newly-allocated string.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strndup(
         str: *const ::core::ffi::c_char,
@@ -3024,16 +3024,16 @@ extern "C" {
     /// will ruin the string data. You should only use this function on strings
     /// that are completely comprised of low ASCII characters.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: the string to reverse.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `str`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strrev(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
 }
@@ -3048,19 +3048,19 @@ extern "C" {
     /// malformed UTF-8!--and converts ASCII characters 'a' through 'z' to their
     /// uppercase equivalents in-place, returning the original `str` pointer.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: the string to convert in-place. Can not be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the `str` pointer passed into this function.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_strlwr`]
     pub fn SDL_strupr(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
 }
@@ -3075,19 +3075,19 @@ extern "C" {
     /// malformed UTF-8!--and converts ASCII characters 'A' through 'Z' to their
     /// lowercase equivalents in-place, returning the original `str` pointer.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: the string to convert in-place. Can not be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the `str` pointer passed into this function.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_strupr`]
     pub fn SDL_strlwr(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
 }
@@ -3101,18 +3101,18 @@ extern "C" {
     /// Note that this looks for _bytes_, not _characters_, so you cannot match
     /// against a Unicode codepoint > 255, regardless of character encoding.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: the string to search. Must not be NULL.
     /// - `c`: the byte value to search for.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the first instance of `c` in the string, or NULL if
     ///   not found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strchr(
         str: *const ::core::ffi::c_char,
@@ -3128,18 +3128,18 @@ extern "C" {
     /// Note that this looks for _bytes_, not _characters_, so you cannot match
     /// against a Unicode codepoint > 255, regardless of character encoding.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: the string to search. Must not be NULL.
     /// - `c`: the byte value to search for.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the last instance of `c` in the string, or NULL if
     ///   not found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strrchr(
         str: *const ::core::ffi::c_char,
@@ -3156,18 +3156,18 @@ extern "C" {
     /// Note that this looks for strings of _bytes_, not _characters_, so it's
     /// legal to search for malformed and incomplete UTF-8 sequences.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `haystack`: the string to search. Must not be NULL.
     /// - `needle`: the string to search for. Must not be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the first instance of `needle` in the string, or NULL
     ///   if not found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strstr(
         haystack: *const ::core::ffi::c_char,
@@ -3186,19 +3186,19 @@ extern "C" {
     /// Note that this looks for strings of _bytes_, not _characters_, so it's
     /// legal to search for malformed and incomplete UTF-8 sequences.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `haystack`: the string to search. Must not be NULL.
     /// - `needle`: the string to search for. Must not be NULL.
     /// - `maxlen`: the maximum number of bytes to search in `haystack`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the first instance of `needle` in the string, or NULL
     ///   if not found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strnstr(
         haystack: *const ::core::ffi::c_char,
@@ -3224,18 +3224,18 @@ extern "C" {
     /// CHARACTER), which is to say two strings of random bits may turn out to
     /// match if they convert to the same amount of replacement characters.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `haystack`: the string to search. Must not be NULL.
     /// - `needle`: the string to search for. Must not be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the first instance of `needle` in the string, or NULL
     ///   if not found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strcasestr(
         haystack: *const ::core::ffi::c_char,
@@ -3261,18 +3261,18 @@ extern "C" {
     /// will use this to save tokenizing state between calls. It is initialized if
     /// `str` is non-NULL, and used to resume tokenizing when `str` is NULL.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: the string to tokenize, or NULL to continue tokenizing.
     /// - `delim`: the delimiter string that separates tokens.
     /// - `saveptr`: pointer to a char *, used for ongoing state.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns A pointer to the next token, or NULL if no tokens remain.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strtok_r(
         str: *mut ::core::ffi::c_char,
@@ -3296,20 +3296,20 @@ extern "C" {
     /// CHARACTER), so a malformed or incomplete UTF-8 sequence might increase the
     /// count by several replacement characters.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: The null-terminated UTF-8 string to read. Must not be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns The length (in codepoints, excluding the null terminator) of
     ///   `src`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_utf8strnlen`]
     /// - [`SDL_strlen`]
     pub fn SDL_utf8strlen(str: *const ::core::ffi::c_char) -> ::core::primitive::usize;
@@ -3334,21 +3334,21 @@ extern "C" {
     /// CHARACTER), so a malformed or incomplete UTF-8 sequence might increase the
     /// count by several replacement characters.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: The null-terminated UTF-8 string to read. Must not be NULL.
     /// - `bytes`: The maximum amount of bytes to count.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns The length (in codepoints, excluding the null terminator) of `src`
     ///   but never more than `maxlen`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_utf8strlen`]
     /// - [`SDL_strnlen`]
     pub fn SDL_utf8strnlen(
@@ -3370,21 +3370,21 @@ extern "C" {
     /// much more space than you expect to use (and don't forget possible negative
     /// signs, null terminator bytes, etc).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `value`: the integer to convert.
     /// - `str`: the buffer to write the string into.
     /// - `radix`: the radix to use for string generation.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `str`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_uitoa`]
     /// - [`SDL_ltoa`]
     /// - [`SDL_lltoa`]
@@ -3408,21 +3408,21 @@ extern "C" {
     /// much more space than you expect to use (and don't forget null terminator
     /// bytes, etc).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `value`: the unsigned integer to convert.
     /// - `str`: the buffer to write the string into.
     /// - `radix`: the radix to use for string generation.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `str`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_itoa`]
     /// - [`SDL_ultoa`]
     /// - [`SDL_ulltoa`]
@@ -3446,21 +3446,21 @@ extern "C" {
     /// much more space than you expect to use (and don't forget possible negative
     /// signs, null terminator bytes, etc).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `value`: the long integer to convert.
     /// - `str`: the buffer to write the string into.
     /// - `radix`: the radix to use for string generation.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `str`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ultoa`]
     /// - [`SDL_itoa`]
     /// - [`SDL_lltoa`]
@@ -3484,21 +3484,21 @@ extern "C" {
     /// much more space than you expect to use (and don't forget null terminator
     /// bytes, etc).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `value`: the unsigned long integer to convert.
     /// - `str`: the buffer to write the string into.
     /// - `radix`: the radix to use for string generation.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `str`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ltoa`]
     /// - [`SDL_uitoa`]
     /// - [`SDL_ulltoa`]
@@ -3522,21 +3522,21 @@ extern "C" {
     /// much more space than you expect to use (and don't forget possible negative
     /// signs, null terminator bytes, etc).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `value`: the long long integer to convert.
     /// - `str`: the buffer to write the string into.
     /// - `radix`: the radix to use for string generation.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `str`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ulltoa`]
     /// - [`SDL_itoa`]
     /// - [`SDL_ltoa`]
@@ -3560,21 +3560,21 @@ extern "C" {
     /// much more space than you expect to use (and don't forget null terminator
     /// bytes, etc).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `value`: the unsigned long long integer to convert.
     /// - `str`: the buffer to write the string into.
     /// - `radix`: the radix to use for string generation.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `str`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_lltoa`]
     /// - [`SDL_uitoa`]
     /// - [`SDL_ultoa`]
@@ -3591,19 +3591,19 @@ extern "C" {
     /// The result of calling `SDL_atoi(str)` is equivalent to
     /// `(int)SDL_strtol(str, NULL, 10)`.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the parsed `int`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_atof`]
     /// - [`SDL_strtol`]
     /// - [`SDL_strtoul`]
@@ -3620,19 +3620,19 @@ extern "C" {
     /// The result of calling `SDL_atof(str)` is equivalent to `SDL_strtod(str,
     /// NULL)`.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the parsed `double`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_atoi`]
     /// - [`SDL_strtol`]
     /// - [`SDL_strtoul`]
@@ -3651,7 +3651,7 @@ extern "C" {
     /// If the parsed number does not fit inside a `long`, the result is clamped to
     /// the minimum and maximum representable `long` values.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     /// - `endp`: If not NULL, the address of the first invalid character (i.e.
     ///   the next character after the parsed number) will be written to
@@ -3661,16 +3661,16 @@ extern "C" {
     ///   number's prefix (0x for hexadecimal, 0 for octal, decimal
     ///   otherwise).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the parsed `long`, or 0 if no number could be parsed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_atoi`]
     /// - [`SDL_atof`]
     /// - [`SDL_strtoul`]
@@ -3695,7 +3695,7 @@ extern "C" {
     /// If the parsed number does not fit inside an `unsigned long`, the result is
     /// clamped to the maximum representable `unsigned long` value.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     /// - `endp`: If not NULL, the address of the first invalid character (i.e.
     ///   the next character after the parsed number) will be written to
@@ -3705,16 +3705,16 @@ extern "C" {
     ///   number's prefix (0x for hexadecimal, 0 for octal, decimal
     ///   otherwise).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the parsed `unsigned long`, or 0 if no number could be parsed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_atoi`]
     /// - [`SDL_atof`]
     /// - [`SDL_strtol`]
@@ -3738,7 +3738,7 @@ extern "C" {
     /// If the parsed number does not fit inside a `long long`, the result is
     /// clamped to the minimum and maximum representable `long long` values.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     /// - `endp`: If not NULL, the address of the first invalid character (i.e.
     ///   the next character after the parsed number) will be written to
@@ -3748,16 +3748,16 @@ extern "C" {
     ///   number's prefix (0x for hexadecimal, 0 for octal, decimal
     ///   otherwise).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the parsed `long long`, or 0 if no number could be parsed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_atoi`]
     /// - [`SDL_atof`]
     /// - [`SDL_strtol`]
@@ -3781,7 +3781,7 @@ extern "C" {
     /// If the parsed number does not fit inside an `unsigned long long`, the
     /// result is clamped to the maximum representable `unsigned long long` value.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: The null-terminated string to read. Must not be NULL.
     /// - `endp`: If not NULL, the address of the first invalid character (i.e.
     ///   the next character after the parsed number) will be written to
@@ -3791,17 +3791,17 @@ extern "C" {
     ///   number's prefix (0x for hexadecimal, 0 for octal, decimal
     ///   otherwise).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the parsed `unsigned long long`, or 0 if no number could be
     ///   parsed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_atoi`]
     /// - [`SDL_atof`]
     /// - [`SDL_strtol`]
@@ -3826,22 +3826,22 @@ extern "C" {
     /// - Whether or not INF and NAN can be parsed is unspecified.
     /// - The precision of the result is unspecified.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: the null-terminated string to read. Must not be NULL.
     /// - `endp`: if not NULL, the address of the first invalid character (i.e.
     ///   the next character after the parsed number) will be written to
     ///   this pointer.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the parsed `double`, or 0 if no number could be parsed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_atoi`]
     /// - [`SDL_atof`]
     /// - [`SDL_strtol`]
@@ -3862,19 +3862,19 @@ extern "C" {
     /// null-terminating character. Also due to the nature of UTF-8, this can be
     /// used with [`SDL_qsort()`] to put strings in (roughly) alphabetical order.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
     ///   exactly.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strcmp(
         str1: *const ::core::ffi::c_char,
@@ -3899,20 +3899,20 @@ extern "C" {
     /// match to this number of bytes (or both have matched to a null-terminator
     /// character before this number of bytes), they will be considered equal.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
     /// - `maxlen`: the maximum number of _bytes_ to compare.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
     ///   exactly.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strncmp(
         str1: *const ::core::ffi::c_char,
@@ -3937,19 +3937,19 @@ extern "C" {
     /// CHARACTER), which is to say two strings of random bits may turn out to
     /// match if they convert to the same amount of replacement characters.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
     ///   exactly.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strcasecmp(
         str1: *const ::core::ffi::c_char,
@@ -3983,20 +3983,20 @@ extern "C" {
     /// match to this number of bytes (or both have matched to a null-terminator
     /// character before this number of bytes), they will be considered equal.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str1`: the first string to compare. NULL is not permitted!
     /// - `str2`: the second string to compare. NULL is not permitted!
     /// - `maxlen`: the maximum number of bytes to compare.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns less than zero if str1 is "less than" str2, greater than zero if
     ///   str1 is "greater than" str2, and zero if the strings match
     ///   exactly.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strncasecmp(
         str1: *const ::core::ffi::c_char,
@@ -4009,21 +4009,21 @@ extern "C" {
     /// Searches a string for the first occurence of any character contained in a
     /// breakset, and returns a pointer from the string to that character.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `str`: The null-terminated string to be searched. Must not be NULL, and
     ///   must not overlap with `breakset`.
     /// - `breakset`: A null-terminated string containing the list of characters
     ///   to look for. Must not be NULL, and must not overlap with
     ///   `str`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns A pointer to the location, in str, of the first occurence of a
     ///   character present in the breakset, or NULL if none is found.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_strpbrk(
         str: *const ::core::ffi::c_char,
@@ -4038,10 +4038,10 @@ extern "C" {
 ///
 /// This tends to render as something like a question mark in most places.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_StepBackUTF8`]
 /// - [`SDL_StepUTF8`]
 pub const SDL_INVALID_UNICODE_CODEPOINT: ::core::primitive::i32 = 65533;
@@ -4080,18 +4080,18 @@ extern "C" {
     /// [RFC3629](https://www.ietf.org/rfc/rfc3629.txt)
     /// for details.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `pstr`: a pointer to a UTF-8 string pointer to be read and adjusted.
     /// - `pslen`: a pointer to the number of bytes in the string, to be read and
     ///   adjusted. NULL is allowed.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the first Unicode codepoint in the string.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_StepUTF8(
         pstr: *mut *const ::core::ffi::c_char,
@@ -4120,17 +4120,17 @@ extern "C" {
     /// [RFC3629](https://www.ietf.org/rfc/rfc3629.txt)
     /// for details.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `start`: a pointer to the beginning of the UTF-8 string.
     /// - `pstr`: a pointer to a UTF-8 string pointer to be read and adjusted.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the previous Unicode codepoint in the string.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_StepBackUTF8(
         start: *const ::core::ffi::c_char,
@@ -4156,18 +4156,18 @@ extern "C" {
     /// If `dst` is NULL, this returns NULL immediately without writing to the
     /// pointer and without setting an error.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `codepoint`: a Unicode codepoint to convert to UTF-8.
     /// - `dst`: the location to write the encoded UTF-8. Must point to at least
     ///   4 bytes!
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the first byte past the newly-written UTF-8 sequence.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_UCS4ToUTF8(
         codepoint: Uint32,
@@ -4181,18 +4181,18 @@ extern "C" {
     /// Scan a string, matching a format string, converting each '%' item and
     /// storing it to pointers provided through variable arguments.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the string to scan. Must not be NULL.
     /// - `fmt`: a printf-style format string. Must not be NULL.
     /// - `...`: a list of pointers to values to be filled in with scanned items.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of items that matched the format string.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_sscanf(
         text: *const ::core::ffi::c_char,
@@ -4208,19 +4208,19 @@ extern "C" {
     /// Functions identically to [`SDL_sscanf()`], except it takes a `va_list` instead
     /// of using `...` variable arguments.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the string to scan. Must not be NULL.
     /// - `fmt`: a printf-style format string. Must not be NULL.
     /// - `ap`: a `va_list` of pointers to values to be filled in with scanned
     ///   items.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of items that matched the format string.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_vsscanf(
         text: *const ::core::ffi::c_char,
@@ -4249,20 +4249,20 @@ extern "C" {
     /// Referencing the output string's pointer with a format item is undefined
     /// behavior.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the buffer to write the string into. Must not be NULL.
     /// - `maxlen`: the maximum bytes to write, including the null-terminator.
     /// - `fmt`: a printf-style format string. Must not be NULL.
     /// - `...`: a list of values to be used with the format string.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of bytes that should be written, not counting the
     ///   null-terminator char, or a negative value on error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_snprintf(
         text: *mut ::core::ffi::c_char,
@@ -4292,21 +4292,21 @@ extern "C" {
     /// Referencing the output string's pointer with a format item is undefined
     /// behavior.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the buffer to write the wide string into. Must not be NULL.
     /// - `maxlen`: the maximum wchar_t values to write, including the
     ///   null-terminator.
     /// - `fmt`: a printf-style format string. Must not be NULL.
     /// - `...`: a list of values to be used with the format string.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of wide characters that should be written, not counting
     ///   the null-terminator char, or a negative value on error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_swprintf(
         text: *mut crate::ffi::c_wchar_t,
@@ -4323,20 +4323,20 @@ extern "C" {
     /// Functions identically to [`SDL_snprintf()`], except it takes a `va_list`
     /// instead of using `...` variable arguments.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the buffer to write the string into. Must not be NULL.
     /// - `maxlen`: the maximum bytes to write, including the null-terminator.
     /// - `fmt`: a printf-style format string. Must not be NULL.
     /// - `ap`: a `va_list` values to be used with the format string.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of bytes that should be written, not counting the
     ///   null-terminator char, or a negative value on error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_vsnprintf(
         text: *mut ::core::ffi::c_char,
@@ -4353,21 +4353,21 @@ extern "C" {
     /// Functions identically to [`SDL_swprintf()`], except it takes a `va_list`
     /// instead of using `...` variable arguments.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the buffer to write the string into. Must not be NULL.
     /// - `maxlen`: the maximum wide characters to write, including the
     ///   null-terminator.
     /// - `fmt`: a printf-style format wide string. Must not be NULL.
     /// - `ap`: a `va_list` values to be used with the format string.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of wide characters that should be written, not counting
     ///   the null-terminator char, or a negative value on error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_vswprintf(
         text: *mut crate::ffi::c_wchar_t,
@@ -4394,19 +4394,19 @@ extern "C" {
     /// The returned string is owned by the caller, and should be passed to
     /// [`SDL_free`] when no longer needed.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `strp`: on output, is set to the new string. Must not be NULL.
     /// - `fmt`: a printf-style format string. Must not be NULL.
     /// - `...`: a list of values to be used with the format string.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of bytes in the newly-allocated string, not counting
     ///   the null-terminator char, or a negative value on error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_asprintf(
         strp: *mut *mut ::core::ffi::c_char,
@@ -4422,19 +4422,19 @@ extern "C" {
     /// Functions identically to [`SDL_asprintf()`], except it takes a `va_list`
     /// instead of using `...` variable arguments.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `strp`: on output, is set to the new string. Must not be NULL.
     /// - `fmt`: a printf-style format string. Must not be NULL.
     /// - `ap`: a `va_list` values to be used with the format string.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of bytes in the newly-allocated string, not counting
     ///   the null-terminator char, or a negative value on error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_vasprintf(
         strp: *mut *mut ::core::ffi::c_char,
@@ -4449,18 +4449,18 @@ extern "C" {
     /// Reusing the seed number will cause [`SDL_rand()`] to repeat the same stream of
     /// 'random' numbers.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `seed`: the value to use as a random number seed, or 0 to use
     ///   [`SDL_GetPerformanceCounter()`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This should be called on the same thread that calls
     ///   [`SDL_rand()`]
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_rand`]
     /// - [`SDL_rand_bits`]
     /// - [`SDL_randf`]
@@ -4489,19 +4489,19 @@ extern "C" {
     /// libraries available with different characteristics and you should pick one
     /// of those to meet any serious needs.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `n`: the number of possible outcomes. n must be positive.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a random value in the range of \[0 .. n-1\].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// All calls should be made from a single thread
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_srand`]
     /// - [`SDL_randf`]
     pub fn SDL_rand(n: Sint32) -> Sint32;
@@ -4519,16 +4519,16 @@ extern "C" {
     /// libraries available with different characteristics and you should pick one
     /// of those to meet any serious needs.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a random value in the range of [0.0, 1.0).
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// All calls should be made from a single thread
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_srand`]
     /// - [`SDL_rand`]
     pub fn SDL_randf() -> ::core::ffi::c_float;
@@ -4545,16 +4545,16 @@ extern "C" {
     /// libraries available with different characteristics and you should pick one
     /// of those to meet any serious needs.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a random value in the range of \[0-SDL_MAX_UINT32\].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// All calls should be made from a single thread
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_rand`]
     /// - [`SDL_randf`]
     /// - [`SDL_srand`]
@@ -4580,22 +4580,22 @@ extern "C" {
     /// libraries available with different characteristics and you should pick one
     /// of those to meet any serious needs.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `state`: a pointer to the current random number state, this may not be
     ///   NULL.
     /// - `n`: the number of possible outcomes. n must be positive.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a random value in the range of \[0 .. n-1\].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is thread-safe, as long as the state pointer
     ///   isn't shared between threads.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_rand`]
     /// - [`SDL_rand_bits_r`]
     /// - [`SDL_randf_r`]
@@ -4614,21 +4614,21 @@ extern "C" {
     /// libraries available with different characteristics and you should pick one
     /// of those to meet any serious needs.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `state`: a pointer to the current random number state, this may not be
     ///   NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a random value in the range of [0.0, 1.0).
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is thread-safe, as long as the state pointer
     ///   isn't shared between threads.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_rand_bits_r`]
     /// - [`SDL_rand_r`]
     /// - [`SDL_randf`]
@@ -4646,21 +4646,21 @@ extern "C" {
     /// libraries available with different characteristics and you should pick one
     /// of those to meet any serious needs.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `state`: a pointer to the current random number state, this may not be
     ///   NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a random value in the range of \[0-SDL_MAX_UINT32\].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is thread-safe, as long as the state pointer
     ///   isn't shared between threads.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_rand_r`]
     /// - [`SDL_randf_r`]
     pub fn SDL_rand_bits_r(state: *mut Uint64) -> Uint32;
@@ -4668,19 +4668,19 @@ extern "C" {
 
 /// The value of Pi, as a double-precision floating point literal.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_PI_F`]
 pub const SDL_PI_D: ::core::ffi::c_double = 3.141592653589793_f64;
 
 /// The value of Pi, as a single-precision floating point literal.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_PI_D`]
 pub const SDL_PI_F: ::core::ffi::c_float = 3.1415927_f32;
 
@@ -4701,19 +4701,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns arc cosine of `x`, in radians.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_acosf`]
     /// - [`SDL_asin`]
     /// - [`SDL_cos`]
@@ -4737,19 +4737,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns arc cosine of `x`, in radians.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_acos`]
     /// - [`SDL_asinf`]
     /// - [`SDL_cosf`]
@@ -4773,19 +4773,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns arc sine of `x`, in radians.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_asinf`]
     /// - [`SDL_acos`]
     /// - [`SDL_sin`]
@@ -4809,19 +4809,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns arc sine of `x`, in radians.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_asin`]
     /// - [`SDL_acosf`]
     /// - [`SDL_sinf`]
@@ -4847,19 +4847,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns arc tangent of of `x` in radians, or 0 if `x = 0`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_atanf`]
     /// - [`SDL_atan2`]
     /// - [`SDL_tan`]
@@ -4885,19 +4885,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns arc tangent of of `x` in radians, or 0 if `x = 0`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_atan`]
     /// - [`SDL_atan2f`]
     /// - [`SDL_tanf`]
@@ -4925,21 +4925,21 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `y`: floating point value of the numerator (y coordinate).
     /// - `x`: floating point value of the denominator (x coordinate).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns arc tangent of of `y / x` in radians, or, if `x = 0`, either
     ///   `-Pi/2`, `0`, or `Pi/2`, depending on the value of `y`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_atan2f`]
     /// - [`SDL_atan`]
     /// - [`SDL_tan`]
@@ -4967,21 +4967,21 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `y`: floating point value of the numerator (y coordinate).
     /// - `x`: floating point value of the denominator (x coordinate).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns arc tangent of of `y / x` in radians, or, if `x = 0`, either
     ///   `-Pi/2`, `0`, or `Pi/2`, depending on the value of `y`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_atan2`]
     /// - [`SDL_atan`]
     /// - [`SDL_tan`]
@@ -5001,19 +5001,19 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_ceilf`] for single-precision floats.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the ceiling of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ceilf`]
     /// - [`SDL_floor`]
     /// - [`SDL_trunc`]
@@ -5035,19 +5035,19 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_ceil`] for double-precision floats.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the ceiling of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ceil`]
     /// - [`SDL_floorf`]
     /// - [`SDL_truncf`]
@@ -5067,21 +5067,21 @@ extern "C" {
 /// This function operates on double-precision floating point values, use
 /// [`SDL_copysignf`] for single-precision floats.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `x`: floating point value to use as the magnitude.
 /// - `y`: floating point value to use as the sign.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the floating point value with the sign of y and the magnitude of
 ///   x.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this function from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This function is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_copysignf`]
 /// - [`SDL_fabs`]
 #[inline(always)]
@@ -5116,21 +5116,21 @@ pub unsafe fn SDL_copysign(
 /// This function operates on single-precision floating point values, use
 /// [`SDL_copysign`] for double-precision floats.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `x`: floating point value to use as the magnitude.
 /// - `y`: floating point value to use as the sign.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the floating point value with the sign of y and the magnitude of
 ///   x.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this function from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This function is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_copysign`]
 /// - [`SDL_fabsf`]
 #[inline(always)]
@@ -5169,19 +5169,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value, in radians.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns cosine of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_cosf`]
     /// - [`SDL_acos`]
     /// - [`SDL_sin`]
@@ -5203,19 +5203,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value, in radians.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns cosine of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_cos`]
     /// - [`SDL_acosf`]
     /// - [`SDL_sinf`]
@@ -5242,19 +5242,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns value of `e^x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_expf`]
     /// - [`SDL_log`]
     pub fn SDL_exp(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
@@ -5280,19 +5280,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns value of `e^x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_exp`]
     /// - [`SDL_logf`]
     pub fn SDL_expf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
@@ -5307,19 +5307,19 @@ extern "C" {
 /// This function operates on double-precision floating point values, use
 /// [`SDL_fabsf`] for single-precision floats.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `x`: floating point value to use as the magnitude.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the absolute value of `x`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this function from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This function is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_fabsf`]
 #[inline(always)]
 pub unsafe fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double {
@@ -5345,19 +5345,19 @@ pub unsafe fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double {
 /// This function operates on single-precision floating point values, use
 /// [`SDL_fabs`] for double-precision floats.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `x`: floating point value to use as the magnitude.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the absolute value of `x`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this function from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This function is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_fabs`]
 #[inline(always)]
 pub unsafe fn SDL_fabsf(x: ::core::ffi::c_float) -> ::core::ffi::c_float {
@@ -5387,19 +5387,19 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_floorf`] for single-precision floats.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the floor of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_floorf`]
     /// - [`SDL_ceil`]
     /// - [`SDL_trunc`]
@@ -5421,19 +5421,19 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_floor`] for double-precision floats.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the floor of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_floor`]
     /// - [`SDL_ceilf`]
     /// - [`SDL_truncf`]
@@ -5455,19 +5455,19 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_truncf`] for single-precision floats.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `x` truncated to an integer.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_truncf`]
     /// - [`SDL_fmod`]
     /// - [`SDL_ceil`]
@@ -5490,19 +5490,19 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_trunc`] for double-precision floats.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `x` truncated to an integer.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_trunc`]
     /// - [`SDL_fmodf`]
     /// - [`SDL_ceilf`]
@@ -5524,20 +5524,20 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_fmodf`] for single-precision floats.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: the numerator.
     /// - `y`: the denominator. Must not be 0.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the remainder of `x / y`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_fmodf`]
     /// - [`SDL_modf`]
     /// - [`SDL_trunc`]
@@ -5560,20 +5560,20 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_fmod`] for double-precision floats.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: the numerator.
     /// - `y`: the denominator. Must not be 0.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the remainder of `x / y`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_fmod`]
     /// - [`SDL_truncf`]
     /// - [`SDL_modff`]
@@ -5587,19 +5587,19 @@ extern "C" {
 extern "C" {
     /// Return whether the value is infinity.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: double-precision floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if the value is infinity, 0 otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_isinff`]
     pub fn SDL_isinf(x: ::core::ffi::c_double) -> ::core::ffi::c_int;
 }
@@ -5607,19 +5607,19 @@ extern "C" {
 extern "C" {
     /// Return whether the value is infinity.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if the value is infinity, 0 otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_isinf`]
     pub fn SDL_isinff(x: ::core::ffi::c_float) -> ::core::ffi::c_int;
 }
@@ -5627,19 +5627,19 @@ extern "C" {
 extern "C" {
     /// Return whether the value is NaN.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: double-precision floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if the value is NaN, 0 otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_isnanf`]
     pub fn SDL_isnan(x: ::core::ffi::c_double) -> ::core::ffi::c_int;
 }
@@ -5647,19 +5647,19 @@ extern "C" {
 extern "C" {
     /// Return whether the value is NaN.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if the value is NaN, 0 otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_isnan`]
     pub fn SDL_isnanf(x: ::core::ffi::c_float) -> ::core::ffi::c_int;
 }
@@ -5681,19 +5681,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value. Must be greater than 0.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the natural logarithm of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_logf`]
     /// - [`SDL_log10`]
     /// - [`SDL_exp`]
@@ -5717,19 +5717,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value. Must be greater than 0.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the natural logarithm of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_log`]
     /// - [`SDL_expf`]
     pub fn SDL_logf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
@@ -5752,19 +5752,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value. Must be greater than 0.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the logarithm of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_log10f`]
     /// - [`SDL_log`]
     /// - [`SDL_pow`]
@@ -5788,19 +5788,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value. Must be greater than 0.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the logarithm of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_log10`]
     /// - [`SDL_logf`]
     /// - [`SDL_powf`]
@@ -5813,20 +5813,20 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_modff`] for single-precision floats.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     /// - `y`: output pointer to store the integer part of `x`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the fractional part of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_modff`]
     /// - [`SDL_trunc`]
     /// - [`SDL_fmod`]
@@ -5842,20 +5842,20 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_modf`] for double-precision floats.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     /// - `y`: output pointer to store the integer part of `x`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the fractional part of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_modf`]
     /// - [`SDL_truncf`]
     /// - [`SDL_fmodf`]
@@ -5881,20 +5881,20 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: the base.
     /// - `y`: the exponent.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `x` raised to the power `y`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_powf`]
     /// - [`SDL_exp`]
     /// - [`SDL_log`]
@@ -5919,20 +5919,20 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: the base.
     /// - `y`: the exponent.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `x` raised to the power `y`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_pow`]
     /// - [`SDL_expf`]
     /// - [`SDL_logf`]
@@ -5953,19 +5953,19 @@ extern "C" {
     /// [`SDL_roundf`] for single-precision floats. To get the result as an integer
     /// type, use [`SDL_lround`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the nearest integer to `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_roundf`]
     /// - [`SDL_lround`]
     /// - [`SDL_floor`]
@@ -5988,19 +5988,19 @@ extern "C" {
     /// [`SDL_round`] for double-precision floats. To get the result as an integer
     /// type, use [`SDL_lroundf`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the nearest integer to `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_round`]
     /// - [`SDL_lroundf`]
     /// - [`SDL_floorf`]
@@ -6023,19 +6023,19 @@ extern "C" {
     /// [`SDL_lroundf`] for single-precision floats. To get the result as a
     /// floating-point type, use [`SDL_round`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the nearest integer to `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_lroundf`]
     /// - [`SDL_round`]
     /// - [`SDL_floor`]
@@ -6058,19 +6058,19 @@ extern "C" {
     /// [`SDL_lround`] for double-precision floats. To get the result as a
     /// floating-point type, use [`SDL_roundf`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the nearest integer to `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_lround`]
     /// - [`SDL_roundf`]
     /// - [`SDL_floorf`]
@@ -6091,20 +6091,20 @@ extern "C" {
     /// This function operates on double-precision floating point values, use
     /// [`SDL_scalbnf`] for single-precision floats.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value to be scaled.
     /// - `n`: integer exponent.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `x * 2^n`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_scalbnf`]
     /// - [`SDL_pow`]
     pub fn SDL_scalbn(x: ::core::ffi::c_double, n: ::core::ffi::c_int) -> ::core::ffi::c_double;
@@ -6122,20 +6122,20 @@ extern "C" {
     /// This function operates on single-precision floating point values, use
     /// [`SDL_scalbn`] for double-precision floats.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value to be scaled.
     /// - `n`: integer exponent.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns `x * 2^n`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_scalbn`]
     /// - [`SDL_powf`]
     pub fn SDL_scalbnf(x: ::core::ffi::c_float, n: ::core::ffi::c_int) -> ::core::ffi::c_float;
@@ -6156,19 +6156,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value, in radians.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns sine of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_sinf`]
     /// - [`SDL_asin`]
     /// - [`SDL_cos`]
@@ -6190,19 +6190,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value, in radians.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns sine of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_sin`]
     /// - [`SDL_asinf`]
     /// - [`SDL_cosf`]
@@ -6224,19 +6224,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value. Must be greater than or equal to 0.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns square root of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_sqrtf`]
     pub fn SDL_sqrt(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
@@ -6256,19 +6256,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value. Must be greater than or equal to 0.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns square root of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_sqrt`]
     pub fn SDL_sqrtf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
@@ -6288,19 +6288,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value, in radians.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns tangent of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_tanf`]
     /// - [`SDL_sin`]
     /// - [`SDL_cos`]
@@ -6324,19 +6324,19 @@ extern "C" {
     /// the same input on different machines or operating systems, or if SDL is
     /// updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `x`: floating point value, in radians.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns tangent of `x`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_tan`]
     /// - [`SDL_sinf`]
     /// - [`SDL_cosf`]
@@ -6347,10 +6347,10 @@ extern "C" {
 
 /// An opaque handle representing string encoding conversion state.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_iconv_open`]
 pub type SDL_iconv_t = *mut SDL_iconv_data_t;
 
@@ -6358,18 +6358,18 @@ extern "C" {
     /// This function allocates a context for the specified character set
     /// conversion.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `tocode`: The target character encoding, must not be NULL.
     /// - `fromcode`: The source character encoding, must not be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a handle that must be freed with [`SDL_iconv_close`], or
     ///   [`SDL_ICONV_ERROR`] on failure.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_iconv`]
     /// - [`SDL_iconv_close`]
     /// - [`SDL_iconv_string`]
@@ -6382,16 +6382,16 @@ extern "C" {
 extern "C" {
     /// This function frees a context used for character set conversion.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `cd`: The character set conversion handle.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns 0 on success, or -1 on failure.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_iconv`]
     /// - [`SDL_iconv_open`]
     /// - [`SDL_iconv_string`]
@@ -6419,7 +6419,7 @@ extern "C" {
     /// - outbytesleft will be set to the number of bytes left in the output
     ///   buffer.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `cd`: The character set conversion context, created in
     ///   [`SDL_iconv_open()`].
     /// - `inbuf`: Address of variable that points to the first character of the
@@ -6428,13 +6428,13 @@ extern "C" {
     /// - `outbuf`: Address of variable that points to the output buffer.
     /// - `outbytesleft`: The number of bytes in the output buffer.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of conversions on success, or a negative error code.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_iconv_open`]
     /// - [`SDL_iconv_close`]
     /// - [`SDL_iconv_string`]
@@ -6471,20 +6471,20 @@ extern "C" {
     /// The returned string is owned by the caller, and should be passed to
     /// [`SDL_free`] when no longer needed.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `tocode`: the character encoding of the output string. Examples are
     ///   "UTF-8", "UCS-4", etc.
     /// - `fromcode`: the character encoding of data in `inbuf`.
     /// - `inbuf`: the string to convert to a different encoding.
     /// - `inbytesleft`: the size of the input string _in bytes_.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new string, converted to the new encoding, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_iconv_open`]
     /// - [`SDL_iconv_close`]
     /// - [`SDL_iconv`]
@@ -6502,13 +6502,13 @@ extern "C" {
 /// [`SDL_iconv_string`] directly. However, it double-evaluates its parameter, so
 /// do not use an expression with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `S`: the string to convert.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a new string, converted to the new encoding, or NULL on error.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_iconv_utf8_locale(S: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char {
@@ -6528,13 +6528,13 @@ pub unsafe fn SDL_iconv_utf8_locale(S: *const ::core::ffi::c_char) -> *mut ::cor
 /// [`SDL_iconv_string`] directly. However, it double-evaluates its parameter, so
 /// do not use an expression with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `S`: the string to convert.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a new string, converted to the new encoding, or NULL on error.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_iconv_utf8_ucs2(S: *const ::core::ffi::c_char) -> *mut Uint16 {
@@ -6554,13 +6554,13 @@ pub unsafe fn SDL_iconv_utf8_ucs2(S: *const ::core::ffi::c_char) -> *mut Uint16 
 /// [`SDL_iconv_string`] directly. However, it double-evaluates its parameter, so
 /// do not use an expression with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `S`: the string to convert.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a new string, converted to the new encoding, or NULL on error.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_iconv_utf8_ucs4(S: *const ::core::ffi::c_char) -> *mut Uint32 {
@@ -6580,13 +6580,13 @@ pub unsafe fn SDL_iconv_utf8_ucs4(S: *const ::core::ffi::c_char) -> *mut Uint32 
 /// [`SDL_iconv_string`] directly. However, it double-evaluates its parameter, so
 /// do not use an expression with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `S`: the string to convert.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a new string, converted to the new encoding, or NULL on error.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_iconv_wchar_utf8(S: *const crate::ffi::c_wchar_t) -> *mut ::core::ffi::c_char {
@@ -6607,19 +6607,19 @@ pub unsafe fn SDL_iconv_wchar_utf8(S: *const crate::ffi::c_wchar_t) -> *mut ::co
 ///
 /// Otherwise store `a * b` via ret and return true.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `a`: the multiplicand.
 /// - `b`: the multiplier.
 /// - `ret`: on non-overflow output, stores the multiplication result, may
 ///   not be NULL.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns false on overflow, true if result is multiplied without overflow.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this function from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_size_mul_check_overflow(
@@ -6647,19 +6647,19 @@ apply_cfg!(#[cfg(not(doc))] => {
 ///
 /// Otherwise store `a + b` via ret and return true.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `a`: the first addend.
 /// - `b`: the second addend.
 /// - `ret`: on non-overflow output, stores the addition result, may not be
 ///   NULL.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns false on overflow, true if result is added without overflow.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this function from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_size_add_check_overflow(
@@ -6694,7 +6694,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// perhaps to work around a compiler or existing code, you can define
     /// `SDL_FUNCTION_POINTER_IS_VOID_POINTER` before including any SDL headers.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This datatype is available since SDL 3.2.0.
     pub type SDL_FunctionPointer = ::core::option::Option<unsafe extern "C" fn()>;
 
@@ -6707,10 +6707,10 @@ apply_cfg!(#[cfg(not(doc))] => {
 
 /// A thread-safe set of environment variables
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetEnvironment`]
 /// - [`SDL_CreateEnvironment`]
 /// - [`SDL_GetEnvironmentVariable`]

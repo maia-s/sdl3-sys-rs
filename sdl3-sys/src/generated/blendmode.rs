@@ -10,13 +10,13 @@ use super::stdinc::*;
 ///
 /// Additional values may be obtained from [`SDL_ComposeCustomBlendMode`].
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_ComposeCustomBlendMode`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_BlendMode::NONE) | [`SDL_BLENDMODE_NONE`] | no blending: dstRGBA = srcRGBA |
@@ -239,10 +239,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_BlendMode {
 /// The blend operation used when combining source and destination pixel
 /// components.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`ADD`](SDL_BlendOperation::ADD) | [`SDL_BLENDOPERATION_ADD`] | dst + src: supported by all renderers |
@@ -328,10 +328,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_BlendOperation {
 /// operation. The comma-separated factors listed above are always applied in
 /// the component order red, green, blue, and alpha.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`ZERO`](SDL_BlendFactor::ZERO) | [`SDL_BLENDFACTOR_ZERO`] | 0, 0, 0, 0 |
@@ -506,7 +506,7 @@ extern "C" {
     /// [`SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA`] factors do not have an effect in this
     /// case.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `srcColorFactor`: the [`SDL_BlendFactor`] applied to the red, green, and
     ///   blue components of the source pixels.
     /// - `dstColorFactor`: the [`SDL_BlendFactor`] applied to the red, green, and
@@ -521,17 +521,17 @@ extern "C" {
     /// - `alphaOperation`: the [`SDL_BlendOperation`] used to combine the alpha
     ///   component of the source and destination pixels.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an [`SDL_BlendMode`] that represents the chosen factors and
     ///   operations.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetRenderDrawBlendMode`]
     /// - [`SDL_GetRenderDrawBlendMode`]
     /// - [`SDL_SetTextureBlendMode`]

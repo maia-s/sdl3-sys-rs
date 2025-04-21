@@ -24,7 +24,7 @@ use super::mouse::*;
 ///
 /// The value 0 is an invalid ID.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -67,7 +67,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_TouchID {
 ///
 /// The value 0 is an invalid ID.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -103,10 +103,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_FingerID {
 
 /// An enum that describes the type of a touch device.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](SDL_TouchDeviceType::INVALID) | [`SDL_TOUCH_DEVICE_INVALID`] | |
@@ -185,10 +185,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_TouchDeviceType {
 /// contact with the touch device (so a "touch" can be a "multitouch," in
 /// reality), and this struct reports details of the specific fingers.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetTouchFingers`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -206,13 +206,13 @@ pub struct SDL_Finger {
 
 /// The [`SDL_MouseID`] for mouse events simulated with touch input.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub const SDL_TOUCH_MOUSEID: SDL_MouseID = SDL_MouseID((-1_i32 as Uint32));
 
 /// The [`SDL_TouchID`] for touch events simulated with mouse input.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub const SDL_MOUSE_TOUCHID: SDL_TouchID = SDL_TouchID((-1_i32 as Uint64));
 
@@ -223,16 +223,16 @@ extern "C" {
     /// Therefore the returned list might be empty, although devices are available.
     /// After using all devices at least once the number will be correct.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `count`: a pointer filled in with the number of devices returned, may
     ///   be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a 0 terminated array of touch device IDs or NULL on failure; call
     ///   [`SDL_GetError()`] for more information. This should be freed with
     ///   [`SDL_free()`] when it is no longer needed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetTouchDevices(count: *mut ::core::ffi::c_int) -> *mut SDL_TouchID;
 }
@@ -240,14 +240,14 @@ extern "C" {
 extern "C" {
     /// Get the touch device name as reported from the driver.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `touchID`: the touch device instance ID.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns touch device name, or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetTouchDeviceName(touchID: SDL_TouchID) -> *const ::core::ffi::c_char;
 }
@@ -255,13 +255,13 @@ extern "C" {
 extern "C" {
     /// Get the type of the given touch device.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `touchID`: the ID of a touch device.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns touch device type.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetTouchDeviceType(touchID: SDL_TouchID) -> SDL_TouchDeviceType;
 }
@@ -269,18 +269,18 @@ extern "C" {
 extern "C" {
     /// Get a list of active fingers for a given touch device.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `touchID`: the ID of a touch device.
     /// - `count`: a pointer filled in with the number of fingers returned, can
     ///   be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a NULL terminated array of [`SDL_Finger`] pointers or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This is a single
     ///   allocation that should be freed with [`SDL_free()`] when it is no
     ///   longer needed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetTouchFingers(
         touchID: SDL_TouchID,

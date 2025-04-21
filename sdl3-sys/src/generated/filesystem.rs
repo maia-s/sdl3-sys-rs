@@ -50,16 +50,16 @@ extern "C" {
     /// The returned path is guaranteed to end with a path separator ('\\' on
     /// Windows, '/' on most other platforms).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an absolute path in UTF-8 encoding to the application data
     ///   directory. NULL will be returned on error or when the platform
     ///   doesn't implement this functionality, call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPrefPath`]
     pub fn SDL_GetBasePath() -> *const ::core::ffi::c_char;
 }
@@ -106,20 +106,20 @@ extern "C" {
     /// The returned path is guaranteed to end with a path separator ('\\' on
     /// Windows, '/' on most other platforms).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `org`: the name of your organization.
     /// - `app`: the name of your application.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a UTF-8 string of the user directory in platform-dependent
     ///   notation. NULL if there's a problem (creating directory failed,
     ///   etc.). This should be freed with [`SDL_free()`] when it is no longer
     ///   needed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetBasePath`]
     pub fn SDL_GetPrefPath(
         org: *const ::core::ffi::c_char,
@@ -151,13 +151,13 @@ extern "C" {
 ///
 /// Note that on macOS/iOS, the Videos folder is called "Movies".
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetUserFolder`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`HOME`](SDL_Folder::HOME) | [`SDL_FOLDER_HOME`] | The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents. |
@@ -295,14 +295,14 @@ extern "C" {
     ///
     /// If NULL is returned, the error may be obtained with [`SDL_GetError()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `folder`: the type of folder to find.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns either a null-terminated C string containing the full path to the
     ///   folder, or NULL if an error happened.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetUserFolder(folder: SDL_Folder) -> *const ::core::ffi::c_char;
 }
@@ -313,13 +313,13 @@ extern "C" {
 /// symlinks, named pipes, etc. They are currently reported as
 /// [`SDL_PATHTYPE_OTHER`].
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_PathInfo`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_PathType::NONE) | [`SDL_PATHTYPE_NONE`] | path does not exist |
@@ -394,10 +394,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_PathType {
 
 /// Information about a path on the filesystem.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetPathInfo`]
 /// - [`SDL_GetStoragePathInfo`]
 #[repr(C)]
@@ -418,14 +418,14 @@ pub struct SDL_PathInfo {
 
 /// Flags for path matching.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GlobDirectory`]
 /// - [`SDL_GlobStorageDirectory`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`CASEINSENSITIVE`](SDL_GlobFlags::CASEINSENSITIVE) | [`SDL_GLOB_CASEINSENSITIVE`] | |
@@ -560,27 +560,27 @@ extern "C" {
     /// If parent directories are missing, it will also create them. Note that if
     /// this fails, it will not remove any parent directories it already made.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `path`: the path of the directory to create.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_CreateDirectory(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
 /// Possible results from an enumeration callback.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_EnumerateDirectoryCallback`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`CONTINUE`](SDL_EnumerationResult::CONTINUE) | [`SDL_ENUM_CONTINUE`] | Value that requests that enumeration continue. |
@@ -661,18 +661,18 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_EnumerationResult {
 /// `dirname` is guaranteed to end with a path separator ('\\' on Windows, '/'
 /// on most other platforms).
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: an app-controlled pointer that is passed to the callback.
 /// - `dirname`: the directory that is being enumerated.
 /// - `fname`: the next entry in the enumeration.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns how the enumeration should proceed.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_EnumerateDirectory`]
 pub type SDL_EnumerateDirectoryCallback = ::core::option::Option<
     unsafe extern "C" fn(
@@ -695,16 +695,16 @@ extern "C" {
     /// returned [`SDL_ENUM_SUCCESS`] to halt enumeration, or all directory entries
     /// were enumerated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `path`: the path of the directory to enumerate.
     /// - `callback`: a function that is called for each entry in the directory.
     /// - `userdata`: a pointer that is passed to `callback`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_EnumerateDirectory(
         path: *const ::core::ffi::c_char,
@@ -719,14 +719,14 @@ extern "C" {
     /// Directories that are not empty will fail; this function will not recursely
     /// delete directory trees.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `path`: the path to remove from the filesystem.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_RemovePath(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
@@ -745,15 +745,15 @@ extern "C" {
     /// for files. Renaming a non-empty directory across filesystems is
     /// dramatically more complex, however.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `oldpath`: the old path.
     /// - `newpath`: the new path.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_RenamePath(
         oldpath: *const ::core::ffi::c_char,
@@ -792,15 +792,15 @@ extern "C" {
     /// might be half a copy, it might be the untouched data of what was already
     /// there, or it might be a zero-byte file, etc.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `oldpath`: the old path.
     /// - `newpath`: the new path.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_CopyFile(
         oldpath: *const ::core::ffi::c_char,
@@ -811,16 +811,16 @@ extern "C" {
 extern "C" {
     /// Get information about a filesystem path.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `path`: the path to query.
     /// - `info`: a pointer filled in with information about the path, or NULL to
     ///   check for the existence of a file.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false if the file doesn't exist, or another
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPathInfo(
         path: *const ::core::ffi::c_char,
@@ -845,7 +845,7 @@ extern "C" {
     /// convenience, but if `count` is non-NULL, on return it will contain the
     /// number of items in the array, not counting the NULL terminator.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `path`: the path of the directory to enumerate.
     /// - `pattern`: the pattern that files in the directory must match. Can be
     ///   NULL.
@@ -853,15 +853,15 @@ extern "C" {
     /// - `count`: on return, will be set to the number of items in the returned
     ///   array. Can be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an array of strings on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information. This is a single allocation
     ///   that should be freed with [`SDL_free()`] when it is no longer needed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GlobDirectory(
         path: *const ::core::ffi::c_char,
@@ -884,12 +884,12 @@ extern "C" {
     /// The returned path is guaranteed to end with a path separator ('\\' on
     /// Windows, '/' on most other platforms).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a UTF-8 string of the current working directory in
     ///   platform-dependent notation. NULL if there's a problem. This
     ///   should be freed with [`SDL_free()`] when it is no longer needed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetCurrentDirectory() -> *mut ::core::ffi::c_char;
 }

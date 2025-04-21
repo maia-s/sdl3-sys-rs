@@ -424,7 +424,7 @@ impl DocComment {
                     writeln!(ctx, "{pfx}")?;
                 }
                 current_section = name;
-                writeln!(ctx, "{pfx} ### {name}")?;
+                writeln!(ctx, "{pfx} ## {name}")?;
             }
             Ok(())
         };
@@ -1095,7 +1095,7 @@ impl Enum {
             if doc.is_some() {
                 writeln!(ctx_doc, "///")?;
             }
-            writeln!(ctx_doc, "/// ### Known values (`sdl3-sys`)")?;
+            writeln!(ctx_doc, "/// ## Known values (`sdl3-sys`)")?;
             writeln!(
                 ctx_doc,
                 "/// | Associated constant | Global constant | Description |"

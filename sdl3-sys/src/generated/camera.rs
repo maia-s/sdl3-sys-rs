@@ -57,10 +57,10 @@ use super::surface::*;
 ///
 /// The value 0 is an invalid ID.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetCameras`]
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -99,10 +99,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_CameraID {
 /// Cameras often support multiple formats; each one will be encapsulated in
 /// this struct.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetCameraSupportedFormats`]
 /// - [`SDL_GetCameraFormat`]
 #[repr(C)]
@@ -125,13 +125,13 @@ pub struct SDL_CameraSpec {
 
 /// The position of camera in relation to system device.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetCameraPosition`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_CameraPosition::UNKNOWN) | [`SDL_CAMERA_POSITION_UNKNOWN`] | |
@@ -205,16 +205,16 @@ extern "C" {
     /// By default, SDL tries all drivers, in its preferred order, until one is
     /// found to be usable.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of built-in camera drivers.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetCameraDriver`]
     pub fn SDL_GetNumCameraDrivers() -> ::core::ffi::c_int;
 }
@@ -230,21 +230,21 @@ extern "C" {
     /// "coremedia" or "android". These never have Unicode characters, and are not
     /// meant to be proper names.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `index`: the index of the camera driver; the value ranges from 0 to
     ///   [`SDL_GetNumCameraDrivers()`] - 1.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the name of the camera driver at the requested index, or NULL if
     ///   an invalid index was specified.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetNumCameraDrivers`]
     pub fn SDL_GetCameraDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
 }
@@ -256,14 +256,14 @@ extern "C" {
     /// "coremedia" or "android". These never have Unicode characters, and are not
     /// meant to be proper names.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the name of the current camera driver or NULL if no driver has
     ///   been initialized.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetCurrentCameraDriver() -> *const ::core::ffi::c_char;
 }
@@ -271,22 +271,22 @@ extern "C" {
 extern "C" {
     /// Get a list of currently connected camera devices.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `count`: a pointer filled in with the number of cameras returned, may
     ///   be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a 0 terminated array of camera instance IDs or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
     ///   with [`SDL_free()`] when it is no longer needed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_OpenCamera`]
     pub fn SDL_GetCameras(count: *mut ::core::ffi::c_int) -> *mut SDL_CameraID;
 }
@@ -313,24 +313,24 @@ extern "C" {
     /// there _is_ a camera until the user has given you permission to check
     /// through a scary warning popup.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `instance_id`: the camera device instance ID.
     /// - `count`: a pointer filled in with the number of elements in the list,
     ///   may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a NULL terminated array of pointers to [`SDL_CameraSpec`] or NULL on
     ///   failure; call [`SDL_GetError()`] for more information. This is a
     ///   single allocation that should be freed with [`SDL_free()`] when it is
     ///   no longer needed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetCameras`]
     /// - [`SDL_OpenCamera`]
     pub fn SDL_GetCameraSupportedFormats(
@@ -342,20 +342,20 @@ extern "C" {
 extern "C" {
     /// Get the human-readable device name for a camera.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `instance_id`: the camera device instance ID.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a human-readable device name or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetCameras`]
     pub fn SDL_GetCameraName(instance_id: SDL_CameraID) -> *const ::core::ffi::c_char;
 }
@@ -368,19 +368,19 @@ extern "C" {
     /// points towards the user, for taking "selfies") and cameras on the back (for
     /// filming in the direction the user is facing).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `instance_id`: the camera device instance ID.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the position of the camera on the system hardware.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetCameras`]
     pub fn SDL_GetCameraPosition(instance_id: SDL_CameraID) -> SDL_CameraPosition;
 }
@@ -417,22 +417,22 @@ extern "C" {
     /// event might come immediately, but it might come seconds, minutes, or hours
     /// later!
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `instance_id`: the camera device instance ID.
     /// - `spec`: the desired format for data the device will provide. Can be
     ///   NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an [`SDL_Camera`] object or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetCameras`]
     /// - [`SDL_GetCameraFormat`]
     pub fn SDL_OpenCamera(
@@ -461,20 +461,20 @@ extern "C" {
     /// If a camera is declined, there's nothing to be done but call
     /// [`SDL_CloseCamera()`] to dispose of it.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `camera`: the opened camera device to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns -1 if user denied access to the camera, 1 if user approved access,
     ///   0 if no decision has been made yet.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_OpenCamera`]
     /// - [`SDL_CloseCamera`]
     pub fn SDL_GetCameraPermissionState(camera: *mut SDL_Camera) -> ::core::ffi::c_int;
@@ -483,20 +483,20 @@ extern "C" {
 extern "C" {
     /// Get the instance ID of an opened camera.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `camera`: an [`SDL_Camera`] to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the instance ID of the specified camera on success or 0 on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_OpenCamera`]
     pub fn SDL_GetCameraID(camera: *mut SDL_Camera) -> SDL_CameraID;
 }
@@ -504,17 +504,17 @@ extern "C" {
 extern "C" {
     /// Get the properties associated with an opened camera.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `camera`: the [`SDL_Camera`] obtained from [`SDL_OpenCamera()`].
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetCameraProperties(camera: *mut SDL_Camera) -> SDL_PropertiesID;
 }
@@ -532,21 +532,21 @@ extern "C" {
     /// or poll [`SDL_GetCameraPermissionState()`] occasionally until it returns
     /// non-zero.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `camera`: opened camera device.
     /// - `spec`: the [`SDL_CameraSpec`] to be initialized by this function.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_OpenCamera`]
     pub fn SDL_GetCameraFormat(
         camera: *mut SDL_Camera,
@@ -583,22 +583,22 @@ extern "C" {
     /// [`SDL_EVENT_CAMERA_DEVICE_DENIED`]) event, or poll
     /// [`SDL_GetCameraPermissionState()`] occasionally until it returns non-zero.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `camera`: opened camera device.
     /// - `timestampNS`: a pointer filled in with the frame's timestamp, or 0 on
     ///   error. Can be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new frame of video on success, NULL if none is currently
     ///   available.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ReleaseCameraFrame`]
     pub fn SDL_AcquireCameraFrame(
         camera: *mut SDL_Camera,
@@ -623,17 +623,17 @@ extern "C" {
     /// The app should not use the surface again after calling this function;
     /// assume the surface is freed and the pointer is invalid.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `camera`: opened camera device.
     /// - `frame`: the video frame surface to release.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_AcquireCameraFrame`]
     pub fn SDL_ReleaseCameraFrame(camera: *mut SDL_Camera, frame: *mut SDL_Surface);
 }
@@ -642,24 +642,24 @@ extern "C" {
     /// Use this function to shut down camera processing and close the camera
     /// device.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `camera`: opened camera device.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, but no
     ///   thread may reference `device` once this function is called.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_OpenCamera`]
     pub fn SDL_CloseCamera(camera: *mut SDL_Camera);
 }
 
 /// The opaque structure used to identify an opened SDL camera.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 pub struct SDL_Camera {

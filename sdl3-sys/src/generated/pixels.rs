@@ -58,46 +58,46 @@ use super::error::*;
 
 /// A fully opaque 8-bit alpha value.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_ALPHA_TRANSPARENT`]
 pub const SDL_ALPHA_OPAQUE: Uint8 = (255 as Uint8);
 
 /// A fully opaque floating point alpha value.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_ALPHA_TRANSPARENT_FLOAT`]
 pub const SDL_ALPHA_OPAQUE_FLOAT: ::core::ffi::c_float = 1.0_f32;
 
 /// A fully transparent 8-bit alpha value.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_ALPHA_OPAQUE`]
 pub const SDL_ALPHA_TRANSPARENT: Uint8 = (0 as Uint8);
 
 /// A fully transparent floating point alpha value.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_ALPHA_OPAQUE_FLOAT`]
 pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 
 /// Pixel type.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_PixelType::UNKNOWN) | [`SDL_PIXELTYPE_UNKNOWN`] | |
@@ -200,10 +200,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_PixelType {
 
 /// Bitmap pixel order, high bit -> low bit.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_BitmapOrder::NONE) | [`SDL_BITMAPORDER_NONE`] | |
@@ -266,10 +266,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_BitmapOrder {
 
 /// Packed component order, high bit -> low bit.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_PackedOrder::NONE) | [`SDL_PACKEDORDER_NONE`] | |
@@ -356,10 +356,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_PackedOrder {
 
 /// Array component order, low byte -> high byte.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_ArrayOrder::NONE) | [`SDL_ARRAYORDER_NONE`] | |
@@ -438,10 +438,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_ArrayOrder {
 
 /// Packed component layout.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_PackedLayout::NONE) | [`SDL_PACKEDLAYOUT_NONE`] | |
@@ -534,19 +534,19 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_PackedLayout {
 /// SDL_DEFINE_PIXELFOURCC('Y', 'V', '1', '2')
 /// ```
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `A`: the first character of the FourCC code.
 /// - `B`: the second character of the FourCC code.
 /// - `C`: the third character of the FourCC code.
 /// - `D`: the fourth character of the FourCC code.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a format value in the style of [`SDL_PixelFormat`].
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> Uint32 {
@@ -587,10 +587,10 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 /// an alias for ABGR8888 on little-endian CPUs like x86, or an alias for
 /// RGBA8888 on big-endian CPUs.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_PixelFormat::UNKNOWN) | [`SDL_PIXELFORMAT_UNKNOWN`] | |
@@ -1047,7 +1047,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_PixelFormat {
 /// SDL_DEFINE_PIXELFORMAT(SDL_PIXELTYPE_PACKED32, SDL_PACKEDORDER_RGBA, SDL_PACKEDLAYOUT_8888, 32, 4)
 /// ```
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `type`: the type of the new format, probably a [`SDL_PixelType`] value.
 /// - `order`: the order of the new format, probably a [`SDL_BitmapOrder`],
 ///   [`SDL_PackedOrder`], or [`SDL_ArrayOrder`] value.
@@ -1056,13 +1056,13 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_PixelFormat {
 /// - `bits`: the number of bits per pixel of the new format.
 /// - `bytes`: the number of bytes per pixel of the new format.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a format value in the style of [`SDL_PixelFormat`].
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_DEFINE_PIXELFORMAT(
@@ -1084,16 +1084,16 @@ pub const fn SDL_DEFINE_PIXELFORMAT(
 /// This macro is generally not needed directly by an app, which should use
 /// specific tests, like [`SDL_ISPIXELFORMAT_FOURCC`], instead.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the flags of `format`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_PIXELFLAG(format: SDL_PixelFormat) -> ::core::ffi::c_int {
@@ -1104,16 +1104,16 @@ pub const fn SDL_PIXELFLAG(format: SDL_PixelFormat) -> ::core::ffi::c_int {
 ///
 /// This is usually a value from the [`SDL_PixelType`] enumeration.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the type of `format`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_PIXELTYPE(format: SDL_PixelFormat) -> SDL_PixelType {
@@ -1125,16 +1125,16 @@ pub const fn SDL_PIXELTYPE(format: SDL_PixelFormat) -> SDL_PixelType {
 /// This is usually a value from the [`SDL_BitmapOrder`], [`SDL_PackedOrder`], or
 /// [`SDL_ArrayOrder`] enumerations, depending on the format type.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the order of `format`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_PIXELORDER(format: SDL_PixelFormat) -> ::core::ffi::c_int {
@@ -1146,16 +1146,16 @@ pub const fn SDL_PIXELORDER(format: SDL_PixelFormat) -> ::core::ffi::c_int {
 /// This is usually a value from the [`SDL_PackedLayout`] enumeration, or zero if a
 /// layout doesn't make sense for the format type.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the layout of `format`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_PIXELLAYOUT(format: SDL_PixelFormat) -> SDL_PackedLayout {
@@ -1169,16 +1169,16 @@ pub const fn SDL_PIXELLAYOUT(format: SDL_PixelFormat) -> SDL_PackedLayout {
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format has alpha, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1193,19 +1193,19 @@ pub const fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormat) -> ::core::primit
 /// FourCC formats will report zero here, as it rarely makes sense to measure
 /// them per-pixel.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the bits-per-pixel of `format`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BYTESPERPIXEL`]
 #[inline(always)]
 pub const fn SDL_BITSPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8 {
@@ -1221,16 +1221,16 @@ pub const fn SDL_BITSPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8 
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format is indexed, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1246,16 +1246,16 @@ pub const fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormat) -> ::core::primi
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format is packed, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1270,16 +1270,16 @@ pub const fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormat) -> ::core::primit
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format is an array, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1296,16 +1296,16 @@ pub const fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormat) -> ::core::primiti
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format is 10-bit, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_FLOAT(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1319,16 +1319,16 @@ pub const fn SDL_ISPIXELFORMAT_FLOAT(format: SDL_PixelFormat) -> ::core::primiti
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format has alpha, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1349,16 +1349,16 @@ pub const fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormat) -> ::core::primiti
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format is 10-bit, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_10BIT(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1375,19 +1375,19 @@ pub const fn SDL_ISPIXELFORMAT_10BIT(format: SDL_PixelFormat) -> ::core::primiti
 /// FourCC formats do their best here, but many of them don't have a meaningful
 /// measurement of bytes per pixel.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the bytes-per-pixel of `format`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BITSPERPIXEL`]
 #[inline(always)]
 pub const fn SDL_BYTESPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8 {
@@ -1407,10 +1407,10 @@ pub const fn SDL_BYTESPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8
 
 /// Colorspace color type.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_ColorType::UNKNOWN) | [`SDL_COLOR_TYPE_UNKNOWN`] | |
@@ -1474,10 +1474,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_ColorType {
 /// Colorspace color range, as described by
 /// <https://www.itu.int/rec/R-REC-BT.2100-2-201807-I/en>
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_ColorRange::UNKNOWN) | [`SDL_COLOR_RANGE_UNKNOWN`] | |
@@ -1545,10 +1545,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_ColorRange {
 /// Colorspace color primaries, as described by
 /// <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_ColorPrimaries::UNKNOWN) | [`SDL_COLOR_PRIMARIES_UNKNOWN`] | |
@@ -1679,10 +1679,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_ColorPrimaries {
 ///
 /// These are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_TransferCharacteristics::UNKNOWN) | [`SDL_TRANSFER_CHARACTERISTICS_UNKNOWN`] | |
@@ -1856,10 +1856,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_TransferCharacteristics {
 ///
 /// These are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`IDENTITY`](SDL_MatrixCoefficients::IDENTITY) | [`SDL_MATRIX_COEFFICIENTS_IDENTITY`] | |
@@ -1996,10 +1996,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_MatrixCoefficients {
 
 /// Colorspace chroma sample location.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_ChromaLocation::NONE) | [`SDL_CHROMA_LOCATION_NONE`] | RGB, no chroma sampling |
@@ -2078,17 +2078,17 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_ChromaLocation {
 /// function, etc.), this is not an exhaustive list, but rather a
 /// representative sample of the kinds of colorspaces supported in SDL.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_ColorPrimaries`]
 /// - [`SDL_ColorRange`]
 /// - [`SDL_ColorType`]
 /// - [`SDL_MatrixCoefficients`]
 /// - [`SDL_TransferCharacteristics`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_Colorspace::UNKNOWN) | [`SDL_COLORSPACE_UNKNOWN`] | |
@@ -2226,7 +2226,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_Colorspace {
 ///                       SDL_CHROMA_LOCATION_NONE)
 /// ```
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `type`: the type of the new format, probably an [`SDL_ColorType`] value.
 /// - `range`: the range of the new format, probably a [`SDL_ColorRange`] value.
 /// - `primaries`: the primaries of the new format, probably an
@@ -2238,13 +2238,13 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_Colorspace {
 /// - `chroma`: the chroma sample location of the new format, probably an
 ///   [`SDL_ChromaLocation`] value.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a format value in the style of [`SDL_Colorspace`].
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_DEFINE_COLORSPACE(
@@ -2266,16 +2266,16 @@ pub const fn SDL_DEFINE_COLORSPACE(
 
 /// A macro to retrieve the type of an [`SDL_Colorspace`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the [`SDL_ColorType`] for `cspace`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACETYPE(cspace: SDL_Colorspace) -> SDL_ColorType {
@@ -2284,16 +2284,16 @@ pub const fn SDL_COLORSPACETYPE(cspace: SDL_Colorspace) -> SDL_ColorType {
 
 /// A macro to retrieve the range of an [`SDL_Colorspace`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the [`SDL_ColorRange`] of `cspace`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACERANGE(cspace: SDL_Colorspace) -> SDL_ColorRange {
@@ -2302,16 +2302,16 @@ pub const fn SDL_COLORSPACERANGE(cspace: SDL_Colorspace) -> SDL_ColorRange {
 
 /// A macro to retrieve the chroma sample location of an [`SDL_Colorspace`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the [`SDL_ChromaLocation`] of `cspace`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACECHROMA(cspace: SDL_Colorspace) -> SDL_ChromaLocation {
@@ -2320,16 +2320,16 @@ pub const fn SDL_COLORSPACECHROMA(cspace: SDL_Colorspace) -> SDL_ChromaLocation 
 
 /// A macro to retrieve the primaries of an [`SDL_Colorspace`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the [`SDL_ColorPrimaries`] of `cspace`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACEPRIMARIES(cspace: SDL_Colorspace) -> SDL_ColorPrimaries {
@@ -2338,16 +2338,16 @@ pub const fn SDL_COLORSPACEPRIMARIES(cspace: SDL_Colorspace) -> SDL_ColorPrimari
 
 /// A macro to retrieve the transfer characteristics of an [`SDL_Colorspace`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the [`SDL_TransferCharacteristics`] of `cspace`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACETRANSFER(cspace: SDL_Colorspace) -> SDL_TransferCharacteristics {
@@ -2356,16 +2356,16 @@ pub const fn SDL_COLORSPACETRANSFER(cspace: SDL_Colorspace) -> SDL_TransferChara
 
 /// A macro to retrieve the matrix coefficients of an [`SDL_Colorspace`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the [`SDL_MatrixCoefficients`] of `cspace`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACEMATRIX(cspace: SDL_Colorspace) -> SDL_MatrixCoefficients {
@@ -2374,16 +2374,16 @@ pub const fn SDL_COLORSPACEMATRIX(cspace: SDL_Colorspace) -> SDL_MatrixCoefficie
 
 /// A macro to determine if an [`SDL_Colorspace`] has a limited range.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if limited range, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISCOLORSPACE_LIMITED_RANGE(cspace: SDL_Colorspace) -> ::core::primitive::bool {
@@ -2392,16 +2392,16 @@ pub const fn SDL_ISCOLORSPACE_LIMITED_RANGE(cspace: SDL_Colorspace) -> ::core::p
 
 /// A macro to determine if an [`SDL_Colorspace`] has a full range.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if full range, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISCOLORSPACE_FULL_RANGE(cspace: SDL_Colorspace) -> ::core::primitive::bool {
@@ -2414,16 +2414,16 @@ pub const fn SDL_ISCOLORSPACE_FULL_RANGE(cspace: SDL_Colorspace) -> ::core::prim
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if BT601 or BT470BG, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISCOLORSPACE_MATRIX_BT601(cspace: SDL_Colorspace) -> ::core::primitive::bool {
@@ -2433,16 +2433,16 @@ pub const fn SDL_ISCOLORSPACE_MATRIX_BT601(cspace: SDL_Colorspace) -> ::core::pr
 
 /// A macro to determine if an [`SDL_Colorspace`] uses BT709 matrix coefficients.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if BT709, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISCOLORSPACE_MATRIX_BT709(cspace: SDL_Colorspace) -> ::core::primitive::bool {
@@ -2452,16 +2452,16 @@ pub const fn SDL_ISCOLORSPACE_MATRIX_BT709(cspace: SDL_Colorspace) -> ::core::pr
 /// A macro to determine if an [`SDL_Colorspace`] uses BT2020_NCL matrix
 /// coefficients.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if BT2020_NCL, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(cspace: SDL_Colorspace) -> ::core::primitive::bool {
@@ -2475,7 +2475,7 @@ pub const fn SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(cspace: SDL_Colorspace) -> ::cor
 /// ([`SDL_PIXELFORMAT_ABGR8888`] on little-endian systems and
 /// [`SDL_PIXELFORMAT_RGBA8888`] on big-endian systems).
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -2490,7 +2490,7 @@ pub struct SDL_Color {
 /// The bits of this structure can be directly reinterpreted as a float-packed
 /// color which uses the [`SDL_PIXELFORMAT_RGBA128_FLOAT`] format
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -2504,10 +2504,10 @@ pub struct SDL_FColor {
 
 /// A set of indexed colors representing a palette.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_SetPaletteColors`]
 #[repr(C)]
 // #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
@@ -2525,7 +2525,7 @@ pub struct SDL_Palette {
 
 /// Details about the format of a pixel.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -2552,17 +2552,17 @@ pub struct SDL_PixelFormatDetails {
 extern "C" {
     /// Get the human readable name of a pixel format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format`: the pixel format to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the human readable name of the specified pixel format or
     ///   "SDL_PIXELFORMAT_UNKNOWN" if the format isn't recognized.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPixelFormatName(format: SDL_PixelFormat) -> *const ::core::ffi::c_char;
 }
@@ -2570,7 +2570,7 @@ extern "C" {
 extern "C" {
     /// Convert one of the enumerated pixel formats to a bpp value and RGBA masks.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format`: one of the [`SDL_PixelFormat`] values.
     /// - `bpp`: a bits per pixel value; usually 15, 16, or 32.
     /// - `Rmask`: a pointer filled in with the red mask for the format.
@@ -2578,17 +2578,17 @@ extern "C" {
     /// - `Bmask`: a pointer filled in with the blue mask for the format.
     /// - `Amask`: a pointer filled in with the alpha mask for the format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPixelFormatForMasks`]
     pub fn SDL_GetMasksForPixelFormat(
         format: SDL_PixelFormat,
@@ -2606,24 +2606,24 @@ extern "C" {
     /// This will return [`SDL_PIXELFORMAT_UNKNOWN`] if the conversion wasn't
     /// possible.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `bpp`: a bits per pixel value; usually 15, 16, or 32.
     /// - `Rmask`: the red mask for the format.
     /// - `Gmask`: the green mask for the format.
     /// - `Bmask`: the blue mask for the format.
     /// - `Amask`: the alpha mask for the format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the [`SDL_PixelFormat`] value corresponding to the format masks, or
     ///   [`SDL_PIXELFORMAT_UNKNOWN`] if there isn't a match.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetMasksForPixelFormat`]
     pub fn SDL_GetPixelFormatForMasks(
         bpp: ::core::ffi::c_int,
@@ -2641,17 +2641,17 @@ extern "C" {
     /// allocated), and hence should not be modified, especially the palette. Weird
     /// errors such as `Blit combination not supported` may occur.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format`: one of the [`SDL_PixelFormat`] values.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to a [`SDL_PixelFormatDetails`] structure or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPixelFormatDetails(format: SDL_PixelFormat) -> *const SDL_PixelFormatDetails;
 }
@@ -2661,21 +2661,21 @@ extern "C" {
     ///
     /// The palette entries are initialized to white.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `ncolors`: represents the number of color entries in the color palette.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new [`SDL_Palette`] structure on success or NULL on failure (e.g. if
     ///   there wasn't enough memory); call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_DestroyPalette`]
     /// - [`SDL_SetPaletteColors`]
     /// - [`SDL_SetSurfacePalette`]
@@ -2685,21 +2685,21 @@ extern "C" {
 extern "C" {
     /// Set a range of colors in a palette.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `palette`: the [`SDL_Palette`] structure to modify.
     /// - `colors`: an array of [`SDL_Color`] structures to copy into the palette.
     /// - `firstcolor`: the index of the first palette entry to modify.
     /// - `ncolors`: the number of entries to modify.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified or destroyed in another thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetPaletteColors(
         palette: *mut SDL_Palette,
@@ -2712,17 +2712,17 @@ extern "C" {
 extern "C" {
     /// Free a palette created with [`SDL_CreatePalette()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `palette`: the [`SDL_Palette`] structure to be freed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified or destroyed in another thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreatePalette`]
     pub fn SDL_DestroyPalette(palette: *mut SDL_Palette);
 }
@@ -2745,7 +2745,7 @@ extern "C" {
     /// format the return value can be assigned to a Uint16, and similarly a Uint8
     /// for an 8-bpp format).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
@@ -2753,17 +2753,17 @@ extern "C" {
     /// - `g`: the green component of the pixel in the range 0-255.
     /// - `b`: the blue component of the pixel in the range 0-255.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pixel value.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPixelFormatDetails`]
     /// - [`SDL_GetRGB`]
     /// - [`SDL_MapRGBA`]
@@ -2795,7 +2795,7 @@ extern "C" {
     /// format the return value can be assigned to a Uint16, and similarly a Uint8
     /// for an 8-bpp format).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
@@ -2804,17 +2804,17 @@ extern "C" {
     /// - `b`: the blue component of the pixel in the range 0-255.
     /// - `a`: the alpha component of the pixel in the range 0-255.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pixel value.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPixelFormatDetails`]
     /// - [`SDL_GetRGBA`]
     /// - [`SDL_MapRGB`]
@@ -2837,7 +2837,7 @@ extern "C" {
     /// (e.g., a completely white pixel in 16-bit RGB565 format would return [0xff,
     /// 0xff, 0xff\] not \[0xf8, 0xfc, 0xf8\]).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `pixel`: a pixel value.
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
@@ -2846,14 +2846,14 @@ extern "C" {
     /// - `g`: a pointer filled in with the green component, may be NULL.
     /// - `b`: a pointer filled in with the blue component, may be NULL.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPixelFormatDetails`]
     /// - [`SDL_GetRGBA`]
     /// - [`SDL_MapRGB`]
@@ -2879,7 +2879,7 @@ extern "C" {
     /// If the surface has no alpha component, the alpha will be returned as 0xff
     /// (100% opaque).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `pixel`: a pixel value.
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
@@ -2889,14 +2889,14 @@ extern "C" {
     /// - `b`: a pointer filled in with the blue component, may be NULL.
     /// - `a`: a pointer filled in with the alpha component, may be NULL.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPixelFormatDetails`]
     /// - [`SDL_GetRGB`]
     /// - [`SDL_MapRGB`]

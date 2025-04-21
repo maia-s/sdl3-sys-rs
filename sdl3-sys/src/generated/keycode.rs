@@ -22,10 +22,10 @@ use super::scancode::*;
 /// Keys with the `SDLK_EXTENDED_MASK` bit set do not map to a scancode or
 /// unicode code point.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`EXTENDED_MASK`](SDL_Keycode::EXTENDED_MASK) | [`SDLK_EXTENDED_MASK`] | |
@@ -1625,10 +1625,10 @@ pub const fn SDL_SCANCODE_TO_KEYCODE(X: SDL_Scancode) -> Uint32 {
 
 /// Valid key modifiers (possibly OR'd together).
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_Keymod::NONE) | [`SDL_KMOD_NONE`] | no modifier is applicable. |

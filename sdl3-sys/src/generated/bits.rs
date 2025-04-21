@@ -12,16 +12,16 @@ use super::stdinc::*;
 /// embedded in the calling program and the linker and dynamic loader will not
 /// be able to find this function inside SDL itself).
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `x`: the 32-bit value to examine.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the index of the most significant bit, or -1 if the value is 0.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this function from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_MostSignificantBitIndex32(x: Uint32) -> ::core::ffi::c_int {
@@ -38,16 +38,16 @@ pub const fn SDL_MostSignificantBitIndex32(x: Uint32) -> ::core::ffi::c_int {
 /// embedded in the calling program and the linker and dynamic loader will not
 /// be able to find this function inside SDL itself).
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `x`: the 32-bit value to examine.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if exactly one bit is set in `x`, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this function from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_HasExactlyOneBitSet32(x: Uint32) -> ::core::primitive::bool {

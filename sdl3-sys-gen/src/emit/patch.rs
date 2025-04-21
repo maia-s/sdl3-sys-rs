@@ -571,7 +571,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
         patch: |ctx, define| {
             define.doc.emit(ctx)?;
             writeln!(ctx, "///")?;
-            writeln!(ctx, "/// ### Safety (`sdl3-sys`)")?;
+            writeln!(ctx, "/// ## Safety (`sdl3-sys`)")?;
             writeln!(
                 ctx,
                 "/// - `iface` must point to memory that is valid for writing the type `T`."

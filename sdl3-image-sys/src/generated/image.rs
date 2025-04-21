@@ -34,10 +34,10 @@ pub const fn SDL_IMAGE_VERSION_ATLEAST(
 extern "C" {
     /// This function gets the version of the dynamically linked SDL_image library.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL_image version.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     pub fn IMG_Version() -> ::core::ffi::c_int;
 }
@@ -89,20 +89,20 @@ extern "C" {
     /// When done with the returned surface, the app should dispose of it with a
     /// call to [`SDL_DestroySurface()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] that data will be read from.
     /// - `closeio`: true to close/free the [`SDL_IOStream`] before returning, false
     ///   to leave it open.
     /// - `type`: a filename extension that represent this data ("BMP", "GIF",
     ///   "PNG", etc).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_Load`]
     /// - [`IMG_Load_IO`]
     /// - [`SDL_DestroySurface`]
@@ -147,16 +147,16 @@ extern "C" {
     /// [SDL_DestroySurface](https://wiki.libsdl.org/SDL3/SDL_DestroySurface)
     /// ().
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `file`: a path on the filesystem to load an image from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadTyped_IO`]
     /// - [`IMG_Load_IO`]
     /// - [`SDL_DestroySurface`]
@@ -204,18 +204,18 @@ extern "C" {
     /// When done with the returned surface, the app should dispose of it with a
     /// call to [`SDL_DestroySurface()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] that data will be read from.
     /// - `closeio`: true to close/free the [`SDL_IOStream`] before returning, false
     ///   to leave it open.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_Load`]
     /// - [`IMG_LoadTyped_IO`]
     /// - [`SDL_DestroySurface`]
@@ -249,17 +249,17 @@ extern "C" {
     /// When done with the returned texture, the app should dispose of it with a
     /// call to [`SDL_DestroyTexture()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `renderer`: the [`SDL_Renderer`] to use to create the GPU texture.
     /// - `file`: a path on the filesystem to load an image from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new texture, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadTextureTyped_IO`]
     /// - [`IMG_LoadTexture_IO`]
     pub fn IMG_LoadTexture(
@@ -301,19 +301,19 @@ extern "C" {
     /// When done with the returned texture, the app should dispose of it with a
     /// call to [`SDL_DestroyTexture()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `renderer`: the [`SDL_Renderer`] to use to create the GPU texture.
     /// - `src`: an [`SDL_IOStream`] that data will be read from.
     /// - `closeio`: true to close/free the [`SDL_IOStream`] before returning, false
     ///   to leave it open.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new texture, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadTexture`]
     /// - [`IMG_LoadTextureTyped_IO`]
     /// - [`SDL_DestroyTexture`]
@@ -363,7 +363,7 @@ extern "C" {
     /// When done with the returned texture, the app should dispose of it with a
     /// call to [`SDL_DestroyTexture()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `renderer`: the [`SDL_Renderer`] to use to create the GPU texture.
     /// - `src`: an [`SDL_IOStream`] that data will be read from.
     /// - `closeio`: true to close/free the [`SDL_IOStream`] before returning, false
@@ -371,13 +371,13 @@ extern "C" {
     /// - `type`: a filename extension that represent this data ("BMP", "GIF",
     ///   "PNG", etc).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new texture, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadTexture`]
     /// - [`IMG_LoadTexture_IO`]
     /// - [`SDL_DestroyTexture`]
@@ -407,16 +407,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is AVIF data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -456,16 +456,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is ICO data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isCUR`]
     /// - [`IMG_isBMP`]
@@ -504,16 +504,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is CUR data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isBMP`]
@@ -552,16 +552,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is BMP data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -600,16 +600,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is GIF data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -648,16 +648,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is JPG data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -696,16 +696,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is JXL data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -744,16 +744,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is LBM data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -792,16 +792,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is PCX data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -840,16 +840,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is PNG data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -888,16 +888,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is PNM data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -936,16 +936,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is SVG data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -984,16 +984,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is QOI data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -1032,16 +1032,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is TIFF data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -1080,16 +1080,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is XCF data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -1128,16 +1128,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is XPM data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -1176,16 +1176,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is XV data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -1224,16 +1224,16 @@ extern "C" {
     /// You do not need to call this function to load data; SDL_image can work to
     /// determine file type in many cases in its standard load functions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: a seekable/readable [`SDL_IOStream`] to provide image data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns non-zero if this is WEBP data, zero otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_isAVIF`]
     /// - [`IMG_isICO`]
     /// - [`IMG_isCUR`]
@@ -1262,16 +1262,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
     /// - [`IMG_LoadBMP_IO`]
@@ -1301,16 +1301,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadCUR_IO`]
     /// - [`IMG_LoadBMP_IO`]
@@ -1340,16 +1340,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadBMP_IO`]
@@ -1379,16 +1379,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1418,16 +1418,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1457,16 +1457,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1496,16 +1496,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1535,16 +1535,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1574,16 +1574,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1613,16 +1613,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1652,16 +1652,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1691,16 +1691,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1730,16 +1730,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1769,16 +1769,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1808,16 +1808,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1847,16 +1847,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1886,16 +1886,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1925,16 +1925,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -1964,16 +1964,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load image data from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAVIF_IO`]
     /// - [`IMG_LoadICO_IO`]
     /// - [`IMG_LoadCUR_IO`]
@@ -2007,15 +2007,15 @@ extern "C" {
     /// When done with the returned surface, the app should dispose of it with a
     /// call to [`SDL_DestroySurface()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to load SVG data from.
     /// - `width`: desired width of the generated surface, in pixels.
     /// - `height`: desired height of the generated surface, in pixels.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     pub fn IMG_LoadSizedSVG_IO(
         src: *mut SDL_IOStream,
@@ -2034,16 +2034,16 @@ extern "C" {
     /// When done with the returned surface, the app should dispose of it with a
     /// call to [`SDL_DestroySurface()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `xpm`: a null-terminated array of strings that comprise XPM data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_ReadXPMFromArrayToRGB888`]
     pub fn IMG_ReadXPMFromArray(xpm: *mut *mut ::core::ffi::c_char) -> *mut SDL_Surface;
 }
@@ -2058,16 +2058,16 @@ extern "C" {
     /// When done with the returned surface, the app should dispose of it with a
     /// call to [`SDL_DestroySurface()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `xpm`: a null-terminated array of strings that comprise XPM data.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new SDL surface, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_ReadXPMFromArray`]
     pub fn IMG_ReadXPMFromArrayToRGB888(xpm: *mut *mut ::core::ffi::c_char) -> *mut SDL_Surface;
 }
@@ -2077,20 +2077,20 @@ extern "C" {
     ///
     /// If the file already exists, it will be overwritten.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `surface`: the SDL surface to save.
     /// - `file`: path on the filesystem to write new file to.
     /// - `quality`: the desired quality, ranging between 0 (lowest) and 100
     ///   (highest).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_SaveAVIF_IO`]
     pub fn IMG_SaveAVIF(
         surface: *mut SDL_Surface,
@@ -2107,7 +2107,7 @@ extern "C" {
     /// If `closeio` is true, `dst` will be closed before returning, whether this
     /// function succeeds or not.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `surface`: the SDL surface to save.
     /// - `dst`: the [`SDL_IOStream`] to save the image data to.
     /// - `closeio`: true to close/free the [`SDL_IOStream`] before returning, false
@@ -2115,14 +2115,14 @@ extern "C" {
     /// - `quality`: the desired quality, ranging between 0 (lowest) and 100
     ///   (highest).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_SaveAVIF`]
     pub fn IMG_SaveAVIF_IO(
         surface: *mut SDL_Surface,
@@ -2137,18 +2137,18 @@ extern "C" {
     ///
     /// If the file already exists, it will be overwritten.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `surface`: the SDL surface to save.
     /// - `file`: path on the filesystem to write new file to.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_SavePNG_IO`]
     pub fn IMG_SavePNG(
         surface: *mut SDL_Surface,
@@ -2164,20 +2164,20 @@ extern "C" {
     /// If `closeio` is true, `dst` will be closed before returning, whether this
     /// function succeeds or not.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `surface`: the SDL surface to save.
     /// - `dst`: the [`SDL_IOStream`] to save the image data to.
     /// - `closeio`: true to close/free the [`SDL_IOStream`] before returning, false
     ///   to leave it open.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_SavePNG`]
     pub fn IMG_SavePNG_IO(
         surface: *mut SDL_Surface,
@@ -2191,20 +2191,20 @@ extern "C" {
     ///
     /// If the file already exists, it will be overwritten.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `surface`: the SDL surface to save.
     /// - `file`: path on the filesystem to write new file to.
     /// - `quality`: \[0; 33\] is Lowest quality, \[34; 66\] is Middle quality, [67;
     ///   100\] is Highest quality.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_SaveJPG_IO`]
     pub fn IMG_SaveJPG(
         surface: *mut SDL_Surface,
@@ -2221,7 +2221,7 @@ extern "C" {
     /// If `closeio` is true, `dst` will be closed before returning, whether this
     /// function succeeds or not.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `surface`: the SDL surface to save.
     /// - `dst`: the [`SDL_IOStream`] to save the image data to.
     /// - `closeio`: true to close/free the [`SDL_IOStream`] before returning, false
@@ -2229,14 +2229,14 @@ extern "C" {
     /// - `quality`: \[0; 33\] is Lowest quality, \[34; 66\] is Middle quality, [67;
     ///   100\] is Highest quality.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_SaveJPG`]
     pub fn IMG_SaveJPG_IO(
         surface: *mut SDL_Surface,
@@ -2273,16 +2273,16 @@ extern "C" {
     /// When done with the returned animation, the app should dispose of it with a
     /// call to [`IMG_FreeAnimation()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `file`: path on the filesystem containing an animated image.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new [`IMG_Animation`], or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_FreeAnimation`]
     pub fn IMG_LoadAnimation(file: *const ::core::ffi::c_char) -> *mut IMG_Animation;
 }
@@ -2297,18 +2297,18 @@ extern "C" {
     /// When done with the returned animation, the app should dispose of it with a
     /// call to [`IMG_FreeAnimation()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] that data will be read from.
     /// - `closeio`: true to close/free the [`SDL_IOStream`] before returning, false
     ///   to leave it open.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new [`IMG_Animation`], or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_FreeAnimation`]
     pub fn IMG_LoadAnimation_IO(
         src: *mut SDL_IOStream,
@@ -2332,19 +2332,19 @@ extern "C" {
     /// When done with the returned animation, the app should dispose of it with a
     /// call to [`IMG_FreeAnimation()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] that data will be read from.
     /// - `closeio`: true to close/free the [`SDL_IOStream`] before returning, false
     ///   to leave it open.
     /// - `type`: a filename extension that represent this data ("GIF", etc).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new [`IMG_Animation`], or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAnimation`]
     /// - [`IMG_LoadAnimation_IO`]
     /// - [`IMG_FreeAnimation`]
@@ -2360,13 +2360,13 @@ extern "C" {
     ///
     /// The provided `anim` pointer is not valid once this call returns.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `anim`: [`IMG_Animation`] to dispose of.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAnimation`]
     /// - [`IMG_LoadAnimation_IO`]
     /// - [`IMG_LoadAnimationTyped_IO`]
@@ -2381,16 +2381,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] that data will be read from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new [`IMG_Animation`], or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAnimation`]
     /// - [`IMG_LoadAnimation_IO`]
     /// - [`IMG_LoadAnimationTyped_IO`]
@@ -2406,16 +2406,16 @@ extern "C" {
     /// better to use the abstract interfaces; also, there is only an [`SDL_IOStream`]
     /// interface available here.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] that data will be read from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new [`IMG_Animation`], or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_image 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`IMG_LoadAnimation`]
     /// - [`IMG_LoadAnimation_IO`]
     /// - [`IMG_LoadAnimationTyped_IO`]

@@ -15,7 +15,7 @@ use super::stdinc::*;
 /// A structure holding a calendar date and time broken down into its
 /// components.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -43,13 +43,13 @@ pub struct SDL_DateTime {
 
 /// The preferred date format of the current system locale.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetDateTimeLocalePreferences`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`YYYYMMDD`](SDL_DateFormat::YYYYMMDD) | [`SDL_DATE_FORMAT_YYYYMMDD`] | Year/Month/Day |
@@ -118,13 +118,13 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_DateFormat {
 
 /// The preferred time format of the current system locale.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetDateTimeLocalePreferences`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`_24HR`](SDL_TimeFormat::_24HR) | [`SDL_TIME_FORMAT_24HR`] | 24 hour time |
@@ -193,17 +193,17 @@ extern "C" {
     /// formats can change, usually because the user has changed a system
     /// preference outside of your program.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dateFormat`: a pointer to the [`SDL_DateFormat`] to hold the returned date
     ///   format, may be NULL.
     /// - `timeFormat`: a pointer to the [`SDL_TimeFormat`] to hold the returned time
     ///   format, may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetDateTimeLocalePreferences(
         dateFormat: *mut SDL_DateFormat,
@@ -215,14 +215,14 @@ extern "C" {
     /// Gets the current value of the system realtime clock in nanoseconds since
     /// Jan 1, 1970 in Universal Coordinated Time (UTC).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `ticks`: the [`SDL_Time`] to hold the returned tick count.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetCurrentTime(ticks: *mut SDL_Time) -> ::core::primitive::bool;
 }
@@ -231,18 +231,18 @@ extern "C" {
     /// Converts an [`SDL_Time`] in nanoseconds since the epoch to a calendar time in
     /// the [`SDL_DateTime`] format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `ticks`: the [`SDL_Time`] to be converted.
     /// - `dt`: the resulting [`SDL_DateTime`].
     /// - `localTime`: the resulting [`SDL_DateTime`] will be expressed in local time
     ///   if true, otherwise it will be in Universal Coordinated
     ///   Time (UTC).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_TimeToDateTime(
         ticks: SDL_Time,
@@ -257,15 +257,15 @@ extern "C" {
     /// This function ignores the day_of_week member of the [`SDL_DateTime`] struct, so
     /// it may remain unset.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dt`: the source [`SDL_DateTime`].
     /// - `ticks`: the resulting [`SDL_Time`].
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_DateTimeToTime(
         dt: *const SDL_DateTime,
@@ -279,14 +279,14 @@ extern "C" {
     ///
     /// This function fills in the two 32-bit values of the FILETIME structure.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `ticks`: the time to convert.
     /// - `dwLowDateTime`: a pointer filled in with the low portion of the
     ///   Windows FILETIME value.
     /// - `dwHighDateTime`: a pointer filled in with the high portion of the
     ///   Windows FILETIME value.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_TimeToWindows(
         ticks: SDL_Time,
@@ -302,14 +302,14 @@ extern "C" {
     /// This function takes the two 32-bit values of the FILETIME structure as
     /// parameters.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dwLowDateTime`: the low portion of the Windows FILETIME value.
     /// - `dwHighDateTime`: the high portion of the Windows FILETIME value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the converted SDL time.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_TimeFromWindows(dwLowDateTime: Uint32, dwHighDateTime: Uint32) -> SDL_Time;
 }
@@ -317,15 +317,15 @@ extern "C" {
 extern "C" {
     /// Get the number of days in a month for a given year.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `year`: the year.
     /// - `month`: the month \[1-12\].
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of days in the requested month or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetDaysInMonth(
         year: ::core::ffi::c_int,
@@ -336,16 +336,16 @@ extern "C" {
 extern "C" {
     /// Get the day of year for a calendar date.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `year`: the year component of the date.
     /// - `month`: the month component of the date.
     /// - `day`: the day component of the date.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the day of year \[0-365\] if the date is valid or -1 on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetDayOfYear(
         year: ::core::ffi::c_int,
@@ -357,16 +357,16 @@ extern "C" {
 extern "C" {
     /// Get the day of week for a calendar date.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `year`: the year component of the date.
     /// - `month`: the month component of the date.
     /// - `day`: the day component of the date.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a value between 0 and 6 (0 being Sunday) if the date is valid or
     ///   -1 on failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetDayOfWeek(
         year: ::core::ffi::c_int,

@@ -17,10 +17,10 @@ use super::error::*;
 ///
 /// These are results returned by [`SDL_GetPowerInfo()`].
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`ERROR`](SDL_PowerState::ERROR) | [`SDL_POWERSTATE_ERROR`] | error determining power status |
@@ -125,7 +125,7 @@ extern "C" {
     /// you want to display continuous status you could call this function every
     /// minute or so.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `seconds`: a pointer filled in with the seconds of battery life left,
     ///   or NULL to ignore. This will be filled in with -1 if we
     ///   can't determine a value or there is no battery.
@@ -134,11 +134,11 @@ extern "C" {
     ///   filled in with -1 we can't determine a value or there is no
     ///   battery.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the current battery state or [`SDL_POWERSTATE_ERROR`] on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPowerInfo(
         seconds: *mut ::core::ffi::c_int,

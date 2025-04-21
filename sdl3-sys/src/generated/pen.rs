@@ -25,7 +25,7 @@ use super::touch::*;
 /// consistent as long as SDL can recognize a tool to be the same pen; but if a
 /// pen physically leaves the area and returns, it might get a new ID.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -61,22 +61,22 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_PenID {
 
 /// The [`SDL_MouseID`] for mouse events simulated with pen input.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub const SDL_PEN_MOUSEID: SDL_MouseID = SDL_MouseID((-2_i32 as Uint32));
 
 /// The [`SDL_TouchID`] for touch events simulated with pen input.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub const SDL_PEN_TOUCHID: SDL_TouchID = SDL_TouchID((-2_i32 as Uint64));
 
 /// Pen input flags, as reported by various pen events' `pen_state` field.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`DOWN`](SDL_PenInputFlags::DOWN) | [`SDL_PEN_INPUT_DOWN`] | pen is pressed down |
@@ -293,10 +293,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_PenInputFlags {
 ///
 /// `SDL_sinf(xtilt * SDL_PI_F / 180.0)`.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`PRESSURE`](SDL_PenAxis::PRESSURE) | [`SDL_PEN_AXIS_PRESSURE`] | Pen pressure.  Unidirectional: 0 to 1.0 |

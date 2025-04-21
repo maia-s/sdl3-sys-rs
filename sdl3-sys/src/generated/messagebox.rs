@@ -21,10 +21,10 @@ use super::video::*;
 ///
 /// If supported will display warning icon, etc.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`ERROR`](SDL_MessageBoxFlags::ERROR) | [`SDL_MESSAGEBOX_ERROR`] | error dialog |
@@ -212,10 +212,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxFlags {
 
 /// [`SDL_MessageBoxButtonData`] flags.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`RETURNKEY_DEFAULT`](SDL_MessageBoxButtonFlags::RETURNKEY_DEFAULT) | [`SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT`] | Marks the default button when return is hit |
@@ -363,7 +363,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxButtonFlags {
 
 /// Individual button data.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -386,7 +386,7 @@ impl ::core::default::Default for SDL_MessageBoxButtonData {
 
 /// RGB value used in a message box color scheme
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -400,7 +400,7 @@ pub struct SDL_MessageBoxColor {
 /// An enumeration of indices inside the colors array of
 /// [`SDL_MessageBoxColorScheme`].
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`BACKGROUND`](SDL_MessageBoxColorType::BACKGROUND) | [`SDL_MESSAGEBOX_COLOR_BACKGROUND`] | |
@@ -481,7 +481,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxColorType {
 
 /// A set of colors to use for message box dialogs
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -492,7 +492,7 @@ pub struct SDL_MessageBoxColorScheme {
 
 /// MessageBox structure containing title, text, window, etc.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -541,20 +541,20 @@ extern "C" {
     /// concern, check the return value from this function and fall back to writing
     /// to stderr if you can.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `messageboxdata`: the [`SDL_MessageBoxData`] structure with title, text and
     ///   other options.
     /// - `buttonid`: the pointer to which user id of hit button should be
     ///   copied.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ShowSimpleMessageBox`]
     pub fn SDL_ShowMessageBox(
         messageboxdata: *const SDL_MessageBoxData,
@@ -591,20 +591,20 @@ extern "C" {
     /// concern, check the return value from this function and fall back to writing
     /// to stderr if you can.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `flags`: an [`SDL_MessageBoxFlags`] value.
     /// - `title`: UTF-8 title text.
     /// - `message`: UTF-8 message text.
     /// - `window`: the parent window, or NULL for no parent.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ShowMessageBox`]
     pub fn SDL_ShowSimpleMessageBox(
         flags: SDL_MessageBoxFlags,

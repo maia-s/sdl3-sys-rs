@@ -36,21 +36,21 @@ extern "C" {
     /// }
     /// ```
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `fmt`: a printf()-style message format string.
     /// - `...`: additional parameters matching % tokens in the `fmt` string, if
     ///   any.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns false.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ClearError`]
     /// - [`SDL_GetError`]
     /// - [`SDL_SetErrorV`]
@@ -62,20 +62,20 @@ extern "C" {
     ///
     /// Calling this function will replace any previous error message that was set.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `fmt`: a printf()-style message format string.
     /// - `ap`: a variable argument list.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns false.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ClearError`]
     /// - [`SDL_GetError`]
     /// - [`SDL_SetError`]
@@ -90,13 +90,13 @@ extern "C" {
     ///
     /// This function does not do any memory allocation.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns false.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_OutOfMemory() -> ::core::primitive::bool;
 }
@@ -125,18 +125,18 @@ extern "C" {
     /// the current thread's error string is changed. The caller should make a copy
     /// if the value is needed after the next SDL API call.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a message with information about the specific error that occurred,
     ///   or an empty string if there hasn't been an error message set since
     ///   the last call to [`SDL_ClearError()`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ClearError`]
     /// - [`SDL_SetError`]
     pub fn SDL_GetError() -> *const ::core::ffi::c_char;
@@ -145,16 +145,16 @@ extern "C" {
 extern "C" {
     /// Clear any previous error message for this thread.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetError`]
     /// - [`SDL_SetError`]
     pub fn SDL_ClearError() -> ::core::primitive::bool;
@@ -165,10 +165,10 @@ extern "C" {
 /// This simply calls [`SDL_SetError()`] with a standardized error string, for
 /// convenience, consistency, and clarity.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_Unsupported() -> ::core::primitive::bool {
@@ -192,10 +192,10 @@ pub unsafe fn SDL_Unsupported() -> ::core::primitive::bool {
 /// }
 /// ```
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_InvalidParamError(param: *const ::core::ffi::c_char) -> ::core::primitive::bool {

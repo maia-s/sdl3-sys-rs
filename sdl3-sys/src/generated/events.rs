@@ -56,10 +56,10 @@ use super::video::*;
 
 /// The types of events that can be delivered.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`FIRST`](SDL_EventType::FIRST) | [`SDL_EVENT_FIRST`] | Unused (do not remove) |
@@ -838,7 +838,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_EventType {
 
 /// Fields shared by every event
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -853,7 +853,7 @@ pub struct SDL_CommonEvent {
 
 /// Display state change event data (event.display.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -874,7 +874,7 @@ pub struct SDL_DisplayEvent {
 
 /// Window state change event data (event.window.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -895,7 +895,7 @@ pub struct SDL_WindowEvent {
 
 /// Keyboard device event structure (event.kdevice.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -918,10 +918,10 @@ pub struct SDL_KeyboardDeviceEvent {
 /// event scancode and modifiers directly from the keyboard layout, bypassing
 /// [`SDL_HINT_KEYCODE_OPTIONS`], by calling [`SDL_GetKeyFromScancode()`].
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetKeyFromScancode`]
 /// - [`SDL_HINT_KEYCODE_OPTIONS`]
 #[repr(C)]
@@ -957,7 +957,7 @@ pub struct SDL_KeyboardEvent {
 /// will be inserted into the editing text. The length is the number of UTF-8
 /// characters that will be replaced by new typing.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -988,7 +988,7 @@ impl ::core::default::Default for SDL_TextEditingEvent {
 
 /// Keyboard IME candidates event structure (event.edit_candidates.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1027,10 +1027,10 @@ impl ::core::default::Default for SDL_TextEditingCandidatesEvent {
 /// This event will never be delivered unless text input is enabled by calling
 /// [`SDL_StartTextInput()`]. Text input is disabled by default!
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_StartTextInput`]
 /// - [`SDL_StopTextInput`]
 #[repr(C)]
@@ -1058,7 +1058,7 @@ impl ::core::default::Default for SDL_TextInputEvent {
 
 /// Mouse device event structure (event.mdevice.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1075,7 +1075,7 @@ pub struct SDL_MouseDeviceEvent {
 
 /// Mouse motion event structure (event.motion.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1104,7 +1104,7 @@ pub struct SDL_MouseMotionEvent {
 
 /// Mouse button event structure (event.button.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1134,7 +1134,7 @@ pub struct SDL_MouseButtonEvent {
 
 /// Mouse wheel event structure (event.wheel.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1163,7 +1163,7 @@ pub struct SDL_MouseWheelEvent {
 
 /// Joystick axis motion event structure (event.jaxis.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1188,7 +1188,7 @@ pub struct SDL_JoyAxisEvent {
 
 /// Joystick trackball motion event structure (event.jball.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1214,7 +1214,7 @@ pub struct SDL_JoyBallEvent {
 
 /// Joystick hat position change event structure (event.jhat.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1230,7 +1230,7 @@ pub struct SDL_JoyHatEvent {
     /// The joystick hat index
     pub hat: Uint8,
     /// The hat position value.
-    /// ### See also
+    /// ## See also
     /// - [`SDL_HAT_LEFTUP`] [`SDL_HAT_UP`] [`SDL_HAT_RIGHTUP`]
     /// - [`SDL_HAT_LEFT`] [`SDL_HAT_CENTERED`] [`SDL_HAT_RIGHT`]
     /// - [`SDL_HAT_LEFTDOWN`] [`SDL_HAT_DOWN`] [`SDL_HAT_RIGHTDOWN`]
@@ -1243,7 +1243,7 @@ pub struct SDL_JoyHatEvent {
 
 /// Joystick button event structure (event.jbutton.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1269,10 +1269,10 @@ pub struct SDL_JoyButtonEvent {
 /// SDL will send JOYSTICK_ADDED events for devices that are already plugged in
 /// during [`SDL_Init`].
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GamepadDeviceEvent`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1289,7 +1289,7 @@ pub struct SDL_JoyDeviceEvent {
 
 /// Joystick battery level change event structure (event.jbattery.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1310,7 +1310,7 @@ pub struct SDL_JoyBatteryEvent {
 
 /// Gamepad axis motion event structure (event.gaxis.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1335,7 +1335,7 @@ pub struct SDL_GamepadAxisEvent {
 
 /// Gamepad button event structure (event.gbutton.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1365,10 +1365,10 @@ pub struct SDL_GamepadButtonEvent {
 /// in during [`SDL_Init()`] and are recognized as gamepads. It will also send
 /// events for joysticks that get gamepad mappings at runtime.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_JoyDeviceEvent`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1385,7 +1385,7 @@ pub struct SDL_GamepadDeviceEvent {
 
 /// Gamepad touchpad event structure (event.gtouchpad.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1412,7 +1412,7 @@ pub struct SDL_GamepadTouchpadEvent {
 
 /// Gamepad sensor event structure (event.gsensor.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1435,7 +1435,7 @@ pub struct SDL_GamepadSensorEvent {
 
 /// Audio device event structure (event.adevice.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1457,7 +1457,7 @@ pub struct SDL_AudioDeviceEvent {
 
 /// Camera device event structure (event.cdevice.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1474,7 +1474,7 @@ pub struct SDL_CameraDeviceEvent {
 
 /// Renderer event structure (event.render.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1505,7 +1505,7 @@ pub struct SDL_RenderEvent {
 /// report a touch outside of the window, which will also be outside of the
 /// range.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1545,7 +1545,7 @@ pub struct SDL_TouchFingerEvent {
 /// is there." The pen touching and lifting off from the tablet while not
 /// leaving the area are handled by [`SDL_EVENT_PEN_DOWN`] and [`SDL_EVENT_PEN_UP`].
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1570,7 +1570,7 @@ pub struct SDL_PenProximityEvent {
 /// `pen_state & SDL_PEN_INPUT_DOWN` to decide if a pen is "drawing" when
 /// dealing with pen motion.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1598,7 +1598,7 @@ pub struct SDL_PenMotionEvent {
 /// These events come when a pen touches a surface (a tablet, etc), or lifts
 /// off from one.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1630,7 +1630,7 @@ pub struct SDL_PenTouchEvent {
 /// This is for buttons on the pen itself that the user might click. The pen
 /// itself pressing down to draw triggers a [`SDL_EVENT_PEN_DOWN`] event instead.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1662,7 +1662,7 @@ pub struct SDL_PenButtonEvent {
 /// You might get some of these events even if the pen isn't touching the
 /// tablet.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1692,7 +1692,7 @@ pub struct SDL_PenAxisEvent {
 /// An event used to drop text or request a file open by the system
 /// (event.drop.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1726,7 +1726,7 @@ impl ::core::default::Default for SDL_DropEvent {
 /// An event triggered when the clipboard contents have changed
 /// (event.clipboard.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1755,7 +1755,7 @@ impl ::core::default::Default for SDL_ClipboardEvent {
 
 /// Sensor event structure (event.sensor.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1776,7 +1776,7 @@ pub struct SDL_SensorEvent {
 
 /// The "quit requested" event
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1797,7 +1797,7 @@ pub struct SDL_QuitEvent {
 /// the programmer; the only requirement is that '''type''' is a value obtained
 /// from [`SDL_RegisterEvents()`].
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1831,7 +1831,7 @@ impl ::core::default::Default for SDL_UserEvent {
 /// The [`SDL_Event`] structure is the core of all event handling in SDL. [`SDL_Event`]
 /// is a union of all event structures used in SDL.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1940,13 +1940,13 @@ extern "C" {
     /// polling or waiting for events (e.g. you are filtering them), then you must
     /// call [`SDL_PumpEvents()`] to force an event queue update.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PollEvent`]
     /// - [`SDL_WaitEvent`]
     pub fn SDL_PumpEvents();
@@ -1954,10 +1954,10 @@ extern "C" {
 
 /// The type of action to request from [`SDL_PeepEvents()`].
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`ADDEVENT`](SDL_EventAction::ADDEVENT) | [`SDL_ADDEVENT`] | Add events to the back of the queue. |
@@ -2044,7 +2044,7 @@ extern "C" {
     /// Otherwise, the events may not be ready to be filtered when you call
     /// [`SDL_PeepEvents()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `events`: destination buffer for the retrieved events, may be NULL to
     ///   leave the events in the queue and return the number of events
     ///   that would have been stored.
@@ -2057,17 +2057,17 @@ extern "C" {
     /// - `maxType`: maximum value of the event type to be considered;
     ///   [`SDL_EVENT_LAST`] is a safe choice.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of events actually stored or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PollEvent`]
     /// - [`SDL_PumpEvents`]
     /// - [`SDL_PushEvent`]
@@ -2086,20 +2086,20 @@ extern "C" {
     /// If you need to check for a range of event types, use [`SDL_HasEvents()`]
     /// instead.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `type`: the type of event to be queried; see [`SDL_EventType`] for details.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if events matching `type` are present, or false if events
     ///   matching `type` are not present.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_HasEvents`]
     pub fn SDL_HasEvent(r#type: Uint32) -> ::core::primitive::bool;
 }
@@ -2109,23 +2109,23 @@ extern "C" {
     ///
     /// If you need to check for a single event type, use [`SDL_HasEvent()`] instead.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `minType`: the low end of event type to be queried, inclusive; see
     ///   [`SDL_EventType`] for details.
     /// - `maxType`: the high end of event type to be queried, inclusive; see
     ///   [`SDL_EventType`] for details.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if events with type >= `minType` and <= `maxType` are
     ///   present, or false if not.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_HasEvents`]
     pub fn SDL_HasEvents(minType: Uint32, maxType: Uint32) -> ::core::primitive::bool;
 }
@@ -2148,16 +2148,16 @@ extern "C" {
     /// use [`SDL_PeepEvents()`] to remove and clean up those events before calling
     /// this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `type`: the type of event to be cleared; see [`SDL_EventType`] for details.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_FlushEvents`]
     pub fn SDL_FlushEvent(r#type: Uint32);
 }
@@ -2176,19 +2176,19 @@ extern "C" {
     /// sure that all pending OS events are flushed, you can call [`SDL_PumpEvents()`]
     /// on the main thread immediately before the flush call.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `minType`: the low end of event type to be cleared, inclusive; see
     ///   [`SDL_EventType`] for details.
     /// - `maxType`: the high end of event type to be cleared, inclusive; see
     ///   [`SDL_EventType`] for details.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_FlushEvent`]
     pub fn SDL_FlushEvents(minType: Uint32, maxType: Uint32);
 }
@@ -2225,20 +2225,20 @@ extern "C" {
     /// }
     /// ```
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `event`: the [`SDL_Event`] structure to be filled with the next event from
     ///   the queue, or NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if this got an event or false if there are none available.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PushEvent`]
     /// - [`SDL_WaitEvent`]
     /// - [`SDL_WaitEventTimeout`]
@@ -2254,21 +2254,21 @@ extern "C" {
     /// As this function may implicitly call [`SDL_PumpEvents()`], you can only call
     /// this function in the thread that initialized the video subsystem.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `event`: the [`SDL_Event`] structure to be filled in with the next event
     ///   from the queue, or NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false if there was an error while waiting for
     ///   events; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PollEvent`]
     /// - [`SDL_PushEvent`]
     /// - [`SDL_WaitEventTimeout`]
@@ -2288,23 +2288,23 @@ extern "C" {
     /// The timeout is not guaranteed, the actual wait time could be longer due to
     /// system scheduling.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `event`: the [`SDL_Event`] structure to be filled in with the next event
     ///   from the queue, or NULL.
     /// - `timeoutMS`: the maximum number of milliseconds to wait for the next
     ///   available event.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if this got an event or false if the timeout elapsed without
     ///   any events available.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PollEvent`]
     /// - [`SDL_PushEvent`]
     /// - [`SDL_WaitEvent`]
@@ -2333,21 +2333,21 @@ extern "C" {
     /// get an event type that does not conflict with other code that also wants
     /// its own custom event types.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `event`: the [`SDL_Event`] to be added to the queue.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success, false if the event was filtered or on failure;
     ///   call [`SDL_GetError()`] for more information. A common reason for
     ///   error is the event queue being full.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PeepEvents`]
     /// - [`SDL_PollEvent`]
     /// - [`SDL_RegisterEvents`]
@@ -2356,25 +2356,25 @@ extern "C" {
 
 /// A function pointer used for callbacks that watch the event queue.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: what was passed as `userdata` to [`SDL_SetEventFilter()`] or
 ///   [`SDL_AddEventWatch`], etc.
 /// - `event`: the event that triggered the callback.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true to permit event to be added to the queue, and false to
 ///   disallow it. When used with [`SDL_AddEventWatch`], the return value is
 ///   ignored.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// SDL may call this callback at any time from any thread; the
 ///   application is responsible for locking resources the callback
 ///   touches that need to be protected.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_SetEventFilter`]
 /// - [`SDL_AddEventWatch`]
 pub type SDL_EventFilter = ::core::option::Option<
@@ -2410,17 +2410,17 @@ extern "C" {
     /// the event filter, but events pushed onto the queue with [`SDL_PeepEvents()`] do
     /// not.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `filter`: an [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_AddEventWatch`]
     /// - [`SDL_SetEventEnabled`]
     /// - [`SDL_GetEventFilter`]
@@ -2435,21 +2435,21 @@ extern "C" {
     /// This function can be used to "chain" filters, by saving the existing filter
     /// before replacing it with a function that will call that saved filter.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `filter`: the current callback function will be stored here.
     /// - `userdata`: the pointer that is passed to the current event filter will
     ///   be stored here.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false if there is no event filter set.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetEventFilter`]
     pub fn SDL_GetEventFilter(
         filter: *mut SDL_EventFilter,
@@ -2475,21 +2475,21 @@ extern "C" {
     /// callback set with [`SDL_SetEventFilter()`], nor for events posted by the user
     /// through [`SDL_PeepEvents()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `filter`: an [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_RemoveEventWatch`]
     /// - [`SDL_SetEventFilter`]
     pub fn SDL_AddEventWatch(
@@ -2504,17 +2504,17 @@ extern "C" {
     /// This function takes the same input as [`SDL_AddEventWatch()`] to identify and
     /// delete the corresponding callback.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `filter`: the function originally passed to [`SDL_AddEventWatch()`].
     /// - `userdata`: the pointer originally passed to [`SDL_AddEventWatch()`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_AddEventWatch`]
     pub fn SDL_RemoveEventWatch(filter: SDL_EventFilter, userdata: *mut ::core::ffi::c_void);
 }
@@ -2527,17 +2527,17 @@ extern "C" {
     /// this function does not change the filter permanently, it only uses the
     /// supplied filter until this function returns.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `filter`: the [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetEventFilter`]
     /// - [`SDL_SetEventFilter`]
     pub fn SDL_FilterEvents(filter: SDL_EventFilter, userdata: *mut ::core::ffi::c_void);
@@ -2546,17 +2546,17 @@ extern "C" {
 extern "C" {
     /// Set the state of processing events by type.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `type`: the type of event; see [`SDL_EventType`] for details.
     /// - `enabled`: whether to process the event or not.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_EventEnabled`]
     pub fn SDL_SetEventEnabled(r#type: Uint32, enabled: ::core::primitive::bool);
 }
@@ -2564,19 +2564,19 @@ extern "C" {
 extern "C" {
     /// Query the state of processing events by type.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `type`: the type of event; see [`SDL_EventType`] for details.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if the event is being processed, false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetEventEnabled`]
     pub fn SDL_EventEnabled(r#type: Uint32) -> ::core::primitive::bool;
 }
@@ -2585,20 +2585,20 @@ extern "C" {
     /// Allocate a set of user-defined events, and return the beginning event
     /// number for that set of events.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `numevents`: the number of events to be allocated.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the beginning event number, or 0 if numevents is invalid or if
     ///   there are not enough user-defined events left.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PushEvent`]
     pub fn SDL_RegisterEvents(numevents: ::core::ffi::c_int) -> Uint32;
 }
@@ -2606,19 +2606,19 @@ extern "C" {
 extern "C" {
     /// Get window associated with an event.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `event`: an event containing a `windowID`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the associated window on success or NULL if there is none.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PollEvent`]
     /// - [`SDL_WaitEvent`]
     /// - [`SDL_WaitEventTimeout`]

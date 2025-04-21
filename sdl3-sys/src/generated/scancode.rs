@@ -18,10 +18,10 @@ use super::stdinc::*;
 /// The values in this enumeration are based on the USB usage page standard:
 /// <https://usb.org/sites/default/files/hut1_5.pdf>
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_Scancode::UNKNOWN) | [`SDL_SCANCODE_UNKNOWN`] | |

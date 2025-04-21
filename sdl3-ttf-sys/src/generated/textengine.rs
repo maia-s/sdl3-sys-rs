@@ -4,10 +4,10 @@ use super::ttf::*;
 
 /// A font atlas draw command.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL_ttf 3.0.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NOOP`](TTF_DrawCommand::NOOP) | [`TTF_DRAW_COMMAND_NOOP`] | |
@@ -70,10 +70,10 @@ impl sdl3_sys::metadata::HasGroupMetadata for TTF_DrawCommand {
 
 /// A filled rectangle draw operation.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`TTF_DrawOperation`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -87,10 +87,10 @@ pub struct TTF_FillOperation {
 
 /// A texture copy draw operation.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`TTF_DrawOperation`]
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -126,7 +126,7 @@ impl ::core::default::Default for TTF_CopyOperation {
 
 /// A text engine draw operation.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL_ttf 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -148,10 +148,10 @@ impl ::core::default::Default for TTF_DrawOperation {
 ///
 /// This structure should be initialized using [`SDL_INIT_INTERFACE()`]
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_INIT_INTERFACE`]
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
