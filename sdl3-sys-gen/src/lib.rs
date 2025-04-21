@@ -660,6 +660,7 @@ impl Gen {
         let mut metadata_out = String::new();
         writeln!(metadata_out, "#![allow(non_upper_case_globals, unused)]")?;
         writeln!(metadata_out)?;
+        writeln!(metadata_out, "use core::ffi::CStr;")?;
         writeln!(
             metadata_out,
             "use sdl3_sys::{{metadata::{{Group, GroupKind, GroupValue, Hint, Property}}, properties::SDL_PropertyType, version::SDL_VERSIONNUM}};"
@@ -713,7 +714,7 @@ impl Gen {
                             module: {module:?},
                             name: {name:?},
                             short_name: {short_name:?},
-                            value: unsafe {{ ::core::ffi::CStr::from_ptr(crate::{module}::{name}) }},
+                            value: unsafe {{ CStr::from_ptr(crate::{module}::{name}) }},
                             doc: {doc},
                             available_since: {available_since},
                         }},
@@ -762,7 +763,7 @@ impl Gen {
                             module: {module:?},
                             name: {name:?},
                             short_name: {short_name:?},
-                            value: unsafe {{ ::core::ffi::CStr::from_ptr(crate::{module}::{name}) }},
+                            value: unsafe {{ CStr::from_ptr(crate::{module}::{name}) }},
                             ty: SDL_PropertyType::{ty},
                             doc: {doc},
                             available_since: {available_since},
