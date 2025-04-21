@@ -1076,6 +1076,10 @@ impl Enum {
         }
 
         let mut doc_out = ctx.capture_output(|ctx| doc.emit(ctx))?;
+        let doc_meta = doc_out
+            .lines()
+            .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
+            .collect::<String>();
         let mut ctx_doc = ctx.with_output(&mut doc_out);
         let mut impl_consts = String::new();
         let mut ctx_impl = ctx.with_output(&mut impl_consts);
@@ -1083,6 +1087,8 @@ impl Enum {
         let mut ctx_global = ctx.with_output(&mut global_consts);
         let mut debug_consts = String::new();
         let mut ctx_debug = ctx.with_output(&mut debug_consts);
+        let mut metadata = String::new();
+        let mut ctx_metadata = ctx.with_output(&mut metadata);
         let mut next_expr = Some(Expr::Literal(Literal::Integer(IntegerLiteral::zero())));
 
         if !known_values.is_empty() {
@@ -1099,6 +1105,38 @@ impl Enum {
                 "/// | ------------------- | --------------- | ----------- |"
             )?;
         }
+
+        writeln!(ctx_metadata, r#"#[cfg(feature = "metadata")]"#)?;
+        writeln!(
+            ctx_metadata,
+            "impl sdl3_sys::metadata::HasGroupMetadata for {enum_ident_s} {{"
+        )?;
+        ctx_metadata.increase_indent();
+        writeln!(
+            ctx_metadata,
+            "const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {{"
+        )?;
+        ctx_metadata.increase_indent();
+        writeln!(
+            ctx_metadata,
+            "kind: sdl3_sys::metadata::GroupKind::{},",
+            match self.kind {
+                EnumKind::Enum => "Enum",
+                EnumKind::Flags => "Flags",
+                EnumKind::Id => "Id",
+                EnumKind::Lock => "Lock",
+            }
+        )?;
+        writeln!(ctx_metadata, "module: {:?},", ctx.module())?;
+        writeln!(ctx_metadata, "name: {:?},", enum_ident_s)?;
+        writeln!(
+            ctx_metadata,
+            "short_name: {:?},",
+            enum_ident_s.strip_prefix(&ctx.gen.sym_prefix).unwrap()
+        )?;
+        writeln!(ctx_metadata, "doc: {doc_meta:?},")?;
+        writeln!(ctx_metadata, "values: &[")?;
+        ctx_metadata.increase_indent();
 
         let mut seen_target_dependent = HashSet::new();
 
@@ -1171,6 +1209,7 @@ impl Enum {
 
             variant.cond.emit_cfg(&mut ctx_impl)?;
             variant.doc.emit(&mut ctx_impl)?;
+            let variant_doc_meta = ctx_impl.capture_output(|ctx| variant.doc.emit(ctx))?;
             if !variant.cond.is_empty() {
                 writeln!(
                     ctx_impl,
@@ -1216,8 +1255,31 @@ impl Enum {
                     short_variant_ident = short_variant_ident,
                 )?;
             }
+
+            writeln!(ctx_metadata, "sdl3_sys::metadata::GroupValue {{")?;
+            ctx_metadata.increase_indent();
+            writeln!(ctx_metadata, "name: {variant_ident:?},")?;
+            writeln!(ctx_metadata, "short_name: {short_variant_ident:?},")?;
+            writeln!(
+                ctx_metadata,
+                "doc: {:?},",
+                variant_doc_meta
+                    .lines()
+                    .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
+                    .collect::<String>()
+            )?;
+            ctx_metadata.decrease_indent();
+            writeln!(ctx_metadata, "}},")?;
         }
 
+        ctx_metadata.decrease_indent();
+        writeln!(ctx_metadata, "],")?;
+        ctx_metadata.decrease_indent();
+        writeln!(ctx_metadata, "}};")?;
+        ctx_metadata.decrease_indent();
+        writeln!(ctx_metadata, "}}")?;
+
+        drop(ctx_metadata);
         drop(ctx_debug);
         drop(ctx_global);
         drop(ctx_impl);
@@ -1409,6 +1471,8 @@ impl Enum {
             writeln!(ctx)?;
         }
         ctx.write_str(&global_consts)?;
+        writeln!(ctx)?;
+        ctx.write_str(&metadata)?;
         writeln!(ctx)?;
         ctx.flush_ool_output()?;
         Ok(())

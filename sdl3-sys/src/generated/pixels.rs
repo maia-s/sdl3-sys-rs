@@ -192,6 +192,84 @@ pub const SDL_PIXELTYPE_ARRAYF16: SDL_PixelType = SDL_PixelType::ARRAYF16;
 pub const SDL_PIXELTYPE_ARRAYF32: SDL_PixelType = SDL_PixelType::ARRAYF32;
 pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_PixelType {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_PixelType",
+        short_name: "PixelType",
+        doc: "Pixel type.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_INDEX1",
+                short_name: "INDEX1",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_INDEX4",
+                short_name: "INDEX4",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_INDEX8",
+                short_name: "INDEX8",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_PACKED8",
+                short_name: "PACKED8",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_PACKED16",
+                short_name: "PACKED16",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_PACKED32",
+                short_name: "PACKED32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_ARRAYU8",
+                short_name: "ARRAYU8",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_ARRAYU16",
+                short_name: "ARRAYU16",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_ARRAYU32",
+                short_name: "ARRAYU32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_ARRAYF16",
+                short_name: "ARRAYF16",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_ARRAYF32",
+                short_name: "ARRAYF32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELTYPE_INDEX2",
+                short_name: "INDEX2",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// Bitmap pixel order, high bit -> low bit.
 ///
 /// ### Availability
@@ -251,6 +329,34 @@ impl SDL_BitmapOrder {
 pub const SDL_BITMAPORDER_NONE: SDL_BitmapOrder = SDL_BitmapOrder::NONE;
 pub const SDL_BITMAPORDER_4321: SDL_BitmapOrder = SDL_BitmapOrder::_4321;
 pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_BitmapOrder {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_BitmapOrder",
+        short_name: "BitmapOrder",
+        doc: "Bitmap pixel order, high bit -> low bit.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_BITMAPORDER_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_BITMAPORDER_4321",
+                short_name: "_4321",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_BITMAPORDER_1234",
+                short_name: "_1234",
+                doc: "",
+            },
+        ],
+    };
+}
 
 /// Packed component order, high bit -> low bit.
 ///
@@ -336,6 +442,64 @@ pub const SDL_PACKEDORDER_BGRX: SDL_PackedOrder = SDL_PackedOrder::BGRX;
 pub const SDL_PACKEDORDER_ABGR: SDL_PackedOrder = SDL_PackedOrder::ABGR;
 pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_PackedOrder {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_PackedOrder",
+        short_name: "PackedOrder",
+        doc: "Packed component order, high bit -> low bit.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDORDER_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDORDER_XRGB",
+                short_name: "XRGB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDORDER_RGBX",
+                short_name: "RGBX",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDORDER_ARGB",
+                short_name: "ARGB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDORDER_RGBA",
+                short_name: "RGBA",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDORDER_XBGR",
+                short_name: "XBGR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDORDER_BGRX",
+                short_name: "BGRX",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDORDER_ABGR",
+                short_name: "ABGR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDORDER_BGRA",
+                short_name: "BGRA",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// Array component order, low byte -> high byte.
 ///
 /// ### Availability
@@ -411,6 +575,54 @@ pub const SDL_ARRAYORDER_ARGB: SDL_ArrayOrder = SDL_ArrayOrder::ARGB;
 pub const SDL_ARRAYORDER_BGR: SDL_ArrayOrder = SDL_ArrayOrder::BGR;
 pub const SDL_ARRAYORDER_BGRA: SDL_ArrayOrder = SDL_ArrayOrder::BGRA;
 pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ArrayOrder {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_ArrayOrder",
+        short_name: "ArrayOrder",
+        doc: "Array component order, low byte -> high byte.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ARRAYORDER_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ARRAYORDER_RGB",
+                short_name: "RGB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ARRAYORDER_RGBA",
+                short_name: "RGBA",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ARRAYORDER_ARGB",
+                short_name: "ARGB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ARRAYORDER_BGR",
+                short_name: "BGR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ARRAYORDER_BGRA",
+                short_name: "BGRA",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ARRAYORDER_ABGR",
+                short_name: "ABGR",
+                doc: "",
+            },
+        ],
+    };
+}
 
 /// Packed component layout.
 ///
@@ -495,6 +707,64 @@ pub const SDL_PACKEDLAYOUT_565: SDL_PackedLayout = SDL_PackedLayout::_565;
 pub const SDL_PACKEDLAYOUT_8888: SDL_PackedLayout = SDL_PackedLayout::_8888;
 pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout::_2101010;
 pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_1010102;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_PackedLayout {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_PackedLayout",
+        short_name: "PackedLayout",
+        doc: "Packed component layout.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDLAYOUT_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDLAYOUT_332",
+                short_name: "_332",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDLAYOUT_4444",
+                short_name: "_4444",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDLAYOUT_1555",
+                short_name: "_1555",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDLAYOUT_5551",
+                short_name: "_5551",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDLAYOUT_565",
+                short_name: "_565",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDLAYOUT_8888",
+                short_name: "_8888",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDLAYOUT_2101010",
+                short_name: "_2101010",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PACKEDLAYOUT_1010102",
+                short_name: "_1010102",
+                doc: "",
+            },
+        ],
+    };
+}
 
 /// A macro for defining custom FourCC pixel formats.
 ///
@@ -1003,6 +1273,424 @@ pub const SDL_PIXELFORMAT_BGRX32: SDL_PixelFormat = SDL_PixelFormat::BGRX32;
 #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PixelFormat::XBGR32;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_PixelFormat {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_PixelFormat",
+        short_name: "PixelFormat",
+        doc: "Pixel format.\n\nSDL's pixel formats have the following naming convention:\n\n- Names with a list of components and a single bit count, such as RGB24 and\nABGR32, define a platform-independent encoding into bytes in the order\nspecified. For example, in RGB24 data, each pixel is encoded in 3 bytes\n(red, green, blue) in that order, and in ABGR32 data, each pixel is\nencoded in 4 bytes alpha, blue, green, red) in that order. Use these\nnames if the property of a format that is important to you is the order\nof the bytes in memory or on disk.\n- Names with a bit count per component, such as ARGB8888 and XRGB1555, are\n\"packed\" into an appropriately-sized integer in the platform's native\nendianness. For example, ARGB8888 is a sequence of 32-bit integers; in\neach integer, the most significant bits are alpha, and the least\nsignificant bits are blue. On a little-endian CPU such as x86, the least\nsignificant bits of each integer are arranged first in memory, but on a\nbig-endian CPU such as s390x, the most significant bits are arranged\nfirst. Use these names if the property of a format that is important to\nyou is the meaning of each bit position within a native-endianness\ninteger.\n- In indexed formats such as INDEX4LSB, each pixel is represented by\nencoding an index into the palette into the indicated number of bits,\nwith multiple pixels packed into each byte if appropriate. In LSB\nformats, the first (leftmost) pixel is stored in the least-significant\nbits of the byte; in MSB formats, it's stored in the most-significant\nbits. INDEX8 does not need LSB/MSB variants, because each pixel exactly\nfills one byte.\n\nThe 32-bit byte-array encodings such as RGBA32 are aliases for the\nappropriate 8888 encoding for the current platform. For example, RGBA32 is\nan alias for ABGR8888 on little-endian CPUs like x86, or an alias for\nRGBA8888 on big-endian CPUs.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX1LSB",
+                short_name: "INDEX1LSB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX1MSB",
+                short_name: "INDEX1MSB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX2LSB",
+                short_name: "INDEX2LSB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX2MSB",
+                short_name: "INDEX2MSB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX4LSB",
+                short_name: "INDEX4LSB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX4MSB",
+                short_name: "INDEX4MSB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX8",
+                short_name: "INDEX8",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGB332",
+                short_name: "RGB332",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_XRGB4444",
+                short_name: "XRGB4444",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_XBGR4444",
+                short_name: "XBGR4444",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_XRGB1555",
+                short_name: "XRGB1555",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_XBGR1555",
+                short_name: "XBGR1555",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB4444",
+                short_name: "ARGB4444",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA4444",
+                short_name: "RGBA4444",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR4444",
+                short_name: "ABGR4444",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA4444",
+                short_name: "BGRA4444",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB1555",
+                short_name: "ARGB1555",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA5551",
+                short_name: "RGBA5551",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR1555",
+                short_name: "ABGR1555",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA5551",
+                short_name: "BGRA5551",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGB565",
+                short_name: "RGB565",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGR565",
+                short_name: "BGR565",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGB24",
+                short_name: "RGB24",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGR24",
+                short_name: "BGR24",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_XRGB8888",
+                short_name: "XRGB8888",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGBX8888",
+                short_name: "RGBX8888",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_XBGR8888",
+                short_name: "XBGR8888",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGRX8888",
+                short_name: "BGRX8888",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB8888",
+                short_name: "ARGB8888",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA8888",
+                short_name: "RGBA8888",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR8888",
+                short_name: "ABGR8888",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA8888",
+                short_name: "BGRA8888",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_XRGB2101010",
+                short_name: "XRGB2101010",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_XBGR2101010",
+                short_name: "XBGR2101010",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB2101010",
+                short_name: "ARGB2101010",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR2101010",
+                short_name: "ABGR2101010",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGB48",
+                short_name: "RGB48",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGR48",
+                short_name: "BGR48",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA64",
+                short_name: "RGBA64",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB64",
+                short_name: "ARGB64",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA64",
+                short_name: "BGRA64",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR64",
+                short_name: "ABGR64",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGB48_FLOAT",
+                short_name: "RGB48_FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGR48_FLOAT",
+                short_name: "BGR48_FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA64_FLOAT",
+                short_name: "RGBA64_FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB64_FLOAT",
+                short_name: "ARGB64_FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA64_FLOAT",
+                short_name: "BGRA64_FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR64_FLOAT",
+                short_name: "ABGR64_FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGB96_FLOAT",
+                short_name: "RGB96_FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGR96_FLOAT",
+                short_name: "BGR96_FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA128_FLOAT",
+                short_name: "RGBA128_FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB128_FLOAT",
+                short_name: "ARGB128_FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA128_FLOAT",
+                short_name: "BGRA128_FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR128_FLOAT",
+                short_name: "ABGR128_FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_YV12",
+                short_name: "YV12",
+                doc: "Planar mode: Y + V + U  (3 planes)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_IYUV",
+                short_name: "IYUV",
+                doc: "Planar mode: Y + U + V  (3 planes)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_YUY2",
+                short_name: "YUY2",
+                doc: "Packed mode: Y0+U0+Y1+V0 (1 plane)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_UYVY",
+                short_name: "UYVY",
+                doc: "Packed mode: U0+Y0+V0+Y1 (1 plane)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_YVYU",
+                short_name: "YVYU",
+                doc: "Packed mode: Y0+V0+Y1+U0 (1 plane)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_NV12",
+                short_name: "NV12",
+                doc: "Planar mode: Y + U/V interleaved  (2 planes)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_NV21",
+                short_name: "NV21",
+                doc: "Planar mode: Y + V/U interleaved  (2 planes)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_P010",
+                short_name: "P010",
+                doc: "Planar mode: Y + U/V interleaved  (2 planes)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_EXTERNAL_OES",
+                short_name: "EXTERNAL_OES",
+                doc: "Android video texture format\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_MJPG",
+                short_name: "MJPG",
+                doc: "Motion JPEG\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA32",
+                short_name: "RGBA32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB32",
+                short_name: "ARGB32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA32",
+                short_name: "BGRA32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR32",
+                short_name: "ABGR32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGBX32",
+                short_name: "RGBX32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_XRGB32",
+                short_name: "XRGB32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGRX32",
+                short_name: "BGRX32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_XBGR32",
+                short_name: "XBGR32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA32",
+                short_name: "RGBA32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB32",
+                short_name: "ARGB32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA32",
+                short_name: "BGRA32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR32",
+                short_name: "ABGR32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_RGBX32",
+                short_name: "RGBX32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_XRGB32",
+                short_name: "XRGB32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_BGRX32",
+                short_name: "BGRX32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PIXELFORMAT_XBGR32",
+                short_name: "XBGR32",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// A macro for defining custom non-FourCC pixel formats.
 ///
 /// For example, defining [`SDL_PIXELFORMAT_RGBA8888`] looks like this:
@@ -1429,6 +2117,35 @@ pub const SDL_COLOR_TYPE_UNKNOWN: SDL_ColorType = SDL_ColorType::UNKNOWN;
 pub const SDL_COLOR_TYPE_RGB: SDL_ColorType = SDL_ColorType::RGB;
 pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ColorType {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_ColorType",
+        short_name: "ColorType",
+        doc:
+            "Colorspace color type.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_TYPE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_TYPE_RGB",
+                short_name: "RGB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_TYPE_YCBCR",
+                short_name: "YCBCR",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// Colorspace color range, as described by
 /// <https://www.itu.int/rec/R-REC-BT.2100-2-201807-I/en>
 ///
@@ -1493,6 +2210,34 @@ pub const SDL_COLOR_RANGE_UNKNOWN: SDL_ColorRange = SDL_ColorRange::UNKNOWN;
 pub const SDL_COLOR_RANGE_LIMITED: SDL_ColorRange = SDL_ColorRange::LIMITED;
 /// Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma
 pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ColorRange {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_ColorRange",
+        short_name: "ColorRange",
+        doc: "Colorspace color range, as described by\n<https://www.itu.int/rec/R-REC-BT.2100-2-201807-I/en>\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_RANGE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_RANGE_LIMITED",
+                short_name: "LIMITED",
+                doc: "Narrow range, e.g. 16-235 for 8-bit RGB and luma, and 16-240 for 8-bit chroma\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_RANGE_FULL",
+                short_name: "FULL",
+                doc: "Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma\n",
+            },
+        ],
+    };
+}
 
 /// Colorspace color primaries, as described by
 /// <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
@@ -1620,6 +2365,89 @@ pub const SDL_COLOR_PRIMARIES_SMPTE432: SDL_ColorPrimaries = SDL_ColorPrimaries:
 /// EBU Tech. 3213-E
 pub const SDL_COLOR_PRIMARIES_EBU3213: SDL_ColorPrimaries = SDL_ColorPrimaries::EBU3213;
 pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::CUSTOM;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ColorPrimaries {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_ColorPrimaries",
+        short_name: "ColorPrimaries",
+        doc: "Colorspace color primaries, as described by\n<https://www.itu.int/rec/T-REC-H.273-201612-S/en>\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_BT709",
+                short_name: "BT709",
+                doc: "ITU-R BT.709-6\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_UNSPECIFIED",
+                short_name: "UNSPECIFIED",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_BT470M",
+                short_name: "BT470M",
+                doc: "ITU-R BT.470-6 System M\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_BT470BG",
+                short_name: "BT470BG",
+                doc: "ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_BT601",
+                short_name: "BT601",
+                doc: "ITU-R BT.601-7 525, SMPTE 170M\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_SMPTE240",
+                short_name: "SMPTE240",
+                doc: "SMPTE 240M, functionally the same as [`SDL_COLOR_PRIMARIES_BT601`]\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_GENERIC_FILM",
+                short_name: "GENERIC_FILM",
+                doc: "Generic film (color filters using Illuminant C)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_BT2020",
+                short_name: "BT2020",
+                doc: "ITU-R BT.2020-2 / ITU-R BT.2100-0\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_XYZ",
+                short_name: "XYZ",
+                doc: "SMPTE ST 428-1\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_SMPTE431",
+                short_name: "SMPTE431",
+                doc: "SMPTE RP 431-2\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_SMPTE432",
+                short_name: "SMPTE432",
+                doc: "SMPTE EG 432-1 / DCI P3\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_EBU3213",
+                short_name: "EBU3213",
+                doc: "EBU Tech. 3213-E\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLOR_PRIMARIES_CUSTOM",
+                short_name: "CUSTOM",
+                doc: "",
+            },
+        ],
+    };
+}
 
 /// Colorspace transfer characteristics.
 ///
@@ -1792,6 +2620,114 @@ pub const SDL_TRANSFER_CHARACTERISTICS_HLG: SDL_TransferCharacteristics =
 pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
     SDL_TransferCharacteristics::CUSTOM;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_TransferCharacteristics {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_TransferCharacteristics",
+        short_name: "TransferCharacteristics",
+        doc: "Colorspace transfer characteristics.\n\nThese are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_BT709",
+                short_name: "BT709",
+                doc: "Rec. ITU-R BT.709-6 / ITU-R BT1361\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_UNSPECIFIED",
+                short_name: "UNSPECIFIED",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_GAMMA22",
+                short_name: "GAMMA22",
+                doc: "ITU-R BT.470-6 System M / ITU-R BT1700 625 PAL & SECAM\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_GAMMA28",
+                short_name: "GAMMA28",
+                doc: "ITU-R BT.470-6 System B, G\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_BT601",
+                short_name: "BT601",
+                doc: "SMPTE ST 170M / ITU-R BT.601-7 525 or 625\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_SMPTE240",
+                short_name: "SMPTE240",
+                doc: "SMPTE ST 240M\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_LINEAR",
+                short_name: "LINEAR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_LOG100",
+                short_name: "LOG100",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_LOG100_SQRT10",
+                short_name: "LOG100_SQRT10",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_IEC61966",
+                short_name: "IEC61966",
+                doc: "IEC 61966-2-4\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_BT1361",
+                short_name: "BT1361",
+                doc: "ITU-R BT1361 Extended Colour Gamut\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_SRGB",
+                short_name: "SRGB",
+                doc: "IEC 61966-2-1 (sRGB or sYCC)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_BT2020_10BIT",
+                short_name: "BT2020_10BIT",
+                doc: "ITU-R BT2020 for 10-bit system\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_BT2020_12BIT",
+                short_name: "BT2020_12BIT",
+                doc: "ITU-R BT2020 for 12-bit system\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_PQ",
+                short_name: "PQ",
+                doc: "SMPTE ST 2084 for 10-, 12-, 14- and 16-bit systems\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_SMPTE428",
+                short_name: "SMPTE428",
+                doc: "SMPTE ST 428-1\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_HLG",
+                short_name: "HLG",
+                doc: "ARIB STD-B67, known as \"hybrid log-gamma\" (HLG)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_CUSTOM",
+                short_name: "CUSTOM",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// Colorspace matrix coefficients.
 ///
 /// These are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
@@ -1928,6 +2864,94 @@ pub const SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL: SDL_MatrixCoefficients =
 pub const SDL_MATRIX_COEFFICIENTS_ICTCP: SDL_MatrixCoefficients = SDL_MatrixCoefficients::ICTCP;
 pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoefficients::CUSTOM;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_MatrixCoefficients {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_MatrixCoefficients",
+        short_name: "MatrixCoefficients",
+        doc: "Colorspace matrix coefficients.\n\nThese are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_IDENTITY",
+                short_name: "IDENTITY",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_BT709",
+                short_name: "BT709",
+                doc: "ITU-R BT.709-6\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_UNSPECIFIED",
+                short_name: "UNSPECIFIED",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_FCC",
+                short_name: "FCC",
+                doc: "US FCC Title 47\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_BT470BG",
+                short_name: "BT470BG",
+                doc: "ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as [`SDL_MATRIX_COEFFICIENTS_BT601`]\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_BT601",
+                short_name: "BT601",
+                doc: "ITU-R BT.601-7 525\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_SMPTE240",
+                short_name: "SMPTE240",
+                doc: "SMPTE 240M\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_YCGCO",
+                short_name: "YCGCO",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_BT2020_NCL",
+                short_name: "BT2020_NCL",
+                doc: "ITU-R BT.2020-2 non-constant luminance\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_BT2020_CL",
+                short_name: "BT2020_CL",
+                doc: "ITU-R BT.2020-2 constant luminance\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_SMPTE2085",
+                short_name: "SMPTE2085",
+                doc: "SMPTE ST 2085\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL",
+                short_name: "CHROMA_DERIVED_NCL",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL",
+                short_name: "CHROMA_DERIVED_CL",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_ICTCP",
+                short_name: "ICTCP",
+                doc: "ITU-R BT.2100-0 ICTCP\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_CUSTOM",
+                short_name: "CUSTOM",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// Colorspace chroma sample location.
 ///
 /// ### Availability
@@ -1999,6 +3023,39 @@ pub const SDL_CHROMA_LOCATION_LEFT: SDL_ChromaLocation = SDL_ChromaLocation::LEF
 pub const SDL_CHROMA_LOCATION_CENTER: SDL_ChromaLocation = SDL_ChromaLocation::CENTER;
 /// In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located").
 pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::TOPLEFT;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ChromaLocation {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_ChromaLocation",
+        short_name: "ChromaLocation",
+        doc: "Colorspace chroma sample location.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_CHROMA_LOCATION_NONE",
+                short_name: "NONE",
+                doc: "RGB, no chroma sampling\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_CHROMA_LOCATION_LEFT",
+                short_name: "LEFT",
+                doc: "In MPEG-2, MPEG-4, and AVC, Cb and Cr are taken on midpoint of the left-edge of the 2x2 square. In other words, they have the same horizontal location as the top-left pixel, but is shifted one-half pixel down vertically.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_CHROMA_LOCATION_CENTER",
+                short_name: "CENTER",
+                doc: "In JPEG/JFIF, H.261, and MPEG-1, Cb and Cr are taken at the center of the 2x2 square. In other words, they are offset one-half pixel to the right and one-half pixel down compared to the top-left pixel.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_CHROMA_LOCATION_TOPLEFT",
+                short_name: "TOPLEFT",
+                doc: "In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel (\"co-sited\", \"co-located\").\n",
+            },
+        ],
+    };
+}
 
 /// Colorspace definitions.
 ///
@@ -2134,6 +3191,84 @@ pub const SDL_COLORSPACE_BT2020_FULL: SDL_Colorspace = SDL_Colorspace::BT2020_FU
 pub const SDL_COLORSPACE_RGB_DEFAULT: SDL_Colorspace = SDL_Colorspace::RGB_DEFAULT;
 /// The default colorspace for YUV surfaces if no colorspace is specified
 pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_Colorspace::YUV_DEFAULT;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_Colorspace {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "pixels",
+        name: "SDL_Colorspace",
+        short_name: "Colorspace",
+        doc: "Colorspace definitions.\n\nSince similar colorspaces may vary in their details (matrix, transfer\nfunction, etc.), this is not an exhaustive list, but rather a\nrepresentative sample of the kinds of colorspaces supported in SDL.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_ColorPrimaries`]\n- [`SDL_ColorRange`]\n- [`SDL_ColorType`]\n- [`SDL_MatrixCoefficients`]\n- [`SDL_TransferCharacteristics`]\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_SRGB",
+                short_name: "SRGB",
+                doc: "Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_SRGB_LINEAR",
+                short_name: "SRGB_LINEAR",
+                doc: "Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_HDR10",
+                short_name: "HDR10",
+                doc: "Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_JPEG",
+                short_name: "JPEG",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_NONE_P709_X601\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_BT601_LIMITED",
+                short_name: "BT601_LIMITED",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_BT601_FULL",
+                short_name: "BT601_FULL",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_BT709_LIMITED",
+                short_name: "BT709_LIMITED",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_BT709_FULL",
+                short_name: "BT709_FULL",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_BT2020_LIMITED",
+                short_name: "BT2020_LIMITED",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P2020\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_BT2020_FULL",
+                short_name: "BT2020_FULL",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P2020\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_RGB_DEFAULT",
+                short_name: "RGB_DEFAULT",
+                doc: "The default colorspace for RGB surfaces if no colorspace is specified\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_COLORSPACE_YUV_DEFAULT",
+                short_name: "YUV_DEFAULT",
+                doc: "The default colorspace for YUV surfaces if no colorspace is specified\n",
+            },
+        ],
+    };
+}
 
 /// A macro for defining custom [`SDL_Colorspace`] formats.
 ///

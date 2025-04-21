@@ -711,6 +711,10 @@ impl Gen {
                 }
             }
         }
+        writeln!(
+            metadata_out,
+            "/// Metadata for hint constants in this crate"
+        )?;
         writeln!(metadata_out, "pub const HINTS: &[Hint] = &[")?;
         for line in metadata_out_hints.lines() {
             // rustfmt won't format this
@@ -718,6 +722,10 @@ impl Gen {
         }
         writeln!(metadata_out, "];")?;
         writeln!(metadata_out)?;
+        writeln!(
+            metadata_out,
+            "/// Metadata for property constants in this crate"
+        )?;
         writeln!(metadata_out, "pub const PROPERTIES: &[Property] = &[")?;
         for line in metadata_out_props.lines() {
             // rustfmt won't format this

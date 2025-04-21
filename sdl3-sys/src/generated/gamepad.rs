@@ -165,6 +165,79 @@ pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR: SDL_GamepadType =
     SDL_GamepadType::NINTENDO_SWITCH_JOYCON_PAIR;
 pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadType {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "gamepad",
+        name: "SDL_GamepadType",
+        short_name: "GamepadType",
+        doc: "Standard gamepad types.\n\nThis type does not necessarily map to first-party controllers from\nMicrosoft/Sony/Nintendo; in many cases, third-party controllers can report\nas these, either because they were designed for a specific console, or they\nsimply most closely match that console's controllers (does it have A/B/X/Y\nbuttons or X/O/Square/Triangle? Does it have a touchpad? etc).\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_TYPE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_TYPE_STANDARD",
+                short_name: "STANDARD",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_TYPE_XBOX360",
+                short_name: "XBOX360",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_TYPE_XBOXONE",
+                short_name: "XBOXONE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_TYPE_PS3",
+                short_name: "PS3",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_TYPE_PS4",
+                short_name: "PS4",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_TYPE_PS5",
+                short_name: "PS5",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_PRO",
+                short_name: "NINTENDO_SWITCH_PRO",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT",
+                short_name: "NINTENDO_SWITCH_JOYCON_LEFT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT",
+                short_name: "NINTENDO_SWITCH_JOYCON_RIGHT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR",
+                short_name: "NINTENDO_SWITCH_JOYCON_PAIR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_TYPE_COUNT",
+                short_name: "COUNT",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// The list of buttons available on a gamepad
 ///
 /// For controllers that use a diamond pattern for the face buttons, the
@@ -373,6 +446,159 @@ pub const SDL_GAMEPAD_BUTTON_MISC5: SDL_GamepadButton = SDL_GamepadButton::MISC5
 pub const SDL_GAMEPAD_BUTTON_MISC6: SDL_GamepadButton = SDL_GamepadButton::MISC6;
 pub const SDL_GAMEPAD_BUTTON_COUNT: SDL_GamepadButton = SDL_GamepadButton::COUNT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadButton {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "gamepad",
+        name: "SDL_GamepadButton",
+        short_name: "GamepadButton",
+        doc: "The list of buttons available on a gamepad\n\nFor controllers that use a diamond pattern for the face buttons, the\nsouth/east/west/north buttons below correspond to the locations in the\ndiamond pattern. For Xbox controllers, this would be A/B/X/Y, for Nintendo\nSwitch controllers, this would be B/A/Y/X, for PlayStation controllers this\nwould be Cross/Circle/Square/Triangle.\n\nFor controllers that don't use a diamond pattern for the face buttons, the\nsouth/east/west/north buttons indicate the buttons labeled A, B, C, D, or\n1, 2, 3, 4, or for controllers that aren't labeled, they are the primary,\nsecondary, etc. buttons.\n\nThe activate action is often the south button and the cancel action is\noften the east button, but in some regions this is reversed, so your game\nshould allow remapping actions based on user preferences.\n\nYou can query the labels for the face buttons using\n[`SDL_GetGamepadButtonLabel()`]\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_SOUTH",
+                short_name: "SOUTH",
+                doc: "Bottom face button (e.g. Xbox A button)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_EAST",
+                short_name: "EAST",
+                doc: "Right face button (e.g. Xbox B button)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_WEST",
+                short_name: "WEST",
+                doc: "Left face button (e.g. Xbox X button)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_NORTH",
+                short_name: "NORTH",
+                doc: "Top face button (e.g. Xbox Y button)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_BACK",
+                short_name: "BACK",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_GUIDE",
+                short_name: "GUIDE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_START",
+                short_name: "START",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LEFT_STICK",
+                short_name: "LEFT_STICK",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_RIGHT_STICK",
+                short_name: "RIGHT_STICK",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LEFT_SHOULDER",
+                short_name: "LEFT_SHOULDER",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER",
+                short_name: "RIGHT_SHOULDER",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_DPAD_UP",
+                short_name: "DPAD_UP",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_DPAD_DOWN",
+                short_name: "DPAD_DOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_DPAD_LEFT",
+                short_name: "DPAD_LEFT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_DPAD_RIGHT",
+                short_name: "DPAD_RIGHT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_MISC1",
+                short_name: "MISC1",
+                doc: "Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button, Google Stadia capture button)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1",
+                short_name: "RIGHT_PADDLE1",
+                doc: "Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LEFT_PADDLE1",
+                short_name: "LEFT_PADDLE1",
+                doc: "Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2",
+                short_name: "RIGHT_PADDLE2",
+                doc: "Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LEFT_PADDLE2",
+                short_name: "LEFT_PADDLE2",
+                doc: "Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_TOUCHPAD",
+                short_name: "TOUCHPAD",
+                doc: "PS4/PS5 touchpad button\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_MISC2",
+                short_name: "MISC2",
+                doc: "Additional button\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_MISC3",
+                short_name: "MISC3",
+                doc: "Additional button\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_MISC4",
+                short_name: "MISC4",
+                doc: "Additional button\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_MISC5",
+                short_name: "MISC5",
+                doc: "Additional button\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_MISC6",
+                short_name: "MISC6",
+                doc: "Additional button\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_COUNT",
+                short_name: "COUNT",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// The set of gamepad button labels
 ///
 /// This isn't a complete set, just the face buttons to make it easy to show
@@ -465,6 +691,64 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_SQUARE: SDL_GamepadButtonLabel = SDL_GamepadB
 pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
     SDL_GamepadButtonLabel::TRIANGLE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadButtonLabel {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "gamepad",
+        name: "SDL_GamepadButtonLabel",
+        short_name: "GamepadButtonLabel",
+        doc: "The set of gamepad button labels\n\nThis isn't a complete set, just the face buttons to make it easy to show\nbutton prompts.\n\nFor a complete set, you should look at the button and gamepad type and have\na set of symbols that work well with your art style.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_A",
+                short_name: "A",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_B",
+                short_name: "B",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_X",
+                short_name: "X",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_Y",
+                short_name: "Y",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_CROSS",
+                short_name: "CROSS",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_CIRCLE",
+                short_name: "CIRCLE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_SQUARE",
+                short_name: "SQUARE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE",
+                short_name: "TRIANGLE",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// The list of axes available on a gamepad
 ///
 /// Thumbstick axis values range from [`SDL_JOYSTICK_AXIS_MIN`] to
@@ -554,6 +838,59 @@ pub const SDL_GAMEPAD_AXIS_LEFT_TRIGGER: SDL_GamepadAxis = SDL_GamepadAxis::LEFT
 pub const SDL_GAMEPAD_AXIS_RIGHT_TRIGGER: SDL_GamepadAxis = SDL_GamepadAxis::RIGHT_TRIGGER;
 pub const SDL_GAMEPAD_AXIS_COUNT: SDL_GamepadAxis = SDL_GamepadAxis::COUNT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadAxis {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "gamepad",
+        name: "SDL_GamepadAxis",
+        short_name: "GamepadAxis",
+        doc: "The list of axes available on a gamepad\n\nThumbstick axis values range from [`SDL_JOYSTICK_AXIS_MIN`] to\n[`SDL_JOYSTICK_AXIS_MAX`], and are centered within ~8000 of zero, though\nadvanced UI will allow users to set or autodetect the dead zone, which\nvaries between gamepads.\n\nTrigger axis values range from 0 (released) to [`SDL_JOYSTICK_AXIS_MAX`] (fully\npressed) when reported by [`SDL_GetGamepadAxis()`]. Note that this is not the\nsame range that will be reported by the lower-level [`SDL_GetJoystickAxis()`].\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_AXIS_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_AXIS_LEFTX",
+                short_name: "LEFTX",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_AXIS_LEFTY",
+                short_name: "LEFTY",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_AXIS_RIGHTX",
+                short_name: "RIGHTX",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_AXIS_RIGHTY",
+                short_name: "RIGHTY",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_AXIS_LEFT_TRIGGER",
+                short_name: "LEFT_TRIGGER",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_AXIS_RIGHT_TRIGGER",
+                short_name: "RIGHT_TRIGGER",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_AXIS_COUNT",
+                short_name: "COUNT",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// Types of gamepad control bindings.
 ///
 /// A gamepad is a collection of bindings that map arbitrary joystick buttons,
@@ -622,6 +959,39 @@ pub const SDL_GAMEPAD_BINDTYPE_NONE: SDL_GamepadBindingType = SDL_GamepadBinding
 pub const SDL_GAMEPAD_BINDTYPE_BUTTON: SDL_GamepadBindingType = SDL_GamepadBindingType::BUTTON;
 pub const SDL_GAMEPAD_BINDTYPE_AXIS: SDL_GamepadBindingType = SDL_GamepadBindingType::AXIS;
 pub const SDL_GAMEPAD_BINDTYPE_HAT: SDL_GamepadBindingType = SDL_GamepadBindingType::HAT;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadBindingType {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "gamepad",
+        name: "SDL_GamepadBindingType",
+        short_name: "GamepadBindingType",
+        doc: "Types of gamepad control bindings.\n\nA gamepad is a collection of bindings that map arbitrary joystick buttons,\naxes and hat switches to specific positions on a generic console-style\ngamepad. This enum is used as part of [`SDL_GamepadBinding`] to specify those\nmappings.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BINDTYPE_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BINDTYPE_BUTTON",
+                short_name: "BUTTON",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BINDTYPE_AXIS",
+                short_name: "AXIS",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GAMEPAD_BINDTYPE_HAT",
+                short_name: "HAT",
+                doc: "",
+            },
+        ],
+    };
+}
 
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_GamepadBinding {

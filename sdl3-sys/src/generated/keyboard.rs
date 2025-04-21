@@ -54,6 +54,19 @@ impl From<SDL_KeyboardID> for Uint32 {
     }
 }
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_KeyboardID {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Id,
+        module: "keyboard",
+        name: "SDL_KeyboardID",
+        short_name: "KeyboardID",
+        doc: "This is a unique ID for a keyboard for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the keyboard is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    };
+}
+
 extern "C" {
     /// Return whether a keyboard is currently connected.
     ///
@@ -576,6 +589,64 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN: SDL_TextInputType =
 pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
     SDL_TextInputType::NUMBER_PASSWORD_VISIBLE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_TextInputType {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "keyboard",
+        name: "SDL_TextInputType",
+        short_name: "TextInputType",
+        doc: "Text input type.\n\nThese are the valid values for [`SDL_PROP_TEXTINPUT_TYPE_NUMBER`]. Not every\nvalue is valid on every platform, but where a value isn't supported, a\nreasonable fallback will be used.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_StartTextInputWithProperties`]\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_TEXT",
+                short_name: "TEXT",
+                doc: "The input is text\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_TEXT_NAME",
+                short_name: "TEXT_NAME",
+                doc: "The input is a person's name\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_TEXT_EMAIL",
+                short_name: "TEXT_EMAIL",
+                doc: "The input is an e-mail address\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_TEXT_USERNAME",
+                short_name: "TEXT_USERNAME",
+                doc: "The input is a username\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_HIDDEN",
+                short_name: "TEXT_PASSWORD_HIDDEN",
+                doc: "The input is a secure password that is hidden\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_VISIBLE",
+                short_name: "TEXT_PASSWORD_VISIBLE",
+                doc: "The input is a secure password that is visible\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_NUMBER",
+                short_name: "NUMBER",
+                doc: "The input is a number\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN",
+                short_name: "NUMBER_PASSWORD_HIDDEN",
+                doc: "The input is a secure PIN that is hidden\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE",
+                short_name: "NUMBER_PASSWORD_VISIBLE",
+                doc: "The input is a secure PIN that is visible\n",
+            },
+        ],
+    };
+}
+
 /// Auto capitalization type.
 ///
 /// These are the valid values for [`SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER`].
@@ -654,6 +725,39 @@ pub const SDL_CAPITALIZE_SENTENCES: SDL_Capitalization = SDL_Capitalization::SEN
 pub const SDL_CAPITALIZE_WORDS: SDL_Capitalization = SDL_Capitalization::WORDS;
 /// All letters will be capitalized
 pub const SDL_CAPITALIZE_LETTERS: SDL_Capitalization = SDL_Capitalization::LETTERS;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_Capitalization {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "keyboard",
+        name: "SDL_Capitalization",
+        short_name: "Capitalization",
+        doc: "Auto capitalization type.\n\nThese are the valid values for [`SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER`].\nNot every value is valid on every platform, but where a value isn't\nsupported, a reasonable fallback will be used.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_StartTextInputWithProperties`]\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_CAPITALIZE_NONE",
+                short_name: "NONE",
+                doc: "No auto-capitalization will be done\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_CAPITALIZE_SENTENCES",
+                short_name: "SENTENCES",
+                doc: "The first letter of sentences will be capitalized\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_CAPITALIZE_WORDS",
+                short_name: "WORDS",
+                doc: "The first letter of words will be capitalized\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_CAPITALIZE_LETTERS",
+                short_name: "LETTERS",
+                doc: "All letters will be capitalized\n",
+            },
+        ],
+    };
+}
 
 extern "C" {
     /// Start accepting Unicode text input events in a window, with properties

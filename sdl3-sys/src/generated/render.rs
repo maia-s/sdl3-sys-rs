@@ -128,6 +128,34 @@ pub const SDL_TEXTUREACCESS_STREAMING: SDL_TextureAccess = SDL_TextureAccess::ST
 /// Texture can be used as a render target
 pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGET;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_TextureAccess {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "render",
+        name: "SDL_TextureAccess",
+        short_name: "TextureAccess",
+        doc: "The access pattern allowed for a texture.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TEXTUREACCESS_STATIC",
+                short_name: "STATIC",
+                doc: "Changes rarely, not lockable\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TEXTUREACCESS_STREAMING",
+                short_name: "STREAMING",
+                doc: "Changes frequently, lockable\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TEXTUREACCESS_TARGET",
+                short_name: "TARGET",
+                doc: "Texture can be used as a render target\n",
+            },
+        ],
+    };
+}
+
 /// How the logical size is mapped to the output.
 ///
 /// ### Availability
@@ -210,6 +238,44 @@ pub const SDL_LOGICAL_PRESENTATION_OVERSCAN: SDL_RendererLogicalPresentation =
 /// The rendered content is scaled up by integer multiples to fit the output resolution
 pub const SDL_LOGICAL_PRESENTATION_INTEGER_SCALE: SDL_RendererLogicalPresentation =
     SDL_RendererLogicalPresentation::INTEGER_SCALE;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_RendererLogicalPresentation {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "render",
+        name: "SDL_RendererLogicalPresentation",
+        short_name: "RendererLogicalPresentation",
+        doc: "How the logical size is mapped to the output.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_LOGICAL_PRESENTATION_DISABLED",
+                short_name: "DISABLED",
+                doc: "There is no logical size in effect\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_LOGICAL_PRESENTATION_STRETCH",
+                short_name: "STRETCH",
+                doc: "The rendered content is stretched to the output resolution\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_LOGICAL_PRESENTATION_LETTERBOX",
+                short_name: "LETTERBOX",
+                doc: "The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_LOGICAL_PRESENTATION_OVERSCAN",
+                short_name: "OVERSCAN",
+                doc: "The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_LOGICAL_PRESENTATION_INTEGER_SCALE",
+                short_name: "INTEGER_SCALE",
+                doc: "The rendered content is scaled up by integer multiples to fit the output resolution\n",
+            },
+        ],
+    };
+}
 
 /// An efficient driver-specific representation of pixel data
 ///

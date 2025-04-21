@@ -184,6 +184,39 @@ pub const SDL_PROCESS_STDIO_APP: SDL_ProcessIO = SDL_ProcessIO::APP;
 /// The I/O stream is redirected to an existing [`SDL_IOStream`].
 pub const SDL_PROCESS_STDIO_REDIRECT: SDL_ProcessIO = SDL_ProcessIO::REDIRECT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ProcessIO {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "process",
+        name: "SDL_ProcessIO",
+        short_name: "ProcessIO",
+        doc: "Description of where standard I/O should be directed when creating a\nprocess.\n\nIf a standard I/O stream is set to [`SDL_PROCESS_STDIO_INHERITED`], it will go\nto the same place as the application's I/O stream. This is the default for\nstandard output and standard error.\n\nIf a standard I/O stream is set to [`SDL_PROCESS_STDIO_NULL`], it is connected\nto `NUL:` on Windows and `/dev/null` on POSIX systems. This is the default\nfor standard input.\n\nIf a standard I/O stream is set to [`SDL_PROCESS_STDIO_APP`], it is connected\nto a new [`SDL_IOStream`] that is available to the application. Standard input\nwill be available as [`SDL_PROP_PROCESS_STDIN_POINTER`] and allows\n[`SDL_GetProcessInput()`], standard output will be available as\n[`SDL_PROP_PROCESS_STDOUT_POINTER`] and allows [`SDL_ReadProcess()`] and\n[`SDL_GetProcessOutput()`], and standard error will be available as\n[`SDL_PROP_PROCESS_STDERR_POINTER`] in the properties for the created\nprocess.\n\nIf a standard I/O stream is set to [`SDL_PROCESS_STDIO_REDIRECT`], it is\nconnected to an existing [`SDL_IOStream`] provided by the application. Standard\ninput is provided using [`SDL_PROP_PROCESS_CREATE_STDIN_POINTER`], standard\noutput is provided using [`SDL_PROP_PROCESS_CREATE_STDOUT_POINTER`], and\nstandard error is provided using [`SDL_PROP_PROCESS_CREATE_STDERR_POINTER`]\nin the creation properties. These existing streams should be closed by the\napplication once the new process is created.\n\nIn order to use an [`SDL_IOStream`] with [`SDL_PROCESS_STDIO_REDIRECT`], it must\nhave [`SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER`] or\n[`SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER`] set. This is true for streams\nrepresenting files and process I/O.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateProcessWithProperties`]\n- [`SDL_GetProcessProperties`]\n- [`SDL_ReadProcess`]\n- [`SDL_GetProcessInput`]\n- [`SDL_GetProcessOutput`]\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PROCESS_STDIO_INHERITED",
+                short_name: "INHERITED",
+                doc: "The I/O stream is inherited from the application.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PROCESS_STDIO_NULL",
+                short_name: "NULL",
+                doc: "The I/O stream is ignored.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PROCESS_STDIO_APP",
+                short_name: "APP",
+                doc: "The I/O stream is connected to a new [`SDL_IOStream`] that the application can read or write\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PROCESS_STDIO_REDIRECT",
+                short_name: "REDIRECT",
+                doc: "The I/O stream is redirected to an existing [`SDL_IOStream`].\n",
+            },
+        ],
+    };
+}
+
 extern "C" {
     /// Create a new process with the specified properties.
     ///

@@ -755,6 +755,44 @@ pub const SDL_SANDBOX_FLATPAK: SDL_Sandbox = SDL_Sandbox::FLATPAK;
 pub const SDL_SANDBOX_SNAP: SDL_Sandbox = SDL_Sandbox::SNAP;
 pub const SDL_SANDBOX_MACOS: SDL_Sandbox = SDL_Sandbox::MACOS;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_Sandbox {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "system",
+        name: "SDL_Sandbox",
+        short_name: "Sandbox",
+        doc: "Application sandbox environment.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SANDBOX_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SANDBOX_UNKNOWN_CONTAINER",
+                short_name: "UNKNOWN_CONTAINER",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SANDBOX_FLATPAK",
+                short_name: "FLATPAK",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SANDBOX_SNAP",
+                short_name: "SNAP",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SANDBOX_MACOS",
+                short_name: "MACOS",
+                doc: "",
+            },
+        ],
+    };
+}
+
 extern "C" {
     /// Get the application sandbox environment, if any.
     ///

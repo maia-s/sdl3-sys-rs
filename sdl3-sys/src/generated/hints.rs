@@ -4265,6 +4265,34 @@ pub const SDL_HINT_DEFAULT: SDL_HintPriority = SDL_HintPriority::DEFAULT;
 pub const SDL_HINT_NORMAL: SDL_HintPriority = SDL_HintPriority::NORMAL;
 pub const SDL_HINT_OVERRIDE: SDL_HintPriority = SDL_HintPriority::OVERRIDE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_HintPriority {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "hints",
+        name: "SDL_HintPriority",
+        short_name: "HintPriority",
+        doc: "An enumeration of hint priorities.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HINT_DEFAULT",
+                short_name: "DEFAULT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HINT_NORMAL",
+                short_name: "NORMAL",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HINT_OVERRIDE",
+                short_name: "OVERRIDE",
+                doc: "",
+            },
+        ],
+    };
+}
+
 extern "C" {
     /// Set a hint with a specific priority.
     ///

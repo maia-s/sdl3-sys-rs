@@ -68,6 +68,19 @@ impl From<SDL_DisplayID> for Uint32 {
     }
 }
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_DisplayID {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Id,
+        module: "video",
+        name: "SDL_DisplayID",
+        short_name: "DisplayID",
+        doc: "This is a unique ID for a display for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the display is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    };
+}
+
 /// This is a unique ID for a window.
 ///
 /// The value 0 is an invalid ID.
@@ -98,6 +111,19 @@ impl From<SDL_WindowID> for Uint32 {
     fn from(value: SDL_WindowID) -> Self {
         value.0
     }
+}
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_WindowID {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Id,
+        module: "video",
+        name: "SDL_WindowID",
+        short_name: "WindowID",
+        doc: "This is a unique ID for a window.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    };
 }
 
 /// The pointer to the global `wl_display` object used by the Wayland video
@@ -179,6 +205,34 @@ pub const SDL_SYSTEM_THEME_UNKNOWN: SDL_SystemTheme = SDL_SystemTheme::UNKNOWN;
 pub const SDL_SYSTEM_THEME_LIGHT: SDL_SystemTheme = SDL_SystemTheme::LIGHT;
 /// Dark colored system theme
 pub const SDL_SYSTEM_THEME_DARK: SDL_SystemTheme = SDL_SystemTheme::DARK;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_SystemTheme {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "video",
+        name: "SDL_SystemTheme",
+        short_name: "SystemTheme",
+        doc: "System theme.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SYSTEM_THEME_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "Unknown system theme\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SYSTEM_THEME_LIGHT",
+                short_name: "LIGHT",
+                doc: "Light colored system theme\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SYSTEM_THEME_DARK",
+                short_name: "DARK",
+                doc: "Dark colored system theme\n",
+            },
+        ],
+    };
+}
 
 /// The structure that defines a display mode.
 ///
@@ -294,6 +348,44 @@ pub const SDL_ORIENTATION_PORTRAIT: SDL_DisplayOrientation = SDL_DisplayOrientat
 /// The display is in portrait mode, upside down
 pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
     SDL_DisplayOrientation::PORTRAIT_FLIPPED;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_DisplayOrientation {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "video",
+        name: "SDL_DisplayOrientation",
+        short_name: "DisplayOrientation",
+        doc: "Display orientation values; the way a display is rotated.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ORIENTATION_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "The display orientation can't be determined\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ORIENTATION_LANDSCAPE",
+                short_name: "LANDSCAPE",
+                doc: "The display is in landscape mode, with the right side up, relative to portrait mode\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ORIENTATION_LANDSCAPE_FLIPPED",
+                short_name: "LANDSCAPE_FLIPPED",
+                doc: "The display is in landscape mode, with the left side up, relative to portrait mode\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ORIENTATION_PORTRAIT",
+                short_name: "PORTRAIT",
+                doc: "The display is in portrait mode\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ORIENTATION_PORTRAIT_FLIPPED",
+                short_name: "PORTRAIT_FLIPPED",
+                doc: "The display is in portrait mode, upside down\n",
+            },
+        ],
+    };
+}
 
 /// The flags on a window.
 ///
@@ -758,6 +850,144 @@ pub const SDL_WINDOW_TRANSPARENT: SDL_WindowFlags = SDL_WindowFlags::TRANSPARENT
 /// window should not be focusable
 pub const SDL_WINDOW_NOT_FOCUSABLE: SDL_WindowFlags = SDL_WindowFlags::NOT_FOCUSABLE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_WindowFlags {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Flags,
+        module: "video",
+        name: "SDL_WindowFlags",
+        short_name: "WindowFlags",
+        doc: "The flags on a window.\n\nThese cover a lot of true/false, or on/off, window state. Some of it is\nimmutable after being set through [`SDL_CreateWindow()`], some of it can be\nchanged on existing windows by the app, and some of it might be altered by\nthe user or system outside of the app's control.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetWindowFlags`]\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_FULLSCREEN",
+                short_name: "FULLSCREEN",
+                doc: "window is in fullscreen mode\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_OPENGL",
+                short_name: "OPENGL",
+                doc: "window usable with OpenGL context\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_OCCLUDED",
+                short_name: "OCCLUDED",
+                doc: "window is occluded\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_HIDDEN",
+                short_name: "HIDDEN",
+                doc: "window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_BORDERLESS",
+                short_name: "BORDERLESS",
+                doc: "no window decoration\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_RESIZABLE",
+                short_name: "RESIZABLE",
+                doc: "window can be resized\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_MINIMIZED",
+                short_name: "MINIMIZED",
+                doc: "window is minimized\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_MAXIMIZED",
+                short_name: "MAXIMIZED",
+                doc: "window is maximized\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_MOUSE_GRABBED",
+                short_name: "MOUSE_GRABBED",
+                doc: "window has grabbed mouse input\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_INPUT_FOCUS",
+                short_name: "INPUT_FOCUS",
+                doc: "window has input focus\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_MOUSE_FOCUS",
+                short_name: "MOUSE_FOCUS",
+                doc: "window has mouse focus\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_EXTERNAL",
+                short_name: "EXTERNAL",
+                doc: "window not created by SDL\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_MODAL",
+                short_name: "MODAL",
+                doc: "window is modal\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_HIGH_PIXEL_DENSITY",
+                short_name: "HIGH_PIXEL_DENSITY",
+                doc: "window uses high pixel density back buffer if possible\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_MOUSE_CAPTURE",
+                short_name: "MOUSE_CAPTURE",
+                doc: "window has mouse captured (unrelated to MOUSE_GRABBED)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_MOUSE_RELATIVE_MODE",
+                short_name: "MOUSE_RELATIVE_MODE",
+                doc: "window has relative mode enabled\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_ALWAYS_ON_TOP",
+                short_name: "ALWAYS_ON_TOP",
+                doc: "window should always be above others\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_UTILITY",
+                short_name: "UTILITY",
+                doc: "window should be treated as a utility window, not showing in the task bar and window list\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_TOOLTIP",
+                short_name: "TOOLTIP",
+                doc: "window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_POPUP_MENU",
+                short_name: "POPUP_MENU",
+                doc: "window should be treated as a popup menu, requires a parent window\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_KEYBOARD_GRABBED",
+                short_name: "KEYBOARD_GRABBED",
+                doc: "window has grabbed keyboard input\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_VULKAN",
+                short_name: "VULKAN",
+                doc: "window usable for Vulkan surface\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_METAL",
+                short_name: "METAL",
+                doc: "window usable for Metal view\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_TRANSPARENT",
+                short_name: "TRANSPARENT",
+                doc: "window with transparent buffer\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_WINDOW_NOT_FOCUSABLE",
+                short_name: "NOT_FOCUSABLE",
+                doc: "window should not be focusable\n",
+            },
+        ],
+    };
+}
+
 /// A magic value used with [`SDL_WINDOWPOS_UNDEFINED`].
 ///
 /// Generally this macro isn't used directly, but rather through
@@ -913,6 +1143,35 @@ pub const SDL_FLASH_CANCEL: SDL_FlashOperation = SDL_FlashOperation::CANCEL;
 pub const SDL_FLASH_BRIEFLY: SDL_FlashOperation = SDL_FlashOperation::BRIEFLY;
 /// Flash the window until it gets focus
 pub const SDL_FLASH_UNTIL_FOCUSED: SDL_FlashOperation = SDL_FlashOperation::UNTIL_FOCUSED;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_FlashOperation {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "video",
+        name: "SDL_FlashOperation",
+        short_name: "FlashOperation",
+        doc:
+            "Window flash operation.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_FLASH_CANCEL",
+                short_name: "CANCEL",
+                doc: "Cancel any window flash state\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_FLASH_BRIEFLY",
+                short_name: "BRIEFLY",
+                doc: "Flash the window briefly to get attention\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_FLASH_UNTIL_FOCUSED",
+                short_name: "UNTIL_FOCUSED",
+                doc: "Flash the window until it gets focus\n",
+            },
+        ],
+    };
+}
 
 /// An opaque handle to an OpenGL context.
 ///
@@ -1245,6 +1504,159 @@ pub const SDL_GL_CONTEXT_NO_ERROR: SDL_GLAttr = SDL_GLAttr::CONTEXT_NO_ERROR;
 pub const SDL_GL_FLOATBUFFERS: SDL_GLAttr = SDL_GLAttr::FLOATBUFFERS;
 pub const SDL_GL_EGL_PLATFORM: SDL_GLAttr = SDL_GLAttr::EGL_PLATFORM;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLAttr {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "video",
+        name: "SDL_GLAttr",
+        short_name: "GLAttr",
+        doc: "An enumeration of OpenGL configuration attributes.\n\nWhile you can set most OpenGL attributes normally, the attributes listed\nabove must be known before SDL creates the window that will be used with\nthe OpenGL context. These attributes are set and read with\n[`SDL_GL_SetAttribute()`] and [`SDL_GL_GetAttribute()`].\n\nIn some cases, these attributes are minimum requests; the GL does not\npromise to give you exactly what you asked for. It's possible to ask for a\n16-bit depth buffer and get a 24-bit one instead, for example, or to ask\nfor no stencil buffer and still have one available. Context creation should\nfail if the GL can't provide your requested attributes at a minimum, but\nyou should check to see exactly what you got.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_RED_SIZE",
+                short_name: "RED_SIZE",
+                doc: "the minimum number of bits for the red channel of the color buffer; defaults to 3.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_GREEN_SIZE",
+                short_name: "GREEN_SIZE",
+                doc: "the minimum number of bits for the green channel of the color buffer; defaults to 3.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_BLUE_SIZE",
+                short_name: "BLUE_SIZE",
+                doc: "the minimum number of bits for the blue channel of the color buffer; defaults to 2.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_ALPHA_SIZE",
+                short_name: "ALPHA_SIZE",
+                doc: "the minimum number of bits for the alpha channel of the color buffer; defaults to 0.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_BUFFER_SIZE",
+                short_name: "BUFFER_SIZE",
+                doc: "the minimum number of bits for frame buffer size; defaults to 0.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_DOUBLEBUFFER",
+                short_name: "DOUBLEBUFFER",
+                doc: "whether the output is single or double buffered; defaults to double buffering on.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_DEPTH_SIZE",
+                short_name: "DEPTH_SIZE",
+                doc: "the minimum number of bits in the depth buffer; defaults to 16.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_STENCIL_SIZE",
+                short_name: "STENCIL_SIZE",
+                doc: "the minimum number of bits in the stencil buffer; defaults to 0.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_ACCUM_RED_SIZE",
+                short_name: "ACCUM_RED_SIZE",
+                doc: "the minimum number of bits for the red channel of the accumulation buffer; defaults to 0.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_ACCUM_GREEN_SIZE",
+                short_name: "ACCUM_GREEN_SIZE",
+                doc: "the minimum number of bits for the green channel of the accumulation buffer; defaults to 0.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_ACCUM_BLUE_SIZE",
+                short_name: "ACCUM_BLUE_SIZE",
+                doc: "the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_ACCUM_ALPHA_SIZE",
+                short_name: "ACCUM_ALPHA_SIZE",
+                doc: "the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_STEREO",
+                short_name: "STEREO",
+                doc: "whether the output is stereo 3D; defaults to off.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_MULTISAMPLEBUFFERS",
+                short_name: "MULTISAMPLEBUFFERS",
+                doc: "the number of buffers used for multisample anti-aliasing; defaults to 0.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_MULTISAMPLESAMPLES",
+                short_name: "MULTISAMPLESAMPLES",
+                doc: "the number of samples used around the current pixel used for multisample anti-aliasing.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_ACCELERATED_VISUAL",
+                short_name: "ACCELERATED_VISUAL",
+                doc: "set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_RETAINED_BACKING",
+                short_name: "RETAINED_BACKING",
+                doc: "not used (deprecated).\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_MAJOR_VERSION",
+                short_name: "CONTEXT_MAJOR_VERSION",
+                doc: "OpenGL context major version.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_MINOR_VERSION",
+                short_name: "CONTEXT_MINOR_VERSION",
+                doc: "OpenGL context minor version.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_FLAGS",
+                short_name: "CONTEXT_FLAGS",
+                doc: "some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_PROFILE_MASK",
+                short_name: "CONTEXT_PROFILE_MASK",
+                doc: "type of GL context (Core, Compatibility, ES). See [`SDL_GLProfile`]; default value depends on platform.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_SHARE_WITH_CURRENT_CONTEXT",
+                short_name: "SHARE_WITH_CURRENT_CONTEXT",
+                doc: "OpenGL context sharing; defaults to 0.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_FRAMEBUFFER_SRGB_CAPABLE",
+                short_name: "FRAMEBUFFER_SRGB_CAPABLE",
+                doc: "requests sRGB capable visual; defaults to 0.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_RELEASE_BEHAVIOR",
+                short_name: "CONTEXT_RELEASE_BEHAVIOR",
+                doc: "sets context the release behavior. See [`SDL_GLContextReleaseFlag`]; defaults to FLUSH.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_RESET_NOTIFICATION",
+                short_name: "CONTEXT_RESET_NOTIFICATION",
+                doc: "set context reset notification. See [`SDL_GLContextResetNotification`]; defaults to NO_NOTIFICATION.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_NO_ERROR",
+                short_name: "CONTEXT_NO_ERROR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_FLOATBUFFERS",
+                short_name: "FLOATBUFFERS",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_EGL_PLATFORM",
+                short_name: "EGL_PLATFORM",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// Possible values to be set for the [`SDL_GL_CONTEXT_PROFILE_MASK`] attribute.
 ///
 /// ### Availability
@@ -1398,6 +1810,34 @@ pub const SDL_GL_CONTEXT_PROFILE_CORE: SDL_GLProfile = SDL_GLProfile::CORE;
 pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLProfile = SDL_GLProfile::COMPATIBILITY;
 /// GLX_CONTEXT_ES2_PROFILE_BIT_EXT
 pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = SDL_GLProfile::ES;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLProfile {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Flags,
+        module: "video",
+        name: "SDL_GLProfile",
+        short_name: "GLProfile",
+        doc: "Possible values to be set for the [`SDL_GL_CONTEXT_PROFILE_MASK`] attribute.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_PROFILE_CORE",
+                short_name: "CORE",
+                doc: "OpenGL Core Profile context\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_PROFILE_COMPATIBILITY",
+                short_name: "COMPATIBILITY",
+                doc: "OpenGL Compatibility Profile context\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_PROFILE_ES",
+                short_name: "ES",
+                doc: "GLX_CONTEXT_ES2_PROFILE_BIT_EXT\n",
+            },
+        ],
+    };
+}
 
 /// Possible flags to be set for the [`SDL_GL_CONTEXT_FLAGS`] attribute.
 ///
@@ -1565,6 +2005,39 @@ pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: SDL_GLContextFlag =
 pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag =
     SDL_GLContextFlag::RESET_ISOLATION_FLAG;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLContextFlag {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Flags,
+        module: "video",
+        name: "SDL_GLContextFlag",
+        short_name: "GLContextFlag",
+        doc: "Possible flags to be set for the [`SDL_GL_CONTEXT_FLAGS`] attribute.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_DEBUG_FLAG",
+                short_name: "DEBUG_FLAG",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG",
+                short_name: "FORWARD_COMPATIBLE_FLAG",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG",
+                short_name: "ROBUST_ACCESS_FLAG",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_RESET_ISOLATION_FLAG",
+                short_name: "RESET_ISOLATION_FLAG",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// Possible values to be set for the [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`]
 /// attribute.
 ///
@@ -1702,6 +2175,29 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: SDL_GLContextReleaseFlag =
     SDL_GLContextReleaseFlag::NONE;
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLContextReleaseFlag =
     SDL_GLContextReleaseFlag::FLUSH;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLContextReleaseFlag {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Flags,
+        module: "video",
+        name: "SDL_GLContextReleaseFlag",
+        short_name: "GLContextReleaseFlag",
+        doc: "Possible values to be set for the [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`]\nattribute.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH",
+                short_name: "FLUSH",
+                doc: "",
+            },
+        ],
+    };
+}
 
 /// Possible values to be set [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] attribute.
 ///
@@ -1843,6 +2339,29 @@ pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification =
     SDL_GLContextResetNotification::NO_NOTIFICATION;
 pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification =
     SDL_GLContextResetNotification::LOSE_CONTEXT;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLContextResetNotification {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Flags,
+        module: "video",
+        name: "SDL_GLContextResetNotification",
+        short_name: "GLContextResetNotification",
+        doc: "Possible values to be set [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] attribute.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_RESET_NO_NOTIFICATION",
+                short_name: "NO_NOTIFICATION",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_GL_CONTEXT_RESET_LOSE_CONTEXT",
+                short_name: "LOSE_CONTEXT",
+                doc: "",
+            },
+        ],
+    };
+}
 
 extern "C" {
     /// Get the number of video drivers compiled into SDL.
@@ -4865,6 +5384,69 @@ pub const SDL_HITTEST_RESIZE_BOTTOM: SDL_HitTestResult = SDL_HitTestResult::RESI
 pub const SDL_HITTEST_RESIZE_BOTTOMLEFT: SDL_HitTestResult = SDL_HitTestResult::RESIZE_BOTTOMLEFT;
 /// Region is the resizable left border.
 pub const SDL_HITTEST_RESIZE_LEFT: SDL_HitTestResult = SDL_HitTestResult::RESIZE_LEFT;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_HitTestResult {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "video",
+        name: "SDL_HitTestResult",
+        short_name: "HitTestResult",
+        doc: "Possible return values from the [`SDL_HitTest`] callback.\n\n### Thread safety\nThis function should only be called on the main thread.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_HitTest`]\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HITTEST_NORMAL",
+                short_name: "NORMAL",
+                doc: "Region is normal. No special properties.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HITTEST_DRAGGABLE",
+                short_name: "DRAGGABLE",
+                doc: "Region can drag entire window.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HITTEST_RESIZE_TOPLEFT",
+                short_name: "RESIZE_TOPLEFT",
+                doc: "Region is the resizable top-left corner border.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HITTEST_RESIZE_TOP",
+                short_name: "RESIZE_TOP",
+                doc: "Region is the resizable top border.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HITTEST_RESIZE_TOPRIGHT",
+                short_name: "RESIZE_TOPRIGHT",
+                doc: "Region is the resizable top-right corner border.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HITTEST_RESIZE_RIGHT",
+                short_name: "RESIZE_RIGHT",
+                doc: "Region is the resizable right border.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HITTEST_RESIZE_BOTTOMRIGHT",
+                short_name: "RESIZE_BOTTOMRIGHT",
+                doc: "Region is the resizable bottom-right corner border.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HITTEST_RESIZE_BOTTOM",
+                short_name: "RESIZE_BOTTOM",
+                doc: "Region is the resizable bottom border.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HITTEST_RESIZE_BOTTOMLEFT",
+                short_name: "RESIZE_BOTTOMLEFT",
+                doc: "Region is the resizable bottom-left corner border.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_HITTEST_RESIZE_LEFT",
+                short_name: "RESIZE_LEFT",
+                doc: "Region is the resizable left border.\n",
+            },
+        ],
+    };
+}
 
 /// Callback used for hit-testing.
 ///

@@ -300,6 +300,94 @@ pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AudioFormat::S32;
 #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_AudioFormat {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "audio",
+        name: "SDL_AudioFormat",
+        short_name: "AudioFormat",
+        doc: "Audio format.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_AUDIO_BITSIZE`]\n- [`SDL_AUDIO_BYTESIZE`]\n- [`SDL_AUDIO_ISINT`]\n- [`SDL_AUDIO_ISFLOAT`]\n- [`SDL_AUDIO_ISBIGENDIAN`]\n- [`SDL_AUDIO_ISLITTLEENDIAN`]\n- [`SDL_AUDIO_ISSIGNED`]\n- [`SDL_AUDIO_ISUNSIGNED`]\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "Unspecified audio format\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_U8",
+                short_name: "U8",
+                doc: "Unsigned 8-bit samples\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_S8",
+                short_name: "S8",
+                doc: "Signed 8-bit samples\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_S16LE",
+                short_name: "S16LE",
+                doc: "Signed 16-bit samples\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_S16BE",
+                short_name: "S16BE",
+                doc: "As above, but big-endian byte order\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_S32LE",
+                short_name: "S32LE",
+                doc: "32-bit integer samples\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_S32BE",
+                short_name: "S32BE",
+                doc: "As above, but big-endian byte order\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_F32LE",
+                short_name: "F32LE",
+                doc: "32-bit floating point samples\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_F32BE",
+                short_name: "F32BE",
+                doc: "As above, but big-endian byte order\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_S16",
+                short_name: "S16",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_S32",
+                short_name: "S32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_F32",
+                short_name: "F32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_S16",
+                short_name: "S16",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_S32",
+                short_name: "S32",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_F32",
+                short_name: "F32",
+                doc: "",
+            },
+        ],
+    };
+}
+
 /// Define an [`SDL_AudioFormat`] value.
 ///
 /// SDL does not support custom audio formats, so this macro is not of much use
@@ -592,6 +680,29 @@ pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID =
 /// This macro is available since SDL 3.2.0.
 pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID =
     SDL_AudioDeviceID::DEFAULT_RECORDING;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_AudioDeviceID {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Id,
+        module: "audio",
+        name: "SDL_AudioDeviceID",
+        short_name: "AudioDeviceID",
+        doc: "SDL Audio Device instance IDs.\n\nZero is used to signify an invalid/null device.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK",
+                short_name: "DEFAULT_PLAYBACK",
+                doc: "A value used to request a default playback audio device.\n\nSeveral functions that require an [`SDL_AudioDeviceID`] will accept this value\nto signify the app just wants the system to choose a default device instead\nof the app providing a specific one.\n\n### Availability\nThis macro is available since SDL 3.2.0.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_AUDIO_DEVICE_DEFAULT_RECORDING",
+                short_name: "DEFAULT_RECORDING",
+                doc: "A value used to request a default recording audio device.\n\nSeveral functions that require an [`SDL_AudioDeviceID`] will accept this value\nto signify the app just wants the system to choose a default device instead\nof the app providing a specific one.\n\n### Availability\nThis macro is available since SDL 3.2.0.\n",
+            },
+        ],
+    };
+}
 
 /// Format specifier for audio data.
 ///

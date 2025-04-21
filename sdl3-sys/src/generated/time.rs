@@ -110,6 +110,34 @@ pub const SDL_DATE_FORMAT_DDMMYYYY: SDL_DateFormat = SDL_DateFormat::DDMMYYYY;
 /// Month/Day/Year
 pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_DateFormat {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "time",
+        name: "SDL_DateFormat",
+        short_name: "DateFormat",
+        doc: "The preferred date format of the current system locale.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetDateTimeLocalePreferences`]\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_DATE_FORMAT_YYYYMMDD",
+                short_name: "YYYYMMDD",
+                doc: "Year/Month/Day\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_DATE_FORMAT_DDMMYYYY",
+                short_name: "DDMMYYYY",
+                doc: "Day/Month/Year\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_DATE_FORMAT_MMDDYYYY",
+                short_name: "MMDDYYYY",
+                doc: "Month/Day/Year\n",
+            },
+        ],
+    };
+}
+
 /// The preferred time format of the current system locale.
 ///
 /// ### Availability
@@ -172,6 +200,29 @@ impl SDL_TimeFormat {
 pub const SDL_TIME_FORMAT_24HR: SDL_TimeFormat = SDL_TimeFormat::_24HR;
 /// 12 hour time
 pub const SDL_TIME_FORMAT_12HR: SDL_TimeFormat = SDL_TimeFormat::_12HR;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_TimeFormat {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "time",
+        name: "SDL_TimeFormat",
+        short_name: "TimeFormat",
+        doc: "The preferred time format of the current system locale.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetDateTimeLocalePreferences`]\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TIME_FORMAT_24HR",
+                short_name: "_24HR",
+                doc: "24 hour time\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_TIME_FORMAT_12HR",
+                short_name: "_12HR",
+                doc: "12 hour time\n",
+            },
+        ],
+    };
+}
 
 extern "C" {
     /// Gets the current preferred date and time format for the system locale.

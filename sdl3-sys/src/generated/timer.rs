@@ -346,6 +346,19 @@ impl From<SDL_TimerID> for Uint32 {
     }
 }
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_TimerID {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Id,
+        module: "timer",
+        name: "SDL_TimerID",
+        short_name: "TimerID",
+        doc: "Definition of the timer ID type.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    };
+}
+
 /// Function prototype for the millisecond timer callback function.
 ///
 /// The callback function is passed the current timer interval and returns the

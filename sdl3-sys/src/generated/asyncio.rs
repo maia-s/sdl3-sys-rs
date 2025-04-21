@@ -141,6 +141,34 @@ pub const SDL_ASYNCIO_TASK_WRITE: SDL_AsyncIOTaskType = SDL_AsyncIOTaskType::WRI
 /// A close operation.
 pub const SDL_ASYNCIO_TASK_CLOSE: SDL_AsyncIOTaskType = SDL_AsyncIOTaskType::CLOSE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_AsyncIOTaskType {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "asyncio",
+        name: "SDL_AsyncIOTaskType",
+        short_name: "AsyncIOTaskType",
+        doc: "Types of asynchronous I/O tasks.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ASYNCIO_TASK_READ",
+                short_name: "READ",
+                doc: "A read operation.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ASYNCIO_TASK_WRITE",
+                short_name: "WRITE",
+                doc: "A write operation.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ASYNCIO_TASK_CLOSE",
+                short_name: "CLOSE",
+                doc: "A close operation.\n",
+            },
+        ],
+    };
+}
+
 /// Possible outcomes of an asynchronous I/O task.
 ///
 /// ### Availability
@@ -206,6 +234,34 @@ pub const SDL_ASYNCIO_COMPLETE: SDL_AsyncIOResult = SDL_AsyncIOResult::COMPLETE;
 pub const SDL_ASYNCIO_FAILURE: SDL_AsyncIOResult = SDL_AsyncIOResult::FAILURE;
 /// request was canceled before completing.
 pub const SDL_ASYNCIO_CANCELED: SDL_AsyncIOResult = SDL_AsyncIOResult::CANCELED;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_AsyncIOResult {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "asyncio",
+        name: "SDL_AsyncIOResult",
+        short_name: "AsyncIOResult",
+        doc: "Possible outcomes of an asynchronous I/O task.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ASYNCIO_COMPLETE",
+                short_name: "COMPLETE",
+                doc: "request was completed without error\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ASYNCIO_FAILURE",
+                short_name: "FAILURE",
+                doc: "request failed for some reason; check [`SDL_GetError()`]!\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_ASYNCIO_CANCELED",
+                short_name: "CANCELED",
+                doc: "request was canceled before completing.\n",
+            },
+        ],
+    };
+}
 
 /// Information about a completed asynchronous I/O request.
 ///

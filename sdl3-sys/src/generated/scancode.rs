@@ -1314,5 +1314,1263 @@ pub const SDL_SCANCODE_RESERVED: SDL_Scancode = SDL_Scancode::RESERVED;
 /// not a key, just marks the number of scancodes for array bounds
 pub const SDL_SCANCODE_COUNT: SDL_Scancode = SDL_Scancode::COUNT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_Scancode {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "scancode",
+        name: "SDL_Scancode",
+        short_name: "Scancode",
+        doc: "The SDL keyboard scancode representation.\n\nAn SDL scancode is the physical representation of a key on the keyboard,\nindependent of language and keyboard mapping.\n\nValues of this type are used to represent keyboard keys, among other places\nin the `scancode` field of the [`SDL_KeyboardEvent`] structure.\n\nThe values in this enumeration are based on the USB usage page standard:\n<https://usb.org/sites/default/files/hut1_5.pdf>\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_A",
+                short_name: "A",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_B",
+                short_name: "B",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_C",
+                short_name: "C",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_D",
+                short_name: "D",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_E",
+                short_name: "E",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F",
+                short_name: "F",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_G",
+                short_name: "G",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_H",
+                short_name: "H",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_I",
+                short_name: "I",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_J",
+                short_name: "J",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_K",
+                short_name: "K",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_L",
+                short_name: "L",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_M",
+                short_name: "M",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_N",
+                short_name: "N",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_O",
+                short_name: "O",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_P",
+                short_name: "P",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_Q",
+                short_name: "Q",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_R",
+                short_name: "R",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_S",
+                short_name: "S",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_T",
+                short_name: "T",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_U",
+                short_name: "U",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_V",
+                short_name: "V",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_W",
+                short_name: "W",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_X",
+                short_name: "X",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_Y",
+                short_name: "Y",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_Z",
+                short_name: "Z",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_1",
+                short_name: "_1",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_2",
+                short_name: "_2",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_3",
+                short_name: "_3",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_4",
+                short_name: "_4",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_5",
+                short_name: "_5",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_6",
+                short_name: "_6",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_7",
+                short_name: "_7",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_8",
+                short_name: "_8",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_9",
+                short_name: "_9",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_0",
+                short_name: "_0",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_RETURN",
+                short_name: "RETURN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_ESCAPE",
+                short_name: "ESCAPE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_BACKSPACE",
+                short_name: "BACKSPACE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_TAB",
+                short_name: "TAB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_SPACE",
+                short_name: "SPACE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MINUS",
+                short_name: "MINUS",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_EQUALS",
+                short_name: "EQUALS",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LEFTBRACKET",
+                short_name: "LEFTBRACKET",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_RIGHTBRACKET",
+                short_name: "RIGHTBRACKET",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_BACKSLASH",
+                short_name: "BACKSLASH",
+                doc: "Located at the lower left of the return\nkey on ISO keyboards and at the right end\nof the QWERTY row on ANSI keyboards.\nProduces REVERSE SOLIDUS (backslash) and\nVERTICAL LINE in a US layout, REVERSE\nSOLIDUS and VERTICAL LINE in a UK Mac\nlayout, NUMBER SIGN and TILDE in a UK\nWindows layout, DOLLAR SIGN and POUND SIGN\nin a Swiss German layout, NUMBER SIGN and\nAPOSTROPHE in a German layout, GRAVE\nACCENT and POUND SIGN in a French Mac\nlayout, and ASTERISK and MICRO SIGN in a\nFrench Windows layout.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_NONUSHASH",
+                short_name: "NONUSHASH",
+                doc: "ISO USB keyboards actually use this code\ninstead of 49 for the same key, but all\nOSes I've seen treat the two codes\nidentically. So, as an implementor, unless\nyour keyboard generates both of those\ncodes and your OS treats them differently,\nyou should generate [`SDL_SCANCODE_BACKSLASH`]\ninstead of this code. As a user, you\nshould not rely on this code because SDL\nwill never generate it with most (all?)\nkeyboards.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_SEMICOLON",
+                short_name: "SEMICOLON",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_APOSTROPHE",
+                short_name: "APOSTROPHE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_GRAVE",
+                short_name: "GRAVE",
+                doc: "Located in the top left corner (on both ANSI\nand ISO keyboards). Produces GRAVE ACCENT and\nTILDE in a US Windows layout and in US and UK\nMac layouts on ANSI keyboards, GRAVE ACCENT\nand NOT SIGN in a UK Windows layout, SECTION\nSIGN and PLUS-MINUS SIGN in US and UK Mac\nlayouts on ISO keyboards, SECTION SIGN and\nDEGREE SIGN in a Swiss German layout (Mac:\nonly on ISO keyboards), CIRCUMFLEX ACCENT and\nDEGREE SIGN in a German layout (Mac: only on\nISO keyboards), SUPERSCRIPT TWO and TILDE in a\nFrench Windows layout, COMMERCIAL AT and\nNUMBER SIGN in a French Mac layout on ISO\nkeyboards, and LESS-THAN SIGN and GREATER-THAN\nSIGN in a Swiss German, German, or French Mac\nlayout on ANSI keyboards.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_COMMA",
+                short_name: "COMMA",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_PERIOD",
+                short_name: "PERIOD",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_SLASH",
+                short_name: "SLASH",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_CAPSLOCK",
+                short_name: "CAPSLOCK",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F1",
+                short_name: "F1",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F2",
+                short_name: "F2",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F3",
+                short_name: "F3",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F4",
+                short_name: "F4",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F5",
+                short_name: "F5",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F6",
+                short_name: "F6",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F7",
+                short_name: "F7",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F8",
+                short_name: "F8",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F9",
+                short_name: "F9",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F10",
+                short_name: "F10",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F11",
+                short_name: "F11",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F12",
+                short_name: "F12",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_PRINTSCREEN",
+                short_name: "PRINTSCREEN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_SCROLLLOCK",
+                short_name: "SCROLLLOCK",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_PAUSE",
+                short_name: "PAUSE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_INSERT",
+                short_name: "INSERT",
+                doc: "insert on PC, help on some Mac keyboards (but\ndoes send code 73, not 117)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_HOME",
+                short_name: "HOME",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_PAGEUP",
+                short_name: "PAGEUP",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_DELETE",
+                short_name: "DELETE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_END",
+                short_name: "END",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_PAGEDOWN",
+                short_name: "PAGEDOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_RIGHT",
+                short_name: "RIGHT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LEFT",
+                short_name: "LEFT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_DOWN",
+                short_name: "DOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_UP",
+                short_name: "UP",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_NUMLOCKCLEAR",
+                short_name: "NUMLOCKCLEAR",
+                doc: "num lock on PC, clear on Mac keyboards\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_DIVIDE",
+                short_name: "KP_DIVIDE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_MULTIPLY",
+                short_name: "KP_MULTIPLY",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_MINUS",
+                short_name: "KP_MINUS",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_PLUS",
+                short_name: "KP_PLUS",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_ENTER",
+                short_name: "KP_ENTER",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_1",
+                short_name: "KP_1",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_2",
+                short_name: "KP_2",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_3",
+                short_name: "KP_3",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_4",
+                short_name: "KP_4",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_5",
+                short_name: "KP_5",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_6",
+                short_name: "KP_6",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_7",
+                short_name: "KP_7",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_8",
+                short_name: "KP_8",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_9",
+                short_name: "KP_9",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_0",
+                short_name: "KP_0",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_PERIOD",
+                short_name: "KP_PERIOD",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_NONUSBACKSLASH",
+                short_name: "NONUSBACKSLASH",
+                doc: "This is the additional key that ISO\nkeyboards have over ANSI ones,\nlocated between left shift and Y.\nProduces GRAVE ACCENT and TILDE in a\nUS or UK Mac layout, REVERSE SOLIDUS\n(backslash) and VERTICAL LINE in a\nUS or UK Windows layout, and\nLESS-THAN SIGN and GREATER-THAN SIGN\nin a Swiss German, German, or French\nlayout.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_APPLICATION",
+                short_name: "APPLICATION",
+                doc: "windows contextual menu, compose\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_POWER",
+                short_name: "POWER",
+                doc: "The USB document says this is a status flag,\nnot a physical key - but some Mac keyboards\ndo have a power key.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_EQUALS",
+                short_name: "KP_EQUALS",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F13",
+                short_name: "F13",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F14",
+                short_name: "F14",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F15",
+                short_name: "F15",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F16",
+                short_name: "F16",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F17",
+                short_name: "F17",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F18",
+                short_name: "F18",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F19",
+                short_name: "F19",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F20",
+                short_name: "F20",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F21",
+                short_name: "F21",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F22",
+                short_name: "F22",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F23",
+                short_name: "F23",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_F24",
+                short_name: "F24",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_EXECUTE",
+                short_name: "EXECUTE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_HELP",
+                short_name: "HELP",
+                doc: "AL Integrated Help Center\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MENU",
+                short_name: "MENU",
+                doc: "Menu (show menu)\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_SELECT",
+                short_name: "SELECT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_STOP",
+                short_name: "STOP",
+                doc: "AC Stop\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AGAIN",
+                short_name: "AGAIN",
+                doc: "AC Redo/Repeat\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_UNDO",
+                short_name: "UNDO",
+                doc: "AC Undo\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_CUT",
+                short_name: "CUT",
+                doc: "AC Cut\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_COPY",
+                short_name: "COPY",
+                doc: "AC Copy\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_PASTE",
+                short_name: "PASTE",
+                doc: "AC Paste\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_FIND",
+                short_name: "FIND",
+                doc: "AC Find\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MUTE",
+                short_name: "MUTE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_VOLUMEUP",
+                short_name: "VOLUMEUP",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_VOLUMEDOWN",
+                short_name: "VOLUMEDOWN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_COMMA",
+                short_name: "KP_COMMA",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_EQUALSAS400",
+                short_name: "KP_EQUALSAS400",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL1",
+                short_name: "INTERNATIONAL1",
+                doc: "used on Asian keyboards, see\nfootnotes in USB doc\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL2",
+                short_name: "INTERNATIONAL2",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL3",
+                short_name: "INTERNATIONAL3",
+                doc: "Yen\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL4",
+                short_name: "INTERNATIONAL4",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL5",
+                short_name: "INTERNATIONAL5",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL6",
+                short_name: "INTERNATIONAL6",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL7",
+                short_name: "INTERNATIONAL7",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL8",
+                short_name: "INTERNATIONAL8",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL9",
+                short_name: "INTERNATIONAL9",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LANG1",
+                short_name: "LANG1",
+                doc: "Hangul/English toggle\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LANG2",
+                short_name: "LANG2",
+                doc: "Hanja conversion\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LANG3",
+                short_name: "LANG3",
+                doc: "Katakana\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LANG4",
+                short_name: "LANG4",
+                doc: "Hiragana\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LANG5",
+                short_name: "LANG5",
+                doc: "Zenkaku/Hankaku\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LANG6",
+                short_name: "LANG6",
+                doc: "reserved\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LANG7",
+                short_name: "LANG7",
+                doc: "reserved\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LANG8",
+                short_name: "LANG8",
+                doc: "reserved\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LANG9",
+                short_name: "LANG9",
+                doc: "reserved\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_ALTERASE",
+                short_name: "ALTERASE",
+                doc: "Erase-Eaze\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_SYSREQ",
+                short_name: "SYSREQ",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_CANCEL",
+                short_name: "CANCEL",
+                doc: "AC Cancel\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_CLEAR",
+                short_name: "CLEAR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_PRIOR",
+                short_name: "PRIOR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_RETURN2",
+                short_name: "RETURN2",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_SEPARATOR",
+                short_name: "SEPARATOR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_OUT",
+                short_name: "OUT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_OPER",
+                short_name: "OPER",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_CLEARAGAIN",
+                short_name: "CLEARAGAIN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_CRSEL",
+                short_name: "CRSEL",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_EXSEL",
+                short_name: "EXSEL",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_00",
+                short_name: "KP_00",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_000",
+                short_name: "KP_000",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_THOUSANDSSEPARATOR",
+                short_name: "THOUSANDSSEPARATOR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_DECIMALSEPARATOR",
+                short_name: "DECIMALSEPARATOR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_CURRENCYUNIT",
+                short_name: "CURRENCYUNIT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_CURRENCYSUBUNIT",
+                short_name: "CURRENCYSUBUNIT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_LEFTPAREN",
+                short_name: "KP_LEFTPAREN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_RIGHTPAREN",
+                short_name: "KP_RIGHTPAREN",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_LEFTBRACE",
+                short_name: "KP_LEFTBRACE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_RIGHTBRACE",
+                short_name: "KP_RIGHTBRACE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_TAB",
+                short_name: "KP_TAB",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_BACKSPACE",
+                short_name: "KP_BACKSPACE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_A",
+                short_name: "KP_A",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_B",
+                short_name: "KP_B",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_C",
+                short_name: "KP_C",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_D",
+                short_name: "KP_D",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_E",
+                short_name: "KP_E",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_F",
+                short_name: "KP_F",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_XOR",
+                short_name: "KP_XOR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_POWER",
+                short_name: "KP_POWER",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_PERCENT",
+                short_name: "KP_PERCENT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_LESS",
+                short_name: "KP_LESS",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_GREATER",
+                short_name: "KP_GREATER",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_AMPERSAND",
+                short_name: "KP_AMPERSAND",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_DBLAMPERSAND",
+                short_name: "KP_DBLAMPERSAND",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_VERTICALBAR",
+                short_name: "KP_VERTICALBAR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_DBLVERTICALBAR",
+                short_name: "KP_DBLVERTICALBAR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_COLON",
+                short_name: "KP_COLON",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_HASH",
+                short_name: "KP_HASH",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_SPACE",
+                short_name: "KP_SPACE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_AT",
+                short_name: "KP_AT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_EXCLAM",
+                short_name: "KP_EXCLAM",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_MEMSTORE",
+                short_name: "KP_MEMSTORE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_MEMRECALL",
+                short_name: "KP_MEMRECALL",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_MEMCLEAR",
+                short_name: "KP_MEMCLEAR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_MEMADD",
+                short_name: "KP_MEMADD",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_MEMSUBTRACT",
+                short_name: "KP_MEMSUBTRACT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_MEMMULTIPLY",
+                short_name: "KP_MEMMULTIPLY",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_MEMDIVIDE",
+                short_name: "KP_MEMDIVIDE",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_PLUSMINUS",
+                short_name: "KP_PLUSMINUS",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_CLEAR",
+                short_name: "KP_CLEAR",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_CLEARENTRY",
+                short_name: "KP_CLEARENTRY",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_BINARY",
+                short_name: "KP_BINARY",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_OCTAL",
+                short_name: "KP_OCTAL",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_DECIMAL",
+                short_name: "KP_DECIMAL",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_KP_HEXADECIMAL",
+                short_name: "KP_HEXADECIMAL",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LCTRL",
+                short_name: "LCTRL",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LSHIFT",
+                short_name: "LSHIFT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LALT",
+                short_name: "LALT",
+                doc: "alt, option\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_LGUI",
+                short_name: "LGUI",
+                doc: "windows, command (apple), meta\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_RCTRL",
+                short_name: "RCTRL",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_RSHIFT",
+                short_name: "RSHIFT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_RALT",
+                short_name: "RALT",
+                doc: "alt gr, option\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_RGUI",
+                short_name: "RGUI",
+                doc: "windows, command (apple), meta\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MODE",
+                short_name: "MODE",
+                doc: "I'm not sure if this is really not covered\nby any of the above, but since there's a\nspecial [`SDL_KMOD_MODE`] for it I'm adding it here\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_SLEEP",
+                short_name: "SLEEP",
+                doc: "Sleep\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_WAKE",
+                short_name: "WAKE",
+                doc: "Wake\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_CHANNEL_INCREMENT",
+                short_name: "CHANNEL_INCREMENT",
+                doc: "Channel Increment\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_CHANNEL_DECREMENT",
+                short_name: "CHANNEL_DECREMENT",
+                doc: "Channel Decrement\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MEDIA_PLAY",
+                short_name: "MEDIA_PLAY",
+                doc: "Play\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MEDIA_PAUSE",
+                short_name: "MEDIA_PAUSE",
+                doc: "Pause\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MEDIA_RECORD",
+                short_name: "MEDIA_RECORD",
+                doc: "Record\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MEDIA_FAST_FORWARD",
+                short_name: "MEDIA_FAST_FORWARD",
+                doc: "Fast Forward\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MEDIA_REWIND",
+                short_name: "MEDIA_REWIND",
+                doc: "Rewind\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MEDIA_NEXT_TRACK",
+                short_name: "MEDIA_NEXT_TRACK",
+                doc: "Next Track\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MEDIA_PREVIOUS_TRACK",
+                short_name: "MEDIA_PREVIOUS_TRACK",
+                doc: "Previous Track\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MEDIA_STOP",
+                short_name: "MEDIA_STOP",
+                doc: "Stop\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MEDIA_EJECT",
+                short_name: "MEDIA_EJECT",
+                doc: "Eject\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MEDIA_PLAY_PAUSE",
+                short_name: "MEDIA_PLAY_PAUSE",
+                doc: "Play / Pause\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_MEDIA_SELECT",
+                short_name: "MEDIA_SELECT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_NEW",
+                short_name: "AC_NEW",
+                doc: "AC New\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_OPEN",
+                short_name: "AC_OPEN",
+                doc: "AC Open\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_CLOSE",
+                short_name: "AC_CLOSE",
+                doc: "AC Close\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_EXIT",
+                short_name: "AC_EXIT",
+                doc: "AC Exit\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_SAVE",
+                short_name: "AC_SAVE",
+                doc: "AC Save\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_PRINT",
+                short_name: "AC_PRINT",
+                doc: "AC Print\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_PROPERTIES",
+                short_name: "AC_PROPERTIES",
+                doc: "AC Properties\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_SEARCH",
+                short_name: "AC_SEARCH",
+                doc: "AC Search\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_HOME",
+                short_name: "AC_HOME",
+                doc: "AC Home\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_BACK",
+                short_name: "AC_BACK",
+                doc: "AC Back\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_FORWARD",
+                short_name: "AC_FORWARD",
+                doc: "AC Forward\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_STOP",
+                short_name: "AC_STOP",
+                doc: "AC Stop\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_REFRESH",
+                short_name: "AC_REFRESH",
+                doc: "AC Refresh\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_AC_BOOKMARKS",
+                short_name: "AC_BOOKMARKS",
+                doc: "AC Bookmarks\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_SOFTLEFT",
+                short_name: "SOFTLEFT",
+                doc: "Usually situated below the display on phones and\nused as a multi-function feature key for selecting\na software defined function shown on the bottom left\nof the display.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_SOFTRIGHT",
+                short_name: "SOFTRIGHT",
+                doc: "Usually situated below the display on phones and\nused as a multi-function feature key for selecting\na software defined function shown on the bottom right\nof the display.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_CALL",
+                short_name: "CALL",
+                doc: "Used for accepting phone calls.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_ENDCALL",
+                short_name: "ENDCALL",
+                doc: "Used for rejecting phone calls.\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_RESERVED",
+                short_name: "RESERVED",
+                doc: "400-500 reserved for dynamic keycodes\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCANCODE_COUNT",
+                short_name: "COUNT",
+                doc: "not a key, just marks the number of scancodes for array bounds\n",
+            },
+        ],
+    };
+}
+
 #[cfg(doc)]
 use crate::everything::*;

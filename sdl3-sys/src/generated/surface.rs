@@ -198,6 +198,39 @@ pub const SDL_SURFACE_LOCKED: SDL_SurfaceFlags = SDL_SurfaceFlags::LOCKED;
 /// Surface uses pixel memory allocated with [`SDL_aligned_alloc()`]
 pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = SDL_SurfaceFlags::SIMD_ALIGNED;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_SurfaceFlags {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Flags,
+        module: "surface",
+        name: "SDL_SurfaceFlags",
+        short_name: "SurfaceFlags",
+        doc: "The flags on an [`SDL_Surface`].\n\nThese are generally considered read-only.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SURFACE_PREALLOCATED",
+                short_name: "PREALLOCATED",
+                doc: "Surface uses preallocated pixel memory\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SURFACE_LOCK_NEEDED",
+                short_name: "LOCK_NEEDED",
+                doc: "Surface needs to be locked to access pixels\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SURFACE_LOCKED",
+                short_name: "LOCKED",
+                doc: "Surface is currently locked\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SURFACE_SIMD_ALIGNED",
+                short_name: "SIMD_ALIGNED",
+                doc: "Surface uses pixel memory allocated with [`SDL_aligned_alloc()`]\n",
+            },
+        ],
+    };
+}
+
 /// The scaling mode.
 ///
 /// ### Availability
@@ -261,6 +294,34 @@ pub const SDL_SCALEMODE_INVALID: SDL_ScaleMode = SDL_ScaleMode::INVALID;
 pub const SDL_SCALEMODE_NEAREST: SDL_ScaleMode = SDL_ScaleMode::NEAREST;
 /// linear filtering
 pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ScaleMode {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "surface",
+        name: "SDL_ScaleMode",
+        short_name: "ScaleMode",
+        doc: "The scaling mode.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCALEMODE_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCALEMODE_NEAREST",
+                short_name: "NEAREST",
+                doc: "nearest pixel sampling\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_SCALEMODE_LINEAR",
+                short_name: "LINEAR",
+                doc: "linear filtering\n",
+            },
+        ],
+    };
+}
 
 /// The flip mode.
 ///
@@ -327,6 +388,34 @@ pub const SDL_FLIP_NONE: SDL_FlipMode = SDL_FlipMode::NONE;
 pub const SDL_FLIP_HORIZONTAL: SDL_FlipMode = SDL_FlipMode::HORIZONTAL;
 /// flip vertically
 pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_FlipMode {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "surface",
+        name: "SDL_FlipMode",
+        short_name: "FlipMode",
+        doc: "The flip mode.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_FLIP_NONE",
+                short_name: "NONE",
+                doc: "Do not flip\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_FLIP_HORIZONTAL",
+                short_name: "HORIZONTAL",
+                doc: "flip horizontally\n",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_FLIP_VERTICAL",
+                short_name: "VERTICAL",
+                doc: "flip vertically\n",
+            },
+        ],
+    };
+}
 
 /// A collection of pixels used in software blitting.
 ///

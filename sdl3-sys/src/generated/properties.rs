@@ -54,6 +54,18 @@ impl From<SDL_PropertiesID> for Uint32 {
     }
 }
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_PropertiesID {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Id,
+        module: "properties",
+        name: "SDL_PropertiesID",
+        short_name: "PropertiesID",
+        doc: "SDL properties ID\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[],
+    };
+}
+
 /// SDL property type
 ///
 /// ### Availability
@@ -125,6 +137,49 @@ pub const SDL_PROPERTY_TYPE_STRING: SDL_PropertyType = SDL_PropertyType::STRING;
 pub const SDL_PROPERTY_TYPE_NUMBER: SDL_PropertyType = SDL_PropertyType::NUMBER;
 pub const SDL_PROPERTY_TYPE_FLOAT: SDL_PropertyType = SDL_PropertyType::FLOAT;
 pub const SDL_PROPERTY_TYPE_BOOLEAN: SDL_PropertyType = SDL_PropertyType::BOOLEAN;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_PropertyType {
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
+        kind: sdl3_sys::metadata::GroupKind::Enum,
+        module: "properties",
+        name: "SDL_PropertyType",
+        short_name: "PropertyType",
+        doc: "SDL property type\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PROPERTY_TYPE_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PROPERTY_TYPE_POINTER",
+                short_name: "POINTER",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PROPERTY_TYPE_STRING",
+                short_name: "STRING",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PROPERTY_TYPE_NUMBER",
+                short_name: "NUMBER",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PROPERTY_TYPE_FLOAT",
+                short_name: "FLOAT",
+                doc: "",
+            },
+            sdl3_sys::metadata::GroupValue {
+                name: "SDL_PROPERTY_TYPE_BOOLEAN",
+                short_name: "BOOLEAN",
+                doc: "",
+            },
+        ],
+    };
+}
 
 extern "C" {
     /// Get the global SDL properties.
