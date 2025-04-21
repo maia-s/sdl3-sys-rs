@@ -1,7 +1,7 @@
 //! Metadata for SDL types and constants
 
 use crate::properties::SDL_PropertyType;
-use core::ffi::CStr;
+use core::ffi::{c_int, CStr};
 
 /// Metadata for hint constants
 #[derive(Clone, Copy)]
@@ -11,6 +11,7 @@ pub struct Hint {
     pub short_name: &'static str,
     pub value: &'static CStr,
     pub doc: &'static str,
+    pub available_since: Option<c_int>,
 }
 
 /// Metadata for property constants
@@ -22,6 +23,7 @@ pub struct Property {
     pub value: &'static CStr,
     pub ty: SDL_PropertyType,
     pub doc: &'static str,
+    pub available_since: Option<c_int>,
 }
 
 /// Access metadata for typed groups of constants (c enums, flags, etc)
@@ -48,6 +50,7 @@ pub struct Group {
     pub short_name: &'static str,
     pub doc: &'static str,
     pub values: &'static [GroupValue],
+    pub available_since: Option<c_int>,
 }
 
 /// Metadata for a single value in a group of constants
@@ -56,6 +59,7 @@ pub struct GroupValue {
     pub name: &'static str,
     pub short_name: &'static str,
     pub doc: &'static str,
+    pub available_since: Option<c_int>,
 }
 
 #[cfg(feature = "metadata")]

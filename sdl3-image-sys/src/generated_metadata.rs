@@ -3,6 +3,7 @@
 use sdl3_sys::{
     metadata::{Group, GroupKind, GroupValue, Hint, Property},
     properties::SDL_PropertyType,
+    version::SDL_VERSIONNUM,
 };
 
 /// Metadata for hint constants in this crate

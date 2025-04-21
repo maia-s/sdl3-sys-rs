@@ -662,7 +662,7 @@ impl Gen {
         writeln!(metadata_out)?;
         writeln!(
             metadata_out,
-            "use sdl3_sys::{{metadata::{{Group, GroupKind, GroupValue, Hint, Property}}, properties::SDL_PropertyType}};"
+            "use sdl3_sys::{{metadata::{{Group, GroupKind, GroupValue, Hint, Property}}, properties::SDL_PropertyType, version::SDL_VERSIONNUM}};"
         )?;
         writeln!(metadata_out)?;
         let mut metadata_out_hints = String::new();
@@ -671,6 +671,32 @@ impl Gen {
         let mut metadata_out_group_offsets = String::new();
         let mut group_count = 0;
         let emitted = self.emitted.borrow();
+
+        fn get_available_since(doc: &str) -> String {
+            let mut lines = doc.lines();
+            while let Some(line) = lines.next() {
+                if line.contains("# Availability") {
+                    let avail = lines.next().unwrap();
+                    let avail_since = "available since ";
+                    let i = avail.find(avail_since).unwrap();
+                    let (_, ver) = avail[i + avail_since.len()..].split_once(' ').unwrap();
+                    let (major, rest) = ver.split_once('.').unwrap();
+                    let (minor, rest) = rest.split_once('.').unwrap();
+                    let micro = if let Some((micro, rest)) = rest.split_once('.') {
+                        assert!(rest.trim().is_empty());
+                        micro
+                    } else {
+                        rest
+                    };
+                    let major = major.parse::<i32>().unwrap();
+                    let minor = minor.parse::<i32>().unwrap();
+                    let micro = micro.parse::<i32>().unwrap();
+                    return format!("Some(SDL_VERSIONNUM({major}, {minor}, {micro}))");
+                }
+            }
+            String::from("None")
+        }
+
         for module in emitted.keys() {
             let metadata = &emitted[module].metadata;
             writeln!(
@@ -689,11 +715,13 @@ impl Gen {
                             short_name: {short_name:?},
                             value: unsafe {{ ::core::ffi::CStr::from_ptr(crate::{module}::{name}) }},
                             doc: {doc:?},
+                            available_since: {available_since},
                         }},
                     "},
                     module = module,
                     name = hint.name,
                     short_name = short_name,
+                    available_since = get_available_since(&hint.doc),
                     doc = hint.doc,
                 )?;
             }
@@ -733,6 +761,7 @@ impl Gen {
                             value: unsafe {{ ::core::ffi::CStr::from_ptr(crate::{module}::{name}) }},
                             ty: SDL_PropertyType::{ty},
                             doc: {doc:?},
+                            available_since: {available_since},
                         }},
                     "},
                     module = module,
@@ -740,10 +769,12 @@ impl Gen {
                     short_name = short_name,
                     doc = prop.doc,
                     ty = ty,
+                    available_since = get_available_since(&prop.doc),
                 )?;
             }
             for group in &metadata.groups {
                 group_count += 1;
+                let available_since = get_available_since(&group.doc);
                 write!(
                     metadata_out_groups,
                     str_block! {"
@@ -753,6 +784,7 @@ impl Gen {
                             name: {name:?},
                             short_name: {short_name:?},
                             doc: {doc:?},
+                            available_since: {available_since},
                             values: &[
                     "},
                     module = module,
@@ -765,6 +797,7 @@ impl Gen {
                     name = group.name,
                     short_name = group.name.strip_prefix(&self.sym_prefix).unwrap(),
                     doc = group.doc,
+                    available_since = available_since,
                 )?;
                 if !group.values.is_empty() {
                     for value in &group.values {
@@ -776,6 +809,11 @@ impl Gen {
                             value.short_name
                         )?;
                         writeln!(metadata_out_groups, "            doc: {:?},", value.doc)?;
+                        writeln!(
+                            metadata_out_groups,
+                            "            available_since: {},",
+                            get_available_since(&value.doc)
+                        )?;
                         writeln!(metadata_out_groups, "        }},")?;
                     }
                 }
