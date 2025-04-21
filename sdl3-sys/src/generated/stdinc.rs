@@ -619,21 +619,9 @@ apply_cfg!(#[cfg(all(not(any(doc, target_os = "horizon")), not(any(doc, target_o
 
     #[cfg(feature = "metadata")]
     impl sdl3_sys::metadata::HasGroupMetadata for SDL_DUMMY_ENUM {
-        const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-            kind: sdl3_sys::metadata::GroupKind::Enum,
-            module: "stdinc",
-            name: "SDL_DUMMY_ENUM",
-            short_name: "DUMMY_ENUM",
-            doc: "",
-            values: &[
-                sdl3_sys::metadata::GroupValue {
-                    name: "DUMMY_ENUM_VALUE",
-                    short_name: "DUMMY_ENUM_VALUE",
-                    doc: "",
-                },
-            ],
-        };
+        const GROUP_METADATA: &sdl3_sys::metadata::Group = &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_stdinc + 0];
     }
+
 
     const _: () = ::core::assert!((::core::mem::size_of::<SDL_DUMMY_ENUM>() == ::core::mem::size_of::<::core::ffi::c_int>()));
 

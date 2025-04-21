@@ -7,7 +7,7 @@ use crate::{
         PrimitiveType, StructFields, StructKind, StructOrUnion, Type, TypeDef, TypeDefKind,
         TypeEnum,
     },
-    strip_common_ident_prefix, Metadata,
+    strip_common_ident_prefix, GroupMetadata, GroupValueMetadata, HintMetadata, PropertyMetadata,
 };
 use core::cell::Cell;
 use std::{
@@ -809,7 +809,7 @@ impl Emit for Define {
                 writeln!(ctx)?;
                 let ident_s = self.ident.as_str();
                 if ident_s.starts_with("SDL_HINT_") {
-                    ctx.register_metadata(Metadata::Hint {
+                    ctx.register_hint_metadata(HintMetadata {
                         name: ident_s.to_owned(),
                         doc: ctx
                             .capture_output(|ctx| self.doc.emit(ctx))?
@@ -818,7 +818,7 @@ impl Emit for Define {
                             .collect(),
                     });
                 } else if ident_s.starts_with("SDL_PROP_") {
-                    ctx.register_metadata(Metadata::Property {
+                    ctx.register_property_metadata(PropertyMetadata {
                         name: ident_s.to_owned(),
                         doc: ctx
                             .capture_output(|ctx| self.doc.emit(ctx))?
@@ -1046,6 +1046,7 @@ impl Enum {
             }
         }
 
+        let module = ctx.module().to_string();
         let doc = if doc.is_some() { &doc } else { &self.doc };
 
         let enum_ident = self.ident.clone().unwrap();
@@ -1087,8 +1088,7 @@ impl Enum {
         let mut ctx_global = ctx.with_output(&mut global_consts);
         let mut debug_consts = String::new();
         let mut ctx_debug = ctx.with_output(&mut debug_consts);
-        let mut metadata = String::new();
-        let mut ctx_metadata = ctx.with_output(&mut metadata);
+        let mut values_metadata = Vec::new();
         let mut next_expr = Some(Expr::Literal(Literal::Integer(IntegerLiteral::zero())));
 
         if !known_values.is_empty() {
@@ -1105,38 +1105,6 @@ impl Enum {
                 "/// | ------------------- | --------------- | ----------- |"
             )?;
         }
-
-        writeln!(ctx_metadata, r#"#[cfg(feature = "metadata")]"#)?;
-        writeln!(
-            ctx_metadata,
-            "impl sdl3_sys::metadata::HasGroupMetadata for {enum_ident_s} {{"
-        )?;
-        ctx_metadata.increase_indent();
-        writeln!(
-            ctx_metadata,
-            "const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {{"
-        )?;
-        ctx_metadata.increase_indent();
-        writeln!(
-            ctx_metadata,
-            "kind: sdl3_sys::metadata::GroupKind::{},",
-            match self.kind {
-                EnumKind::Enum => "Enum",
-                EnumKind::Flags => "Flags",
-                EnumKind::Id => "Id",
-                EnumKind::Lock => "Lock",
-            }
-        )?;
-        writeln!(ctx_metadata, "module: {:?},", ctx.module())?;
-        writeln!(ctx_metadata, "name: {:?},", enum_ident_s)?;
-        writeln!(
-            ctx_metadata,
-            "short_name: {:?},",
-            enum_ident_s.strip_prefix(&ctx.gen.sym_prefix).unwrap()
-        )?;
-        writeln!(ctx_metadata, "doc: {doc_meta:?},")?;
-        writeln!(ctx_metadata, "values: &[")?;
-        ctx_metadata.increase_indent();
 
         let mut seen_target_dependent = HashSet::new();
 
@@ -1256,30 +1224,16 @@ impl Enum {
                 )?;
             }
 
-            writeln!(ctx_metadata, "sdl3_sys::metadata::GroupValue {{")?;
-            ctx_metadata.increase_indent();
-            writeln!(ctx_metadata, "name: {variant_ident:?},")?;
-            writeln!(ctx_metadata, "short_name: {short_variant_ident:?},")?;
-            writeln!(
-                ctx_metadata,
-                "doc: {:?},",
-                variant_doc_meta
+            values_metadata.push(GroupValueMetadata {
+                name: variant_ident.to_owned(),
+                short_name: short_variant_ident.to_owned(),
+                doc: variant_doc_meta
                     .lines()
                     .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
-                    .collect::<String>()
-            )?;
-            ctx_metadata.decrease_indent();
-            writeln!(ctx_metadata, "}},")?;
+                    .collect(),
+            });
         }
 
-        ctx_metadata.decrease_indent();
-        writeln!(ctx_metadata, "],")?;
-        ctx_metadata.decrease_indent();
-        writeln!(ctx_metadata, "}};")?;
-        ctx_metadata.decrease_indent();
-        writeln!(ctx_metadata, "}}")?;
-
-        drop(ctx_metadata);
         drop(ctx_debug);
         drop(ctx_global);
         drop(ctx_impl);
@@ -1472,8 +1426,28 @@ impl Enum {
         }
         ctx.write_str(&global_consts)?;
         writeln!(ctx)?;
-        ctx.write_str(&metadata)?;
+
+        let index = ctx.register_group_metadata(GroupMetadata {
+            kind: self.kind,
+            name: enum_ident_s.to_owned(),
+            doc: doc_meta,
+            values: values_metadata,
+        });
+
+        writeln!(
+            ctx,
+            str_block! {r#"
+                #[cfg(feature = "metadata")]
+                impl sdl3_sys::metadata::HasGroupMetadata for {enum_ident_s} {{
+                    const GROUP_METADATA: &sdl3_sys::metadata::Group = &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_{module} + {index}];
+                }}
+            "#},
+            enum_ident_s = enum_ident_s,
+            module = module,
+            index = index,
+        )?;
         writeln!(ctx)?;
+
         ctx.flush_ool_output()?;
         Ok(())
     }

@@ -206,40 +206,8 @@ pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: SDL_MessageBoxFlags =
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxFlags {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Flags,
-        module: "messagebox",
-        name: "SDL_MessageBoxFlags",
-        short_name: "MessageBoxFlags",
-        doc: "Message box flags.\n\nIf supported will display warning icon, etc.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_ERROR",
-                short_name: "ERROR",
-                doc: "error dialog\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_WARNING",
-                short_name: "WARNING",
-                doc: "warning dialog\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_INFORMATION",
-                short_name: "INFORMATION",
-                doc: "informational dialog\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT",
-                short_name: "BUTTONS_LEFT_TO_RIGHT",
-                doc: "buttons placed left to right\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT",
-                short_name: "BUTTONS_RIGHT_TO_LEFT",
-                doc: "buttons placed right to left\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_messagebox + 0];
 }
 
 /// [`SDL_MessageBoxButtonData`] flags.
@@ -389,25 +357,8 @@ pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: SDL_MessageBoxButtonFlags =
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxButtonFlags {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Flags,
-        module: "messagebox",
-        name: "SDL_MessageBoxButtonFlags",
-        short_name: "MessageBoxButtonFlags",
-        doc: "[`SDL_MessageBoxButtonData`] flags.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT",
-                short_name: "RETURNKEY_DEFAULT",
-                doc: "Marks the default button when return is hit\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT",
-                short_name: "ESCAPEKEY_DEFAULT",
-                doc: "Marks the default button when escape is hit\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_messagebox + 1];
 }
 
 /// Individual button data.
@@ -524,46 +475,8 @@ pub const SDL_MESSAGEBOX_COLOR_COUNT: SDL_MessageBoxColorType = SDL_MessageBoxCo
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxColorType {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "messagebox",
-        name: "SDL_MessageBoxColorType",
-        short_name: "MessageBoxColorType",
-        doc:
-            "An enumeration of indices inside the colors array of\n[`SDL_MessageBoxColorScheme`].\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_COLOR_BACKGROUND",
-                short_name: "BACKGROUND",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_COLOR_TEXT",
-                short_name: "TEXT",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_COLOR_BUTTON_BORDER",
-                short_name: "BUTTON_BORDER",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND",
-                short_name: "BUTTON_BACKGROUND",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED",
-                short_name: "BUTTON_SELECTED",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_MESSAGEBOX_COLOR_COUNT",
-                short_name: "COUNT",
-                doc: "Size of the colors array of [`SDL_MessageBoxColorScheme`].\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_messagebox + 2];
 }
 
 /// A set of colors to use for message box dialogs

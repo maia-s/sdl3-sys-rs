@@ -97,45 +97,8 @@ pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_IOStatus {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "iostream",
-        name: "SDL_IOStatus",
-        short_name: "IOStatus",
-        doc: "[`SDL_IOStream`] status, set by a read or write operation.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_IO_STATUS_READY",
-                short_name: "READY",
-                doc: "Everything is ready (no errors and not EOF).\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_IO_STATUS_ERROR",
-                short_name: "ERROR",
-                doc: "Read or write I/O error\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_IO_STATUS_EOF",
-                short_name: "EOF",
-                doc: "End of file\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_IO_STATUS_NOT_READY",
-                short_name: "NOT_READY",
-                doc: "Non blocking I/O, not ready\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_IO_STATUS_READONLY",
-                short_name: "READONLY",
-                doc: "Tried to write a read-only buffer\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_IO_STATUS_WRITEONLY",
-                short_name: "WRITEONLY",
-                doc: "Tried to read a write-only buffer\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_iostream + 0];
 }
 
 /// Possible `whence` values for [`SDL_IOStream`] seeking.
@@ -209,30 +172,8 @@ pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_IOWhence {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "iostream",
-        name: "SDL_IOWhence",
-        short_name: "IOWhence",
-        doc: "Possible `whence` values for [`SDL_IOStream`] seeking.\n\nThese map to the same \"whence\" concept that `fseek` or `lseek` use in the\nstandard C runtime.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_IO_SEEK_SET",
-                short_name: "SET",
-                doc: "Seek from the beginning of data\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_IO_SEEK_CUR",
-                short_name: "CUR",
-                doc: "Seek relative to current read point\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_IO_SEEK_END",
-                short_name: "END",
-                doc: "Seek relative to the end of data\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_iostream + 1];
 }
 
 /// The function pointers that drive an [`SDL_IOStream`].

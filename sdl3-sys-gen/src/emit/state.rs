@@ -5,7 +5,7 @@ use crate::{
         IdentOrKw, ParseErr, PrimitiveType, RustCode, Span, StructFields, StructKind, Type,
         TypeEnum,
     },
-    Defer, Gen, Metadata,
+    Defer, Gen, GroupMetadata, HintMetadata, Metadata, PropertyMetadata,
 };
 use core::{fmt::Display, mem};
 use std::{
@@ -178,7 +178,7 @@ pub struct InnerEmitContext {
     pending_emits: Vec<(Vec<Ident>, Option<Box<dyn Emit>>)>,
     pending_enabled: bool,
     function_return_type: Type,
-    pub metadata: Vec<Metadata>,
+    pub metadata: Metadata,
 }
 
 impl<'a, 'b> EmitContext<'a, 'b> {
@@ -385,7 +385,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                 pending_emits: Vec::new(),
                 pending_enabled: true,
                 function_return_type: Type::void(),
-                metadata: Vec::new(),
+                metadata: Metadata::default(),
             })),
             output,
             indent: 0,
@@ -569,7 +569,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             pending_emits: Vec::new(),
             pending_enabled: true,
             function_return_type: Type::void(),
-            metadata: Vec::new(),
+            metadata: Metadata::default(),
         }));
         drop(i);
         EmitContext {
@@ -892,8 +892,19 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner_mut().function_return_type = return_type;
     }
 
-    pub fn register_metadata(&self, metadata: Metadata) {
-        self.inner_mut().metadata.push(metadata);
+    pub fn register_hint_metadata(&self, metadata: HintMetadata) {
+        self.inner_mut().metadata.hints.push(metadata);
+    }
+
+    pub fn register_property_metadata(&self, metadata: PropertyMetadata) {
+        self.inner_mut().metadata.properties.push(metadata);
+    }
+
+    pub fn register_group_metadata(&self, metadata: GroupMetadata) -> usize {
+        let mut inner_mut = self.inner_mut();
+        let index = inner_mut.metadata.groups.len();
+        inner_mut.metadata.groups.push(metadata);
+        index
     }
 }
 

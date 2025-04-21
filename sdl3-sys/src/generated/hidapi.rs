@@ -127,40 +127,8 @@ pub const SDL_HID_API_BUS_SPI: SDL_hid_bus_type = SDL_hid_bus_type::SPI;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_hid_bus_type {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "hidapi",
-        name: "SDL_hid_bus_type",
-        short_name: "hid_bus_type",
-        doc: "HID underlying bus types.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_HID_API_BUS_UNKNOWN",
-                short_name: "UNKNOWN",
-                doc: "Unknown bus type\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_HID_API_BUS_USB",
-                short_name: "USB",
-                doc: "USB bus\nSpecifications:\n<https://usb.org/hid>\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_HID_API_BUS_BLUETOOTH",
-                short_name: "BLUETOOTH",
-                doc: "Bluetooth or Bluetooth LE bus\nSpecifications:\n<https://www.bluetooth.com/specifications/specs/human-interface-device-profile-1-1-1/>\n<https://www.bluetooth.com/specifications/specs/hid-service-1-0/>\n<https://www.bluetooth.com/specifications/specs/hid-over-gatt-profile-1-0/>\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_HID_API_BUS_I2C",
-                short_name: "I2C",
-                doc: "I2C bus\nSpecifications:\n<https://docs.microsoft.com/previous-versions/windows/hardware/design/dn642101(v=vs.85)>\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_HID_API_BUS_SPI",
-                short_name: "SPI",
-                doc: "SPI bus\nSpecifications:\n<https://www.microsoft.com/download/details.aspx?id=103325>\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_hidapi + 0];
 }
 
 /// Information about a connected HID device

@@ -54,15 +54,8 @@ impl From<SDL_TouchID> for Uint64 {
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TouchID {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Id,
-        module: "touch",
-        name: "SDL_TouchID",
-        short_name: "TouchID",
-        doc: "A unique ID for a touch device.\n\nThis ID is valid for the time the device is connected to the system, and is\nnever reused for the lifetime of the application.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
-        values: &[
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_touch + 0];
 }
 
 /// A unique ID for a single finger on a touch device.
@@ -104,15 +97,8 @@ impl From<SDL_FingerID> for Uint64 {
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_FingerID {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Id,
-        module: "touch",
-        name: "SDL_FingerID",
-        short_name: "FingerID",
-        doc: "A unique ID for a single finger on a touch device.\n\nThis ID is valid for the time the finger (stylus, etc) is touching and will\nbe unique for all fingers currently in contact, so this ID tracks the\nlifetime of a single continuous touch. This value may represent an index, a\npointer, or some other unique ID, depending on the platform.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
-        values: &[
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_touch + 1];
 }
 
 /// An enum that describes the type of a touch device.
@@ -189,35 +175,8 @@ pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType =
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TouchDeviceType {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "touch",
-        name: "SDL_TouchDeviceType",
-        short_name: "TouchDeviceType",
-        doc: "An enum that describes the type of a touch device.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_TOUCH_DEVICE_INVALID",
-                short_name: "INVALID",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_TOUCH_DEVICE_DIRECT",
-                short_name: "DIRECT",
-                doc: "touch screen with window-relative coordinates\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE",
-                short_name: "INDIRECT_ABSOLUTE",
-                doc: "trackpad with absolute device coordinates\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_TOUCH_DEVICE_INDIRECT_RELATIVE",
-                short_name: "INDIRECT_RELATIVE",
-                doc: "trackpad with screen cursor-relative coordinates\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_touch + 2];
 }
 
 /// Data about a single finger in a multitouch event.

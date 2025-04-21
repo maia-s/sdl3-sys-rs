@@ -64,30 +64,8 @@ pub const TTF_DRAW_COMMAND_COPY: TTF_DrawCommand = TTF_DrawCommand::COPY;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_DrawCommand {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "textengine",
-        name: "TTF_DrawCommand",
-        short_name: "DrawCommand",
-        doc: "A font atlas draw command.\n\n### Availability\nThis enum is available since SDL_ttf 3.0.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_DRAW_COMMAND_NOOP",
-                short_name: "NOOP",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_DRAW_COMMAND_FILL",
-                short_name: "FILL",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_DRAW_COMMAND_COPY",
-                short_name: "COPY",
-                doc: "",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_textengine + 0];
 }
 
 /// A filled rectangle draw operation.

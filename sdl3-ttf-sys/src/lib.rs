@@ -3,3 +3,6 @@
 
 mod generated;
 pub use generated::*;
+
+#[cfg(feature = "metadata")]
+pub mod metadata;

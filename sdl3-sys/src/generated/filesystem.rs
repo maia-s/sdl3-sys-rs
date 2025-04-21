@@ -274,75 +274,8 @@ pub const SDL_FOLDER_COUNT: SDL_Folder = SDL_Folder::COUNT;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_Folder {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "filesystem",
-        name: "SDL_Folder",
-        short_name: "Folder",
-        doc: "The type of the OS-provided default folder for a specific purpose.\n\nNote that the Trash folder isn't included here, because trashing files\nusually involves extra OS-specific functionality to remember the file's\noriginal location.\n\nThe folders supported per platform are:\n\n|             | Windows | macOS/iOS | tvOS | Unix (XDG) | Haiku | Emscripten |\n| ----------- | ------- | --------- | ---- | ---------- | ----- | ---------- |\n| HOME        | X       | X         |      | X          | X     | X          |\n| DESKTOP     | X       | X         |      | X          | X     |            |\n| DOCUMENTS   | X       | X         |      | X          |       |            |\n| DOWNLOADS   | Vista+  | X         |      | X          |       |            |\n| MUSIC       | X       | X         |      | X          |       |            |\n| PICTURES    | X       | X         |      | X          |       |            |\n| PUBLICSHARE |         | X         |      | X          |       |            |\n| SAVEDGAMES  | Vista+  |           |      |            |       |            |\n| SCREENSHOTS | Vista+  |           |      |            |       |            |\n| TEMPLATES   | X       | X         |      | X          |       |            |\n| VIDEOS      | X       | X*        |      | X          |       |            |\n\nNote that on macOS/iOS, the Videos folder is called \"Movies\".\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetUserFolder`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FOLDER_HOME",
-                short_name: "HOME",
-                doc: "The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FOLDER_DESKTOP",
-                short_name: "DESKTOP",
-                doc: "The folder of files that are displayed on the desktop. Note that the existence of a desktop folder does not guarantee that the system does show icons on its desktop; certain GNU/Linux distros with a graphical environment may not have desktop icons.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FOLDER_DOCUMENTS",
-                short_name: "DOCUMENTS",
-                doc: "User document files, possibly application-specific. This is a good place to save a user's projects.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FOLDER_DOWNLOADS",
-                short_name: "DOWNLOADS",
-                doc: "Standard folder for user files downloaded from the internet.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FOLDER_MUSIC",
-                short_name: "MUSIC",
-                doc: "Music files that can be played using a standard music player (mp3, ogg...).\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FOLDER_PICTURES",
-                short_name: "PICTURES",
-                doc: "Image files that can be displayed using a standard viewer (png, jpg...).\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FOLDER_PUBLICSHARE",
-                short_name: "PUBLICSHARE",
-                doc: "Files that are meant to be shared with other users on the same computer.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FOLDER_SAVEDGAMES",
-                short_name: "SAVEDGAMES",
-                doc: "Save files for games.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FOLDER_SCREENSHOTS",
-                short_name: "SCREENSHOTS",
-                doc: "Application screenshots.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FOLDER_TEMPLATES",
-                short_name: "TEMPLATES",
-                doc: "Template files to be used when the user requests the desktop environment to create a new file in a certain folder, such as \"New Text File.txt\".  Any file in the Templates folder can be used as a starting point for a new file.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FOLDER_VIDEOS",
-                short_name: "VIDEOS",
-                doc: "Video files that can be played using a standard video player (mp4, webm...).\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FOLDER_COUNT",
-                short_name: "COUNT",
-                doc: "Total number of types in this enum, not a folder type by itself.\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_filesystem + 0];
 }
 
 extern "C" {
@@ -455,35 +388,8 @@ pub const SDL_PATHTYPE_OTHER: SDL_PathType = SDL_PathType::OTHER;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_PathType {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "filesystem",
-        name: "SDL_PathType",
-        short_name: "PathType",
-        doc: "Types of filesystem entries.\n\nNote that there may be other sorts of items on a filesystem: devices,\nsymlinks, named pipes, etc. They are currently reported as\n[`SDL_PATHTYPE_OTHER`].\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_PathInfo`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_PATHTYPE_NONE",
-                short_name: "NONE",
-                doc: "path does not exist\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_PATHTYPE_FILE",
-                short_name: "FILE",
-                doc: "a normal file\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_PATHTYPE_DIRECTORY",
-                short_name: "DIRECTORY",
-                doc: "a directory\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_PATHTYPE_OTHER",
-                short_name: "OTHER",
-                doc: "something completely different like a device node (not a symlink, those are always followed)\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_filesystem + 1];
 }
 
 /// Information about a path on the filesystem.
@@ -642,20 +548,8 @@ pub const SDL_GLOB_CASEINSENSITIVE: SDL_GlobFlags = SDL_GlobFlags::CASEINSENSITI
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GlobFlags {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Flags,
-        module: "filesystem",
-        name: "SDL_GlobFlags",
-        short_name: "GlobFlags",
-        doc: "Flags for path matching.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GlobDirectory`]\n- [`SDL_GlobStorageDirectory`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_GLOB_CASEINSENSITIVE",
-                short_name: "CASEINSENSITIVE",
-                doc: "",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_filesystem + 2];
 }
 
 extern "C" {
@@ -749,30 +643,8 @@ pub const SDL_ENUM_FAILURE: SDL_EnumerationResult = SDL_EnumerationResult::FAILU
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_EnumerationResult {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "filesystem",
-        name: "SDL_EnumerationResult",
-        short_name: "EnumerationResult",
-        doc: "Possible results from an enumeration callback.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_EnumerateDirectoryCallback`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_ENUM_CONTINUE",
-                short_name: "CONTINUE",
-                doc: "Value that requests that enumeration continue.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_ENUM_SUCCESS",
-                short_name: "SUCCESS",
-                doc: "Value that requests that enumeration stop, successfully.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_ENUM_FAILURE",
-                short_name: "FAILURE",
-                doc: "Value that requests that enumeration stop, as a failure.\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_filesystem + 3];
 }
 
 /// Callback for directory enumeration.

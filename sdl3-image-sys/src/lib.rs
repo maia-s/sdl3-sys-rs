@@ -7,3 +7,6 @@ pub use generated::image;
 
 #[doc(hidden)]
 pub use generated::everything;
+
+#[cfg(feature = "metadata")]
+pub mod metadata;

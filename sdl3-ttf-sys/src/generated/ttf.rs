@@ -728,40 +728,8 @@ pub const TTF_STYLE_STRIKETHROUGH: TTF_FontStyleFlags = TTF_FontStyleFlags::STRI
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_FontStyleFlags {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Flags,
-        module: "ttf",
-        name: "TTF_FontStyleFlags",
-        short_name: "FontStyleFlags",
-        doc: "Font style flags for [`TTF_Font`]\n\nThese are the flags which can be used to set the style of a font in\nSDL_ttf. A combination of these flags can be used with functions that set\nor query font style, such as [`TTF_SetFontStyle`] or [`TTF_GetFontStyle`].\n\n### Availability\nThis datatype is available since SDL_ttf 3.0.0.\n\n### See also\n- [`TTF_SetFontStyle`]\n- [`TTF_GetFontStyle`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_STYLE_NORMAL",
-                short_name: "NORMAL",
-                doc: "No special style\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_STYLE_BOLD",
-                short_name: "BOLD",
-                doc: "Bold style\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_STYLE_ITALIC",
-                short_name: "ITALIC",
-                doc: "Italic style\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_STYLE_UNDERLINE",
-                short_name: "UNDERLINE",
-                doc: "Underlined text\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_STYLE_STRIKETHROUGH",
-                short_name: "STRIKETHROUGH",
-                doc: "Strikethrough text\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 0];
 }
 
 extern "C" {
@@ -967,45 +935,8 @@ pub const TTF_HINTING_LIGHT_SUBPIXEL: TTF_HintingFlags = TTF_HintingFlags::LIGHT
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_HintingFlags {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "ttf",
-        name: "TTF_HintingFlags",
-        short_name: "HintingFlags",
-        doc: "Hinting flags for TTF (TrueType Fonts)\n\nThis enum specifies the level of hinting to be applied to the font\nrendering. The hinting level determines how much the font's outlines are\nadjusted for better alignment on the pixel grid.\n\n### Availability\nThis enum is available since SDL_ttf 3.0.0.\n\n### See also\n- [`TTF_SetFontHinting`]\n- [`TTF_GetFontHinting`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_HINTING_INVALID",
-                short_name: "INVALID",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_HINTING_NORMAL",
-                short_name: "NORMAL",
-                doc: "Normal hinting applies standard grid-fitting.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_HINTING_LIGHT",
-                short_name: "LIGHT",
-                doc: "Light hinting applies subtle adjustments to improve rendering.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_HINTING_MONO",
-                short_name: "MONO",
-                doc: "Monochrome hinting adjusts the font for better rendering at lower resolutions.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_HINTING_NONE",
-                short_name: "NONE",
-                doc: "No hinting, the font is rendered without any grid-fitting.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_HINTING_LIGHT_SUBPIXEL",
-                short_name: "LIGHT_SUBPIXEL",
-                doc: "Light hinting with subpixel rendering for more precise font edges.\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 1];
 }
 
 extern "C" {
@@ -1253,35 +1184,8 @@ pub const TTF_HORIZONTAL_ALIGN_RIGHT: TTF_HorizontalAlignment = TTF_HorizontalAl
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_HorizontalAlignment {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "ttf",
-        name: "TTF_HorizontalAlignment",
-        short_name: "HorizontalAlignment",
-        doc: "The horizontal alignment used when rendering wrapped text.\n\n### Availability\nThis enum is available since SDL_ttf 3.0.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_HORIZONTAL_ALIGN_INVALID",
-                short_name: "INVALID",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_HORIZONTAL_ALIGN_LEFT",
-                short_name: "LEFT",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_HORIZONTAL_ALIGN_CENTER",
-                short_name: "CENTER",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_HORIZONTAL_ALIGN_RIGHT",
-                short_name: "RIGHT",
-                doc: "",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 2];
 }
 
 extern "C" {
@@ -1645,40 +1549,8 @@ pub const TTF_DIRECTION_BTT: TTF_Direction = TTF_Direction::BTT;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_Direction {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "ttf",
-        name: "TTF_Direction",
-        short_name: "Direction",
-        doc: "Direction flags\n\nThe values here are chosen to match\n[hb_direction_t](https://harfbuzz.github.io/harfbuzz-hb-common.html#hb-direction-t)\n.\n\n### Availability\nThis enum is available since SDL_ttf 3.0.0.\n\n### See also\n- [`TTF_SetFontDirection`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_DIRECTION_INVALID",
-                short_name: "INVALID",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_DIRECTION_LTR",
-                short_name: "LTR",
-                doc: "Left to Right\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_DIRECTION_RTL",
-                short_name: "RTL",
-                doc: "Right to Left\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_DIRECTION_TTB",
-                short_name: "TTB",
-                doc: "Top to Bottom\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_DIRECTION_BTT",
-                short_name: "BTT",
-                doc: "Bottom to Top\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 3];
 }
 
 extern "C" {
@@ -1969,35 +1841,8 @@ pub const TTF_IMAGE_SDF: TTF_ImageType = TTF_ImageType::SDF;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_ImageType {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "ttf",
-        name: "TTF_ImageType",
-        short_name: "ImageType",
-        doc: "The type of data in a glyph image\n\n### Availability\nThis enum is available since SDL_ttf 3.0.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_IMAGE_INVALID",
-                short_name: "INVALID",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_IMAGE_ALPHA",
-                short_name: "ALPHA",
-                doc: "The color channels are white\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_IMAGE_COLOR",
-                short_name: "COLOR",
-                doc: "The color channels have image data\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_IMAGE_SDF",
-                short_name: "SDF",
-                doc: "The alpha channel has signed distance field information\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 4];
 }
 
 extern "C" {
@@ -3238,30 +3083,8 @@ pub const TTF_GPU_TEXTENGINE_WINDING_COUNTER_CLOCKWISE: TTF_GPUTextEngineWinding
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_GPUTextEngineWinding {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "ttf",
-        name: "TTF_GPUTextEngineWinding",
-        short_name: "GPUTextEngineWinding",
-        doc: "The winding order of the vertices returned by [`TTF_GetGPUTextDrawData`]\n\n### Availability\nThis enum is available since SDL_ttf 3.0.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_GPU_TEXTENGINE_WINDING_INVALID",
-                short_name: "INVALID",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_GPU_TEXTENGINE_WINDING_CLOCKWISE",
-                short_name: "CLOCKWISE",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_GPU_TEXTENGINE_WINDING_COUNTER_CLOCKWISE",
-                short_name: "COUNTER_CLOCKWISE",
-                doc: "",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 5];
 }
 
 extern "C" {
@@ -4229,40 +4052,8 @@ pub const TTF_SUBSTRING_TEXT_END: TTF_SubStringFlags = TTF_SubStringFlags::TEXT_
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_SubStringFlags {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Flags,
-        module: "ttf",
-        name: "TTF_SubStringFlags",
-        short_name: "SubStringFlags",
-        doc: "Flags for [`TTF_SubString`]\n\n### Availability\nThis datatype is available since SDL_ttf 3.0.0.\n\n### See also\n- [`TTF_SubString`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_SUBSTRING_DIRECTION_MASK",
-                short_name: "DIRECTION_MASK",
-                doc: "The mask for the flow direction for this substring\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_SUBSTRING_TEXT_START",
-                short_name: "TEXT_START",
-                doc: "This substring contains the beginning of the text\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_SUBSTRING_LINE_START",
-                short_name: "LINE_START",
-                doc: "This substring contains the beginning of line `line_index`\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_SUBSTRING_LINE_END",
-                short_name: "LINE_END",
-                doc: "This substring contains the end of line `line_index`\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "TTF_SUBSTRING_TEXT_END",
-                short_name: "TEXT_END",
-                doc: "This substring contains the end of the text\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 6];
 }
 
 /// The representation of a substring within text.

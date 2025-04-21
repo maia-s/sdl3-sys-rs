@@ -130,30 +130,8 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGE
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TextureAccess {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "render",
-        name: "SDL_TextureAccess",
-        short_name: "TextureAccess",
-        doc: "The access pattern allowed for a texture.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_TEXTUREACCESS_STATIC",
-                short_name: "STATIC",
-                doc: "Changes rarely, not lockable\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_TEXTUREACCESS_STREAMING",
-                short_name: "STREAMING",
-                doc: "Changes frequently, lockable\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_TEXTUREACCESS_TARGET",
-                short_name: "TARGET",
-                doc: "Texture can be used as a render target\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_render + 0];
 }
 
 /// How the logical size is mapped to the output.
@@ -241,40 +219,8 @@ pub const SDL_LOGICAL_PRESENTATION_INTEGER_SCALE: SDL_RendererLogicalPresentatio
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_RendererLogicalPresentation {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "render",
-        name: "SDL_RendererLogicalPresentation",
-        short_name: "RendererLogicalPresentation",
-        doc: "How the logical size is mapped to the output.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_LOGICAL_PRESENTATION_DISABLED",
-                short_name: "DISABLED",
-                doc: "There is no logical size in effect\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_LOGICAL_PRESENTATION_STRETCH",
-                short_name: "STRETCH",
-                doc: "The rendered content is stretched to the output resolution\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_LOGICAL_PRESENTATION_LETTERBOX",
-                short_name: "LETTERBOX",
-                doc: "The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_LOGICAL_PRESENTATION_OVERSCAN",
-                short_name: "OVERSCAN",
-                doc: "The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_LOGICAL_PRESENTATION_INTEGER_SCALE",
-                short_name: "INTEGER_SCALE",
-                doc: "The rendered content is scaled up by integer multiples to fit the output resolution\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_render + 1];
 }
 
 /// An efficient driver-specific representation of pixel data

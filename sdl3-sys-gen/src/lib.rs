@@ -33,7 +33,7 @@ mod parse;
 
 use core::fmt::Write;
 use emit::{Emit, EmitContext, EmitErr, InnerEmitContext};
-use parse::{DefineValue, Ident, Items, Parse, ParseContext, ParseErr, Source, Span};
+use parse::{DefineValue, EnumKind, Ident, Items, Parse, ParseContext, ParseErr, Source, Span};
 use std::{
     cell::RefCell,
     collections::{BTreeMap, HashSet},
@@ -83,9 +83,34 @@ fn format_and_write(input: String, path: &Path) -> Result<(), Error> {
     Ok(())
 }
 
-pub enum Metadata {
-    Hint { name: String, doc: String },
-    Property { name: String, doc: String },
+#[derive(Default)]
+pub struct Metadata {
+    hints: Vec<HintMetadata>,
+    properties: Vec<PropertyMetadata>,
+    groups: Vec<GroupMetadata>,
+}
+
+pub struct HintMetadata {
+    name: String,
+    doc: String,
+}
+
+pub struct PropertyMetadata {
+    name: String,
+    doc: String,
+}
+
+pub struct GroupMetadata {
+    kind: EnumKind,
+    name: String,
+    doc: String,
+    values: Vec<GroupValueMetadata>,
+}
+
+pub struct GroupValueMetadata {
+    name: String,
+    short_name: String,
+    doc: String,
 }
 
 struct LinesPatch<'a> {
@@ -633,82 +658,134 @@ impl Gen {
         format_and_write(output, &path)?;
 
         let mut metadata_out = String::new();
+        writeln!(metadata_out, "#![allow(non_upper_case_globals, unused)]")?;
+        writeln!(metadata_out)?;
         writeln!(
             metadata_out,
-            "use sdl3_sys::{{metadata::{{Hint, Property}}, properties::SDL_PropertyType}};"
+            "use sdl3_sys::{{metadata::{{Group, GroupKind, GroupValue, Hint, Property}}, properties::SDL_PropertyType}};"
         )?;
         writeln!(metadata_out)?;
         let mut metadata_out_hints = String::new();
         let mut metadata_out_props = String::new();
+        let mut metadata_out_groups = String::new();
+        let mut metadata_out_group_offsets = String::new();
+        let mut group_count = 0;
         let emitted = self.emitted.borrow();
         for module in emitted.keys() {
-            for md in &emitted[module].metadata {
-                match md {
-                    Metadata::Hint { name, doc } => {
-                        let short_name = name.strip_prefix("SDL_HINT_").unwrap();
-                        write!(
-                            metadata_out_hints,
-                            str_block! {"
-                                Hint {{
-                                    module: {module:?},
-                                    name: {name:?},
-                                    short_name: {short_name:?},
-                                    value: unsafe {{ ::core::ffi::CStr::from_ptr(crate::{module}::{name}) }},
-                                    doc: {doc:?},
-                                }},
-                            "},
-                            module = module,
-                            name = name,
-                            short_name = short_name,
-                            doc = doc,
+            let metadata = &emitted[module].metadata;
+            writeln!(
+                metadata_out_group_offsets,
+                "pub(crate) const GROUP_OFFSET_{module}: usize = {};",
+                group_count
+            )?;
+            for hint in &metadata.hints {
+                let short_name = hint.name.strip_prefix("SDL_HINT_").unwrap();
+                write!(
+                    metadata_out_hints,
+                    str_block! {"
+                        Hint {{
+                            module: {module:?},
+                            name: {name:?},
+                            short_name: {short_name:?},
+                            value: unsafe {{ ::core::ffi::CStr::from_ptr(crate::{module}::{name}) }},
+                            doc: {doc:?},
+                        }},
+                    "},
+                    module = module,
+                    name = hint.name,
+                    short_name = short_name,
+                    doc = hint.doc,
+                )?;
+            }
+            for prop in &metadata.properties {
+                let short_name = prop.name.strip_prefix("SDL_PROP_").unwrap();
+                let ty;
+                let short_name = if let Some(s) = short_name.strip_suffix("_POINTER") {
+                    ty = "POINTER";
+                    s
+                } else if let Some(s) = short_name.strip_suffix("_STRING") {
+                    ty = "STRING";
+                    s
+                } else if let Some(s) = short_name.strip_suffix("_NUMBER") {
+                    ty = "NUMBER";
+                    s
+                } else if let Some(s) = short_name.strip_suffix("_FLOAT") {
+                    ty = "FLOAT";
+                    s
+                } else if let Some(s) = short_name.strip_suffix("_BOOLEAN") {
+                    ty = "BOOLEAN";
+                    s
+                } else {
+                    ty = match prop.name.as_str() {
+                        "SDL_PROP_WINDOW_OPENVR_OVERLAY_ID" => "NUMBER",
+                        "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8" => "NUMBER",
+                        _ => panic!("unknown property type for property {}", prop.name),
+                    };
+                    short_name
+                };
+                write!(
+                    metadata_out_props,
+                    str_block! {"
+                        Property {{
+                            module: {module:?},
+                            name: {name:?},
+                            short_name: {short_name:?},
+                            value: unsafe {{ ::core::ffi::CStr::from_ptr(crate::{module}::{name}) }},
+                            ty: SDL_PropertyType::{ty},
+                            doc: {doc:?},
+                        }},
+                    "},
+                    module = module,
+                    name = prop.name,
+                    short_name = short_name,
+                    doc = prop.doc,
+                    ty = ty,
+                )?;
+            }
+            for group in &metadata.groups {
+                group_count += 1;
+                write!(
+                    metadata_out_groups,
+                    str_block! {"
+                        Group {{
+                            module: {module:?},
+                            kind: GroupKind::{kind},
+                            name: {name:?},
+                            short_name: {short_name:?},
+                            doc: {doc:?},
+                            values: &[
+                    "},
+                    module = module,
+                    kind = match group.kind {
+                        EnumKind::Enum => "Enum",
+                        EnumKind::Flags => "Flags",
+                        EnumKind::Id => "Id",
+                        EnumKind::Lock => "Lock",
+                    },
+                    name = group.name,
+                    short_name = group.name.strip_prefix(&self.sym_prefix).unwrap(),
+                    doc = group.doc,
+                )?;
+                if !group.values.is_empty() {
+                    for value in &group.values {
+                        writeln!(metadata_out_groups, "        GroupValue {{")?;
+                        writeln!(metadata_out_groups, "            name: {:?},", value.name)?;
+                        writeln!(
+                            metadata_out_groups,
+                            "            short_name: {:?},",
+                            value.short_name
                         )?;
-                    }
-                    Metadata::Property { name, doc } => {
-                        let short_name = name.strip_prefix("SDL_PROP_").unwrap();
-                        let ty;
-                        let short_name = if let Some(s) = short_name.strip_suffix("_POINTER") {
-                            ty = "POINTER";
-                            s
-                        } else if let Some(s) = short_name.strip_suffix("_STRING") {
-                            ty = "STRING";
-                            s
-                        } else if let Some(s) = short_name.strip_suffix("_NUMBER") {
-                            ty = "NUMBER";
-                            s
-                        } else if let Some(s) = short_name.strip_suffix("_FLOAT") {
-                            ty = "FLOAT";
-                            s
-                        } else if let Some(s) = short_name.strip_suffix("_BOOLEAN") {
-                            ty = "BOOLEAN";
-                            s
-                        } else {
-                            ty = match name.as_str() {
-                                "SDL_PROP_WINDOW_OPENVR_OVERLAY_ID" => "NUMBER",
-                                "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8" => "NUMBER",
-                                _ => panic!("unknown property type for property {name}"),
-                            };
-                            short_name
-                        };
-                        write!(
-                            metadata_out_props,
-                            str_block! {"
-                                Property {{
-                                    module: {module:?},
-                                    name: {name:?},
-                                    short_name: {short_name:?},
-                                    value: unsafe {{ ::core::ffi::CStr::from_ptr(crate::{module}::{name}) }},
-                                    ty: SDL_PropertyType::{ty},
-                                    doc: {doc:?},
-                                }},
-                            "},
-                            module = module,
-                            name = name,
-                            short_name = short_name,
-                            doc = doc,
-                            ty = ty,
-                        )?;
+                        writeln!(metadata_out_groups, "            doc: {:?},", value.doc)?;
+                        writeln!(metadata_out_groups, "        }},")?;
                     }
                 }
+                write!(
+                    metadata_out_groups,
+                    str_block! {"
+                            ],
+                        }},
+                    "}
+                )?;
             }
         }
         writeln!(
@@ -732,6 +809,16 @@ impl Gen {
             writeln!(metadata_out, "    {line}")?;
         }
         writeln!(metadata_out, "];")?;
+        writeln!(metadata_out)?;
+        writeln!(metadata_out, "/// Metadata for groups in this crate")?;
+        writeln!(metadata_out, "pub const GROUPS: &[Group] = &[")?;
+        for line in metadata_out_groups.lines() {
+            // rustfmt won't format this
+            writeln!(metadata_out, "    {line}")?;
+        }
+        writeln!(metadata_out, "];")?;
+        writeln!(metadata_out)?;
+        writeln!(metadata_out, "{metadata_out_group_offsets}")?;
 
         let mut meta_path = self.output_path.join("..").join("generated_metadata");
         meta_path.set_extension("rs");

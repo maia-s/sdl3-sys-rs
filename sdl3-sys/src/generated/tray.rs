@@ -199,40 +199,8 @@ pub const SDL_TRAYENTRY_CHECKED: SDL_TrayEntryFlags = SDL_TrayEntryFlags::CHECKE
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TrayEntryFlags {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Flags,
-        module: "tray",
-        name: "SDL_TrayEntryFlags",
-        short_name: "TrayEntryFlags",
-        doc: "Flags that control the creation of system tray entries.\n\nSome of these flags are required; exactly one of them must be specified at\nthe time a tray entry is created. Other flags are optional; zero or more of\nthose can be OR'ed together with the required flag.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_InsertTrayEntryAt`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_TRAYENTRY_BUTTON",
-                short_name: "BUTTON",
-                doc: "Make the entry a simple button. Required.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_TRAYENTRY_CHECKBOX",
-                short_name: "CHECKBOX",
-                doc: "Make the entry a checkbox. Required.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_TRAYENTRY_SUBMENU",
-                short_name: "SUBMENU",
-                doc: "Prepare the entry to have a submenu. Required\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_TRAYENTRY_DISABLED",
-                short_name: "DISABLED",
-                doc: "Make the entry disabled. Optional.\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_TRAYENTRY_CHECKED",
-                short_name: "CHECKED",
-                doc: "Make the entry checked. This is valid only for checkboxes. Optional.\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_tray + 0];
 }
 
 /// A callback that is invoked when a tray entry is selected.

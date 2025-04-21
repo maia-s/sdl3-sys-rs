@@ -344,30 +344,8 @@ pub const SDL_FILEDIALOG_OPENFOLDER: SDL_FileDialogType = SDL_FileDialogType::OP
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_FileDialogType {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "dialog",
-        name: "SDL_FileDialogType",
-        short_name: "FileDialogType",
-        doc: "Various types of file dialogs.\n\nThis is used by [`SDL_ShowFileDialogWithProperties()`] to decide what kind of\ndialog to present to the user.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_ShowFileDialogWithProperties`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FILEDIALOG_OPENFILE",
-                short_name: "OPENFILE",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FILEDIALOG_SAVEFILE",
-                short_name: "SAVEFILE",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_FILEDIALOG_OPENFOLDER",
-                short_name: "OPENFOLDER",
-                doc: "",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_dialog + 0];
 }
 
 extern "C" {

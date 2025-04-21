@@ -101,45 +101,8 @@ pub const SDL_POWERSTATE_CHARGED: SDL_PowerState = SDL_PowerState::CHARGED;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_PowerState {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "power",
-        name: "SDL_PowerState",
-        short_name: "PowerState",
-        doc: "The basic state for the system's power supply.\n\nThese are results returned by [`SDL_GetPowerInfo()`].\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_POWERSTATE_ERROR",
-                short_name: "ERROR",
-                doc: "error determining power status\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_POWERSTATE_UNKNOWN",
-                short_name: "UNKNOWN",
-                doc: "cannot determine power status\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_POWERSTATE_ON_BATTERY",
-                short_name: "ON_BATTERY",
-                doc: "Not plugged in, running on the battery\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_POWERSTATE_NO_BATTERY",
-                short_name: "NO_BATTERY",
-                doc: "Plugged in, no battery available\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_POWERSTATE_CHARGING",
-                short_name: "CHARGING",
-                doc: "Plugged in, charging battery\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_POWERSTATE_CHARGED",
-                short_name: "CHARGED",
-                doc: "Plugged in, battery charged\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_power + 0];
 }
 
 extern "C" {

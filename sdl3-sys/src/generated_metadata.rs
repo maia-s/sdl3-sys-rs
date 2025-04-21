@@ -1,5 +1,7 @@
+#![allow(non_upper_case_globals, unused)]
+
 use sdl3_sys::{
-    metadata::{Hint, Property},
+    metadata::{Group, GroupKind, GroupValue, Hint, Property},
     properties::SDL_PropertyType,
 };
 
@@ -3604,3 +3606,8866 @@ pub const PROPERTIES: &[Property] = &[
         doc: "",
     },
 ];
+
+/// Metadata for groups in this crate
+pub const GROUPS: &[Group] = &[
+    Group {
+        module: "assert",
+        kind: GroupKind::Enum,
+        name: "SDL_AssertState",
+        short_name: "AssertState",
+        doc: "Possible outcomes from a triggered assertion.\n\nWhen an enabled assertion triggers, it may call the assertion handler\n(possibly one provided by the app via [`SDL_SetAssertionHandler`]), which will\nreturn one of these values, possibly after asking the user.\n\nThen SDL will respond based on this outcome (loop around to retry the\ncondition, try to break in a debugger, kill the program, or ignore the\nproblem).\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_ASSERTION_RETRY",
+                short_name: "RETRY",
+                doc: "Retry the assert immediately.\n",
+            },
+            GroupValue {
+                name: "SDL_ASSERTION_BREAK",
+                short_name: "BREAK",
+                doc: "Make the debugger trigger a breakpoint.\n",
+            },
+            GroupValue {
+                name: "SDL_ASSERTION_ABORT",
+                short_name: "ABORT",
+                doc: "Terminate the program.\n",
+            },
+            GroupValue {
+                name: "SDL_ASSERTION_IGNORE",
+                short_name: "IGNORE",
+                doc: "Ignore the assert.\n",
+            },
+            GroupValue {
+                name: "SDL_ASSERTION_ALWAYS_IGNORE",
+                short_name: "ALWAYS_IGNORE",
+                doc: "Ignore the assert from now on.\n",
+            },
+        ],
+    },
+    Group {
+        module: "asyncio",
+        kind: GroupKind::Enum,
+        name: "SDL_AsyncIOTaskType",
+        short_name: "AsyncIOTaskType",
+        doc: "Types of asynchronous I/O tasks.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_ASYNCIO_TASK_READ",
+                short_name: "READ",
+                doc: "A read operation.\n",
+            },
+            GroupValue {
+                name: "SDL_ASYNCIO_TASK_WRITE",
+                short_name: "WRITE",
+                doc: "A write operation.\n",
+            },
+            GroupValue {
+                name: "SDL_ASYNCIO_TASK_CLOSE",
+                short_name: "CLOSE",
+                doc: "A close operation.\n",
+            },
+        ],
+    },
+    Group {
+        module: "asyncio",
+        kind: GroupKind::Enum,
+        name: "SDL_AsyncIOResult",
+        short_name: "AsyncIOResult",
+        doc: "Possible outcomes of an asynchronous I/O task.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_ASYNCIO_COMPLETE",
+                short_name: "COMPLETE",
+                doc: "request was completed without error\n",
+            },
+            GroupValue {
+                name: "SDL_ASYNCIO_FAILURE",
+                short_name: "FAILURE",
+                doc: "request failed for some reason; check [`SDL_GetError()`]!\n",
+            },
+            GroupValue {
+                name: "SDL_ASYNCIO_CANCELED",
+                short_name: "CANCELED",
+                doc: "request was canceled before completing.\n",
+            },
+        ],
+    },
+    Group {
+        module: "atomic",
+        kind: GroupKind::Lock,
+        name: "SDL_SpinLock",
+        short_name: "SpinLock",
+        doc: "An atomic spinlock.\n\nThe atomic locks are efficient spinlocks using CPU instructions, but are\nvulnerable to starvation and can spin forever if a thread holding a lock\nhas been terminated. For this reason you should minimize the code executed\ninside an atomic lock and never do expensive things like API or system\ncalls while holding them.\n\nThey are also vulnerable to starvation if the thread holding the lock is\nlower priority than other threads and doesn't get scheduled. In general you\nshould use mutexes instead, since they have better performance and\ncontention behavior.\n\nThe atomic locks are not safe to lock recursively.\n\nPorting Note: The spin lock functions and type are required and can not be\nemulated because they are used in the atomic emulation code.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "audio",
+        kind: GroupKind::Enum,
+        name: "SDL_AudioFormat",
+        short_name: "AudioFormat",
+        doc: "Audio format.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_AUDIO_BITSIZE`]\n- [`SDL_AUDIO_BYTESIZE`]\n- [`SDL_AUDIO_ISINT`]\n- [`SDL_AUDIO_ISFLOAT`]\n- [`SDL_AUDIO_ISBIGENDIAN`]\n- [`SDL_AUDIO_ISLITTLEENDIAN`]\n- [`SDL_AUDIO_ISSIGNED`]\n- [`SDL_AUDIO_ISUNSIGNED`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_AUDIO_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "Unspecified audio format\n",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_U8",
+                short_name: "U8",
+                doc: "Unsigned 8-bit samples\n",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_S8",
+                short_name: "S8",
+                doc: "Signed 8-bit samples\n",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_S16LE",
+                short_name: "S16LE",
+                doc: "Signed 16-bit samples\n",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_S16BE",
+                short_name: "S16BE",
+                doc: "As above, but big-endian byte order\n",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_S32LE",
+                short_name: "S32LE",
+                doc: "32-bit integer samples\n",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_S32BE",
+                short_name: "S32BE",
+                doc: "As above, but big-endian byte order\n",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_F32LE",
+                short_name: "F32LE",
+                doc: "32-bit floating point samples\n",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_F32BE",
+                short_name: "F32BE",
+                doc: "As above, but big-endian byte order\n",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_S16",
+                short_name: "S16",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_S32",
+                short_name: "S32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_F32",
+                short_name: "F32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_S16",
+                short_name: "S16",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_S32",
+                short_name: "S32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_F32",
+                short_name: "F32",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "audio",
+        kind: GroupKind::Id,
+        name: "SDL_AudioDeviceID",
+        short_name: "AudioDeviceID",
+        doc: "SDL Audio Device instance IDs.\n\nZero is used to signify an invalid/null device.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK",
+                short_name: "DEFAULT_PLAYBACK",
+                doc: "A value used to request a default playback audio device.\n\nSeveral functions that require an [`SDL_AudioDeviceID`] will accept this value\nto signify the app just wants the system to choose a default device instead\nof the app providing a specific one.\n\n### Availability\nThis macro is available since SDL 3.2.0.\n",
+            },
+            GroupValue {
+                name: "SDL_AUDIO_DEVICE_DEFAULT_RECORDING",
+                short_name: "DEFAULT_RECORDING",
+                doc: "A value used to request a default recording audio device.\n\nSeveral functions that require an [`SDL_AudioDeviceID`] will accept this value\nto signify the app just wants the system to choose a default device instead\nof the app providing a specific one.\n\n### Availability\nThis macro is available since SDL 3.2.0.\n",
+            },
+        ],
+    },
+    Group {
+        module: "blendmode",
+        kind: GroupKind::Flags,
+        name: "SDL_BlendMode",
+        short_name: "BlendMode",
+        doc: "A set of blend modes used in drawing operations.\n\nThese predefined blend modes are supported everywhere.\n\nAdditional values may be obtained from [`SDL_ComposeCustomBlendMode`].\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_ComposeCustomBlendMode`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_BLENDMODE_NONE",
+                short_name: "NONE",
+                doc: "no blending: dstRGBA = srcRGBA\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDMODE_BLEND",
+                short_name: "BLEND",
+                doc: "alpha blending: dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)), dstA = srcA + (dstA * (1-srcA))\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDMODE_BLEND_PREMULTIPLIED",
+                short_name: "BLEND_PREMULTIPLIED",
+                doc: "pre-multiplied alpha blending: dstRGBA = srcRGBA + (dstRGBA * (1-srcA))\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDMODE_ADD",
+                short_name: "ADD",
+                doc: "additive blending: dstRGB = (srcRGB * srcA) + dstRGB, dstA = dstA\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDMODE_ADD_PREMULTIPLIED",
+                short_name: "ADD_PREMULTIPLIED",
+                doc: "pre-multiplied additive blending: dstRGB = srcRGB + dstRGB, dstA = dstA\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDMODE_MOD",
+                short_name: "MOD",
+                doc: "color modulate: dstRGB = srcRGB * dstRGB, dstA = dstA\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDMODE_MUL",
+                short_name: "MUL",
+                doc: "color multiply: dstRGB = (srcRGB * dstRGB) + (dstRGB * (1-srcA)), dstA = dstA\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDMODE_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "blendmode",
+        kind: GroupKind::Enum,
+        name: "SDL_BlendOperation",
+        short_name: "BlendOperation",
+        doc: "The blend operation used when combining source and destination pixel\ncomponents.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_BLENDOPERATION_ADD",
+                short_name: "ADD",
+                doc: "dst + src: supported by all renderers\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDOPERATION_SUBTRACT",
+                short_name: "SUBTRACT",
+                doc: "src - dst : supported by D3D, OpenGL, OpenGLES, and Vulkan\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDOPERATION_REV_SUBTRACT",
+                short_name: "REV_SUBTRACT",
+                doc: "dst - src : supported by D3D, OpenGL, OpenGLES, and Vulkan\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDOPERATION_MINIMUM",
+                short_name: "MINIMUM",
+                doc: "min(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDOPERATION_MAXIMUM",
+                short_name: "MAXIMUM",
+                doc: "max(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan\n",
+            },
+        ],
+    },
+    Group {
+        module: "blendmode",
+        kind: GroupKind::Enum,
+        name: "SDL_BlendFactor",
+        short_name: "BlendFactor",
+        doc: "The normalized factor used to multiply pixel components.\n\nThe blend factors are multiplied with the pixels from a drawing operation\n(src) and the pixels from the render target (dst) before the blend\noperation. The comma-separated factors listed above are always applied in\nthe component order red, green, blue, and alpha.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_BLENDFACTOR_ZERO",
+                short_name: "ZERO",
+                doc: "0, 0, 0, 0\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDFACTOR_ONE",
+                short_name: "ONE",
+                doc: "1, 1, 1, 1\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDFACTOR_SRC_COLOR",
+                short_name: "SRC_COLOR",
+                doc: "srcR, srcG, srcB, srcA\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR",
+                short_name: "ONE_MINUS_SRC_COLOR",
+                doc: "1-srcR, 1-srcG, 1-srcB, 1-srcA\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDFACTOR_SRC_ALPHA",
+                short_name: "SRC_ALPHA",
+                doc: "srcA, srcA, srcA, srcA\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA",
+                short_name: "ONE_MINUS_SRC_ALPHA",
+                doc: "1-srcA, 1-srcA, 1-srcA, 1-srcA\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDFACTOR_DST_COLOR",
+                short_name: "DST_COLOR",
+                doc: "dstR, dstG, dstB, dstA\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR",
+                short_name: "ONE_MINUS_DST_COLOR",
+                doc: "1-dstR, 1-dstG, 1-dstB, 1-dstA\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDFACTOR_DST_ALPHA",
+                short_name: "DST_ALPHA",
+                doc: "dstA, dstA, dstA, dstA\n",
+            },
+            GroupValue {
+                name: "SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA",
+                short_name: "ONE_MINUS_DST_ALPHA",
+                doc: "1-dstA, 1-dstA, 1-dstA, 1-dstA\n",
+            },
+        ],
+    },
+    Group {
+        module: "camera",
+        kind: GroupKind::Id,
+        name: "SDL_CameraID",
+        short_name: "CameraID",
+        doc: "This is a unique ID for a camera device for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the device is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetCameras`]\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "camera",
+        kind: GroupKind::Enum,
+        name: "SDL_CameraPosition",
+        short_name: "CameraPosition",
+        doc: "The position of camera in relation to system device.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetCameraPosition`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_CAMERA_POSITION_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_CAMERA_POSITION_FRONT_FACING",
+                short_name: "FRONT_FACING",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_CAMERA_POSITION_BACK_FACING",
+                short_name: "BACK_FACING",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "dialog",
+        kind: GroupKind::Enum,
+        name: "SDL_FileDialogType",
+        short_name: "FileDialogType",
+        doc: "Various types of file dialogs.\n\nThis is used by [`SDL_ShowFileDialogWithProperties()`] to decide what kind of\ndialog to present to the user.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_ShowFileDialogWithProperties`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_FILEDIALOG_OPENFILE",
+                short_name: "OPENFILE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_FILEDIALOG_SAVEFILE",
+                short_name: "SAVEFILE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_FILEDIALOG_OPENFOLDER",
+                short_name: "OPENFOLDER",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "events",
+        kind: GroupKind::Enum,
+        name: "SDL_EventType",
+        short_name: "EventType",
+        doc: "The types of events that can be delivered.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_EVENT_FIRST",
+                short_name: "FIRST",
+                doc: "Unused (do not remove)\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_QUIT",
+                short_name: "QUIT",
+                doc: "User-requested quit\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_TERMINATING",
+                short_name: "TERMINATING",
+                doc: "The application is being terminated by the OS. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationWillTerminate()\nCalled on Android in onDestroy()\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_LOW_MEMORY",
+                short_name: "LOW_MEMORY",
+                doc: "The application is low on memory, free memory if possible. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationDidReceiveMemoryWarning()\nCalled on Android in onTrimMemory()\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WILL_ENTER_BACKGROUND",
+                short_name: "WILL_ENTER_BACKGROUND",
+                doc: "The application is about to enter the background. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationWillResignActive()\nCalled on Android in onPause()\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DID_ENTER_BACKGROUND",
+                short_name: "DID_ENTER_BACKGROUND",
+                doc: "The application did enter the background and may not get CPU for some time. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationDidEnterBackground()\nCalled on Android in onPause()\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WILL_ENTER_FOREGROUND",
+                short_name: "WILL_ENTER_FOREGROUND",
+                doc: "The application is about to enter the foreground. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationWillEnterForeground()\nCalled on Android in onResume()\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DID_ENTER_FOREGROUND",
+                short_name: "DID_ENTER_FOREGROUND",
+                doc: "The application is now interactive. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationDidBecomeActive()\nCalled on Android in onResume()\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_LOCALE_CHANGED",
+                short_name: "LOCALE_CHANGED",
+                doc: "The user's locale preferences have changed.\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_SYSTEM_THEME_CHANGED",
+                short_name: "SYSTEM_THEME_CHANGED",
+                doc: "The system theme changed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DISPLAY_ORIENTATION",
+                short_name: "DISPLAY_ORIENTATION",
+                doc: "Display orientation has changed to data1\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DISPLAY_ADDED",
+                short_name: "DISPLAY_ADDED",
+                doc: "Display has been added to the system\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DISPLAY_REMOVED",
+                short_name: "DISPLAY_REMOVED",
+                doc: "Display has been removed from the system\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DISPLAY_MOVED",
+                short_name: "DISPLAY_MOVED",
+                doc: "Display has changed position\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED",
+                short_name: "DISPLAY_DESKTOP_MODE_CHANGED",
+                doc: "Display has changed desktop mode\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED",
+                short_name: "DISPLAY_CURRENT_MODE_CHANGED",
+                doc: "Display has changed current mode\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED",
+                short_name: "DISPLAY_CONTENT_SCALE_CHANGED",
+                doc: "Display has changed content scale\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DISPLAY_FIRST",
+                short_name: "DISPLAY_FIRST",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DISPLAY_LAST",
+                short_name: "DISPLAY_LAST",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_SHOWN",
+                short_name: "WINDOW_SHOWN",
+                doc: "Window has been shown\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_HIDDEN",
+                short_name: "WINDOW_HIDDEN",
+                doc: "Window has been hidden\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_EXPOSED",
+                short_name: "WINDOW_EXPOSED",
+                doc: "Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_MOVED",
+                short_name: "WINDOW_MOVED",
+                doc: "Window has been moved to data1, data2\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_RESIZED",
+                short_name: "WINDOW_RESIZED",
+                doc: "Window has been resized to data1xdata2\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED",
+                short_name: "WINDOW_PIXEL_SIZE_CHANGED",
+                doc: "The pixel size of the window has changed to data1xdata2\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_METAL_VIEW_RESIZED",
+                short_name: "WINDOW_METAL_VIEW_RESIZED",
+                doc: "The pixel size of a Metal view associated with the window has changed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_MINIMIZED",
+                short_name: "WINDOW_MINIMIZED",
+                doc: "Window has been minimized\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_MAXIMIZED",
+                short_name: "WINDOW_MAXIMIZED",
+                doc: "Window has been maximized\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_RESTORED",
+                short_name: "WINDOW_RESTORED",
+                doc: "Window has been restored to normal size and position\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_MOUSE_ENTER",
+                short_name: "WINDOW_MOUSE_ENTER",
+                doc: "Window has gained mouse focus\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_MOUSE_LEAVE",
+                short_name: "WINDOW_MOUSE_LEAVE",
+                doc: "Window has lost mouse focus\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_FOCUS_GAINED",
+                short_name: "WINDOW_FOCUS_GAINED",
+                doc: "Window has gained keyboard focus\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_FOCUS_LOST",
+                short_name: "WINDOW_FOCUS_LOST",
+                doc: "Window has lost keyboard focus\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_CLOSE_REQUESTED",
+                short_name: "WINDOW_CLOSE_REQUESTED",
+                doc: "The window manager requests that the window be closed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_HIT_TEST",
+                short_name: "WINDOW_HIT_TEST",
+                doc: "Window had a hit test that wasn't [`SDL_HITTEST_NORMAL`]\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_ICCPROF_CHANGED",
+                short_name: "WINDOW_ICCPROF_CHANGED",
+                doc: "The ICC profile of the window's display has changed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_DISPLAY_CHANGED",
+                short_name: "WINDOW_DISPLAY_CHANGED",
+                doc: "Window has been moved to display data1\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED",
+                short_name: "WINDOW_DISPLAY_SCALE_CHANGED",
+                doc: "Window display scale has been changed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_SAFE_AREA_CHANGED",
+                short_name: "WINDOW_SAFE_AREA_CHANGED",
+                doc: "The window safe area has been changed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_OCCLUDED",
+                short_name: "WINDOW_OCCLUDED",
+                doc: "The window has been occluded\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_ENTER_FULLSCREEN",
+                short_name: "WINDOW_ENTER_FULLSCREEN",
+                doc: "The window has entered fullscreen mode\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_LEAVE_FULLSCREEN",
+                short_name: "WINDOW_LEAVE_FULLSCREEN",
+                doc: "The window has left fullscreen mode\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_DESTROYED",
+                short_name: "WINDOW_DESTROYED",
+                doc: "The window with the associated ID is being or has been destroyed. If this message is being handled\nin an event watcher, the window handle is still valid and can still be used to retrieve any properties\nassociated with the window. Otherwise, the handle has already been destroyed and all resources\nassociated with it are invalid\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_HDR_STATE_CHANGED",
+                short_name: "WINDOW_HDR_STATE_CHANGED",
+                doc: "Window HDR properties have changed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_FIRST",
+                short_name: "WINDOW_FIRST",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_EVENT_WINDOW_LAST",
+                short_name: "WINDOW_LAST",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_EVENT_KEY_DOWN",
+                short_name: "KEY_DOWN",
+                doc: "Key pressed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_KEY_UP",
+                short_name: "KEY_UP",
+                doc: "Key released\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_TEXT_EDITING",
+                short_name: "TEXT_EDITING",
+                doc: "Keyboard text editing (composition)\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_TEXT_INPUT",
+                short_name: "TEXT_INPUT",
+                doc: "Keyboard text input\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_KEYMAP_CHANGED",
+                short_name: "KEYMAP_CHANGED",
+                doc: "Keymap changed due to a system event such as an\ninput language or keyboard layout change.\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_KEYBOARD_ADDED",
+                short_name: "KEYBOARD_ADDED",
+                doc: "A new keyboard has been inserted into the system\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_KEYBOARD_REMOVED",
+                short_name: "KEYBOARD_REMOVED",
+                doc: "A keyboard has been removed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_TEXT_EDITING_CANDIDATES",
+                short_name: "TEXT_EDITING_CANDIDATES",
+                doc: "Keyboard text editing candidates\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_MOUSE_MOTION",
+                short_name: "MOUSE_MOTION",
+                doc: "Mouse moved\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_MOUSE_BUTTON_DOWN",
+                short_name: "MOUSE_BUTTON_DOWN",
+                doc: "Mouse button pressed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_MOUSE_BUTTON_UP",
+                short_name: "MOUSE_BUTTON_UP",
+                doc: "Mouse button released\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_MOUSE_WHEEL",
+                short_name: "MOUSE_WHEEL",
+                doc: "Mouse wheel motion\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_MOUSE_ADDED",
+                short_name: "MOUSE_ADDED",
+                doc: "A new mouse has been inserted into the system\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_MOUSE_REMOVED",
+                short_name: "MOUSE_REMOVED",
+                doc: "A mouse has been removed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_JOYSTICK_AXIS_MOTION",
+                short_name: "JOYSTICK_AXIS_MOTION",
+                doc: "Joystick axis motion\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_JOYSTICK_BALL_MOTION",
+                short_name: "JOYSTICK_BALL_MOTION",
+                doc: "Joystick trackball motion\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_JOYSTICK_HAT_MOTION",
+                short_name: "JOYSTICK_HAT_MOTION",
+                doc: "Joystick hat position change\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_JOYSTICK_BUTTON_DOWN",
+                short_name: "JOYSTICK_BUTTON_DOWN",
+                doc: "Joystick button pressed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_JOYSTICK_BUTTON_UP",
+                short_name: "JOYSTICK_BUTTON_UP",
+                doc: "Joystick button released\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_JOYSTICK_ADDED",
+                short_name: "JOYSTICK_ADDED",
+                doc: "A new joystick has been inserted into the system\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_JOYSTICK_REMOVED",
+                short_name: "JOYSTICK_REMOVED",
+                doc: "An opened joystick has been removed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_JOYSTICK_BATTERY_UPDATED",
+                short_name: "JOYSTICK_BATTERY_UPDATED",
+                doc: "Joystick battery level change\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_JOYSTICK_UPDATE_COMPLETE",
+                short_name: "JOYSTICK_UPDATE_COMPLETE",
+                doc: "Joystick update is complete\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_GAMEPAD_AXIS_MOTION",
+                short_name: "GAMEPAD_AXIS_MOTION",
+                doc: "Gamepad axis motion\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_GAMEPAD_BUTTON_DOWN",
+                short_name: "GAMEPAD_BUTTON_DOWN",
+                doc: "Gamepad button pressed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_GAMEPAD_BUTTON_UP",
+                short_name: "GAMEPAD_BUTTON_UP",
+                doc: "Gamepad button released\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_GAMEPAD_ADDED",
+                short_name: "GAMEPAD_ADDED",
+                doc: "A new gamepad has been inserted into the system\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_GAMEPAD_REMOVED",
+                short_name: "GAMEPAD_REMOVED",
+                doc: "A gamepad has been removed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_GAMEPAD_REMAPPED",
+                short_name: "GAMEPAD_REMAPPED",
+                doc: "The gamepad mapping was updated\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN",
+                short_name: "GAMEPAD_TOUCHPAD_DOWN",
+                doc: "Gamepad touchpad was touched\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION",
+                short_name: "GAMEPAD_TOUCHPAD_MOTION",
+                doc: "Gamepad touchpad finger was moved\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_GAMEPAD_TOUCHPAD_UP",
+                short_name: "GAMEPAD_TOUCHPAD_UP",
+                doc: "Gamepad touchpad finger was lifted\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_GAMEPAD_SENSOR_UPDATE",
+                short_name: "GAMEPAD_SENSOR_UPDATE",
+                doc: "Gamepad sensor was updated\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_GAMEPAD_UPDATE_COMPLETE",
+                short_name: "GAMEPAD_UPDATE_COMPLETE",
+                doc: "Gamepad update is complete\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED",
+                short_name: "GAMEPAD_STEAM_HANDLE_UPDATED",
+                doc: "Gamepad Steam handle has changed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_FINGER_DOWN",
+                short_name: "FINGER_DOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_EVENT_FINGER_UP",
+                short_name: "FINGER_UP",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_EVENT_FINGER_MOTION",
+                short_name: "FINGER_MOTION",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_EVENT_FINGER_CANCELED",
+                short_name: "FINGER_CANCELED",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_EVENT_CLIPBOARD_UPDATE",
+                short_name: "CLIPBOARD_UPDATE",
+                doc: "The clipboard or primary selection changed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DROP_FILE",
+                short_name: "DROP_FILE",
+                doc: "The system requests a file open\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DROP_TEXT",
+                short_name: "DROP_TEXT",
+                doc: "text/plain drag-and-drop event\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DROP_BEGIN",
+                short_name: "DROP_BEGIN",
+                doc: "A new set of drops is beginning (NULL filename)\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DROP_COMPLETE",
+                short_name: "DROP_COMPLETE",
+                doc: "Current set of drops is now complete (NULL filename)\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_DROP_POSITION",
+                short_name: "DROP_POSITION",
+                doc: "Position while moving over the window\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_AUDIO_DEVICE_ADDED",
+                short_name: "AUDIO_DEVICE_ADDED",
+                doc: "A new audio device is available\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_AUDIO_DEVICE_REMOVED",
+                short_name: "AUDIO_DEVICE_REMOVED",
+                doc: "An audio device has been removed.\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED",
+                short_name: "AUDIO_DEVICE_FORMAT_CHANGED",
+                doc: "An audio device's format has been changed by the system.\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_SENSOR_UPDATE",
+                short_name: "SENSOR_UPDATE",
+                doc: "A sensor was updated\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_PEN_PROXIMITY_IN",
+                short_name: "PEN_PROXIMITY_IN",
+                doc: "Pressure-sensitive pen has become available\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_PEN_PROXIMITY_OUT",
+                short_name: "PEN_PROXIMITY_OUT",
+                doc: "Pressure-sensitive pen has become unavailable\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_PEN_DOWN",
+                short_name: "PEN_DOWN",
+                doc: "Pressure-sensitive pen touched drawing surface\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_PEN_UP",
+                short_name: "PEN_UP",
+                doc: "Pressure-sensitive pen stopped touching drawing surface\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_PEN_BUTTON_DOWN",
+                short_name: "PEN_BUTTON_DOWN",
+                doc: "Pressure-sensitive pen button pressed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_PEN_BUTTON_UP",
+                short_name: "PEN_BUTTON_UP",
+                doc: "Pressure-sensitive pen button released\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_PEN_MOTION",
+                short_name: "PEN_MOTION",
+                doc: "Pressure-sensitive pen is moving on the tablet\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_PEN_AXIS",
+                short_name: "PEN_AXIS",
+                doc: "Pressure-sensitive pen angle/pressure/etc changed\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_CAMERA_DEVICE_ADDED",
+                short_name: "CAMERA_DEVICE_ADDED",
+                doc: "A new camera device is available\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_CAMERA_DEVICE_REMOVED",
+                short_name: "CAMERA_DEVICE_REMOVED",
+                doc: "A camera device has been removed.\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_CAMERA_DEVICE_APPROVED",
+                short_name: "CAMERA_DEVICE_APPROVED",
+                doc: "A camera device has been approved for use by the user.\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_CAMERA_DEVICE_DENIED",
+                short_name: "CAMERA_DEVICE_DENIED",
+                doc: "A camera device has been denied for use by the user.\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_RENDER_TARGETS_RESET",
+                short_name: "RENDER_TARGETS_RESET",
+                doc: "The render targets have been reset and their contents need to be updated\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_RENDER_DEVICE_RESET",
+                short_name: "RENDER_DEVICE_RESET",
+                doc: "The device has been reset and all textures need to be recreated\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_RENDER_DEVICE_LOST",
+                short_name: "RENDER_DEVICE_LOST",
+                doc: "The device has been lost and can't be recovered.\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_PRIVATE0",
+                short_name: "PRIVATE0",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_EVENT_PRIVATE1",
+                short_name: "PRIVATE1",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_EVENT_PRIVATE2",
+                short_name: "PRIVATE2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_EVENT_PRIVATE3",
+                short_name: "PRIVATE3",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_EVENT_POLL_SENTINEL",
+                short_name: "POLL_SENTINEL",
+                doc: "Signals the end of an event poll cycle\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_USER",
+                short_name: "USER",
+                doc: "Events [`SDL_EVENT_USER`] through [`SDL_EVENT_LAST`] are for your use,\nand should be allocated with [`SDL_RegisterEvents()`]\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_LAST",
+                short_name: "LAST",
+                doc: "*  This last event is only for bounding internal arrays\n",
+            },
+            GroupValue {
+                name: "SDL_EVENT_ENUM_PADDING",
+                short_name: "ENUM_PADDING",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "events",
+        kind: GroupKind::Enum,
+        name: "SDL_EventAction",
+        short_name: "EventAction",
+        doc: "The type of action to request from [`SDL_PeepEvents()`].\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_ADDEVENT",
+                short_name: "ADDEVENT",
+                doc: "Add events to the back of the queue.\n",
+            },
+            GroupValue {
+                name: "SDL_PEEKEVENT",
+                short_name: "PEEKEVENT",
+                doc: "Check but don't remove events from the queue front.\n",
+            },
+            GroupValue {
+                name: "SDL_GETEVENT",
+                short_name: "GETEVENT",
+                doc: "Retrieve/remove events from the front of the queue.\n",
+            },
+        ],
+    },
+    Group {
+        module: "filesystem",
+        kind: GroupKind::Enum,
+        name: "SDL_Folder",
+        short_name: "Folder",
+        doc: "The type of the OS-provided default folder for a specific purpose.\n\nNote that the Trash folder isn't included here, because trashing files\nusually involves extra OS-specific functionality to remember the file's\noriginal location.\n\nThe folders supported per platform are:\n\n|             | Windows | macOS/iOS | tvOS | Unix (XDG) | Haiku | Emscripten |\n| ----------- | ------- | --------- | ---- | ---------- | ----- | ---------- |\n| HOME        | X       | X         |      | X          | X     | X          |\n| DESKTOP     | X       | X         |      | X          | X     |            |\n| DOCUMENTS   | X       | X         |      | X          |       |            |\n| DOWNLOADS   | Vista+  | X         |      | X          |       |            |\n| MUSIC       | X       | X         |      | X          |       |            |\n| PICTURES    | X       | X         |      | X          |       |            |\n| PUBLICSHARE |         | X         |      | X          |       |            |\n| SAVEDGAMES  | Vista+  |           |      |            |       |            |\n| SCREENSHOTS | Vista+  |           |      |            |       |            |\n| TEMPLATES   | X       | X         |      | X          |       |            |\n| VIDEOS      | X       | X*        |      | X          |       |            |\n\nNote that on macOS/iOS, the Videos folder is called \"Movies\".\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetUserFolder`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_FOLDER_HOME",
+                short_name: "HOME",
+                doc: "The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents.\n",
+            },
+            GroupValue {
+                name: "SDL_FOLDER_DESKTOP",
+                short_name: "DESKTOP",
+                doc: "The folder of files that are displayed on the desktop. Note that the existence of a desktop folder does not guarantee that the system does show icons on its desktop; certain GNU/Linux distros with a graphical environment may not have desktop icons.\n",
+            },
+            GroupValue {
+                name: "SDL_FOLDER_DOCUMENTS",
+                short_name: "DOCUMENTS",
+                doc: "User document files, possibly application-specific. This is a good place to save a user's projects.\n",
+            },
+            GroupValue {
+                name: "SDL_FOLDER_DOWNLOADS",
+                short_name: "DOWNLOADS",
+                doc: "Standard folder for user files downloaded from the internet.\n",
+            },
+            GroupValue {
+                name: "SDL_FOLDER_MUSIC",
+                short_name: "MUSIC",
+                doc: "Music files that can be played using a standard music player (mp3, ogg...).\n",
+            },
+            GroupValue {
+                name: "SDL_FOLDER_PICTURES",
+                short_name: "PICTURES",
+                doc: "Image files that can be displayed using a standard viewer (png, jpg...).\n",
+            },
+            GroupValue {
+                name: "SDL_FOLDER_PUBLICSHARE",
+                short_name: "PUBLICSHARE",
+                doc: "Files that are meant to be shared with other users on the same computer.\n",
+            },
+            GroupValue {
+                name: "SDL_FOLDER_SAVEDGAMES",
+                short_name: "SAVEDGAMES",
+                doc: "Save files for games.\n",
+            },
+            GroupValue {
+                name: "SDL_FOLDER_SCREENSHOTS",
+                short_name: "SCREENSHOTS",
+                doc: "Application screenshots.\n",
+            },
+            GroupValue {
+                name: "SDL_FOLDER_TEMPLATES",
+                short_name: "TEMPLATES",
+                doc: "Template files to be used when the user requests the desktop environment to create a new file in a certain folder, such as \"New Text File.txt\".  Any file in the Templates folder can be used as a starting point for a new file.\n",
+            },
+            GroupValue {
+                name: "SDL_FOLDER_VIDEOS",
+                short_name: "VIDEOS",
+                doc: "Video files that can be played using a standard video player (mp4, webm...).\n",
+            },
+            GroupValue {
+                name: "SDL_FOLDER_COUNT",
+                short_name: "COUNT",
+                doc: "Total number of types in this enum, not a folder type by itself.\n",
+            },
+        ],
+    },
+    Group {
+        module: "filesystem",
+        kind: GroupKind::Enum,
+        name: "SDL_PathType",
+        short_name: "PathType",
+        doc: "Types of filesystem entries.\n\nNote that there may be other sorts of items on a filesystem: devices,\nsymlinks, named pipes, etc. They are currently reported as\n[`SDL_PATHTYPE_OTHER`].\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_PathInfo`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_PATHTYPE_NONE",
+                short_name: "NONE",
+                doc: "path does not exist\n",
+            },
+            GroupValue {
+                name: "SDL_PATHTYPE_FILE",
+                short_name: "FILE",
+                doc: "a normal file\n",
+            },
+            GroupValue {
+                name: "SDL_PATHTYPE_DIRECTORY",
+                short_name: "DIRECTORY",
+                doc: "a directory\n",
+            },
+            GroupValue {
+                name: "SDL_PATHTYPE_OTHER",
+                short_name: "OTHER",
+                doc: "something completely different like a device node (not a symlink, those are always followed)\n",
+            },
+        ],
+    },
+    Group {
+        module: "filesystem",
+        kind: GroupKind::Flags,
+        name: "SDL_GlobFlags",
+        short_name: "GlobFlags",
+        doc: "Flags for path matching.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GlobDirectory`]\n- [`SDL_GlobStorageDirectory`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GLOB_CASEINSENSITIVE",
+                short_name: "CASEINSENSITIVE",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "filesystem",
+        kind: GroupKind::Enum,
+        name: "SDL_EnumerationResult",
+        short_name: "EnumerationResult",
+        doc: "Possible results from an enumeration callback.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_EnumerateDirectoryCallback`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_ENUM_CONTINUE",
+                short_name: "CONTINUE",
+                doc: "Value that requests that enumeration continue.\n",
+            },
+            GroupValue {
+                name: "SDL_ENUM_SUCCESS",
+                short_name: "SUCCESS",
+                doc: "Value that requests that enumeration stop, successfully.\n",
+            },
+            GroupValue {
+                name: "SDL_ENUM_FAILURE",
+                short_name: "FAILURE",
+                doc: "Value that requests that enumeration stop, as a failure.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gamepad",
+        kind: GroupKind::Enum,
+        name: "SDL_GamepadType",
+        short_name: "GamepadType",
+        doc: "Standard gamepad types.\n\nThis type does not necessarily map to first-party controllers from\nMicrosoft/Sony/Nintendo; in many cases, third-party controllers can report\nas these, either because they were designed for a specific console, or they\nsimply most closely match that console's controllers (does it have A/B/X/Y\nbuttons or X/O/Square/Triangle? Does it have a touchpad? etc).\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GAMEPAD_TYPE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_TYPE_STANDARD",
+                short_name: "STANDARD",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_TYPE_XBOX360",
+                short_name: "XBOX360",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_TYPE_XBOXONE",
+                short_name: "XBOXONE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_TYPE_PS3",
+                short_name: "PS3",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_TYPE_PS4",
+                short_name: "PS4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_TYPE_PS5",
+                short_name: "PS5",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_PRO",
+                short_name: "NINTENDO_SWITCH_PRO",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT",
+                short_name: "NINTENDO_SWITCH_JOYCON_LEFT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT",
+                short_name: "NINTENDO_SWITCH_JOYCON_RIGHT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR",
+                short_name: "NINTENDO_SWITCH_JOYCON_PAIR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_TYPE_COUNT",
+                short_name: "COUNT",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "gamepad",
+        kind: GroupKind::Enum,
+        name: "SDL_GamepadButton",
+        short_name: "GamepadButton",
+        doc: "The list of buttons available on a gamepad\n\nFor controllers that use a diamond pattern for the face buttons, the\nsouth/east/west/north buttons below correspond to the locations in the\ndiamond pattern. For Xbox controllers, this would be A/B/X/Y, for Nintendo\nSwitch controllers, this would be B/A/Y/X, for PlayStation controllers this\nwould be Cross/Circle/Square/Triangle.\n\nFor controllers that don't use a diamond pattern for the face buttons, the\nsouth/east/west/north buttons indicate the buttons labeled A, B, C, D, or\n1, 2, 3, 4, or for controllers that aren't labeled, they are the primary,\nsecondary, etc. buttons.\n\nThe activate action is often the south button and the cancel action is\noften the east button, but in some regions this is reversed, so your game\nshould allow remapping actions based on user preferences.\n\nYou can query the labels for the face buttons using\n[`SDL_GetGamepadButtonLabel()`]\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_SOUTH",
+                short_name: "SOUTH",
+                doc: "Bottom face button (e.g. Xbox A button)\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_EAST",
+                short_name: "EAST",
+                doc: "Right face button (e.g. Xbox B button)\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_WEST",
+                short_name: "WEST",
+                doc: "Left face button (e.g. Xbox X button)\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_NORTH",
+                short_name: "NORTH",
+                doc: "Top face button (e.g. Xbox Y button)\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_BACK",
+                short_name: "BACK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_GUIDE",
+                short_name: "GUIDE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_START",
+                short_name: "START",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LEFT_STICK",
+                short_name: "LEFT_STICK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_RIGHT_STICK",
+                short_name: "RIGHT_STICK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LEFT_SHOULDER",
+                short_name: "LEFT_SHOULDER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER",
+                short_name: "RIGHT_SHOULDER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_DPAD_UP",
+                short_name: "DPAD_UP",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_DPAD_DOWN",
+                short_name: "DPAD_DOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_DPAD_LEFT",
+                short_name: "DPAD_LEFT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_DPAD_RIGHT",
+                short_name: "DPAD_RIGHT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_MISC1",
+                short_name: "MISC1",
+                doc: "Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button, Google Stadia capture button)\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1",
+                short_name: "RIGHT_PADDLE1",
+                doc: "Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1)\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LEFT_PADDLE1",
+                short_name: "LEFT_PADDLE1",
+                doc: "Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3)\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2",
+                short_name: "RIGHT_PADDLE2",
+                doc: "Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2)\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LEFT_PADDLE2",
+                short_name: "LEFT_PADDLE2",
+                doc: "Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4)\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_TOUCHPAD",
+                short_name: "TOUCHPAD",
+                doc: "PS4/PS5 touchpad button\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_MISC2",
+                short_name: "MISC2",
+                doc: "Additional button\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_MISC3",
+                short_name: "MISC3",
+                doc: "Additional button\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_MISC4",
+                short_name: "MISC4",
+                doc: "Additional button\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_MISC5",
+                short_name: "MISC5",
+                doc: "Additional button\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_MISC6",
+                short_name: "MISC6",
+                doc: "Additional button\n",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_COUNT",
+                short_name: "COUNT",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "gamepad",
+        kind: GroupKind::Enum,
+        name: "SDL_GamepadButtonLabel",
+        short_name: "GamepadButtonLabel",
+        doc: "The set of gamepad button labels\n\nThis isn't a complete set, just the face buttons to make it easy to show\nbutton prompts.\n\nFor a complete set, you should look at the button and gamepad type and have\na set of symbols that work well with your art style.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_A",
+                short_name: "A",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_B",
+                short_name: "B",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_X",
+                short_name: "X",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_Y",
+                short_name: "Y",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_CROSS",
+                short_name: "CROSS",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_CIRCLE",
+                short_name: "CIRCLE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_SQUARE",
+                short_name: "SQUARE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE",
+                short_name: "TRIANGLE",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "gamepad",
+        kind: GroupKind::Enum,
+        name: "SDL_GamepadAxis",
+        short_name: "GamepadAxis",
+        doc: "The list of axes available on a gamepad\n\nThumbstick axis values range from [`SDL_JOYSTICK_AXIS_MIN`] to\n[`SDL_JOYSTICK_AXIS_MAX`], and are centered within ~8000 of zero, though\nadvanced UI will allow users to set or autodetect the dead zone, which\nvaries between gamepads.\n\nTrigger axis values range from 0 (released) to [`SDL_JOYSTICK_AXIS_MAX`] (fully\npressed) when reported by [`SDL_GetGamepadAxis()`]. Note that this is not the\nsame range that will be reported by the lower-level [`SDL_GetJoystickAxis()`].\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GAMEPAD_AXIS_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_AXIS_LEFTX",
+                short_name: "LEFTX",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_AXIS_LEFTY",
+                short_name: "LEFTY",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_AXIS_RIGHTX",
+                short_name: "RIGHTX",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_AXIS_RIGHTY",
+                short_name: "RIGHTY",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_AXIS_LEFT_TRIGGER",
+                short_name: "LEFT_TRIGGER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_AXIS_RIGHT_TRIGGER",
+                short_name: "RIGHT_TRIGGER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_AXIS_COUNT",
+                short_name: "COUNT",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "gamepad",
+        kind: GroupKind::Enum,
+        name: "SDL_GamepadBindingType",
+        short_name: "GamepadBindingType",
+        doc: "Types of gamepad control bindings.\n\nA gamepad is a collection of bindings that map arbitrary joystick buttons,\naxes and hat switches to specific positions on a generic console-style\ngamepad. This enum is used as part of [`SDL_GamepadBinding`] to specify those\nmappings.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GAMEPAD_BINDTYPE_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BINDTYPE_BUTTON",
+                short_name: "BUTTON",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BINDTYPE_AXIS",
+                short_name: "AXIS",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GAMEPAD_BINDTYPE_HAT",
+                short_name: "HAT",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUPrimitiveType",
+        short_name: "GPUPrimitiveType",
+        doc: "Specifies the primitive topology of a graphics pipeline.\n\nIf you are using POINTLIST you must include a point size output in the\nvertex shader.\n\n- For HLSL compiling to SPIRV you must decorate a float output with\n\\[\\[vk::builtin(\"PointSize\")\\]\\].\n- For GLSL you must set the gl_PointSize builtin.\n- For MSL you must include a float output with the \\[\\[point_size\\]\\]\ndecorator.\n\nNote that sized point topology is totally unsupported on D3D12. Any size\nother than 1 will be ignored. In general, you should avoid using point\ntopology for both compatibility and performance reasons. You WILL regret\nusing it.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_PRIMITIVETYPE_TRIANGLELIST",
+                short_name: "TRIANGLELIST",
+                doc: "A series of separate triangles.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_PRIMITIVETYPE_TRIANGLESTRIP",
+                short_name: "TRIANGLESTRIP",
+                doc: "A series of connected triangles.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_PRIMITIVETYPE_LINELIST",
+                short_name: "LINELIST",
+                doc: "A series of separate lines.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_PRIMITIVETYPE_LINESTRIP",
+                short_name: "LINESTRIP",
+                doc: "A series of connected lines.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_PRIMITIVETYPE_POINTLIST",
+                short_name: "POINTLIST",
+                doc: "A series of separate points.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPULoadOp",
+        short_name: "GPULoadOp",
+        doc: "Specifies how the contents of a texture attached to a render pass are\ntreated at the beginning of the render pass.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_BeginGPURenderPass`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_LOADOP_LOAD",
+                short_name: "LOAD",
+                doc: "The previous contents of the texture will be preserved.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_LOADOP_CLEAR",
+                short_name: "CLEAR",
+                doc: "The contents of the texture will be cleared to a color.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_LOADOP_DONT_CARE",
+                short_name: "DONT_CARE",
+                doc: "The previous contents of the texture need not be preserved. The contents will be undefined.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUStoreOp",
+        short_name: "GPUStoreOp",
+        doc: "Specifies how the contents of a texture attached to a render pass are\ntreated at the end of the render pass.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_BeginGPURenderPass`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_STOREOP_STORE",
+                short_name: "STORE",
+                doc: "The contents generated during the render pass will be written to memory.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_STOREOP_DONT_CARE",
+                short_name: "DONT_CARE",
+                doc: "The contents generated during the render pass are not needed and may be discarded. The contents will be undefined.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_STOREOP_RESOLVE",
+                short_name: "RESOLVE",
+                doc: "The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture may then be discarded and will be undefined.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_STOREOP_RESOLVE_AND_STORE",
+                short_name: "RESOLVE_AND_STORE",
+                doc: "The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture will be written to memory.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUIndexElementSize",
+        short_name: "GPUIndexElementSize",
+        doc: "Specifies the size of elements in an index buffer.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_INDEXELEMENTSIZE_16BIT",
+                short_name: "_16BIT",
+                doc: "The index elements are 16-bit.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_INDEXELEMENTSIZE_32BIT",
+                short_name: "_32BIT",
+                doc: "The index elements are 32-bit.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUTextureFormat",
+        short_name: "GPUTextureFormat",
+        doc: "Specifies the pixel format of a texture.\n\nTexture format support varies depending on driver, hardware, and usage\nflags. In general, you should use [`SDL_GPUTextureSupportsFormat`] to query if\na format is supported before using it. However, there are a few guaranteed\nformats.\n\nFIXME: Check universal support for 32-bit component formats FIXME: Check\nuniversal support for SIMULTANEOUS_READ_WRITE\n\nFor SAMPLER usage, the following formats are universally supported:\n\n- R8G8B8A8_UNORM\n- B8G8R8A8_UNORM\n- R8_UNORM\n- R8_SNORM\n- R8G8_UNORM\n- R8G8_SNORM\n- R8G8B8A8_SNORM\n- R16_FLOAT\n- R16G16_FLOAT\n- R16G16B16A16_FLOAT\n- R32_FLOAT\n- R32G32_FLOAT\n- R32G32B32A32_FLOAT\n- R11G11B10_UFLOAT\n- R8G8B8A8_UNORM_SRGB\n- B8G8R8A8_UNORM_SRGB\n- D16_UNORM\n\nFor COLOR_TARGET usage, the following formats are universally supported:\n\n- R8G8B8A8_UNORM\n- B8G8R8A8_UNORM\n- R8_UNORM\n- R16_FLOAT\n- R16G16_FLOAT\n- R16G16B16A16_FLOAT\n- R32_FLOAT\n- R32G32_FLOAT\n- R32G32B32A32_FLOAT\n- R8_UINT\n- R8G8_UINT\n- R8G8B8A8_UINT\n- R16_UINT\n- R16G16_UINT\n- R16G16B16A16_UINT\n- R8_INT\n- R8G8_INT\n- R8G8B8A8_INT\n- R16_INT\n- R16G16_INT\n- R16G16B16A16_INT\n- R8G8B8A8_UNORM_SRGB\n- B8G8R8A8_UNORM_SRGB\n\nFor STORAGE usages, the following formats are universally supported:\n\n- R8G8B8A8_UNORM\n- R8G8B8A8_SNORM\n- R16G16B16A16_FLOAT\n- R32_FLOAT\n- R32G32_FLOAT\n- R32G32B32A32_FLOAT\n- R8G8B8A8_UINT\n- R16G16B16A16_UINT\n- R8G8B8A8_INT\n- R16G16B16A16_INT\n\nFor DEPTH_STENCIL_TARGET usage, the following formats are universally\nsupported:\n\n- D16_UNORM\n- Either (but not necessarily both!) D24_UNORM or D32_FLOAT\n- Either (but not necessarily both!) D24_UNORM_S8_UINT or D32_FLOAT_S8_UINT\n\nUnless D16_UNORM is sufficient for your purposes, always check which of\nD24/D32 is supported before creating a depth-stencil texture!\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUTexture`]\n- [`SDL_GPUTextureSupportsFormat`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_A8_UNORM",
+                short_name: "A8_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8_UNORM",
+                short_name: "R8_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8G8_UNORM",
+                short_name: "R8G8_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM",
+                short_name: "R8G8B8A8_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16_UNORM",
+                short_name: "R16_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16G16_UNORM",
+                short_name: "R16G16_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UNORM",
+                short_name: "R16G16B16A16_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R10G10B10A2_UNORM",
+                short_name: "R10G10B10A2_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_B5G6R5_UNORM",
+                short_name: "B5G6R5_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_B5G5R5A1_UNORM",
+                short_name: "B5G5R5A1_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_B4G4R4A4_UNORM",
+                short_name: "B4G4R4A4_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM",
+                short_name: "B8G8R8A8_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM",
+                short_name: "BC1_RGBA_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_BC2_RGBA_UNORM",
+                short_name: "BC2_RGBA_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_BC3_RGBA_UNORM",
+                short_name: "BC3_RGBA_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_BC4_R_UNORM",
+                short_name: "BC4_R_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_BC5_RG_UNORM",
+                short_name: "BC5_RG_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM",
+                short_name: "BC7_RGBA_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_BC6H_RGB_FLOAT",
+                short_name: "BC6H_RGB_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_BC6H_RGB_UFLOAT",
+                short_name: "BC6H_RGB_UFLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8_SNORM",
+                short_name: "R8_SNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8G8_SNORM",
+                short_name: "R8G8_SNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8G8B8A8_SNORM",
+                short_name: "R8G8B8A8_SNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16_SNORM",
+                short_name: "R16_SNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16G16_SNORM",
+                short_name: "R16G16_SNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16G16B16A16_SNORM",
+                short_name: "R16G16B16A16_SNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16_FLOAT",
+                short_name: "R16_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16G16_FLOAT",
+                short_name: "R16G16_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16G16B16A16_FLOAT",
+                short_name: "R16G16B16A16_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R32_FLOAT",
+                short_name: "R32_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R32G32_FLOAT",
+                short_name: "R32G32_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R32G32B32A32_FLOAT",
+                short_name: "R32G32B32A32_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R11G11B10_UFLOAT",
+                short_name: "R11G11B10_UFLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8_UINT",
+                short_name: "R8_UINT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8G8_UINT",
+                short_name: "R8G8_UINT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UINT",
+                short_name: "R8G8B8A8_UINT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16_UINT",
+                short_name: "R16_UINT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16G16_UINT",
+                short_name: "R16G16_UINT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16G16B16A16_UINT",
+                short_name: "R16G16B16A16_UINT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R32_UINT",
+                short_name: "R32_UINT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R32G32_UINT",
+                short_name: "R32G32_UINT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R32G32B32A32_UINT",
+                short_name: "R32G32B32A32_UINT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8_INT",
+                short_name: "R8_INT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8G8_INT",
+                short_name: "R8G8_INT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8G8B8A8_INT",
+                short_name: "R8G8B8A8_INT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16_INT",
+                short_name: "R16_INT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16G16_INT",
+                short_name: "R16G16_INT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R16G16B16A16_INT",
+                short_name: "R16G16B16A16_INT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R32_INT",
+                short_name: "R32_INT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R32G32_INT",
+                short_name: "R32G32_INT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R32G32B32A32_INT",
+                short_name: "R32G32B32A32_INT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM_SRGB",
+                short_name: "R8G8B8A8_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM_SRGB",
+                short_name: "B8G8R8A8_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_BC1_RGBA_UNORM_SRGB",
+                short_name: "BC1_RGBA_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_BC2_RGBA_UNORM_SRGB",
+                short_name: "BC2_RGBA_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_BC3_RGBA_UNORM_SRGB",
+                short_name: "BC3_RGBA_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_BC7_RGBA_UNORM_SRGB",
+                short_name: "BC7_RGBA_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_D16_UNORM",
+                short_name: "D16_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_D24_UNORM",
+                short_name: "D24_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_D32_FLOAT",
+                short_name: "D32_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_D24_UNORM_S8_UINT",
+                short_name: "D24_UNORM_S8_UINT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_D32_FLOAT_S8_UINT",
+                short_name: "D32_FLOAT_S8_UINT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM",
+                short_name: "ASTC_4x4_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_5x4_UNORM",
+                short_name: "ASTC_5x4_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_5x5_UNORM",
+                short_name: "ASTC_5x5_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_6x5_UNORM",
+                short_name: "ASTC_6x5_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_6x6_UNORM",
+                short_name: "ASTC_6x6_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_8x5_UNORM",
+                short_name: "ASTC_8x5_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_8x6_UNORM",
+                short_name: "ASTC_8x6_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_8x8_UNORM",
+                short_name: "ASTC_8x8_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_10x5_UNORM",
+                short_name: "ASTC_10x5_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_10x6_UNORM",
+                short_name: "ASTC_10x6_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_10x8_UNORM",
+                short_name: "ASTC_10x8_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_10x10_UNORM",
+                short_name: "ASTC_10x10_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_12x10_UNORM",
+                short_name: "ASTC_12x10_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_12x12_UNORM",
+                short_name: "ASTC_12x12_UNORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_4x4_UNORM_SRGB",
+                short_name: "ASTC_4x4_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_5x4_UNORM_SRGB",
+                short_name: "ASTC_5x4_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_5x5_UNORM_SRGB",
+                short_name: "ASTC_5x5_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_6x5_UNORM_SRGB",
+                short_name: "ASTC_6x5_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_6x6_UNORM_SRGB",
+                short_name: "ASTC_6x6_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_8x5_UNORM_SRGB",
+                short_name: "ASTC_8x5_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_8x6_UNORM_SRGB",
+                short_name: "ASTC_8x6_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_8x8_UNORM_SRGB",
+                short_name: "ASTC_8x8_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_10x5_UNORM_SRGB",
+                short_name: "ASTC_10x5_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_10x6_UNORM_SRGB",
+                short_name: "ASTC_10x6_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_10x8_UNORM_SRGB",
+                short_name: "ASTC_10x8_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_10x10_UNORM_SRGB",
+                short_name: "ASTC_10x10_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_12x10_UNORM_SRGB",
+                short_name: "ASTC_12x10_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_12x12_UNORM_SRGB",
+                short_name: "ASTC_12x12_UNORM_SRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_4x4_FLOAT",
+                short_name: "ASTC_4x4_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_5x4_FLOAT",
+                short_name: "ASTC_5x4_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_5x5_FLOAT",
+                short_name: "ASTC_5x5_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_6x5_FLOAT",
+                short_name: "ASTC_6x5_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_6x6_FLOAT",
+                short_name: "ASTC_6x6_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_8x5_FLOAT",
+                short_name: "ASTC_8x5_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_8x6_FLOAT",
+                short_name: "ASTC_8x6_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_8x8_FLOAT",
+                short_name: "ASTC_8x8_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_10x5_FLOAT",
+                short_name: "ASTC_10x5_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_10x6_FLOAT",
+                short_name: "ASTC_10x6_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_10x8_FLOAT",
+                short_name: "ASTC_10x8_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_10x10_FLOAT",
+                short_name: "ASTC_10x10_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_12x10_FLOAT",
+                short_name: "ASTC_12x10_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT",
+                short_name: "ASTC_12x12_FLOAT",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Flags,
+        name: "SDL_GPUTextureUsageFlags",
+        short_name: "GPUTextureUsageFlags",
+        doc: "Specifies how a texture is intended to be used by the client.\n\nA texture must have at least one usage flag. Note that some usage flag\ncombinations are invalid.\n\nWith regards to compute storage usage, READ | WRITE means that you can have\nshader A that only writes into the texture and shader B that only reads\nfrom the texture and bind the same texture to either shader respectively.\nSIMULTANEOUS means that you can do reads and writes within the same shader\nor compute pass. It also implies that atomic ops can be used, since those\nare read-modify-write operations. If you use SIMULTANEOUS, you are\nresponsible for avoiding data races, as there is no data synchronization\nwithin a compute pass. Note that SIMULTANEOUS usage is only supported by a\nlimited number of texture formats.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUTexture`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_TEXTUREUSAGE_SAMPLER",
+                short_name: "SAMPLER",
+                doc: "Texture supports sampling.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREUSAGE_COLOR_TARGET",
+                short_name: "COLOR_TARGET",
+                doc: "Texture is a color render target.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET",
+                short_name: "DEPTH_STENCIL_TARGET",
+                doc: "Texture is a depth stencil target.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ",
+                short_name: "GRAPHICS_STORAGE_READ",
+                doc: "Texture supports storage reads in graphics stages.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ",
+                short_name: "COMPUTE_STORAGE_READ",
+                doc: "Texture supports storage reads in the compute stage.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE",
+                short_name: "COMPUTE_STORAGE_WRITE",
+                doc: "Texture supports storage writes in the compute stage.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE",
+                short_name: "COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE",
+                doc: "Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUTextureType",
+        short_name: "GPUTextureType",
+        doc: "Specifies the type of a texture.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUTexture`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_TEXTURETYPE_2D",
+                short_name: "_2D",
+                doc: "The texture is a 2-dimensional image.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTURETYPE_2D_ARRAY",
+                short_name: "_2D_ARRAY",
+                doc: "The texture is a 2-dimensional array image.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTURETYPE_3D",
+                short_name: "_3D",
+                doc: "The texture is a 3-dimensional image.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTURETYPE_CUBE",
+                short_name: "CUBE",
+                doc: "The texture is a cube image.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_TEXTURETYPE_CUBE_ARRAY",
+                short_name: "CUBE_ARRAY",
+                doc: "The texture is a cube array image.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUSampleCount",
+        short_name: "GPUSampleCount",
+        doc: "Specifies the sample count of a texture.\n\nUsed in multisampling. Note that this value only applies when the texture\nis used as a render target.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUTexture`]\n- [`SDL_GPUTextureSupportsSampleCount`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_SAMPLECOUNT_1",
+                short_name: "_1",
+                doc: "No multisampling.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_SAMPLECOUNT_2",
+                short_name: "_2",
+                doc: "MSAA 2x\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_SAMPLECOUNT_4",
+                short_name: "_4",
+                doc: "MSAA 4x\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_SAMPLECOUNT_8",
+                short_name: "_8",
+                doc: "MSAA 8x\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUCubeMapFace",
+        short_name: "GPUCubeMapFace",
+        doc: "Specifies the face of a cube map.\n\nCan be passed in as the layer field in texture-related structs.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_CUBEMAPFACE_POSITIVEX",
+                short_name: "POSITIVEX",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_CUBEMAPFACE_NEGATIVEX",
+                short_name: "NEGATIVEX",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_CUBEMAPFACE_POSITIVEY",
+                short_name: "POSITIVEY",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_CUBEMAPFACE_NEGATIVEY",
+                short_name: "NEGATIVEY",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_CUBEMAPFACE_POSITIVEZ",
+                short_name: "POSITIVEZ",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_CUBEMAPFACE_NEGATIVEZ",
+                short_name: "NEGATIVEZ",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Flags,
+        name: "SDL_GPUBufferUsageFlags",
+        short_name: "GPUBufferUsageFlags",
+        doc: "Specifies how a buffer is intended to be used by the client.\n\nA buffer must have at least one usage flag. Note that some usage flag\ncombinations are invalid.\n\nUnlike textures, READ | WRITE can be used for simultaneous read-write\nusage. The same data synchronization concerns as textures apply.\n\nIf you use a STORAGE flag, the data in the buffer must respect std140\nlayout conventions. In practical terms this means you must ensure that vec3\nand vec4 fields are 16-byte aligned.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUBuffer`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_BUFFERUSAGE_VERTEX",
+                short_name: "VERTEX",
+                doc: "Buffer is a vertex buffer.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BUFFERUSAGE_INDEX",
+                short_name: "INDEX",
+                doc: "Buffer is an index buffer.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BUFFERUSAGE_INDIRECT",
+                short_name: "INDIRECT",
+                doc: "Buffer is an indirect buffer.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ",
+                short_name: "GRAPHICS_STORAGE_READ",
+                doc: "Buffer supports storage reads in graphics stages.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ",
+                short_name: "COMPUTE_STORAGE_READ",
+                doc: "Buffer supports storage reads in the compute stage.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE",
+                short_name: "COMPUTE_STORAGE_WRITE",
+                doc: "Buffer supports storage writes in the compute stage.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUTransferBufferUsage",
+        short_name: "GPUTransferBufferUsage",
+        doc: "Specifies how a transfer buffer is intended to be used by the client.\n\nNote that mapping and copying FROM an upload transfer buffer or TO a\ndownload transfer buffer is undefined behavior.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUTransferBuffer`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD",
+                short_name: "UPLOAD",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD",
+                short_name: "DOWNLOAD",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUShaderStage",
+        short_name: "GPUShaderStage",
+        doc: "Specifies which stage a shader program corresponds to.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUShader`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_SHADERSTAGE_VERTEX",
+                short_name: "VERTEX",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_SHADERSTAGE_FRAGMENT",
+                short_name: "FRAGMENT",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Flags,
+        name: "SDL_GPUShaderFormat",
+        short_name: "GPUShaderFormat",
+        doc: "Specifies the format of shader code.\n\nEach format corresponds to a specific backend that accepts it.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUShader`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_SHADERFORMAT_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_SHADERFORMAT_PRIVATE",
+                short_name: "PRIVATE",
+                doc: "Shaders for NDA'd platforms.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_SHADERFORMAT_SPIRV",
+                short_name: "SPIRV",
+                doc: "SPIR-V shaders for Vulkan.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_SHADERFORMAT_DXBC",
+                short_name: "DXBC",
+                doc: "DXBC SM5_1 shaders for D3D12.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_SHADERFORMAT_DXIL",
+                short_name: "DXIL",
+                doc: "DXIL SM6_0 shaders for D3D12.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_SHADERFORMAT_MSL",
+                short_name: "MSL",
+                doc: "MSL shaders for Metal.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_SHADERFORMAT_METALLIB",
+                short_name: "METALLIB",
+                doc: "Precompiled metallib shaders for Metal.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUVertexElementFormat",
+        short_name: "GPUVertexElementFormat",
+        doc: "Specifies the format of a vertex attribute.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_INT",
+                short_name: "INT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_INT2",
+                short_name: "INT2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_INT3",
+                short_name: "INT3",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_INT4",
+                short_name: "INT4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_UINT",
+                short_name: "UINT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_UINT2",
+                short_name: "UINT2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_UINT3",
+                short_name: "UINT3",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_UINT4",
+                short_name: "UINT4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_FLOAT",
+                short_name: "FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2",
+                short_name: "FLOAT2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3",
+                short_name: "FLOAT3",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4",
+                short_name: "FLOAT4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_BYTE2",
+                short_name: "BYTE2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_BYTE4",
+                short_name: "BYTE4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2",
+                short_name: "UBYTE2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4",
+                short_name: "UBYTE4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_BYTE2_NORM",
+                short_name: "BYTE2_NORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_BYTE4_NORM",
+                short_name: "BYTE4_NORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_UBYTE2_NORM",
+                short_name: "UBYTE2_NORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_UBYTE4_NORM",
+                short_name: "UBYTE4_NORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_SHORT2",
+                short_name: "SHORT2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_SHORT4",
+                short_name: "SHORT4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_USHORT2",
+                short_name: "USHORT2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_USHORT4",
+                short_name: "USHORT4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_SHORT2_NORM",
+                short_name: "SHORT2_NORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_SHORT4_NORM",
+                short_name: "SHORT4_NORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_USHORT2_NORM",
+                short_name: "USHORT2_NORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_USHORT4_NORM",
+                short_name: "USHORT4_NORM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_HALF2",
+                short_name: "HALF2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXELEMENTFORMAT_HALF4",
+                short_name: "HALF4",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUVertexInputRate",
+        short_name: "GPUVertexInputRate",
+        doc: "Specifies the rate at which vertex attributes are pulled from buffers.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_VERTEXINPUTRATE_VERTEX",
+                short_name: "VERTEX",
+                doc: "Attribute addressing is a function of the vertex index.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_VERTEXINPUTRATE_INSTANCE",
+                short_name: "INSTANCE",
+                doc: "Attribute addressing is a function of the instance index.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUFillMode",
+        short_name: "GPUFillMode",
+        doc: "Specifies the fill mode of the graphics pipeline.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_FILLMODE_FILL",
+                short_name: "FILL",
+                doc: "Polygons will be rendered via rasterization.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_FILLMODE_LINE",
+                short_name: "LINE",
+                doc: "Polygon edges will be drawn as line segments.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUCullMode",
+        short_name: "GPUCullMode",
+        doc: "Specifies the facing direction in which triangle faces will be culled.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_CULLMODE_NONE",
+                short_name: "NONE",
+                doc: "No triangles are culled.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_CULLMODE_FRONT",
+                short_name: "FRONT",
+                doc: "Front-facing triangles are culled.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_CULLMODE_BACK",
+                short_name: "BACK",
+                doc: "Back-facing triangles are culled.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUFrontFace",
+        short_name: "GPUFrontFace",
+        doc: "Specifies the vertex winding that will cause a triangle to be determined to\nbe front-facing.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE",
+                short_name: "COUNTER_CLOCKWISE",
+                doc: "A triangle with counter-clockwise vertex winding will be considered front-facing.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_FRONTFACE_CLOCKWISE",
+                short_name: "CLOCKWISE",
+                doc: "A triangle with clockwise vertex winding will be considered front-facing.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUCompareOp",
+        short_name: "GPUCompareOp",
+        doc: "Specifies a comparison operator for depth, stencil and sampler operations.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_COMPAREOP_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_COMPAREOP_NEVER",
+                short_name: "NEVER",
+                doc: "The comparison always evaluates false.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_COMPAREOP_LESS",
+                short_name: "LESS",
+                doc: "The comparison evaluates reference < test.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_COMPAREOP_EQUAL",
+                short_name: "EQUAL",
+                doc: "The comparison evaluates reference == test.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_COMPAREOP_LESS_OR_EQUAL",
+                short_name: "LESS_OR_EQUAL",
+                doc: "The comparison evaluates reference <= test.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_COMPAREOP_GREATER",
+                short_name: "GREATER",
+                doc: "The comparison evaluates reference > test.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_COMPAREOP_NOT_EQUAL",
+                short_name: "NOT_EQUAL",
+                doc: "The comparison evaluates reference != test.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_COMPAREOP_GREATER_OR_EQUAL",
+                short_name: "GREATER_OR_EQUAL",
+                doc: "The comparison evalutes reference >= test.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_COMPAREOP_ALWAYS",
+                short_name: "ALWAYS",
+                doc: "The comparison always evaluates true.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUStencilOp",
+        short_name: "GPUStencilOp",
+        doc: "Specifies what happens to a stored stencil value if stencil tests fail or\npass.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_STENCILOP_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_STENCILOP_KEEP",
+                short_name: "KEEP",
+                doc: "Keeps the current value.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_STENCILOP_ZERO",
+                short_name: "ZERO",
+                doc: "Sets the value to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_STENCILOP_REPLACE",
+                short_name: "REPLACE",
+                doc: "Sets the value to reference.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_STENCILOP_INCREMENT_AND_CLAMP",
+                short_name: "INCREMENT_AND_CLAMP",
+                doc: "Increments the current value and clamps to the maximum value.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_STENCILOP_DECREMENT_AND_CLAMP",
+                short_name: "DECREMENT_AND_CLAMP",
+                doc: "Decrements the current value and clamps to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_STENCILOP_INVERT",
+                short_name: "INVERT",
+                doc: "Bitwise-inverts the current value.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_STENCILOP_INCREMENT_AND_WRAP",
+                short_name: "INCREMENT_AND_WRAP",
+                doc: "Increments the current value and wraps back to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_STENCILOP_DECREMENT_AND_WRAP",
+                short_name: "DECREMENT_AND_WRAP",
+                doc: "Decrements the current value and wraps to the maximum value.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUBlendOp",
+        short_name: "GPUBlendOp",
+        doc: "Specifies the operator to be used when pixels in a render target are\nblended with existing pixels in the texture.\n\nThe source color is the value written by the fragment shader. The\ndestination color is the value currently existing in the texture.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_BLENDOP_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDOP_ADD",
+                short_name: "ADD",
+                doc: "(source * source_factor) + (destination * destination_factor)\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDOP_SUBTRACT",
+                short_name: "SUBTRACT",
+                doc: "(source * source_factor) - (destination * destination_factor)\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDOP_REVERSE_SUBTRACT",
+                short_name: "REVERSE_SUBTRACT",
+                doc: "(destination * destination_factor) - (source * source_factor)\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDOP_MIN",
+                short_name: "MIN",
+                doc: "min(source, destination)\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDOP_MAX",
+                short_name: "MAX",
+                doc: "max(source, destination)\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUBlendFactor",
+        short_name: "GPUBlendFactor",
+        doc: "Specifies a blending factor to be used when pixels in a render target are\nblended with existing pixels in the texture.\n\nThe source color is the value written by the fragment shader. The\ndestination color is the value currently existing in the texture.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_ZERO",
+                short_name: "ZERO",
+                doc: "0\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_ONE",
+                short_name: "ONE",
+                doc: "1\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_SRC_COLOR",
+                short_name: "SRC_COLOR",
+                doc: "source color\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_COLOR",
+                short_name: "ONE_MINUS_SRC_COLOR",
+                doc: "1 - source color\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_DST_COLOR",
+                short_name: "DST_COLOR",
+                doc: "destination color\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_COLOR",
+                short_name: "ONE_MINUS_DST_COLOR",
+                doc: "1 - destination color\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_SRC_ALPHA",
+                short_name: "SRC_ALPHA",
+                doc: "source alpha\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_ALPHA",
+                short_name: "ONE_MINUS_SRC_ALPHA",
+                doc: "1 - source alpha\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_DST_ALPHA",
+                short_name: "DST_ALPHA",
+                doc: "destination alpha\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_ONE_MINUS_DST_ALPHA",
+                short_name: "ONE_MINUS_DST_ALPHA",
+                doc: "1 - destination alpha\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_CONSTANT_COLOR",
+                short_name: "CONSTANT_COLOR",
+                doc: "blend constant\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR",
+                short_name: "ONE_MINUS_CONSTANT_COLOR",
+                doc: "1 - blend constant\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE",
+                short_name: "SRC_ALPHA_SATURATE",
+                doc: "min(source alpha, 1 - destination alpha)\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Flags,
+        name: "SDL_GPUColorComponentFlags",
+        short_name: "GPUColorComponentFlags",
+        doc: "Specifies which color components are written in a graphics pipeline.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_COLORCOMPONENT_R",
+                short_name: "R",
+                doc: "the red component\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_COLORCOMPONENT_G",
+                short_name: "G",
+                doc: "the green component\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_COLORCOMPONENT_B",
+                short_name: "B",
+                doc: "the blue component\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_COLORCOMPONENT_A",
+                short_name: "A",
+                doc: "the alpha component\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUFilter",
+        short_name: "GPUFilter",
+        doc: "Specifies a filter operation used by a sampler.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUSampler`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_FILTER_NEAREST",
+                short_name: "NEAREST",
+                doc: "Point filtering.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_FILTER_LINEAR",
+                short_name: "LINEAR",
+                doc: "Linear filtering.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUSamplerMipmapMode",
+        short_name: "GPUSamplerMipmapMode",
+        doc: "Specifies a mipmap mode used by a sampler.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUSampler`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_SAMPLERMIPMAPMODE_NEAREST",
+                short_name: "NEAREST",
+                doc: "Point filtering.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_SAMPLERMIPMAPMODE_LINEAR",
+                short_name: "LINEAR",
+                doc: "Linear filtering.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUSamplerAddressMode",
+        short_name: "GPUSamplerAddressMode",
+        doc: "Specifies behavior of texture sampling when the coordinates exceed the 0-1\nrange.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateGPUSampler`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_SAMPLERADDRESSMODE_REPEAT",
+                short_name: "REPEAT",
+                doc: "Specifies that the coordinates will wrap around.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_SAMPLERADDRESSMODE_MIRRORED_REPEAT",
+                short_name: "MIRRORED_REPEAT",
+                doc: "Specifies that the coordinates will wrap around mirrored.\n",
+            },
+            GroupValue {
+                name: "SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE",
+                short_name: "CLAMP_TO_EDGE",
+                doc: "Specifies that the coordinates will clamp to the 0-1 range.\n",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUPresentMode",
+        short_name: "GPUPresentMode",
+        doc: "Specifies the timing that will be used to present swapchain textures to the\nOS.\n\nVSYNC mode will always be supported. IMMEDIATE and MAILBOX modes may not be\nsupported on certain systems.\n\nIt is recommended to query [`SDL_WindowSupportsGPUPresentMode`] after claiming\nthe window if you wish to change the present mode to IMMEDIATE or MAILBOX.\n\n- VSYNC: Waits for vblank before presenting. No tearing is possible. If\nthere is a pending image to present, the new image is enqueued for\npresentation. Disallows tearing at the cost of visual latency.\n- IMMEDIATE: Immediately presents. Lowest latency option, but tearing may\noccur.\n- MAILBOX: Waits for vblank before presenting. No tearing is possible. If\nthere is a pending image to present, the pending image is replaced by the\nnew image. Similar to VSYNC, but with reduced visual latency.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_SetGPUSwapchainParameters`]\n- [`SDL_WindowSupportsGPUPresentMode`]\n- [`SDL_WaitAndAcquireGPUSwapchainTexture`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_PRESENTMODE_VSYNC",
+                short_name: "VSYNC",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_PRESENTMODE_IMMEDIATE",
+                short_name: "IMMEDIATE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_PRESENTMODE_MAILBOX",
+                short_name: "MAILBOX",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "gpu",
+        kind: GroupKind::Enum,
+        name: "SDL_GPUSwapchainComposition",
+        short_name: "GPUSwapchainComposition",
+        doc: "Specifies the texture format and colorspace of the swapchain textures.\n\nSDR will always be supported. Other compositions may not be supported on\ncertain systems.\n\nIt is recommended to query [`SDL_WindowSupportsGPUSwapchainComposition`] after\nclaiming the window if you wish to change the swapchain composition from\nSDR.\n\n- SDR: B8G8R8A8 or R8G8B8A8 swapchain. Pixel values are in sRGB encoding.\n- SDR_LINEAR: B8G8R8A8_SRGB or R8G8B8A8_SRGB swapchain. Pixel values are\nstored in memory in sRGB encoding but accessed in shaders in \"linear\nsRGB\" encoding which is sRGB but with a linear transfer function.\n- HDR_EXTENDED_LINEAR: R16G16B16A16_FLOAT swapchain. Pixel values are in\nextended linear sRGB encoding and permits values outside of the \\[0, 1\\]\nrange.\n- HDR10_ST2084: A2R10G10B10 or A2B10G10R10 swapchain. Pixel values are in\nBT.2020 ST2084 (PQ) encoding.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_SetGPUSwapchainParameters`]\n- [`SDL_WindowSupportsGPUSwapchainComposition`]\n- [`SDL_WaitAndAcquireGPUSwapchainTexture`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GPU_SWAPCHAINCOMPOSITION_SDR",
+                short_name: "SDR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_SWAPCHAINCOMPOSITION_SDR_LINEAR",
+                short_name: "SDR_LINEAR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_SWAPCHAINCOMPOSITION_HDR_EXTENDED_LINEAR",
+                short_name: "HDR_EXTENDED_LINEAR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2084",
+                short_name: "HDR10_ST2084",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "haptic",
+        kind: GroupKind::Id,
+        name: "SDL_HapticID",
+        short_name: "HapticID",
+        doc: "This is a unique ID for a haptic device for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the haptic device is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "hidapi",
+        kind: GroupKind::Enum,
+        name: "SDL_hid_bus_type",
+        short_name: "hid_bus_type",
+        doc: "HID underlying bus types.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_HID_API_BUS_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "Unknown bus type\n",
+            },
+            GroupValue {
+                name: "SDL_HID_API_BUS_USB",
+                short_name: "USB",
+                doc: "USB bus\nSpecifications:\n<https://usb.org/hid>\n",
+            },
+            GroupValue {
+                name: "SDL_HID_API_BUS_BLUETOOTH",
+                short_name: "BLUETOOTH",
+                doc: "Bluetooth or Bluetooth LE bus\nSpecifications:\n<https://www.bluetooth.com/specifications/specs/human-interface-device-profile-1-1-1/>\n<https://www.bluetooth.com/specifications/specs/hid-service-1-0/>\n<https://www.bluetooth.com/specifications/specs/hid-over-gatt-profile-1-0/>\n",
+            },
+            GroupValue {
+                name: "SDL_HID_API_BUS_I2C",
+                short_name: "I2C",
+                doc: "I2C bus\nSpecifications:\n<https://docs.microsoft.com/previous-versions/windows/hardware/design/dn642101(v=vs.85)>\n",
+            },
+            GroupValue {
+                name: "SDL_HID_API_BUS_SPI",
+                short_name: "SPI",
+                doc: "SPI bus\nSpecifications:\n<https://www.microsoft.com/download/details.aspx?id=103325>\n",
+            },
+        ],
+    },
+    Group {
+        module: "hints",
+        kind: GroupKind::Enum,
+        name: "SDL_HintPriority",
+        short_name: "HintPriority",
+        doc: "An enumeration of hint priorities.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_HINT_DEFAULT",
+                short_name: "DEFAULT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_HINT_NORMAL",
+                short_name: "NORMAL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_HINT_OVERRIDE",
+                short_name: "OVERRIDE",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "init",
+        kind: GroupKind::Flags,
+        name: "SDL_InitFlags",
+        short_name: "InitFlags",
+        doc: "Initialization flags for [`SDL_Init`] and/or [`SDL_InitSubSystem`]\n\nThese are the flags which may be passed to [`SDL_Init()`]. You should specify\nthe subsystems which you will be using in your application.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_Init`]\n- [`SDL_Quit`]\n- [`SDL_InitSubSystem`]\n- [`SDL_QuitSubSystem`]\n- [`SDL_WasInit`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_INIT_AUDIO",
+                short_name: "AUDIO",
+                doc: "[`SDL_INIT_AUDIO`] implies [`SDL_INIT_EVENTS`]\n",
+            },
+            GroupValue {
+                name: "SDL_INIT_VIDEO",
+                short_name: "VIDEO",
+                doc: "[`SDL_INIT_VIDEO`] implies [`SDL_INIT_EVENTS`], should be initialized on the main thread\n",
+            },
+            GroupValue {
+                name: "SDL_INIT_JOYSTICK",
+                short_name: "JOYSTICK",
+                doc: "[`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`], should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`]\n",
+            },
+            GroupValue {
+                name: "SDL_INIT_HAPTIC",
+                short_name: "HAPTIC",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_INIT_GAMEPAD",
+                short_name: "GAMEPAD",
+                doc: "[`SDL_INIT_GAMEPAD`] implies [`SDL_INIT_JOYSTICK`]\n",
+            },
+            GroupValue {
+                name: "SDL_INIT_EVENTS",
+                short_name: "EVENTS",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_INIT_SENSOR",
+                short_name: "SENSOR",
+                doc: "[`SDL_INIT_SENSOR`] implies [`SDL_INIT_EVENTS`]\n",
+            },
+            GroupValue {
+                name: "SDL_INIT_CAMERA",
+                short_name: "CAMERA",
+                doc: "[`SDL_INIT_CAMERA`] implies [`SDL_INIT_EVENTS`]\n",
+            },
+        ],
+    },
+    Group {
+        module: "init",
+        kind: GroupKind::Enum,
+        name: "SDL_AppResult",
+        short_name: "AppResult",
+        doc: "Return values for optional main callbacks.\n\nReturning [`SDL_APP_SUCCESS`] or [`SDL_APP_FAILURE`] from [`SDL_AppInit`],\n[`SDL_AppEvent`], or [`SDL_AppIterate`] will terminate the program and report\nsuccess/failure to the operating system. What that means is\nplatform-dependent. On Unix, for example, on success, the process error\ncode will be zero, and on failure it will be 1. This interface doesn't\nallow you to return specific exit codes, just whether there was an error\ngenerally or not.\n\nReturning [`SDL_APP_CONTINUE`] from these functions will let the app continue\nto run.\n\nSee\n[Main callbacks in SDL3](https://wiki.libsdl.org/SDL3/README/main-functions#main-callbacks-in-sdl3)\nfor complete details.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_APP_CONTINUE",
+                short_name: "CONTINUE",
+                doc: "Value that requests that the app continue from the main callbacks.\n",
+            },
+            GroupValue {
+                name: "SDL_APP_SUCCESS",
+                short_name: "SUCCESS",
+                doc: "Value that requests termination with success from the main callbacks.\n",
+            },
+            GroupValue {
+                name: "SDL_APP_FAILURE",
+                short_name: "FAILURE",
+                doc: "Value that requests termination with error from the main callbacks.\n",
+            },
+        ],
+    },
+    Group {
+        module: "iostream",
+        kind: GroupKind::Enum,
+        name: "SDL_IOStatus",
+        short_name: "IOStatus",
+        doc: "[`SDL_IOStream`] status, set by a read or write operation.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_IO_STATUS_READY",
+                short_name: "READY",
+                doc: "Everything is ready (no errors and not EOF).\n",
+            },
+            GroupValue {
+                name: "SDL_IO_STATUS_ERROR",
+                short_name: "ERROR",
+                doc: "Read or write I/O error\n",
+            },
+            GroupValue {
+                name: "SDL_IO_STATUS_EOF",
+                short_name: "EOF",
+                doc: "End of file\n",
+            },
+            GroupValue {
+                name: "SDL_IO_STATUS_NOT_READY",
+                short_name: "NOT_READY",
+                doc: "Non blocking I/O, not ready\n",
+            },
+            GroupValue {
+                name: "SDL_IO_STATUS_READONLY",
+                short_name: "READONLY",
+                doc: "Tried to write a read-only buffer\n",
+            },
+            GroupValue {
+                name: "SDL_IO_STATUS_WRITEONLY",
+                short_name: "WRITEONLY",
+                doc: "Tried to read a write-only buffer\n",
+            },
+        ],
+    },
+    Group {
+        module: "iostream",
+        kind: GroupKind::Enum,
+        name: "SDL_IOWhence",
+        short_name: "IOWhence",
+        doc: "Possible `whence` values for [`SDL_IOStream`] seeking.\n\nThese map to the same \"whence\" concept that `fseek` or `lseek` use in the\nstandard C runtime.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_IO_SEEK_SET",
+                short_name: "SET",
+                doc: "Seek from the beginning of data\n",
+            },
+            GroupValue {
+                name: "SDL_IO_SEEK_CUR",
+                short_name: "CUR",
+                doc: "Seek relative to current read point\n",
+            },
+            GroupValue {
+                name: "SDL_IO_SEEK_END",
+                short_name: "END",
+                doc: "Seek relative to the end of data\n",
+            },
+        ],
+    },
+    Group {
+        module: "joystick",
+        kind: GroupKind::Id,
+        name: "SDL_JoystickID",
+        short_name: "JoystickID",
+        doc: "This is a unique ID for a joystick for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the joystick is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "joystick",
+        kind: GroupKind::Enum,
+        name: "SDL_JoystickType",
+        short_name: "JoystickType",
+        doc: "An enum of some common joystick types.\n\nIn some cases, SDL can identify a low-level joystick as being a certain\ntype of device, and will report it through [`SDL_GetJoystickType`] (or\n[`SDL_GetJoystickTypeForID`]).\n\nThis is by no means a complete list of everything that can be plugged into\na computer.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_JOYSTICK_TYPE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_TYPE_GAMEPAD",
+                short_name: "GAMEPAD",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_TYPE_WHEEL",
+                short_name: "WHEEL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_TYPE_ARCADE_STICK",
+                short_name: "ARCADE_STICK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_TYPE_FLIGHT_STICK",
+                short_name: "FLIGHT_STICK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_TYPE_DANCE_PAD",
+                short_name: "DANCE_PAD",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_TYPE_GUITAR",
+                short_name: "GUITAR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_TYPE_DRUM_KIT",
+                short_name: "DRUM_KIT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_TYPE_ARCADE_PAD",
+                short_name: "ARCADE_PAD",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_TYPE_THROTTLE",
+                short_name: "THROTTLE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_TYPE_COUNT",
+                short_name: "COUNT",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "joystick",
+        kind: GroupKind::Enum,
+        name: "SDL_JoystickConnectionState",
+        short_name: "JoystickConnectionState",
+        doc: "Possible connection states for a joystick device.\n\nThis is used by [`SDL_GetJoystickConnectionState`] to report how a device is\nconnected to the system.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_JOYSTICK_CONNECTION_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_CONNECTION_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_CONNECTION_WIRED",
+                short_name: "WIRED",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_JOYSTICK_CONNECTION_WIRELESS",
+                short_name: "WIRELESS",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "keyboard",
+        kind: GroupKind::Id,
+        name: "SDL_KeyboardID",
+        short_name: "KeyboardID",
+        doc: "This is a unique ID for a keyboard for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the keyboard is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "keyboard",
+        kind: GroupKind::Enum,
+        name: "SDL_TextInputType",
+        short_name: "TextInputType",
+        doc: "Text input type.\n\nThese are the valid values for [`SDL_PROP_TEXTINPUT_TYPE_NUMBER`]. Not every\nvalue is valid on every platform, but where a value isn't supported, a\nreasonable fallback will be used.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_StartTextInputWithProperties`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_TEXT",
+                short_name: "TEXT",
+                doc: "The input is text\n",
+            },
+            GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_TEXT_NAME",
+                short_name: "TEXT_NAME",
+                doc: "The input is a person's name\n",
+            },
+            GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_TEXT_EMAIL",
+                short_name: "TEXT_EMAIL",
+                doc: "The input is an e-mail address\n",
+            },
+            GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_TEXT_USERNAME",
+                short_name: "TEXT_USERNAME",
+                doc: "The input is a username\n",
+            },
+            GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_HIDDEN",
+                short_name: "TEXT_PASSWORD_HIDDEN",
+                doc: "The input is a secure password that is hidden\n",
+            },
+            GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_TEXT_PASSWORD_VISIBLE",
+                short_name: "TEXT_PASSWORD_VISIBLE",
+                doc: "The input is a secure password that is visible\n",
+            },
+            GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_NUMBER",
+                short_name: "NUMBER",
+                doc: "The input is a number\n",
+            },
+            GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN",
+                short_name: "NUMBER_PASSWORD_HIDDEN",
+                doc: "The input is a secure PIN that is hidden\n",
+            },
+            GroupValue {
+                name: "SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE",
+                short_name: "NUMBER_PASSWORD_VISIBLE",
+                doc: "The input is a secure PIN that is visible\n",
+            },
+        ],
+    },
+    Group {
+        module: "keyboard",
+        kind: GroupKind::Enum,
+        name: "SDL_Capitalization",
+        short_name: "Capitalization",
+        doc: "Auto capitalization type.\n\nThese are the valid values for [`SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER`].\nNot every value is valid on every platform, but where a value isn't\nsupported, a reasonable fallback will be used.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_StartTextInputWithProperties`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_CAPITALIZE_NONE",
+                short_name: "NONE",
+                doc: "No auto-capitalization will be done\n",
+            },
+            GroupValue {
+                name: "SDL_CAPITALIZE_SENTENCES",
+                short_name: "SENTENCES",
+                doc: "The first letter of sentences will be capitalized\n",
+            },
+            GroupValue {
+                name: "SDL_CAPITALIZE_WORDS",
+                short_name: "WORDS",
+                doc: "The first letter of words will be capitalized\n",
+            },
+            GroupValue {
+                name: "SDL_CAPITALIZE_LETTERS",
+                short_name: "LETTERS",
+                doc: "All letters will be capitalized\n",
+            },
+        ],
+    },
+    Group {
+        module: "keycode",
+        kind: GroupKind::Id,
+        name: "SDL_Keycode",
+        short_name: "Keycode",
+        doc: "The SDL virtual key representation.\n\nValues of this type are used to represent keyboard keys using the current\nlayout of the keyboard. These values include Unicode values representing\nthe unmodified character that would be generated by pressing the key, or an\n`SDLK_*` constant for those keys that do not generate characters.\n\nA special exception is the number keys at the top of the keyboard which map\nto SDLK_0...SDLK_9 on AZERTY layouts.\n\nKeys with the `SDLK_EXTENDED_MASK` bit set do not map to a scancode or\nunicode code point.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDLK_EXTENDED_MASK",
+                short_name: "EXTENDED_MASK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDLK_SCANCODE_MASK",
+                short_name: "SCANCODE_MASK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDLK_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "0\n",
+            },
+            GroupValue {
+                name: "SDLK_RETURN",
+                short_name: "RETURN",
+                doc: "'\\r'\n",
+            },
+            GroupValue {
+                name: "SDLK_ESCAPE",
+                short_name: "ESCAPE",
+                doc: "'\\x1B'\n",
+            },
+            GroupValue {
+                name: "SDLK_BACKSPACE",
+                short_name: "BACKSPACE",
+                doc: "'\\b'\n",
+            },
+            GroupValue {
+                name: "SDLK_TAB",
+                short_name: "TAB",
+                doc: "'\\t'\n",
+            },
+            GroupValue {
+                name: "SDLK_SPACE",
+                short_name: "SPACE",
+                doc: "' '\n",
+            },
+            GroupValue {
+                name: "SDLK_EXCLAIM",
+                short_name: "EXCLAIM",
+                doc: "'!'\n",
+            },
+            GroupValue {
+                name: "SDLK_DBLAPOSTROPHE",
+                short_name: "DBLAPOSTROPHE",
+                doc: "'\"'\n",
+            },
+            GroupValue {
+                name: "SDLK_HASH",
+                short_name: "HASH",
+                doc: "'#'\n",
+            },
+            GroupValue {
+                name: "SDLK_DOLLAR",
+                short_name: "DOLLAR",
+                doc: "'$'\n",
+            },
+            GroupValue {
+                name: "SDLK_PERCENT",
+                short_name: "PERCENT",
+                doc: "'%'\n",
+            },
+            GroupValue {
+                name: "SDLK_AMPERSAND",
+                short_name: "AMPERSAND",
+                doc: "'&'\n",
+            },
+            GroupValue {
+                name: "SDLK_APOSTROPHE",
+                short_name: "APOSTROPHE",
+                doc: "'\\''\n",
+            },
+            GroupValue {
+                name: "SDLK_LEFTPAREN",
+                short_name: "LEFTPAREN",
+                doc: "'('\n",
+            },
+            GroupValue {
+                name: "SDLK_RIGHTPAREN",
+                short_name: "RIGHTPAREN",
+                doc: "')'\n",
+            },
+            GroupValue {
+                name: "SDLK_ASTERISK",
+                short_name: "ASTERISK",
+                doc: "'*'\n",
+            },
+            GroupValue {
+                name: "SDLK_PLUS",
+                short_name: "PLUS",
+                doc: "'+'\n",
+            },
+            GroupValue {
+                name: "SDLK_COMMA",
+                short_name: "COMMA",
+                doc: "','\n",
+            },
+            GroupValue {
+                name: "SDLK_MINUS",
+                short_name: "MINUS",
+                doc: "'-'\n",
+            },
+            GroupValue {
+                name: "SDLK_PERIOD",
+                short_name: "PERIOD",
+                doc: "'.'\n",
+            },
+            GroupValue {
+                name: "SDLK_SLASH",
+                short_name: "SLASH",
+                doc: "'/'\n",
+            },
+            GroupValue {
+                name: "SDLK_0",
+                short_name: "_0",
+                doc: "'0'\n",
+            },
+            GroupValue {
+                name: "SDLK_1",
+                short_name: "_1",
+                doc: "'1'\n",
+            },
+            GroupValue {
+                name: "SDLK_2",
+                short_name: "_2",
+                doc: "'2'\n",
+            },
+            GroupValue {
+                name: "SDLK_3",
+                short_name: "_3",
+                doc: "'3'\n",
+            },
+            GroupValue {
+                name: "SDLK_4",
+                short_name: "_4",
+                doc: "'4'\n",
+            },
+            GroupValue {
+                name: "SDLK_5",
+                short_name: "_5",
+                doc: "'5'\n",
+            },
+            GroupValue {
+                name: "SDLK_6",
+                short_name: "_6",
+                doc: "'6'\n",
+            },
+            GroupValue {
+                name: "SDLK_7",
+                short_name: "_7",
+                doc: "'7'\n",
+            },
+            GroupValue {
+                name: "SDLK_8",
+                short_name: "_8",
+                doc: "'8'\n",
+            },
+            GroupValue {
+                name: "SDLK_9",
+                short_name: "_9",
+                doc: "'9'\n",
+            },
+            GroupValue {
+                name: "SDLK_COLON",
+                short_name: "COLON",
+                doc: "':'\n",
+            },
+            GroupValue {
+                name: "SDLK_SEMICOLON",
+                short_name: "SEMICOLON",
+                doc: "';'\n",
+            },
+            GroupValue {
+                name: "SDLK_LESS",
+                short_name: "LESS",
+                doc: "'<'\n",
+            },
+            GroupValue {
+                name: "SDLK_EQUALS",
+                short_name: "EQUALS",
+                doc: "'='\n",
+            },
+            GroupValue {
+                name: "SDLK_GREATER",
+                short_name: "GREATER",
+                doc: "'>'\n",
+            },
+            GroupValue {
+                name: "SDLK_QUESTION",
+                short_name: "QUESTION",
+                doc: "'?'\n",
+            },
+            GroupValue {
+                name: "SDLK_AT",
+                short_name: "AT",
+                doc: "'@'\n",
+            },
+            GroupValue {
+                name: "SDLK_LEFTBRACKET",
+                short_name: "LEFTBRACKET",
+                doc: "'['\n",
+            },
+            GroupValue {
+                name: "SDLK_BACKSLASH",
+                short_name: "BACKSLASH",
+                doc: "'\\\\'\n",
+            },
+            GroupValue {
+                name: "SDLK_RIGHTBRACKET",
+                short_name: "RIGHTBRACKET",
+                doc: "']'\n",
+            },
+            GroupValue {
+                name: "SDLK_CARET",
+                short_name: "CARET",
+                doc: "'^'\n",
+            },
+            GroupValue {
+                name: "SDLK_UNDERSCORE",
+                short_name: "UNDERSCORE",
+                doc: "'_'\n",
+            },
+            GroupValue {
+                name: "SDLK_GRAVE",
+                short_name: "GRAVE",
+                doc: "'`'\n",
+            },
+            GroupValue {
+                name: "SDLK_A",
+                short_name: "A",
+                doc: "'a'\n",
+            },
+            GroupValue {
+                name: "SDLK_B",
+                short_name: "B",
+                doc: "'b'\n",
+            },
+            GroupValue {
+                name: "SDLK_C",
+                short_name: "C",
+                doc: "'c'\n",
+            },
+            GroupValue {
+                name: "SDLK_D",
+                short_name: "D",
+                doc: "'d'\n",
+            },
+            GroupValue {
+                name: "SDLK_E",
+                short_name: "E",
+                doc: "'e'\n",
+            },
+            GroupValue {
+                name: "SDLK_F",
+                short_name: "F",
+                doc: "'f'\n",
+            },
+            GroupValue {
+                name: "SDLK_G",
+                short_name: "G",
+                doc: "'g'\n",
+            },
+            GroupValue {
+                name: "SDLK_H",
+                short_name: "H",
+                doc: "'h'\n",
+            },
+            GroupValue {
+                name: "SDLK_I",
+                short_name: "I",
+                doc: "'i'\n",
+            },
+            GroupValue {
+                name: "SDLK_J",
+                short_name: "J",
+                doc: "'j'\n",
+            },
+            GroupValue {
+                name: "SDLK_K",
+                short_name: "K",
+                doc: "'k'\n",
+            },
+            GroupValue {
+                name: "SDLK_L",
+                short_name: "L",
+                doc: "'l'\n",
+            },
+            GroupValue {
+                name: "SDLK_M",
+                short_name: "M",
+                doc: "'m'\n",
+            },
+            GroupValue {
+                name: "SDLK_N",
+                short_name: "N",
+                doc: "'n'\n",
+            },
+            GroupValue {
+                name: "SDLK_O",
+                short_name: "O",
+                doc: "'o'\n",
+            },
+            GroupValue {
+                name: "SDLK_P",
+                short_name: "P",
+                doc: "'p'\n",
+            },
+            GroupValue {
+                name: "SDLK_Q",
+                short_name: "Q",
+                doc: "'q'\n",
+            },
+            GroupValue {
+                name: "SDLK_R",
+                short_name: "R",
+                doc: "'r'\n",
+            },
+            GroupValue {
+                name: "SDLK_S",
+                short_name: "S",
+                doc: "'s'\n",
+            },
+            GroupValue {
+                name: "SDLK_T",
+                short_name: "T",
+                doc: "'t'\n",
+            },
+            GroupValue {
+                name: "SDLK_U",
+                short_name: "U",
+                doc: "'u'\n",
+            },
+            GroupValue {
+                name: "SDLK_V",
+                short_name: "V",
+                doc: "'v'\n",
+            },
+            GroupValue {
+                name: "SDLK_W",
+                short_name: "W",
+                doc: "'w'\n",
+            },
+            GroupValue {
+                name: "SDLK_X",
+                short_name: "X",
+                doc: "'x'\n",
+            },
+            GroupValue {
+                name: "SDLK_Y",
+                short_name: "Y",
+                doc: "'y'\n",
+            },
+            GroupValue {
+                name: "SDLK_Z",
+                short_name: "Z",
+                doc: "'z'\n",
+            },
+            GroupValue {
+                name: "SDLK_LEFTBRACE",
+                short_name: "LEFTBRACE",
+                doc: "'{'\n",
+            },
+            GroupValue {
+                name: "SDLK_PIPE",
+                short_name: "PIPE",
+                doc: "'|'\n",
+            },
+            GroupValue {
+                name: "SDLK_RIGHTBRACE",
+                short_name: "RIGHTBRACE",
+                doc: "'}'\n",
+            },
+            GroupValue {
+                name: "SDLK_TILDE",
+                short_name: "TILDE",
+                doc: "'~'\n",
+            },
+            GroupValue {
+                name: "SDLK_DELETE",
+                short_name: "DELETE",
+                doc: "'\\x7F'\n",
+            },
+            GroupValue {
+                name: "SDLK_PLUSMINUS",
+                short_name: "PLUSMINUS",
+                doc: "'\\xB1'\n",
+            },
+            GroupValue {
+                name: "SDLK_CAPSLOCK",
+                short_name: "CAPSLOCK",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CAPSLOCK`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F1",
+                short_name: "F1",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F1`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F2",
+                short_name: "F2",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F2`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F3",
+                short_name: "F3",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F3`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F4",
+                short_name: "F4",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F4`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F5",
+                short_name: "F5",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F5`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F6",
+                short_name: "F6",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F6`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F7",
+                short_name: "F7",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F7`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F8",
+                short_name: "F8",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F8`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F9",
+                short_name: "F9",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F9`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F10",
+                short_name: "F10",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F10`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F11",
+                short_name: "F11",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F11`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F12",
+                short_name: "F12",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F12`])\n",
+            },
+            GroupValue {
+                name: "SDLK_PRINTSCREEN",
+                short_name: "PRINTSCREEN",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_PRINTSCREEN`])\n",
+            },
+            GroupValue {
+                name: "SDLK_SCROLLLOCK",
+                short_name: "SCROLLLOCK",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SCROLLLOCK`])\n",
+            },
+            GroupValue {
+                name: "SDLK_PAUSE",
+                short_name: "PAUSE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_PAUSE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_INSERT",
+                short_name: "INSERT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_INSERT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_HOME",
+                short_name: "HOME",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_HOME`])\n",
+            },
+            GroupValue {
+                name: "SDLK_PAGEUP",
+                short_name: "PAGEUP",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_PAGEUP`])\n",
+            },
+            GroupValue {
+                name: "SDLK_END",
+                short_name: "END",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_END`])\n",
+            },
+            GroupValue {
+                name: "SDLK_PAGEDOWN",
+                short_name: "PAGEDOWN",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_PAGEDOWN`])\n",
+            },
+            GroupValue {
+                name: "SDLK_RIGHT",
+                short_name: "RIGHT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_RIGHT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_LEFT",
+                short_name: "LEFT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_LEFT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_DOWN",
+                short_name: "DOWN",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_DOWN`])\n",
+            },
+            GroupValue {
+                name: "SDLK_UP",
+                short_name: "UP",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_UP`])\n",
+            },
+            GroupValue {
+                name: "SDLK_NUMLOCKCLEAR",
+                short_name: "NUMLOCKCLEAR",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_NUMLOCKCLEAR`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_DIVIDE",
+                short_name: "KP_DIVIDE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_DIVIDE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_MULTIPLY",
+                short_name: "KP_MULTIPLY",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MULTIPLY`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_MINUS",
+                short_name: "KP_MINUS",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MINUS`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_PLUS",
+                short_name: "KP_PLUS",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_PLUS`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_ENTER",
+                short_name: "KP_ENTER",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_ENTER`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_1",
+                short_name: "KP_1",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_1`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_2",
+                short_name: "KP_2",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_2`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_3",
+                short_name: "KP_3",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_3`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_4",
+                short_name: "KP_4",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_4`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_5",
+                short_name: "KP_5",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_5`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_6",
+                short_name: "KP_6",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_6`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_7",
+                short_name: "KP_7",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_7`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_8",
+                short_name: "KP_8",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_8`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_9",
+                short_name: "KP_9",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_9`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_0",
+                short_name: "KP_0",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_0`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_PERIOD",
+                short_name: "KP_PERIOD",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_PERIOD`])\n",
+            },
+            GroupValue {
+                name: "SDLK_APPLICATION",
+                short_name: "APPLICATION",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_APPLICATION`])\n",
+            },
+            GroupValue {
+                name: "SDLK_POWER",
+                short_name: "POWER",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_POWER`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_EQUALS",
+                short_name: "KP_EQUALS",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_EQUALS`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F13",
+                short_name: "F13",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F13`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F14",
+                short_name: "F14",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F14`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F15",
+                short_name: "F15",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F15`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F16",
+                short_name: "F16",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F16`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F17",
+                short_name: "F17",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F17`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F18",
+                short_name: "F18",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F18`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F19",
+                short_name: "F19",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F19`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F20",
+                short_name: "F20",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F20`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F21",
+                short_name: "F21",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F21`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F22",
+                short_name: "F22",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F22`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F23",
+                short_name: "F23",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F23`])\n",
+            },
+            GroupValue {
+                name: "SDLK_F24",
+                short_name: "F24",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_F24`])\n",
+            },
+            GroupValue {
+                name: "SDLK_EXECUTE",
+                short_name: "EXECUTE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_EXECUTE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_HELP",
+                short_name: "HELP",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_HELP`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MENU",
+                short_name: "MENU",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MENU`])\n",
+            },
+            GroupValue {
+                name: "SDLK_SELECT",
+                short_name: "SELECT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SELECT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_STOP",
+                short_name: "STOP",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_STOP`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AGAIN",
+                short_name: "AGAIN",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AGAIN`])\n",
+            },
+            GroupValue {
+                name: "SDLK_UNDO",
+                short_name: "UNDO",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_UNDO`])\n",
+            },
+            GroupValue {
+                name: "SDLK_CUT",
+                short_name: "CUT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CUT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_COPY",
+                short_name: "COPY",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_COPY`])\n",
+            },
+            GroupValue {
+                name: "SDLK_PASTE",
+                short_name: "PASTE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_PASTE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_FIND",
+                short_name: "FIND",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_FIND`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MUTE",
+                short_name: "MUTE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MUTE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_VOLUMEUP",
+                short_name: "VOLUMEUP",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_VOLUMEUP`])\n",
+            },
+            GroupValue {
+                name: "SDLK_VOLUMEDOWN",
+                short_name: "VOLUMEDOWN",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_VOLUMEDOWN`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_COMMA",
+                short_name: "KP_COMMA",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_COMMA`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_EQUALSAS400",
+                short_name: "KP_EQUALSAS400",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_EQUALSAS400`])\n",
+            },
+            GroupValue {
+                name: "SDLK_ALTERASE",
+                short_name: "ALTERASE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_ALTERASE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_SYSREQ",
+                short_name: "SYSREQ",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SYSREQ`])\n",
+            },
+            GroupValue {
+                name: "SDLK_CANCEL",
+                short_name: "CANCEL",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CANCEL`])\n",
+            },
+            GroupValue {
+                name: "SDLK_CLEAR",
+                short_name: "CLEAR",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CLEAR`])\n",
+            },
+            GroupValue {
+                name: "SDLK_PRIOR",
+                short_name: "PRIOR",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_PRIOR`])\n",
+            },
+            GroupValue {
+                name: "SDLK_RETURN2",
+                short_name: "RETURN2",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_RETURN2`])\n",
+            },
+            GroupValue {
+                name: "SDLK_SEPARATOR",
+                short_name: "SEPARATOR",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SEPARATOR`])\n",
+            },
+            GroupValue {
+                name: "SDLK_OUT",
+                short_name: "OUT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_OUT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_OPER",
+                short_name: "OPER",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_OPER`])\n",
+            },
+            GroupValue {
+                name: "SDLK_CLEARAGAIN",
+                short_name: "CLEARAGAIN",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CLEARAGAIN`])\n",
+            },
+            GroupValue {
+                name: "SDLK_CRSEL",
+                short_name: "CRSEL",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CRSEL`])\n",
+            },
+            GroupValue {
+                name: "SDLK_EXSEL",
+                short_name: "EXSEL",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_EXSEL`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_00",
+                short_name: "KP_00",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_00`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_000",
+                short_name: "KP_000",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_000`])\n",
+            },
+            GroupValue {
+                name: "SDLK_THOUSANDSSEPARATOR",
+                short_name: "THOUSANDSSEPARATOR",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_THOUSANDSSEPARATOR`])\n",
+            },
+            GroupValue {
+                name: "SDLK_DECIMALSEPARATOR",
+                short_name: "DECIMALSEPARATOR",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_DECIMALSEPARATOR`])\n",
+            },
+            GroupValue {
+                name: "SDLK_CURRENCYUNIT",
+                short_name: "CURRENCYUNIT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CURRENCYUNIT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_CURRENCYSUBUNIT",
+                short_name: "CURRENCYSUBUNIT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CURRENCYSUBUNIT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_LEFTPAREN",
+                short_name: "KP_LEFTPAREN",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_LEFTPAREN`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_RIGHTPAREN",
+                short_name: "KP_RIGHTPAREN",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_RIGHTPAREN`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_LEFTBRACE",
+                short_name: "KP_LEFTBRACE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_LEFTBRACE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_RIGHTBRACE",
+                short_name: "KP_RIGHTBRACE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_RIGHTBRACE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_TAB",
+                short_name: "KP_TAB",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_TAB`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_BACKSPACE",
+                short_name: "KP_BACKSPACE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_BACKSPACE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_A",
+                short_name: "KP_A",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_A`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_B",
+                short_name: "KP_B",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_B`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_C",
+                short_name: "KP_C",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_C`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_D",
+                short_name: "KP_D",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_D`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_E",
+                short_name: "KP_E",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_E`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_F",
+                short_name: "KP_F",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_F`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_XOR",
+                short_name: "KP_XOR",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_XOR`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_POWER",
+                short_name: "KP_POWER",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_POWER`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_PERCENT",
+                short_name: "KP_PERCENT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_PERCENT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_LESS",
+                short_name: "KP_LESS",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_LESS`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_GREATER",
+                short_name: "KP_GREATER",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_GREATER`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_AMPERSAND",
+                short_name: "KP_AMPERSAND",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_AMPERSAND`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_DBLAMPERSAND",
+                short_name: "KP_DBLAMPERSAND",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_DBLAMPERSAND`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_VERTICALBAR",
+                short_name: "KP_VERTICALBAR",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_VERTICALBAR`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_DBLVERTICALBAR",
+                short_name: "KP_DBLVERTICALBAR",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_DBLVERTICALBAR`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_COLON",
+                short_name: "KP_COLON",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_COLON`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_HASH",
+                short_name: "KP_HASH",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_HASH`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_SPACE",
+                short_name: "KP_SPACE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_SPACE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_AT",
+                short_name: "KP_AT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_AT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_EXCLAM",
+                short_name: "KP_EXCLAM",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_EXCLAM`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_MEMSTORE",
+                short_name: "KP_MEMSTORE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMSTORE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_MEMRECALL",
+                short_name: "KP_MEMRECALL",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMRECALL`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_MEMCLEAR",
+                short_name: "KP_MEMCLEAR",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMCLEAR`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_MEMADD",
+                short_name: "KP_MEMADD",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMADD`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_MEMSUBTRACT",
+                short_name: "KP_MEMSUBTRACT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMSUBTRACT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_MEMMULTIPLY",
+                short_name: "KP_MEMMULTIPLY",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMMULTIPLY`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_MEMDIVIDE",
+                short_name: "KP_MEMDIVIDE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_MEMDIVIDE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_PLUSMINUS",
+                short_name: "KP_PLUSMINUS",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_PLUSMINUS`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_CLEAR",
+                short_name: "KP_CLEAR",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_CLEAR`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_CLEARENTRY",
+                short_name: "KP_CLEARENTRY",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_CLEARENTRY`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_BINARY",
+                short_name: "KP_BINARY",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_BINARY`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_OCTAL",
+                short_name: "KP_OCTAL",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_OCTAL`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_DECIMAL",
+                short_name: "KP_DECIMAL",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_DECIMAL`])\n",
+            },
+            GroupValue {
+                name: "SDLK_KP_HEXADECIMAL",
+                short_name: "KP_HEXADECIMAL",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_HEXADECIMAL`])\n",
+            },
+            GroupValue {
+                name: "SDLK_LCTRL",
+                short_name: "LCTRL",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_LCTRL`])\n",
+            },
+            GroupValue {
+                name: "SDLK_LSHIFT",
+                short_name: "LSHIFT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_LSHIFT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_LALT",
+                short_name: "LALT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_LALT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_LGUI",
+                short_name: "LGUI",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_LGUI`])\n",
+            },
+            GroupValue {
+                name: "SDLK_RCTRL",
+                short_name: "RCTRL",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_RCTRL`])\n",
+            },
+            GroupValue {
+                name: "SDLK_RSHIFT",
+                short_name: "RSHIFT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_RSHIFT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_RALT",
+                short_name: "RALT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_RALT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_RGUI",
+                short_name: "RGUI",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_RGUI`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MODE",
+                short_name: "MODE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MODE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_SLEEP",
+                short_name: "SLEEP",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SLEEP`])\n",
+            },
+            GroupValue {
+                name: "SDLK_WAKE",
+                short_name: "WAKE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_WAKE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_CHANNEL_INCREMENT",
+                short_name: "CHANNEL_INCREMENT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CHANNEL_INCREMENT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_CHANNEL_DECREMENT",
+                short_name: "CHANNEL_DECREMENT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CHANNEL_DECREMENT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MEDIA_PLAY",
+                short_name: "MEDIA_PLAY",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_PLAY`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MEDIA_PAUSE",
+                short_name: "MEDIA_PAUSE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_PAUSE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MEDIA_RECORD",
+                short_name: "MEDIA_RECORD",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_RECORD`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MEDIA_FAST_FORWARD",
+                short_name: "MEDIA_FAST_FORWARD",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_FAST_FORWARD`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MEDIA_REWIND",
+                short_name: "MEDIA_REWIND",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_REWIND`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MEDIA_NEXT_TRACK",
+                short_name: "MEDIA_NEXT_TRACK",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_NEXT_TRACK`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MEDIA_PREVIOUS_TRACK",
+                short_name: "MEDIA_PREVIOUS_TRACK",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_PREVIOUS_TRACK`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MEDIA_STOP",
+                short_name: "MEDIA_STOP",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_STOP`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MEDIA_EJECT",
+                short_name: "MEDIA_EJECT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_EJECT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MEDIA_PLAY_PAUSE",
+                short_name: "MEDIA_PLAY_PAUSE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_PLAY_PAUSE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_MEDIA_SELECT",
+                short_name: "MEDIA_SELECT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_MEDIA_SELECT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_NEW",
+                short_name: "AC_NEW",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_NEW`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_OPEN",
+                short_name: "AC_OPEN",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_OPEN`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_CLOSE",
+                short_name: "AC_CLOSE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_CLOSE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_EXIT",
+                short_name: "AC_EXIT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_EXIT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_SAVE",
+                short_name: "AC_SAVE",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_SAVE`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_PRINT",
+                short_name: "AC_PRINT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_PRINT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_PROPERTIES",
+                short_name: "AC_PROPERTIES",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_PROPERTIES`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_SEARCH",
+                short_name: "AC_SEARCH",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_SEARCH`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_HOME",
+                short_name: "AC_HOME",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_HOME`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_BACK",
+                short_name: "AC_BACK",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_BACK`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_FORWARD",
+                short_name: "AC_FORWARD",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_FORWARD`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_STOP",
+                short_name: "AC_STOP",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_STOP`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_REFRESH",
+                short_name: "AC_REFRESH",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_REFRESH`])\n",
+            },
+            GroupValue {
+                name: "SDLK_AC_BOOKMARKS",
+                short_name: "AC_BOOKMARKS",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_AC_BOOKMARKS`])\n",
+            },
+            GroupValue {
+                name: "SDLK_SOFTLEFT",
+                short_name: "SOFTLEFT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SOFTLEFT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_SOFTRIGHT",
+                short_name: "SOFTRIGHT",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_SOFTRIGHT`])\n",
+            },
+            GroupValue {
+                name: "SDLK_CALL",
+                short_name: "CALL",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CALL`])\n",
+            },
+            GroupValue {
+                name: "SDLK_ENDCALL",
+                short_name: "ENDCALL",
+                doc: "SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_ENDCALL`])\n",
+            },
+            GroupValue {
+                name: "SDLK_LEFT_TAB",
+                short_name: "LEFT_TAB",
+                doc: "Extended key Left Tab\n",
+            },
+            GroupValue {
+                name: "SDLK_LEVEL5_SHIFT",
+                short_name: "LEVEL5_SHIFT",
+                doc: "Extended key Level 5 Shift\n",
+            },
+            GroupValue {
+                name: "SDLK_MULTI_KEY_COMPOSE",
+                short_name: "MULTI_KEY_COMPOSE",
+                doc: "Extended key Multi-key Compose\n",
+            },
+            GroupValue {
+                name: "SDLK_LMETA",
+                short_name: "LMETA",
+                doc: "Extended key Left Meta\n",
+            },
+            GroupValue {
+                name: "SDLK_RMETA",
+                short_name: "RMETA",
+                doc: "Extended key Right Meta\n",
+            },
+            GroupValue {
+                name: "SDLK_LHYPER",
+                short_name: "LHYPER",
+                doc: "Extended key Left Hyper\n",
+            },
+            GroupValue {
+                name: "SDLK_RHYPER",
+                short_name: "RHYPER",
+                doc: "Extended key Right Hyper\n",
+            },
+        ],
+    },
+    Group {
+        module: "keycode",
+        kind: GroupKind::Flags,
+        name: "SDL_Keymod",
+        short_name: "Keymod",
+        doc: "Valid key modifiers (possibly OR'd together).\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_KMOD_NONE",
+                short_name: "NONE",
+                doc: "no modifier is applicable.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_LSHIFT",
+                short_name: "LSHIFT",
+                doc: "the left Shift key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_RSHIFT",
+                short_name: "RSHIFT",
+                doc: "the right Shift key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_LEVEL5",
+                short_name: "LEVEL5",
+                doc: "the Level 5 Shift key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_LCTRL",
+                short_name: "LCTRL",
+                doc: "the left Ctrl (Control) key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_RCTRL",
+                short_name: "RCTRL",
+                doc: "the right Ctrl (Control) key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_LALT",
+                short_name: "LALT",
+                doc: "the left Alt key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_RALT",
+                short_name: "RALT",
+                doc: "the right Alt key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_LGUI",
+                short_name: "LGUI",
+                doc: "the left GUI key (often the Windows key) is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_RGUI",
+                short_name: "RGUI",
+                doc: "the right GUI key (often the Windows key) is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_NUM",
+                short_name: "NUM",
+                doc: "the Num Lock key (may be located on an extended keypad) is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_CAPS",
+                short_name: "CAPS",
+                doc: "the Caps Lock key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_MODE",
+                short_name: "MODE",
+                doc: "the !AltGr key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_SCROLL",
+                short_name: "SCROLL",
+                doc: "the Scroll Lock key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_CTRL",
+                short_name: "CTRL",
+                doc: "Any Ctrl key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_SHIFT",
+                short_name: "SHIFT",
+                doc: "Any Shift key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_ALT",
+                short_name: "ALT",
+                doc: "Any Alt key is down.\n",
+            },
+            GroupValue {
+                name: "SDL_KMOD_GUI",
+                short_name: "GUI",
+                doc: "Any GUI key is down.\n",
+            },
+        ],
+    },
+    Group {
+        module: "log",
+        kind: GroupKind::Enum,
+        name: "SDL_LogCategory",
+        short_name: "LogCategory",
+        doc: "The predefined log categories\n\nBy default the application and gpu categories are enabled at the INFO\nlevel, the assert category is enabled at the WARN level, test is enabled at\nthe VERBOSE level and all other categories are enabled at the ERROR level.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_APPLICATION",
+                short_name: "APPLICATION",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_ERROR",
+                short_name: "ERROR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_ASSERT",
+                short_name: "ASSERT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_SYSTEM",
+                short_name: "SYSTEM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_AUDIO",
+                short_name: "AUDIO",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_VIDEO",
+                short_name: "VIDEO",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_RENDER",
+                short_name: "RENDER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_INPUT",
+                short_name: "INPUT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_TEST",
+                short_name: "TEST",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_GPU",
+                short_name: "GPU",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_RESERVED2",
+                short_name: "RESERVED2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_RESERVED3",
+                short_name: "RESERVED3",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_RESERVED4",
+                short_name: "RESERVED4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_RESERVED5",
+                short_name: "RESERVED5",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_RESERVED6",
+                short_name: "RESERVED6",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_RESERVED7",
+                short_name: "RESERVED7",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_RESERVED8",
+                short_name: "RESERVED8",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_RESERVED9",
+                short_name: "RESERVED9",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_RESERVED10",
+                short_name: "RESERVED10",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_CATEGORY_CUSTOM",
+                short_name: "CUSTOM",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "log",
+        kind: GroupKind::Enum,
+        name: "SDL_LogPriority",
+        short_name: "LogPriority",
+        doc: "The predefined log priorities\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_LOG_PRIORITY_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_PRIORITY_TRACE",
+                short_name: "TRACE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_PRIORITY_VERBOSE",
+                short_name: "VERBOSE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_PRIORITY_DEBUG",
+                short_name: "DEBUG",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_PRIORITY_INFO",
+                short_name: "INFO",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_PRIORITY_WARN",
+                short_name: "WARN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_PRIORITY_ERROR",
+                short_name: "ERROR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_PRIORITY_CRITICAL",
+                short_name: "CRITICAL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_LOG_PRIORITY_COUNT",
+                short_name: "COUNT",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "messagebox",
+        kind: GroupKind::Flags,
+        name: "SDL_MessageBoxFlags",
+        short_name: "MessageBoxFlags",
+        doc: "Message box flags.\n\nIf supported will display warning icon, etc.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_MESSAGEBOX_ERROR",
+                short_name: "ERROR",
+                doc: "error dialog\n",
+            },
+            GroupValue {
+                name: "SDL_MESSAGEBOX_WARNING",
+                short_name: "WARNING",
+                doc: "warning dialog\n",
+            },
+            GroupValue {
+                name: "SDL_MESSAGEBOX_INFORMATION",
+                short_name: "INFORMATION",
+                doc: "informational dialog\n",
+            },
+            GroupValue {
+                name: "SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT",
+                short_name: "BUTTONS_LEFT_TO_RIGHT",
+                doc: "buttons placed left to right\n",
+            },
+            GroupValue {
+                name: "SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT",
+                short_name: "BUTTONS_RIGHT_TO_LEFT",
+                doc: "buttons placed right to left\n",
+            },
+        ],
+    },
+    Group {
+        module: "messagebox",
+        kind: GroupKind::Flags,
+        name: "SDL_MessageBoxButtonFlags",
+        short_name: "MessageBoxButtonFlags",
+        doc: "[`SDL_MessageBoxButtonData`] flags.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT",
+                short_name: "RETURNKEY_DEFAULT",
+                doc: "Marks the default button when return is hit\n",
+            },
+            GroupValue {
+                name: "SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT",
+                short_name: "ESCAPEKEY_DEFAULT",
+                doc: "Marks the default button when escape is hit\n",
+            },
+        ],
+    },
+    Group {
+        module: "messagebox",
+        kind: GroupKind::Enum,
+        name: "SDL_MessageBoxColorType",
+        short_name: "MessageBoxColorType",
+        doc: "An enumeration of indices inside the colors array of\n[`SDL_MessageBoxColorScheme`].\n",
+        values: &[
+            GroupValue {
+                name: "SDL_MESSAGEBOX_COLOR_BACKGROUND",
+                short_name: "BACKGROUND",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_MESSAGEBOX_COLOR_TEXT",
+                short_name: "TEXT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_MESSAGEBOX_COLOR_BUTTON_BORDER",
+                short_name: "BUTTON_BORDER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND",
+                short_name: "BUTTON_BACKGROUND",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED",
+                short_name: "BUTTON_SELECTED",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_MESSAGEBOX_COLOR_COUNT",
+                short_name: "COUNT",
+                doc: "Size of the colors array of [`SDL_MessageBoxColorScheme`].\n",
+            },
+        ],
+    },
+    Group {
+        module: "mouse",
+        kind: GroupKind::Id,
+        name: "SDL_MouseID",
+        short_name: "MouseID",
+        doc: "This is a unique ID for a mouse for the time it is connected to the system,\nand is never reused for the lifetime of the application.\n\nIf the mouse is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "mouse",
+        kind: GroupKind::Enum,
+        name: "SDL_SystemCursor",
+        short_name: "SystemCursor",
+        doc: "Cursor types for [`SDL_CreateSystemCursor()`].\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_DEFAULT",
+                short_name: "DEFAULT",
+                doc: "Default cursor. Usually an arrow.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_TEXT",
+                short_name: "TEXT",
+                doc: "Text selection. Usually an I-beam.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_WAIT",
+                short_name: "WAIT",
+                doc: "Wait. Usually an hourglass or watch or spinning ball.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_CROSSHAIR",
+                short_name: "CROSSHAIR",
+                doc: "Crosshair.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_PROGRESS",
+                short_name: "PROGRESS",
+                doc: "Program is busy but still interactive. Usually it's WAIT with an arrow.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_NWSE_RESIZE",
+                short_name: "NWSE_RESIZE",
+                doc: "Double arrow pointing northwest and southeast.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_NESW_RESIZE",
+                short_name: "NESW_RESIZE",
+                doc: "Double arrow pointing northeast and southwest.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_EW_RESIZE",
+                short_name: "EW_RESIZE",
+                doc: "Double arrow pointing west and east.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_NS_RESIZE",
+                short_name: "NS_RESIZE",
+                doc: "Double arrow pointing north and south.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_MOVE",
+                short_name: "MOVE",
+                doc: "Four pointed arrow pointing north, south, east, and west.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_NOT_ALLOWED",
+                short_name: "NOT_ALLOWED",
+                doc: "Not permitted. Usually a slashed circle or crossbones.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_POINTER",
+                short_name: "POINTER",
+                doc: "Pointer that indicates a link. Usually a pointing hand.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_NW_RESIZE",
+                short_name: "NW_RESIZE",
+                doc: "Window resize top-left. This may be a single arrow or a double arrow like NWSE_RESIZE.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_N_RESIZE",
+                short_name: "N_RESIZE",
+                doc: "Window resize top. May be NS_RESIZE.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_NE_RESIZE",
+                short_name: "NE_RESIZE",
+                doc: "Window resize top-right. May be NESW_RESIZE.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_E_RESIZE",
+                short_name: "E_RESIZE",
+                doc: "Window resize right. May be EW_RESIZE.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_SE_RESIZE",
+                short_name: "SE_RESIZE",
+                doc: "Window resize bottom-right. May be NWSE_RESIZE.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_S_RESIZE",
+                short_name: "S_RESIZE",
+                doc: "Window resize bottom. May be NS_RESIZE.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_SW_RESIZE",
+                short_name: "SW_RESIZE",
+                doc: "Window resize bottom-left. May be NESW_RESIZE.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_W_RESIZE",
+                short_name: "W_RESIZE",
+                doc: "Window resize left. May be EW_RESIZE.\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_CURSOR_COUNT",
+                short_name: "COUNT",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "mouse",
+        kind: GroupKind::Enum,
+        name: "SDL_MouseWheelDirection",
+        short_name: "MouseWheelDirection",
+        doc: "Scroll direction types for the Scroll event\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_MOUSEWHEEL_NORMAL",
+                short_name: "NORMAL",
+                doc: "The scroll direction is normal\n",
+            },
+            GroupValue {
+                name: "SDL_MOUSEWHEEL_FLIPPED",
+                short_name: "FLIPPED",
+                doc: "The scroll direction is flipped / natural\n",
+            },
+        ],
+    },
+    Group {
+        module: "mouse",
+        kind: GroupKind::Flags,
+        name: "SDL_MouseButtonFlags",
+        short_name: "MouseButtonFlags",
+        doc: "A bitmask of pressed mouse buttons, as reported by [`SDL_GetMouseState`], etc.\n\n- Button 1: Left mouse button\n- Button 2: Middle mouse button\n- Button 3: Right mouse button\n- Button 4: Side mouse button 1\n- Button 5: Side mouse button 2\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetMouseState`]\n- [`SDL_GetGlobalMouseState`]\n- [`SDL_GetRelativeMouseState`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_BUTTON_LMASK",
+                short_name: "LMASK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_BUTTON_MMASK",
+                short_name: "MMASK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_BUTTON_RMASK",
+                short_name: "RMASK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_BUTTON_X1MASK",
+                short_name: "X1MASK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_BUTTON_X2MASK",
+                short_name: "X2MASK",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "mutex",
+        kind: GroupKind::Enum,
+        name: "SDL_InitStatus",
+        short_name: "InitStatus",
+        doc: "The current status of an [`SDL_InitState`] structure.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_INIT_STATUS_UNINITIALIZED",
+                short_name: "UNINITIALIZED",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_INIT_STATUS_INITIALIZING",
+                short_name: "INITIALIZING",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_INIT_STATUS_INITIALIZED",
+                short_name: "INITIALIZED",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_INIT_STATUS_UNINITIALIZING",
+                short_name: "UNINITIALIZING",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "pen",
+        kind: GroupKind::Id,
+        name: "SDL_PenID",
+        short_name: "PenID",
+        doc: "SDL pen instance IDs.\n\nZero is used to signify an invalid/null device.\n\nThese show up in pen events when SDL sees input from them. They remain\nconsistent as long as SDL can recognize a tool to be the same pen; but if a\npen physically leaves the area and returns, it might get a new ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "pen",
+        kind: GroupKind::Flags,
+        name: "SDL_PenInputFlags",
+        short_name: "PenInputFlags",
+        doc: "Pen input flags, as reported by various pen events' `pen_state` field.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_PEN_INPUT_DOWN",
+                short_name: "DOWN",
+                doc: "pen is pressed down\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_INPUT_BUTTON_1",
+                short_name: "BUTTON_1",
+                doc: "button 1 is pressed\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_INPUT_BUTTON_2",
+                short_name: "BUTTON_2",
+                doc: "button 2 is pressed\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_INPUT_BUTTON_3",
+                short_name: "BUTTON_3",
+                doc: "button 3 is pressed\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_INPUT_BUTTON_4",
+                short_name: "BUTTON_4",
+                doc: "button 4 is pressed\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_INPUT_BUTTON_5",
+                short_name: "BUTTON_5",
+                doc: "button 5 is pressed\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_INPUT_ERASER_TIP",
+                short_name: "ERASER_TIP",
+                doc: "eraser tip is used\n",
+            },
+        ],
+    },
+    Group {
+        module: "pen",
+        kind: GroupKind::Enum,
+        name: "SDL_PenAxis",
+        short_name: "PenAxis",
+        doc: "Pen axis indices.\n\nThese are the valid values for the `axis` field in [`SDL_PenAxisEvent`]. All\naxes are either normalised to 0..1 or report a (positive or negative) angle\nin degrees, with 0.0 representing the centre. Not all pens/backends support\nall axes: unsupported axes are always zero.\n\nTo convert angles for tilt and rotation into vector representation, use\n[`SDL_sinf`] on the XTILT, YTILT, or ROTATION component, for example:\n\n`SDL_sinf(xtilt * SDL_PI_F / 180.0)`.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_PEN_AXIS_PRESSURE",
+                short_name: "PRESSURE",
+                doc: "Pen pressure.  Unidirectional: 0 to 1.0\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_AXIS_XTILT",
+                short_name: "XTILT",
+                doc: "Pen horizontal tilt angle.  Bidirectional: -90.0 to 90.0 (left-to-right).\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_AXIS_YTILT",
+                short_name: "YTILT",
+                doc: "Pen vertical tilt angle.  Bidirectional: -90.0 to 90.0 (top-to-down).\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_AXIS_DISTANCE",
+                short_name: "DISTANCE",
+                doc: "Pen distance to drawing surface.  Unidirectional: 0.0 to 1.0\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_AXIS_ROTATION",
+                short_name: "ROTATION",
+                doc: "Pen barrel rotation.  Bidirectional: -180 to 179.9 (clockwise, 0 is facing up, -180.0 is facing down).\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_AXIS_SLIDER",
+                short_name: "SLIDER",
+                doc: "Pen finger wheel or slider (e.g., Airbrush Pen).  Unidirectional: 0 to 1.0\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_AXIS_TANGENTIAL_PRESSURE",
+                short_name: "TANGENTIAL_PRESSURE",
+                doc: "Pressure from squeezing the pen (\"barrel pressure\").\n",
+            },
+            GroupValue {
+                name: "SDL_PEN_AXIS_COUNT",
+                short_name: "COUNT",
+                doc: "Total known pen axis types in this version of SDL. This number may grow in future releases!\n",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_PixelType",
+        short_name: "PixelType",
+        doc: "Pixel type.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_PIXELTYPE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELTYPE_INDEX1",
+                short_name: "INDEX1",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELTYPE_INDEX4",
+                short_name: "INDEX4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELTYPE_INDEX8",
+                short_name: "INDEX8",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELTYPE_PACKED8",
+                short_name: "PACKED8",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELTYPE_PACKED16",
+                short_name: "PACKED16",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELTYPE_PACKED32",
+                short_name: "PACKED32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELTYPE_ARRAYU8",
+                short_name: "ARRAYU8",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELTYPE_ARRAYU16",
+                short_name: "ARRAYU16",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELTYPE_ARRAYU32",
+                short_name: "ARRAYU32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELTYPE_ARRAYF16",
+                short_name: "ARRAYF16",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELTYPE_ARRAYF32",
+                short_name: "ARRAYF32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELTYPE_INDEX2",
+                short_name: "INDEX2",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_BitmapOrder",
+        short_name: "BitmapOrder",
+        doc: "Bitmap pixel order, high bit -> low bit.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_BITMAPORDER_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_BITMAPORDER_4321",
+                short_name: "_4321",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_BITMAPORDER_1234",
+                short_name: "_1234",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_PackedOrder",
+        short_name: "PackedOrder",
+        doc: "Packed component order, high bit -> low bit.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_PACKEDORDER_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDORDER_XRGB",
+                short_name: "XRGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDORDER_RGBX",
+                short_name: "RGBX",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDORDER_ARGB",
+                short_name: "ARGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDORDER_RGBA",
+                short_name: "RGBA",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDORDER_XBGR",
+                short_name: "XBGR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDORDER_BGRX",
+                short_name: "BGRX",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDORDER_ABGR",
+                short_name: "ABGR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDORDER_BGRA",
+                short_name: "BGRA",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_ArrayOrder",
+        short_name: "ArrayOrder",
+        doc: "Array component order, low byte -> high byte.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_ARRAYORDER_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_ARRAYORDER_RGB",
+                short_name: "RGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_ARRAYORDER_RGBA",
+                short_name: "RGBA",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_ARRAYORDER_ARGB",
+                short_name: "ARGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_ARRAYORDER_BGR",
+                short_name: "BGR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_ARRAYORDER_BGRA",
+                short_name: "BGRA",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_ARRAYORDER_ABGR",
+                short_name: "ABGR",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_PackedLayout",
+        short_name: "PackedLayout",
+        doc: "Packed component layout.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_PACKEDLAYOUT_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDLAYOUT_332",
+                short_name: "_332",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDLAYOUT_4444",
+                short_name: "_4444",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDLAYOUT_1555",
+                short_name: "_1555",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDLAYOUT_5551",
+                short_name: "_5551",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDLAYOUT_565",
+                short_name: "_565",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDLAYOUT_8888",
+                short_name: "_8888",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDLAYOUT_2101010",
+                short_name: "_2101010",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PACKEDLAYOUT_1010102",
+                short_name: "_1010102",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_PixelFormat",
+        short_name: "PixelFormat",
+        doc: "Pixel format.\n\nSDL's pixel formats have the following naming convention:\n\n- Names with a list of components and a single bit count, such as RGB24 and\nABGR32, define a platform-independent encoding into bytes in the order\nspecified. For example, in RGB24 data, each pixel is encoded in 3 bytes\n(red, green, blue) in that order, and in ABGR32 data, each pixel is\nencoded in 4 bytes alpha, blue, green, red) in that order. Use these\nnames if the property of a format that is important to you is the order\nof the bytes in memory or on disk.\n- Names with a bit count per component, such as ARGB8888 and XRGB1555, are\n\"packed\" into an appropriately-sized integer in the platform's native\nendianness. For example, ARGB8888 is a sequence of 32-bit integers; in\neach integer, the most significant bits are alpha, and the least\nsignificant bits are blue. On a little-endian CPU such as x86, the least\nsignificant bits of each integer are arranged first in memory, but on a\nbig-endian CPU such as s390x, the most significant bits are arranged\nfirst. Use these names if the property of a format that is important to\nyou is the meaning of each bit position within a native-endianness\ninteger.\n- In indexed formats such as INDEX4LSB, each pixel is represented by\nencoding an index into the palette into the indicated number of bits,\nwith multiple pixels packed into each byte if appropriate. In LSB\nformats, the first (leftmost) pixel is stored in the least-significant\nbits of the byte; in MSB formats, it's stored in the most-significant\nbits. INDEX8 does not need LSB/MSB variants, because each pixel exactly\nfills one byte.\n\nThe 32-bit byte-array encodings such as RGBA32 are aliases for the\nappropriate 8888 encoding for the current platform. For example, RGBA32 is\nan alias for ABGR8888 on little-endian CPUs like x86, or an alias for\nRGBA8888 on big-endian CPUs.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_PIXELFORMAT_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX1LSB",
+                short_name: "INDEX1LSB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX1MSB",
+                short_name: "INDEX1MSB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX2LSB",
+                short_name: "INDEX2LSB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX2MSB",
+                short_name: "INDEX2MSB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX4LSB",
+                short_name: "INDEX4LSB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX4MSB",
+                short_name: "INDEX4MSB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_INDEX8",
+                short_name: "INDEX8",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGB332",
+                short_name: "RGB332",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_XRGB4444",
+                short_name: "XRGB4444",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_XBGR4444",
+                short_name: "XBGR4444",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_XRGB1555",
+                short_name: "XRGB1555",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_XBGR1555",
+                short_name: "XBGR1555",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB4444",
+                short_name: "ARGB4444",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA4444",
+                short_name: "RGBA4444",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR4444",
+                short_name: "ABGR4444",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA4444",
+                short_name: "BGRA4444",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB1555",
+                short_name: "ARGB1555",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA5551",
+                short_name: "RGBA5551",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR1555",
+                short_name: "ABGR1555",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA5551",
+                short_name: "BGRA5551",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGB565",
+                short_name: "RGB565",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGR565",
+                short_name: "BGR565",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGB24",
+                short_name: "RGB24",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGR24",
+                short_name: "BGR24",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_XRGB8888",
+                short_name: "XRGB8888",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGBX8888",
+                short_name: "RGBX8888",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_XBGR8888",
+                short_name: "XBGR8888",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGRX8888",
+                short_name: "BGRX8888",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB8888",
+                short_name: "ARGB8888",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA8888",
+                short_name: "RGBA8888",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR8888",
+                short_name: "ABGR8888",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA8888",
+                short_name: "BGRA8888",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_XRGB2101010",
+                short_name: "XRGB2101010",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_XBGR2101010",
+                short_name: "XBGR2101010",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB2101010",
+                short_name: "ARGB2101010",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR2101010",
+                short_name: "ABGR2101010",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGB48",
+                short_name: "RGB48",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGR48",
+                short_name: "BGR48",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA64",
+                short_name: "RGBA64",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB64",
+                short_name: "ARGB64",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA64",
+                short_name: "BGRA64",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR64",
+                short_name: "ABGR64",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGB48_FLOAT",
+                short_name: "RGB48_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGR48_FLOAT",
+                short_name: "BGR48_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA64_FLOAT",
+                short_name: "RGBA64_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB64_FLOAT",
+                short_name: "ARGB64_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA64_FLOAT",
+                short_name: "BGRA64_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR64_FLOAT",
+                short_name: "ABGR64_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGB96_FLOAT",
+                short_name: "RGB96_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGR96_FLOAT",
+                short_name: "BGR96_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA128_FLOAT",
+                short_name: "RGBA128_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB128_FLOAT",
+                short_name: "ARGB128_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA128_FLOAT",
+                short_name: "BGRA128_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR128_FLOAT",
+                short_name: "ABGR128_FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_YV12",
+                short_name: "YV12",
+                doc: "Planar mode: Y + V + U  (3 planes)\n",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_IYUV",
+                short_name: "IYUV",
+                doc: "Planar mode: Y + U + V  (3 planes)\n",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_YUY2",
+                short_name: "YUY2",
+                doc: "Packed mode: Y0+U0+Y1+V0 (1 plane)\n",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_UYVY",
+                short_name: "UYVY",
+                doc: "Packed mode: U0+Y0+V0+Y1 (1 plane)\n",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_YVYU",
+                short_name: "YVYU",
+                doc: "Packed mode: Y0+V0+Y1+U0 (1 plane)\n",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_NV12",
+                short_name: "NV12",
+                doc: "Planar mode: Y + U/V interleaved  (2 planes)\n",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_NV21",
+                short_name: "NV21",
+                doc: "Planar mode: Y + V/U interleaved  (2 planes)\n",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_P010",
+                short_name: "P010",
+                doc: "Planar mode: Y + U/V interleaved  (2 planes)\n",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_EXTERNAL_OES",
+                short_name: "EXTERNAL_OES",
+                doc: "Android video texture format\n",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_MJPG",
+                short_name: "MJPG",
+                doc: "Motion JPEG\n",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA32",
+                short_name: "RGBA32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB32",
+                short_name: "ARGB32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA32",
+                short_name: "BGRA32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR32",
+                short_name: "ABGR32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGBX32",
+                short_name: "RGBX32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_XRGB32",
+                short_name: "XRGB32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGRX32",
+                short_name: "BGRX32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_XBGR32",
+                short_name: "XBGR32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGBA32",
+                short_name: "RGBA32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ARGB32",
+                short_name: "ARGB32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGRA32",
+                short_name: "BGRA32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_ABGR32",
+                short_name: "ABGR32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_RGBX32",
+                short_name: "RGBX32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_XRGB32",
+                short_name: "XRGB32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_BGRX32",
+                short_name: "BGRX32",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PIXELFORMAT_XBGR32",
+                short_name: "XBGR32",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_ColorType",
+        short_name: "ColorType",
+        doc: "Colorspace color type.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_COLOR_TYPE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_COLOR_TYPE_RGB",
+                short_name: "RGB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_COLOR_TYPE_YCBCR",
+                short_name: "YCBCR",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_ColorRange",
+        short_name: "ColorRange",
+        doc: "Colorspace color range, as described by\n<https://www.itu.int/rec/R-REC-BT.2100-2-201807-I/en>\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_COLOR_RANGE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_COLOR_RANGE_LIMITED",
+                short_name: "LIMITED",
+                doc: "Narrow range, e.g. 16-235 for 8-bit RGB and luma, and 16-240 for 8-bit chroma\n",
+            },
+            GroupValue {
+                name: "SDL_COLOR_RANGE_FULL",
+                short_name: "FULL",
+                doc: "Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma\n",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_ColorPrimaries",
+        short_name: "ColorPrimaries",
+        doc: "Colorspace color primaries, as described by\n<https://www.itu.int/rec/T-REC-H.273-201612-S/en>\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_BT709",
+                short_name: "BT709",
+                doc: "ITU-R BT.709-6\n",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_UNSPECIFIED",
+                short_name: "UNSPECIFIED",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_BT470M",
+                short_name: "BT470M",
+                doc: "ITU-R BT.470-6 System M\n",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_BT470BG",
+                short_name: "BT470BG",
+                doc: "ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625\n",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_BT601",
+                short_name: "BT601",
+                doc: "ITU-R BT.601-7 525, SMPTE 170M\n",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_SMPTE240",
+                short_name: "SMPTE240",
+                doc: "SMPTE 240M, functionally the same as [`SDL_COLOR_PRIMARIES_BT601`]\n",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_GENERIC_FILM",
+                short_name: "GENERIC_FILM",
+                doc: "Generic film (color filters using Illuminant C)\n",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_BT2020",
+                short_name: "BT2020",
+                doc: "ITU-R BT.2020-2 / ITU-R BT.2100-0\n",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_XYZ",
+                short_name: "XYZ",
+                doc: "SMPTE ST 428-1\n",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_SMPTE431",
+                short_name: "SMPTE431",
+                doc: "SMPTE RP 431-2\n",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_SMPTE432",
+                short_name: "SMPTE432",
+                doc: "SMPTE EG 432-1 / DCI P3\n",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_EBU3213",
+                short_name: "EBU3213",
+                doc: "EBU Tech. 3213-E\n",
+            },
+            GroupValue {
+                name: "SDL_COLOR_PRIMARIES_CUSTOM",
+                short_name: "CUSTOM",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_TransferCharacteristics",
+        short_name: "TransferCharacteristics",
+        doc: "Colorspace transfer characteristics.\n\nThese are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_BT709",
+                short_name: "BT709",
+                doc: "Rec. ITU-R BT.709-6 / ITU-R BT1361\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_UNSPECIFIED",
+                short_name: "UNSPECIFIED",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_GAMMA22",
+                short_name: "GAMMA22",
+                doc: "ITU-R BT.470-6 System M / ITU-R BT1700 625 PAL & SECAM\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_GAMMA28",
+                short_name: "GAMMA28",
+                doc: "ITU-R BT.470-6 System B, G\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_BT601",
+                short_name: "BT601",
+                doc: "SMPTE ST 170M / ITU-R BT.601-7 525 or 625\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_SMPTE240",
+                short_name: "SMPTE240",
+                doc: "SMPTE ST 240M\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_LINEAR",
+                short_name: "LINEAR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_LOG100",
+                short_name: "LOG100",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_LOG100_SQRT10",
+                short_name: "LOG100_SQRT10",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_IEC61966",
+                short_name: "IEC61966",
+                doc: "IEC 61966-2-4\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_BT1361",
+                short_name: "BT1361",
+                doc: "ITU-R BT1361 Extended Colour Gamut\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_SRGB",
+                short_name: "SRGB",
+                doc: "IEC 61966-2-1 (sRGB or sYCC)\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_BT2020_10BIT",
+                short_name: "BT2020_10BIT",
+                doc: "ITU-R BT2020 for 10-bit system\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_BT2020_12BIT",
+                short_name: "BT2020_12BIT",
+                doc: "ITU-R BT2020 for 12-bit system\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_PQ",
+                short_name: "PQ",
+                doc: "SMPTE ST 2084 for 10-, 12-, 14- and 16-bit systems\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_SMPTE428",
+                short_name: "SMPTE428",
+                doc: "SMPTE ST 428-1\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_HLG",
+                short_name: "HLG",
+                doc: "ARIB STD-B67, known as \"hybrid log-gamma\" (HLG)\n",
+            },
+            GroupValue {
+                name: "SDL_TRANSFER_CHARACTERISTICS_CUSTOM",
+                short_name: "CUSTOM",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_MatrixCoefficients",
+        short_name: "MatrixCoefficients",
+        doc: "Colorspace matrix coefficients.\n\nThese are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_IDENTITY",
+                short_name: "IDENTITY",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_BT709",
+                short_name: "BT709",
+                doc: "ITU-R BT.709-6\n",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_UNSPECIFIED",
+                short_name: "UNSPECIFIED",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_FCC",
+                short_name: "FCC",
+                doc: "US FCC Title 47\n",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_BT470BG",
+                short_name: "BT470BG",
+                doc: "ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as [`SDL_MATRIX_COEFFICIENTS_BT601`]\n",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_BT601",
+                short_name: "BT601",
+                doc: "ITU-R BT.601-7 525\n",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_SMPTE240",
+                short_name: "SMPTE240",
+                doc: "SMPTE 240M\n",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_YCGCO",
+                short_name: "YCGCO",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_BT2020_NCL",
+                short_name: "BT2020_NCL",
+                doc: "ITU-R BT.2020-2 non-constant luminance\n",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_BT2020_CL",
+                short_name: "BT2020_CL",
+                doc: "ITU-R BT.2020-2 constant luminance\n",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_SMPTE2085",
+                short_name: "SMPTE2085",
+                doc: "SMPTE ST 2085\n",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL",
+                short_name: "CHROMA_DERIVED_NCL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL",
+                short_name: "CHROMA_DERIVED_CL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_ICTCP",
+                short_name: "ICTCP",
+                doc: "ITU-R BT.2100-0 ICTCP\n",
+            },
+            GroupValue {
+                name: "SDL_MATRIX_COEFFICIENTS_CUSTOM",
+                short_name: "CUSTOM",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_ChromaLocation",
+        short_name: "ChromaLocation",
+        doc: "Colorspace chroma sample location.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_CHROMA_LOCATION_NONE",
+                short_name: "NONE",
+                doc: "RGB, no chroma sampling\n",
+            },
+            GroupValue {
+                name: "SDL_CHROMA_LOCATION_LEFT",
+                short_name: "LEFT",
+                doc: "In MPEG-2, MPEG-4, and AVC, Cb and Cr are taken on midpoint of the left-edge of the 2x2 square. In other words, they have the same horizontal location as the top-left pixel, but is shifted one-half pixel down vertically.\n",
+            },
+            GroupValue {
+                name: "SDL_CHROMA_LOCATION_CENTER",
+                short_name: "CENTER",
+                doc: "In JPEG/JFIF, H.261, and MPEG-1, Cb and Cr are taken at the center of the 2x2 square. In other words, they are offset one-half pixel to the right and one-half pixel down compared to the top-left pixel.\n",
+            },
+            GroupValue {
+                name: "SDL_CHROMA_LOCATION_TOPLEFT",
+                short_name: "TOPLEFT",
+                doc: "In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel (\"co-sited\", \"co-located\").\n",
+            },
+        ],
+    },
+    Group {
+        module: "pixels",
+        kind: GroupKind::Enum,
+        name: "SDL_Colorspace",
+        short_name: "Colorspace",
+        doc: "Colorspace definitions.\n\nSince similar colorspaces may vary in their details (matrix, transfer\nfunction, etc.), this is not an exhaustive list, but rather a\nrepresentative sample of the kinds of colorspaces supported in SDL.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_ColorPrimaries`]\n- [`SDL_ColorRange`]\n- [`SDL_ColorType`]\n- [`SDL_MatrixCoefficients`]\n- [`SDL_TransferCharacteristics`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_COLORSPACE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_COLORSPACE_SRGB",
+                short_name: "SRGB",
+                doc: "Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709\n",
+            },
+            GroupValue {
+                name: "SDL_COLORSPACE_SRGB_LINEAR",
+                short_name: "SRGB_LINEAR",
+                doc: "Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709\n",
+            },
+            GroupValue {
+                name: "SDL_COLORSPACE_HDR10",
+                short_name: "HDR10",
+                doc: "Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020\n",
+            },
+            GroupValue {
+                name: "SDL_COLORSPACE_JPEG",
+                short_name: "JPEG",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_NONE_P709_X601\n",
+            },
+            GroupValue {
+                name: "SDL_COLORSPACE_BT601_LIMITED",
+                short_name: "BT601_LIMITED",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601\n",
+            },
+            GroupValue {
+                name: "SDL_COLORSPACE_BT601_FULL",
+                short_name: "BT601_FULL",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601\n",
+            },
+            GroupValue {
+                name: "SDL_COLORSPACE_BT709_LIMITED",
+                short_name: "BT709_LIMITED",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709\n",
+            },
+            GroupValue {
+                name: "SDL_COLORSPACE_BT709_FULL",
+                short_name: "BT709_FULL",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709\n",
+            },
+            GroupValue {
+                name: "SDL_COLORSPACE_BT2020_LIMITED",
+                short_name: "BT2020_LIMITED",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P2020\n",
+            },
+            GroupValue {
+                name: "SDL_COLORSPACE_BT2020_FULL",
+                short_name: "BT2020_FULL",
+                doc: "Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P2020\n",
+            },
+            GroupValue {
+                name: "SDL_COLORSPACE_RGB_DEFAULT",
+                short_name: "RGB_DEFAULT",
+                doc: "The default colorspace for RGB surfaces if no colorspace is specified\n",
+            },
+            GroupValue {
+                name: "SDL_COLORSPACE_YUV_DEFAULT",
+                short_name: "YUV_DEFAULT",
+                doc: "The default colorspace for YUV surfaces if no colorspace is specified\n",
+            },
+        ],
+    },
+    Group {
+        module: "power",
+        kind: GroupKind::Enum,
+        name: "SDL_PowerState",
+        short_name: "PowerState",
+        doc: "The basic state for the system's power supply.\n\nThese are results returned by [`SDL_GetPowerInfo()`].\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_POWERSTATE_ERROR",
+                short_name: "ERROR",
+                doc: "error determining power status\n",
+            },
+            GroupValue {
+                name: "SDL_POWERSTATE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "cannot determine power status\n",
+            },
+            GroupValue {
+                name: "SDL_POWERSTATE_ON_BATTERY",
+                short_name: "ON_BATTERY",
+                doc: "Not plugged in, running on the battery\n",
+            },
+            GroupValue {
+                name: "SDL_POWERSTATE_NO_BATTERY",
+                short_name: "NO_BATTERY",
+                doc: "Plugged in, no battery available\n",
+            },
+            GroupValue {
+                name: "SDL_POWERSTATE_CHARGING",
+                short_name: "CHARGING",
+                doc: "Plugged in, charging battery\n",
+            },
+            GroupValue {
+                name: "SDL_POWERSTATE_CHARGED",
+                short_name: "CHARGED",
+                doc: "Plugged in, battery charged\n",
+            },
+        ],
+    },
+    Group {
+        module: "process",
+        kind: GroupKind::Enum,
+        name: "SDL_ProcessIO",
+        short_name: "ProcessIO",
+        doc: "Description of where standard I/O should be directed when creating a\nprocess.\n\nIf a standard I/O stream is set to [`SDL_PROCESS_STDIO_INHERITED`], it will go\nto the same place as the application's I/O stream. This is the default for\nstandard output and standard error.\n\nIf a standard I/O stream is set to [`SDL_PROCESS_STDIO_NULL`], it is connected\nto `NUL:` on Windows and `/dev/null` on POSIX systems. This is the default\nfor standard input.\n\nIf a standard I/O stream is set to [`SDL_PROCESS_STDIO_APP`], it is connected\nto a new [`SDL_IOStream`] that is available to the application. Standard input\nwill be available as [`SDL_PROP_PROCESS_STDIN_POINTER`] and allows\n[`SDL_GetProcessInput()`], standard output will be available as\n[`SDL_PROP_PROCESS_STDOUT_POINTER`] and allows [`SDL_ReadProcess()`] and\n[`SDL_GetProcessOutput()`], and standard error will be available as\n[`SDL_PROP_PROCESS_STDERR_POINTER`] in the properties for the created\nprocess.\n\nIf a standard I/O stream is set to [`SDL_PROCESS_STDIO_REDIRECT`], it is\nconnected to an existing [`SDL_IOStream`] provided by the application. Standard\ninput is provided using [`SDL_PROP_PROCESS_CREATE_STDIN_POINTER`], standard\noutput is provided using [`SDL_PROP_PROCESS_CREATE_STDOUT_POINTER`], and\nstandard error is provided using [`SDL_PROP_PROCESS_CREATE_STDERR_POINTER`]\nin the creation properties. These existing streams should be closed by the\napplication once the new process is created.\n\nIn order to use an [`SDL_IOStream`] with [`SDL_PROCESS_STDIO_REDIRECT`], it must\nhave [`SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER`] or\n[`SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER`] set. This is true for streams\nrepresenting files and process I/O.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_CreateProcessWithProperties`]\n- [`SDL_GetProcessProperties`]\n- [`SDL_ReadProcess`]\n- [`SDL_GetProcessInput`]\n- [`SDL_GetProcessOutput`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_PROCESS_STDIO_INHERITED",
+                short_name: "INHERITED",
+                doc: "The I/O stream is inherited from the application.\n",
+            },
+            GroupValue {
+                name: "SDL_PROCESS_STDIO_NULL",
+                short_name: "NULL",
+                doc: "The I/O stream is ignored.\n",
+            },
+            GroupValue {
+                name: "SDL_PROCESS_STDIO_APP",
+                short_name: "APP",
+                doc: "The I/O stream is connected to a new [`SDL_IOStream`] that the application can read or write\n",
+            },
+            GroupValue {
+                name: "SDL_PROCESS_STDIO_REDIRECT",
+                short_name: "REDIRECT",
+                doc: "The I/O stream is redirected to an existing [`SDL_IOStream`].\n",
+            },
+        ],
+    },
+    Group {
+        module: "properties",
+        kind: GroupKind::Id,
+        name: "SDL_PropertiesID",
+        short_name: "PropertiesID",
+        doc: "SDL properties ID\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "properties",
+        kind: GroupKind::Enum,
+        name: "SDL_PropertyType",
+        short_name: "PropertyType",
+        doc: "SDL property type\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_PROPERTY_TYPE_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PROPERTY_TYPE_POINTER",
+                short_name: "POINTER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PROPERTY_TYPE_STRING",
+                short_name: "STRING",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PROPERTY_TYPE_NUMBER",
+                short_name: "NUMBER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PROPERTY_TYPE_FLOAT",
+                short_name: "FLOAT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_PROPERTY_TYPE_BOOLEAN",
+                short_name: "BOOLEAN",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "render",
+        kind: GroupKind::Enum,
+        name: "SDL_TextureAccess",
+        short_name: "TextureAccess",
+        doc: "The access pattern allowed for a texture.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_TEXTUREACCESS_STATIC",
+                short_name: "STATIC",
+                doc: "Changes rarely, not lockable\n",
+            },
+            GroupValue {
+                name: "SDL_TEXTUREACCESS_STREAMING",
+                short_name: "STREAMING",
+                doc: "Changes frequently, lockable\n",
+            },
+            GroupValue {
+                name: "SDL_TEXTUREACCESS_TARGET",
+                short_name: "TARGET",
+                doc: "Texture can be used as a render target\n",
+            },
+        ],
+    },
+    Group {
+        module: "render",
+        kind: GroupKind::Enum,
+        name: "SDL_RendererLogicalPresentation",
+        short_name: "RendererLogicalPresentation",
+        doc: "How the logical size is mapped to the output.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_LOGICAL_PRESENTATION_DISABLED",
+                short_name: "DISABLED",
+                doc: "There is no logical size in effect\n",
+            },
+            GroupValue {
+                name: "SDL_LOGICAL_PRESENTATION_STRETCH",
+                short_name: "STRETCH",
+                doc: "The rendered content is stretched to the output resolution\n",
+            },
+            GroupValue {
+                name: "SDL_LOGICAL_PRESENTATION_LETTERBOX",
+                short_name: "LETTERBOX",
+                doc: "The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars\n",
+            },
+            GroupValue {
+                name: "SDL_LOGICAL_PRESENTATION_OVERSCAN",
+                short_name: "OVERSCAN",
+                doc: "The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds\n",
+            },
+            GroupValue {
+                name: "SDL_LOGICAL_PRESENTATION_INTEGER_SCALE",
+                short_name: "INTEGER_SCALE",
+                doc: "The rendered content is scaled up by integer multiples to fit the output resolution\n",
+            },
+        ],
+    },
+    Group {
+        module: "scancode",
+        kind: GroupKind::Enum,
+        name: "SDL_Scancode",
+        short_name: "Scancode",
+        doc: "The SDL keyboard scancode representation.\n\nAn SDL scancode is the physical representation of a key on the keyboard,\nindependent of language and keyboard mapping.\n\nValues of this type are used to represent keyboard keys, among other places\nin the `scancode` field of the [`SDL_KeyboardEvent`] structure.\n\nThe values in this enumeration are based on the USB usage page standard:\n<https://usb.org/sites/default/files/hut1_5.pdf>\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_SCANCODE_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_A",
+                short_name: "A",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_B",
+                short_name: "B",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_C",
+                short_name: "C",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_D",
+                short_name: "D",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_E",
+                short_name: "E",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F",
+                short_name: "F",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_G",
+                short_name: "G",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_H",
+                short_name: "H",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_I",
+                short_name: "I",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_J",
+                short_name: "J",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_K",
+                short_name: "K",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_L",
+                short_name: "L",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_M",
+                short_name: "M",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_N",
+                short_name: "N",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_O",
+                short_name: "O",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_P",
+                short_name: "P",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_Q",
+                short_name: "Q",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_R",
+                short_name: "R",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_S",
+                short_name: "S",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_T",
+                short_name: "T",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_U",
+                short_name: "U",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_V",
+                short_name: "V",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_W",
+                short_name: "W",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_X",
+                short_name: "X",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_Y",
+                short_name: "Y",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_Z",
+                short_name: "Z",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_1",
+                short_name: "_1",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_2",
+                short_name: "_2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_3",
+                short_name: "_3",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_4",
+                short_name: "_4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_5",
+                short_name: "_5",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_6",
+                short_name: "_6",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_7",
+                short_name: "_7",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_8",
+                short_name: "_8",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_9",
+                short_name: "_9",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_0",
+                short_name: "_0",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_RETURN",
+                short_name: "RETURN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_ESCAPE",
+                short_name: "ESCAPE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_BACKSPACE",
+                short_name: "BACKSPACE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_TAB",
+                short_name: "TAB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_SPACE",
+                short_name: "SPACE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MINUS",
+                short_name: "MINUS",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_EQUALS",
+                short_name: "EQUALS",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LEFTBRACKET",
+                short_name: "LEFTBRACKET",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_RIGHTBRACKET",
+                short_name: "RIGHTBRACKET",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_BACKSLASH",
+                short_name: "BACKSLASH",
+                doc: "Located at the lower left of the return\nkey on ISO keyboards and at the right end\nof the QWERTY row on ANSI keyboards.\nProduces REVERSE SOLIDUS (backslash) and\nVERTICAL LINE in a US layout, REVERSE\nSOLIDUS and VERTICAL LINE in a UK Mac\nlayout, NUMBER SIGN and TILDE in a UK\nWindows layout, DOLLAR SIGN and POUND SIGN\nin a Swiss German layout, NUMBER SIGN and\nAPOSTROPHE in a German layout, GRAVE\nACCENT and POUND SIGN in a French Mac\nlayout, and ASTERISK and MICRO SIGN in a\nFrench Windows layout.\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_NONUSHASH",
+                short_name: "NONUSHASH",
+                doc: "ISO USB keyboards actually use this code\ninstead of 49 for the same key, but all\nOSes I've seen treat the two codes\nidentically. So, as an implementor, unless\nyour keyboard generates both of those\ncodes and your OS treats them differently,\nyou should generate [`SDL_SCANCODE_BACKSLASH`]\ninstead of this code. As a user, you\nshould not rely on this code because SDL\nwill never generate it with most (all?)\nkeyboards.\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_SEMICOLON",
+                short_name: "SEMICOLON",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_APOSTROPHE",
+                short_name: "APOSTROPHE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_GRAVE",
+                short_name: "GRAVE",
+                doc: "Located in the top left corner (on both ANSI\nand ISO keyboards). Produces GRAVE ACCENT and\nTILDE in a US Windows layout and in US and UK\nMac layouts on ANSI keyboards, GRAVE ACCENT\nand NOT SIGN in a UK Windows layout, SECTION\nSIGN and PLUS-MINUS SIGN in US and UK Mac\nlayouts on ISO keyboards, SECTION SIGN and\nDEGREE SIGN in a Swiss German layout (Mac:\nonly on ISO keyboards), CIRCUMFLEX ACCENT and\nDEGREE SIGN in a German layout (Mac: only on\nISO keyboards), SUPERSCRIPT TWO and TILDE in a\nFrench Windows layout, COMMERCIAL AT and\nNUMBER SIGN in a French Mac layout on ISO\nkeyboards, and LESS-THAN SIGN and GREATER-THAN\nSIGN in a Swiss German, German, or French Mac\nlayout on ANSI keyboards.\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_COMMA",
+                short_name: "COMMA",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_PERIOD",
+                short_name: "PERIOD",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_SLASH",
+                short_name: "SLASH",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_CAPSLOCK",
+                short_name: "CAPSLOCK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F1",
+                short_name: "F1",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F2",
+                short_name: "F2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F3",
+                short_name: "F3",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F4",
+                short_name: "F4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F5",
+                short_name: "F5",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F6",
+                short_name: "F6",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F7",
+                short_name: "F7",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F8",
+                short_name: "F8",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F9",
+                short_name: "F9",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F10",
+                short_name: "F10",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F11",
+                short_name: "F11",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F12",
+                short_name: "F12",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_PRINTSCREEN",
+                short_name: "PRINTSCREEN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_SCROLLLOCK",
+                short_name: "SCROLLLOCK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_PAUSE",
+                short_name: "PAUSE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_INSERT",
+                short_name: "INSERT",
+                doc: "insert on PC, help on some Mac keyboards (but\ndoes send code 73, not 117)\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_HOME",
+                short_name: "HOME",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_PAGEUP",
+                short_name: "PAGEUP",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_DELETE",
+                short_name: "DELETE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_END",
+                short_name: "END",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_PAGEDOWN",
+                short_name: "PAGEDOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_RIGHT",
+                short_name: "RIGHT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LEFT",
+                short_name: "LEFT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_DOWN",
+                short_name: "DOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_UP",
+                short_name: "UP",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_NUMLOCKCLEAR",
+                short_name: "NUMLOCKCLEAR",
+                doc: "num lock on PC, clear on Mac keyboards\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_DIVIDE",
+                short_name: "KP_DIVIDE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_MULTIPLY",
+                short_name: "KP_MULTIPLY",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_MINUS",
+                short_name: "KP_MINUS",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_PLUS",
+                short_name: "KP_PLUS",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_ENTER",
+                short_name: "KP_ENTER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_1",
+                short_name: "KP_1",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_2",
+                short_name: "KP_2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_3",
+                short_name: "KP_3",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_4",
+                short_name: "KP_4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_5",
+                short_name: "KP_5",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_6",
+                short_name: "KP_6",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_7",
+                short_name: "KP_7",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_8",
+                short_name: "KP_8",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_9",
+                short_name: "KP_9",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_0",
+                short_name: "KP_0",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_PERIOD",
+                short_name: "KP_PERIOD",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_NONUSBACKSLASH",
+                short_name: "NONUSBACKSLASH",
+                doc: "This is the additional key that ISO\nkeyboards have over ANSI ones,\nlocated between left shift and Y.\nProduces GRAVE ACCENT and TILDE in a\nUS or UK Mac layout, REVERSE SOLIDUS\n(backslash) and VERTICAL LINE in a\nUS or UK Windows layout, and\nLESS-THAN SIGN and GREATER-THAN SIGN\nin a Swiss German, German, or French\nlayout.\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_APPLICATION",
+                short_name: "APPLICATION",
+                doc: "windows contextual menu, compose\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_POWER",
+                short_name: "POWER",
+                doc: "The USB document says this is a status flag,\nnot a physical key - but some Mac keyboards\ndo have a power key.\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_EQUALS",
+                short_name: "KP_EQUALS",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F13",
+                short_name: "F13",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F14",
+                short_name: "F14",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F15",
+                short_name: "F15",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F16",
+                short_name: "F16",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F17",
+                short_name: "F17",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F18",
+                short_name: "F18",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F19",
+                short_name: "F19",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F20",
+                short_name: "F20",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F21",
+                short_name: "F21",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F22",
+                short_name: "F22",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F23",
+                short_name: "F23",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_F24",
+                short_name: "F24",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_EXECUTE",
+                short_name: "EXECUTE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_HELP",
+                short_name: "HELP",
+                doc: "AL Integrated Help Center\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MENU",
+                short_name: "MENU",
+                doc: "Menu (show menu)\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_SELECT",
+                short_name: "SELECT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_STOP",
+                short_name: "STOP",
+                doc: "AC Stop\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AGAIN",
+                short_name: "AGAIN",
+                doc: "AC Redo/Repeat\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_UNDO",
+                short_name: "UNDO",
+                doc: "AC Undo\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_CUT",
+                short_name: "CUT",
+                doc: "AC Cut\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_COPY",
+                short_name: "COPY",
+                doc: "AC Copy\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_PASTE",
+                short_name: "PASTE",
+                doc: "AC Paste\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_FIND",
+                short_name: "FIND",
+                doc: "AC Find\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MUTE",
+                short_name: "MUTE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_VOLUMEUP",
+                short_name: "VOLUMEUP",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_VOLUMEDOWN",
+                short_name: "VOLUMEDOWN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_COMMA",
+                short_name: "KP_COMMA",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_EQUALSAS400",
+                short_name: "KP_EQUALSAS400",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL1",
+                short_name: "INTERNATIONAL1",
+                doc: "used on Asian keyboards, see\nfootnotes in USB doc\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL2",
+                short_name: "INTERNATIONAL2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL3",
+                short_name: "INTERNATIONAL3",
+                doc: "Yen\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL4",
+                short_name: "INTERNATIONAL4",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL5",
+                short_name: "INTERNATIONAL5",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL6",
+                short_name: "INTERNATIONAL6",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL7",
+                short_name: "INTERNATIONAL7",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL8",
+                short_name: "INTERNATIONAL8",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_INTERNATIONAL9",
+                short_name: "INTERNATIONAL9",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LANG1",
+                short_name: "LANG1",
+                doc: "Hangul/English toggle\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LANG2",
+                short_name: "LANG2",
+                doc: "Hanja conversion\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LANG3",
+                short_name: "LANG3",
+                doc: "Katakana\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LANG4",
+                short_name: "LANG4",
+                doc: "Hiragana\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LANG5",
+                short_name: "LANG5",
+                doc: "Zenkaku/Hankaku\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LANG6",
+                short_name: "LANG6",
+                doc: "reserved\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LANG7",
+                short_name: "LANG7",
+                doc: "reserved\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LANG8",
+                short_name: "LANG8",
+                doc: "reserved\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LANG9",
+                short_name: "LANG9",
+                doc: "reserved\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_ALTERASE",
+                short_name: "ALTERASE",
+                doc: "Erase-Eaze\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_SYSREQ",
+                short_name: "SYSREQ",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_CANCEL",
+                short_name: "CANCEL",
+                doc: "AC Cancel\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_CLEAR",
+                short_name: "CLEAR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_PRIOR",
+                short_name: "PRIOR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_RETURN2",
+                short_name: "RETURN2",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_SEPARATOR",
+                short_name: "SEPARATOR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_OUT",
+                short_name: "OUT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_OPER",
+                short_name: "OPER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_CLEARAGAIN",
+                short_name: "CLEARAGAIN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_CRSEL",
+                short_name: "CRSEL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_EXSEL",
+                short_name: "EXSEL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_00",
+                short_name: "KP_00",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_000",
+                short_name: "KP_000",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_THOUSANDSSEPARATOR",
+                short_name: "THOUSANDSSEPARATOR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_DECIMALSEPARATOR",
+                short_name: "DECIMALSEPARATOR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_CURRENCYUNIT",
+                short_name: "CURRENCYUNIT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_CURRENCYSUBUNIT",
+                short_name: "CURRENCYSUBUNIT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_LEFTPAREN",
+                short_name: "KP_LEFTPAREN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_RIGHTPAREN",
+                short_name: "KP_RIGHTPAREN",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_LEFTBRACE",
+                short_name: "KP_LEFTBRACE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_RIGHTBRACE",
+                short_name: "KP_RIGHTBRACE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_TAB",
+                short_name: "KP_TAB",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_BACKSPACE",
+                short_name: "KP_BACKSPACE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_A",
+                short_name: "KP_A",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_B",
+                short_name: "KP_B",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_C",
+                short_name: "KP_C",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_D",
+                short_name: "KP_D",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_E",
+                short_name: "KP_E",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_F",
+                short_name: "KP_F",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_XOR",
+                short_name: "KP_XOR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_POWER",
+                short_name: "KP_POWER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_PERCENT",
+                short_name: "KP_PERCENT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_LESS",
+                short_name: "KP_LESS",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_GREATER",
+                short_name: "KP_GREATER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_AMPERSAND",
+                short_name: "KP_AMPERSAND",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_DBLAMPERSAND",
+                short_name: "KP_DBLAMPERSAND",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_VERTICALBAR",
+                short_name: "KP_VERTICALBAR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_DBLVERTICALBAR",
+                short_name: "KP_DBLVERTICALBAR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_COLON",
+                short_name: "KP_COLON",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_HASH",
+                short_name: "KP_HASH",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_SPACE",
+                short_name: "KP_SPACE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_AT",
+                short_name: "KP_AT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_EXCLAM",
+                short_name: "KP_EXCLAM",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_MEMSTORE",
+                short_name: "KP_MEMSTORE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_MEMRECALL",
+                short_name: "KP_MEMRECALL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_MEMCLEAR",
+                short_name: "KP_MEMCLEAR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_MEMADD",
+                short_name: "KP_MEMADD",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_MEMSUBTRACT",
+                short_name: "KP_MEMSUBTRACT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_MEMMULTIPLY",
+                short_name: "KP_MEMMULTIPLY",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_MEMDIVIDE",
+                short_name: "KP_MEMDIVIDE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_PLUSMINUS",
+                short_name: "KP_PLUSMINUS",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_CLEAR",
+                short_name: "KP_CLEAR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_CLEARENTRY",
+                short_name: "KP_CLEARENTRY",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_BINARY",
+                short_name: "KP_BINARY",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_OCTAL",
+                short_name: "KP_OCTAL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_DECIMAL",
+                short_name: "KP_DECIMAL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_KP_HEXADECIMAL",
+                short_name: "KP_HEXADECIMAL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LCTRL",
+                short_name: "LCTRL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LSHIFT",
+                short_name: "LSHIFT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LALT",
+                short_name: "LALT",
+                doc: "alt, option\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_LGUI",
+                short_name: "LGUI",
+                doc: "windows, command (apple), meta\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_RCTRL",
+                short_name: "RCTRL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_RSHIFT",
+                short_name: "RSHIFT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_RALT",
+                short_name: "RALT",
+                doc: "alt gr, option\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_RGUI",
+                short_name: "RGUI",
+                doc: "windows, command (apple), meta\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MODE",
+                short_name: "MODE",
+                doc: "I'm not sure if this is really not covered\nby any of the above, but since there's a\nspecial [`SDL_KMOD_MODE`] for it I'm adding it here\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_SLEEP",
+                short_name: "SLEEP",
+                doc: "Sleep\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_WAKE",
+                short_name: "WAKE",
+                doc: "Wake\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_CHANNEL_INCREMENT",
+                short_name: "CHANNEL_INCREMENT",
+                doc: "Channel Increment\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_CHANNEL_DECREMENT",
+                short_name: "CHANNEL_DECREMENT",
+                doc: "Channel Decrement\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MEDIA_PLAY",
+                short_name: "MEDIA_PLAY",
+                doc: "Play\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MEDIA_PAUSE",
+                short_name: "MEDIA_PAUSE",
+                doc: "Pause\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MEDIA_RECORD",
+                short_name: "MEDIA_RECORD",
+                doc: "Record\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MEDIA_FAST_FORWARD",
+                short_name: "MEDIA_FAST_FORWARD",
+                doc: "Fast Forward\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MEDIA_REWIND",
+                short_name: "MEDIA_REWIND",
+                doc: "Rewind\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MEDIA_NEXT_TRACK",
+                short_name: "MEDIA_NEXT_TRACK",
+                doc: "Next Track\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MEDIA_PREVIOUS_TRACK",
+                short_name: "MEDIA_PREVIOUS_TRACK",
+                doc: "Previous Track\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MEDIA_STOP",
+                short_name: "MEDIA_STOP",
+                doc: "Stop\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MEDIA_EJECT",
+                short_name: "MEDIA_EJECT",
+                doc: "Eject\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MEDIA_PLAY_PAUSE",
+                short_name: "MEDIA_PLAY_PAUSE",
+                doc: "Play / Pause\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_MEDIA_SELECT",
+                short_name: "MEDIA_SELECT",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_NEW",
+                short_name: "AC_NEW",
+                doc: "AC New\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_OPEN",
+                short_name: "AC_OPEN",
+                doc: "AC Open\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_CLOSE",
+                short_name: "AC_CLOSE",
+                doc: "AC Close\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_EXIT",
+                short_name: "AC_EXIT",
+                doc: "AC Exit\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_SAVE",
+                short_name: "AC_SAVE",
+                doc: "AC Save\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_PRINT",
+                short_name: "AC_PRINT",
+                doc: "AC Print\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_PROPERTIES",
+                short_name: "AC_PROPERTIES",
+                doc: "AC Properties\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_SEARCH",
+                short_name: "AC_SEARCH",
+                doc: "AC Search\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_HOME",
+                short_name: "AC_HOME",
+                doc: "AC Home\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_BACK",
+                short_name: "AC_BACK",
+                doc: "AC Back\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_FORWARD",
+                short_name: "AC_FORWARD",
+                doc: "AC Forward\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_STOP",
+                short_name: "AC_STOP",
+                doc: "AC Stop\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_REFRESH",
+                short_name: "AC_REFRESH",
+                doc: "AC Refresh\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_AC_BOOKMARKS",
+                short_name: "AC_BOOKMARKS",
+                doc: "AC Bookmarks\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_SOFTLEFT",
+                short_name: "SOFTLEFT",
+                doc: "Usually situated below the display on phones and\nused as a multi-function feature key for selecting\na software defined function shown on the bottom left\nof the display.\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_SOFTRIGHT",
+                short_name: "SOFTRIGHT",
+                doc: "Usually situated below the display on phones and\nused as a multi-function feature key for selecting\na software defined function shown on the bottom right\nof the display.\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_CALL",
+                short_name: "CALL",
+                doc: "Used for accepting phone calls.\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_ENDCALL",
+                short_name: "ENDCALL",
+                doc: "Used for rejecting phone calls.\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_RESERVED",
+                short_name: "RESERVED",
+                doc: "400-500 reserved for dynamic keycodes\n",
+            },
+            GroupValue {
+                name: "SDL_SCANCODE_COUNT",
+                short_name: "COUNT",
+                doc: "not a key, just marks the number of scancodes for array bounds\n",
+            },
+        ],
+    },
+    Group {
+        module: "sensor",
+        kind: GroupKind::Id,
+        name: "SDL_SensorID",
+        short_name: "SensorID",
+        doc: "This is a unique ID for a sensor for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "sensor",
+        kind: GroupKind::Enum,
+        name: "SDL_SensorType",
+        short_name: "SensorType",
+        doc: "The different sensors defined by SDL.\n\nAdditional sensors may be available, using platform dependent semantics.\n\nHere are the additional Android sensors:\n\n<https://developer.android.com/reference/android/hardware/SensorEvent.html#values>\n\nAccelerometer sensor notes:\n\nThe accelerometer returns the current acceleration in SI meters per second\nsquared. This measurement includes the force of gravity, so a device at\nrest will have an value of [`SDL_STANDARD_GRAVITY`] away from the center of the\nearth, which is a positive Y value.\n\n- `values[0]`: Acceleration on the x axis\n- `values[1]`: Acceleration on the y axis\n- `values[2]`: Acceleration on the z axis\n\nFor phones and tablets held in natural orientation and game controllers\nheld in front of you, the axes are defined as follows:\n\n- -X ... +X : left ... right\n- -Y ... +Y : bottom ... top\n- -Z ... +Z : farther ... closer\n\nThe accelerometer axis data is not changed when the device is rotated.\n\nGyroscope sensor notes:\n\nThe gyroscope returns the current rate of rotation in radians per second.\nThe rotation is positive in the counter-clockwise direction. That is, an\nobserver looking from a positive location on one of the axes would see\npositive rotation on that axis when it appeared to be rotating\ncounter-clockwise.\n\n- `values[0]`: Angular speed around the x axis (pitch)\n- `values[1]`: Angular speed around the y axis (yaw)\n- `values[2]`: Angular speed around the z axis (roll)\n\nFor phones and tablets held in natural orientation and game controllers\nheld in front of you, the axes are defined as follows:\n\n- -X ... +X : left ... right\n- -Y ... +Y : bottom ... top\n- -Z ... +Z : farther ... closer\n\nThe gyroscope axis data is not changed when the device is rotated.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetCurrentDisplayOrientation`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_SENSOR_INVALID",
+                short_name: "INVALID",
+                doc: "Returned for an invalid sensor\n",
+            },
+            GroupValue {
+                name: "SDL_SENSOR_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "Unknown sensor type\n",
+            },
+            GroupValue {
+                name: "SDL_SENSOR_ACCEL",
+                short_name: "ACCEL",
+                doc: "Accelerometer\n",
+            },
+            GroupValue {
+                name: "SDL_SENSOR_GYRO",
+                short_name: "GYRO",
+                doc: "Gyroscope\n",
+            },
+            GroupValue {
+                name: "SDL_SENSOR_ACCEL_L",
+                short_name: "ACCEL_L",
+                doc: "Accelerometer for left Joy-Con controller and Wii nunchuk\n",
+            },
+            GroupValue {
+                name: "SDL_SENSOR_GYRO_L",
+                short_name: "GYRO_L",
+                doc: "Gyroscope for left Joy-Con controller\n",
+            },
+            GroupValue {
+                name: "SDL_SENSOR_ACCEL_R",
+                short_name: "ACCEL_R",
+                doc: "Accelerometer for right Joy-Con controller\n",
+            },
+            GroupValue {
+                name: "SDL_SENSOR_GYRO_R",
+                short_name: "GYRO_R",
+                doc: "Gyroscope for right Joy-Con controller\n",
+            },
+        ],
+    },
+    Group {
+        module: "surface",
+        kind: GroupKind::Flags,
+        name: "SDL_SurfaceFlags",
+        short_name: "SurfaceFlags",
+        doc: "The flags on an [`SDL_Surface`].\n\nThese are generally considered read-only.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_SURFACE_PREALLOCATED",
+                short_name: "PREALLOCATED",
+                doc: "Surface uses preallocated pixel memory\n",
+            },
+            GroupValue {
+                name: "SDL_SURFACE_LOCK_NEEDED",
+                short_name: "LOCK_NEEDED",
+                doc: "Surface needs to be locked to access pixels\n",
+            },
+            GroupValue {
+                name: "SDL_SURFACE_LOCKED",
+                short_name: "LOCKED",
+                doc: "Surface is currently locked\n",
+            },
+            GroupValue {
+                name: "SDL_SURFACE_SIMD_ALIGNED",
+                short_name: "SIMD_ALIGNED",
+                doc: "Surface uses pixel memory allocated with [`SDL_aligned_alloc()`]\n",
+            },
+        ],
+    },
+    Group {
+        module: "surface",
+        kind: GroupKind::Enum,
+        name: "SDL_ScaleMode",
+        short_name: "ScaleMode",
+        doc: "The scaling mode.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_SCALEMODE_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SCALEMODE_NEAREST",
+                short_name: "NEAREST",
+                doc: "nearest pixel sampling\n",
+            },
+            GroupValue {
+                name: "SDL_SCALEMODE_LINEAR",
+                short_name: "LINEAR",
+                doc: "linear filtering\n",
+            },
+        ],
+    },
+    Group {
+        module: "surface",
+        kind: GroupKind::Enum,
+        name: "SDL_FlipMode",
+        short_name: "FlipMode",
+        doc: "The flip mode.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_FLIP_NONE",
+                short_name: "NONE",
+                doc: "Do not flip\n",
+            },
+            GroupValue {
+                name: "SDL_FLIP_HORIZONTAL",
+                short_name: "HORIZONTAL",
+                doc: "flip horizontally\n",
+            },
+            GroupValue {
+                name: "SDL_FLIP_VERTICAL",
+                short_name: "VERTICAL",
+                doc: "flip vertically\n",
+            },
+        ],
+    },
+    Group {
+        module: "system",
+        kind: GroupKind::Enum,
+        name: "SDL_Sandbox",
+        short_name: "Sandbox",
+        doc: "Application sandbox environment.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_SANDBOX_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SANDBOX_UNKNOWN_CONTAINER",
+                short_name: "UNKNOWN_CONTAINER",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SANDBOX_FLATPAK",
+                short_name: "FLATPAK",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SANDBOX_SNAP",
+                short_name: "SNAP",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_SANDBOX_MACOS",
+                short_name: "MACOS",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "thread",
+        kind: GroupKind::Id,
+        name: "SDL_ThreadID",
+        short_name: "ThreadID",
+        doc: "A unique numeric ID that identifies a thread.\n\nThese are different from [`SDL_Thread`] objects, which are generally what an\napplication will operate on, but having a way to uniquely identify a thread\ncan be useful at times.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetThreadID`]\n- [`SDL_GetCurrentThreadID`]\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "thread",
+        kind: GroupKind::Id,
+        name: "SDL_TLSID",
+        short_name: "TLSID",
+        doc: "Thread local storage ID.\n\n0 is the invalid ID. An app can create these and then set data for these\nIDs that is unique to each thread.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetTLS`]\n- [`SDL_SetTLS`]\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "thread",
+        kind: GroupKind::Enum,
+        name: "SDL_ThreadPriority",
+        short_name: "ThreadPriority",
+        doc: "The SDL thread priority.\n\nSDL will make system changes as necessary in order to apply the thread\npriority. Code which attempts to control thread state related to priority\nshould be aware that calling [`SDL_SetCurrentThreadPriority`] may alter such\nstate. [`SDL_HINT_THREAD_PRIORITY_POLICY`] can be used to control aspects of\nthis behavior.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_THREAD_PRIORITY_LOW",
+                short_name: "LOW",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_THREAD_PRIORITY_NORMAL",
+                short_name: "NORMAL",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_THREAD_PRIORITY_HIGH",
+                short_name: "HIGH",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_THREAD_PRIORITY_TIME_CRITICAL",
+                short_name: "TIME_CRITICAL",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "thread",
+        kind: GroupKind::Enum,
+        name: "SDL_ThreadState",
+        short_name: "ThreadState",
+        doc: "The SDL thread state.\n\nThe current state of a thread can be checked by calling [`SDL_GetThreadState`].\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetThreadState`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_THREAD_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "The thread is not valid\n",
+            },
+            GroupValue {
+                name: "SDL_THREAD_ALIVE",
+                short_name: "ALIVE",
+                doc: "The thread is currently running\n",
+            },
+            GroupValue {
+                name: "SDL_THREAD_DETACHED",
+                short_name: "DETACHED",
+                doc: "The thread is detached and can't be waited on\n",
+            },
+            GroupValue {
+                name: "SDL_THREAD_COMPLETE",
+                short_name: "COMPLETE",
+                doc: "The thread has finished and should be cleaned up with [`SDL_WaitThread()`]\n",
+            },
+        ],
+    },
+    Group {
+        module: "time",
+        kind: GroupKind::Enum,
+        name: "SDL_DateFormat",
+        short_name: "DateFormat",
+        doc: "The preferred date format of the current system locale.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetDateTimeLocalePreferences`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_DATE_FORMAT_YYYYMMDD",
+                short_name: "YYYYMMDD",
+                doc: "Year/Month/Day\n",
+            },
+            GroupValue {
+                name: "SDL_DATE_FORMAT_DDMMYYYY",
+                short_name: "DDMMYYYY",
+                doc: "Day/Month/Year\n",
+            },
+            GroupValue {
+                name: "SDL_DATE_FORMAT_MMDDYYYY",
+                short_name: "MMDDYYYY",
+                doc: "Month/Day/Year\n",
+            },
+        ],
+    },
+    Group {
+        module: "time",
+        kind: GroupKind::Enum,
+        name: "SDL_TimeFormat",
+        short_name: "TimeFormat",
+        doc: "The preferred time format of the current system locale.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetDateTimeLocalePreferences`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_TIME_FORMAT_24HR",
+                short_name: "_24HR",
+                doc: "24 hour time\n",
+            },
+            GroupValue {
+                name: "SDL_TIME_FORMAT_12HR",
+                short_name: "_12HR",
+                doc: "12 hour time\n",
+            },
+        ],
+    },
+    Group {
+        module: "timer",
+        kind: GroupKind::Id,
+        name: "SDL_TimerID",
+        short_name: "TimerID",
+        doc: "Definition of the timer ID type.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "touch",
+        kind: GroupKind::Id,
+        name: "SDL_TouchID",
+        short_name: "TouchID",
+        doc: "A unique ID for a touch device.\n\nThis ID is valid for the time the device is connected to the system, and is\nnever reused for the lifetime of the application.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "touch",
+        kind: GroupKind::Id,
+        name: "SDL_FingerID",
+        short_name: "FingerID",
+        doc: "A unique ID for a single finger on a touch device.\n\nThis ID is valid for the time the finger (stylus, etc) is touching and will\nbe unique for all fingers currently in contact, so this ID tracks the\nlifetime of a single continuous touch. This value may represent an index, a\npointer, or some other unique ID, depending on the platform.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "touch",
+        kind: GroupKind::Enum,
+        name: "SDL_TouchDeviceType",
+        short_name: "TouchDeviceType",
+        doc: "An enum that describes the type of a touch device.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_TOUCH_DEVICE_INVALID",
+                short_name: "INVALID",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_TOUCH_DEVICE_DIRECT",
+                short_name: "DIRECT",
+                doc: "touch screen with window-relative coordinates\n",
+            },
+            GroupValue {
+                name: "SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE",
+                short_name: "INDIRECT_ABSOLUTE",
+                doc: "trackpad with absolute device coordinates\n",
+            },
+            GroupValue {
+                name: "SDL_TOUCH_DEVICE_INDIRECT_RELATIVE",
+                short_name: "INDIRECT_RELATIVE",
+                doc: "trackpad with screen cursor-relative coordinates\n",
+            },
+        ],
+    },
+    Group {
+        module: "tray",
+        kind: GroupKind::Flags,
+        name: "SDL_TrayEntryFlags",
+        short_name: "TrayEntryFlags",
+        doc: "Flags that control the creation of system tray entries.\n\nSome of these flags are required; exactly one of them must be specified at\nthe time a tray entry is created. Other flags are optional; zero or more of\nthose can be OR'ed together with the required flag.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_InsertTrayEntryAt`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_TRAYENTRY_BUTTON",
+                short_name: "BUTTON",
+                doc: "Make the entry a simple button. Required.\n",
+            },
+            GroupValue {
+                name: "SDL_TRAYENTRY_CHECKBOX",
+                short_name: "CHECKBOX",
+                doc: "Make the entry a checkbox. Required.\n",
+            },
+            GroupValue {
+                name: "SDL_TRAYENTRY_SUBMENU",
+                short_name: "SUBMENU",
+                doc: "Prepare the entry to have a submenu. Required\n",
+            },
+            GroupValue {
+                name: "SDL_TRAYENTRY_DISABLED",
+                short_name: "DISABLED",
+                doc: "Make the entry disabled. Optional.\n",
+            },
+            GroupValue {
+                name: "SDL_TRAYENTRY_CHECKED",
+                short_name: "CHECKED",
+                doc: "Make the entry checked. This is valid only for checkboxes. Optional.\n",
+            },
+        ],
+    },
+    Group {
+        module: "video",
+        kind: GroupKind::Id,
+        name: "SDL_DisplayID",
+        short_name: "DisplayID",
+        doc: "This is a unique ID for a display for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the display is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "video",
+        kind: GroupKind::Id,
+        name: "SDL_WindowID",
+        short_name: "WindowID",
+        doc: "This is a unique ID for a window.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+        ],
+    },
+    Group {
+        module: "video",
+        kind: GroupKind::Enum,
+        name: "SDL_SystemTheme",
+        short_name: "SystemTheme",
+        doc: "System theme.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_SYSTEM_THEME_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "Unknown system theme\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_THEME_LIGHT",
+                short_name: "LIGHT",
+                doc: "Light colored system theme\n",
+            },
+            GroupValue {
+                name: "SDL_SYSTEM_THEME_DARK",
+                short_name: "DARK",
+                doc: "Dark colored system theme\n",
+            },
+        ],
+    },
+    Group {
+        module: "video",
+        kind: GroupKind::Enum,
+        name: "SDL_DisplayOrientation",
+        short_name: "DisplayOrientation",
+        doc: "Display orientation values; the way a display is rotated.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_ORIENTATION_UNKNOWN",
+                short_name: "UNKNOWN",
+                doc: "The display orientation can't be determined\n",
+            },
+            GroupValue {
+                name: "SDL_ORIENTATION_LANDSCAPE",
+                short_name: "LANDSCAPE",
+                doc: "The display is in landscape mode, with the right side up, relative to portrait mode\n",
+            },
+            GroupValue {
+                name: "SDL_ORIENTATION_LANDSCAPE_FLIPPED",
+                short_name: "LANDSCAPE_FLIPPED",
+                doc: "The display is in landscape mode, with the left side up, relative to portrait mode\n",
+            },
+            GroupValue {
+                name: "SDL_ORIENTATION_PORTRAIT",
+                short_name: "PORTRAIT",
+                doc: "The display is in portrait mode\n",
+            },
+            GroupValue {
+                name: "SDL_ORIENTATION_PORTRAIT_FLIPPED",
+                short_name: "PORTRAIT_FLIPPED",
+                doc: "The display is in portrait mode, upside down\n",
+            },
+        ],
+    },
+    Group {
+        module: "video",
+        kind: GroupKind::Flags,
+        name: "SDL_WindowFlags",
+        short_name: "WindowFlags",
+        doc: "The flags on a window.\n\nThese cover a lot of true/false, or on/off, window state. Some of it is\nimmutable after being set through [`SDL_CreateWindow()`], some of it can be\nchanged on existing windows by the app, and some of it might be altered by\nthe user or system outside of the app's control.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetWindowFlags`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_WINDOW_FULLSCREEN",
+                short_name: "FULLSCREEN",
+                doc: "window is in fullscreen mode\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_OPENGL",
+                short_name: "OPENGL",
+                doc: "window usable with OpenGL context\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_OCCLUDED",
+                short_name: "OCCLUDED",
+                doc: "window is occluded\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_HIDDEN",
+                short_name: "HIDDEN",
+                doc: "window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_BORDERLESS",
+                short_name: "BORDERLESS",
+                doc: "no window decoration\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_RESIZABLE",
+                short_name: "RESIZABLE",
+                doc: "window can be resized\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_MINIMIZED",
+                short_name: "MINIMIZED",
+                doc: "window is minimized\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_MAXIMIZED",
+                short_name: "MAXIMIZED",
+                doc: "window is maximized\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_MOUSE_GRABBED",
+                short_name: "MOUSE_GRABBED",
+                doc: "window has grabbed mouse input\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_INPUT_FOCUS",
+                short_name: "INPUT_FOCUS",
+                doc: "window has input focus\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_MOUSE_FOCUS",
+                short_name: "MOUSE_FOCUS",
+                doc: "window has mouse focus\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_EXTERNAL",
+                short_name: "EXTERNAL",
+                doc: "window not created by SDL\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_MODAL",
+                short_name: "MODAL",
+                doc: "window is modal\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_HIGH_PIXEL_DENSITY",
+                short_name: "HIGH_PIXEL_DENSITY",
+                doc: "window uses high pixel density back buffer if possible\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_MOUSE_CAPTURE",
+                short_name: "MOUSE_CAPTURE",
+                doc: "window has mouse captured (unrelated to MOUSE_GRABBED)\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_MOUSE_RELATIVE_MODE",
+                short_name: "MOUSE_RELATIVE_MODE",
+                doc: "window has relative mode enabled\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_ALWAYS_ON_TOP",
+                short_name: "ALWAYS_ON_TOP",
+                doc: "window should always be above others\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_UTILITY",
+                short_name: "UTILITY",
+                doc: "window should be treated as a utility window, not showing in the task bar and window list\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_TOOLTIP",
+                short_name: "TOOLTIP",
+                doc: "window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_POPUP_MENU",
+                short_name: "POPUP_MENU",
+                doc: "window should be treated as a popup menu, requires a parent window\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_KEYBOARD_GRABBED",
+                short_name: "KEYBOARD_GRABBED",
+                doc: "window has grabbed keyboard input\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_VULKAN",
+                short_name: "VULKAN",
+                doc: "window usable for Vulkan surface\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_METAL",
+                short_name: "METAL",
+                doc: "window usable for Metal view\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_TRANSPARENT",
+                short_name: "TRANSPARENT",
+                doc: "window with transparent buffer\n",
+            },
+            GroupValue {
+                name: "SDL_WINDOW_NOT_FOCUSABLE",
+                short_name: "NOT_FOCUSABLE",
+                doc: "window should not be focusable\n",
+            },
+        ],
+    },
+    Group {
+        module: "video",
+        kind: GroupKind::Enum,
+        name: "SDL_FlashOperation",
+        short_name: "FlashOperation",
+        doc: "Window flash operation.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_FLASH_CANCEL",
+                short_name: "CANCEL",
+                doc: "Cancel any window flash state\n",
+            },
+            GroupValue {
+                name: "SDL_FLASH_BRIEFLY",
+                short_name: "BRIEFLY",
+                doc: "Flash the window briefly to get attention\n",
+            },
+            GroupValue {
+                name: "SDL_FLASH_UNTIL_FOCUSED",
+                short_name: "UNTIL_FOCUSED",
+                doc: "Flash the window until it gets focus\n",
+            },
+        ],
+    },
+    Group {
+        module: "video",
+        kind: GroupKind::Enum,
+        name: "SDL_GLAttr",
+        short_name: "GLAttr",
+        doc: "An enumeration of OpenGL configuration attributes.\n\nWhile you can set most OpenGL attributes normally, the attributes listed\nabove must be known before SDL creates the window that will be used with\nthe OpenGL context. These attributes are set and read with\n[`SDL_GL_SetAttribute()`] and [`SDL_GL_GetAttribute()`].\n\nIn some cases, these attributes are minimum requests; the GL does not\npromise to give you exactly what you asked for. It's possible to ask for a\n16-bit depth buffer and get a 24-bit one instead, for example, or to ask\nfor no stencil buffer and still have one available. Context creation should\nfail if the GL can't provide your requested attributes at a minimum, but\nyou should check to see exactly what you got.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GL_RED_SIZE",
+                short_name: "RED_SIZE",
+                doc: "the minimum number of bits for the red channel of the color buffer; defaults to 3.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_GREEN_SIZE",
+                short_name: "GREEN_SIZE",
+                doc: "the minimum number of bits for the green channel of the color buffer; defaults to 3.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_BLUE_SIZE",
+                short_name: "BLUE_SIZE",
+                doc: "the minimum number of bits for the blue channel of the color buffer; defaults to 2.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_ALPHA_SIZE",
+                short_name: "ALPHA_SIZE",
+                doc: "the minimum number of bits for the alpha channel of the color buffer; defaults to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_BUFFER_SIZE",
+                short_name: "BUFFER_SIZE",
+                doc: "the minimum number of bits for frame buffer size; defaults to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_DOUBLEBUFFER",
+                short_name: "DOUBLEBUFFER",
+                doc: "whether the output is single or double buffered; defaults to double buffering on.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_DEPTH_SIZE",
+                short_name: "DEPTH_SIZE",
+                doc: "the minimum number of bits in the depth buffer; defaults to 16.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_STENCIL_SIZE",
+                short_name: "STENCIL_SIZE",
+                doc: "the minimum number of bits in the stencil buffer; defaults to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_ACCUM_RED_SIZE",
+                short_name: "ACCUM_RED_SIZE",
+                doc: "the minimum number of bits for the red channel of the accumulation buffer; defaults to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_ACCUM_GREEN_SIZE",
+                short_name: "ACCUM_GREEN_SIZE",
+                doc: "the minimum number of bits for the green channel of the accumulation buffer; defaults to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_ACCUM_BLUE_SIZE",
+                short_name: "ACCUM_BLUE_SIZE",
+                doc: "the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_ACCUM_ALPHA_SIZE",
+                short_name: "ACCUM_ALPHA_SIZE",
+                doc: "the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_STEREO",
+                short_name: "STEREO",
+                doc: "whether the output is stereo 3D; defaults to off.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_MULTISAMPLEBUFFERS",
+                short_name: "MULTISAMPLEBUFFERS",
+                doc: "the number of buffers used for multisample anti-aliasing; defaults to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_MULTISAMPLESAMPLES",
+                short_name: "MULTISAMPLESAMPLES",
+                doc: "the number of samples used around the current pixel used for multisample anti-aliasing.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_ACCELERATED_VISUAL",
+                short_name: "ACCELERATED_VISUAL",
+                doc: "set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_RETAINED_BACKING",
+                short_name: "RETAINED_BACKING",
+                doc: "not used (deprecated).\n",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_MAJOR_VERSION",
+                short_name: "CONTEXT_MAJOR_VERSION",
+                doc: "OpenGL context major version.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_MINOR_VERSION",
+                short_name: "CONTEXT_MINOR_VERSION",
+                doc: "OpenGL context minor version.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_FLAGS",
+                short_name: "CONTEXT_FLAGS",
+                doc: "some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_PROFILE_MASK",
+                short_name: "CONTEXT_PROFILE_MASK",
+                doc: "type of GL context (Core, Compatibility, ES). See [`SDL_GLProfile`]; default value depends on platform.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_SHARE_WITH_CURRENT_CONTEXT",
+                short_name: "SHARE_WITH_CURRENT_CONTEXT",
+                doc: "OpenGL context sharing; defaults to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_FRAMEBUFFER_SRGB_CAPABLE",
+                short_name: "FRAMEBUFFER_SRGB_CAPABLE",
+                doc: "requests sRGB capable visual; defaults to 0.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_RELEASE_BEHAVIOR",
+                short_name: "CONTEXT_RELEASE_BEHAVIOR",
+                doc: "sets context the release behavior. See [`SDL_GLContextReleaseFlag`]; defaults to FLUSH.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_RESET_NOTIFICATION",
+                short_name: "CONTEXT_RESET_NOTIFICATION",
+                doc: "set context reset notification. See [`SDL_GLContextResetNotification`]; defaults to NO_NOTIFICATION.\n",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_NO_ERROR",
+                short_name: "CONTEXT_NO_ERROR",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GL_FLOATBUFFERS",
+                short_name: "FLOATBUFFERS",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GL_EGL_PLATFORM",
+                short_name: "EGL_PLATFORM",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "video",
+        kind: GroupKind::Flags,
+        name: "SDL_GLProfile",
+        short_name: "GLProfile",
+        doc: "Possible values to be set for the [`SDL_GL_CONTEXT_PROFILE_MASK`] attribute.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GL_CONTEXT_PROFILE_CORE",
+                short_name: "CORE",
+                doc: "OpenGL Core Profile context\n",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_PROFILE_COMPATIBILITY",
+                short_name: "COMPATIBILITY",
+                doc: "OpenGL Compatibility Profile context\n",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_PROFILE_ES",
+                short_name: "ES",
+                doc: "GLX_CONTEXT_ES2_PROFILE_BIT_EXT\n",
+            },
+        ],
+    },
+    Group {
+        module: "video",
+        kind: GroupKind::Flags,
+        name: "SDL_GLContextFlag",
+        short_name: "GLContextFlag",
+        doc: "Possible flags to be set for the [`SDL_GL_CONTEXT_FLAGS`] attribute.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GL_CONTEXT_DEBUG_FLAG",
+                short_name: "DEBUG_FLAG",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG",
+                short_name: "FORWARD_COMPATIBLE_FLAG",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG",
+                short_name: "ROBUST_ACCESS_FLAG",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_RESET_ISOLATION_FLAG",
+                short_name: "RESET_ISOLATION_FLAG",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "video",
+        kind: GroupKind::Flags,
+        name: "SDL_GLContextReleaseFlag",
+        short_name: "GLContextReleaseFlag",
+        doc: "Possible values to be set for the [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`]\nattribute.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE",
+                short_name: "NONE",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH",
+                short_name: "FLUSH",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "video",
+        kind: GroupKind::Flags,
+        name: "SDL_GLContextResetNotification",
+        short_name: "GLContextResetNotification",
+        doc: "Possible values to be set [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] attribute.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
+        values: &[
+            GroupValue {
+                name: "SDL_GL_CONTEXT_RESET_NO_NOTIFICATION",
+                short_name: "NO_NOTIFICATION",
+                doc: "",
+            },
+            GroupValue {
+                name: "SDL_GL_CONTEXT_RESET_LOSE_CONTEXT",
+                short_name: "LOSE_CONTEXT",
+                doc: "",
+            },
+        ],
+    },
+    Group {
+        module: "video",
+        kind: GroupKind::Enum,
+        name: "SDL_HitTestResult",
+        short_name: "HitTestResult",
+        doc: "Possible return values from the [`SDL_HitTest`] callback.\n\n### Thread safety\nThis function should only be called on the main thread.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_HitTest`]\n",
+        values: &[
+            GroupValue {
+                name: "SDL_HITTEST_NORMAL",
+                short_name: "NORMAL",
+                doc: "Region is normal. No special properties.\n",
+            },
+            GroupValue {
+                name: "SDL_HITTEST_DRAGGABLE",
+                short_name: "DRAGGABLE",
+                doc: "Region can drag entire window.\n",
+            },
+            GroupValue {
+                name: "SDL_HITTEST_RESIZE_TOPLEFT",
+                short_name: "RESIZE_TOPLEFT",
+                doc: "Region is the resizable top-left corner border.\n",
+            },
+            GroupValue {
+                name: "SDL_HITTEST_RESIZE_TOP",
+                short_name: "RESIZE_TOP",
+                doc: "Region is the resizable top border.\n",
+            },
+            GroupValue {
+                name: "SDL_HITTEST_RESIZE_TOPRIGHT",
+                short_name: "RESIZE_TOPRIGHT",
+                doc: "Region is the resizable top-right corner border.\n",
+            },
+            GroupValue {
+                name: "SDL_HITTEST_RESIZE_RIGHT",
+                short_name: "RESIZE_RIGHT",
+                doc: "Region is the resizable right border.\n",
+            },
+            GroupValue {
+                name: "SDL_HITTEST_RESIZE_BOTTOMRIGHT",
+                short_name: "RESIZE_BOTTOMRIGHT",
+                doc: "Region is the resizable bottom-right corner border.\n",
+            },
+            GroupValue {
+                name: "SDL_HITTEST_RESIZE_BOTTOM",
+                short_name: "RESIZE_BOTTOM",
+                doc: "Region is the resizable bottom border.\n",
+            },
+            GroupValue {
+                name: "SDL_HITTEST_RESIZE_BOTTOMLEFT",
+                short_name: "RESIZE_BOTTOMLEFT",
+                doc: "Region is the resizable bottom-left corner border.\n",
+            },
+            GroupValue {
+                name: "SDL_HITTEST_RESIZE_LEFT",
+                short_name: "RESIZE_LEFT",
+                doc: "Region is the resizable left border.\n",
+            },
+        ],
+    },
+];
+
+pub(crate) const GROUP_OFFSET_assert: usize = 0;
+pub(crate) const GROUP_OFFSET_asyncio: usize = 1;
+pub(crate) const GROUP_OFFSET_atomic: usize = 3;
+pub(crate) const GROUP_OFFSET_audio: usize = 4;
+pub(crate) const GROUP_OFFSET_bits: usize = 6;
+pub(crate) const GROUP_OFFSET_blendmode: usize = 6;
+pub(crate) const GROUP_OFFSET_camera: usize = 9;
+pub(crate) const GROUP_OFFSET_clipboard: usize = 11;
+pub(crate) const GROUP_OFFSET_cpuinfo: usize = 11;
+pub(crate) const GROUP_OFFSET_dialog: usize = 11;
+pub(crate) const GROUP_OFFSET_error: usize = 12;
+pub(crate) const GROUP_OFFSET_events: usize = 12;
+pub(crate) const GROUP_OFFSET_filesystem: usize = 14;
+pub(crate) const GROUP_OFFSET_gamepad: usize = 18;
+pub(crate) const GROUP_OFFSET_gpu: usize = 23;
+pub(crate) const GROUP_OFFSET_guid: usize = 51;
+pub(crate) const GROUP_OFFSET_haptic: usize = 51;
+pub(crate) const GROUP_OFFSET_hidapi: usize = 52;
+pub(crate) const GROUP_OFFSET_hints: usize = 53;
+pub(crate) const GROUP_OFFSET_init: usize = 54;
+pub(crate) const GROUP_OFFSET_iostream: usize = 56;
+pub(crate) const GROUP_OFFSET_joystick: usize = 58;
+pub(crate) const GROUP_OFFSET_keyboard: usize = 61;
+pub(crate) const GROUP_OFFSET_keycode: usize = 64;
+pub(crate) const GROUP_OFFSET_loadso: usize = 66;
+pub(crate) const GROUP_OFFSET_locale: usize = 66;
+pub(crate) const GROUP_OFFSET_log: usize = 66;
+pub(crate) const GROUP_OFFSET_main: usize = 68;
+pub(crate) const GROUP_OFFSET_messagebox: usize = 68;
+pub(crate) const GROUP_OFFSET_metal: usize = 71;
+pub(crate) const GROUP_OFFSET_misc: usize = 71;
+pub(crate) const GROUP_OFFSET_mouse: usize = 71;
+pub(crate) const GROUP_OFFSET_mutex: usize = 75;
+pub(crate) const GROUP_OFFSET_pen: usize = 76;
+pub(crate) const GROUP_OFFSET_pixels: usize = 79;
+pub(crate) const GROUP_OFFSET_platform: usize = 92;
+pub(crate) const GROUP_OFFSET_power: usize = 92;
+pub(crate) const GROUP_OFFSET_process: usize = 93;
+pub(crate) const GROUP_OFFSET_properties: usize = 94;
+pub(crate) const GROUP_OFFSET_rect: usize = 96;
+pub(crate) const GROUP_OFFSET_render: usize = 96;
+pub(crate) const GROUP_OFFSET_revision: usize = 98;
+pub(crate) const GROUP_OFFSET_scancode: usize = 98;
+pub(crate) const GROUP_OFFSET_sensor: usize = 99;
+pub(crate) const GROUP_OFFSET_stdinc: usize = 101;
+pub(crate) const GROUP_OFFSET_storage: usize = 101;
+pub(crate) const GROUP_OFFSET_surface: usize = 101;
+pub(crate) const GROUP_OFFSET_system: usize = 104;
+pub(crate) const GROUP_OFFSET_thread: usize = 105;
+pub(crate) const GROUP_OFFSET_time: usize = 109;
+pub(crate) const GROUP_OFFSET_timer: usize = 111;
+pub(crate) const GROUP_OFFSET_touch: usize = 112;
+pub(crate) const GROUP_OFFSET_tray: usize = 115;
+pub(crate) const GROUP_OFFSET_version: usize = 116;
+pub(crate) const GROUP_OFFSET_video: usize = 116;
+pub(crate) const GROUP_OFFSET_vulkan: usize = 128;

@@ -927,15 +927,8 @@ impl From<SDL_HapticID> for Uint32 {
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_HapticID {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Id,
-        module: "haptic",
-        name: "SDL_HapticID",
-        short_name: "HapticID",
-        doc: "This is a unique ID for a haptic device for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the haptic device is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n",
-        values: &[
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_haptic + 0];
 }
 
 extern "C" {

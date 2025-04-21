@@ -738,35 +738,8 @@ pub const SDL_INIT_STATUS_UNINITIALIZING: SDL_InitStatus = SDL_InitStatus::UNINI
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_InitStatus {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "mutex",
-        name: "SDL_InitStatus",
-        short_name: "InitStatus",
-        doc: "The current status of an [`SDL_InitState`] structure.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_INIT_STATUS_UNINITIALIZED",
-                short_name: "UNINITIALIZED",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_INIT_STATUS_INITIALIZING",
-                short_name: "INITIALIZING",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_INIT_STATUS_INITIALIZED",
-                short_name: "INITIALIZED",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_INIT_STATUS_UNINITIALIZING",
-                short_name: "UNINITIALIZING",
-                doc: "",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_mutex + 0];
 }
 
 /// A structure used for thread-safe initialization and shutdown.

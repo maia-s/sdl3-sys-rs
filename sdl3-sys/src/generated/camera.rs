@@ -90,15 +90,8 @@ impl From<SDL_CameraID> for Uint32 {
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_CameraID {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Id,
-        module: "camera",
-        name: "SDL_CameraID",
-        short_name: "CameraID",
-        doc: "This is a unique ID for a camera device for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the device is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetCameras`]\n",
-        values: &[
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_camera + 0];
 }
 
 /// The details of an output format for a camera device.
@@ -195,30 +188,8 @@ pub const SDL_CAMERA_POSITION_BACK_FACING: SDL_CameraPosition = SDL_CameraPositi
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_CameraPosition {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "camera",
-        name: "SDL_CameraPosition",
-        short_name: "CameraPosition",
-        doc: "The position of camera in relation to system device.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetCameraPosition`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_CAMERA_POSITION_UNKNOWN",
-                short_name: "UNKNOWN",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_CAMERA_POSITION_FRONT_FACING",
-                short_name: "FRONT_FACING",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_CAMERA_POSITION_BACK_FACING",
-                short_name: "BACK_FACING",
-                doc: "",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_camera + 1];
 }
 
 extern "C" {

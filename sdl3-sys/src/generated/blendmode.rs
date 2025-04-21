@@ -232,55 +232,8 @@ pub const SDL_BLENDMODE_INVALID: SDL_BlendMode = SDL_BlendMode::INVALID;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_BlendMode {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Flags,
-        module: "blendmode",
-        name: "SDL_BlendMode",
-        short_name: "BlendMode",
-        doc: "A set of blend modes used in drawing operations.\n\nThese predefined blend modes are supported everywhere.\n\nAdditional values may be obtained from [`SDL_ComposeCustomBlendMode`].\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_ComposeCustomBlendMode`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDMODE_NONE",
-                short_name: "NONE",
-                doc: "no blending: dstRGBA = srcRGBA\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDMODE_BLEND",
-                short_name: "BLEND",
-                doc: "alpha blending: dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)), dstA = srcA + (dstA * (1-srcA))\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDMODE_BLEND_PREMULTIPLIED",
-                short_name: "BLEND_PREMULTIPLIED",
-                doc: "pre-multiplied alpha blending: dstRGBA = srcRGBA + (dstRGBA * (1-srcA))\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDMODE_ADD",
-                short_name: "ADD",
-                doc: "additive blending: dstRGB = (srcRGB * srcA) + dstRGB, dstA = dstA\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDMODE_ADD_PREMULTIPLIED",
-                short_name: "ADD_PREMULTIPLIED",
-                doc: "pre-multiplied additive blending: dstRGB = srcRGB + dstRGB, dstA = dstA\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDMODE_MOD",
-                short_name: "MOD",
-                doc: "color modulate: dstRGB = srcRGB * dstRGB, dstA = dstA\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDMODE_MUL",
-                short_name: "MUL",
-                doc: "color multiply: dstRGB = (srcRGB * dstRGB) + (dstRGB * (1-srcA)), dstA = dstA\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDMODE_INVALID",
-                short_name: "INVALID",
-                doc: "",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_blendmode + 0];
 }
 
 /// The blend operation used when combining source and destination pixel
@@ -364,40 +317,8 @@ pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_BlendOperation {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "blendmode",
-        name: "SDL_BlendOperation",
-        short_name: "BlendOperation",
-        doc: "The blend operation used when combining source and destination pixel\ncomponents.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDOPERATION_ADD",
-                short_name: "ADD",
-                doc: "dst + src: supported by all renderers\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDOPERATION_SUBTRACT",
-                short_name: "SUBTRACT",
-                doc: "src - dst : supported by D3D, OpenGL, OpenGLES, and Vulkan\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDOPERATION_REV_SUBTRACT",
-                short_name: "REV_SUBTRACT",
-                doc: "dst - src : supported by D3D, OpenGL, OpenGLES, and Vulkan\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDOPERATION_MINIMUM",
-                short_name: "MINIMUM",
-                doc: "min(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDOPERATION_MAXIMUM",
-                short_name: "MAXIMUM",
-                doc: "max(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_blendmode + 1];
 }
 
 /// The normalized factor used to multiply pixel components.
@@ -519,65 +440,8 @@ pub const SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA: SDL_BlendFactor =
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_BlendFactor {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "blendmode",
-        name: "SDL_BlendFactor",
-        short_name: "BlendFactor",
-        doc: "The normalized factor used to multiply pixel components.\n\nThe blend factors are multiplied with the pixels from a drawing operation\n(src) and the pixels from the render target (dst) before the blend\noperation. The comma-separated factors listed above are always applied in\nthe component order red, green, blue, and alpha.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDFACTOR_ZERO",
-                short_name: "ZERO",
-                doc: "0, 0, 0, 0\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDFACTOR_ONE",
-                short_name: "ONE",
-                doc: "1, 1, 1, 1\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDFACTOR_SRC_COLOR",
-                short_name: "SRC_COLOR",
-                doc: "srcR, srcG, srcB, srcA\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR",
-                short_name: "ONE_MINUS_SRC_COLOR",
-                doc: "1-srcR, 1-srcG, 1-srcB, 1-srcA\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDFACTOR_SRC_ALPHA",
-                short_name: "SRC_ALPHA",
-                doc: "srcA, srcA, srcA, srcA\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA",
-                short_name: "ONE_MINUS_SRC_ALPHA",
-                doc: "1-srcA, 1-srcA, 1-srcA, 1-srcA\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDFACTOR_DST_COLOR",
-                short_name: "DST_COLOR",
-                doc: "dstR, dstG, dstB, dstA\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR",
-                short_name: "ONE_MINUS_DST_COLOR",
-                doc: "1-dstR, 1-dstG, 1-dstB, 1-dstA\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDFACTOR_DST_ALPHA",
-                short_name: "DST_ALPHA",
-                doc: "dstA, dstA, dstA, dstA\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA",
-                short_name: "ONE_MINUS_DST_ALPHA",
-                doc: "1-dstA, 1-dstA, 1-dstA, 1-dstA\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_blendmode + 2];
 }
 
 extern "C" {

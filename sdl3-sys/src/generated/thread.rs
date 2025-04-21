@@ -63,15 +63,8 @@ impl From<SDL_ThreadID> for Uint64 {
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_ThreadID {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Id,
-        module: "thread",
-        name: "SDL_ThreadID",
-        short_name: "ThreadID",
-        doc: "A unique numeric ID that identifies a thread.\n\nThese are different from [`SDL_Thread`] objects, which are generally what an\napplication will operate on, but having a way to uniquely identify a thread\ncan be useful at times.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetThreadID`]\n- [`SDL_GetCurrentThreadID`]\n",
-        values: &[
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_thread + 0];
 }
 
 /// Thread local storage ID.
@@ -99,15 +92,8 @@ impl From<SDL_TLSID> for SDL_AtomicInt {
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TLSID {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Id,
-        module: "thread",
-        name: "SDL_TLSID",
-        short_name: "TLSID",
-        doc: "Thread local storage ID.\n\n0 is the invalid ID. An app can create these and then set data for these\nIDs that is unique to each thread.\n\n### Availability\nThis datatype is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetTLS`]\n- [`SDL_SetTLS`]\n",
-        values: &[
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_thread + 1];
 }
 
 /// The SDL thread priority.
@@ -182,35 +168,8 @@ pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPrio
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_ThreadPriority {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "thread",
-        name: "SDL_ThreadPriority",
-        short_name: "ThreadPriority",
-        doc: "The SDL thread priority.\n\nSDL will make system changes as necessary in order to apply the thread\npriority. Code which attempts to control thread state related to priority\nshould be aware that calling [`SDL_SetCurrentThreadPriority`] may alter such\nstate. [`SDL_HINT_THREAD_PRIORITY_POLICY`] can be used to control aspects of\nthis behavior.\n\n### Availability\nThis enum is available since SDL 3.2.0.\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_THREAD_PRIORITY_LOW",
-                short_name: "LOW",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_THREAD_PRIORITY_NORMAL",
-                short_name: "NORMAL",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_THREAD_PRIORITY_HIGH",
-                short_name: "HIGH",
-                doc: "",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_THREAD_PRIORITY_TIME_CRITICAL",
-                short_name: "TIME_CRITICAL",
-                doc: "",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_thread + 2];
 }
 
 /// The SDL thread state.
@@ -292,35 +251,8 @@ pub const SDL_THREAD_COMPLETE: SDL_ThreadState = SDL_ThreadState::COMPLETE;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_ThreadState {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &sdl3_sys::metadata::Group {
-        kind: sdl3_sys::metadata::GroupKind::Enum,
-        module: "thread",
-        name: "SDL_ThreadState",
-        short_name: "ThreadState",
-        doc: "The SDL thread state.\n\nThe current state of a thread can be checked by calling [`SDL_GetThreadState`].\n\n### Availability\nThis enum is available since SDL 3.2.0.\n\n### See also\n- [`SDL_GetThreadState`]\n",
-        values: &[
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_THREAD_UNKNOWN",
-                short_name: "UNKNOWN",
-                doc: "The thread is not valid\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_THREAD_ALIVE",
-                short_name: "ALIVE",
-                doc: "The thread is currently running\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_THREAD_DETACHED",
-                short_name: "DETACHED",
-                doc: "The thread is detached and can't be waited on\n",
-            },
-            sdl3_sys::metadata::GroupValue {
-                name: "SDL_THREAD_COMPLETE",
-                short_name: "COMPLETE",
-                doc: "The thread has finished and should be cleaned up with [`SDL_WaitThread()`]\n",
-            },
-        ],
-    };
+    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_thread + 3];
 }
 
 /// The function passed to [`SDL_CreateThread()`] as the new thread's entry point.
