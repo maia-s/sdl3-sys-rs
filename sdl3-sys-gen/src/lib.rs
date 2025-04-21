@@ -40,7 +40,7 @@ use std::{
     env::{current_dir, set_current_dir},
     error,
     fmt::{self, Debug, Display},
-    fs::{self, read_dir, DirBuilder, File, OpenOptions},
+    fs::{self, create_dir, read_dir, DirBuilder, File, OpenOptions},
     io::{self, BufWriter, Read, Write as _},
     path::{Path, PathBuf},
     process::{Command, Stdio},
@@ -69,7 +69,18 @@ fn skip_emit(_module: &str) -> bool {
     false
 }
 
+fn create_dir_r(dir: &Path) -> Result<(), Error> {
+    if !dir.exists() {
+        if let Some(parent) = dir.parent() {
+            create_dir_r(parent)?;
+        }
+        create_dir(dir)?;
+    }
+    Ok(())
+}
+
 fn format_and_write(input: String, path: &Path) -> Result<(), Error> {
+    create_dir_r(path.parent().unwrap())?;
     let mut fmt = Command::new("rustfmt")
         .arg("--edition")
         .arg("2021")
@@ -657,15 +668,21 @@ impl Gen {
         writeln!(output, "}}")?;
         format_and_write(output, &path)?;
 
-        let mut metadata_out = String::new();
-        writeln!(metadata_out, "#![allow(non_upper_case_globals, unused)]")?;
-        writeln!(metadata_out)?;
-        writeln!(metadata_out, "use core::ffi::CStr;")?;
-        writeln!(
-            metadata_out,
-            "use sdl3_sys::{{metadata::{{Group, GroupKind, GroupValue, Hint, Property}}, properties::SDL_PropertyType, version::SDL_VERSIONNUM}};"
-        )?;
-        writeln!(metadata_out)?;
+        let metadata_out = String::from(str_block! {"
+            #![allow(non_upper_case_globals, unused)]
+
+            use core::ffi::CStr;
+            use sdl3_sys::{{metadata::{{Group, GroupKind, GroupValue, Hint, Property}}, properties::SDL_PropertyType, version::SDL_VERSIONNUM}};
+
+            mod hints;
+            pub use hints::*;
+
+            mod properties;
+            pub use properties::*;
+
+            mod groups;
+            pub use groups::*;
+        "});
         let mut metadata_out_hints = String::new();
         let mut metadata_out_props = String::new();
         let mut metadata_out_groups = String::new();
@@ -697,6 +714,43 @@ impl Gen {
             }
             String::from("None")
         }
+        macro_rules! write_indented {
+            ($target:expr, $indent: expr, $($tt:tt)*) => {{
+                let indent = " ".repeat($indent);
+                for line in format!($($tt)*).lines() {
+                    if line.is_empty() {
+                        writeln!($target)?;
+                    } else {
+                        writeln!($target, "{indent}{line}")?;
+                    }
+                }
+            }};
+        }
+
+        writeln!(
+            metadata_out_hints,
+            str_block! {"
+                use super::*;
+
+                /// Metadata for hint constants in this crate
+                pub static HINTS: &[Hint] = &["}
+        )?;
+        writeln!(
+            metadata_out_props,
+            str_block! {"
+                use super::*;
+
+                /// Metadata for property constants in this crate
+                pub static PROPERTIES: &[Property] = &["}
+        )?;
+        writeln!(
+            metadata_out_groups,
+            str_block! {"
+                use super::*;
+
+                /// Metadata for groups in this crate
+                pub static GROUPS: &[Group] = &["}
+        )?;
 
         for module in emitted.keys() {
             let metadata = &emitted[module].metadata;
@@ -707,8 +761,9 @@ impl Gen {
             )?;
             for hint in &metadata.hints {
                 let short_name = hint.name.strip_prefix("SDL_HINT_").unwrap();
-                write!(
+                write_indented!(
                     metadata_out_hints,
+                    4,
                     str_block! {"
                         Hint {{
                             module: {module:?},
@@ -728,7 +783,7 @@ impl Gen {
                     } else {
                         format!("Some({:?})", hint.doc)
                     }
-                )?;
+                );
             }
             for prop in &metadata.properties {
                 let short_name = prop.name.strip_prefix("SDL_PROP_").unwrap();
@@ -756,8 +811,9 @@ impl Gen {
                     };
                     short_name
                 };
-                write!(
+                write_indented!(
                     metadata_out_props,
+                    4,
                     str_block! {"
                         Property {{
                             module: {module:?},
@@ -779,13 +835,14 @@ impl Gen {
                         format!("Some({:?})", prop.doc)
                     },
                     available_since = get_available_since(&prop.doc),
-                )?;
+                );
             }
             for group in &metadata.groups {
                 group_count += 1;
                 let available_since = get_available_since(&group.doc);
-                write!(
+                write_indented!(
                     metadata_out_groups,
+                    4,
                     str_block! {"
                         Group {{
                             module: {module:?},
@@ -811,77 +868,57 @@ impl Gen {
                         format!("Some({:?})", group.doc)
                     },
                     available_since = available_since,
-                )?;
+                );
                 if !group.values.is_empty() {
                     for value in &group.values {
-                        writeln!(metadata_out_groups, "        GroupValue {{")?;
-                        writeln!(metadata_out_groups, "            name: {:?},", value.name)?;
-                        writeln!(
+                        write_indented!(
                             metadata_out_groups,
-                            "            short_name: {:?},",
-                            value.short_name
-                        )?;
-                        writeln!(
-                            metadata_out_groups,
-                            "            doc: {},",
-                            if value.doc.is_empty() {
+                            12,
+                            str_block! {"
+                                GroupValue {{
+                                    name: {name:?},
+                                    short_name: {short_name:?},
+                                    doc: {doc},
+                                    available_since: {available_since},
+                                }},
+                            "},
+                            name = value.name,
+                            short_name = value.short_name,
+                            doc = if value.doc.is_empty() {
                                 "None".into()
                             } else {
                                 format!("Some({:?})", value.doc)
-                            }
-                        )?;
-                        writeln!(
-                            metadata_out_groups,
-                            "            available_since: {},",
-                            get_available_since(&value.doc)
-                        )?;
-                        writeln!(metadata_out_groups, "        }},")?;
+                            },
+                            available_since = get_available_since(&value.doc),
+                        );
                     }
                 }
-                write!(
+                write_indented!(
                     metadata_out_groups,
+                    4,
                     str_block! {"
                             ],
                         }},
                     "}
-                )?;
+                );
             }
         }
-        writeln!(
-            metadata_out,
-            "/// Metadata for hint constants in this crate"
-        )?;
-        writeln!(metadata_out, "pub static HINTS: &[Hint] = &[")?;
-        for line in metadata_out_hints.lines() {
-            // rustfmt won't format this
-            writeln!(metadata_out, "    {line}")?;
-        }
-        writeln!(metadata_out, "];")?;
-        writeln!(metadata_out)?;
-        writeln!(
-            metadata_out,
-            "/// Metadata for property constants in this crate"
-        )?;
-        writeln!(metadata_out, "pub static PROPERTIES: &[Property] = &[")?;
-        for line in metadata_out_props.lines() {
-            // rustfmt won't format this
-            writeln!(metadata_out, "    {line}")?;
-        }
-        writeln!(metadata_out, "];")?;
-        writeln!(metadata_out)?;
-        writeln!(metadata_out, "/// Metadata for groups in this crate")?;
-        writeln!(metadata_out, "pub static GROUPS: &[Group] = &[")?;
-        for line in metadata_out_groups.lines() {
-            // rustfmt won't format this
-            writeln!(metadata_out, "    {line}")?;
-        }
-        writeln!(metadata_out, "];")?;
-        writeln!(metadata_out)?;
-        writeln!(metadata_out, "{metadata_out_group_offsets}")?;
 
-        let mut meta_path = self.output_path.join("..").join("generated_metadata");
-        meta_path.set_extension("rs");
-        format_and_write(metadata_out, &meta_path)?;
+        writeln!(metadata_out_hints, "];")?;
+        writeln!(metadata_out_props, "];")?;
+        writeln!(metadata_out_groups, "];")?;
+        writeln!(metadata_out_groups)?;
+        writeln!(metadata_out_groups, "{metadata_out_group_offsets}")?;
+
+        let metadata_path = self
+            .output_path
+            .join("..")
+            .join("metadata")
+            .join("generated");
+        format_and_write(metadata_out, &metadata_path.join("mod.rs"))?;
+        format_and_write(metadata_out_hints, &metadata_path.join("hints.rs"))?;
+        format_and_write(metadata_out_props, &metadata_path.join("properties.rs"))?;
+        format_and_write(metadata_out_groups, &metadata_path.join("groups.rs"))?;
         Ok(())
     }
 

@@ -29,7 +29,7 @@ fi
 
 for crate in *-sys; do
     cp -f build-common.rs $crate
-    rm -rf $crate/src/generated
+    rm -rf $crate/src/generated $crate/src/metadata/generated
 done
 
 cargo run -p sdl3-sys-gen $gen_profile

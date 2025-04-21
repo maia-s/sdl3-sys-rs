@@ -63,9 +63,8 @@ pub struct GroupValue {
 }
 
 #[cfg(feature = "metadata")]
-#[path = "generated_metadata.rs"]
-mod generated_metadata;
+mod generated;
 
 #[cfg(feature = "metadata")]
 #[allow(unused_imports)] // false positive
-pub use generated_metadata::*;
+pub use generated::*;
