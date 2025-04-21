@@ -10,7 +10,7 @@ pub struct Hint {
     pub name: &'static str,
     pub short_name: &'static str,
     pub value: &'static CStr,
-    pub doc: &'static str,
+    pub doc: Option<&'static str>,
     pub available_since: Option<c_int>,
 }
 
@@ -22,7 +22,7 @@ pub struct Property {
     pub short_name: &'static str,
     pub value: &'static CStr,
     pub ty: SDL_PropertyType,
-    pub doc: &'static str,
+    pub doc: Option<&'static str>,
     pub available_since: Option<c_int>,
 }
 
@@ -48,7 +48,7 @@ pub struct Group {
     pub module: &'static str,
     pub name: &'static str,
     pub short_name: &'static str,
-    pub doc: &'static str,
+    pub doc: Option<&'static str>,
     pub values: &'static [GroupValue],
     pub available_since: Option<c_int>,
 }
@@ -58,7 +58,7 @@ pub struct Group {
 pub struct GroupValue {
     pub name: &'static str,
     pub short_name: &'static str,
-    pub doc: &'static str,
+    pub doc: Option<&'static str>,
     pub available_since: Option<c_int>,
 }
 

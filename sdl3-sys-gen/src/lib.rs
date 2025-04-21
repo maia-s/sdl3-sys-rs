@@ -714,7 +714,7 @@ impl Gen {
                             name: {name:?},
                             short_name: {short_name:?},
                             value: unsafe {{ ::core::ffi::CStr::from_ptr(crate::{module}::{name}) }},
-                            doc: {doc:?},
+                            doc: {doc},
                             available_since: {available_since},
                         }},
                     "},
@@ -722,7 +722,11 @@ impl Gen {
                     name = hint.name,
                     short_name = short_name,
                     available_since = get_available_since(&hint.doc),
-                    doc = hint.doc,
+                    doc = if hint.doc.is_empty() {
+                        "None".into()
+                    } else {
+                        format!("Some({:?})", hint.doc)
+                    }
                 )?;
             }
             for prop in &metadata.properties {
@@ -760,15 +764,19 @@ impl Gen {
                             short_name: {short_name:?},
                             value: unsafe {{ ::core::ffi::CStr::from_ptr(crate::{module}::{name}) }},
                             ty: SDL_PropertyType::{ty},
-                            doc: {doc:?},
+                            doc: {doc},
                             available_since: {available_since},
                         }},
                     "},
                     module = module,
                     name = prop.name,
                     short_name = short_name,
-                    doc = prop.doc,
                     ty = ty,
+                    doc = if prop.doc.is_empty() {
+                        "None".into()
+                    } else {
+                        format!("Some({:?})", prop.doc)
+                    },
                     available_since = get_available_since(&prop.doc),
                 )?;
             }
@@ -783,7 +791,7 @@ impl Gen {
                             kind: GroupKind::{kind},
                             name: {name:?},
                             short_name: {short_name:?},
-                            doc: {doc:?},
+                            doc: {doc},
                             available_since: {available_since},
                             values: &[
                     "},
@@ -796,7 +804,11 @@ impl Gen {
                     },
                     name = group.name,
                     short_name = group.name.strip_prefix(&self.sym_prefix).unwrap(),
-                    doc = group.doc,
+                    doc = if group.doc.is_empty() {
+                        "None".into()
+                    } else {
+                        format!("Some({:?})", group.doc)
+                    },
                     available_since = available_since,
                 )?;
                 if !group.values.is_empty() {
@@ -808,7 +820,15 @@ impl Gen {
                             "            short_name: {:?},",
                             value.short_name
                         )?;
-                        writeln!(metadata_out_groups, "            doc: {:?},", value.doc)?;
+                        writeln!(
+                            metadata_out_groups,
+                            "            doc: {},",
+                            if value.doc.is_empty() {
+                                "None".into()
+                            } else {
+                                format!("Some({:?})", value.doc)
+                            }
+                        )?;
                         writeln!(
                             metadata_out_groups,
                             "            available_since: {},",
