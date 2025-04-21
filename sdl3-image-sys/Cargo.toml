@@ -48,6 +48,9 @@ debug-impls = []
 metadata = []
 only-metadata = ["metadata", "no-link"]
 
+# Enable nightly features
+nightly = []
+
 no-default = [
     "no-default-backends",
     "no-default-formats",

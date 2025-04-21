@@ -49,6 +49,9 @@ debug-impls = ["sdl3-sys/debug-impls"]
 metadata = []
 only-metadata = ["metadata", "no-link"]
 
+# Enable nightly features
+nightly = []
+
 sdlttf-vendored = []
 no-sdlttf-vendored = []
 
