@@ -6,7 +6,7 @@ use sdl3_sys::{
 };
 
 /// Metadata for hint constants in this crate
-pub const HINTS: &[Hint] = &[
+pub static HINTS: &[Hint] = &[
     Hint {
         module: "hints",
         name: "SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED",
@@ -1676,7 +1676,7 @@ pub const HINTS: &[Hint] = &[
 ];
 
 /// Metadata for property constants in this crate
-pub const PROPERTIES: &[Property] = &[
+pub static PROPERTIES: &[Property] = &[
     Property {
         module: "dialog",
         name: "SDL_PROP_FILE_DIALOG_FILTERS_POINTER",
@@ -3608,7 +3608,7 @@ pub const PROPERTIES: &[Property] = &[
 ];
 
 /// Metadata for groups in this crate
-pub const GROUPS: &[Group] = &[
+pub static GROUPS: &[Group] = &[
     Group {
         module: "assert",
         kind: GroupKind::Enum,

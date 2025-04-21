@@ -792,7 +792,7 @@ impl Gen {
             metadata_out,
             "/// Metadata for hint constants in this crate"
         )?;
-        writeln!(metadata_out, "pub const HINTS: &[Hint] = &[")?;
+        writeln!(metadata_out, "pub static HINTS: &[Hint] = &[")?;
         for line in metadata_out_hints.lines() {
             // rustfmt won't format this
             writeln!(metadata_out, "    {line}")?;
@@ -803,7 +803,7 @@ impl Gen {
             metadata_out,
             "/// Metadata for property constants in this crate"
         )?;
-        writeln!(metadata_out, "pub const PROPERTIES: &[Property] = &[")?;
+        writeln!(metadata_out, "pub static PROPERTIES: &[Property] = &[")?;
         for line in metadata_out_props.lines() {
             // rustfmt won't format this
             writeln!(metadata_out, "    {line}")?;
@@ -811,7 +811,7 @@ impl Gen {
         writeln!(metadata_out, "];")?;
         writeln!(metadata_out)?;
         writeln!(metadata_out, "/// Metadata for groups in this crate")?;
-        writeln!(metadata_out, "pub const GROUPS: &[Group] = &[")?;
+        writeln!(metadata_out, "pub static GROUPS: &[Group] = &[")?;
         for line in metadata_out_groups.lines() {
             // rustfmt won't format this
             writeln!(metadata_out, "    {line}")?;

@@ -6,12 +6,12 @@ use sdl3_sys::{
 };
 
 /// Metadata for hint constants in this crate
-pub const HINTS: &[Hint] = &[];
+pub static HINTS: &[Hint] = &[];
 
 /// Metadata for property constants in this crate
-pub const PROPERTIES: &[Property] = &[];
+pub static PROPERTIES: &[Property] = &[];
 
 /// Metadata for groups in this crate
-pub const GROUPS: &[Group] = &[];
+pub static GROUPS: &[Group] = &[];
 
 pub(crate) const GROUP_OFFSET_image: usize = 0;
