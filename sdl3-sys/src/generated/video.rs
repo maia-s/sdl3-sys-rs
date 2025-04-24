@@ -606,10 +606,10 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 /// ### Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`RED_SIZE`](SDL_GLAttr::RED_SIZE) | [`SDL_GL_RED_SIZE`] | the minimum number of bits for the red channel of the color buffer; defaults to 3. |
-/// | [`GREEN_SIZE`](SDL_GLAttr::GREEN_SIZE) | [`SDL_GL_GREEN_SIZE`] | the minimum number of bits for the green channel of the color buffer; defaults to 3. |
-/// | [`BLUE_SIZE`](SDL_GLAttr::BLUE_SIZE) | [`SDL_GL_BLUE_SIZE`] | the minimum number of bits for the blue channel of the color buffer; defaults to 2. |
-/// | [`ALPHA_SIZE`](SDL_GLAttr::ALPHA_SIZE) | [`SDL_GL_ALPHA_SIZE`] | the minimum number of bits for the alpha channel of the color buffer; defaults to 0. |
+/// | [`RED_SIZE`](SDL_GLAttr::RED_SIZE) | [`SDL_GL_RED_SIZE`] | the minimum number of bits for the red channel of the color buffer; defaults to 8. |
+/// | [`GREEN_SIZE`](SDL_GLAttr::GREEN_SIZE) | [`SDL_GL_GREEN_SIZE`] | the minimum number of bits for the green channel of the color buffer; defaults to 8. |
+/// | [`BLUE_SIZE`](SDL_GLAttr::BLUE_SIZE) | [`SDL_GL_BLUE_SIZE`] | the minimum number of bits for the blue channel of the color buffer; defaults to 8. |
+/// | [`ALPHA_SIZE`](SDL_GLAttr::ALPHA_SIZE) | [`SDL_GL_ALPHA_SIZE`] | the minimum number of bits for the alpha channel of the color buffer; defaults to 8. |
 /// | [`BUFFER_SIZE`](SDL_GLAttr::BUFFER_SIZE) | [`SDL_GL_BUFFER_SIZE`] | the minimum number of bits for frame buffer size; defaults to 0. |
 /// | [`DOUBLEBUFFER`](SDL_GLAttr::DOUBLEBUFFER) | [`SDL_GL_DOUBLEBUFFER`] | whether the output is single or double buffered; defaults to double buffering on. |
 /// | [`DEPTH_SIZE`](SDL_GLAttr::DEPTH_SIZE) | [`SDL_GL_DEPTH_SIZE`] | the minimum number of bits in the depth buffer; defaults to 16. |
@@ -685,13 +685,13 @@ impl ::core::fmt::Debug for SDL_GLAttr {
 }
 
 impl SDL_GLAttr {
-    /// the minimum number of bits for the red channel of the color buffer; defaults to 3.
+    /// the minimum number of bits for the red channel of the color buffer; defaults to 8.
     pub const RED_SIZE: Self = Self(0);
-    /// the minimum number of bits for the green channel of the color buffer; defaults to 3.
+    /// the minimum number of bits for the green channel of the color buffer; defaults to 8.
     pub const GREEN_SIZE: Self = Self(1);
-    /// the minimum number of bits for the blue channel of the color buffer; defaults to 2.
+    /// the minimum number of bits for the blue channel of the color buffer; defaults to 8.
     pub const BLUE_SIZE: Self = Self(2);
-    /// the minimum number of bits for the alpha channel of the color buffer; defaults to 0.
+    /// the minimum number of bits for the alpha channel of the color buffer; defaults to 8.
     pub const ALPHA_SIZE: Self = Self(3);
     /// the minimum number of bits for frame buffer size; defaults to 0.
     pub const BUFFER_SIZE: Self = Self(4);
@@ -740,13 +740,13 @@ impl SDL_GLAttr {
     pub const EGL_PLATFORM: Self = Self(27);
 }
 
-/// the minimum number of bits for the red channel of the color buffer; defaults to 3.
+/// the minimum number of bits for the red channel of the color buffer; defaults to 8.
 pub const SDL_GL_RED_SIZE: SDL_GLAttr = SDL_GLAttr::RED_SIZE;
-/// the minimum number of bits for the green channel of the color buffer; defaults to 3.
+/// the minimum number of bits for the green channel of the color buffer; defaults to 8.
 pub const SDL_GL_GREEN_SIZE: SDL_GLAttr = SDL_GLAttr::GREEN_SIZE;
-/// the minimum number of bits for the blue channel of the color buffer; defaults to 2.
+/// the minimum number of bits for the blue channel of the color buffer; defaults to 8.
 pub const SDL_GL_BLUE_SIZE: SDL_GLAttr = SDL_GLAttr::BLUE_SIZE;
-/// the minimum number of bits for the alpha channel of the color buffer; defaults to 0.
+/// the minimum number of bits for the alpha channel of the color buffer; defaults to 8.
 pub const SDL_GL_ALPHA_SIZE: SDL_GLAttr = SDL_GLAttr::ALPHA_SIZE;
 /// the minimum number of bits for frame buffer size; defaults to 0.
 pub const SDL_GL_BUFFER_SIZE: SDL_GLAttr = SDL_GLAttr::BUFFER_SIZE;
@@ -1582,6 +1582,10 @@ extern "C" {
 extern "C" {
     /// Create a window with the specified dimensions and flags.
     ///
+    /// The window size is a request and may be different than expected based on
+    /// the desktop layout and window manager policies. Your application should be
+    /// prepared to handle a window of any size.
+    ///
     /// `flags` may be any of the following OR'd together:
     ///
     /// - [`SDL_WINDOW_FULLSCREEN`]\: fullscreen window at desktop resolution
@@ -1679,6 +1683,10 @@ extern "C" {
 extern "C" {
     /// Create a child popup window of the specified parent window.
     ///
+    /// The window size is a request and may be different than expected based on
+    /// the desktop layout and window manager policies. Your application should be
+    /// prepared to handle a window of any size.
+    ///
     /// The flags parameter **must** contain at least one of the following:
     ///
     /// - [`SDL_WINDOW_TOOLTIP`]\: The popup window is a tooltip and will not pass any
@@ -1753,6 +1761,10 @@ extern "C" {
 
 extern "C" {
     /// Create a window with the specified properties.
+    ///
+    /// The window size is a request and may be different than expected based on
+    /// the desktop layout and window manager policies. Your application should be
+    /// prepared to handle a window of any size.
     ///
     /// These are the supported properties:
     ///
