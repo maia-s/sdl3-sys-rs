@@ -32,7 +32,7 @@ convention for libraries. You can change this behaviour with the following featu
 | `build-from-source` | Build and link SDL_image from source. You have to install any dependencies SDL needs to build for your target first. See below for build related features. |
 | `build-from-source-static` | Shortcut for enabling both the `build-from-source` and `link-static` features. This should no longer be necessary. |
 | `build-static-vendored` | Build and link SDL_image from source, use vendored libraries (see below), and link it all statically. |
-| `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3_image.xcframework` to be located at `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
+| `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3_image.xcframework` to be located at `~/Library/Frameworks` or `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
 | `link-static` | Link SDL_image statically. |
 
 ### Building from source
@@ -128,6 +128,7 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 
 ## Recent changes
 
+- next:  Look for frameworks in `~/Library/Frameworks` too
 - 0.1.3: Add `link-framework` feature (doesn't work with `build-from-source` yet)
 - 0.1.2: Update SDL_image to 3.2.4
 - 0.1.1: Update SDL_image to 3.2.2, disable vendoring by default on all targets, and when
