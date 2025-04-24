@@ -448,7 +448,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             d.emit(ctx)?;
             writeln!(
                 ctx,
-                "/// `sdl3-sys`: Temporary alias of [`SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER`] for semver compatibility (will be removed in sdl3-sys 0.5)"
+                r#"#[deprecated(since = "0.4.8", note = "renamed to `SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER`")]"#
             )?;
             writeln!(ctx, "pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8: *const ::core::ffi::c_char = SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER;")?;
             writeln!(ctx)?;
