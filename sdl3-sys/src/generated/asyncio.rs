@@ -144,7 +144,7 @@ pub const SDL_ASYNCIO_TASK_CLOSE: SDL_AsyncIOTaskType = SDL_AsyncIOTaskType::CLO
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_AsyncIOTaskType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_asyncio + 0];
+        &crate::metadata::asyncio::METADATA_SDL_AsyncIOTaskType;
 }
 
 /// Possible outcomes of an asynchronous I/O task.
@@ -216,7 +216,7 @@ pub const SDL_ASYNCIO_CANCELED: SDL_AsyncIOResult = SDL_AsyncIOResult::CANCELED;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_AsyncIOResult {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_asyncio + 1];
+        &crate::metadata::asyncio::METADATA_SDL_AsyncIOResult;
 }
 
 /// Information about a completed asynchronous I/O request.

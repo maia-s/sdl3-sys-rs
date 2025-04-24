@@ -303,7 +303,7 @@ pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_AudioFormat {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_audio + 0];
+        &crate::metadata::audio::METADATA_SDL_AudioFormat;
 }
 
 /// Define an [`SDL_AudioFormat`] value.
@@ -602,7 +602,7 @@ pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_AudioDeviceID {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_audio + 1];
+        &crate::metadata::audio::METADATA_SDL_AudioDeviceID;
 }
 
 /// Format specifier for audio data.

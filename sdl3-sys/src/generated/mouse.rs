@@ -75,7 +75,7 @@ impl From<SDL_MouseID> for Uint32 {
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_MouseID {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_mouse + 0];
+        &crate::metadata::mouse::METADATA_SDL_MouseID;
 }
 
 /// Cursor types for [`SDL_CreateSystemCursor()`].
@@ -253,7 +253,7 @@ pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_SystemCursor {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_mouse + 1];
+        &crate::metadata::mouse::METADATA_SDL_SystemCursor;
 }
 
 /// Scroll direction types for the Scroll event
@@ -319,7 +319,7 @@ pub const SDL_MOUSEWHEEL_FLIPPED: SDL_MouseWheelDirection = SDL_MouseWheelDirect
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_MouseWheelDirection {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_mouse + 2];
+        &crate::metadata::mouse::METADATA_SDL_MouseWheelDirection;
 }
 
 pub const SDL_BUTTON_LEFT: ::core::primitive::i32 = 1;
@@ -1183,7 +1183,7 @@ pub const SDL_BUTTON_X2MASK: SDL_MouseButtonFlags = SDL_MouseButtonFlags::X2MASK
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_MouseButtonFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_mouse + 3];
+        &crate::metadata::mouse::METADATA_SDL_MouseButtonFlags;
 }
 
 #[cfg(doc)]

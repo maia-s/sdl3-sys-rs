@@ -833,7 +833,7 @@ pub const SDL_EVENT_ENUM_PADDING: SDL_EventType = SDL_EventType::ENUM_PADDING;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_EventType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_events + 0];
+        &crate::metadata::events::METADATA_SDL_EventType;
 }
 
 /// Fields shared by every event
@@ -2021,7 +2021,7 @@ pub const SDL_GETEVENT: SDL_EventAction = SDL_EventAction::GETEVENT;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_EventAction {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_events + 1];
+        &crate::metadata::events::METADATA_SDL_EventAction;
 }
 
 extern "C" {

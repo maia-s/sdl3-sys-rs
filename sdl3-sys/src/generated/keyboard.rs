@@ -57,7 +57,7 @@ impl From<SDL_KeyboardID> for Uint32 {
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_KeyboardID {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_keyboard + 0];
+        &crate::metadata::keyboard::METADATA_SDL_KeyboardID;
 }
 
 extern "C" {
@@ -585,7 +585,7 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TextInputType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_keyboard + 1];
+        &crate::metadata::keyboard::METADATA_SDL_TextInputType;
 }
 
 /// Auto capitalization type.
@@ -670,7 +670,7 @@ pub const SDL_CAPITALIZE_LETTERS: SDL_Capitalization = SDL_Capitalization::LETTE
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_Capitalization {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_keyboard + 2];
+        &crate::metadata::keyboard::METADATA_SDL_Capitalization;
 }
 
 extern "C" {

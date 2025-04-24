@@ -77,7 +77,7 @@ impl From<SDL_JoystickID> for Uint32 {
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_JoystickID {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_joystick + 0];
+        &crate::metadata::joystick::METADATA_SDL_JoystickID;
 }
 
 /// An enum of some common joystick types.
@@ -182,7 +182,7 @@ pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_JoystickType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_joystick + 1];
+        &crate::metadata::joystick::METADATA_SDL_JoystickType;
 }
 
 /// Possible connection states for a joystick device.
@@ -259,7 +259,7 @@ pub const SDL_JOYSTICK_CONNECTION_WIRELESS: SDL_JoystickConnectionState =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_JoystickConnectionState {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_joystick + 2];
+        &crate::metadata::joystick::METADATA_SDL_JoystickConnectionState;
 }
 
 /// The largest value an SDL_Joystick's axis can report.

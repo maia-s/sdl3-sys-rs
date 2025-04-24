@@ -1427,26 +1427,27 @@ impl Enum {
         ctx.write_str(&global_consts)?;
         writeln!(ctx)?;
 
-        let index = ctx.register_group_metadata(GroupMetadata {
-            kind: self.kind,
-            name: enum_ident_s.to_owned(),
-            doc: doc_meta,
-            values: values_metadata,
-        });
+        if self.emit_metadata {
+            ctx.register_group_metadata(GroupMetadata {
+                kind: self.kind,
+                name: enum_ident_s.to_owned(),
+                doc: doc_meta,
+                values: values_metadata,
+            });
 
-        writeln!(
-            ctx,
-            str_block! {r#"
+            writeln!(
+                ctx,
+                str_block! {r#"
                 #[cfg(feature = "metadata")]
                 impl sdl3_sys::metadata::HasGroupMetadata for {enum_ident_s} {{
-                    const GROUP_METADATA: &sdl3_sys::metadata::Group = &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_{module} + {index}];
+                    const GROUP_METADATA: &sdl3_sys::metadata::Group = &crate::metadata::{module}::METADATA_{enum_ident_s};
                 }}
             "#},
-            enum_ident_s = enum_ident_s,
-            module = module,
-            index = index,
-        )?;
-        writeln!(ctx)?;
+                enum_ident_s = enum_ident_s,
+                module = module,
+            )?;
+            writeln!(ctx)?;
+        }
 
         ctx.flush_ool_output()?;
         Ok(())
@@ -2047,6 +2048,7 @@ impl Emit for TypeDef {
                 hidden: false,
                 kind: *kind,
                 registered: Cell::new(false),
+                emit_metadata: true,
             }
             .emit_enum(ctx, None, None),
         }

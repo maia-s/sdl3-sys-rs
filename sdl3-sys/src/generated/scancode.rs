@@ -1317,7 +1317,7 @@ pub const SDL_SCANCODE_COUNT: SDL_Scancode = SDL_Scancode::COUNT;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_Scancode {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_scancode + 0];
+        &crate::metadata::scancode::METADATA_SDL_Scancode;
 }
 
 #[cfg(doc)]

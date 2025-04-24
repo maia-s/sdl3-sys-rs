@@ -656,38 +656,37 @@ impl Gen {
         for module in self.emitted.borrow().keys() {
             writeln!(output, "pub mod {module};")?;
         }
+        writeln!(output)?;
+        let mut everything_module = String::new();
         writeln!(
-            output,
-            "\n/// Reexports of everything from the other modules"
+            everything_module,
+            "/// Reexports of everything from the other modules"
         )?;
-        writeln!(output, "pub mod everything {{")?;
+        writeln!(everything_module, "pub mod everything {{")?;
         for module in self.emitted.borrow().keys() {
-            writeln!(output, "    #[doc(no_inline)]")?;
-            writeln!(output, "    pub use super::{module}::*;")?;
+            writeln!(everything_module, "    #[doc(no_inline)]")?;
+            writeln!(everything_module, "    pub use super::{module}::*;")?;
         }
-        writeln!(output, "}}")?;
+        writeln!(everything_module, "}}")?;
+        write!(output, "{everything_module}")?;
         format_and_write(output, &path)?;
 
-        let metadata_out = String::from(str_block! {"
+        let metadata_path = self
+            .output_path
+            .join("..")
+            .join("metadata")
+            .join("generated");
+
+        let mut metadata_out = String::from(str_block! {"
             #![allow(non_upper_case_globals, unused)]
 
             use core::ffi::CStr;
             use sdl3_sys::{{metadata::{{Group, GroupKind, GroupValue, Hint, Property}}, properties::SDL_PropertyType, version::SDL_VERSIONNUM}};
 
-            mod hints;
-            pub use hints::*;
-
-            mod properties;
-            pub use properties::*;
-
-            mod groups;
-            pub use groups::*;
         "});
         let mut metadata_out_hints = String::new();
         let mut metadata_out_props = String::new();
         let mut metadata_out_groups = String::new();
-        let mut metadata_out_group_offsets = String::new();
-        let mut group_count = 0;
         let emitted = self.emitted.borrow();
 
         fn get_available_since(doc: &str) -> String {
@@ -730,49 +729,42 @@ impl Gen {
         writeln!(
             metadata_out_hints,
             str_block! {"
-                use super::*;
-
                 /// Metadata for hint constants in this crate
-                pub static HINTS: &[Hint] = &["}
+                pub static HINTS: &[&Hint] = &["}
         )?;
         writeln!(
             metadata_out_props,
             str_block! {"
-                use super::*;
-
                 /// Metadata for property constants in this crate
-                pub static PROPERTIES: &[Property] = &["}
+                pub static PROPERTIES: &[&Property] = &["}
         )?;
         writeln!(
             metadata_out_groups,
             str_block! {"
-                use super::*;
-
                 /// Metadata for groups in this crate
-                pub static GROUPS: &[Group] = &["}
+                pub static GROUPS: &[&Group] = &["}
         )?;
 
         for module in emitted.keys() {
             let metadata = &emitted[module].metadata;
-            writeln!(
-                metadata_out_group_offsets,
-                "pub(crate) const GROUP_OFFSET_{module}: usize = {};",
-                group_count
-            )?;
+            writeln!(metadata_out, "pub mod {module};")?;
+            let mut module_out = format!(
+                "//! Metadata for items in the `crate::{module}` module\n\nuse super::*;\n\n"
+            );
             for hint in &metadata.hints {
                 let short_name = hint.name.strip_prefix("SDL_HINT_").unwrap();
-                write_indented!(
-                    metadata_out_hints,
-                    4,
+                writeln!(metadata_out_hints, "    &{module}::METADATA_{},", hint.name)?;
+                write!(
+                    module_out,
                     str_block! {"
-                        Hint {{
+                        pub static METADATA_{name}: Hint = Hint {{
                             module: {module:?},
                             name: {name:?},
                             short_name: {short_name:?},
                             value: unsafe {{ CStr::from_ptr(crate::{module}::{name}) }},
                             doc: {doc},
                             available_since: {available_since},
-                        }},
+                        }};
                     "},
                     module = module,
                     name = hint.name,
@@ -783,9 +775,10 @@ impl Gen {
                     } else {
                         format!("Some({:?})", hint.doc)
                     }
-                );
+                )?;
             }
             for prop in &metadata.properties {
+                writeln!(metadata_out_props, "    &{module}::METADATA_{},", prop.name)?;
                 let short_name = prop.name.strip_prefix("SDL_PROP_").unwrap();
                 let ty;
                 let short_name = if let Some(s) = short_name.strip_suffix("_POINTER") {
@@ -811,11 +804,10 @@ impl Gen {
                     };
                     short_name
                 };
-                write_indented!(
-                    metadata_out_props,
-                    4,
+                write!(
+                    module_out,
                     str_block! {"
-                        Property {{
+                        pub static METADATA_{name}: Property = Property {{
                             module: {module:?},
                             name: {name:?},
                             short_name: {short_name:?},
@@ -823,7 +815,7 @@ impl Gen {
                             ty: SDL_PropertyType::{ty},
                             doc: {doc},
                             available_since: {available_since},
-                        }},
+                        }};
                     "},
                     module = module,
                     name = prop.name,
@@ -835,16 +827,19 @@ impl Gen {
                         format!("Some({:?})", prop.doc)
                     },
                     available_since = get_available_since(&prop.doc),
-                );
+                )?;
             }
             for group in &metadata.groups {
-                group_count += 1;
                 let available_since = get_available_since(&group.doc);
-                write_indented!(
+                writeln!(
                     metadata_out_groups,
-                    4,
+                    "    &{module}::METADATA_{},",
+                    group.name
+                )?;
+                write!(
+                    module_out,
                     str_block! {"
-                        Group {{
+                        pub static METADATA_{name}: Group = Group {{
                             module: {module:?},
                             kind: GroupKind::{kind},
                             name: {name:?},
@@ -868,12 +863,12 @@ impl Gen {
                         format!("Some({:?})", group.doc)
                     },
                     available_since = available_since,
-                );
+                )?;
                 if !group.values.is_empty() {
                     for value in &group.values {
                         write_indented!(
-                            metadata_out_groups,
-                            12,
+                            module_out,
+                            8,
                             str_block! {"
                                 GroupValue {{
                                     name: {name:?},
@@ -893,32 +888,26 @@ impl Gen {
                         );
                     }
                 }
-                write_indented!(
-                    metadata_out_groups,
-                    4,
+                write!(
+                    module_out,
                     str_block! {"
                             ],
-                        }},
+                        }};
                     "}
-                );
+                )?;
             }
+            format_and_write(module_out, &metadata_path.join(format!("{module}.rs")))?;
         }
 
-        writeln!(metadata_out_hints, "];")?;
-        writeln!(metadata_out_props, "];")?;
-        writeln!(metadata_out_groups, "];")?;
-        writeln!(metadata_out_groups)?;
-        writeln!(metadata_out_groups, "{metadata_out_group_offsets}")?;
+        writeln!(metadata_out)?;
+        writeln!(metadata_out, "{everything_module}")?;
+        writeln!(metadata_out, "{metadata_out_hints}];")?;
+        writeln!(metadata_out)?;
+        writeln!(metadata_out, "{metadata_out_props}];")?;
+        writeln!(metadata_out)?;
+        writeln!(metadata_out, "{metadata_out_groups}];")?;
 
-        let metadata_path = self
-            .output_path
-            .join("..")
-            .join("metadata")
-            .join("generated");
         format_and_write(metadata_out, &metadata_path.join("mod.rs"))?;
-        format_and_write(metadata_out_hints, &metadata_path.join("hints.rs"))?;
-        format_and_write(metadata_out_props, &metadata_path.join("properties.rs"))?;
-        format_and_write(metadata_out_groups, &metadata_path.join("groups.rs"))?;
         Ok(())
     }
 

@@ -758,7 +758,7 @@ pub const SDL_SANDBOX_MACOS: SDL_Sandbox = SDL_Sandbox::MACOS;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_Sandbox {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_system + 0];
+        &crate::metadata::system::METADATA_SDL_Sandbox;
 }
 
 extern "C" {

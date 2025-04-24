@@ -388,7 +388,7 @@ pub const SDL_GPU_PRIMITIVETYPE_POINTLIST: SDL_GPUPrimitiveType = SDL_GPUPrimiti
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUPrimitiveType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 0];
+        &crate::metadata::gpu::METADATA_SDL_GPUPrimitiveType;
 }
 
 /// Specifies how the contents of a texture attached to a render pass are
@@ -464,7 +464,7 @@ pub const SDL_GPU_LOADOP_DONT_CARE: SDL_GPULoadOp = SDL_GPULoadOp::DONT_CARE;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPULoadOp {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 1];
+        &crate::metadata::gpu::METADATA_SDL_GPULoadOp;
 }
 
 /// Specifies how the contents of a texture attached to a render pass are
@@ -546,7 +546,7 @@ pub const SDL_GPU_STOREOP_RESOLVE_AND_STORE: SDL_GPUStoreOp = SDL_GPUStoreOp::RE
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUStoreOp {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 2];
+        &crate::metadata::gpu::METADATA_SDL_GPUStoreOp;
 }
 
 /// Specifies the size of elements in an index buffer.
@@ -615,7 +615,7 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUIndexElementSize {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 3];
+        &crate::metadata::gpu::METADATA_SDL_GPUIndexElementSize;
 }
 
 /// Specifies the pixel format of a texture.
@@ -1252,7 +1252,7 @@ pub const SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT: SDL_GPUTextureFormat =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUTextureFormat {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 4];
+        &crate::metadata::gpu::METADATA_SDL_GPUTextureFormat;
 }
 
 /// Specifies how a texture is intended to be used by the client.
@@ -1498,7 +1498,7 @@ pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: SDL_GPUT
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUTextureUsageFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 5];
+        &crate::metadata::gpu::METADATA_SDL_GPUTextureUsageFlags;
 }
 
 /// Specifies the type of a texture.
@@ -1585,7 +1585,7 @@ pub const SDL_GPU_TEXTURETYPE_CUBE_ARRAY: SDL_GPUTextureType = SDL_GPUTextureTyp
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUTextureType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 6];
+        &crate::metadata::gpu::METADATA_SDL_GPUTextureType;
 }
 
 /// Specifies the sample count of a texture.
@@ -1670,7 +1670,7 @@ pub const SDL_GPU_SAMPLECOUNT_8: SDL_GPUSampleCount = SDL_GPUSampleCount::_8;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUSampleCount {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 7];
+        &crate::metadata::gpu::METADATA_SDL_GPUSampleCount;
 }
 
 /// Specifies the face of a cube map.
@@ -1750,7 +1750,7 @@ pub const SDL_GPU_CUBEMAPFACE_NEGATIVEZ: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUCubeMapFace {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 8];
+        &crate::metadata::gpu::METADATA_SDL_GPUCubeMapFace;
 }
 
 /// Specifies how a buffer is intended to be used by the client.
@@ -1969,7 +1969,7 @@ pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE: SDL_GPUBufferUsageFlags =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUBufferUsageFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 9];
+        &crate::metadata::gpu::METADATA_SDL_GPUBufferUsageFlags;
 }
 
 /// Specifies how a transfer buffer is intended to be used by the client.
@@ -2039,7 +2039,7 @@ pub const SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD: SDL_GPUTransferBufferUsage =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUTransferBufferUsage {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 10];
+        &crate::metadata::gpu::METADATA_SDL_GPUTransferBufferUsage;
 }
 
 /// Specifies which stage a shader program corresponds to.
@@ -2104,7 +2104,7 @@ pub const SDL_GPU_SHADERSTAGE_FRAGMENT: SDL_GPUShaderStage = SDL_GPUShaderStage:
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUShaderStage {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 11];
+        &crate::metadata::gpu::METADATA_SDL_GPUShaderStage;
 }
 
 /// Specifies the format of shader code.
@@ -2317,7 +2317,7 @@ pub const SDL_GPU_SHADERFORMAT_METALLIB: SDL_GPUShaderFormat = SDL_GPUShaderForm
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUShaderFormat {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 12];
+        &crate::metadata::gpu::METADATA_SDL_GPUShaderFormat;
 }
 
 /// Specifies the format of a vertex attribute.
@@ -2529,7 +2529,7 @@ pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF4: SDL_GPUVertexElementFormat =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUVertexElementFormat {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 13];
+        &crate::metadata::gpu::METADATA_SDL_GPUVertexElementFormat;
 }
 
 /// Specifies the rate at which vertex attributes are pulled from buffers.
@@ -2599,7 +2599,7 @@ pub const SDL_GPU_VERTEXINPUTRATE_INSTANCE: SDL_GPUVertexInputRate =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUVertexInputRate {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 14];
+        &crate::metadata::gpu::METADATA_SDL_GPUVertexInputRate;
 }
 
 /// Specifies the fill mode of the graphics pipeline.
@@ -2668,7 +2668,7 @@ pub const SDL_GPU_FILLMODE_LINE: SDL_GPUFillMode = SDL_GPUFillMode::LINE;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUFillMode {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 15];
+        &crate::metadata::gpu::METADATA_SDL_GPUFillMode;
 }
 
 /// Specifies the facing direction in which triangle faces will be culled.
@@ -2743,7 +2743,7 @@ pub const SDL_GPU_CULLMODE_BACK: SDL_GPUCullMode = SDL_GPUCullMode::BACK;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUCullMode {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 16];
+        &crate::metadata::gpu::METADATA_SDL_GPUCullMode;
 }
 
 /// Specifies the vertex winding that will cause a triangle to be determined to
@@ -2814,7 +2814,7 @@ pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOC
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUFrontFace {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 17];
+        &crate::metadata::gpu::METADATA_SDL_GPUFrontFace;
 }
 
 /// Specifies a comparison operator for depth, stencil and sampler operations.
@@ -2923,7 +2923,7 @@ pub const SDL_GPU_COMPAREOP_ALWAYS: SDL_GPUCompareOp = SDL_GPUCompareOp::ALWAYS;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUCompareOp {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 18];
+        &crate::metadata::gpu::METADATA_SDL_GPUCompareOp;
 }
 
 /// Specifies what happens to a stored stencil value if stencil tests fail or
@@ -3037,7 +3037,7 @@ pub const SDL_GPU_STENCILOP_DECREMENT_AND_WRAP: SDL_GPUStencilOp =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUStencilOp {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 19];
+        &crate::metadata::gpu::METADATA_SDL_GPUStencilOp;
 }
 
 /// Specifies the operator to be used when pixels in a render target are
@@ -3132,7 +3132,7 @@ pub const SDL_GPU_BLENDOP_MAX: SDL_GPUBlendOp = SDL_GPUBlendOp::MAX;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUBlendOp {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 20];
+        &crate::metadata::gpu::METADATA_SDL_GPUBlendOp;
 }
 
 /// Specifies a blending factor to be used when pixels in a render target are
@@ -3282,7 +3282,7 @@ pub const SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE: SDL_GPUBlendFactor =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUBlendFactor {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 21];
+        &crate::metadata::gpu::METADATA_SDL_GPUBlendFactor;
 }
 
 /// Specifies which color components are written in a graphics pipeline.
@@ -3456,7 +3456,7 @@ pub const SDL_GPU_COLORCOMPONENT_A: SDL_GPUColorComponentFlags = SDL_GPUColorCom
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUColorComponentFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 22];
+        &crate::metadata::gpu::METADATA_SDL_GPUColorComponentFlags;
 }
 
 /// Specifies a filter operation used by a sampler.
@@ -3525,7 +3525,7 @@ pub const SDL_GPU_FILTER_LINEAR: SDL_GPUFilter = SDL_GPUFilter::LINEAR;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUFilter {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 23];
+        &crate::metadata::gpu::METADATA_SDL_GPUFilter;
 }
 
 /// Specifies a mipmap mode used by a sampler.
@@ -3596,7 +3596,7 @@ pub const SDL_GPU_SAMPLERMIPMAPMODE_LINEAR: SDL_GPUSamplerMipmapMode =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUSamplerMipmapMode {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 24];
+        &crate::metadata::gpu::METADATA_SDL_GPUSamplerMipmapMode;
 }
 
 /// Specifies behavior of texture sampling when the coordinates exceed the 0-1
@@ -3675,7 +3675,7 @@ pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUSamplerAddressMode {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 25];
+        &crate::metadata::gpu::METADATA_SDL_GPUSamplerAddressMode;
 }
 
 /// Specifies the timing that will be used to present swapchain textures to the
@@ -3762,7 +3762,7 @@ pub const SDL_GPU_PRESENTMODE_MAILBOX: SDL_GPUPresentMode = SDL_GPUPresentMode::
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUPresentMode {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 26];
+        &crate::metadata::gpu::METADATA_SDL_GPUPresentMode;
 }
 
 /// Specifies the texture format and colorspace of the swapchain textures.
@@ -3858,7 +3858,7 @@ pub const SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2084: SDL_GPUSwapchainComposition
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUSwapchainComposition {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gpu + 27];
+        &crate::metadata::gpu::METADATA_SDL_GPUSwapchainComposition;
 }
 
 /// A structure specifying a viewport.

@@ -49,7 +49,7 @@ pub struct SDL_SpinLock(pub ::core::ffi::c_int);
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_SpinLock {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_atomic + 0];
+        &crate::metadata::atomic::METADATA_SDL_SpinLock;
 }
 
 extern "C" {

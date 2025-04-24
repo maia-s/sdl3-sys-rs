@@ -349,7 +349,7 @@ impl From<SDL_TimerID> for Uint32 {
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TimerID {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_timer + 0];
+        &crate::metadata::timer::METADATA_SDL_TimerID;
 }
 
 /// Function prototype for the millisecond timer callback function.

@@ -113,7 +113,7 @@ pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_DateFormat {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_time + 0];
+        &crate::metadata::time::METADATA_SDL_DateFormat;
 }
 
 /// The preferred time format of the current system locale.
@@ -182,7 +182,7 @@ pub const SDL_TIME_FORMAT_12HR: SDL_TimeFormat = SDL_TimeFormat::_12HR;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TimeFormat {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_time + 1];
+        &crate::metadata::time::METADATA_SDL_TimeFormat;
 }
 
 extern "C" {

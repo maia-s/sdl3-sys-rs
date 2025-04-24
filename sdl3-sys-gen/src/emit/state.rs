@@ -900,11 +900,8 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         self.inner_mut().metadata.properties.push(metadata);
     }
 
-    pub fn register_group_metadata(&self, metadata: GroupMetadata) -> usize {
-        let mut inner_mut = self.inner_mut();
-        let index = inner_mut.metadata.groups.len();
-        inner_mut.metadata.groups.push(metadata);
-        index
+    pub fn register_group_metadata(&self, metadata: GroupMetadata) {
+        self.inner_mut().metadata.groups.push(metadata);
     }
 }
 

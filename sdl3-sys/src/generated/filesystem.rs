@@ -275,7 +275,7 @@ pub const SDL_FOLDER_COUNT: SDL_Folder = SDL_Folder::COUNT;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_Folder {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_filesystem + 0];
+        &crate::metadata::filesystem::METADATA_SDL_Folder;
 }
 
 extern "C" {
@@ -389,7 +389,7 @@ pub const SDL_PATHTYPE_OTHER: SDL_PathType = SDL_PathType::OTHER;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_PathType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_filesystem + 1];
+        &crate::metadata::filesystem::METADATA_SDL_PathType;
 }
 
 /// Information about a path on the filesystem.
@@ -549,7 +549,7 @@ pub const SDL_GLOB_CASEINSENSITIVE: SDL_GlobFlags = SDL_GlobFlags::CASEINSENSITI
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GlobFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_filesystem + 2];
+        &crate::metadata::filesystem::METADATA_SDL_GlobFlags;
 }
 
 extern "C" {
@@ -644,7 +644,7 @@ pub const SDL_ENUM_FAILURE: SDL_EnumerationResult = SDL_EnumerationResult::FAILU
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_EnumerationResult {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_filesystem + 3];
+        &crate::metadata::filesystem::METADATA_SDL_EnumerationResult;
 }
 
 /// Callback for directory enumeration.

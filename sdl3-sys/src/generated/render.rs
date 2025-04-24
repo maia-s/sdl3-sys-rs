@@ -131,7 +131,7 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGE
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TextureAccess {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_render + 0];
+        &crate::metadata::render::METADATA_SDL_TextureAccess;
 }
 
 /// How the logical size is mapped to the output.
@@ -220,7 +220,7 @@ pub const SDL_LOGICAL_PRESENTATION_INTEGER_SCALE: SDL_RendererLogicalPresentatio
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_RendererLogicalPresentation {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_render + 1];
+        &crate::metadata::render::METADATA_SDL_RendererLogicalPresentation;
 }
 
 /// An efficient driver-specific representation of pixel data

@@ -378,6 +378,7 @@ const ENUM_PATCHES: &[EnumPatch] = &[
         match_ident: |i| i == "SDL_DUMMY_ENUM",
         patch: |_, e| {
             e.hidden = true;
+            e.emit_metadata = false;
             Ok(true)
         },
     },

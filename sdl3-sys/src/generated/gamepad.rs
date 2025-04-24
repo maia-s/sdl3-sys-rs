@@ -168,7 +168,7 @@ pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gamepad + 0];
+        &crate::metadata::gamepad::METADATA_SDL_GamepadType;
 }
 
 /// The list of buttons available on a gamepad
@@ -382,7 +382,7 @@ pub const SDL_GAMEPAD_BUTTON_COUNT: SDL_GamepadButton = SDL_GamepadButton::COUNT
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadButton {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gamepad + 1];
+        &crate::metadata::gamepad::METADATA_SDL_GamepadButton;
 }
 
 /// The set of gamepad button labels
@@ -480,7 +480,7 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadButtonLabel {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gamepad + 2];
+        &crate::metadata::gamepad::METADATA_SDL_GamepadButtonLabel;
 }
 
 /// The list of axes available on a gamepad
@@ -575,7 +575,7 @@ pub const SDL_GAMEPAD_AXIS_COUNT: SDL_GamepadAxis = SDL_GamepadAxis::COUNT;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadAxis {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gamepad + 3];
+        &crate::metadata::gamepad::METADATA_SDL_GamepadAxis;
 }
 
 /// Types of gamepad control bindings.
@@ -650,7 +650,7 @@ pub const SDL_GAMEPAD_BINDTYPE_HAT: SDL_GamepadBindingType = SDL_GamepadBindingT
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadBindingType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_gamepad + 4];
+        &crate::metadata::gamepad::METADATA_SDL_GamepadBindingType;
 }
 
 #[cfg(feature = "debug-impls")]

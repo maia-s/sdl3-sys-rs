@@ -253,7 +253,7 @@ pub const SDL_INIT_CAMERA: SDL_InitFlags = SDL_InitFlags::CAMERA;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_InitFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_init + 0];
+        &crate::metadata::init::METADATA_SDL_InitFlags;
 }
 
 /// Return values for optional main callbacks.
@@ -340,7 +340,7 @@ pub const SDL_APP_FAILURE: SDL_AppResult = SDL_AppResult::FAILURE;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_AppResult {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_init + 1];
+        &crate::metadata::init::METADATA_SDL_AppResult;
 }
 
 /// Function pointer typedef for [`SDL_AppInit`].

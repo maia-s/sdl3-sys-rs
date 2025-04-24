@@ -345,7 +345,7 @@ pub const SDL_FILEDIALOG_OPENFOLDER: SDL_FileDialogType = SDL_FileDialogType::OP
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_FileDialogType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_dialog + 0];
+        &crate::metadata::dialog::METADATA_SDL_FileDialogType;
 }
 
 extern "C" {

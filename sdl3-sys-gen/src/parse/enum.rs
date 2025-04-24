@@ -23,6 +23,7 @@ pub struct Enum {
     pub hidden: bool,
     pub kind: EnumKind,
     pub registered: Cell<bool>,
+    pub emit_metadata: bool,
 }
 
 // parse a c enum to EnumKind::Enum
@@ -95,6 +96,7 @@ impl Parse for Enum {
                 hidden: false,
                 kind: EnumKind::Enum,
                 registered: Cell::new(false),
+                emit_metadata: true,
             };
             patch_parsed_enum(ctx, &mut e)?;
             Ok((rest, Some(e)))

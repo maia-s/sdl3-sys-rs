@@ -64,7 +64,7 @@ impl From<SDL_ThreadID> for Uint64 {
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_ThreadID {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_thread + 0];
+        &crate::metadata::thread::METADATA_SDL_ThreadID;
 }
 
 /// Thread local storage ID.
@@ -92,8 +92,7 @@ impl From<SDL_TLSID> for SDL_AtomicInt {
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TLSID {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_thread + 1];
+    const GROUP_METADATA: &sdl3_sys::metadata::Group = &crate::metadata::thread::METADATA_SDL_TLSID;
 }
 
 /// The SDL thread priority.
@@ -169,7 +168,7 @@ pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPrio
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_ThreadPriority {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_thread + 2];
+        &crate::metadata::thread::METADATA_SDL_ThreadPriority;
 }
 
 /// The SDL thread state.
@@ -252,7 +251,7 @@ pub const SDL_THREAD_COMPLETE: SDL_ThreadState = SDL_ThreadState::COMPLETE;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_ThreadState {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_thread + 3];
+        &crate::metadata::thread::METADATA_SDL_ThreadState;
 }
 
 /// The function passed to [`SDL_CreateThread()`] as the new thread's entry point.

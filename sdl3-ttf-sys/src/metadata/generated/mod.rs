@@ -7,11 +7,31 @@ use sdl3_sys::{
     version::SDL_VERSIONNUM,
 };
 
-mod hints;
-pub use hints::*;
+pub mod textengine;
+pub mod ttf;
 
-mod properties;
-pub use properties::*;
+/// Reexports of everything from the other modules
+pub mod everything {
+    #[doc(no_inline)]
+    pub use super::textengine::*;
+    #[doc(no_inline)]
+    pub use super::ttf::*;
+}
 
-mod groups;
-pub use groups::*;
+/// Metadata for hint constants in this crate
+pub static HINTS: &[&Hint] = &[];
+
+/// Metadata for property constants in this crate
+pub static PROPERTIES: &[&Property] = &[];
+
+/// Metadata for groups in this crate
+pub static GROUPS: &[&Group] = &[
+    &textengine::METADATA_TTF_DrawCommand,
+    &ttf::METADATA_TTF_FontStyleFlags,
+    &ttf::METADATA_TTF_HintingFlags,
+    &ttf::METADATA_TTF_HorizontalAlignment,
+    &ttf::METADATA_TTF_Direction,
+    &ttf::METADATA_TTF_ImageType,
+    &ttf::METADATA_TTF_GPUTextEngineWinding,
+    &ttf::METADATA_TTF_SubStringFlags,
+];

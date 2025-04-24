@@ -207,7 +207,7 @@ pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: SDL_MessageBoxFlags =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_messagebox + 0];
+        &crate::metadata::messagebox::METADATA_SDL_MessageBoxFlags;
 }
 
 /// [`SDL_MessageBoxButtonData`] flags.
@@ -358,7 +358,7 @@ pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: SDL_MessageBoxButtonFlags =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxButtonFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_messagebox + 1];
+        &crate::metadata::messagebox::METADATA_SDL_MessageBoxButtonFlags;
 }
 
 /// Individual button data.
@@ -476,7 +476,7 @@ pub const SDL_MESSAGEBOX_COLOR_COUNT: SDL_MessageBoxColorType = SDL_MessageBoxCo
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxColorType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_messagebox + 2];
+        &crate::metadata::messagebox::METADATA_SDL_MessageBoxColorType;
 }
 
 /// A set of colors to use for message box dialogs

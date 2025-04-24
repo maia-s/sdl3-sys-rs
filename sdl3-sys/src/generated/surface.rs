@@ -201,7 +201,7 @@ pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = SDL_SurfaceFlags::SIMD_AL
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_SurfaceFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_surface + 0];
+        &crate::metadata::surface::METADATA_SDL_SurfaceFlags;
 }
 
 /// The scaling mode.
@@ -271,7 +271,7 @@ pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_ScaleMode {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_surface + 1];
+        &crate::metadata::surface::METADATA_SDL_ScaleMode;
 }
 
 /// The flip mode.
@@ -343,7 +343,7 @@ pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_FlipMode {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_surface + 2];
+        &crate::metadata::surface::METADATA_SDL_FlipMode;
 }
 
 /// A collection of pixels used in software blitting.

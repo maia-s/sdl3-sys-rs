@@ -200,7 +200,7 @@ pub const SDL_TRAYENTRY_CHECKED: SDL_TrayEntryFlags = SDL_TrayEntryFlags::CHECKE
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TrayEntryFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_tray + 0];
+        &crate::metadata::tray::METADATA_SDL_TrayEntryFlags;
 }
 
 /// A callback that is invoked when a tray entry is selected.

@@ -55,7 +55,7 @@ impl From<SDL_TouchID> for Uint64 {
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TouchID {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_touch + 0];
+        &crate::metadata::touch::METADATA_SDL_TouchID;
 }
 
 /// A unique ID for a single finger on a touch device.
@@ -98,7 +98,7 @@ impl From<SDL_FingerID> for Uint64 {
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_FingerID {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_touch + 1];
+        &crate::metadata::touch::METADATA_SDL_FingerID;
 }
 
 /// An enum that describes the type of a touch device.
@@ -176,7 +176,7 @@ pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType =
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TouchDeviceType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_touch + 2];
+        &crate::metadata::touch::METADATA_SDL_TouchDeviceType;
 }
 
 /// Data about a single finger in a multitouch event.

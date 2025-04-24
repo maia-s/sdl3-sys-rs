@@ -729,7 +729,7 @@ pub const TTF_STYLE_STRIKETHROUGH: TTF_FontStyleFlags = TTF_FontStyleFlags::STRI
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_FontStyleFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 0];
+        &crate::metadata::ttf::METADATA_TTF_FontStyleFlags;
 }
 
 extern "C" {
@@ -936,7 +936,7 @@ pub const TTF_HINTING_LIGHT_SUBPIXEL: TTF_HintingFlags = TTF_HintingFlags::LIGHT
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_HintingFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 1];
+        &crate::metadata::ttf::METADATA_TTF_HintingFlags;
 }
 
 extern "C" {
@@ -1185,7 +1185,7 @@ pub const TTF_HORIZONTAL_ALIGN_RIGHT: TTF_HorizontalAlignment = TTF_HorizontalAl
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_HorizontalAlignment {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 2];
+        &crate::metadata::ttf::METADATA_TTF_HorizontalAlignment;
 }
 
 extern "C" {
@@ -1550,7 +1550,7 @@ pub const TTF_DIRECTION_BTT: TTF_Direction = TTF_Direction::BTT;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_Direction {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 3];
+        &crate::metadata::ttf::METADATA_TTF_Direction;
 }
 
 extern "C" {
@@ -1842,7 +1842,7 @@ pub const TTF_IMAGE_SDF: TTF_ImageType = TTF_ImageType::SDF;
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_ImageType {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 4];
+        &crate::metadata::ttf::METADATA_TTF_ImageType;
 }
 
 extern "C" {
@@ -3084,7 +3084,7 @@ pub const TTF_GPU_TEXTENGINE_WINDING_COUNTER_CLOCKWISE: TTF_GPUTextEngineWinding
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_GPUTextEngineWinding {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 5];
+        &crate::metadata::ttf::METADATA_TTF_GPUTextEngineWinding;
 }
 
 extern "C" {
@@ -4053,7 +4053,7 @@ pub const TTF_SUBSTRING_TEXT_END: TTF_SubStringFlags = TTF_SubStringFlags::TEXT_
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for TTF_SubStringFlags {
     const GROUP_METADATA: &sdl3_sys::metadata::Group =
-        &crate::metadata::GROUPS[crate::metadata::GROUP_OFFSET_ttf + 6];
+        &crate::metadata::ttf::METADATA_TTF_SubStringFlags;
 }
 
 /// The representation of a substring within text.

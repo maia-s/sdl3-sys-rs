@@ -7,11 +7,19 @@ use sdl3_sys::{
     version::SDL_VERSIONNUM,
 };
 
-mod hints;
-pub use hints::*;
+pub mod image;
 
-mod properties;
-pub use properties::*;
+/// Reexports of everything from the other modules
+pub mod everything {
+    #[doc(no_inline)]
+    pub use super::image::*;
+}
 
-mod groups;
-pub use groups::*;
+/// Metadata for hint constants in this crate
+pub static HINTS: &[&Hint] = &[];
+
+/// Metadata for property constants in this crate
+pub static PROPERTIES: &[&Property] = &[];
+
+/// Metadata for groups in this crate
+pub static GROUPS: &[&Group] = &[];
