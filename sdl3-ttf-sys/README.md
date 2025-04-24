@@ -32,7 +32,7 @@ convention for libraries. You can change this behaviour with the following featu
 | `build-from-source` | Build and link SDL_ttf from source. You have to install any dependencies SDL needs to build for your target first. See below for build related features. |
 | `build-from-source-static` | Shortcut for enabling both the `build-from-source` and `link-static` features. This should no longer be necessary. |
 | `build-static-vendored` | Build and link SDL_ttf from source, use vendored libraries (see below), and link it all statically. |
-| `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3_ttf.xcframework` to be located at `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
+| `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3_ttf.xcframework` to be located at `~/Library/Frameworks` or `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
 | `link-static` | Link SDL_ttf statically. |
 | `no-link` | Don't build or link anything. This is useful if you only want metadata. |
 
@@ -68,6 +68,7 @@ disables harfbuzz support. Activated features override features disabled with th
 ## Recent changes
 
 - 0.2.0: Update sdl3-sys to 0.5.0, add metadata
+- next:  Look for frameworks in `~/Library/Frameworks` too
 - 0.1.3: Add `link-framework` feature (doesn't work with `build-from-source` yet)
 - 0.1.2: Fix vendored build of Freetype with CMake 4
 - 0.1.1: Update SDL_ttf to 3.2.2

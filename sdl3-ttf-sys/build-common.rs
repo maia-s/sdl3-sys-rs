@@ -225,7 +225,11 @@ fn build(
         {
             if LINK_FRAMEWORK {
                 // FIXME: rust doesn't support linking to xcframeworks
+                let home = env::var("HOME");
                 let link_search = |name| {
+                    if let Ok(home) = home {
+                        println!("cargo::rustc-link-search=framework={home}/Library/Frameworks/{lib_name}.xcframework/{name}");
+                    }
                     println!("cargo::rustc-link-search=framework=/Library/Frameworks/{lib_name}.xcframework/{name}");
                 };
                 if env::var("CARGO_CFG_TARGET_OS").unwrap() == "macos" {

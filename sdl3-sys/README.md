@@ -45,7 +45,7 @@ convention for libraries. You can change this behaviour with the following featu
 | `use-vcpkg` | Use `vcpkg` to find and link the SDL 3 library. |
 | `build-from-source` | Build and link SDL 3 from source. You have to install any dependencies SDL needs to build for your target first. See below for build related features. |
 | `build-from-source-static` | Shortcut for enabling both the `build-from-source` and `link-static` features. This should no longer be necessary. |
-| `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3.xcframework` to be located at `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
+| `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3.xcframework` to be located at `~/Library/Frameworks` or `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
 | `link-static` | Link SDL statically. SDL doesn't recommend doing this. <ul><li>On targets that only support static linking, such as emscripten, you don't have to enable this feature.</li><li>On Apple targets, this currently requires frameworks that should be optional.</li></ul> |
 | `no-link` | Don't build or link anything. This is useful if you only want metadata. |
 
@@ -107,6 +107,7 @@ These features are mutually exclusive. Features higher in this list override lat
 ## Recent changes
 
 - 0.5.0: Make IDs and flag types newtypes, add metadata
+- next:  Look for frameworks in `~/Library/Frameworks` too
 - 0.4.7: Update SDL to 3.2.10, derive PartialEq/Eq/Hash traits for applicable types
 - 0.4.6: Update SDL to 3.2.8
 - 0.4.5: Update SDL to 3.2.6
