@@ -525,6 +525,22 @@ const TYPEDEF_PATCHES: &[TypeDefPatch] = &[
         },
     },
     TypeDefPatch {
+        module: Some("haptic"),
+        match_ident: |i| i == "SDL_HapticDirectionType",
+        patch: |_, td| {
+            td.kind = TypeDefKind::new_enum(EnumKind::Enum);
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
+        module: Some("haptic"),
+        match_ident: |i| i == "SDL_HapticEffectType",
+        patch: |_, td| {
+            td.kind = TypeDefKind::new_enum(EnumKind::Flags);
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
         module: Some("keycode"),
         match_ident: |i| i == "SDL_Keymod",
         patch: |_, td| {
