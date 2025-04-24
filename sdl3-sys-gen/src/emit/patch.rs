@@ -442,6 +442,20 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
         },
     },
     EmitDefinePatch {
+        module: Some("gpu"),
+        match_ident: |i| i == "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER",
+        patch: |ctx, d| {
+            d.emit(ctx)?;
+            writeln!(
+                ctx,
+                "/// `sdl3-sys`: Temporary alias of [`SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER`] for semver compatibility (will be removed in sdl3-sys 0.5)"
+            )?;
+            writeln!(ctx, "pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8: *const ::core::ffi::c_char = SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER;")?;
+            writeln!(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitDefinePatch {
         module: Some("stdinc"),
         match_ident: |i| matches!(i, "SDL_clamp"),
         patch: |ctx, _| {
