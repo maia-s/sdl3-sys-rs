@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PROP_PROCESS_CREATE_ARGS_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_CREATE_ARGS_POINTER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_CREATE_ARGS_POINTER",
     short_name: "PROCESS_CREATE_ARGS_POINTER",
@@ -11,7 +11,7 @@ pub static METADATA_SDL_PROP_PROCESS_CREATE_ARGS_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER",
     short_name: "PROCESS_CREATE_ENVIRONMENT_POINTER",
@@ -20,7 +20,7 @@ pub static METADATA_SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER: Property = Prop
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_CREATE_STDIN_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_CREATE_STDIN_NUMBER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_CREATE_STDIN_NUMBER",
     short_name: "PROCESS_CREATE_STDIN_NUMBER",
@@ -29,7 +29,7 @@ pub static METADATA_SDL_PROP_PROCESS_CREATE_STDIN_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_CREATE_STDIN_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_CREATE_STDIN_POINTER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_CREATE_STDIN_POINTER",
     short_name: "PROCESS_CREATE_STDIN_POINTER",
@@ -38,7 +38,7 @@ pub static METADATA_SDL_PROP_PROCESS_CREATE_STDIN_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER",
     short_name: "PROCESS_CREATE_STDOUT_NUMBER",
@@ -47,7 +47,7 @@ pub static METADATA_SDL_PROP_PROCESS_CREATE_STDOUT_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_CREATE_STDOUT_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_CREATE_STDOUT_POINTER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_CREATE_STDOUT_POINTER",
     short_name: "PROCESS_CREATE_STDOUT_POINTER",
@@ -56,7 +56,7 @@ pub static METADATA_SDL_PROP_PROCESS_CREATE_STDOUT_POINTER: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_CREATE_STDERR_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_CREATE_STDERR_NUMBER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_CREATE_STDERR_NUMBER",
     short_name: "PROCESS_CREATE_STDERR_NUMBER",
@@ -65,7 +65,7 @@ pub static METADATA_SDL_PROP_PROCESS_CREATE_STDERR_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_CREATE_STDERR_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_CREATE_STDERR_POINTER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_CREATE_STDERR_POINTER",
     short_name: "PROCESS_CREATE_STDERR_POINTER",
@@ -74,7 +74,7 @@ pub static METADATA_SDL_PROP_PROCESS_CREATE_STDERR_POINTER: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN",
     short_name: "PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN",
@@ -83,7 +83,7 @@ pub static METADATA_SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN: Property =
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN",
     short_name: "PROCESS_CREATE_BACKGROUND_BOOLEAN",
@@ -92,7 +92,7 @@ pub static METADATA_SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN: Property = Prope
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_PID_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_PID_NUMBER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_PID_NUMBER",
     short_name: "PROCESS_PID_NUMBER",
@@ -101,7 +101,7 @@ pub static METADATA_SDL_PROP_PROCESS_PID_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_STDIN_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_STDIN_POINTER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_STDIN_POINTER",
     short_name: "PROCESS_STDIN_POINTER",
@@ -110,7 +110,7 @@ pub static METADATA_SDL_PROP_PROCESS_STDIN_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_STDOUT_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_STDOUT_POINTER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_STDOUT_POINTER",
     short_name: "PROCESS_STDOUT_POINTER",
@@ -119,7 +119,7 @@ pub static METADATA_SDL_PROP_PROCESS_STDOUT_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_STDERR_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_STDERR_POINTER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_STDERR_POINTER",
     short_name: "PROCESS_STDERR_POINTER",
@@ -128,7 +128,7 @@ pub static METADATA_SDL_PROP_PROCESS_STDERR_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_PROCESS_BACKGROUND_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_PROCESS_BACKGROUND_BOOLEAN: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_BACKGROUND_BOOLEAN",
     short_name: "PROCESS_BACKGROUND_BOOLEAN",
@@ -137,7 +137,7 @@ pub static METADATA_SDL_PROP_PROCESS_BACKGROUND_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_ProcessIO: Group = Group {
+pub const METADATA_SDL_ProcessIO: Group = Group {
     module: "process",
     kind: GroupKind::Enum,
     name: "SDL_ProcessIO",

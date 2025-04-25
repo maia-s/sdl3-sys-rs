@@ -54,7 +54,7 @@ impl From<SDL_TouchID> for Uint64 {
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TouchID {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::touch::METADATA_SDL_TouchID;
 }
 
@@ -97,7 +97,7 @@ impl From<SDL_FingerID> for Uint64 {
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_FingerID {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::touch::METADATA_SDL_FingerID;
 }
 
@@ -175,7 +175,7 @@ pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType =
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TouchDeviceType {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::touch::METADATA_SDL_TouchDeviceType;
 }
 

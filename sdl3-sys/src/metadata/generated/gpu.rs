@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN",
     short_name: "GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN",
@@ -11,7 +11,7 @@ pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN: Property = Pro
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN",
     short_name: "GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN",
@@ -20,7 +20,7 @@ pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN: Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING: Property = Property {
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING",
     short_name: "GPU_DEVICE_CREATE_NAME_STRING",
@@ -29,7 +29,7 @@ pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN",
     short_name: "GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN",
@@ -38,7 +38,7 @@ pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN: Property
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN",
     short_name: "GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN",
@@ -47,7 +47,7 @@ pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN: Property =
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN",
     short_name: "GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN",
@@ -56,7 +56,7 @@ pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN: Property = 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN",
     short_name: "GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN",
@@ -65,7 +65,7 @@ pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN: Property = 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN",
     short_name: "GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN",
@@ -74,7 +74,7 @@ pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN: Property = P
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN",
     short_name: "GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN",
@@ -83,7 +83,7 @@ pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN: Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: Property = Property {
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING",
     short_name: "GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING",
@@ -92,7 +92,7 @@ pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: Prope
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING: Property = Property {
+pub const METADATA_SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING",
     short_name: "GPU_COMPUTEPIPELINE_CREATE_NAME_STRING",
@@ -101,7 +101,7 @@ pub static METADATA_SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING: Property = 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING: Property = Property {
+pub const METADATA_SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING",
     short_name: "GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING",
@@ -110,7 +110,7 @@ pub static METADATA_SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING: Property =
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING: Property = Property {
+pub const METADATA_SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING",
     short_name: "GPU_SAMPLER_CREATE_NAME_STRING",
@@ -119,7 +119,7 @@ pub static METADATA_SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING: Property = Property
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_SHADER_CREATE_NAME_STRING: Property = Property {
+pub const METADATA_SDL_PROP_GPU_SHADER_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_SHADER_CREATE_NAME_STRING",
     short_name: "GPU_SHADER_CREATE_NAME_STRING",
@@ -128,7 +128,7 @@ pub static METADATA_SDL_PROP_GPU_SHADER_CREATE_NAME_STRING: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT: Property = Property {
+pub const METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT",
     short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT",
@@ -137,7 +137,7 @@ pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT: Property = 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT: Property = Property {
+pub const METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT",
     short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT",
@@ -146,7 +146,7 @@ pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT: Property = 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT: Property = Property {
+pub const METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT",
     short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT",
@@ -155,7 +155,7 @@ pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT: Property = 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT: Property = Property {
+pub const METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT",
     short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT",
@@ -164,7 +164,7 @@ pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT: Property = 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT: Property = Property {
+pub const METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT",
     short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT",
@@ -173,7 +173,7 @@ pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT: Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8: Property = Property {
+pub const METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8",
     short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8",
@@ -182,7 +182,7 @@ pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8: Prope
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING: Property = Property {
+pub const METADATA_SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING",
     short_name: "GPU_TEXTURE_CREATE_NAME_STRING",
@@ -191,7 +191,7 @@ pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING: Property = Property
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING: Property = Property {
+pub const METADATA_SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING",
     short_name: "GPU_BUFFER_CREATE_NAME_STRING",
@@ -200,7 +200,7 @@ pub static METADATA_SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING: Property = Property {
+pub const METADATA_SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING",
     short_name: "GPU_TRANSFERBUFFER_CREATE_NAME_STRING",
@@ -209,7 +209,7 @@ pub static METADATA_SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING: Property = P
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_GPUPrimitiveType: Group = Group {
+pub const METADATA_SDL_GPUPrimitiveType: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUPrimitiveType",
@@ -249,7 +249,7 @@ pub static METADATA_SDL_GPUPrimitiveType: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPULoadOp: Group = Group {
+pub const METADATA_SDL_GPULoadOp: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPULoadOp",
@@ -277,7 +277,7 @@ pub static METADATA_SDL_GPULoadOp: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUStoreOp: Group = Group {
+pub const METADATA_SDL_GPUStoreOp: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUStoreOp",
@@ -311,7 +311,7 @@ pub static METADATA_SDL_GPUStoreOp: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUIndexElementSize: Group = Group {
+pub const METADATA_SDL_GPUIndexElementSize: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUIndexElementSize",
@@ -333,7 +333,7 @@ pub static METADATA_SDL_GPUIndexElementSize: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUTextureFormat: Group = Group {
+pub const METADATA_SDL_GPUTextureFormat: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUTextureFormat",
@@ -973,7 +973,7 @@ pub static METADATA_SDL_GPUTextureFormat: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUTextureUsageFlags: Group = Group {
+pub const METADATA_SDL_GPUTextureUsageFlags: Group = Group {
     module: "gpu",
     kind: GroupKind::Flags,
     name: "SDL_GPUTextureUsageFlags",
@@ -1025,7 +1025,7 @@ pub static METADATA_SDL_GPUTextureUsageFlags: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUTextureType: Group = Group {
+pub const METADATA_SDL_GPUTextureType: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUTextureType",
@@ -1065,7 +1065,7 @@ pub static METADATA_SDL_GPUTextureType: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUSampleCount: Group = Group {
+pub const METADATA_SDL_GPUSampleCount: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUSampleCount",
@@ -1099,7 +1099,7 @@ pub static METADATA_SDL_GPUSampleCount: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUCubeMapFace: Group = Group {
+pub const METADATA_SDL_GPUCubeMapFace: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUCubeMapFace",
@@ -1145,7 +1145,7 @@ pub static METADATA_SDL_GPUCubeMapFace: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUBufferUsageFlags: Group = Group {
+pub const METADATA_SDL_GPUBufferUsageFlags: Group = Group {
     module: "gpu",
     kind: GroupKind::Flags,
     name: "SDL_GPUBufferUsageFlags",
@@ -1191,7 +1191,7 @@ pub static METADATA_SDL_GPUBufferUsageFlags: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUTransferBufferUsage: Group = Group {
+pub const METADATA_SDL_GPUTransferBufferUsage: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUTransferBufferUsage",
@@ -1213,7 +1213,7 @@ pub static METADATA_SDL_GPUTransferBufferUsage: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUShaderStage: Group = Group {
+pub const METADATA_SDL_GPUShaderStage: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUShaderStage",
@@ -1235,7 +1235,7 @@ pub static METADATA_SDL_GPUShaderStage: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUShaderFormat: Group = Group {
+pub const METADATA_SDL_GPUShaderFormat: Group = Group {
     module: "gpu",
     kind: GroupKind::Flags,
     name: "SDL_GPUShaderFormat",
@@ -1287,7 +1287,7 @@ pub static METADATA_SDL_GPUShaderFormat: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUVertexElementFormat: Group = Group {
+pub const METADATA_SDL_GPUVertexElementFormat: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUVertexElementFormat",
@@ -1483,7 +1483,7 @@ pub static METADATA_SDL_GPUVertexElementFormat: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUVertexInputRate: Group = Group {
+pub const METADATA_SDL_GPUVertexInputRate: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUVertexInputRate",
@@ -1505,7 +1505,7 @@ pub static METADATA_SDL_GPUVertexInputRate: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUFillMode: Group = Group {
+pub const METADATA_SDL_GPUFillMode: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUFillMode",
@@ -1527,7 +1527,7 @@ pub static METADATA_SDL_GPUFillMode: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUCullMode: Group = Group {
+pub const METADATA_SDL_GPUCullMode: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUCullMode",
@@ -1555,7 +1555,7 @@ pub static METADATA_SDL_GPUCullMode: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUFrontFace: Group = Group {
+pub const METADATA_SDL_GPUFrontFace: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUFrontFace",
@@ -1577,7 +1577,7 @@ pub static METADATA_SDL_GPUFrontFace: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUCompareOp: Group = Group {
+pub const METADATA_SDL_GPUCompareOp: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUCompareOp",
@@ -1641,7 +1641,7 @@ pub static METADATA_SDL_GPUCompareOp: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUStencilOp: Group = Group {
+pub const METADATA_SDL_GPUStencilOp: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUStencilOp",
@@ -1705,7 +1705,7 @@ pub static METADATA_SDL_GPUStencilOp: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUBlendOp: Group = Group {
+pub const METADATA_SDL_GPUBlendOp: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUBlendOp",
@@ -1751,7 +1751,7 @@ pub static METADATA_SDL_GPUBlendOp: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUBlendFactor: Group = Group {
+pub const METADATA_SDL_GPUBlendFactor: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUBlendFactor",
@@ -1845,7 +1845,7 @@ pub static METADATA_SDL_GPUBlendFactor: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUColorComponentFlags: Group = Group {
+pub const METADATA_SDL_GPUColorComponentFlags: Group = Group {
     module: "gpu",
     kind: GroupKind::Flags,
     name: "SDL_GPUColorComponentFlags",
@@ -1879,7 +1879,7 @@ pub static METADATA_SDL_GPUColorComponentFlags: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUFilter: Group = Group {
+pub const METADATA_SDL_GPUFilter: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUFilter",
@@ -1901,7 +1901,7 @@ pub static METADATA_SDL_GPUFilter: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUSamplerMipmapMode: Group = Group {
+pub const METADATA_SDL_GPUSamplerMipmapMode: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUSamplerMipmapMode",
@@ -1923,7 +1923,7 @@ pub static METADATA_SDL_GPUSamplerMipmapMode: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUSamplerAddressMode: Group = Group {
+pub const METADATA_SDL_GPUSamplerAddressMode: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUSamplerAddressMode",
@@ -1951,7 +1951,7 @@ pub static METADATA_SDL_GPUSamplerAddressMode: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUPresentMode: Group = Group {
+pub const METADATA_SDL_GPUPresentMode: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUPresentMode",
@@ -1979,7 +1979,7 @@ pub static METADATA_SDL_GPUPresentMode: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GPUSwapchainComposition: Group = Group {
+pub const METADATA_SDL_GPUSwapchainComposition: Group = Group {
     module: "gpu",
     kind: GroupKind::Enum,
     name: "SDL_GPUSwapchainComposition",

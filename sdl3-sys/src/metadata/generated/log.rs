@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_LogCategory: Group = Group {
+pub const METADATA_SDL_LogCategory: Group = Group {
     module: "log",
     kind: GroupKind::Enum,
     name: "SDL_LogCategory",
@@ -132,7 +132,7 @@ pub static METADATA_SDL_LogCategory: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_LogPriority: Group = Group {
+pub const METADATA_SDL_LogPriority: Group = Group {
     module: "log",
     kind: GroupKind::Enum,
     name: "SDL_LogPriority",

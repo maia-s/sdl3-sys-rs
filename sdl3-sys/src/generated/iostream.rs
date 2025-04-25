@@ -97,7 +97,7 @@ pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_IOStatus {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::iostream::METADATA_SDL_IOStatus;
 }
 
@@ -172,7 +172,7 @@ pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_IOWhence {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::iostream::METADATA_SDL_IOWhence;
 }
 

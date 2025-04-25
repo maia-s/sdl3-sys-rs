@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_InitStatus: Group = Group {
+pub const METADATA_SDL_InitStatus: Group = Group {
     module: "mutex",
     kind: GroupKind::Enum,
     name: "SDL_InitStatus",

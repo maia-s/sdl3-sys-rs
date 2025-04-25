@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_Keycode: Group = Group {
+pub const METADATA_SDL_Keycode: Group = Group {
     module: "keycode",
     kind: GroupKind::Id,
     name: "SDL_Keycode",
@@ -1560,7 +1560,7 @@ pub static METADATA_SDL_Keycode: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_Keymod: Group = Group {
+pub const METADATA_SDL_Keymod: Group = Group {
     module: "keycode",
     kind: GroupKind::Flags,
     name: "SDL_Keymod",

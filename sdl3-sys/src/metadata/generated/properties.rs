@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PropertiesID: Group = Group {
+pub const METADATA_SDL_PropertiesID: Group = Group {
     module: "properties",
     kind: GroupKind::Id,
     name: "SDL_PropertiesID",
@@ -13,7 +13,7 @@ pub static METADATA_SDL_PropertiesID: Group = Group {
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[],
 };
-pub static METADATA_SDL_PropertyType: Group = Group {
+pub const METADATA_SDL_PropertyType: Group = Group {
     module: "properties",
     kind: GroupKind::Enum,
     name: "SDL_PropertyType",

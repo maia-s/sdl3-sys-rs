@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_TrayEntryFlags: Group = Group {
+pub const METADATA_SDL_TrayEntryFlags: Group = Group {
     module: "tray",
     kind: GroupKind::Flags,
     name: "SDL_TrayEntryFlags",

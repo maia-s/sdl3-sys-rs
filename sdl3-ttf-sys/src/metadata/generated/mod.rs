@@ -18,13 +18,13 @@ pub mod everything {
 }
 
 /// Metadata for hint constants in this crate
-pub static HINTS: &[&Hint] = &[];
+pub const HINTS: &[&Hint] = &[];
 
 /// Metadata for property constants in this crate
-pub static PROPERTIES: &[&Property] = &[];
+pub const PROPERTIES: &[&Property] = &[];
 
 /// Metadata for groups in this crate
-pub static GROUPS: &[&Group] = &[
+pub const GROUPS: &[&Group] = &[
     &textengine::METADATA_TTF_DrawCommand,
     &ttf::METADATA_TTF_FontStyleFlags,
     &ttf::METADATA_TTF_HintingFlags,

@@ -927,7 +927,7 @@ impl From<SDL_HapticID> for Uint32 {
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_HapticID {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::haptic::METADATA_SDL_HapticID;
 }
 

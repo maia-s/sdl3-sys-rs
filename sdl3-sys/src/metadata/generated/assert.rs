@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_AssertState: Group = Group {
+pub const METADATA_SDL_AssertState: Group = Group {
     module: "assert",
     kind: GroupKind::Enum,
     name: "SDL_AssertState",

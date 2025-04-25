@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_EventType: Group = Group {
+pub const METADATA_SDL_EventType: Group = Group {
     module: "events",
     kind: GroupKind::Enum,
     name: "SDL_EventType",
@@ -720,7 +720,7 @@ pub static METADATA_SDL_EventType: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_EventAction: Group = Group {
+pub const METADATA_SDL_EventAction: Group = Group {
     module: "events",
     kind: GroupKind::Enum,
     name: "SDL_EventAction",

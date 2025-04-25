@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_TTF_FontStyleFlags: Group = Group {
+pub const METADATA_TTF_FontStyleFlags: Group = Group {
     module: "ttf",
     kind: GroupKind::Flags,
     name: "TTF_FontStyleFlags",
@@ -42,7 +42,7 @@ pub static METADATA_TTF_FontStyleFlags: Group = Group {
         },
     ],
 };
-pub static METADATA_TTF_HintingFlags: Group = Group {
+pub const METADATA_TTF_HintingFlags: Group = Group {
     module: "ttf",
     kind: GroupKind::Enum,
     name: "TTF_HintingFlags",
@@ -88,7 +88,7 @@ pub static METADATA_TTF_HintingFlags: Group = Group {
         },
     ],
 };
-pub static METADATA_TTF_HorizontalAlignment: Group = Group {
+pub const METADATA_TTF_HorizontalAlignment: Group = Group {
     module: "ttf",
     kind: GroupKind::Enum,
     name: "TTF_HorizontalAlignment",
@@ -122,7 +122,7 @@ pub static METADATA_TTF_HorizontalAlignment: Group = Group {
         },
     ],
 };
-pub static METADATA_TTF_Direction: Group = Group {
+pub const METADATA_TTF_Direction: Group = Group {
     module: "ttf",
     kind: GroupKind::Enum,
     name: "TTF_Direction",
@@ -162,7 +162,7 @@ pub static METADATA_TTF_Direction: Group = Group {
         },
     ],
 };
-pub static METADATA_TTF_ImageType: Group = Group {
+pub const METADATA_TTF_ImageType: Group = Group {
     module: "ttf",
     kind: GroupKind::Enum,
     name: "TTF_ImageType",
@@ -196,7 +196,7 @@ pub static METADATA_TTF_ImageType: Group = Group {
         },
     ],
 };
-pub static METADATA_TTF_GPUTextEngineWinding: Group = Group {
+pub const METADATA_TTF_GPUTextEngineWinding: Group = Group {
     module: "ttf",
     kind: GroupKind::Enum,
     name: "TTF_GPUTextEngineWinding",
@@ -224,7 +224,7 @@ pub static METADATA_TTF_GPUTextEngineWinding: Group = Group {
         },
     ],
 };
-pub static METADATA_TTF_SubStringFlags: Group = Group {
+pub const METADATA_TTF_SubStringFlags: Group = Group {
     module: "ttf",
     kind: GroupKind::Flags,
     name: "TTF_SubStringFlags",

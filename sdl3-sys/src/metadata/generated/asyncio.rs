@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_AsyncIOTaskType: Group = Group {
+pub const METADATA_SDL_AsyncIOTaskType: Group = Group {
     module: "asyncio",
     kind: GroupKind::Enum,
     name: "SDL_AsyncIOTaskType",
@@ -30,7 +30,7 @@ pub static METADATA_SDL_AsyncIOTaskType: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_AsyncIOResult: Group = Group {
+pub const METADATA_SDL_AsyncIOResult: Group = Group {
     module: "asyncio",
     kind: GroupKind::Enum,
     name: "SDL_AsyncIOResult",

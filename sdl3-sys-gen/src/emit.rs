@@ -1440,7 +1440,7 @@ impl Enum {
                 str_block! {r#"
                     #[cfg(feature = "metadata")]
                     impl sdl3_sys::metadata::HasGroupMetadata for {enum_ident_s} {{
-                        const GROUP_METADATA: &sdl3_sys::metadata::Group = &crate::metadata::{module}::METADATA_{enum_ident_s};
+                        const GROUP_METADATA: &'static sdl3_sys::metadata::Group = &crate::metadata::{module}::METADATA_{enum_ident_s};
                     }}
                 "#},
                 enum_ident_s = enum_ident_s,

@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PROP_FILE_DIALOG_FILTERS_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_FILE_DIALOG_FILTERS_POINTER: Property = Property {
     module: "dialog",
     name: "SDL_PROP_FILE_DIALOG_FILTERS_POINTER",
     short_name: "FILE_DIALOG_FILTERS_POINTER",
@@ -11,7 +11,7 @@ pub static METADATA_SDL_PROP_FILE_DIALOG_FILTERS_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_FILE_DIALOG_NFILTERS_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_FILE_DIALOG_NFILTERS_NUMBER: Property = Property {
     module: "dialog",
     name: "SDL_PROP_FILE_DIALOG_NFILTERS_NUMBER",
     short_name: "FILE_DIALOG_NFILTERS_NUMBER",
@@ -20,7 +20,7 @@ pub static METADATA_SDL_PROP_FILE_DIALOG_NFILTERS_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_FILE_DIALOG_WINDOW_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_FILE_DIALOG_WINDOW_POINTER: Property = Property {
     module: "dialog",
     name: "SDL_PROP_FILE_DIALOG_WINDOW_POINTER",
     short_name: "FILE_DIALOG_WINDOW_POINTER",
@@ -29,7 +29,7 @@ pub static METADATA_SDL_PROP_FILE_DIALOG_WINDOW_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_FILE_DIALOG_LOCATION_STRING: Property = Property {
+pub const METADATA_SDL_PROP_FILE_DIALOG_LOCATION_STRING: Property = Property {
     module: "dialog",
     name: "SDL_PROP_FILE_DIALOG_LOCATION_STRING",
     short_name: "FILE_DIALOG_LOCATION_STRING",
@@ -38,7 +38,7 @@ pub static METADATA_SDL_PROP_FILE_DIALOG_LOCATION_STRING: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_FILE_DIALOG_MANY_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_FILE_DIALOG_MANY_BOOLEAN: Property = Property {
     module: "dialog",
     name: "SDL_PROP_FILE_DIALOG_MANY_BOOLEAN",
     short_name: "FILE_DIALOG_MANY_BOOLEAN",
@@ -47,7 +47,7 @@ pub static METADATA_SDL_PROP_FILE_DIALOG_MANY_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_FILE_DIALOG_TITLE_STRING: Property = Property {
+pub const METADATA_SDL_PROP_FILE_DIALOG_TITLE_STRING: Property = Property {
     module: "dialog",
     name: "SDL_PROP_FILE_DIALOG_TITLE_STRING",
     short_name: "FILE_DIALOG_TITLE_STRING",
@@ -56,7 +56,7 @@ pub static METADATA_SDL_PROP_FILE_DIALOG_TITLE_STRING: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_FILE_DIALOG_ACCEPT_STRING: Property = Property {
+pub const METADATA_SDL_PROP_FILE_DIALOG_ACCEPT_STRING: Property = Property {
     module: "dialog",
     name: "SDL_PROP_FILE_DIALOG_ACCEPT_STRING",
     short_name: "FILE_DIALOG_ACCEPT_STRING",
@@ -65,7 +65,7 @@ pub static METADATA_SDL_PROP_FILE_DIALOG_ACCEPT_STRING: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_FILE_DIALOG_CANCEL_STRING: Property = Property {
+pub const METADATA_SDL_PROP_FILE_DIALOG_CANCEL_STRING: Property = Property {
     module: "dialog",
     name: "SDL_PROP_FILE_DIALOG_CANCEL_STRING",
     short_name: "FILE_DIALOG_CANCEL_STRING",
@@ -74,7 +74,7 @@ pub static METADATA_SDL_PROP_FILE_DIALOG_CANCEL_STRING: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_FileDialogType: Group = Group {
+pub const METADATA_SDL_FileDialogType: Group = Group {
     module: "dialog",
     kind: GroupKind::Enum,
     name: "SDL_FileDialogType",

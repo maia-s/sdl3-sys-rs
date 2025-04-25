@@ -76,7 +76,7 @@ impl From<SDL_JoystickID> for Uint32 {
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_JoystickID {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::joystick::METADATA_SDL_JoystickID;
 }
 
@@ -181,7 +181,7 @@ pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_JoystickType {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::joystick::METADATA_SDL_JoystickType;
 }
 
@@ -258,7 +258,7 @@ pub const SDL_JOYSTICK_CONNECTION_WIRELESS: SDL_JoystickConnectionState =
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_JoystickConnectionState {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::joystick::METADATA_SDL_JoystickConnectionState;
 }
 

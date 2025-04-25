@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER",
     short_name: "GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER",
@@ -11,7 +11,7 @@ pub static METADATA_SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: Property =
     doc: Some("The pointer to the global `wl_display` object used by the Wayland video\nbackend.\n\nCan be set before the video subsystem is initialized to import an external\n`wl_display` object from an application or toolkit for use in SDL, or read\nafter initialization to export the `wl_display` used by the Wayland video\nbackend. Setting this property after the video subsystem has been\ninitialized has no effect, and reading it when the video subsystem is\nuninitialized will either return the user provided value, if one was set\nprior to initialization, or NULL. See docs/README-wayland.md for more\ninformation.\n"),
     available_since: None,
 };
-pub static METADATA_SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN",
     short_name: "DISPLAY_HDR_ENABLED_BOOLEAN",
@@ -20,7 +20,7 @@ pub static METADATA_SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER",
     short_name: "DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER",
@@ -29,7 +29,7 @@ pub static METADATA_SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: Property =
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN",
     short_name: "WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN",
@@ -38,7 +38,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN: Property = Pro
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN",
     short_name: "WINDOW_CREATE_BORDERLESS_BOOLEAN",
@@ -47,7 +47,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN: Property = Proper
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN",
     short_name: "WINDOW_CREATE_FOCUSABLE_BOOLEAN",
@@ -56,7 +56,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN",
     short_name: "WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN",
@@ -65,7 +65,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN: Pr
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER",
     short_name: "WINDOW_CREATE_FLAGS_NUMBER",
@@ -74,7 +74,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN",
     short_name: "WINDOW_CREATE_FULLSCREEN_BOOLEAN",
@@ -83,7 +83,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN: Property = Proper
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER",
     short_name: "WINDOW_CREATE_HEIGHT_NUMBER",
@@ -92,7 +92,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN",
     short_name: "WINDOW_CREATE_HIDDEN_BOOLEAN",
@@ -101,7 +101,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN",
     short_name: "WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN",
@@ -110,7 +110,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN: Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN",
     short_name: "WINDOW_CREATE_MAXIMIZED_BOOLEAN",
@@ -119,7 +119,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN",
     short_name: "WINDOW_CREATE_MENU_BOOLEAN",
@@ -128,7 +128,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN",
     short_name: "WINDOW_CREATE_METAL_BOOLEAN",
@@ -137,7 +137,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN",
     short_name: "WINDOW_CREATE_MINIMIZED_BOOLEAN",
@@ -146,7 +146,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN",
     short_name: "WINDOW_CREATE_MODAL_BOOLEAN",
@@ -155,7 +155,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN",
     short_name: "WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN",
@@ -164,7 +164,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN: Property = Pro
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN",
     short_name: "WINDOW_CREATE_OPENGL_BOOLEAN",
@@ -173,7 +173,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_PARENT_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_PARENT_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_PARENT_POINTER",
     short_name: "WINDOW_CREATE_PARENT_POINTER",
@@ -182,7 +182,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_PARENT_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN",
     short_name: "WINDOW_CREATE_RESIZABLE_BOOLEAN",
@@ -191,7 +191,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_TITLE_STRING: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_TITLE_STRING: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_TITLE_STRING",
     short_name: "WINDOW_CREATE_TITLE_STRING",
@@ -200,7 +200,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_TITLE_STRING: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN",
     short_name: "WINDOW_CREATE_TRANSPARENT_BOOLEAN",
@@ -209,7 +209,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN: Property = Prope
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN",
     short_name: "WINDOW_CREATE_TOOLTIP_BOOLEAN",
@@ -218,7 +218,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN",
     short_name: "WINDOW_CREATE_UTILITY_BOOLEAN",
@@ -227,7 +227,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN",
     short_name: "WINDOW_CREATE_VULKAN_BOOLEAN",
@@ -236,7 +236,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER",
     short_name: "WINDOW_CREATE_WIDTH_NUMBER",
@@ -245,7 +245,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_X_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_X_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_X_NUMBER",
     short_name: "WINDOW_CREATE_X_NUMBER",
@@ -254,7 +254,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_X_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_Y_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_Y_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_Y_NUMBER",
     short_name: "WINDOW_CREATE_Y_NUMBER",
@@ -263,7 +263,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_Y_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER",
     short_name: "WINDOW_CREATE_COCOA_WINDOW_POINTER",
@@ -272,7 +272,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER: Property = Prop
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER",
     short_name: "WINDOW_CREATE_COCOA_VIEW_POINTER",
@@ -281,7 +281,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER: Property = Proper
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN: Property =
+pub const METADATA_SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN: Property =
     Property {
         module: "video",
         name: "SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN",
@@ -291,7 +291,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN: 
         doc: None,
         available_since: None,
     };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN",
     short_name: "WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN",
@@ -300,7 +300,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN: Pr
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER",
     short_name: "WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER",
@@ -309,7 +309,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER: Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER",
     short_name: "WINDOW_CREATE_WIN32_HWND_POINTER",
@@ -318,7 +318,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER: Property = Proper
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER",
     short_name: "WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER",
@@ -327,7 +327,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER: Prop
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER",
     short_name: "WINDOW_CREATE_X11_WINDOW_NUMBER",
@@ -336,7 +336,7 @@ pub static METADATA_SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_SHAPE_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_SHAPE_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_SHAPE_POINTER",
     short_name: "WINDOW_SHAPE_POINTER",
@@ -345,7 +345,7 @@ pub static METADATA_SDL_PROP_WINDOW_SHAPE_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN",
     short_name: "WINDOW_HDR_ENABLED_BOOLEAN",
@@ -354,7 +354,7 @@ pub static METADATA_SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT",
     short_name: "WINDOW_SDR_WHITE_LEVEL_FLOAT",
@@ -363,7 +363,7 @@ pub static METADATA_SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT",
     short_name: "WINDOW_HDR_HEADROOM_FLOAT",
@@ -372,7 +372,7 @@ pub static METADATA_SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER",
     short_name: "WINDOW_ANDROID_WINDOW_POINTER",
@@ -381,7 +381,7 @@ pub static METADATA_SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER",
     short_name: "WINDOW_ANDROID_SURFACE_POINTER",
@@ -390,7 +390,7 @@ pub static METADATA_SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER: Property = Property
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER",
     short_name: "WINDOW_UIKIT_WINDOW_POINTER",
@@ -399,7 +399,7 @@ pub static METADATA_SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER",
     short_name: "WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER",
@@ -408,7 +408,7 @@ pub static METADATA_SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER: Property = Prop
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER",
     short_name: "WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER",
@@ -417,7 +417,7 @@ pub static METADATA_SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER: Property = 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER",
     short_name: "WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER",
@@ -426,7 +426,7 @@ pub static METADATA_SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER: Property =
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER",
     short_name: "WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER",
@@ -435,7 +435,7 @@ pub static METADATA_SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER: Pro
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER",
     short_name: "WINDOW_KMSDRM_DEVICE_INDEX_NUMBER",
@@ -444,7 +444,7 @@ pub static METADATA_SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER: Property = Prope
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER",
     short_name: "WINDOW_KMSDRM_DRM_FD_NUMBER",
@@ -453,7 +453,7 @@ pub static METADATA_SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER",
     short_name: "WINDOW_KMSDRM_GBM_DEVICE_POINTER",
@@ -462,7 +462,7 @@ pub static METADATA_SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER: Property = Proper
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_COCOA_WINDOW_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_COCOA_WINDOW_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_COCOA_WINDOW_POINTER",
     short_name: "WINDOW_COCOA_WINDOW_POINTER",
@@ -471,7 +471,7 @@ pub static METADATA_SDL_PROP_WINDOW_COCOA_WINDOW_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER",
     short_name: "WINDOW_COCOA_METAL_VIEW_TAG_NUMBER",
@@ -480,7 +480,7 @@ pub static METADATA_SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER: Property = Prop
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_OPENVR_OVERLAY_ID: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_OPENVR_OVERLAY_ID: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_OPENVR_OVERLAY_ID",
     short_name: "WINDOW_OPENVR_OVERLAY_ID",
@@ -489,7 +489,7 @@ pub static METADATA_SDL_PROP_WINDOW_OPENVR_OVERLAY_ID: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER",
     short_name: "WINDOW_VIVANTE_DISPLAY_POINTER",
@@ -498,7 +498,7 @@ pub static METADATA_SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER: Property = Property
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER",
     short_name: "WINDOW_VIVANTE_WINDOW_POINTER",
@@ -507,7 +507,7 @@ pub static METADATA_SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER",
     short_name: "WINDOW_VIVANTE_SURFACE_POINTER",
@@ -516,7 +516,7 @@ pub static METADATA_SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER: Property = Property
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_WIN32_HWND_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_WIN32_HWND_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_WIN32_HWND_POINTER",
     short_name: "WINDOW_WIN32_HWND_POINTER",
@@ -525,7 +525,7 @@ pub static METADATA_SDL_PROP_WINDOW_WIN32_HWND_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_WIN32_HDC_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_WIN32_HDC_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_WIN32_HDC_POINTER",
     short_name: "WINDOW_WIN32_HDC_POINTER",
@@ -534,7 +534,7 @@ pub static METADATA_SDL_PROP_WINDOW_WIN32_HDC_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER",
     short_name: "WINDOW_WIN32_INSTANCE_POINTER",
@@ -543,7 +543,7 @@ pub static METADATA_SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER",
     short_name: "WINDOW_WAYLAND_DISPLAY_POINTER",
@@ -552,7 +552,7 @@ pub static METADATA_SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER: Property = Property
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER",
     short_name: "WINDOW_WAYLAND_SURFACE_POINTER",
@@ -561,7 +561,7 @@ pub static METADATA_SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER: Property = Property
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_WAYLAND_VIEWPORT_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_WAYLAND_VIEWPORT_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_WAYLAND_VIEWPORT_POINTER",
     short_name: "WINDOW_WAYLAND_VIEWPORT_POINTER",
@@ -570,7 +570,7 @@ pub static METADATA_SDL_PROP_WINDOW_WAYLAND_VIEWPORT_POINTER: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER",
     short_name: "WINDOW_WAYLAND_EGL_WINDOW_POINTER",
@@ -579,7 +579,7 @@ pub static METADATA_SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER: Property = Prope
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER",
     short_name: "WINDOW_WAYLAND_XDG_SURFACE_POINTER",
@@ -588,7 +588,7 @@ pub static METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER: Property = Prop
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER",
     short_name: "WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER",
@@ -597,17 +597,16 @@ pub static METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER: Property = Pro
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING: Property =
-    Property {
-        module: "video",
-        name: "SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING",
-        short_name: "WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING",
-        value: crate::video::SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING,
-        ty: PropertyType::STRING,
-        doc: None,
-        available_since: None,
-    };
-pub static METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING: Property = Property {
+    module: "video",
+    name: "SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING",
+    short_name: "WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING",
+    value: crate::video::SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING,
+    ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER",
     short_name: "WINDOW_WAYLAND_XDG_POPUP_POINTER",
@@ -616,7 +615,7 @@ pub static METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER: Property = Proper
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER",
     short_name: "WINDOW_WAYLAND_XDG_POSITIONER_POINTER",
@@ -625,7 +624,7 @@ pub static METADATA_SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER: Property = P
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_X11_DISPLAY_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_X11_DISPLAY_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_X11_DISPLAY_POINTER",
     short_name: "WINDOW_X11_DISPLAY_POINTER",
@@ -634,7 +633,7 @@ pub static METADATA_SDL_PROP_WINDOW_X11_DISPLAY_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_X11_SCREEN_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_X11_SCREEN_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_X11_SCREEN_NUMBER",
     short_name: "WINDOW_X11_SCREEN_NUMBER",
@@ -643,7 +642,7 @@ pub static METADATA_SDL_PROP_WINDOW_X11_SCREEN_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_WINDOW_X11_WINDOW_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_X11_WINDOW_NUMBER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_X11_WINDOW_NUMBER",
     short_name: "WINDOW_X11_WINDOW_NUMBER",
@@ -652,7 +651,7 @@ pub static METADATA_SDL_PROP_WINDOW_X11_WINDOW_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_DisplayID: Group = Group {
+pub const METADATA_SDL_DisplayID: Group = Group {
     module: "video",
     kind: GroupKind::Id,
     name: "SDL_DisplayID",
@@ -662,7 +661,7 @@ pub static METADATA_SDL_DisplayID: Group = Group {
     values: &[
     ],
 };
-pub static METADATA_SDL_WindowID: Group = Group {
+pub const METADATA_SDL_WindowID: Group = Group {
     module: "video",
     kind: GroupKind::Id,
     name: "SDL_WindowID",
@@ -672,7 +671,7 @@ pub static METADATA_SDL_WindowID: Group = Group {
     values: &[
     ],
 };
-pub static METADATA_SDL_SystemTheme: Group = Group {
+pub const METADATA_SDL_SystemTheme: Group = Group {
     module: "video",
     kind: GroupKind::Enum,
     name: "SDL_SystemTheme",
@@ -700,7 +699,7 @@ pub static METADATA_SDL_SystemTheme: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_DisplayOrientation: Group = Group {
+pub const METADATA_SDL_DisplayOrientation: Group = Group {
     module: "video",
     kind: GroupKind::Enum,
     name: "SDL_DisplayOrientation",
@@ -740,7 +739,7 @@ pub static METADATA_SDL_DisplayOrientation: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_WindowFlags: Group = Group {
+pub const METADATA_SDL_WindowFlags: Group = Group {
     module: "video",
     kind: GroupKind::Flags,
     name: "SDL_WindowFlags",
@@ -900,7 +899,7 @@ pub static METADATA_SDL_WindowFlags: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_FlashOperation: Group = Group {
+pub const METADATA_SDL_FlashOperation: Group = Group {
     module: "video",
     kind: GroupKind::Enum,
     name: "SDL_FlashOperation",
@@ -930,7 +929,7 @@ pub static METADATA_SDL_FlashOperation: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GLAttr: Group = Group {
+pub const METADATA_SDL_GLAttr: Group = Group {
     module: "video",
     kind: GroupKind::Enum,
     name: "SDL_GLAttr",
@@ -1108,7 +1107,7 @@ pub static METADATA_SDL_GLAttr: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GLProfile: Group = Group {
+pub const METADATA_SDL_GLProfile: Group = Group {
     module: "video",
     kind: GroupKind::Flags,
     name: "SDL_GLProfile",
@@ -1136,7 +1135,7 @@ pub static METADATA_SDL_GLProfile: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GLContextFlag: Group = Group {
+pub const METADATA_SDL_GLContextFlag: Group = Group {
     module: "video",
     kind: GroupKind::Flags,
     name: "SDL_GLContextFlag",
@@ -1170,7 +1169,7 @@ pub static METADATA_SDL_GLContextFlag: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GLContextReleaseFlag: Group = Group {
+pub const METADATA_SDL_GLContextReleaseFlag: Group = Group {
     module: "video",
     kind: GroupKind::Flags,
     name: "SDL_GLContextReleaseFlag",
@@ -1192,7 +1191,7 @@ pub static METADATA_SDL_GLContextReleaseFlag: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GLContextResetNotification: Group = Group {
+pub const METADATA_SDL_GLContextResetNotification: Group = Group {
     module: "video",
     kind: GroupKind::Flags,
     name: "SDL_GLContextResetNotification",
@@ -1214,7 +1213,7 @@ pub static METADATA_SDL_GLContextResetNotification: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_HitTestResult: Group = Group {
+pub const METADATA_SDL_HitTestResult: Group = Group {
     module: "video",
     kind: GroupKind::Enum,
     name: "SDL_HitTestResult",

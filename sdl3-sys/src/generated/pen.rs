@@ -55,7 +55,8 @@ impl From<SDL_PenID> for Uint32 {
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_PenID {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &crate::metadata::pen::METADATA_SDL_PenID;
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pen::METADATA_SDL_PenID;
 }
 
 /// The [`SDL_MouseID`] for mouse events simulated with pen input.
@@ -276,7 +277,7 @@ pub const SDL_PEN_INPUT_ERASER_TIP: SDL_PenInputFlags = SDL_PenInputFlags::ERASE
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_PenInputFlags {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pen::METADATA_SDL_PenInputFlags;
 }
 
@@ -388,7 +389,8 @@ pub const SDL_PEN_AXIS_COUNT: SDL_PenAxis = SDL_PenAxis::COUNT;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_PenAxis {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group = &crate::metadata::pen::METADATA_SDL_PenAxis;
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pen::METADATA_SDL_PenAxis;
 }
 
 #[cfg(doc)]

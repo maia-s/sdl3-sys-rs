@@ -4267,7 +4267,7 @@ pub const SDL_HINT_OVERRIDE: SDL_HintPriority = SDL_HintPriority::OVERRIDE;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_HintPriority {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::hints::METADATA_SDL_HintPriority;
 }
 

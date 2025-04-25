@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT: Property = Property {
+pub const METADATA_SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT: Property = Property {
     module: "surface",
     name: "SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT",
     short_name: "SURFACE_SDR_WHITE_POINT_FLOAT",
@@ -11,7 +11,7 @@ pub static METADATA_SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT: Property = Property {
+pub const METADATA_SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT: Property = Property {
     module: "surface",
     name: "SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT",
     short_name: "SURFACE_HDR_HEADROOM_FLOAT",
@@ -20,7 +20,7 @@ pub static METADATA_SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING: Property = Property {
+pub const METADATA_SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING: Property = Property {
     module: "surface",
     name: "SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING",
     short_name: "SURFACE_TONEMAP_OPERATOR_STRING",
@@ -29,7 +29,7 @@ pub static METADATA_SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_SURFACE_HOTSPOT_X_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_SURFACE_HOTSPOT_X_NUMBER: Property = Property {
     module: "surface",
     name: "SDL_PROP_SURFACE_HOTSPOT_X_NUMBER",
     short_name: "SURFACE_HOTSPOT_X_NUMBER",
@@ -38,7 +38,7 @@ pub static METADATA_SDL_PROP_SURFACE_HOTSPOT_X_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER: Property = Property {
     module: "surface",
     name: "SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER",
     short_name: "SURFACE_HOTSPOT_Y_NUMBER",
@@ -47,7 +47,7 @@ pub static METADATA_SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_SurfaceFlags: Group = Group {
+pub const METADATA_SDL_SurfaceFlags: Group = Group {
     module: "surface",
     kind: GroupKind::Flags,
     name: "SDL_SurfaceFlags",
@@ -81,7 +81,7 @@ pub static METADATA_SDL_SurfaceFlags: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_ScaleMode: Group = Group {
+pub const METADATA_SDL_ScaleMode: Group = Group {
     module: "surface",
     kind: GroupKind::Enum,
     name: "SDL_ScaleMode",
@@ -109,7 +109,7 @@ pub static METADATA_SDL_ScaleMode: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_FlipMode: Group = Group {
+pub const METADATA_SDL_FlipMode: Group = Group {
     module: "surface",
     kind: GroupKind::Enum,
     name: "SDL_FlipMode",

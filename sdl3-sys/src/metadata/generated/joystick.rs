@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN: Property = Property {
     module: "joystick",
     name: "SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN",
     short_name: "JOYSTICK_CAP_MONO_LED_BOOLEAN",
@@ -11,7 +11,7 @@ pub static METADATA_SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN: Property = Property {
     module: "joystick",
     name: "SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN",
     short_name: "JOYSTICK_CAP_RGB_LED_BOOLEAN",
@@ -20,7 +20,7 @@ pub static METADATA_SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN: Property = Property {
     module: "joystick",
     name: "SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN",
     short_name: "JOYSTICK_CAP_PLAYER_LED_BOOLEAN",
@@ -29,7 +29,7 @@ pub static METADATA_SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN: Property = Property {
     module: "joystick",
     name: "SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN",
     short_name: "JOYSTICK_CAP_RUMBLE_BOOLEAN",
@@ -38,7 +38,7 @@ pub static METADATA_SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN: Property = Property {
     module: "joystick",
     name: "SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN",
     short_name: "JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN",
@@ -47,7 +47,7 @@ pub static METADATA_SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN: Property = Pro
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_JoystickID: Group = Group {
+pub const METADATA_SDL_JoystickID: Group = Group {
     module: "joystick",
     kind: GroupKind::Id,
     name: "SDL_JoystickID",
@@ -57,7 +57,7 @@ pub static METADATA_SDL_JoystickID: Group = Group {
     values: &[
     ],
 };
-pub static METADATA_SDL_JoystickType: Group = Group {
+pub const METADATA_SDL_JoystickType: Group = Group {
     module: "joystick",
     kind: GroupKind::Enum,
     name: "SDL_JoystickType",
@@ -133,7 +133,7 @@ pub static METADATA_SDL_JoystickType: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_JoystickConnectionState: Group = Group {
+pub const METADATA_SDL_JoystickConnectionState: Group = Group {
     module: "joystick",
     kind: GroupKind::Enum,
     name: "SDL_JoystickConnectionState",

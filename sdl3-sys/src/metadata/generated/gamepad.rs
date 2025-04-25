@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN: Property = Property {
     module: "gamepad",
     name: "SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN",
     short_name: "GAMEPAD_CAP_MONO_LED_BOOLEAN",
@@ -11,7 +11,7 @@ pub static METADATA_SDL_PROP_GAMEPAD_CAP_MONO_LED_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN: Property = Property {
     module: "gamepad",
     name: "SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN",
     short_name: "GAMEPAD_CAP_RGB_LED_BOOLEAN",
@@ -20,7 +20,7 @@ pub static METADATA_SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN: Property = Property {
     module: "gamepad",
     name: "SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN",
     short_name: "GAMEPAD_CAP_PLAYER_LED_BOOLEAN",
@@ -29,7 +29,7 @@ pub static METADATA_SDL_PROP_GAMEPAD_CAP_PLAYER_LED_BOOLEAN: Property = Property
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN: Property = Property {
     module: "gamepad",
     name: "SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN",
     short_name: "GAMEPAD_CAP_RUMBLE_BOOLEAN",
@@ -38,7 +38,7 @@ pub static METADATA_SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN: Property = Property {
     module: "gamepad",
     name: "SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN",
     short_name: "GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN",
@@ -47,7 +47,7 @@ pub static METADATA_SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN: Property = Prop
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_GamepadType: Group = Group {
+pub const METADATA_SDL_GamepadType: Group = Group {
     module: "gamepad",
     kind: GroupKind::Enum,
     name: "SDL_GamepadType",
@@ -129,7 +129,7 @@ pub static METADATA_SDL_GamepadType: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GamepadButton: Group = Group {
+pub const METADATA_SDL_GamepadButton: Group = Group {
     module: "gamepad",
     kind: GroupKind::Enum,
     name: "SDL_GamepadButton",
@@ -307,7 +307,7 @@ pub static METADATA_SDL_GamepadButton: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GamepadButtonLabel: Group = Group {
+pub const METADATA_SDL_GamepadButtonLabel: Group = Group {
     module: "gamepad",
     kind: GroupKind::Enum,
     name: "SDL_GamepadButtonLabel",
@@ -371,7 +371,7 @@ pub static METADATA_SDL_GamepadButtonLabel: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GamepadAxis: Group = Group {
+pub const METADATA_SDL_GamepadAxis: Group = Group {
     module: "gamepad",
     kind: GroupKind::Enum,
     name: "SDL_GamepadAxis",
@@ -429,7 +429,7 @@ pub static METADATA_SDL_GamepadAxis: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GamepadBindingType: Group = Group {
+pub const METADATA_SDL_GamepadBindingType: Group = Group {
     module: "gamepad",
     kind: GroupKind::Enum,
     name: "SDL_GamepadBindingType",

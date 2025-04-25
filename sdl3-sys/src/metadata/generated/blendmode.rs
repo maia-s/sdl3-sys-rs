@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_BlendMode: Group = Group {
+pub const METADATA_SDL_BlendMode: Group = Group {
     module: "blendmode",
     kind: GroupKind::Flags,
     name: "SDL_BlendMode",
@@ -60,7 +60,7 @@ pub static METADATA_SDL_BlendMode: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_BlendOperation: Group = Group {
+pub const METADATA_SDL_BlendOperation: Group = Group {
     module: "blendmode",
     kind: GroupKind::Enum,
     name: "SDL_BlendOperation",
@@ -100,7 +100,7 @@ pub static METADATA_SDL_BlendOperation: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_BlendFactor: Group = Group {
+pub const METADATA_SDL_BlendFactor: Group = Group {
     module: "blendmode",
     kind: GroupKind::Enum,
     name: "SDL_BlendFactor",

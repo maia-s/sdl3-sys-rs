@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PixelType: Group = Group {
+pub const METADATA_SDL_PixelType: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_PixelType",
@@ -90,7 +90,7 @@ pub static METADATA_SDL_PixelType: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_BitmapOrder: Group = Group {
+pub const METADATA_SDL_BitmapOrder: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_BitmapOrder",
@@ -118,7 +118,7 @@ pub static METADATA_SDL_BitmapOrder: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_PackedOrder: Group = Group {
+pub const METADATA_SDL_PackedOrder: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_PackedOrder",
@@ -182,7 +182,7 @@ pub static METADATA_SDL_PackedOrder: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_ArrayOrder: Group = Group {
+pub const METADATA_SDL_ArrayOrder: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_ArrayOrder",
@@ -234,7 +234,7 @@ pub static METADATA_SDL_ArrayOrder: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_PackedLayout: Group = Group {
+pub const METADATA_SDL_PackedLayout: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_PackedLayout",
@@ -300,7 +300,7 @@ pub static METADATA_SDL_PackedLayout: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_PixelFormat: Group = Group {
+pub const METADATA_SDL_PixelFormat: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_PixelFormat",
@@ -796,7 +796,7 @@ pub static METADATA_SDL_PixelFormat: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_ColorType: Group = Group {
+pub const METADATA_SDL_ColorType: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_ColorType",
@@ -826,7 +826,7 @@ pub static METADATA_SDL_ColorType: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_ColorRange: Group = Group {
+pub const METADATA_SDL_ColorRange: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_ColorRange",
@@ -854,7 +854,7 @@ pub static METADATA_SDL_ColorRange: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_ColorPrimaries: Group = Group {
+pub const METADATA_SDL_ColorPrimaries: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_ColorPrimaries",
@@ -948,7 +948,7 @@ pub static METADATA_SDL_ColorPrimaries: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_TransferCharacteristics: Group = Group {
+pub const METADATA_SDL_TransferCharacteristics: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_TransferCharacteristics",
@@ -1072,7 +1072,7 @@ pub static METADATA_SDL_TransferCharacteristics: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_MatrixCoefficients: Group = Group {
+pub const METADATA_SDL_MatrixCoefficients: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_MatrixCoefficients",
@@ -1172,7 +1172,7 @@ pub static METADATA_SDL_MatrixCoefficients: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_ChromaLocation: Group = Group {
+pub const METADATA_SDL_ChromaLocation: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_ChromaLocation",
@@ -1206,7 +1206,7 @@ pub static METADATA_SDL_ChromaLocation: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_Colorspace: Group = Group {
+pub const METADATA_SDL_Colorspace: Group = Group {
     module: "pixels",
     kind: GroupKind::Enum,
     name: "SDL_Colorspace",

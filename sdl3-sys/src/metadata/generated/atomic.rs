@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_SpinLock: Group = Group {
+pub const METADATA_SDL_SpinLock: Group = Group {
     module: "atomic",
     kind: GroupKind::Lock,
     name: "SDL_SpinLock",

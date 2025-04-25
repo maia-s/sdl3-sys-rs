@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_MessageBoxFlags: Group = Group {
+pub const METADATA_SDL_MessageBoxFlags: Group = Group {
     module: "messagebox",
     kind: GroupKind::Flags,
     name: "SDL_MessageBoxFlags",
@@ -42,7 +42,7 @@ pub static METADATA_SDL_MessageBoxFlags: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_MessageBoxButtonFlags: Group = Group {
+pub const METADATA_SDL_MessageBoxButtonFlags: Group = Group {
     module: "messagebox",
     kind: GroupKind::Flags,
     name: "SDL_MessageBoxButtonFlags",
@@ -64,7 +64,7 @@ pub static METADATA_SDL_MessageBoxButtonFlags: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_MessageBoxColorType: Group = Group {
+pub const METADATA_SDL_MessageBoxColorType: Group = Group {
     module: "messagebox",
     kind: GroupKind::Enum,
     name: "SDL_MessageBoxColorType",

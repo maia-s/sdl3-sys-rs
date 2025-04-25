@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER: Property = Property {
     module: "iostream",
     name: "SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER",
     short_name: "IOSTREAM_WINDOWS_HANDLE_POINTER",
@@ -11,7 +11,7 @@ pub static METADATA_SDL_PROP_IOSTREAM_WINDOWS_HANDLE_POINTER: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_IOSTREAM_STDIO_FILE_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_IOSTREAM_STDIO_FILE_POINTER: Property = Property {
     module: "iostream",
     name: "SDL_PROP_IOSTREAM_STDIO_FILE_POINTER",
     short_name: "IOSTREAM_STDIO_FILE_POINTER",
@@ -20,7 +20,7 @@ pub static METADATA_SDL_PROP_IOSTREAM_STDIO_FILE_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER: Property = Property {
     module: "iostream",
     name: "SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER",
     short_name: "IOSTREAM_FILE_DESCRIPTOR_NUMBER",
@@ -29,7 +29,7 @@ pub static METADATA_SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER: Property = Property {
     module: "iostream",
     name: "SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER",
     short_name: "IOSTREAM_ANDROID_AASSET_POINTER",
@@ -38,7 +38,7 @@ pub static METADATA_SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_IOSTREAM_MEMORY_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_IOSTREAM_MEMORY_POINTER: Property = Property {
     module: "iostream",
     name: "SDL_PROP_IOSTREAM_MEMORY_POINTER",
     short_name: "IOSTREAM_MEMORY_POINTER",
@@ -47,7 +47,7 @@ pub static METADATA_SDL_PROP_IOSTREAM_MEMORY_POINTER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER: Property = Property {
     module: "iostream",
     name: "SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER",
     short_name: "IOSTREAM_MEMORY_SIZE_NUMBER",
@@ -56,7 +56,7 @@ pub static METADATA_SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER: Property = Property {
     module: "iostream",
     name: "SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER",
     short_name: "IOSTREAM_DYNAMIC_MEMORY_POINTER",
@@ -65,7 +65,7 @@ pub static METADATA_SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER: Property = Property {
     module: "iostream",
     name: "SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER",
     short_name: "IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER",
@@ -74,7 +74,7 @@ pub static METADATA_SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER: Property = Prope
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_IOStatus: Group = Group {
+pub const METADATA_SDL_IOStatus: Group = Group {
     module: "iostream",
     kind: GroupKind::Enum,
     name: "SDL_IOStatus",
@@ -120,7 +120,7 @@ pub static METADATA_SDL_IOStatus: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_IOWhence: Group = Group {
+pub const METADATA_SDL_IOWhence: Group = Group {
     module: "iostream",
     kind: GroupKind::Enum,
     name: "SDL_IOWhence",

@@ -180,7 +180,7 @@ pub mod everything {
 }
 
 /// Metadata for hint constants in this crate
-pub static HINTS: &[&Hint] = &[
+pub const HINTS: &[&Hint] = &[
     &hints::METADATA_SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED,
     &hints::METADATA_SDL_HINT_ANDROID_ALLOW_RECREATE_ACTIVITY,
     &hints::METADATA_SDL_HINT_ANDROID_BLOCK_ON_PAUSE,
@@ -422,7 +422,7 @@ pub static HINTS: &[&Hint] = &[
 ];
 
 /// Metadata for property constants in this crate
-pub static PROPERTIES: &[&Property] = &[
+pub const PROPERTIES: &[&Property] = &[
     &dialog::METADATA_SDL_PROP_FILE_DIALOG_FILTERS_POINTER,
     &dialog::METADATA_SDL_PROP_FILE_DIALOG_NFILTERS_NUMBER,
     &dialog::METADATA_SDL_PROP_FILE_DIALOG_WINDOW_POINTER,
@@ -667,7 +667,7 @@ pub static PROPERTIES: &[&Property] = &[
 ];
 
 /// Metadata for groups in this crate
-pub static GROUPS: &[&Group] = &[
+pub const GROUPS: &[&Group] = &[
     &assert::METADATA_SDL_AssertState,
     &asyncio::METADATA_SDL_AsyncIOTaskType,
     &asyncio::METADATA_SDL_AsyncIOResult,

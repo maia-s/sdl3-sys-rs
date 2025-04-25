@@ -199,7 +199,7 @@ pub const SDL_TRAYENTRY_CHECKED: SDL_TrayEntryFlags = SDL_TrayEntryFlags::CHECKE
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::HasGroupMetadata for SDL_TrayEntryFlags {
-    const GROUP_METADATA: &sdl3_sys::metadata::Group =
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::tray::METADATA_SDL_TrayEntryFlags;
 }
 

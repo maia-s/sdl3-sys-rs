@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_CameraID: Group = Group {
+pub const METADATA_SDL_CameraID: Group = Group {
     module: "camera",
     kind: GroupKind::Id,
     name: "SDL_CameraID",
@@ -12,7 +12,7 @@ pub static METADATA_SDL_CameraID: Group = Group {
     values: &[
     ],
 };
-pub static METADATA_SDL_CameraPosition: Group = Group {
+pub const METADATA_SDL_CameraPosition: Group = Group {
     module: "camera",
     kind: GroupKind::Enum,
     name: "SDL_CameraPosition",

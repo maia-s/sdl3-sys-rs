@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_Scancode: Group = Group {
+pub const METADATA_SDL_Scancode: Group = Group {
     module: "scancode",
     kind: GroupKind::Enum,
     name: "SDL_Scancode",

@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_TimerID: Group = Group {
+pub const METADATA_SDL_TimerID: Group = Group {
     module: "timer",
     kind: GroupKind::Id,
     name: "SDL_TimerID",

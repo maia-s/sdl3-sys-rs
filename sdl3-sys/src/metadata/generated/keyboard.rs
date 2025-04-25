@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PROP_TEXTINPUT_TYPE_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_TEXTINPUT_TYPE_NUMBER: Property = Property {
     module: "keyboard",
     name: "SDL_PROP_TEXTINPUT_TYPE_NUMBER",
     short_name: "TEXTINPUT_TYPE_NUMBER",
@@ -11,7 +11,7 @@ pub static METADATA_SDL_PROP_TEXTINPUT_TYPE_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER: Property = Property {
     module: "keyboard",
     name: "SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER",
     short_name: "TEXTINPUT_CAPITALIZATION_NUMBER",
@@ -20,7 +20,7 @@ pub static METADATA_SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER: Property = Propert
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN: Property = Property {
     module: "keyboard",
     name: "SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN",
     short_name: "TEXTINPUT_AUTOCORRECT_BOOLEAN",
@@ -29,7 +29,7 @@ pub static METADATA_SDL_PROP_TEXTINPUT_AUTOCORRECT_BOOLEAN: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN: Property = Property {
+pub const METADATA_SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN: Property = Property {
     module: "keyboard",
     name: "SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN",
     short_name: "TEXTINPUT_MULTILINE_BOOLEAN",
@@ -38,7 +38,7 @@ pub static METADATA_SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: Property = Property {
     module: "keyboard",
     name: "SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER",
     short_name: "TEXTINPUT_ANDROID_INPUTTYPE_NUMBER",
@@ -47,7 +47,7 @@ pub static METADATA_SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: Property = Prop
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_KeyboardID: Group = Group {
+pub const METADATA_SDL_KeyboardID: Group = Group {
     module: "keyboard",
     kind: GroupKind::Id,
     name: "SDL_KeyboardID",
@@ -57,7 +57,7 @@ pub static METADATA_SDL_KeyboardID: Group = Group {
     values: &[
     ],
 };
-pub static METADATA_SDL_TextInputType: Group = Group {
+pub const METADATA_SDL_TextInputType: Group = Group {
     module: "keyboard",
     kind: GroupKind::Enum,
     name: "SDL_TextInputType",
@@ -121,7 +121,7 @@ pub static METADATA_SDL_TextInputType: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_Capitalization: Group = Group {
+pub const METADATA_SDL_Capitalization: Group = Group {
     module: "keyboard",
     kind: GroupKind::Enum,
     name: "SDL_Capitalization",

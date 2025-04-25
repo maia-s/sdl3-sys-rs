@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_hid_bus_type: Group = Group {
+pub const METADATA_SDL_hid_bus_type: Group = Group {
     module: "hidapi",
     kind: GroupKind::Enum,
     name: "SDL_hid_bus_type",

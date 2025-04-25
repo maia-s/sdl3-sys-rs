@@ -730,19 +730,19 @@ impl Gen {
             metadata_out_hints,
             str_block! {"
                 /// Metadata for hint constants in this crate
-                pub static HINTS: &[&Hint] = &["}
+                pub const HINTS: &[&Hint] = &["}
         )?;
         writeln!(
             metadata_out_props,
             str_block! {"
                 /// Metadata for property constants in this crate
-                pub static PROPERTIES: &[&Property] = &["}
+                pub const PROPERTIES: &[&Property] = &["}
         )?;
         writeln!(
             metadata_out_groups,
             str_block! {"
                 /// Metadata for groups in this crate
-                pub static GROUPS: &[&Group] = &["}
+                pub const GROUPS: &[&Group] = &["}
         )?;
 
         for module in emitted.keys() {
@@ -757,7 +757,7 @@ impl Gen {
                 write!(
                     module_out,
                     str_block! {"
-                        pub static METADATA_{name}: Hint = Hint {{
+                        pub const METADATA_{name}: Hint = Hint {{
                             module: {module:?},
                             name: {name:?},
                             short_name: {short_name:?},
@@ -800,7 +800,7 @@ impl Gen {
                 write!(
                     module_out,
                     str_block! {"
-                        pub static METADATA_{name}: Property = Property {{
+                        pub const METADATA_{name}: Property = Property {{
                             module: {module:?},
                             name: {name:?},
                             short_name: {short_name:?},
@@ -832,7 +832,7 @@ impl Gen {
                 write!(
                     module_out,
                     str_block! {"
-                        pub static METADATA_{name}: Group = Group {{
+                        pub const METADATA_{name}: Group = Group {{
                             module: {module:?},
                             kind: GroupKind::{kind},
                             name: {name:?},

@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_TTF_DrawCommand: Group = Group {
+pub const METADATA_TTF_DrawCommand: Group = Group {
     module: "textengine",
     kind: GroupKind::Enum,
     name: "TTF_DrawCommand",

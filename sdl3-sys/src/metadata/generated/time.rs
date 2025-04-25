@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_DateFormat: Group = Group {
+pub const METADATA_SDL_DateFormat: Group = Group {
     module: "time",
     kind: GroupKind::Enum,
     name: "SDL_DateFormat",
@@ -30,7 +30,7 @@ pub static METADATA_SDL_DateFormat: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_TimeFormat: Group = Group {
+pub const METADATA_SDL_TimeFormat: Group = Group {
     module: "time",
     kind: GroupKind::Enum,
     name: "SDL_TimeFormat",

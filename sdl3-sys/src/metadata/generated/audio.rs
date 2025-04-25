@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_AudioFormat: Group = Group {
+pub const METADATA_SDL_AudioFormat: Group = Group {
     module: "audio",
     kind: GroupKind::Enum,
     name: "SDL_AudioFormat",
@@ -102,7 +102,7 @@ pub static METADATA_SDL_AudioFormat: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_AudioDeviceID: Group = Group {
+pub const METADATA_SDL_AudioDeviceID: Group = Group {
     module: "audio",
     kind: GroupKind::Id,
     name: "SDL_AudioDeviceID",

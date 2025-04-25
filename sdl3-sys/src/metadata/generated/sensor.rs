@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_SensorID: Group = Group {
+pub const METADATA_SDL_SensorID: Group = Group {
     module: "sensor",
     kind: GroupKind::Id,
     name: "SDL_SensorID",
@@ -12,7 +12,7 @@ pub static METADATA_SDL_SensorID: Group = Group {
     values: &[
     ],
 };
-pub static METADATA_SDL_SensorType: Group = Group {
+pub const METADATA_SDL_SensorType: Group = Group {
     module: "sensor",
     kind: GroupKind::Enum,
     name: "SDL_SensorType",

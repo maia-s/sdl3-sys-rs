@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: Property = Property {
     module: "thread",
     name: "SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER",
     short_name: "THREAD_CREATE_ENTRY_FUNCTION_POINTER",
@@ -11,7 +11,7 @@ pub static METADATA_SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: Property = Pr
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_THREAD_CREATE_NAME_STRING: Property = Property {
+pub const METADATA_SDL_PROP_THREAD_CREATE_NAME_STRING: Property = Property {
     module: "thread",
     name: "SDL_PROP_THREAD_CREATE_NAME_STRING",
     short_name: "THREAD_CREATE_NAME_STRING",
@@ -20,7 +20,7 @@ pub static METADATA_SDL_PROP_THREAD_CREATE_NAME_STRING: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_THREAD_CREATE_USERDATA_POINTER: Property = Property {
+pub const METADATA_SDL_PROP_THREAD_CREATE_USERDATA_POINTER: Property = Property {
     module: "thread",
     name: "SDL_PROP_THREAD_CREATE_USERDATA_POINTER",
     short_name: "THREAD_CREATE_USERDATA_POINTER",
@@ -29,7 +29,7 @@ pub static METADATA_SDL_PROP_THREAD_CREATE_USERDATA_POINTER: Property = Property
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: Property = Property {
     module: "thread",
     name: "SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER",
     short_name: "THREAD_CREATE_STACKSIZE_NUMBER",
@@ -38,7 +38,7 @@ pub static METADATA_SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: Property = Property
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_ThreadID: Group = Group {
+pub const METADATA_SDL_ThreadID: Group = Group {
     module: "thread",
     kind: GroupKind::Id,
     name: "SDL_ThreadID",
@@ -48,7 +48,7 @@ pub static METADATA_SDL_ThreadID: Group = Group {
     values: &[
     ],
 };
-pub static METADATA_SDL_TLSID: Group = Group {
+pub const METADATA_SDL_TLSID: Group = Group {
     module: "thread",
     kind: GroupKind::Id,
     name: "SDL_TLSID",
@@ -58,7 +58,7 @@ pub static METADATA_SDL_TLSID: Group = Group {
     values: &[
     ],
 };
-pub static METADATA_SDL_ThreadPriority: Group = Group {
+pub const METADATA_SDL_ThreadPriority: Group = Group {
     module: "thread",
     kind: GroupKind::Enum,
     name: "SDL_ThreadPriority",
@@ -92,7 +92,7 @@ pub static METADATA_SDL_ThreadPriority: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_ThreadState: Group = Group {
+pub const METADATA_SDL_ThreadState: Group = Group {
     module: "thread",
     kind: GroupKind::Enum,
     name: "SDL_ThreadState",

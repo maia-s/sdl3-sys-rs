@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PROP_APP_METADATA_NAME_STRING: Property = Property {
+pub const METADATA_SDL_PROP_APP_METADATA_NAME_STRING: Property = Property {
     module: "init",
     name: "SDL_PROP_APP_METADATA_NAME_STRING",
     short_name: "APP_METADATA_NAME_STRING",
@@ -11,7 +11,7 @@ pub static METADATA_SDL_PROP_APP_METADATA_NAME_STRING: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_APP_METADATA_VERSION_STRING: Property = Property {
+pub const METADATA_SDL_PROP_APP_METADATA_VERSION_STRING: Property = Property {
     module: "init",
     name: "SDL_PROP_APP_METADATA_VERSION_STRING",
     short_name: "APP_METADATA_VERSION_STRING",
@@ -20,7 +20,7 @@ pub static METADATA_SDL_PROP_APP_METADATA_VERSION_STRING: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_APP_METADATA_IDENTIFIER_STRING: Property = Property {
+pub const METADATA_SDL_PROP_APP_METADATA_IDENTIFIER_STRING: Property = Property {
     module: "init",
     name: "SDL_PROP_APP_METADATA_IDENTIFIER_STRING",
     short_name: "APP_METADATA_IDENTIFIER_STRING",
@@ -29,7 +29,7 @@ pub static METADATA_SDL_PROP_APP_METADATA_IDENTIFIER_STRING: Property = Property
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_APP_METADATA_CREATOR_STRING: Property = Property {
+pub const METADATA_SDL_PROP_APP_METADATA_CREATOR_STRING: Property = Property {
     module: "init",
     name: "SDL_PROP_APP_METADATA_CREATOR_STRING",
     short_name: "APP_METADATA_CREATOR_STRING",
@@ -38,7 +38,7 @@ pub static METADATA_SDL_PROP_APP_METADATA_CREATOR_STRING: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_APP_METADATA_COPYRIGHT_STRING: Property = Property {
+pub const METADATA_SDL_PROP_APP_METADATA_COPYRIGHT_STRING: Property = Property {
     module: "init",
     name: "SDL_PROP_APP_METADATA_COPYRIGHT_STRING",
     short_name: "APP_METADATA_COPYRIGHT_STRING",
@@ -47,7 +47,7 @@ pub static METADATA_SDL_PROP_APP_METADATA_COPYRIGHT_STRING: Property = Property 
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_APP_METADATA_URL_STRING: Property = Property {
+pub const METADATA_SDL_PROP_APP_METADATA_URL_STRING: Property = Property {
     module: "init",
     name: "SDL_PROP_APP_METADATA_URL_STRING",
     short_name: "APP_METADATA_URL_STRING",
@@ -56,7 +56,7 @@ pub static METADATA_SDL_PROP_APP_METADATA_URL_STRING: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_PROP_APP_METADATA_TYPE_STRING: Property = Property {
+pub const METADATA_SDL_PROP_APP_METADATA_TYPE_STRING: Property = Property {
     module: "init",
     name: "SDL_PROP_APP_METADATA_TYPE_STRING",
     short_name: "APP_METADATA_TYPE_STRING",
@@ -65,7 +65,7 @@ pub static METADATA_SDL_PROP_APP_METADATA_TYPE_STRING: Property = Property {
     doc: None,
     available_since: None,
 };
-pub static METADATA_SDL_InitFlags: Group = Group {
+pub const METADATA_SDL_InitFlags: Group = Group {
     module: "init",
     kind: GroupKind::Flags,
     name: "SDL_InitFlags",
@@ -123,7 +123,7 @@ pub static METADATA_SDL_InitFlags: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_AppResult: Group = Group {
+pub const METADATA_SDL_AppResult: Group = Group {
     module: "init",
     kind: GroupKind::Enum,
     name: "SDL_AppResult",

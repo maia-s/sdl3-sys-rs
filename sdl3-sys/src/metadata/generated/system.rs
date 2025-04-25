@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_Sandbox: Group = Group {
+pub const METADATA_SDL_Sandbox: Group = Group {
     module: "system",
     kind: GroupKind::Enum,
     name: "SDL_Sandbox",

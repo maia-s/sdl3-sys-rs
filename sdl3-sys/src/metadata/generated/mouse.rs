@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_MouseID: Group = Group {
+pub const METADATA_SDL_MouseID: Group = Group {
     module: "mouse",
     kind: GroupKind::Id,
     name: "SDL_MouseID",
@@ -12,7 +12,7 @@ pub static METADATA_SDL_MouseID: Group = Group {
     values: &[
     ],
 };
-pub static METADATA_SDL_SystemCursor: Group = Group {
+pub const METADATA_SDL_SystemCursor: Group = Group {
     module: "mouse",
     kind: GroupKind::Enum,
     name: "SDL_SystemCursor",
@@ -148,7 +148,7 @@ pub static METADATA_SDL_SystemCursor: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_MouseWheelDirection: Group = Group {
+pub const METADATA_SDL_MouseWheelDirection: Group = Group {
     module: "mouse",
     kind: GroupKind::Enum,
     name: "SDL_MouseWheelDirection",
@@ -170,7 +170,7 @@ pub static METADATA_SDL_MouseWheelDirection: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_MouseButtonFlags: Group = Group {
+pub const METADATA_SDL_MouseButtonFlags: Group = Group {
     module: "mouse",
     kind: GroupKind::Flags,
     name: "SDL_MouseButtonFlags",

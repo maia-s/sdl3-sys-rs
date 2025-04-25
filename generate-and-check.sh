@@ -39,6 +39,7 @@ if $require_clean; then
 fi
 
 for crate in *-sys; do
-    DOCS_RS=1 cargo +1.79.0 check -p $crate
-    DOCS_RS=1 cargo +nightly check -p $crate --all-features
+    cargo +1.79.0 check -p $crate --features 'no-link'
+    cargo +1.79.0 check -p $crate --features 'no-link,debug-impls,metadata'
+    cargo +nightly check -p $crate --all-features
 done

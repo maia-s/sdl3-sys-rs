@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PenID: Group = Group {
+pub const METADATA_SDL_PenID: Group = Group {
     module: "pen",
     kind: GroupKind::Id,
     name: "SDL_PenID",
@@ -12,7 +12,7 @@ pub static METADATA_SDL_PenID: Group = Group {
     values: &[
     ],
 };
-pub static METADATA_SDL_PenInputFlags: Group = Group {
+pub const METADATA_SDL_PenInputFlags: Group = Group {
     module: "pen",
     kind: GroupKind::Flags,
     name: "SDL_PenInputFlags",
@@ -64,7 +64,7 @@ pub static METADATA_SDL_PenInputFlags: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_PenAxis: Group = Group {
+pub const METADATA_SDL_PenAxis: Group = Group {
     module: "pen",
     kind: GroupKind::Enum,
     name: "SDL_PenAxis",

@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_HapticID: Group = Group {
+pub const METADATA_SDL_HapticID: Group = Group {
     module: "haptic",
     kind: GroupKind::Id,
     name: "SDL_HapticID",

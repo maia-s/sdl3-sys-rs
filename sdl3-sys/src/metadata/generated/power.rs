@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_PowerState: Group = Group {
+pub const METADATA_SDL_PowerState: Group = Group {
     module: "power",
     kind: GroupKind::Enum,
     name: "SDL_PowerState",

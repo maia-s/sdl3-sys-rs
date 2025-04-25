@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_TouchID: Group = Group {
+pub const METADATA_SDL_TouchID: Group = Group {
     module: "touch",
     kind: GroupKind::Id,
     name: "SDL_TouchID",
@@ -12,7 +12,7 @@ pub static METADATA_SDL_TouchID: Group = Group {
     values: &[
     ],
 };
-pub static METADATA_SDL_FingerID: Group = Group {
+pub const METADATA_SDL_FingerID: Group = Group {
     module: "touch",
     kind: GroupKind::Id,
     name: "SDL_FingerID",
@@ -22,7 +22,7 @@ pub static METADATA_SDL_FingerID: Group = Group {
     values: &[
     ],
 };
-pub static METADATA_SDL_TouchDeviceType: Group = Group {
+pub const METADATA_SDL_TouchDeviceType: Group = Group {
     module: "touch",
     kind: GroupKind::Enum,
     name: "SDL_TouchDeviceType",

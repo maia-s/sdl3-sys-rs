@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub static METADATA_SDL_Folder: Group = Group {
+pub const METADATA_SDL_Folder: Group = Group {
     module: "filesystem",
     kind: GroupKind::Enum,
     name: "SDL_Folder",
@@ -84,7 +84,7 @@ pub static METADATA_SDL_Folder: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_PathType: Group = Group {
+pub const METADATA_SDL_PathType: Group = Group {
     module: "filesystem",
     kind: GroupKind::Enum,
     name: "SDL_PathType",
@@ -118,7 +118,7 @@ pub static METADATA_SDL_PathType: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_GlobFlags: Group = Group {
+pub const METADATA_SDL_GlobFlags: Group = Group {
     module: "filesystem",
     kind: GroupKind::Flags,
     name: "SDL_GlobFlags",
@@ -134,7 +134,7 @@ pub static METADATA_SDL_GlobFlags: Group = Group {
         },
     ],
 };
-pub static METADATA_SDL_EnumerationResult: Group = Group {
+pub const METADATA_SDL_EnumerationResult: Group = Group {
     module: "filesystem",
     kind: GroupKind::Enum,
     name: "SDL_EnumerationResult",
