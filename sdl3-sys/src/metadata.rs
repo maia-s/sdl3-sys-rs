@@ -1,7 +1,8 @@
 //! Metadata for SDL types and constants
 
-use crate::properties::SDL_PropertyType;
-use core::ffi::{c_int, CStr};
+use core::ffi::{c_char, c_int, CStr};
+
+pub use crate::properties::SDL_PropertyType as PropertyType;
 
 /// Metadata for hint constants
 #[derive(Clone, Copy)]
@@ -9,9 +10,28 @@ pub struct Hint {
     pub module: &'static str,
     pub name: &'static str,
     pub short_name: &'static str,
-    pub value: &'static CStr,
+    pub value: *const c_char,
     pub doc: Option<&'static str>,
     pub available_since: Option<c_int>,
+}
+
+unsafe impl Send for Hint {}
+unsafe impl Sync for Hint {}
+
+impl Hint {
+    #[inline(always)]
+    pub fn value_cstr(&self) -> &'static CStr {
+        // CStr::from_ptr is only const since rust 1.81
+        unsafe { CStr::from_ptr(self.value) }
+    }
+
+    #[inline(always)]
+    pub fn value_str(&self) -> &'static str {
+        match self.value_cstr().to_str() {
+            Ok(str) => str,
+            Err(_) => unreachable!(),
+        }
+    }
 }
 
 /// Metadata for property constants
@@ -20,10 +40,29 @@ pub struct Property {
     pub module: &'static str,
     pub name: &'static str,
     pub short_name: &'static str,
-    pub value: &'static CStr,
-    pub ty: SDL_PropertyType,
+    pub value: *const c_char,
+    pub ty: PropertyType,
     pub doc: Option<&'static str>,
     pub available_since: Option<c_int>,
+}
+
+unsafe impl Send for Property {}
+unsafe impl Sync for Property {}
+
+impl Property {
+    #[inline(always)]
+    pub fn value_cstr(&self) -> &'static CStr {
+        // CStr::from_ptr is only const since rust 1.81
+        unsafe { CStr::from_ptr(self.value) }
+    }
+
+    #[inline(always)]
+    pub fn value_str(&self) -> &'static str {
+        match self.value_cstr().to_str() {
+            Ok(str) => str,
+            Err(_) => unreachable!(),
+        }
+    }
 }
 
 /// Access metadata for typed groups of constants (c enums, flags, etc)

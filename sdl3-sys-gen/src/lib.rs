@@ -681,7 +681,7 @@ impl Gen {
             #![allow(non_upper_case_globals, unused)]
 
             use core::ffi::CStr;
-            use sdl3_sys::{{metadata::{{Group, GroupKind, GroupValue, Hint, Property}}, properties::SDL_PropertyType, version::SDL_VERSIONNUM}};
+            use sdl3_sys::{{metadata::{{Group, GroupKind, GroupValue, Hint, Property, PropertyType}}, version::SDL_VERSIONNUM}};
 
         "});
         let mut metadata_out_hints = String::new();
@@ -761,7 +761,7 @@ impl Gen {
                             module: {module:?},
                             name: {name:?},
                             short_name: {short_name:?},
-                            value: unsafe {{ CStr::from_ptr(crate::{module}::{name}) }},
+                            value: crate::{module}::{name},
                             doc: {doc},
                             available_since: {available_since},
                         }};
@@ -780,29 +780,22 @@ impl Gen {
             for prop in &metadata.properties {
                 writeln!(metadata_out_props, "    &{module}::METADATA_{},", prop.name)?;
                 let short_name = prop.name.strip_prefix("SDL_PROP_").unwrap();
-                let ty;
-                let short_name = if let Some(s) = short_name.strip_suffix("_POINTER") {
-                    ty = "POINTER";
-                    s
-                } else if let Some(s) = short_name.strip_suffix("_STRING") {
-                    ty = "STRING";
-                    s
-                } else if let Some(s) = short_name.strip_suffix("_NUMBER") {
-                    ty = "NUMBER";
-                    s
-                } else if let Some(s) = short_name.strip_suffix("_FLOAT") {
-                    ty = "FLOAT";
-                    s
-                } else if let Some(s) = short_name.strip_suffix("_BOOLEAN") {
-                    ty = "BOOLEAN";
-                    s
+                let ty = if short_name.ends_with("_POINTER") {
+                    "POINTER"
+                } else if short_name.ends_with("_STRING") {
+                    "STRING"
+                } else if short_name.ends_with("_NUMBER") {
+                    "NUMBER"
+                } else if short_name.ends_with("_FLOAT") {
+                    "FLOAT"
+                } else if short_name.ends_with("_BOOLEAN") {
+                    "BOOLEAN"
                 } else {
-                    ty = match prop.name.as_str() {
+                    match prop.name.as_str() {
                         "SDL_PROP_WINDOW_OPENVR_OVERLAY_ID" => "NUMBER",
                         "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8" => "NUMBER",
                         _ => panic!("unknown property type for property {}", prop.name),
-                    };
-                    short_name
+                    }
                 };
                 write!(
                     module_out,
@@ -811,8 +804,8 @@ impl Gen {
                             module: {module:?},
                             name: {name:?},
                             short_name: {short_name:?},
-                            value: unsafe {{ CStr::from_ptr(crate::{module}::{name}) }},
-                            ty: SDL_PropertyType::{ty},
+                            value: crate::{module}::{name},
+                            ty: PropertyType::{ty},
                             doc: {doc},
                             available_since: {available_since},
                         }};

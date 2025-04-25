@@ -5,36 +5,36 @@ use super::*;
 pub static METADATA_SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER: Property = Property {
     module: "thread",
     name: "SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER",
-    short_name: "THREAD_CREATE_ENTRY_FUNCTION",
-    value: unsafe { CStr::from_ptr(crate::thread::SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "THREAD_CREATE_ENTRY_FUNCTION_POINTER",
+    value: crate::thread::SDL_PROP_THREAD_CREATE_ENTRY_FUNCTION_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_THREAD_CREATE_NAME_STRING: Property = Property {
     module: "thread",
     name: "SDL_PROP_THREAD_CREATE_NAME_STRING",
-    short_name: "THREAD_CREATE_NAME",
-    value: unsafe { CStr::from_ptr(crate::thread::SDL_PROP_THREAD_CREATE_NAME_STRING) },
-    ty: SDL_PropertyType::STRING,
+    short_name: "THREAD_CREATE_NAME_STRING",
+    value: crate::thread::SDL_PROP_THREAD_CREATE_NAME_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_THREAD_CREATE_USERDATA_POINTER: Property = Property {
     module: "thread",
     name: "SDL_PROP_THREAD_CREATE_USERDATA_POINTER",
-    short_name: "THREAD_CREATE_USERDATA",
-    value: unsafe { CStr::from_ptr(crate::thread::SDL_PROP_THREAD_CREATE_USERDATA_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "THREAD_CREATE_USERDATA_POINTER",
+    value: crate::thread::SDL_PROP_THREAD_CREATE_USERDATA_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER: Property = Property {
     module: "thread",
     name: "SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER",
-    short_name: "THREAD_CREATE_STACKSIZE",
-    value: unsafe { CStr::from_ptr(crate::thread::SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "THREAD_CREATE_STACKSIZE_NUMBER",
+    value: crate::thread::SDL_PROP_THREAD_CREATE_STACKSIZE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };

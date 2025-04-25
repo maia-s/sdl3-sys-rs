@@ -5,179 +5,171 @@ use super::*;
 pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN",
-    short_name: "GPU_DEVICE_CREATE_DEBUGMODE",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN) },
-    ty: SDL_PropertyType::BOOLEAN,
+    short_name: "GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_DEBUGMODE_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN",
-    short_name: "GPU_DEVICE_CREATE_PREFERLOWPOWER",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN) },
-    ty: SDL_PropertyType::BOOLEAN,
+    short_name: "GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING",
-    short_name: "GPU_DEVICE_CREATE_NAME",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING) },
-    ty: SDL_PropertyType::STRING,
+    short_name: "GPU_DEVICE_CREATE_NAME_STRING",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN",
-    short_name: "GPU_DEVICE_CREATE_SHADERS_PRIVATE",
-    value: unsafe {
-        CStr::from_ptr(crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN)
-    },
-    ty: SDL_PropertyType::BOOLEAN,
+    short_name: "GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN",
-    short_name: "GPU_DEVICE_CREATE_SHADERS_SPIRV",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN) },
-    ty: SDL_PropertyType::BOOLEAN,
+    short_name: "GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN",
-    short_name: "GPU_DEVICE_CREATE_SHADERS_DXBC",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN) },
-    ty: SDL_PropertyType::BOOLEAN,
+    short_name: "GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN",
-    short_name: "GPU_DEVICE_CREATE_SHADERS_DXIL",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN) },
-    ty: SDL_PropertyType::BOOLEAN,
+    short_name: "GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN",
-    short_name: "GPU_DEVICE_CREATE_SHADERS_MSL",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN) },
-    ty: SDL_PropertyType::BOOLEAN,
+    short_name: "GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN",
-    short_name: "GPU_DEVICE_CREATE_SHADERS_METALLIB",
-    value: unsafe {
-        CStr::from_ptr(crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN)
-    },
-    ty: SDL_PropertyType::BOOLEAN,
+    short_name: "GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING",
-    short_name: "GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME",
-    value: unsafe {
-        CStr::from_ptr(crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING)
-    },
-    ty: SDL_PropertyType::STRING,
+    short_name: "GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING",
-    short_name: "GPU_COMPUTEPIPELINE_CREATE_NAME",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING) },
-    ty: SDL_PropertyType::STRING,
+    short_name: "GPU_COMPUTEPIPELINE_CREATE_NAME_STRING",
+    value: crate::gpu::SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING",
-    short_name: "GPU_GRAPHICSPIPELINE_CREATE_NAME",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING) },
-    ty: SDL_PropertyType::STRING,
+    short_name: "GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING",
+    value: crate::gpu::SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING",
-    short_name: "GPU_SAMPLER_CREATE_NAME",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING) },
-    ty: SDL_PropertyType::STRING,
+    short_name: "GPU_SAMPLER_CREATE_NAME_STRING",
+    value: crate::gpu::SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_SHADER_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_SHADER_CREATE_NAME_STRING",
-    short_name: "GPU_SHADER_CREATE_NAME",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_SHADER_CREATE_NAME_STRING) },
-    ty: SDL_PropertyType::STRING,
+    short_name: "GPU_SHADER_CREATE_NAME_STRING",
+    value: crate::gpu::SDL_PROP_GPU_SHADER_CREATE_NAME_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT",
-    short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_R",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT) },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT",
+    value: crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT",
-    short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_G",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT) },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT",
+    value: crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT",
-    short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_B",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT) },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT",
+    value: crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT",
-    short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_A",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT) },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT",
+    value: crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT",
-    short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH",
-    value: unsafe {
-        CStr::from_ptr(crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT)
-    },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT",
+    value: crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
@@ -185,37 +177,35 @@ pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8: Prope
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8",
     short_name: "GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8",
-    value: unsafe {
-        CStr::from_ptr(crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8)
-    },
-    ty: SDL_PropertyType::NUMBER,
+    value: crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING",
-    short_name: "GPU_TEXTURE_CREATE_NAME",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING) },
-    ty: SDL_PropertyType::STRING,
+    short_name: "GPU_TEXTURE_CREATE_NAME_STRING",
+    value: crate::gpu::SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING",
-    short_name: "GPU_BUFFER_CREATE_NAME",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING) },
-    ty: SDL_PropertyType::STRING,
+    short_name: "GPU_BUFFER_CREATE_NAME_STRING",
+    value: crate::gpu::SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING",
-    short_name: "GPU_TRANSFERBUFFER_CREATE_NAME",
-    value: unsafe { CStr::from_ptr(crate::gpu::SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING) },
-    ty: SDL_PropertyType::STRING,
+    short_name: "GPU_TRANSFERBUFFER_CREATE_NAME_STRING",
+    value: crate::gpu::SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };

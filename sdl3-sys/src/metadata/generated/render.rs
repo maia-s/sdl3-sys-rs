@@ -5,87 +5,81 @@ use super::*;
 pub static METADATA_SDL_PROP_RENDERER_CREATE_NAME_STRING: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_CREATE_NAME_STRING",
-    short_name: "RENDERER_CREATE_NAME",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_CREATE_NAME_STRING) },
-    ty: SDL_PropertyType::STRING,
+    short_name: "RENDERER_CREATE_NAME_STRING",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_NAME_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_CREATE_WINDOW_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_CREATE_WINDOW_POINTER",
-    short_name: "RENDERER_CREATE_WINDOW",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_CREATE_WINDOW_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_CREATE_WINDOW_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_WINDOW_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_CREATE_SURFACE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_CREATE_SURFACE_POINTER",
-    short_name: "RENDERER_CREATE_SURFACE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_CREATE_SURFACE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_CREATE_SURFACE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_SURFACE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER",
-    short_name: "RENDERER_CREATE_OUTPUT_COLORSPACE",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER)
-    },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER",
-    short_name: "RENDERER_CREATE_PRESENT_VSYNC",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "RENDERER_CREATE_PRESENT_VSYNC_NUMBER",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER",
-    short_name: "RENDERER_CREATE_VULKAN_INSTANCE",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER)
-    },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_CREATE_VULKAN_INSTANCE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER",
-    short_name: "RENDERER_CREATE_VULKAN_SURFACE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "RENDERER_CREATE_VULKAN_SURFACE_NUMBER",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER",
-    short_name: "RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER)
-    },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER",
-    short_name: "RENDERER_CREATE_VULKAN_DEVICE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_CREATE_VULKAN_DEVICE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
@@ -93,13 +87,9 @@ pub static METADATA_SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_
     Property {
         module: "render",
         name: "SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER",
-        short_name: "RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX",
-        value: unsafe {
-            CStr::from_ptr(
-                crate::render::SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER,
-            )
-        },
-        ty: SDL_PropertyType::NUMBER,
+        short_name: "RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER",
+        value: crate::render::SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER,
+        ty: PropertyType::NUMBER,
         doc: None,
         available_since: None,
     };
@@ -107,195 +97,189 @@ pub static METADATA_SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_N
     Property {
         module: "render",
         name: "SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER",
-        short_name: "RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX",
-        value: unsafe {
-            CStr::from_ptr(
-                crate::render::SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER,
-            )
-        },
-        ty: SDL_PropertyType::NUMBER,
+        short_name: "RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER",
+        value: crate::render::SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER,
+        ty: PropertyType::NUMBER,
         doc: None,
         available_since: None,
     };
 pub static METADATA_SDL_PROP_RENDERER_NAME_STRING: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_NAME_STRING",
-    short_name: "RENDERER_NAME",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_NAME_STRING) },
-    ty: SDL_PropertyType::STRING,
+    short_name: "RENDERER_NAME_STRING",
+    value: crate::render::SDL_PROP_RENDERER_NAME_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_WINDOW_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_WINDOW_POINTER",
-    short_name: "RENDERER_WINDOW",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_WINDOW_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_WINDOW_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_WINDOW_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_SURFACE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_SURFACE_POINTER",
-    short_name: "RENDERER_SURFACE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_SURFACE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_SURFACE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_SURFACE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_VSYNC_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_VSYNC_NUMBER",
-    short_name: "RENDERER_VSYNC",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_VSYNC_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "RENDERER_VSYNC_NUMBER",
+    value: crate::render::SDL_PROP_RENDERER_VSYNC_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER",
-    short_name: "RENDERER_MAX_TEXTURE_SIZE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "RENDERER_MAX_TEXTURE_SIZE_NUMBER",
+    value: crate::render::SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER",
-    short_name: "RENDERER_TEXTURE_FORMATS",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_TEXTURE_FORMATS_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER",
-    short_name: "RENDERER_OUTPUT_COLORSPACE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "RENDERER_OUTPUT_COLORSPACE_NUMBER",
+    value: crate::render::SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN",
-    short_name: "RENDERER_HDR_ENABLED",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN) },
-    ty: SDL_PropertyType::BOOLEAN,
+    short_name: "RENDERER_HDR_ENABLED_BOOLEAN",
+    value: crate::render::SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT",
-    short_name: "RENDERER_SDR_WHITE_POINT",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT) },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "RENDERER_SDR_WHITE_POINT_FLOAT",
+    value: crate::render::SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT",
-    short_name: "RENDERER_HDR_HEADROOM",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT) },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "RENDERER_HDR_HEADROOM_FLOAT",
+    value: crate::render::SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_D3D9_DEVICE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_D3D9_DEVICE_POINTER",
-    short_name: "RENDERER_D3D9_DEVICE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_D3D9_DEVICE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_D3D9_DEVICE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_D3D9_DEVICE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_D3D11_DEVICE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_D3D11_DEVICE_POINTER",
-    short_name: "RENDERER_D3D11_DEVICE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_D3D11_DEVICE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_D3D11_DEVICE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_D3D11_DEVICE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER",
-    short_name: "RENDERER_D3D11_SWAPCHAIN",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_D3D11_SWAPCHAIN_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_D3D12_DEVICE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_D3D12_DEVICE_POINTER",
-    short_name: "RENDERER_D3D12_DEVICE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_D3D12_DEVICE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_D3D12_DEVICE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_D3D12_DEVICE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER",
-    short_name: "RENDERER_D3D12_SWAPCHAIN",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_D3D12_SWAPCHAIN_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER",
-    short_name: "RENDERER_D3D12_COMMAND_QUEUE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_D3D12_COMMAND_QUEUE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER",
-    short_name: "RENDERER_VULKAN_INSTANCE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_VULKAN_INSTANCE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER",
-    short_name: "RENDERER_VULKAN_SURFACE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "RENDERER_VULKAN_SURFACE_NUMBER",
+    value: crate::render::SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER",
-    short_name: "RENDERER_VULKAN_PHYSICAL_DEVICE",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER)
-    },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER",
-    short_name: "RENDERER_VULKAN_DEVICE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_VULKAN_DEVICE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
@@ -303,13 +287,9 @@ pub static METADATA_SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER:
     Property {
         module: "render",
         name: "SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER",
-        short_name: "RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX",
-        value: unsafe {
-            CStr::from_ptr(
-                crate::render::SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER,
-            )
-        },
-        ty: SDL_PropertyType::NUMBER,
+        short_name: "RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER",
+        value: crate::render::SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER,
+        ty: PropertyType::NUMBER,
         doc: None,
         available_since: None,
     };
@@ -317,500 +297,468 @@ pub static METADATA_SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER: 
     Property {
         module: "render",
         name: "SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER",
-        short_name: "RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX",
-        value: unsafe {
-            CStr::from_ptr(
-                crate::render::SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER,
-            )
-        },
-        ty: SDL_PropertyType::NUMBER,
+        short_name: "RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER",
+        value: crate::render::SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER,
+        ty: PropertyType::NUMBER,
         doc: None,
         available_since: None,
     };
 pub static METADATA_SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER",
-    short_name: "RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER)
-    },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER",
+    value: crate::render::SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_RENDERER_GPU_DEVICE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_GPU_DEVICE_POINTER",
-    short_name: "RENDERER_GPU_DEVICE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_RENDERER_GPU_DEVICE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "RENDERER_GPU_DEVICE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_GPU_DEVICE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER",
-    short_name: "TEXTURE_CREATE_COLORSPACE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_COLORSPACE_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER",
-    short_name: "TEXTURE_CREATE_FORMAT",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_FORMAT_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER",
-    short_name: "TEXTURE_CREATE_ACCESS",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_ACCESS_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER",
-    short_name: "TEXTURE_CREATE_WIDTH",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_WIDTH_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER",
-    short_name: "TEXTURE_CREATE_HEIGHT",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_HEIGHT_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT",
-    short_name: "TEXTURE_CREATE_SDR_WHITE_POINT",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT) },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT",
-    short_name: "TEXTURE_CREATE_HDR_HEADROOM",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT) },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "TEXTURE_CREATE_HDR_HEADROOM_FLOAT",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER",
-    short_name: "TEXTURE_CREATE_D3D11_TEXTURE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_CREATE_D3D11_TEXTURE_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER",
-    short_name: "TEXTURE_CREATE_D3D11_TEXTURE_U",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER)
-    },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER",
-    short_name: "TEXTURE_CREATE_D3D11_TEXTURE_V",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER)
-    },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER",
-    short_name: "TEXTURE_CREATE_D3D12_TEXTURE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_CREATE_D3D12_TEXTURE_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER",
-    short_name: "TEXTURE_CREATE_D3D12_TEXTURE_U",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER)
-    },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER",
-    short_name: "TEXTURE_CREATE_D3D12_TEXTURE_V",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER)
-    },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER",
-    short_name: "TEXTURE_CREATE_METAL_PIXELBUFFER",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER)
-    },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER",
-    short_name: "TEXTURE_CREATE_OPENGL_TEXTURE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER",
-    short_name: "TEXTURE_CREATE_OPENGL_TEXTURE_UV",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER)
-    },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER",
-    short_name: "TEXTURE_CREATE_OPENGL_TEXTURE_U",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER)
-    },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER",
-    short_name: "TEXTURE_CREATE_OPENGL_TEXTURE_V",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER)
-    },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER",
-    short_name: "TEXTURE_CREATE_OPENGLES2_TEXTURE",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER)
-    },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER",
-    short_name: "TEXTURE_CREATE_OPENGLES2_TEXTURE_UV",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER)
-    },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER",
-    short_name: "TEXTURE_CREATE_OPENGLES2_TEXTURE_U",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER)
-    },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER",
-    short_name: "TEXTURE_CREATE_OPENGLES2_TEXTURE_V",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER)
-    },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER",
-    short_name: "TEXTURE_CREATE_VULKAN_TEXTURE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_COLORSPACE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_COLORSPACE_NUMBER",
-    short_name: "TEXTURE_COLORSPACE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_COLORSPACE_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_COLORSPACE_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_COLORSPACE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_FORMAT_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_FORMAT_NUMBER",
-    short_name: "TEXTURE_FORMAT",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_FORMAT_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_FORMAT_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_FORMAT_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_ACCESS_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_ACCESS_NUMBER",
-    short_name: "TEXTURE_ACCESS",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_ACCESS_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_ACCESS_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_ACCESS_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_WIDTH_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_WIDTH_NUMBER",
-    short_name: "TEXTURE_WIDTH",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_WIDTH_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_WIDTH_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_WIDTH_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_HEIGHT_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_HEIGHT_NUMBER",
-    short_name: "TEXTURE_HEIGHT",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_HEIGHT_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_HEIGHT_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_HEIGHT_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT",
-    short_name: "TEXTURE_SDR_WHITE_POINT",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT) },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "TEXTURE_SDR_WHITE_POINT_FLOAT",
+    value: crate::render::SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT",
-    short_name: "TEXTURE_HDR_HEADROOM",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT) },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "TEXTURE_HDR_HEADROOM_FLOAT",
+    value: crate::render::SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER",
-    short_name: "TEXTURE_D3D11_TEXTURE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_D3D11_TEXTURE_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER",
-    short_name: "TEXTURE_D3D11_TEXTURE_U",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_D3D11_TEXTURE_U_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER",
-    short_name: "TEXTURE_D3D11_TEXTURE_V",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_D3D11_TEXTURE_V_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER",
-    short_name: "TEXTURE_D3D12_TEXTURE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_D3D12_TEXTURE_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER",
-    short_name: "TEXTURE_D3D12_TEXTURE_U",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_D3D12_TEXTURE_U_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER",
-    short_name: "TEXTURE_D3D12_TEXTURE_V",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER) },
-    ty: SDL_PropertyType::POINTER,
+    short_name: "TEXTURE_D3D12_TEXTURE_V_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER",
-    short_name: "TEXTURE_OPENGL_TEXTURE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_OPENGL_TEXTURE_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER",
-    short_name: "TEXTURE_OPENGL_TEXTURE_UV",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_OPENGL_TEXTURE_UV_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER",
-    short_name: "TEXTURE_OPENGL_TEXTURE_U",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_OPENGL_TEXTURE_U_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER",
-    short_name: "TEXTURE_OPENGL_TEXTURE_V",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_OPENGL_TEXTURE_V_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER",
-    short_name: "TEXTURE_OPENGL_TEXTURE_TARGET",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT",
-    short_name: "TEXTURE_OPENGL_TEX_W",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT) },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "TEXTURE_OPENGL_TEX_W_FLOAT",
+    value: crate::render::SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT",
-    short_name: "TEXTURE_OPENGL_TEX_H",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT) },
-    ty: SDL_PropertyType::FLOAT,
+    short_name: "TEXTURE_OPENGL_TEX_H_FLOAT",
+    value: crate::render::SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER",
-    short_name: "TEXTURE_OPENGLES2_TEXTURE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_OPENGLES2_TEXTURE_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER",
-    short_name: "TEXTURE_OPENGLES2_TEXTURE_UV",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER",
-    short_name: "TEXTURE_OPENGLES2_TEXTURE_U",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_OPENGLES2_TEXTURE_U_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER",
-    short_name: "TEXTURE_OPENGLES2_TEXTURE_V",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_OPENGLES2_TEXTURE_V_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER",
-    short_name: "TEXTURE_OPENGLES2_TEXTURE_TARGET",
-    value: unsafe {
-        CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER)
-    },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
 pub static METADATA_SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER",
-    short_name: "TEXTURE_VULKAN_TEXTURE",
-    value: unsafe { CStr::from_ptr(crate::render::SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER) },
-    ty: SDL_PropertyType::NUMBER,
+    short_name: "TEXTURE_VULKAN_TEXTURE_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER,
+    ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
 };
