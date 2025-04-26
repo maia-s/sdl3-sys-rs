@@ -104,7 +104,7 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
-- next:  Look for frameworks in `~/Library/Frameworks` too
+- next:  Add `no-link` feature, and look for frameworks in `~/Library/Frameworks` too
 - 0.4.7: Update SDL to 3.2.10, derive PartialEq/Eq/Hash traits for applicable types
 - 0.4.6: Update SDL to 3.2.8
 - 0.4.5: Update SDL to 3.2.6

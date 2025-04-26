@@ -129,7 +129,7 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 
 ## Recent changes
 
-- next:  Look for frameworks in `~/Library/Frameworks` too
+- next:  Add `no-link` feature, and look for frameworks in `~/Library/Frameworks` too
 - 0.1.3: Add `link-framework` feature (doesn't work with `build-from-source` yet)
 - 0.1.2: Update SDL_image to 3.2.4
 - 0.1.1: Update SDL_image to 3.2.2, disable vendoring by default on all targets, and when
