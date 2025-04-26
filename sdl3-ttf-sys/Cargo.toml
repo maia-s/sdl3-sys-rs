@@ -27,8 +27,11 @@ build-static-vendored = ["build-from-source-static", "sdlttf-vendored"]
 # Link SDL3_ttf as a static library. The default is to link a shared/dynamic library.
 link-static = []
 
-# Link SDL as an Apple framework. The link-static feature has no effect if this is enabled.
+# Link SDL3_ttf as an Apple framework. The link-static feature has no effect if this is enabled.
 link-framework = []
+
+# Don't link anything, and provide linking flags via Cargo metadata.
+no-link = []
 
 # Use pkg-config to get link flags for SDL3_ttf. Only used when not building from source.
 # This has no effect if the link-framework feature is enabled.
