@@ -47,7 +47,7 @@ convention for libraries. You can change this behaviour with the following featu
 | `build-from-source-static` | Shortcut for enabling both the `build-from-source` and `link-static` features. This should no longer be necessary. |
 | `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3.xcframework` to be located at `~/Library/Frameworks` or `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
 | `link-static` | Link SDL statically. SDL doesn't recommend doing this. <ul><li>On targets that only support static linking, such as emscripten, you don't have to enable this feature.</li><li>On Apple targets, this currently requires frameworks that should be optional.</li></ul> |
-| `no-link` | Don't build or link anything. This is useful if you only want metadata. |
+| `no-link` | Don't link anything, and provide linking flags via Cargo metadata so you can do manual linking if desired. |
 
 ### Building from source
 

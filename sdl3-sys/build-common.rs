@@ -22,6 +22,189 @@ macro_rules! cmake_vars {
     }
 }
 
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum LinkKind {
+    Default,
+    Static,
+}
+
+#[derive(Debug)]
+enum LinkFlag {
+    SearchLib(String),
+    SearchFramework(String),
+    Lib(String),
+    StaticLib(String),
+    Framework(String),
+    #[allow(dead_code)]
+    WeakFramework(String),
+}
+
+#[derive(Default)]
+struct LinkFlags(Vec<LinkFlag>);
+
+impl LinkFlags {
+    fn search_lib(&mut self, s: impl ToString) {
+        self.0.push(LinkFlag::SearchLib(s.to_string()));
+    }
+
+    fn search_framework(&mut self, s: impl ToString) {
+        self.0.push(LinkFlag::SearchFramework(s.to_string()));
+    }
+
+    fn link_lib(&mut self, s: impl ToString) {
+        self.0.push(LinkFlag::Lib(s.to_string()));
+    }
+
+    fn link_static_lib(&mut self, s: impl ToString) {
+        self.0.push(LinkFlag::StaticLib(s.to_string()));
+    }
+
+    fn link_framework(&mut self, s: impl ToString) {
+        self.0.push(LinkFlag::Framework(s.to_string()));
+    }
+
+    #[allow(dead_code)]
+    fn link_weak_framework(&mut self, s: impl ToString) {
+        self.0.push(LinkFlag::WeakFramework(s.to_string()));
+    }
+
+    fn send_to_cargo_link_flags(self) {
+        for flag in self.0.iter() {
+            match flag {
+                LinkFlag::SearchLib(path) => {
+                    println!("cargo::rustc-link-search=native={path}");
+                }
+                LinkFlag::SearchFramework(path) => {
+                    println!("cargo::rustc-link-search=framework={path}");
+                }
+                LinkFlag::Lib(lib) => {
+                    println!("cargo::rustc-link-lib={lib}");
+                }
+                LinkFlag::StaticLib(lib) => {
+                    println!("cargo::rustc-link-lib=static={lib}");
+                }
+                LinkFlag::Framework(lib) | LinkFlag::WeakFramework(lib) => {
+                    // FIXME: rust doesn't support weak linking to frameworks for normal crates
+                    println!("cargo::rustc-link-lib=framework={lib}");
+                }
+            }
+        }
+    }
+
+    fn send_to_cargo_metadata(self) {
+        let mut search_libs = String::new();
+        let mut search_frameworks = String::new();
+        let mut libs = String::new();
+        let mut static_libs = String::new();
+        let mut frameworks = String::new();
+        let mut weak_frameworks = String::new();
+        let mut clang = String::new();
+        let sep = ';';
+        for flag in self.0.iter() {
+            match flag {
+                LinkFlag::SearchLib(path) => {
+                    assert!(
+                        !path.contains(sep),
+                        "library search path contains `{sep}`: {path}"
+                    );
+                    if !search_libs.is_empty() {
+                        search_libs.push(sep);
+                    }
+                    search_libs.push_str(path);
+                    if !clang.is_empty() {
+                        clang.push(sep);
+                    }
+                    clang.push_str("-L");
+                    clang.push_str(path);
+                }
+                LinkFlag::SearchFramework(path) => {
+                    assert!(
+                        !path.contains(sep),
+                        "framework search path contains `{sep}`: {path}"
+                    );
+                    if !search_frameworks.is_empty() {
+                        search_frameworks.push(sep);
+                    }
+                    search_frameworks.push_str(path);
+                    if !clang.is_empty() {
+                        clang.push(sep);
+                    }
+                    clang.push_str("-F");
+                    clang.push_str(path);
+                }
+                LinkFlag::Lib(lib) => {
+                    assert!(!lib.contains(sep), "library name contains `{sep}`: {lib}");
+                    if !libs.is_empty() {
+                        libs.push(sep);
+                    }
+                    libs.push_str(lib);
+                    if !clang.is_empty() {
+                        clang.push(sep);
+                    }
+                    clang.push_str("-l");
+                    clang.push_str(lib);
+                }
+                LinkFlag::StaticLib(lib) => {
+                    assert!(
+                        !lib.contains(sep),
+                        "static library name contains `{sep}`: {lib}"
+                    );
+                    if !static_libs.is_empty() {
+                        static_libs.push(sep);
+                    }
+                    static_libs.push_str(lib);
+                    if !clang.is_empty() {
+                        clang.push(sep);
+                    }
+                    clang.push_str("-Wl,-Bstatic");
+                    clang.push(sep);
+                    clang.push_str("-l");
+                    clang.push(sep);
+                    clang.push_str(lib);
+                    clang.push(sep);
+                    clang.push_str("-Wl,-Bdynamic");
+                }
+                LinkFlag::Framework(lib) => {
+                    assert!(!lib.contains(sep), "framework name contains `{sep}`: {lib}");
+                    if !frameworks.is_empty() {
+                        frameworks.push(sep);
+                    }
+                    frameworks.push_str(lib);
+                    if !clang.is_empty() {
+                        clang.push(sep);
+                    }
+                    clang.push_str("-framework");
+                    clang.push(sep);
+                    clang.push_str(lib);
+                }
+                LinkFlag::WeakFramework(lib) => {
+                    assert!(
+                        !lib.contains(sep),
+                        "weak framework name contains `{sep}`: {lib}"
+                    );
+                    if !weak_frameworks.is_empty() {
+                        weak_frameworks.push(sep);
+                    }
+                    weak_frameworks.push_str(lib);
+                    if !clang.is_empty() {
+                        clang.push(sep);
+                    }
+                    clang.push_str("-weak_framework");
+                    clang.push(sep);
+                    clang.push_str(lib);
+                }
+            }
+        }
+        println!("cargo::metadata=LINK_FLAGS_SEARCH_LIBS={search_libs}");
+        println!("cargo::metadata=LINK_FLAGS_SEARCH_FRAMEWORKS={search_frameworks}");
+        println!("cargo::metadata=LINK_FLAGS_LIBS={libs}");
+        println!("cargo::metadata=LINK_FLAGS_STATIC_LIBS={static_libs}");
+        println!("cargo::metadata=LINK_FLAGS_FRAMEWORKS={frameworks}");
+        println!("cargo::metadata=LINK_FLAGS_WEAK_FRAMEWORKS={weak_frameworks}");
+        println!("cargo::metadata=LINK_FLAGS_CLANG={clang}");
+    }
+}
+
 fn config(key: &str) -> &str {
     struct Config {
         map: BTreeMap<String, String>,
@@ -137,10 +320,13 @@ fn build(
     if cfg!(feature = "no-link") || env::var("DOCS_RS").is_ok() {
         // don't build/link with no-link feature or on docs.rs
     } else {
+        let do_link = !cfg!(feature = "no-link");
+        let mut link_flags = LinkFlags::default();
+
         let link_kind = if cfg!(feature = "link-static") {
-            "static="
+            LinkKind::Static
         } else {
-            ""
+            LinkKind::Default
         };
 
         let lib_name = config("lib_name");
@@ -166,47 +352,55 @@ fn build(
                 for link in cfg.libs_with_private(cfg!(feature = "link-static"))? {
                     match link {
                         Link::SearchLib(path) => {
-                            println!("cargo::rustc-link-search=native={}", path.display())
+                            link_flags.search_lib(path.display());
                         }
 
                         Link::SearchFramework(path) => {
-                            println!("cargo::rustc-link-search=framework={}", path.display())
+                            link_flags.search_framework(path.display());
                         }
 
                         Link::Lib(path) => {
                             if path == Path::new(lib_name) {
-                                if cfg!(feature = "link-static")
-                                    && env::var("CARGO_CFG_TARGET_ENV").unwrap() == "msvc"
-                                {
-                                    println!("cargo::rustc-link-lib=static={lib_name}-static")
-                                } else {
-                                    println!("cargo::rustc-link-lib={link_kind}{}", path.display())
+                                match link_kind {
+                                    LinkKind::Static => {
+                                        if env::var("CARGO_CFG_TARGET_ENV").unwrap() == "msvc" {
+                                            link_flags
+                                                .link_static_lib(format!("{lib_name}-static"));
+                                        } else {
+                                            link_flags.link_static_lib(path.display());
+                                        }
+                                    }
+                                    LinkKind::Default => {
+                                        link_flags.link_lib(path.display());
+                                    }
                                 }
                             } else {
-                                println!("cargo::rustc-link-lib={}", path.display())
+                                link_flags.link_lib(path.display());
                             }
                         }
 
                         Link::Framework(path) => {
-                            println!("cargo::rustc-link-lib=framework={}", path.display())
+                            link_flags.link_framework(path.display());
                         }
 
                         Link::WeakFramework(path) => {
-                            // FIXME: rust doesn't support weak linking to frameworks for normal crates
-                            println!("cargo::rustc-link-lib=framework={}", path.display())
+                            link_flags.link_weak_framework(path.display());
                         }
 
                         _ => (),
                     };
                 }
             } else if LINK_FRAMEWORK {
-                println!("cargo::rustc-link-search=framework={}", out_dir.display());
-                println!("cargo::rustc-link-lib=framework={lib_name}");
+                link_flags.search_framework(out_dir.display());
+                link_flags.link_framework(lib_name);
             } else {
-                println!("cargo::rustc-link-search={}", out_dir.display());
-                println!("cargo::rustc-link-search={}/lib", out_dir.display());
-                println!("cargo::rustc-link-search={}/lib64", out_dir.display());
-                println!("cargo::rustc-link-lib={link_kind}{lib_name}");
+                link_flags.search_lib(out_dir.display());
+                link_flags.search_lib(format!("{}/lib", out_dir.display()));
+                link_flags.search_lib(format!("{}/lib64", out_dir.display()));
+                match link_kind {
+                    LinkKind::Static => link_flags.link_static_lib(lib_name),
+                    LinkKind::Default => link_flags.link_lib(lib_name),
+                }
             }
 
             find_and_output_cmake_dir_metadata(&out_dir)?;
@@ -220,7 +414,6 @@ fn build(
                 )?;
             }
         }
-
         #[cfg(not(feature = "build-from-source"))]
         {
             if LINK_FRAMEWORK {
@@ -228,9 +421,13 @@ fn build(
                 let home = env::var("HOME");
                 let link_search = |name| {
                     if let Ok(home) = home {
-                        println!("cargo::rustc-link-search=framework={home}/Library/Frameworks/{lib_name}.xcframework/{name}");
+                        link_flags.search_framework(format!(
+                            "{home}/Library/Frameworks/{lib_name}.xcframework/{name}"
+                        ));
                     }
-                    println!("cargo::rustc-link-search=framework=/Library/Frameworks/{lib_name}.xcframework/{name}");
+                    link_flags.search_framework(format!(
+                        "/Library/Frameworks/{lib_name}.xcframework/{name}"
+                    ));
                 };
                 if env::var("CARGO_CFG_TARGET_OS").unwrap() == "macos" {
                     link_search("macos-arm64_x86_64");
@@ -247,7 +444,7 @@ fn build(
                         link_search("tvos-arm64");
                     }
                 }
-                println!("cargo::rustc-link-lib=framework={lib_name}");
+                link_flags.link_framework(lib_name);
             } else {
                 #[allow(unused_mut)]
                 let mut handled = false;
@@ -261,20 +458,23 @@ fn build(
                     {
                         handled = true;
                         for path in lib.link_paths.iter() {
-                            println!("cargo::rustc-link-search=native={}", path.display());
+                            link_flags.search_lib(path.display());
                         }
                         for path in lib.framework_paths.iter() {
-                            println!("cargo::rustc-link-search=framework={}", path.display());
+                            link_flags.search_framework(path.display());
                         }
                         for s in lib.libs.iter() {
                             if s == lib_name {
-                                println!("cargo::rustc-link-lib={link_kind}{s}");
+                                match link_kind {
+                                    LinkKind::Static => link_flags.link_static_lib(s),
+                                    LinkKind::Default => link_flags.link_lib(s),
+                                }
                             } else {
-                                println!("cargo::rustc-link-lib={s}");
+                                link_flags.link_lib(s);
                             }
                         }
                         for s in lib.frameworks.iter() {
-                            println!("cargo::rustc-link-lib=framework={s}")
+                            link_flags.link_framework(s);
                         }
                     }
                 }
@@ -287,11 +487,20 @@ fn build(
                 if !handled {
                     // yolo
                     if cfg!(target_os = "macos") {
-                        println!("cargo::rustc-link-search=/opt/homebrew/lib");
+                        link_flags.search_lib("/opt/homebrew/lib");
                     }
-                    println!("cargo::rustc-link-lib={link_kind}{lib_name}");
+                    match link_kind {
+                        LinkKind::Static => link_flags.link_static_lib(lib_name),
+                        LinkKind::Default => link_flags.link_lib(lib_name),
+                    }
                 }
             }
+        }
+
+        if do_link {
+            link_flags.send_to_cargo_link_flags();
+        } else {
+            link_flags.send_to_cargo_metadata();
         }
     }
 
