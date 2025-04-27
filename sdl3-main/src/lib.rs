@@ -2,12 +2,16 @@
 #![deny(unsafe_op_in_unsafe_fn)]
 #![doc = include_str!("../README.md")]
 #![cfg_attr(all(feature = "nightly", doc), feature(doc_auto_cfg))] // https://github.com/rust-lang/rust/issues/43781
+#![cfg_attr(feature = "nightly", feature(try_trait_v2))] // https://github.com/rust-lang/rust/issues/84277
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
 #[cfg(feature = "std")]
 extern crate std;
+
+#[cfg(feature = "nightly")]
+use core::{convert::Infallible, ops::FromResidual};
 
 #[cfg(doc)]
 use state::SyncPtr;
@@ -361,6 +365,22 @@ impl From<SDL_AppResult> for AppResult {
     }
 }
 
+#[cfg(feature = "nightly")]
+impl<E> FromResidual<Result<Infallible, E>> for AppResult {
+    #[inline(always)]
+    fn from_residual(_residual: Result<Infallible, E>) -> Self {
+        AppResult::Failure
+    }
+}
+
+#[cfg(feature = "nightly")]
+impl FromResidual<Option<Infallible>> for AppResult {
+    #[inline(always)]
+    fn from_residual(_residual: Option<Infallible>) -> Self {
+        AppResult::Failure
+    }
+}
+
 /// An [`AppResult`] with an app state, for returning from the function tagged with [`app_init`].
 #[derive(Debug)]
 pub enum AppResultWithState<S: AppState> {
@@ -372,6 +392,22 @@ pub enum AppResultWithState<S: AppState> {
 
     /// Quit with failure status
     Failure(Option<S>),
+}
+
+#[cfg(feature = "nightly")]
+impl<S: AppState, E> FromResidual<Result<Infallible, E>> for AppResultWithState<S> {
+    #[inline(always)]
+    fn from_residual(_residual: Result<Infallible, E>) -> Self {
+        AppResultWithState::Failure(None)
+    }
+}
+
+#[cfg(feature = "nightly")]
+impl<S: AppState> FromResidual<Option<Infallible>> for AppResultWithState<S> {
+    #[inline(always)]
+    fn from_residual(_residual: Option<Infallible>) -> Self {
+        AppResultWithState::Failure(None)
+    }
 }
 
 impl<S: AppState> AppResultWithState<S> {

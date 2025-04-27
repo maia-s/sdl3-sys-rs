@@ -12,6 +12,7 @@ use crate::{app_init, main};
 /// Zero sized token that can only exist on the main thread.
 ///
 /// Call [`MainThreadToken::get()`] or [`MainThreadToken::assert()`] to get one.
+#[derive(Clone, Copy)]
 pub struct MainThreadToken(PhantomData<*const ()>);
 
 static MAIN_THREAD_ID: MainOnceLock<SDL_ThreadID> = MainOnceLock::new();
