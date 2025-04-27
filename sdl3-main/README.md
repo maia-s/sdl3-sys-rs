@@ -16,6 +16,8 @@ See the documentation for more information.
 
 ## Version history
 
-- next:  Implement Copy for MainThreadToken
+- next:
+  - impl `Copy` for `MainThreadToken`
+  - impl `FromResidual` for `AppResult*` on nightly
 - 0.4.1: Fix potential crash if app_quit takes no arguments and appstate is null
 - 0.4.0: Update sdl3-sys to 0.4.0 (first stable SDL release)
