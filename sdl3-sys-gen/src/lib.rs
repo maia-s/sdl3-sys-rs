@@ -185,10 +185,7 @@ impl Crate {
                     .unwrap_or_else(|| panic!("invalid config line: `{line}`"));
                 let (key, value) = (key.trim(), value.trim());
                 if let Some(prev) = config.insert(key.to_owned(), value.to_owned()) {
-                    panic!(
-                        "config key `{}` already set to `{}`, new value `{}`",
-                        key, prev, value
-                    );
+                    panic!("config key `{key}` already set to `{prev}`, new value `{value}`");
                 }
             }
         }
@@ -241,7 +238,7 @@ impl Library {
         let git_describe = {
             let cwd = current_dir()?;
             set_current_dir(src_crate.root_path.join(lib_dir))
-                .map_err(|e| format!("error setting cwd to `{}`: {}", lib_dir, e))?;
+                .map_err(|e| format!("error setting cwd to `{lib_dir}`: {e}"))?;
             let _cwd = Defer::new(|| set_current_dir(cwd).unwrap());
             Command::new("git")
                 .args(["describe", "--tags", "--long"])

@@ -1151,7 +1151,7 @@ impl Enum {
                 }
             };
 
-            if value.starts_with(&format!("{}(", enum_ident_s)) {
+            if value.starts_with(&format!("{enum_ident_s}(")) {
                 value.replace_range(0..enum_ident_s.len(), "Self");
             }
 
