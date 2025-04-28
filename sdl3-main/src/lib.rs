@@ -192,8 +192,10 @@ pub mod __internal {
     use std::{
         any::Any,
         cell::UnsafeCell,
+        env,
         mem::MaybeUninit,
         panic::{catch_unwind, resume_unwind, UnwindSafe},
+        vec::Vec,
     };
 
     #[cfg(feature = "std")]
@@ -259,11 +261,92 @@ pub mod __internal {
         }
     }
 
-    #[inline(always)]
+    #[inline(always)] // this is only called once
     pub unsafe fn run_app(
         main_fn: unsafe extern "C" fn(c_int, *mut *mut c_char) -> c_int,
     ) -> c_int {
-        unsafe { SDL_RunApp(0, ptr::null_mut(), Some(main_fn), ptr::null_mut()) }
+        #[cfg(feature = "std")]
+        {
+            // copy arguments so we can null-terminate them
+            let mut cargs = Vec::new();
+
+            for arg in env::args_os() {
+                let mut carg;
+                #[cfg(unix)]
+                {
+                    use std::{borrow::ToOwned, os::unix::ffi::OsStringExt};
+                    carg = arg.to_owned().into_vec();
+                }
+                #[cfg(all(not(unix), windows))]
+                {
+                    // encode wtf-8
+                    // (rust already encodes this as wtf-8, but it's not specified or guaranteed, so...)
+                    use std::os::windows::ffi::OsStrExt;
+                    carg = Vec::new();
+                    let mut codepoints = arg.encode_wide().peekable();
+                    while let Some(ch) = codepoints.next() {
+                        if ch < 0x80 {
+                            carg.push(ch as u8);
+                        } else if ch < 0x800 {
+                            carg.push(0xc0 | (ch >> 6) as u8);
+                            carg.push(0x80 | (ch as u8 & 0x3f));
+                        } else {
+                            if (0xd800..=0xdbff).contains(&ch) {
+                                if let Some(ch2) = codepoints.peek() {
+                                    if (0xdc00..=0xdfff).contains(ch2) {
+                                        let value = ((ch as u32 - 0xd800) << 10
+                                            | (*ch2 as u32 - 0xdc00))
+                                            + 0x10000;
+                                        carg.push(0xf0 | (value >> 18) as u8);
+                                        carg.push(0x80 | ((value >> 12) as u8 & 0x3f));
+                                        carg.push(0x80 | ((value >> 6) as u8 & 0x3f));
+                                        carg.push(0x80 | (value as u8 & 0x3f));
+                                        let _ = codepoints.next();
+                                        continue;
+                                    }
+                                }
+                            }
+                            carg.push(0xe0 | (ch >> 12) as u8);
+                            carg.push(0x80 | ((ch >> 6) as u8 & 0x3f));
+                            carg.push(0x80 | (ch as u8 & 0x3f));
+                        }
+                    }
+                }
+                #[cfg(not(any(unix, windows)))]
+                {
+                    // yolo
+                    carg = arg.to_string_lossy().into_owned().into_bytes();
+                }
+                carg.push(0);
+                cargs.push(carg);
+            }
+
+            let mut ptrargs = cargs
+                .iter_mut()
+                .map(|carg| carg.as_mut_ptr())
+                .collect::<Vec<_>>();
+            ptrargs.push(ptr::null_mut());
+
+            let result = unsafe {
+                SDL_RunApp(
+                    cargs.len().try_into().expect("too many arguments"),
+                    ptrargs.as_mut_ptr() as *mut *mut c_char,
+                    Some(main_fn),
+                    ptr::null_mut(),
+                )
+            };
+
+            drop(ptrargs);
+            drop(cargs);
+
+            result
+        }
+
+        #[cfg(not(feature = "std"))]
+        {
+            // can't get the arguments without std
+            unsafe { SDL_RunApp(0, ptr::null_mut(), Some(main_fn), ptr::null_mut()) };
+        }
     }
 }
 
