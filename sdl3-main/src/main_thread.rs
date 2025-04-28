@@ -12,10 +12,8 @@ pub struct MainThreadToken(PhantomData<*const ()>);
 
 impl MainThreadToken {
     /// Get `Some(MainThreadToken)` if called on the main thread, or `None` otherwise.
-    /// Returns `None` if `MainThreadToken` hasn't been inited.
     ///
-    /// On targets that don't support threads, this will always succeed if `MainThreadToken`
-    /// has been inited.
+    /// On targets that don't support threads, this will always succeed.
     ///
     /// See also [`MainThreadToken::assert()`]
     pub fn get() -> Option<Self> {
@@ -23,10 +21,8 @@ impl MainThreadToken {
     }
 
     /// Get `MainThreadToken` if called on the main thread, or panic otherwise.
-    /// Panics if `MainThreadToken` hasn't been inited.
     ///
-    /// On targets that don't support threads, this will always succeed if `MainThreadToken`
-    /// has been inited.
+    /// On targets that don't support threads, this will always succeed.
     ///
     /// See also [`MainThreadToken::get()`]
     pub fn assert() -> Self {
