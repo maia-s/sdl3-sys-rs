@@ -33,7 +33,7 @@ impl MainThreadToken {
 /// Data that can only be accessed from the main thread. Accessors take a [`MainThreadToken`].
 ///
 /// This can be moved freely between threads, but the Drop implementation will panic if it's
-/// dropped from another thread than the main thread.
+/// dropped from a thread other than the main thread.
 #[repr(transparent)]
 pub struct MainThreadData<T>(T);
 
