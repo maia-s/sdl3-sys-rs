@@ -224,10 +224,7 @@ fn config(key: &str) -> &str {
                     .unwrap_or_else(|| panic!("invalid config line: `{line}`"));
                 let (key, value) = (key.trim(), value.trim());
                 if let Some(prev) = map.insert(key.to_owned(), value.to_owned()) {
-                    panic!(
-                        "config key `{}` already set to `{}`, new value `{}`",
-                        key, prev, value
-                    );
+                    panic!("config key `{key}` already set to `{prev}`, new value `{value}`");
                 }
             }
             Config { map }
