@@ -44,7 +44,7 @@ impl<T> Drop for MainThreadData<T> {
 }
 
 impl<T> MainThreadData<T> {
-    /// Create a new MainThreadData.
+    /// Create a new `MainThreadData`.
     #[inline(always)]
     pub fn new(_: MainThreadToken, data: T) -> Self {
         Self(data)

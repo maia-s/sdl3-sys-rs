@@ -43,6 +43,34 @@ pub use sdl3_main_macros::main;
 /// respective sdl main callbacks, as if the corresponding attribute macros were used.
 /// All four must be defined in a single impl block, but `app_quit` is optional and will be
 /// defined as an empty function if omitted.
+///
+/// This is functionally the same as marking those functions with the respective attribute
+/// macros, but works with methods and uses the type the block is implemented for as the
+/// app state type.
+///
+/// See the documentation for [`app_init`], [`app_iterate`], [`app_event`] and [`app_quit`].
+///
+/// Example (using the `nightly` feature for ?-propagation to `AppResult*`):
+/// ```custom,{.rust}
+/// use sdl3_main::{AppResult, AppResultWithState};
+///
+/// #[app_impl]
+/// impl MyAppState {
+///     fn app_init() -> AppResultWithState<Self> {
+///         AppResultWithState::Continue(Box::new(Mutex::new(Self::new()?)))
+///     }
+///
+///     fn app_iterate(&mut self) -> AppResult {
+///         self.iterate()?;
+///         AppResult::Continue
+///     }
+///
+///     fn app_event(&mut self) -> AppResult {
+///         self.handle_events()?;
+///         AppResult::Continue
+///     }
+/// }
+/// ```
 pub use sdl3_main_macros::app_impl;
 
 /// The function tagged with `app_init` is called by SDL at the start of the program on the main thread.
