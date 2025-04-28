@@ -345,7 +345,7 @@ pub mod __internal {
         #[cfg(not(feature = "std"))]
         {
             // can't get the arguments without std
-            unsafe { SDL_RunApp(0, ptr::null_mut(), Some(main_fn), ptr::null_mut()) };
+            unsafe { SDL_RunApp(0, ptr::null_mut(), Some(main_fn), ptr::null_mut()) }
         }
     }
 }
