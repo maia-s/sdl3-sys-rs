@@ -1,9 +1,6 @@
 use core::marker::PhantomData;
 use sdl3_sys::init::SDL_IsMainThread;
 
-#[cfg(doc)]
-use crate::{app_init, main};
-
 /// Zero sized token that can only exist on the main thread.
 ///
 /// Call [`MainThreadToken::get()`] or [`MainThreadToken::assert()`] to get one.
