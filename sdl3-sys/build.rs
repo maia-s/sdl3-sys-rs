@@ -22,8 +22,13 @@ fn main() -> Result<(), Box<dyn Error>> {
                 config.define("SDL_STATIC", "ON");
             }
 
-            if cfg!(feature = "sdl-unix-console-build") {
-                config.define("SDL_UNIX_CONSOLE_BUILD", "ON");
+            cmake_vars! { config =>
+                SDL_ASAN,
+                SDL_CCACHE,
+                SDL_GPU_DXVK,
+                SDL_LIBC,
+                SDL_RPATH,
+                SDL_UNIX_CONSOLE_BUILD,
             }
         }
         Ok(())
