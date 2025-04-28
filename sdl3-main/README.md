@@ -16,7 +16,10 @@ See the documentation for more information.
 
 ## Version history
 
-- 0.5.0: Update sdl3-sys to 0.5.0
+- 0.5.0:
+  - Update sdl3-sys to 0.5.0
+  - Remove `MainThreadToken::init` (no longer necessary)
+  - Pass arguments to main on `std` (`!std` already did)
 - next:
   - impl `Copy` for `MainThreadToken`
   - impl `FromResidual` for `AppResult*` on nightly
