@@ -446,7 +446,7 @@ impl Parse for PreProcLine {
                             .into_iter()
                             .map(|(ident, _)| {
                                 let ident = if is_keyword(ident.as_str()) {
-                                    let replacement = IdentOrKw::new_inline(format!("{}_", ident));
+                                    let replacement = IdentOrKw::new_inline(format!("{ident}_"));
                                     ctx.add_patch_ident(ident, replacement.clone());
                                     replacement
                                 } else {

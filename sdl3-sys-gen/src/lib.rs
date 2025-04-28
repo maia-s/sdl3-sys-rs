@@ -292,7 +292,7 @@ impl Library {
                         &|s| s == format!("[build-dependencies.{}]", src_crate.name),
                         &|s| s.starts_with("version ="),
                     ],
-                    apply: &|lines| format!("{}version = \"{}\"\n", lines[0], src_ver),
+                    apply: &|lines| format!("{}version = \"{src_ver}\"\n", lines[0]),
                 },
             ],
         )?;
@@ -300,15 +300,15 @@ impl Library {
         patch_file(
             &sys_crate.readme_path(),
             &[LinesPatch {
-                match_lines: &[&|s| s.contains(&format!("bindings for {} version", lib_dir))],
+                match_lines: &[&|s| s.contains(&format!("bindings for {lib_dir} version"))],
                 apply: &|lines| {
-                    let match_ = &format!("bindings for {} version", lib_dir);
+                    let match_ = &format!("bindings for {lib_dir} version");
                     let line = &lines[0];
                     let pfx = &line[..line.find(match_).unwrap() + match_.len()];
                     if src_ver_display == "3.2.0" {
-                        format!("{pfx} `{}`.\n", src_ver_display)
+                        format!("{pfx} `{src_ver_display}`.\n")
                     } else {
-                        format!("{pfx}s `3.2.0` to `{}`, inclusive.\n", src_ver_display)
+                        format!("{pfx}s `3.2.0` to `{src_ver_display}`, inclusive.\n")
                     }
                 },
             }],

@@ -230,7 +230,7 @@ fn top_level_cargo_target_dir() -> std::path::PathBuf {
 fn find_and_output_cmake_dir_metadata(out_dir: &std::path::Path) -> Result<(), Box<dyn Error>> {
     use std::path::{Path, PathBuf};
     fn try_dir(dir: &Path) -> bool {
-        if dir.join(format!("{}Config.cmake", LIB_NAME)).exists() {
+        if dir.join(format!("{LIB_NAME}Config.cmake")).exists() {
             println!("cargo::metadata=CMAKE_DIR={}", dir.display());
             true
         } else {
