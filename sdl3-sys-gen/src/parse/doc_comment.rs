@@ -82,7 +82,7 @@ impl Display for DocComment {
                     writeln!(f)?;
                 }
                 empties = 0;
-                writeln!(f, "{}", line)?;
+                writeln!(f, "{line}")?;
             }
         }
 

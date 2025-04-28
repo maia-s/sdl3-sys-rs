@@ -33,6 +33,7 @@ no-link = []
 # When building from source, use the `SDL_UNIX_CONSOLE_BUILD` flag to disable the X11 dependency
 # and build a console-only version of SDL. This has no effect when not building from source.
 sdl-unix-console-build = []
+no-sdl-unix-console-build = []
 
 # Use pkg-config to get link flags for SDL. Only used when not building from source.
 # This has no effect if the link-framework feature is enabled.
@@ -71,6 +72,18 @@ use-libc-v0-2 = ["dep:libc-v0-2"]
 use-windows-sys-v0-59 = ["dep:windows-sys-v0-59"]
 use-x11-v2 = ["dep:x11-v2"]
 use-x11-dl-v2 = ["dep:x11-dl-v2"]
+
+# Misc CMake options for when building from source
+sdl-asan = []
+sdl-ccache = []
+sdl-gpu-dxvk = []
+sdl-libc = []
+sdl-rpath = []
+no-sdl-asan = []
+no-sdl-ccache = []
+no-sdl-gpu-dxvk = []
+no-sdl-libc = []
+no-sdl-rpath = []
 
 [package.metadata.docs.rs]
 all-features = true
