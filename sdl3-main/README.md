@@ -24,7 +24,7 @@ See the documentation for more information.
 
 ## Version history
 
-- 0.4.next:
+- 0.4.2:
   - Added optional parking_lot integration
   - Added `run_{sync,async}_on_main_thread` and `MainThreadData::get[_mut]_on_main_thread`
   - impl `Copy` for `MainThreadToken`
