@@ -201,7 +201,9 @@ pub mod app;
 mod main_thread;
 pub mod state;
 
-pub use main_thread::{MainThreadData, MainThreadToken};
+pub use main_thread::{
+    run_on_main_thread_async, run_on_main_thread_sync, MainThreadData, MainThreadToken,
+};
 use state::{AppState, BorrowMut, BorrowRef, BorrowVal, ConsumeMut, ConsumeRef, ConsumeVal};
 
 #[doc(hidden)]
