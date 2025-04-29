@@ -73,7 +73,7 @@ impl<T> MainThreadData<T> {
     ///
     /// Returns false if the callback failed to run.
     ///
-    /// See also [`run_on_main_thread_sync()`].
+    /// See also [`run_sync_on_main_thread()`].
     #[must_use]
     pub fn get_on_main_thread(&self, callback: impl FnOnce(&T) + Send) -> bool {
         run_sync_on_main_thread(move || callback(&self.0))
@@ -87,7 +87,7 @@ impl<T> MainThreadData<T> {
     ///
     /// Returns false if the callback failed to run.
     ///
-    /// See also [`run_on_main_thread_sync()`].
+    /// See also [`run_sync_on_main_thread()`].
     #[must_use]
     pub fn get_mut_on_main_thread(&mut self, callback: impl FnOnce(&mut T) + Send) -> bool {
         run_sync_on_main_thread(move || callback(&mut self.0))
@@ -125,7 +125,7 @@ struct MainThreadCall<T> {
 /// Returns false if the callback failed to run.
 ///
 /// See also:
-/// - [`run_on_main_thread_async()`]
+/// - [`run_async_on_main_thread()`]
 /// - [`MainThreadData::get_on_main_thread()`]
 #[must_use]
 pub fn run_sync_on_main_thread<F: FnOnce() + Send>(callback: F) -> bool {
@@ -146,7 +146,7 @@ pub fn run_sync_on_main_thread<F: FnOnce() + Send>(callback: F) -> bool {
 ///
 /// Returns false if the callback failed to run.
 ///
-/// See also [`run_on_main_thread_sync()`].
+/// See also [`run_sync_on_main_thread()`].
 #[must_use]
 pub fn run_async_on_main_thread<F: FnOnce() + Send + 'static>(callback: F) -> bool {
     unsafe extern "C" fn main_thread_fn(userdata: *mut c_void) {
