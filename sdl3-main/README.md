@@ -19,7 +19,7 @@ See the documentation for more information.
 | ----------------------- | ----------- |
 | `alloc`                 | Enable features that require allocation (enabled by default) |
 | `std`                   | Enable features that require the standard library (enabled by default) |
-| `nightly`               | Enable the `?` operator on `Result::Err` and `Option::None` to convert to `AppResult*::Failure` |
+| `nightly`               | Enable the `?` operator to convert `Result::Err` and `Option::None` to `AppResult*::Failure` |
 | `use-parking-lot-v0-12` | Support parking_lot 0.12 locks in app state accessors |
 
 ## Version history
