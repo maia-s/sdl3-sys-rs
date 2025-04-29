@@ -14,11 +14,12 @@ or all four of the [`app_init`], [`app_iterate`], [`app_event`] and [`app_quit`]
 attribute macros. Don't use the `main` attribute macro in this mode.
 See the documentation for more information.
 
-## Version history
+## Recent changes
 
 - 0.5.0:
   - Update sdl3-sys to 0.5.0
-  - Remove `MainThreadToken::init` (no longer necessary)
+  - Removed `MainThreadToken::init` (no longer necessary)
+  - Added `run_{sync,async}_on_main_thread` and `MainThreadData::get[_mut]_on_main_thread`
   - Pass arguments to main on `std` (`!std` already did)
 - next:
   - impl `Copy` for `MainThreadToken`
