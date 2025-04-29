@@ -65,6 +65,10 @@ impl MainThreadToken {
     }
 }
 
+/// Data that can only be accessed from the main thread. Accessors take a [`MainThreadToken`].
+///
+/// This can be moved freely between threads, but the Drop implementation will panic if it's
+/// dropped from a thread other than the main thread.
 #[repr(transparent)]
 pub struct MainThreadData<T>(T);
 
@@ -78,16 +82,19 @@ impl<T> Drop for MainThreadData<T> {
 }
 
 impl<T> MainThreadData<T> {
+    /// Create a new `MainThreadData`.
     #[inline(always)]
     pub fn new(_: MainThreadToken, data: T) -> Self {
         Self(data)
     }
 
+    /// Get shared access to this data.
     #[inline(always)]
     pub fn get(&self, _: MainThreadToken) -> &T {
         &self.0
     }
 
+    /// Get exclusive access to this data.
     #[inline(always)]
     pub fn get_mut(&mut self, _: MainThreadToken) -> &mut T {
         &mut self.0
