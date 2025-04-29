@@ -347,6 +347,98 @@ where
     }
 }
 
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowRef<T> for Arc<parking_lot_v0_12::Mutex<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_ref<R>(raw: *mut c_void, f: impl FnOnce(&T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&*unsafe { &*(raw as *mut parking_lot_v0_12::Mutex<T>) }.lock())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowMut<T> for Arc<parking_lot_v0_12::Mutex<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_mut<R>(raw: *mut c_void, f: impl FnOnce(&mut T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&mut *unsafe { &*(raw as *mut parking_lot_v0_12::Mutex<T>) }.lock())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowRef<T> for Arc<parking_lot_v0_12::FairMutex<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_ref<R>(raw: *mut c_void, f: impl FnOnce(&T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&*unsafe { &*(raw as *mut parking_lot_v0_12::FairMutex<T>) }.lock())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowMut<T> for Arc<parking_lot_v0_12::FairMutex<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_mut<R>(raw: *mut c_void, f: impl FnOnce(&mut T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&mut *unsafe { &*(raw as *mut parking_lot_v0_12::FairMutex<T>) }.lock())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowRef<T> for Arc<parking_lot_v0_12::ReentrantMutex<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_ref<R>(raw: *mut c_void, f: impl FnOnce(&T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&*unsafe { &*(raw as *mut parking_lot_v0_12::ReentrantMutex<T>) }.lock())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowRef<T> for Arc<parking_lot_v0_12::ReentrantMutex<core::cell::RefCell<T>>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_ref<R>(raw: *mut c_void, f: impl FnOnce(&T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(
+            &*unsafe { &*(raw as *mut parking_lot_v0_12::ReentrantMutex<core::cell::RefCell<T>>) }
+                .lock()
+                .borrow(),
+        )
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowMut<T> for Arc<parking_lot_v0_12::ReentrantMutex<core::cell::RefCell<T>>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_mut<R>(raw: *mut c_void, f: impl FnOnce(&mut T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&mut *unsafe {
+            &*(raw as *mut parking_lot_v0_12::ReentrantMutex<core::cell::RefCell<T>>)
+        }
+        .lock()
+        .borrow_mut())
+    }
+}
+
 #[cfg(feature = "std")]
 impl<T> BorrowRef<T> for Arc<RwLock<T>>
 where
@@ -368,6 +460,30 @@ where
     unsafe fn borrow_mut<R>(raw: *mut c_void, f: impl FnOnce(&mut T) -> R) -> R {
         assert!(!raw.is_null());
         f(&mut *unsafe { &*(raw as *mut RwLock<T>) }.write().unwrap())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowRef<T> for Arc<parking_lot_v0_12::RwLock<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_ref<R>(raw: *mut c_void, f: impl FnOnce(&T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&*unsafe { &*(raw as *mut parking_lot_v0_12::RwLock<T>) }.read())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowMut<T> for Arc<parking_lot_v0_12::RwLock<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_mut<R>(raw: *mut c_void, f: impl FnOnce(&mut T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&mut *unsafe { &*(raw as *mut parking_lot_v0_12::RwLock<T>) }.write())
     }
 }
 
@@ -440,6 +556,98 @@ where
     }
 }
 
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowRef<T> for Box<parking_lot_v0_12::Mutex<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_ref<R>(raw: *mut c_void, f: impl FnOnce(&T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&*unsafe { &*(raw as *mut parking_lot_v0_12::Mutex<T>) }.lock())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowMut<T> for Box<parking_lot_v0_12::Mutex<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_mut<R>(raw: *mut c_void, f: impl FnOnce(&mut T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&mut *unsafe { &*(raw as *mut parking_lot_v0_12::Mutex<T>) }.lock())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowRef<T> for Box<parking_lot_v0_12::FairMutex<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_ref<R>(raw: *mut c_void, f: impl FnOnce(&T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&*unsafe { &*(raw as *mut parking_lot_v0_12::FairMutex<T>) }.lock())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowMut<T> for Box<parking_lot_v0_12::FairMutex<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_mut<R>(raw: *mut c_void, f: impl FnOnce(&mut T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&mut *unsafe { &*(raw as *mut parking_lot_v0_12::FairMutex<T>) }.lock())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowRef<T> for Box<parking_lot_v0_12::ReentrantMutex<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_ref<R>(raw: *mut c_void, f: impl FnOnce(&T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&*unsafe { &*(raw as *mut parking_lot_v0_12::ReentrantMutex<T>) }.lock())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowRef<T> for Box<parking_lot_v0_12::ReentrantMutex<core::cell::RefCell<T>>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_ref<R>(raw: *mut c_void, f: impl FnOnce(&T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(
+            &*unsafe { &*(raw as *mut parking_lot_v0_12::ReentrantMutex<core::cell::RefCell<T>>) }
+                .lock()
+                .borrow(),
+        )
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowMut<T> for Box<parking_lot_v0_12::ReentrantMutex<core::cell::RefCell<T>>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_mut<R>(raw: *mut c_void, f: impl FnOnce(&mut T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&mut *unsafe {
+            &*(raw as *mut parking_lot_v0_12::ReentrantMutex<core::cell::RefCell<T>>)
+        }
+        .lock()
+        .borrow_mut())
+    }
+}
+
 #[cfg(feature = "std")]
 impl<T> BorrowRef<T> for Box<RwLock<T>>
 where
@@ -461,5 +669,29 @@ where
     unsafe fn borrow_mut<R>(raw: *mut c_void, f: impl FnOnce(&mut T) -> R) -> R {
         assert!(!raw.is_null());
         f(&mut *unsafe { &*(raw as *mut RwLock<T>) }.write().unwrap())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowRef<T> for Box<parking_lot_v0_12::RwLock<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_ref<R>(raw: *mut c_void, f: impl FnOnce(&T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&*unsafe { &*(raw as *mut parking_lot_v0_12::RwLock<T>) }.read())
+    }
+}
+
+#[cfg(feature = "use-parking-lot-v0-12")]
+impl<T> BorrowMut<T> for Box<parking_lot_v0_12::RwLock<T>>
+where
+    Self: AppState,
+{
+    #[inline(always)]
+    unsafe fn borrow_mut<R>(raw: *mut c_void, f: impl FnOnce(&mut T) -> R) -> R {
+        assert!(!raw.is_null());
+        f(&mut *unsafe { &*(raw as *mut parking_lot_v0_12::RwLock<T>) }.write())
     }
 }

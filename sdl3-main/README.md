@@ -14,11 +14,20 @@ or all four of the [`app_init`], [`app_iterate`], [`app_event`] and [`app_quit`]
 attribute macros. Don't use the `main` attribute macro in this mode.
 See the documentation for more information.
 
+## Features
+| Feature                 | Description |
+| ----------------------- | ----------- |
+| `alloc`                 | Enable features that require allocation (enabled by default) |
+| `std`                   | Enable features that require the standard library (enabled by default) |
+| `nightly`               | Enable the `?` operator on `Result::Err` and `Option::None` to convert to `AppResult*::Failure` |
+| `use-parking-lot-v0-12` | Support parking_lot 0.12 locks in app state accessors |
+
 ## Version history
 
 - 0.4.next:
+  - Added optional parking_lot integration
+  - Added `run_{sync,async}_on_main_thread` and `MainThreadData::get[_mut]_on_main_thread`
   - impl `Copy` for `MainThreadToken`
   - impl `FromResidual` for `AppResult*` on nightly
-  - Added `run_{sync,async}_on_main_thread` and `MainThreadData::get[_mut]_on_main_thread`
 - 0.4.1: Fix potential crash if app_quit takes no arguments and appstate is null
 - 0.4.0: Update sdl3-sys to 0.4.0 (first stable SDL release)
