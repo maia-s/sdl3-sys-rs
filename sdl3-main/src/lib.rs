@@ -197,6 +197,22 @@ use sdl3_sys::{
     log::{SDL_LogCategory, SDL_LogCritical},
 };
 
+macro_rules! defer {
+    ($($tt:tt)*) => {
+        let _defer = $crate::Defer(Some(move || {{ $($tt)* };}));
+    };
+}
+
+struct Defer<F: FnOnce()>(Option<F>);
+
+impl<F: FnOnce()> Drop for Defer<F> {
+    fn drop(&mut self) {
+        if let Some(f) = self.0.take() {
+            f();
+        }
+    }
+}
+
 pub mod app;
 mod main_thread;
 pub mod state;

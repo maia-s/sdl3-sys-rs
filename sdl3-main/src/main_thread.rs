@@ -75,6 +75,7 @@ impl<T> MainThreadData<T> {
     ///
     /// See also [`run_sync_on_main_thread()`].
     #[must_use]
+    #[inline(always)]
     pub fn get_on_main_thread(&self, callback: impl FnOnce(&T) + Send) -> bool {
         run_sync_on_main_thread(move || callback(&self.0))
     }
@@ -89,6 +90,7 @@ impl<T> MainThreadData<T> {
     ///
     /// See also [`run_sync_on_main_thread()`].
     #[must_use]
+    #[inline(always)]
     pub fn get_mut_on_main_thread(&mut self, callback: impl FnOnce(&mut T) + Send) -> bool {
         run_sync_on_main_thread(move || callback(&mut self.0))
     }
@@ -98,6 +100,7 @@ struct CallOnceContainer<F>(Option<F>);
 
 trait CallOnce {
     fn call_once(&mut self);
+    fn discard(&mut self);
 }
 
 impl<F: FnOnce()> CallOnce for CallOnceContainer<F> {
@@ -105,6 +108,10 @@ impl<F: FnOnce()> CallOnce for CallOnceContainer<F> {
         if let Some(f) = self.0.take() {
             f();
         }
+    }
+
+    fn discard(&mut self) {
+        self.0.take();
     }
 }
 
@@ -150,9 +157,9 @@ pub fn run_sync_on_main_thread<F: FnOnce() + Send>(callback: F) -> bool {
 #[must_use]
 pub fn run_async_on_main_thread<F: FnOnce() + Send + 'static>(callback: F) -> bool {
     unsafe extern "C" fn main_thread_fn(userdata: *mut c_void) {
+        defer!(unsafe { SDL_aligned_free(userdata) });
         let call_once = unsafe { &mut *((*(userdata as *mut MainThreadCallHeader)).0) };
         call_once.call_once();
-        unsafe { SDL_aligned_free(userdata) };
     }
     let f = CallOnceContainer(Some(callback));
     let data_ptr = unsafe {
@@ -164,10 +171,18 @@ pub fn run_async_on_main_thread<F: FnOnce() + Send + 'static>(callback: F) -> bo
     if data_ptr.is_null() {
         return false;
     }
-    let data = unsafe { addr_of_mut!((*data_ptr).data) };
+    let userdata = unsafe { addr_of_mut!((*data_ptr).data) };
     unsafe {
-        addr_of_mut!((*data_ptr).header.0).write(data as *mut dyn CallOnce);
+        addr_of_mut!((*data_ptr).header.0).write(userdata as *mut dyn CallOnce);
         addr_of_mut!((*data_ptr).data).write(f);
     }
-    unsafe { SDL_RunOnMainThread(Some(main_thread_fn), data as *mut c_void, false) }
+    let userdata = userdata as *mut c_void;
+    if unsafe { SDL_RunOnMainThread(Some(main_thread_fn), userdata, false) } {
+        true
+    } else {
+        defer!(unsafe { SDL_aligned_free(userdata) });
+        let call_once = unsafe { &mut *((*(userdata as *mut MainThreadCallHeader)).0) };
+        call_once.discard();
+        false
+    }
 }
