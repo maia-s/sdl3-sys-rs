@@ -34,6 +34,10 @@ done
 
 cargo run -p sdl3-sys-gen $gen_profile
 
+for crate in sdl3-main; do
+    grep -v "]: <https://docs.rs/$crate/" $crate/README.md >$crate/README.md.inc
+done
+
 if $require_clean; then
     git diff --quiet || die "sdl3-sys-gen output didn't match committed results"
 fi
