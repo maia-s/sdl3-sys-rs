@@ -202,7 +202,7 @@ mod main_thread;
 pub mod state;
 
 pub use main_thread::{
-    run_on_main_thread_async, run_on_main_thread_sync, MainThreadData, MainThreadToken,
+    run_async_on_main_thread, run_sync_on_main_thread, MainThreadData, MainThreadToken,
 };
 use state::{AppState, BorrowMut, BorrowRef, BorrowVal, ConsumeMut, ConsumeRef, ConsumeVal};
 

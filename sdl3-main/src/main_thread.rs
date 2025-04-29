@@ -76,7 +76,7 @@ impl<T> MainThreadData<T> {
     /// See also [`run_on_main_thread_sync()`].
     #[must_use]
     pub fn get_on_main_thread(&self, callback: impl FnOnce(&T) + Send) -> bool {
-        run_on_main_thread_sync(move || callback(&self.0))
+        run_sync_on_main_thread(move || callback(&self.0))
     }
 
     /// Get exclusive access to this data in a callback that's run on the main thread.
@@ -90,7 +90,7 @@ impl<T> MainThreadData<T> {
     /// See also [`run_on_main_thread_sync()`].
     #[must_use]
     pub fn get_mut_on_main_thread(&mut self, callback: impl FnOnce(&mut T) + Send) -> bool {
-        run_on_main_thread_sync(move || callback(&mut self.0))
+        run_sync_on_main_thread(move || callback(&mut self.0))
     }
 }
 
@@ -128,7 +128,7 @@ struct MainThreadCall<T> {
 /// - [`run_on_main_thread_async()`]
 /// - [`MainThreadData::get_on_main_thread()`]
 #[must_use]
-pub fn run_on_main_thread_sync<F: FnOnce() + Send>(callback: F) -> bool {
+pub fn run_sync_on_main_thread<F: FnOnce() + Send>(callback: F) -> bool {
     unsafe extern "C" fn main_thread_fn(userdata: *mut c_void) {
         let call_once = unsafe { &mut *(userdata as *mut &mut dyn CallOnce) };
         call_once.call_once();
@@ -148,7 +148,7 @@ pub fn run_on_main_thread_sync<F: FnOnce() + Send>(callback: F) -> bool {
 ///
 /// See also [`run_on_main_thread_sync()`].
 #[must_use]
-pub fn run_on_main_thread_async<F: FnOnce() + Send + 'static>(callback: F) -> bool {
+pub fn run_async_on_main_thread<F: FnOnce() + Send + 'static>(callback: F) -> bool {
     unsafe extern "C" fn main_thread_fn(userdata: *mut c_void) {
         let call_once = unsafe { &mut *((*(userdata as *mut MainThreadCallHeader)).0) };
         call_once.call_once();
