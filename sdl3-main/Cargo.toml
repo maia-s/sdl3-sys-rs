@@ -7,8 +7,8 @@ license = "Zlib"
 description = "Tools for using SDL's main and callback APIs"
 repository = "https://github.com/maia-s/sdl3-sys-rs"
 documentation = "https://docs.rs/sdl3-main"
-keywords = ["sdl"]
-categories = []
+keywords = ["sdl", "main", "callbacks", "game-loop", "event-loop"]
+categories = ["api-bindings", "no-std", "rust-patterns"]
 
 [features]
 default = ["std"]
