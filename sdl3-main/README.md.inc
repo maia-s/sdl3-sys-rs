@@ -36,9 +36,3 @@ See the documentation for more information.
 - 0.4.1: Fix potential crash if app_quit takes no arguments and appstate is null
 - 0.4.0: Update sdl3-sys to 0.4.0 (first stable SDL release)
 
-[`main`]: <https://docs.rs/sdl3-main/0.5.0/sdl3_main/attr.main.html>
-[`app_impl`]: <https://docs.rs/sdl3-main/0.5.0/sdl3_main/attr.app_impl.html>
-[`app_init`]: <https://docs.rs/sdl3-main/0.5.0/sdl3_main/attr.app_init.html>
-[`app_iterate`]: <https://docs.rs/sdl3-main/0.5.0/sdl3_main/attr.app_impl.html>
-[`app_event`]: <https://docs.rs/sdl3-main/0.5.0/sdl3_main/attr.app_event.html>
-[`app_quit`]: <https://docs.rs/sdl3-main/0.5.0/sdl3_main/attr.app_quit.html>
