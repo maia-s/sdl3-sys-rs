@@ -1159,6 +1159,10 @@ pub struct SDL_MouseWheelEvent {
     pub mouse_x: ::core::ffi::c_float,
     /// Y coordinate, relative to window
     pub mouse_y: ::core::ffi::c_float,
+    /// The amount scrolled horizontally, accumulated to whole scroll "ticks" (added in 3.2.12)
+    pub integer_x: Sint32,
+    /// The amount scrolled vertically, accumulated to whole scroll "ticks" (added in 3.2.12)
+    pub integer_y: Sint32,
 }
 
 /// Joystick axis motion event structure (event.jaxis.*)

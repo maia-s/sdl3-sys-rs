@@ -455,7 +455,7 @@ pub const METADATA_SDL_HINT_GPU_DRIVER: Hint = Hint {
     name: "SDL_HINT_GPU_DRIVER",
     short_name: "GPU_DRIVER",
     value: crate::hints::SDL_HINT_GPU_DRIVER,
-    doc: Some("A variable that specifies a GPU backend to use.\n\nBy default, SDL will try all available GPU backends in a reasonable order\nuntil it finds one that can work, but this hint allows the app or user to\nforce a specific target, such as \"direct3d11\" if, say, your hardware\nsupports D3D12 but want to try using D3D11 instead.\n\nThis hint should be set before any GPU functions are called.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n"),
+    doc: Some("A variable that specifies a GPU backend to use.\n\nBy default, SDL will try all available GPU backends in a reasonable order\nuntil it finds one that can work, but this hint allows the app or user to\nforce a specific target, such as \"direct3d12\" if, say, your hardware\nsupports Vulkan but you want to try using D3D12 instead.\n\nThis hint should be set before any GPU functions are called.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n"),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
 pub const METADATA_SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS: Hint = Hint {

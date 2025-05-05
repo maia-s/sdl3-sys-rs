@@ -940,25 +940,25 @@ pub const METADATA_SDL_GLAttr: Group = Group {
         GroupValue {
             name: "SDL_GL_RED_SIZE",
             short_name: "RED_SIZE",
-            doc: Some("the minimum number of bits for the red channel of the color buffer; defaults to 3.\n"),
+            doc: Some("the minimum number of bits for the red channel of the color buffer; defaults to 8.\n"),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GL_GREEN_SIZE",
             short_name: "GREEN_SIZE",
-            doc: Some("the minimum number of bits for the green channel of the color buffer; defaults to 3.\n"),
+            doc: Some("the minimum number of bits for the green channel of the color buffer; defaults to 8.\n"),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GL_BLUE_SIZE",
             short_name: "BLUE_SIZE",
-            doc: Some("the minimum number of bits for the blue channel of the color buffer; defaults to 2.\n"),
+            doc: Some("the minimum number of bits for the blue channel of the color buffer; defaults to 8.\n"),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GL_ALPHA_SIZE",
             short_name: "ALPHA_SIZE",
-            doc: Some("the minimum number of bits for the alpha channel of the color buffer; defaults to 0.\n"),
+            doc: Some("the minimum number of bits for the alpha channel of the color buffer; defaults to 8.\n"),
             available_since: None,
         },
         GroupValue {
