@@ -1,7 +1,7 @@
 # sdl3-sys: Low level Rust bindings for SDL 3
 
 These are low level Rust bindings for SDL, the [Simple DirectMedia Layer](https://libsdl.org).
-This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.2.12`, inclusive.
+This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.2.14`, inclusive.
 
 Many types can be initialized to all zero with the `Default` trait for convenience.
 However, many of these aren't valid when passed to SDL without further modification.
@@ -113,6 +113,9 @@ These features are mutually exclusive. Features higher in this list override lat
 | `nightly` | Enable features that need the nightly compiler. This enables the `VaList` type, as well as enabling some intrinsics. |
 
 ## Recent changes
+
+- 0.5.1:
+    - Update SDL to 3.2.14
 
 - 0.5.0:
     - Update SDL to 3.2.12
