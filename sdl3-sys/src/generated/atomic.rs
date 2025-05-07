@@ -579,6 +579,29 @@ unsafe extern "C" {
 }
 
 unsafe extern "C" {
+    /// Add to an atomic variable.
+    ///
+    /// This function also acts as a full memory barrier.
+    ///
+    /// ***Note: If you don't know what this function is for, you shouldn't use
+    /// it!***
+    ///
+    /// ## Parameters
+    /// - `a`: a pointer to an [`SDL_AtomicU32`] variable to be modified.
+    /// - `v`: the desired value to add or subtract.
+    ///
+    /// ## Return value
+    /// Returns the previous value of the atomic variable.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    pub fn SDL_AddAtomicU32(a: *mut SDL_AtomicU32, v: ::core::ffi::c_int) -> Uint32;
+}
+
+unsafe extern "C" {
     /// Set a pointer to a new value if it is currently an old value.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use

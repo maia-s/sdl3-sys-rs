@@ -322,6 +322,27 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_MouseWheelDirection {
         &crate::metadata::mouse::METADATA_SDL_MouseWheelDirection;
 }
 
+/// Animated cursor frame info.
+///
+/// ## Availability
+/// This struct is available since SDL 3.4.0.
+#[repr(C)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_CursorFrameInfo {
+    /// The surface data for this frame
+    pub surface: *mut SDL_Surface,
+    /// The frame duration in milliseconds (a duration of 0 is infinite)
+    pub duration: Uint32,
+}
+
+impl ::core::default::Default for SDL_CursorFrameInfo {
+    /// Initialize all fields to zero
+    #[inline(always)]
+    fn default() -> Self {
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
+    }
+}
+
 pub const SDL_BUTTON_LEFT: ::core::primitive::i32 = 1;
 
 pub const SDL_BUTTON_MIDDLE: ::core::primitive::i32 = 2;
@@ -336,6 +357,50 @@ pub const SDL_BUTTON_X2: ::core::primitive::i32 = 5;
 pub const fn SDL_BUTTON_MASK(X: ::core::primitive::i32) -> SDL_MouseButtonFlags {
     SDL_MouseButtonFlags(((1_u32 << (X - 1_i32)) as Uint32))
 }
+
+/// A callback used to transform mouse motion delta from raw values.
+///
+/// This is called during SDL's handling of platform mouse events to scale the
+/// values of the resulting motion delta.
+///
+/// ## Parameters
+/// - `userdata`: what was passed as `userdata` to
+///   [`SDL_SetRelativeMouseTransform()`].
+/// - `timestamp`: the associated time at which this mouse motion event was
+///   received.
+/// - `window`: the associated window to which this mouse motion event was
+///   addressed.
+/// - `mouseID`: the associated mouse from which this mouse motion event was
+///   emitted.
+/// - `x`: pointer to a variable that will be treated as the resulting x-axis
+///   motion.
+/// - `y`: pointer to a variable that will be treated as the resulting y-axis
+///   motion.
+///
+/// ## Thread safety
+/// This callback is called by SDL's internal mouse input
+///   processing procedure, which may be a thread separate from the
+///   main event loop that is run at realtime priority. Stalling
+///   this thread with too much work in the callback can therefore
+///   potentially freeze the entire system. Care should be taken
+///   with proper synchronization practices when adding other side
+///   effects beyond mutation of the x and y values.
+///
+/// ## Availability
+/// This datatype is available since SDL 3.4.0.
+///
+/// ## See also
+/// - [`SDL_SetRelativeMouseTransform`]
+pub type SDL_MouseMotionTransformCallback = ::core::option::Option<
+    unsafe extern "C" fn(
+        userdata: *mut ::core::ffi::c_void,
+        timestamp: Uint64,
+        window: *mut SDL_Window,
+        mouseID: SDL_MouseID,
+        x: *mut ::core::ffi::c_float,
+        y: *mut ::core::ffi::c_float,
+    ),
+>;
 
 unsafe extern "C" {
     /// Return whether a mouse is currently connected.
@@ -617,6 +682,32 @@ unsafe extern "C" {
 }
 
 unsafe extern "C" {
+    /// Set a user-defined function by which to transform relative mouse inputs.
+    ///
+    /// This overrides the relative system scale and relative speed scale hints.
+    /// Should be called prior to enabling relative mouse mode, fails otherwise.
+    ///
+    /// ## Parameters
+    /// - `callback`: a callback used to transform relative mouse motion, or NULL
+    ///   for default behavior.
+    /// - `userdata`: a pointer that will be passed to `callback`.
+    ///
+    /// ## Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    pub fn SDL_SetRelativeMouseTransform(
+        callback: SDL_MouseMotionTransformCallback,
+        userdata: *mut ::core::ffi::c_void,
+    ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
     /// Set relative mouse mode for a window.
     ///
     /// While the window has focus and relative mouse mode is enabled, the cursor
@@ -772,6 +863,7 @@ unsafe extern "C" {
     /// This function is available since SDL 3.2.0.
     ///
     /// ## See also
+    /// - [`SDL_CreateAnimatedCursor`]
     /// - [`SDL_CreateColorCursor`]
     /// - [`SDL_CreateSystemCursor`]
     /// - [`SDL_DestroyCursor`]
@@ -789,15 +881,16 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Create a color cursor.
     ///
-    /// If this function is passed a surface with alternate representations, the
-    /// surface will be interpreted as the content to be used for 100% display
-    /// scale, and the alternate representations will be used for high DPI
-    /// situations. For example, if the original surface is 32x32, then on a 2x
-    /// macOS display or 200% display scale on Windows, a 64x64 version of the
-    /// image will be used, if available. If a matching version of the image isn't
-    /// available, the closest larger size image will be downscaled to the
-    /// appropriate size and be used instead, if available. Otherwise, the closest
-    /// smaller image will be upscaled and be used instead.
+    /// If this function is passed a surface with alternate representations added
+    /// with [`SDL_AddSurfaceAlternateImage()`], the surface will be interpreted as the
+    /// content to be used for 100% display scale, and the alternate
+    /// representations will be used for high DPI situations. For example, if the
+    /// original surface is 32x32, then on a 2x macOS display or 200% display scale
+    /// on Windows, a 64x64 version of the image will be used, if available. If a
+    /// matching version of the image isn't available, the closest larger size
+    /// image will be downscaled to the appropriate size and be used instead, if
+    /// available. Otherwise, the closest smaller image will be upscaled and be
+    /// used instead.
     ///
     /// ## Parameters
     /// - `surface`: an [`SDL_Surface`] structure representing the cursor image.
@@ -815,12 +908,73 @@ unsafe extern "C" {
     /// This function is available since SDL 3.2.0.
     ///
     /// ## See also
+    /// - [`SDL_AddSurfaceAlternateImage`]
+    /// - [`SDL_CreateAnimatedCursor`]
     /// - [`SDL_CreateCursor`]
     /// - [`SDL_CreateSystemCursor`]
     /// - [`SDL_DestroyCursor`]
     /// - [`SDL_SetCursor`]
     pub fn SDL_CreateColorCursor(
         surface: *mut SDL_Surface,
+        hot_x: ::core::ffi::c_int,
+        hot_y: ::core::ffi::c_int,
+    ) -> *mut SDL_Cursor;
+}
+
+unsafe extern "C" {
+    /// Create an animated color cursor.
+    ///
+    /// Animated cursors are composed of a sequential array of frames, specified as
+    /// surfaces and durations in an array of [`SDL_CursorFrameInfo`] structs. The hot
+    /// spot coordinates are universal to all frames, and all frames must have the
+    /// same dimensions.
+    ///
+    /// Frame durations are specified in milliseconds. A duration of 0 implies an
+    /// infinite frame time, and the animation will stop on that frame. To create a
+    /// one-shot animation, set the duration of the last frame in the sequence to
+    /// 0.
+    ///
+    /// If this function is passed surfaces with alternate representations added
+    /// with [`SDL_AddSurfaceAlternateImage()`], the surfaces will be interpreted as
+    /// the content to be used for 100% display scale, and the alternate
+    /// representations will be used for high DPI situations. For example, if the
+    /// original surfaces are 32x32, then on a 2x macOS display or 200% display
+    /// scale on Windows, a 64x64 version of the image will be used, if available.
+    /// If a matching version of the image isn't available, the closest larger size
+    /// image will be downscaled to the appropriate size and be used instead, if
+    /// available. Otherwise, the closest smaller image will be upscaled and be
+    /// used instead.
+    ///
+    /// If the underlying platform does not support animated cursors, this function
+    /// will fall back to creating a static color cursor using the first frame in
+    /// the sequence.
+    ///
+    /// ## Parameters
+    /// - `frames`: an array of cursor images composing the animation.
+    /// - `frame_count`: the number of frames in the sequence.
+    /// - `hot_x`: the x position of the cursor hot spot.
+    /// - `hot_y`: the y position of the cursor hot spot.
+    ///
+    /// ## Return value
+    /// Returns the new cursor on success or NULL on failure; call [`SDL_GetError()`]
+    ///   for more information.
+    ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_AddSurfaceAlternateImage`]
+    /// - [`SDL_CreateCursor`]
+    /// - [`SDL_CreateColorCursor`]
+    /// - [`SDL_CreateSystemCursor`]
+    /// - [`SDL_DestroyCursor`]
+    /// - [`SDL_SetCursor`]
+    pub fn SDL_CreateAnimatedCursor(
+        frames: *mut SDL_CursorFrameInfo,
+        frame_count: ::core::ffi::c_int,
         hot_x: ::core::ffi::c_int,
         hot_y: ::core::ffi::c_int,
     ) -> *mut SDL_Cursor;
@@ -927,6 +1081,7 @@ unsafe extern "C" {
     /// This function is available since SDL 3.2.0.
     ///
     /// ## See also
+    /// - [`SDL_CreateAnimatedCursor`]
     /// - [`SDL_CreateColorCursor`]
     /// - [`SDL_CreateCursor`]
     /// - [`SDL_CreateSystemCursor`]

@@ -31,6 +31,15 @@ pub const METADATA_SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: Property = 
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_DISPLAY_WAYLAND_WL_OUTPUT_POINTER: Property = Property {
+    module: "video",
+    name: "SDL_PROP_DISPLAY_WAYLAND_WL_OUTPUT_POINTER",
+    short_name: "DISPLAY_WAYLAND_WL_OUTPUT_POINTER",
+    value: crate::video::SDL_PROP_DISPLAY_WAYLAND_WL_OUTPUT_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN",
@@ -347,6 +356,33 @@ pub const METADATA_SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER: Property = Property
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_CANVAS_ID_STRING: Property = Property {
+    module: "video",
+    name: "SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_CANVAS_ID_STRING",
+    short_name: "WINDOW_CREATE_EMSCRIPTEN_CANVAS_ID_STRING",
+    value: crate::video::SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_CANVAS_ID_STRING,
+    ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN: Property = Property {
+    module: "video",
+    name: "SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN",
+    short_name: "WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN",
+    value: crate::video::SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING: Property = Property {
+    module: "video",
+    name: "SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING",
+    short_name: "WINDOW_CREATE_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING",
+    value: crate::video::SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING,
+    ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_PROP_WINDOW_SHAPE_POINTER: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_SHAPE_POINTER",
@@ -491,11 +527,11 @@ pub const METADATA_SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER: Property = Prope
     doc: None,
     available_since: None,
 };
-pub const METADATA_SDL_PROP_WINDOW_OPENVR_OVERLAY_ID: Property = Property {
+pub const METADATA_SDL_PROP_WINDOW_OPENVR_OVERLAY_ID_NUMBER: Property = Property {
     module: "video",
-    name: "SDL_PROP_WINDOW_OPENVR_OVERLAY_ID",
-    short_name: "WINDOW_OPENVR_OVERLAY_ID",
-    value: crate::video::SDL_PROP_WINDOW_OPENVR_OVERLAY_ID,
+    name: "SDL_PROP_WINDOW_OPENVR_OVERLAY_ID_NUMBER",
+    short_name: "WINDOW_OPENVR_OVERLAY_ID_NUMBER",
+    value: crate::video::SDL_PROP_WINDOW_OPENVR_OVERLAY_ID_NUMBER,
     ty: PropertyType::NUMBER,
     doc: None,
     available_since: None,
@@ -662,6 +698,33 @@ pub const METADATA_SDL_PROP_WINDOW_X11_WINDOW_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_WINDOW_EMSCRIPTEN_CANVAS_ID_STRING: Property = Property {
+    module: "video",
+    name: "SDL_PROP_WINDOW_EMSCRIPTEN_CANVAS_ID_STRING",
+    short_name: "WINDOW_EMSCRIPTEN_CANVAS_ID_STRING",
+    value: crate::video::SDL_PROP_WINDOW_EMSCRIPTEN_CANVAS_ID_STRING,
+    ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_WINDOW_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN: Property = Property {
+    module: "video",
+    name: "SDL_PROP_WINDOW_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN",
+    short_name: "WINDOW_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN",
+    value: crate::video::SDL_PROP_WINDOW_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_WINDOW_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING: Property = Property {
+    module: "video",
+    name: "SDL_PROP_WINDOW_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING",
+    short_name: "WINDOW_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING",
+    value: crate::video::SDL_PROP_WINDOW_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING,
+    ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_DisplayID: Group = Group {
     module: "video",
     kind: GroupKind::Id,
@@ -764,7 +827,7 @@ pub const METADATA_SDL_WindowFlags: Group = Group {
     name: "SDL_WindowFlags",
     short_name: "WindowFlags",
     doc: Some(
-        "The flags on a window.\n\nThese cover a lot of true/false, or on/off, window state. Some of it is\nimmutable after being set through [`SDL_CreateWindow()`], some of it can be\nchanged on existing windows by the app, and some of it might be altered by\nthe user or system outside of the app's control.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetWindowFlags`]\n",
+        "The flags on a window.\n\nThese cover a lot of true/false, or on/off, window state. Some of it is\nimmutable after being set through [`SDL_CreateWindow()`], some of it can be\nchanged on existing windows by the app, and some of it might be altered by\nthe user or system outside of the app's control.\n\nWhen creating windows with [`SDL_WINDOW_RESIZABLE`], SDL will constrain\nresizable windows to the dimensions recommended by the compositor to fit it\nwithin the usable desktop space, although some compositors will do this\nautomatically without intervention as well. Use [`SDL_SetWindowResizable`]\nafter creation instead if you wish to create a window with a specific size.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetWindowFlags`]\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
@@ -952,6 +1015,56 @@ pub const METADATA_SDL_FlashOperation: Group = Group {
             name: "SDL_FLASH_UNTIL_FOCUSED",
             short_name: "UNTIL_FOCUSED",
             doc: Some("Flash the window until it gets focus\n"),
+            available_since: None,
+        },
+    ],
+};
+pub const METADATA_SDL_ProgressState: Group = Group {
+    module: "video",
+    kind: GroupKind::Enum,
+    name: "SDL_ProgressState",
+    short_name: "ProgressState",
+    doc: Some(
+        "Window progress state\n\n## Availability\nThis enum is available since SDL 3.2.8.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 8)),
+    values: &[
+        GroupValue {
+            name: "SDL_PROGRESS_STATE_INVALID",
+            short_name: "INVALID",
+            doc: Some("An invalid progress state indicating an error; check [`SDL_GetError()`]\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_PROGRESS_STATE_NONE",
+            short_name: "NONE",
+            doc: Some("No progress bar is shown\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_PROGRESS_STATE_INDETERMINATE",
+            short_name: "INDETERMINATE",
+            doc: Some("The progress bar is shown in a indeterminate state\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_PROGRESS_STATE_NORMAL",
+            short_name: "NORMAL",
+            doc: Some("The progress bar is shown in a normal state\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_PROGRESS_STATE_PAUSED",
+            short_name: "PAUSED",
+            doc: Some("The progress bar is shown in a paused state\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_PROGRESS_STATE_ERROR",
+            short_name: "ERROR",
+            doc: Some(
+                "The progress bar is shown in a state indicating the application had an error\n",
+            ),
             available_since: None,
         },
     ],

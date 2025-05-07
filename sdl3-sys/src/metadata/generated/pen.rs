@@ -135,3 +135,39 @@ pub const METADATA_SDL_PenAxis: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_PenDeviceType: Group = Group {
+    module: "pen",
+    kind: GroupKind::Enum,
+    name: "SDL_PenDeviceType",
+    short_name: "PenDeviceType",
+    doc: Some(
+        "An enum that describes the type of a pen device.\n\nA \"direct\" device is a pen that touches a graphic display (like an Apple\nPencil on an iPad's screen). \"Indirect\" devices touch an external tablet\nsurface that is connected to the machine but is not a display (like a\nlower-end Wacom tablet connected over USB).\n\nApps may use this information to decide if they should draw a cursor; if\nthe pen is touching the screen directly, a cursor doesn't make sense and\ncan be in the way, but becomes necessary for indirect devices to know where\non the display they are interacting.\n\n## Availability\nThis enum is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
+    values: &[
+        GroupValue {
+            name: "SDL_PEN_DEVICE_TYPE_INVALID",
+            short_name: "INVALID",
+            doc: Some("Not a valid pen device.\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_PEN_DEVICE_TYPE_UNKNOWN",
+            short_name: "UNKNOWN",
+            doc: Some("Don't know specifics of this pen.\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_PEN_DEVICE_TYPE_DIRECT",
+            short_name: "DIRECT",
+            doc: Some("Pen touches display.\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_PEN_DEVICE_TYPE_INDIRECT",
+            short_name: "INDIRECT",
+            doc: Some("Pen touches something that isn't the display.\n"),
+            available_since: None,
+        },
+    ],
+};

@@ -175,7 +175,7 @@ pub const SDL_MIN_UINT64: ::core::primitive::u64 = 0_u64;
 /// [`SDL_TimeToWindows()`] and [`SDL_TimeFromWindows()`].
 ///
 /// ## Availability
-/// This macro is available since SDL 3.2.0.
+/// This datatype is available since SDL 3.2.0.
 ///
 /// ## See also
 /// - [`SDL_MAX_SINT64`]
@@ -4984,7 +4984,7 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Compute the ceiling of `x`.
     ///
-    /// The ceiling of `x` is the smallest integer `y` such that `y > x`, i.e `x`
+    /// The ceiling of `x` is the smallest integer `y` such that `y >= x`, i.e `x`
     /// rounded up to the nearest integer.
     ///
     /// Domain: `-INF <= x <= INF`
@@ -5018,7 +5018,7 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Compute the ceiling of `x`.
     ///
-    /// The ceiling of `x` is the smallest integer `y` such that `y > x`, i.e `x`
+    /// The ceiling of `x` is the smallest integer `y` such that `y >= x`, i.e `x`
     /// rounded up to the nearest integer.
     ///
     /// Domain: `-INF <= x <= INF`
@@ -5324,7 +5324,7 @@ pub const fn SDL_fabsf(x: ::core::ffi::c_float) -> ::core::ffi::c_float {
 unsafe extern "C" {
     /// Compute the floor of `x`.
     ///
-    /// The floor of `x` is the largest integer `y` such that `y > x`, i.e `x`
+    /// The floor of `x` is the largest integer `y` such that `y <= x`, i.e `x`
     /// rounded down to the nearest integer.
     ///
     /// Domain: `-INF <= x <= INF`
@@ -5358,7 +5358,7 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Compute the floor of `x`.
     ///
-    /// The floor of `x` is the largest integer `y` such that `y > x`, i.e `x`
+    /// The floor of `x` is the largest integer `y` such that `y <= x`, i.e `x`
     /// rounded down to the nearest integer.
     ///
     /// Domain: `-INF <= x <= INF`

@@ -109,6 +109,14 @@ pub const METADATA_SDL_ScaleMode: Group = Group {
             doc: Some("linear filtering\n"),
             available_since: None,
         },
+        GroupValue {
+            name: "SDL_SCALEMODE_PIXELART",
+            short_name: "PIXELART",
+            doc: Some(
+                "nearest pixel sampling with improved scaling for pixel art, available since SDL 3.4.0\n",
+            ),
+            available_since: None,
+        },
     ],
 };
 pub const METADATA_SDL_FlipMode: Group = Group {
@@ -135,6 +143,12 @@ pub const METADATA_SDL_FlipMode: Group = Group {
             name: "SDL_FLIP_VERTICAL",
             short_name: "VERTICAL",
             doc: Some("flip vertically\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_FLIP_HORIZONTAL_AND_VERTICAL",
+            short_name: "HORIZONTAL_AND_VERTICAL",
+            doc: Some("flip horizontally and vertically (not a diagonal flip)\n"),
             available_since: None,
         },
     ],

@@ -2178,7 +2178,7 @@ impl SDL_Colorspace {
     /// The default colorspace for RGB surfaces if no colorspace is specified
     pub const RGB_DEFAULT: Self = SDL_COLORSPACE_SRGB;
     /// The default colorspace for YUV surfaces if no colorspace is specified
-    pub const YUV_DEFAULT: Self = SDL_COLORSPACE_JPEG;
+    pub const YUV_DEFAULT: Self = SDL_COLORSPACE_BT601_LIMITED;
 }
 
 pub const SDL_COLORSPACE_UNKNOWN: SDL_Colorspace = SDL_Colorspace::UNKNOWN;
@@ -2846,7 +2846,7 @@ unsafe extern "C" {
     /// 0xff, 0xff\] not \[0xf8, 0xfc, 0xf8\]).
     ///
     /// ## Parameters
-    /// - `pixel`: a pixel value.
+    /// - `pixelvalue`: a pixel value.
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
@@ -2867,7 +2867,7 @@ unsafe extern "C" {
     /// - [`SDL_MapRGB`]
     /// - [`SDL_MapRGBA`]
     pub fn SDL_GetRGB(
-        pixel: Uint32,
+        pixelvalue: Uint32,
         format: *const SDL_PixelFormatDetails,
         palette: *const SDL_Palette,
         r: *mut Uint8,
@@ -2888,7 +2888,7 @@ unsafe extern "C" {
     /// (100% opaque).
     ///
     /// ## Parameters
-    /// - `pixel`: a pixel value.
+    /// - `pixelvalue`: a pixel value.
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
@@ -2910,7 +2910,7 @@ unsafe extern "C" {
     /// - [`SDL_MapRGB`]
     /// - [`SDL_MapRGBA`]
     pub fn SDL_GetRGBA(
-        pixel: Uint32,
+        pixelvalue: Uint32,
         format: *const SDL_PixelFormatDetails,
         palette: *const SDL_Palette,
         r: *mut Uint8,

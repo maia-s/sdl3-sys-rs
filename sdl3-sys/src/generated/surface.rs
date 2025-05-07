@@ -5,12 +5,16 @@
 //! provides a reasonable toolbox for transforming the data, including copying
 //! between surfaces, filling rectangles in the image data, etc.
 //!
-//! There is also a simple .bmp loader, [`SDL_LoadBMP()`]. SDL itself does not
-//! provide loaders for various other file formats, but there are several
-//! excellent external libraries that do, including its own satellite library,
-//! SDL_image:
+//! There is also a simple .bmp loader, [`SDL_LoadBMP()`], and a simple .png
+//! loader, [`SDL_LoadPNG()`]. SDL itself does not provide loaders for other file
+//! formats, but there are several excellent external libraries that do,
+//! including its own satellite library,
+//! [SDL_image](https://wiki.libsdl.org/SDL3_image)
+//! .
 //!
-//! <https://github.com/libsdl-org/SDL_image>
+//! In general these functions are thread-safe in that they can be called on
+//! different threads with different surfaces. You should not try to modify any
+//! surface from two threads simultaneously.
 
 use super::stdinc::*;
 
@@ -215,6 +219,7 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_SurfaceFlags {
 /// | [`INVALID`](SDL_ScaleMode::INVALID) | [`SDL_SCALEMODE_INVALID`] | |
 /// | [`NEAREST`](SDL_ScaleMode::NEAREST) | [`SDL_SCALEMODE_NEAREST`] | nearest pixel sampling |
 /// | [`LINEAR`](SDL_ScaleMode::LINEAR) | [`SDL_SCALEMODE_LINEAR`] | linear filtering |
+/// | [`PIXELART`](SDL_ScaleMode::PIXELART) | [`SDL_SCALEMODE_PIXELART`] | nearest pixel sampling with improved scaling for pixel art, available since SDL 3.4.0 |
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ScaleMode(pub ::core::ffi::c_int);
@@ -248,6 +253,7 @@ impl ::core::fmt::Debug for SDL_ScaleMode {
             Self::INVALID => "SDL_SCALEMODE_INVALID",
             Self::NEAREST => "SDL_SCALEMODE_NEAREST",
             Self::LINEAR => "SDL_SCALEMODE_LINEAR",
+            Self::PIXELART => "SDL_SCALEMODE_PIXELART",
 
             _ => return write!(f, "SDL_ScaleMode({})", self.0),
         })
@@ -260,6 +266,8 @@ impl SDL_ScaleMode {
     pub const NEAREST: Self = Self((0_i32 as ::core::ffi::c_int));
     /// linear filtering
     pub const LINEAR: Self = Self((1_i32 as ::core::ffi::c_int));
+    /// nearest pixel sampling with improved scaling for pixel art, available since SDL 3.4.0
+    pub const PIXELART: Self = Self((2_i32 as ::core::ffi::c_int));
 }
 
 pub const SDL_SCALEMODE_INVALID: SDL_ScaleMode = SDL_ScaleMode::INVALID;
@@ -267,6 +275,8 @@ pub const SDL_SCALEMODE_INVALID: SDL_ScaleMode = SDL_ScaleMode::INVALID;
 pub const SDL_SCALEMODE_NEAREST: SDL_ScaleMode = SDL_ScaleMode::NEAREST;
 /// linear filtering
 pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
+/// nearest pixel sampling with improved scaling for pixel art, available since SDL 3.4.0
+pub const SDL_SCALEMODE_PIXELART: SDL_ScaleMode = SDL_ScaleMode::PIXELART;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_ScaleMode {
@@ -285,6 +295,7 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_ScaleMode {
 /// | [`NONE`](SDL_FlipMode::NONE) | [`SDL_FLIP_NONE`] | Do not flip |
 /// | [`HORIZONTAL`](SDL_FlipMode::HORIZONTAL) | [`SDL_FLIP_HORIZONTAL`] | flip horizontally |
 /// | [`VERTICAL`](SDL_FlipMode::VERTICAL) | [`SDL_FLIP_VERTICAL`] | flip vertically |
+/// | [`HORIZONTAL_AND_VERTICAL`](SDL_FlipMode::HORIZONTAL_AND_VERTICAL) | [`SDL_FLIP_HORIZONTAL_AND_VERTICAL`] | flip horizontally and vertically (not a diagonal flip) |
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_FlipMode(pub ::core::ffi::c_int);
@@ -339,6 +350,16 @@ impl ::core::fmt::Debug for SDL_FlipMode {
             }
             first = false;
             write!(f, "VERTICAL")?;
+        }
+        let all_bits = all_bits | Self::HORIZONTAL_AND_VERTICAL.0;
+        if (Self::HORIZONTAL_AND_VERTICAL != 0 || self.0 == 0)
+            && *self & Self::HORIZONTAL_AND_VERTICAL == Self::HORIZONTAL_AND_VERTICAL
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "HORIZONTAL_AND_VERTICAL")?;
         }
 
         if self.0 & !all_bits != 0 {
@@ -417,6 +438,8 @@ impl SDL_FlipMode {
     pub const HORIZONTAL: Self = Self((1 as ::core::ffi::c_int));
     /// flip vertically
     pub const VERTICAL: Self = Self((2 as ::core::ffi::c_int));
+    /// flip horizontally and vertically (not a diagonal flip)
+    pub const HORIZONTAL_AND_VERTICAL: Self = Self((SDL_FLIP_HORIZONTAL.0 | SDL_FLIP_VERTICAL.0));
 }
 
 /// Do not flip
@@ -425,6 +448,8 @@ pub const SDL_FLIP_NONE: SDL_FlipMode = SDL_FlipMode::NONE;
 pub const SDL_FLIP_HORIZONTAL: SDL_FlipMode = SDL_FlipMode::HORIZONTAL;
 /// flip vertically
 pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
+/// flip horizontally and vertically (not a diagonal flip)
+pub const SDL_FLIP_HORIZONTAL_AND_VERTICAL: SDL_FlipMode = SDL_FlipMode::HORIZONTAL_AND_VERTICAL;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_FlipMode {
@@ -655,7 +680,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -683,7 +709,8 @@ unsafe extern "C" {
     ///   the surface is NULL.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -719,7 +746,8 @@ unsafe extern "C" {
     ///   more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -732,6 +760,9 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Set the palette used by a surface.
     ///
+    /// Setting the palette keeps an internal reference to the palette, which can
+    /// be safely destroyed afterwards.
+    ///
     /// A single palette can be shared with many surfaces.
     ///
     /// ## Parameters
@@ -743,7 +774,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -799,7 +831,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -857,7 +890,8 @@ unsafe extern "C" {
     ///   freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -882,7 +916,8 @@ unsafe extern "C" {
     /// - `surface`: the [`SDL_Surface`] structure to update.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -914,9 +949,10 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe. The locking referred to by
-    ///   this function is making the pixels available for direct
-    ///   access, not thread-safe locking.
+    /// This function can be called on different threads with
+    ///   different surfaces. The locking referred to by this function
+    ///   is making the pixels available for direct access, not
+    ///   thread-safe locking.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1023,7 +1059,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1039,7 +1076,7 @@ unsafe extern "C" {
 }
 
 unsafe extern "C" {
-    /// Save a surface to a file.
+    /// Save a surface to a file in BMP format.
     ///
     /// Surfaces with a 24-bit, 32-bit and paletted 8-bit format get saved in the
     /// BMP directly. Other RGB formats with 8-bit or higher get converted to a
@@ -1056,7 +1093,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1065,6 +1103,120 @@ unsafe extern "C" {
     /// - [`SDL_LoadBMP`]
     /// - [`SDL_SaveBMP_IO`]
     pub fn SDL_SaveBMP(
+        surface: *mut SDL_Surface,
+        file: *const ::core::ffi::c_char,
+    ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Load a PNG image from a seekable SDL data stream.
+    ///
+    /// The new surface should be freed with [`SDL_DestroySurface()`]. Not doing so
+    /// will result in a memory leak.
+    ///
+    /// ## Parameters
+    /// - `src`: the data stream for the surface.
+    /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `src` before returning, even
+    ///   in the case of an error.
+    ///
+    /// ## Return value
+    /// Returns a pointer to a new [`SDL_Surface`] structure or NULL on failure; call
+    ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_DestroySurface`]
+    /// - [`SDL_LoadPNG`]
+    /// - [`SDL_SavePNG_IO`]
+    pub fn SDL_LoadPNG_IO(
+        src: *mut SDL_IOStream,
+        closeio: ::core::primitive::bool,
+    ) -> *mut SDL_Surface;
+}
+
+unsafe extern "C" {
+    /// Load a PNG image from a file.
+    ///
+    /// The new surface should be freed with [`SDL_DestroySurface()`]. Not doing so
+    /// will result in a memory leak.
+    ///
+    /// ## Parameters
+    /// - `file`: the PNG file to load.
+    ///
+    /// ## Return value
+    /// Returns a pointer to a new [`SDL_Surface`] structure or NULL on failure; call
+    ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_DestroySurface`]
+    /// - [`SDL_LoadPNG_IO`]
+    /// - [`SDL_SavePNG`]
+    pub fn SDL_LoadPNG(file: *const ::core::ffi::c_char) -> *mut SDL_Surface;
+}
+
+unsafe extern "C" {
+    /// Save a surface to a seekable SDL data stream in PNG format.
+    ///
+    /// ## Parameters
+    /// - `surface`: the [`SDL_Surface`] structure containing the image to be saved.
+    /// - `dst`: a data stream to save to.
+    /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `dst` before returning, even
+    ///   in the case of an error.
+    ///
+    /// ## Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ## Thread safety
+    /// This function can be called on different threads with
+    ///   different surfaces.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_LoadPNG_IO`]
+    /// - [`SDL_SavePNG`]
+    pub fn SDL_SavePNG_IO(
+        surface: *mut SDL_Surface,
+        dst: *mut SDL_IOStream,
+        closeio: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Save a surface to a file in PNG format.
+    ///
+    /// ## Parameters
+    /// - `surface`: the [`SDL_Surface`] structure containing the image to be saved.
+    /// - `file`: a file to save to.
+    ///
+    /// ## Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ## Thread safety
+    /// This function can be called on different threads with
+    ///   different surfaces.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_LoadPNG`]
+    /// - [`SDL_SavePNG_IO`]
+    pub fn SDL_SavePNG(
         surface: *mut SDL_Surface,
         file: *const ::core::ffi::c_char,
     ) -> ::core::primitive::bool;
@@ -1085,7 +1237,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1142,7 +1295,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1232,7 +1386,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1262,7 +1417,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1295,7 +1451,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1351,7 +1508,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1408,7 +1566,8 @@ unsafe extern "C" {
     ///   blits will be completely clipped.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1438,7 +1597,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1463,7 +1623,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1471,6 +1632,35 @@ unsafe extern "C" {
         surface: *mut SDL_Surface,
         flip: SDL_FlipMode,
     ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Return a copy of a surface rotated clockwise a number of degrees.
+    ///
+    /// The angle of rotation can be negative for counter-clockwise rotation.
+    ///
+    /// When the rotation isn't a multiple of 90 degrees, the resulting surface is
+    /// larger than the original, with the background filled in with the colorkey,
+    /// if available, or RGBA 255/255/255/0 if not.
+    ///
+    /// ## Parameters
+    /// - `surface`: the surface to rotate.
+    /// - `angle`: the rotation angle, in degrees.
+    ///
+    /// ## Return value
+    /// Returns a rotated copy of the surface or NULL on failure; call
+    ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// This function can be called on different threads with
+    ///   different surfaces.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    pub fn SDL_RotateSurface(
+        surface: *mut SDL_Surface,
+        angle: ::core::ffi::c_float,
+    ) -> *mut SDL_Surface;
 }
 
 unsafe extern "C" {
@@ -1489,7 +1679,8 @@ unsafe extern "C" {
     ///   more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1516,7 +1707,8 @@ unsafe extern "C" {
     ///   more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1554,7 +1746,8 @@ unsafe extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1591,7 +1784,8 @@ unsafe extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1755,7 +1949,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1785,7 +1980,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1821,7 +2017,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1858,7 +2055,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2259,7 +2457,8 @@ unsafe extern "C" {
     /// Returns a pixel value.
     ///
     /// ## Thread safety
-    /// It is safe to call this function from any thread.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2298,7 +2497,8 @@ unsafe extern "C" {
     /// Returns a pixel value.
     ///
     /// ## Thread safety
-    /// It is safe to call this function from any thread.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2341,7 +2541,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2380,7 +2581,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2418,7 +2620,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2453,7 +2656,8 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// This function can be called on different threads with
+    ///   different surfaces.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

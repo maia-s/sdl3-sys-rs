@@ -20,6 +20,15 @@ pub const METADATA_SDL_PROP_PROCESS_CREATE_ENVIRONMENT_POINTER: Property = Prope
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_PROCESS_CREATE_WORKING_DIRECTORY_STRING: Property = Property {
+    module: "process",
+    name: "SDL_PROP_PROCESS_CREATE_WORKING_DIRECTORY_STRING",
+    short_name: "PROCESS_CREATE_WORKING_DIRECTORY_STRING",
+    value: crate::process::SDL_PROP_PROCESS_CREATE_WORKING_DIRECTORY_STRING,
+    ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_PROP_PROCESS_CREATE_STDIN_NUMBER: Property = Property {
     module: "process",
     name: "SDL_PROP_PROCESS_CREATE_STDIN_NUMBER",
@@ -89,6 +98,15 @@ pub const METADATA_SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN: Property = Proper
     short_name: "PROCESS_CREATE_BACKGROUND_BOOLEAN",
     value: crate::process::SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN,
     ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_PROCESS_CREATE_CMDLINE_STRING: Property = Property {
+    module: "process",
+    name: "SDL_PROP_PROCESS_CREATE_CMDLINE_STRING",
+    short_name: "PROCESS_CREATE_CMDLINE_STRING",
+    value: crate::process::SDL_PROP_PROCESS_CREATE_CMDLINE_STRING,
+    ty: PropertyType::STRING,
     doc: None,
     available_since: None,
 };

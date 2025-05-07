@@ -747,7 +747,7 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_InitStatus {
 /// Here is an example of using this:
 ///
 /// ```c
-///    static SDL_AtomicInitState init;
+///    static SDL_InitState init;
 ///
 ///    bool InitSystem(void)
 ///    {

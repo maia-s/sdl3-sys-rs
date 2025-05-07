@@ -6,7 +6,7 @@
 //! coming and going, the system changing in some way, etc.
 //!
 //! An app generally takes a moment, perhaps at the start of a new frame, to
-//! examine any events that have occured since the last time and process or
+//! examine any events that have occurred since the last time and process or
 //! ignore them. This is generally done by calling [`SDL_PollEvent()`] in a loop
 //! until it returns false (or, if using the main callbacks, events are
 //! provided one at a time in calls to [`SDL_AppEvent()`] before the next call to
@@ -79,11 +79,12 @@ use super::video::*;
 /// | [`DISPLAY_DESKTOP_MODE_CHANGED`](SDL_EventType::DISPLAY_DESKTOP_MODE_CHANGED) | [`SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED`] | Display has changed desktop mode |
 /// | [`DISPLAY_CURRENT_MODE_CHANGED`](SDL_EventType::DISPLAY_CURRENT_MODE_CHANGED) | [`SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED`] | Display has changed current mode |
 /// | [`DISPLAY_CONTENT_SCALE_CHANGED`](SDL_EventType::DISPLAY_CONTENT_SCALE_CHANGED) | [`SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED`] | Display has changed content scale |
+/// | [`DISPLAY_USABLE_BOUNDS_CHANGED`](SDL_EventType::DISPLAY_USABLE_BOUNDS_CHANGED) | [`SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED`] | Display has changed usable bounds |
 /// | [`DISPLAY_FIRST`](SDL_EventType::DISPLAY_FIRST) | [`SDL_EVENT_DISPLAY_FIRST`] | |
 /// | [`DISPLAY_LAST`](SDL_EventType::DISPLAY_LAST) | [`SDL_EVENT_DISPLAY_LAST`] | |
 /// | [`WINDOW_SHOWN`](SDL_EventType::WINDOW_SHOWN) | [`SDL_EVENT_WINDOW_SHOWN`] | Window has been shown |
 /// | [`WINDOW_HIDDEN`](SDL_EventType::WINDOW_HIDDEN) | [`SDL_EVENT_WINDOW_HIDDEN`] | Window has been hidden |
-/// | [`WINDOW_EXPOSED`](SDL_EventType::WINDOW_EXPOSED) | [`SDL_EVENT_WINDOW_EXPOSED`] | Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event |
+/// | [`WINDOW_EXPOSED`](SDL_EventType::WINDOW_EXPOSED) | [`SDL_EVENT_WINDOW_EXPOSED`] | Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event. data1 is 1 for live-resize expose events, 0 otherwise. |
 /// | [`WINDOW_MOVED`](SDL_EventType::WINDOW_MOVED) | [`SDL_EVENT_WINDOW_MOVED`] | Window has been moved to data1, data2 |
 /// | [`WINDOW_RESIZED`](SDL_EventType::WINDOW_RESIZED) | [`SDL_EVENT_WINDOW_RESIZED`] | Window has been resized to data1xdata2 |
 /// | [`WINDOW_PIXEL_SIZE_CHANGED`](SDL_EventType::WINDOW_PIXEL_SIZE_CHANGED) | [`SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED`] | The pixel size of the window has changed to data1xdata2 |
@@ -116,6 +117,8 @@ use super::video::*;
 /// | [`KEYBOARD_ADDED`](SDL_EventType::KEYBOARD_ADDED) | [`SDL_EVENT_KEYBOARD_ADDED`] | A new keyboard has been inserted into the system |
 /// | [`KEYBOARD_REMOVED`](SDL_EventType::KEYBOARD_REMOVED) | [`SDL_EVENT_KEYBOARD_REMOVED`] | A keyboard has been removed |
 /// | [`TEXT_EDITING_CANDIDATES`](SDL_EventType::TEXT_EDITING_CANDIDATES) | [`SDL_EVENT_TEXT_EDITING_CANDIDATES`] | Keyboard text editing candidates |
+/// | [`SCREEN_KEYBOARD_SHOWN`](SDL_EventType::SCREEN_KEYBOARD_SHOWN) | [`SDL_EVENT_SCREEN_KEYBOARD_SHOWN`] | The on-screen keyboard has been shown |
+/// | [`SCREEN_KEYBOARD_HIDDEN`](SDL_EventType::SCREEN_KEYBOARD_HIDDEN) | [`SDL_EVENT_SCREEN_KEYBOARD_HIDDEN`] | The on-screen keyboard has been hidden |
 /// | [`MOUSE_MOTION`](SDL_EventType::MOUSE_MOTION) | [`SDL_EVENT_MOUSE_MOTION`] | Mouse moved |
 /// | [`MOUSE_BUTTON_DOWN`](SDL_EventType::MOUSE_BUTTON_DOWN) | [`SDL_EVENT_MOUSE_BUTTON_DOWN`] | Mouse button pressed |
 /// | [`MOUSE_BUTTON_UP`](SDL_EventType::MOUSE_BUTTON_UP) | [`SDL_EVENT_MOUSE_BUTTON_UP`] | Mouse button released |
@@ -147,7 +150,10 @@ use super::video::*;
 /// | [`FINGER_UP`](SDL_EventType::FINGER_UP) | [`SDL_EVENT_FINGER_UP`] | |
 /// | [`FINGER_MOTION`](SDL_EventType::FINGER_MOTION) | [`SDL_EVENT_FINGER_MOTION`] | |
 /// | [`FINGER_CANCELED`](SDL_EventType::FINGER_CANCELED) | [`SDL_EVENT_FINGER_CANCELED`] | |
-/// | [`CLIPBOARD_UPDATE`](SDL_EventType::CLIPBOARD_UPDATE) | [`SDL_EVENT_CLIPBOARD_UPDATE`] | The clipboard or primary selection changed |
+/// | [`PINCH_BEGIN`](SDL_EventType::PINCH_BEGIN) | [`SDL_EVENT_PINCH_BEGIN`] | Pinch gesture started |
+/// | [`PINCH_UPDATE`](SDL_EventType::PINCH_UPDATE) | [`SDL_EVENT_PINCH_UPDATE`] | Pinch gesture updated |
+/// | [`PINCH_END`](SDL_EventType::PINCH_END) | [`SDL_EVENT_PINCH_END`] | Pinch gesture ended |
+/// | [`CLIPBOARD_UPDATE`](SDL_EventType::CLIPBOARD_UPDATE) | [`SDL_EVENT_CLIPBOARD_UPDATE`] | The clipboard changed |
 /// | [`DROP_FILE`](SDL_EventType::DROP_FILE) | [`SDL_EVENT_DROP_FILE`] | The system requests a file open |
 /// | [`DROP_TEXT`](SDL_EventType::DROP_TEXT) | [`SDL_EVENT_DROP_TEXT`] | text/plain drag-and-drop event |
 /// | [`DROP_BEGIN`](SDL_EventType::DROP_BEGIN) | [`SDL_EVENT_DROP_BEGIN`] | A new set of drops is beginning (NULL filename) |
@@ -227,6 +233,7 @@ impl ::core::fmt::Debug for SDL_EventType {
             Self::DISPLAY_DESKTOP_MODE_CHANGED => "SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED",
             Self::DISPLAY_CURRENT_MODE_CHANGED => "SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED",
             Self::DISPLAY_CONTENT_SCALE_CHANGED => "SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED",
+            Self::DISPLAY_USABLE_BOUNDS_CHANGED => "SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED",
             Self::DISPLAY_FIRST => "SDL_EVENT_DISPLAY_FIRST",
             Self::DISPLAY_LAST => "SDL_EVENT_DISPLAY_LAST",
             Self::WINDOW_SHOWN => "SDL_EVENT_WINDOW_SHOWN",
@@ -264,6 +271,8 @@ impl ::core::fmt::Debug for SDL_EventType {
             Self::KEYBOARD_ADDED => "SDL_EVENT_KEYBOARD_ADDED",
             Self::KEYBOARD_REMOVED => "SDL_EVENT_KEYBOARD_REMOVED",
             Self::TEXT_EDITING_CANDIDATES => "SDL_EVENT_TEXT_EDITING_CANDIDATES",
+            Self::SCREEN_KEYBOARD_SHOWN => "SDL_EVENT_SCREEN_KEYBOARD_SHOWN",
+            Self::SCREEN_KEYBOARD_HIDDEN => "SDL_EVENT_SCREEN_KEYBOARD_HIDDEN",
             Self::MOUSE_MOTION => "SDL_EVENT_MOUSE_MOTION",
             Self::MOUSE_BUTTON_DOWN => "SDL_EVENT_MOUSE_BUTTON_DOWN",
             Self::MOUSE_BUTTON_UP => "SDL_EVENT_MOUSE_BUTTON_UP",
@@ -295,6 +304,9 @@ impl ::core::fmt::Debug for SDL_EventType {
             Self::FINGER_UP => "SDL_EVENT_FINGER_UP",
             Self::FINGER_MOTION => "SDL_EVENT_FINGER_MOTION",
             Self::FINGER_CANCELED => "SDL_EVENT_FINGER_CANCELED",
+            Self::PINCH_BEGIN => "SDL_EVENT_PINCH_BEGIN",
+            Self::PINCH_UPDATE => "SDL_EVENT_PINCH_UPDATE",
+            Self::PINCH_END => "SDL_EVENT_PINCH_END",
             Self::CLIPBOARD_UPDATE => "SDL_EVENT_CLIPBOARD_UPDATE",
             Self::DROP_FILE => "SDL_EVENT_DROP_FILE",
             Self::DROP_TEXT => "SDL_EVENT_DROP_TEXT",
@@ -381,13 +393,16 @@ impl SDL_EventType {
     pub const DISPLAY_CURRENT_MODE_CHANGED: Self = Self((342 as Uint32));
     /// Display has changed content scale
     pub const DISPLAY_CONTENT_SCALE_CHANGED: Self = Self((343 as Uint32));
+    /// Display has changed usable bounds
+    pub const DISPLAY_USABLE_BOUNDS_CHANGED: Self = Self((344 as Uint32));
     pub const DISPLAY_FIRST: Self = SDL_EVENT_DISPLAY_ORIENTATION;
-    pub const DISPLAY_LAST: Self = SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED;
+    pub const DISPLAY_LAST: Self = SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED;
     /// Window has been shown
     pub const WINDOW_SHOWN: Self = Self((0x202 as Uint32));
     /// Window has been hidden
     pub const WINDOW_HIDDEN: Self = Self((515 as Uint32));
-    /// Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event
+    /// Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event.
+    /// data1 is 1 for live-resize expose events, 0 otherwise.
     pub const WINDOW_EXPOSED: Self = Self((516 as Uint32));
     /// Window has been moved to data1, data2
     pub const WINDOW_MOVED: Self = Self((517 as Uint32));
@@ -455,6 +470,10 @@ impl SDL_EventType {
     pub const KEYBOARD_REMOVED: Self = Self((774 as Uint32));
     /// Keyboard text editing candidates
     pub const TEXT_EDITING_CANDIDATES: Self = Self((775 as Uint32));
+    /// The on-screen keyboard has been shown
+    pub const SCREEN_KEYBOARD_SHOWN: Self = Self((776 as Uint32));
+    /// The on-screen keyboard has been hidden
+    pub const SCREEN_KEYBOARD_HIDDEN: Self = Self((777 as Uint32));
     /// Mouse moved
     pub const MOUSE_MOTION: Self = Self((0x400 as Uint32));
     /// Mouse button pressed
@@ -513,7 +532,13 @@ impl SDL_EventType {
     pub const FINGER_UP: Self = Self((1793 as Uint32));
     pub const FINGER_MOTION: Self = Self((1794 as Uint32));
     pub const FINGER_CANCELED: Self = Self((1795 as Uint32));
-    /// The clipboard or primary selection changed
+    /// Pinch gesture started
+    pub const PINCH_BEGIN: Self = Self((0x710 as Uint32));
+    /// Pinch gesture updated
+    pub const PINCH_UPDATE: Self = Self((1809 as Uint32));
+    /// Pinch gesture ended
+    pub const PINCH_END: Self = Self((1810 as Uint32));
+    /// The clipboard changed
     pub const CLIPBOARD_UPDATE: Self = Self((0x900 as Uint32));
     /// The system requests a file open
     pub const DROP_FILE: Self = Self((0x1000 as Uint32));
@@ -626,13 +651,17 @@ pub const SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED: SDL_EventType =
 /// Display has changed content scale
 pub const SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED: SDL_EventType =
     SDL_EventType::DISPLAY_CONTENT_SCALE_CHANGED;
+/// Display has changed usable bounds
+pub const SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED: SDL_EventType =
+    SDL_EventType::DISPLAY_USABLE_BOUNDS_CHANGED;
 pub const SDL_EVENT_DISPLAY_FIRST: SDL_EventType = SDL_EventType::DISPLAY_FIRST;
 pub const SDL_EVENT_DISPLAY_LAST: SDL_EventType = SDL_EventType::DISPLAY_LAST;
 /// Window has been shown
 pub const SDL_EVENT_WINDOW_SHOWN: SDL_EventType = SDL_EventType::WINDOW_SHOWN;
 /// Window has been hidden
 pub const SDL_EVENT_WINDOW_HIDDEN: SDL_EventType = SDL_EventType::WINDOW_HIDDEN;
-/// Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event
+/// Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event.
+/// data1 is 1 for live-resize expose events, 0 otherwise.
 pub const SDL_EVENT_WINDOW_EXPOSED: SDL_EventType = SDL_EventType::WINDOW_EXPOSED;
 /// Window has been moved to data1, data2
 pub const SDL_EVENT_WINDOW_MOVED: SDL_EventType = SDL_EventType::WINDOW_MOVED;
@@ -705,6 +734,10 @@ pub const SDL_EVENT_KEYBOARD_ADDED: SDL_EventType = SDL_EventType::KEYBOARD_ADDE
 pub const SDL_EVENT_KEYBOARD_REMOVED: SDL_EventType = SDL_EventType::KEYBOARD_REMOVED;
 /// Keyboard text editing candidates
 pub const SDL_EVENT_TEXT_EDITING_CANDIDATES: SDL_EventType = SDL_EventType::TEXT_EDITING_CANDIDATES;
+/// The on-screen keyboard has been shown
+pub const SDL_EVENT_SCREEN_KEYBOARD_SHOWN: SDL_EventType = SDL_EventType::SCREEN_KEYBOARD_SHOWN;
+/// The on-screen keyboard has been hidden
+pub const SDL_EVENT_SCREEN_KEYBOARD_HIDDEN: SDL_EventType = SDL_EventType::SCREEN_KEYBOARD_HIDDEN;
 /// Mouse moved
 pub const SDL_EVENT_MOUSE_MOTION: SDL_EventType = SDL_EventType::MOUSE_MOTION;
 /// Mouse button pressed
@@ -766,7 +799,13 @@ pub const SDL_EVENT_FINGER_DOWN: SDL_EventType = SDL_EventType::FINGER_DOWN;
 pub const SDL_EVENT_FINGER_UP: SDL_EventType = SDL_EventType::FINGER_UP;
 pub const SDL_EVENT_FINGER_MOTION: SDL_EventType = SDL_EventType::FINGER_MOTION;
 pub const SDL_EVENT_FINGER_CANCELED: SDL_EventType = SDL_EventType::FINGER_CANCELED;
-/// The clipboard or primary selection changed
+/// Pinch gesture started
+pub const SDL_EVENT_PINCH_BEGIN: SDL_EventType = SDL_EventType::PINCH_BEGIN;
+/// Pinch gesture updated
+pub const SDL_EVENT_PINCH_UPDATE: SDL_EventType = SDL_EventType::PINCH_UPDATE;
+/// Pinch gesture ended
+pub const SDL_EVENT_PINCH_END: SDL_EventType = SDL_EventType::PINCH_END;
+/// The clipboard changed
 pub const SDL_EVENT_CLIPBOARD_UPDATE: SDL_EventType = SDL_EventType::CLIPBOARD_UPDATE;
 /// The system requests a file open
 pub const SDL_EVENT_DROP_FILE: SDL_EventType = SDL_EventType::DROP_FILE;
@@ -859,7 +898,7 @@ pub struct SDL_CommonEvent {
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DisplayEvent {
-    /// SDL_DISPLAYEVENT_*
+    /// SDL_EVENT_DISPLAY_*
     pub r#type: SDL_EventType,
     pub reserved: Uint32,
     /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
@@ -1484,6 +1523,10 @@ pub struct SDL_GamepadSensorEvent {
 
 /// Audio device event structure (event.adevice.*)
 ///
+/// Note that SDL will send a [`SDL_EVENT_AUDIO_DEVICE_ADDED`] event for every
+/// device it discovers during initialization. After that, this event will only
+/// arrive when a device is hotplugged during the program's run.
+///
 /// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
@@ -1588,7 +1631,23 @@ pub struct SDL_TouchFingerEvent {
     pub windowID: SDL_WindowID,
 }
 
-/// Pressure-sensitive pen proximity event structure (event.pmotion.*)
+/// * Pinch event structure (event.pinch.*)
+#[repr(C)]
+#[derive(Clone, Copy, Default, PartialEq)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_PinchFingerEvent {
+    /// ::SDL_EVENT_PINCH_BEGIN or ::SDL_EVENT_PINCH_UPDATE or ::SDL_EVENT_PINCH_END
+    pub r#type: SDL_EventType,
+    pub reserved: Uint32,
+    /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
+    pub timestamp: Uint64,
+    /// The scale change since the last [`SDL_EVENT_PINCH_UPDATE`]. Scale < 1 is "zoom out". Scale > 1 is "zoom in".
+    pub scale: ::core::ffi::c_float,
+    /// The window underneath the finger, if any
+    pub windowID: SDL_WindowID,
+}
+
+/// Pressure-sensitive pen proximity event structure (event.pproximity.*)
 ///
 /// When a pen becomes visible to the system (it is close enough to a tablet,
 /// etc), SDL will send an [`SDL_EVENT_PEN_PROXIMITY_IN`] event with the new pen's
@@ -1858,7 +1917,7 @@ pub struct SDL_QuitEvent {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_UserEvent {
-    /// [`SDL_EVENT_USER`] through SDL_EVENT_LAST-1, Uint32 because these are not in the [`SDL_EventType`] enumeration
+    /// [`SDL_EVENT_USER`] through [`SDL_EVENT_LAST`], Uint32 because these are not in the [`SDL_EventType`] enumeration
     pub r#type: Uint32,
     pub reserved: Uint32,
     /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
@@ -1962,6 +2021,8 @@ pub union SDL_Event {
     pub user: SDL_UserEvent,
     /// Touch finger event data
     pub tfinger: SDL_TouchFingerEvent,
+    /// Pinch event data
+    pub pinch: SDL_PinchFingerEvent,
     /// Pen proximity event data
     pub pproximity: SDL_PenProximityEvent,
     /// Pen tip touching event data
@@ -2292,6 +2353,13 @@ unsafe extern "C" {
     /// }
     /// ```
     ///
+    /// Note that Windows (and possibly other platforms) has a quirk about how it
+    /// handles events while dragging/resizing a window, which can cause this
+    /// function to block for significant amounts of time. Technical explanations
+    /// and solutions are discussed on the wiki:
+    ///
+    /// <https://wiki.libsdl.org/SDL3/AppFreezeDuringDrag>
+    ///
     /// ## Parameters
     /// - `event`: the [`SDL_Event`] structure to be filled with the next event from
     ///   the queue, or NULL.
@@ -2464,7 +2532,10 @@ unsafe extern "C" {
     /// allows selective filtering of dynamically arriving events.
     ///
     /// **WARNING**: Be very careful of what you do in the event filter function,
-    /// as it may run in a different thread!
+    /// as it may run in a different thread! The exception is handling of
+    /// [`SDL_EVENT_WINDOW_EXPOSED`], which is guaranteed to be sent from the OS on the
+    /// main thread and you are expected to redraw your window in response to this
+    /// event.
     ///
     /// On platforms that support it, if the quit event is generated by an
     /// interrupt signal (e.g. pressing Ctrl-C), it will be delivered to the
@@ -2478,7 +2549,7 @@ unsafe extern "C" {
     /// not.
     ///
     /// ## Parameters
-    /// - `filter`: an [`SDL_EventFilter`] function to call when an event happens.
+    /// - `filter`: a function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
     /// ## Thread safety
@@ -2690,6 +2761,47 @@ unsafe extern "C" {
     /// - [`SDL_WaitEvent`]
     /// - [`SDL_WaitEventTimeout`]
     pub fn SDL_GetWindowFromEvent(event: *const SDL_Event) -> *mut SDL_Window;
+}
+
+unsafe extern "C" {
+    /// Generate an English description of an event.
+    ///
+    /// This will fill `buf` with a null-terminated string that might look
+    /// something like this:
+    ///
+    /// ```text
+    /// SDL_EVENT_MOUSE_MOTION (timestamp=1140256324 windowid=2 which=0 state=0 x=492.99 y=139.09 xrel=52 yrel=6)
+    /// ```
+    ///
+    /// The exact format of the string is not guaranteed; it is intended for
+    /// logging purposes, to be read by a human, and not parsed by a computer.
+    ///
+    /// The returned value follows the same rules as [`SDL_snprintf()`]\: `buf` will
+    /// always be NULL-terminated (unless `buflen` is zero), and will be truncated
+    /// if `buflen` is too small. The return code is the number of bytes needed for
+    /// the complete string, not counting the NULL-terminator, whether the string
+    /// was truncated or not. Unlike [`SDL_snprintf()`], though, this function never
+    /// returns -1.
+    ///
+    /// ## Parameters
+    /// - `event`: an event to describe. May be NULL.
+    /// - `buf`: the buffer to fill with the description string. May be NULL.
+    /// - `buflen`: the maximum bytes that can be written to `buf`.
+    ///
+    /// ## Return value
+    /// Returns number of bytes needed for the full string, not counting the
+    ///   null-terminator byte.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    pub fn SDL_GetEventDescription(
+        event: *const SDL_Event,
+        buf: *mut ::core::ffi::c_char,
+        buflen: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 
 #[cfg(doc)]

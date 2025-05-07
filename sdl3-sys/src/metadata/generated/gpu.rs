@@ -20,12 +20,58 @@ pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_PREFERLOWPOWER_BOOLEAN: Property =
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_VERBOSE_BOOLEAN: Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_CREATE_VERBOSE_BOOLEAN",
+    short_name: "GPU_DEVICE_CREATE_VERBOSE_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_VERBOSE_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING",
     short_name: "GPU_DEVICE_CREATE_NAME_STRING",
     value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING,
     ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_FEATURE_CLIP_DISTANCE_BOOLEAN: Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_CREATE_FEATURE_CLIP_DISTANCE_BOOLEAN",
+    short_name: "GPU_DEVICE_CREATE_FEATURE_CLIP_DISTANCE_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_FEATURE_CLIP_DISTANCE_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_FEATURE_DEPTH_CLAMPING_BOOLEAN: Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_CREATE_FEATURE_DEPTH_CLAMPING_BOOLEAN",
+    short_name: "GPU_DEVICE_CREATE_FEATURE_DEPTH_CLAMPING_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_FEATURE_DEPTH_CLAMPING_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_FEATURE_INDIRECT_DRAW_FIRST_INSTANCE_BOOLEAN:
+    Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_CREATE_FEATURE_INDIRECT_DRAW_FIRST_INSTANCE_BOOLEAN",
+    short_name: "GPU_DEVICE_CREATE_FEATURE_INDIRECT_DRAW_FIRST_INSTANCE_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_FEATURE_INDIRECT_DRAW_FIRST_INSTANCE_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_FEATURE_ANISOTROPY_BOOLEAN: Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_CREATE_FEATURE_ANISOTROPY_BOOLEAN",
+    short_name: "GPU_DEVICE_CREATE_FEATURE_ANISOTROPY_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_FEATURE_ANISOTROPY_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
     doc: None,
     available_since: None,
 };
@@ -83,11 +129,57 @@ pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN: Property
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_D3D12_ALLOW_FEWER_RESOURCE_SLOTS_BOOLEAN: Property =
+    Property {
+        module: "gpu",
+        name: "SDL_PROP_GPU_DEVICE_CREATE_D3D12_ALLOW_FEWER_RESOURCE_SLOTS_BOOLEAN",
+        short_name: "GPU_DEVICE_CREATE_D3D12_ALLOW_FEWER_RESOURCE_SLOTS_BOOLEAN",
+        value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_D3D12_ALLOW_FEWER_RESOURCE_SLOTS_BOOLEAN,
+        ty: PropertyType::BOOLEAN,
+        doc: None,
+        available_since: None,
+    };
 pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING",
     short_name: "GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING",
     value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING,
+    ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_GPU_DEVICE_NAME_STRING: Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_NAME_STRING",
+    short_name: "GPU_DEVICE_NAME_STRING",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_NAME_STRING,
+    ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_GPU_DEVICE_DRIVER_NAME_STRING: Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_DRIVER_NAME_STRING",
+    short_name: "GPU_DEVICE_DRIVER_NAME_STRING",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_DRIVER_NAME_STRING,
+    ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_GPU_DEVICE_DRIVER_VERSION_STRING: Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_DRIVER_VERSION_STRING",
+    short_name: "GPU_DEVICE_DRIVER_VERSION_STRING",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_DRIVER_VERSION_STRING,
+    ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_GPU_DEVICE_DRIVER_INFO_STRING: Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_DRIVER_INFO_STRING",
+    short_name: "GPU_DEVICE_DRIVER_INFO_STRING",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_DRIVER_INFO_STRING,
     ty: PropertyType::STRING,
     doc: None,
     available_since: None,

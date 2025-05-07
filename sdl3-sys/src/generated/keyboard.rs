@@ -203,8 +203,7 @@ unsafe extern "C" {
     /// Get the current key modifier state for the keyboard.
     ///
     /// ## Return value
-    /// Returns an OR'd combination of the modifier keys for the keyboard. See
-    ///   [`SDL_Keymod`] for details.
+    /// Returns an OR'd combination of the modifier keys for the keyboard.
     ///
     /// ## Thread safety
     /// It is safe to call this function from any thread.

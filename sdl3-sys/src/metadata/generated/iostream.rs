@@ -56,6 +56,15 @@ pub const METADATA_SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_IOSTREAM_MEMORY_FREE_FUNC_POINTER: Property = Property {
+    module: "iostream",
+    name: "SDL_PROP_IOSTREAM_MEMORY_FREE_FUNC_POINTER",
+    short_name: "IOSTREAM_MEMORY_FREE_FUNC_POINTER",
+    value: crate::iostream::SDL_PROP_IOSTREAM_MEMORY_FREE_FUNC_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER: Property = Property {
     module: "iostream",
     name: "SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER",

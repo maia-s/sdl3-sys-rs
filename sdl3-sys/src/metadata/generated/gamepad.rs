@@ -124,6 +124,12 @@ pub const METADATA_SDL_GamepadType: Group = Group {
             available_since: None,
         },
         GroupValue {
+            name: "SDL_GAMEPAD_TYPE_GAMECUBE",
+            short_name: "GAMECUBE",
+            doc: None,
+            available_since: None,
+        },
+        GroupValue {
             name: "SDL_GAMEPAD_TYPE_COUNT",
             short_name: "COUNT",
             doc: None,
@@ -137,7 +143,7 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
     name: "SDL_GamepadButton",
     short_name: "GamepadButton",
     doc: Some(
-        "The list of buttons available on a gamepad\n\nFor controllers that use a diamond pattern for the face buttons, the\nsouth/east/west/north buttons below correspond to the locations in the\ndiamond pattern. For Xbox controllers, this would be A/B/X/Y, for Nintendo\nSwitch controllers, this would be B/A/Y/X, for PlayStation controllers this\nwould be Cross/Circle/Square/Triangle.\n\nFor controllers that don't use a diamond pattern for the face buttons, the\nsouth/east/west/north buttons indicate the buttons labeled A, B, C, D, or\n1, 2, 3, 4, or for controllers that aren't labeled, they are the primary,\nsecondary, etc. buttons.\n\nThe activate action is often the south button and the cancel action is\noften the east button, but in some regions this is reversed, so your game\nshould allow remapping actions based on user preferences.\n\nYou can query the labels for the face buttons using\n[`SDL_GetGamepadButtonLabel()`]\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+        "The list of buttons available on a gamepad\n\nFor controllers that use a diamond pattern for the face buttons, the\nsouth/east/west/north buttons below correspond to the locations in the\ndiamond pattern. For Xbox controllers, this would be A/B/X/Y, for Nintendo\nSwitch controllers, this would be B/A/Y/X, for GameCube controllers this\nwould be A/X/B/Y, for PlayStation controllers this would be\nCross/Circle/Square/Triangle.\n\nFor controllers that don't use a diamond pattern for the face buttons, the\nsouth/east/west/north buttons indicate the buttons labeled A, B, C, D, or\n1, 2, 3, 4, or for controllers that aren't labeled, they are the primary,\nsecondary, etc. buttons.\n\nThe activate action is often the south button and the cancel action is\noften the east button, but in some regions this is reversed, so your game\nshould allow remapping actions based on user preferences.\n\nYou can query the labels for the face buttons using\n[`SDL_GetGamepadButtonLabel()`]\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
@@ -249,7 +255,7 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
             name: "SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1",
             short_name: "RIGHT_PADDLE1",
             doc: Some(
-                "Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1)\n",
+                "Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1, DualSense Edge RB button, Right Joy-Con SR button)\n",
             ),
             available_since: None,
         },
@@ -257,7 +263,7 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
             name: "SDL_GAMEPAD_BUTTON_LEFT_PADDLE1",
             short_name: "LEFT_PADDLE1",
             doc: Some(
-                "Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3)\n",
+                "Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3, DualSense Edge LB button, Left Joy-Con SL button)\n",
             ),
             available_since: None,
         },
@@ -265,7 +271,7 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
             name: "SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2",
             short_name: "RIGHT_PADDLE2",
             doc: Some(
-                "Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2)\n",
+                "Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2, DualSense Edge right Fn button, Right Joy-Con SL button)\n",
             ),
             available_since: None,
         },
@@ -273,7 +279,7 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
             name: "SDL_GAMEPAD_BUTTON_LEFT_PADDLE2",
             short_name: "LEFT_PADDLE2",
             doc: Some(
-                "Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4)\n",
+                "Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4, DualSense Edge left Fn button, Left Joy-Con SR button)\n",
             ),
             available_since: None,
         },
@@ -292,13 +298,13 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
         GroupValue {
             name: "SDL_GAMEPAD_BUTTON_MISC3",
             short_name: "MISC3",
-            doc: Some("Additional button\n"),
+            doc: Some("Additional button (e.g. Nintendo GameCube left trigger click)\n"),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GAMEPAD_BUTTON_MISC4",
             short_name: "MISC4",
-            doc: Some("Additional button\n"),
+            doc: Some("Additional button (e.g. Nintendo GameCube right trigger click)\n"),
             available_since: None,
         },
         GroupValue {

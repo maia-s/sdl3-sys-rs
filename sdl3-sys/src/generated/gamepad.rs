@@ -84,6 +84,7 @@ use super::sensor::*;
 /// | [`NINTENDO_SWITCH_JOYCON_LEFT`](SDL_GamepadType::NINTENDO_SWITCH_JOYCON_LEFT) | [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT`] | |
 /// | [`NINTENDO_SWITCH_JOYCON_RIGHT`](SDL_GamepadType::NINTENDO_SWITCH_JOYCON_RIGHT) | [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT`] | |
 /// | [`NINTENDO_SWITCH_JOYCON_PAIR`](SDL_GamepadType::NINTENDO_SWITCH_JOYCON_PAIR) | [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR`] | |
+/// | [`GAMECUBE`](SDL_GamepadType::GAMECUBE) | [`SDL_GAMEPAD_TYPE_GAMECUBE`] | |
 /// | [`COUNT`](SDL_GamepadType::COUNT) | [`SDL_GAMEPAD_TYPE_COUNT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -126,6 +127,7 @@ impl ::core::fmt::Debug for SDL_GamepadType {
             Self::NINTENDO_SWITCH_JOYCON_LEFT => "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_LEFT",
             Self::NINTENDO_SWITCH_JOYCON_RIGHT => "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT",
             Self::NINTENDO_SWITCH_JOYCON_PAIR => "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR",
+            Self::GAMECUBE => "SDL_GAMEPAD_TYPE_GAMECUBE",
             Self::COUNT => "SDL_GAMEPAD_TYPE_COUNT",
 
             _ => return write!(f, "SDL_GamepadType({})", self.0),
@@ -145,7 +147,8 @@ impl SDL_GamepadType {
     pub const NINTENDO_SWITCH_JOYCON_LEFT: Self = Self((8 as ::core::ffi::c_int));
     pub const NINTENDO_SWITCH_JOYCON_RIGHT: Self = Self((9 as ::core::ffi::c_int));
     pub const NINTENDO_SWITCH_JOYCON_PAIR: Self = Self((10 as ::core::ffi::c_int));
-    pub const COUNT: Self = Self((11 as ::core::ffi::c_int));
+    pub const GAMECUBE: Self = Self((11 as ::core::ffi::c_int));
+    pub const COUNT: Self = Self((12 as ::core::ffi::c_int));
 }
 
 pub const SDL_GAMEPAD_TYPE_UNKNOWN: SDL_GamepadType = SDL_GamepadType::UNKNOWN;
@@ -163,6 +166,7 @@ pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT: SDL_GamepadType =
     SDL_GamepadType::NINTENDO_SWITCH_JOYCON_RIGHT;
 pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR: SDL_GamepadType =
     SDL_GamepadType::NINTENDO_SWITCH_JOYCON_PAIR;
+pub const SDL_GAMEPAD_TYPE_GAMECUBE: SDL_GamepadType = SDL_GamepadType::GAMECUBE;
 pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 
 #[cfg(feature = "metadata")]
@@ -176,8 +180,9 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadType {
 /// For controllers that use a diamond pattern for the face buttons, the
 /// south/east/west/north buttons below correspond to the locations in the
 /// diamond pattern. For Xbox controllers, this would be A/B/X/Y, for Nintendo
-/// Switch controllers, this would be B/A/Y/X, for PlayStation controllers this
-/// would be Cross/Circle/Square/Triangle.
+/// Switch controllers, this would be B/A/Y/X, for GameCube controllers this
+/// would be A/X/B/Y, for PlayStation controllers this would be
+/// Cross/Circle/Square/Triangle.
 ///
 /// For controllers that don't use a diamond pattern for the face buttons, the
 /// south/east/west/north buttons indicate the buttons labeled A, B, C, D, or
@@ -214,14 +219,14 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadType {
 /// | [`DPAD_LEFT`](SDL_GamepadButton::DPAD_LEFT) | [`SDL_GAMEPAD_BUTTON_DPAD_LEFT`] | |
 /// | [`DPAD_RIGHT`](SDL_GamepadButton::DPAD_RIGHT) | [`SDL_GAMEPAD_BUTTON_DPAD_RIGHT`] | |
 /// | [`MISC1`](SDL_GamepadButton::MISC1) | [`SDL_GAMEPAD_BUTTON_MISC1`] | Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button, Google Stadia capture button) |
-/// | [`RIGHT_PADDLE1`](SDL_GamepadButton::RIGHT_PADDLE1) | [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1`] | Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1) |
-/// | [`LEFT_PADDLE1`](SDL_GamepadButton::LEFT_PADDLE1) | [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE1`] | Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3) |
-/// | [`RIGHT_PADDLE2`](SDL_GamepadButton::RIGHT_PADDLE2) | [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2`] | Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2) |
-/// | [`LEFT_PADDLE2`](SDL_GamepadButton::LEFT_PADDLE2) | [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE2`] | Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4) |
+/// | [`RIGHT_PADDLE1`](SDL_GamepadButton::RIGHT_PADDLE1) | [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1`] | Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1, DualSense Edge RB button, Right Joy-Con SR button) |
+/// | [`LEFT_PADDLE1`](SDL_GamepadButton::LEFT_PADDLE1) | [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE1`] | Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3, DualSense Edge LB button, Left Joy-Con SL button) |
+/// | [`RIGHT_PADDLE2`](SDL_GamepadButton::RIGHT_PADDLE2) | [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2`] | Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2, DualSense Edge right Fn button, Right Joy-Con SL button) |
+/// | [`LEFT_PADDLE2`](SDL_GamepadButton::LEFT_PADDLE2) | [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE2`] | Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4, DualSense Edge left Fn button, Left Joy-Con SR button) |
 /// | [`TOUCHPAD`](SDL_GamepadButton::TOUCHPAD) | [`SDL_GAMEPAD_BUTTON_TOUCHPAD`] | PS4/PS5 touchpad button |
 /// | [`MISC2`](SDL_GamepadButton::MISC2) | [`SDL_GAMEPAD_BUTTON_MISC2`] | Additional button |
-/// | [`MISC3`](SDL_GamepadButton::MISC3) | [`SDL_GAMEPAD_BUTTON_MISC3`] | Additional button |
-/// | [`MISC4`](SDL_GamepadButton::MISC4) | [`SDL_GAMEPAD_BUTTON_MISC4`] | Additional button |
+/// | [`MISC3`](SDL_GamepadButton::MISC3) | [`SDL_GAMEPAD_BUTTON_MISC3`] | Additional button (e.g. Nintendo GameCube left trigger click) |
+/// | [`MISC4`](SDL_GamepadButton::MISC4) | [`SDL_GAMEPAD_BUTTON_MISC4`] | Additional button (e.g. Nintendo GameCube right trigger click) |
 /// | [`MISC5`](SDL_GamepadButton::MISC5) | [`SDL_GAMEPAD_BUTTON_MISC5`] | Additional button |
 /// | [`MISC6`](SDL_GamepadButton::MISC6) | [`SDL_GAMEPAD_BUTTON_MISC6`] | Additional button |
 /// | [`COUNT`](SDL_GamepadButton::COUNT) | [`SDL_GAMEPAD_BUTTON_COUNT`] | |
@@ -312,21 +317,21 @@ impl SDL_GamepadButton {
     pub const DPAD_RIGHT: Self = Self((14_i32 as ::core::ffi::c_int));
     /// Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button, Google Stadia capture button)
     pub const MISC1: Self = Self((15_i32 as ::core::ffi::c_int));
-    /// Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1)
+    /// Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1, DualSense Edge RB button, Right Joy-Con SR button)
     pub const RIGHT_PADDLE1: Self = Self((16_i32 as ::core::ffi::c_int));
-    /// Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3)
+    /// Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3, DualSense Edge LB button, Left Joy-Con SL button)
     pub const LEFT_PADDLE1: Self = Self((17_i32 as ::core::ffi::c_int));
-    /// Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2)
+    /// Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2, DualSense Edge right Fn button, Right Joy-Con SL button)
     pub const RIGHT_PADDLE2: Self = Self((18_i32 as ::core::ffi::c_int));
-    /// Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4)
+    /// Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4, DualSense Edge left Fn button, Left Joy-Con SR button)
     pub const LEFT_PADDLE2: Self = Self((19_i32 as ::core::ffi::c_int));
     /// PS4/PS5 touchpad button
     pub const TOUCHPAD: Self = Self((20_i32 as ::core::ffi::c_int));
     /// Additional button
     pub const MISC2: Self = Self((21_i32 as ::core::ffi::c_int));
-    /// Additional button
+    /// Additional button (e.g. Nintendo GameCube left trigger click)
     pub const MISC3: Self = Self((22_i32 as ::core::ffi::c_int));
-    /// Additional button
+    /// Additional button (e.g. Nintendo GameCube right trigger click)
     pub const MISC4: Self = Self((23_i32 as ::core::ffi::c_int));
     /// Additional button
     pub const MISC5: Self = Self((24_i32 as ::core::ffi::c_int));
@@ -357,21 +362,21 @@ pub const SDL_GAMEPAD_BUTTON_DPAD_LEFT: SDL_GamepadButton = SDL_GamepadButton::D
 pub const SDL_GAMEPAD_BUTTON_DPAD_RIGHT: SDL_GamepadButton = SDL_GamepadButton::DPAD_RIGHT;
 /// Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button, Google Stadia capture button)
 pub const SDL_GAMEPAD_BUTTON_MISC1: SDL_GamepadButton = SDL_GamepadButton::MISC1;
-/// Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1)
+/// Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1, DualSense Edge RB button, Right Joy-Con SR button)
 pub const SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1: SDL_GamepadButton = SDL_GamepadButton::RIGHT_PADDLE1;
-/// Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3)
+/// Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3, DualSense Edge LB button, Left Joy-Con SL button)
 pub const SDL_GAMEPAD_BUTTON_LEFT_PADDLE1: SDL_GamepadButton = SDL_GamepadButton::LEFT_PADDLE1;
-/// Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2)
+/// Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2, DualSense Edge right Fn button, Right Joy-Con SL button)
 pub const SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2: SDL_GamepadButton = SDL_GamepadButton::RIGHT_PADDLE2;
-/// Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4)
+/// Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4, DualSense Edge left Fn button, Left Joy-Con SR button)
 pub const SDL_GAMEPAD_BUTTON_LEFT_PADDLE2: SDL_GamepadButton = SDL_GamepadButton::LEFT_PADDLE2;
 /// PS4/PS5 touchpad button
 pub const SDL_GAMEPAD_BUTTON_TOUCHPAD: SDL_GamepadButton = SDL_GamepadButton::TOUCHPAD;
 /// Additional button
 pub const SDL_GAMEPAD_BUTTON_MISC2: SDL_GamepadButton = SDL_GamepadButton::MISC2;
-/// Additional button
+/// Additional button (e.g. Nintendo GameCube left trigger click)
 pub const SDL_GAMEPAD_BUTTON_MISC3: SDL_GamepadButton = SDL_GamepadButton::MISC3;
-/// Additional button
+/// Additional button (e.g. Nintendo GameCube right trigger click)
 pub const SDL_GAMEPAD_BUTTON_MISC4: SDL_GamepadButton = SDL_GamepadButton::MISC4;
 /// Additional button
 pub const SDL_GAMEPAD_BUTTON_MISC5: SDL_GamepadButton = SDL_GamepadButton::MISC5;
@@ -919,6 +924,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReloadGamepadMappings() -> ::core::primitive::bool;
@@ -937,6 +945,9 @@ unsafe extern "C" {
     ///   single allocation that should be freed with [`SDL_free()`] when it is
     ///   no longer needed.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGamepadMappings(count: *mut ::core::ffi::c_int) -> *mut *mut ::core::ffi::c_char;
@@ -952,6 +963,9 @@ unsafe extern "C" {
     /// Returns a mapping string or NULL on failure; call [`SDL_GetError()`] for more
     ///   information. This should be freed with [`SDL_free()`] when it is no
     ///   longer needed.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -974,6 +988,9 @@ unsafe extern "C" {
     /// Returns a string that has the gamepad's mapping or NULL if no mapping is
     ///   available; call [`SDL_GetError()`] for more information. This should
     ///   be freed with [`SDL_free()`] when it is no longer needed.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1000,6 +1017,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1017,6 +1037,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true if a gamepad is connected, false otherwise.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1038,6 +1061,9 @@ unsafe extern "C" {
     ///   call [`SDL_GetError()`] for more information. This should be freed
     ///   with [`SDL_free()`] when it is no longer needed.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1056,6 +1082,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if the given joystick is supported by the gamepad interface,
     ///   false if it isn't or it's an invalid index.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1078,6 +1107,9 @@ unsafe extern "C" {
     /// Returns the name of the selected gamepad. If no name can be found, this
     ///   function returns NULL; call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1099,6 +1131,9 @@ unsafe extern "C" {
     /// Returns the path of the selected gamepad. If no path can be found, this
     ///   function returns NULL; call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1118,6 +1153,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the player index of a gamepad, or -1 if it's not available.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1139,6 +1177,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the GUID of the selected gamepad. If called on an invalid index,
     ///   this function returns a zero GUID.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1162,6 +1203,9 @@ unsafe extern "C" {
     /// Returns the USB vendor ID of the selected gamepad. If called on an invalid
     ///   index, this function returns zero.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1183,6 +1227,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the USB product ID of the selected gamepad. If called on an
     ///   invalid index, this function returns zero.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1206,6 +1253,9 @@ unsafe extern "C" {
     /// Returns the product version of the selected gamepad. If called on an
     ///   invalid index, this function returns zero.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1225,6 +1275,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the gamepad type.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1246,6 +1299,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the gamepad type.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1269,6 +1325,9 @@ unsafe extern "C" {
     /// Returns the mapping string. Returns NULL if no mapping is available. This
     ///   should be freed with [`SDL_free()`] when it is no longer needed.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1287,6 +1346,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns a gamepad identifier or NULL if an error occurred; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1308,6 +1370,9 @@ unsafe extern "C" {
     /// Returns an [`SDL_Gamepad`] on success or NULL on failure or if it hasn't been
     ///   opened yet; call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGamepadFromID(instance_id: SDL_JoystickID) -> *mut SDL_Gamepad;
@@ -1321,6 +1386,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the [`SDL_Gamepad`] associated with a player index.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1357,6 +1425,9 @@ unsafe extern "C" {
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGamepadProperties(gamepad: *mut SDL_Gamepad) -> SDL_PropertiesID;
@@ -1388,6 +1459,9 @@ unsafe extern "C" {
     /// Returns the instance ID of the specified gamepad on success or 0 on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGamepadID(gamepad: *mut SDL_Gamepad) -> SDL_JoystickID;
@@ -1403,6 +1477,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the implementation dependent name for the gamepad, or NULL if
     ///   there is no name or the identifier passed is invalid.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1423,6 +1500,9 @@ unsafe extern "C" {
     /// Returns the implementation dependent path for the gamepad, or NULL if
     ///   there is no path or the identifier passed is invalid.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1441,6 +1521,9 @@ unsafe extern "C" {
     /// Returns the gamepad type, or [`SDL_GAMEPAD_TYPE_UNKNOWN`] if it's not
     ///   available.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1458,6 +1541,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the gamepad type, or [`SDL_GAMEPAD_TYPE_UNKNOWN`] if it's not
     ///   available.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1478,6 +1564,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the player index for gamepad, or -1 if it's not available.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1497,6 +1586,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1520,6 +1612,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the USB vendor ID, or zero if unavailable.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1538,6 +1633,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the USB product ID, or zero if unavailable.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1558,6 +1656,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the USB product version, or zero if unavailable.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1577,6 +1678,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the gamepad firmware version, or zero if unavailable.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGamepadFirmwareVersion(gamepad: *mut SDL_Gamepad) -> Uint16;
@@ -1592,6 +1696,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the serial number, or NULL if unavailable.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1610,6 +1717,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the gamepad handle, or 0 if unavailable.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGamepadSteamHandle(gamepad: *mut SDL_Gamepad) -> Uint64;
@@ -1625,6 +1735,9 @@ unsafe extern "C" {
     /// Returns the connection state on success or
     ///   [`SDL_JOYSTICK_CONNECTION_INVALID`] on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1650,6 +1763,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the current battery state.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGamepadPowerInfo(
@@ -1668,6 +1784,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if the gamepad has been opened and is currently connected, or
     ///   false if not.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1693,6 +1812,9 @@ unsafe extern "C" {
     /// Returns an [`SDL_Joystick`] object, or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGamepadJoystick(gamepad: *mut SDL_Gamepad) -> *mut SDL_Joystick;
@@ -1706,6 +1828,9 @@ unsafe extern "C" {
     ///
     /// ## Parameters
     /// - `enabled`: whether to process gamepad events or not.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1724,6 +1849,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true if gamepad events are being processed, false otherwise.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1746,6 +1874,9 @@ unsafe extern "C" {
     ///   single allocation that should be freed with [`SDL_free()`] when it is
     ///   no longer needed.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGamepadBindings(
@@ -1760,6 +1891,9 @@ unsafe extern "C" {
     /// This function is called automatically by the event loop if events are
     /// enabled. Under such circumstances, it will not be necessary to call this
     /// function.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1781,6 +1915,9 @@ unsafe extern "C" {
     /// Returns the [`SDL_GamepadType`] enum corresponding to the input string, or
     ///   [`SDL_GAMEPAD_TYPE_UNKNOWN`] if no match was found.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1799,6 +1936,9 @@ unsafe extern "C" {
     /// Returns a string for the given type, or NULL if an invalid type is
     ///   specified. The string returned is of the format used by
     ///   [`SDL_Gamepad`] mapping strings.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1827,6 +1967,9 @@ unsafe extern "C" {
     /// Returns the [`SDL_GamepadAxis`] enum corresponding to the input string, or
     ///   [`SDL_GAMEPAD_AXIS_INVALID`] if no match was found.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1845,6 +1988,9 @@ unsafe extern "C" {
     /// Returns a string for the given axis, or NULL if an invalid axis is
     ///   specified. The string returned is of the format used by
     ///   [`SDL_Gamepad`] mapping strings.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1866,6 +2012,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true if the gamepad has this axis, false otherwise.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1891,13 +2040,18 @@ unsafe extern "C" {
     /// return a negative value. Note that this differs from the value reported by
     /// the lower-level [`SDL_GetJoystickAxis()`], which normally uses the full range.
     ///
+    /// Note that for invalid gamepads or axes, this will return 0. Zero is also a
+    /// valid value in normal operation; usually it means a centered axis.
+    ///
     /// ## Parameters
     /// - `gamepad`: a gamepad.
     /// - `axis`: an axis index (one of the [`SDL_GamepadAxis`] values).
     ///
     /// ## Return value
-    /// Returns axis state (including 0) on success or 0 (also) on failure; call
-    ///   [`SDL_GetError()`] for more information.
+    /// Returns axis state.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1923,6 +2077,9 @@ unsafe extern "C" {
     /// Returns the [`SDL_GamepadButton`] enum corresponding to the input string, or
     ///   [`SDL_GAMEPAD_BUTTON_INVALID`] if no match was found.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1941,6 +2098,9 @@ unsafe extern "C" {
     /// Returns a string for the given button, or NULL if an invalid button is
     ///   specified. The string returned is of the format used by
     ///   [`SDL_Gamepad`] mapping strings.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1963,6 +2123,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if the gamepad has this button, false otherwise.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1983,6 +2146,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true if the button is pressed, false otherwise.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2006,6 +2172,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the [`SDL_GamepadButtonLabel`] enum corresponding to the button label.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -2027,6 +2196,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the [`SDL_GamepadButtonLabel`] enum corresponding to the button label.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -2047,6 +2219,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns number of touchpads.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -2065,6 +2240,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns number of supported simultaneous fingers.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2097,6 +2275,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -2123,6 +2304,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if the sensor exists, false otherwise.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -2148,6 +2332,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -2171,6 +2358,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if the sensor is enabled, false otherwise.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -2191,6 +2381,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the data rate, or 0.0f if the data rate is not available.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2215,6 +2408,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2246,6 +2442,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2282,6 +2481,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -2314,6 +2516,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetGamepadLED(
@@ -2336,6 +2541,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SendGamepadEffect(
@@ -2351,6 +2559,9 @@ unsafe extern "C" {
     /// ## Parameters
     /// - `gamepad`: a gamepad identifier previously returned by
     ///   [`SDL_OpenGamepad()`].
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2370,6 +2581,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the sfSymbolsName or NULL if the name can't be found.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -2391,6 +2605,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the sfSymbolsName or NULL if the name can't be found.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

@@ -2,6 +2,15 @@
 
 use super::*;
 
+pub const METADATA_SDL_PROP_AUDIOSTREAM_AUTO_CLEANUP_BOOLEAN: Property = Property {
+    module: "audio",
+    name: "SDL_PROP_AUDIOSTREAM_AUTO_CLEANUP_BOOLEAN",
+    short_name: "AUDIOSTREAM_AUTO_CLEANUP_BOOLEAN",
+    value: crate::audio::SDL_PROP_AUDIOSTREAM_AUTO_CLEANUP_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_AudioFormat: Group = Group {
     module: "audio",
     kind: GroupKind::Enum,

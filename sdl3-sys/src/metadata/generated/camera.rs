@@ -43,3 +43,33 @@ pub const METADATA_SDL_CameraPosition: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_CameraPermissionState: Group = Group {
+    module: "camera",
+    kind: GroupKind::Enum,
+    name: "SDL_CameraPermissionState",
+    short_name: "CameraPermissionState",
+    doc: Some(
+        "The current state of a request for camera access.\n\n## Availability\nThis enum is available since SDL 3.4.0.\n\n## See also\n- [`SDL_GetCameraPermissionState`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
+    values: &[
+        GroupValue {
+            name: "SDL_CAMERA_PERMISSION_STATE_DENIED",
+            short_name: "DENIED",
+            doc: None,
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_CAMERA_PERMISSION_STATE_PENDING",
+            short_name: "PENDING",
+            doc: None,
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_CAMERA_PERMISSION_STATE_APPROVED",
+            short_name: "APPROVED",
+            doc: None,
+            available_since: None,
+        },
+    ],
+};

@@ -214,7 +214,7 @@ pub struct SDL_IOStreamInterface {
         ) -> Sint64,
     >,
     /// Read up to `size` bytes from the data stream to the area pointed
-    /// at by `ptr`.
+    /// at by `ptr`. `size` will always be > 0.
     ///
     /// On an incomplete read, you should set `*status` to a value from the
     /// [`SDL_IOStatus`] enum. You do not have to explicitly set this on
@@ -230,7 +230,7 @@ pub struct SDL_IOStreamInterface {
         ) -> ::core::primitive::usize,
     >,
     /// Write exactly `size` bytes from the area pointed at by `ptr`
-    /// to data stream.
+    /// to data stream. `size` will always be > 0.
     ///
     /// On an incomplete write, you should set `*status` to a value from the
     /// [`SDL_IOStatus`] enum. You do not have to explicitly set this on
@@ -312,6 +312,8 @@ unsafe extern "C" {
     /// - "w": Create an empty file for writing. If a file with the same name
     ///   already exists its content is erased and the file is treated as a new
     ///   empty file.
+    /// - "wx": Create an empty file for writing. If a file with the same name
+    ///   already exists, the call fails.
     /// - "a": Append to a file. Writing operations append data at the end of the
     ///   file. The file is created if it does not exist.
     /// - "r+": Open a file for update both reading and writing. The file must
@@ -319,6 +321,8 @@ unsafe extern "C" {
     /// - "w+": Create an empty file for both reading and writing. If a file with
     ///   the same name already exists its content is erased and the file is
     ///   treated as a new empty file.
+    /// - "w+x": Create an empty file for both reading and writing. If a file with
+    ///   the same name already exists, the call fails.
     /// - "a+": Open a file for reading and appending. All writing operations are
     ///   performed at the end of the file, protecting the previous content to be
     ///   overwritten. You can reposition (fseek, rewind) the internal pointer to
@@ -373,7 +377,7 @@ unsafe extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -411,8 +415,7 @@ unsafe extern "C" {
     /// certain size, for both read and write access.
     ///
     /// This memory buffer is not copied by the [`SDL_IOStream`]; the pointer you
-    /// provide must remain valid until you close the stream. Closing the stream
-    /// will not free the original buffer.
+    /// provide must remain valid until you close the stream.
     ///
     /// If you need to make sure the [`SDL_IOStream`] never writes to the memory
     /// buffer, you should use [`SDL_IOFromConstMem()`] with a read-only buffer of
@@ -424,6 +427,13 @@ unsafe extern "C" {
     ///   was passed to this function.
     /// - [`SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER`]\: this will be the `size` parameter
     ///   that was passed to this function.
+    ///
+    /// Additionally, the following properties are recognized:
+    ///
+    /// - [`SDL_PROP_IOSTREAM_MEMORY_FREE_FUNC_POINTER`]\: if this property is set to
+    ///   a non-NULL value it will be interpreted as a function of [`SDL_free_func`]
+    ///   type and called with the passed `mem` pointer when closing the stream. By
+    ///   default it is unset, i.e., the memory will not be freed.
     ///
     /// ## Parameters
     /// - `mem`: a pointer to a buffer to feed an [`SDL_IOStream`] stream.
@@ -459,6 +469,9 @@ pub const SDL_PROP_IOSTREAM_MEMORY_POINTER: *const ::core::ffi::c_char =
 pub const SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER: *const ::core::ffi::c_char =
     c"SDL.iostream.memory.size".as_ptr();
 
+pub const SDL_PROP_IOSTREAM_MEMORY_FREE_FUNC_POINTER: *const ::core::ffi::c_char =
+    c"SDL.iostream.memory.free".as_ptr();
+
 unsafe extern "C" {
     /// Use this function to prepare a read-only memory buffer for use with
     /// [`SDL_IOStream`].
@@ -470,8 +483,7 @@ unsafe extern "C" {
     /// without writing to the memory buffer.
     ///
     /// This memory buffer is not copied by the [`SDL_IOStream`]; the pointer you
-    /// provide must remain valid until you close the stream. Closing the stream
-    /// will not free the original buffer.
+    /// provide must remain valid until you close the stream.
     ///
     /// If you need to write to a memory buffer, you should use [`SDL_IOFromMem()`]
     /// with a writable buffer of memory instead.
@@ -482,6 +494,13 @@ unsafe extern "C" {
     ///   was passed to this function.
     /// - [`SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER`]\: this will be the `size` parameter
     ///   that was passed to this function.
+    ///
+    /// Additionally, the following properties are recognized:
+    ///
+    /// - [`SDL_PROP_IOSTREAM_MEMORY_FREE_FUNC_POINTER`]\: if this property is set to
+    ///   a non-NULL value it will be interpreted as a function of [`SDL_free_func`]
+    ///   type and called with the passed `mem` pointer when closing the stream. By
+    ///   default it is unset, i.e., the memory will not be freed.
     ///
     /// ## Parameters
     /// - `mem`: a pointer to a read-only buffer to feed an [`SDL_IOStream`] stream.
@@ -615,7 +634,7 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -636,7 +655,7 @@ unsafe extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -661,7 +680,7 @@ unsafe extern "C" {
     /// Returns an [`SDL_IOStatus`] enum with the current state.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -680,7 +699,7 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -712,7 +731,7 @@ unsafe extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -738,7 +757,7 @@ unsafe extern "C" {
     ///   be determined.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -759,6 +778,10 @@ unsafe extern "C" {
     /// the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different error
     /// value and [`SDL_GetError()`] will offer a human-readable message.
     ///
+    /// A request for zero bytes on a valid stream will return zero immediately
+    /// without accessing the stream, so the stream status (EOF, err, etc) will not
+    /// change.
+    ///
     /// ## Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `ptr`: a pointer to a buffer to read data into.
@@ -769,7 +792,7 @@ unsafe extern "C" {
     ///   call [`SDL_GetError()`] for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -798,6 +821,10 @@ unsafe extern "C" {
     /// recoverable, such as a non-blocking write that can simply be retried later,
     /// or a fatal error.
     ///
+    /// A request for zero bytes on a valid stream will return zero immediately
+    /// without accessing the stream, so the stream status (EOF, err, etc) will not
+    /// change.
+    ///
     /// ## Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `ptr`: a pointer to a buffer containing data to write.
@@ -808,7 +835,7 @@ unsafe extern "C" {
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -842,7 +869,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -872,7 +899,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -902,7 +929,7 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -934,7 +961,7 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -967,7 +994,7 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -997,7 +1024,7 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1027,7 +1054,7 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1059,7 +1086,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1083,7 +1110,7 @@ unsafe extern "C" {
     ///   information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1107,11 +1134,11 @@ unsafe extern "C" {
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ## Return value
-    /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
+    /// Returns true on successful read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1135,11 +1162,11 @@ unsafe extern "C" {
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ## Return value
-    /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
+    /// Returns true on successful read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1163,11 +1190,11 @@ unsafe extern "C" {
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ## Return value
-    /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
+    /// Returns true on successful read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1191,11 +1218,11 @@ unsafe extern "C" {
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ## Return value
-    /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
+    /// Returns true on successful read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1219,11 +1246,11 @@ unsafe extern "C" {
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ## Return value
-    /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
+    /// Returns true on successful read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1247,11 +1274,11 @@ unsafe extern "C" {
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ## Return value
-    /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
+    /// Returns true on successful read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1275,11 +1302,11 @@ unsafe extern "C" {
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ## Return value
-    /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
+    /// Returns true on successful read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1303,11 +1330,11 @@ unsafe extern "C" {
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ## Return value
-    /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
+    /// Returns true on successful read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1331,11 +1358,11 @@ unsafe extern "C" {
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ## Return value
-    /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
+    /// Returns true on successful read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1359,11 +1386,11 @@ unsafe extern "C" {
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ## Return value
-    /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
+    /// Returns true on successful read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1387,11 +1414,11 @@ unsafe extern "C" {
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ## Return value
-    /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
+    /// Returns true on successful read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1415,11 +1442,11 @@ unsafe extern "C" {
     /// - `value`: a pointer filled in with the data read.
     ///
     /// ## Return value
-    /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
+    /// Returns true on successful read or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1438,7 +1465,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1457,7 +1484,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1481,7 +1508,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1505,7 +1532,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1528,7 +1555,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1551,7 +1578,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1575,7 +1602,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1599,7 +1626,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1622,7 +1649,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1645,7 +1672,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1669,7 +1696,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1693,7 +1720,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1716,7 +1743,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1739,7 +1766,7 @@ unsafe extern "C" {
     ///   for more information.
     ///
     /// ## Thread safety
-    /// This function is not thread safe.
+    /// Do not use the same [`SDL_IOStream`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

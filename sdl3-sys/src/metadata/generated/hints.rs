@@ -178,9 +178,19 @@ pub const METADATA_SDL_HINT_AUDIO_DEVICE_STREAM_ROLE: Hint = Hint {
     short_name: "AUDIO_DEVICE_STREAM_ROLE",
     value: crate::hints::SDL_HINT_AUDIO_DEVICE_STREAM_ROLE,
     doc: Some(
-        "Specify an application role for an audio device.\n\nSome audio backends (such as Pipewire) allow you to describe the role of\nyour audio stream. Among other things, this description might show up in a\nsystem control panel or software for displaying and manipulating media\nplayback/recording graphs.\n\nThis hints lets you transmit that information to the OS. The contents of\nthis hint are used while opening an audio device. You should use a string\nthat describes your what your program is playing (Game, Music, Movie,\netc...).\n\nSetting this to \"\" or leaving it unset will have SDL use a reasonable\ndefault: \"Game\" or something similar.\n\nNote that while this talks about audio streams, this is an OS-level\nconcept, so it applies to a physical audio device in this case, and not an\n[`SDL_AudioStream`], nor an SDL logical audio device.\n\nThis hint should be set before an audio device is opened.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "Specify an application role for an audio device.\n\nSome audio backends (such as Pipewire) allow you to describe the role of\nyour audio stream. Among other things, this description might show up in a\nsystem control panel or software for displaying and manipulating media\nplayback/recording graphs.\n\nThis hints lets you transmit that information to the OS. The contents of\nthis hint are used while opening an audio device. You should use a string\nthat describes your what your program is playing (Game, Music, Movie,\netc...).\n\nSetting this to \"\" or leaving it unset will have SDL use a reasonable\ndefault: \"Game\" or something similar.\n\nNote that while this talks about audio streams, this is an OS-level\nconcept, so it applies to a physical audio device in this case, and not an\n[`SDL_AudioStream`], nor an SDL logical audio device.\n\nFor Windows WASAPI audio, the following roles are supported, and map to\n`AUDIO_STREAM_CATEGORY`:\n\n- \"Other\" (default)\n- \"Communications\" - Real-time communications, such as VOIP or chat\n- \"Game\" - Game audio\n- \"GameChat\" - Game chat audio, similar to \"Communications\" except that\nthis will not attenuate other audio streams\n- \"Movie\" - Music or sound with dialog\n- \"Media\" - Music or sound without dialog\n\nIf your application applies its own echo cancellation, gain control, and\nnoise reduction it should also set [`SDL_HINT_AUDIO_DEVICE_RAW_STREAM`].\n\nThis hint should be set before an audio device is opened.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+};
+pub const METADATA_SDL_HINT_AUDIO_DEVICE_RAW_STREAM: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_AUDIO_DEVICE_RAW_STREAM",
+    short_name: "AUDIO_DEVICE_RAW_STREAM",
+    value: crate::hints::SDL_HINT_AUDIO_DEVICE_RAW_STREAM,
+    doc: Some(
+        "Specify whether this audio device should do audio processing.\n\nSome operating systems perform echo cancellation, gain control, and noise\nreduction as needed. If your application already handles these, you can set\nthis hint to prevent the OS from doing additional audio processing.\n\nThis corresponds to the WASAPI audio option `AUDCLNT_STREAMOPTIONS_RAW`.\n\nThe variable can be set to the following values:\n\n- \"0\": audio processing can be done by the OS. (default)\n- \"1\": audio processing is done by the application.\n\nThis hint should be set before an audio device is opened.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_AUDIO_DISK_INPUT_FILE: Hint = Hint {
     module: "hints",
@@ -342,6 +352,16 @@ pub const METADATA_SDL_HINT_DISPLAY_USABLE_BOUNDS: Hint = Hint {
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
+pub const METADATA_SDL_HINT_INVALID_PARAM_CHECKS: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_INVALID_PARAM_CHECKS",
+    short_name: "INVALID_PARAM_CHECKS",
+    value: crate::hints::SDL_HINT_INVALID_PARAM_CHECKS,
+    doc: Some(
+        "Set the level of checking for invalid parameters passed to SDL functions.\n\nThe variable can be set to the following values:\n\n- \"1\": Enable fast parameter error checking, e.g. quick NULL checks, etc.\n- \"2\": Enable full parameter error checking, e.g. validating objects are\nthe correct type, etc. (default)\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
+};
 pub const METADATA_SDL_HINT_EMSCRIPTEN_ASYNCIFY: Hint = Hint {
     module: "hints",
     name: "SDL_HINT_EMSCRIPTEN_ASYNCIFY",
@@ -358,7 +378,7 @@ pub const METADATA_SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR: Hint = Hint {
     short_name: "EMSCRIPTEN_CANVAS_SELECTOR",
     value: crate::hints::SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR,
     doc: Some(
-        "Specify the CSS selector used for the \"default\" window/canvas.\n\nThis hint only applies to the emscripten platform.\n\nThe default value is \"#canvas\"\n\nThis hint should be set before creating a window.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "Specify the CSS selector used for the \"default\" window/canvas.\n\nThis hint only applies to the emscripten platform.\n\nThis hint should be set before creating a window.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
@@ -368,9 +388,19 @@ pub const METADATA_SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT: Hint = Hint {
     short_name: "EMSCRIPTEN_KEYBOARD_ELEMENT",
     value: crate::hints::SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT,
     doc: Some(
-        "Override the binding element for keyboard inputs for Emscripten builds.\n\nThis hint only applies to the emscripten platform.\n\nThe variable can be one of:\n\n- \"#window\": the javascript window object (default)\n- \"#document\": the javascript document object\n- \"#screen\": the javascript window.screen object\n- \"#canvas\": the WebGL canvas element\n- \"#none\": Don't bind anything at all\n- any other string without a leading # sign applies to the element on the\npage with that ID.\n\nThis hint should be set before creating a window.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "Override the binding element for keyboard inputs for Emscripten builds.\n\nThis hint only applies to the emscripten platform.\n\nThe variable can be one of:\n\n- \"#window\": the javascript window object\n- \"#document\": the javascript document object\n- \"#screen\": the javascript window.screen object\n- \"#canvas\": the WebGL canvas element\n- \"#none\": Don't bind anything at all\n- any other string without a leading # sign applies to the element on the\npage with that ID.\n\nThis hint should be set before creating a window.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+};
+pub const METADATA_SDL_HINT_EMSCRIPTEN_FILL_DOCUMENT: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_EMSCRIPTEN_FILL_DOCUMENT",
+    short_name: "EMSCRIPTEN_FILL_DOCUMENT",
+    value: crate::hints::SDL_HINT_EMSCRIPTEN_FILL_DOCUMENT,
+    doc: Some(
+        "Dictate that newly-created windows will fill the whole browser window.\n\nThe canvas element fills the entire document. Resize events will be\ngenerated as the browser window is resized, as that will adjust the canvas\nsize as well. The canvas will cover anything else on the page, including\nany controls provided by Emscripten in its generated HTML file. Often times\nthis is desirable for a browser-based game, but it means several things\nthat we expect of an SDL window on other platforms might not work as\nexpected, such as minimum window sizes and aspect ratios.\n\nThis hint overrides [`SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN`]\nproperties when creating an SDL window.\n\nThis hint only applies to the emscripten platform.\n\nThis hint should be set before creating a window.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_ENABLE_SCREEN_KEYBOARD: Hint = Hint {
     module: "hints",
@@ -608,7 +638,7 @@ pub const METADATA_SDL_HINT_IOS_HIDE_HOME_INDICATOR: Hint = Hint {
     short_name: "IOS_HIDE_HOME_INDICATOR",
     value: crate::hints::SDL_HINT_IOS_HIDE_HOME_INDICATOR,
     doc: Some(
-        "A variable controlling whether the home indicator bar on iPhone X should be\nhidden.\n\nThe variable can be set to the following values:\n\n- \"0\": The indicator bar is not hidden. (default for windowed applications)\n- \"1\": The indicator bar is hidden and is shown when the screen is touched\n(useful for movie playback applications).\n- \"2\": The indicator bar is dim and the first swipe makes it visible and\nthe second swipe performs the \"home\" action. (default for fullscreen\napplications)\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "A variable controlling whether the home indicator bar on iPhone X and later\nshould be hidden.\n\nThe variable can be set to the following values:\n\n- \"0\": The indicator bar is not hidden. (default for windowed applications)\n- \"1\": The indicator bar is hidden and is shown when the screen is touched\n(useful for movie playback applications).\n- \"2\": The indicator bar is dim and the first swipe makes it visible and\nthe second swipe performs the \"home\" action. (default for fullscreen\napplications)\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
@@ -932,6 +962,56 @@ pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI: Hint = Hint {
     ),
     available_since: None,
 };
+pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_LG4FF: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_JOYSTICK_HIDAPI_LG4FF",
+    short_name: "JOYSTICK_HIDAPI_LG4FF",
+    value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_LG4FF,
+    doc: Some(
+        "A variable controlling whether the HIDAPI driver for some Logitech wheels\nshould be used.\n\nThis variable can be set to the following values:\n\n- \"0\": HIDAPI driver is not used\n- \"1\": HIDAPI driver is used\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]\n",
+    ),
+    available_since: None,
+};
+pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_8BITDO: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_JOYSTICK_HIDAPI_8BITDO",
+    short_name: "JOYSTICK_HIDAPI_8BITDO",
+    value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_8BITDO,
+    doc: Some(
+        "A variable controlling whether the HIDAPI driver for 8BitDo controllers\nshould be used.\n\nThis variable can be set to the following values:\n\n\"0\" - HIDAPI driver is not used. \"1\" - HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]\n",
+    ),
+    available_since: None,
+};
+pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_SINPUT: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_JOYSTICK_HIDAPI_SINPUT",
+    short_name: "JOYSTICK_HIDAPI_SINPUT",
+    value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_SINPUT,
+    doc: Some(
+        "A variable controlling whether the HIDAPI driver for SInput controllers\nshould be used.\n\nMore info - <https://github.com/HandHeldLegend/SInput-HID>\n\nThis variable can be set to the following values:\n\n\"0\" - HIDAPI driver is not used. \"1\" - HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]\n",
+    ),
+    available_since: None,
+};
+pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_ZUIKI: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_JOYSTICK_HIDAPI_ZUIKI",
+    short_name: "JOYSTICK_HIDAPI_ZUIKI",
+    value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_ZUIKI,
+    doc: Some(
+        "A variable controlling whether the HIDAPI driver for ZUIKI controllers\nshould be used.\n\nThis variable can be set to the following values:\n\n\"0\" - HIDAPI driver is not used. \"1\" - HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]\n",
+    ),
+    available_since: None,
+};
+pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI",
+    short_name: "JOYSTICK_HIDAPI_FLYDIGI",
+    value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI,
+    doc: Some(
+        "A variable controlling whether the HIDAPI driver for Flydigi controllers\nshould be used.\n\nThis variable can be set to the following values:\n\n\"0\" - HIDAPI driver is not used. \"1\" - HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]\n",
+    ),
+    available_since: None,
+};
 pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_SWITCH: Hint = Hint {
     module: "hints",
     name: "SDL_HINT_JOYSTICK_HIDAPI_SWITCH",
@@ -961,6 +1041,16 @@ pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED: Hint = Hint {
         "A variable controlling whether the player LEDs should be lit to indicate\nwhich player is associated with a Nintendo Switch controller.\n\nThe variable can be set to the following values:\n\n- \"0\": Player LEDs are not enabled.\n- \"1\": Player LEDs are enabled. (default)\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+};
+pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_SWITCH2: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_JOYSTICK_HIDAPI_SWITCH2",
+    short_name: "JOYSTICK_HIDAPI_SWITCH2",
+    value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_SWITCH2,
+    doc: Some(
+        "A variable controlling whether the HIDAPI driver for Nintendo Switch 2\ncontrollers should be used.\n\nThe variable can be set to the following values:\n\n- \"0\": HIDAPI driver is not used.\n- \"1\": HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].\n\nThis hint should be set before initializing joysticks and gamepads.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS: Hint = Hint {
     module: "hints",
@@ -1051,6 +1141,26 @@ pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED: Hint = Hint {
         "A variable controlling whether the Home button LED should be turned on when\nan Xbox One controller is opened.\n\nThe variable can be set to the following values:\n\n- \"0\": Home button LED is turned off.\n- \"1\": Home button LED is turned on.\n\nBy default the Home button LED state is not changed. This hint can also be\nset to a floating point value between 0.0 and 1.0 which controls the\nbrightness of the Home button LED. The default brightness is 0.4.\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+};
+pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_GIP: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_JOYSTICK_HIDAPI_GIP",
+    short_name: "JOYSTICK_HIDAPI_GIP",
+    value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_GIP,
+    doc: Some(
+        "A variable controlling whether the new HIDAPI driver for wired Xbox One\n(GIP) controllers should be used.\n\nThe variable can be set to the following values:\n\n- \"0\": HIDAPI driver is not used.\n- \"1\": HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE`].\n\nThis hint should be set before initializing joysticks and gamepads.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
+};
+pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA",
+    short_name: "JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA",
+    value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA,
+    doc: Some(
+        "A variable controlling whether the new HIDAPI driver for wired Xbox One\n(GIP) controllers should reset the controller if it can't get the metadata\nfrom the controller.\n\nThe variable can be set to the following values:\n\n- \"0\": Assume this is a generic controller.\n- \"1\": Reset the controller to get metadata.\n\nBy default the controller is not reset.\n\nThis hint should be set before initializing joysticks and gamepads.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_JOYSTICK_IOKIT: Hint = Hint {
     module: "hints",
@@ -1228,7 +1338,7 @@ pub const METADATA_SDL_HINT_KEYCODE_OPTIONS: Hint = Hint {
     short_name: "KEYCODE_OPTIONS",
     value: crate::hints::SDL_HINT_KEYCODE_OPTIONS,
     doc: Some(
-        "A variable that controls keycode representation in keyboard events.\n\nThis variable is a comma separated set of options for translating keycodes\nin events:\n\n- \"none\": Keycode options are cleared, this overrides other options.\n- \"hide_numpad\": The numpad keysyms will be translated into their\nnon-numpad versions based on the current NumLock state. For example,\nSDLK_KP_4 would become SDLK_4 if [`SDL_KMOD_NUM`] is set in the event\nmodifiers, and SDLK_LEFT if it is unset.\n- \"french_numbers\": The number row on French keyboards is inverted, so\npressing the 1 key would yield the keycode SDLK_1, or '1', instead of\nSDLK_AMPERSAND, or '&'\n- \"latin_letters\": For keyboards using non-Latin letters, such as Russian\nor Thai, the letter keys generate keycodes as though it had an en_US\nlayout. e.g. pressing the key associated with [`SDL_SCANCODE_A`] on a Russian\nkeyboard would yield 'a' instead of a Cyrillic letter.\n\nThe default value for this hint is \"french_numbers,latin_letters\"\n\nSome platforms like Emscripten only provide modified keycodes and the\noptions are not used.\n\nThese options do not affect the return value of [`SDL_GetKeyFromScancode()`] or\n[`SDL_GetScancodeFromKey()`], they just apply to the keycode included in key\nevents.\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "A variable that controls keycode representation in keyboard events.\n\nThis variable is a comma separated set of options for translating keycodes\nin events:\n\n- \"none\": Keycode options are cleared, this overrides other options.\n- \"hide_numpad\": The numpad keysyms will be translated into their\nnon-numpad versions based on the current NumLock state. For example,\nSDLK_KP_4 would become SDLK_4 if [`SDL_KMOD_NUM`] is set in the event\nmodifiers, and SDLK_LEFT if it is unset.\n- \"french_numbers\": The number row on French keyboards is inverted, so\npressing the 1 key would yield the keycode SDLK_1, or '1', instead of\nSDLK_AMPERSAND, or '&'\n- \"latin_letters\": For keyboards using non-Latin letters, such as Russian\nor Thai, the letter keys generate keycodes as though it had an English\nQWERTY layout. e.g. pressing the key associated with [`SDL_SCANCODE_A`] on a\nRussian keyboard would yield 'a' instead of a Cyrillic letter.\n\nThe default value for this hint is \"french_numbers,latin_letters\"\n\nSome platforms like Emscripten only provide modified keycodes and the\noptions are not used.\n\nThese options do not affect the return value of [`SDL_GetKeyFromScancode()`] or\n[`SDL_GetScancodeFromKey()`], they just apply to the keycode included in key\nevents.\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
@@ -1252,13 +1362,23 @@ pub const METADATA_SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER: Hint = Hint {
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
+pub const METADATA_SDL_HINT_KMSDRM_ATOMIC: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_KMSDRM_ATOMIC",
+    short_name: "KMSDRM_ATOMIC",
+    value: crate::hints::SDL_HINT_KMSDRM_ATOMIC,
+    doc: Some(
+        "A variable that controls whether KMSDRM will use \"atomic\" functionality.\n\nThe KMSDRM backend can use atomic commits, if both DRM_CLIENT_CAP_ATOMIC\nand DRM_CLIENT_CAP_UNIVERSAL_PLANES is supported by the system. As of SDL\n3.4.0, it will favor this functionality, but in case this doesn't work well\non a given system or other surprises, this hint can be used to disable it.\n\nThis hint can not enable the functionality if it isn't available.\n\nThe variable can be set to the following values:\n\n- \"0\": SDL will not use the KMSDRM \"atomic\" functionality.\n- \"1\": SDL will allow usage of the KMSDRM \"atomic\" functionality. (default)\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
+};
 pub const METADATA_SDL_HINT_LOGGING: Hint = Hint {
     module: "hints",
     name: "SDL_HINT_LOGGING",
     short_name: "LOGGING",
     value: crate::hints::SDL_HINT_LOGGING,
     doc: Some(
-        "A variable controlling the default SDL log levels.\n\nThis variable is a comma separated set of category=level tokens that define\nthe default logging levels for SDL applications.\n\nThe category can be a numeric category, one of \"app\", \"error\", \"assert\",\n\"system\", \"audio\", \"video\", \"render\", \"input\", \"test\", or `*` for any\nunspecified category.\n\nThe level can be a numeric level, one of \"verbose\", \"debug\", \"info\",\n\"warn\", \"error\", \"critical\", or \"quiet\" to disable that category.\n\nYou can omit the category if you want to set the logging level for all\ncategories.\n\nIf this hint isn't set, the default log levels are equivalent to:\n\n`app=info,assert=warn,test=verbose,*=error`\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "A variable controlling the default SDL log levels.\n\nThis variable is a comma separated set of category=level tokens that define\nthe default logging levels for SDL applications.\n\nThe category can be a numeric category, one of \"app\", \"error\", \"assert\",\n\"system\", \"audio\", \"video\", \"render\", \"input\", \"test\", or `*` for any\nunspecified category.\n\nThe level can be a numeric level, one of \"verbose\", \"debug\", \"info\",\n\"warn\", \"error\", \"critical\", or \"quiet\" to disable that category.\n\nYou can omit the category if you want to set the logging level for all\ncategories.\n\nIf this hint isn't set, the default log levels are equivalent to:\n\n`app=info,assert=warn,test=verbose,*=error`\n\nIf the `DEBUG_INVOCATION` environment variable is set to \"1\", the default\nlog levels are equivalent to:\n\n`assert=warn,test=verbose,*=debug`\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
@@ -1318,7 +1438,7 @@ pub const METADATA_SDL_HINT_MAIN_CALLBACK_RATE: Hint = Hint {
     short_name: "MAIN_CALLBACK_RATE",
     value: crate::hints::SDL_HINT_MAIN_CALLBACK_RATE,
     doc: Some(
-        "Request [`SDL_AppIterate()`] be called at a specific rate.\n\nIf this is set to a number, it represents Hz, so \"60\" means try to iterate\n60 times per second. \"0\" means to iterate as fast as possible. Negative\nvalues are illegal, but reserved, in case they are useful in a future\nrevision of SDL.\n\nThere are other strings that have special meaning. If set to \"waitevent\",\n[`SDL_AppIterate`] will not be called until new event(s) have arrived (and been\nprocessed by [`SDL_AppEvent`]). This can be useful for apps that are completely\nidle except in response to input.\n\nOn some platforms, or if you are using [`SDL_main`] instead of [`SDL_AppIterate`],\nthis hint is ignored. When the hint can be used, it is allowed to be\nchanged at any time.\n\nThis defaults to 0, and specifying NULL for the hint's value will restore\nthe default.\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "Request [`SDL_AppIterate()`] be called at a specific rate.\n\nIf this is set to a number, it represents Hz, so \"60\" means try to iterate\n60 times per second. \"0\" means to iterate as fast as possible. Negative\nvalues are illegal, but reserved, in case they are useful in a future\nrevision of SDL.\n\nThere are other strings that have special meaning. If set to \"waitevent\",\n[`SDL_AppIterate`] will not be called until new event(s) have arrived (and been\nprocessed by [`SDL_AppEvent`]). This can be useful for apps that are completely\nidle except in response to input.\n\nOn some platforms, or if you are using [`SDL_main`] instead of [`SDL_AppIterate`],\nthis hint is ignored. When the hint can be used, it is allowed to be\nchanged at any time.\n\nThis defaults to 0, and specifying NULL for the hint's value will restore\nthe default.\n\nThis doesn't have to be an integer value. For example, \"59.94\" won't be\nrounded to an integer rate; the digits after the decimal are actually\nrespected.\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
@@ -1368,7 +1488,7 @@ pub const METADATA_SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE: Hint = Hint {
     short_name: "MOUSE_EMULATE_WARP_WITH_RELATIVE",
     value: crate::hints::SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE,
     doc: Some(
-        "A variable controlling whether warping a hidden mouse cursor will activate\nrelative mouse mode.\n\nWhen this hint is set, the mouse cursor is hidden, and multiple warps to\nthe window center occur within a short time period, SDL will emulate mouse\nwarps using relative mouse mode. This can provide smoother and more\nreliable mouse motion for some older games, which continuously calculate\nthe distance travelled by the mouse pointer and warp it back to the center\nof the window, rather than using relative mouse motion.\n\nNote that relative mouse mode may have different mouse acceleration\nbehavior than pointer warps.\n\nIf your application needs to repeatedly warp the hidden mouse cursor at a\nhigh-frequency for other purposes, it should disable this hint.\n\nThe variable can be set to the following values:\n\n- \"0\": Attempts to warp the mouse will always be made.\n- \"1\": Some mouse warps will be emulated by forcing relative mouse mode.\n(default)\n\nIf not set, this is automatically enabled unless an application uses\nrelative mouse mode directly.\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "A variable controlling whether warping a hidden mouse cursor will activate\nrelative mouse mode.\n\nWhen this hint is set, the mouse cursor is hidden, and multiple warps to\nthe window center occur within a short time period, SDL will emulate mouse\nwarps using relative mouse mode. This can provide smoother and more\nreliable mouse motion for some older games, which continuously calculate\nthe distance traveled by the mouse pointer and warp it back to the center\nof the window, rather than using relative mouse motion.\n\nNote that relative mouse mode may have different mouse acceleration\nbehavior than pointer warps.\n\nIf your application needs to repeatedly warp the hidden mouse cursor at a\nhigh-frequency for other purposes, it should disable this hint.\n\nThe variable can be set to the following values:\n\n- \"0\": Attempts to warp the mouse will always be made.\n- \"1\": Some mouse warps will be emulated by forcing relative mouse mode.\n(default)\n\nIf not set, this is automatically enabled unless an application uses\nrelative mouse mode directly.\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
@@ -1572,6 +1692,16 @@ pub const METADATA_SDL_HINT_RENDER_DIRECT3D11_DEBUG: Hint = Hint {
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
+pub const METADATA_SDL_HINT_RENDER_DIRECT3D11_WARP: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_RENDER_DIRECT3D11_WARP",
+    short_name: "RENDER_DIRECT3D11_WARP",
+    value: crate::hints::SDL_HINT_RENDER_DIRECT3D11_WARP,
+    doc: Some(
+        "A variable controlling whether to use the Direct3D 11 WARP software\nrasterizer.\n\nFor more information, see:\n<https://learn.microsoft.com/en-us/windows/win32/direct3darticles/directx-warp>\n\nThe variable can be set to the following values:\n\n- \"0\": Disable WARP rasterizer. (default)\n- \"1\": Enable WARP rasterizer.\n\nThis hint should be set before creating a renderer.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
+};
 pub const METADATA_SDL_HINT_RENDER_VULKAN_DEBUG: Hint = Hint {
     module: "hints",
     name: "SDL_HINT_RENDER_VULKAN_DEBUG",
@@ -1671,6 +1801,46 @@ pub const METADATA_SDL_HINT_ROG_GAMEPAD_MICE_EXCLUDED: Hint = Hint {
         "A variable containing a list of devices that are not ROG gamepad capable\nmice.\n\nThis will override [`SDL_HINT_ROG_GAMEPAD_MICE`] and the built in device list.\n\nThe format of the string is a comma separated list of USB VID/PID pairs in\nhexadecimal form, e.g.\n\n`0xAAAA/0xBBBB,0xCCCC/0xDDDD`\n\nThe variable can also take the form of \"@file\", in which case the named\nfile will be loaded and interpreted as the value of the variable.\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+};
+pub const METADATA_SDL_HINT_PS2_GS_WIDTH: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_PS2_GS_WIDTH",
+    short_name: "PS2_GS_WIDTH",
+    value: crate::hints::SDL_HINT_PS2_GS_WIDTH,
+    doc: Some(
+        "Variable controlling the width of the PS2's framebuffer in pixels\n\nBy default, this variable is \"640\"\n",
+    ),
+    available_since: None,
+};
+pub const METADATA_SDL_HINT_PS2_GS_HEIGHT: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_PS2_GS_HEIGHT",
+    short_name: "PS2_GS_HEIGHT",
+    value: crate::hints::SDL_HINT_PS2_GS_HEIGHT,
+    doc: Some(
+        "Variable controlling the height of the PS2's framebuffer in pixels\n\nBy default, this variable is \"448\"\n",
+    ),
+    available_since: None,
+};
+pub const METADATA_SDL_HINT_PS2_GS_PROGRESSIVE: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_PS2_GS_PROGRESSIVE",
+    short_name: "PS2_GS_PROGRESSIVE",
+    value: crate::hints::SDL_HINT_PS2_GS_PROGRESSIVE,
+    doc: Some(
+        "Variable controlling whether the signal is interlaced or progressive\n\n- \"0\": Image is interlaced. (default)\n- \"1\": Image is progressive\n",
+    ),
+    available_since: None,
+};
+pub const METADATA_SDL_HINT_PS2_GS_MODE: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_PS2_GS_MODE",
+    short_name: "PS2_GS_MODE",
+    value: crate::hints::SDL_HINT_PS2_GS_MODE,
+    doc: Some(
+        "Variable controlling the video mode of the console\n\n- \"\": Console-native. (default)\n- \"NTSC\": 60hz region\n- \"PAL\": 50hz region\n",
+    ),
+    available_since: None,
 };
 pub const METADATA_SDL_HINT_RPI_VIDEO_LAYER: Hint = Hint {
     module: "hints",
@@ -1871,6 +2041,26 @@ pub const METADATA_SDL_HINT_VIDEO_MAC_FULLSCREEN_MENU_VISIBILITY: Hint = Hint {
         "A variable that specifies the menu visibility when a window is fullscreen\nin Spaces on macOS.\n\nThe variable can be set to the following values:\n\n- \"0\": The menu will be hidden when the window is in a fullscreen space,\nand not accessible by moving the mouse to the top of the screen.\n- \"1\": The menu will be accessible when the window is in a fullscreen\nspace.\n- \"auto\": The menu will be hidden if fullscreen mode was toggled on\nprogrammatically via `SDL_SetWindowFullscreen()`, and accessible if\nfullscreen was entered via the \"fullscreen\" button on the window title\nbar. (default)\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+};
+pub const METADATA_SDL_HINT_VIDEO_METAL_AUTO_RESIZE_DRAWABLE: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_VIDEO_METAL_AUTO_RESIZE_DRAWABLE",
+    short_name: "VIDEO_METAL_AUTO_RESIZE_DRAWABLE",
+    value: crate::hints::SDL_HINT_VIDEO_METAL_AUTO_RESIZE_DRAWABLE,
+    doc: Some(
+        "A variable indicating whether the metal layer drawable size should be\nupdated for the [`SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED`] event on macOS.\n\nThe variable can be set to the following values:\n\n- \"0\": the metal layer drawable size will not be updated on the\n[`SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED`] event.\n- \"1\": the metal layer drawable size will be updated on the\n[`SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED`] event. (default)\n\nThis hint should be set before [`SDL_Metal_CreateView`] called.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
+};
+pub const METADATA_SDL_HINT_VIDEO_MATCH_EXCLUSIVE_MODE_ON_MOVE: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_VIDEO_MATCH_EXCLUSIVE_MODE_ON_MOVE",
+    short_name: "VIDEO_MATCH_EXCLUSIVE_MODE_ON_MOVE",
+    value: crate::hints::SDL_HINT_VIDEO_MATCH_EXCLUSIVE_MODE_ON_MOVE,
+    doc: Some(
+        "A variable controlling whether SDL will attempt to automatically set the\ndestination display to a mode most closely matching that of the previous\ndisplay if an exclusive fullscreen window is moved onto it.\n\nThe variable can be set to the following values:\n\n- \"0\": SDL will not attempt to automatically set a matching mode on the\ndestination display. If an exclusive fullscreen window is moved to a new\ndisplay, the window will become fullscreen desktop.\n- \"1\": SDL will attempt to automatically set a mode on the destination\ndisplay that most closely matches the mode of the display that the\nexclusive fullscreen window was previously on. (default)\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS: Hint = Hint {
     module: "hints",
@@ -2248,7 +2438,7 @@ pub const METADATA_SDL_HINT_WINDOWS_GAMEINPUT: Hint = Hint {
     short_name: "WINDOWS_GAMEINPUT",
     value: crate::hints::SDL_HINT_WINDOWS_GAMEINPUT,
     doc: Some(
-        "A variable controlling whether GameInput is used for raw keyboard and mouse\non Windows.\n\nThe variable can be set to the following values:\n\n- \"0\": GameInput is not used for raw keyboard and mouse events.\n- \"1\": GameInput is used for raw keyboard and mouse events, if available.\n(default)\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "A variable controlling whether GameInput is used for raw keyboard and mouse\non Windows.\n\nThe variable can be set to the following values:\n\n- \"0\": GameInput is not used for raw keyboard and mouse events. (default)\n- \"1\": GameInput is used for raw keyboard and mouse events, if available.\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };

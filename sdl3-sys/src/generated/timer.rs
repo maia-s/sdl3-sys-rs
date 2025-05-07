@@ -7,7 +7,7 @@
 //! This category covers measuring time elapsed ([`SDL_GetTicks()`],
 //! [`SDL_GetPerformanceCounter()`]), putting a thread to sleep for a certain
 //! amount of time ([`SDL_Delay()`], [`SDL_DelayNS()`], [`SDL_DelayPrecise()`]), and firing
-//! a callback function after a certain amount of time has elasped
+//! a callback function after a certain amount of time has elapsed
 //! ([`SDL_AddTimer()`], etc).
 //!
 //! There are also useful macros to convert between time units, like
@@ -181,17 +181,22 @@ pub const fn SDL_NS_TO_US(NS: Uint64) -> Uint64 {
 }
 
 unsafe extern "C" {
-    /// Get the number of milliseconds since SDL library initialization.
+    /// Get the number of milliseconds that have elapsed since the SDL library
+    /// initialization.
     ///
     /// ## Return value
-    /// Returns an unsigned 64-bit value representing the number of milliseconds
-    ///   since the SDL library initialized.
+    /// Returns an unsigned 64‑bit integer that represents the number of
+    ///   milliseconds that have elapsed since the SDL library was
+    ///   initialized (typically via a call to [`SDL_Init`]).
     ///
     /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_GetTicksNS`]
     pub fn SDL_GetTicks() -> Uint64;
 }
 

@@ -56,6 +56,9 @@ unsafe extern "C" {
     ///   doesn't implement this functionality, call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -103,6 +106,12 @@ unsafe extern "C" {
     /// - ...only use letters, numbers, and spaces. Avoid punctuation like "Game
     ///   Name 2: Bad Guy's Revenge!" ... "Game Name 2" is sufficient.
     ///
+    /// Due to historical mistakes, `org` is allowed to be NULL or "". In such
+    /// cases, SDL will omit the org subdirectory, including on platforms where it
+    /// shouldn't, and including on platforms where this would make your app fail
+    /// certification for an app store. New apps should definitely specify a real
+    /// string for `org`.
+    ///
     /// The returned path is guaranteed to end with a path separator ('\\' on
     /// Windows, '/' on most other platforms).
     ///
@@ -115,6 +124,9 @@ unsafe extern "C" {
     ///   notation. NULL if there's a problem (creating directory failed,
     ///   etc.). This should be freed with [`SDL_free()`] when it is no longer
     ///   needed.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -301,6 +313,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns either a null-terminated C string containing the full path to the
     ///   folder, or NULL if an error happened.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -567,6 +582,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_CreateDirectory(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
@@ -704,6 +722,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_EnumerateDirectory(
@@ -726,6 +747,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_RemovePath(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
@@ -734,7 +758,7 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Rename a file or directory.
     ///
-    /// If the file at `newpath` already exists, it will replaced.
+    /// If the file at `newpath` already exists, it will be replaced.
     ///
     /// Note that this will not copy files across filesystems/drives/volumes, as
     /// that is a much more complicated (and possibly time-consuming) operation.
@@ -752,6 +776,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -800,6 +827,11 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread, but this
+    ///   operation is not atomic, so the app might need to protect
+    ///   access to specific paths from other threads if appropriate.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_CopyFile(
@@ -820,6 +852,9 @@ unsafe extern "C" {
     /// Returns true on success or false if the file doesn't exist, or another
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPathInfo(
@@ -832,10 +867,10 @@ unsafe extern "C" {
     /// Enumerate a directory tree, filtered by pattern, and return a list.
     ///
     /// Files are filtered out if they don't match the string in `pattern`, which
-    /// may contain wildcard characters '\*' (match everything) and '?' (match one
+    /// may contain wildcard characters `*` (match everything) and `?` (match one
     /// character). If pattern is NULL, no filtering is done and all results are
     /// returned. Subdirectories are permitted, and are specified with a path
-    /// separator of '/'. Wildcard characters '\*' and '?' never match a path
+    /// separator of `/`. Wildcard characters `*` and `?` never match a path
     /// separator.
     ///
     /// `flags` may be set to [`SDL_GLOB_CASEINSENSITIVE`] to make the pattern matching
@@ -888,6 +923,9 @@ unsafe extern "C" {
     /// Returns a UTF-8 string of the current working directory in
     ///   platform-dependent notation. NULL if there's a problem. This
     ///   should be freed with [`SDL_free()`] when it is no longer needed.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

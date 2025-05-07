@@ -2,6 +2,15 @@
 
 use super::*;
 
+pub const METADATA_SDL_PROP_HIDAPI_LIBUSB_DEVICE_HANDLE_POINTER: Property = Property {
+    module: "hidapi",
+    name: "SDL_PROP_HIDAPI_LIBUSB_DEVICE_HANDLE_POINTER",
+    short_name: "HIDAPI_LIBUSB_DEVICE_HANDLE_POINTER",
+    value: crate::hidapi::SDL_PROP_HIDAPI_LIBUSB_DEVICE_HANDLE_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_hid_bus_type: Group = Group {
     module: "hidapi",
     kind: GroupKind::Enum,

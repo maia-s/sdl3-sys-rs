@@ -126,10 +126,12 @@ unsafe extern "C" {
     ///   it will be invoked.
     /// - `window`: the window that the dialog should be modal for, may be NULL.
     ///   Not all platforms support this option.
-    /// - `filters`: a list of filters, may be NULL. Not all platforms support
-    ///   this option, and platforms that do support it may allow the
-    ///   user to ignore the filters. If non-NULL, it must remain
-    ///   valid at least until the callback is invoked.
+    /// - `filters`: a list of filters, may be NULL. See the
+    ///   [`SDL_DialogFileFilter` documentation for
+    ///   examples](SDL_DialogFileFilter#code-examples). Not all
+    ///   platforms support this option, and platforms that do support
+    ///   it may allow the user to ignore the filters. If non-NULL, it
+    ///   must remain valid at least until the callback is invoked.
     /// - `nfilters`: the number of filters. Ignored if filters is NULL.
     /// - `default_location`: the default folder or file to start the dialog at,
     ///   may be NULL. Not all platforms support this option.

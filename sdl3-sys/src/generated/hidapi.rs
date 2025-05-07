@@ -27,6 +27,8 @@ use super::stdinc::*;
 
 use super::error::*;
 
+use super::properties::*;
+
 /// HID underlying bus types.
 ///
 /// ## Availability
@@ -342,6 +344,29 @@ unsafe extern "C" {
     /// This function is available since SDL 3.2.0.
     pub fn SDL_hid_open_path(path: *const ::core::ffi::c_char) -> *mut SDL_hid_device;
 }
+
+unsafe extern "C" {
+    /// Get the properties associated with an [`SDL_hid_device`].
+    ///
+    /// The following read-only properties are provided by SDL:
+    ///
+    /// - [`SDL_PROP_HIDAPI_LIBUSB_DEVICE_HANDLE_POINTER`]\: the libusb_device_handle
+    ///   associated with the device, if it was opened using libusb.
+    ///
+    /// ## Parameters
+    /// - `dev`: a device handle returned from [`SDL_hid_open()`].
+    ///
+    /// ## Return value
+    /// Returns a valid property ID on success or 0 on failure; call
+    ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    pub fn SDL_hid_get_properties(dev: *mut SDL_hid_device) -> SDL_PropertiesID;
+}
+
+pub const SDL_PROP_HIDAPI_LIBUSB_DEVICE_HANDLE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.hidapi.libusb.device.handle".as_ptr();
 
 unsafe extern "C" {
     /// Write an Output report to a HID device.

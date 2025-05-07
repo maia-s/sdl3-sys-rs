@@ -15,9 +15,9 @@
 //! may also be stretched with linear interpolation.
 //!
 //! This API is designed to accelerate simple 2D operations. You may want more
-//! functionality such as polygons and particle effects and in that case you
-//! should use SDL's OpenGL/Direct3D support, the SDL3 GPU API, or one of the
-//! many good 3D engines.
+//! functionality such as 3D polygons and particle effects, and in that case
+//! you should use SDL's OpenGL/Direct3D support, the SDL3 GPU API, or one of
+//! the many good 3D engines.
 //!
 //! These functions must be called from the main thread. See this bug for
 //! details: <https://github.com/libsdl-org/SDL/issues/986>
@@ -40,11 +40,19 @@ use super::surface::*;
 
 use super::video::*;
 
+use super::gpu::*;
+
 /// The name of the software renderer.
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub const SDL_SOFTWARE_RENDERER: *const ::core::ffi::c_char = c"software".as_ptr();
+
+/// The name of the GPU renderer.
+///
+/// ## Availability
+/// This macro is available since SDL 3.4.0.
+pub const SDL_GPU_RENDERER: *const ::core::ffi::c_char = c"gpu".as_ptr();
 
 /// Vertex structure.
 ///
@@ -134,6 +142,88 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_TextureAccess {
         &crate::metadata::render::METADATA_SDL_TextureAccess;
 }
 
+/// The addressing mode for a texture when used in [`SDL_RenderGeometry()`].
+///
+/// This affects how texture coordinates are interpreted outside of \[0, 1\]
+///
+/// Texture wrapping is always supported for power of two texture sizes, and is
+/// supported for other texture sizes if
+/// [`SDL_PROP_RENDERER_TEXTURE_WRAPPING_BOOLEAN`] is set to true.
+///
+/// ## Availability
+/// This enum is available since SDL 3.4.0.
+///
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`INVALID`](SDL_TextureAddressMode::INVALID) | [`SDL_TEXTURE_ADDRESS_INVALID`] | |
+/// | [`AUTO`](SDL_TextureAddressMode::AUTO) | [`SDL_TEXTURE_ADDRESS_AUTO`] | Wrapping is enabled if texture coordinates are outside \[0, 1\], this is the default |
+/// | [`CLAMP`](SDL_TextureAddressMode::CLAMP) | [`SDL_TEXTURE_ADDRESS_CLAMP`] | Texture coordinates are clamped to the \[0, 1\] range |
+/// | [`WRAP`](SDL_TextureAddressMode::WRAP) | [`SDL_TEXTURE_ADDRESS_WRAP`] | The texture is repeated (tiled) |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SDL_TextureAddressMode(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_TextureAddressMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_TextureAddressMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_TextureAddressMode) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_TextureAddressMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_TextureAddressMode) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_TextureAddressMode {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_TEXTURE_ADDRESS_INVALID",
+            Self::AUTO => "SDL_TEXTURE_ADDRESS_AUTO",
+            Self::CLAMP => "SDL_TEXTURE_ADDRESS_CLAMP",
+            Self::WRAP => "SDL_TEXTURE_ADDRESS_WRAP",
+
+            _ => return write!(f, "SDL_TextureAddressMode({})", self.0),
+        })
+    }
+}
+
+impl SDL_TextureAddressMode {
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
+    /// Wrapping is enabled if texture coordinates are outside \[0, 1\], this is the default
+    pub const AUTO: Self = Self((0_i32 as ::core::ffi::c_int));
+    /// Texture coordinates are clamped to the \[0, 1\] range
+    pub const CLAMP: Self = Self((1_i32 as ::core::ffi::c_int));
+    /// The texture is repeated (tiled)
+    pub const WRAP: Self = Self((2_i32 as ::core::ffi::c_int));
+}
+
+pub const SDL_TEXTURE_ADDRESS_INVALID: SDL_TextureAddressMode = SDL_TextureAddressMode::INVALID;
+/// Wrapping is enabled if texture coordinates are outside \[0, 1\], this is the default
+pub const SDL_TEXTURE_ADDRESS_AUTO: SDL_TextureAddressMode = SDL_TextureAddressMode::AUTO;
+/// Texture coordinates are clamped to the \[0, 1\] range
+pub const SDL_TEXTURE_ADDRESS_CLAMP: SDL_TextureAddressMode = SDL_TextureAddressMode::CLAMP;
+/// The texture is repeated (tiled)
+pub const SDL_TEXTURE_ADDRESS_WRAP: SDL_TextureAddressMode = SDL_TextureAddressMode::WRAP;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::GroupMetadata for SDL_TextureAddressMode {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::render::METADATA_SDL_TextureAddressMode;
+}
+
 /// How the logical size is mapped to the output.
 ///
 /// ## Availability
@@ -144,7 +234,7 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_TextureAccess {
 /// | ------------------- | --------------- | ----------- |
 /// | [`DISABLED`](SDL_RendererLogicalPresentation::DISABLED) | [`SDL_LOGICAL_PRESENTATION_DISABLED`] | There is no logical size in effect |
 /// | [`STRETCH`](SDL_RendererLogicalPresentation::STRETCH) | [`SDL_LOGICAL_PRESENTATION_STRETCH`] | The rendered content is stretched to the output resolution |
-/// | [`LETTERBOX`](SDL_RendererLogicalPresentation::LETTERBOX) | [`SDL_LOGICAL_PRESENTATION_LETTERBOX`] | The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars |
+/// | [`LETTERBOX`](SDL_RendererLogicalPresentation::LETTERBOX) | [`SDL_LOGICAL_PRESENTATION_LETTERBOX`] | The rendered content is fit to the largest dimension and the other dimension is letterboxed with the clear color |
 /// | [`OVERSCAN`](SDL_RendererLogicalPresentation::OVERSCAN) | [`SDL_LOGICAL_PRESENTATION_OVERSCAN`] | The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds |
 /// | [`INTEGER_SCALE`](SDL_RendererLogicalPresentation::INTEGER_SCALE) | [`SDL_LOGICAL_PRESENTATION_INTEGER_SCALE`] | The rendered content is scaled up by integer multiples to fit the output resolution |
 #[repr(transparent)]
@@ -193,7 +283,7 @@ impl SDL_RendererLogicalPresentation {
     pub const DISABLED: Self = Self((0 as ::core::ffi::c_int));
     /// The rendered content is stretched to the output resolution
     pub const STRETCH: Self = Self((1 as ::core::ffi::c_int));
-    /// The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars
+    /// The rendered content is fit to the largest dimension and the other dimension is letterboxed with the clear color
     pub const LETTERBOX: Self = Self((2 as ::core::ffi::c_int));
     /// The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds
     pub const OVERSCAN: Self = Self((3 as ::core::ffi::c_int));
@@ -207,7 +297,7 @@ pub const SDL_LOGICAL_PRESENTATION_DISABLED: SDL_RendererLogicalPresentation =
 /// The rendered content is stretched to the output resolution
 pub const SDL_LOGICAL_PRESENTATION_STRETCH: SDL_RendererLogicalPresentation =
     SDL_RendererLogicalPresentation::STRETCH;
-/// The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars
+/// The rendered content is fit to the largest dimension and the other dimension is letterboxed with the clear color
 pub const SDL_LOGICAL_PRESENTATION_LETTERBOX: SDL_RendererLogicalPresentation =
     SDL_RendererLogicalPresentation::LETTERBOX;
 /// The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds
@@ -403,6 +493,17 @@ unsafe extern "C" {
     ///   present synchronized with the refresh rate. This property can take any
     ///   value that is supported by [`SDL_SetRenderVSync()`] for the renderer.
     ///
+    /// With the SDL GPU renderer (since SDL 3.4.0):
+    ///
+    /// - [`SDL_PROP_RENDERER_CREATE_GPU_DEVICE_POINTER`]\: the device to use with the
+    ///   renderer, optional.
+    /// - [`SDL_PROP_RENDERER_CREATE_GPU_SHADERS_SPIRV_BOOLEAN`]\: the app is able to
+    ///   provide SPIR-V shaders to [`SDL_GPURenderState`], optional.
+    /// - [`SDL_PROP_RENDERER_CREATE_GPU_SHADERS_DXIL_BOOLEAN`]\: the app is able to
+    ///   provide DXIL shaders to [`SDL_GPURenderState`], optional.
+    /// - [`SDL_PROP_RENDERER_CREATE_GPU_SHADERS_MSL_BOOLEAN`]\: the app is able to
+    ///   provide MSL shaders to [`SDL_GPURenderState`], optional.
+    ///
     /// With the vulkan renderer:
     ///
     /// - [`SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER`]\: the VkInstance to use
@@ -455,6 +556,18 @@ pub const SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER: *const ::core::ffi:
 pub const SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER: *const ::core::ffi::c_char =
     c"SDL.renderer.create.present_vsync".as_ptr();
 
+pub const SDL_PROP_RENDERER_CREATE_GPU_DEVICE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.gpu.device".as_ptr();
+
+pub const SDL_PROP_RENDERER_CREATE_GPU_SHADERS_SPIRV_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.gpu.shaders_spirv".as_ptr();
+
+pub const SDL_PROP_RENDERER_CREATE_GPU_SHADERS_DXIL_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.gpu.shaders_dxil".as_ptr();
+
+pub const SDL_PROP_RENDERER_CREATE_GPU_SHADERS_MSL_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.renderer.create.gpu.shaders_msl".as_ptr();
+
 pub const SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER: *const ::core::ffi::c_char =
     c"SDL.renderer.create.vulkan.instance".as_ptr();
 
@@ -474,6 +587,67 @@ pub const SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER:
     *const ::core::ffi::c_char = c"SDL.renderer.create.vulkan.present_queue_family_index".as_ptr();
 
 unsafe extern "C" {
+    /// Create a 2D GPU rendering context.
+    ///
+    /// The GPU device to use is passed in as a parameter. If this is NULL, then a
+    /// device will be created normally and can be retrieved using
+    /// [`SDL_GetGPURendererDevice()`].
+    ///
+    /// The window to use is passed in as a parameter. If this is NULL, then this
+    /// will become an offscreen renderer. In that case, you should call
+    /// [`SDL_SetRenderTarget()`] to setup rendering to a texture, and then call
+    /// [`SDL_RenderPresent()`] normally to complete drawing a frame.
+    ///
+    /// ## Parameters
+    /// - `device`: the GPU device to use with the renderer, or NULL to create a
+    ///   device.
+    /// - `window`: the window where rendering is displayed, or NULL to create an
+    ///   offscreen renderer.
+    ///
+    /// ## Return value
+    /// Returns a valid rendering context or NULL if there was an error; call
+    ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// If this function is called with a valid GPU device, it should
+    ///   be called on the thread that created the device. If this
+    ///   function is called with a valid window, it should be called
+    ///   on the thread that created the window.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_CreateRendererWithProperties`]
+    /// - [`SDL_GetGPURendererDevice`]
+    /// - [`SDL_CreateGPUShader`]
+    /// - [`SDL_CreateGPURenderState`]
+    /// - [`SDL_SetGPURenderState`]
+    pub fn SDL_CreateGPURenderer(
+        device: *mut SDL_GPUDevice,
+        window: *mut SDL_Window,
+    ) -> *mut SDL_Renderer;
+}
+
+unsafe extern "C" {
+    /// Return the GPU device used by a renderer.
+    ///
+    /// ## Parameters
+    /// - `renderer`: the rendering context.
+    ///
+    /// ## Return value
+    /// Returns the GPU device used by the renderer, or NULL if the renderer is
+    ///   not a GPU renderer; call [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    pub fn SDL_GetGPURendererDevice(renderer: *mut SDL_Renderer) -> *mut SDL_GPUDevice;
+}
+
+unsafe extern "C" {
     /// Create a 2D software rendering context for a surface.
     ///
     /// Two other API which can be used to create [`SDL_Renderer`]\:
@@ -490,7 +664,7 @@ unsafe extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ## Thread safety
-    /// This function should only be called on the main thread.
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -574,6 +748,8 @@ unsafe extern "C" {
     /// - [`SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER`]\: a (const [`SDL_PixelFormat`] *)
     ///   array of pixel formats, terminated with [`SDL_PIXELFORMAT_UNKNOWN`],
     ///   representing the available texture formats for this renderer.
+    /// - [`SDL_PROP_RENDERER_TEXTURE_WRAPPING_BOOLEAN`]\: true if the renderer
+    ///   supports [`SDL_TEXTURE_ADDRESS_WRAP`] on non-power-of-two textures.
     /// - [`SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER`]\: an [`SDL_Colorspace`] value
     ///   describing the colorspace for output to the display, defaults to
     ///   [`SDL_COLORSPACE_SRGB`].
@@ -665,6 +841,9 @@ pub const SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER: *const ::core::ffi::c_char 
 
 pub const SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER: *const ::core::ffi::c_char =
     c"SDL.renderer.texture_formats".as_ptr();
+
+pub const SDL_PROP_RENDERER_TEXTURE_WRAPPING_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.renderer.texture_wrapping".as_ptr();
 
 pub const SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER: *const ::core::ffi::c_char =
     c"SDL.renderer.output_colorspace".as_ptr();
@@ -878,6 +1057,9 @@ unsafe extern "C" {
     ///   pixels, required
     /// - [`SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER`]\: the height of the texture in
     ///   pixels, required
+    /// - [`SDL_PROP_TEXTURE_CREATE_PALETTE_POINTER`]\: an [`SDL_Palette`] to use with
+    ///   palettized texture formats. This can be set later with
+    ///   [`SDL_SetTexturePalette()`]
     /// - [`SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT`]\: for HDR10 and floating
     ///   point textures, this defines the value of 100% diffuse white, with higher
     ///   values being displayed in the High Dynamic Range headroom. This defaults
@@ -954,6 +1136,20 @@ unsafe extern "C" {
     ///   VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL associated with the texture, if
     ///   you want to wrap an existing texture.
     ///
+    /// With the GPU renderer:
+    ///
+    /// - [`SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_POINTER`]\: the [`SDL_GPUTexture`]
+    ///   associated with the texture, if you want to wrap an existing texture.
+    /// - [`SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_UV_NUMBER`]\: the [`SDL_GPUTexture`]
+    ///   associated with the UV plane of an NV12 texture, if you want to wrap an
+    ///   existing texture.
+    /// - [`SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_U_NUMBER`]\: the [`SDL_GPUTexture`]
+    ///   associated with the U plane of a YUV texture, if you want to wrap an
+    ///   existing texture.
+    /// - [`SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_V_NUMBER`]\: the [`SDL_GPUTexture`]
+    ///   associated with the V plane of a YUV texture, if you want to wrap an
+    ///   existing texture.
+    ///
     /// ## Parameters
     /// - `renderer`: the rendering context.
     /// - `props`: the properties to use.
@@ -995,6 +1191,9 @@ pub const SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER: *const ::core::ffi::c_char =
 
 pub const SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER: *const ::core::ffi::c_char =
     c"SDL.texture.create.height".as_ptr();
+
+pub const SDL_PROP_TEXTURE_CREATE_PALETTE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.palette".as_ptr();
 
 pub const SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT: *const ::core::ffi::c_char =
     c"SDL.texture.create.SDR_white_point".as_ptr();
@@ -1049,6 +1248,18 @@ pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER: *const ::core::ffi
 
 pub const SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER: *const ::core::ffi::c_char =
     c"SDL.texture.create.vulkan.texture".as_ptr();
+
+pub const SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.gpu.texture".as_ptr();
+
+pub const SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_UV_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.gpu.texture_uv".as_ptr();
+
+pub const SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_U_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.gpu.texture_u".as_ptr();
+
+pub const SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_V_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.gpu.texture_v".as_ptr();
 
 unsafe extern "C" {
     /// Get the properties associated with a texture.
@@ -1127,6 +1338,17 @@ unsafe extern "C" {
     ///   associated with the V plane of a YUV texture
     /// - [`SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER`]\: the GLenum for the
     ///   texture target (`GL_TEXTURE_2D`, `GL_TEXTURE_EXTERNAL_OES`, etc)
+    ///
+    /// With the gpu renderer:
+    ///
+    /// - [`SDL_PROP_TEXTURE_GPU_TEXTURE_POINTER`]\: the [`SDL_GPUTexture`] associated
+    ///   with the texture
+    /// - [`SDL_PROP_TEXTURE_GPU_TEXTURE_UV_POINTER`]\: the [`SDL_GPUTexture`] associated
+    ///   with the UV plane of an NV12 texture
+    /// - [`SDL_PROP_TEXTURE_GPU_TEXTURE_U_POINTER`]\: the [`SDL_GPUTexture`] associated
+    ///   with the U plane of a YUV texture
+    /// - [`SDL_PROP_TEXTURE_GPU_TEXTURE_V_POINTER`]\: the [`SDL_GPUTexture`] associated
+    ///   with the V plane of a YUV texture
     ///
     /// ## Parameters
     /// - `texture`: the texture to query.
@@ -1220,6 +1442,18 @@ pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER: *const ::core::ffi::
 pub const SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER: *const ::core::ffi::c_char =
     c"SDL.texture.vulkan.texture".as_ptr();
 
+pub const SDL_PROP_TEXTURE_GPU_TEXTURE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.gpu.texture".as_ptr();
+
+pub const SDL_PROP_TEXTURE_GPU_TEXTURE_UV_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.gpu.texture_uv".as_ptr();
+
+pub const SDL_PROP_TEXTURE_GPU_TEXTURE_U_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.gpu.texture_u".as_ptr();
+
+pub const SDL_PROP_TEXTURE_GPU_TEXTURE_V_POINTER: *const ::core::ffi::c_char =
+    c"SDL.texture.gpu.texture_v".as_ptr();
+
 unsafe extern "C" {
     /// Get the renderer that created an [`SDL_Texture`].
     ///
@@ -1262,6 +1496,58 @@ unsafe extern "C" {
         w: *mut ::core::ffi::c_float,
         h: *mut ::core::ffi::c_float,
     ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Set the palette used by a texture.
+    ///
+    /// Setting the palette keeps an internal reference to the palette, which can
+    /// be safely destroyed afterwards.
+    ///
+    /// A single palette can be shared with many textures.
+    ///
+    /// ## Parameters
+    /// - `texture`: the texture to update.
+    /// - `palette`: the [`SDL_Palette`] structure to use.
+    ///
+    /// ## Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_CreatePalette`]
+    /// - [`SDL_GetTexturePalette`]
+    pub fn SDL_SetTexturePalette(
+        texture: *mut SDL_Texture,
+        palette: *mut SDL_Palette,
+    ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Get the palette used by a texture.
+    ///
+    /// ## Parameters
+    /// - `texture`: the texture to query.
+    ///
+    /// ## Return value
+    /// Returns a pointer to the palette used by the texture, or NULL if there is
+    ///   no palette used.
+    ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_SetTexturePalette`]
+    pub fn SDL_GetTexturePalette(texture: *mut SDL_Texture) -> *mut SDL_Palette;
 }
 
 unsafe extern "C" {
@@ -1970,14 +2256,6 @@ unsafe extern "C" {
     /// specific dimensions but to make fonts look sharp, the app turns off logical
     /// presentation while drawing text, for example.
     ///
-    /// For the renderer's window, letterboxing is drawn into the framebuffer if
-    /// logical presentation is enabled during [`SDL_RenderPresent`]; be sure to
-    /// reenable it before presenting if you were toggling it, otherwise the
-    /// letterbox areas might have artifacts from previous frames (or artifacts
-    /// from external overlays, etc). Letterboxing is never drawn into texture
-    /// render targets; be sure to call [`SDL_RenderClear()`] before drawing into the
-    /// texture so the letterboxing areas are cleared, if appropriate.
-    ///
     /// You can convert coordinates in an event into rendering coordinates using
     /// [`SDL_ConvertEventToRenderCoordinates()`].
     ///
@@ -2013,16 +2291,17 @@ unsafe extern "C" {
     /// Get device independent resolution and presentation mode for rendering.
     ///
     /// This function gets the width and height of the logical rendering output, or
-    /// the output size in pixels if a logical resolution is not enabled.
+    /// 0 if a logical resolution is not enabled.
     ///
     /// Each render target has its own logical presentation state. This function
     /// gets the state for the current render target.
     ///
     /// ## Parameters
     /// - `renderer`: the rendering context.
-    /// - `w`: an int to be filled with the width.
-    /// - `h`: an int to be filled with the height.
-    /// - `mode`: the presentation mode used.
+    /// - `w`: an int filled with the logical presentation width.
+    /// - `h`: an int filled with the logical presentation height.
+    /// - `mode`: a variable filled with the logical presentation mode being
+    ///   used.
     ///
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
@@ -3176,6 +3455,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_RenderTexture`]
+    /// - [`SDL_RenderTexture9GridTiled`]
     pub fn SDL_RenderTexture9Grid(
         renderer: *mut SDL_Renderer,
         texture: *mut SDL_Texture,
@@ -3186,6 +3466,61 @@ unsafe extern "C" {
         bottom_height: ::core::ffi::c_float,
         scale: ::core::ffi::c_float,
         dstrect: *const SDL_FRect,
+    ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Perform a scaled copy using the 9-grid algorithm to the current rendering
+    /// target at subpixel precision.
+    ///
+    /// The pixels in the texture are split into a 3x3 grid, using the different
+    /// corner sizes for each corner, and the sides and center making up the
+    /// remaining pixels. The corners are then scaled using `scale` and fit into
+    /// the corners of the destination rectangle. The sides and center are then
+    /// tiled into place to cover the remaining destination rectangle.
+    ///
+    /// ## Parameters
+    /// - `renderer`: the renderer which should copy parts of a texture.
+    /// - `texture`: the source texture.
+    /// - `srcrect`: the [`SDL_Rect`] structure representing the rectangle to be used
+    ///   for the 9-grid, or NULL to use the entire texture.
+    /// - `left_width`: the width, in pixels, of the left corners in `srcrect`.
+    /// - `right_width`: the width, in pixels, of the right corners in `srcrect`.
+    /// - `top_height`: the height, in pixels, of the top corners in `srcrect`.
+    /// - `bottom_height`: the height, in pixels, of the bottom corners in
+    ///   `srcrect`.
+    /// - `scale`: the scale used to transform the corner of `srcrect` into the
+    ///   corner of `dstrect`, or 0.0f for an unscaled copy.
+    /// - `dstrect`: a pointer to the destination rectangle, or NULL for the
+    ///   entire rendering target.
+    /// - `tileScale`: the scale used to transform the borders and center of
+    ///   `srcrect` into the borders and middle of `dstrect`, or
+    ///   1.0f for an unscaled copy.
+    ///
+    /// ## Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_RenderTexture`]
+    /// - [`SDL_RenderTexture9Grid`]
+    pub fn SDL_RenderTexture9GridTiled(
+        renderer: *mut SDL_Renderer,
+        texture: *mut SDL_Texture,
+        srcrect: *const SDL_FRect,
+        left_width: ::core::ffi::c_float,
+        right_width: ::core::ffi::c_float,
+        top_height: ::core::ffi::c_float,
+        bottom_height: ::core::ffi::c_float,
+        scale: ::core::ffi::c_float,
+        dstrect: *const SDL_FRect,
+        tileScale: ::core::ffi::c_float,
     ) -> ::core::primitive::bool;
 }
 
@@ -3216,6 +3551,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_RenderGeometryRaw`]
+    /// - [`SDL_SetRenderTextureAddressMode`]
     pub fn SDL_RenderGeometry(
         renderer: *mut SDL_Renderer,
         texture: *mut SDL_Texture,
@@ -3258,6 +3594,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_RenderGeometry`]
+    /// - [`SDL_SetRenderTextureAddressMode`]
     pub fn SDL_RenderGeometryRaw(
         renderer: *mut SDL_Renderer,
         texture: *mut SDL_Texture,
@@ -3271,6 +3608,62 @@ unsafe extern "C" {
         indices: *const ::core::ffi::c_void,
         num_indices: ::core::ffi::c_int,
         size_indices: ::core::ffi::c_int,
+    ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Set the texture addressing mode used in [`SDL_RenderGeometry()`].
+    ///
+    /// ## Parameters
+    /// - `renderer`: the rendering context.
+    /// - `u_mode`: the [`SDL_TextureAddressMode`] to use for horizontal texture
+    ///   coordinates in [`SDL_RenderGeometry()`].
+    /// - `v_mode`: the [`SDL_TextureAddressMode`] to use for vertical texture
+    ///   coordinates in [`SDL_RenderGeometry()`].
+    ///
+    /// ## Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_RenderGeometry`]
+    /// - [`SDL_RenderGeometryRaw`]
+    /// - [`SDL_GetRenderTextureAddressMode`]
+    pub fn SDL_SetRenderTextureAddressMode(
+        renderer: *mut SDL_Renderer,
+        u_mode: SDL_TextureAddressMode,
+        v_mode: SDL_TextureAddressMode,
+    ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Get the texture addressing mode used in [`SDL_RenderGeometry()`].
+    ///
+    /// ## Parameters
+    /// - `renderer`: the rendering context.
+    /// - `u_mode`: a pointer filled in with the [`SDL_TextureAddressMode`] to use
+    ///   for horizontal texture coordinates in [`SDL_RenderGeometry()`],
+    ///   may be NULL.
+    /// - `v_mode`: a pointer filled in with the [`SDL_TextureAddressMode`] to use
+    ///   for vertical texture coordinates in [`SDL_RenderGeometry()`], may
+    ///   be NULL.
+    ///
+    /// ## Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_SetRenderTextureAddressMode`]
+    pub fn SDL_GetRenderTextureAddressMode(
+        renderer: *mut SDL_Renderer,
+        u_mode: *mut SDL_TextureAddressMode,
+        v_mode: *mut SDL_TextureAddressMode,
     ) -> ::core::primitive::bool;
 }
 
@@ -3333,8 +3726,7 @@ unsafe extern "C" {
     /// should not be done; you are only required to change back the rendering
     /// target to default via `SDL_SetRenderTarget(renderer, NULL)` afterwards, as
     /// textures by themselves do not have a concept of backbuffers. Calling
-    /// [`SDL_RenderPresent`] while rendering to a texture will still update the screen
-    /// with any current drawing that has been done _to the window itself_.
+    /// [`SDL_RenderPresent`] while rendering to a texture will fail.
     ///
     /// ## Parameters
     /// - `renderer`: the rendering context.
@@ -3624,8 +4016,8 @@ unsafe extern "C" {
     /// Among these limitations:
     ///
     /// - It accepts UTF-8 strings, but will only renders ASCII characters.
-    /// - It has a single, tiny size (8x8 pixels). One can use logical presentation
-    ///   or scaling to adjust it, but it will be blurry.
+    /// - It has a single, tiny size (8x8 pixels). You can use logical presentation
+    ///   or [`SDL_SetRenderScale()`] to adjust it.
     /// - It uses a simple, hardcoded bitmap font. It does not allow different font
     ///   selections and it does not support truetype, for proper scaling.
     /// - It does no word-wrapping and does not treat newline characters as a line
@@ -3704,6 +4096,213 @@ unsafe extern "C" {
         fmt: *const ::core::ffi::c_char,
         ...
     ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Set default scale mode for new textures for given renderer.
+    ///
+    /// When a renderer is created, scale_mode defaults to [`SDL_SCALEMODE_LINEAR`].
+    ///
+    /// ## Parameters
+    /// - `renderer`: the renderer to update.
+    /// - `scale_mode`: the scale mode to change to for new textures.
+    ///
+    /// ## Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_GetDefaultTextureScaleMode`]
+    pub fn SDL_SetDefaultTextureScaleMode(
+        renderer: *mut SDL_Renderer,
+        scale_mode: SDL_ScaleMode,
+    ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Get default texture scale mode of the given renderer.
+    ///
+    /// ## Parameters
+    /// - `renderer`: the renderer to get data from.
+    /// - `scale_mode`: a [`SDL_ScaleMode`] filled with current default scale mode.
+    ///   See [`SDL_SetDefaultTextureScaleMode()`] for the meaning of
+    ///   the value.
+    ///
+    /// ## Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_SetDefaultTextureScaleMode`]
+    pub fn SDL_GetDefaultTextureScaleMode(
+        renderer: *mut SDL_Renderer,
+        scale_mode: *mut SDL_ScaleMode,
+    ) -> ::core::primitive::bool;
+}
+
+/// A structure specifying the parameters of a GPU render state.
+///
+/// ## Availability
+/// This struct is available since SDL 3.4.0.
+///
+/// ## See also
+/// - [`SDL_CreateGPURenderState`]
+#[repr(C)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_GPURenderStateCreateInfo {
+    /// The fragment shader to use when this render state is active
+    pub fragment_shader: *mut SDL_GPUShader,
+    /// The number of additional fragment samplers to bind when this render state is active
+    pub num_sampler_bindings: Sint32,
+    /// Additional fragment samplers to bind when this render state is active
+    pub sampler_bindings: *const SDL_GPUTextureSamplerBinding,
+    /// The number of storage textures to bind when this render state is active
+    pub num_storage_textures: Sint32,
+    /// Storage textures to bind when this render state is active
+    pub storage_textures: *const *mut SDL_GPUTexture,
+    /// The number of storage buffers to bind when this render state is active
+    pub num_storage_buffers: Sint32,
+    /// Storage buffers to bind when this render state is active
+    pub storage_buffers: *const *mut SDL_GPUBuffer,
+    /// A properties ID for extensions. Should be 0 if no extensions are needed.
+    pub props: SDL_PropertiesID,
+}
+
+impl ::core::default::Default for SDL_GPURenderStateCreateInfo {
+    /// Initialize all fields to zero
+    #[inline(always)]
+    fn default() -> Self {
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
+    }
+}
+
+unsafe extern "C" {
+    /// Create custom GPU render state.
+    ///
+    /// ## Parameters
+    /// - `renderer`: the renderer to use.
+    /// - `createinfo`: a struct describing the GPU render state to create.
+    ///
+    /// ## Return value
+    /// Returns a custom GPU render state or NULL on failure; call [`SDL_GetError()`]
+    ///   for more information.
+    ///
+    /// ## Thread safety
+    /// This function should be called on the thread that created the
+    ///   renderer.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_SetGPURenderStateFragmentUniforms`]
+    /// - [`SDL_SetGPURenderState`]
+    /// - [`SDL_DestroyGPURenderState`]
+    pub fn SDL_CreateGPURenderState(
+        renderer: *mut SDL_Renderer,
+        createinfo: *mut SDL_GPURenderStateCreateInfo,
+    ) -> *mut SDL_GPURenderState;
+}
+
+unsafe extern "C" {
+    /// Set fragment shader uniform variables in a custom GPU render state.
+    ///
+    /// The data is copied and will be pushed using
+    /// [`SDL_PushGPUFragmentUniformData()`] during draw call execution.
+    ///
+    /// ## Parameters
+    /// - `state`: the state to modify.
+    /// - `slot_index`: the fragment uniform slot to push data to.
+    /// - `data`: client data to write.
+    /// - `length`: the length of the data to write.
+    ///
+    /// ## Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ## Thread safety
+    /// This function should be called on the thread that created the
+    ///   renderer.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    pub fn SDL_SetGPURenderStateFragmentUniforms(
+        state: *mut SDL_GPURenderState,
+        slot_index: Uint32,
+        data: *const ::core::ffi::c_void,
+        length: Uint32,
+    ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Set custom GPU render state.
+    ///
+    /// This function sets custom GPU render state for subsequent draw calls. This
+    /// allows using custom shaders with the GPU renderer.
+    ///
+    /// ## Parameters
+    /// - `renderer`: the renderer to use.
+    /// - `state`: the state to to use, or NULL to clear custom GPU render state.
+    ///
+    /// ## Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ## Thread safety
+    /// This function should be called on the thread that created the
+    ///   renderer.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    pub fn SDL_SetGPURenderState(
+        renderer: *mut SDL_Renderer,
+        state: *mut SDL_GPURenderState,
+    ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Destroy custom GPU render state.
+    ///
+    /// ## Parameters
+    /// - `state`: the state to destroy.
+    ///
+    /// ## Thread safety
+    /// This function should be called on the thread that created the
+    ///   renderer.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_CreateGPURenderState`]
+    pub fn SDL_DestroyGPURenderState(state: *mut SDL_GPURenderState);
+}
+
+/// A custom GPU render state.
+///
+/// ## Availability
+/// This struct is available since SDL 3.4.0.
+///
+/// ## See also
+/// - [`SDL_CreateGPURenderState`]
+/// - [`SDL_SetGPURenderStateFragmentUniforms`]
+/// - [`SDL_SetGPURenderState`]
+/// - [`SDL_DestroyGPURenderState`]
+#[repr(C)]
+pub struct SDL_GPURenderState {
+    _opaque: [::core::primitive::u8; 0],
 }
 
 /// A structure representing rendering state

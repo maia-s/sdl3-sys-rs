@@ -4,9 +4,18 @@
 //! handling, e.g., for input and drawing tablets or suitably equipped mobile /
 //! tablet devices.
 //!
-//! To get started with pens, simply handle SDL_EVENT_PEN_* events. When a pen
-//! starts providing input, SDL will assign it a unique [`SDL_PenID`], which will
-//! remain for the life of the process, as long as the pen stays connected.
+//! To get started with pens, simply handle pen events:
+//!
+//! - [`SDL_EVENT_PEN_PROXIMITY_IN`], [`SDL_EVENT_PEN_PROXIMITY_OUT`]
+//!   ([`SDL_PenProximityEvent`])
+//! - [`SDL_EVENT_PEN_DOWN`], [`SDL_EVENT_PEN_UP`] ([`SDL_PenTouchEvent`])
+//! - [`SDL_EVENT_PEN_MOTION`] ([`SDL_PenMotionEvent`])
+//! - [`SDL_EVENT_PEN_BUTTON_DOWN`], [`SDL_EVENT_PEN_BUTTON_UP`] ([`SDL_PenButtonEvent`])
+//! - [`SDL_EVENT_PEN_AXIS`] ([`SDL_PenAxisEvent`])
+//!
+//! When a pen starts providing input, SDL will assign it a unique [`SDL_PenID`],
+//! which will remain for the life of the process, as long as the pen stays
+//! connected.
 //!
 //! Pens may provide more than simple touch input; they might have other axes,
 //! such as pressure, tilt, rotation, etc.
@@ -391,6 +400,115 @@ pub const SDL_PEN_AXIS_COUNT: SDL_PenAxis = SDL_PenAxis::COUNT;
 impl sdl3_sys::metadata::GroupMetadata for SDL_PenAxis {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pen::METADATA_SDL_PenAxis;
+}
+
+/// An enum that describes the type of a pen device.
+///
+/// A "direct" device is a pen that touches a graphic display (like an Apple
+/// Pencil on an iPad's screen). "Indirect" devices touch an external tablet
+/// surface that is connected to the machine but is not a display (like a
+/// lower-end Wacom tablet connected over USB).
+///
+/// Apps may use this information to decide if they should draw a cursor; if
+/// the pen is touching the screen directly, a cursor doesn't make sense and
+/// can be in the way, but becomes necessary for indirect devices to know where
+/// on the display they are interacting.
+///
+/// ## Availability
+/// This enum is available since SDL 3.4.0.
+///
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`INVALID`](SDL_PenDeviceType::INVALID) | [`SDL_PEN_DEVICE_TYPE_INVALID`] | Not a valid pen device. |
+/// | [`UNKNOWN`](SDL_PenDeviceType::UNKNOWN) | [`SDL_PEN_DEVICE_TYPE_UNKNOWN`] | Don't know specifics of this pen. |
+/// | [`DIRECT`](SDL_PenDeviceType::DIRECT) | [`SDL_PEN_DEVICE_TYPE_DIRECT`] | Pen touches display. |
+/// | [`INDIRECT`](SDL_PenDeviceType::INDIRECT) | [`SDL_PEN_DEVICE_TYPE_INDIRECT`] | Pen touches something that isn't the display. |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SDL_PenDeviceType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PenDeviceType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_PenDeviceType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PenDeviceType) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_PenDeviceType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_PenDeviceType) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_PenDeviceType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::INVALID => "SDL_PEN_DEVICE_TYPE_INVALID",
+            Self::UNKNOWN => "SDL_PEN_DEVICE_TYPE_UNKNOWN",
+            Self::DIRECT => "SDL_PEN_DEVICE_TYPE_DIRECT",
+            Self::INDIRECT => "SDL_PEN_DEVICE_TYPE_INDIRECT",
+
+            _ => return write!(f, "SDL_PenDeviceType({})", self.0),
+        })
+    }
+}
+
+impl SDL_PenDeviceType {
+    /// Not a valid pen device.
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
+    /// Don't know specifics of this pen.
+    pub const UNKNOWN: Self = Self((0_i32 as ::core::ffi::c_int));
+    /// Pen touches display.
+    pub const DIRECT: Self = Self((1_i32 as ::core::ffi::c_int));
+    /// Pen touches something that isn't the display.
+    pub const INDIRECT: Self = Self((2_i32 as ::core::ffi::c_int));
+}
+
+/// Not a valid pen device.
+pub const SDL_PEN_DEVICE_TYPE_INVALID: SDL_PenDeviceType = SDL_PenDeviceType::INVALID;
+/// Don't know specifics of this pen.
+pub const SDL_PEN_DEVICE_TYPE_UNKNOWN: SDL_PenDeviceType = SDL_PenDeviceType::UNKNOWN;
+/// Pen touches display.
+pub const SDL_PEN_DEVICE_TYPE_DIRECT: SDL_PenDeviceType = SDL_PenDeviceType::DIRECT;
+/// Pen touches something that isn't the display.
+pub const SDL_PEN_DEVICE_TYPE_INDIRECT: SDL_PenDeviceType = SDL_PenDeviceType::INDIRECT;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::GroupMetadata for SDL_PenDeviceType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pen::METADATA_SDL_PenDeviceType;
+}
+
+unsafe extern "C" {
+    /// Get the device type of the given pen.
+    ///
+    /// Many platforms do not supply this information, so an app must always be
+    /// prepared to get an [`SDL_PEN_DEVICE_TYPE_UNKNOWN`] result.
+    ///
+    /// ## Parameters
+    /// - `instance_id`: the pen instance ID.
+    ///
+    /// ## Return value
+    /// Returns the device type of the given pen, or [`SDL_PEN_DEVICE_TYPE_INVALID`]
+    ///   on failure; call [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    pub fn SDL_GetPenDeviceType(instance_id: SDL_PenID) -> SDL_PenDeviceType;
 }
 
 #[cfg(doc)]

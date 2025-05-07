@@ -5,8 +5,8 @@
 //! instead.
 //!
 //! The term "instance_id" is the current instantiation of a joystick device in
-//! the system, if the joystick is removed and then re-inserted then it will
-//! get a new instance_id, instance_id's are monotonically increasing
+//! the system. If the joystick is removed and then re-inserted then it will
+//! get a new instance_id. instance_id's are monotonically increasing
 //! identifiers of a joystick plugged in.
 //!
 //! The term "player_index" is the number assigned to a player on a specific
@@ -24,6 +24,14 @@
 //! If you would like to receive joystick updates while the application is in
 //! the background, you should set the following hint before calling
 //! [`SDL_Init()`]\: [`SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS`]
+//!
+//! SDL can provide virtual joysticks as well: the app defines an imaginary
+//! controller with [`SDL_AttachVirtualJoystick()`], and then can provide inputs
+//! for it via [`SDL_SetJoystickVirtualAxis()`], [`SDL_SetJoystickVirtualButton()`],
+//! etc. As this data is supplied, it will look like a normal joystick to SDL,
+//! just not backed by a hardware driver. This has been used to make unusual
+//! devices, like VR headset controllers, look like normal joysticks, or
+//! provide recording/playback of game inputs, etc.
 
 use super::stdinc::*;
 
@@ -88,6 +96,10 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_JoystickID {
 ///
 /// This is by no means a complete list of everything that can be plugged into
 /// a computer.
+///
+/// You may refer to
+/// [XInput Controller Types](https://learn.microsoft.com/en-us/windows/win32/xinput/xinput-and-controller-subtypes)
+/// table for a general understanding of each joystick type.
 ///
 /// ## Availability
 /// This enum is available since SDL 3.2.0.
@@ -289,6 +301,9 @@ unsafe extern "C" {
     /// joysticks while processing to guarantee that the joystick list won't change
     /// and joystick and gamepad events will not be delivered.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_LockJoysticks();
@@ -296,6 +311,10 @@ unsafe extern "C" {
 
 unsafe extern "C" {
     /// Unlocking for atomic access to the joystick API.
+    ///
+    /// ## Thread safety
+    /// This should be called from the same thread that called
+    ///   [`SDL_LockJoysticks()`].
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -307,6 +326,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true if a joystick is connected, false otherwise.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -327,6 +349,9 @@ unsafe extern "C" {
     /// Returns a 0 terminated array of joystick instance IDs or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
     ///   with [`SDL_free()`] when it is no longer needed.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -349,6 +374,9 @@ unsafe extern "C" {
     /// Returns the name of the selected joystick. If no name can be found, this
     ///   function returns NULL; call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -370,6 +398,9 @@ unsafe extern "C" {
     /// Returns the path of the selected joystick. If no path can be found, this
     ///   function returns NULL; call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -389,6 +420,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the player index of a joystick, or -1 if it's not available.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -410,6 +444,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the GUID of the selected joystick. If called with an invalid
     ///   instance_id, this function returns a zero GUID.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -433,6 +470,9 @@ unsafe extern "C" {
     /// Returns the USB vendor ID of the selected joystick. If called with an
     ///   invalid instance_id, this function returns 0.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -454,6 +494,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the USB product ID of the selected joystick. If called with an
     ///   invalid instance_id, this function returns 0.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -477,6 +520,9 @@ unsafe extern "C" {
     /// Returns the product version of the selected joystick. If called with an
     ///   invalid instance_id, this function returns 0.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -498,6 +544,9 @@ unsafe extern "C" {
     /// Returns the [`SDL_JoystickType`] of the selected joystick. If called with an
     ///   invalid instance_id, this function returns
     ///   [`SDL_JOYSTICK_TYPE_UNKNOWN`].
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -521,6 +570,9 @@ unsafe extern "C" {
     /// Returns a joystick identifier or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -539,6 +591,9 @@ unsafe extern "C" {
     /// Returns an [`SDL_Joystick`] on success or NULL on failure or if it hasn't been
     ///   opened yet; call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetJoystickFromID(instance_id: SDL_JoystickID) -> *mut SDL_Joystick;
@@ -553,6 +608,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns an [`SDL_Joystick`] on success or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -739,6 +797,18 @@ const _: () = ::core::assert!(
 unsafe extern "C" {
     /// Attach a new virtual joystick.
     ///
+    /// Apps can create virtual joysticks, that exist without hardware directly
+    /// backing them, and have program-supplied inputs. Once attached, a virtual
+    /// joystick looks like any other joystick that SDL can access. These can be
+    /// used to make other things look like joysticks, or provide pre-recorded
+    /// input, etc.
+    ///
+    /// Once attached, the app can send joystick inputs to the new virtual joystick
+    /// using [`SDL_SetJoystickVirtualAxis()`], etc.
+    ///
+    /// When no longer needed, the virtual joystick can be removed by calling
+    /// [`SDL_DetachVirtualJoystick()`].
+    ///
     /// ## Parameters
     /// - `desc`: joystick description, initialized using [`SDL_INIT_INTERFACE()`].
     ///
@@ -746,11 +816,20 @@ unsafe extern "C" {
     /// Returns the joystick instance ID, or 0 on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
     /// ## See also
     /// - [`SDL_DetachVirtualJoystick`]
+    /// - [`SDL_SetJoystickVirtualAxis`]
+    /// - [`SDL_SetJoystickVirtualButton`]
+    /// - [`SDL_SetJoystickVirtualBall`]
+    /// - [`SDL_SetJoystickVirtualHat`]
+    /// - [`SDL_SetJoystickVirtualTouchpad`]
+    /// - [`SDL_SetJoystickVirtualSensorData`]
     pub fn SDL_AttachVirtualJoystick(desc: *const SDL_VirtualJoystickDesc) -> SDL_JoystickID;
 }
 
@@ -764,6 +843,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -781,6 +863,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true if the joystick is virtual, false otherwise.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -809,8 +894,18 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_SetJoystickVirtualButton`]
+    /// - [`SDL_SetJoystickVirtualBall`]
+    /// - [`SDL_SetJoystickVirtualHat`]
+    /// - [`SDL_SetJoystickVirtualTouchpad`]
+    /// - [`SDL_SetJoystickVirtualSensorData`]
     pub fn SDL_SetJoystickVirtualAxis(
         joystick: *mut SDL_Joystick,
         axis: ::core::ffi::c_int,
@@ -837,8 +932,18 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_SetJoystickVirtualAxis`]
+    /// - [`SDL_SetJoystickVirtualButton`]
+    /// - [`SDL_SetJoystickVirtualHat`]
+    /// - [`SDL_SetJoystickVirtualTouchpad`]
+    /// - [`SDL_SetJoystickVirtualSensorData`]
     pub fn SDL_SetJoystickVirtualBall(
         joystick: *mut SDL_Joystick,
         ball: ::core::ffi::c_int,
@@ -865,8 +970,18 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_SetJoystickVirtualAxis`]
+    /// - [`SDL_SetJoystickVirtualBall`]
+    /// - [`SDL_SetJoystickVirtualHat`]
+    /// - [`SDL_SetJoystickVirtualTouchpad`]
+    /// - [`SDL_SetJoystickVirtualSensorData`]
     pub fn SDL_SetJoystickVirtualButton(
         joystick: *mut SDL_Joystick,
         button: ::core::ffi::c_int,
@@ -892,8 +1007,18 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_SetJoystickVirtualAxis`]
+    /// - [`SDL_SetJoystickVirtualButton`]
+    /// - [`SDL_SetJoystickVirtualBall`]
+    /// - [`SDL_SetJoystickVirtualTouchpad`]
+    /// - [`SDL_SetJoystickVirtualSensorData`]
     pub fn SDL_SetJoystickVirtualHat(
         joystick: *mut SDL_Joystick,
         hat: ::core::ffi::c_int,
@@ -926,8 +1051,18 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_SetJoystickVirtualAxis`]
+    /// - [`SDL_SetJoystickVirtualButton`]
+    /// - [`SDL_SetJoystickVirtualBall`]
+    /// - [`SDL_SetJoystickVirtualHat`]
+    /// - [`SDL_SetJoystickVirtualSensorData`]
     pub fn SDL_SetJoystickVirtualTouchpad(
         joystick: *mut SDL_Joystick,
         touchpad: ::core::ffi::c_int,
@@ -960,8 +1095,18 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_SetJoystickVirtualAxis`]
+    /// - [`SDL_SetJoystickVirtualButton`]
+    /// - [`SDL_SetJoystickVirtualBall`]
+    /// - [`SDL_SetJoystickVirtualHat`]
+    /// - [`SDL_SetJoystickVirtualTouchpad`]
     pub fn SDL_SendJoystickVirtualSensorData(
         joystick: *mut SDL_Joystick,
         r#type: SDL_SensorType,
@@ -994,6 +1139,9 @@ unsafe extern "C" {
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetJoystickProperties(joystick: *mut SDL_Joystick) -> SDL_PropertiesID;
@@ -1024,6 +1172,9 @@ unsafe extern "C" {
     /// Returns the name of the selected joystick. If no name can be found, this
     ///   function returns NULL; call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1041,6 +1192,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the path of the selected joystick. If no path can be found, this
     ///   function returns NULL; call [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1062,6 +1216,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the player index, or -1 if it's not available.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1081,6 +1238,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1106,6 +1266,9 @@ unsafe extern "C" {
     ///   this function returns a zero GUID; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1126,6 +1289,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the USB vendor ID of the selected joystick, or 0 if unavailable.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1145,6 +1311,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the USB product ID of the selected joystick, or 0 if unavailable.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1163,6 +1332,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the product version of the selected joystick, or 0 if unavailable.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1184,6 +1356,9 @@ unsafe extern "C" {
     /// Returns the firmware version of the selected joystick, or 0 if
     ///   unavailable.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetJoystickFirmwareVersion(joystick: *mut SDL_Joystick) -> Uint16;
@@ -1201,6 +1376,9 @@ unsafe extern "C" {
     /// Returns the serial number of the selected joystick, or NULL if
     ///   unavailable.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetJoystickSerial(joystick: *mut SDL_Joystick) -> *const ::core::ffi::c_char;
@@ -1214,6 +1392,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the [`SDL_JoystickType`] of the selected joystick.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1236,6 +1417,9 @@ unsafe extern "C" {
     ///   available.
     /// - `crc16`: a pointer filled in with a CRC used to distinguish different
     ///   products with the same VID/PID, or 0 if not available.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1261,6 +1445,9 @@ unsafe extern "C" {
     /// Returns true if the joystick has been opened, false if it has not; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_JoystickConnected(joystick: *mut SDL_Joystick) -> ::core::primitive::bool;
@@ -1275,6 +1462,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the instance ID of the specified joystick on success or 0 on
     ///   failure; call [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1294,6 +1484,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the number of axis controls/number of axes on success or -1 on
     ///   failure; call [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1321,6 +1514,9 @@ unsafe extern "C" {
     /// Returns the number of trackballs on success or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1341,6 +1537,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the number of POV hats on success or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1363,6 +1562,9 @@ unsafe extern "C" {
     /// Returns the number of buttons on success or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1384,6 +1586,9 @@ unsafe extern "C" {
     /// ## Parameters
     /// - `enabled`: whether to process joystick events or not.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1403,6 +1608,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if joystick events are being processed, false otherwise.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1416,6 +1624,9 @@ unsafe extern "C" {
     ///
     /// This is called automatically by the event loop if any joystick events are
     /// enabled.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1443,6 +1654,9 @@ unsafe extern "C" {
     /// Returns a 16-bit signed integer representing the current position of the
     ///   axis or 0 on failure; call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1465,6 +1679,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true if this axis has any initial value, or false if not.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1493,6 +1710,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1517,6 +1737,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the current hat position.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1555,6 +1778,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if the button is pressed, false otherwise.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1585,6 +1811,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true, or false if rumble isn't supported on this joystick.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1622,6 +1851,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -1654,6 +1886,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetJoystickLED(
@@ -1676,6 +1911,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SendJoystickEffect(
@@ -1690,6 +1928,9 @@ unsafe extern "C" {
     ///
     /// ## Parameters
     /// - `joystick`: the joystick device to close.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1709,6 +1950,9 @@ unsafe extern "C" {
     /// Returns the connection state on success or
     ///   [`SDL_JOYSTICK_CONNECTION_INVALID`] on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -1736,6 +1980,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the current battery state or [`SDL_POWERSTATE_ERROR`] on failure;
     ///   call [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

@@ -47,6 +47,42 @@ pub const METADATA_SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER: Property = Pro
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_RENDERER_CREATE_GPU_DEVICE_POINTER: Property = Property {
+    module: "render",
+    name: "SDL_PROP_RENDERER_CREATE_GPU_DEVICE_POINTER",
+    short_name: "RENDERER_CREATE_GPU_DEVICE_POINTER",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_GPU_DEVICE_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_RENDERER_CREATE_GPU_SHADERS_SPIRV_BOOLEAN: Property = Property {
+    module: "render",
+    name: "SDL_PROP_RENDERER_CREATE_GPU_SHADERS_SPIRV_BOOLEAN",
+    short_name: "RENDERER_CREATE_GPU_SHADERS_SPIRV_BOOLEAN",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_GPU_SHADERS_SPIRV_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_RENDERER_CREATE_GPU_SHADERS_DXIL_BOOLEAN: Property = Property {
+    module: "render",
+    name: "SDL_PROP_RENDERER_CREATE_GPU_SHADERS_DXIL_BOOLEAN",
+    short_name: "RENDERER_CREATE_GPU_SHADERS_DXIL_BOOLEAN",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_GPU_SHADERS_DXIL_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_RENDERER_CREATE_GPU_SHADERS_MSL_BOOLEAN: Property = Property {
+    module: "render",
+    name: "SDL_PROP_RENDERER_CREATE_GPU_SHADERS_MSL_BOOLEAN",
+    short_name: "RENDERER_CREATE_GPU_SHADERS_MSL_BOOLEAN",
+    value: crate::render::SDL_PROP_RENDERER_CREATE_GPU_SHADERS_MSL_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER",
@@ -154,6 +190,15 @@ pub const METADATA_SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER: Property = Propert
     short_name: "RENDERER_TEXTURE_FORMATS_POINTER",
     value: crate::render::SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER,
     ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_RENDERER_TEXTURE_WRAPPING_BOOLEAN: Property = Property {
+    module: "render",
+    name: "SDL_PROP_RENDERER_TEXTURE_WRAPPING_BOOLEAN",
+    short_name: "RENDERER_TEXTURE_WRAPPING_BOOLEAN",
+    value: crate::render::SDL_PROP_RENDERER_TEXTURE_WRAPPING_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
     doc: None,
     available_since: None,
 };
@@ -366,6 +411,15 @@ pub const METADATA_SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_TEXTURE_CREATE_PALETTE_POINTER: Property = Property {
+    module: "render",
+    name: "SDL_PROP_TEXTURE_CREATE_PALETTE_POINTER",
+    short_name: "TEXTURE_CREATE_PALETTE_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_PALETTE_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT",
@@ -525,6 +579,42 @@ pub const METADATA_SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER: Property = Pro
     short_name: "TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER",
     value: crate::render::SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER,
     ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_POINTER: Property = Property {
+    module: "render",
+    name: "SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_POINTER",
+    short_name: "TEXTURE_CREATE_GPU_TEXTURE_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_UV_POINTER: Property = Property {
+    module: "render",
+    name: "SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_UV_POINTER",
+    short_name: "TEXTURE_CREATE_GPU_TEXTURE_UV_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_UV_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_U_POINTER: Property = Property {
+    module: "render",
+    name: "SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_U_POINTER",
+    short_name: "TEXTURE_CREATE_GPU_TEXTURE_U_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_U_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_V_POINTER: Property = Property {
+    module: "render",
+    name: "SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_V_POINTER",
+    short_name: "TEXTURE_CREATE_GPU_TEXTURE_V_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_V_POINTER,
+    ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
 };
@@ -762,6 +852,42 @@ pub const METADATA_SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_TEXTURE_GPU_TEXTURE_POINTER: Property = Property {
+    module: "render",
+    name: "SDL_PROP_TEXTURE_GPU_TEXTURE_POINTER",
+    short_name: "TEXTURE_GPU_TEXTURE_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_GPU_TEXTURE_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_TEXTURE_GPU_TEXTURE_UV_POINTER: Property = Property {
+    module: "render",
+    name: "SDL_PROP_TEXTURE_GPU_TEXTURE_UV_POINTER",
+    short_name: "TEXTURE_GPU_TEXTURE_UV_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_GPU_TEXTURE_UV_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_TEXTURE_GPU_TEXTURE_U_POINTER: Property = Property {
+    module: "render",
+    name: "SDL_PROP_TEXTURE_GPU_TEXTURE_U_POINTER",
+    short_name: "TEXTURE_GPU_TEXTURE_U_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_GPU_TEXTURE_U_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_TEXTURE_GPU_TEXTURE_V_POINTER: Property = Property {
+    module: "render",
+    name: "SDL_PROP_TEXTURE_GPU_TEXTURE_V_POINTER",
+    short_name: "TEXTURE_GPU_TEXTURE_V_POINTER",
+    value: crate::render::SDL_PROP_TEXTURE_GPU_TEXTURE_V_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_TextureAccess: Group = Group {
     module: "render",
     kind: GroupKind::Enum,
@@ -792,6 +918,44 @@ pub const METADATA_SDL_TextureAccess: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_TextureAddressMode: Group = Group {
+    module: "render",
+    kind: GroupKind::Enum,
+    name: "SDL_TextureAddressMode",
+    short_name: "TextureAddressMode",
+    doc: Some(
+        "The addressing mode for a texture when used in [`SDL_RenderGeometry()`].\n\nThis affects how texture coordinates are interpreted outside of \\[0, 1\\]\n\nTexture wrapping is always supported for power of two texture sizes, and is\nsupported for other texture sizes if\n[`SDL_PROP_RENDERER_TEXTURE_WRAPPING_BOOLEAN`] is set to true.\n\n## Availability\nThis enum is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
+    values: &[
+        GroupValue {
+            name: "SDL_TEXTURE_ADDRESS_INVALID",
+            short_name: "INVALID",
+            doc: None,
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_TEXTURE_ADDRESS_AUTO",
+            short_name: "AUTO",
+            doc: Some(
+                "Wrapping is enabled if texture coordinates are outside \\[0, 1\\], this is the default\n",
+            ),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_TEXTURE_ADDRESS_CLAMP",
+            short_name: "CLAMP",
+            doc: Some("Texture coordinates are clamped to the \\[0, 1\\] range\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_TEXTURE_ADDRESS_WRAP",
+            short_name: "WRAP",
+            doc: Some("The texture is repeated (tiled)\n"),
+            available_since: None,
+        },
+    ],
+};
 pub const METADATA_SDL_RendererLogicalPresentation: Group = Group {
     module: "render",
     kind: GroupKind::Enum,
@@ -818,7 +982,7 @@ pub const METADATA_SDL_RendererLogicalPresentation: Group = Group {
             name: "SDL_LOGICAL_PRESENTATION_LETTERBOX",
             short_name: "LETTERBOX",
             doc: Some(
-                "The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars\n",
+                "The rendered content is fit to the largest dimension and the other dimension is letterboxed with the clear color\n",
             ),
             available_since: None,
         },

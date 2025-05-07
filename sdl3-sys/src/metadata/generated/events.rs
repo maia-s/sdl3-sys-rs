@@ -127,6 +127,12 @@ pub const METADATA_SDL_EventType: Group = Group {
             available_since: None,
         },
         GroupValue {
+            name: "SDL_EVENT_DISPLAY_USABLE_BOUNDS_CHANGED",
+            short_name: "DISPLAY_USABLE_BOUNDS_CHANGED",
+            doc: Some("Display has changed usable bounds\n"),
+            available_since: None,
+        },
+        GroupValue {
             name: "SDL_EVENT_DISPLAY_FIRST",
             short_name: "DISPLAY_FIRST",
             doc: None,
@@ -154,7 +160,7 @@ pub const METADATA_SDL_EventType: Group = Group {
             name: "SDL_EVENT_WINDOW_EXPOSED",
             short_name: "WINDOW_EXPOSED",
             doc: Some(
-                "Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event\n",
+                "Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event.\ndata1 is 1 for live-resize expose events, 0 otherwise.\n",
             ),
             available_since: None,
         },
@@ -355,6 +361,18 @@ pub const METADATA_SDL_EventType: Group = Group {
             available_since: None,
         },
         GroupValue {
+            name: "SDL_EVENT_SCREEN_KEYBOARD_SHOWN",
+            short_name: "SCREEN_KEYBOARD_SHOWN",
+            doc: Some("The on-screen keyboard has been shown\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_EVENT_SCREEN_KEYBOARD_HIDDEN",
+            short_name: "SCREEN_KEYBOARD_HIDDEN",
+            doc: Some("The on-screen keyboard has been hidden\n"),
+            available_since: None,
+        },
+        GroupValue {
             name: "SDL_EVENT_MOUSE_MOTION",
             short_name: "MOUSE_MOTION",
             doc: Some("Mouse moved\n"),
@@ -541,9 +559,27 @@ pub const METADATA_SDL_EventType: Group = Group {
             available_since: None,
         },
         GroupValue {
+            name: "SDL_EVENT_PINCH_BEGIN",
+            short_name: "PINCH_BEGIN",
+            doc: Some("Pinch gesture started\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_EVENT_PINCH_UPDATE",
+            short_name: "PINCH_UPDATE",
+            doc: Some("Pinch gesture updated\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_EVENT_PINCH_END",
+            short_name: "PINCH_END",
+            doc: Some("Pinch gesture ended\n"),
+            available_since: None,
+        },
+        GroupValue {
             name: "SDL_EVENT_CLIPBOARD_UPDATE",
             short_name: "CLIPBOARD_UPDATE",
-            doc: Some("The clipboard or primary selection changed\n"),
+            doc: Some("The clipboard changed\n"),
             available_since: None,
         },
         GroupValue {

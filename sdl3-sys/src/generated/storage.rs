@@ -342,6 +342,10 @@ const _: () = ::core::assert!(
 unsafe extern "C" {
     /// Opens up a read-only container for the application's filesystem.
     ///
+    /// By default, [`SDL_OpenTitleStorage`] uses the generic storage implementation.
+    /// When the path override is not provided, the generic implementation will use
+    /// the output of [`SDL_GetBasePath`] as the base path.
+    ///
     /// ## Parameters
     /// - `override`: a path to override the backend's default title root.
     /// - `props`: a property list that may contain backend-specific information.

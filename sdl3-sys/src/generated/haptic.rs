@@ -46,7 +46,7 @@
 //! {
 //!    SDL_Haptic *haptic;
 //!    SDL_HapticEffect effect;
-//!    int effect_id;
+//!    SDL_HapticEffectID effect_id;
 //!
 //!    // Open the device
 //!    haptic = SDL_OpenHapticFromJoystick(joystick);
@@ -94,6 +94,493 @@ use super::error::*;
 
 use super::joystick::*;
 
+/// Used to play a device an infinite number of times.
+///
+/// ## Availability
+/// This macro is available since SDL 3.2.0.
+///
+/// ## See also
+/// - [`SDL_RunHapticEffect`]
+pub const SDL_HAPTIC_INFINITY: ::core::primitive::u32 = 4294967295_u32;
+
+/// * Type of haptic effect.
+///
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`CONSTANT`](SDL_HapticEffectType::CONSTANT) | [`SDL_HAPTIC_CONSTANT`] | Constant effect supported.  Constant haptic effect.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticCondition`] |
+/// | [`SINE`](SDL_HapticEffectType::SINE) | [`SDL_HAPTIC_SINE`] | Sine wave effect supported.  Periodic haptic effect that simulates sine waves.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticPeriodic`] |
+/// | [`SQUARE`](SDL_HapticEffectType::SQUARE) | [`SDL_HAPTIC_SQUARE`] | Square wave effect supported.  Periodic haptic effect that simulates square waves.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticPeriodic`] |
+/// | [`TRIANGLE`](SDL_HapticEffectType::TRIANGLE) | [`SDL_HAPTIC_TRIANGLE`] | Triangle wave effect supported.  Periodic haptic effect that simulates triangular waves.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticPeriodic`] |
+/// | [`SAWTOOTHUP`](SDL_HapticEffectType::SAWTOOTHUP) | [`SDL_HAPTIC_SAWTOOTHUP`] | Sawtoothup wave effect supported.  Periodic haptic effect that simulates saw tooth up waves.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticPeriodic`] |
+/// | [`SAWTOOTHDOWN`](SDL_HapticEffectType::SAWTOOTHDOWN) | [`SDL_HAPTIC_SAWTOOTHDOWN`] | Sawtoothdown wave effect supported.  Periodic haptic effect that simulates saw tooth down waves.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticPeriodic`] |
+/// | [`RAMP`](SDL_HapticEffectType::RAMP) | [`SDL_HAPTIC_RAMP`] | Ramp effect supported.  Ramp haptic effect.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticRamp`] |
+/// | [`SPRING`](SDL_HapticEffectType::SPRING) | [`SDL_HAPTIC_SPRING`] | Spring effect supported - uses axes position.  Condition haptic effect that simulates a spring. Effect is based on the axes position.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticCondition`] |
+/// | [`DAMPER`](SDL_HapticEffectType::DAMPER) | [`SDL_HAPTIC_DAMPER`] | Damper effect supported - uses axes velocity.  Condition haptic effect that simulates dampening. Effect is based on the axes velocity.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticCondition`] |
+/// | [`INERTIA`](SDL_HapticEffectType::INERTIA) | [`SDL_HAPTIC_INERTIA`] | Inertia effect supported - uses axes acceleration.  Condition haptic effect that simulates inertia. Effect is based on the axes acceleration.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticCondition`] |
+/// | [`FRICTION`](SDL_HapticEffectType::FRICTION) | [`SDL_HAPTIC_FRICTION`] | Friction effect supported - uses axes movement.  Condition haptic effect that simulates friction. Effect is based on the axes movement.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticCondition`] |
+/// | [`LEFTRIGHT`](SDL_HapticEffectType::LEFTRIGHT) | [`SDL_HAPTIC_LEFTRIGHT`] | Left/Right effect supported.  Haptic effect for direct control over high/low frequency motors.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticLeftRight`] |
+/// | [`RESERVED1`](SDL_HapticEffectType::RESERVED1) | [`SDL_HAPTIC_RESERVED1`] | Reserved for future use.  \since This macro is available since SDL 3.2.0. |
+/// | [`RESERVED2`](SDL_HapticEffectType::RESERVED2) | [`SDL_HAPTIC_RESERVED2`] | Reserved for future use.  \since This macro is available since SDL 3.2.0. |
+/// | [`RESERVED3`](SDL_HapticEffectType::RESERVED3) | [`SDL_HAPTIC_RESERVED3`] | Reserved for future use.  \since This macro is available since SDL 3.2.0. |
+/// | [`CUSTOM`](SDL_HapticEffectType::CUSTOM) | [`SDL_HAPTIC_CUSTOM`] | Custom effect is supported.  User defined custom haptic effect.  \since This macro is available since SDL 3.2.0. |
+/// | [`GAIN`](SDL_HapticEffectType::GAIN) | [`SDL_HAPTIC_GAIN`] | Device can set global gain.  Device supports setting the global gain.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_SetHapticGain`] |
+/// | [`AUTOCENTER`](SDL_HapticEffectType::AUTOCENTER) | [`SDL_HAPTIC_AUTOCENTER`] | Device can set autocenter.  Device supports setting autocenter.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_SetHapticAutocenter`] |
+/// | [`STATUS`](SDL_HapticEffectType::STATUS) | [`SDL_HAPTIC_STATUS`] | Device can be queried for effect status.  Device supports querying effect status.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_GetHapticEffectStatus`] |
+/// | [`PAUSE`](SDL_HapticEffectType::PAUSE) | [`SDL_HAPTIC_PAUSE`] | Device can be paused.  Devices supports being paused.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_PauseHaptic`] \sa [`SDL_ResumeHaptic`] |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_HapticEffectType(pub Uint16);
+
+impl ::core::cmp::PartialEq<Uint16> for SDL_HapticEffectType {
+    #[inline(always)]
+    fn eq(&self, other: &Uint16) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_HapticEffectType> for Uint16 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_HapticEffectType) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_HapticEffectType> for Uint16 {
+    #[inline(always)]
+    fn from(value: SDL_HapticEffectType) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_HapticEffectType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_HapticEffectType(")?;
+        let all_bits = all_bits | Self::CONSTANT.0;
+        if (Self::CONSTANT != 0 || self.0 == 0) && *self & Self::CONSTANT == Self::CONSTANT {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "CONSTANT")?;
+        }
+        let all_bits = all_bits | Self::SINE.0;
+        if (Self::SINE != 0 || self.0 == 0) && *self & Self::SINE == Self::SINE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SINE")?;
+        }
+        let all_bits = all_bits | Self::SQUARE.0;
+        if (Self::SQUARE != 0 || self.0 == 0) && *self & Self::SQUARE == Self::SQUARE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SQUARE")?;
+        }
+        let all_bits = all_bits | Self::TRIANGLE.0;
+        if (Self::TRIANGLE != 0 || self.0 == 0) && *self & Self::TRIANGLE == Self::TRIANGLE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "TRIANGLE")?;
+        }
+        let all_bits = all_bits | Self::SAWTOOTHUP.0;
+        if (Self::SAWTOOTHUP != 0 || self.0 == 0) && *self & Self::SAWTOOTHUP == Self::SAWTOOTHUP {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SAWTOOTHUP")?;
+        }
+        let all_bits = all_bits | Self::SAWTOOTHDOWN.0;
+        if (Self::SAWTOOTHDOWN != 0 || self.0 == 0)
+            && *self & Self::SAWTOOTHDOWN == Self::SAWTOOTHDOWN
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SAWTOOTHDOWN")?;
+        }
+        let all_bits = all_bits | Self::RAMP.0;
+        if (Self::RAMP != 0 || self.0 == 0) && *self & Self::RAMP == Self::RAMP {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RAMP")?;
+        }
+        let all_bits = all_bits | Self::SPRING.0;
+        if (Self::SPRING != 0 || self.0 == 0) && *self & Self::SPRING == Self::SPRING {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SPRING")?;
+        }
+        let all_bits = all_bits | Self::DAMPER.0;
+        if (Self::DAMPER != 0 || self.0 == 0) && *self & Self::DAMPER == Self::DAMPER {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DAMPER")?;
+        }
+        let all_bits = all_bits | Self::INERTIA.0;
+        if (Self::INERTIA != 0 || self.0 == 0) && *self & Self::INERTIA == Self::INERTIA {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "INERTIA")?;
+        }
+        let all_bits = all_bits | Self::FRICTION.0;
+        if (Self::FRICTION != 0 || self.0 == 0) && *self & Self::FRICTION == Self::FRICTION {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "FRICTION")?;
+        }
+        let all_bits = all_bits | Self::LEFTRIGHT.0;
+        if (Self::LEFTRIGHT != 0 || self.0 == 0) && *self & Self::LEFTRIGHT == Self::LEFTRIGHT {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LEFTRIGHT")?;
+        }
+        let all_bits = all_bits | Self::RESERVED1.0;
+        if (Self::RESERVED1 != 0 || self.0 == 0) && *self & Self::RESERVED1 == Self::RESERVED1 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RESERVED1")?;
+        }
+        let all_bits = all_bits | Self::RESERVED2.0;
+        if (Self::RESERVED2 != 0 || self.0 == 0) && *self & Self::RESERVED2 == Self::RESERVED2 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RESERVED2")?;
+        }
+        let all_bits = all_bits | Self::RESERVED3.0;
+        if (Self::RESERVED3 != 0 || self.0 == 0) && *self & Self::RESERVED3 == Self::RESERVED3 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RESERVED3")?;
+        }
+        let all_bits = all_bits | Self::CUSTOM.0;
+        if (Self::CUSTOM != 0 || self.0 == 0) && *self & Self::CUSTOM == Self::CUSTOM {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "CUSTOM")?;
+        }
+        let all_bits = all_bits | Self::GAIN.0;
+        if (Self::GAIN != 0 || self.0 == 0) && *self & Self::GAIN == Self::GAIN {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "GAIN")?;
+        }
+        let all_bits = all_bits | Self::AUTOCENTER.0;
+        if (Self::AUTOCENTER != 0 || self.0 == 0) && *self & Self::AUTOCENTER == Self::AUTOCENTER {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "AUTOCENTER")?;
+        }
+        let all_bits = all_bits | Self::STATUS.0;
+        if (Self::STATUS != 0 || self.0 == 0) && *self & Self::STATUS == Self::STATUS {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "STATUS")?;
+        }
+        let all_bits = all_bits | Self::PAUSE.0;
+        if (Self::PAUSE != 0 || self.0 == 0) && *self & Self::PAUSE == Self::PAUSE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "PAUSE")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_HapticEffectType {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_HapticEffectType {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_HapticEffectType {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_HapticEffectType {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_HapticEffectType {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_HapticEffectType {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_HapticEffectType {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_HapticEffectType {
+    /// Constant effect supported.
+    ///
+    /// Constant haptic effect.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticCondition`]
+    pub const CONSTANT: Self = Self((1_u32 as Uint16));
+    /// Sine wave effect supported.
+    ///
+    /// Periodic haptic effect that simulates sine waves.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticPeriodic`]
+    pub const SINE: Self = Self((2_u32 as Uint16));
+    /// Square wave effect supported.
+    ///
+    /// Periodic haptic effect that simulates square waves.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticPeriodic`]
+    pub const SQUARE: Self = Self((4_u32 as Uint16));
+    /// Triangle wave effect supported.
+    ///
+    /// Periodic haptic effect that simulates triangular waves.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticPeriodic`]
+    pub const TRIANGLE: Self = Self((8_u32 as Uint16));
+    /// Sawtoothup wave effect supported.
+    ///
+    /// Periodic haptic effect that simulates saw tooth up waves.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticPeriodic`]
+    pub const SAWTOOTHUP: Self = Self((16_u32 as Uint16));
+    /// Sawtoothdown wave effect supported.
+    ///
+    /// Periodic haptic effect that simulates saw tooth down waves.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticPeriodic`]
+    pub const SAWTOOTHDOWN: Self = Self((32_u32 as Uint16));
+    /// Ramp effect supported.
+    ///
+    /// Ramp haptic effect.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticRamp`]
+    pub const RAMP: Self = Self((64_u32 as Uint16));
+    /// Spring effect supported - uses axes position.
+    ///
+    /// Condition haptic effect that simulates a spring. Effect is based on the
+    /// axes position.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticCondition`]
+    pub const SPRING: Self = Self((128_u32 as Uint16));
+    /// Damper effect supported - uses axes velocity.
+    ///
+    /// Condition haptic effect that simulates dampening. Effect is based on the
+    /// axes velocity.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticCondition`]
+    pub const DAMPER: Self = Self((256_u32 as Uint16));
+    /// Inertia effect supported - uses axes acceleration.
+    ///
+    /// Condition haptic effect that simulates inertia. Effect is based on the axes
+    /// acceleration.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticCondition`]
+    pub const INERTIA: Self = Self((512_u32 as Uint16));
+    /// Friction effect supported - uses axes movement.
+    ///
+    /// Condition haptic effect that simulates friction. Effect is based on the
+    /// axes movement.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticCondition`]
+    pub const FRICTION: Self = Self((1024_u32 as Uint16));
+    /// Left/Right effect supported.
+    ///
+    /// Haptic effect for direct control over high/low frequency motors.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticLeftRight`]
+    pub const LEFTRIGHT: Self = Self((2048_u32 as Uint16));
+    /// Reserved for future use.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    pub const RESERVED1: Self = Self((4096_u32 as Uint16));
+    /// Reserved for future use.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    pub const RESERVED2: Self = Self((8192_u32 as Uint16));
+    /// Reserved for future use.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    pub const RESERVED3: Self = Self((16384_u32 as Uint16));
+    /// Custom effect is supported.
+    ///
+    /// User defined custom haptic effect.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    pub const CUSTOM: Self = Self((32768_u32 as Uint16));
+    /// Device can set global gain.
+    ///
+    /// Device supports setting the global gain.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_SetHapticGain`]
+    pub const GAIN: Self = Self((65536_u32 as Uint16));
+    /// Device can set autocenter.
+    ///
+    /// Device supports setting autocenter.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_SetHapticAutocenter`]
+    pub const AUTOCENTER: Self = Self((131072_u32 as Uint16));
+    /// Device can be queried for effect status.
+    ///
+    /// Device supports querying effect status.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_GetHapticEffectStatus`]
+    pub const STATUS: Self = Self((262144_u32 as Uint16));
+    /// Device can be paused.
+    ///
+    /// Devices supports being paused.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_PauseHaptic`]
+    /// - [`SDL_ResumeHaptic`]
+    pub const PAUSE: Self = Self((524288_u32 as Uint16));
+}
+
 /// Constant effect supported.
 ///
 /// Constant haptic effect.
@@ -103,8 +590,7 @@ use super::joystick::*;
 ///
 /// ## See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_CONSTANT: Uint16 = (1_u32 as Uint16);
-
+pub const SDL_HAPTIC_CONSTANT: SDL_HapticEffectType = SDL_HapticEffectType::CONSTANT;
 /// Sine wave effect supported.
 ///
 /// Periodic haptic effect that simulates sine waves.
@@ -114,8 +600,7 @@ pub const SDL_HAPTIC_CONSTANT: Uint16 = (1_u32 as Uint16);
 ///
 /// ## See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_SINE: Uint16 = (2_u32 as Uint16);
-
+pub const SDL_HAPTIC_SINE: SDL_HapticEffectType = SDL_HapticEffectType::SINE;
 /// Square wave effect supported.
 ///
 /// Periodic haptic effect that simulates square waves.
@@ -125,8 +610,7 @@ pub const SDL_HAPTIC_SINE: Uint16 = (2_u32 as Uint16);
 ///
 /// ## See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_SQUARE: Uint16 = (4_u32 as Uint16);
-
+pub const SDL_HAPTIC_SQUARE: SDL_HapticEffectType = SDL_HapticEffectType::SQUARE;
 /// Triangle wave effect supported.
 ///
 /// Periodic haptic effect that simulates triangular waves.
@@ -136,8 +620,7 @@ pub const SDL_HAPTIC_SQUARE: Uint16 = (4_u32 as Uint16);
 ///
 /// ## See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_TRIANGLE: Uint16 = (8_u32 as Uint16);
-
+pub const SDL_HAPTIC_TRIANGLE: SDL_HapticEffectType = SDL_HapticEffectType::TRIANGLE;
 /// Sawtoothup wave effect supported.
 ///
 /// Periodic haptic effect that simulates saw tooth up waves.
@@ -147,8 +630,7 @@ pub const SDL_HAPTIC_TRIANGLE: Uint16 = (8_u32 as Uint16);
 ///
 /// ## See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_SAWTOOTHUP: Uint16 = (16_u32 as Uint16);
-
+pub const SDL_HAPTIC_SAWTOOTHUP: SDL_HapticEffectType = SDL_HapticEffectType::SAWTOOTHUP;
 /// Sawtoothdown wave effect supported.
 ///
 /// Periodic haptic effect that simulates saw tooth down waves.
@@ -158,8 +640,7 @@ pub const SDL_HAPTIC_SAWTOOTHUP: Uint16 = (16_u32 as Uint16);
 ///
 /// ## See also
 /// - [`SDL_HapticPeriodic`]
-pub const SDL_HAPTIC_SAWTOOTHDOWN: Uint16 = (32_u32 as Uint16);
-
+pub const SDL_HAPTIC_SAWTOOTHDOWN: SDL_HapticEffectType = SDL_HapticEffectType::SAWTOOTHDOWN;
 /// Ramp effect supported.
 ///
 /// Ramp haptic effect.
@@ -169,8 +650,7 @@ pub const SDL_HAPTIC_SAWTOOTHDOWN: Uint16 = (32_u32 as Uint16);
 ///
 /// ## See also
 /// - [`SDL_HapticRamp`]
-pub const SDL_HAPTIC_RAMP: Uint16 = (64_u32 as Uint16);
-
+pub const SDL_HAPTIC_RAMP: SDL_HapticEffectType = SDL_HapticEffectType::RAMP;
 /// Spring effect supported - uses axes position.
 ///
 /// Condition haptic effect that simulates a spring. Effect is based on the
@@ -181,8 +661,7 @@ pub const SDL_HAPTIC_RAMP: Uint16 = (64_u32 as Uint16);
 ///
 /// ## See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_SPRING: Uint16 = (128_u32 as Uint16);
-
+pub const SDL_HAPTIC_SPRING: SDL_HapticEffectType = SDL_HapticEffectType::SPRING;
 /// Damper effect supported - uses axes velocity.
 ///
 /// Condition haptic effect that simulates dampening. Effect is based on the
@@ -193,8 +672,7 @@ pub const SDL_HAPTIC_SPRING: Uint16 = (128_u32 as Uint16);
 ///
 /// ## See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_DAMPER: Uint16 = (256_u32 as Uint16);
-
+pub const SDL_HAPTIC_DAMPER: SDL_HapticEffectType = SDL_HapticEffectType::DAMPER;
 /// Inertia effect supported - uses axes acceleration.
 ///
 /// Condition haptic effect that simulates inertia. Effect is based on the axes
@@ -205,8 +683,7 @@ pub const SDL_HAPTIC_DAMPER: Uint16 = (256_u32 as Uint16);
 ///
 /// ## See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_INERTIA: Uint16 = (512_u32 as Uint16);
-
+pub const SDL_HAPTIC_INERTIA: SDL_HapticEffectType = SDL_HapticEffectType::INERTIA;
 /// Friction effect supported - uses axes movement.
 ///
 /// Condition haptic effect that simulates friction. Effect is based on the
@@ -217,8 +694,7 @@ pub const SDL_HAPTIC_INERTIA: Uint16 = (512_u32 as Uint16);
 ///
 /// ## See also
 /// - [`SDL_HapticCondition`]
-pub const SDL_HAPTIC_FRICTION: Uint16 = (1024_u32 as Uint16);
-
+pub const SDL_HAPTIC_FRICTION: SDL_HapticEffectType = SDL_HapticEffectType::FRICTION;
 /// Left/Right effect supported.
 ///
 /// Haptic effect for direct control over high/low frequency motors.
@@ -228,34 +704,29 @@ pub const SDL_HAPTIC_FRICTION: Uint16 = (1024_u32 as Uint16);
 ///
 /// ## See also
 /// - [`SDL_HapticLeftRight`]
-pub const SDL_HAPTIC_LEFTRIGHT: Uint16 = (2048_u32 as Uint16);
-
+pub const SDL_HAPTIC_LEFTRIGHT: SDL_HapticEffectType = SDL_HapticEffectType::LEFTRIGHT;
 /// Reserved for future use.
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_HAPTIC_RESERVED1: Uint16 = (4096_u32 as Uint16);
-
+pub const SDL_HAPTIC_RESERVED1: SDL_HapticEffectType = SDL_HapticEffectType::RESERVED1;
 /// Reserved for future use.
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_HAPTIC_RESERVED2: Uint16 = (8192_u32 as Uint16);
-
+pub const SDL_HAPTIC_RESERVED2: SDL_HapticEffectType = SDL_HapticEffectType::RESERVED2;
 /// Reserved for future use.
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_HAPTIC_RESERVED3: Uint16 = (16384_u32 as Uint16);
-
+pub const SDL_HAPTIC_RESERVED3: SDL_HapticEffectType = SDL_HapticEffectType::RESERVED3;
 /// Custom effect is supported.
 ///
 /// User defined custom haptic effect.
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_HAPTIC_CUSTOM: Uint16 = (32768_u32 as Uint16);
-
+pub const SDL_HAPTIC_CUSTOM: SDL_HapticEffectType = SDL_HapticEffectType::CUSTOM;
 /// Device can set global gain.
 ///
 /// Device supports setting the global gain.
@@ -265,8 +736,7 @@ pub const SDL_HAPTIC_CUSTOM: Uint16 = (32768_u32 as Uint16);
 ///
 /// ## See also
 /// - [`SDL_SetHapticGain`]
-pub const SDL_HAPTIC_GAIN: ::core::primitive::u32 = 65536_u32;
-
+pub const SDL_HAPTIC_GAIN: SDL_HapticEffectType = SDL_HapticEffectType::GAIN;
 /// Device can set autocenter.
 ///
 /// Device supports setting autocenter.
@@ -276,8 +746,7 @@ pub const SDL_HAPTIC_GAIN: ::core::primitive::u32 = 65536_u32;
 ///
 /// ## See also
 /// - [`SDL_SetHapticAutocenter`]
-pub const SDL_HAPTIC_AUTOCENTER: ::core::primitive::u32 = 131072_u32;
-
+pub const SDL_HAPTIC_AUTOCENTER: SDL_HapticEffectType = SDL_HapticEffectType::AUTOCENTER;
 /// Device can be queried for effect status.
 ///
 /// Device supports querying effect status.
@@ -287,8 +756,7 @@ pub const SDL_HAPTIC_AUTOCENTER: ::core::primitive::u32 = 131072_u32;
 ///
 /// ## See also
 /// - [`SDL_GetHapticEffectStatus`]
-pub const SDL_HAPTIC_STATUS: ::core::primitive::u32 = 262144_u32;
-
+pub const SDL_HAPTIC_STATUS: SDL_HapticEffectType = SDL_HapticEffectType::STATUS;
 /// Device can be paused.
 ///
 /// Devices supports being paused.
@@ -299,7 +767,100 @@ pub const SDL_HAPTIC_STATUS: ::core::primitive::u32 = 262144_u32;
 /// ## See also
 /// - [`SDL_PauseHaptic`]
 /// - [`SDL_ResumeHaptic`]
-pub const SDL_HAPTIC_PAUSE: ::core::primitive::u32 = 524288_u32;
+pub const SDL_HAPTIC_PAUSE: SDL_HapticEffectType = SDL_HapticEffectType::PAUSE;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::GroupMetadata for SDL_HapticEffectType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::haptic::METADATA_SDL_HapticEffectType;
+}
+
+/// * Type of coordinates used for haptic direction.
+///
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`POLAR`](SDL_HapticDirectionType::POLAR) | [`SDL_HAPTIC_POLAR`] | Uses polar coordinates for the direction.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticDirection`] |
+/// | [`CARTESIAN`](SDL_HapticDirectionType::CARTESIAN) | [`SDL_HAPTIC_CARTESIAN`] | Uses cartesian coordinates for the direction.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticDirection`] |
+/// | [`SPHERICAL`](SDL_HapticDirectionType::SPHERICAL) | [`SDL_HAPTIC_SPHERICAL`] | Uses spherical coordinates for the direction.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticDirection`] |
+/// | [`STEERING_AXIS`](SDL_HapticDirectionType::STEERING_AXIS) | [`SDL_HAPTIC_STEERING_AXIS`] | Use this value to play an effect on the steering wheel axis.  This provides better compatibility across platforms and devices as SDL will guess the correct axis.  \since This macro is available since SDL 3.2.0.  \sa [`SDL_HapticDirection`] |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SDL_HapticDirectionType(pub Uint8);
+
+impl ::core::cmp::PartialEq<Uint8> for SDL_HapticDirectionType {
+    #[inline(always)]
+    fn eq(&self, other: &Uint8) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_HapticDirectionType> for Uint8 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_HapticDirectionType) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_HapticDirectionType> for Uint8 {
+    #[inline(always)]
+    fn from(value: SDL_HapticDirectionType) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_HapticDirectionType {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::POLAR => "SDL_HAPTIC_POLAR",
+            Self::CARTESIAN => "SDL_HAPTIC_CARTESIAN",
+            Self::SPHERICAL => "SDL_HAPTIC_SPHERICAL",
+            Self::STEERING_AXIS => "SDL_HAPTIC_STEERING_AXIS",
+
+            _ => return write!(f, "SDL_HapticDirectionType({})", self.0),
+        })
+    }
+}
+
+impl SDL_HapticDirectionType {
+    /// Uses polar coordinates for the direction.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticDirection`]
+    pub const POLAR: Self = Self((0 as Uint8));
+    /// Uses cartesian coordinates for the direction.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticDirection`]
+    pub const CARTESIAN: Self = Self((1 as Uint8));
+    /// Uses spherical coordinates for the direction.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticDirection`]
+    pub const SPHERICAL: Self = Self((2 as Uint8));
+    /// Use this value to play an effect on the steering wheel axis.
+    ///
+    /// This provides better compatibility across platforms and devices as SDL will
+    /// guess the correct axis.
+    ///
+    /// ## Availability
+    /// This macro is available since SDL 3.2.0.
+    ///
+    /// ## See also
+    /// - [`SDL_HapticDirection`]
+    pub const STEERING_AXIS: Self = Self((3 as Uint8));
+}
 
 /// Uses polar coordinates for the direction.
 ///
@@ -308,8 +869,7 @@ pub const SDL_HAPTIC_PAUSE: ::core::primitive::u32 = 524288_u32;
 ///
 /// ## See also
 /// - [`SDL_HapticDirection`]
-pub const SDL_HAPTIC_POLAR: Uint8 = (0 as Uint8);
-
+pub const SDL_HAPTIC_POLAR: SDL_HapticDirectionType = SDL_HapticDirectionType::POLAR;
 /// Uses cartesian coordinates for the direction.
 ///
 /// ## Availability
@@ -317,8 +877,7 @@ pub const SDL_HAPTIC_POLAR: Uint8 = (0 as Uint8);
 ///
 /// ## See also
 /// - [`SDL_HapticDirection`]
-pub const SDL_HAPTIC_CARTESIAN: Uint8 = (1 as Uint8);
-
+pub const SDL_HAPTIC_CARTESIAN: SDL_HapticDirectionType = SDL_HapticDirectionType::CARTESIAN;
 /// Uses spherical coordinates for the direction.
 ///
 /// ## Availability
@@ -326,8 +885,7 @@ pub const SDL_HAPTIC_CARTESIAN: Uint8 = (1 as Uint8);
 ///
 /// ## See also
 /// - [`SDL_HapticDirection`]
-pub const SDL_HAPTIC_SPHERICAL: Uint8 = (2 as Uint8);
-
+pub const SDL_HAPTIC_SPHERICAL: SDL_HapticDirectionType = SDL_HapticDirectionType::SPHERICAL;
 /// Use this value to play an effect on the steering wheel axis.
 ///
 /// This provides better compatibility across platforms and devices as SDL will
@@ -338,16 +896,52 @@ pub const SDL_HAPTIC_SPHERICAL: Uint8 = (2 as Uint8);
 ///
 /// ## See also
 /// - [`SDL_HapticDirection`]
-pub const SDL_HAPTIC_STEERING_AXIS: Uint8 = (3 as Uint8);
+pub const SDL_HAPTIC_STEERING_AXIS: SDL_HapticDirectionType =
+    SDL_HapticDirectionType::STEERING_AXIS;
 
-/// Used to play a device an infinite number of times.
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::GroupMetadata for SDL_HapticDirectionType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::haptic::METADATA_SDL_HapticDirectionType;
+}
+
+/// ID for haptic effects.
 ///
-/// ## Availability
-/// This macro is available since SDL 3.2.0.
+/// This is -1 if the ID is invalid.
 ///
 /// ## See also
-/// - [`SDL_RunHapticEffect`]
-pub const SDL_HAPTIC_INFINITY: ::core::primitive::u32 = 4294967295_u32;
+/// - [`SDL_CreateHapticEffect`]
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_HapticEffectID(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_HapticEffectID {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_HapticEffectID> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_HapticEffectID) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_HapticEffectID> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_HapticEffectID) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::GroupMetadata for SDL_HapticEffectID {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::haptic::METADATA_SDL_HapticEffectID;
+}
 
 /// Structure that represents a haptic direction.
 ///
@@ -457,7 +1051,7 @@ pub const SDL_HAPTIC_INFINITY: ::core::primitive::u32 = 4294967295_u32;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticDirection {
     /// The type of encoding.
-    pub r#type: Uint8,
+    pub r#type: SDL_HapticDirectionType,
     /// The encoded direction.
     pub dir: [Sint32; 3],
 }
@@ -480,7 +1074,7 @@ pub struct SDL_HapticDirection {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticConstant {
     /// [`SDL_HAPTIC_CONSTANT`]
-    pub r#type: Uint16,
+    pub r#type: SDL_HapticEffectType,
     /// Direction of the effect.
     pub direction: SDL_HapticDirection,
     /// Duration of the effect.
@@ -572,7 +1166,7 @@ pub struct SDL_HapticPeriodic {
     /// [`SDL_HAPTIC_SINE`], [`SDL_HAPTIC_SQUARE`]
     /// [`SDL_HAPTIC_TRIANGLE`], [`SDL_HAPTIC_SAWTOOTHUP`] or
     /// [`SDL_HAPTIC_SAWTOOTHDOWN`]
-    pub r#type: Uint16,
+    pub r#type: SDL_HapticEffectType,
     /// Direction of the effect.
     pub direction: SDL_HapticDirection,
     /// Duration of the effect.
@@ -634,7 +1228,7 @@ pub struct SDL_HapticPeriodic {
 pub struct SDL_HapticCondition {
     /// [`SDL_HAPTIC_SPRING`], [`SDL_HAPTIC_DAMPER`],
     /// [`SDL_HAPTIC_INERTIA`] or [`SDL_HAPTIC_FRICTION`]
-    pub r#type: Uint16,
+    pub r#type: SDL_HapticEffectType,
     /// Direction of the effect.
     pub direction: SDL_HapticDirection,
     /// Duration of the effect.
@@ -679,7 +1273,7 @@ pub struct SDL_HapticCondition {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticRamp {
     /// [`SDL_HAPTIC_RAMP`]
-    pub r#type: Uint16,
+    pub r#type: SDL_HapticEffectType,
     /// Direction of the effect.
     pub direction: SDL_HapticDirection,
     /// Duration of the effect.
@@ -723,7 +1317,7 @@ pub struct SDL_HapticRamp {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticLeftRight {
     /// [`SDL_HAPTIC_LEFTRIGHT`]
-    pub r#type: Uint16,
+    pub r#type: SDL_HapticEffectType,
     /// Duration of the effect in milliseconds.
     pub length: Uint32,
     /// Control of the large controller motor.
@@ -754,7 +1348,7 @@ pub struct SDL_HapticLeftRight {
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_HapticCustom {
     /// [`SDL_HAPTIC_CUSTOM`]
-    pub r#type: Uint16,
+    pub r#type: SDL_HapticEffectType,
     /// Direction of the effect.
     pub direction: SDL_HapticDirection,
     /// Duration of the effect.
@@ -867,7 +1461,7 @@ impl ::core::default::Default for SDL_HapticCustom {
 #[derive(Clone, Copy)]
 pub union SDL_HapticEffect {
     /// Effect type.
-    pub r#type: Uint16,
+    pub r#type: SDL_HapticEffectType,
     /// Constant effect.
     pub constant: SDL_HapticConstant,
     /// Periodic effect.
@@ -1265,7 +1859,7 @@ unsafe extern "C" {
     pub fn SDL_CreateHapticEffect(
         haptic: *mut SDL_Haptic,
         effect: *const SDL_HapticEffect,
-    ) -> ::core::ffi::c_int;
+    ) -> SDL_HapticEffectID;
 }
 
 unsafe extern "C" {
@@ -1294,7 +1888,7 @@ unsafe extern "C" {
     /// - [`SDL_RunHapticEffect`]
     pub fn SDL_UpdateHapticEffect(
         haptic: *mut SDL_Haptic,
-        effect: ::core::ffi::c_int,
+        effect: SDL_HapticEffectID,
         data: *const SDL_HapticEffect,
     ) -> ::core::primitive::bool;
 }
@@ -1327,7 +1921,7 @@ unsafe extern "C" {
     /// - [`SDL_StopHapticEffects`]
     pub fn SDL_RunHapticEffect(
         haptic: *mut SDL_Haptic,
-        effect: ::core::ffi::c_int,
+        effect: SDL_HapticEffectID,
         iterations: Uint32,
     ) -> ::core::primitive::bool;
 }
@@ -1351,7 +1945,7 @@ unsafe extern "C" {
     /// - [`SDL_StopHapticEffects`]
     pub fn SDL_StopHapticEffect(
         haptic: *mut SDL_Haptic,
-        effect: ::core::ffi::c_int,
+        effect: SDL_HapticEffectID,
     ) -> ::core::primitive::bool;
 }
 
@@ -1370,7 +1964,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_CreateHapticEffect`]
-    pub fn SDL_DestroyHapticEffect(haptic: *mut SDL_Haptic, effect: ::core::ffi::c_int);
+    pub fn SDL_DestroyHapticEffect(haptic: *mut SDL_Haptic, effect: SDL_HapticEffectID);
 }
 
 unsafe extern "C" {
@@ -1393,7 +1987,7 @@ unsafe extern "C" {
     /// - [`SDL_GetHapticFeatures`]
     pub fn SDL_GetHapticEffectStatus(
         haptic: *mut SDL_Haptic,
-        effect: ::core::ffi::c_int,
+        effect: SDL_HapticEffectID,
     ) -> ::core::primitive::bool;
 }
 

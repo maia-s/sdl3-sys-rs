@@ -25,6 +25,9 @@ use super::scancode::*;
 /// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
+/// ## See also
+/// - [`SDL_HINT_KEYCODE_OPTIONS`]
+///
 /// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |

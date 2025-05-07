@@ -192,6 +192,78 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_CameraPosition {
         &crate::metadata::camera::METADATA_SDL_CameraPosition;
 }
 
+/// The current state of a request for camera access.
+///
+/// ## Availability
+/// This enum is available since SDL 3.4.0.
+///
+/// ## See also
+/// - [`SDL_GetCameraPermissionState`]
+///
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`DENIED`](SDL_CameraPermissionState::DENIED) | [`SDL_CAMERA_PERMISSION_STATE_DENIED`] | |
+/// | [`PENDING`](SDL_CameraPermissionState::PENDING) | [`SDL_CAMERA_PERMISSION_STATE_PENDING`] | |
+/// | [`APPROVED`](SDL_CameraPermissionState::APPROVED) | [`SDL_CAMERA_PERMISSION_STATE_APPROVED`] | |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SDL_CameraPermissionState(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_CameraPermissionState {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_CameraPermissionState> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_CameraPermissionState) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_CameraPermissionState> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn from(value: SDL_CameraPermissionState) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_CameraPermissionState {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        #[allow(unreachable_patterns)]
+        f.write_str(match *self {
+            Self::DENIED => "SDL_CAMERA_PERMISSION_STATE_DENIED",
+            Self::PENDING => "SDL_CAMERA_PERMISSION_STATE_PENDING",
+            Self::APPROVED => "SDL_CAMERA_PERMISSION_STATE_APPROVED",
+
+            _ => return write!(f, "SDL_CameraPermissionState({})", self.0),
+        })
+    }
+}
+
+impl SDL_CameraPermissionState {
+    pub const DENIED: Self = Self((-1_i32 as ::core::ffi::c_int));
+    pub const PENDING: Self = Self((0_i32 as ::core::ffi::c_int));
+    pub const APPROVED: Self = Self((1_i32 as ::core::ffi::c_int));
+}
+
+pub const SDL_CAMERA_PERMISSION_STATE_DENIED: SDL_CameraPermissionState =
+    SDL_CameraPermissionState::DENIED;
+pub const SDL_CAMERA_PERMISSION_STATE_PENDING: SDL_CameraPermissionState =
+    SDL_CameraPermissionState::PENDING;
+pub const SDL_CAMERA_PERMISSION_STATE_APPROVED: SDL_CameraPermissionState =
+    SDL_CameraPermissionState::APPROVED;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::GroupMetadata for SDL_CameraPermissionState {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::camera::METADATA_SDL_CameraPermissionState;
+}
+
 unsafe extern "C" {
     /// Use this function to get the number of built-in camera drivers.
     ///
@@ -450,8 +522,9 @@ unsafe extern "C" {
     /// on others the approval might be implicit and not alert the user at all.
     ///
     /// This function can be used to check the status of that approval. It will
-    /// return 0 if still waiting for user response, 1 if the camera is approved
-    /// for use, and -1 if the user denied access.
+    /// return [`SDL_CAMERA_PERMISSION_STATE_PENDING`] if waiting for user response,
+    /// [`SDL_CAMERA_PERMISSION_STATE_APPROVED`] if the camera is approved for use, and
+    /// [`SDL_CAMERA_PERMISSION_STATE_DENIED`] if the user denied access.
     ///
     /// Instead of polling with this function, you can wait for a
     /// [`SDL_EVENT_CAMERA_DEVICE_APPROVED`] (or [`SDL_EVENT_CAMERA_DEVICE_DENIED`]) event
@@ -465,8 +538,9 @@ unsafe extern "C" {
     /// - `camera`: the opened camera device to query.
     ///
     /// ## Return value
-    /// Returns -1 if user denied access to the camera, 1 if user approved access,
-    ///   0 if no decision has been made yet.
+    /// Returns an [`SDL_CameraPermissionState`] value indicating if access is
+    ///   granted, or [`SDL_CAMERA_PERMISSION_STATE_PENDING`] if the decision
+    ///   is still pending.
     ///
     /// ## Thread safety
     /// It is safe to call this function from any thread.
@@ -477,7 +551,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_OpenCamera`]
     /// - [`SDL_CloseCamera`]
-    pub fn SDL_GetCameraPermissionState(camera: *mut SDL_Camera) -> ::core::ffi::c_int;
+    pub fn SDL_GetCameraPermissionState(camera: *mut SDL_Camera) -> SDL_CameraPermissionState;
 }
 
 unsafe extern "C" {

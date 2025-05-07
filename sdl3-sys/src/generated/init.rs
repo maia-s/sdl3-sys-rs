@@ -270,7 +270,7 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_InitFlags {
 /// to run.
 ///
 /// See
-/// [Main callbacks in SDL3](https://wiki.libsdl.org/SDL3/README/main-functions#main-callbacks-in-sdl3)
+/// [Main callbacks in SDL3](https://wiki.libsdl.org/SDL3/README-main-functions#main-callbacks-in-sdl3)
 /// for complete details.
 ///
 /// ## Availability

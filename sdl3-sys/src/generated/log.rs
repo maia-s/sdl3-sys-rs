@@ -354,6 +354,9 @@ unsafe extern "C" {
     /// [`SDL_LOG_PRIORITY_WARN`] and higher have a prefix showing their priority, e.g.
     /// "WARNING: ".
     ///
+    /// This function makes a copy of its string argument, **prefix**, so it is not
+    /// necessary to keep the value of **prefix** alive after the call returns.
+    ///
     /// ## Parameters
     /// - `priority`: the [`SDL_LogPriority`] to modify.
     /// - `prefix`: the prefix to use for that log priority, or NULL to use no
@@ -428,7 +431,6 @@ unsafe extern "C" {
     /// - [`SDL_LogInfo`]
     /// - [`SDL_LogMessage`]
     /// - [`SDL_LogMessageV`]
-    /// - [`SDL_LogTrace`]
     /// - [`SDL_LogVerbose`]
     /// - [`SDL_LogWarn`]
     pub fn SDL_LogTrace(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);

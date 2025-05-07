@@ -64,7 +64,7 @@ pub const METADATA_SDL_JoystickType: Group = Group {
     name: "SDL_JoystickType",
     short_name: "JoystickType",
     doc: Some(
-        "An enum of some common joystick types.\n\nIn some cases, SDL can identify a low-level joystick as being a certain\ntype of device, and will report it through [`SDL_GetJoystickType`] (or\n[`SDL_GetJoystickTypeForID`]).\n\nThis is by no means a complete list of everything that can be plugged into\na computer.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+        "An enum of some common joystick types.\n\nIn some cases, SDL can identify a low-level joystick as being a certain\ntype of device, and will report it through [`SDL_GetJoystickType`] (or\n[`SDL_GetJoystickTypeForID`]).\n\nThis is by no means a complete list of everything that can be plugged into\na computer.\n\nYou may refer to\n[XInput Controller Types](https://learn.microsoft.com/en-us/windows/win32/xinput/xinput-and-controller-subtypes)\ntable for a general understanding of each joystick type.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
