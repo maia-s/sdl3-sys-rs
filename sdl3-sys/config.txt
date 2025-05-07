@@ -3,5 +3,7 @@ lib_name: SDL3
 lib_min_version: 3.1.3
 lib_dir: SDL
 include_dir: include/SDL3
-sym_prefix: SDL_
+version_header: SDL_version.h
 headers_prefix: SDL_
+sym_prefix: SDL_
+define_prefix: SDL_

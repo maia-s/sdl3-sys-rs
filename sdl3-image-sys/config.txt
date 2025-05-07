@@ -3,5 +3,7 @@ lib_name: SDL3_image
 lib_min_version: 3.2.0
 lib_dir: SDL_image
 include_dir: include/SDL3_image
-sym_prefix: IMG_
+version_header: SDL_image.h
 headers_prefix: SDL_
+sym_prefix: IMG_
+define_prefix: SDL_IMAGE_

@@ -156,9 +156,13 @@ impl LinesPatch<'_> {
     }
 }
 
+fn read_to_string(path: &Path) -> Result<String, Error> {
+    Ok(fs::read_to_string(path)
+        .map_err(|e| format!("error reading `{}`: {}", path.display(), e))?)
+}
+
 fn patch_file(path: &Path, patches: &[LinesPatch]) -> Result<(), Error> {
-    let mut contents = fs::read_to_string(path)
-        .map_err(|e| format!("error reading `{}`: {}", path.display(), e))?;
+    let mut contents = read_to_string(path)?;
     for patch in patches {
         contents = patch.patch(&contents);
     }
@@ -234,6 +238,52 @@ impl Library {
         let lib_name = sys_crate.config("lib_name");
         let lib_name_meta = lib_name.replace('_', "-"); // version metadata can't have `_`
         let lib_dir = sys_crate.config("lib_dir");
+        let include_dir = sys_crate.config("include_dir");
+        let version_header = src_crate
+            .root_path
+            .join(lib_dir)
+            .join(include_dir)
+            .join(sys_crate.config("version_header"));
+        let define_prefix = sys_crate.config("define_prefix");
+
+        let mut version_major = None;
+        let mut version_minor = None;
+        let mut version_micro = None;
+        for line in read_to_string(&version_header)?.lines() {
+            if let Some(line) = line.trim_ascii_start().strip_prefix("#define") {
+                if let Some(line) = line.trim_ascii_start().strip_prefix(define_prefix) {
+                    if let Some(line) = line.strip_prefix("MAJOR_VERSION") {
+                        version_major = Some(
+                            line.trim_ascii()
+                                .parse::<usize>()
+                                .map_err(|e| format!("couldn't parse major version: {e}"))?,
+                        );
+                    } else if let Some(line) = line.strip_prefix("MINOR_VERSION") {
+                        version_minor = Some(
+                            line.trim_ascii()
+                                .parse::<usize>()
+                                .map_err(|e| format!("couldn't parse minor version: {e}"))?,
+                        );
+                    } else if let Some(line) = line.strip_prefix("MICRO_VERSION") {
+                        version_micro = Some(
+                            line.trim_ascii()
+                                .parse::<usize>()
+                                .map_err(|e| format!("couldn't parse micro version: {e}"))?,
+                        );
+                    }
+                    if version_major.is_some() && version_minor.is_some() && version_micro.is_some()
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        let version = format!(
+            "{}.{}.{}",
+            version_major.unwrap(),
+            version_minor.unwrap(),
+            version_micro.unwrap()
+        );
 
         let git_describe = {
             let cwd = current_dir()?;
@@ -254,74 +304,40 @@ impl Library {
         let (rest, revision_hash) = git_describe.rsplit_once('-').unwrap();
         let (revision_tag, revision_offset) = rest.rsplit_once('-').unwrap();
 
-        let (revision_tag_base, version, src_ver, src_ver_display, revision, revision_metadata) =
-            if let Some((revision_tag_base, version)) = revision_tag.rsplit_once('-') {
+        let (revision_tag_base, revision_ver) =
+            if let Some((revision_tag_base, _)) = revision_tag.rsplit_once('-') {
                 match (revision_tag_base, revision_offset) {
-                    ("release", "0") => {
-                        let ver = version.to_string();
-                        (
-                            revision_tag_base,
-                            version,
-                            ver.clone(),
-                            ver.clone(),
-                            format!("{lib_name}-{revision_tag}"),
-                            format!("{lib_name_meta}-{ver}"),
-                        )
-                    }
+                    ("release", "0") => (revision_tag_base, version.clone()),
 
-                    (_, "0") => {
-                        let ver = format!("{version}-{revision_tag_base}");
-                        let rev = format!("{lib_name}-{revision_tag}");
-                        let rev_meta = format!("{lib_name_meta}-{revision_tag}");
-                        (
-                            revision_tag_base,
-                            version,
-                            format!("{ver}-{revision_offset}"),
-                            ver,
-                            rev,
-                            rev_meta,
-                        )
-                    }
+                    (_, "0") => (revision_tag_base, format!("{version}-{revision_tag}")),
 
-                    (_, _) => {
-                        let ver = format!(
-                            "{version}-{revision_tag_base}-{revision_offset}-{revision_hash}"
-                        );
-                        let rev =
-                            format!("{lib_name}-{revision_tag}-{revision_offset}-{revision_hash}");
-                        let rev_meta = format!(
-                            "{lib_name_meta}-{revision_tag}-{revision_offset}-{revision_hash}"
-                        );
-                        (revision_tag_base, version, ver.clone(), ver, rev, rev_meta)
-                    }
+                    (_, _) => (
+                        revision_tag_base,
+                        format!("{version}-{revision_tag}-{revision_offset}-{revision_hash}"),
+                    ),
                 }
             } else if revision_tag.starts_with('v')
                 && revision_tag[1..].chars().next().unwrap().is_ascii_digit()
             {
-                let revision_tag_base = "";
-                let version = &revision_tag[1..];
-                let ver = version.to_owned();
                 if revision_offset == "0" {
-                    (
-                        revision_tag_base,
-                        version,
-                        ver.clone(),
-                        ver,
-                        format!("{lib_name}-{revision_tag}"),
-                        format!("{lib_name_meta}-{revision_tag}"),
-                    )
+                    ("", format!("{version}-{revision_tag}"))
                 } else {
-                    todo!()
+                    (
+                        "",
+                        format!("{version}-{revision_tag}-{revision_offset}-{revision_hash}"),
+                    )
                 }
             } else {
                 todo!()
             };
+        let revision = format!("{lib_name}-{revision_ver}");
+        let revision_meta = revision.replace('_', "-");
 
         patch_file(
             &src_crate.cargo_toml_path(),
             &[LinesPatch {
                 match_lines: &[&|s| s.starts_with("version =")],
-                apply: &|_| format!("version = \"{src_ver}\"\n"),
+                apply: &|_| format!("version = \"{revision_ver}\"\n"),
             }],
         )?;
 
@@ -330,7 +346,7 @@ impl Library {
             &[
                 LinesPatch {
                     match_lines: &[&|s| s.starts_with("pub const REVISION:")],
-                    apply: &|_| format!("pub const REVISION: &str = {revision:?};\n"),
+                    apply: &|_| format!("pub const REVISION: &str = \"{revision}\";\n"),
                 },
                 LinesPatch {
                     match_lines: &[&|s| s.starts_with("pub const VERSION:")],
@@ -371,7 +387,7 @@ impl Library {
                         else {
                             unreachable!()
                         };
-                        format!("{}{}\"\n", &line[..=revision_pos], revision_metadata)
+                        format!("{}{revision_meta}\"\n", &line[..=revision_pos],)
                     },
                 },
                 LinesPatch {
@@ -379,7 +395,7 @@ impl Library {
                         &|s| s == format!("[build-dependencies.{}]", src_crate.name),
                         &|s| s.starts_with("version ="),
                     ],
-                    apply: &|lines| format!("{}version = \"{src_ver}\"\n", lines[0]),
+                    apply: &|lines| format!("{}version = \"{revision_ver}\"\n", lines[0]),
                 },
             ],
         )?;
@@ -392,10 +408,10 @@ impl Library {
                     let match_ = &format!("bindings for {lib_dir} version");
                     let line = &lines[0];
                     let pfx = &line[..line.find(match_).unwrap() + match_.len()];
-                    if src_ver_display == "3.2.0" {
-                        format!("{pfx} `{src_ver_display}`.\n")
+                    if version == "3.2.0" {
+                        format!("{pfx} `{version}`.\n")
                     } else {
-                        format!("{pfx}s `3.2.0` to `{src_ver_display}`, inclusive.\n")
+                        format!("{pfx}s `3.2.0` to `{revision_ver}`, inclusive.\n")
                     }
                 },
             }],
@@ -923,7 +939,7 @@ impl Gen {
                             patched
                         },
                     }
-                    .patch(fs::read_to_string(&main_impl).unwrap().as_str())
+                    .patch(read_to_string(&main_impl).unwrap().as_str())
                 },
             }
             .patch(input.as_str()),
