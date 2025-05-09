@@ -1,7 +1,7 @@
 # sdl3-sys: Low level Rust bindings for SDL 3
 
 These are low level Rust bindings for SDL, the [Simple DirectMedia Layer](https://libsdl.org).
-This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.2.12`, inclusive.
+This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.2.10`, inclusive.
 
 Many types can be initialized to all zero with the `Default` trait for convenience.
 However, many of these aren't valid when passed to SDL without further modification.
@@ -104,10 +104,6 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
-- 0.4.8:
-    - Update SDL to 3.2.12
-    - Add `no-link` feature
-    - On Apple targets, look for frameworks in `~/Library/Frameworks` too
 - 0.4.7:
     - Update SDL to 3.2.10
     - Derive PartialEq/Eq/Hash traits for applicable types
