@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-main"
-version = "0.5.0"
+version = "0.6.0"
 edition = "2021"
 authors = ["Maia S. R."]
 license = "Zlib"
@@ -21,7 +21,7 @@ use-parking-lot-v0-12 = ["dep:parking-lot-v0-12", "std"]
 
 [dependencies.sdl3-sys]
 path = "../sdl3-sys"
-version = "0.5"
+version = "0.6"
 
 [dependencies.sdl3-main-macros]
 path = "../sdl3-main-macros"

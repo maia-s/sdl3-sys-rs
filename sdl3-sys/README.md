@@ -32,7 +32,7 @@ If you're looking for more idiomatic or higher level bindings, check out the
 
 ## Usage
 
-`sdl3-sys` requires SDL version `3.1.3` or later, but `3.2.0` or later is preferred.
+`sdl3-sys` requires SDL version `3.1.3` or later, but `3.2.0` or later is recommended.
 Some APIs may require a later version. You can check availability in the documentation.
 
 By default, `sdl3-sys` will attempt to link to a dynamic/shared library named
@@ -52,10 +52,20 @@ convention for libraries. You can change this behaviour with the following featu
 ### Building from source
 
 When building from source with the `build-from-source` feature flag, you can enable these
-additional features to configure the build. These have no effect when not building from source.
+additional features to configure the build. They have no effect when not building from source.
+They correspond to SDL CMake variables, and you can prefix them with `no-` to disable them,
+e.g. `no-sdl-libc` to not link with the system C library. If you both enable and disable a
+feature, enable takes precendece.
 
-| Feature | Description |
-| ------- | ----------- |
+Most of these features only work on some targets; don't enable them unless you need them.
+
+| Feature                  | Description |
+| ------------------------ | ----------- |
+| `sdl-asan`               | Compile SDL with Address Sanitizer. |
+| `sdl-ccache`             | Compile SDL with Ccache. |
+| `sdl-gpu-dxvk`           | Build SDL GPU with DXVK support. |
+| `sdl-libc`               | Link SDL with system C library (default). Use `no-sdl-libc` to disable. |
+| `sdl-rpath`              | Set RPATH when linking SDL (default on some targets). Use `no-sdl-rpath` to disable. |
 | `sdl-unix-console-build` | Allow building SDL without X11 or Wayland support on Linux and other targets that usually use X11/Wayland. By default, SDL requires either X11 or Wayland on these targets as a sanity check. |
 
 ## Target specific features
@@ -106,11 +116,11 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
-- 0.5.0: Make IDs and flag types newtypes, add metadata
-- 0.4.8:
+- 0.6.0 WIP: Make IDs and flag types newtypes, add metadata
+- 0.5.0:
     - Update SDL to 3.2.12
     - Add `no-link` feature
-    - On Apple targets, look for frameworks in `~/Library/Frameworks` too
+    - Add more SDL CMake features for use when building from source
 - 0.4.7:
     - Update SDL to 3.2.10
     - Derive PartialEq/Eq/Hash traits for applicable types

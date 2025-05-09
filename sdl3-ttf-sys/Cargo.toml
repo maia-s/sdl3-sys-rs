@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-ttf-sys"
-version = "0.2.0+SDL3-ttf-3.2.2"
+version = "0.3.0+SDL3-ttf-3.2.2"
 edition = "2021"
 authors = ["Maia S. R."]
 license = "Zlib"
@@ -61,7 +61,7 @@ no-sdlttf-harfbuzz = []
 no-sdlttf-plutosvg = []
 
 [dependencies]
-sdl3-sys = { version = "0.5", path = "../sdl3-sys" }
+sdl3-sys = { version = "0.6", path = "../sdl3-sys" }
 
 [build-dependencies.cmake]
 version = "0.1"

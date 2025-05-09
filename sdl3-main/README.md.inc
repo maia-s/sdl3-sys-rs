@@ -24,10 +24,11 @@ See the documentation for more information.
 
 ## Recent changes
 
-- 0.5.0:
-  - Update sdl3-sys to 0.5.0
+- 0.6.0 WIP:
+  - Update sdl3-sys to 0.6.0
   - Removed `MainThreadToken::init` (no longer necessary)
   - Pass arguments to main on `std` (`!std` already did)
+- 0.5.0: Update sdl3-sys to 0.5.0
 - 0.4.2:
   - Added optional parking_lot integration
   - Added `run_{sync,async}_on_main_thread` and `MainThreadData::get[_mut]_on_main_thread`
