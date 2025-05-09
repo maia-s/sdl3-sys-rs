@@ -118,6 +118,7 @@ These features are mutually exclusive. Features higher in this list override lat
     - Update SDL to 3.2.12
     - Add `no-link` feature
     - Add more SDL CMake features for use when building from source
+    - On Apple targets, look for frameworks in `~/Library/Frameworks` too
 - 0.4.7:
     - Update SDL to 3.2.10
     - Derive PartialEq/Eq/Hash traits for applicable types
