@@ -104,6 +104,7 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
+- 0.4.9: Revert semver break in 0.4.8 (moved to sdl3-sys 0.5).
 - 0.4.7:
     - Update SDL to 3.2.10
     - Derive PartialEq/Eq/Hash traits for applicable types
