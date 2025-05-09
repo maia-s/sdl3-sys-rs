@@ -65,7 +65,9 @@ disables harfbuzz support. Activated features override features disabled with th
 
 ## Recent changes
 
-- next:  Add `no-link` feature, and look for frameworks in `~/Library/Frameworks` too
+- 0.2.0:
+    - Update sdl3-sys to 0.5.0
+    - Add `no-link` feature, and look for frameworks in `~/Library/Frameworks` too
 - 0.1.3: Add `link-framework` feature (doesn't work with `build-from-source` yet)
 - 0.1.2: Fix vendored build of Freetype with CMake 4
 - 0.1.1: Update SDL_ttf to 3.2.2

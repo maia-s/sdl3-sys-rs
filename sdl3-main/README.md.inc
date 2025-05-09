@@ -22,8 +22,9 @@ See the documentation for more information.
 | `nightly`               | Enable the `?` operator to convert `Result::Err` and `Option::None` to `AppResult*::Failure` |
 | `use-parking-lot-v0-12` | Support parking_lot 0.12 locks in app state accessors |
 
-## Version history
+## Recent changes
 
+- 0.5.0: Update sdl3-sys to 0.5.0
 - 0.4.2:
   - Added optional parking_lot integration
   - Added `run_{sync,async}_on_main_thread` and `MainThreadData::get[_mut]_on_main_thread`
