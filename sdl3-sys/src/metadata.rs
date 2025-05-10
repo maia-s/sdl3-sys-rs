@@ -20,13 +20,12 @@ unsafe impl Sync for Hint {}
 
 impl Hint {
     #[inline(always)]
-    pub fn value_cstr(&self) -> &'static CStr {
-        // CStr::from_ptr is only const since rust 1.81
+    pub const fn value_cstr(&self) -> &'static CStr {
         unsafe { CStr::from_ptr(self.value) }
     }
 
     #[inline(always)]
-    pub fn value_str(&self) -> &'static str {
+    pub const fn value_str(&self) -> &'static str {
         match self.value_cstr().to_str() {
             Ok(str) => str,
             Err(_) => unreachable!(),
@@ -51,13 +50,12 @@ unsafe impl Sync for Property {}
 
 impl Property {
     #[inline(always)]
-    pub fn value_cstr(&self) -> &'static CStr {
-        // CStr::from_ptr is only const since rust 1.81
+    pub const fn value_cstr(&self) -> &'static CStr {
         unsafe { CStr::from_ptr(self.value) }
     }
 
     #[inline(always)]
-    pub fn value_str(&self) -> &'static str {
+    pub const fn value_str(&self) -> &'static str {
         match self.value_cstr().to_str() {
             Ok(str) => str,
             Err(_) => unreachable!(),

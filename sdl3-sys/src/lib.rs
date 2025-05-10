@@ -7,8 +7,6 @@
 
 extern crate self as sdl3_sys;
 
-use core::mem::size_of;
-
 // This macro is used to apply a cfg attribute to multiple items
 // e.g. `apply_cfg!(#[cfg(feature = "nightly")] => { type VaList = ::core::ffi::VaList; })`
 macro_rules! apply_cfg {
