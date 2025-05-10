@@ -989,8 +989,11 @@ pub struct SDL_TextEditingCandidatesEvent {
     pub selected_candidate: Sint32,
     /// true if the list is horizontal, false if it's vertical
     pub horizontal: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
@@ -1105,6 +1108,7 @@ pub struct SDL_MouseButtonEvent {
     pub down: ::core::primitive::bool,
     /// 1 for single-click, 2 for double-click, etc.
     pub clicks: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding: Uint8,
     /// X coordinate, relative to window
     pub x: ::core::ffi::c_float,
@@ -1162,11 +1166,15 @@ pub struct SDL_JoyAxisEvent {
     pub which: SDL_JoystickID,
     /// The joystick axis index
     pub axis: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
     /// The axis value (range: -32768 to 32767)
     pub value: Sint16,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding4: Uint16,
 }
 
@@ -1187,8 +1195,11 @@ pub struct SDL_JoyBallEvent {
     pub which: SDL_JoystickID,
     /// The joystick trackball index
     pub ball: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
     /// The relative motion in the X direction
     pub xrel: Sint16,
@@ -1221,7 +1232,9 @@ pub struct SDL_JoyHatEvent {
     ///
     /// Note that zero means the POV is centered.
     pub value: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
@@ -1244,7 +1257,9 @@ pub struct SDL_JoyButtonEvent {
     pub button: Uint8,
     /// true if the button is pressed
     pub down: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
@@ -1309,11 +1324,15 @@ pub struct SDL_GamepadAxisEvent {
     pub which: SDL_JoystickID,
     /// The gamepad axis ([`SDL_GamepadAxis`])
     pub axis: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
     /// The axis value (range: -32768 to 32767)
     pub value: Sint16,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding4: Uint16,
 }
 
@@ -1336,7 +1355,9 @@ pub struct SDL_GamepadButtonEvent {
     pub button: Uint8,
     /// true if the button is pressed
     pub down: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
@@ -1434,8 +1455,11 @@ pub struct SDL_AudioDeviceEvent {
     pub which: SDL_AudioDeviceID,
     /// false if a playback device, true if a recording device.
     pub recording: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
@@ -1896,6 +1920,7 @@ pub union SDL_Event {
     pub drop: SDL_DropEvent,
     /// Clipboard event data
     pub clipboard: SDL_ClipboardEvent,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding: [Uint8; 128],
 }
 

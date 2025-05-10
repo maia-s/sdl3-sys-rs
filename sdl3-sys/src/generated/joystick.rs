@@ -506,6 +506,7 @@ extern "C" {
 pub struct SDL_VirtualJoystickTouchpadDesc {
     /// the number of simultaneous fingers on this touchpad
     pub nfingers: Uint16,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding: [Uint16; 3],
 }
 
@@ -547,6 +548,7 @@ pub struct SDL_VirtualJoystickDesc {
     /// [`SDL_JoystickType`]
     pub r#type: Uint16,
     /// unused
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding: Uint16,
     /// the USB vendor ID of this joystick
     pub vendor_id: Uint16,
@@ -565,6 +567,7 @@ pub struct SDL_VirtualJoystickDesc {
     /// the number of sensors on this joystick, requires `sensors` to point at valid descriptions
     pub nsensors: Uint16,
     /// unused
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: [Uint16; 2],
     /// A mask of which buttons are valid for this controller
     /// e.g. (1 << [`SDL_GAMEPAD_BUTTON_SOUTH`])

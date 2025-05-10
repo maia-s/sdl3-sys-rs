@@ -1140,6 +1140,9 @@ impl StructOrUnion {
 
             for field in fields.fields.iter() {
                 field.doc.emit(ctx_ool)?;
+                if field.ident.as_str().starts_with("padding") {
+                    writeln!(ctx_ool, "#[deprecated(note = \"padding fields are exempt from semver; init with `..Default::default()`\")]")?;
+                }
                 write!(ctx_ool, "pub ")?;
                 field.ident.emit(ctx_ool)?;
                 write!(ctx_ool, ": ")?;
