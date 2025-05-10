@@ -2534,6 +2534,7 @@ pub struct SDL_PixelFormatDetails {
     pub format: SDL_PixelFormat,
     pub bits_per_pixel: Uint8,
     pub bytes_per_pixel: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding: [Uint8; 2],
     pub Rmask: Uint32,
     pub Gmask: Uint32,

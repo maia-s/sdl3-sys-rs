@@ -55,7 +55,7 @@ When building from source with the `build-from-source` feature flag, you can ena
 additional features to configure the build. They have no effect when not building from source.
 They correspond to SDL CMake variables, and you can prefix them with `no-` to disable them,
 e.g. `no-sdl-libc` to not link with the system C library. If you both enable and disable a
-feature, enable takes precendece.
+feature, enable takes precedence.
 
 Most of these features only work on some targets; don't enable them unless you need them.
 
@@ -121,6 +121,7 @@ These features are mutually exclusive. Features higher in this list override lat
     - Update SDL to 3.2.12
     - Add `no-link` feature
     - Add more SDL CMake features for use when building from source
+    - On Apple targets, look for frameworks in `~/Library/Frameworks` too
 - 0.4.7:
     - Update SDL to 3.2.10
     - Derive PartialEq/Eq/Hash traits for applicable types

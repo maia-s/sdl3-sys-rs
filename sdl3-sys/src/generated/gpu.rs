@@ -4236,7 +4236,9 @@ pub struct SDL_GPUSamplerCreateInfo {
     pub enable_anisotropy: ::core::primitive::bool,
     /// true to enable comparison against a reference value during lookups.
     pub enable_compare: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
     /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
@@ -4382,7 +4384,9 @@ pub struct SDL_GPUColorTargetBlendState {
     pub enable_blend: ::core::primitive::bool,
     /// Whether the color write mask is enabled.
     pub enable_color_write_mask: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
@@ -4544,7 +4548,9 @@ pub struct SDL_GPURasterizerState {
     pub enable_depth_bias: ::core::primitive::bool,
     /// true to enable depth clip, false to enable depth clamp.
     pub enable_depth_clip: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
@@ -4566,8 +4572,11 @@ pub struct SDL_GPUMultisampleState {
     pub sample_mask: Uint32,
     /// Reserved for future use. Must be set to false.
     pub enable_mask: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
@@ -4599,8 +4608,11 @@ pub struct SDL_GPUDepthStencilState {
     pub enable_depth_write: ::core::primitive::bool,
     /// true enables the stencil test.
     pub enable_stencil_test: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
@@ -4644,8 +4656,11 @@ pub struct SDL_GPUGraphicsPipelineTargetInfo {
     pub depth_stencil_format: SDL_GPUTextureFormat,
     /// true specifies that the pipeline uses a depth-stencil target.
     pub has_depth_stencil_target: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
@@ -4814,7 +4829,9 @@ pub struct SDL_GPUColorTargetInfo {
     pub cycle: ::core::primitive::bool,
     /// true cycles the resolve texture if the resolve texture is bound. Ignored if a RESOLVE* store_op is not used.
     pub cycle_resolve_texture: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
@@ -4890,7 +4907,9 @@ pub struct SDL_GPUDepthStencilTargetInfo {
     pub cycle: ::core::primitive::bool,
     /// The value to clear the stencil component to at the beginning of the render pass. Ignored if [`SDL_GPU_LOADOP_CLEAR`] is not used.
     pub clear_stencil: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
@@ -4927,8 +4946,11 @@ pub struct SDL_GPUBlitInfo {
     pub filter: SDL_GPUFilter,
     /// true cycles the destination texture if it is already bound.
     pub cycle: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
@@ -5008,8 +5030,11 @@ pub struct SDL_GPUStorageBufferReadWriteBinding {
     pub buffer: *mut SDL_GPUBuffer,
     /// true cycles the buffer if it is already bound.
     pub cycle: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
@@ -5041,8 +5066,11 @@ pub struct SDL_GPUStorageTextureReadWriteBinding {
     pub layer: Uint32,
     /// true cycles the texture if it is already bound.
     pub cycle: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 

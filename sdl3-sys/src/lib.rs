@@ -20,6 +20,7 @@ macro_rules! size_of_field {
     ($struct:ty, $field:ident) => {
         $crate::size_of_return_value(&|s: $struct| unsafe {
             // safety: this is never evaluated
+            #[allow(deprecated)]
             s.$field
         })
     };
