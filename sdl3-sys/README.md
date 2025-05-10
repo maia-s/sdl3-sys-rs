@@ -116,7 +116,10 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
-- 0.6.0 WIP: Make IDs and flag types newtypes, add metadata
+- 0.6.0 WIP:
+    - Make IDs and flag types newtypes
+    - Add metadata
+    - MSRV 1.81
 - 0.5.0:
     - Update SDL to 3.2.12
     - Add `no-link` feature
