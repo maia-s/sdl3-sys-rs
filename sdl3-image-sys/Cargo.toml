@@ -42,7 +42,7 @@ use-pkg-config = ["dep:pkg-config"]
 use-vcpkg = ["dep:vcpkg"]
 
 # Implement the Debug trait for applicable types
-debug-impls = []
+debug-impls = ["sdl3-sys/debug-impls"]
 
 # Enable metadata
 metadata = []
