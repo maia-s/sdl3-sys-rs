@@ -2510,7 +2510,6 @@ pub struct SDL_FColor {
 /// ## See also
 /// - [`SDL_SetPaletteColors`]
 #[repr(C)]
-// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Palette {
     /// number of elements in `colors`.
@@ -2521,6 +2520,8 @@ pub struct SDL_Palette {
     pub version: Uint32,
     /// internal use only, do not touch.
     pub refcount: ::core::ffi::c_int,
+    #[doc(hidden)]
+    __non_exhaustive: ::sdl3_sys::NonExhaustive,
 }
 
 /// Details about the format of a pixel.

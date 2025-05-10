@@ -210,7 +210,6 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_SystemTheme {
 /// - [`SDL_SetWindowFullscreenMode`]
 /// - [`SDL_GetWindowFullscreenMode`]
 #[repr(C)]
-// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DisplayMode {
     /// the display this mode is associated with
@@ -231,6 +230,8 @@ pub struct SDL_DisplayMode {
     pub refresh_rate_denominator: ::core::ffi::c_int,
     /// Private
     pub internal: *mut SDL_DisplayModeData,
+    #[doc(hidden)]
+    __non_exhaustive: ::sdl3_sys::NonExhaustive,
 }
 
 /// Display orientation values; the way a display is rotated.

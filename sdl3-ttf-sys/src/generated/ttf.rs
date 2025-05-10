@@ -2651,7 +2651,6 @@ pub use super::textengine::TTF_TextEngine;
 /// - [`TTF_GetTextProperties`]
 /// - [`TTF_DestroyText`]
 #[repr(C)]
-// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct TTF_Text {
     /// A copy of the UTF-8 string that this text object represents, useful for layout, debugging and retrieving substring text. This is updated when the text object is modified and will be freed automatically when the object is destroyed.
@@ -2662,6 +2661,8 @@ pub struct TTF_Text {
     pub refcount: ::core::ffi::c_int,
     /// Private
     pub internal: *mut TTF_TextData,
+    #[doc(hidden)]
+    __non_exhaustive: ::sdl3_sys::NonExhaustive,
 }
 
 extern "C" {

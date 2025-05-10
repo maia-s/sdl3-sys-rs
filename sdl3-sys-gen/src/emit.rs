@@ -1602,10 +1602,6 @@ impl StructOrUnion {
             }
             sym.doc.emit(ctx_ool)?;
             writeln!(ctx_ool, "#[repr(C)]")?;
-            if !sym.can_construct {
-                // !!!FIXME
-                writeln!(ctx_ool, "// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699")?;
-            }
             emit_derives(
                 ctx_ool,
                 can_derive_copy,
@@ -1632,6 +1628,11 @@ impl StructOrUnion {
                 write!(ctx_ool, ": ")?;
                 field.ty.emit(ctx_ool)?;
                 writeln!(ctx_ool, ",")?;
+            }
+            if !sym.can_construct {
+                // see https://github.com/rust-lang/rust/issues/132699
+                writeln!(ctx_ool, "#[doc(hidden)]")?;
+                writeln!(ctx_ool, "__non_exhaustive: ::sdl3_sys::NonExhaustive,")?;
             }
 
             ctx_ool.decrease_indent();

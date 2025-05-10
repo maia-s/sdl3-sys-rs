@@ -234,7 +234,6 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_RendererLogicalPresentation {
 /// - [`SDL_CreateTextureWithProperties`]
 /// - [`SDL_DestroyTexture`]
 #[repr(C)]
-// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Texture {
     /// The format of the texture, read-only
@@ -245,6 +244,8 @@ pub struct SDL_Texture {
     pub h: ::core::ffi::c_int,
     /// Application reference count, used when freeing texture
     pub refcount: ::core::ffi::c_int,
+    #[doc(hidden)]
+    __non_exhaustive: ::sdl3_sys::NonExhaustive,
 }
 
 extern "C" {

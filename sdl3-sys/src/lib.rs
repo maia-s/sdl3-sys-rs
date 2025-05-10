@@ -51,6 +51,21 @@ macro_rules! __const_c_str {
     };
 }
 
+#[doc(hidden)]
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct NonExhaustive(());
+
+#[cfg(feature = "debug-impls")]
+impl core::fmt::Debug for NonExhaustive {
+    #[inline(always)]
+    fn fmt(&self, _: &mut core::fmt::Formatter) -> core::fmt::Result {
+        Ok(())
+    }
+}
+
+const _: () = assert!(size_of::<NonExhaustive>() == 0);
+
 mod generated;
 pub use generated::*;
 

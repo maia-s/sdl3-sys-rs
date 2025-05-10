@@ -375,7 +375,6 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_FlipMode {
 /// - [`SDL_CreateSurface`]
 /// - [`SDL_DestroySurface`]
 #[repr(C)]
-// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Surface {
     /// The flags of the surface, read-only
@@ -394,6 +393,8 @@ pub struct SDL_Surface {
     pub refcount: ::core::ffi::c_int,
     /// Reserved for internal use
     pub reserved: *mut ::core::ffi::c_void,
+    #[doc(hidden)]
+    __non_exhaustive: ::sdl3_sys::NonExhaustive,
 }
 
 /// Evaluates to true if the surface needs to be locked before access.
