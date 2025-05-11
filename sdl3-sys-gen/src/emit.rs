@@ -35,6 +35,7 @@ pub fn doc_link_sym(s: &str) -> Option<(&str, &str)> {
     match s {
         // libraries
         "SDL_image"
+        | "SDL_mixer"
         | "SDL_ttf"
         // unused preprocessor syms, environment variables, etc
         | "SDL_FILESYSTEM_BASE_DIR_TYPE"
