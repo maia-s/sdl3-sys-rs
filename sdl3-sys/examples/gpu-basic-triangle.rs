@@ -1,3 +1,6 @@
+//! Based on the official example in C here:
+//! https://github.com/TheSpydog/SDL_gpu_examples/blob/main/Examples/BasicTriangle.c
+
 use std::ptr::null_mut;
 use std::sync::Mutex;
 

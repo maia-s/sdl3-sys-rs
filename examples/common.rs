@@ -71,7 +71,7 @@ pub unsafe fn load_shader(
         num_storage_buffers: meta.storage_buffers,
         num_uniform_buffers: meta.uniform_buffers,
         num_storage_textures: meta.storage_textures,
-        props: 0,
+        props: Default::default(),
     };
     let shader = SDL_CreateGPUShader(device, &shader_info);
     if shader.is_null() {

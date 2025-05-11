@@ -211,8 +211,6 @@ dependencies = [
  "rpkg-config",
  "sdl3-main",
  "sdl3-src",
- "serde",
- "serde_json",
  "vcpkg",
  "windows-sys",
  "x11",
@@ -225,6 +223,16 @@ version = "0.1.0"
 dependencies = [
  "const-it",
  "str-block",
+]
+
+[[package]]
+name = "sdl3-sys-gpu-pull-sprite-batch-example"
+version = "0.1.0"
+dependencies = [
+ "sdl3-main",
+ "sdl3-sys",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

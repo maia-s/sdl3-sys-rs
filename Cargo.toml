@@ -8,8 +8,10 @@ members = [
     "sdl3-src",
     "sdl3-sys-gen",
     "sdl3-sys",
+    # "sdl3-sys/examples/gpu-*",
     "sdl3-ttf-src",
     "sdl3-ttf-sys",
+    "examples/gpu-*",
 ]
 default-members = [
     "sdl3-sys",
