@@ -1,2 +1,3 @@
 /target
-/sdl3-gfx-src/SDL3_gfx/*
+/sdl3-gfx-src/SDL3_gfx
+/sdl3-mixer-src/SDL_remixer
