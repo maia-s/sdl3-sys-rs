@@ -294,12 +294,28 @@ impl Library {
                 .args(["describe", "--tags", "--long"])
                 .output()?
         };
-        if !git_describe.status.success() {
-            return Err("git describe failed".into());
-        }
-        let git_describe = String::from_utf8_lossy(&git_describe.stdout)
-            .trim()
-            .to_owned();
+        let git_describe = if git_describe.status.success() {
+            String::from_utf8_lossy(&git_describe.stdout)
+                .trim()
+                .to_owned()
+        } else {
+            let git_rev = {
+                let cwd = current_dir()?;
+                set_current_dir(src_crate.root_path.join(lib_dir))
+                    .map_err(|e| format!("error setting cwd to `{lib_dir}`: {e}"))?;
+                let _cwd = Defer::new(|| set_current_dir(cwd).unwrap());
+                Command::new("git")
+                    .args(["rev-parse", "--short", "HEAD"])
+                    .output()?
+            };
+            if !git_rev.status.success() {
+                return Err("couldn't get git revision".into());
+            }
+            format!(
+                "v0.0.0-x-g{}",
+                String::from_utf8_lossy(&git_rev.stdout).trim()
+            )
+        };
 
         let (rest, revision_hash) = git_describe.rsplit_once('-').unwrap();
         let (revision_tag, revision_offset) = rest.rsplit_once('-').unwrap();
