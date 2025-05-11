@@ -345,6 +345,25 @@ impl Library {
             &src_crate.lib_rs_path(),
             &[
                 LinesPatch {
+                    match_lines: &[
+                        &|s| s == "#[cfg(not(windows))]",
+                        &|s| s.starts_with("pub const SOURCE_DIR:"),
+                        &|s| s == "#[cfg(windows)]",
+                        &|s| s.starts_with("pub const SOURCE_DIR:"),
+                    ],
+                    apply: &|_| {
+                        format!(
+                            str_block! {r#"
+                                #[cfg(not(windows))]
+                                pub const SOURCE_DIR: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/{lib_dir}");
+                                #[cfg(windows)]
+                                pub const SOURCE_DIR: &str = concat!(env!("CARGO_MANIFEST_DIR"), "\\{lib_dir}");
+                            "#},
+                            lib_dir = lib_dir
+                        )
+                    },
+                },
+                LinesPatch {
                     match_lines: &[&|s| s.starts_with("pub const REVISION:")],
                     apply: &|_| format!("pub const REVISION: &str = \"{revision}\";\n"),
                 },
