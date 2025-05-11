@@ -1,0 +1,25 @@
+# Changes
+
+- 0.5.0:
+    - Update sdl3-sys to 0.5.0
+    - Add optional parking_lot integration
+    - Add `run_{sync,async}_on_main_thread` and `MainThreadData::get[_mut]_on_main_thread`
+    - impl `Copy` for `MainThreadToken`
+    - impl `FromResidual` for `AppResult*` on nightly
+
+- 0.4.1:
+    - Fix potential crash if `app_quit` takes no arguments and appstate is null
+
+- 0.4.0:
+    - Update sdl3-sys to 0.4.0 (first stable SDL 3 release)
+
+- 0.3.0:
+    - Update sdl3-sys to 0.3.0
+
+- 0.2.0:
+    - Update sdl3-sys to 0.2.0
+    - Add `app_impl` attribute macro
+    - Parser improvements
+
+- 0.1.0:
+    - First release
