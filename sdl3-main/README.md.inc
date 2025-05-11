@@ -25,9 +25,9 @@ See the documentation for more information.
 ## Recent changes
 
 - 0.6.0 WIP:
-  - Update sdl3-sys to 0.6.0
-  - Removed `MainThreadToken::init` (no longer necessary)
-  - Pass arguments to main on `std` (`!std` already did)
+    - Update sdl3-sys to 0.6.0
+    - Removed `MainThreadToken::init` (no longer necessary)
+    - Pass arguments to main on `std` (`!std` already did)
 - 0.5.0:
     - Update sdl3-sys to 0.5.0
     - Add optional parking_lot integration
