@@ -1,0 +1,11 @@
+[package]
+name = "sdl3-mixer-src"
+version = "3.1.2-prerelease"
+edition = "2021"
+authors = ["SDL developers"]
+license = "Zlib"
+description = "Source code of the SDL3_mixer library"
+repository = "https://codeberg.org/maia/sdl3-sys-rs"
+# documentation = "https://docs.rs/sdl3-mixer-src"
+keywords = ["sdl"]
+categories = ["no-std"]

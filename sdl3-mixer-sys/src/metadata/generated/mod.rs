@@ -1,0 +1,53 @@
+#![allow(non_upper_case_globals, unused)]
+
+use core::ffi::CStr;
+use sdl3_sys::{
+    metadata::{Group, GroupKind, GroupValue, Hint, Property, PropertyType},
+    version::SDL_VERSIONNUM,
+};
+
+pub mod mixer;
+
+/// Reexports of everything from the other modules
+pub mod everything {
+    #[doc(no_inline)]
+    pub use super::mixer::*;
+}
+
+/// Metadata for hint constants in this crate
+pub const HINTS: &[&Hint] = &[];
+
+/// Metadata for property constants in this crate
+pub const PROPERTIES: &[&Property] = &[
+    &mixer::METADATA_MIX_PROP_MIXER_DEVICE_NUMBER,
+    &mixer::METADATA_MIX_PROP_AUDIO_LOAD_IOSTREAM_POINTER,
+    &mixer::METADATA_MIX_PROP_AUDIO_LOAD_CLOSEIO_BOOLEAN,
+    &mixer::METADATA_MIX_PROP_AUDIO_LOAD_PREDECODE_BOOLEAN,
+    &mixer::METADATA_MIX_PROP_AUDIO_LOAD_PREFERRED_MIXER_POINTER,
+    &mixer::METADATA_MIX_PROP_AUDIO_LOAD_SKIP_METADATA_TAGS_BOOLEAN,
+    &mixer::METADATA_MIX_PROP_AUDIO_DECODER_STRING,
+    &mixer::METADATA_MIX_PROP_METADATA_TITLE_STRING,
+    &mixer::METADATA_MIX_PROP_METADATA_ARTIST_STRING,
+    &mixer::METADATA_MIX_PROP_METADATA_ALBUM_STRING,
+    &mixer::METADATA_MIX_PROP_METADATA_COPYRIGHT_STRING,
+    &mixer::METADATA_MIX_PROP_METADATA_TRACK_NUMBER,
+    &mixer::METADATA_MIX_PROP_METADATA_TOTAL_TRACKS_NUMBER,
+    &mixer::METADATA_MIX_PROP_METADATA_YEAR_NUMBER,
+    &mixer::METADATA_MIX_PROP_METADATA_DURATION_FRAMES_NUMBER,
+    &mixer::METADATA_MIX_PROP_METADATA_DURATION_INFINITE_BOOLEAN,
+    &mixer::METADATA_MIX_PROP_PLAY_LOOPS_NUMBER,
+    &mixer::METADATA_MIX_PROP_PLAY_MAX_FRAME_NUMBER,
+    &mixer::METADATA_MIX_PROP_PLAY_MAX_MILLISECONDS_NUMBER,
+    &mixer::METADATA_MIX_PROP_PLAY_START_FRAME_NUMBER,
+    &mixer::METADATA_MIX_PROP_PLAY_START_MILLISECOND_NUMBER,
+    &mixer::METADATA_MIX_PROP_PLAY_LOOP_START_FRAME_NUMBER,
+    &mixer::METADATA_MIX_PROP_PLAY_LOOP_START_MILLISECOND_NUMBER,
+    &mixer::METADATA_MIX_PROP_PLAY_FADE_IN_FRAMES_NUMBER,
+    &mixer::METADATA_MIX_PROP_PLAY_FADE_IN_MILLISECONDS_NUMBER,
+    &mixer::METADATA_MIX_PROP_PLAY_FADE_IN_START_GAIN_FLOAT,
+    &mixer::METADATA_MIX_PROP_PLAY_APPEND_SILENCE_FRAMES_NUMBER,
+    &mixer::METADATA_MIX_PROP_PLAY_APPEND_SILENCE_MILLISECONDS_NUMBER,
+];
+
+/// Metadata for groups in this crate
+pub const GROUPS: &[&Group] = &[];

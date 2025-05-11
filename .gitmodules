@@ -7,3 +7,6 @@
 [submodule "SDL_ttf"]
 	path = sdl3-ttf-src/SDL_ttf
 	url = https://github.com/libsdl-org/SDL_ttf
+[submodule "SDL_mixer"]
+	path = sdl3-mixer-src/SDL_mixer
+	url = https://github.com/libsdl-org/SDL_mixer

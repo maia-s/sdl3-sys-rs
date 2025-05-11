@@ -1,0 +1,11 @@
+package_name: sdl3-mixer
+lib_name: SDL3_mixer
+lib_rev_name: SDL_mixer
+lib_min_version: 3.2.0
+lib_dir: SDL_mixer
+include_dir: include/SDL3_mixer
+version_header: SDL_mixer.h
+headers_prefix: SDL_
+sym_prefix: MIX_
+define_prefix: SDL_MIXER_
+hint_prop_prefix: MIX_

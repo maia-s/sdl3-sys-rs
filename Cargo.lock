@@ -392,6 +392,22 @@ name = "sdl3-main-macros"
 version = "0.2.0"
 
 [[package]]
+name = "sdl3-mixer-src"
+version = "3.1.2-prerelease"
+
+[[package]]
+name = "sdl3-mixer-sys"
+version = "0.6.0-pre-0+SDL-mixer-3.1.2-prerelease"
+dependencies = [
+ "cmake",
+ "pkg-config",
+ "rpkg-config",
+ "sdl3-mixer-src",
+ "sdl3-sys",
+ "vcpkg",
+]
+
+[[package]]
 name = "sdl3-src"
 version = "3.4.0"
 

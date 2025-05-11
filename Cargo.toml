@@ -5,6 +5,8 @@ members = [
     "sdl3-image-sys",
     "sdl3-main-macros",
     "sdl3-main",
+    "sdl3-mixer-src",
+    "sdl3-mixer-sys",
     "sdl3-src",
     "sdl3-sys-gen",
     "sdl3-sys",
@@ -14,4 +16,10 @@ members = [
     "examples/gpu-clear-screen",
     "examples/gpu-pull-sprite-batch",
 ]
-default-members = ["sdl3-sys", "sdl3-image-sys", "sdl3-ttf-sys", "sdl3-main"]
+default-members = [
+    "sdl3-image-sys",
+    "sdl3-main",
+    "sdl3-mixer-sys",
+    "sdl3-sys",
+    "sdl3-ttf-sys",
+]

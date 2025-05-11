@@ -1,0 +1,208 @@
+[package]
+name = "sdl3-mixer-sys"
+version = "0.6.0-pre-0+SDL-mixer-3.1.2-prerelease"
+edition = "2024"
+rust-version = "1.85"
+authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
+license = "Zlib"
+description = "Low level Rust bindings for SDL3_mixer"
+repository = "https://codeberg.org/maia/sdl3-sys-rs"
+documentation = "https://docs.rs/sdl3-mixer-sys"
+keywords = ["sdl", "graphics"]
+categories = ["external-ffi-bindings", "no-std"]
+links = "SDL3_mixer"
+
+[features]
+default = []
+
+# Build and link SDL3_mixer from source instead of linking a pre-existing library
+build-from-source = ["dep:cmake", "dep:rpkg-config", "dep:sdl3-mixer-src"]
+
+# Build and link a static SDL3_mixer library from source
+build-from-source-static = ["build-from-source", "link-static"]
+
+# Build and link a static SDL3_image library from source using vendored libraries
+build-static-vendored = ["build-from-source-static", "sdlmixer-vendored"]
+
+# Link SDL3_mixer as a static library. The default is to link a shared/dynamic library.
+link-static = []
+
+# Link SDL3_mixer as an Apple framework. The link-static feature has no effect if this is enabled.
+link-framework = []
+
+# Don't link anything, and provide linking flags via Cargo metadata.
+no-link = []
+
+# Use pkg-config to get link flags for SDL3_mixer. Only used when not building from source.
+# This has no effect if the link-framework feature is enabled.
+use-pkg-config = ["dep:pkg-config"]
+
+# Use vcpkg to get link flags for SDL3_mixer. Only used when not building from source.
+# The link-static feature has no effect when using vcpkg.
+# This has no effect if the link-framework feature is enabled.
+use-vcpkg = ["dep:vcpkg"]
+
+# Implement the Debug trait for applicable types
+debug-impls = ["sdl3-sys/debug-impls"]
+
+# Enable metadata
+metadata = []
+only-metadata = ["metadata", "no-link"]
+
+# Enable nightly features
+nightly = []
+
+no-default-formats = [
+    "no-default-aiff",
+    "no-default-wave",
+    "no-default-voc",
+    "no-default-au",
+    "no-default-flac",
+    "no-default-gme",
+    "no-default-mod",
+    "no-default-mp3",
+    "no-default-midi",
+    "no-default-opus",
+    "no-default-vorbis",
+    "no-default-wavpack",
+]
+
+no-default-aiff = [
+    "no-sdlmixer-aiff",
+]
+no-default-wave = [
+    "no-sdlmixer-wave",
+]
+no-default-voc = [
+    "no-sdlmixer-voc",
+]
+no-default-au = [
+    "no-sdlmixer-au",
+]
+no-default-flac = [
+    "no-sdlmixer-flac-libflac",
+    "no-sdlmixer-flac-drflac",
+]
+no-default-gme = [
+    "no-sdlmixer-gme",
+]
+no-default-mod = [
+    "no-sdlmixer-mod-xmp"
+]
+no-default-mp3 = [
+    "no-sdlmixer-mp3-drmp3",
+    "no-sdlmixer-mp3-mpg123",
+]
+no-default-midi = [
+    "no-sdlmixer-midi-fluidsynth",
+    "no-sdlmixer-midi-timidity",
+]
+no-default-opus = [
+    "no-sdlmixer-opus",
+]
+no-default-vorbis = [
+    "no-sdlmixer-vorbis-stb",
+    "no-sdlmixer-vorbis-tremor",
+    "no-sdlmixer-vorbis-vorbisfile",
+]
+no-default-wavpack = [
+    "no-sdlmixer-wavpack",
+]
+
+sdlmixer-deps-shared = []
+no-sdlmixer-deps-shared = []
+
+sdlmixer-vendored = []
+no-sdlmixer-vendored = []
+
+sdlmixer-aiff = []
+no-sdlmixer-aiff = []
+
+sdlmixer-wave = []
+no-sdlmixer-wave = []
+
+sdlmixer-voc = []
+no-sdlmixer-voc = []
+
+sdlmixer-au = []
+no-sdlmixer-au = []
+
+sdlmixer-flac-libflac = []
+sdlmixer-flac-libflac-shared = ["sdlmixer-flac-libflac"]
+sdlmixer-flac-drflac = []
+no-sdlmixer-flac-libflac = []
+no-sdlmixer-flac-libflac-shared = []
+no-sdlmixer-flac-drflac = []
+
+sdlmixer-gme = []
+sdlmixer-gme-shared = ["sdlmixer-gme"]
+no-sdlmixer-gme = []
+no-sdlmixer-gme-shared = []
+
+sdlmixer-mod-xmp = []
+sdlmixer-mod-xmp-lite = ["sdlmixer-mod-xmp"]
+sdlmixer-mod-xmp-shared = ["sdlmixer-mod-xmp"] # xmp or xmp-lite
+no-sdlmixer-mod-xmp = ["no-sdlmixer-mod-xmp-lite"]
+no-sdlmixer-mod-xmp-lite = []
+no-sdlmixer-mod-xmp-shared = []
+
+sdlmixer-mp3-drmp3 = []
+sdlmixer-mp3-mpg123 = []
+sdlmixer-mp3-mpg123-shared = ["sdlmixer-mp3-mpg123"]
+no-sdlmixer-mp3-drmp3 = []
+no-sdlmixer-mp3-mpg123 = []
+no-sdlmixer-mp3-mpg123-shared = []
+
+sdlmixer-midi-fluidsynth = []
+sdlmixer-midi-fluidsynth-shared = ["sdlmixer-midi-fluidsynth"]
+sdlmixer-midi-timidity = []
+no-sdlmixer-midi-fluidsynth = []
+no-sdlmixer-midi-fluidsynth-shared = []
+no-sdlmixer-midi-timidity = []
+
+sdlmixer-opus = []
+sdlmixer-opus-shared = ["sdlmixer-opus"]
+no-sdlmixer-opus = []
+no-sdlmixer-opus-shared = []
+
+sdlmixer-vorbis-stb = []
+sdlmixer-vorbis-tremor = []
+sdlmixer-vorbis-tremor-shared = ["sdlmixer-vorbis-tremor"]
+sdlmixer-vorbis-vorbisfile = []
+sdlmixer-vorbis-vorbisfile-shared = ["sdlmixer-vorbis-vorbisfile"]
+no-sdlmixer-vorbis-stb = []
+no-sdlmixer-vorbis-tremor = []
+no-sdlmixer-vorbis-tremor-shared = []
+no-sdlmixer-vorbis-vorbisfile = []
+no-sdlmixer-vorbis-vorbisfile-shared = []
+
+sdlmixer-wavpack = []
+sdlmixer-wavpack-dsd = ["sdlmixer-wavpack"]
+sdlmixer-wavpack-shared = ["sdlmixer-wavpack"]
+no-sdlmixer-wavpack = []
+no-sdlmixer-wavpack-dsd = []
+no-sdlmixer-wavpack-shared = []
+
+[dependencies]
+sdl3-sys = { version = "0.6.0-pre-0", path = "../sdl3-sys" }
+
+[build-dependencies.cmake]
+version = "0.1"
+optional = true
+
+[build-dependencies.pkg-config]
+version = "0.3"
+optional = true
+
+[build-dependencies.rpkg-config]
+version = "0.1.2"
+optional = true
+
+[build-dependencies.sdl3-mixer-src]
+version = "3.1.2-prerelease"
+path = "../sdl3-mixer-src"
+optional = true
+
+[build-dependencies.vcpkg]
+version = "0.2"
+optional = true
